@@ -897,27 +897,7 @@ export interface ICommentExpressionToken {
 // @internal
 export interface ICreateKnowledgeDocumentRequest {
     // (undocumented)
-    content: string;
-    // (undocumented)
-    filename: string;
-    // (undocumented)
-    pageBoundaries?: number[];
-    // (undocumented)
-    scopes?: string[];
-    // (undocumented)
-    title?: string;
-}
-
-// @internal
-export interface ICreateKnowledgeDocumentResponse {
-    // (undocumented)
-    filename: string;
-    // (undocumented)
-    message: string;
-    // (undocumented)
-    numChunks: number;
-    // (undocumented)
-    success: boolean;
+    file: File;
 }
 
 // @alpha
@@ -1596,19 +1576,21 @@ export interface IKnowledgeDocumentMetadata {
     // (undocumented)
     filename: string;
     // (undocumented)
-    isDisabled?: boolean;
+    id: string;
+    // (undocumented)
+    isDisabled?: boolean | null;
     // (undocumented)
     numChunks?: number;
     // (undocumented)
     scopes: string[];
     // (undocumented)
-    title?: string;
+    title?: string | null;
     // (undocumented)
     updatedAt?: string;
     // (undocumented)
     updatedBy?: string;
     // (undocumented)
-    workspaceId?: string;
+    workspaceId?: string | null;
 }
 
 // @internal
@@ -1618,18 +1600,18 @@ export interface IKnowledgeDocumentsPage {
     // (undocumented)
     nextPageToken?: string | null;
     // (undocumented)
-    totalCount?: number;
+    totalCount?: number | null;
 }
 
 // @internal
 export interface IKnowledgeDocumentsService {
-    create(request: ICreateKnowledgeDocumentRequest): Promise<ICreateKnowledgeDocumentResponse>;
-    delete(filename: string): Promise<IDeleteKnowledgeDocumentResponse>;
-    get(filename: string): Promise<IKnowledgeDocumentMetadata>;
+    create(request: ICreateKnowledgeDocumentRequest): Promise<void>;
+    delete(documentId: string): Promise<IDeleteKnowledgeDocumentResponse>;
+    get(documentId: string): Promise<IKnowledgeDocumentMetadata>;
     list(options?: IListKnowledgeDocumentsOptions): Promise<IKnowledgeDocumentsPage>;
-    patch(filename: string, request: IPatchKnowledgeDocumentRequest): Promise<IKnowledgeDocumentMetadata>;
+    patch(documentId: string, request: IPatchKnowledgeDocumentRequest): Promise<IKnowledgeDocumentMetadata>;
     search(query: string, options?: ISearchKnowledgeOptions): Promise<ISearchKnowledgeResponse>;
-    upsert(request: IUpsertKnowledgeDocumentRequest): Promise<IUpsertKnowledgeDocumentResponse>;
+    upsert(request: IUpsertKnowledgeDocumentRequest): Promise<void>;
 }
 
 // @internal
@@ -1641,17 +1623,19 @@ export interface IKnowledgeSearchResult {
     // (undocumented)
     filename: string;
     // (undocumented)
+    id: string;
+    // (undocumented)
     pageNumbers: number[];
     // (undocumented)
     scopes: string[];
     // (undocumented)
     score: number;
     // (undocumented)
-    title?: string;
+    title?: string | null;
     // (undocumented)
     totalChunks: number;
     // (undocumented)
-    workspaceId?: string;
+    workspaceId?: string | null;
 }
 
 // @internal
@@ -2342,19 +2326,8 @@ export interface ITextExpressionToken {
 // @internal
 export interface IUpsertKnowledgeDocumentRequest {
     // (undocumented)
-    content: string;
-    // (undocumented)
-    filename: string;
-    // (undocumented)
-    pageBoundaries?: number[];
-    // (undocumented)
-    scopes?: string[];
-    // (undocumented)
-    title?: string;
+    file: File;
 }
-
-// @internal
-export type IUpsertKnowledgeDocumentResponse = ICreateKnowledgeDocumentResponse;
 
 // @public
 export interface IUserService {

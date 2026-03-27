@@ -8,6 +8,7 @@ import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
+    DashboardAttributeFilterSelectionTypeValues,
     type IDashboardAttributeFilter,
     type ObjRef,
     areObjRefsEqual,
@@ -156,6 +157,13 @@ export function* addAttributeFilterHandler(
             }),
         );
     }
+    // New filters default to listOrText available mode
+    attributeFilterConfigActions.push(
+        tabsActions.changeAttributeFilterSelectionType({
+            localIdentifier: addedFilter.attributeFilter.localIdentifier!,
+            selectionType: DashboardAttributeFilterSelectionTypeValues.LIST_OR_TEXT,
+        }),
+    );
     if (displayAsLabel) {
         attributeFilterConfigActions.push(
             tabsActions.changeDisplayAsLabel({

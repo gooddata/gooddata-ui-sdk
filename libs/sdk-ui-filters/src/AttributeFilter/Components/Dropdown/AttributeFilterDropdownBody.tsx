@@ -84,6 +84,7 @@ export function AttributeFilterDropdownBody({
         onTextFilterLiteralChange,
         onTextFilterLiteralBlur,
         onToggleTextFilterCaseSensitive,
+        hideTooltips,
     } = useAttributeFilterContext();
 
     const parentFilterTitles = useMemo(() => {
@@ -196,6 +197,7 @@ export function AttributeFilterDropdownBody({
                     autocompleteOptions={autocompleteOptions}
                     onAutocompleteSearch={handleAutocompleteSearch}
                     isAutocompleteLoading={isLoadingInitialElementsPage || isLoadingNextElementsPage}
+                    hideTooltips={hideTooltips}
                 />
             );
         }

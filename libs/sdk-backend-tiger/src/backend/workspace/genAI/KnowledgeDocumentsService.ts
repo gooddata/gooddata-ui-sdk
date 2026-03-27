@@ -1,17 +1,16 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    ActionsApi_CreateDocument,
-    ActionsApi_DeleteDocument,
-    ActionsApi_GetDocument,
-    ActionsApi_ListDocuments,
-    ActionsApi_PatchDocument,
-    ActionsApi_SearchKnowledge,
-    ActionsApi_UpsertDocument,
-} from "@gooddata/api-client-tiger/endpoints/actions";
+    GenAiApi_CreateKnowledgeDocument,
+    GenAiApi_DeleteKnowledgeDocument,
+    GenAiApi_GetKnowledgeDocument,
+    GenAiApi_ListKnowledgeDocuments,
+    GenAiApi_PatchKnowledgeDocument,
+    GenAiApi_SearchKnowledge,
+    GenAiApi_UpsertKnowledgeDocument,
+} from "@gooddata/api-client-tiger/endpoints/genAI";
 import type {
     ICreateKnowledgeDocumentRequest,
-    ICreateKnowledgeDocumentResponse,
     IDeleteKnowledgeDocumentResponse,
     IKnowledgeDocumentMetadata,
     IKnowledgeDocumentsPage,
@@ -21,13 +20,14 @@ import type {
     ISearchKnowledgeOptions,
     ISearchKnowledgeResponse,
     IUpsertKnowledgeDocumentRequest,
-    IUpsertKnowledgeDocumentResponse,
 } from "@gooddata/sdk-backend-spi";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
  * Knowledge documents service.
+ *
+ * All operations use the ai-json-api (gen-ai) endpoints.
  *
  * @internal
  */
@@ -39,7 +39,7 @@ export class KnowledgeDocumentsService implements IKnowledgeDocumentsService {
 
     async list(options?: IListKnowledgeDocumentsOptions): Promise<IKnowledgeDocumentsPage> {
         const response = await this.authCall((client) =>
-            ActionsApi_ListDocuments(client.axios, client.basePath, {
+            GenAiApi_ListKnowledgeDocuments(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 ...(options?.scopes !== undefined && { scopes: options.scopes }),
                 ...(options?.pageSize !== undefined && { size: options.pageSize }),
@@ -53,55 +53,53 @@ export class KnowledgeDocumentsService implements IKnowledgeDocumentsService {
         return response.data;
     }
 
-    async get(filename: string): Promise<IKnowledgeDocumentMetadata> {
+    async get(documentId: string): Promise<IKnowledgeDocumentMetadata> {
         const response = await this.authCall((client) =>
-            ActionsApi_GetDocument(client.axios, client.basePath, {
+            GenAiApi_GetKnowledgeDocument(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
-                filename,
+                documentId,
             }),
         );
         return response.data;
     }
 
-    async create(request: ICreateKnowledgeDocumentRequest): Promise<ICreateKnowledgeDocumentResponse> {
-        const response = await this.authCall((client) =>
-            ActionsApi_CreateDocument(client.axios, client.basePath, {
+    async create(request: ICreateKnowledgeDocumentRequest): Promise<void> {
+        await this.authCall((client) =>
+            GenAiApi_CreateKnowledgeDocument(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
-                createKnowledgeDocumentRequestDto: request,
+                file: request.file,
             }),
         );
-        return response.data;
     }
 
-    async upsert(request: IUpsertKnowledgeDocumentRequest): Promise<IUpsertKnowledgeDocumentResponse> {
-        const response = await this.authCall((client) =>
-            ActionsApi_UpsertDocument(client.axios, client.basePath, {
+    async upsert(request: IUpsertKnowledgeDocumentRequest): Promise<void> {
+        await this.authCall((client) =>
+            GenAiApi_UpsertKnowledgeDocument(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
-                upsertKnowledgeDocumentRequestDto: request,
+                file: request.file,
             }),
         );
-        return response.data;
     }
 
-    async delete(filename: string): Promise<IDeleteKnowledgeDocumentResponse> {
+    async delete(documentId: string): Promise<IDeleteKnowledgeDocumentResponse> {
         const response = await this.authCall((client) =>
-            ActionsApi_DeleteDocument(client.axios, client.basePath, {
+            GenAiApi_DeleteKnowledgeDocument(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
-                filename,
+                documentId,
             }),
         );
         return response.data;
     }
 
     async patch(
-        filename: string,
+        documentId: string,
         request: IPatchKnowledgeDocumentRequest,
     ): Promise<IKnowledgeDocumentMetadata> {
         const response = await this.authCall((client) =>
-            ActionsApi_PatchDocument(client.axios, client.basePath, {
+            GenAiApi_PatchKnowledgeDocument(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
-                filename,
-                patchKnowledgeDocumentRequestDto: request,
+                documentId,
+                aiPatchDocumentRequest: request,
             }),
         );
         return response.data;
@@ -109,7 +107,7 @@ export class KnowledgeDocumentsService implements IKnowledgeDocumentsService {
 
     async search(query: string, options?: ISearchKnowledgeOptions): Promise<ISearchKnowledgeResponse> {
         const response = await this.authCall((client) =>
-            ActionsApi_SearchKnowledge(client.axios, client.basePath, {
+            GenAiApi_SearchKnowledge(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 query,
                 limit: options?.limit,

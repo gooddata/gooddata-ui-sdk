@@ -26,7 +26,10 @@ export {
     type IPluggableApplicationMountHandle,
     type IPluggableApplicationMountOptions,
     type IPluggableAppEvent,
+    type IPluggableAppTelemetryCallbacks,
+    type ITelemetryEventOptions,
     type PluggableApplicationMount,
+    type TelemetryChannel,
 } from "./mount.js";
 
 export {

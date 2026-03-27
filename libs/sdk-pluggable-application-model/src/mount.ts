@@ -19,6 +19,56 @@ export interface IPluggableAppEvent {
 }
 
 /**
+ * Telemetry channel determines which analytics pipeline receives the event.
+ *
+ * @remarks
+ * - `"standard"` — default channel for general UI events.
+ * - `"ai"` — channel for AI-related events that require separate compliance handling.
+ *
+ * @alpha
+ */
+export type TelemetryChannel = "standard" | "ai";
+
+/**
+ * Optional configuration for a telemetry event.
+ *
+ * @alpha
+ */
+export interface ITelemetryEventOptions {
+    /**
+     * Which analytics channel to route the event to.
+     *
+     * @defaultValue `"standard"`
+     */
+    channel?: TelemetryChannel;
+}
+
+/**
+ * Telemetry callbacks provided by the shell to pluggable applications.
+ *
+ * @remarks
+ * Pluggable applications can use these methods to log events through the shell's
+ * centralized telemetry system. All events are automatically tagged with the
+ * source application ID.
+ *
+ * @alpha
+ */
+export interface IPluggableAppTelemetryCallbacks {
+    /**
+     * Track a custom telemetry event from the pluggable application.
+     *
+     * @param eventName - Name of the event.
+     * @param data - Optional key-value payload.
+     * @param options - Optional event configuration (e.g. channel routing).
+     */
+    trackEvent: (eventName: string, data?: Record<string, unknown>, options?: ITelemetryEventOptions) => void;
+    /** Track a page view within the pluggable application. */
+    trackPageView: (page: string) => void;
+    /** Track a timing measurement from the pluggable application. */
+    trackTiming: (variable: string, label: string, valueMs: number) => void;
+}
+
+/**
  * Options passed by the host into a pluggable application's mount function.
  *
  * @alpha
@@ -56,6 +106,17 @@ export interface IPluggableApplicationMountOptions {
      * instance.
      */
     onEvent?: (e: IPluggableAppEvent) => void;
+
+    /**
+     * Telemetry callbacks for the pluggable application to track events through the shell's
+     * centralized telemetry system.
+     *
+     * @remarks
+     * This is the preferred way for pluggable applications to emit telemetry. Events are
+     * automatically tagged with the source application ID and forwarded to all configured
+     * telemetry providers registered in the shell application.
+     */
+    onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
 }
 
 /**

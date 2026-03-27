@@ -1401,6 +1401,10 @@
     {
       "name": "xml2js",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "yaml",
+      "allowedCategories": [ "production" ]
     }
   ]
 }

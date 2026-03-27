@@ -5,6 +5,7 @@ import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/tool
 import {
     type ISetDashboardAttributeFilterConfigDisplayAsLabelPayload,
     type ISetDashboardAttributeFilterConfigModePayload,
+    type ISetDashboardAttributeFilterSelectionTypePayload,
 } from "../../../../model/commands/dashboard.js";
 import { type TabsReducer } from "../tabsReducers.js";
 import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
@@ -75,6 +76,38 @@ const changeDisplayAsLabel: AttributeFilterConfigReducer<
     }
 };
 
+/**
+ * Changes the available mode for the attribute filter given by its local identifier.
+ */
+const changeAttributeFilterSelectionType: AttributeFilterConfigReducer<
+    PayloadAction<ISetDashboardAttributeFilterSelectionTypePayload>
+> = (state, action) => {
+    const { localIdentifier } = action.payload;
+
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.attributeFilterConfigs) {
+        activeTab.attributeFilterConfigs = { attributeFilterConfigs: [] };
+    }
+    const existingConfig = activeTab.attributeFilterConfigs.attributeFilterConfigs?.find(
+        (item) => item.localIdentifier === localIdentifier,
+    );
+
+    if (existingConfig) {
+        existingConfig.selectionType = action.payload.selectionType;
+        activeTab.attributeFilterConfigs.attributeFilterConfigs = [
+            ...(activeTab.attributeFilterConfigs.attributeFilterConfigs ?? []),
+        ];
+    } else {
+        activeTab.attributeFilterConfigs.attributeFilterConfigs = [
+            ...(activeTab.attributeFilterConfigs.attributeFilterConfigs || []),
+            action.payload,
+        ];
+    }
+};
+
 const setAttributeFilterConfigs: AttributeFilterConfigReducer<PayloadAction<any>> = (state, action) => {
     const { attributeFilterConfigs } = action.payload;
 
@@ -104,6 +137,7 @@ const removeAttributeFilterConfig: TabsReducer<PayloadAction<string>> = (state, 
 
 export const attributeFilterConfigsReducers = {
     changeAttributeFilterConfigMode,
+    changeAttributeFilterSelectionType,
     setAttributeFilterConfigs,
     removeAttributeFilterConfig,
     changeDisplayAsLabel,

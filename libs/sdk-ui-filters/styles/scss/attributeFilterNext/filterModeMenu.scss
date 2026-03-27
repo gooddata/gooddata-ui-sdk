@@ -6,28 +6,28 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        width: 32px;
-        height: 32px;
+        width: 35px;
+        height: 35px;
     }
 
     &__button--icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
+        width: 35px;
+        height: 35px;
         padding: 0;
 
         .gd-ui-kit-icon-button {
-            width: 32px;
-            height: 32px;
-            min-width: 32px;
-            border-radius: var(--gd-button-borderRadius, 3px);
+            width: 35px;
+            height: 35px;
+            min-width: 35px;
+            border-radius: 0 3px 0 0;
         }
 
-        // Hover state per design (Gray 200 / complementary-2)
+        // Hover state per design (complementary-3)
         &:hover .gd-ui-kit-icon-button {
-            background-color: var(--gd-palette-complementary-2, #ebeff4);
+            background-color: var(--gd-palette-complementary-3, #dde4eb);
         }
 
         // Active state when menu is open or button is pressed (complementary-3)
@@ -42,7 +42,7 @@
         max-height: none;
         box-shadow: 0 2px 20px 0 rgba(20, 56, 93, 0.2);
         border-radius: 3px;
-        padding: 8px 0;
+        padding: 0 0 8px;
 
         .gd-ui-kit-listbox {
             min-width: 100%;

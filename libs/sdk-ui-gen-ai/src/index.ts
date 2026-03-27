@@ -17,6 +17,8 @@ export {
 export {
     makeUserMessage,
     makeTextContents,
+    makeUserItem,
+    makeAssistantItem,
     type Message,
     type BaseMessage,
     type UserMessage,

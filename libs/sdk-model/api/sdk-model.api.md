@@ -400,6 +400,12 @@ export function dashboardAttributeFilterItemValidateElementsBy(filter: Dashboard
 export type DashboardAttributeFilterSelectionMode = "single" | "multi";
 
 // @alpha
+export type DashboardAttributeFilterSelectionType = "list" | "text" | "listOrText";
+
+// @internal
+export const DashboardAttributeFilterSelectionTypeValues: Record<Uppercase<Exclude<DashboardAttributeFilterSelectionType, "listOrText">> | "LIST_OR_TEXT", DashboardAttributeFilterSelectionType>;
+
+// @alpha
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
 // @internal
@@ -1628,6 +1634,7 @@ export interface IDashboardAttributeFilterConfig {
     displayAsLabel?: ObjRef;
     localIdentifier: string;
     mode?: DashboardAttributeFilterConfigMode;
+    selectionType?: DashboardAttributeFilterSelectionType;
 }
 
 // @beta

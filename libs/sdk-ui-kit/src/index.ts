@@ -1002,6 +1002,7 @@ export { getTypedUiTabsContextStore } from "./@ui/UiTabs/context.js";
 export { useUiTabsContextStoreValue } from "./@ui/UiTabs/useUiTabsContextStoreValue.js";
 export { UiTooltip } from "./@ui/UiTooltip/UiTooltip.js";
 export type { IUiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
+export { TOOLTIP_WIDTH_MEDIUM } from "./@ui/UiTooltip/constants.js";
 export {
     UiDropdownIconButton,
     type IUiDropdownIconButtonProps,

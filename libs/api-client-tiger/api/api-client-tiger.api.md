@@ -1274,16 +1274,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
     createdBy(requestParameters: GenAiApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiCreateDocumentRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "CreateKnowledgeDocumentResponseDto" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    createDocument(requestParameters: ActionsApiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<CreateKnowledgeDocumentResponseDto>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiDeleteDocumentRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "DeleteKnowledgeDocumentResponseDto" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    deleteDocument(requestParameters: ActionsApiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<DeleteKnowledgeDocumentResponseDto>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
@@ -1298,11 +1288,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateTitleRequest" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "GenerateTitleResponse" needs to be exported by the entry point index.d.ts
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiGetDocumentRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "KnowledgeDocumentMetadataDto" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    getDocument(requestParameters: ActionsApiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiGetWorkflowStatusRequest" needs to be exported by the entry point index.d.ts
@@ -1312,11 +1297,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiListDocumentsRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "ListKnowledgeDocumentsResponseDto" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    listDocuments(requestParameters: ActionsApiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<ListKnowledgeDocumentsResponseDto>;
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     listLlmProviderModelsById(requestParameters: ActionsApiListLlmProviderModelsByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     memoryCreatedByUsers(requestParameters: GenAiApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
@@ -1326,10 +1306,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     // Warning: (ae-forgotten-export) The symbol "ActionsApiOutlierDetectionResultRequest" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OutlierDetectionResult" needs to be exported by the entry point index.d.ts
     outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiPatchDocumentRequest" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    patchDocument(requestParameters: ActionsApiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
     // @deprecated
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiResolveLlmProvidersRequest" needs to be exported by the entry point index.d.ts
@@ -1339,11 +1315,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiRetrieveResultBinaryRequest" needs to be exported by the entry point index.d.ts
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiSearchKnowledgeRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "SearchKnowledgeResponseDto" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    searchKnowledge(requestParameters: ActionsApiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<SearchKnowledgeResponseDto>;
     tags(requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     // Warning: (ae-forgotten-export) The symbol "TestLlmProviderResponse" needs to be exported by the entry point index.d.ts
     testLlmProvider(requestParameters: GenAiApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
@@ -1352,11 +1323,6 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     // Warning: (ae-forgotten-export) The symbol "TrendingObjectsResult" needs to be exported by the entry point index.d.ts
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiUpsertDocumentRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "UpsertKnowledgeDocumentResponseDto" needs to be exported by the entry point index.d.ts
-    //
-    // (undocumented)
-    upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<UpsertKnowledgeDocumentResponseDto>;
     // @deprecated
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     // @deprecated
@@ -1392,10 +1358,6 @@ export interface AfmActionsApiInterface {
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
     createdBy(requestParameters: GenAiApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
-    // (undocumented)
-    createDocument(requestParameters: ActionsApiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<CreateKnowledgeDocumentResponseDto>;
-    // (undocumented)
-    deleteDocument(requestParameters: ActionsApiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<DeleteKnowledgeDocumentResponseDto>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
@@ -1403,38 +1365,28 @@ export interface AfmActionsApiInterface {
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
-    // (undocumented)
-    getDocument(requestParameters: ActionsApiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
-    // (undocumented)
-    listDocuments(requestParameters: ActionsApiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<ListKnowledgeDocumentsResponseDto>;
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     listLlmProviderModelsById(requestParameters: ActionsApiListLlmProviderModelsByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     memoryCreatedByUsers(requestParameters: GenAiApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
     outlierDetection(requestParameters: ActionsApiOutlierDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResponse>;
     outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
-    // (undocumented)
-    patchDocument(requestParameters: ActionsApiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
     // @deprecated
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     resolveLlmProviders(requestParameters: ActionsApiResolveLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlms>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
-    // (undocumented)
-    searchKnowledge(requestParameters: ActionsApiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<SearchKnowledgeResponseDto>;
     tags(requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
     testLlmProvider(requestParameters: GenAiApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     testLlmProviderById(requestParameters: GenAiApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
-    // (undocumented)
-    upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<UpsertKnowledgeDocumentResponseDto>;
     // @deprecated
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     // @deprecated
@@ -2165,7 +2117,7 @@ export interface AggregatedFactControllerApiSearchEntitiesAggregatedFactsRequest
 }
 
 // @public (undocumented)
-export interface AiAllowedRelationshipTypeDto {
+export interface AiAllowedRelationshipType {
     // (undocumented)
     'allowOrphans'?: boolean;
     // (undocumented)
@@ -2483,23 +2435,23 @@ export interface AiClusteringAmount {
 // @public
 export type AiContent = ({
     type: 'multipart';
-} & AiMultipartContentDto) | ({
+} & AiMultipartContent) | ({
     type: 'reasoning';
-} & AiReasoningContentDto) | ({
+} & AiReasoningContent) | ({
     type: 'text';
-} & AiTextMessageContentDto) | ({
+} & AiTextMessageContent) | ({
     type: 'toolCall';
-} & AiFunctionCallContentDto) | ({
+} & AiFunctionCallContent) | ({
     type: 'toolResult';
-} & AiFunctionResultContentDto);
+} & AiFunctionResultContent);
 
 // @public
-export interface AiConversationItemListResponseDto {
-    'items': Array<AiConversationItemResponseDto>;
+export interface AiConversationItemListResponse {
+    'items': Array<AiConversationItemResponse>;
 }
 
 // @public
-export interface AiConversationItemResponseDto {
+export interface AiConversationItemResponse {
     // (undocumented)
     'content': AiContent;
     'conversationId': string;
@@ -2510,16 +2462,16 @@ export interface AiConversationItemResponseDto {
     'replyTo'?: string | null;
     // (undocumented)
     'responseId'?: string | null;
-    'role': AiConversationItemResponseDtoRoleEnum;
+    'role': AiConversationItemResponseRoleEnum;
     // (undocumented)
     'taskId'?: string | null;
 }
 
 // @public (undocumented)
-export type AiConversationItemResponseDtoRoleEnum = 'user' | 'assistant' | 'tool';
+export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool';
 
 // @public
-export interface AiConversationResponseDto {
+export interface AiConversationResponse {
     'conversationId': string;
     'createdAt': string;
     'lastActivityAt': string;
@@ -2529,15 +2481,15 @@ export interface AiConversationResponseDto {
 }
 
 // @public (undocumented)
-export interface AiConversationResponseListDto {
-    'responses': Array<AiConversationTurnResponseDto>;
+export interface AiConversationResponseList {
+    'responses': Array<AiConversationTurnResponse>;
 }
 
 // @public (undocumented)
-export interface AiConversationTurnResponseDto {
+export interface AiConversationTurnResponse {
     'createdAt': string;
     // (undocumented)
-    'feedback'?: AiFeedbackDto | null;
+    'feedback'?: AiFeedback | null;
     'responseId': string;
     'updatedAt': string;
 }
@@ -2586,15 +2538,49 @@ export const AiDateGranularity: {
 // @public (undocumented)
 export type AiDateGranularity = typeof AiDateGranularity[keyof typeof AiDateGranularity];
 
-// @public (undocumented)
-export interface AiFeedbackDto {
+// @public
+export interface AiDeleteDocumentResponse {
     // (undocumented)
-    'text'?: string | null;
-    'type': AiFeedbackDtoTypeEnum;
+    'message': string;
+    // (undocumented)
+    'success': boolean;
+}
+
+// @public
+export interface AiDocumentMetadataResponse {
+    // (undocumented)
+    'createdAt': string;
+    // (undocumented)
+    'createdBy': string;
+    // (undocumented)
+    'filename': string;
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'isDisabled'?: boolean | null;
+    // (undocumented)
+    'numChunks': number;
+    // (undocumented)
+    'scopes': Array<string>;
+    // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
+    'updatedAt': string;
+    // (undocumented)
+    'updatedBy': string;
+    // (undocumented)
+    'workspaceId'?: string | null;
 }
 
 // @public (undocumented)
-export type AiFeedbackDtoTypeEnum = 'POSITIVE' | 'NEGATIVE';
+export interface AiFeedback {
+    // (undocumented)
+    'text'?: string | null;
+    'type': AiFeedbackTypeEnum;
+}
+
+// @public (undocumented)
+export type AiFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
 // @public (undocumented)
 export interface AiFieldsValue {
@@ -2643,7 +2629,7 @@ export interface AiForecastPeriod {
 }
 
 // @public (undocumented)
-export interface AiFunctionCallContentDto {
+export interface AiFunctionCallContent {
     // (undocumented)
     [key: string]: any;
     'arguments': object;
@@ -2654,14 +2640,14 @@ export interface AiFunctionCallContentDto {
 }
 
 // @public (undocumented)
-export interface AiFunctionResultContentDto {
+export interface AiFunctionResultContent {
     'callId': string;
     'result': string;
-    'type'?: AiFunctionResultContentDtoTypeEnum;
+    'type'?: AiFunctionResultContentTypeEnum;
 }
 
 // @public (undocumented)
-export type AiFunctionResultContentDtoTypeEnum = 'toolResult';
+export type AiFunctionResultContentTypeEnum = 'toolResult';
 
 // @public (undocumented)
 export interface AiHTTPValidationError {
@@ -2670,61 +2656,71 @@ export interface AiHTTPValidationError {
 }
 
 // @public (undocumented)
-export interface AiKeyDriverAnalysisDto {
+export interface AiKeyDriverAnalysis {
     // (undocumented)
     [key: string]: any;
     'analyzedPeriod': string;
     'dateAttributeId': string;
     'filters': Array<object>;
-    'measure': AiKeyDriverAnalysisMeasureDto;
+    'measure': AiKeyDriverAnalysisMeasure;
     'referencePeriod': string;
 }
 
 // @public (undocumented)
-export interface AiKeyDriverAnalysisMeasureDto {
+export interface AiKeyDriverAnalysisMeasure {
     // (undocumented)
-    'aggregation'?: AiKeyDriverAnalysisMeasureDtoAggregationEnum | null;
+    'aggregation'?: AiKeyDriverAnalysisMeasureAggregationEnum | null;
     'id': string;
-    'type': AiKeyDriverAnalysisMeasureDtoTypeEnum;
+    'type': AiKeyDriverAnalysisMeasureTypeEnum;
 }
 
 // @public (undocumented)
-export type AiKeyDriverAnalysisMeasureDtoAggregationEnum = 'SUM' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'COUNT';
+export type AiKeyDriverAnalysisMeasureAggregationEnum = 'SUM' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'COUNT';
 
 // @public (undocumented)
-export type AiKeyDriverAnalysisMeasureDtoTypeEnum = 'metric' | 'fact' | 'attribute';
+export type AiKeyDriverAnalysisMeasureTypeEnum = 'metric' | 'fact' | 'attribute';
 
 // @public (undocumented)
-export interface AiKeyDriverAnalysisPartDto {
+export interface AiKeyDriverAnalysisPart {
     // (undocumented)
-    'kda'?: AiKeyDriverAnalysisDto | null;
-    'type'?: AiKeyDriverAnalysisPartDtoTypeEnum;
+    'kda'?: AiKeyDriverAnalysis | null;
+    'type'?: AiKeyDriverAnalysisPartTypeEnum;
 }
 
 // @public (undocumented)
-export type AiKeyDriverAnalysisPartDtoTypeEnum = 'kda';
+export type AiKeyDriverAnalysisPartTypeEnum = 'kda';
+
+// @public
+export interface AiListDocumentsResponse {
+    // (undocumented)
+    'documents': Array<AiDocumentMetadataResponse>;
+    // (undocumented)
+    'nextPageToken'?: string | null;
+    // (undocumented)
+    'totalCount'?: number | null;
+}
 
 // @public (undocumented)
-export interface AiMultipartContentDto {
-    'parts': Array<AiMultipartContentDtoPartsInner>;
-    'type'?: AiMultipartContentDtoTypeEnum;
+export interface AiMultipartContent {
+    'parts': Array<AiMultipartContentPartsInner>;
+    'type'?: AiMultipartContentTypeEnum;
 }
 
 // @public
-export type AiMultipartContentDtoPartsInner = ({
+export type AiMultipartContentPartsInner = ({
     type: 'kda';
-} & AiKeyDriverAnalysisPartDto) | ({
+} & AiKeyDriverAnalysisPart) | ({
     type: 'searchResults';
-} & AiSearchResultsDto) | ({
+} & AiSearchResults) | ({
     type: 'text';
-} & AiTextPartDto) | ({
+} & AiTextPart) | ({
     type: 'visualization';
-} & AiVisualizationPartDto) | ({
+} & AiVisualizationPart) | ({
     type: 'whatIf';
-} & AiWhatIfAnalysisPartDto);
+} & AiWhatIfAnalysisPart);
 
 // @public (undocumented)
-export type AiMultipartContentDtoTypeEnum = 'multipart';
+export type AiMultipartContentTypeEnum = 'multipart';
 
 // @public (undocumented)
 export const AiObjectType: {
@@ -2744,6 +2740,18 @@ export const AiObjectType: {
 
 // @public (undocumented)
 export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
+
+// @public
+interface AiPatchDocumentRequest {
+    // (undocumented)
+    'isDisabled'?: boolean | null;
+    // (undocumented)
+    'scopes'?: Array<string> | null;
+    // (undocumented)
+    'title'?: string | null;
+}
+export { AiPatchDocumentRequest }
+export { AiPatchDocumentRequest as GenAiApiPatchDocumentRequestBody }
 
 // @public (undocumented)
 export interface AiQuery {
@@ -2800,33 +2808,41 @@ export interface AiRankingFilter {
 export type AiRankingFilterTypeEnum = 'ranking_filter';
 
 // @public (undocumented)
-export interface AiReasoningContentDto {
+export interface AiReasoningContent {
     'summary': string;
-    'type'?: AiReasoningContentDtoTypeEnum;
+    'type'?: AiReasoningContentTypeEnum;
 }
 
 // @public (undocumented)
-export type AiReasoningContentDtoTypeEnum = 'reasoning';
+export type AiReasoningContentTypeEnum = 'reasoning';
 
 // @public (undocumented)
-export interface AiResponseFeedbackDto {
+export interface AiResponseFeedback {
     // (undocumented)
     'text'?: string | null;
     // (undocumented)
-    'type': AiResponseFeedbackDtoTypeEnum;
+    'type': AiResponseFeedbackTypeEnum;
 }
-
-// @public (undocumented)
-export type AiResponseFeedbackDtoTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
 // @public (undocumented)
 export interface AiResponseFeedbackRequest {
     // (undocumented)
-    'feedback': AiResponseFeedbackDto | null;
+    'feedback': AiResponseFeedback | null;
 }
 
 // @public (undocumented)
-export interface AiSearchObjectDto {
+export type AiResponseFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
+
+// @public
+export interface AiSearchDocumentsResponse {
+    // (undocumented)
+    'results': Array<AiSearchResultItem>;
+    // (undocumented)
+    'statistics': AiSearchStatistics;
+}
+
+// @public (undocumented)
+export interface AiSearchObject {
     // (undocumented)
     'createdAt'?: string | null;
     // (undocumented)
@@ -2853,7 +2869,7 @@ export interface AiSearchObjectDto {
 }
 
 // @public (undocumented)
-export interface AiSearchRelationshipDto {
+export interface AiSearchRelationship {
     'sourceId': string;
     'sourceTitle': string;
     'sourceType': string;
@@ -2864,60 +2880,92 @@ export interface AiSearchRelationshipDto {
     'targetWorkspaceId': string;
 }
 
-// @public (undocumented)
-export interface AiSearchResultsDto {
-    'keywords': Array<string>;
-    'objects': Array<AiSearchObjectDto>;
+// @public
+export interface AiSearchResultItem {
     // (undocumented)
-    'relationships'?: Array<AiSearchRelationshipDto> | null;
+    'chunkIndex': number;
     // (undocumented)
-    'requestedObjectType'?: string | null;
-    'type'?: AiSearchResultsDtoTypeEnum;
+    'content': string;
+    // (undocumented)
+    'filename': string;
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'pageNumbers': Array<number>;
+    // (undocumented)
+    'scopes': Array<string>;
+    // (undocumented)
+    'score': number;
+    // (undocumented)
+    'title'?: string | null;
+    // (undocumented)
+    'totalChunks': number;
+    // (undocumented)
+    'workspaceId'?: string | null;
 }
 
 // @public (undocumented)
-export type AiSearchResultsDtoTypeEnum = 'searchResults';
+export interface AiSearchResults {
+    'keywords': Array<string>;
+    'objects': Array<AiSearchObject>;
+    // (undocumented)
+    'relationships'?: Array<AiSearchRelationship> | null;
+    // (undocumented)
+    'requestedObjectType'?: string | null;
+    'type'?: AiSearchResultsTypeEnum;
+}
 
 // @public (undocumented)
-export interface AiSendMessageContentDto {
+export type AiSearchResultsTypeEnum = 'searchResults';
+
+// @public
+export interface AiSearchStatistics {
+    // (undocumented)
+    'averageSimilarityScore': number;
+    // (undocumented)
+    'totalResults': number;
+}
+
+// @public (undocumented)
+export interface AiSendMessageContent {
     // (undocumented)
     'text': string;
     // (undocumented)
-    'type': AiSendMessageContentDtoTypeEnum;
+    'type': AiSendMessageContentTypeEnum;
 }
 
 // @public (undocumented)
-export type AiSendMessageContentDtoTypeEnum = 'text';
+export type AiSendMessageContentTypeEnum = 'text';
 
 // @public (undocumented)
-export interface AiSendMessageItemDto {
+export interface AiSendMessageItem {
     // (undocumented)
-    'content': AiSendMessageContentDto;
+    'content': AiSendMessageContent;
     // (undocumented)
-    'role': AiSendMessageItemDtoRoleEnum;
+    'role': AiSendMessageItemRoleEnum;
 }
 
 // @public (undocumented)
-export type AiSendMessageItemDtoRoleEnum = 'user';
+export type AiSendMessageItemRoleEnum = 'user';
 
 // @public (undocumented)
-export interface AiSendMessageOptionsDto {
+export interface AiSendMessageOptions {
     // (undocumented)
-    'search'?: AiSendMessageSearchOptionsDto | null;
+    'search'?: AiSendMessageSearchOptions | null;
 }
 
 // @public
 export interface AiSendMessageRequest {
     // (undocumented)
-    'item': AiSendMessageItemDto;
+    'item': AiSendMessageItem;
     // (undocumented)
-    'options'?: AiSendMessageOptionsDto | null;
+    'options'?: AiSendMessageOptions | null;
 }
 
 // @public (undocumented)
-export interface AiSendMessageSearchOptionsDto {
+export interface AiSendMessageSearchOptions {
     // (undocumented)
-    'allowedRelationshipTypes'?: Array<AiAllowedRelationshipTypeDto> | null;
+    'allowedRelationshipTypes'?: Array<AiAllowedRelationshipType> | null;
     // (undocumented)
     'objectTypes'?: Array<AiObjectType> | null;
     // (undocumented)
@@ -2925,22 +2973,36 @@ export interface AiSendMessageSearchOptionsDto {
 }
 
 // @public (undocumented)
-export interface AiTextMessageContentDto {
+export interface AiTextMessageContent {
     'text': string;
-    'type'?: AiTextMessageContentDtoTypeEnum;
+    'type'?: AiTextMessageContentTypeEnum;
 }
 
 // @public (undocumented)
-export type AiTextMessageContentDtoTypeEnum = 'text';
+export type AiTextMessageContentTypeEnum = 'text';
 
 // @public (undocumented)
-export interface AiTextPartDto {
+export interface AiTextPart {
     'text': string;
-    'type'?: AiTextPartDtoTypeEnum;
+    'type'?: AiTextPartTypeEnum;
 }
 
 // @public (undocumented)
-export type AiTextPartDtoTypeEnum = 'text';
+export type AiTextPartTypeEnum = 'text';
+
+// @public
+export interface AiUploadDocumentResponse {
+    // (undocumented)
+    'filename': string;
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'numChunks': number;
+    // (undocumented)
+    'success': boolean;
+}
 
 // @public (undocumented)
 export interface AiValidationError {
@@ -3019,51 +3081,45 @@ export interface AiVisualizationMetricsInner {
 }
 
 // @public (undocumented)
-export interface AiVisualizationPartDto {
-    'metadata': AiVisualizationPartMetadataDto;
-    'type'?: AiVisualizationPartDtoTypeEnum;
+export interface AiVisualizationPart {
+    'type'?: AiVisualizationPartTypeEnum;
     // (undocumented)
     'visualization'?: AiVisualization | null;
 }
 
 // @public (undocumented)
-export type AiVisualizationPartDtoTypeEnum = 'visualization';
-
-// @public (undocumented)
-export interface AiVisualizationPartMetadataDto {
-    'isSaved': boolean;
-}
+export type AiVisualizationPartTypeEnum = 'visualization';
 
 // @public (undocumented)
 export type AiVisualizationTypeEnum = 'table' | 'headline_chart' | 'bar_chart' | 'column_chart' | 'line_chart' | 'pie_chart' | 'scatter_chart';
 
 // @public (undocumented)
-export interface AiWhatIfAnalysisPartDto {
-    'type'?: AiWhatIfAnalysisPartDtoTypeEnum;
+export interface AiWhatIfAnalysisPart {
+    'type'?: AiWhatIfAnalysisPartTypeEnum;
     // (undocumented)
-    'whatIf'?: AiWhatIfScenarioDto | null;
+    'whatIf'?: AiWhatIfScenario | null;
 }
 
 // @public (undocumented)
-export type AiWhatIfAnalysisPartDtoTypeEnum = 'whatIf';
+export type AiWhatIfAnalysisPartTypeEnum = 'whatIf';
 
 // @public (undocumented)
-export interface AiWhatIfMeasureAdjustmentDto {
+export interface AiWhatIfMeasureAdjustment {
     'metricId': string;
     'metricType': string;
     'scenarioMaql': string;
 }
 
 // @public (undocumented)
-export interface AiWhatIfScenarioDto {
+export interface AiWhatIfScenario {
     'includeBaseline': boolean;
-    'scenarios': Array<AiWhatIfScenarioVariantDto>;
+    'scenarios': Array<AiWhatIfScenarioVariant>;
     'visualizationRef': string;
 }
 
 // @public (undocumented)
-export interface AiWhatIfScenarioVariantDto {
-    'adjustments': Array<AiWhatIfMeasureAdjustmentDto>;
+export interface AiWhatIfScenarioVariant {
+    'adjustments': Array<AiWhatIfMeasureAdjustment>;
     'label': string;
 }
 
@@ -6852,9 +6908,9 @@ export interface ContentSlideTemplate {
 // @public
 export class ConversationsAi extends BaseAPI implements ConversationsAiInterface {
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseDto>;
-    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseDto[]>;
-    postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseDto>;
+    getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse[]>;
+    postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Configuration_2" needs to be exported by the entry point index.d.ts
@@ -6865,17 +6921,17 @@ export { ConversationsAi_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConve
 export { ConversationsAi_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete as GenAiApi_DeleteConversation }
 
 // @public
-function ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponseDto>;
+function ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet }
 export { ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet as GenAiApi_GetConversation }
 
 // @public
-function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<Array<AiConversationResponseDto>>;
+function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<Array<AiConversationResponse>>;
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet }
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet as GenAiApi_GetConversations }
 
 // @public
-function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponseDto>;
+function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost }
 export { ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost as GenAiApi_PostConversations }
 
@@ -6919,9 +6975,9 @@ export { ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversa
 // @public
 export interface ConversationsAiInterface {
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseDto>;
-    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AiConversationResponseDto>>;
-    postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseDto>;
+    getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AiConversationResponse>>;
+    postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 }
 
 // @public
@@ -17738,11 +17794,11 @@ export function isVisualizationObjectsItem(visualizationObject: unknown): visual
 
 // @public
 export class ItemsAi extends BaseAPI implements ItemsAiInterface {
-    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponseDto>;
+    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
 }
 
 // @public
-function ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(axios: AxiosInstance, basePath: string, requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationItemListResponseDto>;
+function ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(axios: AxiosInstance, basePath: string, requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationItemListResponse>;
 export { ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet as GenAiApi_GetConversationItems }
 export { ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet }
 
@@ -17759,7 +17815,7 @@ export { ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversation
 
 // @public
 export interface ItemsAiInterface {
-    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponseDto>;
+    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
 }
 
 // @public
@@ -24354,53 +24410,164 @@ export interface KeyDriversResult {
 
 // @public
 export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
-    downloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(requestParameters: KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
-    uploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(requestParameters: KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
-    upsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(requestParameters: KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    createDocument(requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
+    deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
+    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    getDocument(requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
+    listDocuments(requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiListDocumentsResponse>;
+    patchDocument(requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
+    searchKnowledge(requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchDocumentsResponse>;
+    upsertDocument(requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
 }
 
 // @public
-export function KnowledgeAi_DownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<any>;
+function KnowledgeAi_CreateDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+export { KnowledgeAi_CreateDocument as GenAiApi_CreateKnowledgeDocument }
+export { KnowledgeAi_CreateDocument }
 
 // @public
-export function KnowledgeAi_UploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<any>;
+function KnowledgeAi_DeleteDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDeleteDocumentResponse>;
+export { KnowledgeAi_DeleteDocument as GenAiApi_DeleteKnowledgeDocument }
+export { KnowledgeAi_DeleteDocument }
 
 // @public
-export function KnowledgeAi_UpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<any>;
+export function KnowledgeAi_DownloadDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<any>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_DownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(workspaceId: string, filename: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+function KnowledgeAi_GetDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+export { KnowledgeAi_GetDocument as GenAiApi_GetKnowledgeDocument }
+export { KnowledgeAi_GetDocument }
 
 // @public
-export function KnowledgeAiAxiosParamCreator_UploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(workspaceId: string, file: File, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+function KnowledgeAi_ListDocuments(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiListDocumentsResponse>;
+export { KnowledgeAi_ListDocuments as GenAiApi_ListKnowledgeDocuments }
+export { KnowledgeAi_ListDocuments }
 
 // @public
-export function KnowledgeAiAxiosParamCreator_UpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(workspaceId: string, file: File, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+function KnowledgeAi_PatchDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+export { KnowledgeAi_PatchDocument as GenAiApi_PatchKnowledgeDocument }
+export { KnowledgeAi_PatchDocument }
 
 // @public
-export interface KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest {
-    readonly filename: string;
+function KnowledgeAi_SearchKnowledge(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiSearchDocumentsResponse>;
+export { KnowledgeAi_SearchKnowledge as GenAiApi_SearchKnowledge }
+export { KnowledgeAi_SearchKnowledge }
+
+// @public
+function KnowledgeAi_UpsertDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+export { KnowledgeAi_UpsertDocument as GenAiApi_UpsertKnowledgeDocument }
+export { KnowledgeAi_UpsertDocument }
+
+// @public
+export function KnowledgeAiAxiosParamCreator_CreateDocument(workspaceId: string, file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+export function KnowledgeAiAxiosParamCreator_DeleteDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+export function KnowledgeAiAxiosParamCreator_DownloadDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+export function KnowledgeAiAxiosParamCreator_GetDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+export function KnowledgeAiAxiosParamCreator_ListDocuments(workspaceId: string, scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string, state?: 'enabled' | 'disabled', query?: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+export function KnowledgeAiAxiosParamCreator_PatchDocument(workspaceId: string, documentId: string, aiPatchDocumentRequest: AiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+export function KnowledgeAiAxiosParamCreator_SearchKnowledge(workspaceId: string, query: string, limit?: number, minScore?: number, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+export function KnowledgeAiAxiosParamCreator_UpsertDocument(workspaceId: string, file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+interface KnowledgeAiCreateDocumentRequest {
+    readonly file: File;
+    readonly scopes?: Array<string>;
+    readonly title?: string;
     readonly workspaceId: string;
 }
+export { KnowledgeAiCreateDocumentRequest as GenAiApiCreateKnowledgeDocumentRequest }
+export { KnowledgeAiCreateDocumentRequest }
+
+// @public
+interface KnowledgeAiDeleteDocumentRequest {
+    readonly documentId: string;
+    readonly workspaceId: string;
+}
+export { KnowledgeAiDeleteDocumentRequest as GenAiApiDeleteKnowledgeDocumentRequest }
+export { KnowledgeAiDeleteDocumentRequest }
+
+// @public
+export interface KnowledgeAiDownloadDocumentRequest {
+    readonly documentId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+interface KnowledgeAiGetDocumentRequest {
+    readonly documentId: string;
+    readonly workspaceId: string;
+}
+export { KnowledgeAiGetDocumentRequest as GenAiApiGetKnowledgeDocumentRequest }
+export { KnowledgeAiGetDocumentRequest }
 
 // @public
 export interface KnowledgeAiInterface {
-    downloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(requestParameters: KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
-    uploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(requestParameters: KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
-    upsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(requestParameters: KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    createDocument(requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
+    deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
+    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    getDocument(requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
+    listDocuments(requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiListDocumentsResponse>;
+    patchDocument(requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
+    searchKnowledge(requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchDocumentsResponse>;
+    upsertDocument(requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
 }
 
 // @public
-export interface KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest {
-    readonly file: File;
+interface KnowledgeAiListDocumentsRequest {
+    readonly metaInclude?: string;
+    readonly pageToken?: string;
+    readonly query?: string;
+    readonly scopes?: Array<string>;
+    readonly size?: number;
+    readonly state?: 'enabled' | 'disabled';
     readonly workspaceId: string;
 }
+export { KnowledgeAiListDocumentsRequest as GenAiApiListKnowledgeDocumentsRequest }
+export { KnowledgeAiListDocumentsRequest }
 
 // @public
-export interface KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest {
-    readonly file: File;
+interface KnowledgeAiPatchDocumentRequest {
+    readonly aiPatchDocumentRequest: AiPatchDocumentRequest;
+    readonly documentId: string;
     readonly workspaceId: string;
 }
+export { KnowledgeAiPatchDocumentRequest as GenAiApiPatchKnowledgeDocumentRequest }
+export { KnowledgeAiPatchDocumentRequest }
+
+// @public
+interface KnowledgeAiSearchKnowledgeRequest {
+    readonly limit?: number;
+    readonly minScore?: number;
+    readonly query: string;
+    readonly scopes?: Array<string>;
+    readonly workspaceId: string;
+}
+export { KnowledgeAiSearchKnowledgeRequest as GenAiApiSearchKnowledgeRequest }
+export { KnowledgeAiSearchKnowledgeRequest }
+
+// @public
+interface KnowledgeAiUpsertDocumentRequest {
+    readonly file: File;
+    readonly scopes?: Array<string>;
+    readonly title?: string;
+    readonly workspaceId: string;
+}
+export { KnowledgeAiUpsertDocumentRequest as GenAiApiUpsertKnowledgeDocumentRequest }
+export { KnowledgeAiUpsertDocumentRequest }
 
 // @public
 export class KnowledgeRecommendationControllerApi extends MetadataBaseApi implements KnowledgeRecommendationControllerApiInterface {
@@ -28238,12 +28405,12 @@ export interface ResolveSettingsRequest {
 
 // @public
 export class ResponsesAi extends BaseAPI implements ResponsesAiInterface {
-    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseListDto>;
+    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
     patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
-function ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponseListDto>;
+function ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponseList>;
 export { ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet as GenAiApi_GetConversationResponses }
 export { ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet }
 
@@ -28268,7 +28435,7 @@ export { ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConv
 
 // @public
 export interface ResponsesAiInterface {
-    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseListDto>;
+    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
     patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 

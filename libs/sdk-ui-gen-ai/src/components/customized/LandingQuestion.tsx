@@ -6,7 +6,13 @@ import { connect } from "react-redux";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../../model.js";
+import {
+    makeAssistantItem,
+    makeAssistantMessage,
+    makeTextContents,
+    makeUserItem,
+    makeUserMessage,
+} from "../../model.js";
 import { setMessagesAction } from "../../store/messages/messagesSlice.js";
 import { escapeMarkdown } from "../utils/markdownUtils.js";
 
@@ -41,6 +47,10 @@ function LandingQuestionComponent({
                     messages: [
                         makeUserMessage([makeTextContents(escapeMarkdown(question), [])]),
                         makeAssistantMessage([makeTextContents(escapeMarkdown(answer), [])], true),
+                    ],
+                    items: [
+                        makeUserItem({ type: "text", text: escapeMarkdown(question) }),
+                        makeAssistantItem({ type: "text", text: escapeMarkdown(answer) }, "", true),
                     ],
                 })
             }

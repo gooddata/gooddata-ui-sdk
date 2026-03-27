@@ -17,7 +17,7 @@ import {
     type IAttributeFilterElementsSelectItemProps,
     type IAttributeFilterElementsSelectProps,
 } from "../Components/ElementsSelect/types.js";
-import { type IFilterModeMenuProps } from "../Components/FilterModeMenu/FilterModeMenu.js";
+import { type IFilterModeMenuProps } from "../Components/FilterModeMenu/types.js";
 import { type ITextFilterBodyProps } from "../Components/TextFilterBody/types.js";
 import { type IAttributeFilterCustomComponentProps } from "../types.js";
 import { ThrowMissingComponentError } from "../utils.js";

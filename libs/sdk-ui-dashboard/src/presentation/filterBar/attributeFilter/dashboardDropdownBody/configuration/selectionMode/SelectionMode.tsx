@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, type IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -7,7 +7,7 @@ import { SelectionModeButton } from "./SelectionModeButton.js";
 import { SelectionModeItem } from "./SelectionModeItem.js";
 import { ConfigurationCategory } from "../ConfigurationCategory.js";
 
-const ITEM_HEIGHT = 23;
+const ITEM_HEIGHT = 28;
 const DROPDOWN_WIDTH = 225;
 const ALIGN_POINTS: IAlignPoint[] = [
     {
@@ -23,6 +23,7 @@ const ALIGN_POINTS: IAlignPoint[] = [
 interface ISelectionModeProps {
     selectionTitleText: string;
     multiSelectionOptionText: string;
+    multiSelectionOptionTooltip: string;
     singleSelectionOptionText: string;
     singleSelectionDisabledTooltip: string;
     selectionMode: DashboardAttributeFilterSelectionMode;
@@ -33,6 +34,7 @@ interface ISelectionModeProps {
 export function SelectionMode({
     selectionTitleText,
     multiSelectionOptionText,
+    multiSelectionOptionTooltip,
     singleSelectionOptionText,
     singleSelectionDisabledTooltip,
     selectionMode,
@@ -68,6 +70,7 @@ export function SelectionMode({
                                 <SelectionModeItem
                                     item={item}
                                     itemTitle={selectionOptionTitleMap[item]}
+                                    tooltip={item === "multi" ? multiSelectionOptionTooltip : undefined}
                                     selected={item === selectionMode}
                                     disabled={item === "single" && disabled}
                                     disabledTooltip={singleSelectionDisabledTooltip}

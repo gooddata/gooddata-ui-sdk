@@ -6,6 +6,8 @@ import { invariant } from "ts-invariant";
 
 import {
     DashboardAttributeFilterConfigModeValues,
+    type DashboardAttributeFilterItem,
+    DashboardAttributeFilterSelectionTypeValues,
     type IAttributeElement,
     type IAttributeMetadataObject,
     type IAttributeOrMeasure,
@@ -15,7 +17,10 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemTitle,
     filterObjRef,
+    isDashboardArbitraryAttributeFilter,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 
 import { useDependentDateFiltersConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDependentDateFiltersConfiguration.js";
@@ -24,10 +29,14 @@ import { useLimitingItemsConfiguration } from "./dashboardDropdownBody/configura
 import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useModeConfiguration.js";
 import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration.js";
 import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
+import { useSelectionTypeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionTypeConfiguration.js";
 import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
+import { mergeDashboardAttributeFilterMetadata } from "./mergeDashboardAttributeFilterMetadata.js";
 import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
+import { replaceAttributeFilterItemSelection } from "../../../model/commands/filters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../model/store/catalog/catalogSelectors.js";
 import {
     selectFilterContextDateFilter,
@@ -42,7 +51,8 @@ export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfig
     ReturnType<typeof useDisplayFormConfiguration> &
     ReturnType<typeof useTitleConfiguration> &
     ReturnType<typeof useSelectionModeConfiguration> &
-    ReturnType<typeof useModeConfiguration> & {
+    ReturnType<typeof useModeConfiguration> &
+    ReturnType<typeof useSelectionTypeConfiguration> & {
         onConfigurationSave: (
             currentDisplayFormRef: ObjRef,
             committedSelectionElements: IAttributeElement[],
@@ -69,7 +79,7 @@ export const useAttributeFilterParentFiltering = (): IAttributeFilterParentFilte
  * @internal
  */
 export type IAttributeFilterParentFilteringProviderProps = {
-    filter: IDashboardAttributeFilter;
+    filterItem: DashboardAttributeFilterItem;
     displayAsLabel?: ObjRef;
     attributes?: IAttributeMetadataObject[];
     children?: ReactNode;
@@ -80,10 +90,15 @@ export type IAttributeFilterParentFilteringProviderProps = {
  */
 export function AttributeFilterParentFilteringProvider({
     children,
-    filter: currentFilter,
+    filterItem,
     attributes,
     displayAsLabel,
 }: IAttributeFilterParentFilteringProviderProps) {
+    const currentFilter: IDashboardAttributeFilter = useMemo(
+        () => (isDashboardAttributeFilter(filterItem) ? filterItem : toSyntheticAttributeFilter(filterItem)),
+        [filterItem],
+    );
+
     const availableDatasetsForFilter: IAttributeOrMeasure[] = useMemo(
         () => [
             {
@@ -191,6 +206,20 @@ export function AttributeFilterParentFilteringProvider({
     } = useModeConfiguration(currentFilter, DashboardAttributeFilterConfigModeValues.ACTIVE);
 
     const {
+        selectionType,
+        selectionTypeChanged,
+        onSelectionTypeUpdate,
+        onSelectionTypeChange,
+        onConfigurationClose: onSelectionTypeClose,
+    } = useSelectionTypeConfiguration(filterItem);
+
+    const { run: replaceFilterItem } = useDashboardCommandProcessing({
+        commandCreator: replaceAttributeFilterItemSelection,
+        successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+    });
+
+    const {
         limitingItems,
         limitingItemsChanged,
         onLimitingItemsUpdate,
@@ -199,6 +228,43 @@ export function AttributeFilterParentFilteringProvider({
     } = useLimitingItemsConfiguration(currentFilter);
 
     const onConfigurationSave = useCallback(() => {
+        // When selection type changed to an exclusive mode, reset filter to All of the target type
+        if (
+            selectionTypeChanged &&
+            selectionType !== DashboardAttributeFilterSelectionTypeValues.LIST_OR_TEXT
+        ) {
+            const filterLocalId = dashboardAttributeFilterItemLocalIdentifier(filterItem);
+            const displayForm = dashboardAttributeFilterItemDisplayForm(filterItem);
+
+            if (selectionType === DashboardAttributeFilterSelectionTypeValues.LIST && filterLocalId) {
+                replaceFilterItem(
+                    filterLocalId,
+                    mergeDashboardAttributeFilterMetadata(filterItem, {
+                        attributeFilter: {
+                            displayForm,
+                            negativeSelection: true,
+                            attributeElements: { uris: [] },
+                            localIdentifier: filterLocalId,
+                            title: title ?? defaultAttributeFilterTitle,
+                        },
+                    }),
+                );
+            } else if (selectionType === DashboardAttributeFilterSelectionTypeValues.TEXT && filterLocalId) {
+                replaceFilterItem(
+                    filterLocalId,
+                    mergeDashboardAttributeFilterMetadata(filterItem, {
+                        arbitraryAttributeFilter: {
+                            displayForm,
+                            values: [],
+                            negativeSelection: true,
+                            localIdentifier: filterLocalId,
+                            title: title ?? defaultAttributeFilterTitle,
+                        },
+                    }),
+                );
+            }
+        }
+
         // the order is important to keep the app in valid state
         if (selectionMode === "single") {
             onParentFiltersChange();
@@ -212,14 +278,22 @@ export function AttributeFilterParentFilteringProvider({
         onDisplayFormChange();
         onTitleChange();
         onModeChange();
+        onSelectionTypeChange();
         onLimitingItemsChange();
     }, [
         selectionMode,
+        selectionType,
+        selectionTypeChanged,
+        filterItem,
+        title,
+        defaultAttributeFilterTitle,
+        replaceFilterItem,
         onParentFiltersChange,
         onDisplayFormChange,
         onTitleChange,
         onSelectionModeChange,
         onModeChange,
+        onSelectionTypeChange,
         onLimitingItemsChange,
         onDependentDateFiltersChange,
     ]);
@@ -230,6 +304,7 @@ export function AttributeFilterParentFilteringProvider({
         onTitleClose();
         onSelectionModeClose();
         onModeClose();
+        onSelectionTypeClose();
         onLimitingItemsClose();
         onDependentDateFiltersClose();
     }, [
@@ -238,6 +313,7 @@ export function AttributeFilterParentFilteringProvider({
         onTitleClose,
         onSelectionModeClose,
         onModeClose,
+        onSelectionTypeClose,
         onLimitingItemsClose,
         onDependentDateFiltersClose,
     ]);
@@ -278,6 +354,10 @@ export function AttributeFilterParentFilteringProvider({
                 modeChanged,
                 onModeChange,
                 onModeUpdate,
+                selectionType,
+                selectionTypeChanged,
+                onSelectionTypeUpdate,
+                onSelectionTypeChange,
                 limitingItems,
                 limitingItemsChanged,
                 onLimitingItemsUpdate,
@@ -293,6 +373,49 @@ export function AttributeFilterParentFilteringProvider({
             {children}
         </AttributeFilterParentFiltering.Provider>
     );
+}
+
+/**
+ * Converts a text filter (arbitrary or match) to a synthetic IDashboardAttributeFilter
+ * so it can be consumed by the provider hooks that expect IDashboardAttributeFilter.
+ */
+function toSyntheticAttributeFilter(filter: DashboardAttributeFilterItem): IDashboardAttributeFilter {
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        const {
+            displayForm,
+            localIdentifier,
+            title,
+            filterElementsBy,
+            filterElementsByDate,
+            validateElementsBy,
+        } = filter.arbitraryAttributeFilter;
+        return {
+            attributeFilter: {
+                displayForm,
+                localIdentifier,
+                title,
+                filterElementsBy,
+                filterElementsByDate,
+                validateElementsBy,
+                negativeSelection: false,
+                attributeElements: { uris: [] },
+            },
+        };
+    }
+
+    // Match filter
+    const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
+    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+    const title = dashboardAttributeFilterItemTitle(filter);
+    return {
+        attributeFilter: {
+            displayForm,
+            localIdentifier,
+            title,
+            negativeSelection: false,
+            attributeElements: { uris: [] },
+        },
+    };
 }
 
 const noop = () => {};
@@ -347,6 +470,10 @@ export function AttributeFilterNoopParentFilteringProvider({
             modeChanged: false,
             onModeChange: noop,
             onModeUpdate: noop,
+            selectionType: DashboardAttributeFilterSelectionTypeValues.TEXT,
+            selectionTypeChanged: false,
+            onSelectionTypeUpdate: noop,
+            onSelectionTypeChange: noop,
             limitingItems: [],
             limitingItemsChanged: false,
             onLimitingItemsUpdate: noop,

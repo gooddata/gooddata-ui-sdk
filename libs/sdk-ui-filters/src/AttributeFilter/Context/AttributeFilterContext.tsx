@@ -24,6 +24,8 @@ export type IAttributeFilterContext = AttributeFilterController &
         | "overlayPositionType"
         | "alignPoints"
         | "menuConfig"
+        | "hideTooltips"
+        | "showHeader"
     >;
 
 export const AttributeFilterContext = createContext<IAttributeFilterContext | null>(null);
@@ -59,6 +61,8 @@ export function AttributeFilterContextProvider(props: IAttributeFilterCoreProps 
         overlayPositionType,
         alignPoints,
         menuConfig,
+        hideTooltips,
+        showHeader,
     } = props;
 
     const controller = useAttributeFilterController(props);
@@ -79,6 +83,8 @@ export function AttributeFilterContextProvider(props: IAttributeFilterCoreProps 
                 overlayPositionType,
                 alignPoints,
                 menuConfig,
+                hideTooltips,
+                showHeader,
             }}
         >
             {children}

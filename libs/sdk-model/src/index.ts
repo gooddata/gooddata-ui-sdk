@@ -922,6 +922,8 @@ export {
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfigItem,
     type DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterSelectionType,
+    DashboardAttributeFilterSelectionTypeValues,
     type IDashboardDateFilterAddedPresets,
     type IDashboardPluginBase,
     type IDashboardPlugin,

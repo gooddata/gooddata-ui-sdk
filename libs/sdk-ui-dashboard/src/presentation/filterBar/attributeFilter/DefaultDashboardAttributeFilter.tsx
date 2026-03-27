@@ -6,16 +6,11 @@ import { useIntl } from "react-intl";
 
 import {
     DashboardAttributeFilterConfigModeValues,
-    type DashboardAttributeFilterItem,
-    type IDashboardAttributeFilter,
     dashboardAttributeFilterItemDisplayForm,
-    dashboardAttributeFilterItemFilterElementsBy,
-    dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     dashboardAttributeFilterItemValidateElementsBy,
     filterObjRef,
-    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
@@ -49,7 +44,9 @@ import {
 } from "./CustomDropdownActions.js";
 import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
 import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
+import { mergeDashboardAttributeFilterMetadata } from "./mergeDashboardAttributeFilterMetadata.js";
 import { type IDashboardAttributeFilterProps } from "./types.js";
+import { useAttributeFilterConfigTexts } from "./useAttributeFilterConfigTexts.js";
 import { useDependentDateFilters } from "./useDependentDateFilters.js";
 import { useParentFilters } from "./useParentFilters.js";
 import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
@@ -69,6 +66,8 @@ import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSe
 import {
     selectAttributeFilterConfigsModeMap,
     selectAttributeFilterConfigsModeMapByTab,
+    selectAttributeFilterConfigsSelectionTypeMap,
+    selectAttributeFilterConfigsSelectionTypeMapByTab,
 } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectIsAttributeFilterDependentByLocalIdentifier,
@@ -176,15 +175,37 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     );
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const allAvailableFilterModes = useDashboardSelector(selectAvailableAttributeFilterModes);
+    const attributeFilterConfigsSelectionTypeMapByTab = useDashboardSelector(
+        selectAttributeFilterConfigsSelectionTypeMapByTab,
+    );
+    const attributeFilterConfigsSelectionTypeMapActive = useDashboardSelector(
+        selectAttributeFilterConfigsSelectionTypeMap,
+    );
+    const selectionTypeMap = useMemo(
+        () =>
+            tabId
+                ? (attributeFilterConfigsSelectionTypeMapByTab[tabId] ?? new Map())
+                : attributeFilterConfigsSelectionTypeMapActive,
+        [tabId, attributeFilterConfigsSelectionTypeMapByTab, attributeFilterConfigsSelectionTypeMapActive],
+    );
+    const filterSelectionType = selectionTypeMap.get(filterLocalId!);
     const availableFilterModes = useMemo(() => {
-        if (isEditMode) {
+        // Respect the per-filter selectionType config in both edit and view mode
+        if (filterSelectionType === "list") {
+            return allAvailableFilterModes.filter((mode) => mode === "elements");
+        }
+        if (filterSelectionType === "text") {
+            return allAvailableFilterModes.filter((mode) => mode !== "elements");
+        }
+        if (filterSelectionType === "listOrText") {
             return allAvailableFilterModes;
         }
+        // Fallback for existing filters without config: derive from current filter type
         if (standardFilter) {
             return allAvailableFilterModes.filter((mode) => mode === "elements");
         }
         return allAvailableFilterModes.filter((mode) => mode !== "elements");
-    }, [isEditMode, allAvailableFilterModes, standardFilter]);
+    }, [allAvailableFilterModes, standardFilter, filterSelectionType]);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -192,38 +213,35 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
 
     const intl = useIntl();
 
-    const cancelText = intl.formatMessage({ id: "gs.list.cancel" });
-    const closeText = intl.formatMessage({ id: "close" });
-    const saveText = intl.formatMessage({ id: "attributesDropdown.save" });
-    const applyText = intl.formatMessage({ id: "gs.list.apply" });
-    const displayValuesAsText = intl.formatMessage({
-        id: "attributesDropdown.displayValuesAs",
-    });
-    const filterByText = intl.formatMessage({
-        id: "attributesDropdown.filterBy",
-    });
-    const titleText = intl.formatMessage({ id: "attributesDropdown.title" });
-    const resetTitleText = intl.formatMessage({
-        id: "attributesDropdown.title.reset",
-    });
-    const selectionTitleText = intl.formatMessage({
-        id: "attributesDropdown.selectionMode",
-    });
-    const multiSelectionOptionText = intl.formatMessage({
-        id: "attributesDropdown.selectionMode.multi",
-    });
-    const singleSelectionOptionText = intl.formatMessage({
-        id: "attributesDropdown.selectionMode.single",
-    });
-    const singleSelectionDisabledTooltip = intl.formatMessage({
-        id: "attributesDropdown.selectionMode.disabled.tooltip",
-    });
-    const parentFiltersDisabledTooltip = intl.formatMessage({
-        id: "attributesDropdown.parentFilter.disabled.tooltip",
-    });
-    const modeCategoryTitleText = intl.formatMessage({
-        id: "filter.configuration.mode.title",
-    });
+    const {
+        cancelText,
+        closeText,
+        saveText,
+        applyText,
+        displayValuesAsText,
+        filterByText,
+        titleText,
+        resetTitleText,
+        selectionTitleText,
+        multiSelectionOptionText,
+        multiSelectionOptionTooltip,
+        singleSelectionOptionText,
+        singleSelectionDisabledTooltip,
+        parentFiltersDisabledTooltip,
+        modeCategoryTitleText,
+        selectionTypeAsText,
+        selectionTypeListAndTextText,
+        selectionTypeListText,
+        selectionTypeTextText,
+        selectionTypeListAndTextTooltip,
+        selectionTypeListTooltip,
+        selectionTypeTextTooltip,
+        selectionTypeSingleDisabledTooltip,
+    } = useAttributeFilterConfigTexts();
+    // Show available mode dropdown only when at least one text mode FF is enabled
+    const showSelectionTypeSection = allAvailableFilterModes.some(
+        (mode) => mode === "arbitrary" || mode === "match",
+    );
 
     const onCloseFilter = useCallback(() => {
         if (onClose) {
@@ -274,6 +292,12 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
             );
 
             const CustomTooltipComponent = useMemo(() => {
+                // When text filter FFs are enabled, the attribute filter dropdown header
+                // has its own help icon (AttributeFilterDetailsBubble), so hide this one.
+                if (showSelectionTypeSection) {
+                    return undefined;
+                }
+
                 function TooltipComponent() {
                     return (
                         <AttributeDatasetInfo
@@ -320,6 +344,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         isAttributeFilterDependent,
         isDraggable,
         isVirtualAttributeFilter,
+        showSelectionTypeSection,
     ]);
 
     const CustomDropdownActions = useMemo(() => {
@@ -335,6 +360,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 onConfigurationSave,
                 onConfigurationClose,
                 selectionModeChanged,
+                selectionTypeChanged,
                 modeChanged,
                 limitingItemsChanged,
                 onDependentDateFiltersConfigurationChanged,
@@ -347,6 +373,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                       displayFormChanged ||
                       titleChanged ||
                       selectionModeChanged ||
+                      selectionTypeChanged ||
                       modeChanged ||
                       limitingItemsChanged ||
                       onDependentDateFiltersConfigurationChanged
@@ -426,11 +453,21 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                             resetTitleText={resetTitleText}
                             selectionTitleText={selectionTitleText}
                             multiSelectionOptionText={multiSelectionOptionText}
+                            multiSelectionOptionTooltip={multiSelectionOptionTooltip}
                             singleSelectionOptionText={singleSelectionOptionText}
                             modeCategoryTitleText={modeCategoryTitleText}
                             singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                             parentFiltersDisabledTooltip={parentFiltersDisabledTooltip}
                             showConfigModeSection={!!capabilities.supportsHiddenAndLockedFiltersOnUI}
+                            showSelectionTypeSection={showSelectionTypeSection}
+                            selectionTypeAsText={selectionTypeAsText}
+                            selectionTypeListAndTextText={selectionTypeListAndTextText}
+                            selectionTypeListAndTextTooltip={selectionTypeListAndTextTooltip}
+                            selectionTypeListText={selectionTypeListText}
+                            selectionTypeListTooltip={selectionTypeListTooltip}
+                            selectionTypeTextText={selectionTypeTextText}
+                            selectionTypeTextTooltip={selectionTypeTextTooltip}
+                            selectionTypeSingleDisabledTooltip={selectionTypeSingleDisabledTooltip}
                         />
                     ) : (
                         <AttributeFilterElementsSelect {...props} />
@@ -449,12 +486,22 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         resetTitleText,
         selectionTitleText,
         multiSelectionOptionText,
+        multiSelectionOptionTooltip,
         singleSelectionOptionText,
         singleSelectionDisabledTooltip,
         parentFiltersDisabledTooltip,
         modeCategoryTitleText,
         intl,
         capabilities,
+        showSelectionTypeSection,
+        selectionTypeAsText,
+        selectionTypeListAndTextText,
+        selectionTypeListText,
+        selectionTypeListTooltip,
+        selectionTypeTextText,
+        selectionTypeTextTooltip,
+        selectionTypeListAndTextTooltip,
+        selectionTypeSingleDisabledTooltip,
     ]);
 
     const CustomTextFilterBody = useMemo(() => {
@@ -476,11 +523,21 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                             resetTitleText={resetTitleText}
                             selectionTitleText={selectionTitleText}
                             multiSelectionOptionText={multiSelectionOptionText}
+                            multiSelectionOptionTooltip={multiSelectionOptionTooltip}
                             singleSelectionOptionText={singleSelectionOptionText}
                             modeCategoryTitleText={modeCategoryTitleText}
                             singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                             parentFiltersDisabledTooltip={parentFiltersDisabledTooltip}
                             showConfigModeSection={!!capabilities.supportsHiddenAndLockedFiltersOnUI}
+                            showSelectionTypeSection={showSelectionTypeSection}
+                            selectionTypeAsText={selectionTypeAsText}
+                            selectionTypeListAndTextText={selectionTypeListAndTextText}
+                            selectionTypeListAndTextTooltip={selectionTypeListAndTextTooltip}
+                            selectionTypeListText={selectionTypeListText}
+                            selectionTypeListTooltip={selectionTypeListTooltip}
+                            selectionTypeTextText={selectionTypeTextText}
+                            selectionTypeTextTooltip={selectionTypeTextTooltip}
+                            selectionTypeSingleDisabledTooltip={selectionTypeSingleDisabledTooltip}
                         />
                     ) : (
                         <TextFilterBody {...props} />
@@ -499,12 +556,22 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         resetTitleText,
         selectionTitleText,
         multiSelectionOptionText,
+        multiSelectionOptionTooltip,
         singleSelectionOptionText,
         singleSelectionDisabledTooltip,
         parentFiltersDisabledTooltip,
         modeCategoryTitleText,
         intl,
         capabilities,
+        showSelectionTypeSection,
+        selectionTypeAsText,
+        selectionTypeListAndTextText,
+        selectionTypeListText,
+        selectionTypeListTooltip,
+        selectionTypeTextText,
+        selectionTypeTextTooltip,
+        selectionTypeListAndTextTooltip,
+        selectionTypeSingleDisabledTooltip,
     ]);
 
     const createStatusBarComponent = (params: {
@@ -685,96 +752,18 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
             }
             withoutApply={isApplyAllAtOnceEnabledAndSet}
             menuConfig={{ availableFilterModes, showLabelsSwitch: false }}
+            hideTooltips={!isEditMode}
+            showHeader={showSelectionTypeSection}
         />
     );
 
-    const providerFilter = standardFilter ?? toSyntheticAttributeFilter(filter);
-
     return (
         <AttributeFilterParentFilteringProvider
-            filter={providerFilter}
+            filterItem={filter}
             attributes={attributes}
             displayAsLabel={displayAsLabel}
         >
             {filterContent}
         </AttributeFilterParentFilteringProvider>
     );
-}
-
-/**
- * Converts a text filter (arbitrary or match) to a synthetic IDashboardAttributeFilter
- * so it can be consumed by the AttributeFilterParentFilteringProvider.
- * The provider hooks only need displayForm, localIdentifier, title, filterElementsBy,
- * filterElementsByDate, and validateElementsBy - the rest is stubbed.
- */
-function toSyntheticAttributeFilter(filter: DashboardAttributeFilterItem): IDashboardAttributeFilter {
-    if (isDashboardArbitraryAttributeFilter(filter)) {
-        const {
-            displayForm,
-            localIdentifier,
-            title,
-            filterElementsBy,
-            filterElementsByDate,
-            validateElementsBy,
-        } = filter.arbitraryAttributeFilter;
-        return {
-            attributeFilter: {
-                displayForm,
-                localIdentifier,
-                title,
-                filterElementsBy,
-                filterElementsByDate,
-                validateElementsBy,
-                negativeSelection: false,
-                attributeElements: { uris: [] },
-            },
-        };
-    }
-
-    // Match filter
-    const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
-    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
-    const title = dashboardAttributeFilterItemTitle(filter);
-    return {
-        attributeFilter: {
-            displayForm,
-            localIdentifier,
-            title,
-            negativeSelection: false,
-            attributeElements: { uris: [] },
-        },
-    };
-}
-
-/**
- * Merges dashboard-only metadata into the converted filter.
- *
- * `attributeFilterToDashboardAttributeFilter` builds selection from `IAttributeFilter` only.
- * `filterElementsBy`, `filterElementsByDate`, and `validateElementsBy` are not on that type, so they are
- * copied from `originalFilter`. Without this, replacing the whole filter item drops parent filtering and
- * validation config.
- */
-function mergeDashboardAttributeFilterMetadata(
-    originalFilter: DashboardAttributeFilterItem,
-    convertedFilter: DashboardAttributeFilterItem,
-): DashboardAttributeFilterItem {
-    const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(originalFilter);
-    const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(originalFilter);
-    const validateElementsBy = dashboardAttributeFilterItemValidateElementsBy(originalFilter);
-    const metadata = {
-        ...(filterElementsBy === undefined ? {} : { filterElementsBy }),
-        ...(filterElementsByDate === undefined ? {} : { filterElementsByDate }),
-        ...(validateElementsBy === undefined ? {} : { validateElementsBy }),
-    };
-    if (isDashboardAttributeFilter(convertedFilter)) {
-        return {
-            attributeFilter: { ...convertedFilter.attributeFilter, ...metadata },
-        };
-    }
-    if (isDashboardArbitraryAttributeFilter(convertedFilter)) {
-        return {
-            arbitraryAttributeFilter: { ...convertedFilter.arbitraryAttributeFilter, ...metadata },
-        };
-    }
-    return convertedFilter;
 }

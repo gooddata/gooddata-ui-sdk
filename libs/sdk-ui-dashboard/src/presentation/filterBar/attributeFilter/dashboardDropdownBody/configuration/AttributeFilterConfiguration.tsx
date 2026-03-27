@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -8,6 +8,8 @@ import { invariant } from "ts-invariant";
 import {
     type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
+    type DashboardAttributeFilterSelectionMode,
+    type DashboardAttributeFilterSelectionType,
     type ObjRef,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
@@ -25,6 +27,7 @@ import { useValidNeighbourAttributes } from "./hooks/useValidNeighbourAttributes
 import { LocalizedLimitValuesConfiguration } from "./limitValues/LimitValuesConfiguration.js";
 import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
 import { SelectionMode } from "./selectionMode/SelectionMode.js";
+import { SelectionType } from "./selectionType/SelectionType.js";
 import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes.js";
 import { useMetricsAndFacts } from "../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -49,12 +52,22 @@ interface IAttributeFilterConfigurationProps {
     resetTitleText: string;
     selectionTitleText: string;
     multiSelectionOptionText: string;
+    multiSelectionOptionTooltip: string;
     singleSelectionOptionText: string;
     singleSelectionDisabledTooltip: string;
     parentFiltersDisabledTooltip: string;
     intl: IntlShape;
     modeCategoryTitleText: string;
     showConfigModeSection: boolean;
+    showSelectionTypeSection: boolean;
+    selectionTypeAsText: string;
+    selectionTypeListAndTextText: string;
+    selectionTypeListAndTextTooltip: string;
+    selectionTypeListText: string;
+    selectionTypeListTooltip: string;
+    selectionTypeTextText: string;
+    selectionTypeTextTooltip: string;
+    selectionTypeSingleDisabledTooltip: string;
 }
 
 export function AttributeFilterConfiguration({
@@ -65,6 +78,7 @@ export function AttributeFilterConfiguration({
     resetTitleText,
     selectionTitleText,
     multiSelectionOptionText,
+    multiSelectionOptionTooltip,
     singleSelectionOptionText,
     singleSelectionDisabledTooltip,
     parentFiltersDisabledTooltip,
@@ -72,6 +86,15 @@ export function AttributeFilterConfiguration({
     intl,
     modeCategoryTitleText,
     showConfigModeSection,
+    showSelectionTypeSection,
+    selectionTypeAsText,
+    selectionTypeListAndTextText,
+    selectionTypeListAndTextTooltip,
+    selectionTypeListText,
+    selectionTypeListTooltip,
+    selectionTypeTextText,
+    selectionTypeTextTooltip,
+    selectionTypeSingleDisabledTooltip,
 }: IAttributeFilterConfigurationProps) {
     const theme = useTheme();
 
@@ -120,6 +143,8 @@ export function AttributeFilterConfiguration({
         onSelectionModeUpdate,
         mode,
         onModeUpdate,
+        selectionType,
+        onSelectionTypeUpdate,
         limitingItems,
         onLimitingItemsUpdate,
         availableDatasetsForFilter,
@@ -153,6 +178,26 @@ export function AttributeFilterConfiguration({
 
         return parents.filter((parent) => parent.isSelected).length > 0;
     }, [parents, supportsSingleSelectDependentFilters]);
+
+    /** Preserves selection type across a temporary switch to single mode (single mode forces "list"). */
+    const selectionTypeBeforeSingleModeRef = useRef<DashboardAttributeFilterSelectionType | null>(null);
+
+    const handleSelectionModeChange = useCallback(
+        (value: DashboardAttributeFilterSelectionMode) => {
+            onSelectionModeUpdate(value);
+            if (value === "single") {
+                selectionTypeBeforeSingleModeRef.current = selectionType;
+                onSelectionTypeUpdate("list");
+            } else if (value === "multi") {
+                const previousSelectionType = selectionTypeBeforeSingleModeRef.current;
+                selectionTypeBeforeSingleModeRef.current = null;
+                if (previousSelectionType !== null) {
+                    onSelectionTypeUpdate(previousSelectionType);
+                }
+            }
+        },
+        [onSelectionModeUpdate, onSelectionTypeUpdate, selectionType],
+    );
 
     if (
         connectingAttributesLoading ||
@@ -199,12 +244,28 @@ export function AttributeFilterConfiguration({
             <SelectionMode
                 selectionTitleText={selectionTitleText}
                 multiSelectionOptionText={multiSelectionOptionText}
+                multiSelectionOptionTooltip={multiSelectionOptionTooltip}
                 singleSelectionOptionText={singleSelectionOptionText}
                 singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
                 selectionMode={selectionMode}
-                onSelectionModeChange={onSelectionModeUpdate}
+                onSelectionModeChange={handleSelectionModeChange}
                 disabled={getIsSelectionDisabled()}
             />
+            {showSelectionTypeSection ? (
+                <SelectionType
+                    asLabelText={selectionTypeAsText}
+                    listOrTextOptionText={selectionTypeListAndTextText}
+                    listOrTextTooltip={selectionTypeListAndTextTooltip}
+                    listOptionText={selectionTypeListText}
+                    listTooltip={selectionTypeListTooltip}
+                    textOptionText={selectionTypeTextText}
+                    textTooltip={selectionTypeTextTooltip}
+                    selectionType={selectionType}
+                    onSelectionTypeChange={onSelectionTypeUpdate}
+                    isSingleSelectionMode={selectionMode === "single"}
+                    singleSelectionDisabledTooltip={selectionTypeSingleDisabledTooltip}
+                />
+            ) : null}
             <LocalizedLimitValuesConfiguration
                 attributeTitle={title ?? defaultAttributeFilterTitle}
                 parentFilters={parents}

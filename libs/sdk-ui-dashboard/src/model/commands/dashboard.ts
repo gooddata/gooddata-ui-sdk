@@ -3,6 +3,7 @@
 import { type IDashboardExportPresentationOptions } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterSelectionType,
     type DashboardDateFilterConfigMode,
     type FilterContextItem,
     type IDashboard,
@@ -672,6 +673,56 @@ export function setDashboardAttributeFilterConfigMode(
         payload: {
             localIdentifier,
             mode,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link ISetDashboardAttributeFilterSelectionType} command.
+ * @alpha
+ */
+export interface ISetDashboardAttributeFilterSelectionTypePayload {
+    /**
+     * Local identifier of the filter to change available mode.
+     */
+    localIdentifier: string;
+    /**
+     * Available mode of the attribute filter — controls which presentation modes
+     * (list, text, or both) are available to the user in Dashboard View mode.
+     */
+    selectionType?: DashboardAttributeFilterSelectionType;
+}
+
+/**
+ * Command for changing attribute filter available mode.
+ * @alpha
+ */
+export interface ISetDashboardAttributeFilterSelectionType extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_AVAILABLE_MODE";
+    readonly payload: ISetDashboardAttributeFilterSelectionTypePayload;
+}
+
+/**
+ * Creates the {@link ISetDashboardAttributeFilterSelectionType} command.
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the filter
+ * @param selectionType - available mode to set
+ * @returns change available mode command
+ */
+export function setDashboardAttributeFilterSelectionType(
+    localIdentifier: string,
+    selectionType?: DashboardAttributeFilterSelectionType,
+): ISetDashboardAttributeFilterSelectionType {
+    return {
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_AVAILABLE_MODE",
+        payload: {
+            localIdentifier,
+            selectionType,
         },
     };
 }

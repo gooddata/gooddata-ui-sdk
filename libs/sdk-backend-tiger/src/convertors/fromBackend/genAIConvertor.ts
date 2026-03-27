@@ -2,15 +2,15 @@
 
 import {
     type AiContent,
-    type AiConversationItemResponseDto,
-    type AiConversationResponseDto,
-    type AiConversationResponseListDto,
-    type AiConversationTurnResponseDto,
-    type AiKeyDriverAnalysisDto,
-    type AiSearchObjectDto,
-    type AiSearchRelationshipDto,
+    type AiConversationItemResponse,
+    type AiConversationResponse,
+    type AiConversationResponseList,
+    type AiConversationTurnResponse,
+    type AiKeyDriverAnalysis,
+    type AiSearchObject,
+    type AiSearchRelationship,
     type AiVisualization,
-    type AiWhatIfScenarioDto,
+    type AiWhatIfScenario,
 } from "@gooddata/api-client-tiger";
 import {
     type IChatConversation,
@@ -18,7 +18,6 @@ import {
     type IChatConversationError,
     type IChatConversationFeedback,
     type IChatConversationItem,
-    type IChatConversationTextContent,
     type IChatKdaDefinition,
     type IChatVisualisationDefinition,
     type IChatWhatIfDefinition,
@@ -30,9 +29,7 @@ import {
     assertNever,
 } from "@gooddata/sdk-model";
 
-export function convertChatConversationFromBackend(
-    conversation: AiConversationResponseDto,
-): IChatConversation {
+export function convertChatConversationFromBackend(conversation: AiConversationResponse): IChatConversation {
     return {
         id: conversation.conversationId,
         createdAt: conversation.createdAt,
@@ -41,8 +38,8 @@ export function convertChatConversationFromBackend(
 }
 
 export function convertChatConversationItemFromBackend(
-    item: AiConversationItemResponseDto,
-    responses: AiConversationResponseListDto["responses"] | undefined,
+    item: AiConversationItemResponse,
+    responses: AiConversationResponseList["responses"] | undefined,
 ): IChatConversationItem {
     const response = responses?.find((r) => r.responseId === item.responseId);
 
@@ -59,7 +56,7 @@ export function convertChatConversationItemFromBackend(
 }
 
 function convertChatConversationFeedbackFromBackend(
-    response: AiConversationTurnResponseDto | undefined,
+    response: AiConversationTurnResponse | undefined,
 ): IChatConversationFeedback | undefined {
     if (!response?.feedback) {
         return undefined;
@@ -94,12 +91,11 @@ function convertChatConversationContentFromBackend(content: AiContent): IChatCon
                             return {
                                 type: "text",
                                 text: part.text,
-                            } as IChatConversationTextContent;
+                            };
                         case "visualization":
                             return {
                                 type: "visualization",
                                 visualization: convertVisualisation(part.visualization),
-                                metadata: part.metadata,
                             };
                         case "kda":
                             return {
@@ -164,21 +160,21 @@ function convertVisualisation(vis?: AiVisualization | null): IChatVisualisationD
     };
 }
 
-function convertKda(_kda?: AiKeyDriverAnalysisDto | null): IChatKdaDefinition {
+function convertKda(_kda?: AiKeyDriverAnalysis | null): IChatKdaDefinition {
     //TODO: s.hacker Convert kda to frontend format
     return {
         id: "kda",
     };
 }
 
-function convertWhatIf(_whatIf?: AiWhatIfScenarioDto | null): IChatWhatIfDefinition {
+function convertWhatIf(_whatIf?: AiWhatIfScenario | null): IChatWhatIfDefinition {
     //TODO: s.hacker Convert what if to frontend format
     return {
         id: "whatif",
     };
 }
 
-function convertSearchResults(results: AiSearchObjectDto[]): ISemanticSearchResultItem[] {
+function convertSearchResults(results: AiSearchObject[]): ISemanticSearchResultItem[] {
     return results.map((result) => ({
         id: result.id,
         type: result.type as GenAIObjectType,
@@ -194,7 +190,7 @@ function convertSearchResults(results: AiSearchObjectDto[]): ISemanticSearchResu
 }
 
 function convertSearchRelationships(
-    relationships: AiSearchRelationshipDto[] | null | undefined,
+    relationships: AiSearchRelationship[] | null | undefined,
 ): ISemanticSearchRelationship[] {
     return (
         relationships?.map((result) => ({

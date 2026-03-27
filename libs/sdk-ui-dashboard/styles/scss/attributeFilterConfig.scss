@@ -90,6 +90,50 @@
         }
     }
 
+    .configuration-selection-kind {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin: 0 10px 10px;
+
+        .configuration-selection-kind-label {
+            color: var(--gd-palette-complementary-7, #6d7680);
+            font-size: 12px;
+            line-height: 20px;
+            flex-shrink: 0;
+        }
+
+        .selection-kind-dropdown {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .selection-kind-dropdown-button {
+            width: 100%;
+        }
+    }
+
+    .selection-kind-dropdown-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .selection-kind-dropdown-item-title {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .selection-kind-dropdown-item-help {
+            flex-shrink: 0;
+            cursor: help;
+            color: var(--gd-palette-complementary-6, #94a1ad);
+            font-size: 12px;
+            margin-left: 5px;
+        }
+    }
+
     .configuration-item-mode {
         margin: 0 10px 10px;
 

@@ -6,10 +6,11 @@ import {
     type IAttributeMetadataObject,
     type ObjRef,
 } from "@gooddata/sdk-model";
-import { UiIcon } from "@gooddata/sdk-ui-kit";
+import { ShortenedText, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterDetailsBubble } from "./AttributeFilterDetailsBubble.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
+import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { type AttributeFilterMode } from "../../filterModeTypes.js";
 
 /**
@@ -87,29 +88,38 @@ export function AttributeFilterDropdownHeader({
     onLabelChange,
 }: IAttributeFilterDropdownHeaderProps) {
     const { FilterModeMenuComponent } = useAttributeFilterComponentsContext();
+    const { hideTooltips } = useAttributeFilterContext();
 
     const showDetailsBubble = attribute && label && requestHandler;
 
     return (
         <div className="gd-attribute-filter-dropdown-header s-attribute-filter-dropdown-header">
             <div className="gd-attribute-filter-dropdown-header__title">
-                <span className="gd-attribute-filter-dropdown-header__title-text">{title ?? ""}</span>
-                <span className="gd-attribute-filter-dropdown-header__title-icon">
-                    {showDetailsBubble ? (
-                        <AttributeFilterDetailsBubble
-                            attribute={attribute}
-                            label={label}
-                            requestHandler={requestHandler}
-                        />
-                    ) : (
-                        <UiIcon
-                            type="question"
-                            size={12}
-                            color="complementary-7"
-                            accessibilityConfig={{ ariaHidden: true }}
-                        />
-                    )}
-                </span>
+                <ShortenedText
+                    className="gd-attribute-filter-dropdown-header__title-text"
+                    tooltipAlignPoints={[{ align: "tc bc" }]}
+                    ellipsisPosition="end"
+                >
+                    {title ?? ""}
+                </ShortenedText>
+                {hideTooltips ? null : (
+                    <span className="gd-attribute-filter-dropdown-header__title-icon">
+                        {showDetailsBubble ? (
+                            <AttributeFilterDetailsBubble
+                                attribute={attribute}
+                                label={label}
+                                requestHandler={requestHandler}
+                            />
+                        ) : (
+                            <UiIcon
+                                type="question"
+                                size={12}
+                                color="complementary-7"
+                                accessibilityConfig={{ ariaHidden: true }}
+                            />
+                        )}
+                    </span>
+                )}
             </div>
             <FilterModeMenuComponent
                 currentMode={currentFilterMode ?? "elements"}
@@ -118,6 +128,7 @@ export function AttributeFilterDropdownHeader({
                 labels={labels}
                 selectedLabelRef={selectedLabelRef}
                 onLabelChange={onLabelChange}
+                hideTooltips={hideTooltips}
             />
         </div>
     );

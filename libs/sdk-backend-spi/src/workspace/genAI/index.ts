@@ -523,59 +523,43 @@ export type IMemoryItemsQueryResult = IPagedResource<IMemoryItemMetadataObject>;
  * @internal
  */
 export interface IKnowledgeDocumentMetadata {
+    id: string;
     filename: string;
-    workspaceId?: string;
-    title?: string;
+    workspaceId?: string | null;
+    title?: string | null;
     numChunks?: number;
     createdAt?: string;
     updatedAt?: string;
     createdBy?: string;
     updatedBy?: string;
     scopes: string[];
-    isDisabled?: boolean;
+    isDisabled?: boolean | null;
 }
 
 /**
  * Request payload for creating a knowledge document.
+ *
+ * Note: Uses the browser `File` API. This interface is only intended
+ * for browser-based consumers.
+ *
  * @internal
  */
 export interface ICreateKnowledgeDocumentRequest {
-    filename: string;
-    content: string;
-    pageBoundaries?: number[];
-    title?: string;
-    scopes?: string[];
-}
-
-/**
- * Response returned when a knowledge document is created.
- * @internal
- */
-export interface ICreateKnowledgeDocumentResponse {
-    filename: string;
-    success: boolean;
-    message: string;
-    numChunks: number;
+    file: File;
 }
 
 /**
  * Request payload for upserting a knowledge document.
  * Creates the document if it does not exist, updates it otherwise.
+ *
+ * Note: Uses the browser `File` API. This interface is only intended
+ * for browser-based consumers.
+ *
  * @internal
  */
 export interface IUpsertKnowledgeDocumentRequest {
-    filename: string;
-    content: string;
-    pageBoundaries?: number[];
-    title?: string;
-    scopes?: string[];
+    file: File;
 }
-
-/**
- * Response returned when a knowledge document is upserted.
- * @internal
- */
-export type IUpsertKnowledgeDocumentResponse = ICreateKnowledgeDocumentResponse;
 
 /**
  * Response returned when a knowledge document is deleted.
@@ -602,14 +586,15 @@ export interface IPatchKnowledgeDocumentRequest {
  * @internal
  */
 export interface IKnowledgeSearchResult {
+    id: string;
     filename: string;
     content: string;
     score: number;
     chunkIndex: number;
     totalChunks: number;
     pageNumbers: number[];
-    workspaceId?: string;
-    title?: string;
+    workspaceId?: string | null;
+    title?: string | null;
     scopes: string[];
 }
 
@@ -666,7 +651,7 @@ export interface IListKnowledgeDocumentsOptions {
 export interface IKnowledgeDocumentsPage {
     documents: IKnowledgeDocumentMetadata[];
     nextPageToken?: string | null;
-    totalCount?: number;
+    totalCount?: number | null;
 }
 
 /**
@@ -680,32 +665,32 @@ export interface IKnowledgeDocumentsService {
     list(options?: IListKnowledgeDocumentsOptions): Promise<IKnowledgeDocumentsPage>;
 
     /**
-     * Get metadata for a single knowledge document by filename.
+     * Get metadata for a single knowledge document by its ID.
      */
-    get(filename: string): Promise<IKnowledgeDocumentMetadata>;
+    get(documentId: string): Promise<IKnowledgeDocumentMetadata>;
 
     /**
-     * Create a new knowledge document.
-     * Fails if a document with the same filename already exists.
+     * Upload a new knowledge document via multipart/form-data.
+     * Throws on failure (e.g. HTTP 409 if a document with the same filename already exists).
      */
-    create(request: ICreateKnowledgeDocumentRequest): Promise<ICreateKnowledgeDocumentResponse>;
+    create(request: ICreateKnowledgeDocumentRequest): Promise<void>;
 
     /**
-     * Upsert a knowledge document.
+     * Upload or replace a knowledge document via multipart/form-data.
      * Creates the document if it does not exist, updates it otherwise.
      */
-    upsert(request: IUpsertKnowledgeDocumentRequest): Promise<IUpsertKnowledgeDocumentResponse>;
+    upsert(request: IUpsertKnowledgeDocumentRequest): Promise<void>;
 
     /**
      * Delete a knowledge document and all its chunks.
      */
-    delete(filename: string): Promise<IDeleteKnowledgeDocumentResponse>;
+    delete(documentId: string): Promise<IDeleteKnowledgeDocumentResponse>;
 
     /**
      * Patch metadata of an existing knowledge document.
      * Only provided fields will be updated.
      */
-    patch(filename: string, request: IPatchKnowledgeDocumentRequest): Promise<IKnowledgeDocumentMetadata>;
+    patch(documentId: string, request: IPatchKnowledgeDocumentRequest): Promise<IKnowledgeDocumentMetadata>;
 
     /**
      * Search the knowledge base using semantic similarity.

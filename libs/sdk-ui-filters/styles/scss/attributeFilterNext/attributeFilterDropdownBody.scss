@@ -26,12 +26,23 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    min-width: 0;
+    overflow: hidden;
     color: var(--gd-palette-complementary-7, #6d7680);
     font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
     line-height: 15px;
     font-family: variables.$gd-font-primary;
+    padding-right: 5px;
+}
+
+.gd-attribute-filter-dropdown-header__title-text {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .gd-attribute-filter-dropdown-header__title-icon {

@@ -4,8 +4,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
+import { UiTooltip } from "@gooddata/sdk-ui-kit";
+
 import { type TextFilterOperator } from "../../textFilterOperatorUtils.js";
-import { getTextFilterStateParts } from "../../textFilterStateSummaryUtils.js";
+import { getTextFilterStateParts, getTextFilterStateText } from "../../textFilterStateSummaryUtils.js";
 
 /**
  * Props for TextFilterStateSummary component.
@@ -46,6 +48,7 @@ export function TextFilterStateSummary(props: ITextFilterStateSummaryProps) {
     const { operator, values, literal } = props;
     const intl = useIntl();
     const state = getTextFilterStateParts(operator, values, literal, intl);
+    const tooltipText = getTextFilterStateText(operator, values, literal, intl);
     const contentRef = useRef<HTMLDivElement>(null);
     const [isTruncated, setIsTruncated] = useState(false);
 
@@ -68,7 +71,7 @@ export function TextFilterStateSummary(props: ITextFilterStateSummaryProps) {
 
     const showCount = isTruncated && isArbitraryOperator(operator) && values.length > 0;
 
-    return (
+    const summaryContent = (
         <div className="gd-text-filter-state-summary s-text-filter-state-summary">
             <div className="gd-text-filter-state-summary__divider" />
 
@@ -90,5 +93,18 @@ export function TextFilterStateSummary(props: ITextFilterStateSummaryProps) {
                 ) : null}
             </div>
         </div>
+    );
+
+    if (!isTruncated) {
+        return summaryContent;
+    }
+
+    return (
+        <UiTooltip
+            arrowPlacement="top-start"
+            triggerBy={["hover"]}
+            content={tooltipText}
+            anchor={summaryContent}
+        />
     );
 }

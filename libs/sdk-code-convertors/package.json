@@ -1,0 +1,74 @@
+{
+    "name": "@gooddata/sdk-code-convertors",
+    "version": "11.28.0-alpha.1",
+    "description": "GoodData AAC declarative converters",
+    "license": "MIT",
+    "author": "GoodData",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-code-convertors"
+    },
+    "files": [
+        "esm/**"
+    ],
+    "type": "module",
+    "sideEffects": false,
+    "browser": "./esm/index.js",
+    "types": "./esm/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./esm/index.d.ts",
+            "import": "./esm/index.js",
+            "default": "./esm/index.js"
+        }
+    },
+    "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:test": "npm run test-once",
+        "_phase:validate": "npm run validate",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "build": "npm-run-all -p build-check build-ts && npm run api-extractor",
+        "build-check": "tsgo",
+        "build-ts": "tsgo -p tsconfig.build.json",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf esm coverage *.log tsconfig.tsbuildinfo",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "test": "vitest watch",
+        "test-once": "vitest run",
+        "build-wasm": "bash wasm/build.sh",
+        "test-wasm": "bash wasm/test.sh"
+    },
+    "dependencies": {
+        "@gooddata/api-client-tiger": "workspace:*",
+        "@gooddata/sdk-model": "workspace:*",
+        "yaml": "^2.2.2"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
+        "@microsoft/api-extractor": "^7.55.2",
+        "@typescript-eslint/eslint-plugin": "8.52.0",
+        "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
+        "dependency-cruiser": "^14.1.2",
+        "eslint": "^9.39.2",
+        "eslint-import-resolver-typescript": "4.4.4",
+        "eslint-plugin-headers": "1.3.3",
+        "eslint-plugin-import-esm": "1.2.1",
+        "eslint-plugin-import-x": "4.16.1",
+        "eslint-plugin-jsdoc": "62.1.0",
+        "eslint-plugin-no-barrel-files": "1.2.2",
+        "eslint-plugin-sonarjs": "3.0.6",
+        "npm-run-all": "^4.1.5",
+        "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
+        "oxlint-tsgolint": "0.11.4",
+        "typescript": "5.9.3",
+        "vitest": "4.1.0"
+    }
+}

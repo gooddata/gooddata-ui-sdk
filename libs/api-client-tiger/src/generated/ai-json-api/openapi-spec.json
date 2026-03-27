@@ -30,7 +30,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ConversationResponseDto"
+                                    "$ref": "#/components/schemas/ConversationResponse"
                                 }
                             }
                         }
@@ -72,7 +72,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/ConversationResponseDto"
+                                        "$ref": "#/components/schemas/ConversationResponse"
                                     },
                                     "title": "Response Get Conversations Api V1 Ai Workspaces  Workspace Id  Chat Conversations Get"
                                 }
@@ -125,7 +125,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ConversationResponseDto"
+                                    "$ref": "#/components/schemas/ConversationResponse"
                                 }
                             }
                         }
@@ -218,7 +218,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ConversationItemListResponseDto"
+                                    "$ref": "#/components/schemas/ConversationItemListResponse"
                                 }
                             }
                         }
@@ -269,7 +269,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ConversationResponseListDto"
+                                    "$ref": "#/components/schemas/ConversationResponseList"
                                 }
                             }
                         }
@@ -487,14 +487,14 @@
                 }
             }
         },
-        "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/upload": {
+        "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents": {
             "post": {
                 "tags": [
                     "Knowledge"
                 ],
                 "summary": "Upload Document",
                 "description": "Upload a new knowledge document. Returns 409 if filename already exists.",
-                "operationId": "upload_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_post",
+                "operationId": "createDocument",
                 "parameters": [
                     {
                         "name": "workspace_id",
@@ -511,7 +511,7 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/Body_upload_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_post"
+                                "$ref": "#/components/schemas/Body_createDocument"
                             }
                         }
                     }
@@ -521,7 +521,9 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/UploadDocumentResponse"
+                                }
                             }
                         }
                     },
@@ -543,7 +545,7 @@
                 ],
                 "summary": "Upsert Document",
                 "description": "Upload or replace a knowledge document.",
-                "operationId": "upsert_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_put",
+                "operationId": "upsertDocument",
                 "parameters": [
                     {
                         "name": "workspace_id",
@@ -560,11 +562,203 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/Body_upsert_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_put"
+                                "$ref": "#/components/schemas/Body_upsertDocument"
                             }
                         }
                     }
                 },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UploadDocumentResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Knowledge"
+                ],
+                "summary": "List Documents",
+                "description": "List knowledge documents accessible from the workspace.",
+                "operationId": "listDocuments",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "scopes",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Scopes"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "maximum": 2000,
+                            "minimum": 1,
+                            "default": 50,
+                            "title": "Size"
+                        }
+                    },
+                    {
+                        "name": "pageToken",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Pagetoken"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Metainclude"
+                        }
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "enum": [
+                                        "enabled",
+                                        "disabled"
+                                    ],
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "State"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Query"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListDocumentsResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{document_id}/download": {
+            "get": {
+                "tags": [
+                    "Knowledge"
+                ],
+                "summary": "Download Document",
+                "description": "Download a knowledge document's raw file.",
+                "operationId": "downloadDocument",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Document Id"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful Response",
@@ -587,14 +781,14 @@
                 }
             }
         },
-        "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{filename}/download": {
+        "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{document_id}": {
             "get": {
                 "tags": [
                     "Knowledge"
                 ],
-                "summary": "Download Document",
-                "description": "Download a knowledge document's raw file.",
-                "operationId": "download_document_api_v1_ai_workspaces__workspace_id__knowledge_documents__filename__download_get",
+                "summary": "Get Document",
+                "description": "Get a single knowledge document's metadata.",
+                "operationId": "getDocument",
                 "parameters": [
                     {
                         "name": "workspace_id",
@@ -606,12 +800,12 @@
                         }
                     },
                     {
-                        "name": "filename",
+                        "name": "document_id",
                         "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "title": "Filename"
+                            "title": "Document Id"
                         }
                     }
                 ],
@@ -620,7 +814,213 @@
                         "description": "Successful Response",
                         "content": {
                             "application/json": {
-                                "schema": {}
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentMetadataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Knowledge"
+                ],
+                "summary": "Delete Document",
+                "description": "Delete a knowledge document and all its chunks.",
+                "operationId": "deleteDocument",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Document Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeleteDocumentResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Knowledge"
+                ],
+                "summary": "Patch Document",
+                "description": "Patch a knowledge document's metadata without re-uploading content.",
+                "operationId": "patchDocument",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "document_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Document Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchDocumentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DocumentMetadataResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/knowledge/search": {
+            "get": {
+                "tags": [
+                    "Knowledge"
+                ],
+                "summary": "Search Documents",
+                "description": "Search the knowledge base using semantic similarity.",
+                "operationId": "searchKnowledge",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Query"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "default": 10,
+                            "title": "Limit"
+                        }
+                    },
+                    {
+                        "name": "minScore",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "maximum": 1,
+                            "minimum": 0,
+                            "default": 0,
+                            "title": "Minscore"
+                        }
+                    },
+                    {
+                        "name": "scopes",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "title": "Scopes"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SearchDocumentsResponse"
+                                }
                             }
                         }
                     },
@@ -640,7 +1040,7 @@
     },
     "components": {
         "schemas": {
-            "AllowedRelationshipTypeDto": {
+            "AllowedRelationshipType": {
                 "properties": {
                     "sourceType": {
                         "type": "string",
@@ -661,7 +1061,7 @@
                     "sourceType",
                     "targetType"
                 ],
-                "title": "AllowedRelationshipTypeDto"
+                "title": "AllowedRelationshipType"
             },
             "AttributeFilter": {
                 "properties": {
@@ -708,33 +1108,83 @@
                 "type": "object",
                 "title": "AttributeFilterState"
             },
-            "Body_upload_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_post": {
+            "Body_createDocument": {
                 "properties": {
                     "file": {
                         "type": "string",
                         "format": "binary",
                         "title": "File"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
+                    "scopes": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Scopes"
                     }
                 },
                 "type": "object",
                 "required": [
                     "file"
                 ],
-                "title": "Body_upload_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_post"
+                "title": "Body_createDocument"
             },
-            "Body_upsert_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_put": {
+            "Body_upsertDocument": {
                 "properties": {
                     "file": {
                         "type": "string",
                         "format": "binary",
                         "title": "File"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
+                    "scopes": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Scopes"
                     }
                 },
                 "type": "object",
                 "required": [
                     "file"
                 ],
-                "title": "Body_upsert_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_put"
+                "title": "Body_upsertDocument"
             },
             "BucketRefObject": {
                 "properties": {
@@ -750,11 +1200,11 @@
                 ],
                 "title": "BucketRefObject"
             },
-            "ConversationItemListResponseDto": {
+            "ConversationItemListResponse": {
                 "properties": {
                     "items": {
                         "items": {
-                            "$ref": "#/components/schemas/ConversationItemResponseDto"
+                            "$ref": "#/components/schemas/ConversationItemResponse"
                         },
                         "type": "array",
                         "title": "Items",
@@ -766,10 +1216,10 @@
                 "required": [
                     "items"
                 ],
-                "title": "ConversationItemListResponseDto",
+                "title": "ConversationItemListResponse",
                 "description": "Conversation item list response."
             },
-            "ConversationItemResponseDto": {
+            "ConversationItemResponse": {
                 "properties": {
                     "itemId": {
                         "type": "string",
@@ -804,19 +1254,19 @@
                     "content": {
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/TextMessageContentDto"
+                                "$ref": "#/components/schemas/TextMessageContent"
                             },
                             {
-                                "$ref": "#/components/schemas/ReasoningContentDto"
+                                "$ref": "#/components/schemas/ReasoningContent"
                             },
                             {
-                                "$ref": "#/components/schemas/MultipartContentDto"
+                                "$ref": "#/components/schemas/MultipartContent"
                             },
                             {
-                                "$ref": "#/components/schemas/FunctionCallContentDto"
+                                "$ref": "#/components/schemas/FunctionCallContent"
                             },
                             {
-                                "$ref": "#/components/schemas/FunctionResultContentDto"
+                                "$ref": "#/components/schemas/FunctionResultContent"
                             }
                         ],
                         "title": "Content",
@@ -824,11 +1274,11 @@
                         "discriminator": {
                             "propertyName": "type",
                             "mapping": {
-                                "multipart": "#/components/schemas/MultipartContentDto",
-                                "reasoning": "#/components/schemas/ReasoningContentDto",
-                                "text": "#/components/schemas/TextMessageContentDto",
-                                "toolCall": "#/components/schemas/FunctionCallContentDto",
-                                "toolResult": "#/components/schemas/FunctionResultContentDto"
+                                "multipart": "#/components/schemas/MultipartContent",
+                                "reasoning": "#/components/schemas/ReasoningContent",
+                                "text": "#/components/schemas/TextMessageContent",
+                                "toolCall": "#/components/schemas/FunctionCallContent",
+                                "toolResult": "#/components/schemas/FunctionResultContent"
                             }
                         }
                     },
@@ -879,10 +1329,10 @@
                     "role",
                     "content"
                 ],
-                "title": "ConversationItemResponseDto",
+                "title": "ConversationItemResponse",
                 "description": "Conversation item returned by the agentic HTTP API."
             },
-            "ConversationResponseDto": {
+            "ConversationResponse": {
                 "properties": {
                     "conversationId": {
                         "type": "string",
@@ -925,14 +1375,14 @@
                     "createdAt",
                     "lastActivityAt"
                 ],
-                "title": "ConversationResponseDto",
+                "title": "ConversationResponse",
                 "description": "Conversation returned by the agentic HTTP API."
             },
-            "ConversationResponseListDto": {
+            "ConversationResponseList": {
                 "properties": {
                     "responses": {
                         "items": {
-                            "$ref": "#/components/schemas/ConversationTurnResponseDto"
+                            "$ref": "#/components/schemas/ConversationTurnResponse"
                         },
                         "type": "array",
                         "title": "Responses",
@@ -944,9 +1394,9 @@
                 "required": [
                     "responses"
                 ],
-                "title": "ConversationResponseListDto"
+                "title": "ConversationResponseList"
             },
-            "ConversationTurnResponseDto": {
+            "ConversationTurnResponse": {
                 "properties": {
                     "responseId": {
                         "type": "string",
@@ -956,7 +1406,7 @@
                     "feedback": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/FeedbackDto"
+                                "$ref": "#/components/schemas/Feedback"
                             },
                             {
                                 "type": "null"
@@ -982,7 +1432,7 @@
                     "createdAt",
                     "updatedAt"
                 ],
-                "title": "ConversationTurnResponseDto"
+                "title": "ConversationTurnResponse"
             },
             "DateFilterAbsolute": {
                 "properties": {
@@ -1060,7 +1510,111 @@
                 "title": "DateGranularity",
                 "description": "Date granularity for date filters."
             },
-            "FeedbackDto": {
+            "DeleteDocumentResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "title": "Success"
+                    },
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "success",
+                    "message"
+                ],
+                "title": "DeleteDocumentResponse",
+                "description": "Response for DELETE /documents/{documentId}."
+            },
+            "DocumentMetadataResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
+                    },
+                    "numChunks": {
+                        "type": "integer",
+                        "title": "Numchunks"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "title": "Createdat"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "title": "Updatedat"
+                    },
+                    "createdBy": {
+                        "type": "string",
+                        "title": "Createdby"
+                    },
+                    "updatedBy": {
+                        "type": "string",
+                        "title": "Updatedby"
+                    },
+                    "scopes": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Scopes"
+                    },
+                    "workspaceId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Workspaceid"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
+                    "isDisabled": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Isdisabled"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "filename",
+                    "numChunks",
+                    "createdAt",
+                    "updatedAt",
+                    "createdBy",
+                    "updatedBy",
+                    "scopes"
+                ],
+                "title": "DocumentMetadataResponse",
+                "description": "Document metadata returned by GET /documents/{document_id} and list."
+            },
+            "Feedback": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1089,9 +1643,9 @@
                 "required": [
                     "type"
                 ],
-                "title": "FeedbackDto"
+                "title": "Feedback"
             },
-            "FunctionCallContentDto": {
+            "FunctionCallContent": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1130,9 +1684,9 @@
                     "name",
                     "arguments"
                 ],
-                "title": "FunctionCallContentDto"
+                "title": "FunctionCallContent"
             },
-            "FunctionResultContentDto": {
+            "FunctionResultContent": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1158,7 +1712,7 @@
                     "callId",
                     "result"
                 ],
-                "title": "FunctionResultContentDto"
+                "title": "FunctionResultContent"
             },
             "HTTPValidationError": {
                 "properties": {
@@ -1173,10 +1727,10 @@
                 "type": "object",
                 "title": "HTTPValidationError"
             },
-            "KeyDriverAnalysisDto": {
+            "KeyDriverAnalysis": {
                 "properties": {
                     "measure": {
-                        "$ref": "#/components/schemas/KeyDriverAnalysisMeasureDto",
+                        "$ref": "#/components/schemas/KeyDriverAnalysisMeasure",
                         "description": "Measure definition for key driver analysis."
                     },
                     "dateAttributeId": {
@@ -1213,9 +1767,9 @@
                     "referencePeriod",
                     "filters"
                 ],
-                "title": "KeyDriverAnalysisDto"
+                "title": "KeyDriverAnalysis"
             },
-            "KeyDriverAnalysisMeasureDto": {
+            "KeyDriverAnalysisMeasure": {
                 "properties": {
                     "id": {
                         "type": "string",
@@ -1259,9 +1813,9 @@
                     "id",
                     "type"
                 ],
-                "title": "KeyDriverAnalysisMeasureDto"
+                "title": "KeyDriverAnalysisMeasure"
             },
-            "KeyDriverAnalysisPartDto": {
+            "KeyDriverAnalysisPart": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1273,7 +1827,7 @@
                     "kda": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/KeyDriverAnalysisDto"
+                                "$ref": "#/components/schemas/KeyDriverAnalysis"
                             },
                             {
                                 "type": "null"
@@ -1284,9 +1838,48 @@
                 },
                 "additionalProperties": false,
                 "type": "object",
-                "title": "KeyDriverAnalysisPartDto"
+                "title": "KeyDriverAnalysisPart"
             },
-            "MultipartContentDto": {
+            "ListDocumentsResponse": {
+                "properties": {
+                    "documents": {
+                        "items": {
+                            "$ref": "#/components/schemas/DocumentMetadataResponse"
+                        },
+                        "type": "array",
+                        "title": "Documents"
+                    },
+                    "totalCount": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Totalcount"
+                    },
+                    "nextPageToken": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Nextpagetoken"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "documents"
+                ],
+                "title": "ListDocumentsResponse",
+                "description": "Response for GET /documents."
+            },
+            "MultipartContent": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1299,29 +1892,29 @@
                         "items": {
                             "oneOf": [
                                 {
-                                    "$ref": "#/components/schemas/TextPartDto"
+                                    "$ref": "#/components/schemas/TextPart"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/VisualizationPartDto"
+                                    "$ref": "#/components/schemas/VisualizationPart"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/KeyDriverAnalysisPartDto"
+                                    "$ref": "#/components/schemas/KeyDriverAnalysisPart"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/WhatIfAnalysisPartDto"
+                                    "$ref": "#/components/schemas/WhatIfAnalysisPart"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/SearchResultsDto"
+                                    "$ref": "#/components/schemas/SearchResults"
                                 }
                             ],
                             "discriminator": {
                                 "propertyName": "type",
                                 "mapping": {
-                                    "kda": "#/components/schemas/KeyDriverAnalysisPartDto",
-                                    "searchResults": "#/components/schemas/SearchResultsDto",
-                                    "text": "#/components/schemas/TextPartDto",
-                                    "visualization": "#/components/schemas/VisualizationPartDto",
-                                    "whatIf": "#/components/schemas/WhatIfAnalysisPartDto"
+                                    "kda": "#/components/schemas/KeyDriverAnalysisPart",
+                                    "searchResults": "#/components/schemas/SearchResults",
+                                    "text": "#/components/schemas/TextPart",
+                                    "visualization": "#/components/schemas/VisualizationPart",
+                                    "whatIf": "#/components/schemas/WhatIfAnalysisPart"
                                 }
                             }
                         },
@@ -1335,7 +1928,7 @@
                 "required": [
                     "parts"
                 ],
-                "title": "MultipartContentDto"
+                "title": "MultipartContent"
             },
             "ObjectType": {
                 "type": "string",
@@ -1354,6 +1947,49 @@
                     "filter_context"
                 ],
                 "title": "ObjectType"
+            },
+            "PatchDocumentRequest": {
+                "properties": {
+                    "isDisabled": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Isdisabled"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
+                    "scopes": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Scopes"
+                    }
+                },
+                "type": "object",
+                "title": "PatchDocumentRequest",
+                "description": "Request body for PATCH /documents/{documentId}."
             },
             "Query": {
                 "properties": {
@@ -1494,7 +2130,7 @@
                 ],
                 "title": "RankingFilter"
             },
-            "ReasoningContentDto": {
+            "ReasoningContent": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1514,9 +2150,9 @@
                 "required": [
                     "summary"
                 ],
-                "title": "ReasoningContentDto"
+                "title": "ReasoningContent"
             },
-            "ResponseFeedbackDto": {
+            "ResponseFeedback": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1543,14 +2179,14 @@
                 "required": [
                     "type"
                 ],
-                "title": "ResponseFeedbackDto"
+                "title": "ResponseFeedback"
             },
             "ResponseFeedbackRequest": {
                 "properties": {
                     "feedback": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/ResponseFeedbackDto"
+                                "$ref": "#/components/schemas/ResponseFeedback"
                             },
                             {
                                 "type": "null"
@@ -1564,7 +2200,28 @@
                 ],
                 "title": "ResponseFeedbackRequest"
             },
-            "SearchObjectDto": {
+            "SearchDocumentsResponse": {
+                "properties": {
+                    "results": {
+                        "items": {
+                            "$ref": "#/components/schemas/SearchResultItem"
+                        },
+                        "type": "array",
+                        "title": "Results"
+                    },
+                    "statistics": {
+                        "$ref": "#/components/schemas/SearchStatistics"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "results",
+                    "statistics"
+                ],
+                "title": "SearchDocumentsResponse",
+                "description": "Response for GET /search."
+            },
+            "SearchObject": {
                 "properties": {
                     "id": {
                         "type": "string",
@@ -1712,9 +2369,9 @@
                     "title",
                     "score"
                 ],
-                "title": "SearchObjectDto"
+                "title": "SearchObject"
             },
-            "SearchRelationshipDto": {
+            "SearchRelationship": {
                 "properties": {
                     "sourceWorkspaceId": {
                         "type": "string",
@@ -1769,9 +2426,86 @@
                     "targetType",
                     "targetTitle"
                 ],
-                "title": "SearchRelationshipDto"
+                "title": "SearchRelationship"
             },
-            "SearchResultsDto": {
+            "SearchResultItem": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
+                    },
+                    "content": {
+                        "type": "string",
+                        "title": "Content"
+                    },
+                    "score": {
+                        "type": "number",
+                        "title": "Score"
+                    },
+                    "chunkIndex": {
+                        "type": "integer",
+                        "title": "Chunkindex"
+                    },
+                    "totalChunks": {
+                        "type": "integer",
+                        "title": "Totalchunks"
+                    },
+                    "pageNumbers": {
+                        "items": {
+                            "type": "integer"
+                        },
+                        "type": "array",
+                        "title": "Pagenumbers"
+                    },
+                    "workspaceId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Workspaceid"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    },
+                    "scopes": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Scopes"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "filename",
+                    "content",
+                    "score",
+                    "chunkIndex",
+                    "totalChunks",
+                    "pageNumbers",
+                    "scopes"
+                ],
+                "title": "SearchResultItem",
+                "description": "A single search result entry."
+            },
+            "SearchResults": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1782,7 +2516,7 @@
                     },
                     "objects": {
                         "items": {
-                            "$ref": "#/components/schemas/SearchObjectDto"
+                            "$ref": "#/components/schemas/SearchObject"
                         },
                         "type": "array",
                         "title": "Objects",
@@ -1812,7 +2546,7 @@
                         "anyOf": [
                             {
                                 "items": {
-                                    "$ref": "#/components/schemas/SearchRelationshipDto"
+                                    "$ref": "#/components/schemas/SearchRelationship"
                                 },
                                 "type": "array"
                             },
@@ -1830,9 +2564,28 @@
                     "objects",
                     "keywords"
                 ],
-                "title": "SearchResultsDto"
+                "title": "SearchResults"
             },
-            "SendMessageContentDto": {
+            "SearchStatistics": {
+                "properties": {
+                    "totalResults": {
+                        "type": "integer",
+                        "title": "Totalresults"
+                    },
+                    "averageSimilarityScore": {
+                        "type": "number",
+                        "title": "Averagesimilarityscore"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "totalResults",
+                    "averageSimilarityScore"
+                ],
+                "title": "SearchStatistics",
+                "description": "Statistics about the search results."
+            },
+            "SendMessageContent": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1849,9 +2602,9 @@
                     "type",
                     "text"
                 ],
-                "title": "SendMessageContentDto"
+                "title": "SendMessageContent"
             },
-            "SendMessageItemDto": {
+            "SendMessageItem": {
                 "properties": {
                     "role": {
                         "type": "string",
@@ -1859,7 +2612,7 @@
                         "title": "Role"
                     },
                     "content": {
-                        "$ref": "#/components/schemas/SendMessageContentDto"
+                        "$ref": "#/components/schemas/SendMessageContent"
                     }
                 },
                 "type": "object",
@@ -1867,14 +2620,14 @@
                     "role",
                     "content"
                 ],
-                "title": "SendMessageItemDto"
+                "title": "SendMessageItem"
             },
-            "SendMessageOptionsDto": {
+            "SendMessageOptions": {
                 "properties": {
                     "search": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/SendMessageSearchOptionsDto"
+                                "$ref": "#/components/schemas/SendMessageSearchOptions"
                             },
                             {
                                 "type": "null"
@@ -1883,17 +2636,17 @@
                     }
                 },
                 "type": "object",
-                "title": "SendMessageOptionsDto"
+                "title": "SendMessageOptions"
             },
             "SendMessageRequest": {
                 "properties": {
                     "item": {
-                        "$ref": "#/components/schemas/SendMessageItemDto"
+                        "$ref": "#/components/schemas/SendMessageItem"
                     },
                     "options": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/SendMessageOptionsDto"
+                                "$ref": "#/components/schemas/SendMessageOptions"
                             },
                             {
                                 "type": "null"
@@ -1908,7 +2661,7 @@
                 "title": "SendMessageRequest",
                 "description": "POST /conversations/{conversationId}/messages body."
             },
-            "SendMessageSearchOptionsDto": {
+            "SendMessageSearchOptions": {
                 "properties": {
                     "objectTypes": {
                         "anyOf": [
@@ -1941,7 +2694,7 @@
                         "anyOf": [
                             {
                                 "items": {
-                                    "$ref": "#/components/schemas/AllowedRelationshipTypeDto"
+                                    "$ref": "#/components/schemas/AllowedRelationshipType"
                                 },
                                 "type": "array"
                             },
@@ -1953,9 +2706,9 @@
                     }
                 },
                 "type": "object",
-                "title": "SendMessageSearchOptionsDto"
+                "title": "SendMessageSearchOptions"
             },
-            "TextMessageContentDto": {
+            "TextMessageContent": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1975,9 +2728,9 @@
                 "required": [
                     "text"
                 ],
-                "title": "TextMessageContentDto"
+                "title": "TextMessageContent"
             },
-            "TextPartDto": {
+            "TextPart": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1997,7 +2750,41 @@
                 "required": [
                     "text"
                 ],
-                "title": "TextPartDto"
+                "title": "TextPart"
+            },
+            "UploadDocumentResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "title": "Filename"
+                    },
+                    "success": {
+                        "type": "boolean",
+                        "title": "Success"
+                    },
+                    "message": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "numChunks": {
+                        "type": "integer",
+                        "title": "Numchunks"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "filename",
+                    "success",
+                    "message",
+                    "numChunks"
+                ],
+                "title": "UploadDocumentResponse",
+                "description": "Response for POST/PUT /documents."
             },
             "ValidationError": {
                 "properties": {
@@ -2223,7 +3010,7 @@
                 "title": "VisualizationIdUpdateRequest",
                 "description": "PATCH /conversations/{conversationId}/visualizations/{visualizationId} body."
             },
-            "VisualizationPartDto": {
+            "VisualizationPart": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -2242,35 +3029,13 @@
                             }
                         ],
                         "description": "Optional full visualization payload (AAC JSON) when available."
-                    },
-                    "metadata": {
-                        "$ref": "#/components/schemas/VisualizationPartMetadataDto",
-                        "description": "Visualization state metadata."
                     }
                 },
                 "additionalProperties": false,
                 "type": "object",
-                "required": [
-                    "metadata"
-                ],
-                "title": "VisualizationPartDto"
+                "title": "VisualizationPart"
             },
-            "VisualizationPartMetadataDto": {
-                "properties": {
-                    "isSaved": {
-                        "type": "boolean",
-                        "title": "Issaved",
-                        "description": "Whether the visualization was explicitly saved by user action."
-                    }
-                },
-                "additionalProperties": false,
-                "type": "object",
-                "required": [
-                    "isSaved"
-                ],
-                "title": "VisualizationPartMetadataDto"
-            },
-            "WhatIfAnalysisPartDto": {
+            "WhatIfAnalysisPart": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -2282,7 +3047,7 @@
                     "whatIf": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/WhatIfScenarioDto"
+                                "$ref": "#/components/schemas/WhatIfScenario"
                             },
                             {
                                 "type": "null"
@@ -2293,9 +3058,9 @@
                 },
                 "additionalProperties": false,
                 "type": "object",
-                "title": "WhatIfAnalysisPartDto"
+                "title": "WhatIfAnalysisPart"
             },
-            "WhatIfMeasureAdjustmentDto": {
+            "WhatIfMeasureAdjustment": {
                 "properties": {
                     "metricId": {
                         "type": "string",
@@ -2320,9 +3085,9 @@
                     "metricType",
                     "scenarioMaql"
                 ],
-                "title": "WhatIfMeasureAdjustmentDto"
+                "title": "WhatIfMeasureAdjustment"
             },
-            "WhatIfScenarioDto": {
+            "WhatIfScenario": {
                 "properties": {
                     "visualizationRef": {
                         "type": "string",
@@ -2331,7 +3096,7 @@
                     },
                     "scenarios": {
                         "items": {
-                            "$ref": "#/components/schemas/WhatIfScenarioVariantDto"
+                            "$ref": "#/components/schemas/WhatIfScenarioVariant"
                         },
                         "type": "array",
                         "title": "Scenarios",
@@ -2350,9 +3115,9 @@
                     "scenarios",
                     "includeBaseline"
                 ],
-                "title": "WhatIfScenarioDto"
+                "title": "WhatIfScenario"
             },
-            "WhatIfScenarioVariantDto": {
+            "WhatIfScenarioVariant": {
                 "properties": {
                     "label": {
                         "type": "string",
@@ -2361,7 +3126,7 @@
                     },
                     "adjustments": {
                         "items": {
-                            "$ref": "#/components/schemas/WhatIfMeasureAdjustmentDto"
+                            "$ref": "#/components/schemas/WhatIfMeasureAdjustment"
                         },
                         "type": "array",
                         "title": "Adjustments",
@@ -2374,7 +3139,7 @@
                     "label",
                     "adjustments"
                 ],
-                "title": "WhatIfScenarioVariantDto"
+                "title": "WhatIfScenarioVariant"
             }
         }
     }

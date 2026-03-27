@@ -412,11 +412,14 @@ export const makeConversationItem = (item: IChatConversationItem): IChatConversa
 
 /**
  * Make a new assistant message item.
+ * @internal
  */
 export const makeAssistantItem = (
     content?: IChatConversationLocalContent,
     id?: string,
+    complete?: boolean,
 ): IChatConversationLocalItem => ({
+    complete,
     id: id ?? "",
     type: "item",
     localId: uuidv4(),
@@ -431,6 +434,7 @@ export const makeAssistantItem = (
 
 /**
  * Make a new user message item.
+ * @internal
  */
 export const makeUserItem = (
     content?: IChatConversationLocalContent,

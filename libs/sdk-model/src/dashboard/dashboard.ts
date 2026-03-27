@@ -64,6 +64,27 @@ export const DashboardAttributeFilterConfigModeValues: Record<
 };
 
 /**
+ * Attribute filter available mode — controls which filter presentation modes
+ * (list-based, text-based, or both) are available to the user in Dashboard View mode.
+ * @alpha
+ */
+export type DashboardAttributeFilterSelectionType = "list" | "text" | "listOrText";
+
+/**
+ * Represent the values of DashboardAttributeFilterSelectionType
+ *
+ * @internal
+ */
+export const DashboardAttributeFilterSelectionTypeValues: Record<
+    Uppercase<Exclude<DashboardAttributeFilterSelectionType, "listOrText">> | "LIST_OR_TEXT",
+    DashboardAttributeFilterSelectionType
+> = {
+    LIST: "list" as const,
+    TEXT: "text" as const,
+    LIST_OR_TEXT: "listOrText" as const,
+};
+
+/**
  * Date filter presets to add to the date filter for the current dashboard
  * @alpha
  */
@@ -128,6 +149,17 @@ export interface IDashboardAttributeFilterConfig {
      * Display form to use to show elements of attribute filter in UI. Used only for attribute filters with elements selection. For text filters (arbitrary, match) it is not used.
      */
     displayAsLabel?: ObjRef;
+
+    /**
+     * Controls which filter presentation modes are available to the user in Dashboard View mode.
+     * - "list" — only elements/list selection
+     * - "text" — only text-based filtering (arbitrary/match)
+     * - "listOrText" — both modes available, user can switch
+     *
+     * When not set, the default is derived from the current filter type:
+     * elements filters default to "list", text filters default to "text".
+     */
+    selectionType?: DashboardAttributeFilterSelectionType;
 }
 
 /**
