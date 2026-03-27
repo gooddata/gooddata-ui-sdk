@@ -114,7 +114,10 @@ function createGeoCollectionBackend(provider: CollectionItemsProvider): IAnalyti
     });
 }
 
-function createGeoStyleBackend(getDefaultStyle: IGeoService["getDefaultStyle"]): IAnalyticalBackend {
+function createGeoStyleBackend(
+    getDefaultStyle: IGeoService["getDefaultStyle"],
+    getDefaultStyleSpriteIcons: IGeoService["getDefaultStyleSpriteIcons"] = async () => [],
+): IAnalyticalBackend {
     const backend = dummyBackendEmptyData();
 
     return {
@@ -122,6 +125,7 @@ function createGeoStyleBackend(getDefaultStyle: IGeoService["getDefaultStyle"]):
         geo: () => ({
             ...backend.geo(),
             getDefaultStyle,
+            getDefaultStyleSpriteIcons,
         }),
     };
 }
@@ -236,6 +240,23 @@ describe("withCaching", () => {
         await backend.geo().getDefaultStyle({ basemap: "basemap-0" });
 
         expect(getDefaultStyle).toHaveBeenCalledTimes(12);
+    });
+
+    it("caches default style sprite icons", async () => {
+        const getDefaultStyleSpriteIcons = vi.fn<IGeoService["getDefaultStyleSpriteIcons"]>(async () => [
+            "airport",
+            "harbor",
+        ]);
+        const backend = withCachingForTests(
+            createGeoStyleBackend(async () => ({}), getDefaultStyleSpriteIcons),
+        );
+
+        const first = await backend.geo().getDefaultStyleSpriteIcons();
+        const second = await backend.geo().getDefaultStyleSpriteIcons();
+
+        expect(first).toEqual(["airport", "harbor"]);
+        expect(second).toEqual(["airport", "harbor"]);
+        expect(getDefaultStyleSpriteIcons).toHaveBeenCalledTimes(1);
     });
 
     it("evicts when execution cache TTL expires (time-based)", async () => {

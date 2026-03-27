@@ -38,9 +38,11 @@ export type {
     IGeoPushpinChartProps,
 } from "./next/types/props/pushpinChart/public.js";
 export type {
+    BoundsChangedCallback,
     CenterPositionChangedCallback,
     IGeoLngLat,
     IGeoLngLatBounds,
+    ViewportInteractionEndCallback,
     ZoomChangedCallback,
 } from "./publicTypes/geoCommon.js";
 export { GeoPushpinChart } from "./next/GeoPushpinChart.js";
@@ -92,6 +94,7 @@ export {
 export {
     isValidPushpinSizeOption,
     type GeoChartPushpinSizeOption,
+    type GeoChartShapeType,
     type IGeoChartPointsConfig,
 } from "./next/types/config/points.js";
 

@@ -1,7 +1,22 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { type IInsightDefinition } from "@gooddata/sdk-model";
+
+import {
+    hasPushpinColorMeasure,
+    hasPushpinSegmentAttribute,
+    hasPushpinSizeMeasure,
+    isPushpinClusteringEditable as isPushpinClusteringEditableInternal,
+} from "../../utils/geoPushpinCompatibility.js";
+
+/**
+ * Checks whether the insight contains a non-empty size bucket.
+ *
+ * @internal
+ */
+export function hasSizeMeasure(insight: IInsightDefinition | undefined): boolean {
+    return hasPushpinSizeMeasure(insight);
+}
 
 /**
  * Checks whether the insight contains a non-empty color bucket.
@@ -9,11 +24,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
  * @internal
  */
 export function hasColorMeasure(insight: IInsightDefinition | undefined): boolean {
-    if (!insight) {
-        return false;
-    }
-    const bucket = insightBucket(insight, BucketNames.COLOR);
-    return bucket !== undefined && !bucketIsEmpty(bucket);
+    return hasPushpinColorMeasure(insight);
 }
 
 /**
@@ -22,9 +33,17 @@ export function hasColorMeasure(insight: IInsightDefinition | undefined): boolea
  * @internal
  */
 export function hasSegmentAttribute(insight: IInsightDefinition | undefined): boolean {
-    if (!insight) {
-        return false;
-    }
-    const bucket = insightBucket(insight, BucketNames.SEGMENT);
-    return bucket !== undefined && !bucketIsEmpty(bucket);
+    return hasPushpinSegmentAttribute(insight);
+}
+
+/**
+ * Checks whether pushpin clustering can be edited for the current insight configuration.
+ *
+ * @internal
+ */
+export function isPushpinClusteringEditable(
+    insight: IInsightDefinition | undefined,
+    shapeType?: Parameters<typeof isPushpinClusteringEditableInternal>[1],
+): boolean {
+    return isPushpinClusteringEditableInternal(insight, shapeType);
 }

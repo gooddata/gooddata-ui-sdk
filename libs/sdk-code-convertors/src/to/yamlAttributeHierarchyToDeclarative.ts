@@ -1,8 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type DeclarativeAttributeHierarchy } from "@gooddata/api-client-tiger";
+import type { AttributeHierarchy } from "@gooddata/sdk-code-schemas/v1";
 
-import type { AttributeHierarchy } from "../schemas/v1/metadata.js";
 import { convertIdToTitle } from "../utils/sharedUtils.js";
 import { createIdentifier } from "../utils/yamlUtils.js";
 

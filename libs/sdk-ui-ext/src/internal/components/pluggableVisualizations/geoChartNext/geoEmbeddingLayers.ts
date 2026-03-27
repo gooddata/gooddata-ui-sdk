@@ -112,6 +112,8 @@ function sanitizeLayerForEmbedding(layer: IGeoLayer): IGeoLayer {
         latitude,
         longitude,
         ...(layer.size ? { size: layer.size } : {}),
+        ...(layer.measures?.length ? { measures: layer.measures } : {}),
+        ...(layer.geoIcon ? { geoIcon: layer.geoIcon } : {}),
     };
     return pushpinLayer;
 }

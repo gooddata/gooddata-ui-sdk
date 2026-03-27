@@ -33,6 +33,14 @@ export interface IMapOptions {
     bounds?: IGeoLngLatBounds;
 
     /**
+     * Padding used when fitting the initial bounds.
+     *
+     * @remarks
+     * Undefined keeps the runtime default.
+     */
+    boundsPadding?: number;
+
+    /**
      * Navigation interaction settings for pan and zoom.
      */
     navigation?: IGeoChartViewportNavigation;

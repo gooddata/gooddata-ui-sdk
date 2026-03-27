@@ -60,6 +60,7 @@ export async function initializeMapLibreMap(
         center,
         zoom,
         bounds,
+        boundsPadding,
         interactive = true,
         dragRotate,
         pitchWithRotate,
@@ -107,6 +108,13 @@ export async function initializeMapLibreMap(
         delete mapOptions.maxZoom;
     } else if (typeof maxZoom === "number") {
         mapOptions.maxZoom = maxZoom;
+    }
+
+    if (typeof boundsPadding === "number") {
+        mapOptions.fitBoundsOptions = {
+            ...mapOptions.fitBoundsOptions,
+            padding: boundsPadding,
+        };
     }
 
     if (bounds) {

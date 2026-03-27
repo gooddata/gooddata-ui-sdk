@@ -1,12 +1,9 @@
 // (C) 2026 GoodData Corporation
 
 /**
- * Hand-curated public types from the auto-generated AAC schema.
+ * Hand-curated public types from the AAC schema provided by @gooddata/sdk-code-schemas.
  * This file isolates api-extractor from the generated metadata.ts internals
  * (which contain anonymous union members like Visualisation1-22, Id4-16, etc.).
- *
- * When code-schemas is migrated to this repo, metadata.ts will be replaced
- * with properly structured types and this file can be removed.
  */
 
 import type {
@@ -21,7 +18,7 @@ import type {
     Query,
     Section,
     Visualisation,
-} from "./v1/metadata.js";
+} from "@gooddata/sdk-code-schemas/v1";
 
 /** @public */
 export type AacAttributeHierarchy = AttributeHierarchy;

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 // =============================================================================
 // Pushpin Size Configuration
@@ -132,6 +132,19 @@ export const DEFAULT_DATA_POINTS_LIMIT = 50000;
  */
 export const DEFAULT_PUSHPIN_OPTIONS = {
     "circle-stroke-width": 1,
+} as const;
+
+/**
+ * Flat GeoJSON feature properties consumed directly by MapLibre styling expressions.
+ *
+ * @remarks
+ * Keep these names centralized so the source builder and layer expressions stay aligned.
+ */
+export const PUSHPIN_STYLE_FEATURE_PROPERTIES = {
+    size: "pushpinSize",
+    colorBackground: "color_background",
+    colorBorder: "color_border",
+    iconName: "icon_name",
 } as const;
 
 /**

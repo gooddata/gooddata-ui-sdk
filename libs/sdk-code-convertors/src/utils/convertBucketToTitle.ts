@@ -1,7 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
 import { type AfmObjectIdentifier } from "@gooddata/api-client-tiger";
-
 import type {
     Attribute,
     DateDataset,
@@ -12,7 +11,8 @@ import type {
     Reference,
     Dataset as SchemaDataset,
     Source,
-} from "../schemas/v1/metadata.js";
+} from "@gooddata/sdk-code-schemas/v1";
+
 import { type ExportEntities } from "../types.js";
 import { mapDateAttribute, mapDateDataset } from "./dateUtils.js";
 import { convertGranularity, convertGranularityToId } from "./granularityUtils.js";

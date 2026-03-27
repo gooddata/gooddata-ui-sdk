@@ -1,6 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IGeoCommonData, type IGeoDataItem, type IGeoMeasureItem } from "./common.js";
+import {
+    type IGeoAttributeItem,
+    type IGeoCommonData,
+    type IGeoDataItem,
+    type IGeoMeasureItem,
+} from "./common.js";
 import { type IGeoLngLat } from "../common/coordinates.js";
 
 /**
@@ -52,4 +57,12 @@ export interface IPushpinGeoData extends IGeoCommonData {
      * Size measure data (determines pushpin size)
      */
     size?: IGeoMeasureItem;
+    /**
+     * Measure data (shown in tooltip, does not affect size or color)
+     */
+    measures?: IGeoMeasureItem[];
+    /**
+     * Geo icon label data (icon names resolved from GDC.geo.icon attribute)
+     */
+    geoIcon?: IGeoAttributeItem;
 }

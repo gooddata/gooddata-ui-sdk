@@ -14,6 +14,7 @@ export function createMockGeoService(style?: IGeoStyleSpecification): IGeoServic
 
     return {
         getDefaultStyle: async () => Promise.resolve(resolvedStyle),
+        getDefaultStyleSpriteIcons: async () => Promise.resolve([]),
         collections: () => ({
             getAll: () => Promise.resolve([]),
             getGeoCollection: () => Promise.resolve(undefined),

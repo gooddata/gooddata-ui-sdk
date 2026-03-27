@@ -12,7 +12,8 @@ import type {
     MetricField,
     PoPMetricField,
     PreviousPeriodMetricField,
-} from "../schemas/v1/metadata.js";
+} from "@gooddata/sdk-code-schemas/v1";
+
 import { type Profile } from "../types.js";
 
 export const TABLE_PATH_DELIMITER = "/";

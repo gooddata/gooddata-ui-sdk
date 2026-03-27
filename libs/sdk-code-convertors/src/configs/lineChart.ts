@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
+
 import { type ColorMapping, type PointShapeSymbol } from "./types.js";
 import {
     type ConfigDefaults,
@@ -8,7 +10,6 @@ import {
     loadConfig,
     saveConfigObject,
 } from "./utils.js";
-import type { Visualisation } from "../schemas/v1/metadata.js";
 import { loadColorMapping, saveColorMapping } from "../utils/configUtils.js";
 
 type DefaultProperties = {

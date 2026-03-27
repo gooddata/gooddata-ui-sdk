@@ -11,6 +11,7 @@ import {
     DEFAULT_CLUSTER_RADIUS,
     EMPTY_SEGMENT_VALUE,
     PUSHPIN_SIZE_OPTIONS_MAP,
+    PUSHPIN_STYLE_FEATURE_PROPERTIES,
 } from "./constants.js";
 import { getMinMax } from "./size/calculations.js";
 import { type IGeoLngLat } from "../../types/common/coordinates.js";
@@ -53,6 +54,8 @@ interface IPushpinFeatureContext {
     segmentUris: string[];
     sizeData: number[];
     colorData: number[];
+    measures: Array<{ title: string; format: string; data: number[] }>;
+    geoIconData: string[];
     pushpinColors: IPushpinColor[];
     geoPointsConfig: IGeoChartPointsConfig;
     minSizeFromData: number | undefined;
@@ -99,6 +102,7 @@ function buildPushpinFeatureProperties(
         segmentUris,
         sizeData,
         colorData,
+        geoIconData,
         pushpinColors,
         geoPointsConfig,
         minSizeFromData,
@@ -115,10 +119,10 @@ function buildPushpinFeatureProperties(
 
     const pushpinColor = pushpinColors[index] || pushpinColors[0] || {};
 
-    return {
-        pushpinSize,
-        color_background: pushpinColor.background,
-        color_border: pushpinColor.border,
+    const properties: GeoJSON.GeoJsonProperties = {
+        [PUSHPIN_STYLE_FEATURE_PROPERTIES.size]: pushpinSize,
+        [PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBackground]: pushpinColor.background,
+        [PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBorder]: pushpinColor.border,
         locationName: {
             title: locationNameTitle,
             value: locationNameData[index],
@@ -143,6 +147,23 @@ function buildPushpinFeatureProperties(
             attrId: segmentAttrId,
         },
     };
+
+    if (ctx.measures.length > 0) {
+        const measuresArr = ctx.measures.map((m) => ({
+            title: m.title,
+            value: m.data[index],
+            format: m.format,
+        }));
+        // Keep backward-compatible "metric" property for single measure,
+        // and always provide "measures" array for multi-measure support.
+        properties["metric"] = measuresArr[0];
+        properties["measures"] = measuresArr;
+    }
+    if (geoIconData.length > 0) {
+        properties[PUSHPIN_STYLE_FEATURE_PROPERTIES.iconName] = geoIconData[index];
+    }
+
+    return properties;
 }
 
 function createPushpinFeatures({
@@ -151,7 +172,7 @@ function createPushpinFeatures({
     colorStrategy,
     tooltipAttrIds,
 }: IPushpinDataSourceProps): IPushpinDataSourceFeatures {
-    const { color, location, segment, size, tooltipText } = geoData;
+    const { color, location, segment, size, tooltipText, measures, geoIcon } = geoData;
 
     if (!location) {
         return [];
@@ -160,6 +181,12 @@ function createPushpinFeatures({
     const { points: geoPointsConfig = {} } = config || {};
     const sizeData = size?.data ?? [];
     const colorData = color?.data ?? [];
+    const measuresCtx = (measures ?? []).map((m) => ({
+        title: m.name,
+        format: m.format,
+        data: m.data,
+    }));
+    const geoIconData = geoIcon?.data ?? [];
     const { min: minSizeFromData, max: maxSizeFromData } = getMinMax(sizeData);
     const fallbackLocationNameData = buildFallbackLocationLabels(location.data);
     const locationNameData = tooltipText?.data?.length ? tooltipText.data : fallbackLocationNameData;
@@ -171,11 +198,13 @@ function createPushpinFeatures({
         segmentTitle: segment?.name ?? "",
         sizeFormat: size?.format ?? "",
         colorFormat: color?.format ?? "",
+        measures: measuresCtx,
         locationNameData,
         segmentData: segment?.data ?? [],
         segmentUris: (segment?.uris ?? []).map((uri) => uri ?? EMPTY_SEGMENT_VALUE),
         sizeData,
         colorData,
+        geoIconData,
         pushpinColors: getPushpinColors(colorData, segment?.data ?? [], colorStrategy),
         geoPointsConfig,
         minSizeFromData,
@@ -264,7 +293,7 @@ export function createPushpinDataSource(
  * Applies current palette/mapping colors to a pushpin GeoJSON source specification.
  *
  * @remarks
- * Pushpin styling reads colors from flattened GeoJSON feature properties (`color_background`, `color_border`).
+ * Pushpin styling reads colors from flattened GeoJSON feature properties.
  * To update colors in-place (via `setData`), we patch those properties according to `properties.locationIndex`.
  *
  * If the source data is not a FeatureCollection, the source is returned unchanged.
@@ -298,8 +327,8 @@ function recolorPushpinDataSource(
 
         const nextProperties: GeoJSON.GeoJsonProperties = {
             ...properties,
-            color_background: pushpinColor.background,
-            color_border: pushpinColor.border,
+            [PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBackground]: pushpinColor.background,
+            [PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBorder]: pushpinColor.border,
         };
 
         const previousColor: unknown = properties["color"];

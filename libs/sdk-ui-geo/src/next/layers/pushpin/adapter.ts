@@ -88,6 +88,16 @@ export function filterPushpinGeoDataToRenderablePoints(geoData: IPushpinGeoData)
                   data: pickByValidIndex(geoData.color.data) as number[],
               }
             : undefined,
+        measures: geoData.measures?.map((m) => ({
+            ...m,
+            data: pickByValidIndex(m.data) as number[],
+        })),
+        geoIcon: geoData.geoIcon
+            ? {
+                  ...geoData.geoIcon,
+                  data: pickByValidIndex(geoData.geoIcon.data) as string[],
+              }
+            : undefined,
         segment: geoData.segment
             ? {
                   ...geoData.segment,
@@ -160,7 +170,9 @@ function createPushpinSource(
     context: IGeoAdapterContext,
 ) {
     const config = createPushpinConfig(context);
-    const hasClustering = isClusteringAllowed(geoData, config.points?.groupNearbyPoints);
+    const shapeType = config.points?.shapeType ?? "circle";
+    const isIconShape = shapeType === "iconByValue" || shapeType === "oneIcon";
+    const hasClustering = !isIconShape && isClusteringAllowed(geoData, config.points?.groupNearbyPoints);
 
     return {
         config,
@@ -176,7 +188,18 @@ function createPushpinSource(
 
 function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): IPreparedExecution {
     const { backend, workspace, execConfig, globalFilters, executionFactory } = context;
-    const { latitude, longitude, size, color, segmentBy, filters = [], sortBy = [], tooltipText } = layer;
+    const {
+        latitude,
+        longitude,
+        size,
+        color,
+        measures,
+        geoIcon,
+        segmentBy,
+        filters = [],
+        sortBy = [],
+        tooltipText,
+    } = layer;
 
     const buckets = [];
 
@@ -189,6 +212,12 @@ function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): 
     }
     if (color) {
         buckets.push(newBucket(BucketNames.COLOR, color));
+    }
+    if (measures?.length) {
+        buckets.push(newBucket(BucketNames.MEASURES, ...measures));
+    }
+    if (geoIcon && context.config?.points?.shapeType === "iconByValue") {
+        buckets.push(newBucket(BucketNames.GEO_ICON, geoIcon));
     }
     if (segmentBy) {
         buckets.push(newBucket(BucketNames.SEGMENT, segmentBy));
@@ -295,6 +324,8 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
             String(points?.groupNearbyPoints),
             String(points?.minSize),
             String(points?.maxSize),
+            String(points?.shapeType),
+            String(points?.icon),
         ].join(":");
     },
 

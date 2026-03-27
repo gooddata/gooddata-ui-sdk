@@ -1,17 +1,17 @@
 // (C) 2024-2026 GoodData Corporation
 
 import { type AfmObjectIdentifier } from "@gooddata/api-client-tiger";
-
-import { convertGranularityToId } from "./granularityUtils.js";
-import { isRelativeDateFilter } from "./typeGuards.js";
-import { createIdentifier } from "./yamlUtils.js";
 import type {
     DateDataset,
     DateFilter,
     PoPMetricField,
     PreviousPeriodMetricField,
     Query,
-} from "../schemas/v1/metadata.js";
+} from "@gooddata/sdk-code-schemas/v1";
+
+import { convertGranularityToId } from "./granularityUtils.js";
+import { isRelativeDateFilter } from "./typeGuards.js";
+import { createIdentifier } from "./yamlUtils.js";
 
 export function mapDateAttribute(query: Query, field: PoPMetricField): AfmObjectIdentifier | null {
     let filter: DateFilter | undefined;

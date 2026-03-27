@@ -7,7 +7,7 @@ import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 import { type IGeoAreasConfig } from "./areas.js";
 import { type IGeoChartLegendConfig } from "./legend.js";
 import { type IGeoChartViewport } from "./viewport.js";
-import type { IGeoLngLat } from "../../../publicTypes/geoCommon.js";
+import type { IGeoLngLat, IGeoLngLatBounds } from "../../../publicTypes/geoCommon.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import type { GeoBasemap, GeoColorScheme } from "../map/basemap.js";
 
@@ -18,6 +18,11 @@ import type { GeoBasemap, GeoColorScheme } from "../map/basemap.js";
  */
 export interface IGeoAreaChartConfig {
     center?: IGeoLngLat;
+    /**
+     * Bounding box for custom viewport. Takes priority over center/zoom
+     * and adapts to container dimensions.
+     */
+    bounds?: IGeoLngLatBounds;
     isExportMode?: boolean;
     legend?: IGeoChartLegendConfig;
     limit?: number;

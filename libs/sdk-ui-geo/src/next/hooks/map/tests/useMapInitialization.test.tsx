@@ -9,6 +9,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IMapFacade, type StyleSpecification } from "../../../layers/common/mapFacade.js";
 import { type IGeoChartConfig } from "../../../types/config/unified.js";
+import { useApplyViewportOnConfigChange } from "../useApplyViewportOnConfigChange.js";
 import { useMapInitialization } from "../useMapInitialization.js";
 import { useMapResize } from "../useMapResize.js";
 
@@ -76,6 +77,10 @@ function createResizeMapMock(): IMapFacade {
     canvas.width = 400;
     canvas.height = 300;
     const style: StyleSpecification = { version: 8, sources: {}, layers: [] };
+    const bounds: ReturnType<IMapFacade["getBounds"]> = {
+        southWest: { lat: -10, lng: -20 },
+        northEast: { lat: 10, lng: 20 },
+    };
     const center: ReturnType<IMapFacade["getCenter"]> = {
         lat: 0,
         lng: 0,
@@ -101,6 +106,7 @@ function createResizeMapMock(): IMapFacade {
         jumpTo: vi.fn(() => map),
         panTo: vi.fn(() => map),
         zoomTo: vi.fn(() => map),
+        getBounds: vi.fn(() => bounds),
         getCenter: vi.fn(() => center),
         getZoom: vi.fn(() => 3),
         getStyle: vi.fn(() => style),
@@ -1042,6 +1048,125 @@ describe("useMapResize", () => {
         await waitFor(() => {
             expect(recreatedMap.jumpTo).not.toHaveBeenCalled();
             expect(recreatedMap.resize).not.toHaveBeenCalled();
+        });
+    });
+
+    it("does not reapply viewport when only viewport config changes without resize", async () => {
+        const map = createResizeMapMock();
+        const chartContainerRect = {
+            client: {
+                width: 400,
+                height: 300,
+            },
+        } as ContentRect;
+        const firstViewport = {
+            bounds: {
+                southWest: { lng: 10, lat: 20 },
+                northEast: { lng: 30, lat: 40 },
+            },
+        };
+        const secondViewport = {
+            bounds: {
+                southWest: { lng: -28.04, lat: 33.39 },
+                northEast: { lng: 47.04, lat: 72.95 },
+            },
+        };
+
+        const { rerender } = renderHook(
+            ({ viewport }: { viewport: typeof firstViewport }) =>
+                useMapResize(map, true, chartContainerRect, viewport, null, undefined),
+            {
+                initialProps: { viewport: firstViewport },
+            },
+        );
+
+        await waitFor(() => {
+            expect(map.jumpTo).toHaveBeenCalledTimes(1);
+            expect(map.resize).toHaveBeenCalledTimes(1);
+        });
+
+        rerender({ viewport: secondViewport });
+
+        await waitFor(() => {
+            expect(map.jumpTo).toHaveBeenCalledTimes(1);
+            expect(map.resize).toHaveBeenCalledTimes(1);
+        });
+    });
+});
+
+describe("useApplyViewportOnConfigChange", () => {
+    it("does not reapply stored bounds when they already match the live map viewport", async () => {
+        const map = createResizeMapMock();
+        const config: IGeoChartConfig = {
+            applyViewportNavigation: false,
+            bounds: map.getBounds(),
+        };
+        const initialConfig: IGeoChartConfig = {
+            applyViewportNavigation: false,
+            center: { lat: 0, lng: 0 },
+            zoom: 3,
+        };
+
+        const { rerender } = renderHook(
+            ({ nextConfig }: { nextConfig: IGeoChartConfig }) =>
+                useApplyViewportOnConfigChange(map, true, nextConfig, null),
+            {
+                initialProps: {
+                    nextConfig: initialConfig,
+                },
+            },
+        );
+
+        rerender({ nextConfig: config });
+
+        await waitFor(() => {
+            expect(map.cameraForBounds).not.toHaveBeenCalled();
+            expect(map.flyTo).not.toHaveBeenCalled();
+            expect(map.jumpTo).not.toHaveBeenCalled();
+        });
+    });
+
+    it("applies updated bounds after the map is already mounted", async () => {
+        const map = createResizeMapMock();
+        const initialBounds = {
+            southWest: { lng: 10, lat: 20 },
+            northEast: { lng: 30, lat: 40 },
+        };
+        const updatedBounds = {
+            southWest: { lng: -5, lat: 15 },
+            northEast: { lng: 25, lat: 35 },
+        };
+        const initialConfig: IGeoChartConfig = {
+            applyViewportNavigation: false,
+            bounds: initialBounds,
+        };
+        const updatedConfig: IGeoChartConfig = {
+            ...initialConfig,
+            bounds: updatedBounds,
+        };
+
+        const { rerender } = renderHook(
+            ({ config }: { config: IGeoChartConfig }) =>
+                useApplyViewportOnConfigChange(map, true, config, null),
+            {
+                initialProps: { config: initialConfig },
+            },
+        );
+
+        expect(map.cameraForBounds).not.toHaveBeenCalled();
+        expect(map.flyTo).not.toHaveBeenCalled();
+
+        rerender({ config: updatedConfig });
+
+        await waitFor(() => {
+            expect(map.cameraForBounds).toHaveBeenCalledWith(
+                [
+                    [updatedBounds.southWest.lng, updatedBounds.southWest.lat],
+                    [updatedBounds.northEast.lng, updatedBounds.northEast.lat],
+                ],
+                { padding: 30 },
+            );
+            expect(map.flyTo).toHaveBeenCalledWith({ center: [0, 0], zoom: 3 });
         });
     });
 });

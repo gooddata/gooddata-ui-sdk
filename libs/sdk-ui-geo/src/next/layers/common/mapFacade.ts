@@ -18,6 +18,8 @@ import type {
     SymbolLayerSpecification as MapLibreSymbolLayerSpecification,
 } from "maplibre-gl";
 
+import type { IGeoLngLatBounds } from "../../types/common/coordinates.js";
+
 export type Map = MapLibreMap;
 export type Popup = MapLibrePopup;
 
@@ -90,6 +92,7 @@ export interface IMapFacade {
     jumpTo(...args: JumpToArgs): IMapFacade;
     panTo(...args: PanToArgs): IMapFacade;
     zoomTo(...args: ZoomToArgs): IMapFacade;
+    getBounds(): IGeoLngLatBounds;
     getCenter(...args: []): CenterResult;
     getZoom(...args: []): ZoomResult;
     getStyle(): StyleResult;
@@ -186,6 +189,13 @@ export function createMapFacade(map: MapLibreMap): IMapFacade {
         zoomTo: (...args: ZoomToArgs) => {
             map.zoomTo(...args);
             return facade;
+        },
+        getBounds: () => {
+            const b = map.getBounds();
+            return {
+                southWest: { lat: b.getSouth(), lng: b.getWest() },
+                northEast: { lat: b.getNorth(), lng: b.getEast() },
+            };
         },
         getCenter: () => map.getCenter(),
         getZoom: () => map.getZoom(),

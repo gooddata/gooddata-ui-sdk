@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import type { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { IPushpinGeoData } from "../../../types/geoData/pushpin.js";
-import { EMPTY_SEGMENT_VALUE } from "../constants.js";
+import { EMPTY_SEGMENT_VALUE, PUSHPIN_STYLE_FEATURE_PROPERTIES } from "../constants.js";
 import { createPushpinDataSource } from "../source.js";
 
 const colorStrategyMock: IColorStrategy = {
@@ -150,5 +150,54 @@ describe("createPushpinDataSource", () => {
         expect(data.features[0].properties?.["locationName"]).toMatchObject({ value: "Valid Row" });
         expect(data.features[0].properties?.["color"]).toMatchObject({ value: 222 });
         expect(data.features[0].properties?.["size"]).toMatchObject({ value: 2000 });
+    });
+
+    it("keeps tooltip measures nested and emits the icon name as a flat property", () => {
+        const geoData: IPushpinGeoData = {
+            location: {
+                name: "Location",
+                index: 0,
+                data: [{ lat: 40.7128, lng: -74.006 }],
+            },
+            measures: [
+                {
+                    name: "Revenue",
+                    index: 1,
+                    data: [321],
+                    format: "#,##0",
+                },
+                {
+                    name: "Margin",
+                    index: 2,
+                    data: [0.41],
+                    format: "#,##0.00%",
+                },
+            ],
+            geoIcon: {
+                name: "Icon",
+                index: 3,
+                data: ["airport"],
+            },
+        };
+
+        const source = createPushpinDataSource({
+            geoData,
+            colorStrategy: colorStrategyMock,
+            config: {},
+            hasClustering: false,
+        });
+
+        const data = source.data;
+        if (!data || typeof data === "string" || data.type !== "FeatureCollection") {
+            throw new Error("Expected FeatureCollection data");
+        }
+
+        expect(data.features[0].properties?.[PUSHPIN_STYLE_FEATURE_PROPERTIES.iconName]).toBe("airport");
+        expect(data.features[0].properties?.["metric"]).toMatchObject({ value: 321 });
+        expect(data.features[0].properties?.["measures"]).toMatchObject([
+            { title: "Revenue", value: 321, format: "#,##0" },
+            { title: "Margin", value: 0.41, format: "#,##0.00%" },
+        ]);
+        expect(data.features[0].properties).not.toHaveProperty("icon_size_metric_value");
     });
 });

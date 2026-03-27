@@ -85,6 +85,7 @@ export function createAttributeRef(locationAttribute: IAttribute, attributeId: s
 export function getLocationProperties(locationItem: IBucketItem): {
     latitude?: string | undefined;
     longitude?: string | undefined;
+    geoIcon?: string | undefined;
 } {
     const latitudeDfRef = locationItem.displayForms?.find(
         (displayForm) => displayForm.type === "GDC.geo.pin_latitude",
@@ -92,11 +93,28 @@ export function getLocationProperties(locationItem: IBucketItem): {
     const longitudeDfRef = locationItem.displayForms?.find(
         (displayForm) => displayForm.type === "GDC.geo.pin_longitude",
     )?.ref;
+    const geoIconDfRef = locationItem.displayForms?.find(
+        (displayForm) => displayForm.type === GEO_ICON_DISPLAY_FORM_TYPE,
+    )?.ref;
 
     return {
         ...(latitudeDfRef ? { latitude: getRefIdentifier(latitudeDfRef) } : {}),
         ...(longitudeDfRef ? { longitude: getRefIdentifier(longitudeDfRef) } : {}),
+        ...(geoIconDfRef ? { geoIcon: getRefIdentifier(geoIconDfRef) } : {}),
     };
+}
+
+const GEO_ICON_DISPLAY_FORM_TYPE = "GDC.geo.icon";
+
+/**
+ * Checks whether the location attribute has a GDC.geo.icon display form.
+ *
+ * @param locationItem - The location bucket item containing display forms
+ * @returns True if a geo icon display form exists
+ * @internal
+ */
+export function hasGeoIconDisplayForm(locationItem: IBucketItem): boolean {
+    return locationItem.displayForms?.some((df) => df.type === GEO_ICON_DISPLAY_FORM_TYPE) ?? false;
 }
 
 /**

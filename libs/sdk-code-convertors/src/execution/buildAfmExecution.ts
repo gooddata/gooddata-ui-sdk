@@ -13,14 +13,14 @@ import {
     type RelativeDateFilterRelativeDateFilterGranularityEnum,
     type SortKey,
 } from "@gooddata/api-client-tiger";
-
 import type {
     ComparisonCondition,
     Query,
     QueryFilters,
     RangeCondition,
     Sorts,
-} from "../schemas/v1/metadata.js";
+} from "@gooddata/sdk-code-schemas/v1";
+
 import { type ExportEntities, type ToExecutionResults } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
@@ -428,7 +428,7 @@ function buildSorting(sort_by: Sorts | undefined): {
         };
     }
 
-    const sorting = {};
+    const sorting: Record<string, "ASC" | "DESC"> = {};
     const items = sort_by
         .map((sort) => {
             if (isAttributeSort(sort)) {

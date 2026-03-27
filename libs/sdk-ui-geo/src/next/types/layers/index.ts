@@ -197,6 +197,28 @@ export interface IGeoLayerPushpin extends IGeoLayerBase {
      * If not provided, all markers are rendered at a uniform size.
      */
     size?: IAttributeOrMeasure;
+
+    /**
+     * Additional measures displayed in pushpin tooltips.
+     *
+     * @remarks
+     * When provided, these measures are displayed in tooltips without
+     * affecting pushpin size or color.
+     */
+    measures?: IAttributeOrMeasure[];
+
+    /**
+     * Geo icon attribute for pushpins.
+     *
+     * @remarks
+     * An attribute whose display form type is `GDC.geo.icon`. When provided
+     * together with `shapeType: "iconByValue"`, each pushpin's icon is resolved
+     * from the attribute value for that row.
+     *
+     * This attribute is required when `config.points.shapeType` is `"iconByValue"`.
+     * If it is missing, the icon marker may not render.
+     */
+    geoIcon?: IAttribute;
 }
 
 /**

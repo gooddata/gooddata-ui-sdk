@@ -8,6 +8,7 @@ import {
     type GenAIObjectType,
     type IAllowedRelationshipType,
     type IColorPalette,
+    type IGenAIUserContext,
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
@@ -52,6 +53,11 @@ type ChatWindowSliceState = {
      * Allowed relationship types for semantic search (e.g. for view-only users).
      */
     allowedRelationshipTypes?: IAllowedRelationshipType[];
+    /**
+     * One-shot user context for the next message (e.g. active visualization).
+     * Cleared after being consumed by the saga.
+     */
+    userContext?: IGenAIUserContext;
 };
 
 export const chatWindowSliceName = "chatWindow";
@@ -65,6 +71,7 @@ const initialState: ChatWindowSliceState = {
     includeTags: undefined,
     excludeTags: undefined,
     allowedRelationshipTypes: undefined,
+    userContext: undefined,
 };
 
 const chatWindowSlice = createSlice({
@@ -124,6 +131,15 @@ const chatWindowSlice = createSlice({
         ) => {
             state.allowedRelationshipTypes = allowedRelationshipTypes;
         },
+        setUserContextAction: (
+            state,
+            { payload: { userContext } }: PayloadAction<{ userContext?: IGenAIUserContext }>,
+        ) => {
+            state.userContext = userContext;
+        },
+        clearUserContextAction: (state) => {
+            state.userContext = undefined;
+        },
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },
 });
@@ -140,4 +156,6 @@ export const {
     setTagsAction,
     setCatalogItemsActions,
     setAllowedRelationshipTypesAction,
+    setUserContextAction,
+    clearUserContextAction,
 } = chatWindowSlice.actions;

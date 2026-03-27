@@ -5,12 +5,7 @@ import { type ReactElement, type ReactNode } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import {
-    type IInsightDefinition,
-    bucketIsEmpty,
-    insightBucket,
-    insightHasMeasures,
-} from "@gooddata/sdk-model";
+import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type GeoBasemap, type GeoColorScheme, doesGeoBasemapSupportColorScheme } from "@gooddata/sdk-ui-geo";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -19,7 +14,12 @@ import {
     ConfigurationPanelContent,
     type IConfigurationPanelContentProps,
 } from "./ConfigurationPanelContent.js";
-import { hasColorMeasure, hasSegmentAttribute } from "./geoInsightBucketUtils.js";
+import {
+    hasColorMeasure,
+    hasSegmentAttribute,
+    hasSizeMeasure,
+    isPushpinClusteringEditable,
+} from "./geoInsightBucketUtils.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -30,9 +30,11 @@ import {
 import {
     isGeoBasemapConfigEnabled,
     isGeoChartsViewportConfigEnabled,
+    isGeoPushpinIconEnabled,
     isGeoSatelliteBasemapEnabled,
 } from "../../constants/featureFlags.js";
 import { sanitizeGeoMapStyleOptions } from "../../constants/geoMapStyle.js";
+import { type IDropdownItem } from "../../interfaces/Dropdown.js";
 import { BasemapDropdownControl } from "../configurationControls/BasemapDropdownControl.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
@@ -40,11 +42,14 @@ import { ColorSchemeDropdownControl } from "../configurationControls/ColorScheme
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
 import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSection.js";
+import { PushpinShapeControl } from "../configurationControls/PushpinShapeControl.js";
 import { PushpinSizeControl } from "../configurationControls/PushpinSizeControl.js";
 import { PushpinViewportControl } from "../configurationControls/PushpinViewportControl.js";
 
 interface IGeoPushpinConfigurationPanelProps extends IConfigurationPanelContentProps {
     getCurrentMapView?: () => ICurrentMapView;
+    spriteIcons?: IDropdownItem[];
+    hasGeoIconLabel?: boolean;
 }
 
 export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeoPushpinConfigurationPanelProps> {
@@ -143,11 +148,16 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
     protected renderPointsSection(): ReactElement {
         const { groupNearbyPoints } = this.getControlProperties();
 
-        const { properties, propertiesMeta, pushData, insight } = this.props;
+        const { properties, propertiesMeta, pushData, insight, featureFlags, spriteIcons, hasGeoIconLabel } =
+            this.props;
         const isControlDisabled = this.isControlDisabled();
-        const isClusteringDisabled =
-            isControlDisabled || insightHasMeasures(insight!) || hasSegmentAttribute(insight);
+        const iconEnabled = isGeoPushpinIconEnabled(featureFlags);
+        const shapeType = properties?.controls?.["points"]?.shapeType ?? "circle";
+        const isIconShape = shapeType === "iconByValue" || shapeType === "oneIcon";
+        const shouldRenderPushpinSizeControl = isIconShape === false;
+        const isClusteringDisabled = isControlDisabled || !isPushpinClusteringEditable(insight, shapeType);
         const isPushpinSizeControlDisabled = isControlDisabled || !hasSizeMeasure(insight);
+        const hasSizeOrColorMeasure = hasSizeMeasure(insight) || hasColorMeasure(insight);
         return (
             <ConfigSection
                 id="points_section"
@@ -165,11 +175,23 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
                     showDisabledMessage={isClusteringDisabled}
                     pushData={pushData}
                 />
-                <PushpinSizeControl
-                    properties={properties!}
-                    disabled={isPushpinSizeControlDisabled}
-                    pushData={pushData!}
-                />
+                {iconEnabled ? (
+                    <PushpinShapeControl
+                        properties={properties!}
+                        disabled={isControlDisabled}
+                        pushData={pushData!}
+                        spriteIcons={spriteIcons}
+                        hasGeoIconLabel={hasGeoIconLabel}
+                        hasSizeOrColorMeasure={hasSizeOrColorMeasure}
+                    />
+                ) : null}
+                {shouldRenderPushpinSizeControl ? (
+                    <PushpinSizeControl
+                        properties={properties!}
+                        disabled={isPushpinSizeControlDisabled}
+                        pushData={pushData!}
+                    />
+                ) : null}
             </ConfigSection>
         );
     }
@@ -224,15 +246,6 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
             />
         );
     }
-}
-
-function hasSizeMeasure(insight: IInsightDefinition | undefined): boolean {
-    if (!insight) {
-        return false;
-    }
-    const bucket = insightBucket(insight, BucketNames.SIZE);
-
-    return bucket !== undefined && !bucketIsEmpty(bucket);
 }
 
 function hasLocationAttribute(insight: IInsightDefinition | undefined): boolean {

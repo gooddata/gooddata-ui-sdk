@@ -49,7 +49,7 @@ export function buildGeoVisualizationConfig({
     featureFlags,
 }: IBuildGeoConfigParams): IGeoChartConfig {
     const { config = {}, customVisualizationConfig = {}, a11yTitle } = options;
-    const { center, zoom, legend, viewport = {}, ...restSupportedControls } = supportedControls;
+    const { center, zoom, bounds, legend, viewport = {}, ...restSupportedControls } = supportedControls;
     const {
         basemap: rawBasemap,
         tileset: legacyTileset,
@@ -80,6 +80,7 @@ export function buildGeoVisualizationConfig({
         ? {
               ...(center ? { center } : {}),
               ...(typeof zoom === "number" ? { zoom } : {}),
+              ...(isViewportConfigEnabled && bounds ? { bounds } : {}),
           }
         : {};
 
@@ -150,6 +151,7 @@ export function buildGeoVisualizationConfig({
 const supportedGeoConfigProperties = new Set<keyof IGeoChartConfig>([
     "center",
     "zoom",
+    "bounds",
     "cooperativeGestures",
     "legend",
     "limit",

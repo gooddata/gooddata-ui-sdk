@@ -1,0 +1,2250 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "/gaac/visualisation",
+    "title": "Visualisation",
+    "description": "JSON schema for Gooddata Analytics Visualisation",
+    "properties": {
+        "type": {
+            "description": "Type of visualisation.",
+            "type": "string",
+            "enum": [
+                "table",
+                "bar_chart",
+                "column_chart",
+                "line_chart",
+                "area_chart",
+                "scatter_chart",
+                "bubble_chart",
+                "pie_chart",
+                "donut_chart",
+                "treemap_chart",
+                "pyramid_chart",
+                "funnel_chart",
+                "heatmap_chart",
+                "bullet_chart",
+                "waterfall_chart",
+                "dependency_wheel_chart",
+                "sankey_chart",
+                "headline_chart",
+                "combo_chart",
+                "geo_chart",
+                "geo_area_chart",
+                "repeater_chart"
+            ]
+        }
+    },
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["table"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Table",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["table"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "rows": {
+                        "type": "array",
+                        "description": "A list of rows attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "A list of columns attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["bar_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Bar Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["bar_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "stack_by": {
+                        "type": "array",
+                        "description": "A list of stack by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["column_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Column Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["column_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "stack_by": {
+                        "type": "array",
+                        "description": "A list of stack by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["line_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Line Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["line_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "trend_by": {
+                        "type": "array",
+                        "description": "A list of trend by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["area_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Area Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["area_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "stack_by": {
+                        "type": "array",
+                        "description": "A list of stack by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["scatter_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Scatter Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["scatter_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "oneOf": [{ "$ref": "#/$defs/bucketItem" }, { "$ref": "#/$defs/bucketEmptyItem" }]
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "attributes": {
+                        "type": "array",
+                        "description": "A list of attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attribute in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["bubble_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Bubble Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["bubble_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "oneOf": [{ "$ref": "#/$defs/bucketItem" }, { "$ref": "#/$defs/bucketEmptyItem" }]
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of size metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "size_by": {
+                        "type": "array",
+                        "description": "A list of size metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["pie_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Pie Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["pie_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["donut_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Pie Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["donut_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["treemap_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Treemap Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["treemap_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["pyramid_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Pyramid Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["pyramid_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["funnel_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Funnel Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["funnel_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["heatmap_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Heatmap Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["heatmap_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "rows": {
+                        "type": "array",
+                        "description": "A list of rows attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "A list of columns attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["bullet_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Bullet Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["bullet_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "oneOf": [{ "$ref": "#/$defs/bucketItem" }, { "$ref": "#/$defs/bucketEmptyItem" }]
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["waterfall_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Waterfall Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["waterfall_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["dependency_wheel_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Dependency Wheel Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["dependency_wheel_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "oneOf": [{ "$ref": "#/$defs/bucketItem" }, { "$ref": "#/$defs/bucketEmptyItem" }]
+                        }
+                    },
+                    "from": {
+                        "description": "A from attribute in this visualisation.",
+                        "$ref": "#/$defs/bucketItem"
+                    },
+                    "to": {
+                        "description": "A to attribute in this visualisation.",
+                        "$ref": "#/$defs/bucketItem"
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["sankey_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Sankey Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["sankey_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "oneOf": [{ "$ref": "#/$defs/bucketItem" }, { "$ref": "#/$defs/bucketEmptyItem" }]
+                        }
+                    },
+                    "from": {
+                        "description": "A from attribute in this visualisation.",
+                        "$ref": "#/$defs/bucketItem"
+                    },
+                    "to": {
+                        "description": "A to attribute in this visualisation.",
+                        "$ref": "#/$defs/bucketItem"
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["headline_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Headline Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["headline_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["combo_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Combo Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["combo_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "Not used in this graph type."
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["geo_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Geo Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["geo_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "oneOf": [{ "$ref": "#/$defs/bucketItem" }, { "$ref": "#/$defs/bucketEmptyItem" }]
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by locations in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketPushpinLocationItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "layers": {
+                        "type": "array",
+                        "description": "A list of data layers in this visualisation. Layer buckets reuse the root-level query definition.",
+                        "items": {
+                            "$ref": "#/$defs/layerItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["geo_area_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Geo Area Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["geo_area_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by locations in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketGeoAreaItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "layers": {
+                        "type": "array",
+                        "description": "A list of data layers in this visualisation. Layer buckets reuse the root-level query definition.",
+                        "items": {
+                            "$ref": "#/$defs/layerItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": ["repeater_chart"]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "title": "Repeater Chart",
+                "additionalProperties": false,
+                "properties": {
+                    "type": {
+                        "description": "Type of visualisation.",
+                        "type": "string",
+                        "enum": ["repeater_chart"]
+                    },
+                    "id": {
+                        "$ref": "/gaac/identifier",
+                        "description": "A unique identifier of the visualisation.",
+                        "$semantic": [
+                            {
+                                "type": "uniqueness",
+                                "source": "visualisation.id",
+                                "code": "core.uniqueness.visualisations.id"
+                            },
+                            {
+                                "type": "definition",
+                                "source": "visualisation.id"
+                            }
+                        ]
+                    },
+                    "title": {
+                        "$ref": "/gaac/title",
+                        "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
+                    },
+                    "description": {
+                        "$ref": "/gaac/description",
+                        "description": "An optional description of the visualisation."
+                    },
+                    "tags": {
+                        "$ref": "/gaac/tags",
+                        "description": "A list of strings - metadata tags of this visualisation."
+                    },
+                    "show_in_ai_results": {
+                        "type": "boolean",
+                        "description": "Optional flag to indicate if the visualisation should be shown in AI results. When omitted, the visualisation is visible."
+                    },
+                    "is_hidden": {
+                        "type": "boolean",
+                        "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                        "deprecated": true
+                    },
+                    "query": {
+                        "$ref": "/gaac/query",
+                        "description": "Query definition of visualisation."
+                    },
+                    "config": {
+                        "$ref": "/gaac/config",
+                        "description": "Configuration of visualisation of defined type."
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "view_by": {
+                        "type": "array",
+                        "description": "A list of view by locations in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "segment_by": {
+                        "type": "array",
+                        "description": "A list of segment by attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "rows": {
+                        "type": "array",
+                        "description": "A list of rows attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "A list of columns attributes in this visualisation.",
+                        "items": {
+                            "$ref": "#/$defs/bucketItem"
+                        }
+                    }
+                },
+                "required": ["id", "type", "query"]
+            }
+        }
+    ],
+    "required": ["type"],
+    "$defs": {
+        "bucketItem": {
+            "title": "Bucket",
+            "$semantic": {
+                "type": "reference",
+                "sources": ["current.query.metric.localId", "current.query.attribute.localId"]
+            },
+            "oneOf": [
+                {
+                    "title": "Simple Bucket",
+                    "type": "string",
+                    "$semantic": {
+                        "type": "reference",
+                        "sources": ["current.query.metric.localId", "current.query.attribute.localId"]
+                    }
+                },
+                {
+                    "title": "Complex Bucket",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "field": {
+                            "type": "string",
+                            "description": "A field name in the report.",
+                            "$semantic": {
+                                "type": "reference",
+                                "sources": ["current.query.metric.localId", "current.query.attribute.localId"]
+                            }
+                        },
+                        "format": {
+                            "type": "string",
+                            "description": "Metric value default format"
+                        },
+                        "axis": {
+                            "type": "string",
+                            "description": "Axis to use for this bucket. Only applicable for \"combo\" charts.",
+                            "enum": ["primary", "secondary"]
+                        },
+                        "display_as": {
+                            "type": "string",
+                            "description": "Chart type to use for this bucket. Only applicable for \"repeater\" charts.",
+                            "enum": ["line", "column", "metric"]
+                        },
+                        "totals": {
+                            "type": "array",
+                            "description": "A list of totals in this bucket.",
+                            "items": {
+                                "$ref": "#/$defs/totalItem"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "bucketLocationItem": {
+            "title": "Location Bucket",
+            "type": "string",
+            "$semantic": {
+                "type": "reference",
+                "sources": ["current.query.location.localId"]
+            }
+        },
+        "bucketPushpinLocationItem": {
+            "title": "Pushpin Location Bucket",
+            "type": "string",
+            "$semantic": {
+                "type": "reference",
+                "sources": ["current.query.location.pushpin.localId"]
+            }
+        },
+        "bucketGeoAreaItem": {
+            "title": "Geo Area Bucket",
+            "type": "string",
+            "$semantic": {
+                "type": "reference",
+                "sources": ["current.query.location.geo_area.localId"]
+            }
+        },
+        "bucketEmptyItem": {
+            "title": "Empty Bucket",
+            "type": "null"
+        },
+        "totalItem": {
+            "title": "Total",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["SUM", "AVG", "MAX", "MIN", "MED", "NAT"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "A total title."
+                },
+                "using": {
+                    "type": "string",
+                    "description": "Local metric identifier to use for this total.",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "current.query.metric.localId"
+                    }
+                }
+            },
+            "required": ["type", "using"]
+        },
+        "layerItemBase": {
+            "title": "Visualization Data Layer",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the visualization data layer."
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the layer. Will be derived from id if not provided explicitly."
+                },
+                "type": {
+                    "type": "string",
+                    "description": "Type of visualisation for this layer.",
+                    "enum": ["pushpin", "area"]
+                },
+                "config": {
+                    "$ref": "/gaac/config",
+                    "description": "Configuration of layer of defined type."
+                },
+                "metrics": {
+                    "type": "array",
+                    "description": "A list of metrics in this layer.",
+                    "items": {
+                        "oneOf": [{ "$ref": "#/$defs/bucketItem" }, { "$ref": "#/$defs/bucketEmptyItem" }]
+                    }
+                },
+                "view_by": {
+                    "type": "array",
+                    "description": "A list of view by locations in this layer.",
+                    "items": {
+                        "$ref": "#/$defs/bucketLocationItem"
+                    }
+                },
+                "segment_by": {
+                    "type": "array",
+                    "description": "A list of segment by attributes in this layer.",
+                    "items": {
+                        "$ref": "#/$defs/bucketItem"
+                    }
+                }
+            },
+            "required": ["id"]
+        },
+        "layerItem": {
+            "allOf": [
+                {
+                    "$ref": "#/$defs/layerItemBase"
+                },
+                {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "type": {
+                                    "const": "pushpin"
+                                },
+                                "view_by": {
+                                    "type": "array",
+                                    "description": "A list of view by locations in this layer.",
+                                    "items": {
+                                        "$ref": "#/$defs/bucketPushpinLocationItem"
+                                    }
+                                }
+                            },
+                            "required": ["type"]
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "const": "area"
+                                },
+                                "view_by": {
+                                    "type": "array",
+                                    "description": "A list of view by locations in this layer.",
+                                    "items": {
+                                        "$ref": "#/$defs/bucketGeoAreaItem"
+                                    }
+                                }
+                            },
+                            "required": ["type"]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

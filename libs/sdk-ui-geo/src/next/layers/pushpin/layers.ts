@@ -10,6 +10,7 @@ import {
     PUSHPIN_STYLE_CIRCLE_COLOR,
     PUSHPIN_STYLE_CIRCLE_SIZE,
     PUSHPIN_STYLE_CIRCLE_STROKE_COLOR,
+    PUSHPIN_STYLE_FEATURE_PROPERTIES,
 } from "./constants.js";
 import { getMinMax } from "./size/calculations.js";
 import { DEFAULT_CLUSTER_FILTER, DEFAULT_CLUSTER_LABELS_CONFIG } from "../../map/runtime/mapConfig.js";
@@ -68,7 +69,7 @@ export const UNCLUSTER_FILTER: ExpressionSpecification = ["!", ["has", "point_co
 
 const UNCLUSTER_COLOR: ExpressionSpecification = [
     "coalesce",
-    ["get", "color_background"],
+    ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBackground],
     "rgba(20,178,226,0.7)",
 ];
 
@@ -125,7 +126,7 @@ function createPushpinSizeOptions(
     // Use coalesce to handle null pushpinSize values
     const sizeExpression: ExpressionSpecification = [
         "step",
-        ["coalesce", ["get", "pushpinSize"], minSizeInPixel],
+        ["coalesce", ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.size], minSizeInPixel],
         Math.round(minSizeInPixel / 2), // a
         getStopPointSize(1),
         Math.round(getStopPointSize(1) / 2), // ar^1
@@ -176,8 +177,16 @@ export function createPushpinDataLayer(
         paint: {
             ...DEFAULT_PUSHPIN_OPTIONS,
             // Use data-driven styling from flattened feature properties
-            [PUSHPIN_STYLE_CIRCLE_COLOR]: ["coalesce", ["get", "color_background"], "rgba(20,178,226,0.7)"],
-            [PUSHPIN_STYLE_CIRCLE_STROKE_COLOR]: ["coalesce", ["get", "color_border"], "rgb(233,237,241)"],
+            [PUSHPIN_STYLE_CIRCLE_COLOR]: [
+                "coalesce",
+                ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBackground],
+                "rgba(20,178,226,0.7)",
+            ],
+            [PUSHPIN_STYLE_CIRCLE_STROKE_COLOR]: [
+                "coalesce",
+                ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBorder],
+                "rgb(233,237,241)",
+            ],
             [PUSHPIN_STYLE_CIRCLE_SIZE]: createPushpinSizeOptions(geoData, geoPointsConfig),
         },
     };
@@ -231,6 +240,47 @@ export function createClusterLabels(dataSourceName: string, layerId?: string): S
     };
 }
 
+/**
+ * Creates a pushpin icon (symbol) layer for icon-based shape types.
+ *
+ * @param dataSourceName - Name of the GeoJSON data source
+ * @param config - Geo chart configuration
+ * @param geoData - Geographic data for metric-based sizing
+ * @param layerId - Optional custom layer ID (defaults to DEFAULT_LAYER_NAME)
+ * @returns MapLibre symbol layer specification
+ *
+ * @internal
+ */
+export function createPushpinIconLayer(
+    dataSourceName: string,
+    config: IGeoPushpinChartConfig,
+    _geoData: IPushpinGeoData,
+    layerId: string = DEFAULT_LAYER_NAME,
+): SymbolLayerSpecification {
+    const { selectedSegmentItems = [], points: geoPointsConfig = {} } = config || {};
+    const shapeType = geoPointsConfig.shapeType ?? "circle";
+    const staticIcon = geoPointsConfig.icon ?? "";
+
+    const iconImage: ExpressionSpecification | string =
+        shapeType === "iconByValue" ? ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.iconName] : staticIcon;
+
+    const layer: SymbolLayerSpecification = {
+        id: layerId,
+        type: "symbol",
+        source: dataSourceName,
+        layout: {
+            "icon-image": iconImage,
+            "icon-allow-overlap": true,
+            "icon-size": 1,
+        },
+    };
+
+    if (selectedSegmentItems.length > 0) {
+        layer.filter = createPushpinFilter(selectedSegmentItems);
+    }
+
+    return layer;
+}
 /**
  * Create layer for un-clustered points which are not close to others
  *

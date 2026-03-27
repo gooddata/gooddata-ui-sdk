@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { cloneDeep, set } from "lodash-es";
+import { cloneDeep, isEqual, set } from "lodash-es";
 
 import {
     type IAnalyticalBackend,
@@ -17,8 +17,13 @@ import {
     insightSorts,
     insightTitle,
 } from "@gooddata/sdk-model";
-import { GeoLocationMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
-import { type IGeoChartConfig, type IGeoLayer, isGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
+import { BucketNames, GeoLocationMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    type GeoChartShapeType,
+    type IGeoChartConfig,
+    type IGeoLayer,
+    isGeoLayerPushpin,
+} from "@gooddata/sdk-ui-geo";
 import {
     GeoChartInternal,
     PUSHPIN_LAYER_ID,
@@ -32,6 +37,7 @@ import {
     getLatitudeAttribute,
     getLocationProperties,
     getPrimaryLayerControls,
+    hasGeoIconDisplayForm,
 } from "./geoAttributeHelper.js";
 import { buildGeoVisualizationConfig } from "./geoConfigBuilder.js";
 import {
@@ -41,9 +47,13 @@ import {
     sanitizeMeasures,
 } from "./geoPushpinBucketHelper.js";
 import { BUCKETS } from "../../../constants/bucket.js";
-import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
+import {
+    isGeoChartsViewportConfigEnabled,
+    isGeoPushpinIconEnabled,
+} from "../../../constants/featureFlags.js";
 import { GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
+import { type IDropdownItem } from "../../../interfaces/Dropdown.js";
 import {
     EmptyAfmSdkError,
     type IExtendedReferencePoint,
@@ -57,6 +67,10 @@ import { configurePercent } from "../../../utils/bucketConfig.js";
 import { limitNumberOfMeasuresInBuckets } from "../../../utils/bucketHelper.js";
 import { routeLocalIdRefFiltersToLayers } from "../../../utils/filters/routeLocalIdRefFiltersToLayers.js";
 import { sanitizeGeoReferencePointFilters } from "../../../utils/filters/sanitizeGeoReferencePointFilters.js";
+import {
+    isPushpinClusteringEditable,
+    isPushpinClusteringEditableForBuckets,
+} from "../../../utils/geoPushpinCompatibility.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
@@ -70,7 +84,8 @@ import { LiveMapViewTracker, createSyncedViewportHandlers } from "../geoCommon/l
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 
 /**
- * Geo pushpin charts support max 2 measures: one for size and one for color
+ * Geo pushpin charts support max 2 measures: size + color, or icon metric alone.
+ * Tooltip metric is independent and doesn't count toward this limit.
  */
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 
@@ -87,7 +102,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     private backend: IAnalyticalBackend;
     private workspace: string;
     private liveMapView = new LiveMapViewTracker();
-
+    private spriteIcons: IDropdownItem[] = [];
+    private loadedSpriteIconsKey?: string;
+    private loadingSpriteIconsKey?: string;
+    private cachedHasGeoIconLabel = false;
     constructor(props: IVisConstruct) {
         super(props);
         this.type = VisualizationTypes.PUSHPIN;
@@ -95,6 +113,19 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         this.workspace = props.projectId;
         this.initializeProperties(props.visualizationProperties);
         this.initializePropertiesMeta();
+    }
+
+    public override haveSomePropertiesRelevantForReferencePointChanged(
+        currentReferencePoint: IReferencePoint,
+        nextReferencePoint: IReferencePoint,
+    ): boolean {
+        return (
+            getPushpinShapeType(currentReferencePoint) !== getPushpinShapeType(nextReferencePoint) ||
+            !isEqual(
+                currentReferencePoint?.properties?.sortItems ?? [],
+                nextReferencePoint?.properties?.sortItems ?? [],
+            )
+        );
     }
 
     // Clear stale propertiesMeta synchronously. useGeoPushData will push the
@@ -125,10 +156,14 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         return super
             .getExtendedReferencePoint(referencePoint)
             .then((extendedReferencePoint: IExtendedReferencePoint) => {
-                let newReferencePoint: IExtendedReferencePoint = setGeoPushpinUiConfig(
-                    extendedReferencePoint,
+                let newReferencePoint: IExtendedReferencePoint =
+                    this.getResolvedReferencePointWithFallback(extendedReferencePoint);
+                newReferencePoint = disableClusteringIfNotEditable(newReferencePoint);
+                newReferencePoint = setGeoPushpinUiConfig(
+                    newReferencePoint,
                     this.intl,
                     this.type,
+                    this.featureFlags,
                 );
                 newReferencePoint = configurePercent(newReferencePoint, true);
                 newReferencePoint = removeSort(newReferencePoint);
@@ -140,12 +175,23 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                     updated.buckets,
                     enableImprovedAdFilters,
                 );
+                // Cache geo icon label availability for renderConfigurationPanel.
+                // The reference point carries displayForms metadata that the insight does not.
+                if (isGeoPushpinIconEnabled(this.featureFlags)) {
+                    const uiConfig = this.getUiConfig();
+                    const locItem = getLocationItems(updated.buckets, uiConfig)[0];
+                    this.cachedHasGeoIconLabel = locItem ? hasGeoIconDisplayForm(locItem) : false;
+                }
+
                 return { ...updated, filters: sanitizedFilters };
             });
     }
 
     public override getUiConfig(): IUiConfig {
         const config = cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
+        if (!isGeoPushpinIconEnabled(this.featureFlags)) {
+            delete config.buckets[BucketNames.MEASURES];
+        }
         this.addMetricToFiltersIfEnabled(config);
         return config;
     }
@@ -162,11 +208,28 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         extendedReferencePoint: IExtendedReferencePoint,
     ): IExtendedReferencePoint {
         const sanitized = sanitizeMeasures(extendedReferencePoint);
-        const buckets = limitNumberOfMeasuresInBuckets(sanitized.buckets, NUMBER_MEASURES_IN_BUCKETS_LIMIT);
+
+        // Separate the MEASURES bucket (tooltip metrics) before limiting —
+        // the 2-measure limit applies only to size + color, not to tooltip metrics.
+        const measuresBucket = sanitized.buckets.find((b) => b.localIdentifier === BucketNames.MEASURES);
+        const bucketsWithoutMeasures = sanitized.buckets.filter(
+            (b) => b.localIdentifier !== BucketNames.MEASURES,
+        );
+        const limitedBuckets = limitNumberOfMeasuresInBuckets(
+            bucketsWithoutMeasures,
+            NUMBER_MEASURES_IN_BUCKETS_LIMIT,
+        );
+        const buckets = measuresBucket ? [...limitedBuckets, measuresBucket] : limitedBuckets;
 
         const uiConfig = this.getUiConfig();
-        const { sizeMeasures, colorMeasures } = distributeMeasures(buckets, uiConfig);
-        const configuredBuckets = createConfiguredBuckets(buckets, sizeMeasures, colorMeasures, uiConfig);
+        const { sizeMeasures, colorMeasures, metricMeasures } = distributeMeasures(buckets, uiConfig);
+        const configuredBuckets = createConfiguredBuckets(
+            buckets,
+            sizeMeasures,
+            colorMeasures,
+            metricMeasures,
+            uiConfig,
+        );
 
         set(sanitized, BUCKETS, configuredBuckets);
         return sanitized;
@@ -185,8 +248,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         }
 
         const referencePointConfigured = cloneDeep(referencePoint);
-        const visualizationProperties = this.visualizationProperties || {};
-        const { controls = {} } = visualizationProperties;
+        const controls = referencePointConfigured.properties?.controls ?? {};
         const locationProperties = getLocationProperties(locationItem);
 
         // Don't add groupNearbyPoints if it wasn't already in the properties.
@@ -306,20 +368,80 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         );
     }
 
+    private clearSpriteIcons(): void {
+        this.spriteIcons = [];
+        this.loadedSpriteIconsKey = undefined;
+        this.loadingSpriteIconsKey = undefined;
+    }
+
+    private async loadSpriteIcons(spriteIconsKey: string): Promise<void> {
+        this.spriteIcons = [];
+        this.loadedSpriteIconsKey = undefined;
+        this.loadingSpriteIconsKey = spriteIconsKey;
+
+        try {
+            const iconNames = await this.backend.geo().getDefaultStyleSpriteIcons();
+
+            if (this.loadingSpriteIconsKey !== spriteIconsKey) {
+                return;
+            }
+
+            this.spriteIcons = iconNames.map((name): IDropdownItem => ({ title: name, value: name }));
+            this.loadedSpriteIconsKey = spriteIconsKey;
+            this.loadingSpriteIconsKey = undefined;
+            // Sprite metadata arrives asynchronously, so the already-rendered panel
+            // must be rerendered to expose the updated icon choices.
+            this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+        } catch {
+            if (this.loadingSpriteIconsKey !== spriteIconsKey) {
+                return;
+            }
+
+            this.spriteIcons = [];
+            this.loadedSpriteIconsKey = spriteIconsKey;
+            this.loadingSpriteIconsKey = undefined;
+            this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+        }
+    }
+
+    private syncSpriteIcons(): void {
+        const spriteIconsKey = this.featureFlags?.["geoIconSheet"];
+        if (typeof spriteIconsKey !== "string" || !spriteIconsKey) {
+            this.clearSpriteIcons();
+            return;
+        }
+
+        if (this.loadedSpriteIconsKey === spriteIconsKey || this.loadingSpriteIconsKey === spriteIconsKey) {
+            return;
+        }
+
+        void this.loadSpriteIcons(spriteIconsKey);
+    }
+
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
         const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(this.featureFlags);
+        const iconEnabled = isGeoPushpinIconEnabled(this.featureFlags);
         this.liveMapView.resetIfInsightChanged(insight);
 
+        if (iconEnabled) {
+            this.syncSpriteIcons();
+        } else {
+            this.clearSpriteIcons();
+        }
+
+        // Use cached value from getExtendedReferencePoint — the reference point
+        // carries displayForms metadata that the insight parameter does not.
+        const hasGeoIconLabel = iconEnabled && this.cachedHasGeoIconLabel;
+
         if (configPanelElement) {
+            const resolvedProperties = this.getResolvedVisualizationPropertiesWithFallback(insight);
+
             this.renderFun(
                 <GeoPushpinConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
-                    properties={getGeoVisualizationPropertiesWithFallback(
-                        this.visualizationProperties,
-                        this.getInsightControlsWithFallback(insight),
-                    )}
+                    properties={resolvedProperties}
                     references={this.references}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
@@ -331,6 +453,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                     permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                     getCurrentMapView={isViewportConfigEnabled ? this.getCurrentMapView : undefined}
+                    spriteIcons={this.spriteIcons}
+                    hasGeoIconLabel={hasGeoIconLabel}
                 />,
                 configPanelElement,
             );
@@ -395,6 +519,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             onDrill: this.onDrill,
             onCenterPositionChanged: isViewportConfigEnabled ? this.handleCenterPositionChanged : undefined,
             onZoomChanged: isViewportConfigEnabled ? this.handleZoomChanged : undefined,
+            onBoundsChanged: isViewportConfigEnabled ? this.handleBoundsChanged : undefined,
+            onViewportInteractionEnd: isViewportConfigEnabled
+                ? this.handleViewportInteractionEnded
+                : undefined,
         };
 
         this.renderFun(<GeoChartInternal {...geoChartProps} />, this.getElement());
@@ -404,10 +532,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         options: IVisProps,
         insight: IInsightDefinition,
     ): { primaryLayer: IGeoLayer; config: IGeoChartConfig; filters: IFilter[] } | undefined {
-        const controlsWithFallback = getGeoControlsWithFallback(
-            this.visualizationProperties,
-            this.getInsightControlsWithFallback(insight),
-        );
+        const controlsWithFallback =
+            this.getResolvedVisualizationPropertiesWithFallback(insight).controls ?? {};
         const fullConfig = this.buildGeoVisualizationConfig(options, controlsWithFallback);
         const filters = insightFilters(insight);
         const sortBy = insightSorts(insight);
@@ -483,6 +609,33 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         };
     }
 
+    private getResolvedVisualizationPropertiesWithFallback(
+        insight: IInsightDefinition,
+    ): IVisualizationProperties {
+        const visualizationPropertiesWithFallback = getGeoVisualizationPropertiesWithFallback(
+            this.visualizationProperties,
+            this.getInsightControlsWithFallback(insight),
+        );
+
+        return disableClusteringInVisualizationPropertiesWhenNotEditable(
+            visualizationPropertiesWithFallback,
+            insight,
+        );
+    }
+
+    private getResolvedReferencePointWithFallback(
+        referencePoint: IExtendedReferencePoint,
+    ): IExtendedReferencePoint {
+        return set(
+            cloneDeep(referencePoint),
+            "properties",
+            getGeoVisualizationPropertiesWithFallback(
+                this.visualizationProperties ?? {},
+                referencePoint.properties?.controls ?? {},
+            ),
+        );
+    }
+
     private syncedHandlers = createSyncedViewportHandlers(this.liveMapView, {
         getEnvironment: () => this.environment,
         getVisualizationProperties: () => this.visualizationProperties,
@@ -494,5 +647,36 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
 
     private handleCenterPositionChanged = this.syncedHandlers.handleCenterPositionChanged;
     private handleZoomChanged = this.syncedHandlers.handleZoomChanged;
+    private handleBoundsChanged = this.syncedHandlers.handleBoundsChanged;
+    private handleViewportInteractionEnded = this.syncedHandlers.handleViewportInteractionEnded;
     private getCurrentMapView = () => this.liveMapView.getCurrentMapView(this.visualizationProperties);
+}
+
+function disableClusteringIfNotEditable(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    let updatedReferencePoint = referencePoint;
+    const shapeType = getPushpinShapeType(referencePoint);
+    const clusteringEnabled = referencePoint.properties?.controls?.["points"]?.groupNearbyPoints === true;
+
+    if (clusteringEnabled && !isPushpinClusteringEditableForBuckets(referencePoint.buckets, shapeType)) {
+        updatedReferencePoint = set(referencePoint, "properties.controls.points.groupNearbyPoints", false);
+    }
+
+    return updatedReferencePoint;
+}
+
+function disableClusteringInVisualizationPropertiesWhenNotEditable(
+    visualizationProperties: IVisualizationProperties,
+    insight: IInsightDefinition,
+): IVisualizationProperties {
+    const shapeType = getPushpinShapeType({ properties: visualizationProperties });
+
+    if (isPushpinClusteringEditable(insight, shapeType)) {
+        return visualizationProperties;
+    }
+
+    return set(cloneDeep(visualizationProperties), "controls.points.groupNearbyPoints", false);
+}
+
+function getPushpinShapeType(referencePoint: Pick<IReferencePoint, "properties">): GeoChartShapeType {
+    return referencePoint.properties?.controls?.["points"]?.shapeType ?? "circle";
 }

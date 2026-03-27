@@ -1,6 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { type ComponentType, memo } from "react";
+import { type ComponentType, memo, useCallback, useState } from "react";
 
 import { cloneDeep, set } from "lodash-es";
 import { type WrappedComponentProps, injectIntl } from "react-intl";
@@ -30,6 +30,8 @@ export interface IDropdownControlProps {
     showDisabledMessage?: boolean;
     disabledMessageAlignPoints?: IAlignPoint[];
     customListItem?: ComponentType<ISingleSelectListItemProps>;
+    showSearch?: boolean;
+    searchPlaceholder?: string;
 
     pushData?(data: any): void;
 }
@@ -50,9 +52,24 @@ export const DropdownControl = injectIntl(
         showDisabledMessage = false,
         disabledMessageAlignPoints,
         customListItem: ListItem = SingleSelectListItem,
+        showSearch = false,
+        searchPlaceholder,
         pushData,
         intl,
     }: IDropdownControlProps & WrappedComponentProps) {
+        const [searchString, setSearchString] = useState("");
+        const onSearch = useCallback((value: string) => setSearchString(value), []);
+
+        const filteredItems =
+            showSearch && searchString
+                ? items.filter(
+                      (item) =>
+                          item.type === "header" ||
+                          item.type === "separator" ||
+                          (item.title ?? "").toLowerCase().includes(searchString.toLowerCase()),
+                  )
+                : items;
+
         const getSelectedItem = (value: string | number): IDropdownItem | undefined => {
             if (items) {
                 return items.find((item) => item.value === value);
@@ -106,12 +123,21 @@ export const DropdownControl = injectIntl(
                             closeOnParentScroll
                             closeOnMouseDrag
                             alignPoints={DROPDOWN_ALIGNMENTS}
+                            onOpenStateChanged={(isOpen) => {
+                                if (!isOpen) {
+                                    setSearchString("");
+                                }
+                            }}
                             renderBody={({ closeDropdown, isMobile }) => {
                                 return (
                                     <DropdownList
                                         width={width}
                                         isMobile={isMobile}
-                                        items={items}
+                                        items={filteredItems}
+                                        showSearch={showSearch}
+                                        searchString={searchString}
+                                        onSearch={onSearch}
+                                        searchPlaceholder={searchPlaceholder}
                                         renderItem={({ item }) => (
                                             <ListItem
                                                 title={item.title}

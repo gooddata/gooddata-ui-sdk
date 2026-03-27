@@ -1,15 +1,13 @@
 // (C) 2024-2026 GoodData Corporation
 
-/* eslint-disable */
 /* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-10-18T09:13:34.478Z; */
-// @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
+    type IAttribute,
+    type IMeasure,
+    type IMeasureDefinition,
+    idRef,
     newAttribute,
     newMeasure,
-    IAttribute,
-    IMeasure,
-    IMeasureDefinition,
-    idRef,
 } from "@gooddata/sdk-model";
 
 /**

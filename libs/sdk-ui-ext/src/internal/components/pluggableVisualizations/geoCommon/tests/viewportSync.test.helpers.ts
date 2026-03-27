@@ -19,6 +19,7 @@ export interface ICreateComponentOverrides {
 interface IGeoChartCallbackProps {
     onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
     onZoomChanged?: (zoom: number) => void;
+    onViewportInteractionEnd?: () => void;
 }
 
 /**
@@ -38,10 +39,9 @@ export function extractGeoChartCallbacks(mockRenderFun: Mock): IGeoChartCallback
 }
 
 /**
- * Fires center and zoom callbacks on the chart and asserts that pushData
+ * Fires center and zoom callbacks on the chart, commits the interaction,
+ * and asserts that pushData
  * was called with the expected viewport values and `ignoreUndoRedo: true`.
- *
- * The sync is coalesced via a microtask, so we await before asserting.
  */
 export async function fireAndExpectViewportSync(
     mockRenderFun: Mock,
@@ -53,9 +53,7 @@ export async function fireAndExpectViewportSync(
 
     chartProps.onCenterPositionChanged?.(newCenter);
     chartProps.onZoomChanged?.(newZoom);
-
-    // Flush the coalesced microtask sync
-    await Promise.resolve();
+    chartProps.onViewportInteractionEnd?.();
 
     const viewportCalls = pushData.mock.calls.filter((call) => call[0]?.ignoreUndoRedo === true);
     expect(viewportCalls.length).toBeGreaterThanOrEqual(1);
@@ -66,7 +64,8 @@ export async function fireAndExpectViewportSync(
 }
 
 /**
- * Fires center and zoom callbacks on the chart and asserts that no
+ * Fires center and zoom callbacks on the chart without committing a user interaction
+ * and asserts that no
  * viewport sync (`ignoreUndoRedo: true`) pushData calls were made.
  *
  * Filters by `ignoreUndoRedo` so the assertion is robust even if
@@ -83,9 +82,6 @@ export async function fireAndExpectNoViewportSync(
 
     chartProps.onCenterPositionChanged?.(newCenter);
     chartProps.onZoomChanged?.(newZoom);
-
-    // Flush the coalesced microtask sync
-    await Promise.resolve();
 
     const viewportCallsAfter = pushData.mock.calls.filter((call) => call[0]?.ignoreUndoRedo === true).length;
     expect(viewportCallsAfter).toBe(viewportCallsBefore);

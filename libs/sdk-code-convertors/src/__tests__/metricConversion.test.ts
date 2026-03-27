@@ -2,8 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
+import type { Metric } from "@gooddata/sdk-code-schemas/v1";
+
 import { declarativeMetricToYaml } from "../from/declarativeMetricToYaml.js";
-import type { Metric } from "../schemas/v1/metadata.js";
 import { yamlMetricToDeclarative } from "../to/yamlMetricToDeclarative.js";
 
 describe("metric conversion", () => {

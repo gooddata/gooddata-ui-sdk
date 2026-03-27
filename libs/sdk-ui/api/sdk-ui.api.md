@@ -171,6 +171,7 @@ export const BucketNames: {
     readonly SIZE: "size";
     readonly COLOR: "color";
     readonly TOOLTIP_TEXT: "tooltipText";
+    readonly GEO_ICON: "geoIcon";
 };
 
 // @internal (undocumented)

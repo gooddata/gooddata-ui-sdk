@@ -115,9 +115,7 @@ export class AnalyticsCatalogService implements IAnalyticsCatalogService {
 }
 
 function toGenerateRequestObjectType(
-    objectType:
-        | IAnalyticsCatalogGenerateDescriptionRequest["objectType"]
-        | IAnalyticsCatalogGenerateTitleRequest["objectType"],
+    objectType: IAnalyticsCatalogGenerateDescriptionRequest["objectType"],
 ):
     | ActionsApiGenerateDescriptionRequest["generateDescriptionRequest"]["objectType"]
     | ActionsApiGenerateTitleRequest["generateTitleRequest"]["objectType"] {

@@ -135,7 +135,7 @@ function chunkArray<T>(items: T[], chunkSize: number): T[][] {
 export class TigerExecutionResult implements IExecutionResult {
     private readonly workspace: string;
     public readonly dimensions: IDimensionDescriptor[];
-    private readonly resultId: string;
+    private readonly _resultId: string;
     private readonly _fingerprint: string;
 
     constructor(
@@ -153,8 +153,8 @@ export class TigerExecutionResult implements IExecutionResult {
             this.definition,
         );
         this.workspace = this.definition.workspace;
-        this.resultId = execResponse.executionResponse.links.executionResult;
-        this._fingerprint = SparkMD5.hash(this.resultId);
+        this._resultId = execResponse.executionResponse.links.executionResult;
+        this._fingerprint = SparkMD5.hash(this._resultId);
     }
 
     public withSignal = (signal: AbortSignal): IExecutionResult => {
@@ -177,7 +177,7 @@ export class TigerExecutionResult implements IExecutionResult {
                 client.basePath,
                 {
                     workspaceId: this.workspace,
-                    resultId: this.resultId,
+                    resultId: this._resultId,
                 },
                 this.enrichClientWithCancelOptions(),
             ).then(({ data }) => data),
@@ -188,7 +188,7 @@ export class TigerExecutionResult implements IExecutionResult {
 
     public async readForecastAll(forecastConfig: IForecastConfig): Promise<IForecastResult> {
         const workspace = this.workspace;
-        const resultId = this.resultId;
+        const resultId = this._resultId;
 
         const forecast = await this.authCall((client) =>
             SmartFunctionsApi_Forecast(
@@ -265,7 +265,7 @@ export class TigerExecutionResult implements IExecutionResult {
 
     public async readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
         const workspaceId = this.workspace;
-        const resultId = this.resultId;
+        const resultId = this._resultId;
         const sensitivity = config.sensitivity;
 
         const anomalyDetection = await this.authCall((client) =>
@@ -300,7 +300,7 @@ export class TigerExecutionResult implements IExecutionResult {
 
     public async readClusteringAll(clusteringConfig: IClusteringConfig): Promise<IClusteringResult> {
         const workspaceId = this.workspace;
-        const resultId = this.resultId;
+        const resultId = this._resultId;
         const numberOfClusters = clusteringConfig.numberOfClusters;
         const threshold = clusteringConfig.threshold ? { threshold: clusteringConfig.threshold } : {};
 
@@ -352,7 +352,7 @@ export class TigerExecutionResult implements IExecutionResult {
                 client.basePath,
                 {
                     workspaceId: this.workspace,
-                    resultId: this.resultId,
+                    resultId: this._resultId,
                     limit: saneSize,
                     offset: saneOffset,
                 },
@@ -384,7 +384,7 @@ export class TigerExecutionResult implements IExecutionResult {
                 client.basePath,
                 {
                     workspaceId: this.workspace,
-                    resultId: this.resultId,
+                    resultId: this._resultId,
                 },
                 options,
             ).then(({ data }) => data as unknown as ReadableStream),
@@ -430,7 +430,7 @@ export class TigerExecutionResult implements IExecutionResult {
 
         const payload: TabularExportRequest = {
             format,
-            executionResult: options.visualizationObjectId ? undefined : this.resultId, // use the visualizationObject for the export instead of the execution when provided
+            executionResult: options.visualizationObjectId ? undefined : this._resultId, // use the visualizationObject for the export instead of the execution when provided
             fileName: options.title ?? "default",
             settings,
             customOverride: augmented,
@@ -462,6 +462,10 @@ export class TigerExecutionResult implements IExecutionResult {
 
     public fingerprint(): string {
         return this._fingerprint;
+    }
+
+    public resultId(): string {
+        return this._resultId;
     }
 
     private asDataView = (promisedRes: Promise<ExecutionResult>): Promise<IDataView> => {

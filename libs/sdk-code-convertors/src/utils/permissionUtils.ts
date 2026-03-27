@@ -1,7 +1,8 @@
 // (C) 2024-2026 GoodData Corporation
 
+import type { Dashboard } from "@gooddata/sdk-code-schemas/v1";
+
 import { createIdentifier } from "./yamlUtils.js";
-import type { Dashboard } from "../schemas/v1/metadata.js";
 
 type GenericAssigneePermission = {
     name: string;
@@ -84,7 +85,7 @@ export const toDeclarativePermissions = (
         return [ownPermissions, hierarchicalPermissions];
     }
 
-    Object.keys(permissions).forEach((name) => {
+    (Object.keys(permissions) as Array<keyof typeof permissions>).forEach((name) => {
         const permission = permissions[name];
 
         const targetOutput = name.endsWith("_SELF") ? ownPermissions : hierarchicalPermissions;
@@ -104,7 +105,7 @@ export const toDeclarativePermissions = (
         }
 
         if (permission.users) {
-            permission.users.forEach((userId) => {
+            permission.users.forEach((userId: string) => {
                 const identifier = createIdentifier(userId, { forceType: "user" });
                 if (identifier) {
                     targetOutput.push({
@@ -116,7 +117,7 @@ export const toDeclarativePermissions = (
         }
 
         if (permission.user_groups) {
-            permission.user_groups.forEach((userGroupId) => {
+            permission.user_groups.forEach((userGroupId: string) => {
                 const identifier = createIdentifier(userGroupId, { forceType: "userGroup" });
                 if (identifier) {
                     targetOutput.push({

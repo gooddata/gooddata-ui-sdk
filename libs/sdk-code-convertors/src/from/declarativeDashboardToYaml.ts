@@ -8,6 +8,7 @@ import {
     type DeclarativeAnalyticalDashboardExtension,
     type DeclarativeFilterContext,
 } from "@gooddata/api-client-tiger";
+import type { Dashboard, Filter, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import {
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
@@ -42,7 +43,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { VisualisationsTypes } from "../conts.js";
-import type { Dashboard, Filter, Visualisation } from "../schemas/v1/metadata.js";
 import { type DashboardTab, type FromEntities } from "../types.js";
 import { serializeUrlTarget } from "../utils/customUrl.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";

@@ -7,7 +7,7 @@ import {
     insightLayers,
 } from "@gooddata/sdk-model";
 import { type IPushData, type VisualizationEnvironment } from "@gooddata/sdk-ui";
-import { type IGeoLngLat } from "@gooddata/sdk-ui-geo";
+import { type IGeoLngLat, type IGeoLngLatBounds } from "@gooddata/sdk-ui-geo";
 
 import { ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -42,6 +42,22 @@ export function isGeoLngLat(value: unknown): value is IGeoLngLat {
 }
 
 /**
+ * Type guard for {@link IGeoLngLatBounds}.
+ *
+ * @internal
+ */
+export function isGeoLngLatBounds(value: unknown): value is IGeoLngLatBounds {
+    return (
+        typeof value === "object" &&
+        value !== null &&
+        "northEast" in value &&
+        "southWest" in value &&
+        isGeoLngLat((value as IGeoLngLatBounds).northEast) &&
+        isGeoLngLat((value as IGeoLngLatBounds).southWest)
+    );
+}
+
+/**
  * Snapshot of the current map center and zoom.
  *
  * @internal
@@ -49,6 +65,7 @@ export function isGeoLngLat(value: unknown): value is IGeoLngLat {
 export interface ILiveMapView {
     center?: IGeoLngLat;
     zoom?: number;
+    bounds?: IGeoLngLatBounds;
 }
 
 /**
@@ -72,6 +89,8 @@ export interface ISyncViewportContext {
 export interface ISyncedMapHandlers {
     handleCenterPositionChanged: (center: IGeoLngLat) => void;
     handleZoomChanged: (zoom: number) => void;
+    handleBoundsChanged: (bounds: IGeoLngLatBounds) => void;
+    handleViewportInteractionEnded: () => void;
 }
 
 /**
@@ -86,6 +105,7 @@ export interface ISyncedMapHandlers {
 export class LiveMapViewTracker {
     private currentMapCenter?: IGeoLngLat;
     private currentMapZoom?: number;
+    private currentMapBounds?: IGeoLngLatBounds;
     private insightContextKey?: string;
 
     readonly handleCenterPositionChanged = (center: IGeoLngLat): void => {
@@ -96,6 +116,10 @@ export class LiveMapViewTracker {
         this.currentMapZoom = zoom;
     };
 
+    readonly handleBoundsChanged = (bounds: IGeoLngLatBounds): void => {
+        this.currentMapBounds = bounds;
+    };
+
     getCurrentMapView(visualizationProperties: IVisualizationProperties): ILiveMapView {
         const currentCenter = this.currentMapCenter ?? visualizationProperties?.controls?.["center"];
         const currentZoom = this.currentMapZoom ?? visualizationProperties?.controls?.["zoom"];
@@ -103,6 +127,7 @@ export class LiveMapViewTracker {
         return {
             center: currentCenter,
             zoom: typeof currentZoom === "number" ? currentZoom : undefined,
+            bounds: this.currentMapBounds,
         };
     }
 
@@ -132,14 +157,29 @@ export class LiveMapViewTracker {
 
         const storedCenter = controls?.["center"];
         const storedZoom = controls?.["zoom"];
+        const storedBounds = controls?.["bounds"];
         const isSameCenterAndZoom =
             isGeoLngLat(storedCenter) &&
             typeof storedZoom === "number" &&
             Math.abs(storedCenter.lat - currentMapView.center.lat) < GEO_COORD_EPSILON &&
             Math.abs(storedCenter.lng - currentMapView.center.lng) < GEO_COORD_EPSILON &&
             Math.abs(storedZoom - currentMapView.zoom) < GEO_COORD_EPSILON;
+        const hasStoredBounds = isGeoLngLatBounds(storedBounds);
+        const hasCurrentBounds = isGeoLngLatBounds(currentMapView.bounds);
+        const currentBounds = hasCurrentBounds ? currentMapView.bounds : undefined;
+        const isSameBounds =
+            (!hasStoredBounds && (!hasCurrentBounds || isSameCenterAndZoom)) ||
+            (hasStoredBounds &&
+                currentBounds &&
+                Math.abs(storedBounds.northEast.lat - currentBounds.northEast.lat) < GEO_COORD_EPSILON &&
+                Math.abs(storedBounds.northEast.lng - currentBounds.northEast.lng) < GEO_COORD_EPSILON &&
+                Math.abs(storedBounds.southWest.lat - currentBounds.southWest.lat) < GEO_COORD_EPSILON &&
+                Math.abs(storedBounds.southWest.lng - currentBounds.southWest.lng) < GEO_COORD_EPSILON);
 
-        if (isSameCenterAndZoom) {
+        // Bounds are the canonical custom viewport representation.
+        // If the saved bounds already match the live map, syncing center/zoom drift would only
+        // dirty the insight without changing the actual viewport.
+        if ((hasStoredBounds && isSameBounds) || (isSameCenterAndZoom && isSameBounds)) {
             return;
         }
 
@@ -149,6 +189,7 @@ export class LiveMapViewTracker {
                 ...ctx.visualizationProperties?.controls,
                 center: currentMapView.center,
                 zoom: currentMapView.zoom,
+                bounds: currentMapView.bounds,
             },
         };
 
@@ -160,33 +201,22 @@ export class LiveMapViewTracker {
     }
 
     /**
-     * Returns center/zoom handlers that update the live snapshot and
-     * automatically persist the viewport when conditions are met.
-     *
-     * The sync is coalesced via a microtask so that rapid center+zoom
-     * callback pairs result in a single `pushData` call with both values.
+     * Returns handlers that keep the live viewport snapshot in sync and persist it
+     * only after an explicit user interaction signal from the map layer.
      */
     createSyncedHandlers(getContext: () => ISyncViewportContext): ISyncedMapHandlers {
-        let syncScheduled = false;
-        const scheduleSync = (): void => {
-            if (syncScheduled) {
-                return;
-            }
-            syncScheduled = true;
-            Promise.resolve().then(() => {
-                syncScheduled = false;
-                this.syncCustomViewportSnapshot(getContext());
-            });
-        };
-
         return {
             handleCenterPositionChanged: (center: IGeoLngLat): void => {
                 this.handleCenterPositionChanged(center);
-                scheduleSync();
             },
             handleZoomChanged: (zoom: number): void => {
                 this.handleZoomChanged(zoom);
-                scheduleSync();
+            },
+            handleBoundsChanged: (bounds: IGeoLngLatBounds): void => {
+                this.handleBoundsChanged(bounds);
+            },
+            handleViewportInteractionEnded: (): void => {
+                this.syncCustomViewportSnapshot(getContext());
             },
         };
     }
@@ -209,6 +239,7 @@ export class LiveMapViewTracker {
         this.insightContextKey = nextInsightContextKey;
         this.currentMapCenter = undefined;
         this.currentMapZoom = undefined;
+        this.currentMapBounds = undefined;
     }
 }
 

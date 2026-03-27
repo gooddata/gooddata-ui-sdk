@@ -5,6 +5,7 @@ import {
     createClusterLabels,
     createClusterPoints,
     createPushpinDataLayer,
+    createPushpinIconLayer,
     createUnclusterPoints,
 } from "./layers.js";
 import { createStylePlan } from "../../map/styleReconciliation/planBuilder.js";
@@ -54,11 +55,16 @@ export function syncPushpinLayerToMap(
     // Build plan using pre-computed source - no transformation needed
     const planBuilder = createStylePlan().addSource(ids.sourceId, source);
 
-    if (hasClustering) {
+    const shapeType = geoPointsConfig.shapeType ?? "circle";
+    const isIconShape = shapeType === "iconByValue" || shapeType === "oneIcon";
+
+    if (hasClustering && !isIconShape) {
         planBuilder
             .addLayer(createClusterPoints(ids.sourceId, ids.clusterLayerId))
             .addLayer(createClusterLabels(ids.sourceId, ids.clusterLabelsLayerId))
             .addLayer(createUnclusterPoints(ids.sourceId, ids.unclusterLayerId));
+    } else if (isIconShape) {
+        planBuilder.addLayer(createPushpinIconLayer(ids.sourceId, config, geoData, ids.pointLayerId));
     } else {
         planBuilder.addLayer(createPushpinDataLayer(ids.sourceId, geoData, config, ids.pointLayerId));
     }

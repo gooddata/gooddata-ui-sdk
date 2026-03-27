@@ -455,6 +455,9 @@ function recordedExecutionResult(
         fingerprint(): string {
             return fp;
         },
+        resultId(): string | undefined {
+            return undefined;
+        },
         equals(other: IExecutionResult): boolean {
             return fp === other.fingerprint();
         },

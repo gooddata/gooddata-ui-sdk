@@ -5,6 +5,7 @@ import { type ISettings } from "@gooddata/sdk-model";
 export const ENABLE_GEO_CHARTS_VIEWPORT_CONFIG = "enableGeoChartsViewportConfig";
 export const ENABLE_GEO_BASEMAP_CONFIG = "enableGeoBasemapConfig";
 export const ENABLE_GEO_SATELLITE_BASEMAP_OPTION = "enableGeoSatelliteBasemapOption";
+export const ENABLE_GEO_PUSHPIN_ICON = "enableGeoPushpinIcon";
 
 export function isGeoChartsViewportConfigEnabled(featureFlags?: ISettings): boolean {
     const value = featureFlags?.[ENABLE_GEO_CHARTS_VIEWPORT_CONFIG];
@@ -18,5 +19,10 @@ export function isGeoBasemapConfigEnabled(featureFlags?: ISettings): boolean {
 
 export function isGeoSatelliteBasemapEnabled(featureFlags?: ISettings): boolean {
     const value = featureFlags?.[ENABLE_GEO_SATELLITE_BASEMAP_OPTION];
+    return value === true;
+}
+
+export function isGeoPushpinIconEnabled(featureFlags?: ISettings): boolean {
+    const value = featureFlags?.[ENABLE_GEO_PUSHPIN_ICON];
     return value === true;
 }

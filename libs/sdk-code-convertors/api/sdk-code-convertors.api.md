@@ -6,6 +6,11 @@
 
 import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AfmObjectIdentifier } from '@gooddata/api-client-tiger';
+import type { AttributeHierarchy } from '@gooddata/sdk-code-schemas/v1';
+import type { Dashboard } from '@gooddata/sdk-code-schemas/v1';
+import type { DashboardFilters } from '@gooddata/sdk-code-schemas/v1';
+import type { Dataset } from '@gooddata/sdk-code-schemas/v1';
+import type { DateDataset } from '@gooddata/sdk-code-schemas/v1';
 import { DeclarativeAnalyticalDashboard } from '@gooddata/api-client-tiger';
 import { DeclarativeAttributeHierarchy } from '@gooddata/api-client-tiger';
 import { DeclarativeDashboardPlugin } from '@gooddata/api-client-tiger';
@@ -17,59 +22,43 @@ import { DeclarativeTable } from '@gooddata/api-client-tiger';
 import { DeclarativeVisualizationObject } from '@gooddata/api-client-tiger';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
+import type { Metadata } from '@gooddata/sdk-code-schemas/v1';
+import type { Metric } from '@gooddata/sdk-code-schemas/v1';
+import type { Plugin as Plugin_2 } from '@gooddata/sdk-code-schemas/v1';
+import type { Query } from '@gooddata/sdk-code-schemas/v1';
+import type { Section } from '@gooddata/sdk-code-schemas/v1';
+import type { Visualisation } from '@gooddata/sdk-code-schemas/v1';
 
-// Warning: (ae-forgotten-export) The symbol "AttributeHierarchy" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacAttributeHierarchy = AttributeHierarchy;
 
-// Warning: (ae-forgotten-export) The symbol "Dashboard" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacDashboard = Dashboard;
 
-// Warning: (ae-forgotten-export) The symbol "DashboardFilters" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacDashboardFilters = DashboardFilters;
 
-// Warning: (ae-forgotten-export) The symbol "Dataset" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacDataset = Dataset;
 
-// Warning: (ae-forgotten-export) The symbol "DateDataset" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacDateDataset = DateDataset;
 
-// Warning: (ae-forgotten-export) The symbol "Metadata" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacMetadata = Metadata;
 
-// Warning: (ae-forgotten-export) The symbol "Metric" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacMetric = Metric;
 
-// Warning: (ae-forgotten-export) The symbol "Plugin_2" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacPlugin = Plugin_2;
 
-// Warning: (ae-forgotten-export) The symbol "Query" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacQuery = Query;
 
-// Warning: (ae-forgotten-export) The symbol "Section" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacSection = Section;
 
-// Warning: (ae-forgotten-export) The symbol "Visualisation" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type AacVisualisation = Visualisation;
 

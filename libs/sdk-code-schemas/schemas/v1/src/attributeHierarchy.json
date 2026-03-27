@@ -1,0 +1,77 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "AttributeHierarchyType",
+    "description": "JSON schema for Gooddata Analytics Attribute Hierarchy",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "attribute_hierarchy"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/attribute_hierarchy"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["attribute_hierarchy"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "attribute_hierarchy": {
+            "$id": "/gaac/attribute_hierarchy",
+            "title": "Attribute Hierarchy",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the attribute hierarchy.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "attributeHierarchy.id",
+                            "code": "core.uniqueness.attributeHierarchy.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "attributeHierarchy.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["attribute_hierarchy"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the attribute hierarchy."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this attribute hierarchy."
+                },
+                "attributes": {
+                    "type": "array",
+                    "description": "A list of sorted attributes use in attribute hierarchy. The first attribute is the top level attribute.",
+                    "items": {
+                        "$ref": "/gaac/attributeIdentifier"
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": ["id", "type", "attributes"]
+        }
+    }
+}

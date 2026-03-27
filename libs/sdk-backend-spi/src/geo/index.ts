@@ -56,6 +56,14 @@ export interface IGeoService {
     getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
 
     /**
+     * Loads icon names from the sprite sheet used by the default geo style.
+     *
+     * @remarks
+     * Returns an empty array when the organization does not have a sprite sheet configured.
+     */
+    getDefaultStyleSpriteIcons(): Promise<string[]>;
+
+    /**
      * Returns service for managing custom geo collections.
      */
     collections(): IOrganizationGeoCollectionsService;

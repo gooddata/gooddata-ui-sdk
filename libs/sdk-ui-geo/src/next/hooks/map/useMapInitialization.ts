@@ -409,6 +409,7 @@ export function useMapInitialization(
     const configCenterLng = config?.center?.lng;
     const configCenterLat = config?.center?.lat;
     const configZoom = config?.zoom;
+    const initialBoundsPadding = config?.viewport?.area === "custom" && config?.bounds ? 0 : undefined;
 
     const requestedViewport = useMemo(
         () =>
@@ -531,6 +532,7 @@ export function useMapInitialization(
             {
                 container,
                 bounds: initialViewportRef.current.bounds,
+                boundsPadding: initialBoundsPadding,
                 center: initialViewportRef.current.center,
                 zoom: initialViewportRef.current.zoom,
                 cooperativeGestures,
@@ -618,6 +620,7 @@ export function useMapInitialization(
         mapLibreLocale,
         backend,
         maxZoom,
+        initialBoundsPadding,
         basemap,
         colorScheme,
         mapLanguage,

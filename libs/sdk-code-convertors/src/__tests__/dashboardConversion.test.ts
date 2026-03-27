@@ -2,8 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
+import type { Dashboard, RichTextWidget, VisualisationWidget } from "@gooddata/sdk-code-schemas/v1";
+
 import { declarativeDashboardToYaml } from "../from/declarativeDashboardToYaml.js";
-import type { Dashboard, RichTextWidget, VisualisationWidget } from "../schemas/v1/metadata.js";
 import {
     yamlDashboardToDeclarative,
     yamlFilterContextToDeclarative,

@@ -12,8 +12,6 @@ import {
     type DeclarativeMetric,
     type DeclarativeVisualizationObject,
 } from "@gooddata/api-client-tiger";
-import { type IDashboardDefinition, type IDashboardFilterGroupsConfig } from "@gooddata/sdk-model";
-
 import type {
     AttributeHierarchy,
     Dashboard,
@@ -23,7 +21,8 @@ import type {
     Metric,
     Plugin,
     Visualisation,
-} from "./schemas/v1/metadata.js";
+} from "@gooddata/sdk-code-schemas/v1";
+import { type IDashboardDefinition, type IDashboardFilterGroupsConfig } from "@gooddata/sdk-model";
 
 /** @public */
 export type Profile = {

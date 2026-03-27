@@ -3,6 +3,7 @@
 import { Document, Pair, type Scalar, YAMLMap, YAMLSeq, type Node as YamlNode } from "yaml";
 
 import { type DeclarativeVisualizationObject } from "@gooddata/api-client-tiger";
+import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import {
     type IAbsoluteDateFilter,
     type IArithmeticMeasureDefinition,
@@ -82,7 +83,6 @@ import { scatterChart } from "../configs/scatterChart.js";
 import { table } from "../configs/table.js";
 import { treemapChart } from "../configs/treemapChart.js";
 import { waterfallChart } from "../configs/waterfallChart.js";
-import type { Visualisation } from "../schemas/v1/metadata.js";
 import { BucketsType, type FromEntities } from "../types.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
 import { parseDateValues } from "../utils/filterUtils.js";
@@ -262,7 +262,10 @@ function getPairKeyValue(pair: Pair): string | undefined {
     return undefined;
 }
 
-export function declarativeFiltersConfigToYaml(insight: IInsightDefinition["insight"], filtersMap: YAMLMap) {
+export function declarativeFiltersConfigToYaml(
+    insight: IInsightDefinition["insight"],
+    filtersMap: Record<string, FilterMapEntry>,
+) {
     Object.keys(insight.attributeFilterConfigs ?? {}).forEach((key) => {
         const filter = filtersMap[key];
         if (filter) {
@@ -697,8 +700,13 @@ function getShortenedBucket(def: YAMLMap): string | false {
 
 //filters
 
+type FilterMapEntry = {
+    yaml: YAMLMap;
+    filter: IFilter;
+};
+
 type Filters = {
-    filtersMap: YAMLMap;
+    filtersMap: Record<string, FilterMapEntry>;
     filtersArray: YAMLMap;
 };
 
@@ -814,7 +822,7 @@ function groupFiltersByDateFilter(filters: IFilter[]): {
 
 export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[]): Filters {
     const filtersArray: Array<Pair> = [];
-    const filtersMap = new YAMLMap();
+    const filtersMap: Record<string, FilterMapEntry> = {};
     const usedKeys = new Set<string>();
 
     const getUniqueKey = (baseKey: string) => {

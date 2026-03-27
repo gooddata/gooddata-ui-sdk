@@ -11,12 +11,12 @@ Run all commands in this directory. Run `nvm use` to select the right version of
 1. Create a `.env` file with the following:
 
 ```
-HOST=https://staging.dev-latest.stg11.panther.intgdc.com
+BACKEND_URL=https://staging.dev-latest.stg11.panther.intgdc.com
 TEST_WORKSPACE_ID=<your workspace id>
 TIGER_API_TOKEN=<token>
 ```
 
-`HOST` and `TEST_WORKSPACE_ID` are required in dev mode. `TIGER_API_TOKEN` is used for authentication.
+`BACKEND_URL` and `TEST_WORKSPACE_ID` are required in dev mode. `TIGER_API_TOKEN` is used for authentication.
 
 2. Run the app in dev mode:
 

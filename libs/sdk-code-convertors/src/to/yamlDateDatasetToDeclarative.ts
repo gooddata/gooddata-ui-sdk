@@ -1,8 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type DeclarativeDateDataset } from "@gooddata/api-client-tiger";
+import type { DateDataset } from "@gooddata/sdk-code-schemas/v1";
 
-import type { DateDataset } from "../schemas/v1/metadata.js";
 import { convertGranularityToDeclarativeDatasetGranularity } from "../utils/granularityUtils.js";
 import { convertIdToTitle } from "../utils/sharedUtils.js";
 

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add @gooddata/sdk-code-schemas package",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.soubusta@gooddata.com"
+}

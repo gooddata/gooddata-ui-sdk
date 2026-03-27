@@ -151,5 +151,21 @@ describe("bullet chart bucket helper", () => {
                 getBucket(BucketNames.VIEW, []),
             ]);
         });
+
+        it("should ignore an empty tooltip measures bucket when switching from Geo Pushpin Next", () => {
+            const buckets = [
+                getBucket(BucketNames.MEASURES, []),
+                getBucket(BucketNames.SIZE, [masterMeasureItems[0]]),
+                getBucket(BucketNames.COLOR, [masterMeasureItems[1]]),
+            ];
+            const actual = transformBuckets(buckets);
+
+            expect(actual).toEqual([
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[1]]),
+                getBucket(BucketNames.TERTIARY_MEASURES, []),
+                getBucket(BucketNames.VIEW, []),
+            ]);
+        });
     });
 });

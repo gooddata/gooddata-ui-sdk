@@ -95,6 +95,64 @@ describe("PushpinViewportControl", () => {
             expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.viewport?.area).toBe("custom");
         });
 
+        it("should clear stale bounds when switching to custom without live bounds snapshot", async () => {
+            const pushData = vi.fn();
+            createComponent({
+                pushData,
+                getCurrentMapView: () => ({
+                    center: { lat: 50.1, lng: 14.4 },
+                    zoom: 3,
+                }),
+                properties: {
+                    controls: {
+                        bounds: {
+                            southWest: { lat: -10, lng: -20 },
+                            northEast: { lat: 10, lng: 20 },
+                        },
+                    },
+                },
+            });
+
+            await userEvent.click(screen.getByRole("combobox"));
+            await userEvent.click(screen.getByText("Custom"));
+
+            expect(pushData).toHaveBeenCalledOnce();
+            expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.bounds).toBeUndefined();
+        });
+
+        it("should preserve preset bounds when switching from preset viewport to custom", async () => {
+            const pushData = vi.fn();
+            createComponent({
+                pushData,
+                getCurrentMapView: () => ({
+                    center: { lat: 4.3, lng: 0 },
+                    zoom: 0.47,
+                    bounds: {
+                        southWest: { lat: -84.24, lng: -180 },
+                        northEast: { lat: 85.05, lng: 180 },
+                    },
+                }),
+                properties: {
+                    controls: {
+                        viewport: {
+                            area: "continent_eu",
+                        },
+                    },
+                },
+            });
+
+            await userEvent.click(screen.getByRole("combobox"));
+            await userEvent.click(screen.getByText("Custom"));
+
+            expect(pushData).toHaveBeenCalledOnce();
+            expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.bounds).toEqual({
+                southWest: { lat: 36, lng: -24 },
+                northEast: { lat: 72, lng: 43 },
+            });
+            expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.center).toBeUndefined();
+            expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.zoom).toBeUndefined();
+        });
+
         it("should keep auto viewport selected when navigation is set without area", () => {
             createComponent({
                 properties: {

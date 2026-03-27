@@ -33,7 +33,7 @@ export const DEFAULT_WORLD_BOUNDS = { northEast: { lat: 84, lng: 180 }, southWes
  *
  * @internal
  */
-export const VIEWPORTS = {
+export const PRESET_VIEWPORT_BOUNDS = {
     continent_af: [
         { lat: -36, lng: -20 },
         { lat: 38, lng: 54 },
@@ -109,7 +109,7 @@ export const DEFAULT_MAPLIBRE_OPTIONS: Partial<MapOptions> = {
     // set maxDuration: 1 will remove the animation when viewport is changed
     fitBoundsOptions: { padding: DEFAULT_BOUNDS_PADDING, maxDuration: 1 },
     // Disable infinite geochart scrolling
-    // maxBounds: VIEWPORTS["world"] as LngLatBoundsLike,
+    // maxBounds: PRESET_VIEWPORT_BOUNDS["world"] as LngLatBoundsLike,
     // The maximum zoom level of the map (0-24).
     maxZoom: 8,
     // If false, the map's pitch (tilt) control with "drag to rotate" interaction will be disabled.

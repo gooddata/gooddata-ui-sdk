@@ -678,6 +678,9 @@ export type GenAINegativeAttributeFilter = {
     exclude: Array<string | null>;
 };
 
+// @internal
+export type GenAIObjectReferenceType = "WIDGET" | "METRIC" | "ATTRIBUTE" | "DASHBOARD";
+
 // @beta
 export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
@@ -2597,7 +2600,7 @@ export interface IFiscalYear {
 
 // @internal
 export interface IGenAIActiveObject {
-    id: string;
+    ref: ObjRef;
     type: GenAIObjectType;
     workspaceId: string;
 }
@@ -2674,6 +2677,12 @@ export interface IGenAICreatedVisualizations {
 }
 
 // @internal
+export interface IGenAIDashboardContext {
+    ref: ObjRef;
+    widgets: IGenAIWidgetDescriptor[];
+}
+
+// @internal
 export interface IGenAIForecastConfig {
     confidenceLevel: number;
     forecastPeriod: number;
@@ -2687,14 +2696,33 @@ export interface IGenAIFoundObjects {
 }
 
 // @internal
+export interface IGenAIObjectReference {
+    ref: ObjRef;
+    type: GenAIObjectReferenceType;
+}
+
+// @internal
+export interface IGenAIObjectReferenceGroup {
+    context?: IGenAIObjectReference;
+    objects: IGenAIObjectReference[];
+}
+
+// @internal
 export type IGenAISuggestion = {
     query: string;
     label: string;
 };
 
 // @internal
+export interface IGenAIUIContext {
+    dashboard?: IGenAIDashboardContext;
+}
+
+// @internal
 export interface IGenAIUserContext {
-    activeObject: IGenAIActiveObject;
+    activeObject?: IGenAIActiveObject;
+    referencedObjects?: IGenAIObjectReferenceGroup[];
+    view?: IGenAIUIContext;
 }
 
 // @internal
@@ -2751,6 +2779,15 @@ export interface IGenAIWhatIfConfig {
 export interface IGenAIWhatIfScenario {
     adjustments: IGenAIWhatIfAdjustment[];
     label: string;
+}
+
+// @internal
+export interface IGenAIWidgetDescriptor {
+    insightRef?: ObjRef;
+    resultId?: string;
+    title: string;
+    widgetRef: ObjRef;
+    widgetType: string;
 }
 
 // @alpha

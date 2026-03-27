@@ -1,0 +1,93 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "MetricType",
+    "description": "JSON schema for Gooddata Analytics Metric",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "metric"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/metric"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["metric"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "metric": {
+            "$id": "/gaac/metric",
+            "title": "Metric",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the metric.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "metric.id",
+                            "code": "core.uniqueness.metrics.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "metric.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["metric"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the metric. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the metric."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this metric."
+                },
+                "maql": {
+                    "type": "string",
+                    "description": "Define MAQL syntax for metric.",
+                    "$semantic": {
+                        "type": "maql"
+                    }
+                },
+                "format": {
+                    "type": "string",
+                    "description": "Metric value default format"
+                },
+                "show_in_ai_results": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the metric should be shown in AI results. When omitted, the metric is visible."
+                },
+                "is_hidden": {
+                    "type": "boolean",
+                    "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                    "deprecated": true
+                }
+            },
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["metric"]
+            },
+            "required": ["id", "type", "maql"]
+        }
+    }
+}

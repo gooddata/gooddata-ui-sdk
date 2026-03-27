@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IGeoLngLat } from "./coordinates.js";
+import { type IGeoLngLat, type IGeoLngLatBounds } from "./coordinates.js";
 
 /**
  * Called when the map center changes.
@@ -15,3 +15,17 @@ export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
  * @internal
  */
 export type ZoomChangedCallback = (zoom: number) => void;
+
+/**
+ * Called when the map visible bounds change.
+ *
+ * @internal
+ */
+export type BoundsChangedCallback = (bounds: IGeoLngLatBounds) => void;
+
+/**
+ * Called when a viewport change triggered by a real user interaction finishes.
+ *
+ * @internal
+ */
+export type ViewportInteractionEndCallback = () => void;

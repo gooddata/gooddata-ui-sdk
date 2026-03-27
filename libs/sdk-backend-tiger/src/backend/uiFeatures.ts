@@ -142,6 +142,7 @@ export enum TigerFeaturesNames {
     EnableAIKnowledge = "enableAIKnowledge",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     EnableAiAgenticConversations = "enableAiAgenticConversations",
+    EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
     EnableKDEmptyDateValuesFilter = "enableKDEmptyDateValuesFilter",
@@ -319,6 +320,7 @@ export type ITigerFeatureFlags = {
     enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
+    enableGenAiVisualizationSummarySkill: (typeof FeatureFlagsValues)["enableGenAiVisualizationSummarySkill"][number];
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
 };
@@ -476,6 +478,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNullJoins: false,
     enableDashboardDensitySetting: false,
     enableAiAgenticConversations: false,
+    enableGenAiVisualizationSummarySkill: false,
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
 };
@@ -634,6 +637,7 @@ export const FeatureFlagsValues = {
     enableNullJoins: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
     enableAiAgenticConversations: [true, false] as const,
+    enableGenAiVisualizationSummarySkill: [false, true] as const,
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,
 };

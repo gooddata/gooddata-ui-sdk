@@ -54,8 +54,10 @@ interface IPushpinGeoDataBuckets {
     longitude?: IPushpinLocationItem;
     size?: IGeoMeasureItem;
     color?: IGeoMeasureItem;
+    measures?: IGeoMeasureItem[];
     segment?: IGeoSegmentItem;
     tooltipText?: IGeoAttributeItem;
+    geoIcon?: IGeoAttributeItem;
 }
 
 type BucketInfos = { [localId: string]: IBucketItemInfo | null };
@@ -79,7 +81,11 @@ function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: BucketItemInfo)
     const { color, size } = geoData;
     const hasColorMeasure = color !== undefined;
     const hasSizeMeasure = size !== undefined;
-    const attrHeaderItemIndex = hasColorMeasure || hasSizeMeasure ? 1 : 0;
+    const hasMeasures = dv
+        .def()
+        .buckets()
+        .some((b) => b.localIdentifier === BucketNames.MEASURES && b.items.length > 0);
+    const attrHeaderItemIndex = hasColorMeasure || hasSizeMeasure || hasMeasures ? 1 : 0;
     return dv.meta().allHeaders()[attrHeaderItemIndex];
 }
 
@@ -210,29 +216,33 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): BucketItemInfo {
     const result: BucketItemInfo = {};
 
     // Process attribute buckets
-    [BucketNames.LATITUDE, BucketNames.LONGITUDE, BucketNames.SEGMENT, BucketNames.TOOLTIP_TEXT].forEach(
-        (bucketName): void => {
-            const bucketItemInfo = bucketItemInfos[bucketName];
-            if (!bucketItemInfo) {
-                return;
-            }
-            const index = attributeDescriptors.findIndex(
-                (desc: IAttributeDescriptor): boolean =>
-                    desc.attributeHeader.localIdentifier === bucketItemInfo.localIdentifier &&
-                    (desc.attributeHeader.uri === bucketItemInfo.uri ||
-                        desc.attributeHeader.identifier === bucketItemInfo.identifier),
-            );
+    [
+        BucketNames.LATITUDE,
+        BucketNames.LONGITUDE,
+        BucketNames.SEGMENT,
+        BucketNames.TOOLTIP_TEXT,
+        BucketNames.GEO_ICON,
+    ].forEach((bucketName): void => {
+        const bucketItemInfo = bucketItemInfos[bucketName];
+        if (!bucketItemInfo) {
+            return;
+        }
+        const index = attributeDescriptors.findIndex(
+            (desc: IAttributeDescriptor): boolean =>
+                desc.attributeHeader.localIdentifier === bucketItemInfo.localIdentifier &&
+                (desc.attributeHeader.uri === bucketItemInfo.uri ||
+                    desc.attributeHeader.identifier === bucketItemInfo.identifier),
+        );
 
-            if (index !== -1) {
-                const {
-                    formOf: { name },
-                } = attributeDescriptors[index].attributeHeader;
-                result[bucketName] = { index, name };
-            }
-        },
-    );
+        if (index !== -1) {
+            const {
+                formOf: { name },
+            } = attributeDescriptors[index].attributeHeader;
+            result[bucketName] = { index, name };
+        }
+    });
 
-    // Process measure buckets
+    // Process measure buckets (MEASURES is handled separately by processMetricBuckets)
     [BucketNames.SIZE, BucketNames.COLOR].forEach((bucketName): void => {
         const bucketItemInfo = bucketItemInfos[bucketName];
         if (!bucketItemInfo) {
@@ -365,6 +375,26 @@ function processTooltipTextBucket(ctx: IBucketProcessingContext): IGeoAttributeI
 }
 
 /**
+ * Processes geo icon attribute bucket
+ */
+function processGeoIconBucket(ctx: IBucketProcessingContext): IGeoAttributeItem | undefined {
+    const { bucketInfo, attributeHeaderItems, emptyHeaderString, nullHeaderString } = ctx;
+    const geoIconIndex = bucketInfo.geoIcon?.index;
+    const geoIconBucket = bucketInfo[BucketNames.GEO_ICON];
+
+    if (geoIconIndex === undefined || !geoIconBucket) {
+        return undefined;
+    }
+
+    const data = getAttributeData(attributeHeaderItems, geoIconIndex, emptyHeaderString, nullHeaderString);
+    return {
+        index: geoIconBucket.index,
+        name: geoIconBucket.name,
+        data,
+    };
+}
+
+/**
  * Processes size measure bucket
  */
 function processSizeBucket(ctx: IBucketProcessingContext): IGeoMeasureItem | undefined {
@@ -402,6 +432,52 @@ function processColorBucket(ctx: IBucketProcessingContext): IGeoMeasureItem | un
         data: getMeasureData(dv, colorIndex),
         format: getFormatFromExecutionResponse(dv, colorIndex),
     };
+}
+
+/**
+ * Processes all measures from the MEASURES bucket.
+ *
+ * @remarks
+ * The MEASURES bucket may contain multiple items. This function iterates
+ * over every item in the bucket and resolves each one's index in the
+ * measure descriptors array.
+ */
+function processMetricBuckets(ctx: IBucketProcessingContext): IGeoMeasureItem[] {
+    const { dv } = ctx;
+    const buckets = dv.def().buckets();
+    const measureDescriptors = dv.meta().measureDescriptors();
+    const measuresBucket = buckets.find((b) => b.localIdentifier === BucketNames.MEASURES);
+
+    if (!measuresBucket || measuresBucket.items.length === 0) {
+        return [];
+    }
+
+    const result: IGeoMeasureItem[] = [];
+
+    for (const item of measuresBucket.items) {
+        const info = getBucketItemInfo(item);
+        if (!info) {
+            continue;
+        }
+
+        const index = measureDescriptors.findIndex(
+            (desc: IMeasureDescriptor): boolean =>
+                desc.measureHeaderItem.localIdentifier === info.localIdentifier &&
+                (desc.measureHeaderItem.uri === info.uri ||
+                    desc.measureHeaderItem.identifier === info.identifier),
+        );
+
+        if (index !== -1) {
+            result.push({
+                index,
+                name: measureDescriptors[index].measureHeaderItem.name,
+                data: getMeasureData(dv, index),
+                format: getFormatFromExecutionResponse(dv, index),
+            });
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -460,6 +536,16 @@ export function transformPushpinData(
     const color = processColorBucket(ctx);
     if (color) {
         result.color = color;
+    }
+
+    const measures = processMetricBuckets(ctx);
+    if (measures.length > 0) {
+        result.measures = measures;
+    }
+
+    const geoIcon = processGeoIconBucket(ctx);
+    if (geoIcon) {
+        result.geoIcon = geoIcon;
     }
 
     return result;
@@ -553,10 +639,25 @@ export function parsePushpinGeoProperties(properties: GeoJSON.GeoJsonProperties)
             ? (properties as Record<string, JsonValue>)
             : ({} as Record<string, JsonValue>);
     const tooltipKeys = ["locationName", "color", "size", "segment", "tooltipText"] as const;
-    const parsedProperties: Record<string, GeoJSON.GeoJsonProperties> = {};
+    const parsedProperties: Record<string, GeoJSON.GeoJsonProperties | unknown[]> = {};
     for (const key of tooltipKeys) {
         const item = rawProperties[key] ?? "{}";
         parsedProperties[key] = parseGeoPropertyItem(item, key);
+    }
+    // MapLibre serializes nested objects/arrays as JSON strings in feature properties.
+    // Parse the measures array back from string if needed.
+    const rawMeasures = rawProperties["measures"];
+    if (Array.isArray(rawMeasures)) {
+        parsedProperties["measures"] = rawMeasures;
+    } else if (typeof rawMeasures === "string") {
+        try {
+            const parsed: unknown = JSON.parse(rawMeasures);
+            if (Array.isArray(parsed)) {
+                parsedProperties["measures"] = parsed;
+            }
+        } catch {
+            // invalid JSON — skip
+        }
     }
     return parsedProperties;
 }
@@ -590,11 +691,11 @@ export function findPushpinAttributesInDimension(
     dv: DataViewFacade,
     geoData: IPushpinGeoData,
 ): IPushpinAttributesInDimension {
-    const { color, location, segment, size, tooltipText } = geoData;
+    const { color, location, segment, size, tooltipText, measures } = geoData;
     const locationIndex = location?.index ?? 0;
     const headers = dv.meta().allHeaders();
 
-    const hasMeasure = size || color;
+    const hasMeasure = size || color || (measures && measures.length > 0);
     const attrDimensionIndex = hasMeasure ? 1 : 0;
     const attributeDescriptors: IAttributeDescriptor[] = dv.meta().attributeDescriptors();
     const attributeResultHeaderItems: IResultHeader[][] = headers[attrDimensionIndex];

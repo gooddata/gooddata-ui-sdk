@@ -10,27 +10,6 @@ import { applyViewport } from "../../map/viewport/viewportCalculation.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type IMapViewport } from "../../types/map/provider.js";
 
-function getViewportKey(viewport: Partial<IMapViewport>): string {
-    if (viewport.bounds) {
-        const { southWest, northEast } = viewport.bounds;
-        return `bounds:${southWest.lng}:${southWest.lat}:${northEast.lng}:${northEast.lat}`;
-    }
-
-    if (viewport.center && viewport.zoom !== undefined) {
-        return `center:${viewport.center.lng}:${viewport.center.lat}:zoom:${viewport.zoom}`;
-    }
-
-    if (viewport.center) {
-        return `center:${viewport.center.lng}:${viewport.center.lat}`;
-    }
-
-    if (viewport.zoom !== undefined) {
-        return `zoom:${viewport.zoom}`;
-    }
-
-    return "empty";
-}
-
 /**
  * Handle map resize when container dimensions change
  *
@@ -70,7 +49,6 @@ export function useMapResize(
     }, [area]);
 
     const prevContainerRect = useRef<ContentRect | null>(null);
-    const previousViewportKeyRef = useRef<string | null>(null);
     const previousMapRef = useRef<IMapFacade | null>(null);
 
     useEffect(() => {
@@ -86,17 +64,12 @@ export function useMapResize(
         const curr = chartContainerRect.client;
         const { width, height } = curr;
         const hasResized = !prev || prev.width !== width || prev.height !== height;
-        const viewportToApply = resolveResponsiveViewport(map, viewport, dataViewport, viewportConfig);
-        const viewportKey = getViewportKey(viewportToApply);
-        const hasViewportChanged = previousViewportKeyRef.current !== viewportKey;
 
-        if (hasResized || hasViewportChanged) {
+        if (hasResized) {
             prevContainerRect.current = chartContainerRect;
-            if (hasResized) {
-                map.resize();
-            }
+            map.resize();
+            const viewportToApply = resolveResponsiveViewport(map, viewport, dataViewport, viewportConfig);
             applyViewport(map, viewportToApply, false);
-            previousViewportKeyRef.current = viewportKey;
         }
     }, [map, isMapReady, chartContainerRect, viewport, dataViewport, viewportConfig]);
 }

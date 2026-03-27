@@ -1,0 +1,699 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "/gaac/query",
+    "title": "Query",
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+        "fields": {
+            "$ref": "#/$defs/queryFields",
+            "description": "A list of fields in this query."
+        },
+        "filter_by": {
+            "$ref": "/gaac/queryFilters",
+            "description": "A list of filters in this query."
+        },
+        "sort_by": {
+            "$ref": "#/$defs/querySorts",
+            "description": "A list of sorting in this query."
+        }
+    },
+    "required": ["fields"],
+    "$defs": {
+        "queryFields": {
+            "title": "Fields",
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    "$ref": "#/$defs/queryField"
+                }
+            }
+        },
+        "querySorts": {
+            "title": "Sorts",
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/querySort"
+            }
+        },
+        "queryField": {
+            "title": "Field",
+            "oneOf": [
+                {
+                    "$ref": "/gaac/attributeIdentifier"
+                },
+                {
+                    "$ref": "/gaac/labelIdentifier"
+                },
+                {
+                    "$ref": "/gaac/metricIdentifier"
+                },
+                {
+                    "$ref": "/gaac/factIdentifier"
+                },
+                {
+                    "title": "Structured Field",
+                    "type": "object",
+                    "properties": {
+                        "aggregation": {
+                            "type": "string",
+                            "description": "Aggregation function to use for this field.",
+                            "enum": [
+                                "SUM",
+                                "COUNT",
+                                "APPROXIMATE_COUNT",
+                                "AVG",
+                                "MIN",
+                                "MAX",
+                                "MEDIAN",
+                                "RUNSUM"
+                            ]
+                        },
+                        "using": {
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "description": "Identifier to use for this field."
+                                },
+                                {
+                                    "type": "array",
+                                    "description": "List of identifiers to use for this field.",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            ]
+                        },
+                        "maql": {
+                            "type": "string",
+                            "description": "Define MAQL syntax for metric."
+                        },
+                        "operator": {
+                            "type": "string",
+                            "enum": ["SUM", "DIFFERENCE", "MULTIPLICATION", "RATIO", "CHANGE"],
+                            "description": "Arithmetic operator to use for this field."
+                        },
+                        "type": {
+                            "type": "string",
+                            "enum": ["PREVIOUS_YEAR", "PREVIOUS_PERIOD"],
+                            "description": "Type of relative period metric related to another metric in list."
+                        },
+                        "date_filter": {
+                            "type": "string",
+                            "description": "Date filter to use for this field.",
+                            "$semantic": {
+                                "type": "reference",
+                                "sources": [
+                                    "current.query.relative_date_filter_datasets",
+                                    "current.query.absolute_date_filter_datasets"
+                                ]
+                            }
+                        }
+                    },
+                    "oneOf": [
+                        {
+                            "title": "Attribute Field Guard",
+                            "if": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "using": {
+                                                "type": ["string", "null"]
+                                            }
+                                        },
+                                        "required": ["using"]
+                                    },
+                                    {
+                                        "not": {
+                                            "aggregation": {
+                                                "type": "string"
+                                            },
+                                            "required": ["aggregation"]
+                                        }
+                                    },
+                                    {
+                                        "not": {
+                                            "operator": {
+                                                "type": "string"
+                                            },
+                                            "required": ["operator"]
+                                        }
+                                    },
+                                    {
+                                        "not": {
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "required": ["type"]
+                                        }
+                                    }
+                                ]
+                            },
+                            "then": {
+                                "title": "Attribute Field",
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "title": {
+                                        "$ref": "/gaac/title",
+                                        "description": "A field title."
+                                    },
+                                    "show_all_values": {
+                                        "description": "Show all values in the attribute filter (do not ignore empty and NULL).",
+                                        "type": "boolean"
+                                    },
+                                    "using": {
+                                        "type": "string",
+                                        "description": "Attribute or label identifier to use for this field.",
+                                        "oneOf": [
+                                            {
+                                                "$ref": "/gaac/attributeIdentifier"
+                                            },
+                                            {
+                                                "$ref": "/gaac/labelIdentifier"
+                                            },
+                                            {
+                                                "$ref": "/gaac/factIdentifier"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "required": ["using"]
+                            },
+                            "else": {
+                                "not": {}
+                            }
+                        },
+                        {
+                            "title": "Metric Field Guard",
+                            "if": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "using": {
+                                                "type": ["string", "null"]
+                                            }
+                                        },
+                                        "required": ["using"]
+                                    },
+                                    {
+                                        "not": {
+                                            "operator": {
+                                                "type": "string"
+                                            },
+                                            "required": ["operator"]
+                                        }
+                                    },
+                                    {
+                                        "not": {
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "required": ["type"]
+                                        }
+                                    }
+                                ]
+                            },
+                            "then": {
+                                "title": "Metric Field",
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "title": {
+                                        "$ref": "/gaac/title",
+                                        "description": "A field title."
+                                    },
+                                    "compute_ratio": {
+                                        "type": "boolean",
+                                        "description": "Compute ratio for this metric."
+                                    },
+                                    "filter_by": {
+                                        "$ref": "/gaac/queryFilters",
+                                        "description": "A list of filters in this query."
+                                    },
+                                    "using": {
+                                        "$ref": "/gaac/metricIdentifier",
+                                        "description": "Metric identifier to use for this field."
+                                    }
+                                },
+                                "required": ["using"]
+                            },
+                            "else": {
+                                "not": {}
+                            }
+                        },
+                        {
+                            "title": "Calculated Metric Field Guard",
+                            "if": {
+                                "properties": {
+                                    "using": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "aggregation": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["using", "aggregation"]
+                            },
+                            "then": {
+                                "title": "Calculated Metric Field",
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "title": {
+                                        "$ref": "/gaac/title",
+                                        "description": "A field title."
+                                    },
+                                    "compute_ratio": {
+                                        "type": "boolean",
+                                        "description": "Compute ratio for this metric."
+                                    },
+                                    "filter_by": {
+                                        "$ref": "/gaac/queryFilters",
+                                        "description": "A list of filters in this query."
+                                    },
+                                    "aggregation": {
+                                        "type": "string",
+                                        "enum": [
+                                            "SUM",
+                                            "COUNT",
+                                            "APPROXIMATE_COUNT",
+                                            "AVG",
+                                            "MIN",
+                                            "MAX",
+                                            "MEDIAN",
+                                            "RUNSUM"
+                                        ],
+                                        "description": "Aggregation function to use for this field."
+                                    },
+                                    "using": {
+                                        "type": "string",
+                                        "oneOf": [
+                                            {
+                                                "$ref": "/gaac/attributeIdentifier"
+                                            },
+                                            {
+                                                "$ref": "/gaac/factIdentifier"
+                                            },
+                                            {
+                                                "$ref": "/gaac/labelIdentifier"
+                                            }
+                                        ],
+                                        "description": "Attribute identifier to use for this field."
+                                    }
+                                },
+                                "required": ["using", "aggregation"]
+                            },
+                            "else": {
+                                "not": {}
+                            }
+                        },
+                        {
+                            "title": "Inline Metric Field Guard",
+                            "if": {
+                                "properties": {
+                                    "maql": {
+                                        "type": ["string", "null"]
+                                    }
+                                },
+                                "required": ["maql"]
+                            },
+                            "then": {
+                                "title": "Inline Metric Field",
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "title": {
+                                        "$ref": "/gaac/title",
+                                        "description": "A field title."
+                                    },
+                                    "maql": {
+                                        "type": "string",
+                                        "description": "Define MAQL syntax for metric.",
+                                        "$semantic": {
+                                            "type": "maql"
+                                        }
+                                    }
+                                },
+                                "required": ["maql"]
+                            },
+                            "else": {
+                                "not": {}
+                            }
+                        },
+                        {
+                            "title": "Arithmetic Metric Field Guard",
+                            "if": {
+                                "properties": {
+                                    "using": {
+                                        "type": "array"
+                                    },
+                                    "operator": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["using", "operator"]
+                            },
+                            "then": {
+                                "title": "Arithmetic Metric Field",
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "title": {
+                                        "$ref": "/gaac/title",
+                                        "description": "A field title."
+                                    },
+                                    "operator": {
+                                        "type": "string",
+                                        "enum": ["SUM", "DIFFERENCE", "MULTIPLICATION", "RATIO", "CHANGE"],
+                                        "description": "Arithmetic operator to use for this field."
+                                    },
+                                    "using": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "description": "Local metric to use for this field.",
+                                            "$semantic": {
+                                                "type": "reference",
+                                                "source": "current.query.metric.localId"
+                                            }
+                                        },
+                                        "minItems": 2,
+                                        "maxItems": 2
+                                    }
+                                },
+                                "required": ["using", "operator"]
+                            },
+                            "else": {
+                                "not": {}
+                            }
+                        },
+                        {
+                            "title": "PoP Metric Field Guard",
+                            "if": {
+                                "properties": {
+                                    "using": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["PREVIOUS_YEAR"]
+                                    },
+                                    "date_filter": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["using", "type", "date_filter"]
+                            },
+                            "then": {
+                                "title": "PoP Metric Field",
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "title": {
+                                        "$ref": "/gaac/title",
+                                        "description": "A field title."
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["PREVIOUS_YEAR"],
+                                        "description": "Type of relative period metric related to another metric in list."
+                                    },
+                                    "using": {
+                                        "type": "string",
+                                        "description": "Identifier to use for this field.",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "current.query.metric.localId"
+                                        }
+                                    },
+                                    "date_filter": {
+                                        "type": "string",
+                                        "description": "Date filter to use for this field.",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": [
+                                                "current.query.relative_date_filter_datasets",
+                                                "current.query.absolute_date_filter_datasets"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": ["using", "type", "date_filter"]
+                            },
+                            "else": {
+                                "not": {}
+                            }
+                        },
+                        {
+                            "title": "Previous Period Metric Field Guard",
+                            "if": {
+                                "properties": {
+                                    "using": {
+                                        "type": ["string", "null"]
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["PREVIOUS_PERIOD"]
+                                    },
+                                    "date_filter": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["using", "type", "date_filter"]
+                            },
+                            "then": {
+                                "title": "Previous Period Metric Field",
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "title": {
+                                        "$ref": "/gaac/title",
+                                        "description": "A field title."
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["PREVIOUS_PERIOD"],
+                                        "description": "Type of relative period metric related to another metric in list."
+                                    },
+                                    "using": {
+                                        "type": "string",
+                                        "description": "Identifier to use for this field.",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "current.query.metric.localId"
+                                        }
+                                    },
+                                    "date_filter": {
+                                        "type": "string",
+                                        "description": "Date filter to use for this field.",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": [
+                                                "current.query.relative_date_filter_datasets",
+                                                "current.query.absolute_date_filter_datasets"
+                                            ]
+                                        }
+                                    },
+                                    "period": {
+                                        "type": "number",
+                                        "description": "Number of periods ago to use for this field.",
+                                        "minimum": 1
+                                    }
+                                },
+                                "required": ["using", "type", "date_filter"]
+                            },
+                            "else": {
+                                "not": {}
+                            }
+                        }
+                    ]
+                }
+            ],
+            "$semantic": [
+                {
+                    "type": "definition",
+                    "sources": [
+                        "current.query.attribute.localId",
+                        "current.query.metric.localId",
+                        "current.query.location.localId",
+                        "current.query.location.pushpin.localId",
+                        "current.query.location.geo_area.localId",
+                        "current.widget.visualization.query.localId",
+                        "current.widget.visualization.query.attribute.localId",
+                        "current.widget.visualization.query.dateAttribute.localId"
+                    ],
+                    "mode": "property"
+                }
+            ]
+        },
+        "querySort": {
+            "title": "Sort",
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": ["attribute_sort"]
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/queryAttributeSort"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": ["metric_sort"]
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/queryMetricSort"
+                    }
+                },
+                {
+                    "if": {
+                        "not": {
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["type"]
+                        }
+                    },
+                    "then": {
+                        "$semantic": {
+                            "type": "snippet",
+                            "snippets": []
+                        }
+                    }
+                }
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["attribute_sort", "metric_sort"]
+                }
+            },
+            "required": ["type"]
+        },
+        "queryAttributeSort": {
+            "title": "Attribute Sort",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["attribute_sort"]
+                },
+                "by": {
+                    "description": "Local attribute or label to use in this sort.",
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "$semantic": {
+                                "type": "reference",
+                                "source": "current.query.attribute.localId"
+                            }
+                        },
+                        {
+                            "$ref": "/gaac/attributeIdentifier"
+                        },
+                        {
+                            "$ref": "/gaac/labelIdentifier"
+                        }
+                    ]
+                },
+                "direction": {
+                    "type": "string",
+                    "enum": ["ASC", "DESC"],
+                    "description": "Sort direction."
+                },
+                "aggregation": {
+                    "type": "string",
+                    "enum": ["SUM"],
+                    "description": "Aggregation function to use for this sort."
+                }
+            },
+            "required": ["type", "by", "direction"]
+        },
+        "queryMetricSort": {
+            "title": "Metric Sort",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["metric_sort"]
+                },
+                "direction": {
+                    "type": "string",
+                    "enum": ["ASC", "DESC"],
+                    "description": "Sort direction."
+                },
+                "metrics": {
+                    "type": "array",
+                    "items": {
+                        "description": "Metric identifier or local metric to use for this sort.",
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "current.query.metric.localId"
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "properties": {
+                                    "by": {
+                                        "description": "Local attribute or label to use in this sort.",
+                                        "oneOf": [
+                                            {
+                                                "type": "string",
+                                                "$semantic": {
+                                                    "type": "reference",
+                                                    "source": "current.query.attribute.localId"
+                                                }
+                                            },
+                                            {
+                                                "$ref": "/gaac/attributeIdentifier"
+                                            },
+                                            {
+                                                "$ref": "/gaac/labelIdentifier"
+                                            }
+                                        ]
+                                    },
+                                    "element": {
+                                        "type": "string",
+                                        "description": "Value of attribute or label to use for this sort.",
+                                        "$semantic": {
+                                            "type": "values",
+                                            "from": "current.sort.by"
+                                        }
+                                    },
+                                    "function": {
+                                        "type": "string",
+                                        "description": "Aggregation function to use for this sort.",
+                                        "enum": ["SUM", "AVG", "MIN", "MAX", "MED", "NAT"]
+                                    }
+                                },
+                                "required": ["by"]
+                            }
+                        ]
+                    },
+                    "minItems": 1
+                }
+            },
+            "required": ["type", "metrics", "direction"]
+        }
+    }
+}

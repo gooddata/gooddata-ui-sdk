@@ -21,6 +21,7 @@ export function applyPushpinConfigDefaults<T extends IGeoChartConfig>(config: T)
             minSize: points.minSize ?? "normal",
             maxSize: points.maxSize ?? "normal",
             groupNearbyPoints: points.groupNearbyPoints ?? true,
+            shapeType: points.shapeType ?? "circle",
         },
     };
 }

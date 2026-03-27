@@ -3,9 +3,9 @@
 import { Document } from "yaml";
 
 import { type AfmObjectIdentifier, type DeclarativeAttributeHierarchy } from "@gooddata/api-client-tiger";
+import type { AttributeHierarchy } from "@gooddata/sdk-code-schemas/v1";
 import { type IAttributeHierarchyMetadataObject } from "@gooddata/sdk-model";
 
-import type { AttributeHierarchy } from "../schemas/v1/metadata.js";
 import { ATTRIBUTE_HIERARCHY_COMMENT } from "../utils/texts.js";
 import { entryWithSpace, fillOptionalMetaFields, getIdentifier } from "../utils/yamlUtils.js";
 

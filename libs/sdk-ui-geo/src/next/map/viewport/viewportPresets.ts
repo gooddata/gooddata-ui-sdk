@@ -4,7 +4,12 @@ import type { LngLatBoundsLike } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../../types/common/coordinates.js";
 import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
 import { type IGeoChartViewport, isConcreteViewportPreset } from "../../types/config/viewport.js";
-import { DEFAULT_CENTER, DEFAULT_WORLD_BOUNDS, DEFAULT_ZOOM, VIEWPORTS } from "../runtime/mapConfig.js";
+import {
+    DEFAULT_CENTER,
+    DEFAULT_WORLD_BOUNDS,
+    DEFAULT_ZOOM,
+    PRESET_VIEWPORT_BOUNDS,
+} from "../runtime/mapConfig.js";
 
 /**
  * Viewport configuration for MapLibre
@@ -33,7 +38,7 @@ export function getViewportOptions(data: IGeoLngLat[], config: IGeoPushpinChartC
 
     if (!center) {
         if (isConcreteViewportPreset(area)) {
-            const [southWest, northEast] = VIEWPORTS[area];
+            const [southWest, northEast] = PRESET_VIEWPORT_BOUNDS[area];
             const bounds: LngLatBoundsLike = [southWest, northEast];
             return { bounds };
         } else {

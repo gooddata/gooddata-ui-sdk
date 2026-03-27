@@ -41,6 +41,7 @@ import {
 interface IGeoLayerControls {
     latitude?: string;
     longitude?: string;
+    geoIcon?: string;
 }
 
 function isColorMappingItem(value: unknown): value is IColorMappingItem {
@@ -127,10 +128,11 @@ function isGeoLayerControls(value: unknown): value is IGeoLayerControls {
     if (!isRecord(value)) {
         return false;
     }
-    const { latitude, longitude } = value;
+    const { latitude, longitude, geoIcon } = value;
     const hasValidLatitude = latitude === undefined || typeof latitude === "string";
     const hasValidLongitude = longitude === undefined || typeof longitude === "string";
-    return hasValidLatitude && hasValidLongitude;
+    const hasValidGeoIcon = geoIcon === undefined || typeof geoIcon === "string";
+    return hasValidLatitude && hasValidLongitude && hasValidGeoIcon;
 }
 
 /**
@@ -310,8 +312,16 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
 
     const size = getAttributeOrMeasureFromBucket(buckets, BucketNames.SIZE);
     const color = getAttributeOrMeasureFromBucket(buckets, BucketNames.COLOR);
+    const measuresBucket = buckets.find((b) => b.localIdentifier === BucketNames.MEASURES);
+    const measures = measuresBucket?.items.length ? measuresBucket.items : undefined;
     const segmentBy = getAttributeFromBucket(buckets, BucketNames.SEGMENT);
     const tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
+
+    // Resolve geoIcon from bucket or from controls (same pattern as latitude/longitude)
+    let geoIcon = getAttributeFromBucket(buckets, BucketNames.GEO_ICON);
+    if (!geoIcon && isGeoLayerControls(controls) && controls.geoIcon) {
+        geoIcon = createAttributeFromDisplayFormId(controls.geoIcon, "geoIcon_df");
+    }
     const colorMapping = getLayerColorMappingFromControls(controls);
     const colorPalette = getLayerColorPaletteFromControls(controls);
     const layerConfig: IGeoLayerConfig | undefined = colorPalette || colorMapping ? {} : undefined;
@@ -343,6 +353,8 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
         longitude,
         size,
         color,
+        measures,
+        geoIcon,
         segmentBy,
         tooltipText,
         ...(layerConfig ? { config: layerConfig } : {}),
@@ -462,6 +474,8 @@ function pushpinLayerToBuckets(layer: IGeoLayerPushpin): IBucket[] {
         createSingleItemBucket(BucketNames.LONGITUDE, layer.longitude),
         createSingleItemBucket(BucketNames.SIZE, layer.size),
         createSingleItemBucket(BucketNames.COLOR, layer.color),
+        layer.measures?.length ? { localIdentifier: BucketNames.MEASURES, items: layer.measures } : null,
+        createSingleItemBucket(BucketNames.GEO_ICON, layer.geoIcon),
         createSingleItemBucket(BucketNames.SEGMENT, layer.segmentBy),
         createSingleItemBucket(BucketNames.TOOLTIP_TEXT, layer.tooltipText),
     );

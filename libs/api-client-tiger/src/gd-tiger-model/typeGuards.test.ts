@@ -45,6 +45,22 @@ describe("typeGuards", () => {
         },
     };
 
+    const arbitraryAttributeDashboardFilter: ITigerFilterContextItem = {
+        arbitraryAttributeFilter: {
+            displayForm: { identifier: "label.product.name", type: "displayForm" },
+            values: ["North", "South"],
+            negativeSelection: false,
+        },
+    };
+
+    const matchAttributeDashboardFilter: ITigerFilterContextItem = {
+        matchAttributeFilter: {
+            displayForm: { identifier: "label.product.name", type: "displayForm" },
+            operator: "contains",
+            literal: "North",
+        },
+    };
+
     it("recognizes Tiger filter with compound measure value condition", () => {
         expect(isTigerFilter(compoundMeasureValueFilter)).toBe(true);
     });
@@ -63,11 +79,20 @@ describe("typeGuards", () => {
     it("recognizes dashboard filters", () => {
         expect(isTigerFilterContextItem(attributeDashboardFilter)).toBe(true);
         expect(isTigerFilterContextItem(dateDashboardFilter)).toBe(true);
+        expect(isTigerFilterContextItem(arbitraryAttributeDashboardFilter)).toBe(true);
+        expect(isTigerFilterContextItem(matchAttributeDashboardFilter)).toBe(true);
         expect(isTigerFilterContextItem({ dateFilter: { from: "2020-01-01", to: "2020-12-31" } })).toBe(true);
     });
 
     it("recognizes dashboard filter arrays and rejects mixed arrays", () => {
-        expect(isTigerFilterContextItems([attributeDashboardFilter, dateDashboardFilter])).toBe(true);
+        expect(
+            isTigerFilterContextItems([
+                attributeDashboardFilter,
+                dateDashboardFilter,
+                arbitraryAttributeDashboardFilter,
+                matchAttributeDashboardFilter,
+            ]),
+        ).toBe(true);
         expect(isTigerFilterContextItems([attributeDashboardFilter, { foo: "bar" }])).toBe(false);
     });
 });

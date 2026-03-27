@@ -1,0 +1,74 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Plugin Type",
+    "description": "JSON schema for Gooddata Analytics Dashboard Plugin",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "plugin"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/plugin"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["plugin"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "plugin": {
+            "$id": "/gaac/plugin",
+            "title": "Plugin",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the plugin.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "plugin.id",
+                            "code": "core.uniqueness.plugins.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "plugin.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["plugin"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the plugin. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the plugin."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this plugin."
+                },
+                "url": {
+                    "type": "string",
+                    "description": "URL of the plugin.",
+                    "pattern": "[(http(s)?):\\/\\/(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)"
+                }
+            },
+            "required": ["id", "type", "url"]
+        }
+    }
+}

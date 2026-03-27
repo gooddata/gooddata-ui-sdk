@@ -255,6 +255,24 @@ export interface IOrganizationSettingsService {
     setMaxZoomLevel(level: number | null): Promise<void>;
 
     /**
+     * Sets the geo icon sprite sheet URL for the organization.
+     *
+     * @param url - URL of the Mapbox sprite sheet (without file extension).
+     *
+     * @returns promise
+     * @alpha
+     */
+    setGeoIconSheet(url: string): Promise<void>;
+
+    /**
+     * Deletes the geo icon sprite sheet setting from the organization.
+     *
+     * @returns promise
+     * @alpha
+     */
+    deleteGeoIconSheet(): Promise<void>;
+
+    /**
      * Returns effective organization settings with all defaults resolved.
      *
      * @remarks

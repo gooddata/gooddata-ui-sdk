@@ -12,7 +12,6 @@ import {
     type DeclarativeWorkspaceDataFilterReferences,
     type GrainIdentifier,
 } from "@gooddata/api-client-tiger";
-
 import type {
     AggregatedFact,
     Attribute,
@@ -20,7 +19,8 @@ import type {
     DateDataset,
     Fact,
     Fields,
-} from "../schemas/v1/metadata.js";
+} from "@gooddata/sdk-code-schemas/v1";
+
 import { type ExportEntities } from "../types.js";
 import { determineTypeForId } from "../utils/granularityUtils.js";
 import { TABLE_PATH_DELIMITER, convertIdToTitle } from "../utils/sharedUtils.js";
