@@ -457,8 +457,18 @@ const messagesSlice = createSlice({
             assistantMessage.complete = true;
             delete state.asyncProcess;
         },
-        setMessagesAction: (state, { payload: { messages } }: PayloadAction<{ messages: Message[] }>) => {
-            setNormalizedMessages(state, messages);
+        setMessagesAction: (
+            state,
+            {
+                payload: { messages, items },
+            }: PayloadAction<{ messages?: Message[]; items?: IChatConversationLocalItem[] }>,
+        ) => {
+            const conversation = state.currentConversation;
+            if (conversation) {
+                setNormalizedConversation(state, conversation, items ?? []);
+            } else {
+                setNormalizedMessages(state, messages ?? []);
+            }
         },
         setVerboseAction: (state, { payload: { verbose } }: PayloadAction<{ verbose: boolean }>) => {
             state.verbose = verbose;

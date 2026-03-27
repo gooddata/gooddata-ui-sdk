@@ -5,6 +5,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import {
     type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
+    type DashboardAttributeFilterSelectionType,
     type IDashboardAttributeFilterConfig,
     type ObjRef,
 } from "@gooddata/sdk-model";
@@ -131,4 +132,42 @@ export const selectAttributeFilterConfigsModeMapByTab: DashboardSelector<
     }
 
     return result;
+});
+
+/**
+ * Get a map of attribute filter selection types keyed by tab identifier.
+ *
+ * @remarks
+ * Returns a record where each key is a tab identifier and the value is a Map of attribute filter
+ * `selectionType` values for that tab. Use when rendering filters for a specific tab (not only the active one).
+ *
+ * @internal
+ */
+export const selectAttributeFilterConfigsSelectionTypeMapByTab: DashboardSelector<
+    Record<string, Map<string, DashboardAttributeFilterSelectionType | undefined>>
+> = createSelector(selectAttributeFilterConfigsOverridesByTab, (overridesByTab) => {
+    const result: Record<string, Map<string, DashboardAttributeFilterSelectionType | undefined>> = {};
+
+    for (const [tabIdentifier, configs] of Object.entries(overridesByTab)) {
+        result[tabIdentifier] = configs.reduce((map, config) => {
+            map.set(config.localIdentifier, config.selectionType);
+            return map;
+        }, new Map<string, DashboardAttributeFilterSelectionType | undefined>());
+    }
+
+    return result;
+});
+
+/**
+ * Get a map of attribute filter available modes from dashboard attribute filter configurations.
+ *
+ * @internal
+ */
+export const selectAttributeFilterConfigsSelectionTypeMap: DashboardSelector<
+    Map<string, DashboardAttributeFilterSelectionType | undefined>
+> = createSelector(selectAttributeFilterConfigsOverrides, (attributeFilterConfigs) => {
+    return attributeFilterConfigs.reduce((map, config) => {
+        map.set(config.localIdentifier, config.selectionType);
+        return map;
+    }, new Map<string, DashboardAttributeFilterSelectionType | undefined>());
 });

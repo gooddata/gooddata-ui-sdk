@@ -35,7 +35,7 @@ import {
     type IAttributeFilterElementsSelectItemProps,
     type IAttributeFilterElementsSelectProps,
 } from "./Components/ElementsSelect/types.js";
-import { type IFilterModeMenuProps } from "./Components/FilterModeMenu/FilterModeMenu.js";
+import { type IFilterModeMenuProps } from "./Components/FilterModeMenu/types.js";
 import { type ITextFilterBodyProps } from "./Components/TextFilterBody/types.js";
 import { type AttributeFilterAvailableMode } from "./filterModeTypes.js";
 
@@ -400,6 +400,31 @@ export interface IAttributeFilterCoreProps {
      * @alpha
      */
     menuConfig?: IAttributeFilterMenuConfig;
+
+    /**
+     * When true, hides all help/info tooltip icons within the attribute filter.
+     *
+     * @remarks
+     * This affects:
+     * - The info icon in the dropdown header showing attribute details
+     * - The tooltip icons next to section headers in the filter mode menu
+     * - The tooltip icon next to the "Values" label in the text filter body
+     *
+     * @alpha
+     */
+    hideTooltips?: boolean;
+
+    /**
+     * When true, always show the dropdown header with title and filter mode menu,
+     * even when there is only one available filter mode.
+     *
+     * @remarks
+     * Defaults to false. When false, the header is only shown when there are
+     * multiple filter modes or display form switching is available.
+     *
+     * @alpha
+     */
+    showHeader?: boolean;
 }
 
 /**

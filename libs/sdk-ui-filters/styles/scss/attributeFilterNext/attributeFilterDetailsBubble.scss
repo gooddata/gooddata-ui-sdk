@@ -13,12 +13,10 @@
     width: 220px;
     margin: -7px -10px;
     padding: 15px;
-    background: var(--gd-palette-complementary-0, #fff);
-    border: 1px solid var(--gd-palette-complementary-3-from-theme, #c9d5e0);
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
     border-radius: var(--gd-modal-borderRadius, 3px);
-    box-shadow:
-        0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
-        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .gd-attribute-filter-details-bubble__content {
@@ -39,7 +37,7 @@
     font-size: 13px;
     font-weight: 700;
     line-height: 1.4;
-    color: var(--gd-palette-complementary-9, #000);
+    color: var(--gd-palette-complementary-8, #464e56);
     font-family: variables.$gd-font-primary;
 }
 
@@ -70,7 +68,7 @@
     font-size: 12px;
     font-weight: 400;
     line-height: 1.5;
-    color: var(--gd-palette-complementary-9, #000);
+    color: var(--gd-palette-complementary-8, #464e56);
     font-family: variables.$gd-font-primary;
 }
 
@@ -78,7 +76,7 @@
     margin-top: 2px;
     font-size: 12px;
     line-height: 1.5;
-    color: var(--gd-palette-complementary-9, #000);
+    color: var(--gd-palette-complementary-8, #464e56);
     font-family: variables.$gd-font-primary;
 }
 
@@ -91,7 +89,7 @@
     margin-top: 4px;
     font-size: 10px;
     font-weight: 600;
-    color: var(--gd-palette-complementary-7, #6d7680);
+    color: var(--gd-palette-complementary-6, #94a1ad);
     font-family: variables.$gd-font-primary;
 }
 

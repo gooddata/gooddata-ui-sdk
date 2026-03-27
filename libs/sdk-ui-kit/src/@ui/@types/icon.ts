@@ -159,4 +159,5 @@ export type IconType =
     | "streamUp"
     | "streamDown"
     | "stream"
-    | "density";
+    | "density"
+    | "parameter";

@@ -25,6 +25,7 @@ export function useAttributeFilterDropdownHeader() {
         availableInternalFilterModes,
         onFilterModeChange,
         menuConfig,
+        showHeader,
     } = useAttributeFilterContext();
 
     const showLabelsSwitch = menuConfig?.showLabelsSwitch ?? true;
@@ -36,8 +37,10 @@ export function useAttributeFilterDropdownHeader() {
     const canSwitchDisplayForms = showLabelsSwitch && displayForms.length > 1 && setDisplayForm;
     const totalAvailableModes = availableInternalFilterModes?.length ?? 0;
     const showFilterHeader =
-        totalAvailableModes > 1 &&
-        ((onFilterModeChange && (availableInternalFilterModes?.length ?? 0) > 1) || canSwitchDisplayForms);
+        showHeader ||
+        (totalAvailableModes > 1 &&
+            ((onFilterModeChange && (availableInternalFilterModes?.length ?? 0) > 1) ||
+                canSwitchDisplayForms));
 
     return {
         showFilterHeader,

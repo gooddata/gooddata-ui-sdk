@@ -224,7 +224,11 @@ export interface IDashboardArbitraryAttributeFilter {
  * @alpha
  */
 export function isDashboardArbitraryAttributeFilter(obj: unknown): obj is IDashboardArbitraryAttributeFilter {
-    return !isEmpty(obj) && !!(obj as IDashboardArbitraryAttributeFilter).arbitraryAttributeFilter;
+    return (
+        !isEmpty(obj) &&
+        !!(obj as IDashboardArbitraryAttributeFilter).arbitraryAttributeFilter &&
+        isObjRef((obj as IDashboardArbitraryAttributeFilter).arbitraryAttributeFilter.displayForm)
+    );
 }
 
 /**
@@ -280,7 +284,11 @@ export interface IDashboardMatchAttributeFilter {
  * @alpha
  */
 export function isDashboardMatchAttributeFilter(obj: unknown): obj is IDashboardMatchAttributeFilter {
-    return !isEmpty(obj) && !!(obj as IDashboardMatchAttributeFilter).matchAttributeFilter;
+    return (
+        !isEmpty(obj) &&
+        !!(obj as IDashboardMatchAttributeFilter).matchAttributeFilter &&
+        isObjRef((obj as IDashboardMatchAttributeFilter).matchAttributeFilter.displayForm)
+    );
 }
 
 /**

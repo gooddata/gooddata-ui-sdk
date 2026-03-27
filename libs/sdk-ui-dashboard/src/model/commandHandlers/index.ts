@@ -7,6 +7,7 @@ import { saveAlertHandler } from "./alerts/saveAlertHandler.js";
 import { changeAttributeFilterDisplayAsLabelHandler } from "./dashboard/changeAttributeFilterDisplayAsLabelHandler.js";
 import { changeAttributeFilterLimitingItemsHandler } from "./dashboard/changeAttributeFilterLimitingItemsHandler.js";
 import { changeAttributeFilterModeHandler } from "./dashboard/changeAttributeFilterModeHandler.js";
+import { changeAttributeFilterSelectionTypeHandler } from "./dashboard/changeAttributeFilterSelectionTypeHandler.js";
 import { changeDateFilterTitleHandler } from "./dashboard/changeDateFilterTitleHandler.js";
 import { changeDateFilterWithDimensionModeHandler } from "./dashboard/changeDateFilterWithDimensionModeHandler.js";
 import { changeIgnoreExecutionTimestampHandler } from "./dashboard/changeIgnoreExecutionTimestampHandler.js";
@@ -174,6 +175,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION": applyWorkingSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION": resetWorkingSelectionHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE": changeAttributeFilterModeHandler,
+    "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_AVAILABLE_MODE": changeAttributeFilterSelectionTypeHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL": changeAttributeFilterDisplayAsLabelHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS": changeAttributeFilterLimitingItemsHandler,
     "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE": setDashboardDateFilterConfigModeHandler,

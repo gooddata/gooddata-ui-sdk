@@ -308,8 +308,14 @@ export type LinkHandlerEvent = {
     section?: "ai";
 };
 
+// @internal
+export const makeAssistantItem: (content?: IChatConversationLocalContent | undefined, id?: string | undefined, complete?: boolean | undefined) => IChatConversationLocalItem;
+
 // @public (undocumented)
 export const makeTextContents: (text: string, objects: TextContentObject[]) => TextContents;
+
+// @internal
+export const makeUserItem: (content?: IChatConversationLocalContent | undefined, id?: string | undefined) => IChatConversationLocalItem;
 
 // @public (undocumented)
 export const makeUserMessage: (content: Contents[]) => UserMessage;

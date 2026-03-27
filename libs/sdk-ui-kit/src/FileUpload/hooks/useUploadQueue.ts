@@ -126,7 +126,16 @@ export function useUploadQueue({
                     onUploadSuccess?.(item.file);
                 }
             } catch (error: unknown) {
-                const errorMessage = error instanceof Error ? error.message : undefined;
+                const errorMessage = (() => {
+                    if (error instanceof Error) {
+                        return (
+                            (error as { responseBody?: { detail: string } }).responseBody?.detail ??
+                            error.message
+                        );
+                    }
+                    return undefined;
+                })();
+
                 updateFileStatus(item.id, UploadItemStatus.Error, errorMessage);
                 onUploadError?.(item.file, error);
             }

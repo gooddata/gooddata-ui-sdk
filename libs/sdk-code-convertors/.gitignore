@@ -1,0 +1,3 @@
+wasm/.bin/
+wasm/bundle.js
+wasm/convertors.wasm

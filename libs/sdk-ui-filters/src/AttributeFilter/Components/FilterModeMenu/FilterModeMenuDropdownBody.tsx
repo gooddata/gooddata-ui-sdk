@@ -25,6 +25,7 @@ export type IFilterModeMenuDropdownBodyProps = {
     selectionTooltip: string;
     valuesAsTitle: string;
     valuesAsTooltip: string;
+    hideTooltips?: boolean;
 };
 
 export function FilterModeMenuDropdownBody({
@@ -42,6 +43,7 @@ export function FilterModeMenuDropdownBody({
     selectionTooltip,
     valuesAsTitle,
     valuesAsTooltip,
+    hideTooltips,
 }: IFilterModeMenuDropdownBodyProps) {
     const valuesAsAriaAttributes: UiListboxAriaAttributes = {
         ...ariaAttributes,
@@ -54,7 +56,11 @@ export function FilterModeMenuDropdownBody({
         <div className="gd-filter-mode-menu__dropdown" data-testid="filter-mode-menu-dropdown">
             {showModeSection ? (
                 <>
-                    <FilterModeMenuSectionHeader title={selectionTitle} tooltip={selectionTooltip} />
+                    <FilterModeMenuSectionHeader
+                        title={selectionTitle}
+                        tooltip={selectionTooltip}
+                        hideTooltip={hideTooltips}
+                    />
                     <FilterModeMenuSelectableSection<IModeItemData>
                         items={modeListboxItems}
                         selectedItemId={selectedModeItemId}
@@ -77,7 +83,11 @@ export function FilterModeMenuDropdownBody({
 
             {showDisplayForms ? (
                 <>
-                    <FilterModeMenuSectionHeader title={valuesAsTitle} tooltip={valuesAsTooltip} />
+                    <FilterModeMenuSectionHeader
+                        title={valuesAsTitle}
+                        tooltip={valuesAsTooltip}
+                        hideTooltip={hideTooltips}
+                    />
                     <FilterModeMenuSelectableSection<ILabelItemData>
                         items={labelListboxItems}
                         selectedItemId={selectedLabelItemId}

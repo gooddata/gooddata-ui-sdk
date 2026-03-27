@@ -187,7 +187,6 @@ export const useInsightExport = (config: {
         void exportHandler(exportFunction, { format: "csv", title, grandTotalsPosition }).finally(() =>
             setIsExporting(false),
         );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         exportFunction,
         exportHandler,
@@ -219,7 +218,6 @@ export const useInsightExport = (config: {
 
         setIsExporting(true);
         void exportRawHandler(exportRawFunction, title).finally(() => setIsExporting(false));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [csvDelimiterDialogEnabled, exportRawFunction, exportRawHandler, openCsvDialog, settings, title]);
 
     const onExportPowerPointPresentation = useCallback(() => {

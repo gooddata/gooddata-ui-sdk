@@ -1,16 +1,14 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-
-const ARROW_OFFSETS = { "cr cl": [20, 0], "cl cr": [-10, 0] };
-const ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];
+import { TOOLTIP_WIDTH_MEDIUM, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 interface ISelectionModeItemProps {
     item: DashboardAttributeFilterSelectionMode;
     itemTitle: string;
+    tooltip?: string;
     selected: boolean;
     disabled: boolean;
     disabledTooltip: string;
@@ -20,6 +18,7 @@ interface ISelectionModeItemProps {
 export function SelectionModeItem({
     item,
     itemTitle,
+    tooltip,
     selected,
     disabled,
     disabledTooltip,
@@ -27,26 +26,30 @@ export function SelectionModeItem({
 }: ISelectionModeItemProps) {
     const className = cx(
         "gd-list-item",
+        "selection-kind-dropdown-item",
         {
             "is-selected": selected,
-        },
-        {
             "is-disabled": disabled,
         },
         "s-selection-mode-dropdown-item",
         `s-selection-mode-dropdown-item-${item}`,
     );
 
+    const tooltipText = disabled ? disabledTooltip : tooltip;
+
     return (
-        <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-            <div className={className} onClick={() => !disabled && onClick()}>
-                {itemTitle}
-            </div>
-            {Boolean(disabled) && (
-                <Bubble arrowOffsets={ARROW_OFFSETS} alignPoints={ALIGN_POINTS}>
-                    <div>{disabledTooltip}</div>
-                </Bubble>
-            )}
-        </BubbleHoverTrigger>
+        <div className={className} onClick={() => !disabled && onClick()}>
+            <span className="selection-kind-dropdown-item-title">{itemTitle}</span>
+            {tooltipText ? (
+                <UiTooltip
+                    anchor={<span className="selection-kind-dropdown-item-help gd-icon-circle-question" />}
+                    content={tooltipText}
+                    arrowPlacement="left"
+                    triggerBy={["hover"]}
+                    width={TOOLTIP_WIDTH_MEDIUM}
+                    anchorWrapperStyles={{ display: "flex", alignItems: "center" }}
+                />
+            ) : null}
+        </div>
     );
 }

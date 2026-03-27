@@ -47,8 +47,8 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
         autocompleteOptions,
         onAutocompleteSearch,
         isAutocompleteLoading,
+        hideTooltips,
     } = props;
-
     const { showFilterHeader, headerProps } = useAttributeFilterDropdownHeader();
 
     const isArbitraryOperator = operator === "is" || operator === "isNot";
@@ -118,7 +118,7 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
                                     })}
                                 >
                                     {isArbitraryOperator ? arbitraryFilterValue : matchFilterValue}
-                                    {isArbitraryOperator ? <ArbitraryValuesTooltip /> : null}
+                                    {isArbitraryOperator && !hideTooltips ? <ArbitraryValuesTooltip /> : null}
                                 </label>
                                 {isArbitraryOperator && values.length > 0 ? (
                                     <UiLink

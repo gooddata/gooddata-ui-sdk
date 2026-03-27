@@ -115,6 +115,7 @@ export interface IPluggableApplicationMountOptions {
     ctx: IPlatformContext;
     id: string;
     onEvent?: (e: IPluggableAppEvent) => void;
+    onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
 }
 
 // @alpha
@@ -123,6 +124,13 @@ export interface IPluggableApplicationNavigation {
     go(to: string): void;
     // (undocumented)
     openApp(id: string, path?: string): void;
+}
+
+// @alpha
+export interface IPluggableAppTelemetryCallbacks {
+    trackEvent: (eventName: string, data?: Record<string, unknown>, options?: ITelemetryEventOptions) => void;
+    trackPageView: (page: string) => void;
+    trackTiming: (variable: string, label: string, valueMs: number) => void;
 }
 
 // @alpha
@@ -154,6 +162,11 @@ export interface IShellUiMountOptions {
 export function isPlatformContextV1(context: unknown): context is IPlatformContextV1;
 
 // @alpha
+export interface ITelemetryEventOptions {
+    channel?: TelemetryChannel;
+}
+
+// @alpha
 export enum PantherTier {
     // (undocumented)
     DEMO = "DEMO",
@@ -172,5 +185,8 @@ export type PluggableApplicationMount = (options: IPluggableApplicationMountOpti
 
 // @alpha
 export type ShellUiMount = (options: IShellUiMountOptions) => IShellUiMountHandle;
+
+// @alpha
+export type TelemetryChannel = "standard" | "ai";
 
 ```

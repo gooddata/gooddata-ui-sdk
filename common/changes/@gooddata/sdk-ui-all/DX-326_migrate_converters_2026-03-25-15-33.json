@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Migrate code-convertors package into gdc-ui as SDK lib",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

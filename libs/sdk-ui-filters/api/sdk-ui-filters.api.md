@@ -558,7 +558,7 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter" | "overlayPositionType" | "alignPoints" | "menuConfig">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter" | "overlayPositionType" | "alignPoints" | "menuConfig" | "hideTooltips" | "showHeader">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
@@ -577,6 +577,8 @@ export interface IAttributeFilterCoreProps {
     filter?: IAttributeFilter;
     fullscreenOnMobile?: boolean;
     hiddenElements?: string[];
+    // @alpha
+    hideTooltips?: boolean;
     locale?: ILocale;
     // @alpha
     menuConfig?: IAttributeFilterMenuConfig;
@@ -593,6 +595,8 @@ export interface IAttributeFilterCoreProps {
     resetOnParentFilterChange?: boolean;
     selectFirst?: boolean;
     selectionMode?: DashboardAttributeFilterSelectionMode;
+    // @alpha
+    showHeader?: boolean;
     staticElements?: IAttributeElement[];
     title?: string;
     validateElementsBy?: ObjRef[];
@@ -1117,6 +1121,7 @@ export interface IFilterModeMenuItemProps {
 export interface IFilterModeMenuProps {
     availableModes?: AttributeFilterMode[];
     currentMode: AttributeFilterMode;
+    hideTooltips?: boolean;
     labels?: IAttributeDisplayFormMetadataObject[];
     onLabelChange?: (labelRef: ObjRef) => void;
     onModeChange: (mode: AttributeFilterMode) => void;
@@ -1412,6 +1417,7 @@ export interface ITextFilterBodyProps {
     hasValuesEmptyError?: boolean;
     hasValuesLimitExceededError?: boolean;
     hasValuesLimitReachedWarning?: boolean;
+    hideTooltips?: boolean;
     isAutocompleteLoading?: boolean;
     literal: string;
     onAutocompleteSearch?: (searchString: string) => void;

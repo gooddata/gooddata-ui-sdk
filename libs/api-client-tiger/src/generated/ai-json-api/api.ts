@@ -20,7 +20,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
-export interface AiAllowedRelationshipTypeDto {
+export interface AiAllowedRelationshipType {
     'sourceType': string;
     'targetType': string;
     'allowOrphans'?: boolean;
@@ -50,22 +50,22 @@ export interface AiClusteringAmount {
  * @type AiContent
  * Conversation item content payload.
  */
-export type AiContent = { type: 'multipart' } & AiMultipartContentDto | { type: 'reasoning' } & AiReasoningContentDto | { type: 'text' } & AiTextMessageContentDto | { type: 'toolCall' } & AiFunctionCallContentDto | { type: 'toolResult' } & AiFunctionResultContentDto;
+export type AiContent = { type: 'multipart' } & AiMultipartContent | { type: 'reasoning' } & AiReasoningContent | { type: 'text' } & AiTextMessageContent | { type: 'toolCall' } & AiFunctionCallContent | { type: 'toolResult' } & AiFunctionResultContent;
 
 /**
  * Conversation item list response.
  */
-export interface AiConversationItemListResponseDto {
+export interface AiConversationItemListResponse {
     /**
      * Ordered list of conversation items.
      */
-    'items': Array<AiConversationItemResponseDto>;
+    'items': Array<AiConversationItemResponse>;
 }
 
 /**
  * Conversation item returned by the agentic HTTP API.
  */
-export interface AiConversationItemResponseDto {
+export interface AiConversationItemResponse {
     /**
      * Conversation item identifier.
      */
@@ -85,19 +85,19 @@ export interface AiConversationItemResponseDto {
     /**
      * Author role of the item.
      */
-    'role': AiConversationItemResponseDtoRoleEnum;
+    'role': AiConversationItemResponseRoleEnum;
     'content': AiContent;
     'responseId'?: string | null;
     'replyTo'?: string | null;
     'taskId'?: string | null;
 }
 
-export type AiConversationItemResponseDtoRoleEnum = 'user' | 'assistant' | 'tool';
+export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool';
 
 /**
  * Conversation returned by the agentic HTTP API.
  */
-export interface AiConversationResponseDto {
+export interface AiConversationResponse {
     /**
      * Conversation identifier.
      */
@@ -124,19 +124,19 @@ export interface AiConversationResponseDto {
     'lastActivityAt': string;
 }
 
-export interface AiConversationResponseListDto {
+export interface AiConversationResponseList {
     /**
      * Conversation responses.
      */
-    'responses': Array<AiConversationTurnResponseDto>;
+    'responses': Array<AiConversationTurnResponse>;
 }
 
-export interface AiConversationTurnResponseDto {
+export interface AiConversationTurnResponse {
     /**
      * Response identifier.
      */
     'responseId': string;
-    'feedback'?: AiFeedbackDto | null;
+    'feedback'?: AiFeedback | null;
     /**
      * Response creation timestamp (ISO-8601 UTC).
      */
@@ -181,15 +181,40 @@ export const AiDateGranularity = {
 export type AiDateGranularity = typeof AiDateGranularity[keyof typeof AiDateGranularity];
 
 
-export interface AiFeedbackDto {
+/**
+ * Response for DELETE /documents/{documentId}.
+ */
+export interface AiDeleteDocumentResponse {
+    'success': boolean;
+    'message': string;
+}
+
+/**
+ * Document metadata returned by GET /documents/{document_id} and list.
+ */
+export interface AiDocumentMetadataResponse {
+    'id': string;
+    'filename': string;
+    'numChunks': number;
+    'createdAt': string;
+    'updatedAt': string;
+    'createdBy': string;
+    'updatedBy': string;
+    'scopes': Array<string>;
+    'workspaceId'?: string | null;
+    'title'?: string | null;
+    'isDisabled'?: boolean | null;
+}
+
+export interface AiFeedback {
     /**
      * Feedback type.
      */
-    'type': AiFeedbackDtoTypeEnum;
+    'type': AiFeedbackTypeEnum;
     'text'?: string | null;
 }
 
-export type AiFeedbackDtoTypeEnum = 'POSITIVE' | 'NEGATIVE';
+export type AiFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
 export interface AiFieldsValue {
     'using': string;
@@ -218,7 +243,7 @@ export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'rank
 export interface AiForecastPeriod {
 }
 
-export interface AiFunctionCallContentDto {
+export interface AiFunctionCallContent {
     [key: string]: any;
 
     /**
@@ -243,11 +268,11 @@ export interface AiFunctionCallContentDto {
     'arguments': object;
 }
 
-export interface AiFunctionResultContentDto {
+export interface AiFunctionResultContent {
     /**
      * Type of item content.
      */
-    'type'?: AiFunctionResultContentDtoTypeEnum;
+    'type'?: AiFunctionResultContentTypeEnum;
     /**
      * Function call correlation identifier.
      */
@@ -258,19 +283,19 @@ export interface AiFunctionResultContentDto {
     'result': string;
 }
 
-export type AiFunctionResultContentDtoTypeEnum = 'toolResult';
+export type AiFunctionResultContentTypeEnum = 'toolResult';
 
 export interface AiHTTPValidationError {
     'detail'?: Array<AiValidationError>;
 }
 
-export interface AiKeyDriverAnalysisDto {
+export interface AiKeyDriverAnalysis {
     [key: string]: any;
 
     /**
      * Measure definition for key driver analysis.
      */
-    'measure': AiKeyDriverAnalysisMeasureDto;
+    'measure': AiKeyDriverAnalysisMeasure;
     /**
      * Date attribute identifier used for period comparison.
      */
@@ -289,7 +314,7 @@ export interface AiKeyDriverAnalysisDto {
     'filters': Array<object>;
 }
 
-export interface AiKeyDriverAnalysisMeasureDto {
+export interface AiKeyDriverAnalysisMeasure {
     /**
      * Measure object identifier.
      */
@@ -297,40 +322,49 @@ export interface AiKeyDriverAnalysisMeasureDto {
     /**
      * Measure object type.
      */
-    'type': AiKeyDriverAnalysisMeasureDtoTypeEnum;
-    'aggregation'?: AiKeyDriverAnalysisMeasureDtoAggregationEnum | null;
+    'type': AiKeyDriverAnalysisMeasureTypeEnum;
+    'aggregation'?: AiKeyDriverAnalysisMeasureAggregationEnum | null;
 }
 
-export type AiKeyDriverAnalysisMeasureDtoTypeEnum = 'metric' | 'fact' | 'attribute';
-export type AiKeyDriverAnalysisMeasureDtoAggregationEnum = 'SUM' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'COUNT';
+export type AiKeyDriverAnalysisMeasureTypeEnum = 'metric' | 'fact' | 'attribute';
+export type AiKeyDriverAnalysisMeasureAggregationEnum = 'SUM' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'COUNT';
 
-export interface AiKeyDriverAnalysisPartDto {
+export interface AiKeyDriverAnalysisPart {
     /**
      * Type of multipart part.
      */
-    'type'?: AiKeyDriverAnalysisPartDtoTypeEnum;
-    'kda'?: AiKeyDriverAnalysisDto | null;
+    'type'?: AiKeyDriverAnalysisPartTypeEnum;
+    'kda'?: AiKeyDriverAnalysis | null;
 }
 
-export type AiKeyDriverAnalysisPartDtoTypeEnum = 'kda';
+export type AiKeyDriverAnalysisPartTypeEnum = 'kda';
 
-export interface AiMultipartContentDto {
+/**
+ * Response for GET /documents.
+ */
+export interface AiListDocumentsResponse {
+    'documents': Array<AiDocumentMetadataResponse>;
+    'totalCount'?: number | null;
+    'nextPageToken'?: string | null;
+}
+
+export interface AiMultipartContent {
     /**
      * Type of item content.
      */
-    'type'?: AiMultipartContentDtoTypeEnum;
+    'type'?: AiMultipartContentTypeEnum;
     /**
      * Ordered multipart content fragments.
      */
-    'parts': Array<AiMultipartContentDtoPartsInner>;
+    'parts': Array<AiMultipartContentPartsInner>;
 }
 
-export type AiMultipartContentDtoTypeEnum = 'multipart';
+export type AiMultipartContentTypeEnum = 'multipart';
 
 /**
- * @type AiMultipartContentDtoPartsInner
+ * @type AiMultipartContentPartsInner
  */
-export type AiMultipartContentDtoPartsInner = { type: 'kda' } & AiKeyDriverAnalysisPartDto | { type: 'searchResults' } & AiSearchResultsDto | { type: 'text' } & AiTextPartDto | { type: 'visualization' } & AiVisualizationPartDto | { type: 'whatIf' } & AiWhatIfAnalysisPartDto;
+export type AiMultipartContentPartsInner = { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
 
 
 export const AiObjectType = {
@@ -350,6 +384,15 @@ export const AiObjectType = {
 
 export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
 
+
+/**
+ * Request body for PATCH /documents/{documentId}.
+ */
+export interface AiPatchDocumentRequest {
+    'isDisabled'?: boolean | null;
+    'title'?: string | null;
+    'scopes'?: Array<string> | null;
+}
 
 export interface AiQuery {
     'fields': { [key: string]: AiFieldsValue; };
@@ -384,31 +427,39 @@ export interface AiRankingFilter {
 
 export type AiRankingFilterTypeEnum = 'ranking_filter';
 
-export interface AiReasoningContentDto {
+export interface AiReasoningContent {
     /**
      * Type of item content.
      */
-    'type'?: AiReasoningContentDtoTypeEnum;
+    'type'?: AiReasoningContentTypeEnum;
     /**
      * Reasoning summary intended for UI display.
      */
     'summary': string;
 }
 
-export type AiReasoningContentDtoTypeEnum = 'reasoning';
+export type AiReasoningContentTypeEnum = 'reasoning';
 
-export interface AiResponseFeedbackDto {
-    'type': AiResponseFeedbackDtoTypeEnum;
+export interface AiResponseFeedback {
+    'type': AiResponseFeedbackTypeEnum;
     'text'?: string | null;
 }
 
-export type AiResponseFeedbackDtoTypeEnum = 'POSITIVE' | 'NEGATIVE';
+export type AiResponseFeedbackTypeEnum = 'POSITIVE' | 'NEGATIVE';
 
 export interface AiResponseFeedbackRequest {
-    'feedback': AiResponseFeedbackDto | null;
+    'feedback': AiResponseFeedback | null;
 }
 
-export interface AiSearchObjectDto {
+/**
+ * Response for GET /search.
+ */
+export interface AiSearchDocumentsResponse {
+    'results': Array<AiSearchResultItem>;
+    'statistics': AiSearchStatistics;
+}
+
+export interface AiSearchObject {
     /**
      * Object identifier.
      */
@@ -440,7 +491,7 @@ export interface AiSearchObjectDto {
     'score': number;
 }
 
-export interface AiSearchRelationshipDto {
+export interface AiSearchRelationship {
     /**
      * Workspace ID of the source object.
      */
@@ -475,82 +526,117 @@ export interface AiSearchRelationshipDto {
     'targetTitle': string;
 }
 
-export interface AiSearchResultsDto {
+/**
+ * A single search result entry.
+ */
+export interface AiSearchResultItem {
+    'id': string;
+    'filename': string;
+    'content': string;
+    'score': number;
+    'chunkIndex': number;
+    'totalChunks': number;
+    'pageNumbers': Array<number>;
+    'workspaceId'?: string | null;
+    'title'?: string | null;
+    'scopes': Array<string>;
+}
+
+export interface AiSearchResults {
     /**
      * Type of multipart part.
      */
-    'type'?: AiSearchResultsDtoTypeEnum;
+    'type'?: AiSearchResultsTypeEnum;
     /**
      * Search result objects for widget rendering.
      */
-    'objects': Array<AiSearchObjectDto>;
+    'objects': Array<AiSearchObject>;
     /**
      * Keywords used in search query.
      */
     'keywords': Array<string>;
     'requestedObjectType'?: string | null;
-    'relationships'?: Array<AiSearchRelationshipDto> | null;
+    'relationships'?: Array<AiSearchRelationship> | null;
 }
 
-export type AiSearchResultsDtoTypeEnum = 'searchResults';
+export type AiSearchResultsTypeEnum = 'searchResults';
 
-export interface AiSendMessageContentDto {
-    'type': AiSendMessageContentDtoTypeEnum;
+/**
+ * Statistics about the search results.
+ */
+export interface AiSearchStatistics {
+    'totalResults': number;
+    'averageSimilarityScore': number;
+}
+
+export interface AiSendMessageContent {
+    'type': AiSendMessageContentTypeEnum;
     'text': string;
 }
 
-export type AiSendMessageContentDtoTypeEnum = 'text';
+export type AiSendMessageContentTypeEnum = 'text';
 
-export interface AiSendMessageItemDto {
-    'role': AiSendMessageItemDtoRoleEnum;
-    'content': AiSendMessageContentDto;
+export interface AiSendMessageItem {
+    'role': AiSendMessageItemRoleEnum;
+    'content': AiSendMessageContent;
 }
 
-export type AiSendMessageItemDtoRoleEnum = 'user';
+export type AiSendMessageItemRoleEnum = 'user';
 
-export interface AiSendMessageOptionsDto {
-    'search'?: AiSendMessageSearchOptionsDto | null;
+export interface AiSendMessageOptions {
+    'search'?: AiSendMessageSearchOptions | null;
 }
 
 /**
  * POST /conversations/{conversationId}/messages body.
  */
 export interface AiSendMessageRequest {
-    'item': AiSendMessageItemDto;
-    'options'?: AiSendMessageOptionsDto | null;
+    'item': AiSendMessageItem;
+    'options'?: AiSendMessageOptions | null;
 }
 
-export interface AiSendMessageSearchOptionsDto {
+export interface AiSendMessageSearchOptions {
     'objectTypes'?: Array<AiObjectType> | null;
     'searchLimit'?: number | null;
-    'allowedRelationshipTypes'?: Array<AiAllowedRelationshipTypeDto> | null;
+    'allowedRelationshipTypes'?: Array<AiAllowedRelationshipType> | null;
 }
 
-export interface AiTextMessageContentDto {
+export interface AiTextMessageContent {
     /**
      * Type of item content.
      */
-    'type'?: AiTextMessageContentDtoTypeEnum;
+    'type'?: AiTextMessageContentTypeEnum;
     /**
      * Plain text message content.
      */
     'text': string;
 }
 
-export type AiTextMessageContentDtoTypeEnum = 'text';
+export type AiTextMessageContentTypeEnum = 'text';
 
-export interface AiTextPartDto {
+export interface AiTextPart {
     /**
      * Type of multipart part.
      */
-    'type'?: AiTextPartDtoTypeEnum;
+    'type'?: AiTextPartTypeEnum;
     /**
      * Text fragment.
      */
     'text': string;
 }
 
-export type AiTextPartDtoTypeEnum = 'text';
+export type AiTextPartTypeEnum = 'text';
+
+/**
+ * Response for POST/PUT /documents.
+ */
+export interface AiUploadDocumentResponse {
+    'id': string;
+    'filename': string;
+    'success': boolean;
+    'message': string;
+    'numChunks': number;
+}
 
 export interface AiValidationError {
     'loc': Array<AiValidationErrorLocInner>;
@@ -601,38 +687,27 @@ export interface AiVisualizationMetricsInner {
     'field': string;
 }
 
-export interface AiVisualizationPartDto {
+export interface AiVisualizationPart {
     /**
      * Type of multipart part.
      */
-    'type'?: AiVisualizationPartDtoTypeEnum;
+    'type'?: AiVisualizationPartTypeEnum;
     'visualization'?: AiVisualization | null;
-    /**
-     * Visualization state metadata.
-     */
-    'metadata': AiVisualizationPartMetadataDto;
 }
 
-export type AiVisualizationPartDtoTypeEnum = 'visualization';
+export type AiVisualizationPartTypeEnum = 'visualization';
 
-export interface AiVisualizationPartMetadataDto {
-    /**
-     * Whether the visualization was explicitly saved by user action.
-     */
-    'isSaved': boolean;
-}
-
-export interface AiWhatIfAnalysisPartDto {
+export interface AiWhatIfAnalysisPart {
     /**
      * Type of multipart part.
      */
-    'type'?: AiWhatIfAnalysisPartDtoTypeEnum;
-    'whatIf'?: AiWhatIfScenarioDto | null;
+    'type'?: AiWhatIfAnalysisPartTypeEnum;
+    'whatIf'?: AiWhatIfScenario | null;
 }
 
-export type AiWhatIfAnalysisPartDtoTypeEnum = 'whatIf';
+export type AiWhatIfAnalysisPartTypeEnum = 'whatIf';
 
-export interface AiWhatIfMeasureAdjustmentDto {
+export interface AiWhatIfMeasureAdjustment {
     /**
      * Adjusted metric identifier.
      */
@@ -647,7 +722,7 @@ export interface AiWhatIfMeasureAdjustmentDto {
     'scenarioMaql': string;
 }
 
-export interface AiWhatIfScenarioDto {
+export interface AiWhatIfScenario {
     /**
      * Base visualization reference used by scenario.
      */
@@ -655,14 +730,14 @@ export interface AiWhatIfScenarioDto {
     /**
      * Defined what-if variants.
      */
-    'scenarios': Array<AiWhatIfScenarioVariantDto>;
+    'scenarios': Array<AiWhatIfScenarioVariant>;
     /**
      * Whether baseline values are included.
      */
     'includeBaseline': boolean;
 }
 
-export interface AiWhatIfScenarioVariantDto {
+export interface AiWhatIfScenarioVariant {
     /**
      * Scenario name.
      */
@@ -670,7 +745,7 @@ export interface AiWhatIfScenarioVariantDto {
     /**
      * Scenario adjustments.
      */
-    'adjustments': Array<AiWhatIfMeasureAdjustmentDto>;
+    'adjustments': Array<AiWhatIfMeasureAdjustment>;
 }
 
 
@@ -906,7 +981,7 @@ export async function ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceI
     requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<AiConversationResponseDto> {
+): AxiosPromise<AiConversationResponse> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(
         requestParameters.workspaceId, requestParameters.conversationId, 
         options || {},
@@ -932,7 +1007,7 @@ export async function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspace
     requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<Array<AiConversationResponseDto>> {
+): AxiosPromise<Array<AiConversationResponse>> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(
         requestParameters.workspaceId, 
         options || {},
@@ -958,7 +1033,7 @@ export async function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspac
     requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<AiConversationResponseDto> {
+): AxiosPromise<AiConversationResponse> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(
         requestParameters.workspaceId, 
         options || {},
@@ -992,7 +1067,7 @@ export interface ConversationsAiInterface {
      * @throws {RequiredError}
      * @memberof ConversationsAiInterface
      */
-    getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseDto>;
+    getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 
     /**
      * 
@@ -1002,7 +1077,7 @@ export interface ConversationsAiInterface {
      * @throws {RequiredError}
      * @memberof ConversationsAiInterface
      */
-    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AiConversationResponseDto>>;
+    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AiConversationResponse>>;
 
     /**
      * 
@@ -1012,7 +1087,7 @@ export interface ConversationsAiInterface {
      * @throws {RequiredError}
      * @memberof ConversationsAiInterface
      */
-    postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseDto>;
+    postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 
 }
 
@@ -1209,7 +1284,7 @@ export async function ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdCh
     requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<AiConversationItemListResponseDto> {
+): AxiosPromise<AiConversationItemListResponse> {
     const localVarAxiosArgs = await ItemsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(
         requestParameters.workspaceId, requestParameters.conversationId, 
         options || {},
@@ -1233,7 +1308,7 @@ export interface ItemsAiInterface {
      * @throws {RequiredError}
      * @memberof ItemsAiInterface
      */
-    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponseDto>;
+    getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
 
 }
 
@@ -1281,26 +1356,141 @@ export class ItemsAi extends BaseAPI implements ItemsAiInterface {
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
- * Download a knowledge document\'s raw file.
- * @summary Download Document
+ * Upload a new knowledge document. Returns 409 if filename already exists.
+ * @summary Upload Document
  * @param {string} workspaceId 
- * @param {string} filename 
+ * @param {File} file 
+ * @param {string} [title] 
+ * @param {Array<string>} [scopes] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function KnowledgeAiAxiosParamCreator_DownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(
-    workspaceId: string, filename: string, 
+export async function KnowledgeAiAxiosParamCreator_CreateDocument(
+    workspaceId: string, file: File, title?: string, scopes?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('downloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet', 'workspaceId', workspaceId)
-    // verify required parameter 'filename' is not null or undefined
-    assertParamExists('downloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet', 'filename', filename)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{filename}/download`
+    assertParamExists('createDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'file' is not null or undefined
+    assertParamExists('createDocument', 'file', file)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+    const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+
+    if (file !== undefined) { 
+        localVarFormParams.append('file', file as any);
+    }
+    
+    if (title !== undefined) { 
+        localVarFormParams.append('title', title as any);
+    }
+        if (scopes) {
+        
+        localVarFormParams.append('scopes', scopes.join(COLLECTION_FORMATS.csv));
+    }
+    
+    
+    localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    localVarRequestOptions.data = localVarFormParams;
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * Delete a knowledge document and all its chunks.
+ * @summary Delete Document
+ * @param {string} workspaceId 
+ * @param {string} documentId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_DeleteDocument(
+    workspaceId: string, documentId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'documentId' is not null or undefined
+    assertParamExists('deleteDocument', 'documentId', documentId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{document_id}`
         .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
-        .replace(`{${"filename"}}`, encodeURIComponent(String(filename)));
+        .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * Download a knowledge document\'s raw file.
+ * @summary Download Document
+ * @param {string} workspaceId 
+ * @param {string} documentId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_DownloadDocument(
+    workspaceId: string, documentId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('downloadDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'documentId' is not null or undefined
+    assertParamExists('downloadDocument', 'documentId', documentId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{document_id}/download`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -1330,43 +1520,37 @@ export async function KnowledgeAiAxiosParamCreator_DownloadDocumentApiV1AiWorksp
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
- * Upload a new knowledge document. Returns 409 if filename already exists.
- * @summary Upload Document
+ * Get a single knowledge document\'s metadata.
+ * @summary Get Document
  * @param {string} workspaceId 
- * @param {File} file 
+ * @param {string} documentId 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function KnowledgeAiAxiosParamCreator_UploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(
-    workspaceId: string, file: File, 
+export async function KnowledgeAiAxiosParamCreator_GetDocument(
+    workspaceId: string, documentId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('uploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost', 'workspaceId', workspaceId)
-    // verify required parameter 'file' is not null or undefined
-    assertParamExists('uploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost', 'file', file)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/upload`
-        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    assertParamExists('getDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'documentId' is not null or undefined
+    assertParamExists('getDocument', 'documentId', documentId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{document_id}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
     if (configuration) {
         baseOptions = configuration.baseOptions;
     }
-    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
-    const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
 
-    if (file !== undefined) { 
-        localVarFormParams.append('file', file as any);
-    }
-    
-    
-    localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1375,7 +1559,214 @@ export async function KnowledgeAiAxiosParamCreator_UploadDocumentApiV1AiWorkspac
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    localVarRequestOptions.data = localVarFormParams;
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * List knowledge documents accessible from the workspace.
+ * @summary List Documents
+ * @param {string} workspaceId 
+ * @param {Array<string>} [scopes] 
+ * @param {number} [size] 
+ * @param {string} [pageToken] 
+ * @param {string} [metaInclude] 
+ * @param {'enabled' | 'disabled'} [state] 
+ * @param {string} [query] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_ListDocuments(
+    workspaceId: string, scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string, state?: 'enabled' | 'disabled', query?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('listDocuments', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (scopes) {
+        localVarQueryParameter['scopes'] = scopes;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (pageToken !== undefined) {
+        localVarQueryParameter['pageToken'] = pageToken;
+    }
+
+    if (metaInclude !== undefined) {
+        localVarQueryParameter['metaInclude'] = metaInclude;
+    }
+
+    if (state !== undefined) {
+        localVarQueryParameter['state'] = state;
+    }
+
+    if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * Patch a knowledge document\'s metadata without re-uploading content.
+ * @summary Patch Document
+ * @param {string} workspaceId 
+ * @param {string} documentId 
+ * @param {AiPatchDocumentRequest} aiPatchDocumentRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_PatchDocument(
+    workspaceId: string, documentId: string, aiPatchDocumentRequest: AiPatchDocumentRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'documentId' is not null or undefined
+    assertParamExists('patchDocument', 'documentId', documentId)
+    // verify required parameter 'aiPatchDocumentRequest' is not null or undefined
+    assertParamExists('patchDocument', 'aiPatchDocumentRequest', aiPatchDocumentRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{document_id}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiPatchDocumentRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiPatchDocumentRequest !== undefined ? aiPatchDocumentRequest : {})
+        : aiPatchDocumentRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * Search the knowledge base using semantic similarity.
+ * @summary Search Documents
+ * @param {string} workspaceId 
+ * @param {string} query 
+ * @param {number} [limit] 
+ * @param {number} [minScore] 
+ * @param {Array<string>} [scopes] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_SearchKnowledge(
+    workspaceId: string, query: string, limit?: number, minScore?: number, scopes?: Array<string>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchKnowledge', 'workspaceId', workspaceId)
+    // verify required parameter 'query' is not null or undefined
+    assertParamExists('searchKnowledge', 'query', query)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/search`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter['limit'] = limit;
+    }
+
+    if (minScore !== undefined) {
+        localVarQueryParameter['minScore'] = minScore;
+    }
+
+    if (scopes) {
+        localVarQueryParameter['scopes'] = scopes;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
 
     return {
         url: toPathString(localVarUrlObj),
@@ -1390,20 +1781,22 @@ export async function KnowledgeAiAxiosParamCreator_UploadDocumentApiV1AiWorkspac
  * @summary Upsert Document
  * @param {string} workspaceId 
  * @param {File} file 
+ * @param {string} [title] 
+ * @param {Array<string>} [scopes] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function KnowledgeAiAxiosParamCreator_UpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(
-    workspaceId: string, file: File, 
+export async function KnowledgeAiAxiosParamCreator_UpsertDocument(
+    workspaceId: string, file: File, title?: string, scopes?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
     // verify required parameter 'workspaceId' is not null or undefined
-    assertParamExists('upsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut', 'workspaceId', workspaceId)
+    assertParamExists('upsertDocument', 'workspaceId', workspaceId)
     // verify required parameter 'file' is not null or undefined
-    assertParamExists('upsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut', 'file', file)
-    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/upload`
+    assertParamExists('upsertDocument', 'file', file)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents`
         .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1421,6 +1814,14 @@ export async function KnowledgeAiAxiosParamCreator_UpsertDocumentApiV1AiWorkspac
         localVarFormParams.append('file', file as any);
     }
     
+    if (title !== undefined) { 
+        localVarFormParams.append('title', title as any);
+    }
+        if (scopes) {
+        
+        localVarFormParams.append('scopes', scopes.join(COLLECTION_FORMATS.csv));
+    }
+    
     
     localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
     
@@ -1443,23 +1844,23 @@ export async function KnowledgeAiAxiosParamCreator_UpsertDocumentApiV1AiWorkspac
 
 // KnowledgeAi Api FP
 /**
- * Download a knowledge document\'s raw file.
- * @summary Download Document
+ * Upload a new knowledge document. Returns 409 if filename already exists.
+ * @summary Upload Document
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
- * @param {KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest} requestParameters Request parameters.
+ * @param {KnowledgeAiCreateDocumentRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function KnowledgeAi_DownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(
+export async function KnowledgeAi_CreateDocument(
     axios: AxiosInstance, basePath: string,
-    requestParameters: KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest, 
+    requestParameters: KnowledgeAiCreateDocumentRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<any> {
-    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_DownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(
-        requestParameters.workspaceId, requestParameters.filename, 
+): AxiosPromise<AiUploadDocumentResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_CreateDocument(
+        requestParameters.workspaceId, requestParameters.file, requestParameters.title, requestParameters.scopes, 
         options || {},
         configuration,
     );
@@ -1469,23 +1870,153 @@ export async function KnowledgeAi_DownloadDocumentApiV1AiWorkspacesWorkspaceIdKn
 
 // KnowledgeAi Api FP
 /**
- * Upload a new knowledge document. Returns 409 if filename already exists.
- * @summary Upload Document
+ * Delete a knowledge document and all its chunks.
+ * @summary Delete Document
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
- * @param {KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest} requestParameters Request parameters.
+ * @param {KnowledgeAiDeleteDocumentRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function KnowledgeAi_UploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(
+export async function KnowledgeAi_DeleteDocument(
     axios: AxiosInstance, basePath: string,
-    requestParameters: KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest, 
+    requestParameters: KnowledgeAiDeleteDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiDeleteDocumentResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_DeleteDocument(
+        requestParameters.workspaceId, requestParameters.documentId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * Download a knowledge document\'s raw file.
+ * @summary Download Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiDownloadDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_DownloadDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiDownloadDocumentRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
 ): AxiosPromise<any> {
-    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_UploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(
-        requestParameters.workspaceId, requestParameters.file, 
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_DownloadDocument(
+        requestParameters.workspaceId, requestParameters.documentId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * Get a single knowledge document\'s metadata.
+ * @summary Get Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiGetDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_GetDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiGetDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiDocumentMetadataResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_GetDocument(
+        requestParameters.workspaceId, requestParameters.documentId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * List knowledge documents accessible from the workspace.
+ * @summary List Documents
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiListDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_ListDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiListDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiListDocumentsResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_ListDocuments(
+        requestParameters.workspaceId, requestParameters.scopes, requestParameters.size, requestParameters.pageToken, requestParameters.metaInclude, requestParameters.state, requestParameters.query, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * Patch a knowledge document\'s metadata without re-uploading content.
+ * @summary Patch Document
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiPatchDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_PatchDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiPatchDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiDocumentMetadataResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_PatchDocument(
+        requestParameters.workspaceId, requestParameters.documentId, requestParameters.aiPatchDocumentRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * Search the knowledge base using semantic similarity.
+ * @summary Search Documents
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiSearchKnowledgeRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_SearchKnowledge(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiSearchKnowledgeRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiSearchDocumentsResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_SearchKnowledge(
+        requestParameters.workspaceId, requestParameters.query, requestParameters.limit, requestParameters.minScore, requestParameters.scopes, 
         options || {},
         configuration,
     );
@@ -1499,19 +2030,19 @@ export async function KnowledgeAi_UploadDocumentApiV1AiWorkspacesWorkspaceIdKnow
  * @summary Upsert Document
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
- * @param {KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest} requestParameters Request parameters.
+ * @param {KnowledgeAiUpsertDocumentRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
-export async function KnowledgeAi_UpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(
+export async function KnowledgeAi_UpsertDocument(
     axios: AxiosInstance, basePath: string,
-    requestParameters: KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest, 
+    requestParameters: KnowledgeAiUpsertDocumentRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<any> {
-    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_UpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(
-        requestParameters.workspaceId, requestParameters.file, 
+): AxiosPromise<AiUploadDocumentResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_UpsertDocument(
+        requestParameters.workspaceId, requestParameters.file, requestParameters.title, requestParameters.scopes, 
         options || {},
         configuration,
     );
@@ -1526,98 +2057,344 @@ export async function KnowledgeAi_UpsertDocumentApiV1AiWorkspacesWorkspaceIdKnow
  */
 export interface KnowledgeAiInterface {
     /**
-     * Download a knowledge document\'s raw file.
-     * @summary Download Document
-     * @param {KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KnowledgeAiInterface
-     */
-    downloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(requestParameters: KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
-
-    /**
      * Upload a new knowledge document. Returns 409 if filename already exists.
      * @summary Upload Document
-     * @param {KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest} requestParameters Request parameters.
+     * @param {KnowledgeAiCreateDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KnowledgeAiInterface
      */
-    uploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(requestParameters: KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    createDocument(requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
+
+    /**
+     * Delete a knowledge document and all its chunks.
+     * @summary Delete Document
+     * @param {KnowledgeAiDeleteDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
+
+    /**
+     * Download a knowledge document\'s raw file.
+     * @summary Download Document
+     * @param {KnowledgeAiDownloadDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+
+    /**
+     * Get a single knowledge document\'s metadata.
+     * @summary Get Document
+     * @param {KnowledgeAiGetDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    getDocument(requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
+
+    /**
+     * List knowledge documents accessible from the workspace.
+     * @summary List Documents
+     * @param {KnowledgeAiListDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    listDocuments(requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiListDocumentsResponse>;
+
+    /**
+     * Patch a knowledge document\'s metadata without re-uploading content.
+     * @summary Patch Document
+     * @param {KnowledgeAiPatchDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    patchDocument(requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
+
+    /**
+     * Search the knowledge base using semantic similarity.
+     * @summary Search Documents
+     * @param {KnowledgeAiSearchKnowledgeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    searchKnowledge(requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchDocumentsResponse>;
 
     /**
      * Upload or replace a knowledge document.
      * @summary Upsert Document
-     * @param {KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest} requestParameters Request parameters.
+     * @param {KnowledgeAiUpsertDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KnowledgeAiInterface
      */
-    upsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(requestParameters: KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+    upsertDocument(requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
 
 }
 
 /**
- * Request parameters for downloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet operation in KnowledgeAi.
+ * Request parameters for createDocument operation in KnowledgeAi.
  * @export
- * @interface KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest
+ * @interface KnowledgeAiCreateDocumentRequest
  */
-export interface KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest {
+export interface KnowledgeAiCreateDocumentRequest {
     /**
      * 
      * @type {string}
-     * @memberof KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet
-     */
-    readonly workspaceId: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet
-     */
-    readonly filename: string
-}
-
-/**
- * Request parameters for uploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost operation in KnowledgeAi.
- * @export
- * @interface KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest
- */
-export interface KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest {
-    /**
-     * 
-     * @type {string}
-     * @memberof KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost
+     * @memberof KnowledgeAiCreateDocument
      */
     readonly workspaceId: string
 
     /**
      * 
      * @type {File}
-     * @memberof KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost
+     * @memberof KnowledgeAiCreateDocument
      */
     readonly file: File
-}
 
-/**
- * Request parameters for upsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut operation in KnowledgeAi.
- * @export
- * @interface KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest
- */
-export interface KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest {
     /**
      * 
      * @type {string}
-     * @memberof KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut
+     * @memberof KnowledgeAiCreateDocument
+     */
+    readonly title?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KnowledgeAiCreateDocument
+     */
+    readonly scopes?: Array<string>
+}
+
+/**
+ * Request parameters for deleteDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiDeleteDocumentRequest
+ */
+export interface KnowledgeAiDeleteDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiDeleteDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiDeleteDocument
+     */
+    readonly documentId: string
+}
+
+/**
+ * Request parameters for downloadDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiDownloadDocumentRequest
+ */
+export interface KnowledgeAiDownloadDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiDownloadDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiDownloadDocument
+     */
+    readonly documentId: string
+}
+
+/**
+ * Request parameters for getDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiGetDocumentRequest
+ */
+export interface KnowledgeAiGetDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiGetDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiGetDocument
+     */
+    readonly documentId: string
+}
+
+/**
+ * Request parameters for listDocuments operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiListDocumentsRequest
+ */
+export interface KnowledgeAiListDocumentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiListDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KnowledgeAiListDocuments
+     */
+    readonly scopes?: Array<string>
+
+    /**
+     * 
+     * @type {number}
+     * @memberof KnowledgeAiListDocuments
+     */
+    readonly size?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiListDocuments
+     */
+    readonly pageToken?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiListDocuments
+     */
+    readonly metaInclude?: string
+
+    /**
+     * 
+     * @type {'enabled' | 'disabled'}
+     * @memberof KnowledgeAiListDocuments
+     */
+    readonly state?: 'enabled' | 'disabled'
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiListDocuments
+     */
+    readonly query?: string
+}
+
+/**
+ * Request parameters for patchDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiPatchDocumentRequest
+ */
+export interface KnowledgeAiPatchDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiPatchDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiPatchDocument
+     */
+    readonly documentId: string
+
+    /**
+     * 
+     * @type {AiPatchDocumentRequest}
+     * @memberof KnowledgeAiPatchDocument
+     */
+    readonly aiPatchDocumentRequest: AiPatchDocumentRequest
+}
+
+/**
+ * Request parameters for searchKnowledge operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiSearchKnowledgeRequest
+ */
+export interface KnowledgeAiSearchKnowledgeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiSearchKnowledge
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiSearchKnowledge
+     */
+    readonly query: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof KnowledgeAiSearchKnowledge
+     */
+    readonly limit?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof KnowledgeAiSearchKnowledge
+     */
+    readonly minScore?: number
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KnowledgeAiSearchKnowledge
+     */
+    readonly scopes?: Array<string>
+}
+
+/**
+ * Request parameters for upsertDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiUpsertDocumentRequest
+ */
+export interface KnowledgeAiUpsertDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiUpsertDocument
      */
     readonly workspaceId: string
 
     /**
      * 
      * @type {File}
-     * @memberof KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut
+     * @memberof KnowledgeAiUpsertDocument
      */
     readonly file: File
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiUpsertDocument
+     */
+    readonly title?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KnowledgeAiUpsertDocument
+     */
+    readonly scopes?: Array<string>
 }
 
 /**
@@ -1628,39 +2405,99 @@ export interface KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeD
  */
 export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     /**
-     * Download a knowledge document\'s raw file.
-     * @summary Download Document
-     * @param {KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest} requestParameters Request parameters.
+     * Upload a new knowledge document. Returns 409 if filename already exists.
+     * @summary Upload Document
+     * @param {KnowledgeAiCreateDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KnowledgeAi
      */
-    public downloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(requestParameters: KnowledgeAiDownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGetRequest, options?: AxiosRequestConfig) {
-        return KnowledgeAi_DownloadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsFilenameDownloadGet(this.axios, this.basePath, requestParameters, options, this.configuration);
+    public createDocument(requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_CreateDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
-     * Upload a new knowledge document. Returns 409 if filename already exists.
-     * @summary Upload Document
-     * @param {KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest} requestParameters Request parameters.
+     * Delete a knowledge document and all its chunks.
+     * @summary Delete Document
+     * @param {KnowledgeAiDeleteDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KnowledgeAi
      */
-    public uploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(requestParameters: KnowledgeAiUploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPostRequest, options?: AxiosRequestConfig) {
-        return KnowledgeAi_UploadDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPost(this.axios, this.basePath, requestParameters, options, this.configuration);
+    public deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_DeleteDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Download a knowledge document\'s raw file.
+     * @summary Download Document
+     * @param {KnowledgeAiDownloadDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_DownloadDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Get a single knowledge document\'s metadata.
+     * @summary Get Document
+     * @param {KnowledgeAiGetDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public getDocument(requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_GetDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * List knowledge documents accessible from the workspace.
+     * @summary List Documents
+     * @param {KnowledgeAiListDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public listDocuments(requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_ListDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Patch a knowledge document\'s metadata without re-uploading content.
+     * @summary Patch Document
+     * @param {KnowledgeAiPatchDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public patchDocument(requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_PatchDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Search the knowledge base using semantic similarity.
+     * @summary Search Documents
+     * @param {KnowledgeAiSearchKnowledgeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public searchKnowledge(requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_SearchKnowledge(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
      * Upload or replace a knowledge document.
      * @summary Upsert Document
-     * @param {KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest} requestParameters Request parameters.
+     * @param {KnowledgeAiUpsertDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof KnowledgeAi
      */
-    public upsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(requestParameters: KnowledgeAiUpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPutRequest, options?: AxiosRequestConfig) {
-        return KnowledgeAi_UpsertDocumentApiV1AiWorkspacesWorkspaceIdKnowledgeDocumentsUploadPut(this.axios, this.basePath, requestParameters, options, this.configuration);
+    public upsertDocument(requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_UpsertDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -1961,7 +2798,7 @@ export async function ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorks
     requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<AiConversationResponseListDto> {
+): AxiosPromise<AiConversationResponseList> {
     const localVarAxiosArgs = await ResponsesAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(
         requestParameters.workspaceId, requestParameters.conversationId, 
         options || {},
@@ -2011,7 +2848,7 @@ export interface ResponsesAiInterface {
      * @throws {RequiredError}
      * @memberof ResponsesAiInterface
      */
-    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseListDto>;
+    getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
 
     /**
      * 

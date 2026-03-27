@@ -39,6 +39,8 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         overlayPositionType,
         alignPoints,
         menuConfig,
+        hideTooltips,
+        showHeader,
         onApply,
         onChange,
         onSelect,
@@ -126,6 +128,8 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     overlayPositionType={overlayPositionType}
                     alignPoints={alignPoints}
                     menuConfig={menuConfig}
+                    hideTooltips={hideTooltips}
+                    showHeader={showHeader}
                 >
                     {children}
                 </AttributeFilterContextProvider>

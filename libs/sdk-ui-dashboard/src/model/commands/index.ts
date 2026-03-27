@@ -15,6 +15,7 @@ import {
     type ISetAttributeFilterLimitingItems,
     type ISetDashboardAttributeFilterConfigDisplayAsLabel,
     type ISetDashboardAttributeFilterConfigMode,
+    type ISetDashboardAttributeFilterSelectionType,
     type ISetDashboardDateFilterConfigMode,
     type ISetDashboardDateFilterWithDimensionConfigMode,
     type ISetDateFilterConfigTitle,
@@ -233,6 +234,7 @@ export type DashboardCommands =
     | IAddDrillTargets
     | ISetDashboardDateFilterConfigMode
     | ISetDashboardAttributeFilterConfigMode
+    | ISetDashboardAttributeFilterSelectionType
     | ISetDashboardAttributeFilterConfigDisplayAsLabel
     | IRemoveDrillDownForInsightWidget
     | IRemoveDrillToUrlForInsightWidget

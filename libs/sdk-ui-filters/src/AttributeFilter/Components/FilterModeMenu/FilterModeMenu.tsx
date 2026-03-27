@@ -4,51 +4,13 @@ import { useMemo } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { type IAttributeDisplayFormMetadataObject, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, type IAlignPoint, type IUiListboxItem } from "@gooddata/sdk-ui-kit";
 
 import { FilterModeMenuButton } from "./FilterModeMenuButton.js";
 import { FilterModeMenuDropdownBody } from "./FilterModeMenuDropdownBody.js";
-import { type ILabelItemData, type IModeItemData } from "./types.js";
+import { type IFilterModeMenuProps, type ILabelItemData, type IModeItemData } from "./types.js";
 import { type AttributeFilterMode } from "../../filterModeTypes.js";
-
-/**
- * Props for FilterModeMenu component.
- *
- * @alpha
- */
-export interface IFilterModeMenuProps {
-    /**
-     * Current filter mode
-     */
-    currentMode: AttributeFilterMode;
-
-    /**
-     * Available filter modes
-     */
-    availableModes?: AttributeFilterMode[];
-
-    /**
-     * Callback when mode is selected
-     */
-    onModeChange: (mode: AttributeFilterMode) => void;
-
-    /**
-     * Labels for "Values as" section.
-     * When more than one, the section is shown.
-     */
-    labels?: IAttributeDisplayFormMetadataObject[];
-
-    /**
-     * Currently selected label ref.
-     */
-    selectedLabelRef?: ObjRef;
-
-    /**
-     * Callback when label is selected.
-     */
-    onLabelChange?: (labelRef: ObjRef) => void;
-}
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
 const modeMessages = defineMessages({
@@ -69,6 +31,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
         labels = [],
         selectedLabelRef,
         onLabelChange: onDisplayFormChange,
+        hideTooltips,
     } = props;
     const intl = useIntl();
 
@@ -169,6 +132,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                             valuesAsTooltip={intl.formatMessage({
                                 id: "attributeFilter.mode.valuesAs.tooltip",
                             })}
+                            hideTooltips={hideTooltips}
                         />
                     );
                 }}

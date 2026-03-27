@@ -328,10 +328,8 @@ export { AttributeFilterStatusBar } from "./AttributeFilter/Components/ElementsS
 export { SingleSelectionAttributeFilterStatusBar } from "./AttributeFilter/Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
 
 // AttributeFilter Components - Filter Mode Menu
-export {
-    type IFilterModeMenuProps,
-    FilterModeMenu,
-} from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenu.js";
+export type { IFilterModeMenuProps } from "./AttributeFilter/Components/FilterModeMenu/types.js";
+export { FilterModeMenu } from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenu.js";
 export {
     type IFilterModeMenuButtonProps,
     FilterModeMenuButton,

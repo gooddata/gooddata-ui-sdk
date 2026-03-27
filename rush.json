@@ -620,6 +620,13 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/sdk-code-convertors",
+            "projectFolder": "libs/sdk-code-convertors",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui",
             "projectFolder": "libs/sdk-ui",
             "reviewCategory": "production",

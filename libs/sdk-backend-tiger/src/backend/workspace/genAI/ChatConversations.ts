@@ -2,7 +2,7 @@
 
 import { type EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
-import { type AiConversationItemResponseDto } from "@gooddata/api-client-tiger";
+import { type AiConversationItemResponse } from "@gooddata/api-client-tiger";
 import {
     GenAiApi_DeleteConversation,
     GenAiApi_GetConversation,
@@ -181,7 +181,7 @@ export class ConversationThread implements IChatConversationThread {
             );
         });
 
-        const data = items.data as { items: AiConversationItemResponseDto[] };
+        const data = items.data as { items: AiConversationItemResponse[] };
         return data.items.map((item) =>
             convertChatConversationItemFromBackend(item, responses?.data.responses),
         );
@@ -361,7 +361,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                 options,
             );
         });
-        const data = response.data as { items: AiConversationItemResponseDto[] };
+        const data = response.data as { items: AiConversationItemResponse[] };
         return data.items.map((item) => convertChatConversationItemFromBackend(item, undefined));
     }
     stream(): ReadableStream<IChatConversationItem | IChatConversationError> {
@@ -468,7 +468,7 @@ class ServerSentEventsDataConverter extends TransformStream<
                 } else if (event.type === "item" && "item" in event.data) {
                     controller.enqueue(
                         convertChatConversationItemFromBackend(
-                            event.data.item as AiConversationItemResponseDto,
+                            event.data.item as AiConversationItemResponse,
                             undefined,
                         ),
                     );

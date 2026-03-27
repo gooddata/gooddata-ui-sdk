@@ -111,4 +111,9 @@ export interface ITextFilterBodyProps {
      * Whether autocomplete is currently loading results from the backend.
      */
     isAutocompleteLoading?: boolean;
+
+    /**
+     * If true, tooltips in the filter body are hidden.
+     */
+    hideTooltips?: boolean;
 }

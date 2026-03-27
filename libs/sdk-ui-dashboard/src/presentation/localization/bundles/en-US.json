@@ -1431,6 +1431,10 @@
         "text": "Multiple values",
         "crowdinContext": "Option to allow selecting multiple values in the attribute filter"
     },
+    "attributesDropdown.selectionMode.multi.tooltip": {
+        "text": "Select more than one value. Some conditions (contains, starts with, ends with) support only a single value.",
+        "crowdinContext": "Tooltip for the multiple values option in the selection mode dropdown"
+    },
     "attributesDropdown.selectionMode.single": {
         "text": "Single value",
         "crowdinContext": "Option to allow selecting only one value in the attribute filter"
@@ -1438,6 +1442,38 @@
     "attributesDropdown.selectionMode.disabled.tooltip": {
         "text": "Single value selection is not allowed if any filters are selected in Filter by.To use the Single value selection, disable all filters in Filter by.",
         "crowdinContext": "Tooltip explaining why single value selection is disabled when filters are applied"
+    },
+    "attributesDropdown.selectionType.as": {
+        "text": "as",
+        "crowdinContext": "Label prefix for the available mode dropdown in attribute filter configuration"
+    },
+    "attributesDropdown.selectionType.listOrText": {
+        "text": "List or Text",
+        "crowdinContext": "Option in the available mode dropdown: both list and text filter modes are available"
+    },
+    "attributesDropdown.selectionType.list": {
+        "text": "List",
+        "crowdinContext": "Option in the available mode dropdown: only list (elements) filter mode is available"
+    },
+    "attributesDropdown.selectionType.text": {
+        "text": "Text",
+        "crowdinContext": "Option in the available mode dropdown: only text filter mode is available"
+    },
+    "attributesDropdown.selectionType.listOrText.tooltip": {
+        "text": "Allow users to switch between List selection and Text selection.\n\nIn List selection users choose values from list of options.\n\nIn Text selection users add values as a text.",
+        "crowdinContext": "Tooltip for the List or Text option in the selection type dropdown"
+    },
+    "attributesDropdown.selectionType.list.tooltip": {
+        "text": "Choose values from list of options.",
+        "crowdinContext": "Tooltip for the List option in the selection type dropdown"
+    },
+    "attributesDropdown.selectionType.text.tooltip": {
+        "text": "Add values as a text.",
+        "crowdinContext": "Tooltip for the Text option in the selection type dropdown"
+    },
+    "attributesDropdown.selectionType.singleDisabled.tooltip": {
+        "text": "Available only for Multiple value selection.",
+        "crowdinContext": "Tooltip shown on hover of disabled selection type options when single value selection mode is active"
     },
     "attributesDropdown.parentFilter.disabled.tooltip": {
         "text": "Filtering by other filters is disabled for Single value selection. To set Filter by, select the multiple value selection.",
