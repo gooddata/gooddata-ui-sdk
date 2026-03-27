@@ -43,7 +43,8 @@ TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME}
 EOF
 
 echo "⭐️ Build gooddata-ui-sdk-scenarios"
-(cd $APP_DIR; ./scripts/inject-runtime-config.sh "$TEST_WORKSPACE_ID" && npm run pack-build)
+export WORKSPACE_ID="$TEST_WORKSPACE_ID"
+(cd $APP_DIR; npm run pack-build)
 
 echo "⭐️ Build docker container from gooddata-ui-sdk-scenarios"
 export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}

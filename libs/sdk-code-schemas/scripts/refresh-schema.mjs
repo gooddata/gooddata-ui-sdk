@@ -6,23 +6,42 @@
 // Generates TypeScript types and compiled JSON schema from the AAC JSON Schema source files.
 // Inlines the $ref resolution logic that was previously in @gooddata/code-ast's mergeSchemas.
 
-import fs from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { readFileSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 
 import { compile } from "json-schema-to-typescript";
-import lodash from "lodash-es";
-import { format, resolveConfig } from "prettier";
+import { cloneDeep, mergeWith } from "lodash-es";
+import { format as oxfmt } from "oxfmt";
 import { readdirp } from "readdirp";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const mergable = ["required"];
+// Match sdk/.oxfmtrc.json settings so generated files pass format-check.
+const OXFMT_OPTIONS = { printWidth: 110, tabWidth: 4, trailingComma: "all" };
 const GOODDATA_COPYRIGHT = `// (C) ${new Date().getFullYear()} GoodData Corporation\n\n`;
 
+const checkMode = process.argv.includes("--check");
+
+/**
+ * Sanitize generated TSDoc comments for api-extractor compatibility.
+ * Escapes curly braces (misinterpreted as inline tags), strips invalid
+ * tags like @minItems/@maxItems, and removes resulting empty comment lines.
+ * @param {string} source - Generated TypeScript source code.
+ * @returns {string} Sanitized source code.
+ */
+function sanitizeTsDoc(source) {
+    return source.replace(/\/\*\*[\s\S]*?\*\//g, (comment) => {
+        const sanitized = comment
+            .replace(/(?<!\\)\{/g, "\\{")
+            .replace(/(?<!\\)\}/g, "\\}")
+            .replace(/^\s*\*\s*@(?:minItems|maxItems).*$/gm, "");
+        // Remove empty comment lines left after stripping tags.
+        return sanitized.replace(/(\n\s*\*\s*\n)+/g, "\n");
+    });
+}
+
 async function main() {
-    const basedir = path.resolve(__dirname, "../schemas/v1/src");
-    const saveDir = path.resolve(__dirname, "../src/v1");
+    const basedir = resolve("./schemas/v1/src");
+    const saveDir = resolve("./src/v1");
 
     await processSchema(basedir, saveDir, "index.json", "metadata");
 }
@@ -41,11 +60,10 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
     console.log(`Found ${files.length} schema files in ${Date.now() - start}ms`);
 
     start = Date.now();
-    const tasks = files.map(async (file) => {
-        const content = JSON.parse((await fs.readFile(file)).toString());
-        return { file, content };
-    });
-    const contents = await Promise.all(tasks);
+    const contents = files.map((file) => ({
+        file,
+        content: JSON.parse(readFileSync(file, "utf-8")),
+    }));
     console.log(`Read ${files.length} schema files in ${Date.now() - start}ms`);
 
     start = Date.now();
@@ -56,7 +74,6 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
         root.content,
         items.map((item) => item.content),
     );
-    const json = JSON.stringify(schema);
     console.log(`Created schema in ${Date.now() - start}ms`);
 
     start = Date.now();
@@ -67,17 +84,32 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
     const def = await compile(narrowedSchema, name, { cwd: basedir });
     console.log(`Compiled schema in ${Date.now() - start}ms`);
 
-    const config = await resolveConfig(root.file);
+    const typeFilename = join(saveDir, `${name}.ts`);
+    const schemaFilename = join(saveDir, `${name}.json`);
 
-    const typeFilename = path.join(saveDir, `${name}.ts`);
-    const typeData = await format(def, { ...config, filepath: typeFilename });
-    await fs.writeFile(typeFilename, GOODDATA_COPYRIGHT + typeData);
+    const typeContent = (await oxfmt(typeFilename, GOODDATA_COPYRIGHT + sanitizeTsDoc(def), OXFMT_OPTIONS))
+        .code;
+    const schemaContent = (await oxfmt(schemaFilename, JSON.stringify(schema, null, 4) + "\n", OXFMT_OPTIONS))
+        .code;
 
-    const schemaFilename = path.join(saveDir, `${name}.json`);
-    const schemaData = await format(json, { ...config, filepath: schemaFilename });
-    await fs.writeFile(schemaFilename, schemaData);
+    if (checkMode) {
+        const existingType = readFileSync(typeFilename, "utf-8");
+        const existingSchema = readFileSync(schemaFilename, "utf-8");
 
-    console.log(`Generated type file "${typeFilename}" from ${files.length} schema files.`);
+        const stale = [];
+        if (existingType !== typeContent) stale.push(typeFilename);
+        if (existingSchema !== schemaContent) stale.push(schemaFilename);
+        if (stale.length) {
+            console.error(`Schema check failed — these files are stale:\n  ${stale.join("\n  ")}`);
+            console.error(`Run 'rushx schema-write' to regenerate.`);
+            process.exit(1);
+        }
+        console.log(`Schema check passed — compiled metadata is up to date.`);
+    } else {
+        writeFileSync(typeFilename, typeContent);
+        writeFileSync(schemaFilename, schemaContent);
+        console.log(`Generated ${typeFilename} and ${schemaFilename} from ${files.length} schema files.`);
+    }
 }
 
 // --- Inlined $ref resolution (from @gooddata/code-ast mergeSchemas + unifyReferences) ---
@@ -262,7 +294,7 @@ function narrowAllOf(schema) {
         [],
     );
     delete schema.allOf;
-    schema.oneOf = lodash.cloneDeep(oneOf);
+    schema.oneOf = cloneDeep(oneOf);
 }
 
 function narrowOneOf(schema) {
@@ -274,22 +306,18 @@ function narrowOneOf(schema) {
     delete schema.oneOf;
 
     schema.oneOf = originalOneOf.map((a) => {
-        return lodash.mergeWith(
-            lodash.cloneDeep(schema),
-            lodash.cloneDeep(a),
-            function customizer(objValue, srcValue, key) {
-                if (lodash.isArray(objValue) && mergable.includes(key)) {
-                    return [...new Set([...objValue, ...srcValue])];
-                }
-                return srcValue;
-            },
-        );
+        return mergeWith(cloneDeep(schema), cloneDeep(a), function customizer(objValue, srcValue, key) {
+            if (Array.isArray(objValue) && mergable.includes(key)) {
+                return [...new Set([...objValue, ...srcValue])];
+            }
+            return srcValue;
+        });
     });
 }
 
 function narrowThen(schema) {
     if (schema.then) {
-        schema.oneOf = lodash.cloneDeep([schema.then, ...(schema.else ? [schema.else] : [])]);
+        schema.oneOf = cloneDeep([schema.then, ...(schema.else ? [schema.else] : [])]);
         delete schema.else;
         delete schema.then;
     }

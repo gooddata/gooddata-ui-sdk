@@ -353,7 +353,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -361,10 +361,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3641",
-                    "X-Ratelimit-Reset": "23",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -428,7 +425,7 @@
                             }
                         ],
                         "links": {
-                            "executionResult": "14e1a3dc09fbfc9223df4337e69733a29a98824e:259fc3517e96c7106e2e8155ef4795a8fd416edec826d9dad0c2e48e3f137aed"
+                            "executionResult": "85121e9c851e6f2a3b3597482fc010614030caef:c59a8fbb7d71340f13ab4b06209699386ce4f59bfa397d5dc975b203a407373a"
                         }
                     }
                 },
@@ -438,13 +435,15 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3452",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -508,7 +507,7 @@
                             }
                         ],
                         "links": {
-                            "executionResult": "b8acba7eae39732944a313f04f6c5c00349aafa4:6b233bdd5ba303eaf01cbf23427e4a477b500359a30e196765ee4f63c9397769"
+                            "executionResult": "4ab0feed13ddc557cf422ba2c35da238cbceba94:5cecd1391b45091153194c5891c214d7e3240194ea76334acb5f64aa80ee31ff"
                         }
                     }
                 },
@@ -518,20 +517,76 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3575",
-                    "X-Ratelimit-Reset": "19",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
         {
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_14e1a3dc09fbfc9223df4337e69733a29a98824e259fc3517e96c7106e2e8155ef4795a8fd416edec826d9dad0c2e48e3f137aed",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_4ab0feed13ddc557cf422ba2c35da238cbceba945cecd1391b45091153194c5891c214d7e3240194ea76334acb5f64aa80ee31ff",
             "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/14e1a3dc09fbfc9223df4337e69733a29a98824e%3A259fc3517e96c7106e2e8155ef4795a8fd416edec826d9dad0c2e48e3f137aed",
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/4ab0feed13ddc557cf422ba2c35da238cbceba94%3A5cecd1391b45091153194c5891c214d7e3240194ea76334acb5f64aa80ee31ff",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "jsonBody": {
+                    "data": [],
+                    "dimensionHeaders": [
+                        {
+                            "headerGroups": [
+                                {
+                                    "headers": []
+                                }
+                            ]
+                        },
+                        {
+                            "headerGroups": [
+                                {
+                                    "headers": []
+                                }
+                            ]
+                        }
+                    ],
+                    "grandTotals": [],
+                    "metadata": {
+                        "dataSourceMessages": []
+                    },
+                    "paging": {
+                        "count": [0, 0],
+                        "offset": [0, 0],
+                        "total": [0, 0]
+                    }
+                },
+                "headers": {
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-Content-Type-Options": "nosniff",
+                    "X-XSS-Protection": "1; mode=block"
+                }
+            }
+        },
+        {
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_85121e9c851e6f2a3b3597482fc010614030caefc59a8fbb7d71340f13ab4b06209699386ce4f59bfa397d5dc975b203a407373a",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/85121e9c851e6f2a3b3597482fc010614030caef%3Ac59a8fbb7d71340f13ab4b06209699386ce4f59bfa397d5dc975b203a407373a",
                 "method": "GET"
             },
             "response": {
@@ -595,65 +650,15 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
-                    "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3445",
-                    "X-Ratelimit-Reset": "8",
-                    "X-XSS-Protection": "0"
-                }
-            }
-        },
-        {
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_b8acba7eae39732944a313f04f6c5c00349aafa46b233bdd5ba303eaf01cbf23427e4a477b500359a30e196765ee4f63c9397769",
-            "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/b8acba7eae39732944a313f04f6c5c00349aafa4%3A6b233bdd5ba303eaf01cbf23427e4a477b500359a30e196765ee4f63c9397769",
-                "method": "GET"
-            },
-            "response": {
-                "status": 200,
-                "jsonBody": {
-                    "data": [],
-                    "dimensionHeaders": [
-                        {
-                            "headerGroups": [
-                                {
-                                    "headers": []
-                                }
-                            ]
-                        },
-                        {
-                            "headerGroups": [
-                                {
-                                    "headers": []
-                                }
-                            ]
-                        }
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
                     ],
-                    "grandTotals": [],
-                    "metadata": {
-                        "dataSourceMessages": []
-                    },
-                    "paging": {
-                        "count": [0, 0],
-                        "offset": [0, 0],
-                        "total": [0, 0]
-                    }
-                },
-                "headers": {
-                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-                    "Content-Type": "application/json",
-                    "Expires": "0",
-                    "Pragma": "no-cache",
-                    "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3563",
-                    "X-Ratelimit-Reset": "19",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -689,7 +694,7 @@
             "response": {
                 "status": 200,
                 "jsonBody": {
-                    "cacheId": "fefdba8de9ef4461d300c53bfd40553e",
+                    "cacheId": "bfccab285e05eb4f9ff0138e980976f7",
                     "elements": [
                         {
                             "primaryTitle": "Adam Bradley",
@@ -797,7 +802,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -805,10 +810,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3451",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -844,7 +846,7 @@
             "response": {
                 "status": 200,
                 "jsonBody": {
-                    "cacheId": "73ca585e4e60287b6a9d4006ff0bbd5f",
+                    "cacheId": "c439f9ebdf33aa01a0ee44f98e41eeeb",
                     "elements": [
                         {
                             "primaryTitle": "Adam Bradley",
@@ -880,13 +882,15 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3451",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -983,6 +987,13 @@
                         },
                         "id": "mapboxToken",
                         "type": "MAPBOX_TOKEN"
+                    },
+                    {
+                        "content": {
+                            "value": ""
+                        },
+                        "id": "geoIconSheet",
+                        "type": "GEO_ICON_SHEET"
                     },
                     {
                         "content": {
@@ -1265,7 +1276,7 @@
                     "Cache-Control": "max-age=10, private",
                     "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -1273,10 +1284,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2174",
-                    "X-Ratelimit-Reset": "11",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1310,13 +1318,15 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2174",
-                    "X-Ratelimit-Reset": "11",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1388,8 +1398,8 @@
                         "page": {
                             "number": 0,
                             "size": 1,
-                            "totalElements": 3,
-                            "totalPages": 3
+                            "totalElements": 2,
+                            "totalPages": 2
                         }
                     }
                 },
@@ -1399,7 +1409,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -1407,10 +1417,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2161",
-                    "X-Ratelimit-Reset": "11",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1511,7 +1518,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -1519,10 +1526,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2110",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1552,13 +1556,15 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2124",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1589,7 +1595,7 @@
                 "jsonBody": {
                     "data": {
                         "attributes": {
-                            "name": "E2E_SDK_cypress_test -- 2026-03-16T15:12:39.495Z"
+                            "name": "E2E_SDK_cypress_test -- 2026-03-27T22:34:41.556Z"
                         },
                         "id": "c76e0537d0614abb0027f7c992656b964922506f",
                         "meta": {
@@ -1622,13 +1628,15 @@
                     "Cache-Control": "max-age=5, private",
                     "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2174",
-                    "X-Ratelimit-Reset": "11",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1959,7 +1967,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Dashboard column chart has not hyperlink",
                                 "title": "Dashboard column chart has not hyperlink"
                             },
@@ -2619,7 +2627,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Dashboard column chart has hyperlinks",
                                 "title": "Dashboard column chart has hyperlinks"
                             },
@@ -2952,7 +2960,7 @@
                                 },
                                 "createdAt": "2024-01-02 11:50",
                                 "description": "",
-                                "modifiedAt": "2026-03-16 15:16",
+                                "modifiedAt": "2026-03-27 22:37",
                                 "title": "Insight on dashboard"
                             },
                             "id": "46dbb7b3-468c-436f-a2ff-85fbf4e8d5ad",
@@ -3167,7 +3175,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "KD has null value"
                             },
@@ -3508,7 +3516,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "KD with No data"
                             },
@@ -3724,7 +3732,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Dashboard column chart only measures"
                             },
@@ -3793,7 +3801,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "KD with big insight"
                             },
@@ -4010,7 +4018,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "KD using long name metric"
                             },
@@ -4402,7 +4410,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Target KD has null value"
                             },
@@ -5235,7 +5243,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Parent Dashboard"
                             },
@@ -5515,7 +5523,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "KD with merge and unmerge insights"
                             },
@@ -5584,7 +5592,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "KD with many data insight"
                             },
@@ -5721,7 +5729,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "KD with invalid insight"
                             },
@@ -5752,7 +5760,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -5760,10 +5768,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2110",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -6046,7 +6051,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -6054,10 +6059,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2174",
-                    "X-Ratelimit-Reset": "11",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -6236,7 +6238,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -6244,10 +6246,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2105",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -6313,11 +6312,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_account.account",
+                                            "id": "label.f_account.account.name",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "label.f_account.account.name",
+                                            "id": "attr.f_account.account",
                                             "type": "label"
                                         }
                                     ]
@@ -6449,11 +6448,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "label.f_owner.salesrep.ownername",
+                                            "id": "attr.f_owner.salesrep",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "attr.f_owner.salesrep",
+                                            "id": "label.f_owner.salesrep.ownername",
                                             "type": "label"
                                         }
                                     ]
@@ -6483,15 +6482,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "label.f_product.product.image",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "attr.f_product.product",
                                             "type": "label"
                                         },
                                         {
                                             "id": "label.f_product.product.name",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "label.f_product.product.image",
                                             "type": "label"
                                         },
                                         {
@@ -6557,15 +6556,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_stage.stagename",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "label.f_stage.stagename.stagename",
                                             "type": "label"
                                         },
                                         {
                                             "id": "label.f_stage.stagename.order",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "attr.f_stage.stagename",
                                             "type": "label"
                                         }
                                     ]
@@ -9363,15 +9362,7 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "f_city.id.latitude",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.cityname",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.location",
+                                            "id": "f_city.id",
                                             "type": "label"
                                         },
                                         {
@@ -9379,7 +9370,7 @@
                                             "type": "label"
                                         },
                                         {
-                                            "id": "f_city.id",
+                                            "id": "f_city.id.location",
                                             "type": "label"
                                         },
                                         {
@@ -9388,6 +9379,14 @@
                                         },
                                         {
                                             "id": "f_city.id.cityasciiname",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.cityname",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.latitude",
                                             "type": "label"
                                         }
                                     ]
@@ -9879,6 +9878,10 @@
                                 "labels": {
                                     "data": [
                                         {
+                                            "id": "state_id.statecode",
+                                            "type": "label"
+                                        },
+                                        {
                                             "id": "state_id",
                                             "type": "label"
                                         },
@@ -9888,10 +9891,6 @@
                                         },
                                         {
                                             "id": "state_id.stateid",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "state_id.statecode",
                                             "type": "label"
                                         }
                                     ]
@@ -9921,15 +9920,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "user_id.useremail",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "user_id.username",
                                             "type": "label"
                                         },
                                         {
                                             "id": "user_id",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "user_id.useremail",
                                             "type": "label"
                                         }
                                     ]
@@ -12127,7 +12126,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -12135,10 +12134,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2238",
-                    "X-Ratelimit-Reset": "12",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -12216,11 +12212,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_account.account",
+                                            "id": "label.f_account.account.name",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "label.f_account.account.name",
+                                            "id": "attr.f_account.account",
                                             "type": "label"
                                         }
                                     ]
@@ -12394,11 +12390,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "label.f_owner.salesrep.ownername",
+                                            "id": "attr.f_owner.salesrep",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "attr.f_owner.salesrep",
+                                            "id": "label.f_owner.salesrep.ownername",
                                             "type": "label"
                                         }
                                     ]
@@ -12440,15 +12436,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "label.f_product.product.image",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "attr.f_product.product",
                                             "type": "label"
                                         },
                                         {
                                             "id": "label.f_product.product.name",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "label.f_product.product.image",
                                             "type": "label"
                                         },
                                         {
@@ -12532,15 +12528,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_stage.stagename",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "label.f_stage.stagename.stagename",
                                             "type": "label"
                                         },
                                         {
                                             "id": "label.f_stage.stagename.order",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "attr.f_stage.stagename",
                                             "type": "label"
                                         }
                                     ]
@@ -15926,15 +15922,7 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "f_city.id.latitude",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.cityname",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.location",
+                                            "id": "f_city.id",
                                             "type": "label"
                                         },
                                         {
@@ -15942,7 +15930,7 @@
                                             "type": "label"
                                         },
                                         {
-                                            "id": "f_city.id",
+                                            "id": "f_city.id.location",
                                             "type": "label"
                                         },
                                         {
@@ -15951,6 +15939,14 @@
                                         },
                                         {
                                             "id": "f_city.id.cityasciiname",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.cityname",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.latitude",
                                             "type": "label"
                                         }
                                     ]
@@ -16562,6 +16558,10 @@
                                 "labels": {
                                     "data": [
                                         {
+                                            "id": "state_id.statecode",
+                                            "type": "label"
+                                        },
+                                        {
                                             "id": "state_id",
                                             "type": "label"
                                         },
@@ -16571,10 +16571,6 @@
                                         },
                                         {
                                             "id": "state_id.stateid",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "state_id.statecode",
                                             "type": "label"
                                         }
                                     ]
@@ -16616,15 +16612,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "user_id.useremail",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "user_id.username",
                                             "type": "label"
                                         },
                                         {
                                             "id": "user_id",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "user_id.useremail",
                                             "type": "label"
                                         }
                                     ]
@@ -16678,6 +16674,27 @@
                                     }
                                 ],
                                 "referenceProperties": [
+                                    {
+                                        "identifier": {
+                                            "id": "f_owner",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "ownerid_id",
+                                                "dataType": "INT",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "f_owner.id",
+                                                    "type": "attribute"
+                                                }
+                                            }
+                                        ]
+                                    },
                                     {
                                         "identifier": {
                                             "id": "f_account",
@@ -16736,27 +16753,6 @@
                                                 "nullValue": null,
                                                 "target": {
                                                     "id": "f_opportunity.id",
-                                                    "type": "attribute"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
-                                            "id": "f_owner",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "ownerid_id",
-                                                "dataType": "INT",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "f_owner.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -18852,6 +18848,27 @@
                                 "referenceProperties": [
                                     {
                                         "identifier": {
+                                            "id": "dt_snapshotdate_timestamp",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "dt_snapshotdate_timestamp",
+                                                "dataType": "TIMESTAMP",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "dt_snapshotdate_timestamp",
+                                                    "type": "date"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "identifier": {
                                             "id": "f_product",
                                             "type": "dataset"
                                         },
@@ -18866,6 +18883,27 @@
                                                 "nullValue": null,
                                                 "target": {
                                                     "id": "f_product.id",
+                                                    "type": "attribute"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "identifier": {
+                                            "id": "f_opportunity",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "opportunityid_id",
+                                                "dataType": "INT",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "f_opportunity.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -18894,69 +18932,6 @@
                                     },
                                     {
                                         "identifier": {
-                                            "id": "f_account",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "accountid_id",
-                                                "dataType": "INT",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "f_account.id",
-                                                    "type": "attribute"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
-                                            "id": "dt_snapshotdate_timestamp",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "dt_snapshotdate_timestamp",
-                                                "dataType": "TIMESTAMP",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "dt_snapshotdate_timestamp",
-                                                    "type": "date"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
-                                            "id": "f_opportunity",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "opportunityid_id",
-                                                "dataType": "INT",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "f_opportunity.id",
-                                                    "type": "attribute"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
                                             "id": "f_owner",
                                             "type": "dataset"
                                         },
@@ -18971,6 +18946,27 @@
                                                 "nullValue": null,
                                                 "target": {
                                                     "id": "f_owner.id",
+                                                    "type": "attribute"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "identifier": {
+                                            "id": "f_account",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "accountid_id",
+                                                "dataType": "INT",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "f_account.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -19139,27 +19135,6 @@
                                     },
                                     {
                                         "identifier": {
-                                            "id": "f_stage",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "stage_id",
-                                                "dataType": "INT",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "f_stage.id",
-                                                    "type": "attribute"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
                                             "id": "f_opportunity",
                                             "type": "dataset"
                                         },
@@ -19174,6 +19149,27 @@
                                                 "nullValue": null,
                                                 "target": {
                                                     "id": "f_opportunity.id",
+                                                    "type": "attribute"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "identifier": {
+                                            "id": "f_stage",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "stage_id",
+                                                "dataType": "INT",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "f_stage.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -19490,7 +19486,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -19498,10 +19494,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2110",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -19587,13 +19580,15 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2106",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -19662,13 +19657,15 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2101",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -19741,7 +19738,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -19749,10 +19746,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2117",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -20034,7 +20028,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -20042,10 +20036,111 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2251",
-                    "X-Ratelimit-Reset": "12",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
+                }
+            }
+        },
+        {
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_filtercontexts",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterContexts",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"data\":{\"attributes\":{\"content\":{\"filters\":[{\"attributeFilter\":{\"attributeElements\":{\"uris\":[\"Adam Bradley\",\"Alejandro Vabiano\",\"Alexsandr Fyodr\",\"Antony\"]},\"displayForm\":{\"identifier\":{\"id\":\"label.f_owner.salesrep.ownername\",\"type\":\"label\"}},\"localIdentifier\":\"569694f5c5af4307ace4b75fce3b43a4\",\"negativeSelection\":false,\"selectionMode\":\"multi\"}},{\"dateFilter\":{\"dataSet\":{\"identifier\":{\"id\":\"dt_activity_timestamp\",\"type\":\"dataset\"}},\"granularity\":\"GDC.time.date\",\"localIdentifier\":\"dt_activity_timestamp_1_dateFilter\",\"type\":\"relative\"}},{\"dateFilter\":{\"dataSet\":{\"identifier\":{\"id\":\"dt_oppcreated_timestamp\",\"type\":\"dataset\"}},\"granularity\":\"GDC.time.date\",\"localIdentifier\":\"dt_oppcreated_timestamp_2_dateFilter\",\"type\":\"relative\"}}],\"version\":\"2\"},\"description\":\"\",\"title\":\"filterContext\"},\"type\":\"filterContext\"}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 201,
+                "jsonBody": {
+                    "data": {
+                        "attributes": {
+                            "content": {
+                                "filters": [
+                                    {
+                                        "attributeFilter": {
+                                            "attributeElements": {
+                                                "uris": [
+                                                    "Adam Bradley",
+                                                    "Alejandro Vabiano",
+                                                    "Alexsandr Fyodr",
+                                                    "Antony"
+                                                ]
+                                            },
+                                            "displayForm": {
+                                                "identifier": {
+                                                    "id": "label.f_owner.salesrep.ownername",
+                                                    "type": "label"
+                                                }
+                                            },
+                                            "localIdentifier": "569694f5c5af4307ace4b75fce3b43a4",
+                                            "negativeSelection": false,
+                                            "selectionMode": "multi"
+                                        }
+                                    },
+                                    {
+                                        "dateFilter": {
+                                            "dataSet": {
+                                                "identifier": {
+                                                    "id": "dt_activity_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "granularity": "GDC.time.date",
+                                            "localIdentifier": "dt_activity_timestamp_1_dateFilter",
+                                            "type": "relative"
+                                        }
+                                    },
+                                    {
+                                        "dateFilter": {
+                                            "dataSet": {
+                                                "identifier": {
+                                                    "id": "dt_oppcreated_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "granularity": "GDC.time.date",
+                                            "localIdentifier": "dt_oppcreated_timestamp_2_dateFilter",
+                                            "type": "relative"
+                                        }
+                                    }
+                                ],
+                                "version": "2"
+                            },
+                            "description": "",
+                            "title": "filterContext"
+                        },
+                        "id": "bd1b9d95-1838-4c26-a82b-ac66d9aec357",
+                        "meta": {
+                            "origin": {
+                                "originId": "c76e0537d0614abb0027f7c992656b964922506f",
+                                "originType": "NATIVE"
+                            }
+                        },
+                        "type": "filterContext"
+                    },
+                    "links": {
+                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterContexts/bd1b9d95-1838-4c26-a82b-ac66d9aec357"
+                    }
+                },
+                "headers": {
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-Content-Type-Options": "nosniff",
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -20093,13 +20188,15 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2163",
-                    "X-Ratelimit-Reset": "11",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -20200,7 +20297,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -20208,10 +20305,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2122",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -20248,7 +20342,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT MAX({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "_Timeline [EOP]"
                             },
@@ -20271,7 +20365,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT COUNT({attribute/f_opportunity.id}, {label/f_opportunitysnapshot.id}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "# Of Opportunities"
                             },
@@ -20294,7 +20388,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Amount metric description",
                                 "tags": ["custom_column", "summary"],
                                 "title": "Amount"
@@ -20318,7 +20412,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \"Won\""
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "# Of Opportunities Won"
                             },
@@ -20341,7 +20435,7 @@
                                     "format": "#,##0.0%",
                                     "maql": "SELECT {metric/8d33a0b1-cfdf-4074-a26a-4c4357774967} / {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Win Rate"
                             },
@@ -20364,7 +20458,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Amount [BOP]"
                             },
@@ -20387,7 +20481,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Avg. Amount"
                             },
@@ -20410,7 +20504,7 @@
                                     "format": "#,##0.0%",
                                     "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_probability}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Probability"
                             },
@@ -20433,7 +20527,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT SUM(\n    SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}\n      WHERE {label/f_stage.status_id} = \"Open\")"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Best Case"
                             },
@@ -20456,7 +20550,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} <= {metric/6b1411d5-e253-418e-8fd3-137a9f56ea92}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "_Snapshot [EOP]"
                             },
@@ -20479,7 +20573,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate})\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "_Close [BOP]"
                             },
@@ -20502,7 +20596,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "_Close [EOP]"
                             },
@@ -20525,7 +20619,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Parent metric"
                             },
@@ -20548,7 +20642,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}\n  WHERE {label/f_stage.status_id} = \"Won\""
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Won"
                             },
@@ -20571,7 +20665,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Metric with long name",
                                 "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i"
                             },
@@ -20594,7 +20688,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\"\", NULL, \"East Coast\", \"West Coast\" )"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Metric has null value",
                                 "title": "Metric has null value"
                             },
@@ -20617,7 +20711,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT SUM({metric/amount_bop} * -1 )"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Negative Metric"
                             },
@@ -20640,7 +20734,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT COUNT({label/f_activity.id})"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "# of Activities"
                             },
@@ -20663,7 +20757,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}\n  WHERE {label/f_stage.status_id} = \"Lost\""
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "# of Lost Opps."
                             },
@@ -20686,7 +20780,7 @@
                                     "format": "#,##0",
                                     "maql": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \"Won\""
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "# of Won Opps."
                             },
@@ -20709,7 +20803,7 @@
                                     "format": "#,##0.00",
                                     "maql": "select min({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) by all in all other dimensions except {attribute/f_opportunity.id}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "_Opp. First Snapshot"
                             },
@@ -20732,7 +20826,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT MIN({fact/fact.f_opportunitysnapshot.oppsnapshotdate})\n  BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day}\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} >= {metric/timeline_bop}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "_Snapshot [BOP]"
                             },
@@ -20755,7 +20849,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT MIN({fact/fact.f_timeline.timelinedate})\n  BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "_Timeline [BOP]"
                             },
@@ -20783,7 +20877,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -20791,10 +20885,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2110",
-                    "X-Ratelimit-Reset": "9",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -20901,7 +20992,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Column chart with Department attribute",
                                 "title": "Column chart with Department attribute"
                             },
@@ -20991,7 +21082,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Column chart long attribute has hyperlink",
                                 "title": "Column chart long attribute has hyperlink"
                             },
@@ -21092,7 +21183,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Column chart has many hyperlinks",
                                 "title": "Column chart has many hyperlinks"
                             },
@@ -21165,7 +21256,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Column chart has hyperlink",
                                 "title": "Column chart has hyperlink"
                             },
@@ -21266,7 +21357,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Column chart has not hyperlink",
                                 "title": "Column chart has not hyperlink"
                             },
@@ -21340,7 +21431,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Column chart only measures",
                                 "title": "Column chart only measures"
                             },
@@ -21444,7 +21535,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Insight using long name metric"
                             },
@@ -21501,7 +21592,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Table using long name metric"
                             },
@@ -21606,7 +21697,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "unmerge cells insight"
                             },
@@ -21699,7 +21790,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "No data"
                             },
@@ -21785,7 +21876,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "many data"
                             },
@@ -21865,7 +21956,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "Parent Insight",
                                 "title": "Parent Insight"
                             },
@@ -22046,7 +22137,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "AD has null value",
                                 "title": "AD has null value"
                             },
@@ -22138,7 +22229,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "invalid insight"
                             },
@@ -22218,7 +22309,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "big insight"
                             },
@@ -22323,7 +22414,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "merge cells insight"
                             },
@@ -22380,7 +22471,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:pyramid"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Negative Insight"
                             },
@@ -22558,7 +22649,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:pyramid"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Combine with all filter types"
                             },
@@ -22967,7 +23058,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Table has multi metrics and multi formats"
                             },
@@ -23224,7 +23315,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-03-16 15:12",
+                                "createdAt": "2026-03-27 22:34",
                                 "description": "",
                                 "title": "Table has AM metric"
                             },
@@ -25997,7 +26088,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -26005,10 +26096,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2249",
-                    "X-Ratelimit-Reset": "12",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -26107,7 +26195,7 @@
                     "Cache-Control": "max-age=10, private",
                     "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -26115,10 +26203,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3887",
-                    "X-Ratelimit-Reset": "11",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         }

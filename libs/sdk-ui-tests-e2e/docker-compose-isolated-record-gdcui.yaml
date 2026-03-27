@@ -30,6 +30,8 @@ services:
 
     gooddata-ui-sdk-scenarios:
         image: $IMAGE_ID
+        environment:
+            - WORKSPACE_ID
         volumes:
             - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
         depends_on:

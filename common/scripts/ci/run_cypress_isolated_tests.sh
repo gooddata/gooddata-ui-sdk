@@ -7,9 +7,9 @@ APP_DIR=$ROOT_DIR/libs/sdk-ui-tests-app
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
 REF_WS_DIR=$ROOT_DIR/libs/sdk-ui-tests-reference-workspace
 
-# Inject runtime config (WORKSPACE_ID) into the pre-built dist and pack
-WORKSPACE_ID=$(jq -r '.workspaceId' $REF_WS_DIR/recordings_workspace.json)
-(cd $APP_DIR; ./scripts/inject-runtime-config.sh "$WORKSPACE_ID" && npm run pack-build)
+# Pack the pre-built dist into a tarball for Docker (WORKSPACE_ID is injected at container runtime)
+export WORKSPACE_ID=$(jq -r '.workspaceId' $REF_WS_DIR/recordings_workspace.json)
+(cd $APP_DIR; npm run pack-build)
 
 # Write .env for the e2e tests
 pushd $E2E_TEST_DIR

@@ -10,32 +10,17 @@
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "libs/sdk-ui-tests-e2e"
     },
-    "files": [
-        "dist/**/*.js",
-        "dist/**/*.json",
-        "dist/**/*.d.ts",
-        "dist/**/*.map",
-        "dist/**/*.svg",
-        "esm/**/*.js",
-        "esm/**/*.json",
-        "esm/**/*.d.ts",
-        "esm/**/*.map",
-        "esm/**/*.svg",
-        "styles"
-    ],
     "type": "module",
     "sideEffects": [
         "*.css",
         "*.svg"
     ],
-    "main": "dist/index.js",
-    "module": "esm/index.js",
-    "browser": "dist/index.js",
-    "typings": "esm/index.d.ts",
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "build": "tsgo",
+        "build": "npm-run-all -p build-check dist",
+        "build-check": "tsgo",
+        "dist": "rm -rf dist && NODE_NO_WARNINGS=1 rolldown build --config rolldown.config.ts",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci coverage *.log",
         "e2e:isolated:docker:replay": "./scripts/local/run.sh isolated docker replay",
         "e2e:isolated:docker:record": "./scripts/local/run.sh isolated docker record",
@@ -88,10 +73,12 @@
         "eslint-plugin-sonarjs": "3.0.6",
         "lodash-es": "^4.17.23",
         "node-xlsx": "0.24.0",
+        "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "pdf-parse": "1.1.4",
+        "rolldown": "1.0.0-rc.9",
         "typescript": "5.9.3"
     },
     "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"

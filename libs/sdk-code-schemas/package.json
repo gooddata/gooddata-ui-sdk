@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-schemas",
-    "version": "11.28.0-alpha.4",
+    "version": "11.28.0-alpha.5",
     "description": "GoodData AAC JSON Schema types and compiled schemas",
     "license": "MIT",
     "author": "GoodData",
@@ -40,12 +40,13 @@
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
+        "schema-check": "node scripts/refresh-schema.mjs --check",
+        "schema-write": "node scripts/refresh-schema.mjs",
+        "validate": "npm run lint && npm run dep-cruiser && npm run format-check && npm run schema-check",
         "lint": "oxlint . --type-aware --quiet && eslint .",
         "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
         "test": "vitest watch",
-        "test-once": "vitest run",
-        "refresh-schema": "node scripts/refresh-schema.mjs"
+        "test-once": "vitest run"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
