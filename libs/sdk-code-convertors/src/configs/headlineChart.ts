@@ -84,11 +84,7 @@ function load(props: VisualisationConfig<DefaultProperties>) {
                     ],
                     [
                         "indicator_colors",
-                        getValueOrDefault(
-                            !val.colorConfig?.disabled,
-                            !DEFAULTS.comparison.colorConfig!.disabled,
-                            "bool",
-                        ),
+                        val.colorConfig?.disabled === undefined ? undefined : !val.colorConfig.disabled,
                     ],
                     ["indicator_color_equals", loadColor("equals", val.colorConfig?.equals)?.value],
                     ["indicator_color_negative", loadColor("negative", val.colorConfig?.negative)?.value],
@@ -175,11 +171,7 @@ function save(
                 positive: getValueOrDefault(config.label_positive, DEFAULTS.comparison.labelConfig!.positive),
             }),
             colorConfig: saveConfigObject({
-                disabled: getValueOrDefault(
-                    !config.indicator_colors,
-                    DEFAULTS.comparison.colorConfig!.disabled,
-                    "bool",
-                ),
+                disabled: config.indicator_colors === undefined ? undefined : !config.indicator_colors,
                 equals: saveColor("equals", config.indicator_color_equals, "enum")?.color,
                 negative: saveColor("negative", config.indicator_color_negative, "enum")?.color,
                 positive: saveColor("positive", config.indicator_color_positive, "enum")?.color,

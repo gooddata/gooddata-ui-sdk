@@ -48,6 +48,7 @@ import { serializeUrlTarget } from "../utils/customUrl.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
 import { fromDeclarativePermissions } from "../utils/permissionUtils.js";
+import { collectFieldLevelFilters } from "../utils/sharedUtils.js";
 import { DASHBOARD_COMMENT } from "../utils/texts.js";
 import {
     createFilterContextItemKeyName,
@@ -648,7 +649,11 @@ function drillFiltersToYaml(
         includeYaml.add(
             new Pair(
                 "metric_filters",
-                filterRefsToYaml(drill.includedSourceMeasureFiltersObjRefs, entities, sourceVisualizationId),
+                sourceMeasureFilterRefsToYaml(
+                    drill.includedSourceMeasureFiltersObjRefs,
+                    entities,
+                    sourceVisualizationId,
+                ),
             ),
         );
     }
@@ -716,6 +721,21 @@ function sourceInsightFilterRefFallbackId(ref: { type: string; [key: string]: an
         default:
             return null;
     }
+}
+
+function sourceMeasureFilterRefsToYaml(
+    refs: Array<{ type: string; [key: string]: any }>,
+    entities?: FromEntities,
+    sourceVisualizationId?: string,
+): string[] {
+    const visualisation = entities?.find(
+        (entity) => VisualisationsTypes.includes(entity.type) && entity.id === sourceVisualizationId,
+    )?.data as Visualisation | undefined;
+    const fieldFilters = collectFieldLevelFilters(visualisation);
+
+    return refs
+        .map((ref) => findSourceInsightFilterId(fieldFilters, ref) ?? sourceInsightFilterRefFallbackId(ref))
+        .filter(Boolean) as string[];
 }
 
 export type FilterContextItem = { yaml: YAMLMap; filter: IFilterContextDefinition["filters"][number] };

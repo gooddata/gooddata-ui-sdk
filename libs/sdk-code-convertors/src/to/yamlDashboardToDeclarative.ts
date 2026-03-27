@@ -59,7 +59,7 @@ import { type DashboardTab, type ExportEntities } from "../types.js";
 import { parseUrlTarget } from "../utils/customUrl.js";
 import { convertGranularity } from "../utils/granularityUtils.js";
 import { toDeclarativePermissions } from "../utils/permissionUtils.js";
-import { convertIdToTitle, getFullField } from "../utils/sharedUtils.js";
+import { collectFieldLevelFilters, convertIdToTitle, getFullField } from "../utils/sharedUtils.js";
 import {
     isAbsoluteDateFilter,
     isAttributeField,
@@ -566,7 +566,12 @@ export function yamlInteractionToDeclarative(
               measure: createLocalIdentifier(input.click_on as string),
           };
 
-    const interactionFilters = yamlInteractionFiltersToDeclarative(input, target.query?.filter_by);
+    const sourceMeasureFilters = collectFieldLevelFilters(target);
+    const interactionFilters = yamlInteractionFiltersToDeclarative(
+        input,
+        target.query?.filter_by,
+        sourceMeasureFilters,
+    );
     const ignoredAttrs = (input.ignored_intersection_attributes as string[] | undefined)?.length
         ? { drillIntersectionIgnoredAttributes: input.ignored_intersection_attributes as string[] }
         : {};
@@ -653,6 +658,7 @@ type InteractionInclude = Omit<
 function yamlInteractionFiltersToDeclarative(
     input: Interaction,
     sourceVisualizationFilters?: SourceVisualizationFilters,
+    sourceMeasureFilters?: SourceVisualizationFilters,
 ) {
     const interaction = input as Interaction &
         LegacyInteractionFilterFields & {
@@ -696,7 +702,7 @@ function yamlInteractionFiltersToDeclarative(
             ? {
                   includedSourceMeasureFiltersObjRefs: yamlSourceFiltersToDeclarative(
                       includedSourceMeasure,
-                      sourceVisualizationFilters,
+                      sourceMeasureFilters,
                   ),
               }
             : {},
