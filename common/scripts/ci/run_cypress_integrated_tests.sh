@@ -49,8 +49,9 @@ TIGER_API_TOKEN=${TIGER_API_TOKEN}
 TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME}
 EOF
 
-# Inject runtime config (WORKSPACE_ID) into the pre-built dist and pack
-(cd $APP_DIR; ./scripts/inject-runtime-config.sh "$TEST_WORKSPACE_ID" && npm run pack-build)
+# Pack the pre-built dist into a tarball for Docker (WORKSPACE_ID is injected at container runtime)
+export WORKSPACE_ID="$TEST_WORKSPACE_ID"
+(cd $APP_DIR; npm run pack-build)
 
 export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
 

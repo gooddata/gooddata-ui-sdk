@@ -47,19 +47,18 @@ When you have a new change on dashboard, run `rushx export-fixture` in the `sdk-
 
 ## Production build
 
-`rush build` produces the production bundle in `dist/`. The bundle is built without environment-specific values baked in — `WORKSPACE_ID` is injected at runtime via `config.js`.
+`rush build` produces the production bundle in `dist/`. The bundle is built without environment-specific values baked in — `WORKSPACE_ID` is injected at container runtime.
 
 ### Runtime configuration
 
-In production builds, the HTML includes a `<script src="./config.js"></script>` tag (injected by a Vite plugin). This file is not part of the build output — it must be generated before packaging:
+In production builds, the HTML includes a `<script src="./config.js"></script>` tag (injected by a Vite plugin). The Docker entrypoint (`scripts/docker-entrypoint.sh`) generates `config.js` from the `WORKSPACE_ID` environment variable at container startup. This allows the same Docker image to be reused across environments without rebuilding:
 
 ```bash
-./scripts/inject-runtime-config.sh <WORKSPACE_ID>
-npm run pack-build
+npm run dist && npm run pack-build
+docker build -t sdk-ui-tests-app .
+docker run -e WORKSPACE_ID=<your-workspace-id> -p 9500:9500 sdk-ui-tests-app
 ```
-
-This allows the same build artifact to be reused across environments (isolated tests, integrated tests, recording) without rebuilding.
 
 ### CI flow
 
-The CI shell scripts (`run_cypress_isolated_tests.sh`, `run_cypress_integrated_tests.sh`, `run_cypress_recording.sh`) call `inject-runtime-config.sh` with the appropriate workspace ID, then `pack-build` to create `sdk.tgz` for the Docker image.
+The CI shell scripts (`run_cypress_isolated_tests.sh`, `run_cypress_integrated_tests.sh`, `run_cypress_recording.sh`) export `WORKSPACE_ID` and run `pack-build` to create `sdk.tgz` for the Docker image. The workspace ID is passed to the container via docker-compose environment variables.

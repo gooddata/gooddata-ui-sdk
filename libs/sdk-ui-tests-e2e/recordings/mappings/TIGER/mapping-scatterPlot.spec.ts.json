@@ -91,7 +91,7 @@
                             }
                         ],
                         "links": {
-                            "executionResult": "cb6e52065b47a66879d150422aa9d1e64bc753e0:0415dbeda5bd21a1a0edfd05514e7dbb7c2c67661dd0ca924bc0042c4305edcc"
+                            "executionResult": "d64586b5cbb1aee23c6d43ef14ee119418b7e39f:05d05da3a768f7af7d5744ace84e63394f00d85ac6ccb42c4b19971a2390d61f"
                         }
                     }
                 },
@@ -101,7 +101,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -109,10 +109,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3406",
-                    "X-Ratelimit-Reset": "4",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -207,7 +204,7 @@
                             }
                         ],
                         "links": {
-                            "executionResult": "22fc1287014b9539c9ec05178f12a7d2deacedfa:14bd28bb583dec7cd413efc99f616e1306637f6b9355204e695749e65eb3c311"
+                            "executionResult": "0837f6da60f3f98c6260c501debfd7ee9dfc5f06:ee548f29e89aee700b751c307598a18891a0afff74e90fd5de1fd7612932ebdb"
                         }
                     }
                 },
@@ -217,7 +214,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -225,17 +222,14 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3437",
-                    "X-Ratelimit-Reset": "7",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
         {
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_22fc1287014b9539c9ec05178f12a7d2deacedfa14bd28bb583dec7cd413efc99f616e1306637f6b9355204e695749e65eb3c311",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_0837f6da60f3f98c6260c501debfd7ee9dfc5f06ee548f29e89aee700b751c307598a18891a0afff74e90fd5de1fd7612932ebdb",
             "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/22fc1287014b9539c9ec05178f12a7d2deacedfa%3A14bd28bb583dec7cd413efc99f616e1306637f6b9355204e695749e65eb3c311",
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/0837f6da60f3f98c6260c501debfd7ee9dfc5f06%3Aee548f29e89aee700b751c307598a18891a0afff74e90fd5de1fd7612932ebdb",
                 "method": "GET"
             },
             "response": {
@@ -447,7 +441,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -455,17 +449,14 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3433",
-                    "X-Ratelimit-Reset": "6",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
         {
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_cb6e52065b47a66879d150422aa9d1e64bc753e00415dbeda5bd21a1a0edfd05514e7dbb7c2c67661dd0ca924bc0042c4305edcc",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_d64586b5cbb1aee23c6d43ef14ee119418b7e39f05d05da3a768f7af7d5744ace84e63394f00d85ac6ccb42c4b19971a2390d61f",
             "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/cb6e52065b47a66879d150422aa9d1e64bc753e0%3A0415dbeda5bd21a1a0edfd05514e7dbb7c2c67661dd0ca924bc0042c4305edcc",
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/d64586b5cbb1aee23c6d43ef14ee119418b7e39f%3A05d05da3a768f7af7d5744ace84e63394f00d85ac6ccb42c4b19971a2390d61f",
                 "method": "GET"
             },
             "response": {
@@ -677,7 +668,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -685,10 +676,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "3397",
-                    "X-Ratelimit-Reset": "3",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -785,6 +773,13 @@
                         },
                         "id": "mapboxToken",
                         "type": "MAPBOX_TOKEN"
+                    },
+                    {
+                        "content": {
+                            "value": ""
+                        },
+                        "id": "geoIconSheet",
+                        "type": "GEO_ICON_SHEET"
                     },
                     {
                         "content": {
@@ -1067,7 +1062,7 @@
                     "Cache-Control": "max-age=10, private",
                     "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -1075,10 +1070,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "1942",
-                    "X-Ratelimit-Reset": "4",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1109,7 +1101,7 @@
                 "jsonBody": {
                     "data": {
                         "attributes": {
-                            "name": "E2E_SDK_cypress_test -- 2026-03-16T15:12:39.495Z"
+                            "name": "E2E_SDK_cypress_test -- 2026-03-27T22:34:41.556Z"
                         },
                         "id": "c76e0537d0614abb0027f7c992656b964922506f",
                         "meta": {
@@ -1142,115 +1134,15 @@
                     "Cache-Control": "max-age=5, private",
                     "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "1942",
-                    "X-Ratelimit-Reset": "4",
-                    "X-XSS-Protection": "0"
-                }
-            }
-        },
-        {
-            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_filtercontexts",
-            "request": {
-                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterContexts",
-                "method": "POST",
-                "bodyPatterns": [
-                    {
-                        "equalToJson": "{\"data\":{\"attributes\":{\"content\":{\"filters\":[{\"attributeFilter\":{\"attributeElements\":{\"uris\":[\"Adam Bradley\",\"Alejandro Vabiano\",\"Alexsandr Fyodr\",\"Antony\"]},\"displayForm\":{\"identifier\":{\"id\":\"label.f_owner.salesrep.ownername\",\"type\":\"label\"}},\"localIdentifier\":\"569694f5c5af4307ace4b75fce3b43a4\",\"negativeSelection\":false,\"selectionMode\":\"multi\"}},{\"dateFilter\":{\"dataSet\":{\"identifier\":{\"id\":\"dt_activity_timestamp\",\"type\":\"dataset\"}},\"granularity\":\"GDC.time.date\",\"localIdentifier\":\"dt_activity_timestamp_1_dateFilter\",\"type\":\"relative\"}},{\"dateFilter\":{\"dataSet\":{\"identifier\":{\"id\":\"dt_oppcreated_timestamp\",\"type\":\"dataset\"}},\"granularity\":\"GDC.time.date\",\"localIdentifier\":\"dt_oppcreated_timestamp_2_dateFilter\",\"type\":\"relative\"}}],\"version\":\"2\"},\"description\":\"\",\"title\":\"filterContext\"},\"type\":\"filterContext\"}}",
-                        "ignoreArrayOrder": false,
-                        "ignoreExtraElements": false
-                    }
-                ]
-            },
-            "response": {
-                "status": 201,
-                "jsonBody": {
-                    "data": {
-                        "attributes": {
-                            "content": {
-                                "filters": [
-                                    {
-                                        "attributeFilter": {
-                                            "attributeElements": {
-                                                "uris": [
-                                                    "Adam Bradley",
-                                                    "Alejandro Vabiano",
-                                                    "Alexsandr Fyodr",
-                                                    "Antony"
-                                                ]
-                                            },
-                                            "displayForm": {
-                                                "identifier": {
-                                                    "id": "label.f_owner.salesrep.ownername",
-                                                    "type": "label"
-                                                }
-                                            },
-                                            "localIdentifier": "569694f5c5af4307ace4b75fce3b43a4",
-                                            "negativeSelection": false,
-                                            "selectionMode": "multi"
-                                        }
-                                    },
-                                    {
-                                        "dateFilter": {
-                                            "dataSet": {
-                                                "identifier": {
-                                                    "id": "dt_activity_timestamp",
-                                                    "type": "dataset"
-                                                }
-                                            },
-                                            "granularity": "GDC.time.date",
-                                            "localIdentifier": "dt_activity_timestamp_1_dateFilter",
-                                            "type": "relative"
-                                        }
-                                    },
-                                    {
-                                        "dateFilter": {
-                                            "dataSet": {
-                                                "identifier": {
-                                                    "id": "dt_oppcreated_timestamp",
-                                                    "type": "dataset"
-                                                }
-                                            },
-                                            "granularity": "GDC.time.date",
-                                            "localIdentifier": "dt_oppcreated_timestamp_2_dateFilter",
-                                            "type": "relative"
-                                        }
-                                    }
-                                ],
-                                "version": "2"
-                            },
-                            "description": "",
-                            "title": "filterContext"
-                        },
-                        "id": "e87ca732-5106-428e-bf4d-eb5038f7a8a1",
-                        "meta": {
-                            "origin": {
-                                "originId": "c76e0537d0614abb0027f7c992656b964922506f",
-                                "originType": "NATIVE"
-                            }
-                        },
-                        "type": "filterContext"
-                    },
-                    "links": {
-                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterContexts/e87ca732-5106-428e-bf4d-eb5038f7a8a1"
-                    }
-                },
-                "headers": {
-                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-                    "Content-Type": "application/json",
-                    "Expires": "0",
-                    "Pragma": "no-cache",
-                    "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
-                    "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "2056",
-                    "X-Ratelimit-Reset": "8",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1373,7 +1265,7 @@
                     "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -1381,10 +1273,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "4000",
-                    "X-Ratelimit-Remaining": "1943",
-                    "X-Ratelimit-Reset": "4",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         },
@@ -1483,7 +1372,7 @@
                     "Cache-Control": "max-age=10, private",
                     "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
@@ -1491,10 +1380,7 @@
                         "Access-Control-Request-Headers"
                     ],
                     "X-Content-Type-Options": "nosniff",
-                    "X-Ratelimit-Limit": "6500",
-                    "X-Ratelimit-Remaining": "3586",
-                    "X-Ratelimit-Reset": "4",
-                    "X-XSS-Protection": "0"
+                    "X-XSS-Protection": "1; mode=block"
                 }
             }
         }

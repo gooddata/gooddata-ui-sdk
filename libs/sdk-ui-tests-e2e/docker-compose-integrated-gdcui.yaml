@@ -4,6 +4,7 @@ services:
     gooddata-ui-sdk-scenarios:
         image: $IMAGE_ID
         environment:
+            - WORKSPACE_ID
             - TEST_BACKEND=${TEST_BACKEND:?Check README.md for more detail}
             - TEST_BACKEND_NO_PREFIX=${TEST_BACKEND_NO_PREFIX:?Check README.md for more detail}
         volumes:

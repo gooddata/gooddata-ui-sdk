@@ -475,10 +475,8 @@ export type MetricFieldGuard = MetricField | MetricFieldGuard1;
 /**
  * This interface was referenced by `QueryFilters`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
- *
  * This interface was referenced by `QueryFilters1`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
- *
  * This interface was referenced by `QueryFilters2`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
  */
@@ -1102,7 +1100,6 @@ export interface Fields {
     /**
      * This interface was referenced by `Fields`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
-     *
      * This interface was referenced by `Fields1`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
@@ -1399,7 +1396,6 @@ export interface Fields1 {
     /**
      * This interface was referenced by `Fields`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
-     *
      * This interface was referenced by `Fields1`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
@@ -1885,7 +1881,6 @@ export interface DashboardFilters {
     /**
      * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
-     *
      * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
@@ -1956,7 +1951,6 @@ export interface DashboardFilters1 {
     /**
      * This interface was referenced by `DashboardFilters`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
-     *
      * This interface was referenced by `DashboardFilters1`'s JSON-Schema definition
      * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
      */
@@ -2070,8 +2064,6 @@ export interface AttributeHierarchy {
     tags?: Tags10;
     /**
      * A list of sorted attributes use in attribute hierarchy. The first attribute is the top level attribute.
-     *
-     * minItems: 1
      */
     attributes: [AttributeIdentifier4, ...AttributeIdentifier4[]];
 }
@@ -2227,7 +2219,6 @@ export interface QueryFilters {
 /**
  * This interface was referenced by `undefined`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
- *
  * This interface was referenced by `undefined`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
  */
@@ -2260,8 +2251,8 @@ export interface MultipleConditions1 {
      */
     using: MetricIdentifier;
     /**
-     * minItems: 1
-     */
+
+   */
     conditions: [MetricValueFilterCondition, ...MetricValueFilterCondition[]];
     /**
      * Null values will be treated as zero.
@@ -2526,9 +2517,9 @@ export interface ArithmeticMetricField {
      */
     operator: "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
     /**
-     * minItems: 2
-     * maxItems: 2
-     */
+
+
+   */
     using: [string, string];
 }
 export interface ArithmeticMetricFieldGuard1 {
@@ -2671,8 +2662,8 @@ export interface MetricSort {
      */
     direction: "ASC" | "DESC";
     /**
-     * minItems: 1
-     */
+
+   */
     metrics: [
         (
             | string
