@@ -70,14 +70,16 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
     const root = contents.find((item) => item.file.includes(rootSchema));
     const items = contents.filter((item) => !item.file.includes(rootSchema));
 
-    const schema = mergeSchemas(
+    const mergedSchema = mergeSchemas(
         root.content,
         items.map((item) => item.content),
     );
     console.log(`Created schema in ${Date.now() - start}ms`);
 
     start = Date.now();
-    const narrowedSchema = narrowSchema(schema);
+    // narrowSchema expands allOf/if/then/else into oneOf for json-schema-to-typescript.
+    // This is only needed for type generation, not for the runtime JSON schema.
+    const narrowedSchema = narrowSchema(structuredClone(mergedSchema));
     console.log(`Narrowed schema in ${Date.now() - start}ms`);
 
     start = Date.now();
@@ -89,8 +91,10 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
 
     const typeContent = (await oxfmt(typeFilename, GOODDATA_COPYRIGHT + sanitizeTsDoc(def), OXFMT_OPTIONS))
         .code;
-    const schemaContent = (await oxfmt(schemaFilename, JSON.stringify(schema, null, 4) + "\n", OXFMT_OPTIONS))
-        .code;
+    // Write the un-narrowed schema to metadata.json — it's used for runtime validation
+    // (e.g. Ajv). The narrowed schema (with oneOf explosion) is only for type generation
+    // and would cause combinatorial blowup in schema compilers.
+    const schemaContent = (await oxfmt(schemaFilename, JSON.stringify(mergedSchema), OXFMT_OPTIONS)).code;
 
     if (checkMode) {
         const existingType = readFileSync(typeFilename, "utf-8");

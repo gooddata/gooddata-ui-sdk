@@ -7,7 +7,9 @@ services:
               if [ -n \"$$FILTER\" ]; then
                 npx playwright test --config ./playwright/playwright.config.ts --grep '@pre-merge-isolated' $$(echo \"$$FILTER\" | tr ',' ' ') --update-snapshots;
               else
-                npx playwright test --config ./playwright/playwright.config.ts --grep '@pre-merge-isolated' --update-snapshots;
+                SHARD_ARGS='';
+                if [ -n \"$$SHARD_INDEX\" ] && [ -n \"$$SHARD_TOTAL\" ]; then SHARD_ARGS=\"--shard=$$SHARD_INDEX/$$SHARD_TOTAL\"; fi;
+                npx playwright test --config ./playwright/playwright.config.ts --grep '@pre-merge-isolated' --update-snapshots $$SHARD_ARGS;
               fi
             "
         volumes:
@@ -26,6 +28,8 @@ services:
             - NO_COLOR
             - TIGER_API_TOKEN
             - TEST_WORKSPACE_ID
+            - SHARD_INDEX
+            - SHARD_TOTAL
             - FILTER
 
     gooddata-ui-sdk-scenarios:
