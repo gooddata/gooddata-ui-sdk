@@ -5158,7 +5158,7 @@ export const metadata_v1: {
                 type: string;
                 source: string;
                 mode: string;
-            };
+            }[];
         };
         queryMetricValueFilter: {
             title: string;
