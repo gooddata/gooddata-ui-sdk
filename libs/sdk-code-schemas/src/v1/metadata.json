@@ -3458,6 +3458,11 @@
                     "type": "definition",
                     "source": "current.widget.visualization.query.filter.localId",
                     "mode": "property"
+                },
+                {
+                    "type": "definition",
+                    "source": "current.widget.visualization.query.field.filter.localId",
+                    "mode": "property"
                 }
             ]
         },
@@ -3502,11 +3507,18 @@
                 }
             },
             "required": ["type", "using"],
-            "$semantic": {
-                "type": "definition",
-                "source": "current.widget.visualization.query.filter.localId",
-                "mode": "property"
-            }
+            "$semantic": [
+                {
+                    "type": "definition",
+                    "source": "current.widget.visualization.query.filter.localId",
+                    "mode": "property"
+                },
+                {
+                    "type": "definition",
+                    "source": "current.widget.visualization.query.field.filter.localId",
+                    "mode": "property"
+                }
+            ]
         },
         "queryMetricValueFilter": {
             "title": "Metric Value Filter",
