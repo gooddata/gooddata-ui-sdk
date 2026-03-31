@@ -580,6 +580,7 @@ const messagesSlice = createSlice({
                         );
 
                 if (visualization) {
+                    visualization.visualization.insight.title = payload.visualizationTitle;
                     visualization.saving = {
                         started: true,
                         completed: false,
@@ -593,6 +594,35 @@ const messagesSlice = createSlice({
 
                 if (visualization) {
                     visualization.saving = true;
+                }
+            }
+        },
+        savedVisualizationAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                visualizationId: string;
+                assistantMessageId: string;
+            }>,
+        ) => {
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+
+            if (isChatConversationLocalItem(assistantMessage)) {
+                if (assistantMessage.content.type !== "multipart") {
+                    throw new Error("Unexpected message type");
+                }
+
+                const visualization: IChatConversationMultipartLocalPart | undefined =
+                    assistantMessage.content.parts
+                        .filter((filter) => filter.type === "visualization")
+                        .find(
+                            (content) =>
+                                content.visualization?.insight.identifier === payload.visualizationId,
+                        );
+
+                if (visualization) {
+                    delete visualization.saving;
                 }
             }
         },
@@ -770,6 +800,7 @@ export const {
     setUserFeedbackError,
     clearUserFeedbackError,
     saveVisualizationAction,
+    savedVisualizationAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
     saveVisualisationRenderStatusAction,

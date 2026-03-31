@@ -7,9 +7,9 @@ import { useIntl } from "react-intl";
 
 import {
     type DashboardAttributeFilterItem,
-    type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type ObjRef,
+    dashboardAttributeFilterItemLocalIdentifier,
 } from "@gooddata/sdk-model";
 import {
     AttributeFilterButton,
@@ -18,27 +18,28 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { type OverlayPositionType, UiChip, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectAvailableAttributeFilterSelectionTypes } from "../../../model/store/config/configSelectors.js";
 import { StandaloneDashboardAttributeFilter } from "../../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 
 interface IAttributeBarProps {
-    attribute: IDashboardAttributeFilter;
+    attribute: DashboardAttributeFilterItem;
     attributeConfigs: IDashboardAttributeFilterConfig[];
-    onChange?: (newFilter: IDashboardAttributeFilter) => void;
-    onDelete?: (filter: IDashboardAttributeFilter) => void;
+    onChange?: (newFilter: DashboardAttributeFilterItem) => void;
+    onDelete?: (filter: DashboardAttributeFilterItem) => void;
 }
 
 type IAttributeBarInnerProps = Omit<IAttributeBarProps, "attribute" | "attributeConfigs"> & {
-    currentFilter: IDashboardAttributeFilter;
+    currentFilter: DashboardAttributeFilterItem;
     deleteAriaLabel: string;
 };
 
 export function AttributeBar(props: IAttributeBarProps) {
     const intl = useIntl();
     const deleteAriaLabel = intl.formatMessage({ id: "kdaDialog.dialog.bars.attribute.deleteLabel" });
+    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(props.attribute);
 
-    const config = props.attributeConfigs.find(
-        (attribute) => attribute.localIdentifier === props.attribute.attributeFilter.localIdentifier,
-    );
+    const config = props.attributeConfigs.find((attribute) => attribute.localIdentifier === localIdentifier);
     const displayAsLabel = config?.displayAsLabel;
 
     return (
@@ -63,22 +64,22 @@ function KdaAttributeFilterWrapper({
     onChange,
     onDelete,
 }: {
-    filter: IDashboardAttributeFilter;
+    filter: DashboardAttributeFilterItem;
     displayAsLabel?: ObjRef;
     overlayPositionType?: OverlayPositionType;
     deleteAriaLabel?: string;
-    onChange?: (newFilter: IDashboardAttributeFilter) => void;
-    onDelete?: (filter: IDashboardAttributeFilter) => void;
+    onChange?: (newFilter: DashboardAttributeFilterItem) => void;
+    onDelete?: (filter: DashboardAttributeFilterItem) => void;
 }) {
     const handleFilterChanged = useCallback(
         (newFilter: DashboardAttributeFilterItem) => {
-            onChange?.(newFilter as IDashboardAttributeFilter);
+            onChange?.(newFilter);
         },
         [onChange],
     );
 
     const handleFilterDeleted = useCallback(
-        (filter: IDashboardAttributeFilter) => {
+        (filter: DashboardAttributeFilterItem) => {
             onDelete?.(filter);
         },
         [onDelete],
@@ -110,9 +111,12 @@ function KdaAttributeFilterComponent({
     ...props
 }: IAttributeFilterButtonProps &
     Pick<IAttributeBarInnerProps, "currentFilter" | "onDelete" | "deleteAriaLabel">) {
+    const allAvailableSelectionTypes = useDashboardSelector(selectAvailableAttributeFilterSelectionTypes);
+
     return (
         <AttributeFilterButton
             {...props}
+            menuConfig={{ availableSelectionTypes: allAvailableSelectionTypes, showLabelsSwitch: false }}
             LoadingComponent={KdaAttributeFilterLoadingComponent}
             DropdownButtonComponent={(ddProps) => (
                 <KdaAttributeFilterDropdownButtonComponent

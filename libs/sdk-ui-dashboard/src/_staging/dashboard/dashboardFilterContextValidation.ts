@@ -15,6 +15,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     isDashboardTextAttributeFilter,
+    isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
 import { isFilterTypeCompatibleWithSelectionType } from "../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
@@ -340,10 +341,15 @@ function mergeAttributeFilter(
         };
     }
 
-    // Determine the override's type and check selectionType compatibility
-    // Default selectionType for list (IDashboardAttributeFilter) originals is "list"
     const overrideType = isDashboardAttributeFilter(filterToMerge) ? "list" : "text";
-    if (!isFilterTypeCompatibleWithSelectionType(overrideType, filterConfig?.selectionType, "list")) {
+    const singleSelectionDefault = isSingleSelectionFilter(originalFilter) ? "list" : undefined;
+    if (
+        !isFilterTypeCompatibleWithSelectionType(
+            overrideType,
+            filterConfig?.selectionType,
+            singleSelectionDefault,
+        )
+    ) {
         return {
             mergedFilter: originalFilter,
             validationResults: [
@@ -422,10 +428,8 @@ function mergeTextAttributeFilter(
         };
     }
 
-    // Determine the override's type and check selectionType compatibility
-    // Default selectionType for text originals is "text"
     const overrideType = isDashboardTextAttributeFilter(filterToMerge) ? "text" : "list";
-    if (!isFilterTypeCompatibleWithSelectionType(overrideType, filterConfig?.selectionType, "text")) {
+    if (!isFilterTypeCompatibleWithSelectionType(overrideType, filterConfig?.selectionType)) {
         return {
             mergedFilter: originalFilter,
             validationResults: [

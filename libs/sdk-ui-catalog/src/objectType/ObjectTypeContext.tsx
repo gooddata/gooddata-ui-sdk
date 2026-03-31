@@ -1,7 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type PropsWithChildren, createContext, useContext, useEffect, useMemo, useState } from "react";
 
+import { ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
 
 interface IObjectTypeState {
@@ -13,12 +14,12 @@ interface IObjectTypeActions {
 
 const initialState: IObjectTypeState = {
     counter: {
-        measure: 0,
-        fact: 0,
-        attribute: 0,
-        dataSet: 0,
-        insight: 0,
-        analyticalDashboard: 0,
+        [ObjectTypes.METRIC]: 0,
+        [ObjectTypes.FACT]: 0,
+        [ObjectTypes.ATTRIBUTE]: 0,
+        [ObjectTypes.DATASET]: 0,
+        [ObjectTypes.VISUALIZATION]: 0,
+        [ObjectTypes.DASHBOARD]: 0,
     },
 };
 const initialActions: IObjectTypeActions = {

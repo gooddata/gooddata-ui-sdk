@@ -32,6 +32,7 @@ import {
     convertIntersectionToAttributeFilters,
     removeIgnoredValuesFromDrillIntersection,
 } from "./common/intersectionUtils.js";
+import { mergeDashboardAndSourceFilters } from "./common/mergeFilters.js";
 import { getIncludedSourceFiltersForDashboard } from "./common/sourceDrillFilters.js";
 import {
     dashboardAttributeFilterItemToAttributeFilter,
@@ -160,13 +161,12 @@ export function* drillToDashboardHandler(
     attributeFilterConfigs.push(...dashboardFilterConfigs);
     const includedSourceFilters = getIncludedSourceFiltersForDashboard(insight, cmd.payload.drillDefinition);
 
-    // Order matters: intersection > dashboard > source insight/measure.
-    const resultingFilters = compact([
-        ...intersectionFilters,
-        commonDateFilter,
-        ...dashboardFilters,
-        ...includedSourceFilters,
-    ]);
+    // Merge dashboard and source filters by intersecting element values for matching attributes.
+    // Unmatched filters from either side pass through as-is.
+    const mergedFilters = mergeDashboardAndSourceFilters(dashboardFilters, includedSourceFilters);
+
+    // Order matters: intersection > common date > merged dashboard+source.
+    const resultingFilters = compact([...intersectionFilters, commonDateFilter, ...mergedFilters]);
 
     const targetTabLocalIdentifier = cmd.payload.drillDefinition.targetTabLocalIdentifier;
     if (targetTabLocalIdentifier && isDrillingToSelf) {

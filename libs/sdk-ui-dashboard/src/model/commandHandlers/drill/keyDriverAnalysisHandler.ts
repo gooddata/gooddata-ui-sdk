@@ -4,8 +4,10 @@ import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import {
+    type DashboardAttributeFilterItem,
     type IDashboardAttributeFilter,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
     isAttributeDescriptor,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
@@ -158,18 +160,21 @@ function loadLocalIdentifiers(drillEvent: IDashboardDrillEvent) {
 
 function mergeFilters(
     intersectionFilters: IDashboardAttributeFilter[],
-    attributeFilters: IDashboardAttributeFilter[],
-): IDashboardAttributeFilter[] {
+    attributeFilters: DashboardAttributeFilterItem[],
+): DashboardAttributeFilterItem[] {
     const unusedFilters = intersectionFilters.filter((filter) => {
         return !attributeFilters.find((f) =>
-            areObjRefsEqual(f.attributeFilter.displayForm, filter.attributeFilter.displayForm),
+            areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(f), filter.attributeFilter.displayForm),
         );
     });
 
     return [
         ...attributeFilters.map((filter) => {
             const intersectionFilter = intersectionFilters.find((f) =>
-                areObjRefsEqual(f.attributeFilter.displayForm, filter.attributeFilter.displayForm),
+                areObjRefsEqual(
+                    f.attributeFilter.displayForm,
+                    dashboardAttributeFilterItemDisplayForm(filter),
+                ),
             );
             if (intersectionFilter) {
                 return intersectionFilter;

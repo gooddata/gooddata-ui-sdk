@@ -234,7 +234,7 @@ describe("dashboardFilterContextValidation", () => {
                 expect(result.validationResults.length).toBe(0);
             });
 
-            it("should merge list filter when config has no selectionType (defaults to list)", () => {
+            it("should merge list filter when config has no selectionType (defaults to listOrText)", () => {
                 const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
                 const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
                     "newValue",
@@ -311,8 +311,18 @@ describe("dashboardFilterContextValidation", () => {
                 ).toBe(true);
             });
 
-            it("should reject text override on list original when config has no selectionType (defaults to list)", () => {
+            it("should allow text override on list original when config has no selectionType (defaults to listOrText)", () => {
                 const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
+
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            it("should reject text override on single selection list original when config has no selectionType (defaults to list)", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1", "single");
                 const filterToMerge = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
 
                 const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
@@ -395,7 +405,7 @@ describe("dashboardFilterContextValidation", () => {
                 ).toBe(true);
             });
 
-            it("should reject list override on text original when config has no selectionType (defaults to text)", () => {
+            it("should allow list override on text original when config has no selectionType (defaults to listOrText)", () => {
                 const originalFilter = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
                 const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
                     "newValue",
@@ -403,14 +413,8 @@ describe("dashboardFilterContextValidation", () => {
 
                 const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
 
-                expect(result.mergedFilters[0]).toBe(originalFilter);
-                expect(
-                    hasValidationError(
-                        result.validationResults,
-                        filterToMerge,
-                        "cannot-apply-incompatible-selection-type",
-                    ),
-                ).toBe(true);
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
             });
         });
 

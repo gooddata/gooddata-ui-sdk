@@ -68,7 +68,13 @@ export function* onVisualizationSave({
 
             const savedVisualization: IInsight = yield call(
                 backend.workspace(workspace).insights().createInsight,
-                visualizationContent.visualization,
+                {
+                    ...visualizationContent.visualization,
+                    insight: {
+                        ...visualizationContent.visualization.insight,
+                        title: payload.visualizationTitle,
+                    },
+                },
             );
 
             const resave = backend

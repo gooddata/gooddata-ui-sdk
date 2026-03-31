@@ -833,7 +833,7 @@
     "drill.kda.in": "in",
     "drill.kda.drop": "Drop {where} {title}",
     "drill.kda.increase": "Increase {where} {title}",
-    "drill.kda.no_change": "Outdated {where} {title}",
+    "drill.kda.no_change": "Stale {where} {title}",
     "drill.kda.year_to_year": "Year on year change",
     "dashboard.tabs.default.label": "Untitled tab",
     "dashboard.tabs.move.left": "Move left",

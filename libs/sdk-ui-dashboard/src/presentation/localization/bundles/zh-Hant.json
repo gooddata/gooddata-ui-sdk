@@ -833,7 +833,7 @@
     "drill.kda.in": "在",
     "drill.kda.drop": "降低 {where} {title}",
     "drill.kda.increase": "增加 {where} {title}",
-    "drill.kda.no_change": "陳舊 {where} {title}",
+    "drill.kda.no_change": "無變化 {where} {title}",
     "drill.kda.year_to_year": "同比變化",
     "dashboard.tabs.default.label": "無標題標籤頁",
     "dashboard.tabs.move.left": "向左移動",

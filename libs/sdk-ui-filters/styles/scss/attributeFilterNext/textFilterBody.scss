@@ -122,27 +122,31 @@
         line-height: 20px;
         color: var(--gd-palette-complementary-8, #464e56);
         overflow: hidden;
-    }
 
-    &__content {
-        flex: 1 1 auto;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        .gd-ui-kit-tooltip__anchor {
+            display: flex;
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow: hidden;
+            width: auto;
+        }
+
+        .gd-shortened-text {
+            flex: 0 1 auto;
+            min-width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            &.gd-selection-list {
+                font-weight: bold;
+            }
+        }
     }
 
     &__operator {
-        font-weight: 400;
-    }
-
-    &__value {
-        font-weight: 700;
-    }
-
-    &__count {
         flex: 0 0 auto;
-        font-weight: 400;
+        white-space: nowrap;
     }
 }
 
@@ -256,7 +260,7 @@
             padding: 0;
 
             .gd-chips-input__chips-frame {
-                padding: 4px 8px;
+                padding: 7px 5px;
                 max-height: 120px;
                 overflow-y: auto;
                 overscroll-behavior: contain;

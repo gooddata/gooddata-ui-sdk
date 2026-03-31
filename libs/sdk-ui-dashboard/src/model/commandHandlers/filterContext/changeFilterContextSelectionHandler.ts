@@ -484,8 +484,8 @@ function* getAttributeFiltersUpdateActions(
 
                 if (existingFilterItem && isDashboardTextAttributeFilter(existingFilterItem)) {
                     const configSelectionType = selectionTypeMap?.get(localId);
-                    // Default for text filters is "text" — only allow list override if config permits
-                    if (configSelectionType === "list" || configSelectionType === "listOrText") {
+                    // Default is "listOrText" — only skip if config explicitly restricts to "text"
+                    if (configSelectionType !== "text") {
                         // Text → list: set displayAsLabel to the text filter's displayForm
                         // so the list filter visually shows the same label
                         updateActions.push(
@@ -529,8 +529,15 @@ function* getAttributeFiltersUpdateActions(
             const isExistingText = isDashboardTextAttributeFilter(existingFilter);
             if (!isExistingText) {
                 const configSelectionType = selectionTypeMap?.get(localId);
-                // Default for list filters is "list" — skip unless config allows text
-                if (configSelectionType !== "text" && configSelectionType !== "listOrText") {
+                // Default is "listOrText", except single selection list filters → "list"
+                if (configSelectionType === "list") {
+                    continue;
+                }
+                if (
+                    configSelectionType === undefined &&
+                    isDashboardAttributeFilter(existingFilter) &&
+                    isSingleSelectionFilter(existingFilter)
+                ) {
                     continue;
                 }
             }

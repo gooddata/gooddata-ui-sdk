@@ -93,7 +93,7 @@
     "gd.gen-ai.state.minutes": "m",
     "drill.kda.from": "von",
     "drill.kda.in": "am",
-    "drill.kda.drop": "Entfernen {where} {title}",
+    "drill.kda.drop": "Rückgang {where} {title}",
     "drill.kda.increase": "Erhöhen {where} {title}",
     "drill.kda.no_change": "Unverändert {where} {title}",
     "drill.kda.year_to_year": "Veränderung von Jahr zu Jahr"

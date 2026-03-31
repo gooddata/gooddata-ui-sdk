@@ -76,7 +76,21 @@
     dirpath = "11.11"
     url = "/11.11/"
 [[versions]]
-    version = "6.0"
-    changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#600"
-    dirpath = "6.0"
-    url = "https://sdk.gooddata.com/gooddata-ui/docs/6.0.0/about_gooddataui.html"
+    version = "11.10"
+    dirpath = "11.10"
+    url = "/11.10/"
+[[versions]]
+    version = "8.12"
+    changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#8120"
+    dirpath = "8.12"
+    url = "https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html"
+[[versions]]
+    version = "7.9"
+    changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#790"
+    dirpath = "7.9"
+    url = "https://sdk.gooddata.com/gooddata-ui/docs/7.9.0/about_gooddataui.html"
+[[versions]]
+    version = "6.3"
+    changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#630"
+    dirpath = "6.3"
+    url = "https://sdk.gooddata.com/gooddata-ui/docs/6.3.0/about_gooddataui.html"

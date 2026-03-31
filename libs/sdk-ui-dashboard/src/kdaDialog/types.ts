@@ -1,8 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
 import {
+    type DashboardAttributeFilterItem,
     type IAttributeDescriptorBody,
-    type IDashboardAttributeFilter,
     type IMeasure,
     type ObjRef,
 } from "@gooddata/sdk-model";
@@ -76,7 +76,7 @@ export interface IKdaDefinition {
     /**
      * Filters to apply
      */
-    filters?: IDashboardAttributeFilter[];
+    filters?: DashboardAttributeFilterItem[];
     /**
      * Date attribute
      */

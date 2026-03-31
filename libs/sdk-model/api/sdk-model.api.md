@@ -2524,6 +2524,7 @@ export interface IFeatureFlags {
     // (undocumented)
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;
+    enableParameters?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTablePagination?: boolean;
     enablePreAggregationDatasets?: boolean;

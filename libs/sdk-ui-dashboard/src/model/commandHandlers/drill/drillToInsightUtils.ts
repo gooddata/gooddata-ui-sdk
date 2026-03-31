@@ -4,9 +4,12 @@ import {
     type IDrillToInsight as IDrillToInsightDefinition,
     type IFilter,
     type IInsight,
+    type IMeasureValueFilter,
     areObjRefsEqual,
+    attributeLocalId,
     filterMeasureRef,
     filterObjRef,
+    insightAttributes,
     insightFilters,
     insightMeasures,
     insightSetFilters,
@@ -15,6 +18,7 @@ import {
     isMeasureValueFilter,
     isRankingFilter,
     measureLocalId,
+    measureValueFilterDimensionality,
 } from "@gooddata/sdk-model";
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
 
@@ -110,24 +114,61 @@ function addSourceMeasureFiltersToInsight(
 
 /**
  * Filters out MVF/ranking filters that reference measures by localIdentifier not present
- * in the target insight. Such filters would cause the execution normalizer to throw
- * because it cannot resolve the dangling localId reference.
+ * in the target insight, and strips MVF dimensionality refs that reference attributes
+ * not present in the target insight. Such dangling localId references would cause the
+ * execution normalizer to throw.
  */
 function filterOutInvalidMeasureFilters(filters: IFilter[], targetInsight: IInsight): IFilter[] {
     const targetMeasureLocalIds = new Set(insightMeasures(targetInsight).map(measureLocalId));
+    const targetAttributeLocalIds = new Set(insightAttributes(targetInsight).map(attributeLocalId));
 
-    return filters.filter((filter) => {
-        if (!isMeasureValueFilter(filter) && !isRankingFilter(filter)) {
-            return true;
-        }
+    return filters
+        .filter((filter) => {
+            if (!isMeasureValueFilter(filter) && !isRankingFilter(filter)) {
+                return true;
+            }
 
-        const measureRef = filterMeasureRef(filter);
-        if (!measureRef || !isLocalIdRef(measureRef)) {
-            return true;
-        }
+            const measureRef = filterMeasureRef(filter);
+            if (!measureRef || !isLocalIdRef(measureRef)) {
+                return true;
+            }
 
-        return targetMeasureLocalIds.has(measureRef.localIdentifier);
-    });
+            return targetMeasureLocalIds.has(measureRef.localIdentifier);
+        })
+        .map((filter) => {
+            if (!isMeasureValueFilter(filter)) {
+                return filter;
+            }
+
+            return stripInvalidDimensionality(filter, targetAttributeLocalIds);
+        });
+}
+
+function stripInvalidDimensionality(
+    filter: IMeasureValueFilter,
+    targetAttributeLocalIds: Set<string>,
+): IMeasureValueFilter {
+    const dimensionality = measureValueFilterDimensionality(filter);
+    if (!dimensionality?.length) {
+        return filter;
+    }
+
+    const validDimensionality = dimensionality.filter(
+        (ref) => !isLocalIdRef(ref) || targetAttributeLocalIds.has(ref.localIdentifier),
+    );
+
+    if (validDimensionality.length === dimensionality.length) {
+        return filter;
+    }
+
+    return {
+        measureValueFilter: {
+            ...filter.measureValueFilter,
+            ...(validDimensionality.length > 0
+                ? { dimensionality: validDimensionality }
+                : { dimensionality: undefined }),
+        },
+    };
 }
 
 function mergeInsightFilters(sourceFiltersToApply: IFilter[], targetFilters: IFilter[]): IFilter[] {

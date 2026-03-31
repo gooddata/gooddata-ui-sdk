@@ -5968,7 +5968,7 @@ export interface IKdaDataPoint {
 // @internal (undocumented)
 export interface IKdaDefinition {
     dateAttribute: ObjRef;
-    filters?: IDashboardAttributeFilter[];
+    filters?: DashboardAttributeFilterItem[];
     metric: IMeasure;
     metrics?: IMeasure[];
     range: [IKdaDataPoint, IKdaDataPoint];
@@ -9430,7 +9430,7 @@ export function removeAttributeFilters(filterLocalIds: string[], correlationId?:
 export function removeDateFilter(dataSet: ObjRef, correlationId?: string): IRemoveDateFilters;
 
 // @internal (undocumented)
-export function removeDateFilters(filters: FilterContextItem[]): IDashboardAttributeFilter[];
+export function removeDateFilters(filters: FilterContextItem[]): DashboardAttributeFilterItem[];
 
 // @alpha
 export function removeDrillDownForInsightWidget(ref: ObjRef, blacklistHierarchies: IDrillDownReference[], correlationId?: string): IRemoveDrillDownForInsightWidget;

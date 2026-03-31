@@ -1,8 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { useCallback, useEffect, useRef, useState } from "react";
-
-import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { UiTooltip } from "@gooddata/sdk-ui-kit";
 
@@ -31,16 +29,13 @@ export interface ITextFilterStateSummaryProps {
     literal: string;
 }
 
-const summaryMessages = defineMessages({
-    rich: { id: "attributeFilter.text.summary.rich" },
-});
-
 const isArbitraryOperator = (op: TextFilterOperator) => op === "is" || op === "isNot";
 
 /**
  * Textual representation of current text filter state.
- * Renders full summary and lets browser handle ellipsis.
- * Shows (totalCount) suffix only when text is truncated.
+ * Shows operator and value(s) with ellipsis truncation.
+ * Tooltip with full text is shown on hover when content is truncated.
+ * Shows (totalCount) suffix for arbitrary operators.
  *
  * @alpha
  */
@@ -49,62 +44,34 @@ export function TextFilterStateSummary(props: ITextFilterStateSummaryProps) {
     const intl = useIntl();
     const state = getTextFilterStateParts(operator, values, literal, intl);
     const tooltipText = getTextFilterStateText(operator, values, literal, intl);
-    const contentRef = useRef<HTMLDivElement>(null);
-    const [isTruncated, setIsTruncated] = useState(false);
 
-    const checkTruncation = useCallback(() => {
-        const el = contentRef.current;
-        if (!el) return;
-        setIsTruncated(el.scrollWidth > el.clientWidth);
-    }, []);
+    const showCount = isArbitraryOperator(operator) && values.length > 0;
 
-    useEffect(() => {
-        const raf = requestAnimationFrame(() => checkTruncation());
-        const observer = new ResizeObserver(checkTruncation);
-        const el = contentRef.current;
-        if (el) observer.observe(el);
-        return () => {
-            cancelAnimationFrame(raf);
-            observer.disconnect();
-        };
-    }, [checkTruncation, state.operator, state.value]);
-
-    const showCount = isTruncated && isArbitraryOperator(operator) && values.length > 0;
-
-    const summaryContent = (
+    return (
         <div className="gd-text-filter-state-summary s-text-filter-state-summary">
             <div className="gd-text-filter-state-summary__divider" />
 
             <div className="gd-text-filter-state-summary__text">
-                <div ref={contentRef} className="gd-text-filter-state-summary__content">
-                    <FormattedMessage
-                        {...summaryMessages.rich}
-                        values={{
-                            operator: state.operator,
-                            value: state.value,
-                            b: (chunks) => (
-                                <span className="gd-text-filter-state-summary__value">{chunks}</span>
-                            ),
-                        }}
+                <span className="gd-text-filter-state-summary__operator">
+                    {state.operator}
+                    {state.value ? "\xa0" : null}
+                </span>
+                {state.value ? (
+                    <UiTooltip
+                        arrowPlacement="top-start"
+                        triggerBy={["hover"]}
+                        content={tooltipText}
+                        anchor={
+                            <>
+                                <span className="gd-shortened-text gd-selection-list s-text-filter-state-summary-value">
+                                    {state.value}
+                                </span>
+                                {showCount ? `\xa0(${values.length})` : null}
+                            </>
+                        }
                     />
-                </div>
-                {showCount ? (
-                    <span className="gd-text-filter-state-summary__count"> ({values.length})</span>
                 ) : null}
             </div>
         </div>
-    );
-
-    if (!isTruncated) {
-        return summaryContent;
-    }
-
-    return (
-        <UiTooltip
-            arrowPlacement="top-start"
-            triggerBy={["hover"]}
-            content={tooltipText}
-            anchor={summaryContent}
-        />
     );
 }

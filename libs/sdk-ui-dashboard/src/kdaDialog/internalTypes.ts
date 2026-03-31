@@ -1,8 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
 import {
+    type DashboardAttributeFilterItem,
     type ICatalogDateAttribute,
-    type IDashboardAttributeFilter,
     type ISeparators,
     type ObjRef,
 } from "@gooddata/sdk-model";
@@ -66,7 +66,7 @@ export interface IKdaState {
     selectedItem: IUiListboxInteractiveItem<IKdaItem> | "summary";
     selectedStatus: KdaAsyncStatus;
     selectedError: Error | undefined;
-    attributeFilters: IDashboardAttributeFilter[];
+    attributeFilters: DashboardAttributeFilterItem[];
     items: IUiListboxInteractiveItem<IKdaItem>[];
     itemsStatus: KdaAsyncStatus;
     itemsError: Error | undefined;

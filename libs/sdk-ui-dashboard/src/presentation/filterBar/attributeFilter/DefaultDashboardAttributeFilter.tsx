@@ -200,12 +200,13 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         if (filterSelectionType === "listOrText") {
             return allAvailableSelectionTypes;
         }
-        // Fallback for existing filters without config: derive from current filter type
-        if (standardFilter) {
+        // Fallback for existing filters without config: default to listOrText
+        // Exception: list filter with single selection mode → listOnly
+        if (standardFilter && filterSelectionMode === "single") {
             return allAvailableSelectionTypes.filter((mode) => mode === "elements");
         }
-        return allAvailableSelectionTypes.filter((mode) => mode !== "elements");
-    }, [allAvailableSelectionTypes, standardFilter, filterSelectionType]);
+        return allAvailableSelectionTypes;
+    }, [allAvailableSelectionTypes, standardFilter, filterSelectionType, filterSelectionMode]);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);

@@ -2,16 +2,17 @@
 
 import { type IntlShape, type MessageDescriptor, defineMessages } from "react-intl";
 
+import { ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
 import type { VisualizationType } from "../catalogItem/types.js";
 
 const objectTypeMessages: Record<ObjectType, MessageDescriptor> = defineMessages({
-    analyticalDashboard: { id: "analyticsCatalog.objectType.dashboard.tooltip" },
-    insight: { id: "analyticsCatalog.objectType.visualization.tooltip" },
-    measure: { id: "analyticsCatalog.objectType.metric.tooltip" },
-    attribute: { id: "analyticsCatalog.objectType.attribute.tooltip" },
-    fact: { id: "analyticsCatalog.objectType.fact.tooltip" },
-    dataSet: { id: "analyticsCatalog.objectType.dateDataset.tooltip" },
+    [ObjectTypes.DASHBOARD]: { id: "analyticsCatalog.objectType.dashboard.name" },
+    [ObjectTypes.VISUALIZATION]: { id: "analyticsCatalog.objectType.visualization.name" },
+    [ObjectTypes.METRIC]: { id: "analyticsCatalog.objectType.metric.name" },
+    [ObjectTypes.ATTRIBUTE]: { id: "analyticsCatalog.objectType.attribute.name" },
+    [ObjectTypes.FACT]: { id: "analyticsCatalog.objectType.fact.name" },
+    [ObjectTypes.DATASET]: { id: "analyticsCatalog.objectType.dateDataset.name" },
 });
 
 const visualizationTypeMessages: Record<VisualizationType, MessageDescriptor> = defineMessages({
@@ -38,10 +39,15 @@ const visualizationTypeMessages: Record<VisualizationType, MessageDescriptor> = 
     repeater: { id: "analyticsCatalog.visualizationType.repeater.tooltip" },
 });
 
+/**
+ * Returns the canonical display name for a catalog object type.
+ * When the type is `"insight"` and a specific visualization type is known,
+ * the more specific visualization label is returned instead.
+ */
 export function getObjectTypeLabel(
     intl: IntlShape,
     type: ObjectType,
-    visualizationType: VisualizationType | undefined,
+    visualizationType?: VisualizationType,
 ): string {
     if (type === "insight" && visualizationType && visualizationType in visualizationTypeMessages) {
         return intl.formatMessage(visualizationTypeMessages[visualizationType]);

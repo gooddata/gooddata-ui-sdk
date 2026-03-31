@@ -1715,10 +1715,6 @@
         "text": "{operator} {value}",
         "crowdinContext": "Plain text summary of current text filter state for button subtitle."
     },
-    "attributeFilter.text.summary.rich": {
-        "text": "{operator} <b>{value}</b>",
-        "crowdinContext": "Rich text summary of current text filter state shown in text filter body."
-    },
     "attributeFilter.text.arbitrary.values": {
         "text": "Values",
         "crowdinContext": "Label for values input in text attribute filter."

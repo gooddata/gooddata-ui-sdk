@@ -95,6 +95,6 @@
     "drill.kda.in": "在",
     "drill.kda.drop": "降低 {where} {title}",
     "drill.kda.increase": "增加 {where} {title}",
-    "drill.kda.no_change": "陈旧的 {where} {title}",
+    "drill.kda.no_change": "无变化 {where} {title}",
     "drill.kda.year_to_year": "同比变化"
 }

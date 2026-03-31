@@ -14,7 +14,7 @@ import { type DashboardAttributeFilterSelectionType } from "@gooddata/sdk-model"
 export function isFilterTypeCompatibleWithSelectionType(
     filterType: "list" | "text",
     configSelectionType: DashboardAttributeFilterSelectionType | undefined,
-    defaultSelectionType: "list" | "text",
+    defaultSelectionType: "list" | "text" | "listOrText" = "listOrText",
 ): boolean {
     const effectiveSelectionType = configSelectionType ?? defaultSelectionType;
     if (effectiveSelectionType === "listOrText") {

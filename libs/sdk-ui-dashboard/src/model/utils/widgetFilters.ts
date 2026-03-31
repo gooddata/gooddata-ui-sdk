@@ -1,11 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
 import {
+    type DashboardAttributeFilterItem,
     type FilterContextItem,
-    type IDashboardAttributeFilter,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
-    isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
@@ -51,6 +50,6 @@ export function removeIgnoredWidgetFilters(
 /**
  * @internal
  */
-export function removeDateFilters(filters: FilterContextItem[]): IDashboardAttributeFilter[] {
-    return filters.filter(isDashboardAttributeFilter);
+export function removeDateFilters(filters: FilterContextItem[]): DashboardAttributeFilterItem[] {
+    return filters.filter(isDashboardAttributeFilterItem);
 }

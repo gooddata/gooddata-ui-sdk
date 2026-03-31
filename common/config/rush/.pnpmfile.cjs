@@ -52,7 +52,7 @@ function readPackage(packageJson, context) {
         ].includes(packageJson.name) &&
         packageJson.peerDependencies["vite"]
     ) {
-        context.log("Fixed up dependencies for " + packageJson.name);
+        //context.log("Fixed up dependencies for " + packageJson.name);
         packageJson.peerDependencies["vite"] = "^8.0.0";
     }
 
@@ -61,28 +61,28 @@ function readPackage(packageJson, context) {
     }
 
     if (packageJson.dependencies && packageJson.dependencies["baseline-browser-mapping"]) {
-        context.log("Fixed up dependencies for baseline-browser-mapping");
+        //context.log("Fixed up dependencies for baseline-browser-mapping");
         packageJson.dependencies["baseline-browser-mapping"] = baselineBrowserMappingVersion;
     }
 
     if (packageJson.devDependencies && packageJson.devDependencies["baseline-browser-mapping"]) {
-        context.log("Fixed up dependencies for baseline-browser-mapping");
+        //context.log("Fixed up dependencies for baseline-browser-mapping");
         packageJson.devDependencies["baseline-browser-mapping"] = baselineBrowserMappingVersion;
     }
 
     if (packageJson.dependencies && packageJson.dependencies["browserslist"]) {
-        context.log("Fixed up dependencies for browserslist");
+        //context.log("Fixed up dependencies for browserslist");
         packageJson.dependencies["browserslist"] = browserslistVersion;
     }
 
     if (packageJson.devDependencies && packageJson.devDependencies["browserslist"]) {
-        context.log("Fixed up dependencies for browserslist");
+        //context.log("Fixed up dependencies for browserslist");
         packageJson.devDependencies["browserslist"] = browserslistVersion;
     }
 
     // remove after eslint-plugin-sonarjs is updated to > 3.0.7
     if (packageJson.dependencies && packageJson.dependencies["minimatch"]) {
-        context.log("Fixed up dependencies for minimatch");
+        //context.log("Fixed up dependencies for minimatch");
         packageJson.dependencies["minimatch"] = "10.1.2";
     }
 
