@@ -4,12 +4,16 @@ import { invariant } from "ts-invariant";
 
 import { ClientFormatterFacade, type ISeparators } from "@gooddata/number-formatter";
 import {
+    type DashboardAttributeFilterItem,
     type ICatalogAttribute,
     type IDashboardAttributeFilter,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
     isAttributeElementsByRef,
-    isAttributeElementsByValue,
+    isDashboardArbitraryAttributeFilter,
+    isDashboardAttributeFilter,
+    isDashboardMatchAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
@@ -64,12 +68,16 @@ export function formatKeyDriverAnalysisDateRange(
 
 //Attribute filters
 
-export function getOnlyRelevantFilters(all: IDashboardAttributeFilter[], relevantAttrs: ICatalogAttribute[]) {
+export function getOnlyRelevantFilters(
+    all: DashboardAttributeFilterItem[],
+    relevantAttrs: ICatalogAttribute[],
+) {
     return all.filter((f) => {
+        const displayForm = dashboardAttributeFilterItemDisplayForm(f);
         return relevantAttrs.some(
             (r) =>
-                areObjRefsEqual(f.attributeFilter.displayForm, r.attribute) ||
-                r.displayForms.some((df) => areObjRefsEqual(f.attributeFilter.displayForm, df.ref)),
+                areObjRefsEqual(displayForm, r.attribute) ||
+                r.displayForms.some((df) => areObjRefsEqual(displayForm, df.ref)),
         );
     });
 }
@@ -99,26 +107,52 @@ export function createNewAttributeFilter(
     return dashboardFilter;
 }
 
-export function updateExistingAttributeFilter(f: IDashboardAttributeFilter, val: string) {
-    return {
-        ...f,
-        attributeFilter: {
-            ...f.attributeFilter,
-            negativeSelection: false,
-            attributeElements: {
-                ...(isAttributeElementsByRef(f.attributeFilter.attributeElements)
-                    ? {
-                          uris: [val],
-                      }
-                    : {}),
-                ...(isAttributeElementsByValue(f.attributeFilter.attributeElements)
-                    ? {
-                          values: [val],
-                      }
-                    : {}),
+export function updateExistingAttributeFilter(
+    f: DashboardAttributeFilterItem,
+    val: string,
+    primaryDisplayForm?: ObjRef,
+): DashboardAttributeFilterItem {
+    if (isDashboardAttributeFilter(f)) {
+        const attributeElements = isAttributeElementsByRef(f.attributeFilter.attributeElements)
+            ? { uris: [val] }
+            : { values: [val] };
+        return {
+            ...f,
+            attributeFilter: {
+                ...f.attributeFilter,
+                negativeSelection: false,
+                attributeElements,
             },
-        },
-    } as IDashboardAttributeFilter;
+        };
+    }
+
+    if (isDashboardArbitraryAttributeFilter(f)) {
+        return {
+            attributeFilter: {
+                displayForm: primaryDisplayForm ?? f.arbitraryAttributeFilter.displayForm,
+                negativeSelection: false,
+                attributeElements: { uris: [val] },
+                localIdentifier: f.arbitraryAttributeFilter.localIdentifier,
+                title: f.arbitraryAttributeFilter.title,
+                selectionMode: "multi",
+            },
+        };
+    }
+
+    if (isDashboardMatchAttributeFilter(f)) {
+        return {
+            attributeFilter: {
+                displayForm: primaryDisplayForm ?? f.matchAttributeFilter.displayForm,
+                negativeSelection: false,
+                attributeElements: { uris: [val] },
+                localIdentifier: f.matchAttributeFilter.localIdentifier,
+                title: f.matchAttributeFilter.title,
+                selectionMode: "multi",
+            },
+        };
+    }
+
+    return f;
 }
 
 export function clearSummaryValue(definition: DeepReadonly<IKdaDefinition> | null): Partial<IKdaState> {

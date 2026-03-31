@@ -43,6 +43,7 @@ export enum TigerFeaturesNames {
     EnableKDVisualizationSwitcher = "enableKDVisualizationSwitcher",
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
+    EnableParameters = "enableParameters",
     EnableAlerting = "enableAlerting",
     EnableLlmEndpointReplacement = "enableLlmEndpointReplacement",
     EnableAlertingAttributes = "enableAlertAttributes",
@@ -198,6 +199,7 @@ export type ITigerFeatureFlags = {
     enableKDAttributeFilterDatesValidation: (typeof FeatureFlagsValues)["enableKDAttributeFilterDatesValidation"][number];
     enableOracleDataSource: (typeof FeatureFlagsValues)["enableOracleDataSource"][number];
     enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
+    enableParameters: (typeof FeatureFlagsValues)["enableParameters"][number];
     enableAlerting: (typeof FeatureFlagsValues)["enableAlerting"][number];
     enableLlmEndpointReplacement: (typeof FeatureFlagsValues)["enableLlmEndpointReplacement"][number];
     enableAlertAttributes: (typeof FeatureFlagsValues)["enableAlertAttributes"][number];
@@ -359,6 +361,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableStarrocksDataSource: false,
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
+    enableParameters: false,
     enableAlerting: true,
     enableLlmEndpointReplacement: false,
     enableAlertAttributes: true,
@@ -517,6 +520,7 @@ export const FeatureFlagsValues = {
     enableKDAttributeFilterDatesValidation: [true, false] as const,
     enableOracleDataSource: [true, false] as const,
     enableAnalyticalCatalog: [true, false] as const,
+    enableParameters: [true, false] as const,
     enableAlerting: [true, false] as const,
     enableLlmEndpointReplacement: [true, false] as const,
     enableAlertAttributes: [true, false] as const,

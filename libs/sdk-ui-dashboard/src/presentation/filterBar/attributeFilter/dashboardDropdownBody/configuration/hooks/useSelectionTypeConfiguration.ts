@@ -8,6 +8,7 @@ import {
     DashboardAttributeFilterSelectionTypeValues,
     dashboardAttributeFilterItemLocalIdentifier,
     isDashboardAttributeFilter,
+    isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
 import { setDashboardAttributeFilterSelectionType } from "../../../../../../model/commands/dashboard.js";
@@ -28,10 +29,11 @@ export function useSelectionTypeConfiguration(filterItem: DashboardAttributeFilt
         (item) => item.localIdentifier === localIdentifier,
     );
 
-    // Default based on filter type: elements filters → "list", text filters → "text"
-    const defaultSelectionType = isDashboardAttributeFilter(filterItem)
-        ? DashboardAttributeFilterSelectionTypeValues.LIST
-        : DashboardAttributeFilterSelectionTypeValues.TEXT;
+    // Default to listOrText, except list filter with single selection mode → listOnly
+    const defaultSelectionType =
+        isDashboardAttributeFilter(filterItem) && isSingleSelectionFilter(filterItem)
+            ? DashboardAttributeFilterSelectionTypeValues.LIST
+            : DashboardAttributeFilterSelectionTypeValues.LIST_OR_TEXT;
     const originalSelectionType = currentFilterConfig?.selectionType ?? defaultSelectionType;
 
     const [selectionType, setSelectionType] =

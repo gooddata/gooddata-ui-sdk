@@ -178,6 +178,10 @@
             background-color: var(--gd-palette-primary-dimmed);
             color: var(--gd-palette-primary-base);
         }
+
+        > :not(#{$root}__item-title) {
+            flex: none;
+        }
     }
 
     &__item-title {

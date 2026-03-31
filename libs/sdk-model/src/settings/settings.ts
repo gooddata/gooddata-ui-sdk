@@ -1115,4 +1115,9 @@ export interface IFeatureFlags {
      * Enable ai agentic conversations.
      */
     enableAiAgenticConversations?: boolean;
+
+    /**
+     * Enable parameters feature.
+     */
+    enableParameters?: boolean;
 }

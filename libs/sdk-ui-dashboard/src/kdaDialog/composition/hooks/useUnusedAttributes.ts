@@ -1,8 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
-import { type ICatalogAttribute, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    type ICatalogAttribute,
+    areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+} from "@gooddata/sdk-model";
 
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useKdaState } from "../../providers/KdaState.js";
@@ -18,11 +22,13 @@ export function useUnusedAttributes() {
 
         const filters = state.attributeFilters;
         return relevantAttributes.filter((attr) => {
-            return !filters.some(
-                (f) =>
-                    areObjRefsEqual(f.attributeFilter.displayForm, attr.attribute.ref) ||
-                    attr.displayForms.some((df) => areObjRefsEqual(f.attributeFilter.displayForm, df.ref)),
-            );
+            return !filters.some((f) => {
+                const displayForm = dashboardAttributeFilterItemDisplayForm(f);
+                return (
+                    areObjRefsEqual(displayForm, attr.attribute.ref) ||
+                    attr.displayForms.some((df) => areObjRefsEqual(displayForm, df.ref))
+                );
+            });
         });
     }, [attributeFinder, state.attributeFilters, state.relevantAttributes]);
 }

@@ -17,6 +17,7 @@ import {
     isDashboardDateFilterWithDimension,
     isLocalIdRef,
     measureAlias,
+    measureFilters,
     measureLocalId,
     measureTitle,
     serializeObjRef,
@@ -33,6 +34,18 @@ import {
     findDashboardAttributeFilterByIncomingDisplayAsLabel,
     findDashboardAttributeFilterByTargetDisplayAsLabel,
 } from "../../../../../model/utils/filterContextUtils.js";
+
+/**
+ * Strip filter description suffix baked in by AD
+ */
+function stripMeasureFilterSuffix(measure: IMeasure, title: string): string {
+    const filters = measureFilters(measure);
+    if (!filters?.length) {
+        return title;
+    }
+
+    return title.replace(/ \([^)]+\)$/, "");
+}
 
 export function getMeasureTitleFromSourceInsightMeasures(
     sourceInsightMeasures: IMeasure[],
@@ -59,7 +72,7 @@ export function getMeasureTitleFromSourceInsightMeasures(
 
         const title = measureTitle(sourceMeasure);
         if (title) {
-            return title;
+            return stripMeasureFilterSuffix(sourceMeasure, title);
         }
 
         // For arithmetic and derived measures that don't have explicit titles,
@@ -74,7 +87,8 @@ export function getMeasureTitleFromSourceInsightMeasures(
         );
 
         const titleProp = allTitleProps.find((p) => p.localIdentifier === measureRef.localIdentifier);
-        return titleProp?.alias ?? titleProp?.title;
+        const builtTitle = titleProp?.alias ?? titleProp?.title;
+        return builtTitle ? stripMeasureFilterSuffix(sourceMeasure, builtTitle) : builtTitle;
     }
 
     //fallback to catalog lookup in case of object ref

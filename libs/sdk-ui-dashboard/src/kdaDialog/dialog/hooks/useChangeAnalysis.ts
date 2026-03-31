@@ -7,9 +7,9 @@ import stringify from "json-stable-stringify";
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type IChangeAnalysisResults, type IKeyDriver } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardAttributeFilterItem,
     type IAttribute,
     type ICatalogAttribute,
-    type IDashboardAttributeFilter,
     type IMeasure,
     type ISeparators,
     type ObjRef,
@@ -51,7 +51,7 @@ export function useChangeAnalysis() {
 function useChangeAnalysisResults(
     definition: DeepReadonly<IKdaDefinition> | null,
     attrs: ObjRef[],
-    attrFilters: IDashboardAttributeFilter[],
+    attrFilters: DashboardAttributeFilterItem[],
     loading: boolean,
 ) {
     const backend = useBackendStrict();

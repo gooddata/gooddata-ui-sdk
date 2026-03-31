@@ -39,29 +39,29 @@
         "text": "Date dataset: {count}",
         "crowdinContext": "ARIA label for the Date dataset object type filter button, showing the number of matching date datasets. Example: 'Date dataset: 6'."
     },
-    "analyticsCatalog.objectType.dashboard.tooltip": {
+    "analyticsCatalog.objectType.dashboard.name": {
         "text": "Dashboard",
-        "crowdinContext": "Tooltip label shown when hovering the dashboard object type indicator (e.g., in the catalog table or the detail header)."
+        "crowdinContext": "Canonical display name for the Dashboard object type, used in tooltips, menus, and labels."
     },
-    "analyticsCatalog.objectType.visualization.tooltip": {
+    "analyticsCatalog.objectType.visualization.name": {
         "text": "Visualization",
-        "crowdinContext": "Tooltip label shown when hovering the visualization object type indicator when the specific visualization type is not available."
+        "crowdinContext": "Canonical display name for the Visualization object type, used in tooltips, menus, and labels."
     },
-    "analyticsCatalog.objectType.metric.tooltip": {
+    "analyticsCatalog.objectType.metric.name": {
         "text": "Metric",
-        "crowdinContext": "Tooltip label shown when hovering the metric object type indicator."
+        "crowdinContext": "Canonical display name for the Metric object type, used in tooltips, menus, and labels."
     },
-    "analyticsCatalog.objectType.attribute.tooltip": {
+    "analyticsCatalog.objectType.attribute.name": {
         "text": "Attribute",
-        "crowdinContext": "Tooltip label shown when hovering the attribute object type indicator."
+        "crowdinContext": "Canonical display name for the Attribute object type, used in tooltips, menus, and labels."
     },
-    "analyticsCatalog.objectType.fact.tooltip": {
+    "analyticsCatalog.objectType.fact.name": {
         "text": "Fact",
-        "crowdinContext": "Tooltip label shown when hovering the fact object type indicator."
+        "crowdinContext": "Canonical display name for the Fact object type, used in tooltips, menus, and labels."
     },
-    "analyticsCatalog.objectType.dateDataset.tooltip": {
+    "analyticsCatalog.objectType.dateDataset.name": {
         "text": "Date dataset",
-        "crowdinContext": "Tooltip label shown when hovering the date dataset object type indicator."
+        "crowdinContext": "Canonical display name for the Date dataset object type, used in tooltips, menus, and labels."
     },
     "analyticsCatalog.visualizationType.table.tooltip": {
         "text": "Table",

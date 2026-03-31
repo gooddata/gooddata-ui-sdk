@@ -9,7 +9,7 @@ import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backen
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocalItem, type IChatConversationMultipartLocalPart } from "../../../model.js";
-import { saveVisualizationAction } from "../../../store/messages/messagesSlice.js";
+import { saveVisualizationAction, savedVisualizationAction } from "../../../store/messages/messagesSlice.js";
 
 export type SaveVisualizationDialogProps = {
     message: IChatConversationLocalItem;
@@ -21,6 +21,7 @@ export type SaveVisualizationDialogProps = {
 
 export type SaveVisualizationDialogDispatchProps = {
     saveVisualizationAction: typeof saveVisualizationAction;
+    savedVisualizationAction: typeof savedVisualizationAction;
 };
 
 function SaveVisualizationDialogCore({
@@ -30,6 +31,7 @@ function SaveVisualizationDialogCore({
     visualization,
     onClose,
     saveVisualizationAction,
+    savedVisualizationAction,
 }: SaveVisualizationDialogProps & SaveVisualizationDialogDispatchProps) {
     const intl = useIntl();
 
@@ -40,6 +42,7 @@ function SaveVisualizationDialogCore({
         part,
         visualization,
         saveVisualizationAction,
+        savedVisualizationAction,
         onClose,
     );
 
@@ -47,7 +50,7 @@ function SaveVisualizationDialogCore({
         <ConfirmDialog
             onClose={onClose}
             onCancel={onClose}
-            onSubmit={onSubmit}
+            onSubmit={() => onSubmit(value)}
             isPositive
             autofocusOnOpen={false}
             submitOnEnterKey
@@ -89,6 +92,7 @@ function useVisualisationSaving(
     part: IChatConversationMultipartLocalPart,
     visualization: IChatConversationVisualisationContent["visualization"],
     saveVisualization: typeof saveVisualizationAction,
+    savedVisualization: typeof savedVisualizationAction,
     onClose: () => void,
 ) {
     // Close the dialog automatically once the item is saved
@@ -97,8 +101,20 @@ function useVisualisationSaving(
     useEffect(() => {
         if (isStarted && isComplete) {
             onClose();
+            savedVisualization({
+                visualizationId: visualization.insight.identifier,
+                assistantMessageId: message.localId,
+            });
         }
-    }, [isStarted, isComplete, onClose]);
+    }, [
+        isStarted,
+        isComplete,
+        onClose,
+        part,
+        savedVisualization,
+        visualization.insight.identifier,
+        message.localId,
+    ]);
 
     const onSubmit = useCallback(
         async (title: string) => {
@@ -125,6 +141,7 @@ function useVisualisationSaving(
 
 const mapDispatchToProps = {
     saveVisualizationAction,
+    savedVisualizationAction,
 };
 
 export const SaveVisualizationDialog = connect(null, mapDispatchToProps)(SaveVisualizationDialogCore);

@@ -57,7 +57,8 @@
     padding: 15px 0;
 
     &-title {
-        display: flex;
+        display: grid;
+        grid-template-columns: auto 1fr;
         align-items: center;
         gap: 5px;
         flex-shrink: 0;

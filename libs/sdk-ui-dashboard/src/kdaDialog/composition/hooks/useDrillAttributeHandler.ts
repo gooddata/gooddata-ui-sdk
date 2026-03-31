@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
 import {
     type IResultAttributeHeader,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
     isAttributeDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
@@ -45,17 +46,22 @@ export function useDrillAttributeHandler() {
 
             const found = currentFilters.find(
                 (f) =>
-                    areObjRefsEqual(f.attributeFilter.displayForm, catalogAttribute.attribute.ref) ||
+                    areObjRefsEqual(
+                        dashboardAttributeFilterItemDisplayForm(f),
+                        catalogAttribute.attribute.ref,
+                    ) ||
                     catalogAttribute.displayForms.some((df) =>
-                        areObjRefsEqual(df.ref, f.attributeFilter.displayForm),
+                        areObjRefsEqual(df.ref, dashboardAttributeFilterItemDisplayForm(f)),
                     ),
             );
 
             const value = attributeItem.attributeHeaderItem.uri;
+            const primaryDisplayForm = catalogAttribute.displayForms.find((df) => df.isPrimary)?.ref;
+
             if (found) {
                 const newFilters = state.attributeFilters.map((f) => {
                     if (found === f) {
-                        return updateExistingAttributeFilter(f, value);
+                        return updateExistingAttributeFilter(f, value, primaryDisplayForm);
                     }
                     return f;
                 });

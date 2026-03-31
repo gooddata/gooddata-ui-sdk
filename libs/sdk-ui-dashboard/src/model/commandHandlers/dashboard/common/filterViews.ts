@@ -29,6 +29,7 @@ import {
     isDashboardMatchAttributeFilter,
     isDashboardTextAttributeFilter,
     isFilterContext,
+    isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
 import { isFilterTypeCompatibleWithSelectionType } from "./attributeFilterSelectionTypeCompatibility.js";
@@ -300,10 +301,11 @@ export const changeFilterContextSelection = (
 
             // Try same-type (list) match first
             const viewFilter = findMatchingAttributeFilterByLocalIdentifier(filter, filterViewFilters);
+            const listDefaultSelectionType = isSingleSelectionFilter(filter) ? "list" : undefined;
             if (
                 viewFilter !== undefined &&
                 hasSameAttributeFilterConfiguration(filter, viewFilter) &&
-                isFilterTypeCompatibleWithSelectionType("list", configSelectionType, "list")
+                isFilterTypeCompatibleWithSelectionType("list", configSelectionType, listDefaultSelectionType)
             ) {
                 return {
                     attributeFilter: {
@@ -317,7 +319,7 @@ export const changeFilterContextSelection = (
             // Try cross-type (text) match if selectionType allows text
             if (
                 filterLocalId &&
-                isFilterTypeCompatibleWithSelectionType("text", configSelectionType, "list")
+                isFilterTypeCompatibleWithSelectionType("text", configSelectionType, listDefaultSelectionType)
             ) {
                 const viewTextFilter = findMatchingAttributeFilterItemByLocalIdentifier(
                     filterLocalId,
@@ -376,7 +378,7 @@ export const changeFilterContextSelection = (
             const configSelectionType = filterConfig?.selectionType;
 
             // Try same-type (text) match first
-            if (isFilterTypeCompatibleWithSelectionType("text", configSelectionType, "text")) {
+            if (isFilterTypeCompatibleWithSelectionType("text", configSelectionType)) {
                 const viewFilter = findMatchingTextFilterByLocalIdentifier(filter, filterViewFilters);
                 if (viewFilter !== undefined && hasSameTextFilterConfiguration(filter, viewFilter)) {
                     return applyTextFilterFromView(filter, viewFilter);
@@ -384,10 +386,7 @@ export const changeFilterContextSelection = (
             }
 
             // Try cross-type (list) match if selectionType allows list
-            if (
-                filterLocalId &&
-                isFilterTypeCompatibleWithSelectionType("list", configSelectionType, "text")
-            ) {
+            if (filterLocalId && isFilterTypeCompatibleWithSelectionType("list", configSelectionType)) {
                 const viewListFilter = findMatchingAttributeFilterItemByLocalIdentifier(
                     filterLocalId,
                     filterViewFilters,

@@ -834,7 +834,7 @@ function useCallbacks(
                 handler.setSearch(search);
                 handler.loadInitialElementsPage(SEARCH_CORRELATION);
             }
-        }, 200),
+        }, 300),
         [handler],
     );
 

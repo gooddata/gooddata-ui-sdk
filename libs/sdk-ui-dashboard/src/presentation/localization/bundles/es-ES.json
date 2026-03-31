@@ -831,7 +831,7 @@
     "menu.back": "Volver al menú principal",
     "drill.kda.from": "de",
     "drill.kda.in": "en",
-    "drill.kda.drop": "Soltar {where} {title}",
+    "drill.kda.drop": "Caída {where} {title}",
     "drill.kda.increase": "Aumentar {where} {title}",
     "drill.kda.no_change": "Estable {where} {title}",
     "drill.kda.year_to_year": "Variación interanual",
