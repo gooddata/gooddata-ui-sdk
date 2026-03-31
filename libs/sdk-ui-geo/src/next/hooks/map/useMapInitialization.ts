@@ -18,7 +18,6 @@ import {
 import { resolveMapInteractionOptions } from "../../map/runtime/mapConfig.js";
 import { initializeMapLibreMap } from "../../map/runtime/mapInitialization.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
-import { type GeoBasemap, doesGeoBasemapSupportColorScheme } from "../../types/map/basemap.js";
 import { type IMapViewport } from "../../types/map/provider.js";
 import { getMapCanvasRuntimeCapabilities } from "../../utils/mapCanvasAccessibility.js";
 import { generateMapLibreLocale } from "../../utils/mapLocale.js";
@@ -83,20 +82,11 @@ function resolveInitialNavigationConfig(
     };
 }
 
-function normalizeGeoBasemapOption(basemap: string | undefined): GeoBasemap | undefined {
-    switch (basemap) {
-        case undefined:
-        case "default":
-            return undefined;
-        case "standard":
-        case "satellite":
-        case "monochrome":
-        case "hybrid":
-        case "none":
-            return basemap;
-        default:
-            return undefined;
+function normalizeGeoBasemapOption(basemap: string | undefined): string | undefined {
+    if (basemap === undefined || basemap === "default") {
+        return undefined;
     }
+    return basemap;
 }
 
 /**
@@ -500,8 +490,6 @@ export function useMapInitialization(
     const maxZoom = config?.maxZoomLevel;
     const rawBasemap = config?.basemap === undefined ? undefined : `${config.basemap}`;
     const basemap = normalizeGeoBasemapOption(rawBasemap);
-    const colorScheme =
-        basemap !== undefined && doesGeoBasemapSupportColorScheme(basemap) ? config?.colorScheme : undefined;
     const isGeoChartA11yImprovementsEnabled = config?.enableGeoChartA11yImprovements ?? false;
     const { isKeyboardInteractionEnabled, isKeyboardRotationEnabled } = useMemo(
         () =>
@@ -548,7 +536,6 @@ export function useMapInitialization(
                 maxZoom,
                 style: config?.mapStyle,
                 basemap,
-                colorScheme,
                 language: mapLanguage,
             },
             mapLibreLocale,
@@ -622,7 +609,6 @@ export function useMapInitialization(
         maxZoom,
         initialBoundsPadding,
         basemap,
-        colorScheme,
         mapLanguage,
         intl,
         mapInstructionsId,

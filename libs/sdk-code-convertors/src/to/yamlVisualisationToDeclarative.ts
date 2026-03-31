@@ -1,6 +1,9 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { type DeclarativeVisualizationObject } from "@gooddata/api-client-tiger";
+import {
+    type DeclarativeVisualizationObject,
+    type JsonApiVisualizationObjectOut,
+} from "@gooddata/api-client-tiger";
 import type {
     All,
     AttributeFilter,
@@ -145,6 +148,20 @@ export function yamlVisualisationToDeclarative(
     }
 
     return output;
+}
+
+/** @public */
+export function yamlVisualisationToMetadataObject(
+    entities: ExportEntities,
+    input: Visualisation,
+): JsonApiVisualizationObjectOut {
+    const declarative = yamlVisualisationToDeclarative(entities, input);
+
+    return {
+        type: "visualizationObject",
+        id: declarative.id,
+        attributes: declarative as JsonApiVisualizationObjectOut["attributes"],
+    };
 }
 
 function yamlVisTypeToDeclarative(def: Visualisation): string {

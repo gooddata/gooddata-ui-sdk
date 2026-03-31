@@ -392,7 +392,10 @@ export type IChatConversationErrorContent = {
  */
 export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart & {
     reporting?: boolean;
-    saving?: boolean;
+    saving?: {
+        started: boolean;
+        completed: boolean;
+    };
     error?: {
         name: string;
         message: string;

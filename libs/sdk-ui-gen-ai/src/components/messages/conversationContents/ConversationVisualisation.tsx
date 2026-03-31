@@ -5,17 +5,20 @@ import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useDispatch } from "react-redux";
 
-import { type IChatVisualisationDefinition } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
 import {
-    type IAttribute,
+    type IAttributeOrMeasure,
+    type IBucket,
     type IColorPalette,
     type IDrillOrigin,
     type IExecutionConfig,
     type IFilter,
     type IKeyDriveAnalysis,
-    type IMeasure,
     type ISortItem,
     type ITheme,
+    type ObjRef,
+    isAttribute,
+    isMeasure,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
@@ -26,7 +29,6 @@ import {
     type OnError,
     type OnExportReady,
     type OnFiredDrillEvent,
-    type OnLoadingChanged,
     isNoDataSdkError,
 } from "@gooddata/sdk-ui";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart, ScatterPlot } from "@gooddata/sdk-ui-charts";
@@ -74,13 +76,12 @@ const legendTooltipOptions = {
 
 export type ConversationVisualisationProps = {
     message: IChatConversationLocalItem;
-    visualization: IChatVisualisationDefinition;
+    visualization: IChatConversationVisualisationContent["visualization"];
     colorPalette?: IColorPalette;
     execConfig?: IExecutionConfig;
     agGridToken?: string;
     isTable?: boolean;
     onVisualisationError?: (error: GoodDataSdkError) => void;
-    onLoadingChanged?: OnLoadingChanged;
     onDrillFired?: (
         data: {
             keyDriverData: IDashboardKeyDriverCombinationItem[];
@@ -100,7 +101,6 @@ export function ConversationVisualisation({
     agGridToken,
     isTable,
     onVisualisationError,
-    onLoadingChanged,
     onDrillFired,
     enableChangeAnalysis = false,
     enableNewPivotTable = true,
@@ -111,24 +111,43 @@ export function ConversationVisualisation({
     const resolvedAgGridToken = useAgGridToken(agGridToken);
     const kpiTheme = useKpiTheme();
 
-    const { metrics, dimensions, filters, sorts } = useExecution(visualization);
+    const { filters, sorts, buckets } = useExecution(visualization);
+    const bucketsData = useBucketData(buckets);
 
     const drillableItems = useMemo(() => {
         if (visualization && enableChangeAnalysis) {
-            if (visualization.type === "TABLE") {
-                return metrics.filter(Boolean).map(headerPredicate);
+            if (visualization.insight.visualizationUrl === "local:table") {
+                return visualization.insight.buckets
+                    .map((bucket) => {
+                        return bucket.items.map(headerPredicate);
+                    })
+                    .flat();
             }
-            return [dimensions[0], dimensions[1]].filter(Boolean).map((x) => x.attribute.displayForm);
+            return visualization.insight.buckets
+                .map((bucket) => {
+                    return bucket.items.map((attr) => {
+                        if (isAttribute(attr)) {
+                            return attr.attribute.displayForm;
+                        }
+                        return undefined;
+                    });
+                })
+                .flat()
+                .filter(Boolean) as ObjRef[];
         }
         return undefined;
-    }, [dimensions, enableChangeAnalysis, metrics, visualization]);
+    }, [enableChangeAnalysis, visualization]);
 
     const handleSdkError = useCallback(
         (error: GoodDataSdkError) => {
+            if (!visualization) {
+                return;
+            }
             // Ignore NO_DATA error, we still want an option to save the visualization
             if (!isNoDataSdkError(error)) {
                 onVisualisationError?.(error);
             }
+
             dispatch(
                 visualizationErrorAction({
                     errorType: error.seType,
@@ -140,7 +159,7 @@ export function ConversationVisualisation({
                 case "NO_DATA":
                     dispatch(
                         saveVisualisationRenderStatusAction({
-                            visualizationId: visualization.id,
+                            visualizationId: visualization.insight.identifier,
                             assistantMessageId: message.localId,
                             status: "NO_DATA",
                         }),
@@ -150,7 +169,7 @@ export function ConversationVisualisation({
                 case "DATA_TOO_LARGE_TO_DISPLAY":
                     dispatch(
                         saveVisualisationRenderStatusAction({
-                            visualizationId: visualization.id,
+                            visualizationId: visualization.insight.identifier,
                             assistantMessageId: message.localId,
                             status: "TOO_MANY_DATA_POINTS",
                         }),
@@ -159,7 +178,7 @@ export function ConversationVisualisation({
                 default:
                     dispatch(
                         saveVisualisationRenderStatusAction({
-                            visualizationId: visualization.id,
+                            visualizationId: visualization.insight.identifier,
                             assistantMessageId: message.localId,
                             status: "UNEXPECTED_ERROR",
                         }),
@@ -167,23 +186,20 @@ export function ConversationVisualisation({
                     break;
             }
         },
-        [dispatch, onVisualisationError, visualization.id, message.localId],
-    );
-    const handleLoadingChanged = useCallback(
-        ({ isLoading }: { isLoading: boolean }) => {
-            onLoadingChanged?.({ isLoading });
-        },
-        [onLoadingChanged],
+        [visualization, dispatch, onVisualisationError, message.localId],
     );
     const handleSuccess = useCallback(() => {
+        if (!visualization) {
+            return;
+        }
         dispatch(
             saveVisualisationRenderStatusAction({
-                visualizationId: visualization.id,
+                visualizationId: visualization.insight.identifier,
                 assistantMessageId: message.localId,
                 status: "SUCCESSFUL",
             }),
         );
-    }, [dispatch, visualization?.id, message.localId]);
+    }, [dispatch, visualization, message.localId]);
     const handlerDrill = useCallback(
         (event: IDrillEvent) => {
             const keyDriverData = getKdaKeyDriverCombinations(
@@ -211,12 +227,10 @@ export function ConversationVisualisation({
         if (isTable) {
             return renderTable(
                 intl.locale,
-                metrics,
-                dimensions,
+                bucketsData,
                 filters,
                 sorts,
                 handleSdkError,
-                handleLoadingChanged,
                 handleSuccess,
                 handlerDrill,
                 {
@@ -230,17 +244,15 @@ export function ConversationVisualisation({
             );
         }
 
-        switch (visualization.type) {
-            case "BAR":
+        switch (visualization.insight.visualizationUrl) {
+            case "local:bar":
                 return renderBarChart(
                     intl.locale,
-                    metrics,
-                    dimensions,
+                    bucketsData,
                     filters,
                     sorts,
                     colorPalette,
                     handleSdkError,
-                    handleLoadingChanged,
                     handleSuccess,
                     handlerDrill,
                     {
@@ -249,16 +261,14 @@ export function ConversationVisualisation({
                         execConfig,
                     },
                 );
-            case "COLUMN":
+            case "local:column":
                 return renderColumnChart(
                     intl.locale,
-                    metrics,
-                    dimensions,
+                    bucketsData,
                     filters,
                     sorts,
                     colorPalette,
                     handleSdkError,
-                    handleLoadingChanged,
                     handleSuccess,
                     handlerDrill,
                     {
@@ -268,17 +278,15 @@ export function ConversationVisualisation({
                         execConfig,
                     },
                 );
-            case "LINE":
+            case "local:line":
                 return renderLineChart(
                     intl.locale,
                     visualization,
-                    metrics,
-                    dimensions,
+                    bucketsData,
                     filters,
                     sorts,
                     colorPalette,
                     handleSdkError,
-                    handleLoadingChanged,
                     handleSuccess,
                     handlerDrill,
                     {
@@ -288,16 +296,14 @@ export function ConversationVisualisation({
                         execConfig,
                     },
                 );
-            case "PIE":
+            case "local:pie":
                 return renderPieChart(
                     intl.locale,
-                    metrics,
-                    dimensions,
+                    bucketsData,
                     filters,
                     sorts,
                     colorPalette,
                     handleSdkError,
-                    handleLoadingChanged,
                     handleSuccess,
                     handlerDrill,
                     {
@@ -307,17 +313,15 @@ export function ConversationVisualisation({
                         execConfig,
                     },
                 );
-            case "SCATTER":
+            case "local:scatter":
                 return renderScatterPlot(
                     intl.locale,
                     visualization,
-                    metrics,
-                    dimensions,
+                    bucketsData,
                     filters,
                     sorts,
                     colorPalette,
                     handleSdkError,
-                    handleLoadingChanged,
                     handleSuccess,
                     handlerDrill,
                     {
@@ -326,15 +330,13 @@ export function ConversationVisualisation({
                         execConfig,
                     },
                 );
-            case "TABLE":
+            case "local:table":
                 return renderTable(
                     intl.locale,
-                    metrics,
-                    dimensions,
+                    bucketsData,
                     filters,
                     sorts,
                     handleSdkError,
-                    handleLoadingChanged,
                     handleSuccess,
                     handlerDrill,
                     {
@@ -346,16 +348,14 @@ export function ConversationVisualisation({
                         execConfig,
                     },
                 );
-            case "HEADLINE":
+            case "local:headline":
                 return renderHeadline(
                     intl.locale,
                     kpiTheme,
-                    metrics,
-                    dimensions,
+                    bucketsData,
                     filters,
                     colorPalette,
                     handleSdkError,
-                    handleLoadingChanged,
                     handleSuccess,
                     handlerDrill,
                     {
@@ -365,8 +365,7 @@ export function ConversationVisualisation({
                     },
                 );
             default:
-                //TODO: s.hacker assertNever(visualization.type);
-                return null;
+                throw new Error(`Unsupported chart type: ${visualization.insight.visualizationUrl}`);
         }
     };
 
@@ -393,100 +392,11 @@ function useKpiTheme() {
 
 const renderBarChart = (
     locale: string,
-    metrics: IMeasure[],
-    dimensions: IAttribute[],
+    buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
-    onLoadingChanged: OnLoadingChanged,
-    onSuccess: OnExportReady,
-    onDrill: OnFiredDrillEvent,
-    props: {
-        drillableItems?: ExplicitDrill[];
-        enableAccessibleChartTooltip?: boolean;
-        enableChangeAnalysis?: boolean;
-        execConfig?: IExecutionConfig;
-    },
-) => (
-    <BarChart
-        locale={locale}
-        height={VIS_HEIGHT}
-        measures={metrics}
-        viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
-        stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
-        sortBy={sortBy}
-        config={{
-            ...visualizationTooltipOptions,
-            ...legendTooltipOptions,
-            colorPalette,
-            // Better visibility with stacked bars if there are multiple metrics and dimensions
-            stackMeasures: metrics.length > 1 && dimensions.length === 2,
-            enableAccessibleTooltip: props.enableAccessibleChartTooltip,
-        }}
-        drillableItems={props.drillableItems}
-        onDrill={onDrill}
-        filters={filters}
-        onError={onError}
-        onLoadingChanged={onLoadingChanged}
-        onExportReady={onSuccess}
-        execConfig={props.execConfig}
-    />
-);
-
-const renderColumnChart = (
-    locale: string,
-    metrics: IMeasure[],
-    dimensions: IAttribute[],
-    filters: IFilter[],
-    sortBy: ISortItem[],
-    colorPalette: IColorPalette | undefined,
-    onError: OnError,
-    onLoadingChanged: OnLoadingChanged,
-    onSuccess: OnExportReady,
-    onDrill: OnFiredDrillEvent,
-    props: {
-        drillableItems?: ExplicitDrill[];
-        enableAccessibleChartTooltip?: boolean;
-        enableChangeAnalysis?: boolean;
-        execConfig?: IExecutionConfig;
-    },
-) => (
-    <ColumnChart
-        locale={locale}
-        height={VIS_HEIGHT}
-        measures={metrics}
-        viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
-        stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
-        sortBy={sortBy}
-        config={{
-            ...visualizationTooltipOptions,
-            ...legendTooltipOptions,
-            colorPalette,
-            // Better visibility with stacked bars if there are multiple metrics and dimensions
-            stackMeasures: metrics.length > 1 && dimensions.length === 2,
-            enableAccessibleTooltip: props.enableAccessibleChartTooltip,
-        }}
-        drillableItems={props.drillableItems}
-        onDrill={onDrill}
-        filters={filters}
-        onError={onError}
-        onLoadingChanged={onLoadingChanged}
-        onExportReady={onSuccess}
-        execConfig={props.execConfig}
-    />
-);
-
-const renderLineChart = (
-    locale: string,
-    visualization: IChatVisualisationDefinition,
-    metrics: IMeasure[],
-    dimensions: IAttribute[],
-    filters: IFilter[],
-    sortBy: ISortItem[],
-    colorPalette: IColorPalette | undefined,
-    onError: OnError,
-    onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
@@ -496,19 +406,116 @@ const renderLineChart = (
         execConfig?: IExecutionConfig;
     },
 ) => {
-    const forecast = mapVisualizationForecastToChartConfig(visualization);
-    const forecastConfig = mapVisualizationForecastToBackendConfig(visualization);
+    const { metrics, view, stack } = buckets;
 
-    const anomalies = mapVisualizationAnomalyDetectionToChartConfig(visualization);
-    const outliersConfig = mapVisualizationAnomalyDetectionToBackendConfig(visualization);
+    return (
+        <BarChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            viewBy={view[0]}
+            stackBy={stack[0]}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                // Better visibility with stacked bars if there are multiple metrics and dimensions
+                stackMeasures: stack.length >= 1,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            filters={filters}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderColumnChart = (
+    locale: string,
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        enableChangeAnalysis?: boolean;
+        execConfig?: IExecutionConfig;
+    },
+) => {
+    const { metrics, view, stack } = buckets;
+
+    return (
+        <ColumnChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            viewBy={view}
+            stackBy={stack[0]}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                // Better visibility with stacked bars if there are multiple metrics and dimensions
+                stackMeasures: stack.length >= 1,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            filters={filters}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
+
+const renderLineChart = (
+    locale: string,
+    visualization: IChatConversationVisualisationContent["visualization"],
+    buckets: ReturnType<typeof useBucketData>,
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        enableChangeAnalysis?: boolean;
+        execConfig?: IExecutionConfig;
+    },
+) => {
+    const forecast = mapVisualizationForecastToChartConfig(visualization.insight.properties["controls"]);
+    const forecastConfig = mapVisualizationForecastToBackendConfig(
+        visualization.insight.properties["controls"],
+    );
+
+    const anomalies = mapVisualizationAnomalyDetectionToChartConfig(
+        visualization.insight.properties["controls"],
+    );
+    const outliersConfig = mapVisualizationAnomalyDetectionToBackendConfig(
+        visualization.insight.properties["controls"],
+    );
+
+    const { metrics, trend, segment } = buckets;
 
     return (
         <LineChart
             locale={locale}
             height={VIS_HEIGHT}
             measures={metrics}
-            trendBy={dimensions[0]}
-            segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
+            trendBy={trend[0]}
+            segmentBy={segment[0]}
             filters={filters}
             sortBy={sortBy}
             config={{
@@ -524,7 +531,6 @@ const renderLineChart = (
             drillableItems={props.drillableItems}
             onDrill={onDrill}
             onError={onError}
-            onLoadingChanged={onLoadingChanged}
             onExportReady={onSuccess}
             execConfig={props.execConfig}
         />
@@ -533,13 +539,11 @@ const renderLineChart = (
 
 const renderPieChart = (
     locale: string,
-    metrics: IMeasure[],
-    dimensions: IAttribute[],
+    buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
-    onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
@@ -548,38 +552,39 @@ const renderPieChart = (
         enableChangeAnalysis?: boolean;
         execConfig?: IExecutionConfig;
     },
-) => (
-    <PieChart
-        locale={locale}
-        height={VIS_HEIGHT}
-        measures={metrics}
-        viewBy={metrics.length <= 1 ? dimensions[0] : undefined}
-        filters={filters}
-        sortBy={sortBy}
-        config={{
-            ...visualizationTooltipOptions,
-            colorPalette,
-            enableAccessibleTooltip: props.enableAccessibleChartTooltip,
-        }}
-        drillableItems={props.drillableItems}
-        onDrill={onDrill}
-        onError={onError}
-        onLoadingChanged={onLoadingChanged}
-        onExportReady={onSuccess}
-        execConfig={props.execConfig}
-    />
-);
+) => {
+    const { metrics, view } = buckets;
+
+    return (
+        <PieChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            viewBy={view[0]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                colorPalette,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
 
 const renderScatterPlot = (
     locale: string,
-    visualization: IChatVisualisationDefinition,
-    metrics: IMeasure[],
-    dimensions: IAttribute[],
+    visualization: IChatConversationVisualisationContent["visualization"],
+    buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
-    onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
@@ -588,8 +593,12 @@ const renderScatterPlot = (
         execConfig?: IExecutionConfig;
     },
 ) => {
-    const clustering = mapVisualizationClusteringToChartConfig(visualization);
-    const clusteringConfig = mapVisualizationClusteringToBackendConfig(visualization);
+    const clustering = mapVisualizationClusteringToChartConfig(visualization.insight.properties["controls"]);
+    const clusteringConfig = mapVisualizationClusteringToBackendConfig(
+        visualization.insight.properties["controls"],
+    );
+
+    const { metrics, attribute, segment } = buckets;
 
     return (
         <ScatterPlot
@@ -597,8 +606,8 @@ const renderScatterPlot = (
             height={VIS_HEIGHT}
             xAxisMeasure={metrics[0]}
             yAxisMeasure={metrics[1]}
-            attribute={dimensions[0]}
-            segmentBy={dimensions[1]}
+            attribute={attribute[0]}
+            segmentBy={segment[0]}
             filters={filters}
             sortBy={sortBy}
             config={{
@@ -611,7 +620,6 @@ const renderScatterPlot = (
             drillableItems={props.drillableItems}
             onDrill={onDrill}
             onError={onError}
-            onLoadingChanged={onLoadingChanged}
             onExportReady={onSuccess}
             execConfig={props.execConfig}
         />
@@ -620,12 +628,10 @@ const renderScatterPlot = (
 
 const renderTable = (
     locale: string,
-    metrics: IMeasure[],
-    dimensions: IAttribute[],
+    buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     sortBy: ISortItem[],
     onError: OnError,
-    onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
@@ -638,18 +644,19 @@ const renderTable = (
     },
 ) => {
     const TableComponent = props.enableNewPivotTable ? PivotTableNext : PivotTable;
+    const { metrics, rows } = buckets;
+
     return (
         <TableComponent
             locale={locale}
             measures={metrics}
-            rows={dimensions}
+            rows={rows}
             filters={filters}
             sortBy={sortBy}
             config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
             drillableItems={props.drillableItems}
             onDrill={onDrill}
             onError={onError}
-            onLoadingChanged={onLoadingChanged}
             onExportReady={onSuccess}
             execConfig={props.execConfig}
         />
@@ -659,12 +666,10 @@ const renderTable = (
 const renderHeadline = (
     locale: string,
     theme: ITheme | undefined,
-    metrics: IMeasure[],
-    _dimensions: IAttribute[],
+    buckets: ReturnType<typeof useBucketData>,
     filters: IFilter[],
     colorPalette: IColorPalette | undefined,
     onError: OnError,
-    onLoadingChanged: OnLoadingChanged,
     onSuccess: OnExportReady,
     onDrill: OnFiredDrillEvent,
     props: {
@@ -673,12 +678,14 @@ const renderHeadline = (
         execConfig?: IExecutionConfig;
     },
 ) => {
+    const { metrics, secondary_metrics } = buckets;
+
     return (
         <ScopedThemeProvider theme={theme}>
             <Headline
                 locale={locale}
                 primaryMeasure={metrics[0]}
-                secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
+                secondaryMeasures={secondary_metrics}
                 filters={filters}
                 config={{
                     ...visualizationTooltipOptions,
@@ -688,7 +695,6 @@ const renderHeadline = (
                 drillableItems={props.drillableItems}
                 onDrill={onDrill}
                 onError={onError}
-                onLoadingChanged={onLoadingChanged}
                 onExportReady={onSuccess}
                 execConfig={props.execConfig}
             />
@@ -696,11 +702,37 @@ const renderHeadline = (
     );
 };
 
-function headerPredicate(m: IMeasure): IHeaderPredicate {
+function headerPredicate(m: IAttributeOrMeasure): IHeaderPredicate {
     return (header) => {
-        if (isMeasureDescriptor(header)) {
+        if (isMeasureDescriptor(header) && isMeasure(m)) {
             return header.measureHeaderItem.localIdentifier === m.measure.localIdentifier;
         }
         return false;
     };
+}
+
+function useBucketData(buckets: IBucket[]) {
+    return useMemo(() => {
+        const metrics = buckets.find((b) => b.localIdentifier === "measures")?.items.filter(isMeasure) ?? [];
+        const secondary_metrics =
+            buckets.find((b) => b.localIdentifier === "secondary_measures")?.items.filter(isMeasure) ?? [];
+        const view = buckets.find((b) => b.localIdentifier === "view")?.items.filter(isAttribute) ?? [];
+        const stack = buckets.find((b) => b.localIdentifier === "stack")?.items.filter(isAttribute) ?? [];
+        const trend = buckets.find((b) => b.localIdentifier === "trend")?.items.filter(isAttribute) ?? [];
+        const rows = buckets.find((b) => b.localIdentifier === "rows")?.items.filter(isAttribute) ?? [];
+        const attribute =
+            buckets.find((b) => b.localIdentifier === "attribute")?.items.filter(isAttribute) ?? [];
+        const segment = buckets.find((b) => b.localIdentifier === "segment")?.items.filter(isAttribute) ?? [];
+
+        return {
+            metrics,
+            secondary_metrics,
+            view,
+            stack,
+            trend,
+            segment,
+            attribute,
+            rows,
+        };
+    }, [buckets]);
 }

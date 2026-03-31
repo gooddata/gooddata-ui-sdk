@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.28.0-alpha.8",
+    "version": "11.28.0-alpha.9",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -47,6 +47,7 @@
         "@gooddata/api-client-tiger": "workspace:*",
         "@gooddata/sdk-code-schemas": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
+        "uuid": "11.1.0",
         "yaml": "^2.2.2"
     },
     "devDependencies": {

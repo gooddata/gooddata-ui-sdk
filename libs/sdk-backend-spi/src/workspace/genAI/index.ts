@@ -12,6 +12,7 @@ import type {
     IGenAICreatedVisualizations,
     IGenAIFoundObjects,
     IGenAIUserContext,
+    IInsight,
     IMemoryItemDefinition,
     IMemoryItemMetadataObject,
     ISemanticQualityIssuesCalculation,
@@ -954,48 +955,12 @@ export function isChatConversationToolResultContent(
 }
 
 /**
- * GenAI Chat Conversation visualisation definition
- * @internal
- */
-export interface IChatVisualisationDefinition {
-    id: string;
-    title: string;
-    type: string;
-    config: {
-        forecast?: {
-            forecastPeriod: number;
-            confidenceLevel: number;
-            seasonal: boolean;
-        };
-        anomalyDetection?: {
-            sensitivity: "LOW" | "MEDIUM" | "HIGH";
-        };
-        clustering?: {
-            numberOfClusters: number;
-            threshold?: number;
-        };
-        whatIf?: {
-            scenarios: {
-                label: string;
-                adjustments: {
-                    metricId: string;
-                    metricType: "metric" | "fact" | "attribute";
-                    scenarioMaql: string;
-                }[];
-            }[];
-            includeBaseline?: boolean;
-        };
-    };
-    //TODO: s.hacker: Use yaml spec types
-}
-
-/**
  * GenAI Chat Conversation tool result content
  * @internal
  */
 export type IChatConversationVisualisationContent = {
     type: "visualization";
-    visualization: IChatVisualisationDefinition;
+    visualization: IInsight;
 };
 
 /**

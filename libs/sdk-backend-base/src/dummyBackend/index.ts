@@ -312,6 +312,12 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
                 getDefaultStyleSpriteIcons: () => {
                     throw new NotSupported("not supported");
                 },
+                getStyles: () => {
+                    throw new NotSupported("not supported");
+                },
+                getStyleById: () => {
+                    throw new NotSupported("not supported");
+                },
                 collections: () => ({
                     getAll: () => Promise.resolve([]),
                     getGeoCollection: () => Promise.resolve(undefined),

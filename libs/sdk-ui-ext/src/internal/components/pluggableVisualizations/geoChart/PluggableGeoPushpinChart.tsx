@@ -34,6 +34,7 @@ import {
 } from "@gooddata/sdk-ui-geo";
 
 import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket.js";
+import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
@@ -68,6 +69,11 @@ import {
 } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import {
+    GeoBasemapItemsLoader,
+    getGeoBasemapDropdownItems,
+    getGeoConfigurationPanelIsLoading,
+} from "../geoCommon/geoBasemapConfiguration.js";
 
 const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 
@@ -115,10 +121,13 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
  * - |Segment| ≥ 1 ⇒ [attributeSort(Segment[0])]
  */
 export class PluggableGeoPushpinChart extends PluggableBaseChart {
+    private readonly basemapItemsLoader: GeoBasemapItemsLoader;
+
     constructor(props: IVisConstruct) {
         super(props);
 
         this.type = VisualizationTypes.PUSHPIN;
+        this.basemapItemsLoader = new GeoBasemapItemsLoader(props.backend);
         this.initializeProperties(props.visualizationProperties);
     }
 
@@ -227,9 +236,24 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
+        this.basemapItemsLoader.ensureLoaded(() => {
+            this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+        });
 
         // NOTE: using pushData directly; no handlePushData here as in other visualizations.
         if (configPanelElement) {
+            const currentBasemap = sanitizeGeoMapStyleOptions({
+                basemap: this.visualizationProperties.controls?.["basemap"],
+                legacyTileset: this.visualizationProperties.controls?.["tileset"],
+            }).basemap;
+            const basemapItems = getGeoBasemapDropdownItems(
+                this.basemapItemsLoader.getItems(),
+                currentBasemap,
+            );
+            const isLoading = getGeoConfigurationPanelIsLoading(
+                this.isLoading,
+                this.basemapItemsLoader.getIsLoading(),
+            );
             this.renderFun(
                 <GeoPushpinConfigurationPanel
                     locale={this.locale}
@@ -241,7 +265,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                     colors={this.colors}
                     type={this.type}
                     isError={this.getIsError()}
-                    isLoading={this.isLoading}
+                    isLoading={isLoading}
+                    basemapItems={basemapItems}
                     featureFlags={this.featureFlags}
                     permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}

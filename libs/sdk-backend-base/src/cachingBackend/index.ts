@@ -27,6 +27,7 @@ import {
     type IForecastConfig,
     type IForecastResult,
     type IGeoService,
+    type IGeoStyleListItem,
     type IGeoStyleParams,
     type IGeoStyleSpecification,
     type IGetAutomationOptions,
@@ -151,6 +152,7 @@ type WorkspaceSettingsCacheEntry = {
 type GeoCacheEntry = {
     stylesByParams: LRUCache<string, Promise<IGeoStyleSpecification>>;
     defaultStyleSpriteIcons?: Promise<string[]>;
+    stylesList?: Promise<IGeoStyleListItem[]>;
 };
 
 type CachingContext = {
@@ -1743,7 +1745,7 @@ class WithGeoCaching implements IGeoService {
 
     public getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification> {
         const cache = this.ctx.caches.geo!;
-        const key = `${params?.basemap ?? ""}:${params?.colorScheme ?? ""}:${params?.language ?? ""}`;
+        const key = `default:${params?.language ?? ""}`;
         let result = cache.stylesByParams.get(key);
 
         if (!result) {
@@ -1767,6 +1769,37 @@ class WithGeoCaching implements IGeoService {
                 throw e;
             });
             cache.defaultStyleSpriteIcons = result;
+        }
+
+        return result;
+    }
+
+    public getStyles(): Promise<IGeoStyleListItem[]> {
+        const cache = this.ctx.caches.geo!;
+        let result = cache.stylesList;
+
+        if (!result) {
+            result = this.decorated.getStyles().catch((e) => {
+                cache.stylesList = undefined;
+                throw e;
+            });
+            cache.stylesList = result;
+        }
+
+        return result;
+    }
+
+    public getStyleById(styleId: string, params?: IGeoStyleParams): Promise<IGeoStyleSpecification> {
+        const cache = this.ctx.caches.geo!;
+        const key = `style:${styleId}:${params?.language ?? ""}`;
+        let result = cache.stylesByParams.get(key);
+
+        if (!result) {
+            result = this.decorated.getStyleById(styleId, params).catch((e: unknown) => {
+                cache.stylesByParams.delete(key);
+                throw e;
+            });
+            cache.stylesByParams.set(key, result);
         }
 
         return result;
@@ -2109,7 +2142,7 @@ export type CachingConfiguration = {
      * When true, cache geo assets returned by `backend.geo()`.
      *
      * The geo style is the same for all workspaces within a single backend instance. Cached style
-     * entries are keyed by the requested basemap and color scheme and kept in a small LRU cache.
+     * entries are keyed by the requested style ID and kept in a small LRU cache.
      * The default sprite icon list is cached as a single shared promise. This is useful to avoid
      * repeated network calls when multiple geo charts are rendered on the same page.
      *

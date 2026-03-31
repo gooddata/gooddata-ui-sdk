@@ -2,22 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { IGenAIVisualization } from "@gooddata/sdk-model";
-
 import {
     mapVisualizationAnomalyDetectionToBackendConfig,
     mapVisualizationAnomalyDetectionToChartConfig,
 } from "../anomalyDetectionMapping.js";
 
-const baseVisualization: IGenAIVisualization = {
-    id: "generated-line",
-    title: "Revenue trend",
-    visualizationType: "LINE",
-    metrics: [],
-    dimensionality: [],
-    filters: [],
-    suggestions: [],
-};
+const baseVisualization = {};
 
 describe("anomalyDetectionMapping", () => {
     describe("mapVisualizationAnomalyDetectionToChartConfig", () => {
@@ -26,13 +16,11 @@ describe("anomalyDetectionMapping", () => {
         });
 
         it("should map LOW sensitivity correctly", () => {
-            const vis: IGenAIVisualization = {
-                ...baseVisualization,
-                config: {
+            expect(
+                mapVisualizationAnomalyDetectionToChartConfig({
                     anomalyDetection: { sensitivity: "LOW" },
-                },
-            };
-            expect(mapVisualizationAnomalyDetectionToChartConfig(vis)).toEqual({
+                }),
+            ).toEqual({
                 enabled: true,
                 sensitivity: "low",
                 size: "small",
@@ -44,33 +32,27 @@ describe("anomalyDetectionMapping", () => {
         });
 
         it("should map MEDIUM sensitivity correctly", () => {
-            const vis: IGenAIVisualization = {
-                ...baseVisualization,
-                config: {
+            expect(
+                mapVisualizationAnomalyDetectionToChartConfig({
                     anomalyDetection: { sensitivity: "MEDIUM" },
-                },
-            };
-            expect(mapVisualizationAnomalyDetectionToChartConfig(vis)?.sensitivity).toBe("medium");
+                })?.sensitivity,
+            ).toBe("medium");
         });
 
         it("should map HIGH sensitivity correctly", () => {
-            const vis: IGenAIVisualization = {
-                ...baseVisualization,
-                config: {
+            expect(
+                mapVisualizationAnomalyDetectionToChartConfig({
                     anomalyDetection: { sensitivity: "HIGH" },
-                },
-            };
-            expect(mapVisualizationAnomalyDetectionToChartConfig(vis)?.sensitivity).toBe("high");
+                })?.sensitivity,
+            ).toBe("high");
         });
 
         it("should return undefined for invalid sensitivity", () => {
-            const vis: IGenAIVisualization = {
-                ...baseVisualization,
-                config: {
+            expect(
+                mapVisualizationAnomalyDetectionToChartConfig({
                     anomalyDetection: { sensitivity: "INVALID" as any },
-                },
-            };
-            expect(mapVisualizationAnomalyDetectionToChartConfig(vis)).toBeUndefined();
+                }),
+            ).toBeUndefined();
         });
     });
 
@@ -80,13 +62,11 @@ describe("anomalyDetectionMapping", () => {
         });
 
         it("should map sensitivity correctly", () => {
-            const vis: IGenAIVisualization = {
-                ...baseVisualization,
-                config: {
+            expect(
+                mapVisualizationAnomalyDetectionToBackendConfig({
                     anomalyDetection: { sensitivity: "MEDIUM" },
-                },
-            };
-            expect(mapVisualizationAnomalyDetectionToBackendConfig(vis)).toEqual({
+                }),
+            ).toEqual({
                 sensitivity: "medium",
             });
         });

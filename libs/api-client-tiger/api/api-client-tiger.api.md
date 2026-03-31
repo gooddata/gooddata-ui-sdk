@@ -17495,8 +17495,6 @@ export interface ILiveFeatures {
 
 // @public
 export interface ILocationStyleParams {
-    basemap?: string;
-    colorScheme?: string;
     language?: string;
 }
 
@@ -25940,6 +25938,8 @@ export interface LocalIdentifier {
 // @public
 export type LocationStyleApiInterface = {
     getDefaultStyle(params?: ILocationStyleParams): Promise<LocationStyleDocument>;
+    getStyles(): Promise<ILocationStyleListItem[]>;
+    getStyleById(styleId: string, params?: ILocationStyleParams): Promise<LocationStyleDocument>;
 };
 
 // @public
@@ -32193,5 +32193,6 @@ export interface Xliff {
 //
 // src/gd-tiger-model/TigerTypes.ts:787:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
 // src/gd-tiger-model/TigerTypes.ts:788:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
+// src/locationStyle.ts:53:5 - (ae-forgotten-export) The symbol "ILocationStyleListItem" needs to be exported by the entry point index.d.ts
 
 ```

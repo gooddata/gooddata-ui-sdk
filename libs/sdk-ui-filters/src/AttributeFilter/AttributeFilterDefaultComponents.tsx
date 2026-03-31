@@ -17,7 +17,7 @@ import { SingleSelectionAttributeFilterElementsSelectActions } from "./Component
 import { SingleSelectionAttributeFilterElementsSelectItem } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem.js";
 import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 import { SingleSelectionAttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
-import { FilterModeMenu } from "./Components/FilterModeMenu/FilterModeMenu.js";
+import { FilterMenu } from "./Components/FilterMenu/FilterMenu.js";
 import { TextFilterBody } from "./Components/TextFilterBody/TextFilterBody.js";
 import { type IAttributeFilterBaseProps, type IAttributeFilterCustomComponentProps } from "./types.js";
 
@@ -38,7 +38,7 @@ export const AttributeFilterDefaultComponents: Required<IAttributeFilterCustomCo
     ElementsSelectActionsComponent: AttributeFilterElementsActions,
     EmptyResultComponent: AttributeFilterEmptyResult,
     StatusBarComponent: AttributeFilterStatusBar,
-    FilterModeMenuComponent: FilterModeMenu,
+    FilterMenuComponent: FilterMenu,
     TextFilterBodyComponent: TextFilterBody,
 };
 

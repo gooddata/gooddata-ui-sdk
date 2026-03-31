@@ -7,28 +7,31 @@ import {
     UiIcon,
 } from "@gooddata/sdk-ui-kit";
 
-import { type IModeItemData } from "./types.js";
+import { type ISelectionTypeItemData } from "./types.js";
 
-type IFilterModeMenuListItemProps<TData> = {
+type IFilterMenuListItemProps<TData> = {
     item: IUiListboxInteractiveItem<TData>;
     onSelect: IUiListboxInteractiveItemProps<TData>["onSelect"];
     isFocused: boolean;
     isSelected: boolean;
 };
 
-export function FilterModeMenuListItem<TData>({
+export function FilterMenuListItem<TData>({
     item,
     onSelect,
     isFocused,
     isSelected,
-}: IFilterModeMenuListItemProps<TData>) {
-    const modeData = item.data as unknown as IModeItemData | undefined;
-    const filterModeTestId = modeData && "mode" in modeData ? `filter-mode-${modeData.mode}` : undefined;
+}: IFilterMenuListItemProps<TData>) {
+    const selectionTypeData = item.data as unknown as ISelectionTypeItemData | undefined;
+    const selectionTypeTestId =
+        selectionTypeData && "selectionType" in selectionTypeData
+            ? `selection-type-${selectionTypeData.selectionType}`
+            : undefined;
 
     return (
         <SingleSelectListItem
-            className="gd-filter-mode-menu__item"
-            dataTestId={filterModeTestId}
+            className="gd-filter-menu__item"
+            dataTestId={selectionTypeTestId}
             title={item.stringTitle}
             isSelected={isSelected}
             isFocused={isFocused}
@@ -36,7 +39,7 @@ export function FilterModeMenuListItem<TData>({
             info={isSelected ? "selected" : undefined}
             infoRenderer={() =>
                 isSelected ? (
-                    <span className="gd-filter-mode-menu__item-check">
+                    <span className="gd-filter-menu__item-check">
                         <UiIcon type="check" color="primary" size={14} />
                     </span>
                 ) : null

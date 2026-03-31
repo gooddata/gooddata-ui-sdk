@@ -22,7 +22,11 @@ export const useScheduleValidation = (schedule: IAutomationMetadataObjectDefinit
     const widgetRef = widgetLocalId ? { identifier: widgetLocalId } : undefined;
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
 
-    const isValid = isDashboardSchedule || !!widget;
+    // Schedules created via API may not reference any widget — that's acceptable.
+    // We only flag an error when a widget was explicitly referenced but no longer exists on the dashboard.
+    const hasUnresolvableWidgetRef = !!widgetRef && !widget;
+
+    const isValid = isDashboardSchedule || !hasUnresolvableWidgetRef;
 
     return {
         isValid,

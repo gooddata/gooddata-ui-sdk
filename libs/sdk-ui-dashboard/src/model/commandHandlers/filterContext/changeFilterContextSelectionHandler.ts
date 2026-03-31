@@ -9,6 +9,7 @@ import { type SagaReturnType, all, call, put, select } from "redux-saga/effects"
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
+    type DashboardAttributeFilterSelectionType,
     type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IDashboardAttributeFilter,
@@ -18,7 +19,10 @@ import {
     areObjRefsEqual,
     attributeElementsIsEmpty,
     dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemFilterElementsBy,
+    dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemValidateElementsBy,
     getAttributeElementsItems,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
@@ -33,6 +37,7 @@ import {
     updateAttributeElementsItems,
 } from "@gooddata/sdk-model";
 
+import { resolveAndRegisterDisplayFormMetadata } from "./attributeFilter/resolveDisplayFormMetadata.js";
 import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
@@ -41,12 +46,15 @@ import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsOverridesByTab,
+    selectAttributeFilterConfigsSelectionTypeMap,
+    selectAttributeFilterConfigsSelectionTypeMapByTab,
 } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     type IUpdateAttributeFilterSelectionPayload,
     type IUpsertDateFilterPayload,
 } from "../../store/tabs/filterContext/filterContextReducers.js";
 import {
+    selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilterByDisplayFormForTab,
     selectFilterContextAttributeFilterByLocalId,
@@ -70,6 +78,80 @@ import {
     type DisplayFormResolutionResult,
     resolveDisplayFormMetadata,
 } from "../../utils/displayFormResolver.js";
+
+// Tab-aware select helpers — encapsulate the "if tab select ForTab else select" pattern.
+// Named after the base selector they wrap.
+function* selectFilterContextAttributeFilterByDisplayFormTabAware(
+    displayForm: ObjRef,
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>>> {
+    return tabLocalIdentifier
+        ? yield select(selectFilterContextAttributeFilterByDisplayFormForTab(displayForm, tabLocalIdentifier))
+        : yield select(selectFilterContextAttributeFilterByDisplayForm(displayForm));
+}
+
+function* selectFilterContextAttributeFilterItemByLocalIdTabAware(
+    localId: string,
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>>> {
+    return tabLocalIdentifier
+        ? yield select(selectFilterContextAttributeFilterItemByLocalIdForTab(localId, tabLocalIdentifier))
+        : yield select(selectFilterContextAttributeFilterItemByLocalId(localId));
+}
+
+function* selectFilterContextAttributeFilterByLocalIdTabAware(
+    localId: string,
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>>> {
+    return tabLocalIdentifier
+        ? yield select(selectFilterContextAttributeFilterByLocalIdForTab(localId, tabLocalIdentifier))
+        : yield select(selectFilterContextAttributeFilterByLocalId(localId));
+}
+
+function* selectFilterContextAttributeFiltersTabAware(
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<typeof selectFilterContextAttributeFilters>> {
+    return tabLocalIdentifier
+        ? yield select(selectFilterContextAttributeFiltersForTab(tabLocalIdentifier))
+        : yield select(selectFilterContextAttributeFilters);
+}
+
+function* selectFilterContextAttributeFilterItemsTabAware(
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<typeof selectFilterContextAttributeFilterItems>> {
+    return tabLocalIdentifier
+        ? yield select(selectFilterContextAttributeFilterItemsForTab(tabLocalIdentifier))
+        : yield select(selectFilterContextAttributeFilterItems);
+}
+
+function* selectFilterContextDateFilterByDataSetTabAware(
+    dataSet: ObjRef,
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>>> {
+    return tabLocalIdentifier
+        ? yield select(selectFilterContextDateFilterByDataSetForTab(dataSet, tabLocalIdentifier))
+        : yield select(selectFilterContextDateFilterByDataSet(dataSet));
+}
+
+function* selectFilterContextDateFiltersWithDimensionTabAware(
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<typeof selectFilterContextDateFiltersWithDimension>> {
+    return tabLocalIdentifier
+        ? yield select(selectFilterContextDateFiltersWithDimensionForTab(tabLocalIdentifier))
+        : yield select(selectFilterContextDateFiltersWithDimension);
+}
+
+function* selectAttributeFilterConfigsSelectionTypeMapTabAware(
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<typeof selectAttributeFilterConfigsSelectionTypeMap>> {
+    if (tabLocalIdentifier) {
+        const byTab: ReturnType<typeof selectAttributeFilterConfigsSelectionTypeMapByTab> = yield select(
+            selectAttributeFilterConfigsSelectionTypeMapByTab,
+        );
+        return byTab[tabLocalIdentifier] ?? new Map();
+    }
+    return yield select(selectAttributeFilterConfigsSelectionTypeMap);
+}
 
 export function* changeFilterContextSelectionHandler(
     ctx: DashboardContext,
@@ -151,11 +233,16 @@ export function* changeFilterContextSelectionHandler(
         isDashboardCommonDateFilter,
     );
 
-    const [
-        attributeFilterUpdateActions,
-        commonDateFilterUpdateActions,
-        dateFiltersUpdateActions,
-    ]: AnyAction[][] = yield all([
+    const selectionTypeMap: ReturnType<typeof selectAttributeFilterConfigsSelectionTypeMap> = yield call(
+        selectAttributeFilterConfigsSelectionTypeMapTabAware,
+        tabLocalIdentifier,
+    );
+
+    const [attributeFilterResult, commonDateFilterUpdateActions, dateFiltersUpdateActions]: [
+        { actions: AnyAction[]; displayFormsToResolve: ObjRef[] },
+        AnyAction[],
+        AnyAction[],
+    ] = yield all([
         call(
             getAttributeFiltersUpdateActions,
             [...attributeFilters].reverse(),
@@ -164,14 +251,29 @@ export function* changeFilterContextSelectionHandler(
             resetOthers,
             ctx,
             tabLocalIdentifier,
+            selectionTypeMap,
         ),
         call(getDateFilterUpdateActions, commonDateFilter, resetOthers, tabLocalIdentifier),
         call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
     ]);
 
+    // Ensure display form metadata is loaded for filters that will actually be applied.
+    // This handles the case where a default saved view changed filter types (e.g., list→text)
+    // and then local storage restores original types whose display forms weren't loaded during init.
+    if (attributeFilterResult.displayFormsToResolve.length > 0) {
+        const displayFormsMap: ReturnType<typeof selectAttributeFilterDisplayFormsMap> = yield select(
+            selectAttributeFilterDisplayFormsMap,
+        );
+        for (const displayForm of attributeFilterResult.displayFormsToResolve) {
+            if (!displayFormsMap.get(displayForm)) {
+                yield call(resolveAndRegisterDisplayFormMetadata, displayForm);
+            }
+        }
+    }
+
     yield put(
         batchActions([
-            ...attributeFilterUpdateActions,
+            ...attributeFilterResult.actions,
             ...commonDateFilterUpdateActions,
             ...dateFiltersUpdateActions,
         ]),
@@ -200,14 +302,11 @@ function* getDashboardFilterByAttributeMatching(
 
     for (const displayForm of attribute?.displayForms ?? []) {
         const dashboardFilter: ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm> =
-            tabLocalIdentifier
-                ? yield select(
-                      selectFilterContextAttributeFilterByDisplayFormForTab(
-                          displayForm.ref,
-                          tabLocalIdentifier,
-                      ),
-                  )
-                : yield select(selectFilterContextAttributeFilterByDisplayForm(displayForm.ref));
+            yield call(
+                selectFilterContextAttributeFilterByDisplayFormTabAware,
+                displayForm.ref,
+                tabLocalIdentifier,
+            );
         if (dashboardFilter) {
             return dashboardFilter;
         }
@@ -230,14 +329,11 @@ function* getDashboardFilterByDisplayAsLabelMatching(
         (config) => config.localIdentifier === attributeFilter.attributeFilter.localIdentifier,
     );
     if (filterConfig?.displayAsLabel) {
-        dashboardFilter = tabLocalIdentifier
-            ? yield select(
-                  selectFilterContextAttributeFilterByDisplayFormForTab(
-                      filterConfig.displayAsLabel,
-                      tabLocalIdentifier,
-                  ),
-              )
-            : yield select(selectFilterContextAttributeFilterByDisplayForm(filterConfig.displayAsLabel));
+        dashboardFilter = yield call(
+            selectFilterContextAttributeFilterByDisplayFormTabAware,
+            filterConfig.displayAsLabel,
+            tabLocalIdentifier,
+        );
         foundByDisplayAsLabel = !!dashboardFilter;
     }
     if (!foundByDisplayAsLabel) {
@@ -255,18 +351,11 @@ function* getDashboardFilterByDisplayAsLabelMatching(
             areObjRefsEqual(config.displayAsLabel, filterRef),
         );
         if (matchingDashboardFilterConfig) {
-            dashboardFilter = tabLocalIdentifier
-                ? yield select(
-                      selectFilterContextAttributeFilterByLocalIdForTab(
-                          matchingDashboardFilterConfig?.localIdentifier,
-                          tabLocalIdentifier,
-                      ),
-                  )
-                : yield select(
-                      selectFilterContextAttributeFilterByLocalId(
-                          matchingDashboardFilterConfig?.localIdentifier,
-                      ),
-                  );
+            dashboardFilter = yield call(
+                selectFilterContextAttributeFilterByLocalIdTabAware,
+                matchingDashboardFilterConfig?.localIdentifier,
+                tabLocalIdentifier,
+            );
             foundByDashboardFilterDisplayAsLabel = !!dashboardFilter;
         }
     }
@@ -280,8 +369,10 @@ function* getAttributeFiltersUpdateActions(
     resetOthers: boolean,
     ctx: DashboardContext,
     tabLocalIdentifier?: string,
-): SagaIterator<AnyAction[]> {
+    selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>,
+): SagaIterator<{ actions: AnyAction[]; displayFormsToResolve: ObjRef[] }> {
     const updateActions: AnyAction[] = [];
+    const displayFormsToResolve: ObjRef[] = [];
     const handledLocalIds = new Set<string>();
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
@@ -293,11 +384,11 @@ function* getAttributeFiltersUpdateActions(
         const filterRef = attributeFilter.attributeFilter.displayForm;
         // only attribute filters with elements are relevant
         let dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
-            tabLocalIdentifier
-                ? yield select(
-                      selectFilterContextAttributeFilterByDisplayFormForTab(filterRef, tabLocalIdentifier),
-                  )
-                : yield select(selectFilterContextAttributeFilterByDisplayForm(filterRef));
+            yield call(
+                selectFilterContextAttributeFilterByDisplayFormTabAware,
+                filterRef,
+                tabLocalIdentifier,
+            );
 
         if (!dashboardFilter && canMapDashboardFilterFromAnotherDisplayForm(ctx)) {
             dashboardFilter = yield call(
@@ -369,6 +460,7 @@ function* getAttributeFiltersUpdateActions(
                     }),
                 );
             }
+            displayFormsToResolve.push(filterRef);
             updateActions.push(
                 tabsActions.updateAttributeFilterSelection({
                     ...getAttributeFilterSelectionPayload(attributeFilter, dashboardFilter),
@@ -377,26 +469,70 @@ function* getAttributeFiltersUpdateActions(
             );
 
             handledLocalIds.add(dashboardFilter.attributeFilter.localIdentifier!);
+        } else {
+            // No list filter found by displayForm — check if a text filter exists with the same
+            // localIdentifier and selectionType config allows list type override
+            const localId = attributeFilter.attributeFilter.localIdentifier;
+            if (localId) {
+                const existingFilterItem: ReturnType<
+                    ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>
+                > = yield call(
+                    selectFilterContextAttributeFilterItemByLocalIdTabAware,
+                    localId,
+                    tabLocalIdentifier,
+                );
+
+                if (existingFilterItem && isDashboardTextAttributeFilter(existingFilterItem)) {
+                    const configSelectionType = selectionTypeMap?.get(localId);
+                    // Default for text filters is "text" — only allow list override if config permits
+                    if (configSelectionType === "list" || configSelectionType === "listOrText") {
+                        // Text → list: set displayAsLabel to the text filter's displayForm
+                        // so the list filter visually shows the same label
+                        updateActions.push(
+                            tabsActions.replaceAttributeFilterItem({
+                                filterLocalId: localId,
+                                filter: attributeFilter,
+                                tabLocalIdentifier,
+                            }),
+                            tabsActions.changeDisplayAsLabel({
+                                localIdentifier: localId,
+                                displayAsLabel: dashboardAttributeFilterItemDisplayForm(existingFilterItem),
+                                tabLocalIdentifier,
+                            }),
+                        );
+                        displayFormsToResolve.push(attributeFilter.attributeFilter.displayForm);
+                        handledLocalIds.add(localId);
+                    }
+                }
+            }
         }
     }
 
     // Build replace actions for text filter types (arbitrary, match).
-    // Only replace filters that are already text filters — converting a standard attribute filter
-    // (with element selection) to a text filter is not supported.
     for (const textFilter of textAttributeFilters) {
         const localId = dashboardAttributeFilterItemLocalIdentifier(textFilter);
         if (localId) {
             const existingFilter: ReturnType<
                 ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>
-            > = tabLocalIdentifier
-                ? yield select(
-                      selectFilterContextAttributeFilterItemByLocalIdForTab(localId, tabLocalIdentifier),
-                  )
-                : yield select(selectFilterContextAttributeFilterItemByLocalId(localId));
+            > = yield call(
+                selectFilterContextAttributeFilterItemByLocalIdTabAware,
+                localId,
+                tabLocalIdentifier,
+            );
 
-            // Skip if the target filter does not exist or is a standard attribute filter
-            if (!existingFilter || !isDashboardTextAttributeFilter(existingFilter)) {
+            if (!existingFilter) {
                 continue;
+            }
+
+            // Allow replacement if existing filter is already text type,
+            // or if selectionType config allows text on a list filter target
+            const isExistingText = isDashboardTextAttributeFilter(existingFilter);
+            if (!isExistingText) {
+                const configSelectionType = selectionTypeMap?.get(localId);
+                // Default for list filters is "list" — skip unless config allows text
+                if (configSelectionType !== "text" && configSelectionType !== "listOrText") {
+                    continue;
+                }
             }
 
             updateActions.push(
@@ -406,15 +542,29 @@ function* getAttributeFiltersUpdateActions(
                     tabLocalIdentifier,
                 }),
             );
+
+            // List → text: update displayAsLabel to match the text filter's displayForm
+            if (!isExistingText) {
+                const textDisplayForm = dashboardAttributeFilterItemDisplayForm(textFilter);
+                updateActions.push(
+                    tabsActions.changeDisplayAsLabel({
+                        localIdentifier: localId,
+                        displayAsLabel: textDisplayForm,
+                        tabLocalIdentifier,
+                    }),
+                );
+                displayFormsToResolve.push(textDisplayForm);
+            }
+
             handledLocalIds.add(localId);
         }
     }
 
     if (resetOthers) {
-        const currentAttributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> =
-            tabLocalIdentifier
-                ? yield select(selectFilterContextAttributeFiltersForTab(tabLocalIdentifier))
-                : yield select(selectFilterContextAttributeFilters);
+        const currentAttributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield call(
+            selectFilterContextAttributeFiltersTabAware,
+            tabLocalIdentifier,
+        );
 
         // for element-based filters that have not been handled, create clear selection actions
         const unhandledFilters = currentAttributeFilters.filter(
@@ -431,10 +581,10 @@ function* getAttributeFiltersUpdateActions(
 
         // for text filters (arbitrary/match) that have not been handled, reset to All state
         // (negative arbitrary filter with empty selection)
-        const currentAllFilterItems: ReturnType<typeof selectFilterContextAttributeFilterItems> =
-            tabLocalIdentifier
-                ? yield select(selectFilterContextAttributeFilterItemsForTab(tabLocalIdentifier))
-                : yield select(selectFilterContextAttributeFilterItems);
+        const currentAllFilterItems: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield call(
+            selectFilterContextAttributeFilterItemsTabAware,
+            tabLocalIdentifier,
+        );
 
         const unhandledTextFilters = currentAllFilterItems.filter(
             (filter): filter is DashboardTextAttributeFilter =>
@@ -449,6 +599,9 @@ function* getAttributeFiltersUpdateActions(
                     values: [],
                     negativeSelection: true,
                     localIdentifier: localId,
+                    filterElementsBy: dashboardAttributeFilterItemFilterElementsBy(textFilter),
+                    filterElementsByDate: dashboardAttributeFilterItemFilterElementsByDate(textFilter),
+                    validateElementsBy: dashboardAttributeFilterItemValidateElementsBy(textFilter),
                 },
             };
             updateActions.push(
@@ -461,7 +614,7 @@ function* getAttributeFiltersUpdateActions(
         }
     }
 
-    return updateActions;
+    return { actions: updateActions, displayFormsToResolve };
 }
 
 function* getDateFilterUpdateActions(
@@ -525,9 +678,7 @@ function* getDateFiltersUpdateActions(
     for (const dateFilter of dateFilters) {
         const filterRef = dateFilter.dateFilter.dataSet!;
         const dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> =
-            tabLocalIdentifier
-                ? yield select(selectFilterContextDateFilterByDataSetForTab(filterRef, tabLocalIdentifier))
-                : yield select(selectFilterContextDateFilterByDataSet(filterRef));
+            yield call(selectFilterContextDateFilterByDataSetTabAware, filterRef, tabLocalIdentifier);
 
         if (dashboardFilter) {
             const localIdentifierObj = dateFilter.dateFilter.localIdentifier
@@ -564,10 +715,10 @@ function* getDateFiltersUpdateActions(
     }
 
     if (resetOthers) {
-        const currentDateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> =
-            tabLocalIdentifier
-                ? yield select(selectFilterContextDateFiltersWithDimensionForTab(tabLocalIdentifier))
-                : yield select(selectFilterContextDateFiltersWithDimension);
+        const currentDateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield call(
+            selectFilterContextDateFiltersWithDimensionTabAware,
+            tabLocalIdentifier,
+        );
 
         // for filters that have not been handled by the loop above, create a clear selection actions
         const unhandledFilters = currentDateFilters.filter(

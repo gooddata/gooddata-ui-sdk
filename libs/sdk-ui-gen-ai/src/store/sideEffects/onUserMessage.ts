@@ -469,7 +469,7 @@ function* evaluateUserConversationMessage(
                             assistantMessageId: currentAssistantMessage.localId,
                             interactionId: chunkInteractionId,
                             item: value,
-                            content: convertToLocalContent(value.content, true),
+                            content: convertToLocalContent(value.content),
                         }),
                     );
                 }

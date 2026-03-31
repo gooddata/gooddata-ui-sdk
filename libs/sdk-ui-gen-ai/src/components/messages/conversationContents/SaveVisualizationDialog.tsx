@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { type IChatVisualisationDefinition } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocalItem, type IChatConversationMultipartLocalPart } from "../../../model.js";
@@ -14,7 +14,7 @@ import { saveVisualizationAction } from "../../../store/messages/messagesSlice.j
 export type SaveVisualizationDialogProps = {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
-    visualization: IChatVisualisationDefinition;
+    visualization: IChatConversationVisualisationContent["visualization"];
     type: "save" | "explore";
     onClose: () => void;
 };
@@ -33,7 +33,7 @@ function SaveVisualizationDialogCore({
 }: SaveVisualizationDialogProps & SaveVisualizationDialogDispatchProps) {
     const intl = useIntl();
 
-    const [value, setValue] = useState<string>(visualization.title);
+    const [value, setValue] = useState<string>(visualization.insight.title);
     const { onSubmit } = useVisualisationSaving(
         type,
         message,
@@ -58,9 +58,9 @@ function SaveVisualizationDialogCore({
                     ? intl.formatMessage({ id: "gd.gen-ai.button.save" })
                     : intl.formatMessage({ id: "gd.gen-ai.button.save_and_explore" })
             }
-            showProgressIndicator={part.saving}
-            isSubmitDisabled={part.saving}
-            isCancelDisabled={part.saving}
+            showProgressIndicator={part.saving?.started}
+            isSubmitDisabled={part.saving?.started}
+            isCancelDisabled={part.saving?.started}
             className="gd-gen-ai-chat__visualization__save-dialog"
         >
             <Typography tagName="p">
@@ -72,9 +72,9 @@ function SaveVisualizationDialogCore({
                 autofocus
                 label={intl.formatMessage({ id: "gd.gen-ai.save-dialog.label" })}
                 labelPositionTop
-                placeholder={visualization.title}
+                placeholder={visualization.insight.title}
                 value={value}
-                disabled={part.saving}
+                disabled={part.saving?.started}
                 onChange={(newValue) => setValue(String(newValue))}
             />
         </ConfirmDialog>
@@ -87,38 +87,38 @@ function useVisualisationSaving(
     type: "save" | "explore",
     message: IChatConversationLocalItem,
     part: IChatConversationMultipartLocalPart,
-    visualization: IChatVisualisationDefinition,
+    visualization: IChatConversationVisualisationContent["visualization"],
     saveVisualization: typeof saveVisualizationAction,
     onClose: () => void,
 ) {
-    const [savingStarted, setSavingStarted] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
-
     // Close the dialog automatically once the item is saved
+    const isStarted = part.saving?.started;
+    const isComplete = part.saving?.completed;
     useEffect(() => {
-        if (savingStarted && !part.saving) {
-            setSavingStarted(false);
+        if (isStarted && isComplete) {
             onClose();
         }
-    }, [savingStarted, part.saving, onClose]);
+    }, [isStarted, isComplete, onClose]);
 
     const onSubmit = useCallback(
         async (title: string) => {
-            setSavingStarted(true);
-            setIsSaving(true);
-
             saveVisualization({
-                visualizationId: visualization.id,
-                visualizationTitle: title || visualization.title,
+                visualizationId: visualization.insight.identifier,
+                visualizationTitle: title || visualization.insight.title,
                 assistantMessageId: message.localId,
                 explore: type === "explore",
             });
         },
-        [message.localId, saveVisualization, type, visualization.id, visualization.title],
+        [
+            type,
+            message.localId,
+            saveVisualization,
+            visualization.insight.identifier,
+            visualization.insight.title,
+        ],
     );
 
     return {
-        isSaving,
         onSubmit,
     };
 }

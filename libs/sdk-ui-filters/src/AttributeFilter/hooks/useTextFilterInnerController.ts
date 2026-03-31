@@ -8,7 +8,7 @@ import { type GoodDataSdkError, useDebounce } from "@gooddata/sdk-ui";
 
 import { MAX_SELECTION_SIZE } from "./constants.js";
 import { type AsyncOperationStatus } from "../../AttributeFilterHandler/types/common.js";
-import { type AttributeFilterTextMode } from "../filterModeTypes.js";
+import { type AttributeFilterTextSelectionType } from "../selectionTypes.js";
 import {
     type TextFilterOperator,
     getOperatorFromFilter,
@@ -41,8 +41,8 @@ export interface ITextFilterInnerControllerProps {
     workspace: string;
     filter: IAttributeFilter;
     onTextStateChange?: (state: ITextFilterState) => void;
-    filterModeChanged?: boolean;
-    availableTextModes?: AttributeFilterTextMode[];
+    selectionTypeChanged?: boolean;
+    availableTextModes?: AttributeFilterTextSelectionType[];
     attributeMetadataStatus?: AsyncOperationStatus;
     attributeMetadataError?: GoodDataSdkError;
     withoutApply?: boolean;
@@ -64,11 +64,11 @@ export function isTextStateInvalid(state: ITextFilterState): boolean {
     return state.literal.trim() === "";
 }
 
-const DEFAULT_TEXT_MODES: AttributeFilterTextMode[] = ["arbitrary", "match"];
+const DEFAULT_TEXT_MODES: AttributeFilterTextSelectionType[] = ["arbitrary", "match"];
 
 const isOperatorAllowed = (
     nextOperator: TextFilterOperator,
-    availableTextModes: AttributeFilterTextMode[],
+    availableTextModes: AttributeFilterTextSelectionType[],
 ): boolean => {
     if (isAllOperator(nextOperator)) {
         return true;
@@ -79,7 +79,7 @@ const isOperatorAllowed = (
     return availableTextModes.includes("match");
 };
 
-const getFallbackOperator = (availableTextModes: AttributeFilterTextMode[]): TextFilterOperator => {
+const getFallbackOperator = (availableTextModes: AttributeFilterTextSelectionType[]): TextFilterOperator => {
     if (availableTextModes.includes("arbitrary")) {
         return "is";
     }
@@ -130,7 +130,7 @@ export function useTextFilterInnerController(
         filter,
         onTextStateChange,
         availableTextModes = DEFAULT_TEXT_MODES,
-        filterModeChanged = false,
+        selectionTypeChanged = false,
         withoutApply = false,
     } = props;
 
@@ -314,7 +314,7 @@ export function useTextFilterInnerController(
     const isMatchInputEmpty =
         !isArbitraryOperator(operator) && !isAllOperator(operator) && literal.trim() === "";
 
-    const hasUserInteractedOrReset = isEmptyAfterOperatorChange || filterModeChanged;
+    const hasUserInteractedOrReset = isEmptyAfterOperatorChange || selectionTypeChanged;
 
     const isArbitraryFilterInvalid = (isValuesTouched || hasUserInteractedOrReset) && isArbitraryInputEmpty;
 
@@ -330,14 +330,14 @@ export function useTextFilterInnerController(
         isArbitraryInputEmpty ||
         isMatchInputEmpty ||
         (!hasDraftChanged(operator, values, literal, caseSensitive ?? false, committedState) &&
-            !filterModeChanged);
+            !selectionTypeChanged);
 
     return {
         isTextFilterInvalid: isTextFilterInvalid,
         isApplyDisabled,
         isWorkingSelectionChanged:
             hasDraftChanged(operator, values, literal, caseSensitive ?? false, committedState) ||
-            filterModeChanged,
+            selectionTypeChanged,
         textFilterOperator: operator,
         textFilterValues: values,
         textFilterLiteral: literal,
@@ -388,7 +388,7 @@ function hasDraftChanged(
 
 function extractStateFromFilter(
     filter: IAttributeFilter,
-    availableTextModes: AttributeFilterTextMode[],
+    availableTextModes: AttributeFilterTextSelectionType[],
 ): ITextFilterState {
     const filterOperator = getOperatorFromFilter(filter);
     const resolvedOperator = isOperatorAllowed(filterOperator, availableTextModes)

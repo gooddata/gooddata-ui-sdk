@@ -1,8 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { LocationStyleApi_GetDefaultStyle } from "@gooddata/api-client-tiger/endpoints/locationStyle";
+import {
+    LocationStyleApi_GetDefaultStyle,
+    LocationStyleApi_GetStyleById,
+    LocationStyleApi_GetStyles,
+} from "@gooddata/api-client-tiger/endpoints/locationStyle";
 import {
     type IGeoService,
+    type IGeoStyleListItem,
     type IGeoStyleParams,
     type IGeoStyleSpecification,
     type IOrganizationGeoCollectionsService,
@@ -42,6 +47,14 @@ export class TigerGeoService implements IGeoService {
             const responseData = await response.json();
             return responseData !== null && typeof responseData === "object" ? Object.keys(responseData) : [];
         });
+    }
+
+    public async getStyles(): Promise<IGeoStyleListItem[]> {
+        return this.authCall(async (client) => LocationStyleApi_GetStyles(client.axios));
+    }
+
+    public async getStyleById(styleId: string, params?: IGeoStyleParams): Promise<IGeoStyleSpecification> {
+        return this.authCall(async (client) => LocationStyleApi_GetStyleById(client.axios, styleId, params));
     }
 
     public collections(): IOrganizationGeoCollectionsService {

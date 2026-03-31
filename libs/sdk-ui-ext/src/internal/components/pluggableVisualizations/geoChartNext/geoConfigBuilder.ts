@@ -53,7 +53,6 @@ export function buildGeoVisualizationConfig({
     const {
         basemap: rawBasemap,
         tileset: legacyTileset,
-        colorScheme: rawColorScheme,
         ...restSupportedControlsWithoutGeoStyle
     } = restSupportedControls;
     const { isInEditMode, isExportMode } = config;
@@ -61,7 +60,6 @@ export function buildGeoVisualizationConfig({
     const sanitizedGeoMapStyle = sanitizeGeoMapStyleOptions({
         basemap: rawBasemap,
         legacyTileset,
-        colorScheme: rawColorScheme,
     });
     const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
     const isPresetViewportAreaSelected = isConcreteViewportPreset(viewport.area);
@@ -133,7 +131,6 @@ export function buildGeoVisualizationConfig({
         ...viewportProp,
         ...customVisualizationConfig,
         basemap: sanitizedGeoMapStyle.basemap,
-        colorScheme: sanitizedGeoMapStyle.colorScheme,
         separators: config.separators,
         colorPalette: config.colorPalette,
         colorMapping,
@@ -157,7 +154,6 @@ const supportedGeoConfigProperties = new Set<keyof IGeoChartConfig>([
     "limit",
     "mapStyle",
     "basemap",
-    "colorScheme",
     "selectedSegmentItems",
     "separators",
     "viewport",
@@ -180,13 +176,11 @@ export function geoConfigFromInsight(
     const sanitizedGeoMapStyle = sanitizeGeoMapStyleOptions({
         basemap: controls.basemap,
         legacyTileset: controls.tileset,
-        colorScheme: controls.colorScheme,
     });
     const withValuesFromContext = {
         ...controls,
         ...(normalizedLegend ? { legend: normalizedLegend } : {}),
         basemap: sanitizedGeoMapStyle.basemap,
-        colorScheme: sanitizedGeoMapStyle.colorScheme,
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
     };
 

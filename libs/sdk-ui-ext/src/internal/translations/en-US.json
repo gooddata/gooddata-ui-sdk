@@ -963,50 +963,6 @@
         "text": "Basemap",
         "crowdinContext": "Geo pushpin configuration: Label for selecting the basemap."
     },
-    "properties.map.basemap.default": {
-        "text": "default",
-        "crowdinContext": "Basemap option: backend default map style with no explicit basemap parameters"
-    },
-    "properties.map.basemap.standard": {
-        "text": "standard",
-        "crowdinContext": "Basemap option: Standard vector map style"
-    },
-    "properties.map.basemap.satellite": {
-        "text": "satellite",
-        "crowdinContext": "Basemap option: Satellite imagery"
-    },
-    "properties.map.basemap.monochrome": {
-        "text": "monochrome",
-        "crowdinContext": "Basemap option: Monochrome (grayscale) map style"
-    },
-    "properties.map.basemap.hybrid": {
-        "text": "hybrid",
-        "crowdinContext": "Basemap option: Hybrid (satellite with labels) map style"
-    },
-    "properties.map.basemap.none": {
-        "text": "none",
-        "crowdinContext": "Basemap option: No basemap (white background only)"
-    },
-    "properties.map.basemap.noneInfo": {
-        "text": "Hides the basemap.",
-        "crowdinContext": "Tooltip for the None basemap option explaining it hides the basemap"
-    },
-    "properties.map.colorScheme.title": {
-        "text": "Theme",
-        "crowdinContext": "Geo map configuration: Label for selecting the theme (light or dark) of the map style."
-    },
-    "properties.map.colorScheme.autoDefault": {
-        "text": "auto (default)",
-        "crowdinContext": "Color scheme option: automatic default color scheme for the selected basemap"
-    },
-    "properties.map.colorScheme.light": {
-        "text": "light",
-        "crowdinContext": "Color scheme option: Light map style"
-    },
-    "properties.map.colorScheme.dark": {
-        "text": "dark",
-        "crowdinContext": "Color scheme option: Dark map style"
-    },
     "properties.viewport.area.title": {
         "text": "Default viewport",
         "crowdinContext": "Default viewport configuration"

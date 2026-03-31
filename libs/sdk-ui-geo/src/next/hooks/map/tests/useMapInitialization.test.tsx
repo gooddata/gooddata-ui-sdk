@@ -462,15 +462,14 @@ describe("useMapInitialization a11y", () => {
         expect(options.language).toBe("de");
     });
 
-    it("passes public basemap style params to runtime without internal basemap FF", async () => {
+    it("passes basemap to runtime", async () => {
         renderHook(
             () =>
                 useMapInitialization(
                     containerRef,
                     {
                         enableGeoChartA11yImprovements: true,
-                        basemap: "standard",
-                        colorScheme: "dark",
+                        basemap: "standard-light",
                     },
                     null,
                     undefined,
@@ -487,39 +486,10 @@ describe("useMapInitialization a11y", () => {
         });
 
         const [options] = initMock.mock.calls[0];
-        expect(options.basemap).toBe("standard");
-        expect(options.colorScheme).toBe("dark");
+        expect(options.basemap).toBe("standard-light");
     });
 
-    it("ignores colorScheme when basemap is not specified", async () => {
-        renderHook(
-            () =>
-                useMapInitialization(
-                    containerRef,
-                    {
-                        enableGeoChartA11yImprovements: true,
-                        colorScheme: "dark",
-                    },
-                    null,
-                    undefined,
-                    undefined,
-                    "instructions-id",
-                ),
-            {
-                wrapper,
-            },
-        );
-
-        await waitFor(() => {
-            expect(initMock).toHaveBeenCalled();
-        });
-
-        const [options] = initMock.mock.calls[0];
-        expect(options.basemap).toBeUndefined();
-        expect(options.colorScheme).toBeUndefined();
-    });
-
-    it("ignores explicit default colorScheme when basemap is not specified", async () => {
+    it("normalizes default basemap to undefined", async () => {
         renderHook(
             () =>
                 useMapInitialization(
@@ -543,65 +513,6 @@ describe("useMapInitialization a11y", () => {
 
         const [options] = initMock.mock.calls[0];
         expect(options.basemap).toBeUndefined();
-        expect(options.colorScheme).toBeUndefined();
-    });
-
-    it("ignores colorScheme in runtime when selected basemap does not support it", async () => {
-        renderHook(
-            () =>
-                useMapInitialization(
-                    containerRef,
-                    {
-                        enableGeoChartA11yImprovements: true,
-                        basemap: "none",
-                        colorScheme: "dark",
-                    },
-                    null,
-                    undefined,
-                    undefined,
-                    "instructions-id",
-                ),
-            {
-                wrapper,
-            },
-        );
-
-        await waitFor(() => {
-            expect(initMock).toHaveBeenCalled();
-        });
-
-        const [options] = initMock.mock.calls[0];
-        expect(options.basemap).toBe("none");
-        expect(options.colorScheme).toBeUndefined();
-    });
-
-    it("ignores colorScheme in runtime for hybrid basemap", async () => {
-        renderHook(
-            () =>
-                useMapInitialization(
-                    containerRef,
-                    {
-                        enableGeoChartA11yImprovements: true,
-                        basemap: "hybrid",
-                        colorScheme: "dark",
-                    },
-                    null,
-                    undefined,
-                    undefined,
-                    "instructions-id",
-                ),
-            {
-                wrapper,
-            },
-        );
-
-        await waitFor(() => {
-            expect(initMock).toHaveBeenCalled();
-        });
-
-        const [options] = initMock.mock.calls[0];
-        expect(options.basemap).toBe("hybrid");
-        expect(options.colorScheme).toBeUndefined();
     });
 
     it("enables keyboard and disables rotation on canvas focus for interactive maps", async () => {

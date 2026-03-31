@@ -5,14 +5,14 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { type IDropdownButtonRenderProps, UiIconButton } from "@gooddata/sdk-ui-kit";
 
-import { TEXT_FILTER_MODE_BUTTON_ID } from "./accessibility/elementId.js";
+import { TEXT_FILTER_MENU_BUTTON_ID } from "./accessibility/elementId.js";
 
 /**
- * Props for FilterModeMenuButton component.
+ * Props for FilterMenuButton component.
  *
  * @alpha
  */
-export interface IFilterModeMenuButtonProps {
+export interface IFilterMenuButtonProps {
     /**
      * Whether the dropdown is open
      */
@@ -34,33 +34,28 @@ export interface IFilterModeMenuButtonProps {
     accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
 }
 
-const modeMessages = defineMessages({
-    selection: { id: "attributeFilter.mode.selection" },
+const selectionTypeMessages = defineMessages({
+    selection: { id: "attributeFilter.selectionType.selection" },
 });
 
 /**
- * Button that triggers the filter mode menu dropdown.
+ * Button that triggers the filter menu dropdown.
  *
  * @alpha
  */
-export function FilterModeMenuButton(props: IFilterModeMenuButtonProps) {
+export function FilterMenuButton(props: IFilterMenuButtonProps) {
     const { isOpen, onClick, ariaAttributes, accessibilityConfig } = props;
     const { formatMessage } = useIntl();
 
     return (
         <div
-            className={cx(
-                "gd-filter-mode-menu__button",
-                "gd-filter-mode-menu__button--icon",
-                "s-filter-mode-menu-button",
-                {
-                    "is-active": isOpen,
-                },
-            )}
-            data-testid="filter-mode-menu-button"
+            className={cx("gd-filter-menu__button", "gd-filter-menu__button--icon", "s-filter-menu-button", {
+                "is-active": isOpen,
+            })}
+            data-testid="filter-menu-button"
         >
             <UiIconButton
-                id={TEXT_FILTER_MODE_BUTTON_ID}
+                id={TEXT_FILTER_MENU_BUTTON_ID}
                 icon="ellipsis"
                 size="large"
                 variant="tertiary"
@@ -68,7 +63,7 @@ export function FilterModeMenuButton(props: IFilterModeMenuButtonProps) {
                 isActive={isOpen}
                 onClick={onClick}
                 ariaAttributes={ariaAttributes}
-                label={formatMessage(modeMessages.selection)}
+                label={formatMessage(selectionTypeMessages.selection)}
                 accessibilityConfig={accessibilityConfig}
             />
         </div>

@@ -225,19 +225,18 @@ describe("withCaching", () => {
 
     it("evicts least recently used geo styles when the geo style cache reaches its max size", async () => {
         const getDefaultStyle = vi.fn<IGeoService["getDefaultStyle"]>(async (params) => ({
-            basemap: params?.basemap,
-            colorScheme: params?.colorScheme,
+            language: params?.language,
         }));
         const backend = withCachingForTests(createGeoStyleBackend(getDefaultStyle));
 
         for (let i = 0; i < 10; i += 1) {
-            await backend.geo().getDefaultStyle({ basemap: `basemap-${i}` });
+            await backend.geo().getDefaultStyle({ language: `lang-${i}` });
         }
 
         expect(getDefaultStyle).toHaveBeenCalledTimes(10);
 
-        await backend.geo().getDefaultStyle({ basemap: "basemap-10" });
-        await backend.geo().getDefaultStyle({ basemap: "basemap-0" });
+        await backend.geo().getDefaultStyle({ language: "lang-10" });
+        await backend.geo().getDefaultStyle({ language: "lang-0" });
 
         expect(getDefaultStyle).toHaveBeenCalledTimes(12);
     });

@@ -2,9 +2,9 @@
 
 import { type IUiListboxItem, UiListbox, type UiListboxAriaAttributes } from "@gooddata/sdk-ui-kit";
 
-import { FilterModeMenuListItem } from "./FilterModeMenuListItem.js";
+import { FilterMenuListItem } from "./FilterMenuListItem.js";
 
-export type IFilterModeMenuSelectableSectionProps<TData> = {
+export type IFilterMenuSelectableSectionProps<TData> = {
     items: IUiListboxItem<TData, never>[];
     selectedItemId?: string;
     onSelect: (item: IUiListboxItem<TData, never>) => void;
@@ -12,13 +12,13 @@ export type IFilterModeMenuSelectableSectionProps<TData> = {
     ariaAttributes: UiListboxAriaAttributes;
 };
 
-export function FilterModeMenuSelectableSection<TData>({
+export function FilterMenuSelectableSection<TData>({
     items,
     selectedItemId,
     onSelect,
     onClose,
     ariaAttributes,
-}: IFilterModeMenuSelectableSectionProps<TData>) {
+}: IFilterMenuSelectableSectionProps<TData>) {
     return (
         <UiListbox<TData, never>
             shouldKeyboardActionStopPropagation
@@ -29,7 +29,7 @@ export function FilterModeMenuSelectableSection<TData>({
             onClose={onClose}
             ariaAttributes={ariaAttributes}
             InteractiveItemComponent={({ item, onSelect, isFocused, isSelected }) => (
-                <FilterModeMenuListItem
+                <FilterMenuListItem
                     item={item}
                     onSelect={onSelect}
                     isFocused={isFocused}

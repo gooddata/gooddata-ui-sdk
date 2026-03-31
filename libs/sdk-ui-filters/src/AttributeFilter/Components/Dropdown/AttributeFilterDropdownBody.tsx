@@ -68,8 +68,8 @@ export function AttributeFilterDropdownBody({
         onClearIrrelevantSelection,
         disabled,
         // New mode-related fields
-        currentFilterMode,
-        availableTextFilterModes,
+        currentSelectionType,
+        availableTextSelectionTypes,
         textFilterOperator,
         textFilterValues,
         textFilterLiteral,
@@ -102,7 +102,7 @@ export function AttributeFilterDropdownBody({
             });
         }
 
-        if (currentFilterMode === "text" && textFilterValuesLimitExceededError) {
+        if (currentSelectionType === "text" && textFilterValuesLimitExceededError) {
             return intl.formatMessage(
                 {
                     id: "attributeFilter.text.applyButton.tooltip.valuesLimitExceeded",
@@ -111,7 +111,7 @@ export function AttributeFilterDropdownBody({
             );
         }
 
-        if (currentFilterMode === "text" && isSelectionInvalid) {
+        if (currentSelectionType === "text" && isSelectionInvalid) {
             return intl.formatMessage({
                 id: "attributeFilter.text.applyButton.tooltip.emptyValue",
             });
@@ -119,7 +119,7 @@ export function AttributeFilterDropdownBody({
 
         return undefined;
     }, [
-        currentFilterMode,
+        currentSelectionType,
         intl,
         isApplyDisabled,
         isSelectionInvalid,
@@ -174,7 +174,7 @@ export function AttributeFilterDropdownBody({
 
     // Render filter body based on mode
     const renderFilterBody = () => {
-        if (currentFilterMode === "text") {
+        if (currentSelectionType === "text") {
             return (
                 <TextFilterBodyComponent
                     operator={textFilterOperator ?? "is"}
@@ -193,7 +193,7 @@ export function AttributeFilterDropdownBody({
                     onToggleCaseSensitive={onToggleTextFilterCaseSensitive ?? (() => {})}
                     attributeTitle={title ?? ""}
                     disabled={disabled}
-                    availableTextModes={availableTextFilterModes}
+                    availableTextModes={availableTextSelectionTypes}
                     autocompleteOptions={autocompleteOptions}
                     onAutocompleteSearch={handleAutocompleteSearch}
                     isAutocompleteLoading={isLoadingInitialElementsPage || isLoadingNextElementsPage}

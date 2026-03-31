@@ -6,16 +6,16 @@ import {
     type UiListboxAriaAttributes,
 } from "@gooddata/sdk-ui-kit";
 
-import { FilterModeMenuSectionHeader } from "./FilterModeMenuSectionHeader.js";
-import { FilterModeMenuSelectableSection } from "./FilterModeMenuSelectableSection.js";
-import { type ILabelItemData, type IModeItemData } from "./types.js";
+import { FilterMenuSectionHeader } from "./FilterMenuSectionHeader.js";
+import { FilterMenuSelectableSection } from "./FilterMenuSelectableSection.js";
+import { type ILabelItemData, type ISelectionTypeItemData } from "./types.js";
 
-export type IFilterModeMenuDropdownBodyProps = {
-    showModeSection: boolean;
+export type IFilterMenuDropdownBodyProps = {
+    showSelectionTypeSection: boolean;
     showDisplayForms: boolean;
-    modeListboxItems: IUiListboxItem<IModeItemData, never>[];
-    selectedModeItemId?: string;
-    onModeSelect: (item: IUiListboxItem<IModeItemData, never>) => void;
+    selectionTypeListboxItems: IUiListboxItem<ISelectionTypeItemData, never>[];
+    selectedSelectionTypeItemId?: string;
+    onSelectionTypeSelect: (item: IUiListboxItem<ISelectionTypeItemData, never>) => void;
     labelListboxItems: IUiListboxItem<ILabelItemData, never>[];
     selectedLabelItemId?: string;
     onLabelSelect: (item: IUiListboxItem<ILabelItemData, never>) => void;
@@ -28,12 +28,12 @@ export type IFilterModeMenuDropdownBodyProps = {
     hideTooltips?: boolean;
 };
 
-export function FilterModeMenuDropdownBody({
-    showModeSection,
+export function FilterMenuDropdownBody({
+    showSelectionTypeSection,
     showDisplayForms,
-    modeListboxItems,
-    selectedModeItemId,
-    onModeSelect,
+    selectionTypeListboxItems,
+    selectedSelectionTypeItemId,
+    onSelectionTypeSelect,
     labelListboxItems,
     selectedLabelItemId,
     onLabelSelect,
@@ -44,7 +44,7 @@ export function FilterModeMenuDropdownBody({
     valuesAsTitle,
     valuesAsTooltip,
     hideTooltips,
-}: IFilterModeMenuDropdownBodyProps) {
+}: IFilterMenuDropdownBodyProps) {
     const valuesAsAriaAttributes: UiListboxAriaAttributes = {
         ...ariaAttributes,
         id: `${ariaAttributes.id}-values-as`,
@@ -53,28 +53,28 @@ export function FilterModeMenuDropdownBody({
     };
 
     return (
-        <div className="gd-filter-mode-menu__dropdown" data-testid="filter-mode-menu-dropdown">
-            {showModeSection ? (
+        <div className="gd-filter-menu__dropdown" data-testid="filter-menu-dropdown">
+            {showSelectionTypeSection ? (
                 <>
-                    <FilterModeMenuSectionHeader
+                    <FilterMenuSectionHeader
                         title={selectionTitle}
                         tooltip={selectionTooltip}
                         hideTooltip={hideTooltips}
                     />
-                    <FilterModeMenuSelectableSection<IModeItemData>
-                        items={modeListboxItems}
-                        selectedItemId={selectedModeItemId}
-                        onSelect={onModeSelect}
+                    <FilterMenuSelectableSection<ISelectionTypeItemData>
+                        items={selectionTypeListboxItems}
+                        selectedItemId={selectedSelectionTypeItemId}
+                        onSelect={onSelectionTypeSelect}
                         onClose={closeDropdown}
                         ariaAttributes={ariaAttributes}
                     />
                 </>
             ) : null}
 
-            {showModeSection && showDisplayForms ? (
+            {showSelectionTypeSection && showDisplayForms ? (
                 <SingleSelectListItem
                     type="separator"
-                    className="gd-filter-mode-menu__divider"
+                    className="gd-filter-menu__divider"
                     accessibilityConfig={{
                         role: "separator",
                     }}
@@ -83,17 +83,17 @@ export function FilterModeMenuDropdownBody({
 
             {showDisplayForms ? (
                 <>
-                    <FilterModeMenuSectionHeader
+                    <FilterMenuSectionHeader
                         title={valuesAsTitle}
                         tooltip={valuesAsTooltip}
                         hideTooltip={hideTooltips}
                     />
-                    <FilterModeMenuSelectableSection<ILabelItemData>
+                    <FilterMenuSelectableSection<ILabelItemData>
                         items={labelListboxItems}
                         selectedItemId={selectedLabelItemId}
                         onSelect={onLabelSelect}
                         onClose={closeDropdown}
-                        ariaAttributes={showModeSection ? valuesAsAriaAttributes : ariaAttributes}
+                        ariaAttributes={showSelectionTypeSection ? valuesAsAriaAttributes : ariaAttributes}
                     />
                 </>
             ) : null}

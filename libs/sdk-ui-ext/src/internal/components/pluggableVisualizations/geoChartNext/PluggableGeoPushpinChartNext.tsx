@@ -51,6 +51,7 @@ import {
     isGeoChartsViewportConfigEnabled,
     isGeoPushpinIconEnabled,
 } from "../../../constants/featureFlags.js";
+import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
 import { GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import { type IDropdownItem } from "../../../interfaces/Dropdown.js";
@@ -75,6 +76,11 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import {
+    GeoBasemapItemsLoader,
+    getGeoBasemapDropdownItems,
+    getGeoConfigurationPanelIsLoading,
+} from "../geoCommon/geoBasemapConfiguration.js";
 import {
     getGeoControlsWithFallback,
     getGeoVisualizationPropertiesWithFallback,
@@ -106,11 +112,13 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     private loadedSpriteIconsKey?: string;
     private loadingSpriteIconsKey?: string;
     private cachedHasGeoIconLabel = false;
+    private readonly basemapItemsLoader: GeoBasemapItemsLoader;
     constructor(props: IVisConstruct) {
         super(props);
         this.type = VisualizationTypes.PUSHPIN;
         this.backend = props.backend;
         this.workspace = props.projectId;
+        this.basemapItemsLoader = new GeoBasemapItemsLoader(this.backend);
         this.initializeProperties(props.visualizationProperties);
         this.initializePropertiesMeta();
     }
@@ -423,6 +431,9 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(this.featureFlags);
         const iconEnabled = isGeoPushpinIconEnabled(this.featureFlags);
         this.liveMapView.resetIfInsightChanged(insight);
+        this.basemapItemsLoader.ensureLoaded(() => {
+            this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+        });
 
         if (iconEnabled) {
             this.syncSpriteIcons();
@@ -436,7 +447,18 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
 
         if (configPanelElement) {
             const resolvedProperties = this.getResolvedVisualizationPropertiesWithFallback(insight);
-
+            const currentBasemap = sanitizeGeoMapStyleOptions({
+                basemap: resolvedProperties.controls?.["basemap"],
+                legacyTileset: resolvedProperties.controls?.["tileset"],
+            }).basemap;
+            const basemapItems = getGeoBasemapDropdownItems(
+                this.basemapItemsLoader.getItems(),
+                currentBasemap,
+            );
+            const isLoading = getGeoConfigurationPanelIsLoading(
+                this.isLoading,
+                this.basemapItemsLoader.getIsLoading(),
+            );
             this.renderFun(
                 <GeoPushpinConfigurationPanel
                     locale={this.locale}
@@ -448,7 +470,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                     colors={this.colors}
                     type={this.type}
                     isError={this.getIsError()}
-                    isLoading={this.isLoading}
+                    isLoading={isLoading}
+                    basemapItems={basemapItems}
                     featureFlags={this.featureFlags}
                     permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}

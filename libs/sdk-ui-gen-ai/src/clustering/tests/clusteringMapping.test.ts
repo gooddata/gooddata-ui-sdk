@@ -2,22 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { IGenAIVisualization } from "@gooddata/sdk-model";
-
 import {
     mapVisualizationClusteringToBackendConfig,
     mapVisualizationClusteringToChartConfig,
 } from "../clusteringMapping.js";
 
-const baseVisualization: IGenAIVisualization = {
-    id: "generated-scatter",
-    title: "Clustering trend",
-    visualizationType: "SCATTER",
-    metrics: [],
-    dimensionality: [],
-    filters: [],
-    suggestions: [],
-};
+const baseVisualization = {};
 
 describe("clusteringMapping", () => {
     describe("mapVisualizationClusteringToChartConfig", () => {
@@ -26,16 +16,14 @@ describe("clusteringMapping", () => {
         });
 
         it("should map clustering config to chart config", () => {
-            const visualization: IGenAIVisualization = {
-                ...baseVisualization,
-                config: {
+            expect(
+                mapVisualizationClusteringToChartConfig({
                     clustering: {
                         numberOfClusters: 3,
                         threshold: 0.5,
                     },
-                },
-            };
-            expect(mapVisualizationClusteringToChartConfig(visualization)).toEqual({
+                }),
+            ).toEqual({
                 enabled: true,
                 numberOfClusters: 3,
             });
@@ -48,16 +36,14 @@ describe("clusteringMapping", () => {
         });
 
         it("should map clustering config to backend config", () => {
-            const visualization: IGenAIVisualization = {
-                ...baseVisualization,
-                config: {
+            expect(
+                mapVisualizationClusteringToBackendConfig({
                     clustering: {
                         numberOfClusters: 5,
                         threshold: 0.1,
                     },
-                },
-            };
-            expect(mapVisualizationClusteringToBackendConfig(visualization)).toEqual({
+                }),
+            ).toEqual({
                 numberOfClusters: 5,
                 threshold: 0.1,
             });

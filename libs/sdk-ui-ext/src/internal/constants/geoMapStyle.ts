@@ -1,13 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type GeoBasemap, type GeoColorScheme, doesGeoBasemapSupportColorScheme } from "@gooddata/sdk-ui-geo";
-
 export interface IGeoMapStyleOptions {
-    basemap: GeoBasemap | undefined;
-    colorScheme: GeoColorScheme | undefined;
+    basemap: string | undefined;
 }
 
-function sanitizeLegacyGeoTileset(value: unknown): GeoBasemap | undefined {
+function sanitizeLegacyGeoTileset(value: unknown): string | undefined {
     if (value === "satellite") {
         return "satellite";
     }
@@ -15,22 +12,8 @@ function sanitizeLegacyGeoTileset(value: unknown): GeoBasemap | undefined {
     return undefined;
 }
 
-function sanitizeGeoBasemap(value: unknown): GeoBasemap | undefined {
-    if (
-        value === "standard" ||
-        value === "monochrome" ||
-        value === "satellite" ||
-        value === "hybrid" ||
-        value === "none"
-    ) {
-        return value;
-    }
-
-    return undefined;
-}
-
-function sanitizeGeoColorScheme(value: unknown): GeoColorScheme | undefined {
-    if (value === "light" || value === "dark") {
+function sanitizeGeoBasemap(value: unknown): string | undefined {
+    if (typeof value === "string" && value.length > 0 && value !== "default") {
         return value;
     }
 
@@ -40,20 +23,11 @@ function sanitizeGeoColorScheme(value: unknown): GeoColorScheme | undefined {
 export function sanitizeGeoMapStyleOptions({
     basemap,
     legacyTileset,
-    colorScheme,
 }: {
     basemap: unknown;
     legacyTileset?: unknown;
-    colorScheme: unknown;
 }): IGeoMapStyleOptions {
-    const sanitizedBasemap = sanitizeGeoBasemap(basemap) ?? sanitizeLegacyGeoTileset(legacyTileset);
-    const sanitizedColorScheme =
-        sanitizedBasemap !== undefined && doesGeoBasemapSupportColorScheme(sanitizedBasemap)
-            ? sanitizeGeoColorScheme(colorScheme)
-            : undefined;
-
     return {
-        basemap: sanitizedBasemap,
-        colorScheme: sanitizedColorScheme,
+        basemap: sanitizeGeoBasemap(basemap) ?? sanitizeLegacyGeoTileset(legacyTileset),
     };
 }

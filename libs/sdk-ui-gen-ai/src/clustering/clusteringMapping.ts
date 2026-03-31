@@ -1,16 +1,15 @@
 // (C) 2026 GoodData Corporation
 
-import type { IChatVisualisationDefinition, IClusteringConfig } from "@gooddata/sdk-backend-spi";
-import type { IGenAIVisualization } from "@gooddata/sdk-model";
+import type { IClusteringConfig } from "@gooddata/sdk-backend-spi";
 import type { IChartClusteringConfig } from "@gooddata/sdk-ui-charts";
+
+import { type Config } from "../types.js";
 
 /**
  * @internal
  */
-export function mapVisualizationClusteringToChartConfig(
-    visualization?: IGenAIVisualization | IChatVisualisationDefinition,
-): IChartClusteringConfig | undefined {
-    const clustering = visualization?.config?.clustering;
+export function mapVisualizationClusteringToChartConfig(config?: Config): IChartClusteringConfig | undefined {
+    const clustering = config?.clustering;
 
     if (!clustering) {
         return undefined;
@@ -25,10 +24,8 @@ export function mapVisualizationClusteringToChartConfig(
 /**
  * @internal
  */
-export function mapVisualizationClusteringToBackendConfig(
-    visualization?: IGenAIVisualization | IChatVisualisationDefinition,
-): IClusteringConfig | undefined {
-    const clustering = visualization?.config?.clustering;
+export function mapVisualizationClusteringToBackendConfig(config?: Config): IClusteringConfig | undefined {
+    const clustering = config?.clustering;
 
     if (!clustering) {
         return undefined;

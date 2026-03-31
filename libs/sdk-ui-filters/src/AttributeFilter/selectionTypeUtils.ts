@@ -12,24 +12,26 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    type AttributeFilterAvailableMode,
-    type AttributeFilterMode,
-    type AttributeFilterTextMode,
-} from "./filterModeTypes.js";
+    type AttributeFilterAvailableSelectionType,
+    type AttributeFilterSelectionType,
+    type AttributeFilterTextSelectionType,
+} from "./selectionTypes.js";
 
 /**
- * Determines the filter mode from the filter type.
+ * Determines the selection type from the filter type.
  *
  * @param filter - extended attribute filter
- * @returns filter mode
+ * @returns selection type
  * @alpha
  */
-export function getFilterModeFromFilter(filter: IAttributeFilter | undefined): AttributeFilterMode {
+export function getSelectionTypeFromFilter(
+    filter: IAttributeFilter | undefined,
+): AttributeFilterSelectionType {
     if (!filter) {
         return "elements";
     }
 
-    // Both arbitrary and match filters use "text" mode
+    // Both arbitrary and match filters use "text" selection type
     if (isArbitraryAttributeFilter(filter) || isMatchAttributeFilter(filter)) {
         return "text";
     }
@@ -38,13 +40,13 @@ export function getFilterModeFromFilter(filter: IAttributeFilter | undefined): A
 }
 
 /**
- * Determines the public available mode from filter type.
+ * Determines the public available selection type from filter type.
  *
  * @alpha
  */
-export function getAvailableModeFromFilter(
+export function getAvailableSelectionTypeFromFilter(
     filter: IAttributeFilter | undefined,
-): AttributeFilterAvailableMode {
+): AttributeFilterAvailableSelectionType {
     if (!filter) {
         return "elements";
     }
@@ -61,15 +63,15 @@ export function getAvailableModeFromFilter(
 }
 
 /**
- * Maps public available modes to internal menu modes.
+ * Maps public available selection types to internal selection types.
  *
  * @alpha
  */
-export function mapAvailableModesToInternal(
-    modes: AttributeFilterAvailableMode[] | undefined,
-): AttributeFilterMode[] {
-    const available = modes ?? ["elements", "arbitrary", "match"];
-    const mapped = new Set<AttributeFilterMode>();
+export function mapAvailableSelectionTypesToInternal(
+    selectionTypes: AttributeFilterAvailableSelectionType[] | undefined,
+): AttributeFilterSelectionType[] {
+    const available = selectionTypes ?? ["elements", "arbitrary", "match"];
+    const mapped = new Set<AttributeFilterSelectionType>();
 
     if (available.includes("elements")) {
         mapped.add("elements");
@@ -82,68 +84,68 @@ export function mapAvailableModesToInternal(
 }
 
 /**
- * Resolves text-only available modes from public available modes.
+ * Resolves text-only available selection types from public available selection types.
  *
  * @alpha
  */
-export function getAvailableTextModes(
-    modes: AttributeFilterAvailableMode[] | undefined,
-): AttributeFilterTextMode[] {
-    const available = modes ?? ["elements", "arbitrary", "match"];
-    const textModes: AttributeFilterTextMode[] = [];
+export function getAvailableTextSelectionTypes(
+    selectionTypes: AttributeFilterAvailableSelectionType[] | undefined,
+): AttributeFilterTextSelectionType[] {
+    const available = selectionTypes ?? ["elements", "arbitrary", "match"];
+    const textSelectionTypes: AttributeFilterTextSelectionType[] = [];
 
     if (available.includes("arbitrary")) {
-        textModes.push("arbitrary");
+        textSelectionTypes.push("arbitrary");
     }
     if (available.includes("match")) {
-        textModes.push("match");
+        textSelectionTypes.push("match");
     }
 
-    if (textModes.length === 0) {
+    if (textSelectionTypes.length === 0) {
         return ["arbitrary", "match"];
     }
 
-    return textModes;
+    return textSelectionTypes;
 }
 
 /**
- * Creates an empty filter for the specified mode.
+ * Creates an empty filter for the specified selection type.
  *
- * @param mode - filter mode
+ * @param selectionType - selection type
  * @param displayForm - display form reference
  * @param localIdentifier - optional local identifier
  * @returns empty filter of the specified type
  * @alpha
  */
-export function createEmptyFilterForMode(
-    mode: AttributeFilterMode,
+export function createEmptyFilterForSelectionType(
+    selectionType: AttributeFilterSelectionType,
     displayForm: ObjRef,
     localIdentifier?: string,
 ): IAttributeFilter {
-    if (mode === "text") {
+    if (selectionType === "text") {
         // Default to "all" operator (arbitrary negative with empty values = All)
         return newArbitraryAttributeFilter(displayForm, [], true, localIdentifier);
     }
 
-    // elements mode - create negative filter with empty selection (All)
+    // elements selection type - create negative filter with empty selection (All)
     return newNegativeAttributeFilter(displayForm, { uris: [] }, localIdentifier);
 }
 
 /**
- * Creates an empty filter for the specified public mode.
+ * Creates an empty filter for the specified public available selection type.
  *
  * @alpha
  */
-export function createEmptyFilterForAvailableMode(
-    mode: AttributeFilterAvailableMode,
+export function createEmptyFilterForAvailableSelectionType(
+    selectionType: AttributeFilterAvailableSelectionType,
     displayForm: ObjRef,
     localIdentifier?: string,
 ): IAttributeFilter {
-    if (mode === "elements") {
+    if (selectionType === "elements") {
         return newNegativeAttributeFilter(displayForm, { uris: [] }, localIdentifier);
     }
 
-    if (mode === "arbitrary") {
+    if (selectionType === "arbitrary") {
         return newArbitraryAttributeFilter(displayForm, [], true, localIdentifier);
     }
 

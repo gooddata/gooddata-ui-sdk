@@ -1343,6 +1343,12 @@
         display: flex;
         flex-direction: row;
         gap: 5px;
+
+        &.active {
+            .gd-gen-ai-chat__conversation__visualization__save button:not(:focus):not(:focus-visible) {
+                opacity: 1;
+            }
+        }
     }
 
     &__suggestions {
@@ -1375,8 +1381,7 @@
     }
 
     // Show menu button on hover or when menu is open (active class)
-    &:hover,
-    &.active {
+    &:hover {
         .gd-gen-ai-chat__conversation__visualization__save button {
             opacity: 1;
         }

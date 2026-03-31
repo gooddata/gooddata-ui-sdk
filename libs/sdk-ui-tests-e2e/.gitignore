@@ -1,4 +1,4 @@
 test-results/
 playwright/results/
-scripts/.bin
+scripts/.bin/
 dist/

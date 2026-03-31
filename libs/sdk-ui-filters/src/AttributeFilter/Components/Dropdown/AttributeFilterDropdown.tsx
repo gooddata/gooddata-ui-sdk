@@ -15,7 +15,7 @@ import {
     isArbitraryOperator,
 } from "../../textFilterOperatorUtils.js";
 import { AttributeFilterButtonErrorTooltip } from "../DropdownButton/AttributeFilterButtonErrorTooltip.js";
-import { TEXT_FILTER_MODE_BUTTON_ID } from "../FilterModeMenu/accessibility/elementId.js";
+import { TEXT_FILTER_MENU_BUTTON_ID } from "../FilterMenu/accessibility/elementId.js";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },
@@ -51,7 +51,7 @@ export function AttributeFilterDropdown() {
         fullscreenOnMobile,
         isCommittedSelectionInverted,
         isWorkingSelectionInverted,
-        currentFilterMode,
+        currentSelectionType,
         textFilterOperator,
         textFilterValues,
         textFilterLiteral,
@@ -76,7 +76,7 @@ export function AttributeFilterDropdown() {
     const selectionElements = withoutApply ? workingSelectionElements : committedSelectionElements;
     const operator = textFilterOperator ?? "is";
     const subtitleFilterRaw =
-        currentFilterMode === "text"
+        currentSelectionType === "text"
             ? withoutApply && currentDisplayFormRef
                 ? createFilterFromOperator(
                       operator,
@@ -91,7 +91,7 @@ export function AttributeFilterDropdown() {
     // showing invalid state (matching useLastValidValue usage for elements mode).
     const subtitleFilter = useLastValidValue(
         subtitleFilterRaw,
-        currentFilterMode !== "text" || !isSelectionInvalid || !withoutApply,
+        currentSelectionType !== "text" || !isSelectionInvalid || !withoutApply,
     );
     const subtitle = useResolveAttributeFilterSubtitle(
         isSelectionInverted,
@@ -99,7 +99,7 @@ export function AttributeFilterDropdown() {
         subtitleFilter,
     );
 
-    const initialFocus = currentFilterMode === "text" ? TEXT_FILTER_MODE_BUTTON_ID : undefined;
+    const initialFocus = currentSelectionType === "text" ? TEXT_FILTER_MENU_BUTTON_ID : undefined;
 
     const isMultiselect = selectionMode !== "single";
     const committedValues = getValuesFromFilter(textFilterCommittedFilter);
@@ -110,7 +110,7 @@ export function AttributeFilterDropdown() {
         arbitraryCount = Array.isArray(committedValues) ? committedValues.length : 0;
     }
     const textSelectionCount = isArbitraryOperator(operator) ? arbitraryCount : 0;
-    const selectionCount = currentFilterMode === "text" ? textSelectionCount : selectionElements.length;
+    const selectionCount = currentSelectionType === "text" ? textSelectionCount : selectionElements.length;
     const showSelectionCount = isMultiselect && selectionCount !== 0;
     const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>((e) => {
         //stop arrow keys from leaking to filter bar

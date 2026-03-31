@@ -9830,6 +9830,12 @@ export const selectAttributeFilterConfigsOverrides: DashboardSelector<IDashboard
 // @internal
 export const selectAttributeFilterConfigsOverridesByTab: DashboardSelector<Record<string, IDashboardAttributeFilterConfig[]>>;
 
+// @internal
+export const selectAttributeFilterConfigsSelectionTypeMap: DashboardSelector<Map<string, DashboardAttributeFilterSelectionType | undefined>>;
+
+// @internal
+export const selectAttributeFilterConfigsSelectionTypeMapByTab: DashboardSelector<Record<string, Map<string, DashboardAttributeFilterSelectionType | undefined>>>;
+
 // @public
 export const selectAttributeFilterDescendants: (localId: string) => DashboardSelector<string[]>;
 
@@ -10407,6 +10413,9 @@ export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDesc
 export const selectEntitlementMinimumRecurrenceMinutes: DashboardSelector<IEntitlementDescriptor | undefined>;
 
 // @alpha (undocumented)
+export const selectEntitlementUnlimitedAutomationRecipients: DashboardSelector<IEntitlementDescriptor | undefined>;
+
+// @alpha (undocumented)
 export const selectEntitlementUnlimitedAutomations: DashboardSelector<IEntitlementDescriptor | undefined>;
 
 // @alpha
@@ -10947,6 +10956,9 @@ export const selectLocale: DashboardSelector<ILocale>;
 
 // @internal
 export const selectMapboxToken: DashboardSelector<string | undefined>;
+
+// @alpha (undocumented)
+export const selectMaxAutomationRecipients: DashboardSelector<number>;
 
 // @alpha (undocumented)
 export const selectMenuButtonItemsVisibility: DashboardSelector<IMenuButtonItemsVisibility>;

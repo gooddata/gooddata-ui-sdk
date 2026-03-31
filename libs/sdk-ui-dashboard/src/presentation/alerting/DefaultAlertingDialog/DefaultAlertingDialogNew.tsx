@@ -61,7 +61,7 @@ import {
     selectIsWhiteLabeled,
     selectLocale,
 } from "../../../model/store/config/configSelectors.js";
-import { selectEntitlementMaxAutomationRecipients } from "../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectMaxAutomationRecipients } from "../../../model/store/entitlements/entitlementsSelectors.js";
 import { selectCanUseAiAssistant } from "../../../model/store/permissions/permissionsSelectors.js";
 import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../model/store/topBar/topBarSelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
@@ -73,7 +73,6 @@ import { useAutomationFiltersSelect } from "../../automationFilters/useAutomatio
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
-import { DEFAULT_MAX_RECIPIENTS } from "../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { type IAlertingDialogProps } from "../types.js";
 import { AlertTriggerIntervalSelect } from "./components/AlertTriggerIntervalSelect.js";
@@ -691,13 +690,7 @@ export function DefaultAlertingDialogNew(props: IAlertingDialogProps) {
 }
 
 function useDefaultAlertingDialogData() {
-    const maxAutomationsRecipientsEntitlement = useDashboardSelector(
-        selectEntitlementMaxAutomationRecipients,
-    );
-    const maxAutomationsRecipients = parseInt(
-        maxAutomationsRecipientsEntitlement?.value ?? DEFAULT_MAX_RECIPIENTS,
-        10,
-    );
+    const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
 
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
     const enableAutomationFilterContext = useEnableAlertingAutomationFilterContext();

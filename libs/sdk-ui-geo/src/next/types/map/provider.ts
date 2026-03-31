@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { GeoBasemap, GeoColorScheme } from "./basemap.js";
+import type { GeoBasemap } from "./basemap.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../common/coordinates.js";
 import { type IGeoPushpinChartConfig } from "../config/pushpinChart.js";
@@ -82,20 +82,12 @@ export interface IMapOptions {
     style?: string | StyleSpecification;
 
     /**
-     * Basemap identifier.
+     * Basemap style identifier (e.g. `"standard-light"`, `"satellite"`).
      *
      * @remarks
      * `undefined` uses the backend default basemap.
      */
     basemap?: GeoBasemap;
-
-    /**
-     * Color scheme for the map style.
-     *
-     * @remarks
-     * `undefined` uses the backend default color scheme for the selected basemap.
-     */
-    colorScheme?: GeoColorScheme;
 
     /**
      * Two-letter ISO 639-1 language code for map labels (e.g. `en`, `de`).

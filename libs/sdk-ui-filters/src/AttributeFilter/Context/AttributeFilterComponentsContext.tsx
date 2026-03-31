@@ -17,7 +17,7 @@ import {
     type IAttributeFilterElementsSelectItemProps,
     type IAttributeFilterElementsSelectProps,
 } from "../Components/ElementsSelect/types.js";
-import { type IFilterModeMenuProps } from "../Components/FilterModeMenu/types.js";
+import { type IFilterMenuProps } from "../Components/FilterMenu/types.js";
 import { type ITextFilterBodyProps } from "../Components/TextFilterBody/types.js";
 import { type IAttributeFilterCustomComponentProps } from "../types.js";
 import { ThrowMissingComponentError } from "../utils.js";
@@ -41,7 +41,7 @@ export interface IAttributeFilterComponentsContextValue {
     ElementsSelectActionsComponent: ComponentType<IAttributeFilterElementsActionsProps>;
     EmptyResultComponent: ComponentType<IAttributeFilterEmptyResultProps>;
     StatusBarComponent: ComponentType<IAttributeFilterStatusBarProps>;
-    FilterModeMenuComponent: ComponentType<IFilterModeMenuProps>;
+    FilterMenuComponent: ComponentType<IFilterMenuProps>;
     TextFilterBodyComponent: ComponentType<ITextFilterBodyProps>;
 }
 
@@ -89,8 +89,8 @@ const AttributeFilterComponentsContext = createContext<IAttributeFilterComponent
         "AttributeFilterComponentsContext",
     ),
     StatusBarComponent: ThrowMissingComponentError("StatusBarComponent", "AttributeFilterComponentsContext"),
-    FilterModeMenuComponent: ThrowMissingComponentError(
-        "FilterModeMenuComponent",
+    FilterMenuComponent: ThrowMissingComponentError(
+        "FilterMenuComponent",
         "AttributeFilterComponentsContext",
     ),
     TextFilterBodyComponent: ThrowMissingComponentError(

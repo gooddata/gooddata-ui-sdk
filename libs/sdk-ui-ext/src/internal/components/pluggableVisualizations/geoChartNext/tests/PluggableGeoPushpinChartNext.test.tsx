@@ -121,7 +121,9 @@ describe("PluggableGeoPushpinChartNext", () => {
         return (lastCall[0] as ReactElement).props;
     }
 
-    afterEach(() => {
+    afterEach(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
         mockRenderFun.mockReset();
         vi.restoreAllMocks();
         vi.unstubAllGlobals();

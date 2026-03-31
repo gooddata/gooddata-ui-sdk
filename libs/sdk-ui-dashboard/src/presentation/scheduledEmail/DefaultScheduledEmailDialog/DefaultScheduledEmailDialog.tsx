@@ -42,7 +42,7 @@ import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDia
 import { MessageForm } from "./components/MessageForm/MessageForm.js";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
 import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
-import { DEFAULT_MAX_RECIPIENTS, SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
+import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
@@ -62,8 +62,8 @@ import {
 } from "../../../model/store/config/configSelectors.js";
 import { selectIsCrossFiltering } from "../../../model/store/drill/drillSelectors.js";
 import {
-    selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
+    selectMaxAutomationRecipients,
 } from "../../../model/store/entitlements/entitlementsSelectors.js";
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
 import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../model/store/topBar/topBarSelectors.js";
@@ -777,13 +777,7 @@ function useDefaultScheduledEmailDialogData({
     const settings = useDashboardSelector(selectSettings);
     const formatLocale = settings?.formatLocale;
     const weekStart = useDashboardSelector(selectWeekStart);
-    const maxAutomationsRecipientsEntitlement = useDashboardSelector(
-        selectEntitlementMaxAutomationRecipients,
-    );
-    const maxAutomationsRecipients = parseInt(
-        maxAutomationsRecipientsEntitlement?.value ?? DEFAULT_MAX_RECIPIENTS,
-        10,
-    );
+    const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
     const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
         selectEntitlementMinimumRecurrenceMinutes,
     );

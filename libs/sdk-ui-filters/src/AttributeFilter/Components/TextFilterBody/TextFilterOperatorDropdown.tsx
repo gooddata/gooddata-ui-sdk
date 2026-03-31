@@ -13,7 +13,7 @@ import {
     type UiListboxAriaAttributes,
 } from "@gooddata/sdk-ui-kit";
 
-import { type AttributeFilterTextMode } from "../../filterModeTypes.js";
+import { type AttributeFilterTextSelectionType } from "../../selectionTypes.js";
 import { type TextFilterOperator } from "../../textFilterOperatorUtils.js";
 
 /**
@@ -40,7 +40,7 @@ export interface ITextFilterOperatorDropdownProps {
     /**
      * Available text sub-modes.
      */
-    availableTextModes?: AttributeFilterTextMode[];
+    availableTextModes?: AttributeFilterTextSelectionType[];
 
     /**
      * Optional id of the operator trigger button.

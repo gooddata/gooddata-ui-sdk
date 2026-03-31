@@ -25,14 +25,17 @@ import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
 import { useTextFilterController } from "./useTextFilterController.js";
 import { type ITextFilterState, isTextStateInvalid } from "./useTextFilterInnerController.js";
-import { type AttributeFilterAvailableMode, type AttributeFilterMode } from "../filterModeTypes.js";
 import {
-    createEmptyFilterForAvailableMode,
-    createEmptyFilterForMode,
-    getAvailableTextModes,
-    getFilterModeFromFilter,
-    mapAvailableModesToInternal,
-} from "../filterModeUtils.js";
+    type AttributeFilterAvailableSelectionType,
+    type AttributeFilterSelectionType,
+} from "../selectionTypes.js";
+import {
+    createEmptyFilterForAvailableSelectionType,
+    createEmptyFilterForSelectionType,
+    getAvailableTextSelectionTypes,
+    getSelectionTypeFromFilter,
+    mapAvailableSelectionTypesToInternal,
+} from "../selectionTypeUtils.js";
 import { createFilterFromOperator, isArbitraryOperator } from "../textFilterOperatorUtils.js";
 import {
     type IAttributeFilterCoreProps,
@@ -54,7 +57,7 @@ export type IUseAttributeFilterControllerProps = Omit<
 
 const NOOP_ON_APPLY: OnApplyCallbackType = () => {};
 const NOOP_ON_CHANGE: OnChangeCallbackType = () => {};
-const DEFAULT_AVAILABLE_FILTER_MODES: AttributeFilterAvailableMode[] = ["elements"];
+const DEFAULT_AVAILABLE_SELECTION_TYPES: AttributeFilterAvailableSelectionType[] = ["elements"];
 
 /**
  * UseAttributeFilterController hook is responsible for initialization of AttributeFilterHandler {@link IMultiSelectAttributeFilterHandler} Core API for Attribute Filter components
@@ -101,7 +104,7 @@ export const useAttributeFilterController = (
         menuConfig,
     } = props;
 
-    const availableFilterModes = menuConfig?.availableFilterModes ?? DEFAULT_AVAILABLE_FILTER_MODES;
+    const availableSelectionTypes = menuConfig?.availableSelectionTypes ?? DEFAULT_AVAILABLE_SELECTION_TYPES;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
     const workspace = useWorkspaceStrict(workspaceInput, "AttributeFilter");
@@ -118,17 +121,17 @@ export const useAttributeFilterController = (
         connectToPlaceholder,
     );
 
-    const [filterMode, setFilterMode] = useState<AttributeFilterMode>(
-        () => getFilterModeFromFilter(resolvedFilter) ?? "elements",
+    const [selectionType, setSelectionType] = useState<AttributeFilterSelectionType>(
+        () => getSelectionTypeFromFilter(resolvedFilter) ?? "elements",
     );
     useEffect(() => {
-        setFilterMode(getFilterModeFromFilter(resolvedFilter) ?? "elements");
+        setSelectionType(getSelectionTypeFromFilter(resolvedFilter) ?? "elements");
     }, [resolvedFilter]);
 
-    const isTextMode = filterMode === "text";
+    const isTextSelectionType = selectionType === "text";
 
-    const originalFilterMode = getFilterModeFromFilter(resolvedFilter);
-    const filterModeChanged = originalFilterMode !== filterMode;
+    const originalSelectionType = getSelectionTypeFromFilter(resolvedFilter);
+    const selectionTypeChanged = originalSelectionType !== selectionType;
 
     // The display form from the filter definition itself. For elements filters this is
     // always the primary label. For text filters it is whatever label the text filter uses.
@@ -174,19 +177,19 @@ export const useAttributeFilterController = (
     const elementsModeFilter = useMemo(
         (): IAttributeFilter =>
             (!resolvedFilter || originalIsTextFilter
-                ? createEmptyFilterForMode("elements", resolvedDisplayFormRef)
+                ? createEmptyFilterForSelectionType("elements", resolvedDisplayFormRef)
                 : resolvedFilter) as IAttributeFilter,
         [resolvedFilter, originalIsTextFilter, resolvedDisplayFormRef],
     );
 
-    const effectiveOnApply = isTextMode ? NOOP_ON_APPLY : (onApply ?? NOOP_ON_APPLY);
-    const effectiveOnChange = isTextMode
+    const effectiveOnApply = isTextSelectionType ? NOOP_ON_APPLY : (onApply ?? NOOP_ON_APPLY);
+    const effectiveOnChange = isTextSelectionType
         ? connectToPlaceholder
             ? (((filter: IAttributeFilter) => setConnectedPlaceholderValue(filter)) as OnChangeCallbackType)
             : NOOP_ON_CHANGE
         : (onChange ?? NOOP_ON_CHANGE);
-    const effectiveOnError = isTextMode ? undefined : onError;
-    const effectiveOnInitLoadingChanged = isTextMode ? undefined : onInitLoadingChanged;
+    const effectiveOnError = isTextSelectionType ? undefined : onError;
+    const effectiveOnInitLoadingChanged = isTextSelectionType ? undefined : onInitLoadingChanged;
 
     const filterDetailRequestHandler = useFilterDetailRequestHandler(backend, workspace);
 
@@ -198,8 +201,8 @@ export const useAttributeFilterController = (
 
     const limitingDateFilters = useResolveDependentDateFiltersInput(dependentDateFilters);
 
-    const availableInternalFilterModes = mapAvailableModesToInternal(availableFilterModes);
-    const availableTextFilterModes = getAvailableTextModes(availableFilterModes);
+    const availableInternalSelectionTypes = mapAvailableSelectionTypesToInternal(availableSelectionTypes);
+    const availableTextSelectionTypes = getAvailableTextSelectionTypes(availableSelectionTypes);
 
     const localId = resolvedFilter ? filterLocalIdentifier(resolvedFilter) : undefined;
 
@@ -235,8 +238,8 @@ export const useAttributeFilterController = (
         supportsShowingFilteredElements: supportsShowingFilteredElements ?? false,
         supportsSingleSelectDependentFilters: supportsSingleSelectDependentFilters ?? false,
         setConnectedPlaceholderValue,
-        currentFilterMode: filterMode,
-        filterModeChanged,
+        currentSelectionType: selectionType,
+        selectionTypeChanged,
     });
 
     // ─── Text state change handler ─────────────────────────────────────
@@ -305,15 +308,15 @@ export const useAttributeFilterController = (
         if (originalIsTextFilter && resolvedFilter) {
             return resolvedFilter;
         }
-        if (!isTextMode) {
-            return createEmptyFilterForMode("text", effectiveDisplayFormRef, localId);
+        if (!isTextSelectionType) {
+            return createEmptyFilterForSelectionType("text", effectiveDisplayFormRef, localId);
         }
         if (cachedTextModeFilter) {
             return cachedTextModeFilter;
         }
-        return createEmptyFilterForMode("text", effectiveDisplayFormRef, localId);
+        return createEmptyFilterForSelectionType("text", effectiveDisplayFormRef, localId);
     }, [
-        isTextMode,
+        isTextSelectionType,
         originalIsTextFilter,
         resolvedFilter,
         effectiveDisplayFormRef,
@@ -323,7 +326,7 @@ export const useAttributeFilterController = (
 
     // Sync cache in effect — never mutate during render (React purity rules).
     useEffect(() => {
-        if (!isTextMode) {
+        if (!isTextSelectionType) {
             setCachedTextModeFilter(null);
             return;
         }
@@ -331,18 +334,18 @@ export const useAttributeFilterController = (
             return;
         }
         setCachedTextModeFilter(
-            (prev) => prev ?? createEmptyFilterForMode("text", effectiveDisplayFormRef, localId),
+            (prev) => prev ?? createEmptyFilterForSelectionType("text", effectiveDisplayFormRef, localId),
         );
-    }, [isTextMode, originalIsTextFilter, resolvedFilter, effectiveDisplayFormRef, localId]);
+    }, [isTextSelectionType, originalIsTextFilter, resolvedFilter, effectiveDisplayFormRef, localId]);
 
     const textFilterController = useTextFilterController({
-        isTextMode,
+        isTextMode: isTextSelectionType,
         backend,
         workspace,
         filterInput: textModeFilter,
         onTextStateChange,
-        availableFilterModes,
-        filterModeChanged,
+        availableSelectionTypes,
+        selectionTypeChanged,
         withoutApply,
     });
 
@@ -361,12 +364,12 @@ export const useAttributeFilterController = (
         [elementsResetForModeSwitchFn],
     );
 
-    const handleFilterModeChange = useCallback(
+    const handleSelectionTypeChange = useCallback(
         (
             newFilter: IAttributeFilter | undefined,
             newDisplayAsLabel: ObjRef | undefined,
-            previousMode: AttributeFilterMode,
-            nextMode: AttributeFilterMode,
+            previousMode: AttributeFilterSelectionType,
+            nextMode: AttributeFilterSelectionType,
         ) => {
             if (newFilter) {
                 if (connectToPlaceholder) {
@@ -375,7 +378,7 @@ export const useAttributeFilterController = (
                     if (previousMode === nextMode) {
                         return;
                     }
-                    setFilterMode(nextMode);
+                    setSelectionType(nextMode);
 
                     if (nextMode === "elements") {
                         elementsResetForModeSwitch(newFilter, newDisplayAsLabel);
@@ -409,19 +412,19 @@ export const useAttributeFilterController = (
     );
 
     const { currentDisplayFormRef: elementsCurrentDisplayFormRef } = elementsFilterController;
-    const onFilterModeChangeForControllers = useCallback(
-        (newMode: AttributeFilterMode) => {
+    const onSelectionTypeChangeForControllers = useCallback(
+        (newMode: AttributeFilterSelectionType) => {
             if (!resolvedDisplayFormRef) {
                 return;
             }
-            let nextAvailableMode: AttributeFilterAvailableMode = "elements";
+            let nextAvailableMode: AttributeFilterAvailableSelectionType = "elements";
 
-            if (newMode === filterMode) {
+            if (newMode === selectionType) {
                 return;
             }
 
             if (newMode === "text") {
-                if (availableTextFilterModes.includes("arbitrary")) {
+                if (availableTextSelectionTypes.includes("arbitrary")) {
                     nextAvailableMode = "arbitrary";
                 } else {
                     nextAvailableMode = "match";
@@ -436,17 +439,17 @@ export const useAttributeFilterController = (
 
             const displayAsDisplayFormForNewFilter = newMode === "text" ? undefined : userSelectedDisplayForm;
 
-            const newFilter = createEmptyFilterForAvailableMode(
+            const newFilter = createEmptyFilterForAvailableSelectionType(
                 nextAvailableMode,
                 displayFormForNewFilter,
                 localId,
             );
-            handleFilterModeChange(newFilter, displayAsDisplayFormForNewFilter, filterMode, newMode);
+            handleSelectionTypeChange(newFilter, displayAsDisplayFormForNewFilter, selectionType, newMode);
         },
         [
-            availableTextFilterModes,
-            filterMode,
-            handleFilterModeChange,
+            availableTextSelectionTypes,
+            selectionType,
+            handleSelectionTypeChange,
             localId,
             userSelectedDisplayForm,
             elementsCurrentDisplayFormRef,
@@ -540,23 +543,23 @@ export const useAttributeFilterController = (
 
     // In text mode, dropdown close must also clear the elements search string
     // (used for autocomplete) in addition to resetting text controller state.
-    // Also revert filterMode to the original mode derived from the resolved filter
+    // Also revert selectionType to the original mode derived from the resolved filter
     // so that closing without Apply reverts an uncommitted mode switch.
     const { onReset: onResetElements } = elementsFilterController;
     const { onReset: onResetText } = textFilterController;
     const onResetTextMode = useCallback(() => {
         onResetText?.();
         onResetElements();
-        setFilterMode(getFilterModeFromFilter(resolvedFilter) ?? "elements");
+        setSelectionType(getSelectionTypeFromFilter(resolvedFilter) ?? "elements");
     }, [onResetText, onResetElements, resolvedFilter]);
 
-    // Wrap elements onReset to also revert filterMode on dropdown close without Apply.
+    // Wrap elements onReset to also revert selectionType on dropdown close without Apply.
     const onResetElementsMode = useCallback(() => {
         onResetElements();
-        setFilterMode(getFilterModeFromFilter(resolvedFilter) ?? "elements");
+        setSelectionType(getSelectionTypeFromFilter(resolvedFilter) ?? "elements");
     }, [onResetElements, resolvedFilter]);
 
-    if (isTextMode) {
+    if (isTextSelectionType) {
         return {
             attribute: elementsFilterController.attribute,
             displayForms: elementsFilterController.displayForms,
@@ -587,11 +590,11 @@ export const useAttributeFilterController = (
             filterDetailRequestHandler,
             setDisplayForm,
             resetForModeSwitch: textFilterController.resetForModeSwitch ?? noop,
-            onFilterModeChange:
-                availableInternalFilterModes.length > 1 ? onFilterModeChangeForControllers : undefined,
-            currentFilterMode: filterMode,
-            availableInternalFilterModes,
-            availableTextFilterModes,
+            onSelectionTypeChange:
+                availableInternalSelectionTypes.length > 1 ? onSelectionTypeChangeForControllers : undefined,
+            currentSelectionType: selectionType,
+            availableInternalSelectionTypes,
+            availableTextSelectionTypes,
             offset: 0,
             limit: 0,
             isLoadingInitialElementsPage: elementsFilterController.isLoadingInitialElementsPage,
@@ -625,10 +628,10 @@ export const useAttributeFilterController = (
         // so header menu changes in elements mode also update userSelectedDisplayForm.
         setDisplayForm,
         onReset: onResetElementsMode,
-        currentFilterMode: filterMode,
-        availableInternalFilterModes,
-        availableTextFilterModes,
-        onFilterModeChange:
-            availableInternalFilterModes.length > 1 ? onFilterModeChangeForControllers : undefined,
+        currentSelectionType: selectionType,
+        availableInternalSelectionTypes,
+        availableTextSelectionTypes,
+        onSelectionTypeChange:
+            availableInternalSelectionTypes.length > 1 ? onSelectionTypeChangeForControllers : undefined,
     };
 };

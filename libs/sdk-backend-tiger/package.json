@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.28.0-alpha.8",
+    "version": "11.28.0-alpha.9",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -56,6 +56,7 @@
         "@gooddata/emailjs-mime-codec-new": "3.0.2",
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
+        "@gooddata/sdk-code-convertors": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/util": "workspace:*",
         "axios": "^1.9.0",

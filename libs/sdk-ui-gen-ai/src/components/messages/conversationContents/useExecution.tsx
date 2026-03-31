@@ -2,32 +2,30 @@
 
 import { useMemo } from "react";
 
-import { type IChatVisualisationDefinition } from "@gooddata/sdk-backend-spi";
-import {
-    type IAttribute,
-    type IFilter,
-    type IMeasure,
-    type IMeasureDefinition,
-    type ISortItem,
-} from "@gooddata/sdk-model";
+import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
+import { type IBucket, type IFilter, type ISortItem } from "@gooddata/sdk-model";
 
 export interface IExecution {
-    vis?: IChatVisualisationDefinition;
-    metrics: IMeasure<IMeasureDefinition>[];
-    dimensions: IAttribute[];
+    buckets: IBucket[];
     filters: IFilter[];
     sorts: ISortItem[];
 }
 
-export const useExecution = (vis?: IChatVisualisationDefinition): IExecution => {
+export const useExecution = (
+    visualisation?: IChatConversationVisualisationContent["visualization"],
+): IExecution => {
     return useMemo(() => {
-        //TODO: s.hacker Visualisation
+        if (!visualisation) {
+            return {
+                buckets: [],
+                filters: [],
+                sorts: [],
+            };
+        }
         return {
-            vis,
-            metrics: [],
-            dimensions: [],
-            filters: [],
-            sorts: [],
+            buckets: visualisation.insight.buckets,
+            filters: visualisation.insight.filters,
+            sorts: visualisation.insight.sorts,
         };
-    }, [vis]);
+    }, [visualisation]);
 };

@@ -8,6 +8,7 @@ import { declarativeVisualisationToYaml } from "../from/declarativeVisualisation
 import {
     yamlBucketsToDeclarative,
     yamlVisualisationToDeclarative,
+    yamlVisualisationToMetadataObject,
 } from "../to/yamlVisualisationToDeclarative.js";
 import type { ExportEntities, FromEntities } from "../types.js";
 
@@ -111,6 +112,49 @@ describe("visualisation conversion", () => {
             const buckets = yamlBucketsToDeclarative(input);
             expect(buckets).toHaveLength(3);
             buckets.forEach((b) => expect(b.items).toHaveLength(0));
+        });
+    });
+
+    describe("yamlVisualisationToMetadataObject", () => {
+        it("should convert simple bar chart to JsonApi format", () => {
+            const input: Visualisation = {
+                type: "bar_chart",
+                id: "bar1",
+                title: "Bar Chart Title",
+                description: "Bar Chart Description",
+                tags: ["tag1", "tag2"],
+                query: {
+                    fields: {
+                        m1: { using: "metric/revenue" },
+                        a1: { using: "label/region" },
+                    },
+                },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+            };
+
+            const result = yamlVisualisationToMetadataObject(emptyEntities, input);
+            expect(result.type).toBe("visualizationObject");
+            expect(result.id).toBe("bar1");
+            expect(result.attributes).toBeDefined();
+            expect(result.attributes.title).toBe("Bar Chart Title");
+            expect(result.attributes.description).toBe("Bar Chart Description");
+            expect(result.attributes.tags).toEqual(["tag1", "tag2"]);
+            expect(result.attributes.content).toBeDefined();
+            expect((result.attributes.content as any).visualizationUrl).toBe("local:bar");
+        });
+
+        it("should handle is_hidden and show_in_ai_results correctly", () => {
+            const input: Visualisation = {
+                type: "bar_chart",
+                id: "bar1",
+                is_hidden: true,
+                show_in_ai_results: false,
+                query: { fields: {} },
+            };
+
+            const result = yamlVisualisationToMetadataObject(emptyEntities, input);
+            expect(result.attributes.isHidden).toBe(true);
         });
     });
 

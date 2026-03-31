@@ -50,9 +50,8 @@ export function GeoChartDataLoader({
             backend,
             mapStyle: props.config?.mapStyle,
             basemap: props.config?.basemap,
-            colorScheme: props.config?.colorScheme,
         }),
-        [backend, props.config?.mapStyle, props.config?.basemap, props.config?.colorScheme],
+        [backend, props.config?.mapStyle, props.config?.basemap],
     );
     const [mapError, setMapError] = useState<GoodDataSdkError | null>(null);
     const [previousMapInitializationInputs, setPreviousMapInitializationInputs] =

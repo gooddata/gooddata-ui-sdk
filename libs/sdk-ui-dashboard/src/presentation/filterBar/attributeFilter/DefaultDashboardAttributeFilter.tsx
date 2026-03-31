@@ -56,7 +56,7 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
 import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectAvailableAttributeFilterModes,
+    selectAvailableAttributeFilterSelectionTypes,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectLocale,
@@ -174,7 +174,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     );
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
-    const allAvailableFilterModes = useDashboardSelector(selectAvailableAttributeFilterModes);
+    const allAvailableSelectionTypes = useDashboardSelector(selectAvailableAttributeFilterSelectionTypes);
     const attributeFilterConfigsSelectionTypeMapByTab = useDashboardSelector(
         selectAttributeFilterConfigsSelectionTypeMapByTab,
     );
@@ -189,23 +189,23 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         [tabId, attributeFilterConfigsSelectionTypeMapByTab, attributeFilterConfigsSelectionTypeMapActive],
     );
     const filterSelectionType = selectionTypeMap.get(filterLocalId!);
-    const availableFilterModes = useMemo(() => {
+    const availableSelectionTypes = useMemo(() => {
         // Respect the per-filter selectionType config in both edit and view mode
         if (filterSelectionType === "list") {
-            return allAvailableFilterModes.filter((mode) => mode === "elements");
+            return allAvailableSelectionTypes.filter((mode) => mode === "elements");
         }
         if (filterSelectionType === "text") {
-            return allAvailableFilterModes.filter((mode) => mode !== "elements");
+            return allAvailableSelectionTypes.filter((mode) => mode !== "elements");
         }
         if (filterSelectionType === "listOrText") {
-            return allAvailableFilterModes;
+            return allAvailableSelectionTypes;
         }
         // Fallback for existing filters without config: derive from current filter type
         if (standardFilter) {
-            return allAvailableFilterModes.filter((mode) => mode === "elements");
+            return allAvailableSelectionTypes.filter((mode) => mode === "elements");
         }
-        return allAvailableFilterModes.filter((mode) => mode !== "elements");
-    }, [allAvailableFilterModes, standardFilter, filterSelectionType]);
+        return allAvailableSelectionTypes.filter((mode) => mode !== "elements");
+    }, [allAvailableSelectionTypes, standardFilter, filterSelectionType]);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -239,7 +239,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         selectionTypeSingleDisabledTooltip,
     } = useAttributeFilterConfigTexts();
     // Show available mode dropdown only when at least one text mode FF is enabled
-    const showSelectionTypeSection = allAvailableFilterModes.some(
+    const showSelectionTypeSection = allAvailableSelectionTypes.some(
         (mode) => mode === "arbitrary" || mode === "match",
     );
 
@@ -751,7 +751,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 enableImmediateAttributeFilterDisplayAsLabelMigration
             }
             withoutApply={isApplyAllAtOnceEnabledAndSet}
-            menuConfig={{ availableFilterModes, showLabelsSwitch: false }}
+            menuConfig={{ availableSelectionTypes, showLabelsSwitch: false }}
             hideTooltips={!isEditMode}
             showHeader={showSelectionTypeSection}
         />

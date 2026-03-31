@@ -4,7 +4,7 @@ import { useIntl } from "react-intl";
 
 import { type IAttributeElement, type IAttributeFilter } from "@gooddata/sdk-model";
 
-import { getFilterModeFromFilter } from "../filterModeUtils.js";
+import { getSelectionTypeFromFilter } from "../selectionTypeUtils.js";
 import { getAttributeFilterSubtitle, getExtendedAttributeFilterSubtitle } from "../utils.js";
 
 /**
@@ -18,8 +18,8 @@ export function useResolveAttributeFilterSubtitle(
     const intl = useIntl();
 
     // For non-elements modes, use extended subtitle
-    const mode = getFilterModeFromFilter(filter);
-    if (mode !== "elements" && filter) {
+    const selectionType = getSelectionTypeFromFilter(filter);
+    if (selectionType !== "elements" && filter) {
         return getExtendedAttributeFilterSubtitle(filter, intl);
     }
 

@@ -1643,27 +1643,27 @@
         "text": "doesn't end with",
         "crowdinContext": "Shortened text filter operator label for negative ends with used in filter summary."
     },
-    "attributeFilter.mode.selection": {
+    "attributeFilter.selectionType.selection": {
         "text": "Selection",
         "crowdinContext": "Section title for choosing attribute filter mode."
     },
-    "attributeFilter.mode.selection.tooltip": {
+    "attributeFilter.selectionType.selection.tooltip": {
         "text": "List shows all values for checkbox selection. Text finds values that match what you type.",
         "crowdinContext": "Tooltip explaining the difference between list and text attribute filter modes."
     },
-    "attributeFilter.mode.list": {
+    "attributeFilter.selectionType.list": {
         "text": "List",
         "crowdinContext": "Attribute filter mode label for list selection."
     },
-    "attributeFilter.mode.text": {
+    "attributeFilter.selectionType.text": {
         "text": "Text",
         "crowdinContext": "Attribute filter mode label for text selection."
     },
-    "attributeFilter.mode.valuesAs": {
+    "attributeFilter.selectionType.valuesAs": {
         "text": "Values as",
         "crowdinContext": "Section title for choosing which display form to use for filter values."
     },
-    "attributeFilter.mode.valuesAs.tooltip": {
+    "attributeFilter.selectionType.valuesAs.tooltip": {
         "text": "Choose which label is used for value lists and typed-text matching.",
         "crowdinContext": "Tooltip explaining the values as display form selection in attribute filter."
     },
