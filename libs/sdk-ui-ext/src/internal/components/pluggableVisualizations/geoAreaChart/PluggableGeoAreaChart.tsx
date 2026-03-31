@@ -38,6 +38,7 @@ import {
 import { buildAreaVisualizationConfig } from "./geoAreaConfigBuilder.js";
 import { BUCKETS } from "../../../constants/bucket.js";
 import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
+import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
 import { GEOAREA_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_AREA_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
@@ -59,6 +60,11 @@ import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConf
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { extractControls } from "../geoChartNext/geoAttributeHelper.js";
 import {
+    GeoBasemapItemsLoader,
+    getGeoBasemapDropdownItems,
+    getGeoConfigurationPanelIsLoading,
+} from "../geoCommon/geoBasemapConfiguration.js";
+import {
     getGeoControlsWithFallback,
     getGeoVisualizationPropertiesWithFallback,
 } from "../geoCommon/geoVisualizationPropertiesWithFallback.js";
@@ -79,15 +85,17 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 1;
  * @alpha
  */
 export class PluggableGeoAreaChart extends PluggableBaseChart {
-    private backend: IAnalyticalBackend;
-    private workspace: string;
-    private liveMapView = new LiveMapViewTracker();
+    private readonly backend: IAnalyticalBackend;
+    private readonly workspace: string;
+    private readonly liveMapView = new LiveMapViewTracker();
+    private readonly basemapItemsLoader: GeoBasemapItemsLoader;
 
     constructor(props: IVisConstruct) {
         super(props);
         this.type = VisualizationTypes.CHOROPLETH;
         this.backend = props.backend;
         this.workspace = props.projectId;
+        this.basemapItemsLoader = new GeoBasemapItemsLoader(this.backend);
         this.initializeProperties(props.visualizationProperties);
         this.initializePropertiesMeta();
     }
@@ -248,23 +256,40 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         const configPanelElement = this.getConfigPanelElement();
         const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(this.featureFlags);
         this.liveMapView.resetIfInsightChanged(insight);
+        this.basemapItemsLoader.ensureLoaded(() => {
+            this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+        });
 
         if (configPanelElement) {
+            const resolvedProperties = getGeoVisualizationPropertiesWithFallback(
+                this.visualizationProperties,
+                this.getInsightControlsWithFallback(insight),
+            );
+            const currentBasemap = sanitizeGeoMapStyleOptions({
+                basemap: resolvedProperties.controls?.["basemap"],
+                legacyTileset: resolvedProperties.controls?.["tileset"],
+            }).basemap;
+            const basemapItems = getGeoBasemapDropdownItems(
+                this.basemapItemsLoader.getItems(),
+                currentBasemap,
+            );
+            const isLoading = getGeoConfigurationPanelIsLoading(
+                this.isLoading,
+                this.basemapItemsLoader.getIsLoading(),
+            );
             this.renderFun(
                 <GeoAreaConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
-                    properties={getGeoVisualizationPropertiesWithFallback(
-                        this.visualizationProperties,
-                        this.getInsightControlsWithFallback(insight),
-                    )}
+                    properties={resolvedProperties}
                     references={this.references}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
                     colors={this.colors}
                     type={this.type}
                     isError={this.getIsError()}
-                    isLoading={this.isLoading}
+                    isLoading={isLoading}
+                    basemapItems={basemapItems}
                     featureFlags={this.featureFlags}
                     permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}

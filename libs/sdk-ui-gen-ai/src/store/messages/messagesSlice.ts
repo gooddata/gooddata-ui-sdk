@@ -574,10 +574,16 @@ const messagesSlice = createSlice({
                 const visualization: IChatConversationMultipartLocalPart | undefined =
                     assistantMessage.content.parts
                         .filter((filter) => filter.type === "visualization")
-                        .find((content) => content.visualization.id === payload.visualizationId);
+                        .find(
+                            (content) =>
+                                content.visualization?.insight.identifier === payload.visualizationId,
+                        );
 
                 if (visualization) {
-                    visualization.saving = true;
+                    visualization.saving = {
+                        started: true,
+                        completed: false,
+                    };
                 }
             } else {
                 const visualization = assistantMessage.content
@@ -613,10 +619,16 @@ const messagesSlice = createSlice({
                 const visualization: IChatConversationMultipartLocalPart | undefined =
                     assistantMessage.content.parts
                         .filter((filter) => filter.type === "visualization")
-                        .find((content) => content.visualization.id === payload.visualizationId);
+                        .find(
+                            (content) =>
+                                content.visualization?.insight.identifier === payload.visualizationId,
+                        );
 
                 if (visualization) {
-                    visualization.saving = false;
+                    visualization.saving = {
+                        started: false,
+                        completed: false,
+                    };
                     visualization.error = payload.error;
                 }
             } else {
@@ -651,10 +663,17 @@ const messagesSlice = createSlice({
                 const visualization: IChatConversationMultipartLocalPart | undefined =
                     assistantMessage.content.parts
                         .filter((filter) => filter.type === "visualization")
-                        .find((content) => content.visualization.id === payload.visualizationId);
+                        .find(
+                            (content) =>
+                                content.visualization?.insight.identifier === payload.visualizationId,
+                        );
 
                 if (visualization) {
-                    visualization.saving = false;
+                    visualization.saving = {
+                        started: true,
+                        completed: true,
+                    };
+                    visualization.visualization.insight.identifier = payload.savedVisualizationId;
                 }
             } else {
                 const visualization = assistantMessage.content
@@ -696,7 +715,10 @@ const messagesSlice = createSlice({
                 const visualization: IChatConversationMultipartLocalPart | undefined =
                     assistantMessage.content.parts
                         .filter((filter) => filter.type === "visualization")
-                        .find((content) => content.visualization.id === payload.visualizationId);
+                        .find(
+                            (content) =>
+                                content.visualization?.insight.identifier === payload.visualizationId,
+                        );
 
                 if (visualization) {
                     delete visualization.reporting;

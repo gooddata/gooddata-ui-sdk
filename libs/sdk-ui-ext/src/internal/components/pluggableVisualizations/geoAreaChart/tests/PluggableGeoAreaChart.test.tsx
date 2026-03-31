@@ -66,7 +66,9 @@ describe("PluggableGeoAreaChart", () => {
         return { visualization: new PluggableGeoAreaChart(props), onError, pushData };
     }
 
-    afterEach(() => {
+    afterEach(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
         mockRenderFun.mockReset();
     });
 

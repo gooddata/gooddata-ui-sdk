@@ -760,7 +760,7 @@ export type IChatConversationToolResultContent = {
 // @internal
 export type IChatConversationVisualisationContent = {
     type: "visualization";
-    visualization: IChatVisualisationDefinition;
+    visualization: IInsight;
 };
 
 // @internal
@@ -812,42 +812,6 @@ export interface IChatThreadQuery {
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery;
     withSearchLimit(searchLimit: number): IChatThreadQuery;
     withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
-}
-
-// @internal
-export interface IChatVisualisationDefinition {
-    // (undocumented)
-    config: {
-        forecast?: {
-            forecastPeriod: number;
-            confidenceLevel: number;
-            seasonal: boolean;
-        };
-        anomalyDetection?: {
-            sensitivity: "LOW" | "MEDIUM" | "HIGH";
-        };
-        clustering?: {
-            numberOfClusters: number;
-            threshold?: number;
-        };
-        whatIf?: {
-            scenarios: {
-                label: string;
-                adjustments: {
-                    metricId: string;
-                    metricType: "metric" | "fact" | "attribute";
-                    scenarioMaql: string;
-                }[];
-            }[];
-            includeBaseline?: boolean;
-        };
-    };
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    title: string;
-    // (undocumented)
-    type: string;
 }
 
 // @internal
@@ -1452,12 +1416,19 @@ export interface IGeoService {
     collections(): IOrganizationGeoCollectionsService;
     getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
     getDefaultStyleSpriteIcons(): Promise<string[]>;
+    getStyleById(styleId: string, params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
+    getStyles(): Promise<IGeoStyleListItem[]>;
+}
+
+// @alpha
+export interface IGeoStyleListItem {
+    id: string;
+    link: string;
+    title: string;
 }
 
 // @alpha
 export interface IGeoStyleParams {
-    basemap?: string;
-    colorScheme?: string;
     language?: string;
 }
 

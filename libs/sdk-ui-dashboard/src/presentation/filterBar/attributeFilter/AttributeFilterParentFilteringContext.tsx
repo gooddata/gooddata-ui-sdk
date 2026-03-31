@@ -236,6 +236,10 @@ export function AttributeFilterParentFilteringProvider({
             const filterLocalId = dashboardAttributeFilterItemLocalIdentifier(filterItem);
             const displayForm = dashboardAttributeFilterItemDisplayForm(filterItem);
 
+            // Only include title if the filter has a custom (non-default) title,
+            // otherwise leave it unset so saved views can match without a title mismatch
+            const explicitTitle = title === defaultAttributeFilterTitle ? undefined : title;
+
             if (selectionType === DashboardAttributeFilterSelectionTypeValues.LIST && filterLocalId) {
                 replaceFilterItem(
                     filterLocalId,
@@ -245,7 +249,7 @@ export function AttributeFilterParentFilteringProvider({
                             negativeSelection: true,
                             attributeElements: { uris: [] },
                             localIdentifier: filterLocalId,
-                            title: title ?? defaultAttributeFilterTitle,
+                            title: explicitTitle,
                         },
                     }),
                 );
@@ -258,7 +262,7 @@ export function AttributeFilterParentFilteringProvider({
                             values: [],
                             negativeSelection: true,
                             localIdentifier: filterLocalId,
-                            title: title ?? defaultAttributeFilterTitle,
+                            title: explicitTitle,
                         },
                     }),
                 );

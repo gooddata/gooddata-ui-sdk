@@ -11,7 +11,7 @@ import { ShortenedText, UiIcon } from "@gooddata/sdk-ui-kit";
 import { AttributeFilterDetailsBubble } from "./AttributeFilterDetailsBubble.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
-import { type AttributeFilterMode } from "../../filterModeTypes.js";
+import { type AttributeFilterSelectionType } from "../../selectionTypes.js";
 
 /**
  * Props for AttributeFilterDropdownHeader component.
@@ -27,17 +27,17 @@ export interface IAttributeFilterDropdownHeaderProps {
     /**
      * Current filter mode (elements or text).
      */
-    currentFilterMode?: AttributeFilterMode;
+    currentSelectionType?: AttributeFilterSelectionType;
 
     /**
-     * Available filter modes.
+     * Available internal selection types.
      */
-    availableInternalFilterModes?: AttributeFilterMode[];
+    availableInternalSelectionTypes?: AttributeFilterSelectionType[];
 
     /**
-     * Callback when filter mode changes.
+     * Callback when selection type changes.
      */
-    onFilterModeChange?: (mode: AttributeFilterMode) => void;
+    onSelectionTypeChange?: (selectionType: AttributeFilterSelectionType) => void;
 
     /**
      * Attribute metadata (for details bubble).
@@ -77,9 +77,9 @@ export interface IAttributeFilterDropdownHeaderProps {
  */
 export function AttributeFilterDropdownHeader({
     title,
-    currentFilterMode,
-    availableInternalFilterModes,
-    onFilterModeChange,
+    currentSelectionType,
+    availableInternalSelectionTypes,
+    onSelectionTypeChange,
     attribute,
     label,
     requestHandler,
@@ -87,7 +87,7 @@ export function AttributeFilterDropdownHeader({
     selectedLabelRef,
     onLabelChange,
 }: IAttributeFilterDropdownHeaderProps) {
-    const { FilterModeMenuComponent } = useAttributeFilterComponentsContext();
+    const { FilterMenuComponent } = useAttributeFilterComponentsContext();
     const { hideTooltips } = useAttributeFilterContext();
 
     const showDetailsBubble = attribute && label && requestHandler;
@@ -121,10 +121,10 @@ export function AttributeFilterDropdownHeader({
                     </span>
                 )}
             </div>
-            <FilterModeMenuComponent
-                currentMode={currentFilterMode ?? "elements"}
-                availableModes={availableInternalFilterModes}
-                onModeChange={onFilterModeChange ?? (() => {})}
+            <FilterMenuComponent
+                currentSelectionType={currentSelectionType ?? "elements"}
+                availableSelectionTypes={availableInternalSelectionTypes}
+                onSelectionTypeChange={onSelectionTypeChange ?? (() => {})}
                 labels={labels}
                 selectedLabelRef={selectedLabelRef}
                 onLabelChange={onLabelChange}

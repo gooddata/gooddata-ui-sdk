@@ -72,7 +72,6 @@ export async function initializeMapLibreMap(
         maxZoom,
         style,
         basemap,
-        colorScheme,
         language,
     }: IMapInitializationOptions,
     locale?: IMapLibreLocale,
@@ -80,7 +79,7 @@ export async function initializeMapLibreMap(
 ): Promise<IMapInitResult> {
     const maplibregl = await import("maplibre-gl");
     const styleSpecification =
-        style ?? (backend ? await fetchMapStyle(backend, basemap, colorScheme, language) : undefined);
+        style ?? (backend ? await fetchMapStyle(backend, basemap, language) : undefined);
 
     if (!styleSpecification) {
         throw new Error("Map style is required. Provide either a style option or a backend instance.");

@@ -146,8 +146,8 @@ export function useAttributeFilterControllerData(
         limitingValidationItems,
         isFilteredByLimitingValidationItems,
 
-        // Default to elements mode for existing handler
-        currentFilterMode: "elements" as const,
+        // Default to elements selection type for existing handler
+        currentSelectionType: "elements" as const,
     };
 }
 

@@ -2,28 +2,28 @@
 
 import { type IAttributeDisplayFormMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
-import { type AttributeFilterMode } from "../../filterModeTypes.js";
+import { type AttributeFilterSelectionType } from "../../selectionTypes.js";
 
 /**
- * Props for FilterModeMenu component.
+ * Props for FilterMenu component.
  *
  * @alpha
  */
-export interface IFilterModeMenuProps {
+export interface IFilterMenuProps {
     /**
-     * Current filter mode
+     * Current filter selection type
      */
-    currentMode: AttributeFilterMode;
+    currentSelectionType: AttributeFilterSelectionType;
 
     /**
-     * Available filter modes
+     * Available filter selection types
      */
-    availableModes?: AttributeFilterMode[];
+    availableSelectionTypes?: AttributeFilterSelectionType[];
 
     /**
-     * Callback when mode is selected
+     * Callback when selection type is changed
      */
-    onModeChange: (mode: AttributeFilterMode) => void;
+    onSelectionTypeChange: (selectionType: AttributeFilterSelectionType) => void;
 
     /**
      * Labels for "Values as" section.
@@ -47,8 +47,8 @@ export interface IFilterModeMenuProps {
     hideTooltips?: boolean;
 }
 
-export type IModeItemData = {
-    mode: AttributeFilterMode;
+export type ISelectionTypeItemData = {
+    selectionType: AttributeFilterSelectionType;
 };
 
 export type ILabelItemData = {

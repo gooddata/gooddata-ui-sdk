@@ -9,7 +9,7 @@ import { type IGeoChartPointsConfig } from "./points.js";
 import { type IGeoChartViewport } from "./viewport.js";
 import type { IGeoLngLat, IGeoLngLatBounds } from "../../../publicTypes/geoCommon.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
-import type { GeoBasemap, GeoColorScheme } from "../map/basemap.js";
+import type { GeoBasemap } from "../map/basemap.js";
 
 /**
  * Configuration for MapLibre-based pushpin rendering.
@@ -55,7 +55,7 @@ export interface IGeoPushpinChartConfig {
     mapStyle?: string | StyleSpecification;
 
     /**
-     * Selected basemap.
+     * Selected basemap style identifier (e.g. `"standard-light"`, `"satellite"`).
      *
      * @remarks
      * `undefined` uses the backend default basemap.
@@ -63,17 +63,6 @@ export interface IGeoPushpinChartConfig {
      * @alpha
      */
     basemap?: GeoBasemap;
-
-    /**
-     * Color scheme for the map style.
-     *
-     * @remarks
-     * `undefined` uses the backend default color scheme for the selected basemap.
-     * Ignored for `satellite` and `none` basemaps.
-     *
-     * @alpha
-     */
-    colorScheme?: GeoColorScheme;
 
     /**
      * Maximum zoom level allowed on the map.
@@ -107,7 +96,7 @@ export interface IGeoPushpinChartConfig {
     enableGeoChartA11yImprovements?: boolean;
 
     /**
-     * Enables basemap and color-scheme configuration that relies on backend style support.
+     * Enables basemap configuration that relies on backend style support.
      *
      * @internal
      */

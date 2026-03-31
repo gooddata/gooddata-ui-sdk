@@ -2110,9 +2110,6 @@ importers:
       '@gooddata/oxlint-config':
         specifier: workspace:*
         version: link:../../tools/oxlint-config
-      '@gooddata/reference-workspace':
-        specifier: workspace:*
-        version: link:../../tools/reference-workspace
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.26.34(@types/node@22.13.0)
@@ -2585,6 +2582,9 @@ importers:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
+      '@gooddata/sdk-code-convertors':
+        specifier: workspace:*
+        version: link:../sdk-code-convertors
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../sdk-model
@@ -2721,6 +2721,9 @@ importers:
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../sdk-model
+      uuid:
+        specifier: 11.1.0
+        version: 11.1.0
       yaml:
         specifier: ^2.2.2
         version: 2.8.3
@@ -4586,6 +4589,9 @@ importers:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
+      '@gooddata/sdk-code-convertors':
+        specifier: workspace:*
+        version: link:../sdk-code-convertors
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../sdk-model

@@ -9,7 +9,6 @@ import {
     type AiKeyDriverAnalysis,
     type AiSearchObject,
     type AiSearchRelationship,
-    type AiVisualization,
     type AiWhatIfScenario,
 } from "@gooddata/api-client-tiger";
 import {
@@ -19,15 +18,17 @@ import {
     type IChatConversationFeedback,
     type IChatConversationItem,
     type IChatKdaDefinition,
-    type IChatVisualisationDefinition,
     type IChatWhatIfDefinition,
 } from "@gooddata/sdk-backend-spi";
+import { type AacVisualisation, yamlVisualisationToMetadataObject } from "@gooddata/sdk-code-convertors";
 import {
     type GenAIObjectType,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
     assertNever,
 } from "@gooddata/sdk-model";
+
+import { visualizationObjectsItemToInsight } from "./InsightConverter.js";
 
 export function convertChatConversationFromBackend(conversation: AiConversationResponse): IChatConversation {
     return {
@@ -95,7 +96,12 @@ function convertChatConversationContentFromBackend(content: AiContent): IChatCon
                         case "visualization":
                             return {
                                 type: "visualization",
-                                visualization: convertVisualisation(part.visualization),
+                                visualization: visualizationObjectsItemToInsight(
+                                    yamlVisualisationToMetadataObject(
+                                        [],
+                                        part.visualization as AacVisualisation,
+                                    ),
+                                ),
                             };
                         case "kda":
                             return {
@@ -147,16 +153,6 @@ export function convertChatConversationErrorFromBackend(
         type: "error",
         code: item.statusCode ?? 500,
         message: item.detail ?? "Unknown error",
-    };
-}
-
-function convertVisualisation(vis?: AiVisualization | null): IChatVisualisationDefinition {
-    //TODO: s.hacker: Convert visualization to frontend format
-    return {
-        id: vis?.id ?? "",
-        type: vis?.type ?? "",
-        title: vis?.title ?? "",
-        config: {},
     };
 }
 

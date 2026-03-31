@@ -9,8 +9,8 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { type TextFilterController } from "./types.js";
 import { type ITextFilterState, useTextFilterInnerController } from "./useTextFilterInnerController.js";
 import { type AsyncOperationStatus } from "../../AttributeFilterHandler/types/common.js";
-import { type AttributeFilterAvailableMode } from "../filterModeTypes.js";
-import { getAvailableTextModes } from "../filterModeUtils.js";
+import { type AttributeFilterAvailableSelectionType } from "../selectionTypes.js";
+import { getAvailableTextSelectionTypes } from "../selectionTypeUtils.js";
 
 /**
  * @internal
@@ -21,8 +21,8 @@ export interface ITextFilterControllerProps {
     workspace: string;
     filterInput: IAttributeFilter;
     onTextStateChange?: (state: ITextFilterState) => void;
-    availableFilterModes?: AttributeFilterAvailableMode[];
-    filterModeChanged?: boolean;
+    availableSelectionTypes?: AttributeFilterAvailableSelectionType[];
+    selectionTypeChanged?: boolean;
     /** Attribute metadata from orchestrator (handler) */
     attributeMetadataStatus?: AsyncOperationStatus;
     attributeMetadataError?: GoodDataSdkError;
@@ -47,16 +47,16 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
         workspace,
         filterInput,
         onTextStateChange,
-        availableFilterModes,
+        availableSelectionTypes,
         attributeMetadataStatus,
         attributeMetadataError,
-        filterModeChanged = false,
+        selectionTypeChanged = false,
         withoutApply = false,
     } = props;
 
-    const availableTextFilterModes = useMemo(
-        () => getAvailableTextModes(availableFilterModes),
-        [availableFilterModes],
+    const availableTextSelectionTypes = useMemo(
+        () => getAvailableTextSelectionTypes(availableSelectionTypes),
+        [availableSelectionTypes],
     );
 
     const {
@@ -87,11 +87,11 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
         backend,
         workspace,
         filter: filterInput,
-        availableTextModes: availableTextFilterModes,
+        availableTextModes: availableTextSelectionTypes,
         onTextStateChange,
         attributeMetadataStatus,
         attributeMetadataError,
-        filterModeChanged,
+        selectionTypeChanged,
         withoutApply,
     });
 

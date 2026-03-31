@@ -4,7 +4,10 @@
 
 export {
     LocationStyleApi_GetDefaultStyle,
+    LocationStyleApi_GetStyleById,
+    LocationStyleApi_GetStyles,
     tigerLocationStyleClientFactory,
+    type ILocationStyleListItem,
     type LocationStyleApiInterface,
     type LocationStyleDocument,
 } from "../../locationStyle.js";

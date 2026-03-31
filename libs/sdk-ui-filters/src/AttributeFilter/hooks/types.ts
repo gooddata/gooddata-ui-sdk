@@ -9,7 +9,10 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type AttributeFilterMode, type AttributeFilterTextMode } from "../filterModeTypes.js";
+import {
+    type AttributeFilterSelectionType,
+    type AttributeFilterTextSelectionType,
+} from "../selectionTypes.js";
 import { type TextFilterOperator } from "../textFilterOperatorUtils.js";
 import { type ITextFilterState } from "./useTextFilterInnerController.js";
 
@@ -264,31 +267,31 @@ export type TextFilterControllerData = {
 };
 
 /**
- * Filter mode state (elements vs text mode switching).
+ * Selection type state (elements vs text selection type switching).
  *
  * @public
  */
-export type FilterModeControllerData = {
+export type SelectionTypeControllerData = {
     /**
-     * Current filter mode (derived from filter type).
+     * Current selection type (derived from filter type).
      *
      * @alpha
      */
-    currentFilterMode: AttributeFilterMode;
+    currentSelectionType: AttributeFilterSelectionType;
 
     /**
-     * Available internal filter modes for menu rendering.
+     * Available internal selection types for menu rendering.
      *
      * @alpha
      */
-    availableInternalFilterModes?: AttributeFilterMode[];
+    availableInternalSelectionTypes?: AttributeFilterSelectionType[];
 
     /**
-     * Available text filter sub-modes.
+     * Available text filter sub-selection types.
      *
      * @alpha
      */
-    availableTextFilterModes?: AttributeFilterTextMode[];
+    availableTextSelectionTypes?: AttributeFilterTextSelectionType[];
 };
 
 /**
@@ -298,7 +301,7 @@ export type FilterModeControllerData = {
  */
 export type AttributeFilterControllerData = CommonFilterControllerData &
     ElementsFilterControllerData &
-    FilterModeControllerData &
+    SelectionTypeControllerData &
     Partial<TextFilterControllerData>;
 
 /**
@@ -424,18 +427,18 @@ export type TextFilterControllerCallbacks = {
 };
 
 /**
- * Filter mode callbacks (elements vs text mode switching).
+ * Selection type callbacks (elements vs text selection type switching).
  *
  * @public
  */
-export type FilterModeControllerCallbacks = {
+export type SelectionTypeControllerCallbacks = {
     /**
-     * Switch filter mode callback.
-     * Resets filter to empty state of new mode.
+     * Switch selection type callback.
+     * Resets filter to empty state of new selection type.
      *
      * @alpha
      */
-    onFilterModeChange?: (newMode: AttributeFilterMode) => void;
+    onSelectionTypeChange?: (newMode: AttributeFilterSelectionType) => void;
 
     /**
      * Change the display form (attribute label) used for filter values.
@@ -460,7 +463,7 @@ export type FilterModeControllerCallbacks = {
 export type AttributeFilterControllerCallbacks = CommonFilterControllerCallbacks &
     ElementsFilterControllerCallbacks &
     TextFilterControllerCallbacks &
-    FilterModeControllerCallbacks;
+    SelectionTypeControllerCallbacks;
 
 /**
  * AttributeFilter controller return type.
@@ -478,7 +481,7 @@ export type ElementsFilterController = CommonFilterControllerData &
     ElementsFilterControllerData &
     CommonFilterControllerCallbacks &
     ElementsFilterControllerCallbacks &
-    Pick<FilterModeControllerCallbacks, "setDisplayForm" | "resetForModeSwitch">;
+    Pick<SelectionTypeControllerCallbacks, "setDisplayForm" | "resetForModeSwitch">;
 
 /**
  * Text mode controller return type.

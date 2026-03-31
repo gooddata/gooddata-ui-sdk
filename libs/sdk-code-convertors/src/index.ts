@@ -39,6 +39,7 @@ export { yamlDateDatesetToDeclarative } from "./to/yamlDateDatasetToDeclarative.
 export { yamlMetricToDeclarative } from "./to/yamlMetricToDeclarative.js";
 export {
     yamlVisualisationToDeclarative,
+    yamlVisualisationToMetadataObject,
     yamlBucketsToDeclarative,
     yamlFiltersToDeclarative,
     yamlReportToDeclarative,

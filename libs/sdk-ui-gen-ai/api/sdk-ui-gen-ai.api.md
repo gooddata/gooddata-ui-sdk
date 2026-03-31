@@ -218,7 +218,10 @@ export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> 
 // @public
 export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart & {
     reporting?: boolean;
-    saving?: boolean;
+    saving?: {
+        started: boolean;
+        completed: boolean;
+    };
     error?: {
         name: string;
         message: string;

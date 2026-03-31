@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { getFilterModeFromFilter } from "./filterModeUtils.js";
+import { getSelectionTypeFromFilter } from "./selectionTypeUtils.js";
 import { getOperatorFromFilter, getValuesFromFilter } from "./textFilterOperatorUtils.js";
 import { getTextFilterStateText } from "./textFilterStateSummaryUtils.js";
 import { type IAttributeFilterBaseProps } from "./types.js";
@@ -184,9 +184,9 @@ export function getExtendedAttributeFilterSubtitle(
         return intl.formatMessage({ id: "gs.list.all" });
     }
 
-    const mode = getFilterModeFromFilter(filter);
+    const selectionType = getSelectionTypeFromFilter(filter);
 
-    if (mode === "text") {
+    if (selectionType === "text") {
         const operator = getOperatorFromFilter(filter);
         const valuesOrLiteral = getValuesFromFilter(filter);
         const values = Array.isArray(valuesOrLiteral) ? valuesOrLiteral : [];

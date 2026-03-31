@@ -1300,6 +1300,8 @@ export {
     selectEntitlementMaxAutomations,
     selectEntitlementMinimumRecurrenceMinutes,
     selectEntitlementUnlimitedAutomations,
+    selectEntitlementUnlimitedAutomationRecipients,
+    selectMaxAutomationRecipients,
 } from "./model/store/entitlements/entitlementsSelectors.js";
 export type { PermissionsState } from "./model/store/permissions/permissionsState.js";
 export {
@@ -1488,6 +1490,8 @@ export {
     selectEffectiveAttributeFiltersModeMap,
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectAttributeFilterConfigsModeMapByTab,
+    selectAttributeFilterConfigsSelectionTypeMap,
+    selectAttributeFilterConfigsSelectionTypeMapByTab,
 } from "./model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export type { IDateFilterConfigsState } from "./model/store/tabs/dateFilterConfigs/dateFilterConfigsState.js";
 export type { IAttributeFilterConfigsState } from "./model/store/tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";

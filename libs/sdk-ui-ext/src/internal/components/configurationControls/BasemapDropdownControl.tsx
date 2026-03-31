@@ -2,23 +2,33 @@
 
 import { memo } from "react";
 
-import { useIntl } from "react-intl";
-
 import { type IPushData } from "@gooddata/sdk-ui";
 
 import { DropdownControl, type IDropdownControlProps } from "./DropdownControl.js";
-import { getBasemapDropdownItems } from "../../constants/dropdowns.js";
-import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { messages } from "../../../locales.js";
+import { type IDropdownItem } from "../../interfaces/Dropdown.js";
 
-interface IBasemapDropdownControlProps extends Omit<IDropdownControlProps, "items"> {
-    showSatelliteBasemapOption: boolean;
+export interface IBasemapDropdownControlProps extends Omit<
+    IDropdownControlProps,
+    "items" | "valuePath" | "labelText"
+> {
+    items: IDropdownItem[];
+    /**
+     * When false the control renders nothing.
+     * This absorbs the feature-flag check so callers don't need a wrapper.
+     */
+    enabled?: boolean;
 }
 
 export const BasemapDropdownControl = memo(function BasemapDropdownControl({
-    showSatelliteBasemapOption,
+    items,
+    enabled = true,
     ...props
 }: IBasemapDropdownControlProps) {
-    const intl = useIntl();
+    if (!enabled) {
+        return null;
+    }
+
     const pushData = (data: IPushData) => {
         if (data.properties?.controls?.["basemap"] !== "default") {
             props.pushData?.(data);
@@ -32,7 +42,6 @@ export const BasemapDropdownControl = memo(function BasemapDropdownControl({
                 controls: {
                     ...data.properties?.controls,
                     basemap: undefined,
-                    colorScheme: undefined,
                     tileset: undefined,
                 },
             },
@@ -42,11 +51,10 @@ export const BasemapDropdownControl = memo(function BasemapDropdownControl({
     return (
         <DropdownControl
             {...props}
+            valuePath="basemap"
+            labelText={messages["basemapTitle"].id}
             value={props.value ?? "default"}
-            items={getTranslatedDropdownItems(
-                getBasemapDropdownItems(showSatelliteBasemapOption, props.value ?? "default"),
-                intl,
-            )}
+            items={items}
             pushData={pushData}
         />
     );

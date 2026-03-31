@@ -18,14 +18,9 @@ import copy from "copy-to-clipboard";
 import { useIntl } from "react-intl";
 import { connect, useDispatch } from "react-redux";
 
-import { type IChatSuggestion, type IChatVisualisationDefinition } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationVisualisationContent, type IChatSuggestion } from "@gooddata/sdk-backend-spi";
 import { type IColorPalette, type IDashboardAttributeFilter, type IFilter } from "@gooddata/sdk-model";
-import {
-    type IDrillEvent,
-    useBackendStrict,
-    useCancelablePromise,
-    useWorkspaceStrict,
-} from "@gooddata/sdk-ui";
+import { type IDrillEvent, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IDashboardKeyDriverCombinationItem } from "@gooddata/sdk-ui-dashboard";
 import {
     Dropdown,
@@ -46,6 +41,7 @@ import {
     type ConversationVisualisationProps,
 } from "./ConversationVisualisation.js";
 import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
+import { useSaveCheck } from "./useSaveCheck.js";
 import {
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
@@ -81,7 +77,7 @@ interface IMenuButtonItem {
 export type ConversationVisualizationContentProps = {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
-    visualization: IChatVisualisationDefinition;
+    visualization: IChatConversationVisualisationContent["visualization"];
     showSuggestions?: boolean;
     colorPalette?: IColorPalette;
     className?: string;
@@ -112,10 +108,8 @@ function ConversationVisualizationContentCore({
     const containerRef = useRef<HTMLDivElement>(null);
 
     const [hasVisError, setVisError] = useState(false);
-    const [visLoading, setVisLoading] = useState(true);
     const [isTable, setIsTable] = useState(false);
     const moreButtonDescId = useId();
-    const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
 
     const { setDrillState, DrillOverlay, DrillChooser } = useDrillState({
         containerRef,
@@ -127,8 +121,13 @@ function ConversationVisualizationContentCore({
         part,
         visualization,
     });
+    const { visualisationCheckLoading, visualisationSaved } = useSaveCheck(part, visualization);
 
     const { onCopy, onOpen, onSave } = useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard });
+
+    const onVisualizationError = useCallback(() => {
+        setVisError(true);
+    }, []);
 
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",
@@ -142,16 +141,16 @@ function ConversationVisualizationContentCore({
                 <Wrapper containerRef={containerRef} visualization={visualization}>
                     <VisualisationMenu
                         visualization={visualization}
-                        isMenuOpen={isMenuButtonOpen}
-                        onMenu={setMenuButtonOpen}
+                        isVisualisationSaved={visualisationSaved}
+                        isVisualisationCheckLoading={visualisationCheckLoading}
                         isTable={isTable}
                         onTable={setIsTable}
-                        isLoading={visLoading}
                         hasError={hasVisError}
                         moreButtonId={moreButtonDescId}
                         onSave={onSave}
                         onOpen={onOpen}
                         onCopy={onCopy}
+                        isLoading={part.reporting ?? false}
                     />
                     <Title id={moreButtonDescId} visualization={visualization} useMarkdown={useMarkdown} />
                     <VisualisationWrapper
@@ -164,12 +163,7 @@ function ConversationVisualizationContentCore({
                         enableNewPivotTable={enableNewPivotTable}
                         enableAccessibleChartTooltip={enableAccessibleChartTooltip}
                         onDrillFired={setDrillState}
-                        onVisualisationError={() => {
-                            setVisError(true);
-                        }}
-                        onLoadingChanged={({ isLoading }) => {
-                            setVisLoading(isLoading);
-                        }}
+                        onVisualisationError={onVisualizationError}
                     />
                     <SaveDialog />
                     <DrillOverlay />
@@ -184,21 +178,17 @@ function ConversationVisualizationContentCore({
 
 interface IWrapperProps {
     containerRef: RefObject<HTMLDivElement | null>;
-    visualization: IChatVisualisationDefinition;
-    active?: boolean;
+    visualization: IChatConversationVisualisationContent["visualization"];
     children: ReactNode;
 }
 
-function Wrapper({ containerRef, visualization, active, children }: IWrapperProps) {
+function Wrapper({ containerRef, visualization, children }: IWrapperProps) {
     return (
         <div
             ref={containerRef}
             className={cx(
                 "gd-gen-ai-chat__conversation__visualization",
-                `gd-gen-ai-chat__conversation__visualization--${visualization.type.toLowerCase()}`,
-                {
-                    active,
-                },
+                `gd-gen-ai-chat__conversation__visualization--${visualization?.insight.visualizationUrl.replace("local:", "").toLowerCase() ?? "unknown"}`,
             )}
         >
             {children}
@@ -207,7 +197,7 @@ function Wrapper({ containerRef, visualization, active, children }: IWrapperProp
 }
 
 interface ITitleProps {
-    visualization: IChatVisualisationDefinition;
+    visualization: IChatConversationVisualisationContent["visualization"];
     id: string;
     useMarkdown?: boolean;
 }
@@ -215,22 +205,24 @@ interface ITitleProps {
 function Title({ id, visualization, useMarkdown }: ITitleProps) {
     return (
         <div className="gd-gen-ai-chat__conversation__visualization__title" id={id}>
-            <MarkdownComponent allowMarkdown={useMarkdown}>{visualization.title}</MarkdownComponent>
+            <MarkdownComponent allowMarkdown={useMarkdown}>
+                {visualization?.insight.title ?? ""}
+            </MarkdownComponent>
         </div>
     );
 }
 
 interface IVisualisationMenuProps {
-    visualization: IChatVisualisationDefinition;
+    visualization: IChatConversationVisualisationContent["visualization"];
     hasError: boolean;
     //state
     isLoading: boolean;
+    isVisualisationCheckLoading: boolean;
+    isVisualisationSaved: boolean;
     //table
     isTable: boolean;
     onTable: (state: boolean) => void;
     //menu
-    isMenuOpen: boolean;
-    onMenu: (state: boolean) => void;
     moreButtonId: string;
     //callbacks
     onSave: (e: MouseEvent | KeyboardEvent) => void;
@@ -240,19 +232,19 @@ interface IVisualisationMenuProps {
 
 function VisualisationMenu({
     visualization,
+    isVisualisationSaved,
+    isVisualisationCheckLoading,
     hasError,
     isLoading,
     isTable,
     onTable,
-    isMenuOpen,
-    onMenu,
     moreButtonId,
     onSave,
     onOpen,
     onCopy,
 }: IVisualisationMenuProps) {
-    const backend = useBackendStrict();
-    const workspaceId = useWorkspaceStrict();
+    const [isMenuButtonOpen, setMenuButtonOpen] = useState(false);
+
     const config = useConfig();
     const intl = useIntl();
 
@@ -265,24 +257,9 @@ function VisualisationMenu({
     const toggleTableLabel = intl.formatMessage({ id: "gd.gen-ai.visualisation.toggle.table" });
     const toggleTableOrig = intl.formatMessage({ id: "gd.gen-ai.visualisation.toggle.original" });
 
-    const { result, status, error } = useCancelablePromise(
-        {
-            promise: async () => {
-                const res = await backend.workspace(workspaceId).insights().getInsight({
-                    type: "insight",
-                    identifier: visualization.id,
-                });
-                return Boolean(res);
-            },
-        },
-        [workspaceId, visualization.id],
-    );
-    const visualisationSaved = Boolean(result && !error);
-    const visualisationCheckLoading = status === "loading";
-
     const menuItems = useMemo(
         () =>
-            visualisationSaved
+            isVisualisationSaved
                 ? ([
                       {
                           id: "button-save",
@@ -338,7 +315,7 @@ function VisualisationMenu({
                           },
                       },
                   ] as IMenuButtonItem[]),
-        [intl, visualisationSaved],
+        [intl, isVisualisationSaved],
     );
 
     const handleButtonClick = useCallback(
@@ -346,24 +323,24 @@ function VisualisationMenu({
             switch (item.id) {
                 case "button-save":
                     onSave(e);
-                    onMenu(false);
+                    setMenuButtonOpen(false);
                     break;
                 case "button-open":
-                    onOpen(e, visualisationSaved);
-                    onMenu(false);
+                    onOpen(e, isVisualisationSaved);
+                    setMenuButtonOpen(false);
                     break;
                 case "button-copy":
-                    if (visualisationSaved) {
+                    if (isVisualisationSaved) {
                         onCopy(e);
                     }
-                    onMenu(false);
+                    setMenuButtonOpen(false);
                     break;
                 default:
                     // No action needed for other items
                     break;
             }
         },
-        [onCopy, onMenu, onOpen, onSave, visualisationSaved],
+        [onCopy, setMenuButtonOpen, onOpen, onSave, isVisualisationSaved],
     );
 
     const renderMenuItems = useCallback(() => {
@@ -374,7 +351,7 @@ function VisualisationMenu({
                 alignTo={`.${classes}`}
                 alignPoints={overlayAlignPoints}
                 key="saveVisualisationMenuButton"
-                onClose={() => onMenu(false)}
+                onClose={() => setMenuButtonOpen(false)}
                 className="gd-gen-ai-chat__conversation__visualization__menu_overlay"
             >
                 <UiFocusManager enableAutofocus enableReturnFocusOnUnmount enableFocusTrap>
@@ -395,20 +372,24 @@ function VisualisationMenu({
                         onSelect={(item, e) => {
                             handleButtonClick(e, item.data as IMenuButtonItem);
                         }}
-                        onClose={() => onMenu(false)}
+                        onClose={() => setMenuButtonOpen(false)}
                     />
                 </UiFocusManager>
             </Overlay>
         );
-    }, [classes, handleButtonClick, menuId, menuItems, onMenu]);
+    }, [classes, handleButtonClick, menuId, menuItems, setMenuButtonOpen]);
 
     if (!config.canAnalyze || hasError) {
         return null;
     }
 
     return (
-        <div className={cx("gd-gen-ai-chat__conversation__visualization__buttons")}>
-            {visualization.type === "TABLE" ? null : (
+        <div
+            className={cx("gd-gen-ai-chat__conversation__visualization__buttons", {
+                active: isMenuButtonOpen,
+            })}
+        >
+            {visualization?.insight.visualizationUrl === "local:table" ? null : (
                 <div className={cx("gd-gen-ai-chat__conversation__visualization__table")}>
                     <UiTooltip
                         triggerBy={["focus", "hover"]}
@@ -441,23 +422,23 @@ function VisualisationMenu({
                     anchor={
                         <UiIconButton
                             dataTestId="gen-ai-visualization-menu-button"
-                            onClick={() => onMenu(!isMenuOpen)}
+                            onClick={() => setMenuButtonOpen(!isMenuButtonOpen)}
                             icon="ellipsis"
-                            isDisabled={isLoading || visualisationCheckLoading}
+                            isDisabled={isLoading || isVisualisationCheckLoading}
                             accessibilityConfig={{
                                 role: "button",
                                 ariaLabel: moreLabel,
                                 ariaDescribedBy: moreButtonId,
-                                isExpanded: isMenuOpen,
+                                isExpanded: isMenuButtonOpen,
                                 popupId: menuId,
                                 ariaHaspopup: "menu",
                             }}
-                            isActive={isMenuOpen}
+                            isActive={isMenuButtonOpen}
                         />
                     }
                     content={moreLabel}
                 />
-                {isMenuOpen ? renderMenuItems() : null}
+                {isMenuButtonOpen ? renderMenuItems() : null}
             </div>
         </div>
     );
@@ -468,7 +449,7 @@ function VisualisationWrapper(props: ConversationVisualisationProps) {
         <div
             className={cx(
                 "gd-gen-ai-chat__conversation__visualization__wrapper",
-                `gd-gen-ai-chat__conversation__visualization__wrapper--${props.isTable ? "table" : props.visualization.type.toLowerCase()}`,
+                `gd-gen-ai-chat__conversation__visualization__wrapper--${props.isTable ? "table" : (props.visualization?.insight.visualizationUrl.replace("local:", "").toLowerCase() ?? "unknown")}`,
             )}
         >
             <VisualizationErrorBoundary>
@@ -634,7 +615,7 @@ function getRelativeOffset(child?: HTMLElement, ancestor?: HTMLDivElement | null
 interface IUseSaveDialogProps {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
-    visualization: IChatVisualisationDefinition;
+    visualization: IChatConversationVisualisationContent["visualization"];
 }
 
 function useSaveDialog({ message, part, visualization }: IUseSaveDialogProps) {
@@ -664,7 +645,7 @@ function useSaveDialog({ message, part, visualization }: IUseSaveDialogProps) {
 }
 
 interface IUseHandlersProps {
-    visualization: IChatVisualisationDefinition;
+    visualization: IChatConversationVisualisationContent["visualization"];
     setSaveDialogOpen: (value: "save" | "explore" | null) => void;
     onCopyToClipboard?: (data: { content: string }) => void;
 }
@@ -679,17 +660,24 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
 
     const onOpen = useCallback(
         (e: MouseEvent | KeyboardEvent, isSaved: boolean) => {
+            if (!visualization) {
+                return;
+            }
+
             if (isSaved) {
                 if (config.allowNativeLinks) {
-                    window.location.href = getVisualizationHref(workspaceId, visualization.id);
+                    window.location.href = getVisualizationHref(
+                        workspaceId,
+                        visualization.insight.identifier,
+                    );
                 } else {
                     config.linkHandler?.({
-                        id: visualization.id,
+                        id: visualization.insight.identifier,
                         type: "visualization",
                         workspaceId,
                         newTab: e.metaKey,
                         preventDefault: e.preventDefault.bind(e),
-                        itemUrl: getVisualizationHref(workspaceId, visualization.id),
+                        itemUrl: getVisualizationHref(workspaceId, visualization.insight.identifier),
                     });
                     e.stopPropagation();
                 }
@@ -697,14 +685,17 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
                 setSaveDialogOpen("explore");
             }
         },
-        [config, setSaveDialogOpen, visualization.id, workspaceId],
+        [config, setSaveDialogOpen, visualization, workspaceId],
     );
 
     const onCopy = useCallback(() => {
-        const link = getAbsoluteVisualizationHref(workspaceId, visualization.id);
+        if (!visualization) {
+            return;
+        }
+        const link = getAbsoluteVisualizationHref(workspaceId, visualization.insight.identifier);
         copy(link);
         onCopyToClipboard?.({ content: link });
-    }, [onCopyToClipboard, visualization.id, workspaceId]);
+    }, [onCopyToClipboard, visualization, workspaceId]);
 
     return {
         onSave,

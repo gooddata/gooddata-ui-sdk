@@ -941,8 +941,8 @@ const renderLineChart = (
     const forecast = mapVisualizationForecastToChartConfig(visualization);
     const forecastConfig = mapVisualizationForecastToBackendConfig(visualization);
 
-    const anomalies = mapVisualizationAnomalyDetectionToChartConfig(visualization);
-    const outliersConfig = mapVisualizationAnomalyDetectionToBackendConfig(visualization);
+    const anomalies = mapVisualizationAnomalyDetectionToChartConfig(visualization.config);
+    const outliersConfig = mapVisualizationAnomalyDetectionToBackendConfig(visualization.config);
 
     return (
         <LineChart
@@ -1030,8 +1030,8 @@ const renderScatterPlot = (
         execConfig?: IExecutionConfig;
     },
 ) => {
-    const clustering = mapVisualizationClusteringToChartConfig(visualization);
-    const clusteringConfig = mapVisualizationClusteringToBackendConfig(visualization);
+    const clustering = mapVisualizationClusteringToChartConfig(visualization.config);
+    const clusteringConfig = mapVisualizationClusteringToBackendConfig(visualization.config);
 
     return (
         <ScatterPlot

@@ -427,7 +427,7 @@ function useInitOrReload(
         withoutApply: boolean;
         isSelectionInvalid: boolean;
         isTextMode: boolean;
-        filterModeChanged?: boolean;
+        selectionTypeChanged?: boolean;
     },
     supportsKeepingDependentFiltersSelection: boolean,
     supportsCircularDependencyInFilters: boolean,
@@ -450,7 +450,7 @@ function useInitOrReload(
         withoutApply,
         isSelectionInvalid,
         isTextMode,
-        filterModeChanged,
+        selectionTypeChanged,
     } = props;
 
     const prevIsTextModeRef = useRef(isTextMode);
@@ -508,7 +508,7 @@ function useInitOrReload(
         prevIsTextModeRef.current = isTextMode;
 
         const filterChanged =
-            justSwitchedFromText || filterModeChanged ? false : getFilterChanged(filter, handler);
+            justSwitchedFromText || selectionTypeChanged ? false : getFilterChanged(filter, handler);
 
         const limitingValidationItemsChanged =
             shouldIncludeLimitingFilters &&
@@ -570,7 +570,7 @@ function useInitOrReload(
         shouldIncludeLimitingFilters,
         isSelectionInvalid,
         isTextMode,
-        filterModeChanged,
+        selectionTypeChanged,
     ]);
 
     const isMountedRef = useRef(false);
@@ -992,9 +992,9 @@ export interface IElementsFilterControllerProps {
     supportsSingleSelectDependentFilters: boolean;
     setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
     /** Used internally to determine if elements controller runs in text-mode context (empty filter). */
-    currentFilterMode: "elements" | "text";
+    currentSelectionType: "elements" | "text";
     /** When true, parent filter is text mode but we display elements - filters differ, Apply should be enabled. */
-    filterModeChanged?: boolean;
+    selectionTypeChanged?: boolean;
 }
 
 /**
@@ -1029,11 +1029,11 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
         supportsShowingFilteredElements,
         supportsSingleSelectDependentFilters,
         setConnectedPlaceholderValue,
-        currentFilterMode,
-        filterModeChanged = false,
+        currentSelectionType,
+        selectionTypeChanged = false,
     } = props;
 
-    const isTextMode = currentFilterMode === "text";
+    const isTextMode = currentSelectionType === "text";
 
     const shouldReloadElements = useRef<boolean>(false);
     const setShouldReloadElements = useCallback(
@@ -1066,7 +1066,7 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
     );
 
     const isWorkingSelectionChanged =
-        attributeFilterControllerData.isWorkingSelectionChanged || filterModeChanged;
+        attributeFilterControllerData.isWorkingSelectionChanged || selectionTypeChanged;
 
     useOnError(handler!, { onError });
     useOnInitLoadingChanged(handler!, {
@@ -1092,7 +1092,7 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
             withoutApply,
             isSelectionInvalid: (withoutApply ?? false) && attributeFilterControllerData.isSelectionInvalid,
             isTextMode,
-            filterModeChanged,
+            selectionTypeChanged,
         },
         supportsKeepingDependentFiltersSelection ?? false,
         supportsCircularDependencyInFilters ?? false,

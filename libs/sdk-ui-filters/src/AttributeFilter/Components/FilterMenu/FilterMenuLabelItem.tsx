@@ -4,11 +4,11 @@ import { type IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { SingleSelectListItem, UiIcon } from "@gooddata/sdk-ui-kit";
 
 /**
- * Props for FilterModeMenuLabelItem component.
+ * Props for FilterMenuLabelItem component.
  *
  * @alpha
  */
-export interface IFilterModeMenuLabelItemProps {
+export interface IFilterMenuLabelItemProps {
     /**
      * Label metadata for this menu item.
      */
@@ -26,16 +26,16 @@ export interface IFilterModeMenuLabelItemProps {
 }
 
 /**
- * Individual label menu item in the filter mode menu "Values as" section.
+ * Individual label menu item in the filter menu "Values as" section.
  *
  * @alpha
  */
-export function FilterModeMenuLabelItem(props: IFilterModeMenuLabelItemProps) {
+export function FilterMenuLabelItem(props: IFilterMenuLabelItemProps) {
     const { label, isSelected, onClick } = props;
 
     return (
         <SingleSelectListItem
-            className="gd-filter-mode-menu__item"
+            className="gd-filter-menu__item"
             title={label.title}
             isSelected={isSelected}
             elementType="button"
@@ -43,7 +43,7 @@ export function FilterModeMenuLabelItem(props: IFilterModeMenuLabelItemProps) {
             info={isSelected ? "selected" : undefined}
             infoRenderer={() =>
                 isSelected ? (
-                    <span className="gd-filter-mode-menu__item-check">
+                    <span className="gd-filter-menu__item-check">
                         <UiIcon type="check" color="primary" size={14} />
                     </span>
                 ) : null

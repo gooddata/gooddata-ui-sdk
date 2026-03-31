@@ -89,7 +89,7 @@ describe("geoConfigFromInsight", () => {
         expect(config.viewport?.area).toBe("continent_na");
     });
 
-    it("prefers explicit basemap over legacy tileset visualization properties", () => {
+    it("keeps explicit basemap values unchanged", () => {
         const locationAttribute = newAttribute(idRef("nm_location", "displayForm"), (attribute) =>
             attribute.localId("location_id"),
         );
@@ -269,10 +269,9 @@ describe("buildGeoVisualizationConfig", () => {
         expect(configWithCorner.legend?.position).toBe("bottom-left");
     });
 
-    it("drops colorScheme for basemaps that do not support it even when the broad basemap FF is disabled", () => {
+    it("preserves basemap even when the broad basemap FF is disabled", () => {
         const supportedControls = {
             basemap: "none",
-            colorScheme: "dark",
         };
 
         const disabledConfig = buildGeoVisualizationConfig({
@@ -291,16 +290,13 @@ describe("buildGeoVisualizationConfig", () => {
 
         expect(disabledConfig.enableGeoBasemapConfig).toBe(false);
         expect(disabledConfig.basemap).toBe("none");
-        expect(disabledConfig.colorScheme).toBeUndefined();
         expect(enabledConfig.enableGeoBasemapConfig).toBe(true);
         expect(enabledConfig.basemap).toBe("none");
-        expect(enabledConfig.colorScheme).toBeUndefined();
     });
 
     it("does not let raw config or custom visualization config override sanitized supported controls", () => {
         const rawGeoStyleConfig = {
             basemap: "none",
-            colorScheme: "dark",
         };
         const config = buildGeoVisualizationConfig({
             options: {
@@ -315,14 +311,12 @@ describe("buildGeoVisualizationConfig", () => {
             },
             supportedControls: {
                 basemap: "monochrome",
-                colorScheme: "light",
             },
             colorMapping: undefined,
             environment: ANALYTICAL_ENVIRONMENT,
         });
 
         expect(config.basemap).toBe("monochrome");
-        expect(config.colorScheme).toBe("light");
     });
 
     it("maps legacy tileset supported controls to basemap", () => {
@@ -430,7 +424,6 @@ describe("buildAreaVisualizationConfig", () => {
     it("preserves sanitized basemap config even when the broad basemap FF is disabled", () => {
         const supportedControls = {
             basemap: "monochrome",
-            colorScheme: "light",
         };
 
         const disabledConfig = buildAreaVisualizationConfig({
@@ -449,10 +442,8 @@ describe("buildAreaVisualizationConfig", () => {
 
         expect(disabledConfig.enableGeoBasemapConfig).toBe(false);
         expect(disabledConfig.basemap).toBe("monochrome");
-        expect(disabledConfig.colorScheme).toBe("light");
         expect(enabledConfig.enableGeoBasemapConfig).toBe(true);
         expect(enabledConfig.basemap).toBe("monochrome");
-        expect(enabledConfig.colorScheme).toBe("light");
     });
 
     it("maps legacy tileset controls to basemap", () => {

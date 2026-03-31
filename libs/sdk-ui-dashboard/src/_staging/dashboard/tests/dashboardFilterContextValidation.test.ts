@@ -1,12 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
     type DashboardAttributeFilterConfigMode,
     type DashboardAttributeFilterSelectionMode,
+    type DashboardAttributeFilterSelectionType,
     type DashboardDateFilterConfigMode,
     type FilterContextItem,
     type IAttributeElements,
+    type IDashboardArbitraryAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type ObjRef,
@@ -56,6 +59,19 @@ const createDateFilter = (
         to: 0,
         granularity: "GDC.time.year",
         ...(dimension ? { dimension } : {}),
+    },
+});
+
+const createTextAttributeFilter = (
+    displayFormRef: ObjRef,
+    localIdentifier: string,
+    values: string[] = ["textValue"],
+): IDashboardArbitraryAttributeFilter => ({
+    arbitraryAttributeFilter: {
+        displayForm: displayFormRef,
+        negativeSelection: false,
+        localIdentifier,
+        values,
     },
 });
 
@@ -146,6 +162,254 @@ describe("dashboardFilterContextValidation", () => {
                 expect(result.validationResults.length).toBe(1);
                 expect(
                     hasValidationError(result.validationResults, filterToMerge, "cannot-apply-readonly"),
+                ).toBe(true);
+            });
+        });
+
+        describe("Selection type compatibility", () => {
+            it("should keep original list filter when config selectionType is 'text'", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
+                    "newValue",
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "text" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+                expect(result.validationResults.length).toBe(1);
+                expect(
+                    hasValidationError(
+                        result.validationResults,
+                        filterToMerge,
+                        "cannot-apply-incompatible-selection-type",
+                    ),
+                ).toBe(true);
+            });
+
+            it("should merge list filter when config selectionType is 'list'", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
+                    "newValue",
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "list" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            it("should merge list filter when config selectionType is 'listOrText'", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
+                    "newValue",
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "listOrText" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            it("should merge list filter when config has no selectionType (defaults to list)", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
+                    "newValue",
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [{ localIdentifier: "attr1" }],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            // Cross-type: text override on list original
+            it("should allow text override on list original when config selectionType is 'text'", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "text" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            it("should allow text override on list original when config selectionType is 'listOrText'", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "listOrText" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            it("should reject text override on list original when config selectionType is 'list'", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "list" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+                expect(result.validationResults.length).toBe(1);
+                expect(
+                    hasValidationError(
+                        result.validationResults,
+                        filterToMerge,
+                        "cannot-apply-incompatible-selection-type",
+                    ),
+                ).toBe(true);
+            });
+
+            it("should reject text override on list original when config has no selectionType (defaults to list)", () => {
+                const originalFilter = createAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+                expect(
+                    hasValidationError(
+                        result.validationResults,
+                        filterToMerge,
+                        "cannot-apply-incompatible-selection-type",
+                    ),
+                ).toBe(true);
+            });
+
+            // Cross-type: list override on text original
+            it("should allow list override on text original when config selectionType is 'list'", () => {
+                const originalFilter = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
+                    "newValue",
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "list" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            it("should allow list override on text original when config selectionType is 'listOrText'", () => {
+                const originalFilter = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
+                    "newValue",
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "listOrText" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(filterToMerge);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            it("should reject list override on text original when config selectionType is 'text'", () => {
+                const originalFilter = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
+                    "newValue",
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    attributeFilterConfigs: [
+                        {
+                            localIdentifier: "attr1",
+                            selectionType: "text" as DashboardAttributeFilterSelectionType,
+                        },
+                    ],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+                expect(result.validationResults.length).toBe(1);
+                expect(
+                    hasValidationError(
+                        result.validationResults,
+                        filterToMerge,
+                        "cannot-apply-incompatible-selection-type",
+                    ),
+                ).toBe(true);
+            });
+
+            it("should reject list override on text original when config has no selectionType (defaults to text)", () => {
+                const originalFilter = createTextAttributeFilter(attributeDisplayFormRef, "attr1");
+                const filterToMerge = createAttributeFilter(attributeDisplayFormRef, "attr1", "multi", [
+                    "newValue",
+                ]);
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+                expect(
+                    hasValidationError(
+                        result.validationResults,
+                        filterToMerge,
+                        "cannot-apply-incompatible-selection-type",
+                    ),
                 ).toBe(true);
             });
         });

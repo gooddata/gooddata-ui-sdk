@@ -40,9 +40,9 @@ import {
     selectSettings,
 } from "../../../../../../model/store/config/configSelectors.js";
 import {
-    selectEntitlementMaxAutomationRecipients,
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
+    selectMaxAutomationRecipients,
 } from "../../../../../../model/store/entitlements/entitlementsSelectors.js";
 import { selectExecutionResultByRef } from "../../../../../../model/store/executionResults/executionResultsSelectors.js";
 import { selectInsightByWidgetRef } from "../../../../../../model/store/insights/insightsSelectors.js";
@@ -65,8 +65,6 @@ import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/items.js";
-import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
-
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
 export interface IInsightWidgetAlertingProps {
@@ -95,13 +93,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const allAutomationsCount = useDashboardSelector(selectAllAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
-    const maxAutomationsRecipientsEntitlement = useDashboardSelector(
-        selectEntitlementMaxAutomationRecipients,
-    );
-    const maxAutomationsRecipients = parseInt(
-        maxAutomationsRecipientsEntitlement?.value ?? DEFAULT_MAX_RECIPIENTS,
-        10,
-    );
+    const maxAutomationsRecipients = useDashboardSelector(selectMaxAutomationRecipients);
     const canManageAttributes = useDashboardSelector(selectEnableAlertAttributes);
     const canManageComparison = useDashboardSelector(selectEnableComparisonInAlerting);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);

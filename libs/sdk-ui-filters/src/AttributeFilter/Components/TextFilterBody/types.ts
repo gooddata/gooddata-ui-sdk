@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type AttributeFilterTextMode } from "../../filterModeTypes.js";
+import { type AttributeFilterTextSelectionType } from "../../selectionTypes.js";
 import { type TextFilterOperator } from "../../textFilterOperatorUtils.js";
 
 /**
@@ -92,7 +92,7 @@ export interface ITextFilterBodyProps {
     /**
      * Available text sub-modes.
      */
-    availableTextModes?: AttributeFilterTextMode[];
+    availableTextModes?: AttributeFilterTextSelectionType[];
 
     /**
      * Autocomplete suggestions for the values input (is / is not operators).

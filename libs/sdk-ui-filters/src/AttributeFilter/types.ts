@@ -35,9 +35,9 @@ import {
     type IAttributeFilterElementsSelectItemProps,
     type IAttributeFilterElementsSelectProps,
 } from "./Components/ElementsSelect/types.js";
-import { type IFilterModeMenuProps } from "./Components/FilterModeMenu/types.js";
+import { type IFilterMenuProps } from "./Components/FilterMenu/types.js";
 import { type ITextFilterBodyProps } from "./Components/TextFilterBody/types.js";
-import { type AttributeFilterAvailableMode } from "./filterModeTypes.js";
+import { type AttributeFilterAvailableSelectionType } from "./selectionTypes.js";
 
 /**
  * Configuration for the attribute filter header menu.
@@ -58,7 +58,7 @@ export interface IAttributeFilterMenuConfig {
      * The UI maps arbitrary/match to internal text mode and distinguishes them by operator:
      * "is"/"isNot" = arbitrary, others = match.
      */
-    availableFilterModes?: AttributeFilterAvailableMode[];
+    availableSelectionTypes?: AttributeFilterAvailableSelectionType[];
 
     /**
      * Show the "Values as" label switching section in the header menu.
@@ -564,10 +564,10 @@ export interface IAttributeFilterCustomComponentProps {
     /**
      * Customize filter mode menu component.
      * @remarks
-     * -  If not provided, the default implementation {@link FilterModeMenu} will be used.
+     * -  If not provided, the default implementation {@link FilterMenu} will be used.
      * @alpha
      */
-    FilterModeMenuComponent?: ComponentType<IFilterModeMenuProps>;
+    FilterMenuComponent?: ComponentType<IFilterMenuProps>;
 
     /**
      * Customize text filter body component.

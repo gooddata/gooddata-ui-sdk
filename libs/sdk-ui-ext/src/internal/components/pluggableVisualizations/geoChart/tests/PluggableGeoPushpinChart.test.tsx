@@ -47,7 +47,9 @@ describe("PluggableGeoPushpinChart", () => {
         return new PluggableGeoPushpinChart(props);
     }
 
-    afterEach(() => {
+    afterEach(async () => {
+        await Promise.resolve();
+        await Promise.resolve();
         mockRenderFun.mockReset();
     });
 

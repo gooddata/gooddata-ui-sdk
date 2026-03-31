@@ -4,7 +4,6 @@ import { type ReactElement, type ReactNode } from "react";
 
 import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { type GeoBasemap, type GeoColorScheme, doesGeoBasemapSupportColorScheme } from "@gooddata/sdk-ui-geo";
 
 import {
     ConfigurationPanelContent,
@@ -12,21 +11,18 @@ import {
 } from "./ConfigurationPanelContent.js";
 import { hasColorMeasure, hasSegmentAttribute } from "./geoInsightBucketUtils.js";
 import { messages } from "../../../locales.js";
-import {
-    isGeoBasemapConfigEnabled,
-    isGeoChartsViewportConfigEnabled,
-    isGeoSatelliteBasemapEnabled,
-} from "../../constants/featureFlags.js";
+import { isGeoBasemapConfigEnabled, isGeoChartsViewportConfigEnabled } from "../../constants/featureFlags.js";
 import { sanitizeGeoMapStyleOptions } from "../../constants/geoMapStyle.js";
+import { type IDropdownItem } from "../../interfaces/Dropdown.js";
 import { BasemapDropdownControl } from "../configurationControls/BasemapDropdownControl.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
-import { ColorSchemeDropdownControl } from "../configurationControls/ColorSchemeDropdownControl.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { GeoViewportControl, type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
 import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSection.js";
 
 interface IGeoAreaConfigurationPanelProps extends IConfigurationPanelContentProps {
     getCurrentMapView?: () => ICurrentMapView;
+    basemapItems: IDropdownItem[];
 }
 
 /**
@@ -43,13 +39,11 @@ interface IGeoAreaConfigurationPanelProps extends IConfigurationPanelContentProp
  */
 export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAreaConfigurationPanelProps> {
     protected getControlProperties(): {
-        basemap: GeoBasemap | undefined;
-        colorScheme: GeoColorScheme | undefined;
+        basemap: string | undefined;
     } {
         return sanitizeGeoMapStyleOptions({
             basemap: this.props.properties?.controls?.["basemap"],
             legacyTileset: this.props.properties?.controls?.["tileset"],
-            colorScheme: this.props.properties?.controls?.["colorScheme"],
         });
     }
 
@@ -71,14 +65,11 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAre
     }
 
     protected renderViewportSection(): ReactElement {
-        const { properties, propertiesMeta, pushData, featureFlags } = this.props;
-        const { basemap, colorScheme } = this.getControlProperties();
+        const { properties, propertiesMeta, pushData, featureFlags, basemapItems } = this.props;
+        const { basemap } = this.getControlProperties();
         const isBasemapConfigEnabled = isGeoBasemapConfigEnabled(featureFlags);
-        const isSatelliteBasemapEnabled = isGeoSatelliteBasemapEnabled(featureFlags);
         const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
         const isDisabled = this.isControlDisabled();
-        const isColorSchemeSupported = basemap !== undefined && doesGeoBasemapSupportColorScheme(basemap);
-        const isColorSchemeDisabled = isDisabled || !isColorSchemeSupported;
         return (
             <ConfigSection
                 id="map_section"
@@ -93,29 +84,15 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAre
                     pushData={pushData}
                     getCurrentMapView={isViewportConfigEnabled ? this.props.getCurrentMapView : undefined}
                     beforeNavigationContent={
-                        isBasemapConfigEnabled ? (
-                            <>
-                                <BasemapDropdownControl
-                                    valuePath="basemap"
-                                    labelText={messages["basemapTitle"].id}
-                                    properties={properties}
-                                    value={basemap}
-                                    disabled={isDisabled}
-                                    showDisabledMessage={isDisabled}
-                                    showSatelliteBasemapOption={isSatelliteBasemapEnabled}
-                                    pushData={pushData}
-                                />
-                                <ColorSchemeDropdownControl
-                                    valuePath="colorScheme"
-                                    labelText={messages["colorSchemeTitle"].id}
-                                    properties={properties}
-                                    value={colorScheme}
-                                    disabled={isColorSchemeDisabled}
-                                    showDisabledMessage={isColorSchemeDisabled}
-                                    pushData={pushData}
-                                />
-                            </>
-                        ) : null
+                        <BasemapDropdownControl
+                            enabled={isBasemapConfigEnabled}
+                            items={basemapItems}
+                            value={basemap}
+                            disabled={isDisabled}
+                            showDisabledMessage={isDisabled}
+                            properties={properties}
+                            pushData={pushData}
+                        />
                     }
                 />
             </ConfigSection>

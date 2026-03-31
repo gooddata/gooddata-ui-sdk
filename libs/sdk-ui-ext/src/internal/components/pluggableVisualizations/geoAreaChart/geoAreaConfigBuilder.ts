@@ -28,10 +28,8 @@ interface IGeoAreaControls {
     legend?: IGeoAreaChartConfig["legend"];
     viewport?: IGeoAreaChartConfig["viewport"];
     mapStyle?: IGeoAreaChartConfig["mapStyle"];
-    maxZoomLevel?: IGeoAreaChartConfig["maxZoomLevel"];
     basemap?: IGeoAreaChartConfig["basemap"];
     tileset?: unknown;
-    colorScheme?: IGeoAreaChartConfig["colorScheme"];
 }
 
 /**
@@ -49,28 +47,16 @@ export function buildAreaVisualizationConfig({
     environment,
     featureFlags,
 }: IBuildAreaVisualizationConfigParams): IGeoAreaChartConfig {
-    const { config = {}, a11yTitle } = options;
-    const { colorPalette, separators, maxZoomLevel: configMaxZoomLevel, isInEditMode, isExportMode } = config;
+    const { config = {}, customVisualizationConfig = {}, a11yTitle } = options;
+    const { colorPalette, separators, isInEditMode, isExportMode } = config;
     const controls = (supportedControls.controls ?? supportedControls ?? {}) as IGeoAreaControls;
-    const {
-        center,
-        zoom,
-        bounds,
-        legend = {},
-        viewport = {},
-        mapStyle,
-        maxZoomLevel: controlsMaxZoomLevel,
-        basemap,
-        tileset,
-        colorScheme,
-    } = controls;
+    const { center, zoom, bounds, legend = {}, viewport = {}, mapStyle, basemap, tileset } = controls;
     const legendEnabled = legend?.enabled;
     const legendPosition = normalizeGeoLegendPosition(legend?.position);
     const isBasemapConfigEnabled = isGeoBasemapConfigEnabled(featureFlags);
     const sanitizedGeoMapStyle = sanitizeGeoMapStyleOptions({
         basemap,
         legacyTileset: tileset,
-        colorScheme,
     });
     const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
     const isPresetViewportAreaSelected = Boolean(isConcreteViewportPreset(viewport.area));
@@ -81,9 +67,6 @@ export function buildAreaVisualizationConfig({
               area: viewport.area === "custom" ? "auto" : viewport.area,
               navigation: undefined,
           };
-    // Explicit undefined check - null is a meaningful value that clears the zoom limit
-    const maxZoomLevel = configMaxZoomLevel === undefined ? controlsMaxZoomLevel : configMaxZoomLevel;
-
     // Build viewport configuration with frozen state during edit/export
     const viewportProp = {
         viewport: {
@@ -99,6 +82,7 @@ export function buildAreaVisualizationConfig({
               : undefined;
 
     const areaConfig = {
+        ...config,
         isExportMode,
         separators,
         colorPalette,
@@ -115,13 +99,12 @@ export function buildAreaVisualizationConfig({
         ...viewportProp,
         mapStyle,
         ...(sanitizedGeoMapStyle.basemap ? { basemap: sanitizedGeoMapStyle.basemap } : {}),
-        ...(sanitizedGeoMapStyle.colorScheme ? { colorScheme: sanitizedGeoMapStyle.colorScheme } : {}),
-        maxZoomLevel,
         a11yTitle,
         enableGeoBasemapConfig: isBasemapConfigEnabled,
         enableGeoChartA11yImprovements: featureFlags?.["enableGeoChartA11yImprovements"] ?? false,
         enableGeoChartsViewportConfig: isViewportConfigEnabled,
         applyViewportNavigation,
+        ...customVisualizationConfig,
     };
 
     return areaConfig;

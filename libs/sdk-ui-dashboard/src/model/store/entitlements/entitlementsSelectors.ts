@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
@@ -38,6 +38,33 @@ export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitl
     createSelector(selectEntitlements, (entitlements) => {
         return entitlements.find((entitlement) => entitlement.name === "AutomationRecipientCount");
     });
+
+/**
+ * @alpha
+ */
+export const selectEntitlementUnlimitedAutomationRecipients: DashboardSelector<
+    IEntitlementDescriptor | undefined
+> = createSelector(selectEntitlements, (entitlements) => {
+    return entitlements.find((entitlement) => entitlement.name === "UnlimitedAutomationRecipients");
+});
+
+/**
+ * @alpha
+ */
+export const selectMaxAutomationRecipients: DashboardSelector<number> = createSelector(
+    selectEntitlementMaxAutomationRecipients,
+    selectEntitlementUnlimitedAutomationRecipients,
+    (maxRecipientsEntitlement, unlimitedEntitlement) => {
+        if (unlimitedEntitlement) {
+            return Infinity;
+        }
+
+        const DEFAULT_MAX_RECIPIENTS = 10;
+        return maxRecipientsEntitlement?.value
+            ? Number(maxRecipientsEntitlement.value)
+            : DEFAULT_MAX_RECIPIENTS;
+    },
+);
 
 /**
  * @alpha

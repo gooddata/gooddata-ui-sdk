@@ -2,7 +2,7 @@
 
 import { describe, expect, it, vi } from "vitest";
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 
 import type { StyleSpecification } from "../../../layers/common/mapFacade.js";
 import { fetchMapStyle } from "../styleEndpoint.js";
@@ -66,165 +66,153 @@ function createRasterLayer(source: string) {
 }
 
 describe("fetchMapStyle", () => {
-    it("loads style through backend geo service", async () => {
+    it("loads style through backend geo service using getStyleById", async () => {
+        const getStyleById = vi.fn().mockResolvedValue(SAMPLE_STYLE);
         const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
         const style = await fetchMapStyle(backend, "standard");
 
         expect(style).toEqual(SAMPLE_STYLE);
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: "standard",
-            colorScheme: undefined,
+        expect(getStyleById).toHaveBeenCalledWith("standard", {
             language: undefined,
         });
+        expect(getDefaultStyle).not.toHaveBeenCalled();
     });
 
-    it("sends no basemap param when basemap is undefined", async () => {
+    it("uses getDefaultStyle when basemap is undefined", async () => {
+        const getStyleById = vi.fn().mockResolvedValue(SAMPLE_STYLE);
         const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
         await fetchMapStyle(backend);
 
         expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: undefined,
-            colorScheme: undefined,
             language: undefined,
         });
-    });
-
-    it("ignores colorScheme when basemap is omitted", async () => {
-        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
-
-        await fetchMapStyle(backend, undefined, "dark");
-
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: undefined,
-            colorScheme: undefined,
-            language: undefined,
-        });
-    });
-
-    it("passes colorScheme param to backend", async () => {
-        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
-
-        await fetchMapStyle(backend, "standard", "dark");
-
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: "standard",
-            colorScheme: "dark",
-            language: undefined,
-        });
+        expect(getStyleById).not.toHaveBeenCalled();
     });
 
     it("passes satellite basemap param to backend", async () => {
+        const getStyleById = vi.fn().mockResolvedValue(SAMPLE_STYLE);
         const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
         await fetchMapStyle(backend, "satellite");
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: "satellite",
-            colorScheme: undefined,
+        expect(getStyleById).toHaveBeenCalledWith("satellite", {
             language: undefined,
         });
-    });
-
-    it("ignores colorScheme for satellite basemap", async () => {
-        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
-
-        await fetchMapStyle(backend, "satellite", "dark");
-
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: "satellite",
-            colorScheme: undefined,
-            language: undefined,
-        });
-    });
-
-    it("ignores colorScheme for hybrid basemap", async () => {
-        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
-
-        await fetchMapStyle(backend, "hybrid", "dark");
-
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: "hybrid",
-            colorScheme: undefined,
-            language: undefined,
-        });
+        expect(getDefaultStyle).not.toHaveBeenCalled();
     });
 
     it("accepts none basemap style with empty sources", async () => {
+        const getStyleById = vi.fn().mockResolvedValue(NONE_STYLE);
         const getDefaultStyle = vi.fn().mockResolvedValue(NONE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
         const style = await fetchMapStyle(backend, "none");
 
         expect(style).toEqual(NONE_STYLE);
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: "none",
-            colorScheme: undefined,
+        expect(getStyleById).toHaveBeenCalledWith("none", {
             language: undefined,
         });
     });
 
-    it("ignores colorScheme for none basemap", async () => {
-        const getDefaultStyle = vi.fn().mockResolvedValue(NONE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
-
-        await fetchMapStyle(backend, "none", "light");
-
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: "none",
-            colorScheme: undefined,
-            language: undefined,
-        });
-    });
-
-    it("passes language param to backend", async () => {
+    it("passes language param to backend with basemap", async () => {
+        const getStyleById = vi.fn().mockResolvedValue(SAMPLE_STYLE);
         const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
-        await fetchMapStyle(backend, "standard", "light", "de");
+        await fetchMapStyle(backend, "standard", "de");
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({
-            basemap: "standard",
-            colorScheme: "light",
+        expect(getStyleById).toHaveBeenCalledWith("standard", {
             language: "de",
         });
     });
 
+    it("falls back to the default style when the requested style id is not found", async () => {
+        const getStyleById = vi
+            .fn()
+            .mockRejectedValue(new UnexpectedResponseError("Not Found", 404, undefined));
+        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
+
+        const style = await fetchMapStyle(backend, "missing-style");
+
+        expect(style).toEqual(SAMPLE_STYLE);
+        expect(getStyleById).toHaveBeenCalledWith("missing-style", {
+            language: undefined,
+        });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            language: undefined,
+        });
+    });
+
+    it("rethrows non-404 SPI response errors from getStyleById", async () => {
+        const error = new UnexpectedResponseError("Forbidden", 403, undefined);
+        const getStyleById = vi.fn().mockRejectedValue(error);
+        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
+
+        await expect(fetchMapStyle(backend, "standard")).rejects.toBe(error);
+        expect(getDefaultStyle).not.toHaveBeenCalled();
+    });
+
+    it("rethrows unexpected getStyleById failures", async () => {
+        const error = new Error("network failed");
+        const getStyleById = vi.fn().mockRejectedValue(error);
+        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
+
+        await expect(fetchMapStyle(backend, "standard")).rejects.toBe(error);
+        expect(getDefaultStyle).not.toHaveBeenCalled();
+    });
+
+    it("passes language param to backend without basemap", async () => {
+        const getStyleById = vi.fn().mockResolvedValue(SAMPLE_STYLE);
+        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
+
+        await fetchMapStyle(backend, undefined, "de");
+
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            language: "de",
+        });
+        expect(getStyleById).not.toHaveBeenCalled();
+    });
+
     it("throws when style is missing version", async () => {
         const invalidStyle = { ...SAMPLE_STYLE, version: undefined };
+        const getStyleById = vi.fn().mockResolvedValue(invalidStyle);
         const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
         await expect(fetchMapStyle(backend, "standard")).rejects.toThrow("valid style version");
     });
 
     it("throws when style has no sources", async () => {
         const invalidStyle = { ...SAMPLE_STYLE, sources: undefined };
+        const getStyleById = vi.fn().mockResolvedValue(invalidStyle);
         const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
         await expect(fetchMapStyle(backend, "standard")).rejects.toThrow("must contain sources");
     });
 
     it("throws when glyphs URL is not absolute", async () => {
         const invalidStyle = { ...SAMPLE_STYLE, glyphs: "/relative/path" };
+        const getStyleById = vi.fn().mockResolvedValue(invalidStyle);
         const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
         await expect(fetchMapStyle(backend, "standard")).rejects.toThrow("must be an absolute URL");
     });
 
     it("accepts vector source with url instead of tiles", async () => {
+        const getStyleById = vi.fn().mockResolvedValue(SAMPLE_STYLE_WITH_URL);
         const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE_WITH_URL);
-        const backend = createBackendMock(getDefaultStyle);
+        const backend = createBackendMock(getDefaultStyle, getStyleById);
 
         const style = await fetchMapStyle(backend, "standard");
 
@@ -633,10 +621,14 @@ describe("fetchMapStyle", () => {
     });
 });
 
-function createBackendMock(getDefaultStyle: ReturnType<typeof vi.fn>): IAnalyticalBackend {
+function createBackendMock(
+    getDefaultStyle: ReturnType<typeof vi.fn>,
+    getStyleById: ReturnType<typeof vi.fn> = getDefaultStyle,
+): IAnalyticalBackend {
     return {
         geo: () => ({
             getDefaultStyle,
+            getStyleById,
         }),
     } as unknown as IAnalyticalBackend;
 }

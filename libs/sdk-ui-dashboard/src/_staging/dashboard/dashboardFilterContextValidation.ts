@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type FilterContextItem,
@@ -10,10 +10,14 @@ import {
     type ObjRef,
     areObjRefsEqual,
     attributeElementsCount,
+    dashboardFilterLocalIdentifier,
     dashboardFilterObjRef,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
+
+import { isFilterTypeCompatibleWithSelectionType } from "../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 
 /**
  * Describes validation errors that can occur when merging dashboard filters.
@@ -25,7 +29,8 @@ export type FilterValidationErrorType =
     | "cannot-apply-readonly" // The filter is readonly and cannot be modified
     | "cannot-apply-multi-to-single" // Cannot apply a multi-value filter to a single-value filter
     | "cannot-apply-missing-filter" // The filter doesn't exist in the dashboard
-    | "parent-filter-is-missing"; // The filter parent doesn't exist in the dashboard
+    | "parent-filter-is-missing" // The filter parent doesn't exist in the dashboard
+    | "cannot-apply-incompatible-selection-type"; // The override filter type is incompatible with config's selectionType
 
 /**
  * Result of filter validation containing the filter and the specific error.
@@ -309,7 +314,7 @@ function mergeAttributeFilter(
     missingAttributeFilterLocalIdentifiers: string[],
 ): { mergedFilter: FilterContextItem; validationResults: ValidationResult[] } {
     // No matching filter found, keep original
-    if (!filterToMerge || !isDashboardAttributeFilter(filterToMerge)) {
+    if (!filterToMerge) {
         return {
             mergedFilter: originalFilter,
             validationResults: [],
@@ -321,25 +326,120 @@ function mergeAttributeFilter(
     const filterConfigsMap = createAttributeFilterConfigsMap(attributeFilterConfigs);
     const filterConfig = filterLocalIdentifier ? filterConfigsMap.get(filterLocalIdentifier) : undefined;
 
-    // Validate filter
-    const validationResults = validateAttributeFilter(
-        originalFilter,
-        filterToMerge,
-        filterConfig,
-        missingAttributeFilterLocalIdentifiers,
-    );
+    // Check hidden/readonly mode before type branching
+    if (filterConfig?.mode === "hidden") {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [{ filter: filterToMerge, error: "cannot-apply-hidden" }],
+        };
+    }
+    if (filterConfig?.mode === "readonly") {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [{ filter: filterToMerge, error: "cannot-apply-readonly" }],
+        };
+    }
 
-    // Determine which filter to use based on validation
-    const mergedFilter = determineFilterToUse(
-        originalFilter,
-        filterToMerge,
-        validationResults,
-        missingAttributeFilterLocalIdentifiers,
-    );
+    // Determine the override's type and check selectionType compatibility
+    // Default selectionType for list (IDashboardAttributeFilter) originals is "list"
+    const overrideType = isDashboardAttributeFilter(filterToMerge) ? "list" : "text";
+    if (!isFilterTypeCompatibleWithSelectionType(overrideType, filterConfig?.selectionType, "list")) {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [
+                {
+                    filter: filterToMerge,
+                    error: "cannot-apply-incompatible-selection-type",
+                },
+            ],
+        };
+    }
+
+    // For list-type overrides, run list-specific validations (mode, multi-to-single, parent filters)
+    if (isDashboardAttributeFilter(filterToMerge)) {
+        const validationResults = validateAttributeFilter(
+            originalFilter,
+            filterToMerge,
+            filterConfig,
+            missingAttributeFilterLocalIdentifiers,
+        );
+
+        const mergedFilter = determineFilterToUse(
+            originalFilter,
+            filterToMerge,
+            validationResults,
+            missingAttributeFilterLocalIdentifiers,
+        );
+
+        return {
+            mergedFilter,
+            validationResults,
+        };
+    }
+
+    // Text-type override passed selectionType check — apply it
+    return {
+        mergedFilter: filterToMerge,
+        validationResults: [],
+    };
+}
+
+/**
+ * Merges a text attribute filter, checking selectionType compatibility.
+ *
+ * @param originalFilter - Original text attribute filter
+ * @param filterToMerge - Filter to merge, if found
+ * @param attributeFilterConfigs - Attribute filter configurations
+ * @returns Object containing the merged filter and validation results
+ */
+function mergeTextAttributeFilter(
+    originalFilter: FilterContextItem,
+    filterToMerge: FilterContextItem | undefined,
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined,
+): { mergedFilter: FilterContextItem; validationResults: ValidationResult[] } {
+    if (!filterToMerge) {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [],
+        };
+    }
+
+    const filterLocalIdentifier = dashboardFilterLocalIdentifier(originalFilter);
+    const filterConfigsMap = createAttributeFilterConfigsMap(attributeFilterConfigs);
+    const filterConfig = filterLocalIdentifier ? filterConfigsMap.get(filterLocalIdentifier) : undefined;
+
+    // Check hidden/readonly mode
+    if (filterConfig?.mode === "hidden") {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [{ filter: filterToMerge, error: "cannot-apply-hidden" }],
+        };
+    }
+    if (filterConfig?.mode === "readonly") {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [{ filter: filterToMerge, error: "cannot-apply-readonly" }],
+        };
+    }
+
+    // Determine the override's type and check selectionType compatibility
+    // Default selectionType for text originals is "text"
+    const overrideType = isDashboardTextAttributeFilter(filterToMerge) ? "text" : "list";
+    if (!isFilterTypeCompatibleWithSelectionType(overrideType, filterConfig?.selectionType, "text")) {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [
+                {
+                    filter: filterToMerge,
+                    error: "cannot-apply-incompatible-selection-type",
+                },
+            ],
+        };
+    }
 
     return {
-        mergedFilter,
-        validationResults,
+        mergedFilter: filterToMerge,
+        validationResults: [],
     };
 }
 
@@ -458,6 +558,8 @@ export function mergeFilterContextFilters(
                 config.dateFilterConfig,
                 config.dateFilterConfigs,
             );
+        } else if (isDashboardTextAttributeFilter(originalFilter)) {
+            return mergeTextAttributeFilter(originalFilter, filterToMerge, config.attributeFilterConfigs);
         } else {
             // For unknown filter types, just keep the original with no validation
             return {

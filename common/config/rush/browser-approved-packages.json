@@ -183,6 +183,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-code-convertors",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-code-schemas",
       "allowedCategories": [ "production" ]
     },

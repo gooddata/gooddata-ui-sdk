@@ -1,10 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isInsightWidget,
@@ -32,10 +34,13 @@ export function removeIgnoredWidgetFilters(
                   }
 
                   if (
-                      isDashboardAttributeFilter(filter) &&
+                      isDashboardAttributeFilterItem(filter) &&
                       ignoredFilter.type === "attributeFilterReference"
                   ) {
-                      return areObjRefsEqual(ignoredFilter.displayForm, filter.attributeFilter.displayForm);
+                      return areObjRefsEqual(
+                          ignoredFilter.displayForm,
+                          dashboardAttributeFilterItemDisplayForm(filter),
+                      );
                   }
 
                   return false;

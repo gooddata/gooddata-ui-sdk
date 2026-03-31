@@ -71,6 +71,7 @@ import { IRankingFilterBody } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
+import { JsonApiVisualizationObjectOut } from '@gooddata/api-client-tiger';
 import type { ListOfColors } from '@gooddata/sdk-code-schemas/v1';
 import type { Metadata } from '@gooddata/sdk-code-schemas/v1';
 import type { Metric } from '@gooddata/sdk-code-schemas/v1';
@@ -1095,6 +1096,9 @@ export function yamlSortsToDeclarative(sort_by: Sorts | undefined, fields: Visua
 // @public (undocumented)
 export function yamlVisualisationToDeclarative(entities: ExportEntities, input: Visualisation): DeclarativeVisualizationObject;
 
+// @public (undocumented)
+export function yamlVisualisationToMetadataObject(entities: ExportEntities, input: Visualisation): JsonApiVisualizationObjectOut;
+
 // Warning: (ae-forgotten-export) The symbol "DashboardWidget" needs to be exported by the entry point index.d.ts
 // Warning: (ae-missing-release-tag) "yamlWidgetItemToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1176,7 +1180,7 @@ export function yamlWidgetToDeclarative(entities: ExportEntities, input: Visuali
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "load_15" needs to be exported by the entry point index.d.ts
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "save_15" needs to be exported by the entry point index.d.ts
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "DefaultProperties_15" needs to be exported by the entry point index.d.ts
-// src/to/yamlVisualisationToDeclarative.ts:291:5 - (ae-forgotten-export) The symbol "VisualisationDefinition" needs to be exported by the entry point index.d.ts
+// src/to/yamlVisualisationToDeclarative.ts:308:5 - (ae-forgotten-export) The symbol "VisualisationDefinition" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

@@ -2,25 +2,21 @@
 
 import { TOOLTIP_WIDTH_MEDIUM, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-export type IFilterModeMenuSectionHeaderProps = {
+export type IFilterMenuSectionHeaderProps = {
     title: string;
     tooltip: string;
     hideTooltip?: boolean;
 };
 
-export function FilterModeMenuSectionHeader({
-    title,
-    tooltip,
-    hideTooltip,
-}: IFilterModeMenuSectionHeaderProps) {
+export function FilterMenuSectionHeader({ title, tooltip, hideTooltip }: IFilterMenuSectionHeaderProps) {
     return (
-        <div className="gd-filter-mode-menu__section">
-            <div className="gd-filter-mode-menu__section-label">
-                <span className="gd-filter-mode-menu__section-text">{title}</span>
+        <div className="gd-filter-menu__section">
+            <div className="gd-filter-menu__section-label">
+                <span className="gd-filter-menu__section-text">{title}</span>
                 {hideTooltip ? null : (
                     <UiTooltip
                         anchor={
-                            <span className="gd-filter-mode-menu__section-icon" aria-hidden="true">
+                            <span className="gd-filter-menu__section-icon" aria-hidden="true">
                                 <UiIconButton
                                     icon="question"
                                     size="xsmall"

@@ -8,7 +8,7 @@ FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/
 WORKDIR /app
 
 # Install @playwright/test so bundled code can require it at runtime
-RUN npm install --no-save @playwright/test@1.58.2
+RUN npm install --no-save @playwright/test@1.58.2 pdf-parse@1.1.4
 
 # Compare JSON fixture files
 COPY playwright/fixtures ./playwright/fixtures

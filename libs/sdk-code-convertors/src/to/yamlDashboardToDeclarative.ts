@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { randomUUID } from "crypto";
+import { v4 as uuidV4 } from "uuid";
 
 import {
     type DeclarativeAnalyticalDashboard,
@@ -113,7 +113,7 @@ function extractDashboardEmptyValueHandling(filter: unknown): EmptyValueHandling
 }
 
 function createFilterContextId(baseId: string): string {
-    return `${baseId}_filterContext_${randomUUID()}`;
+    return `${baseId}_filterContext_${uuidV4()}`;
 }
 
 /**

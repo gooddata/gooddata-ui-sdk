@@ -31,6 +31,7 @@ import {
     loadThreadSuccessAction,
     restoreCachedMessagesAction,
 } from "../messages/messagesSlice.js";
+import { convertToLocalContent } from "./converters/toLocalContent.js";
 
 /**
  * Load thread history and put it to the store.
@@ -198,7 +199,12 @@ function* fetchConversations() {
         loadConversationsSuccessAction({
             conversations: conversationItems,
             currentConversation: conversation,
-            conversationItems: resultsItems.map(makeConversationItem),
+            conversationItems: resultsItems.map((item) => {
+                return makeConversationItem({
+                    ...item,
+                    content: convertToLocalContent(item.content),
+                });
+            }),
             threadId: conversation.id,
         }),
     );

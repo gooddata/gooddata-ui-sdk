@@ -7,27 +7,27 @@ import { defineMessages, useIntl } from "react-intl";
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, type IAlignPoint, type IUiListboxItem } from "@gooddata/sdk-ui-kit";
 
-import { FilterModeMenuButton } from "./FilterModeMenuButton.js";
-import { FilterModeMenuDropdownBody } from "./FilterModeMenuDropdownBody.js";
-import { type IFilterModeMenuProps, type ILabelItemData, type IModeItemData } from "./types.js";
-import { type AttributeFilterMode } from "../../filterModeTypes.js";
+import { FilterMenuButton } from "./FilterMenuButton.js";
+import { FilterMenuDropdownBody } from "./FilterMenuDropdownBody.js";
+import { type IFilterMenuProps, type ILabelItemData, type ISelectionTypeItemData } from "./types.js";
+import { type AttributeFilterSelectionType } from "../../selectionTypes.js";
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
-const modeMessages = defineMessages({
-    list: { id: "attributeFilter.mode.list" },
-    text: { id: "attributeFilter.mode.text" },
+const selectionTypeMessages = defineMessages({
+    list: { id: "attributeFilter.selectionType.list" },
+    text: { id: "attributeFilter.selectionType.text" },
 });
 
 /**
- * Menu for switching between different attribute filter modes.
+ * Menu for switching between different attribute filter selection types.
  *
  * @alpha
  */
-export function FilterModeMenu(props: IFilterModeMenuProps) {
+export function FilterMenu(props: IFilterMenuProps) {
     const {
-        currentMode,
-        availableModes = ["elements", "text"],
-        onModeChange,
+        currentSelectionType,
+        availableSelectionTypes = ["elements", "text"],
+        onSelectionTypeChange,
         labels = [],
         selectedLabelRef,
         onLabelChange: onDisplayFormChange,
@@ -36,28 +36,32 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
     const intl = useIntl();
 
     // Simplified: just 2 options per Figma design
-    const allOptions: AttributeFilterMode[] = ["elements", "text"];
+    const allOptions: AttributeFilterSelectionType[] = ["elements", "text"];
 
-    // Filter options based on available modes
-    const visibleOptions = allOptions.filter((mode) => availableModes.includes(mode));
-    const showModeSection = visibleOptions.length > 1;
+    // Filter options based on available selection types
+    const visibleOptions = allOptions.filter((selectionType) =>
+        availableSelectionTypes.includes(selectionType),
+    );
+    const showSelectionTypeSection = visibleOptions.length > 1;
     const showDisplayForms = labels.length > 1;
-    const hasMenuContent = showModeSection || showDisplayForms;
+    const hasMenuContent = showSelectionTypeSection || showDisplayForms;
 
-    const handleOptionClick = (mode: AttributeFilterMode) => {
-        onModeChange(mode);
+    const handleOptionClick = (selectionType: AttributeFilterSelectionType) => {
+        onSelectionTypeChange(selectionType);
     };
 
     const handleDisplayFormClick = (displayFormRef: ObjRef) => {
         onDisplayFormChange?.(displayFormRef);
     };
 
-    const modeListboxItems = useMemo<IUiListboxItem<IModeItemData, never>[]>(() => {
-        return visibleOptions.map((mode) => ({
+    const selectionTypeListboxItems = useMemo<IUiListboxItem<ISelectionTypeItemData, never>[]>(() => {
+        return visibleOptions.map((selectionType) => ({
             type: "interactive",
-            id: `mode:${mode}`,
-            stringTitle: intl.formatMessage(mode === "text" ? modeMessages.text : modeMessages.list),
-            data: { mode },
+            id: `mode:${selectionType}`,
+            stringTitle: intl.formatMessage(
+                selectionType === "text" ? selectionTypeMessages.text : selectionTypeMessages.list,
+            ),
+            data: { selectionType },
         }));
     }, [intl, visibleOptions]);
 
@@ -78,16 +82,18 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
         return selectedLabel ? `label:${selectedLabel.id}` : undefined;
     }, [labels, selectedLabelRef]);
 
-    const selectedModeItemId = useMemo(() => {
-        return showModeSection && visibleOptions.includes(currentMode) ? `mode:${currentMode}` : undefined;
-    }, [currentMode, showModeSection, visibleOptions]);
+    const selectedSelectionTypeItemId = useMemo(() => {
+        return showSelectionTypeSection && visibleOptions.includes(currentSelectionType)
+            ? `mode:${currentSelectionType}`
+            : undefined;
+    }, [currentSelectionType, showSelectionTypeSection, visibleOptions]);
 
     if (!hasMenuContent) {
         return null;
     }
 
     return (
-        <div className="gd-filter-mode-menu s-filter-mode-menu">
+        <div className="gd-filter-menu s-filter-menu">
             <Dropdown
                 alignPoints={ALIGN_POINTS}
                 closeOnParentScroll
@@ -100,7 +106,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                     ariaAttributes,
                     accessibilityConfig,
                 }) => (
-                    <FilterModeMenuButton
+                    <FilterMenuButton
                         isOpen={dropdownIsOpen}
                         onClick={toggleDropdown}
                         ariaAttributes={ariaAttributes}
@@ -109,13 +115,13 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => {
                     return (
-                        <FilterModeMenuDropdownBody
-                            showModeSection={showModeSection}
+                        <FilterMenuDropdownBody
+                            showSelectionTypeSection={showSelectionTypeSection}
                             showDisplayForms={showDisplayForms}
-                            modeListboxItems={modeListboxItems}
-                            selectedModeItemId={selectedModeItemId}
-                            onModeSelect={(item) => {
-                                handleOptionClick(item.data.mode);
+                            selectionTypeListboxItems={selectionTypeListboxItems}
+                            selectedSelectionTypeItemId={selectedSelectionTypeItemId}
+                            onSelectionTypeSelect={(item) => {
+                                handleOptionClick(item.data.selectionType);
                             }}
                             labelListboxItems={labelListboxItems}
                             selectedLabelItemId={selectedLabelItemId}
@@ -124,13 +130,17 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                             }}
                             closeDropdown={closeDropdown}
                             ariaAttributes={ariaAttributes}
-                            selectionTitle={intl.formatMessage({ id: "attributeFilter.mode.selection" })}
-                            selectionTooltip={intl.formatMessage({
-                                id: "attributeFilter.mode.selection.tooltip",
+                            selectionTitle={intl.formatMessage({
+                                id: "attributeFilter.selectionType.selection",
                             })}
-                            valuesAsTitle={intl.formatMessage({ id: "attributeFilter.mode.valuesAs" })}
+                            selectionTooltip={intl.formatMessage({
+                                id: "attributeFilter.selectionType.selection.tooltip",
+                            })}
+                            valuesAsTitle={intl.formatMessage({
+                                id: "attributeFilter.selectionType.valuesAs",
+                            })}
                             valuesAsTooltip={intl.formatMessage({
-                                id: "attributeFilter.mode.valuesAs.tooltip",
+                                id: "attributeFilter.selectionType.valuesAs.tooltip",
                             })}
                             hideTooltips={hideTooltips}
                         />

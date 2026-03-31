@@ -59,7 +59,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         ElementsSelectActionsComponent,
         EmptyResultComponent,
         StatusBarComponent,
-        FilterModeMenuComponent,
+        FilterMenuComponent,
         TextFilterBodyComponent,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
     } = props;
@@ -94,7 +94,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                 }
                 EmptyResultComponent={EmptyResultComponent ?? DefaultComponents.EmptyResultComponent}
                 StatusBarComponent={StatusBarComponent ?? DefaultComponents.StatusBarComponent}
-                FilterModeMenuComponent={FilterModeMenuComponent ?? DefaultComponents.FilterModeMenuComponent}
+                FilterMenuComponent={FilterMenuComponent ?? DefaultComponents.FilterMenuComponent}
                 TextFilterBodyComponent={TextFilterBodyComponent ?? DefaultComponents.TextFilterBodyComponent}
             >
                 <AttributeFilterContextProvider

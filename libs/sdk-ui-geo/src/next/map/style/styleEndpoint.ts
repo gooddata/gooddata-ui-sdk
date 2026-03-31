@@ -1,13 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
-import {
-    type GeoBasemap,
-    type GeoColorScheme,
-    doesGeoBasemapSupportColorScheme,
-} from "../../types/map/basemap.js";
 
 const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
 
@@ -34,6 +29,9 @@ const TILE_SOURCE_TYPES: ReadonlySet<string> = new Set(["vector", "raster", "ras
  * Fetches the MapLibre style specification from the backend.
  *
  * @remarks
+ * When `basemap` is defined, the style is fetched via `GET /api/v1/location/styles/{basemap}`.
+ * When `basemap` is undefined, the backend default style is returned via `GET /api/v1/location/style`.
+ *
  * The backend returns a complete MapLibre v8 style with all tile, glyph, and sprite URLs
  * already proxied through the GoodData API. No manual URL construction is needed on the
  * UI side — the returned style JSON can be passed directly to MapLibre.
@@ -41,27 +39,35 @@ const TILE_SOURCE_TYPES: ReadonlySet<string> = new Set(["vector", "raster", "ras
  * Caching is handled by the caching backend layer. Multiple calls with the same
  * backend instance and params will be deduplicated if the backend is wrapped with `withCaching`.
  *
- * When basemap is `undefined`, no basemap parameter is sent and the backend returns its own
- * default style. In that case `colorScheme` is also omitted because the default basemap does
- * not support explicit color variants.
- *
  * @internal
  */
 export async function fetchMapStyle(
     backend: IAnalyticalBackend,
-    basemap?: GeoBasemap,
-    colorScheme?: GeoColorScheme,
+    basemap?: string,
     language?: string,
 ): Promise<StyleSpecification> {
-    const colorSchemeParam =
-        colorScheme === undefined || basemap === undefined || !doesGeoBasemapSupportColorScheme(basemap)
-            ? undefined
-            : colorScheme;
-    const style = (await backend
-        .geo()
-        .getDefaultStyle({ basemap, colorScheme: colorSchemeParam, language })) as unknown;
+    const style =
+        basemap === undefined
+            ? ((await backend.geo().getDefaultStyle({ language })) as unknown)
+            : await fetchMapStyleByIdWithFallback(backend, basemap, language);
     assertValidStyle(style);
     return style;
+}
+
+async function fetchMapStyleByIdWithFallback(
+    backend: IAnalyticalBackend,
+    basemap: string,
+    language?: string,
+): Promise<unknown> {
+    try {
+        return (await backend.geo().getStyleById(basemap, { language })) as unknown;
+    } catch (error) {
+        if (isUnexpectedResponseError(error) && error.httpStatus === 404) {
+            return (await backend.geo().getDefaultStyle({ language })) as unknown;
+        }
+
+        throw error;
+    }
 }
 
 function assertValidStyle(style: unknown): asserts style is StyleSpecification {

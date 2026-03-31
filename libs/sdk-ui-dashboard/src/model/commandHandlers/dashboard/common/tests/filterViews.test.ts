@@ -45,21 +45,24 @@ describe("filterViews", () => {
 
                 const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
                 expect(updatedFilterContext).toEqual({
-                    ...filterContext,
-                    filters: [
-                        {
-                            attributeFilter: {
-                                attributeElements: { uris: [] },
-                                displayForm: {
-                                    identifier: "campaign_channels.category",
-                                    type: "displayForm",
+                    filterContext: {
+                        ...filterContext,
+                        filters: [
+                            {
+                                attributeFilter: {
+                                    attributeElements: { uris: [] },
+                                    displayForm: {
+                                        identifier: "campaign_channels.category",
+                                        type: "displayForm",
+                                    },
+                                    negativeSelection: true,
+                                    localIdentifier: "86e90c9b864e4701affced5e55b36b9c",
+                                    selectionMode: "single",
                                 },
-                                negativeSelection: true,
-                                localIdentifier: "86e90c9b864e4701affced5e55b36b9c",
-                                selectionMode: "single",
                             },
-                        },
-                    ],
+                        ],
+                    },
+                    configUpdates: new Map(),
                 });
             });
 
@@ -116,21 +119,24 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: [
-                            {
-                                attributeFilter: {
-                                    attributeElements: { uris: [] },
-                                    displayForm: {
-                                        identifier: "campaign_channels.category",
-                                        type: "displayForm",
+                        filterContext: {
+                            ...filterContext,
+                            filters: [
+                                {
+                                    attributeFilter: {
+                                        attributeElements: { uris: [] },
+                                        displayForm: {
+                                            identifier: "campaign_channels.category",
+                                            type: "displayForm",
+                                        },
+                                        negativeSelection: true,
+                                        localIdentifier: "86e90c9b864e4701affced5e55b36b9c",
+                                        selectionMode: "single",
                                     },
-                                    negativeSelection: true,
-                                    localIdentifier: "86e90c9b864e4701affced5e55b36b9c",
-                                    selectionMode: "single",
                                 },
-                            },
-                        ],
+                            ],
+                        },
+                        configUpdates: new Map(),
                     });
                 },
             );
@@ -163,7 +169,7 @@ describe("filterViews", () => {
                 ];
 
                 const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
-                expect(updatedFilterContext.filters).toEqual([
+                expect(updatedFilterContext.filterContext.filters).toEqual([
                     {
                         attributeFilter: {
                             attributeElements: { uris: [] },
@@ -204,8 +210,11 @@ describe("filterViews", () => {
 
                 const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
                 expect(updatedFilterContext).toEqual({
-                    ...filterContext,
-                    filters: filterViewFilters,
+                    filterContext: {
+                        ...filterContext,
+                        filters: filterViewFilters,
+                    },
+                    configUpdates: new Map(),
                 });
             });
 
@@ -236,8 +245,11 @@ describe("filterViews", () => {
 
                 const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
                 expect(updatedFilterContext).toEqual({
-                    ...filterContext,
-                    filters: filterViewFilters,
+                    filterContext: {
+                        ...filterContext,
+                        filters: filterViewFilters,
+                    },
+                    configUpdates: new Map(),
                 });
             });
 
@@ -268,8 +280,11 @@ describe("filterViews", () => {
 
                 const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
                 expect(updatedFilterContext).toEqual({
-                    ...filterContext,
-                    filters: filterViewFilters,
+                    filterContext: {
+                        ...filterContext,
+                        filters: filterViewFilters,
+                    },
+                    configUpdates: new Map(),
                 });
             });
         });
@@ -286,8 +301,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
 
@@ -310,8 +328,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
 
@@ -334,8 +355,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
 
@@ -367,8 +391,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
             });
@@ -404,8 +431,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
 
@@ -437,8 +467,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
 
@@ -470,8 +503,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
 
@@ -505,16 +541,19 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: [
-                            {
-                                dateFilter: {
-                                    dataSet: { identifier: "date", type: "dataSet" },
-                                    granularity: "GDC.time.date",
-                                    type: "relative",
+                        filterContext: {
+                            ...filterContext,
+                            filters: [
+                                {
+                                    dateFilter: {
+                                        dataSet: { identifier: "date", type: "dataSet" },
+                                        granularity: "GDC.time.date",
+                                        type: "relative",
+                                    },
                                 },
-                            },
-                        ],
+                            ],
+                        },
+                        configUpdates: new Map(),
                     });
                 });
             });
@@ -553,8 +592,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
 
@@ -587,7 +629,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             arbitraryAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -646,7 +688,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             arbitraryAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -691,7 +733,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             arbitraryAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -725,7 +767,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             arbitraryAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -764,7 +806,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             arbitraryAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -809,8 +851,11 @@ describe("filterViews", () => {
                         filterViewFilters,
                     );
                     expect(updatedFilterContext).toEqual({
-                        ...filterContext,
-                        filters: filterViewFilters,
+                        filterContext: {
+                            ...filterContext,
+                            filters: filterViewFilters,
+                        },
+                        configUpdates: new Map(),
                     });
                 });
 
@@ -832,7 +877,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             arbitraryAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -871,7 +916,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             matchAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -912,7 +957,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             arbitraryAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -951,7 +996,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             matchAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -992,7 +1037,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             matchAttributeFilter: {
                                 displayForm: displayFormRef,
@@ -1034,7 +1079,7 @@ describe("filterViews", () => {
                         filterContext,
                         filterViewFilters,
                     );
-                    expect(updatedFilterContext.filters).toEqual([
+                    expect(updatedFilterContext.filterContext.filters).toEqual([
                         {
                             arbitraryAttributeFilter: {
                                 displayForm: displayFormRef,

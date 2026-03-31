@@ -29,13 +29,25 @@ else
   RUSH_REPO_ROOT="../.."
 fi
 
-(cd $REF_WS_DIR && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js create-ref-workspace)
+pushd $REF_WS_DIR
+CLI_CREATE_ARGS=(
+    --prefix E2E_SDK_cypress_test
+    --host "$HOST"
+    --token "$TIGER_API_TOKEN"
+    --datasource "$TIGER_DATASOURCES_NAME"
+    --fixture-type "$FIXTURE_TYPE"
+    --metadata-extension-local "fixtures/$FIXTURE_TYPE/tiger_metadata_extension.json"
+)
+
+echo "Creating reference workspaces..."
+eval "$(reference-workspace-cli create "${CLI_CREATE_ARGS[@]}")"
+echo "TEST_WORKSPACE_ID=$TEST_WORKSPACE_ID"
+echo "TEST_CHILD_WORKSPACE_ID=$TEST_CHILD_WORKSPACE_ID"
+export TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID
+popd
+
 WORKSPACE_CREATED=true
 DELETE_MODE="${DELETE_MODE:-delete_always}"
-
-# Read workspace IDs created by create-ref-workspace
-export TEST_WORKSPACE_ID=$(grep "^TEST_WORKSPACE_ID=" $REF_WS_DIR/.env | cut -d= -f2)
-export TEST_CHILD_WORKSPACE_ID=$(grep "^TEST_CHILD_WORKSPACE_ID=" $REF_WS_DIR/.env | cut -d= -f2)
 
 # Write .env for the e2e tests
 cat > $E2E_TEST_DIR/.env <<-EOF
@@ -49,32 +61,42 @@ TIGER_API_TOKEN=${TIGER_API_TOKEN}
 TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME}
 EOF
 
-# Pack the pre-built dist into a tarball for Docker (WORKSPACE_ID is injected at container runtime)
-export WORKSPACE_ID="$TEST_WORKSPACE_ID"
-(cd $APP_DIR; npm run pack-build)
-
-export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
-
 cleanup() {
     echo "Executing cleanup before exiting..."
     # remove previously created workspace
     if [ -n "$WORKSPACE_CREATED" ]; then
-      if [ $DELETE_MODE = "delete_never" ]; then
+      if [ "$DELETE_MODE" = "delete_never" ]; then
         echo "DELETE_MODE is delete_never, skip deleting the created workspace"
       else
-        (cd $REF_WS_DIR && node $RUSH_REPO_ROOT/common/scripts/install-run-rushx.js delete-ref-workspace)
+        echo "Deleting reference workspaces..."
+        (cd $REF_WS_DIR && reference-workspace-cli delete \
+            --host "$HOST" --token "$TIGER_API_TOKEN" \
+            "$TEST_CHILD_OF_CHILD_WORKSPACE_ID" \
+            "$TEST_CHILD_WORKSPACE_ID" \
+            "$TEST_WORKSPACE_ID") || true
       fi
     fi
     rm -f $REF_WS_DIR/.env $E2E_TEST_DIR/.env
-    docker rmi --force $IMAGE_ID || true
+    if [ -z "$_PREBUILT" ]; then
+      docker rmi --force $IMAGE_URL || true
+    fi
 }
 
 trap cleanup EXIT
 
-pushd $E2E_TEST_DIR
+export WORKSPACE_ID="$TEST_WORKSPACE_ID"
 
-# Build docker image from the app package
-docker build --no-cache -t $IMAGE_ID $APP_DIR || exit 1
+if [ -n "$IMAGE_URL" ]; then
+    echo "Using pre-built app image: $IMAGE_URL"
+    _PREBUILT=true
+else
+    # Pack the pre-built dist into a tarball for Docker (WORKSPACE_ID is injected at container runtime)
+    (cd $APP_DIR; npm run pack-build)
+    export IMAGE_URL=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
+    docker build --no-cache -t $IMAGE_URL $APP_DIR || exit 1
+fi
+
+pushd $E2E_TEST_DIR
 
 if [ -n "$GDC_UI" ]; then
   COMPOSE_FILE="docker-compose-integrated-gdcui.yaml"

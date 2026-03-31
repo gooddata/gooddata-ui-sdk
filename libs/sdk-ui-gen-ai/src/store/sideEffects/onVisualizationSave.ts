@@ -2,7 +2,6 @@
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
-import { v4 as uuidV4 } from "uuid";
 
 import { type IAnalyticalBackend, type IChatConversation } from "@gooddata/sdk-backend-spi";
 import {
@@ -61,32 +60,26 @@ export function* onVisualizationSave({
             const visualizationContent: IChatConversationMultipartLocalPart | undefined =
                 assistantMessage.content.parts
                     .filter((filter) => filter.type === "visualization")
-                    .find((content) => content.visualization.id === payload.visualizationId);
+                    .find((content) => content.visualization.insight.identifier === payload.visualizationId);
 
             if (!visualizationContent) {
                 return;
             }
 
-            const { visualizationId } = yield call(
-                checkId,
-                backend,
-                workspace,
-                conversation.id,
-                payload.visualizationId,
-            );
-
-            const visualization = {
-                ...visualizationContent.visualization,
-                id: visualizationId,
-            };
-
-            //TODO: s.hacker Save visualization
-            // eslint-disable-next-line no-console
-            console.log("visualization", visualization);
-
             const savedVisualization: IInsight = yield call(
                 backend.workspace(workspace).insights().createInsight,
-                {} as IInsightDefinition,
+                visualizationContent.visualization,
+            );
+
+            const resave = backend
+                .workspace(workspace)
+                .genAI()
+                .getChatConversations()
+                .getConversationThread(conversation.id);
+            yield call(
+                resave.resaveVisualisation.bind(resave),
+                visualizationContent.visualization.insight.identifier,
+                savedVisualization.insight.identifier,
             );
 
             yield put(
@@ -267,8 +260,8 @@ export const buildLineChart = (
         newBucket(BucketNames.SEGMENT, segmentBy);
     }
 
-    const forecast = mapVisualizationForecastToChartConfig(visualizationContent);
-    const anomalies = mapVisualizationAnomalyDetectionToChartConfig(visualizationContent);
+    const forecast = mapVisualizationForecastToChartConfig(visualizationContent.config);
+    const anomalies = mapVisualizationAnomalyDetectionToChartConfig(visualizationContent.config);
 
     const controls = {
         ...(forecast ? { forecast } : {}),
@@ -314,7 +307,7 @@ export const buildScatterPlot = (
         buckets.push(newBucket(BucketNames.SEGMENT, segmentBy));
     }
 
-    const clustering = mapVisualizationClusteringToChartConfig(visualizationContent);
+    const clustering = mapVisualizationClusteringToChartConfig(visualizationContent.config);
 
     return {
         insight: {
@@ -382,41 +375,3 @@ const buildHeadlineChart = (
         },
     };
 };
-
-async function checkId(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    conversationId: string,
-    visualizationId: string,
-) {
-    try {
-        const existing = await backend.workspace(workspace).insights().getInsight({
-            identifier: visualizationId,
-            type: "insight",
-        });
-
-        if (existing) {
-            const id = uuidV4();
-
-            await backend
-                .workspace(workspace)
-                .genAI()
-                .getChatConversations()
-                .getConversationThread(conversationId)
-                .resaveVisualisation(visualizationId, id);
-
-            return {
-                visualizationId: id,
-            };
-        } else {
-            return {
-                visualizationId,
-            };
-        }
-    } catch (e) {
-        return {
-            error: e,
-            visualizationId,
-        };
-    }
-}

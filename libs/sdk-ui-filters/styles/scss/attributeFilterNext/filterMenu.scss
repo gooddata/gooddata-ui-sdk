@@ -1,7 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
-.gd-filter-mode-menu {
+.gd-filter-menu {
     &__button {
         display: flex;
         align-items: center;
@@ -99,7 +99,7 @@
         font-family: variables.$gd-font-primary;
 
         // Title/text on the left, check icon on the right
-        > *:not(.gd-filter-mode-menu__item-check) {
+        > *:not(.gd-filter-menu__item-check) {
             flex: 1 1 auto;
             min-width: 0;
             overflow: hidden;
@@ -116,7 +116,7 @@
             color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
         }
 
-        .gd-filter-mode-menu__item-check {
+        .gd-filter-menu__item-check {
             flex: 0 0 auto;
             margin-left: auto;
             margin-right: 5px;

@@ -214,8 +214,8 @@ export type {
     ElementsFilterControllerCallbacks,
     TextFilterControllerData,
     TextFilterControllerCallbacks,
-    FilterModeControllerData,
-    FilterModeControllerCallbacks,
+    SelectionTypeControllerData,
+    SelectionTypeControllerCallbacks,
 } from "./AttributeFilter/hooks/types.js";
 export {
     type IUseAttributeFilterHandlerProps,
@@ -231,18 +231,18 @@ export {
 } from "./AttributeFilter/hooks/useAttributeFilterSearch.js";
 export { getAttributeFilterSubtitle, getExtendedAttributeFilterSubtitle } from "./AttributeFilter/utils.js";
 export type {
-    AttributeFilterAvailableMode,
-    AttributeFilterMode,
-    AttributeFilterTextMode,
-} from "./AttributeFilter/filterModeTypes.js";
+    AttributeFilterAvailableSelectionType,
+    AttributeFilterSelectionType,
+    AttributeFilterTextSelectionType,
+} from "./AttributeFilter/selectionTypes.js";
 export {
-    getAvailableModeFromFilter,
-    getAvailableTextModes,
-    getFilterModeFromFilter,
-    mapAvailableModesToInternal,
-    createEmptyFilterForMode,
-    createEmptyFilterForAvailableMode,
-} from "./AttributeFilter/filterModeUtils.js";
+    getAvailableSelectionTypeFromFilter,
+    getAvailableTextSelectionTypes,
+    getSelectionTypeFromFilter,
+    mapAvailableSelectionTypesToInternal,
+    createEmptyFilterForSelectionType,
+    createEmptyFilterForAvailableSelectionType,
+} from "./AttributeFilter/selectionTypeUtils.js";
 export {
     type TextFilterOperator,
     type TextFilterNegativeOperator,
@@ -327,17 +327,17 @@ export type { IAttributeFilterStatusBarProps } from "./AttributeFilter/Component
 export { AttributeFilterStatusBar } from "./AttributeFilter/Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 export { SingleSelectionAttributeFilterStatusBar } from "./AttributeFilter/Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
 
-// AttributeFilter Components - Filter Mode Menu
-export type { IFilterModeMenuProps } from "./AttributeFilter/Components/FilterModeMenu/types.js";
-export { FilterModeMenu } from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenu.js";
+// AttributeFilter Components - Filter Menu
+export type { IFilterMenuProps } from "./AttributeFilter/Components/FilterMenu/types.js";
+export { FilterMenu } from "./AttributeFilter/Components/FilterMenu/FilterMenu.js";
 export {
-    type IFilterModeMenuButtonProps,
-    FilterModeMenuButton,
-} from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenuButton.js";
+    type IFilterMenuButtonProps,
+    FilterMenuButton,
+} from "./AttributeFilter/Components/FilterMenu/FilterMenuButton.js";
 export {
-    type IFilterModeMenuItemProps,
-    FilterModeMenuItem,
-} from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenuItem.js";
+    type IFilterMenuSelectionTypeItemProps,
+    FilterMenuSelectionTypeItem,
+} from "./AttributeFilter/Components/FilterMenu/FilterMenuSelectionTypeItem.js";
 
 // AttributeFilter Components - Text Filter Body
 export { TextFilterBody } from "./AttributeFilter/Components/TextFilterBody/TextFilterBody.js";

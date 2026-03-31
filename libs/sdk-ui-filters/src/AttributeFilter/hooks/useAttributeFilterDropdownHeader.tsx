@@ -21,9 +21,9 @@ export function useAttributeFilterDropdownHeader() {
         currentDisplayAsDisplayFormRef,
         filterDetailRequestHandler,
         setDisplayForm,
-        currentFilterMode,
-        availableInternalFilterModes,
-        onFilterModeChange,
+        currentSelectionType,
+        availableInternalSelectionTypes,
+        onSelectionTypeChange,
         menuConfig,
         showHeader,
     } = useAttributeFilterContext();
@@ -35,20 +35,20 @@ export function useAttributeFilterDropdownHeader() {
     }, [displayForms, currentDisplayFormRef]);
 
     const canSwitchDisplayForms = showLabelsSwitch && displayForms.length > 1 && setDisplayForm;
-    const totalAvailableModes = availableInternalFilterModes?.length ?? 0;
+    const totalAvailableSelectionTypes = availableInternalSelectionTypes?.length ?? 0;
     const showFilterHeader =
         showHeader ||
-        (totalAvailableModes > 1 &&
-            ((onFilterModeChange && (availableInternalFilterModes?.length ?? 0) > 1) ||
+        (totalAvailableSelectionTypes > 1 &&
+            ((onSelectionTypeChange && (availableInternalSelectionTypes?.length ?? 0) > 1) ||
                 canSwitchDisplayForms));
 
     return {
         showFilterHeader,
         headerProps: {
             title,
-            currentFilterMode,
-            availableInternalFilterModes,
-            onFilterModeChange,
+            currentSelectionType,
+            availableInternalSelectionTypes,
+            onSelectionTypeChange,
             attribute,
             label: currentLabel,
             requestHandler: filterDetailRequestHandler,

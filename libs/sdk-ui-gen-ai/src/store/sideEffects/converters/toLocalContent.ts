@@ -7,15 +7,12 @@ import {
 
 import type { IChatConversationLocalContent, IChatConversationMultipartLocalPart } from "../../../model.js";
 
-export function convertToLocalContent(
-    content: IChatConversationContent,
-    arrived?: boolean,
-): IChatConversationLocalContent {
+export function convertToLocalContent(content: IChatConversationContent): IChatConversationLocalContent {
     return {
         ...content,
         ...(content.type === "multipart"
             ? {
-                  parts: convertToLocalMultipartContent(content.parts, arrived),
+                  parts: convertToLocalMultipartContent(content.parts),
               }
             : {}),
     };
@@ -23,11 +20,10 @@ export function convertToLocalContent(
 
 export function convertToLocalMultipartContent(
     content: IChatConversationMultipartPart[],
-    arrived?: boolean,
 ): IChatConversationMultipartLocalPart[] {
     return content.map((c) => ({
         ...c,
-        ...(c.type === "visualization" && arrived
+        ...(c.type === "visualization"
             ? {
                   reporting: true,
               }

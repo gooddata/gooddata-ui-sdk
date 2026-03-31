@@ -31,7 +31,7 @@ export function TextFilterIsEmpty() {
                 titleWithSelection
                 onApply={action("on-apply")}
                 onChange={action("on-change")}
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
             />
         </div>
     );
@@ -88,7 +88,7 @@ export function TextFilterIsWithValues() {
                 onInitLoadingChanged={(loading, attribute) =>
                     logCallback("onInitLoadingChanged", loading, attribute)
                 }
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
             />
         </div>
     );
@@ -122,7 +122,7 @@ export function TextFilterIsNot() {
                 titleWithSelection
                 onApply={action("on-apply")}
                 onChange={action("on-change")}
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
             />
         </div>
     );
@@ -152,7 +152,7 @@ export function TextFilterContains() {
                 titleWithSelection
                 onApply={action("on-apply")}
                 onChange={action("on-change")}
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
             />
         </div>
     );
@@ -182,7 +182,7 @@ export function TextFilterStartsWith() {
                 titleWithSelection
                 onApply={action("on-apply")}
                 onChange={action("on-change")}
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
             />
         </div>
     );
@@ -214,7 +214,7 @@ export function TextFilterArbitraryAtLimit() {
                 titleWithSelection
                 onApply={action("on-apply")}
                 onChange={action("on-change")}
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
                 onError={action("on-error")}
             />
         </div>
@@ -243,7 +243,7 @@ export const TextFilterArbitraryAtLimitThemed = () =>
                 titleWithSelection
                 onApply={action("on-apply")}
                 onChange={action("on-change")}
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
             />
         </div>,
     );
@@ -272,7 +272,7 @@ export function TextFilterWithModeSwitching() {
                 titleWithSelection
                 onApply={action("on-apply")}
                 onChange={action("on-change")}
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
             />
         </div>
     );
@@ -300,7 +300,7 @@ export const Themed = () =>
                 titleWithSelection
                 onApply={action("on-apply")}
                 onChange={action("on-change")}
-                menuConfig={{ availableFilterModes: ["elements", "arbitrary", "match"] }}
+                menuConfig={{ availableSelectionTypes: ["elements", "arbitrary", "match"] }}
             />
         </div>,
     );

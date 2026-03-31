@@ -166,7 +166,6 @@ export {
     type IChatConversationVisualisationContent,
     type IChatConversationSearchContent,
     type IChatKdaDefinition,
-    type IChatVisualisationDefinition,
     type IChatWhatIfDefinition,
     type IChatSuggestion,
     isChatConversationError,
@@ -335,7 +334,7 @@ export type {
 export type { IOrganization, IOrganizations } from "./organization/index.js";
 export type { IEntitlements } from "./entitlements/index.js";
 export type { IDataSourcesService } from "./dataSources/index.js";
-export type { IGeoService, IGeoStyleParams, IGeoStyleSpecification } from "./geo/index.js";
+export type { IGeoService, IGeoStyleListItem, IGeoStyleParams, IGeoStyleSpecification } from "./geo/index.js";
 export type { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings/index.js";
 export type { IOrganizationStylingService } from "./organization/styling/index.js";
 export type { IOrganizationSettingsService } from "./organization/settings/index.js";

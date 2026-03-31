@@ -57,9 +57,6 @@ export function createAreaLayer(layer: Omit<IGeoLayerArea, "type" | "id">, id?: 
 // @public
 export function createPushpinLayer(layer: Omit<IGeoLayerPushpin, "type" | "id">, id?: string): IGeoLayerPushpin;
 
-// @alpha
-export function doesGeoBasemapSupportColorScheme(basemap: GeoBasemap): boolean;
-
 // @public @deprecated (undocumented)
 export function enrichMapboxToken<T>(config?: T & {
     mapboxToken?: string;
@@ -71,7 +68,7 @@ export function enrichMapboxToken<T>(config?: T & {
 export function GeoAreaChart(props: IGeoAreaChartProps): ReactElement;
 
 // @alpha
-export type GeoBasemap = "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+export type GeoBasemap = string;
 
 // @public
 export function GeoChart(props: IGeoChartProps): ReactElement;
@@ -81,9 +78,6 @@ export type GeoChartPushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | 
 
 // @public
 export type GeoChartShapeType = "circle" | "iconByValue" | "oneIcon";
-
-// @alpha
-export type GeoColorScheme = "light" | "dark";
 
 // @public
 export type GeoLayerType = GeoLayerType_2;
@@ -150,8 +144,6 @@ export interface IGeoAreaChartConfig {
     colorPalette?: IColorPalette;
     // (undocumented)
     colors?: string[];
-    // @alpha
-    colorScheme?: GeoColorScheme;
     // (undocumented)
     cooperativeGestures?: boolean;
     // (undocumented)
@@ -216,8 +208,6 @@ export interface IGeoChartConfig {
     colorMapping?: IColorMapping[];
     colorPalette?: IColorPalette;
     colors?: string[];
-    // @alpha
-    colorScheme?: GeoColorScheme;
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
     // @internal
@@ -555,8 +545,6 @@ export interface IGeoPushpinChartConfig {
     colorPalette?: IColorPalette;
     // (undocumented)
     colors?: string[];
-    // @alpha
-    colorScheme?: GeoColorScheme;
     // (undocumented)
     cooperativeGestures?: boolean;
     // (undocumented)
