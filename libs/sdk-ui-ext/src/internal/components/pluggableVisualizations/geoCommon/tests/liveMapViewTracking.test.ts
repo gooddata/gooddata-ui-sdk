@@ -399,9 +399,9 @@ describe("LiveMapViewTracker bounds tracking", () => {
             southWest: { lat: 50, lng: 10 },
             northEast: { lat: 55, lng: 17 },
         });
-        // Center and zoom should also be persisted for backward compatibility
-        expect(pushed.properties?.controls?.["center"]).toEqual({ lat: 52.52, lng: 13.4 });
-        expect(pushed.properties?.controls?.["zoom"]).toBe(6);
+        // Center and zoom should be stripped when bounds are present (bounds is canonical)
+        expect(pushed.properties?.controls?.["center"]).toBeUndefined();
+        expect(pushed.properties?.controls?.["zoom"]).toBeUndefined();
     });
 
     it("should not push when both center/zoom and bounds are within epsilon", () => {

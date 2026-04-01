@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactElement, useEffect, useRef } from "react";
+import { type ReactElement, useCallback, useEffect, useRef } from "react";
 
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
@@ -64,6 +64,21 @@ export function PushpinShapeControl(props: IPushpinShapeControlProps): ReactElem
             return item;
         });
 
+    // Wrap pushData for the shapeType dropdown: clear icon when switching away from "oneIcon"
+    const handleShapeTypePushData = useCallback(
+        (data: { properties?: IVisualizationProperties }) => {
+            const nextShape = data.properties?.controls?.["points"]?.shapeType;
+            if (nextShape !== "oneIcon" && data.properties?.controls?.["points"]?.icon !== undefined) {
+                const sanitized = cloneDeep(data.properties!);
+                set(sanitized, "controls.points.icon", undefined);
+                pushData({ ...data, properties: sanitized });
+                return;
+            }
+            pushData(data);
+        },
+        [pushData],
+    );
+
     // Auto-select first sprite icon when switching to "oneIcon" with no icon set
     useEffect(() => {
         if (shapeType !== "oneIcon" || icon || spriteIcons.length === 0) {
@@ -101,7 +116,7 @@ export function PushpinShapeControl(props: IPushpinShapeControlProps): ReactElem
                 disabled={isShapeTypeSelectionDisabled}
                 showDisabledMessage={isShapeTypeSelectionDisabled}
                 properties={properties}
-                pushData={pushData}
+                pushData={handleShapeTypePushData}
                 items={shapeTypeItems}
             />
             {shapeType === "oneIcon" && hasSpriteIcons ? (

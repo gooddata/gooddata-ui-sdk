@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "11.28.0-alpha.14",
+    "version": "11.28.0-alpha.15",
     "description": "GoodData SDK Catalog Export tooling",
     "license": "MIT",
     "author": "GoodData",

@@ -246,6 +246,203 @@ describe("visualisation conversion", () => {
         });
     });
 
+    describe("geo chart config round-trip", () => {
+        it("should round-trip geo_chart with bounds, stripping center/zoom", () => {
+            const input = {
+                type: "geo_chart",
+                id: "geo_bounds",
+                query: {
+                    fields: { m1: { using: "metric/revenue" }, a1: { using: "label/city" } },
+                },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                config: {
+                    basemap: "my-custom-style",
+                    shape_type: "oneIcon",
+                    icon: "pin",
+                    viewport: "custom",
+                    viewport_pan: false,
+                    viewport_bounds_ne_lat: 49.384,
+                    viewport_bounds_ne_lng: -66.886,
+                    viewport_bounds_sw_lat: 24.396,
+                    viewport_bounds_sw_lng: -124.849,
+                    // Also provide center/zoom — should be stripped because bounds are present
+                    center_lat: 39.8283,
+                    center_lng: -98.5795,
+                    zoom_level: 4,
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const controls = (declarative.content as any).properties.controls;
+
+            expect(controls.points.shapeType).toBe("oneIcon");
+            expect(controls.points.icon).toBe("pin");
+            expect(controls.basemap).toBe("my-custom-style");
+            expect(controls.bounds).toEqual({
+                northEast: { lat: 49.384, lng: -66.886 },
+                southWest: { lat: 24.396, lng: -124.849 },
+            });
+            // center/zoom must be stripped when bounds are present
+            expect(controls.center).toBeUndefined();
+            expect(controls.zoom).toBeUndefined();
+
+            // Round-trip back to YAML
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            const cfg = json!.config!;
+            expect(cfg["shape_type"]).toBe("oneIcon");
+            expect(cfg["icon"]).toBe("pin");
+            expect(cfg["basemap"]).toBe("my-custom-style");
+            expect(cfg["viewport_bounds_ne_lat"]).toBe(49.384);
+            expect(cfg["viewport_bounds_sw_lat"]).toBe(24.396);
+            // center/zoom must not appear in YAML when bounds are used
+            expect(cfg["center_lat"]).toBeUndefined();
+            expect(cfg["center_lng"]).toBeUndefined();
+            expect(cfg["zoom_level"]).toBeUndefined();
+        });
+
+        it("should strip icon when shapeType is circle (default)", () => {
+            const input = {
+                type: "geo_chart",
+                id: "geo_circle",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: {
+                    shape_type: "circle",
+                    icon: "pin", // should be stripped — not valid for circle
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const controls = (declarative.content as any).properties.controls;
+
+            // circle is default → shapeType stripped; icon stripped because not oneIcon
+            expect(controls.points).toBeUndefined();
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config).toBeUndefined();
+        });
+
+        it("should strip icon when shapeType is iconByValue", () => {
+            const input = {
+                type: "geo_chart",
+                id: "geo_ibv",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: {
+                    shape_type: "iconByValue",
+                    icon: "pin", // should be stripped — not valid for iconByValue
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const controls = (declarative.content as any).properties.controls;
+            expect(controls.points.shapeType).toBe("iconByValue");
+            expect(controls.points.icon).toBeUndefined();
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            const cfg = json!.config!;
+            expect(cfg["shape_type"]).toBe("iconByValue");
+            expect(cfg["icon"]).toBeUndefined();
+        });
+
+        it("should preserve center/zoom when bounds are absent", () => {
+            const input = {
+                type: "geo_chart",
+                id: "geo_center",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: {
+                    viewport: "custom",
+                    center_lat: 39.8283,
+                    center_lng: -98.5795,
+                    zoom_level: 4,
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const controls = (declarative.content as any).properties.controls;
+            expect(controls.center).toEqual({ lat: 39.8283, lng: -98.5795 });
+            expect(controls.zoom).toBe(4);
+            expect(controls.bounds).toBeUndefined();
+        });
+
+        it("should round-trip geo_area_chart with bounds and sanitized center/zoom", () => {
+            const input = {
+                type: "geo_area_chart",
+                id: "geo_area",
+                query: {
+                    fields: { m1: { using: "metric/revenue" }, a1: { using: "label/region" } },
+                },
+                metrics: [{ field: "m1" }],
+                view_by: [{ field: "a1" }],
+                config: {
+                    viewport: "custom",
+                    viewport_bounds_ne_lat: 72.0,
+                    viewport_bounds_ne_lng: -12.0,
+                    viewport_bounds_sw_lat: 15.0,
+                    viewport_bounds_sw_lng: -170.0,
+                    center_lat: 50.0,
+                    center_lng: 14.0,
+                    zoom_level: 6,
+                    basemap: "satellite",
+                },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const controls = (declarative.content as any).properties.controls;
+
+            expect(controls.bounds).toEqual({
+                northEast: { lat: 72.0, lng: -12.0 },
+                southWest: { lat: 15.0, lng: -170.0 },
+            });
+            // center/zoom stripped because bounds present
+            expect(controls.center).toBeUndefined();
+            expect(controls.zoom).toBeUndefined();
+            // no points for area chart
+            expect(controls.points).toBeUndefined();
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            const cfg = json!.config!;
+            expect(cfg["viewport_bounds_ne_lat"]).toBe(72.0);
+            expect(cfg["center_lat"]).toBeUndefined();
+        });
+
+        it("should handle free-form basemap string", () => {
+            const input = {
+                type: "geo_chart",
+                id: "geo_basemap",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+                config: { basemap: "my-org-custom-dark-v2" },
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            expect((declarative.content as any).properties.controls.basemap).toBe("my-org-custom-dark-v2");
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config!["basemap"]).toBe("my-org-custom-dark-v2");
+        });
+
+        it("should produce clean round-trip with only defaults (no dirty state)", () => {
+            const input = {
+                type: "geo_chart",
+                id: "geo_clean",
+                query: { fields: { m1: { using: "metric/revenue" } } },
+                metrics: [{ field: "m1" }],
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const controls = (declarative.content as any).properties.controls;
+
+            // With only defaults, no controls should be persisted
+            expect(controls).toBeUndefined();
+
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            expect(json!.config).toBeUndefined();
+        });
+    });
+
     describe("declarativeVisualisationToYaml", () => {
         it("should convert a bar chart declarative object to YAML", () => {
             const input = {

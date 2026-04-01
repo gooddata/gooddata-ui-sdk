@@ -621,7 +621,16 @@
                 },
                 "value_type": {
                     "type": "string",
-                    "enum": ["TEXT", "HYPERLINK", "GEO", "GEO_LONGITUDE", "GEO_LATITUDE", "IMAGE", "GEO_AREA"]
+                    "enum": [
+                        "TEXT",
+                        "HYPERLINK",
+                        "GEO",
+                        "GEO_LONGITUDE",
+                        "GEO_LATITUDE",
+                        "GEO_ICON",
+                        "IMAGE",
+                        "GEO_AREA"
+                    ]
                 },
                 "geo_area_config": {
                     "$ref": "#/$defs/geoAreaConfig",

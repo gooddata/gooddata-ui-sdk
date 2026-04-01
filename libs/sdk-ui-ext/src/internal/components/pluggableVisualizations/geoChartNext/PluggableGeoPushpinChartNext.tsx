@@ -81,6 +81,7 @@ import {
     getGeoBasemapDropdownItems,
     getGeoConfigurationPanelIsLoading,
 } from "../geoCommon/geoBasemapConfiguration.js";
+import { sanitizeGeoViewportProperties } from "../geoCommon/geoPropertySanitization.js";
 import {
     getGeoControlsWithFallback,
     getGeoVisualizationPropertiesWithFallback,
@@ -167,6 +168,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                 let newReferencePoint: IExtendedReferencePoint =
                     this.getResolvedReferencePointWithFallback(extendedReferencePoint);
                 newReferencePoint = disableClusteringIfNotEditable(newReferencePoint);
+                newReferencePoint = sanitizeGeoPointProperties(newReferencePoint);
+                newReferencePoint = sanitizeGeoViewportProperties(newReferencePoint);
                 newReferencePoint = setGeoPushpinUiConfig(
                     newReferencePoint,
                     this.intl,
@@ -673,6 +676,27 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     private handleBoundsChanged = this.syncedHandlers.handleBoundsChanged;
     private handleViewportInteractionEnded = this.syncedHandlers.handleViewportInteractionEnded;
     private getCurrentMapView = () => this.liveMapView.getCurrentMapView(this.visualizationProperties);
+}
+
+/**
+ * Strips properties that are incompatible with the current shape type.
+ * - `points.icon` is only valid for "oneIcon" shape; remove it for other shapes.
+ */
+function sanitizeGeoPointProperties(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    const controls = referencePoint.properties?.controls;
+    if (!controls) {
+        return referencePoint;
+    }
+
+    const shapeType = controls["points"]?.shapeType ?? "circle";
+
+    if (shapeType !== "oneIcon" && controls["points"]?.icon !== undefined) {
+        const updated = cloneDeep(referencePoint);
+        set(updated, "properties.controls.points.icon", undefined);
+        return updated;
+    }
+
+    return referencePoint;
 }
 
 function disableClusteringIfNotEditable(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {

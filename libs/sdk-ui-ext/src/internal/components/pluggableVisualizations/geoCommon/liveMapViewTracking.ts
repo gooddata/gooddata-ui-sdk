@@ -183,12 +183,16 @@ export class LiveMapViewTracker {
             return;
         }
 
+        // When bounds are available, they are the canonical custom viewport representation.
+        // Persisting center/zoom alongside bounds is redundant and causes dirty-state issues
+        // in round-trip serialization (convertors strip center/zoom when bounds exist).
+        const hasBoundsToSave = isGeoLngLatBounds(currentMapView.bounds);
         const nextProperties: IVisualizationProperties = {
             ...ctx.visualizationProperties,
             controls: {
                 ...ctx.visualizationProperties?.controls,
-                center: currentMapView.center,
-                zoom: currentMapView.zoom,
+                center: hasBoundsToSave ? undefined : currentMapView.center,
+                zoom: hasBoundsToSave ? undefined : currentMapView.zoom,
                 bounds: currentMapView.bounds,
             },
         };
