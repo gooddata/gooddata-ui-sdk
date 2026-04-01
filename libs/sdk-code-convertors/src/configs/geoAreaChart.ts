@@ -29,7 +29,6 @@ type DefaultProperties = {
     };
     tooltipText: string;
     basemap: string;
-    colorScheme: string;
     viewport: {
         area:
             | "auto"
@@ -51,6 +50,10 @@ type DefaultProperties = {
         lng: number;
     };
     zoom: number;
+    bounds: {
+        northEast: { lat: number; lng: number };
+        southWest: { lat: number; lng: number };
+    };
     disableAlerts: boolean;
     disableScheduledExports: boolean;
 };
@@ -63,7 +66,6 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     },
     tooltipText: "",
     basemap: "",
-    colorScheme: "",
     viewport: {
         area: "auto",
         navigation: {
@@ -76,12 +78,44 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
         lng: Number.NaN,
     },
     zoom: Number.NaN,
+    bounds: {
+        northEast: { lat: Number.NaN, lng: Number.NaN },
+        southWest: { lat: Number.NaN, lng: Number.NaN },
+    },
     disableAlerts: false,
     disableScheduledExports: false,
 };
 
+function sanitizeControls(controls: DefaultProperties): DefaultProperties {
+    const sanitized = { ...controls };
+
+    // Strip center/zoom when bounds are present (bounds is canonical for custom viewport)
+    const viewportArea = sanitized.viewport?.area ?? "auto";
+    const isPresetViewport = viewportArea !== "auto" && viewportArea !== "custom";
+    const hasBounds =
+        sanitized.bounds?.northEast?.lat !== undefined &&
+        !isNaN(sanitized.bounds?.northEast?.lat) &&
+        sanitized.bounds?.southWest?.lat !== undefined &&
+        !isNaN(sanitized.bounds?.southWest?.lat);
+
+    if (isPresetViewport) {
+        sanitized.center = { lat: Number.NaN, lng: Number.NaN };
+        sanitized.zoom = Number.NaN;
+        sanitized.bounds = {
+            northEast: { lat: Number.NaN, lng: Number.NaN },
+            southWest: { lat: Number.NaN, lng: Number.NaN },
+        };
+    } else if (hasBounds) {
+        sanitized.center = { lat: Number.NaN, lng: Number.NaN };
+        sanitized.zoom = Number.NaN;
+    }
+
+    return sanitized;
+}
+
 function load(props: VisualisationConfig<DefaultProperties>) {
-    return loadConfig(props, (key, value) => {
+    const sanitizedProps = props.controls ? { controls: sanitizeControls(props.controls) } : props;
+    return loadConfig(sanitizedProps, (key, value) => {
         switch (key) {
             case "colorMapping":
                 return [["colors", loadColorMapping(value as (typeof DEFAULTS)["colorMapping"])]];
@@ -97,9 +131,6 @@ function load(props: VisualisationConfig<DefaultProperties>) {
             }
             case "basemap": {
                 return [["basemap", getValueOrDefault(value as string, DEFAULTS.basemap)]];
-            }
-            case "colorScheme": {
-                return [["color_scheme", getValueOrDefault(value as string, DEFAULTS.colorScheme)]];
             }
             case "viewport": {
                 const val = value as (typeof DEFAULTS)["viewport"];
@@ -124,6 +155,27 @@ function load(props: VisualisationConfig<DefaultProperties>) {
             }
             case "zoom": {
                 return [["zoom_level", getValueOrDefault(value as number, DEFAULTS.zoom, "number")]];
+            }
+            case "bounds": {
+                const val = value as (typeof DEFAULTS)["bounds"];
+                return [
+                    [
+                        "viewport_bounds_ne_lat",
+                        getValueOrDefault(val.northEast?.lat, DEFAULTS.bounds.northEast.lat, "number"),
+                    ],
+                    [
+                        "viewport_bounds_ne_lng",
+                        getValueOrDefault(val.northEast?.lng, DEFAULTS.bounds.northEast.lng, "number"),
+                    ],
+                    [
+                        "viewport_bounds_sw_lat",
+                        getValueOrDefault(val.southWest?.lat, DEFAULTS.bounds.southWest.lat, "number"),
+                    ],
+                    [
+                        "viewport_bounds_sw_lng",
+                        getValueOrDefault(val.southWest?.lng, DEFAULTS.bounds.southWest.lng, "number"),
+                    ],
+                ];
             }
             case "disableAlerts":
                 return [
@@ -151,6 +203,56 @@ function save(
         return undefined;
     }
 
+    // Sanitize viewport-related properties:
+    // - Preset viewports (continent_*, world) are self-contained — strip bounds, center, zoom
+    // - Custom viewport with bounds — strip center/zoom (bounds is canonical)
+    // - Custom viewport without bounds — keep center/zoom as fallback
+    const viewportArea = getValueOrDefault(config.viewport, DEFAULTS.viewport.area);
+    const isPresetViewport =
+        viewportArea !== undefined && viewportArea !== "auto" && viewportArea !== "custom";
+    const hasBounds =
+        !isPresetViewport &&
+        config["viewport_bounds_ne_lat"] !== undefined &&
+        config["viewport_bounds_sw_lat"] !== undefined;
+    const stripPositionalProps = isPresetViewport || hasBounds;
+    const centerLat = stripPositionalProps
+        ? undefined
+        : getValueOrDefault(config.center_lat, DEFAULTS.center.lat, "number");
+    const centerLng = stripPositionalProps
+        ? undefined
+        : getValueOrDefault(config.center_lng, DEFAULTS.center.lng, "number");
+    const zoomVal = stripPositionalProps
+        ? undefined
+        : getValueOrDefault(config.zoom_level, DEFAULTS.zoom, "number");
+    const bounds = isPresetViewport
+        ? undefined
+        : saveConfigObject({
+              northEast: saveConfigObject({
+                  lat: getValueOrDefault(
+                      config["viewport_bounds_ne_lat"],
+                      DEFAULTS.bounds.northEast.lat,
+                      "number",
+                  ),
+                  lng: getValueOrDefault(
+                      config["viewport_bounds_ne_lng"],
+                      DEFAULTS.bounds.northEast.lng,
+                      "number",
+                  ),
+              }),
+              southWest: saveConfigObject({
+                  lat: getValueOrDefault(
+                      config["viewport_bounds_sw_lat"],
+                      DEFAULTS.bounds.southWest.lat,
+                      "number",
+                  ),
+                  lng: getValueOrDefault(
+                      config["viewport_bounds_sw_lng"],
+                      DEFAULTS.bounds.southWest.lng,
+                      "number",
+                  ),
+              }),
+          });
+
     return saveConfigObject({
         colorMapping: saveConfigObject(saveColorMapping(config.colors ?? {})),
         legend: saveConfigObject({
@@ -159,19 +261,19 @@ function save(
         }),
         tooltipText: getValueOrDefault(config.tooltip_text, DEFAULTS.tooltipText),
         basemap: getValueOrDefault(config.basemap, DEFAULTS.basemap),
-        colorScheme: getValueOrDefault(config.color_scheme, DEFAULTS.colorScheme),
         viewport: saveConfigObject({
-            area: getValueOrDefault(config.viewport, DEFAULTS.viewport.area),
+            area: viewportArea,
             navigation: saveConfigObject({
                 pan: getValueOrDefault(config.viewport_pan, DEFAULTS.viewport.navigation.pan, "bool"),
                 zoom: getValueOrDefault(config.viewport_zoom, DEFAULTS.viewport.navigation.zoom, "bool"),
             }),
         }),
         center: saveConfigObject({
-            lat: getValueOrDefault(config.center_lat, DEFAULTS.center.lat, "number"),
-            lng: getValueOrDefault(config.center_lng, DEFAULTS.center.lng, "number"),
+            lat: centerLat,
+            lng: centerLng,
         }),
-        zoom: getValueOrDefault(config.zoom_level, DEFAULTS.zoom, "number"),
+        zoom: zoomVal,
+        bounds,
         disableAlerts: getValueOrDefault(config.disable_alerts, DEFAULTS.disableAlerts, "bool"),
         disableScheduledExports: getValueOrDefault(
             config.disable_scheduled_exports,

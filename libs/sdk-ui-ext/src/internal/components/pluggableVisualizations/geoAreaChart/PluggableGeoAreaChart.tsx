@@ -64,6 +64,7 @@ import {
     getGeoBasemapDropdownItems,
     getGeoConfigurationPanelIsLoading,
 } from "../geoCommon/geoBasemapConfiguration.js";
+import { sanitizeGeoViewportProperties } from "../geoCommon/geoPropertySanitization.js";
 import {
     getGeoControlsWithFallback,
     getGeoVisualizationPropertiesWithFallback,
@@ -130,6 +131,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                 );
                 newReferencePoint = configurePercent(newReferencePoint, true);
                 newReferencePoint = removeSort(newReferencePoint);
+                newReferencePoint = sanitizeGeoViewportProperties(newReferencePoint);
                 const enableImprovedAdFilters = this.featureFlags?.enableImprovedAdFilters ?? true;
                 const sanitizedFilters = sanitizeGeoReferencePointFilters(
                     originalFilters,

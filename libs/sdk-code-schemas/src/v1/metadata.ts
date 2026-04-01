@@ -1186,7 +1186,15 @@ export interface Label {
      */
     description?: string;
     tags?: Tags2;
-    value_type?: "TEXT" | "HYPERLINK" | "GEO" | "GEO_LONGITUDE" | "GEO_LATITUDE" | "IMAGE" | "GEO_AREA";
+    value_type?:
+        | "TEXT"
+        | "HYPERLINK"
+        | "GEO"
+        | "GEO_LONGITUDE"
+        | "GEO_LATITUDE"
+        | "GEO_ICON"
+        | "IMAGE"
+        | "GEO_AREA";
     geo_area_config?: GeoAreaConfig;
     /**
      * Optional flag to indicate if the label should be shown in AI results. When omitted, the label is visible.
@@ -2824,8 +2832,7 @@ export interface VisualisationConfig {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -2834,6 +2841,12 @@ export interface VisualisationConfig {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -3137,8 +3150,7 @@ export interface VisualisationConfig1 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -3147,6 +3159,12 @@ export interface VisualisationConfig1 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -3386,8 +3404,7 @@ export interface VisualisationConfig2 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -3396,6 +3413,12 @@ export interface VisualisationConfig2 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -3635,8 +3658,7 @@ export interface VisualisationConfig3 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -3645,6 +3667,12 @@ export interface VisualisationConfig3 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -3884,8 +3912,7 @@ export interface VisualisationConfig4 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -3894,6 +3921,12 @@ export interface VisualisationConfig4 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -4133,8 +4166,7 @@ export interface VisualisationConfig5 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -4143,6 +4175,12 @@ export interface VisualisationConfig5 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -4382,8 +4420,7 @@ export interface VisualisationConfig6 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -4392,6 +4429,12 @@ export interface VisualisationConfig6 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -4627,8 +4670,7 @@ export interface VisualisationConfig7 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -4637,6 +4679,12 @@ export interface VisualisationConfig7 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -4872,8 +4920,7 @@ export interface VisualisationConfig8 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -4882,6 +4929,12 @@ export interface VisualisationConfig8 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -5117,8 +5170,7 @@ export interface VisualisationConfig9 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -5127,6 +5179,12 @@ export interface VisualisationConfig9 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -5362,8 +5420,7 @@ export interface VisualisationConfig10 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -5372,6 +5429,12 @@ export interface VisualisationConfig10 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -5607,8 +5670,7 @@ export interface VisualisationConfig11 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -5617,6 +5679,12 @@ export interface VisualisationConfig11 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -5860,8 +5928,7 @@ export interface VisualisationConfig12 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -5870,6 +5937,12 @@ export interface VisualisationConfig12 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -6105,8 +6178,7 @@ export interface VisualisationConfig13 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -6115,6 +6187,12 @@ export interface VisualisationConfig13 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -6350,8 +6428,7 @@ export interface VisualisationConfig14 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -6360,6 +6437,12 @@ export interface VisualisationConfig14 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -6597,8 +6680,7 @@ export interface VisualisationConfig15 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -6607,6 +6689,12 @@ export interface VisualisationConfig15 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -6844,8 +6932,7 @@ export interface VisualisationConfig16 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -6854,6 +6941,12 @@ export interface VisualisationConfig16 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -7089,8 +7182,7 @@ export interface VisualisationConfig17 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -7099,6 +7191,12 @@ export interface VisualisationConfig17 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -7334,8 +7432,7 @@ export interface VisualisationConfig18 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -7344,6 +7441,12 @@ export interface VisualisationConfig18 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -7583,8 +7686,7 @@ export interface VisualisationConfig19 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -7593,6 +7695,12 @@ export interface VisualisationConfig19 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -7805,8 +7913,7 @@ export interface VisualisationConfig20 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -7815,6 +7922,12 @@ export interface VisualisationConfig20 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -8054,8 +8167,7 @@ export interface VisualisationConfig21 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -8064,6 +8176,12 @@ export interface VisualisationConfig21 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";
@@ -8307,8 +8425,7 @@ export interface VisualisationConfig22 {
         | "continent_sa"
         | "world"
         | "custom";
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
-    color_scheme?: "light" | "dark";
+    basemap?: string;
     viewport_pan?: boolean;
     viewport_zoom?: boolean;
     center_lat?: number;
@@ -8317,6 +8434,12 @@ export interface VisualisationConfig22 {
     group_nearby_points?: boolean;
     min_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
     max_size?: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    icon?: string;
+    viewport_bounds_ne_lat?: number;
+    viewport_bounds_ne_lng?: number;
+    viewport_bounds_sw_lat?: number;
+    viewport_bounds_sw_lng?: number;
     row_height?: "small" | "medium" | "large";
     cell_vertical_align?: "top" | "middle" | "bottom";
     cell_text_wrapping?: "clip" | "wrap";

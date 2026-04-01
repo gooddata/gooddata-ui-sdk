@@ -1488,7 +1488,7 @@ interface Label {
     title?: string;
     translations?: LabelTranslation[];
     // (undocumented)
-    value_type?: "TEXT" | "HYPERLINK" | "GEO" | "GEO_LONGITUDE" | "GEO_LATITUDE" | "IMAGE" | "GEO_AREA";
+    value_type?: "TEXT" | "HYPERLINK" | "GEO" | "GEO_LONGITUDE" | "GEO_LATITUDE" | "GEO_ICON" | "IMAGE" | "GEO_AREA";
 }
 
 // Warning: (ae-missing-release-tag) "LabelIdentifier" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -4037,11 +4037,6 @@ export const metadata_v1: {
                     };
                     basemap: {
                         type: string;
-                        enum: string[];
-                    };
-                    color_scheme: {
-                        type: string;
-                        enum: string[];
                     };
                     viewport_pan: {
                         type: string;
@@ -4068,6 +4063,25 @@ export const metadata_v1: {
                     max_size: {
                         type: string;
                         enum: string[];
+                    };
+                    shape_type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    icon: {
+                        type: string;
+                    };
+                    viewport_bounds_ne_lat: {
+                        type: string;
+                    };
+                    viewport_bounds_ne_lng: {
+                        type: string;
+                    };
+                    viewport_bounds_sw_lat: {
+                        type: string;
+                    };
+                    viewport_bounds_sw_lng: {
+                        type: string;
                     };
                     row_height: {
                         type: string;
@@ -9960,7 +9974,7 @@ interface VisualisationConfig {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -9987,8 +10001,6 @@ interface VisualisationConfig {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -10040,6 +10052,8 @@ interface VisualisationConfig {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -10082,6 +10096,8 @@ interface VisualisationConfig {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -10107,6 +10123,14 @@ interface VisualisationConfig {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -10201,7 +10225,7 @@ interface VisualisationConfig1 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -10228,8 +10252,6 @@ interface VisualisationConfig1 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -10281,6 +10303,8 @@ interface VisualisationConfig1 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -10323,6 +10347,8 @@ interface VisualisationConfig1 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -10348,6 +10374,14 @@ interface VisualisationConfig1 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -10442,7 +10476,7 @@ interface VisualisationConfig10 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -10469,8 +10503,6 @@ interface VisualisationConfig10 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -10522,6 +10554,8 @@ interface VisualisationConfig10 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -10564,6 +10598,8 @@ interface VisualisationConfig10 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -10589,6 +10625,14 @@ interface VisualisationConfig10 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -10683,7 +10727,7 @@ interface VisualisationConfig11 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -10710,8 +10754,6 @@ interface VisualisationConfig11 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -10763,6 +10805,8 @@ interface VisualisationConfig11 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -10805,6 +10849,8 @@ interface VisualisationConfig11 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -10830,6 +10876,14 @@ interface VisualisationConfig11 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -10924,7 +10978,7 @@ interface VisualisationConfig12 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -10951,8 +11005,6 @@ interface VisualisationConfig12 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -11004,6 +11056,8 @@ interface VisualisationConfig12 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -11046,6 +11100,8 @@ interface VisualisationConfig12 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -11071,6 +11127,14 @@ interface VisualisationConfig12 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -11165,7 +11229,7 @@ interface VisualisationConfig13 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -11192,8 +11256,6 @@ interface VisualisationConfig13 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -11245,6 +11307,8 @@ interface VisualisationConfig13 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -11287,6 +11351,8 @@ interface VisualisationConfig13 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -11312,6 +11378,14 @@ interface VisualisationConfig13 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -11406,7 +11480,7 @@ interface VisualisationConfig14 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -11433,8 +11507,6 @@ interface VisualisationConfig14 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -11486,6 +11558,8 @@ interface VisualisationConfig14 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -11528,6 +11602,8 @@ interface VisualisationConfig14 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -11553,6 +11629,14 @@ interface VisualisationConfig14 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -11647,7 +11731,7 @@ interface VisualisationConfig15 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -11674,8 +11758,6 @@ interface VisualisationConfig15 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -11727,6 +11809,8 @@ interface VisualisationConfig15 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -11769,6 +11853,8 @@ interface VisualisationConfig15 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -11794,6 +11880,14 @@ interface VisualisationConfig15 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -11888,7 +11982,7 @@ interface VisualisationConfig16 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -11915,8 +12009,6 @@ interface VisualisationConfig16 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -11968,6 +12060,8 @@ interface VisualisationConfig16 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -12010,6 +12104,8 @@ interface VisualisationConfig16 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -12035,6 +12131,14 @@ interface VisualisationConfig16 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -12129,7 +12233,7 @@ interface VisualisationConfig17 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -12156,8 +12260,6 @@ interface VisualisationConfig17 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -12209,6 +12311,8 @@ interface VisualisationConfig17 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -12251,6 +12355,8 @@ interface VisualisationConfig17 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -12276,6 +12382,14 @@ interface VisualisationConfig17 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -12370,7 +12484,7 @@ interface VisualisationConfig18 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -12397,8 +12511,6 @@ interface VisualisationConfig18 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -12450,6 +12562,8 @@ interface VisualisationConfig18 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -12492,6 +12606,8 @@ interface VisualisationConfig18 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -12517,6 +12633,14 @@ interface VisualisationConfig18 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -12611,7 +12735,7 @@ interface VisualisationConfig19 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -12638,8 +12762,6 @@ interface VisualisationConfig19 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -12691,6 +12813,8 @@ interface VisualisationConfig19 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -12733,6 +12857,8 @@ interface VisualisationConfig19 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -12758,6 +12884,14 @@ interface VisualisationConfig19 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -12852,7 +12986,7 @@ interface VisualisationConfig2 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -12879,8 +13013,6 @@ interface VisualisationConfig2 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -12932,6 +13064,8 @@ interface VisualisationConfig2 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -12974,6 +13108,8 @@ interface VisualisationConfig2 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -12999,6 +13135,14 @@ interface VisualisationConfig2 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -13093,7 +13237,7 @@ interface VisualisationConfig20 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -13120,8 +13264,6 @@ interface VisualisationConfig20 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -13173,6 +13315,8 @@ interface VisualisationConfig20 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -13215,6 +13359,8 @@ interface VisualisationConfig20 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -13240,6 +13386,14 @@ interface VisualisationConfig20 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -13334,7 +13488,7 @@ interface VisualisationConfig21 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -13361,8 +13515,6 @@ interface VisualisationConfig21 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -13414,6 +13566,8 @@ interface VisualisationConfig21 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -13456,6 +13610,8 @@ interface VisualisationConfig21 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -13481,6 +13637,14 @@ interface VisualisationConfig21 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -13575,7 +13739,7 @@ interface VisualisationConfig22 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -13602,8 +13766,6 @@ interface VisualisationConfig22 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -13655,6 +13817,8 @@ interface VisualisationConfig22 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -13697,6 +13861,8 @@ interface VisualisationConfig22 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -13722,6 +13888,14 @@ interface VisualisationConfig22 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -13816,7 +13990,7 @@ interface VisualisationConfig3 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -13843,8 +14017,6 @@ interface VisualisationConfig3 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -13896,6 +14068,8 @@ interface VisualisationConfig3 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -13938,6 +14112,8 @@ interface VisualisationConfig3 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -13963,6 +14139,14 @@ interface VisualisationConfig3 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -14057,7 +14241,7 @@ interface VisualisationConfig4 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -14084,8 +14268,6 @@ interface VisualisationConfig4 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -14137,6 +14319,8 @@ interface VisualisationConfig4 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -14179,6 +14363,8 @@ interface VisualisationConfig4 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -14204,6 +14390,14 @@ interface VisualisationConfig4 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -14298,7 +14492,7 @@ interface VisualisationConfig5 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -14325,8 +14519,6 @@ interface VisualisationConfig5 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -14378,6 +14570,8 @@ interface VisualisationConfig5 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -14420,6 +14614,8 @@ interface VisualisationConfig5 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -14445,6 +14641,14 @@ interface VisualisationConfig5 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -14539,7 +14743,7 @@ interface VisualisationConfig6 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -14566,8 +14770,6 @@ interface VisualisationConfig6 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -14619,6 +14821,8 @@ interface VisualisationConfig6 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -14661,6 +14865,8 @@ interface VisualisationConfig6 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -14686,6 +14892,14 @@ interface VisualisationConfig6 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -14780,7 +14994,7 @@ interface VisualisationConfig7 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -14807,8 +15021,6 @@ interface VisualisationConfig7 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -14860,6 +15072,8 @@ interface VisualisationConfig7 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -14902,6 +15116,8 @@ interface VisualisationConfig7 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -14927,6 +15143,14 @@ interface VisualisationConfig7 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -15021,7 +15245,7 @@ interface VisualisationConfig8 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -15048,8 +15272,6 @@ interface VisualisationConfig8 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -15101,6 +15323,8 @@ interface VisualisationConfig8 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -15143,6 +15367,8 @@ interface VisualisationConfig8 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -15168,6 +15394,14 @@ interface VisualisationConfig8 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)
@@ -15262,7 +15496,7 @@ interface VisualisationConfig9 {
     // (undocumented)
     anomaly_detection_size?: "small" | "medium" | "big";
     // (undocumented)
-    basemap?: "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+    basemap?: string;
     // (undocumented)
     cell_image_sizing?: "fit" | "fill";
     // (undocumented)
@@ -15289,8 +15523,6 @@ interface VisualisationConfig9 {
     clustering_threshold?: number;
     // (undocumented)
     color?: ColorDefinition;
-    // (undocumented)
-    color_scheme?: "light" | "dark";
     // (undocumented)
     colors?: ListOfColors;
     // (undocumented)
@@ -15342,6 +15574,8 @@ interface VisualisationConfig9 {
     // (undocumented)
     group_nearby_points?: boolean;
     // (undocumented)
+    icon?: string;
+    // (undocumented)
     indicator_arrow?: boolean;
     // (undocumented)
     indicator_color_equals?: Color3;
@@ -15384,6 +15618,8 @@ interface VisualisationConfig9 {
     // (undocumented)
     row_height?: "small" | "medium" | "large";
     // (undocumented)
+    shape_type?: "circle" | "iconByValue" | "oneIcon";
+    // (undocumented)
     stack_measures?: boolean;
     // (undocumented)
     stack_measures_to_100?: boolean;
@@ -15409,6 +15645,14 @@ interface VisualisationConfig9 {
     total_name?: string;
     // (undocumented)
     viewport?: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+    // (undocumented)
+    viewport_bounds_ne_lat?: number;
+    // (undocumented)
+    viewport_bounds_ne_lng?: number;
+    // (undocumented)
+    viewport_bounds_sw_lat?: number;
+    // (undocumented)
+    viewport_bounds_sw_lng?: number;
     // (undocumented)
     viewport_pan?: boolean;
     // (undocumented)

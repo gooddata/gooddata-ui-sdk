@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-application",
-    "version": "11.28.0-alpha.14",
+    "version": "11.28.0-alpha.15",
     "description": "GoodData SDK React helpers for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",

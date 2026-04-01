@@ -46,7 +46,6 @@ function getViewportProperty(props: IGeoViewportControl): IGeoChartViewport {
 }
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
-const GEO_COORD_EPSILON = 1e-6;
 
 function getPresetViewportBounds(area: IGeoChartViewportArea | undefined): IGeoLngLatBounds | undefined {
     if (!isConcreteViewportPreset(area)) {
@@ -55,19 +54,6 @@ function getPresetViewportBounds(area: IGeoChartViewportArea | undefined): IGeoL
 
     const [southWest, northEast] = PRESET_VIEWPORT_BOUNDS[area];
     return { southWest, northEast };
-}
-
-function areBoundsEqual(left: IGeoLngLatBounds | undefined, right: IGeoLngLatBounds | undefined): boolean {
-    if (!left || !right) {
-        return false;
-    }
-
-    return (
-        Math.abs(left.southWest.lat - right.southWest.lat) < GEO_COORD_EPSILON &&
-        Math.abs(left.southWest.lng - right.southWest.lng) < GEO_COORD_EPSILON &&
-        Math.abs(left.northEast.lat - right.northEast.lat) < GEO_COORD_EPSILON &&
-        Math.abs(left.northEast.lng - right.northEast.lng) < GEO_COORD_EPSILON
-    );
 }
 
 /**
@@ -111,19 +97,10 @@ export function GeoViewportControl(props: IGeoViewportControl): ReactElement {
                     : undefined;
 
                 if (presetBounds) {
+                    // Switching from a preset to "custom": use preset bounds, clear center/zoom
                     set(nextProperties, "controls.bounds", presetBounds);
-
-                    if (
-                        hasValidSnapshot &&
-                        currentMapView?.center &&
-                        areBoundsEqual(currentMapView.bounds, presetBounds)
-                    ) {
-                        set(nextProperties, "controls.center", currentMapView.center);
-                        set(nextProperties, "controls.zoom", currentMapView.zoom);
-                    } else {
-                        set(nextProperties, "controls.center", undefined);
-                        set(nextProperties, "controls.zoom", undefined);
-                    }
+                    set(nextProperties, "controls.center", undefined);
+                    set(nextProperties, "controls.zoom", undefined);
 
                     pushData?.({
                         ...data,
@@ -133,9 +110,17 @@ export function GeoViewportControl(props: IGeoViewportControl): ReactElement {
                 }
 
                 if (hasValidSnapshot && currentMapView?.center) {
-                    set(nextProperties, "controls.center", currentMapView.center);
-                    set(nextProperties, "controls.zoom", currentMapView.zoom);
-                    set(nextProperties, "controls.bounds", currentMapView.bounds);
+                    // Switching to "custom" with no preset: use current map bounds if available,
+                    // otherwise fall back to center/zoom
+                    if (currentMapView.bounds) {
+                        set(nextProperties, "controls.bounds", currentMapView.bounds);
+                        set(nextProperties, "controls.center", undefined);
+                        set(nextProperties, "controls.zoom", undefined);
+                    } else {
+                        set(nextProperties, "controls.center", currentMapView.center);
+                        set(nextProperties, "controls.zoom", currentMapView.zoom);
+                        set(nextProperties, "controls.bounds", undefined);
+                    }
                 }
             } else {
                 set(nextProperties, "controls.center", undefined);

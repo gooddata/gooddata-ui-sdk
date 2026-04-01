@@ -2623,11 +2623,7 @@
                             "custom"
                         ]
                     },
-                    "basemap": {
-                        "type": "string",
-                        "enum": ["standard", "satellite", "monochrome", "hybrid", "none"]
-                    },
-                    "color_scheme": { "type": "string", "enum": ["light", "dark"] },
+                    "basemap": { "type": "string" },
                     "viewport_pan": { "type": "boolean" },
                     "viewport_zoom": { "type": "boolean" },
                     "center_lat": { "type": "number" },
@@ -2642,6 +2638,12 @@
                         "type": "string",
                         "enum": ["0.5x", "0.75x", "normal", "1.25x", "1.5x", "default"]
                     },
+                    "shape_type": { "type": "string", "enum": ["circle", "iconByValue", "oneIcon"] },
+                    "icon": { "type": "string" },
+                    "viewport_bounds_ne_lat": { "type": "number" },
+                    "viewport_bounds_ne_lng": { "type": "number" },
+                    "viewport_bounds_sw_lat": { "type": "number" },
+                    "viewport_bounds_sw_lng": { "type": "number" },
                     "row_height": { "type": "string", "enum": ["small", "medium", "large"] },
                     "cell_vertical_align": { "type": "string", "enum": ["top", "middle", "bottom"] },
                     "cell_text_wrapping": { "type": "string", "enum": ["clip", "wrap"] },
@@ -5277,7 +5279,16 @@
                 },
                 "value_type": {
                     "type": "string",
-                    "enum": ["TEXT", "HYPERLINK", "GEO", "GEO_LONGITUDE", "GEO_LATITUDE", "IMAGE", "GEO_AREA"]
+                    "enum": [
+                        "TEXT",
+                        "HYPERLINK",
+                        "GEO",
+                        "GEO_LONGITUDE",
+                        "GEO_LATITUDE",
+                        "GEO_ICON",
+                        "IMAGE",
+                        "GEO_AREA"
+                    ]
                 },
                 "geo_area_config": {
                     "$ref": "#/$defs/geoAreaConfig",
