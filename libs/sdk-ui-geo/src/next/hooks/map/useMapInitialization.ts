@@ -82,13 +82,6 @@ function resolveInitialNavigationConfig(
     };
 }
 
-function normalizeGeoBasemapOption(basemap: string | undefined): string | undefined {
-    if (basemap === undefined || basemap === "default") {
-        return undefined;
-    }
-    return basemap;
-}
-
 /**
  * Cleanup map resources
  *
@@ -488,8 +481,7 @@ export function useMapInitialization(
         [isViewportFrozen],
     );
     const maxZoom = config?.maxZoomLevel;
-    const rawBasemap = config?.basemap === undefined ? undefined : `${config.basemap}`;
-    const basemap = normalizeGeoBasemapOption(rawBasemap);
+    const basemap = config?.basemap === undefined ? undefined : `${config.basemap}`;
     const isGeoChartA11yImprovementsEnabled = config?.enableGeoChartA11yImprovements ?? false;
     const { isKeyboardInteractionEnabled, isKeyboardRotationEnabled } = useMemo(
         () =>

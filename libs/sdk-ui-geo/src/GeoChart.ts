@@ -154,7 +154,7 @@ export interface IGeoLegendConfig {
      *
      * @remarks
      * Legend items will be rendered horizontally on screens smaller than 767px.
-     * For the popup legend must be a flag set to `autoPositionWithPopup`
+     * The legacy `autoPositionWithPopup` value preserves automatic legend placement heuristics.
      */
     responsive?: boolean | "autoPositionWithPopup";
 }

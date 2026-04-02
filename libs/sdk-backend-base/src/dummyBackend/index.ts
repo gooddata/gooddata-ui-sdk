@@ -2208,7 +2208,12 @@ class DummyWorkspaceDashboardsService implements IWorkspaceDashboardsService {
         _exportId: string,
         _type: "visual" | "slides" | undefined,
         _tabId?: string,
-    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null> {
+    ): Promise<{
+        filterContext?: IFilterContext;
+        title?: string;
+        hideWidgetTitles?: boolean;
+        exportMetadata?: Record<string, string>;
+    } | null> {
         throw new NotSupported("not supported");
     }
 

@@ -489,7 +489,7 @@ describe("useMapInitialization a11y", () => {
         expect(options.basemap).toBe("standard-light");
     });
 
-    it("normalizes default basemap to undefined", async () => {
+    it("normalizes missing basemap to undefined", async () => {
         renderHook(
             () =>
                 useMapInitialization(

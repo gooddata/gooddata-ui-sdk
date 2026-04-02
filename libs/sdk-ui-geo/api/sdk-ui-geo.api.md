@@ -588,8 +588,9 @@ export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChart
     longitude: AttributeOrPlaceholder;
 }
 
-// @public
+// @public @deprecated
 export interface IGeoPushpinChartLocationProps extends IGeoPushpinChartBaseProps {
+    // @deprecated
     location: AttributeOrPlaceholder;
 }
 

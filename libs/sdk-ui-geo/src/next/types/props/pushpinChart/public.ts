@@ -53,7 +53,10 @@ export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChart
  * Props for {@link GeoPushpinChart} in the (legacy) single-attribute mode.
  *
  * @remarks
- * The `location` prop is not supported on Tiger and will fail at runtime, but is kept for backward-compatible typing.
+ * The `location` prop is kept for backward compatibility with older applications.
+ * For GoodData Cloud / Tiger, use separate `latitude` and `longitude` attributes instead.
+ *
+ * @deprecated Use separate `latitude` and `longitude` attributes instead.
  *
  * @public
  */
@@ -61,6 +64,8 @@ export interface IGeoPushpinChartLocationProps extends IGeoPushpinChartBaseProps
     /**
      * The attribute definition or placeholder that determines the longitude and latitude of the pins.
      * Values expected in format lat;long.
+     *
+     * @deprecated Use separate `latitude` and `longitude` attributes instead.
      */
     location: AttributeOrPlaceholder;
 }

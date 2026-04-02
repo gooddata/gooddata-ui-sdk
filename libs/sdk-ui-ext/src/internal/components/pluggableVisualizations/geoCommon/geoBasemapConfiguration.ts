@@ -59,6 +59,20 @@ export function getGeoBasemapDropdownItems(
     return [...dynamicItems, { title: currentBasemap, value: currentBasemap }];
 }
 
+/**
+ * Returns the first available basemap ID when no basemap is currently persisted.
+ * Returns undefined when no action is needed (basemap already set or no items available).
+ */
+export function getGeoBasemapFallbackId(
+    apiItems: readonly IGeoStyleListItem[],
+    currentBasemap: string | undefined,
+): string | undefined {
+    if (currentBasemap !== undefined || apiItems.length === 0) {
+        return undefined;
+    }
+    return apiItems[0].id;
+}
+
 export function getGeoConfigurationPanelIsLoading(
     isVisualizationLoading: boolean,
     isBasemapItemsLoading: boolean,

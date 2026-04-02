@@ -2481,6 +2481,7 @@ export interface IFeatureFlags {
     enableGeoBasemapConfig?: boolean;
     enableGeoChartA11yImprovements?: boolean;
     enableGeoChartsViewportConfig?: boolean;
+    enableGeoPushpinIcon?: boolean;
     enableGeoSatelliteBasemapOption?: boolean;
     enableGeoSegmentConflictRecommendation?: boolean;
     enableHeadlineExport?: boolean;

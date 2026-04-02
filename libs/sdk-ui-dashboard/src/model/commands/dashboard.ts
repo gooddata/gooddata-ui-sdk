@@ -421,8 +421,16 @@ export function deleteDashboard(correlationId?: string): IDeleteDashboard {
 /**
  * @beta
  */
+export interface IExportDashboardToPdfPayload {
+    exportMetadata?: Record<string, string>;
+}
+
+/**
+ * @beta
+ */
 export interface IExportDashboardToPdf extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.EXPORT.PDF";
+    readonly payload?: IExportDashboardToPdfPayload;
 }
 
 /**
@@ -430,15 +438,35 @@ export interface IExportDashboardToPdf extends IDashboardCommand {
  * the dashboard to a PDF file. If successful, an instance of {@link IDashboardExportToPdfResolved} will be emitted
  * with the URL of the resulting file.
  *
+ * @param payload - payload to override the dashboard export options. If not provided, the dashboard will be exported with the current filter context and options.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @beta
  */
-export function exportDashboardToPdf(correlationId?: string): IExportDashboardToPdf {
+export function exportDashboardToPdf(correlationId?: string): IExportDashboardToPdf;
+/**
+ * @beta
+ */
+export function exportDashboardToPdf(
+    payload?: IExportDashboardToPdfPayload,
+    correlationId?: string,
+): IExportDashboardToPdf;
+export function exportDashboardToPdf(
+    payloadOrCorrelationId?: IExportDashboardToPdfPayload | string,
+    correlationId?: string,
+): IExportDashboardToPdf {
+    const payload =
+        payloadOrCorrelationId && typeof payloadOrCorrelationId !== "string"
+            ? payloadOrCorrelationId
+            : undefined;
+    const effectiveCorrelationId =
+        typeof payloadOrCorrelationId === "string" ? payloadOrCorrelationId : correlationId;
+
     return {
         type: "GDC.DASH/CMD.EXPORT.PDF",
-        correlationId,
+        correlationId: effectiveCorrelationId,
+        payload,
     };
 }
 
@@ -518,6 +546,11 @@ export interface IExportDashboardToPresentationPayload {
      * Overrides current filter context filters with provided custom filters
      */
     filters?: FilterContextItem[];
+
+    /**
+     * Adds custom export metadata to the export request.
+     */
+    exportMetadata?: Record<string, string>;
 
     /**
      * Overrides export options with custom options.

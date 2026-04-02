@@ -62,6 +62,7 @@ import { extractControls } from "../geoChartNext/geoAttributeHelper.js";
 import {
     GeoBasemapItemsLoader,
     getGeoBasemapDropdownItems,
+    getGeoBasemapFallbackId,
     getGeoConfigurationPanelIsLoading,
 } from "../geoCommon/geoBasemapConfiguration.js";
 import { sanitizeGeoViewportProperties } from "../geoCommon/geoPropertySanitization.js";
@@ -271,9 +272,11 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                 basemap: resolvedProperties.controls?.["basemap"],
                 legacyTileset: resolvedProperties.controls?.["tileset"],
             }).basemap;
+            const effectiveBasemap =
+                currentBasemap ?? getGeoBasemapFallbackId(this.basemapItemsLoader.getItems(), currentBasemap);
             const basemapItems = getGeoBasemapDropdownItems(
                 this.basemapItemsLoader.getItems(),
-                currentBasemap,
+                effectiveBasemap,
             );
             const isLoading = getGeoConfigurationPanelIsLoading(
                 this.isLoading,
@@ -318,6 +321,21 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             environment: this.environment,
             featureFlags: this.featureFlags,
         });
+    }
+
+    private applyBasemapFallback(controls: IVisualizationProperties): IVisualizationProperties {
+        const { basemap } = sanitizeGeoMapStyleOptions({
+            basemap: controls["basemap"],
+            legacyTileset: controls["tileset"],
+        });
+        if (basemap !== undefined) {
+            return controls;
+        }
+        const fallback = getGeoBasemapFallbackId(this.basemapItemsLoader.getItems(), basemap);
+        if (!fallback) {
+            return controls;
+        }
+        return { ...controls, basemap: fallback };
     }
 
     protected override renderVisualization(
@@ -369,10 +387,11 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         options: IVisProps,
         insight: IInsightDefinition,
     ): { primaryLayer: IGeoLayer; config: IGeoAreaChartConfig; filters: IFilter[] } | undefined {
-        const controlsWithFallback = getGeoControlsWithFallback(
+        const rawControls = getGeoControlsWithFallback(
             this.visualizationProperties,
             this.getInsightControlsWithFallback(insight),
         );
+        const controlsWithFallback = this.applyBasemapFallback(rawControls);
         const fullConfig = this.buildGeoAreaVisualizationConfig(options, controlsWithFallback);
         const filters = insightFilters(insight);
         const sortBy = createAreaSortForSegment(insight);

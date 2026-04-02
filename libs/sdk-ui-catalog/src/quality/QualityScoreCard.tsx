@@ -7,8 +7,8 @@ import { useIntl } from "react-intl";
 import { useQualityActions, useQualityState } from "./QualityContext.js";
 import { QualityScoreCardAction } from "./QualityScoreCardAction.js";
 import { QualityScoreCardAnnouncements } from "./QualityScoreCardAnnouncements.js";
+import { QualityScoreCardButton } from "./QualityScoreCardButton.js";
 import { QualityScoreCardDate } from "./QualityScoreCardDate.js";
-import { QualityScoreCardMenu } from "./QualityScoreCardMenu.js";
 import { QualityScoreCardScore } from "./QualityScoreCardScore.js";
 import { getQualityIssueCodes } from "./utils.js";
 import { useFilterActions } from "../filter/FilterContext.js";
@@ -44,7 +44,7 @@ export function QualityScoreCard() {
                 {intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.title" })}
             </h3>
             <QualityScoreCardAnnouncements isLoading={isLoading} />
-            <QualityScoreCardMenu intl={intl} onRunCheck={handleRunCheck} isLoading={isLoading} />
+            <QualityScoreCardButton intl={intl} onRunCheck={handleRunCheck} isLoading={isLoading} />
             <QualityScoreCardScore issues={issues} isLoading={isLoading || isSyncing} />
             <QualityScoreCardAction
                 intl={intl}

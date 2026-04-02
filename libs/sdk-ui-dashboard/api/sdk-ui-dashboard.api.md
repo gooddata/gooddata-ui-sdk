@@ -918,6 +918,7 @@ export type DashboardConfig = {
     widgetsOverlay?: Record<string, IDashboardWidgetOverlay>;
     exportId?: string;
     exportType?: "visual" | "slides";
+    exportMetadata?: Record<string, string>;
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;
     hideAddTabButton?: boolean;
@@ -1790,6 +1791,9 @@ export function exportDashboardToExcel(mergeHeaders: boolean, exportInfo: boolea
 
 // @beta
 export function exportDashboardToPdf(correlationId?: string): IExportDashboardToPdf;
+
+// @beta (undocumented)
+export function exportDashboardToPdf(payload?: IExportDashboardToPdfPayload, correlationId?: string): IExportDashboardToPdf;
 
 // @beta
 export function exportDashboardToPdfPresentation(payload?: IExportDashboardToPresentationPayload, correlationId?: string): IExportDashboardToPdfPresentation;
@@ -5467,7 +5471,15 @@ export interface IExportDashboardToExcelPayload {
 // @beta (undocumented)
 export interface IExportDashboardToPdf extends IDashboardCommand {
     // (undocumented)
+    readonly payload?: IExportDashboardToPdfPayload;
+    // (undocumented)
     readonly type: "GDC.DASH/CMD.EXPORT.PDF";
+}
+
+// @beta (undocumented)
+export interface IExportDashboardToPdfPayload {
+    // (undocumented)
+    exportMetadata?: Record<string, string>;
 }
 
 // @beta (undocumented)
@@ -5488,6 +5500,7 @@ export interface IExportDashboardToPptPresentation extends IDashboardCommand {
 
 // @beta (undocumented)
 export interface IExportDashboardToPresentationPayload {
+    exportMetadata?: Record<string, string>;
     filters?: FilterContextItem[];
     options?: IDashboardExportPresentationOptions;
 }
@@ -9593,7 +9606,7 @@ export type ResolveAsyncRenderPayload = {
 };
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -10438,6 +10451,9 @@ export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardS
 
 // @internal (undocumented)
 export const selectExecutionTimestamp: DashboardSelector<string | undefined>;
+
+// @beta
+export const selectExportMetadata: DashboardSelector<Record<string, string> | undefined>;
 
 // @alpha
 export const selectExportResultPollingTimeout: DashboardSelector<number | undefined>;

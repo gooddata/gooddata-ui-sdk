@@ -13,7 +13,7 @@ function sanitizeLegacyGeoTileset(value: unknown): string | undefined {
 }
 
 function sanitizeGeoBasemap(value: unknown): string | undefined {
-    if (typeof value === "string" && value.length > 0 && value !== "default") {
+    if (typeof value === "string" && value.length > 0) {
         return value;
     }
 

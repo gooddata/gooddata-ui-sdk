@@ -79,6 +79,7 @@ import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import {
     GeoBasemapItemsLoader,
     getGeoBasemapDropdownItems,
+    getGeoBasemapFallbackId,
     getGeoConfigurationPanelIsLoading,
 } from "../geoCommon/geoBasemapConfiguration.js";
 import { sanitizeGeoViewportProperties } from "../geoCommon/geoPropertySanitization.js";
@@ -194,7 +195,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                     this.cachedHasGeoIconLabel = locItem ? hasGeoIconDisplayForm(locItem) : false;
                 }
 
-                return { ...updated, filters: sanitizedFilters };
+                const resolved = this.cachedHasGeoIconLabel ? updated : resetIconByValueShapeType(updated);
+                return { ...resolved, filters: sanitizedFilters };
             });
     }
 
@@ -454,9 +456,11 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                 basemap: resolvedProperties.controls?.["basemap"],
                 legacyTileset: resolvedProperties.controls?.["tileset"],
             }).basemap;
+            const effectiveBasemap =
+                currentBasemap ?? getGeoBasemapFallbackId(this.basemapItemsLoader.getItems(), currentBasemap);
             const basemapItems = getGeoBasemapDropdownItems(
                 this.basemapItemsLoader.getItems(),
-                currentBasemap,
+                effectiveBasemap,
             );
             const isLoading = getGeoConfigurationPanelIsLoading(
                 this.isLoading,
@@ -510,6 +514,21 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         });
     }
 
+    private applyBasemapFallback(controls: IVisualizationProperties): IVisualizationProperties {
+        const { basemap } = sanitizeGeoMapStyleOptions({
+            basemap: controls["basemap"],
+            legacyTileset: controls["tileset"],
+        });
+        if (basemap !== undefined) {
+            return controls;
+        }
+        const fallback = getGeoBasemapFallbackId(this.basemapItemsLoader.getItems(), basemap);
+        if (!fallback) {
+            return controls;
+        }
+        return { ...controls, basemap: fallback };
+    }
+
     protected override renderVisualization(
         options: IVisProps,
         insight: IInsightDefinition,
@@ -558,8 +577,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         options: IVisProps,
         insight: IInsightDefinition,
     ): { primaryLayer: IGeoLayer; config: IGeoChartConfig; filters: IFilter[] } | undefined {
-        const controlsWithFallback =
-            this.getResolvedVisualizationPropertiesWithFallback(insight).controls ?? {};
+        const rawControls = this.getResolvedVisualizationPropertiesWithFallback(insight).controls ?? {};
+        const controlsWithFallback = this.applyBasemapFallback(rawControls);
         const fullConfig = this.buildGeoVisualizationConfig(options, controlsWithFallback);
         const filters = insightFilters(insight);
         const sortBy = insightSorts(insight);
@@ -643,9 +662,14 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             this.getInsightControlsWithFallback(insight),
         );
 
-        return disableClusteringInVisualizationPropertiesWhenNotEditable(
+        const afterClustering = disableClusteringInVisualizationPropertiesWhenNotEditable(
             visualizationPropertiesWithFallback,
             insight,
+        );
+
+        return resetIconByValueInVisualizationProperties(
+            afterClustering,
+            isGeoPushpinIconEnabled(this.featureFlags) && this.cachedHasGeoIconLabel,
         );
     }
 
@@ -726,4 +750,21 @@ function disableClusteringInVisualizationPropertiesWhenNotEditable(
 
 function getPushpinShapeType(referencePoint: Pick<IReferencePoint, "properties">): GeoChartShapeType {
     return referencePoint.properties?.controls?.["points"]?.shapeType ?? "circle";
+}
+
+function resetIconByValueShapeType(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    if (getPushpinShapeType(referencePoint) === "iconByValue") {
+        return set(cloneDeep(referencePoint), "properties.controls.points.shapeType", "circle");
+    }
+    return referencePoint;
+}
+
+function resetIconByValueInVisualizationProperties(
+    properties: IVisualizationProperties,
+    hasGeoIconLabel: boolean,
+): IVisualizationProperties {
+    if (properties?.controls?.["points"]?.shapeType === "iconByValue" && !hasGeoIconLabel) {
+        return set(cloneDeep(properties), "controls.points.shapeType", "circle");
+    }
+    return properties;
 }
