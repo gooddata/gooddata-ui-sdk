@@ -66,6 +66,7 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                     <UiButton
                         isDisabled
                         label={lastMessage}
+                        dataTestId="reasoning"
                         accessibilityConfig={{ ariaExpanded: false }}
                         iconBefore="brain"
                         iconBeforeSize={12}
@@ -74,6 +75,7 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                 ) : (
                     <UiButton
                         label={lastMessage}
+                        dataTestId="reasoning"
                         onClick={() => setIsExpanded(!isExpanded)}
                         accessibilityConfig={{ ariaExpanded: isExpanded }}
                         iconBefore={isExpanded ? "navigateDown" : "navigateRight"}
@@ -88,7 +90,12 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
                 ) : null}
             </div>
             {isExpanded ? (
-                <div className="gd-gen-ai-chat__messages__conversation-group--content">{children}</div>
+                <div
+                    className="gd-gen-ai-chat__messages__conversation-group--content"
+                    data-testid="gen-ai-reasoning-group-content"
+                >
+                    {children}
+                </div>
             ) : null}
         </div>
     );

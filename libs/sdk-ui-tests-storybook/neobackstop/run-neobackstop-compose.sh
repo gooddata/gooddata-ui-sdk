@@ -8,8 +8,10 @@ export USER_GID=$(id -g)
 
 cd $ROOT_DIR
 
-# copy storybook to serve app dir
-cp -r ./storybook ./neobackstop/serve/storybook
+# copy storybook to serve app dir (skip when using pre-built images)
+if [ -z "$NEOBACKSTOP_IMAGE" ] && [ -z "$NEOBACKSTOP_SERVE_IMAGE" ]; then
+    cp -r ./storybook ./neobackstop/serve/storybook
+fi
 
 # let "test" be the default command
 # Collect all CLI args; default to "test" if none provided
@@ -22,6 +24,11 @@ fi
 # Convert CLI flags "--flag value" to "--flag=value" for Go app
 # Simple conversion: replace space after flag with =
 COMMAND_ARGS=$(echo $COMMAND_ARGS | sed -E 's/--([a-zA-Z0-9_-]+) ([^ ]+)/--\1=\2/g')
+
+# Pull pre-built images if provided, otherwise compose will build locally
+if [ -n "$NEOBACKSTOP_IMAGE" ] || [ -n "$NEOBACKSTOP_SERVE_IMAGE" ]; then
+    docker-compose -f ./docker-compose-neobackstop.yaml pull
+fi
 
 #--exit-code-from backstop
 docker-compose -f ./docker-compose-neobackstop.yaml -p sdk-ui-tests-e2e-backstop-${BUILD_ID:-default} up --abort-on-container-exit --force-recreate --always-recreate-deps --renew-anon-volumes

@@ -1,6 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-export const extractError = (e: unknown) => {
+import { type IChatConversationLocalItem, type Message, makeUserItem } from "../../model.js";
+
+export function extractError(e: unknown) {
     // Normal error
     if (e instanceof Error) {
         return `${e.name}: ${e.message}`;
@@ -11,4 +13,21 @@ export const extractError = (e: unknown) => {
     }
 
     return String(e);
-};
+}
+
+export function convertMessageToChatConversation(message: Message): IChatConversationLocalItem {
+    //NOTE: Try to convert message to local item to ensure backward compatibility with
+    // previous action
+    return makeUserItem(
+        {
+            type: "text",
+            text: message.content.reduce((acc, content) => {
+                if (content.type === "text") {
+                    return acc + " " + content.text;
+                }
+                return acc;
+            }, ""),
+        },
+        message.id,
+    );
+}

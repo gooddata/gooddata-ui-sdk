@@ -93,6 +93,7 @@ export interface ISeriesDataItem {
     loading?: boolean;
     marker?: ISeriesMarker;
     anomaly?: boolean;
+    data?: ISeriesDataItem[];
 }
 
 export interface ISeriesNodeItem {

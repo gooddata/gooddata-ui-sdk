@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-mockingbird",
-    "version": "11.28.0-alpha.16",
+    "version": "11.29.0-alpha.0",
     "description": "Mock GoodData Backend SPI implementation",
     "license": "MIT",
     "author": "GoodData",

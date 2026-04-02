@@ -31,6 +31,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { Chart, type IChartProps } from "./Chart.js";
+import { coalesceNulls, skipLeadingZeros } from "./dataSanitizers.js";
 import { mergePropertiesWithOverride } from "./propertyMerger.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type OnLegendReady } from "../../interfaces/chartProps.js";
@@ -105,16 +106,6 @@ function getFlexDirection(position: string): CSSProperties["flexDirection"] {
     }
 
     return "row";
-}
-
-function skipLeadingZeros(values: ISeriesDataItem[]) {
-    const result = [...values];
-
-    while (result[0]?.y === 0) {
-        result.shift();
-    }
-
-    return result;
 }
 
 const highchartsStyle = { flex: "1 1 auto", position: "relative", overflow: "hidden" } as const;
@@ -249,6 +240,10 @@ export const HighChartsRenderer = memo(function HighChartsRenderer({
 
             if (isFunnel(chart?.type)) {
                 items = skipLeadingZeros(items).filter((i) => !(i.y === null || i.y === undefined));
+            }
+
+            if (isWaterfall(chart?.type)) {
+                items = items.map(coalesceNulls);
             }
 
             const updatedItems = items.map((item: any) => {

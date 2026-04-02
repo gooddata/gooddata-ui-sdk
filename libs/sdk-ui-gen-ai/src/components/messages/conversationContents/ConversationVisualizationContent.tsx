@@ -186,6 +186,10 @@ function Wrapper({ containerRef, visualization, children }: IWrapperProps) {
     return (
         <div
             ref={containerRef}
+            data-testid="gen-ai-conversation-visualization"
+            data-visualization-type={
+                visualization?.insight.visualizationUrl.replace("local:", "").toLowerCase() ?? "unknown"
+            }
             className={cx(
                 "gd-gen-ai-chat__conversation__visualization",
                 `gd-gen-ai-chat__conversation__visualization--${visualization?.insight.visualizationUrl.replace("local:", "").toLowerCase() ?? "unknown"}`,

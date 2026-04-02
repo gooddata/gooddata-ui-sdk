@@ -29,7 +29,9 @@ import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
 import { createLayerInsight, sanitizeDeduplicatedGlobalFilters } from "../execution/layerInsightFactory.js";
+import { prepareExecutionWithGeoIcon } from "../execution/prepareGeoIconExecution.js";
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
+import { resolveAttributeDisplayForms } from "../execution/resolveAttributeDisplayForms.js";
 import type { IGeoAdapterContext, IGeoLayerAdapter, IPushpinLayerOutput } from "../registry/adapterTypes.js";
 
 function getValidLocations(locations: Array<IGeoLngLat | null | undefined>): IGeoLngLat[] {
@@ -257,7 +259,21 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
         context: IGeoAdapterContext,
         execution: IPreparedExecution,
     ): Promise<IPreparedExecution> {
-        return prepareExecutionWithTooltipText(context, execution, layer.latitude);
+        // Resolve tooltip and geoIcon display forms in a single backend call.
+        // Skip the metadata lookup entirely when both derived buckets already exist.
+        const needsGeoIcon = !execution.definition.buckets.some(
+            (b) => b.localIdentifier === BucketNames.GEO_ICON,
+        );
+        const needsTooltip = !execution.definition.buckets.some(
+            (b) => b.localIdentifier === BucketNames.TOOLTIP_TEXT,
+        );
+
+        const displayFormRef = layer.latitude ? attributeDisplayFormRef(layer.latitude) : undefined;
+        const { tooltipRef, geoIconRef } =
+            needsTooltip || needsGeoIcon ? await resolveAttributeDisplayForms(context, displayFormRef) : {};
+
+        const withTooltip = prepareExecutionWithTooltipText(context, execution, tooltipRef ?? displayFormRef);
+        return prepareExecutionWithGeoIcon(context, withTooltip, geoIconRef);
     },
 
     async prepareLayer(layer, dataView, context): Promise<IPushpinLayerOutput | null> {
