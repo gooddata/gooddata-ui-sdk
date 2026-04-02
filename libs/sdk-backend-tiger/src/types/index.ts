@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type DeclarativeSettingTypeEnum,
@@ -55,6 +55,7 @@ export interface IExportMetadata {
     filtersByTab?: FiltersByTab;
     title?: string;
     hideWidgetTitles?: boolean;
+    exportMetadata?: Record<string, string>;
 }
 
 export type TigerSettingsType = DeclarativeSettingTypeEnum;

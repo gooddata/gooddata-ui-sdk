@@ -72,6 +72,7 @@ export function* exportDashboardToPptPresentationHandler(
 
     const options: IDashboardExportPresentationOptions = {
         ...(cmd.payload?.options ?? {}),
+        exportMetadata: cmd.payload?.exportMetadata,
         timeout,
     };
 

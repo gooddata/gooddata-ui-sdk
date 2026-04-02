@@ -70,13 +70,18 @@ export function* exportDashboardToPdfHandler(
         selectExportResultPollingTimeout,
     );
 
+    const options: IDashboardExportPdfOptions = {
+        timeout,
+        exportMetadata: cmd.payload?.exportMetadata,
+    };
+
     const result: PromiseFnReturnType<typeof exportDashboardToPdf> = yield call(
         exportDashboardToPdf,
         ctx,
         dashboardRef,
         effectiveFilters,
         effectiveFiltersByTab,
-        { timeout },
+        options,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

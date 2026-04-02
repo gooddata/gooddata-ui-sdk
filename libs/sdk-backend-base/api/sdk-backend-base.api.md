@@ -659,6 +659,7 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         filterContext?: IFilterContext | undefined;
         title?: string | undefined;
         hideWidgetTitles?: boolean | undefined;
+        exportMetadata?: Record<string, string> | undefined;
     } | null>;
     // (undocumented)
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;

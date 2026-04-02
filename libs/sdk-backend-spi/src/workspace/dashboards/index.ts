@@ -305,6 +305,11 @@ export interface IDashboardExportPdfOptions {
     filename?: string;
 
     /**
+     * Custom export metadata forwarded through the export flow.
+     */
+    exportMetadata?: Record<string, string>;
+
+    /**
      * Override the default export result polling timeout (in milliseconds).
      *
      * @remarks
@@ -376,6 +381,7 @@ export interface IDashboardExportPresentationOptions {
     title?: string;
     hideWidgetTitles?: boolean;
     filename?: string;
+    exportMetadata?: Record<string, string>;
 
     /**
      * Override the default export result polling timeout (in milliseconds).
@@ -508,7 +514,12 @@ export interface IWorkspaceDashboardsService {
         exportId: string,
         type: "visual" | "slides" | undefined,
         tabId?: string,
-    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null>;
+    ): Promise<{
+        filterContext?: IFilterContext;
+        title?: string;
+        hideWidgetTitles?: boolean;
+        exportMetadata?: Record<string, string>;
+    } | null>;
 
     /**
      * Create and save dashboard for the provided dashboard definition

@@ -32,5 +32,8 @@ export const convertExportMetadata = (
             : {}),
         ...(exportMetadata?.title ? { title: exportMetadata.title } : {}),
         ...(exportMetadata?.hideWidgetTitles ? { hideWidgetTitles: exportMetadata.hideWidgetTitles } : {}),
+        ...(exportMetadata?.exportMetadata === undefined
+            ? {}
+            : { exportMetadata: exportMetadata.exportMetadata }),
     };
 };

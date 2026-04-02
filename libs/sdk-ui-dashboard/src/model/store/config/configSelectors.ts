@@ -209,6 +209,18 @@ export const selectIsExport: DashboardSelector<boolean> = createSelector(selectC
 });
 
 /**
+ * Returns custom export metadata.
+ *
+ * @beta
+ */
+export const selectExportMetadata: DashboardSelector<Record<string, string> | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.exportMetadata;
+    },
+);
+
+/**
  * Returns whether the Dashboard is white labeled.
  *
  * @internal

@@ -54,7 +54,12 @@ export interface IGeoChartLegendConfig {
     position?: GeoLegendPosition | LegacyGeoLegendPosition;
 
     /**
-     * Responsive behavior: `true` switches to fluid layout, `"autoPositionWithPopup"` renders a popup legend.
+     * Responsive behavior for the geo legend.
+     *
+     * @remarks
+     * `true` enables responsive legend layout.
+     * The legacy `"autoPositionWithPopup"` value is kept for backward compatibility and preserves
+     * the automatic legend placement heuristics used in smaller containers.
      *
      * @defaultValue false
      */

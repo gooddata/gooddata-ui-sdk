@@ -4,6 +4,7 @@ import { cloneDeep, isEmpty, isEqual } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
 
 import {
+    type FiltersByTab,
     type IDashboardExportImageOptions,
     type IDashboardExportPdfOptions,
     type IDashboardExportPresentationOptions,
@@ -208,7 +209,12 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         _exportId: string,
         _type: "visual" | "slides" | undefined,
         _tabId?: string,
-    ): Promise<IFilterContext | null> => {
+    ): Promise<{
+        filterContext?: IFilterContext;
+        title?: string;
+        hideWidgetTitles?: boolean;
+        exportMetadata?: Record<string, string>;
+    } | null> => {
         return Promise.resolve(null);
     };
 
@@ -396,6 +402,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     public exportDashboardToPdf(
         _ref: ObjRef,
         _filters?: FilterContextItem[],
+        _filtersByTab?: FiltersByTab,
         _options?: IDashboardExportPdfOptions,
     ): Promise<IExportResult> {
         return Promise.resolve({
@@ -407,8 +414,9 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
     public exportDashboardToPresentation(
         _ref: ObjRef,
-        _format: string,
+        _format: "PDF" | "PPTX",
         _filters?: FilterContextItem[],
+        _filtersByTab?: FiltersByTab,
         _options?: IDashboardExportPresentationOptions,
     ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");
@@ -417,6 +425,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     public exportDashboardToImage(
         _ref: ObjRef,
         _filters?: FilterContextItem[],
+        _filtersByTab?: FiltersByTab,
         _options?: IDashboardExportImageOptions,
     ): Promise<IExportResult> {
         throw new NotSupported("recorded backend does not support this call");

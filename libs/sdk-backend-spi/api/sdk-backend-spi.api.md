@@ -875,12 +875,15 @@ export interface IDashboardExportImageOptions {
 
 // @alpha
 export interface IDashboardExportPdfOptions {
+    exportMetadata?: Record<string, string>;
     filename?: string;
     timeout?: number;
 }
 
 // @beta
 export interface IDashboardExportPresentationOptions {
+    // (undocumented)
+    exportMetadata?: Record<string, string>;
     // (undocumented)
     filename?: string;
     // (undocumented)
@@ -2506,6 +2509,7 @@ export interface IWorkspaceDashboardsService {
         filterContext?: IFilterContext;
         title?: string;
         hideWidgetTitles?: boolean;
+        exportMetadata?: Record<string, string>;
     } | null>;
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;

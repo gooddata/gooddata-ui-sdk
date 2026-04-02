@@ -48,7 +48,7 @@ export async function fetchMapStyle(
 ): Promise<StyleSpecification> {
     const style =
         basemap === undefined
-            ? ((await backend.geo().getDefaultStyle({ language })) as unknown)
+            ? await backend.geo().getDefaultStyle({ language })
             : await fetchMapStyleByIdWithFallback(backend, basemap, language);
     assertValidStyle(style);
     return style;

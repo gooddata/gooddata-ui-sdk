@@ -5,13 +5,23 @@
 ```ts
 
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAuthCredentials } from '@gooddata/sdk-pluggable-application-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
 import { JSX } from 'react/jsx-runtime';
 import { PropsWithChildren } from 'react';
 
+// @alpha
+export function createBackendForModule(auth: IAuthCredentials, options: ICreateBackendForModuleOptions): IAnalyticalBackend;
+
 // @public
 export interface IClientPlatformContext extends IPlatformContext {
     backend: IAnalyticalBackend;
+}
+
+// @alpha
+export interface ICreateBackendForModuleOptions {
+    packageName: string;
+    packageVersion?: string;
 }
 
 // @public

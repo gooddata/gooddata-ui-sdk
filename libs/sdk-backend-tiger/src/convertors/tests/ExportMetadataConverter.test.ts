@@ -26,12 +26,18 @@ describe("ExportMetadataConverter", () => {
                 },
                 title: "Export title",
                 hideWidgetTitles: true,
+                exportMetadata: {
+                    selectedTab: "switcher-tab-1",
+                },
             },
             true,
         );
 
         expect(metadata?.title).toBe("Export title");
         expect(metadata?.hideWidgetTitles).toBe(true);
+        expect(metadata?.exportMetadata).toEqual({
+            selectedTab: "switcher-tab-1",
+        });
 
         const convertedFilter = metadata?.filters?.[0];
         expect(convertedFilter).toBeDefined();
@@ -53,12 +59,18 @@ describe("ExportMetadataConverter", () => {
                 filtersByTab: {
                     tabA: [tigerDashboardFilter],
                 },
+                exportMetadata: {
+                    selectedTab: "switcher-tab-1",
+                },
             },
             false,
         );
 
         expect(metadata).toEqual({
             filters: [tigerDashboardFilter],
+            exportMetadata: {
+                selectedTab: "switcher-tab-1",
+            },
         });
         expect(metadata).not.toHaveProperty("filtersByTab");
     });

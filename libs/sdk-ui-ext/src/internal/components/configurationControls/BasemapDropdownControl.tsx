@@ -2,8 +2,6 @@
 
 import { memo } from "react";
 
-import { type IPushData } from "@gooddata/sdk-ui";
-
 import { DropdownControl, type IDropdownControlProps } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { type IDropdownItem } from "../../interfaces/Dropdown.js";
@@ -29,33 +27,15 @@ export const BasemapDropdownControl = memo(function BasemapDropdownControl({
         return null;
     }
 
-    const pushData = (data: IPushData) => {
-        if (data.properties?.controls?.["basemap"] !== "default") {
-            props.pushData?.(data);
-            return;
-        }
-
-        props.pushData?.({
-            ...data,
-            properties: {
-                ...data.properties,
-                controls: {
-                    ...data.properties?.controls,
-                    basemap: undefined,
-                    tileset: undefined,
-                },
-            },
-        });
-    };
+    const fallbackValue = items[0]?.value as string | undefined;
 
     return (
         <DropdownControl
             {...props}
             valuePath="basemap"
             labelText={messages["basemapTitle"].id}
-            value={props.value ?? "default"}
+            value={props.value ?? fallbackValue}
             items={items}
-            pushData={pushData}
         />
     );
 });

@@ -15,3 +15,5 @@ export {
     usePlatformContext,
     usePlatformContextStrict,
 } from "./context.js";
+
+export { createBackendForModule, type ICreateBackendForModuleOptions } from "./backend.js";

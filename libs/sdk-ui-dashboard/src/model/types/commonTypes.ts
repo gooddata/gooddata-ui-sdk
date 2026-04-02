@@ -314,6 +314,11 @@ export type DashboardConfig = {
     exportType?: "visual" | "slides";
 
     /**
+     * Custom export metadata retrieved during export mode.
+     */
+    exportMetadata?: Record<string, string>;
+
+    /**
      * Disable cross filtering
      *
      * @remarks
@@ -491,6 +496,7 @@ export type ResolvedDashboardConfig = Omit<
     | "maxZoomLevel"
     | "exportId"
     | "exportType"
+    | "exportMetadata"
     | "focusObject"
     | "slideConfig"
     | "references"

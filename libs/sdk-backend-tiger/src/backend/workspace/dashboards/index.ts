@@ -259,7 +259,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         exportId: string,
         type: "visual" | "slides" | undefined,
         exportTabId?: string,
-    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean } | null> => {
+    ): Promise<{
+        filterContext?: IFilterContext;
+        title?: string;
+        hideWidgetTitles?: boolean;
+        exportMetadata?: Record<string, string>;
+    } | null> => {
         const metadata = await this.authCall((client) => {
             if (type === "slides") {
                 return ExportApi_GetSlidesExportMetadata(client.axios, client.basePath, {
@@ -326,6 +331,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             ...(convertedExportMetadata?.hideWidgetTitles
                 ? { hideWidgetTitles: convertedExportMetadata.hideWidgetTitles }
                 : {}),
+            ...(convertedExportMetadata?.exportMetadata === undefined
+                ? {}
+                : { exportMetadata: convertedExportMetadata.exportMetadata }),
         };
     };
 
@@ -640,6 +648,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
                     filtersByTab: withoutAllTimePerTab,
+                    exportMetadata: options?.exportMetadata,
                 }),
             };
             const pdfExport = await ExportApi_CreatePdfExport(client.axios, client.basePath, {
@@ -704,6 +713,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     filtersByTab: withoutAllTimePerTab,
                     title: options?.title,
                     hideWidgetTitles: options?.hideWidgetTitles,
+                    exportMetadata: options?.exportMetadata,
                 }),
             };
             const slideshowExport = await ExportApi_CreateSlidesExport(client.axios, client.basePath, {
@@ -1532,7 +1542,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         type: "visual" | "slides" | undefined,
         filterContextRef: ObjRef | undefined,
         exportTabId?: string,
-    ): Promise<{ filterContext?: IFilterContext; title?: string; hideWidgetTitles?: boolean }> => {
+    ): Promise<{
+        filterContext?: IFilterContext;
+        title?: string;
+        hideWidgetTitles?: boolean;
+        exportMetadata?: Record<string, string>;
+    }> => {
         const filterContextByRef = filterContextRef
             ? await this.getFilterContext(filterContextRef)
             : undefined;
@@ -1545,6 +1560,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             filterContext: filterContextByExport?.filterContext || filterContextByRef,
             title: filterContextByExport?.title,
             hideWidgetTitles: filterContextByExport?.hideWidgetTitles,
+            exportMetadata: filterContextByExport?.exportMetadata,
         };
     };
 }

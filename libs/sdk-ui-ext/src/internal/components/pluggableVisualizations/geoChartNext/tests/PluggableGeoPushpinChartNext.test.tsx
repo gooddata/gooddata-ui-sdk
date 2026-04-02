@@ -1195,4 +1195,102 @@ describe("PluggableGeoPushpinChartNext", () => {
             expect(colorBucket?.items.map((i) => i.localIdentifier)).toEqual(["m2"]);
         });
     });
+
+    it("should reset shapeType from iconByValue to circle when geo icon label is not available", async () => {
+        const { visualization } = createComponent(undefined, {
+            enableGeoPushpinIcon: true,
+        });
+
+        const extendedReferencePoint = await visualization.getExtendedReferencePoint({
+            buckets: [
+                {
+                    localIdentifier: BucketNames.VIEW,
+                    items: [
+                        {
+                            ...createLocationBucketItem(),
+                            displayForms: [
+                                {
+                                    id: "attr.region.latitude",
+                                    ref: uriRef("/df/latitude"),
+                                    type: "GDC.geo.pin_latitude",
+                                    title: "Latitude",
+                                    isDefault: false,
+                                },
+                                {
+                                    id: "attr.region.longitude",
+                                    ref: uriRef("/df/longitude"),
+                                    type: "GDC.geo.pin_longitude",
+                                    title: "Longitude",
+                                    isDefault: false,
+                                },
+                                // No GDC.geo.icon display form — simulates label removed from LDM
+                            ],
+                        },
+                    ],
+                },
+            ],
+            filters: { localIdentifier: "filters", items: [] },
+            properties: {
+                controls: {
+                    points: {
+                        shapeType: "iconByValue",
+                    },
+                },
+            },
+        });
+
+        expect(extendedReferencePoint.properties?.controls?.["points"]?.shapeType).toBe("circle");
+    });
+
+    it("should keep shapeType as iconByValue when geo icon label is available", async () => {
+        const { visualization } = createComponent(undefined, {
+            enableGeoPushpinIcon: true,
+        });
+
+        const extendedReferencePoint = await visualization.getExtendedReferencePoint({
+            buckets: [
+                {
+                    localIdentifier: BucketNames.VIEW,
+                    items: [
+                        {
+                            ...createLocationBucketItem(),
+                            displayForms: [
+                                {
+                                    id: "attr.region.latitude",
+                                    ref: uriRef("/df/latitude"),
+                                    type: "GDC.geo.pin_latitude",
+                                    title: "Latitude",
+                                    isDefault: false,
+                                },
+                                {
+                                    id: "attr.region.longitude",
+                                    ref: uriRef("/df/longitude"),
+                                    type: "GDC.geo.pin_longitude",
+                                    title: "Longitude",
+                                    isDefault: false,
+                                },
+                                {
+                                    id: "attr.region.geoIcon",
+                                    ref: uriRef("/df/geoIcon"),
+                                    type: "GDC.geo.icon",
+                                    title: "Geo Icon",
+                                    isDefault: false,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+            filters: { localIdentifier: "filters", items: [] },
+            properties: {
+                controls: {
+                    points: {
+                        shapeType: "iconByValue",
+                    },
+                },
+            },
+        });
+
+        expect(extendedReferencePoint.properties?.controls?.["points"]?.shapeType).toBe("iconByValue");
+    });
 });

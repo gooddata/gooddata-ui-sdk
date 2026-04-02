@@ -5623,9 +5623,15 @@ importers:
 
   ../../libs/sdk-ui-pluggable-application:
     dependencies:
+      '@gooddata/sdk-backend-base':
+        specifier: workspace:*
+        version: link:../sdk-backend-base
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
+      '@gooddata/sdk-backend-tiger':
+        specifier: workspace:*
+        version: link:../sdk-backend-tiger
       '@gooddata/sdk-pluggable-application-model':
         specifier: workspace:*
         version: link:../sdk-pluggable-application-model

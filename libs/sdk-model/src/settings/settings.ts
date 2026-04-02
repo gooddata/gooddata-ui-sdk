@@ -966,6 +966,11 @@ export interface IFeatureFlags {
     enableGeoSatelliteBasemapOption?: boolean;
 
     /**
+     * Enable geo pushpin icon sprite sheet configuration UI.
+     */
+    enableGeoPushpinIcon?: boolean;
+
+    /**
      * Enable automation management in dashboards
      */
     enableAutomationManagement?: boolean;

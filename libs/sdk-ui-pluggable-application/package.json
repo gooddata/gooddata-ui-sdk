@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-application",
-    "version": "11.28.0-alpha.15",
+    "version": "11.28.0-alpha.16",
     "description": "GoodData SDK React helpers for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -40,7 +40,9 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-pluggable-application\"'"
     },
     "dependencies": {
+        "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
+        "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-pluggable-application-model": "workspace:*",
         "ts-invariant": "0.10.3",
         "tslib": "2.8.1"
