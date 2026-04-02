@@ -22,6 +22,7 @@ import {
     makeErrorContent,
     makeErrorContents,
 } from "../../model.js";
+import { convertMessageToChatConversation } from "../sideEffects/utils.js";
 
 type MessagesSliceState = {
     /**
@@ -305,7 +306,12 @@ const messagesSlice = createSlice({
          * Add message to the stack
          */
         newMessageAction: (state, action: PayloadAction<Message | IChatConversationLocalItem>) => {
-            const message = action.payload;
+            let message = action.payload;
+
+            if (state.currentConversation && !isChatConversationLocalItem(message)) {
+                message = convertMessageToChatConversation(message);
+            }
+
             if (isChatConversationLocalItem(message)) {
                 if (!state.currentConversation) {
                     throw new Error("Working with conversation message but thread mode is active.");

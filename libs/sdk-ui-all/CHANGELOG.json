@@ -2,6 +2,96 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.28.0",
+            "tag": "@gooddata/sdk-ui-all_v11.28.0",
+            "date": "Thu, 02 Apr 2026 12:48:18 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Add @gooddata/sdk-code-schemas package"
+                    },
+                    {
+                        "comment": "Expand sdk-code-schemas and sdk-code-convertors API surface"
+                    },
+                    {
+                        "comment": "fix colorConfig.disabled inversion and source measure filter lookup"
+                    },
+                    {
+                        "comment": "Migrate code-convertors package into gdc-ui as SDK lib"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix automation error message for missing widget."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fixed recipient limit not respecting UnlimitedAutomationRecipients entitlement."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix description panel icon shrinking."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Introduce new `externalLink` icon"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix `UiMenu` icons shrinking."
+                    },
+                    {
+                        "comment": "Introduce `enableParameters` feature flag."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Introduce new `parameter` icon."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard, sdk-backend-tiger, sdk-ui-ext: Reduce dashboard runtime console log noise."
+                    },
+                    {
+                        "comment": "sdk-ui-all: adapt codebase to use updated visualization structure, use sdk-code-convertors for visualisation"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: fixed Save as New so the entered name is consistently saved and the UI properly clears the saving state when the operation completes."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: replace dropdown menu with button in QualityScoreCard"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: update logic to ensure proper handling for both conversation and thread modes to ensure for backward compatibility"
+                    },
+                    {
+                        "comment": "Preserve export metadata, including selected tab, in PDF and PPT dashboard exports."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Added tiger-specific functions proxy and factory to SDK."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Switched to new file uploading endpoints for AI knowledge."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Consider allowed selection type when working with filters."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Introduce configuration of text filter and improve its design."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Change default selection type behavior and other text filter improvements."
+                    },
+                    {
+                        "comment": "sdk-ui-geo: for custom viewport, prefer bounds over center/zoom."
+                    },
+                    {
+                        "comment": "sdk-ui-geo: improve accessiblity, add configuration options for basemap, add support to render sprite icons instead of circles for pushpins - static or based on geo icon label values."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Introduce new Text Filters on Key Driver Analysis."
+                    },
+                    {
+                        "comment": "sdk(gen-ai): AI Summaries from hamburger menu"
+                    },
+                    {
+                        "comment": "Add playwright tests for new new agentic ui"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.27.0",
             "tag": "@gooddata/sdk-ui-all_v11.27.0",
             "date": "Thu, 26 Mar 2026 07:00:37 GMT",

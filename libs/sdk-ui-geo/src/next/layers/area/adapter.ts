@@ -28,6 +28,7 @@ import { getGeoChartDimensions } from "../common/dimensions.js";
 import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
 import { createLayerInsight, sanitizeDeduplicatedGlobalFilters } from "../execution/layerInsightFactory.js";
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
+import { resolveAttributeDisplayForms } from "../execution/resolveAttributeDisplayForms.js";
 import {
     type IAreaLayerOutput,
     type IGeoAdapterContext,
@@ -130,7 +131,16 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         context: IGeoAdapterContext,
         execution: IPreparedExecution,
     ): Promise<IPreparedExecution> {
-        return prepareExecutionWithTooltipText(context, execution, layer.area);
+        const needsTooltip = !execution.definition.buckets.some(
+            (b) => b.localIdentifier === BucketNames.TOOLTIP_TEXT,
+        );
+
+        const displayFormRef = layer.area ? attributeDisplayFormRef(layer.area) : undefined;
+        const { tooltipRef } = needsTooltip
+            ? await resolveAttributeDisplayForms(context, displayFormRef)
+            : {};
+
+        return prepareExecutionWithTooltipText(context, execution, tooltipRef ?? displayFormRef);
     },
 
     async prepareLayer(layer, dataView, context): Promise<IAreaLayerOutput | null> {

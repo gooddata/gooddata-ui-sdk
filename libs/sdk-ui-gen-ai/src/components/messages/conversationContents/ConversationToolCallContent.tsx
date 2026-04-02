@@ -22,7 +22,7 @@ export function ConversationToolCallContent({
     );
 
     return (
-        <div className={classNames}>
+        <div className={classNames} data-testid="gen-ai-tool-call" data-tool-name={name}>
             <div>
                 {isLoading ? (
                     <FormattedMessage
