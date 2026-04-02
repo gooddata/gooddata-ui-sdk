@@ -1,6 +1,40 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 26 Mar 2026 07:00:37 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Apr 2026 12:48:18 GMT and should not be manually modified.
+
+## 11.28.0
+
+Thu, 02 Apr 2026 12:48:18 GMT
+
+### Updates
+
+- Add @gooddata/sdk-code-schemas package
+- Expand sdk-code-schemas and sdk-code-convertors API surface
+- fix colorConfig.disabled inversion and source measure filter lookup
+- Migrate code-convertors package into gdc-ui as SDK lib
+- sdk-ui-dashboard: Fix automation error message for missing widget.
+- sdk-ui-dashboard: Fixed recipient limit not respecting UnlimitedAutomationRecipients entitlement.
+- sdk-ui-kit: Fix description panel icon shrinking.
+- sdk-ui-kit: Introduce new `externalLink` icon
+- sdk-ui-kit: Fix `UiMenu` icons shrinking.
+- Introduce `enableParameters` feature flag.
+- sdk-ui-kit: Introduce new `parameter` icon.
+- sdk-ui-dashboard, sdk-backend-tiger, sdk-ui-ext: Reduce dashboard runtime console log noise.
+- sdk-ui-all: adapt codebase to use updated visualization structure, use sdk-code-convertors for visualisation
+- sdk-ui-gen-ai: fixed Save as New so the entered name is consistently saved and the UI properly clears the saving state when the operation completes.
+- sdk-ui-catalog: replace dropdown menu with button in QualityScoreCard
+- sdk-ui-gen-ai: update logic to ensure proper handling for both conversation and thread modes to ensure for backward compatibility
+- Preserve export metadata, including selected tab, in PDF and PPT dashboard exports.
+- sdk-backend-tiger: Added tiger-specific functions proxy and factory to SDK.
+- sdk-backend-spi: Switched to new file uploading endpoints for AI knowledge.
+- sdk-ui-all: Consider allowed selection type when working with filters.
+- sdk-ui-all: Introduce configuration of text filter and improve its design.
+- sdk-ui-all: Change default selection type behavior and other text filter improvements.
+- sdk-ui-geo: for custom viewport, prefer bounds over center/zoom.
+- sdk-ui-geo: improve accessiblity, add configuration options for basemap, add support to render sprite icons instead of circles for pushpins - static or based on geo icon label values.
+- sdk-ui-dashboard: Introduce new Text Filters on Key Driver Analysis.
+- sdk(gen-ai): AI Summaries from hamburger menu
+- Add playwright tests for new new agentic ui
 
 ## 11.27.0
 

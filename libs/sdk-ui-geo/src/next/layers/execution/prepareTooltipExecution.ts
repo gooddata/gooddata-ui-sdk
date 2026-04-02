@@ -2,8 +2,6 @@
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    type IAttribute,
-    type IAttributeDisplayFormMetadataObject,
     type IExecutionDefinition,
     type ObjRef,
     attributeAlias,
@@ -85,76 +83,32 @@ function addTooltipBucket(
     return rebuildExecutionWithBuckets(context, execution, buckets);
 }
 
-function isGeoDisplayForm(displayForm: IAttributeDisplayFormMetadataObject): boolean {
-    const displayFormType = displayForm.displayFormType;
-    return typeof displayFormType === "string" && displayFormType.startsWith("GDC.geo.");
-}
-
-function pickPreferredDisplayForm(
-    displayForms: IAttributeDisplayFormMetadataObject[],
-): IAttributeDisplayFormMetadataObject | undefined {
-    return (
-        displayForms.find((displayForm) => displayForm.isDefault) ??
-        displayForms.find((displayForm) => displayForm.isPrimary) ??
-        displayForms[0]
-    );
-}
-
-async function resolveDefaultDisplayFormRef(
-    context: IGeoAdapterContext,
-    ref: ObjRef | undefined,
-): Promise<ObjRef | undefined> {
-    if (!ref) {
-        return undefined;
-    }
-
-    try {
-        const attribute = await context.backend
-            .workspace(context.workspace)
-            .attributes()
-            .getAttributeByDisplayForm(ref);
-        const displayForms = attribute.displayForms ?? [];
-        if (!displayForms.length) {
-            return undefined;
-        }
-
-        const nonGeoDisplayForms = displayForms.filter((displayForm) => !isGeoDisplayForm(displayForm));
-        const preferred = pickPreferredDisplayForm(
-            nonGeoDisplayForms.length ? nonGeoDisplayForms : displayForms,
-        );
-
-        return preferred?.ref;
-    } catch {
-        return undefined;
-    }
-}
-
-export async function prepareExecutionWithTooltipText(
+/**
+ * Ensures the execution includes a TOOLTIP_TEXT bucket.
+ *
+ * @param context - Adapter context
+ * @param execution - Prepared execution to augment
+ * @param tooltipRef - Resolved tooltip display form ref (from {@link resolveAttributeDisplayForms}).
+ *   Callers should fall back to the location attribute's own display form when the
+ *   resolver returns undefined.
+ */
+export function prepareExecutionWithTooltipText(
     context: IGeoAdapterContext,
     execution: IPreparedExecution,
-    attribute: IAttribute | undefined,
-): Promise<IPreparedExecution> {
+    tooltipRef: ObjRef | undefined,
+): IPreparedExecution {
     /*
-     * Keep tooltip handling in one place for both area and pushpin adapters.
-     *
-     * Branch 1: TOOLTIP_TEXT bucket already exists:
-     * - Keep bucket as-is when localId is already TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID.
-     * - Otherwise rewrite only tooltip localId to TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID.
-     *
-     * Branch 2: TOOLTIP_TEXT bucket is missing:
-     * - Resolve preferred display form and add tooltip bucket with TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID.
+     * Branch 1: TOOLTIP_TEXT bucket already exists — fix localId if needed.
+     * Branch 2: TOOLTIP_TEXT bucket is missing — add one using the resolved ref.
      */
     const executionWithFixedTooltip = fixExistingTooltipBucketLocalId(context, execution);
     if (executionWithFixedTooltip) {
         return executionWithFixedTooltip;
     }
 
-    if (!attribute) {
+    if (!tooltipRef) {
         return execution;
     }
-
-    const displayFormRef = attributeDisplayFormRef(attribute);
-    const tooltipRef = (await resolveDefaultDisplayFormRef(context, displayFormRef)) ?? displayFormRef;
 
     return addTooltipBucket(context, execution, tooltipRef);
 }

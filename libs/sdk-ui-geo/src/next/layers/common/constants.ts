@@ -35,3 +35,15 @@ export const COORDINATE_FORM_TYPES: AttributeDisplayFormType[] = [
  * @internal
  */
 export const TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID = "tooltipText_df";
+
+/**
+ * Local identifier used for the derived geo-icon attribute in GeoChart executions.
+ *
+ * @remarks
+ * When `shapeType` is `"iconByValue"` and no explicit `geoIcon` attribute is provided,
+ * the adapter resolves the `GDC.geo.icon` display form from the latitude attribute's
+ * parent and injects a GEO_ICON bucket with this localId.
+ *
+ * @internal
+ */
+export const GEO_ICON_ATTRIBUTE_LOCAL_ID = "geoIcon_df";

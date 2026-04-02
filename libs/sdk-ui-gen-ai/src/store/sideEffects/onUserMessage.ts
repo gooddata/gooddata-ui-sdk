@@ -22,7 +22,7 @@ import {
 
 import { processContents } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
-import { extractError } from "./utils.js";
+import { convertMessageToChatConversation, extractError } from "./utils.js";
 import {
     type AssistantMessage,
     type IChatConversationLocalItem,
@@ -59,18 +59,23 @@ import {
  * @internal
  */
 export function* onUserMessage({ payload }: ReturnType<typeof newMessageAction>) {
-    const settings: IUserWorkspaceSettings = yield select(settingsSelector);
+    const conversation: IChatConversation = yield select(conversationSelector);
 
-    if (isChatConversationLocalItem(payload)) {
-        if (!settings.enableAiAgenticConversations) {
+    let message = payload;
+    if (conversation && !isChatConversationLocalItem(message)) {
+        message = convertMessageToChatConversation(message);
+    }
+
+    if (isChatConversationLocalItem(message)) {
+        if (!conversation) {
             throw new Error("Thread mode is turned on, but conversation message was provided.");
         }
-        yield conversationUserMessage(payload);
+        yield conversationUserMessage(message);
     } else {
-        if (settings.enableAiAgenticConversations) {
+        if (conversation) {
             throw new Error("Conversation mode is turned on, but thread message was provided.");
         }
-        yield threadUserMessage(payload);
+        yield threadUserMessage(message);
     }
 }
 

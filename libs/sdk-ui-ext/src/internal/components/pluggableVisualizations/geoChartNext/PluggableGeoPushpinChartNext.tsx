@@ -52,6 +52,7 @@ import {
     isGeoPushpinIconEnabled,
 } from "../../../constants/featureFlags.js";
 import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
+import { ANALYTICAL_ENVIRONMENT } from "../../../constants/properties.js";
 import { GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import { type IDropdownItem } from "../../../interfaces/Dropdown.js";
@@ -667,9 +668,13 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             insight,
         );
 
+        // Only AD has reference-point metadata that tells us whether the location attribute
+        // still exposes GDC.geo.icon. Keep the fallback to circle there, but do not apply it
+        // in KD/runtime environments where persisted iconByValue should be preserved.
         return resetIconByValueInVisualizationProperties(
             afterClustering,
-            isGeoPushpinIconEnabled(this.featureFlags) && this.cachedHasGeoIconLabel,
+            isGeoPushpinIconEnabled(this.featureFlags) &&
+                (this.environment !== ANALYTICAL_ENVIRONMENT || this.cachedHasGeoIconLabel),
         );
     }
 
