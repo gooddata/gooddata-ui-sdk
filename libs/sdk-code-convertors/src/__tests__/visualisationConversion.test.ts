@@ -7,6 +7,7 @@ import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import { declarativeVisualisationToYaml } from "../from/declarativeVisualisationToYaml.js";
 import {
     yamlBucketsToDeclarative,
+    yamlFiltersToDeclarative,
     yamlVisualisationToDeclarative,
     yamlVisualisationToMetadataObject,
 } from "../to/yamlVisualisationToDeclarative.js";
@@ -16,6 +17,195 @@ const emptyEntities: ExportEntities = [];
 const emptyFromEntities: FromEntities = [];
 
 describe("visualisation conversion", () => {
+    describe("yamlFiltersToDeclarative", () => {
+        it("should convert positive attribute filter", () => {
+            const filters_by = {
+                f1: {
+                    type: "attribute_filter",
+                    using: "label/region",
+                    state: { include: ["East", "West"] },
+                },
+            };
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toEqual({
+                positiveAttributeFilter: {
+                    displayForm: { identifier: { id: "region", type: "label" } },
+                    in: { values: ["East", "West"] },
+                },
+            });
+        });
+
+        it("should convert negative attribute filter", () => {
+            const filters_by = {
+                f1: {
+                    type: "attribute_filter",
+                    using: "label/region",
+                    state: { exclude: ["East"] },
+                },
+            };
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toEqual({
+                negativeAttributeFilter: {
+                    displayForm: { identifier: { id: "region", type: "label" } },
+                    notIn: { values: ["East"] },
+                },
+            });
+        });
+
+        it("should convert absolute date filter", () => {
+            const filters_by = {
+                f1: {
+                    type: "date_filter",
+                    using: "dataset/date",
+                    from: "2020-01-01",
+                    to: "2020-12-31",
+                },
+            };
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toEqual({
+                absoluteDateFilter: {
+                    dataSet: { identifier: { id: "date", type: "dataset" } },
+                    from: "2020-01-01",
+                    to: "2020-12-31",
+                },
+            });
+        });
+
+        it("should convert relative date filter", () => {
+            const filters_by = {
+                f1: {
+                    type: "date_filter",
+                    using: "dataset/date",
+                    granularity: "YEAR",
+                    from: -1,
+                    to: 0,
+                },
+            };
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toEqual({
+                relativeDateFilter: {
+                    dataSet: { identifier: { id: "date", type: "dataset" } },
+                    granularity: "GDC.time.year",
+                    from: -1,
+                    to: 0,
+                },
+            });
+        });
+
+        it("should convert measure comparison value filter", () => {
+            const filters_by = {
+                f1: {
+                    type: "metric_value_filter",
+                    using: "metric/amount",
+                    condition: "GREATER_THAN",
+                    value: 100,
+                },
+            };
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toEqual({
+                measureValueFilter: {
+                    measure: { identifier: { id: "amount", type: "metric" } },
+                    condition: {
+                        comparison: {
+                            operator: "GREATER_THAN",
+                            value: 100,
+                            treatNullValuesAs: undefined,
+                        },
+                    },
+                },
+            });
+        });
+
+        it("should convert measure range value filter", () => {
+            const filters_by = {
+                f1: {
+                    type: "metric_value_filter",
+                    using: "metric/amount",
+                    condition: "BETWEEN",
+                    from: 100,
+                    to: 200,
+                },
+            };
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toEqual({
+                measureValueFilter: {
+                    measure: { identifier: { id: "amount", type: "metric" } },
+                    condition: {
+                        range: {
+                            operator: "BETWEEN",
+                            from: 100,
+                            to: 200,
+                            treatNullValuesAs: undefined,
+                        },
+                    },
+                },
+            });
+        });
+
+        it("should convert ranking filter", () => {
+            const filters_by = {
+                f1: {
+                    type: "ranking_filter",
+                    using: "metric/amount",
+                    top: 10,
+                    attribute: "label/region",
+                },
+            };
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toEqual({
+                rankingFilter: {
+                    measure: { identifier: { id: "amount", type: "metric" } },
+                    attributes: [{ identifier: { id: "region", type: "label" } }],
+                    operator: "TOP",
+                    value: 10,
+                },
+            });
+        });
+
+        it("should handle array of filters", () => {
+            const filters_by = [
+                {
+                    type: "attribute_filter",
+                    using: "label/region",
+                    state: { include: ["East"] },
+                },
+                {
+                    type: "metric_value_filter",
+                    using: "metric/amount",
+                    condition: "GREATER_THAN",
+                    value: 100,
+                },
+            ];
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(2);
+        });
+
+        it("should handle attribute filter configs (display_as)", () => {
+            const filters_by = {
+                f1: {
+                    type: "attribute_filter",
+                    using: "label/region",
+                    state: { include: ["East"] },
+                    display_as: "label/region_name",
+                },
+            };
+            const { filters, attributeFilterConfigs } = yamlFiltersToDeclarative(emptyEntities, filters_by);
+            expect(filters).toHaveLength(1);
+            expect(attributeFilterConfigs).toEqual({
+                f1: {
+                    displayAsLabel: { identifier: { id: "region_name", type: "label" } },
+                },
+            });
+        });
+    });
+
     describe("yamlBucketsToDeclarative", () => {
         it("should convert bar chart buckets (measures, view, stack)", () => {
             const input: Visualisation = {
@@ -31,11 +221,10 @@ describe("visualisation conversion", () => {
                 view_by: [{ field: "a1" }],
             } as any;
 
-            const buckets = yamlBucketsToDeclarative(input);
-            expect(buckets).toHaveLength(3);
+            const { buckets } = yamlBucketsToDeclarative([], input);
+            expect(buckets).toHaveLength(2);
             expect(buckets[0].localIdentifier).toBe("measures");
             expect(buckets[1].localIdentifier).toBe("view");
-            expect(buckets[2].localIdentifier).toBe("stack");
         });
 
         it("should convert table buckets (measures, attribute, columns)", () => {
@@ -52,11 +241,10 @@ describe("visualisation conversion", () => {
                 metrics: [{ field: "m1" }],
             } as any;
 
-            const buckets = yamlBucketsToDeclarative(input);
-            expect(buckets).toHaveLength(3);
+            const { buckets } = yamlBucketsToDeclarative([], input);
+            expect(buckets).toHaveLength(2);
             expect(buckets[0].localIdentifier).toBe("measures");
             expect(buckets[1].localIdentifier).toBe("attribute");
-            expect(buckets[2].localIdentifier).toBe("columns");
         });
 
         it("should convert pie chart buckets (measures, view)", () => {
@@ -73,7 +261,7 @@ describe("visualisation conversion", () => {
                 view_by: [{ field: "a1" }],
             } as any;
 
-            const buckets = yamlBucketsToDeclarative(input);
+            const { buckets } = yamlBucketsToDeclarative([], input);
             expect(buckets).toHaveLength(2);
             expect(buckets[0].localIdentifier).toBe("measures");
             expect(buckets[1].localIdentifier).toBe("view");
@@ -94,12 +282,14 @@ describe("visualisation conversion", () => {
                 view_by: [{ field: "a1" }],
             } as any;
 
-            const buckets = yamlBucketsToDeclarative(input);
-            expect(buckets).toHaveLength(4);
+            const { buckets } = yamlBucketsToDeclarative([], input);
+            expect(buckets).toHaveLength(3);
             expect(buckets[0].localIdentifier).toBe("measures");
             expect(buckets[0].items).toHaveLength(1);
             expect(buckets[1].localIdentifier).toBe("secondary_measures");
             expect(buckets[1].items).toHaveLength(1);
+            expect(buckets[2].localIdentifier).toBe("attribute");
+            expect(buckets[2].items).toHaveLength(1);
         });
 
         it("should handle empty buckets gracefully", () => {
@@ -109,9 +299,8 @@ describe("visualisation conversion", () => {
                 query: { fields: {} },
             } as any;
 
-            const buckets = yamlBucketsToDeclarative(input);
-            expect(buckets).toHaveLength(3);
-            buckets.forEach((b) => expect(b.items).toHaveLength(0));
+            const { buckets } = yamlBucketsToDeclarative([], input);
+            expect(buckets).toHaveLength(0);
         });
     });
 

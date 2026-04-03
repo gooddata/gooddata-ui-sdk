@@ -14,6 +14,7 @@ import type {
     DateFilter,
     EmptyBucket,
     Field,
+    Filter,
     MetricSort,
     MetricValueFilter,
     MetricValueFilterCondition,
@@ -311,54 +312,9 @@ export function yamlReportToDeclarative(
     positions: Array<{ longitude: string; latitude: string }>;
     attributeFilterConfigs?: IAttributeFilterConfigs;
 } {
+    const { buckets, positions, attrFilterConfig } = yamlBucketsToDeclarative(entities, input);
+
     const query = input.query;
-    const positions: Array<{ longitude: string; latitude: string }> = [];
-
-    let attrFilterConfig: IAttributeFilterConfigs = {};
-    const visBuckets = yamlBucketsToDeclarative(input);
-    const buckets = visBuckets
-        .map((bucket) => {
-            const { localIdentifier } = bucket;
-            const totals: ITotal[] = [];
-
-            //do not include empty buckets
-            if (bucket.items.length === 0) {
-                return null;
-            }
-
-            const items = bucket.items
-                .map((item) => {
-                    const { bucketItem, bucketTotals, longitude, latitude, filterConfig } =
-                        yamlBucketItemToDeclarative(
-                            entities,
-                            query,
-                            item,
-                            query.fields || {},
-                            localIdentifier,
-                        );
-
-                    attrFilterConfig = {
-                        ...attrFilterConfig,
-                        ...filterConfig,
-                    };
-
-                    totals.push(...bucketTotals);
-
-                    if (latitude && longitude) {
-                        positions.push({ latitude, longitude });
-                    }
-                    return bucketItem;
-                })
-                .filter(Boolean);
-
-            return {
-                localIdentifier,
-                items,
-                ...(totals.length ? { totals } : {}),
-            } as VisualisationDefinition["buckets"][number];
-        })
-        .filter(Boolean) as VisualisationDefinition["buckets"];
-
     const sorts = yamlSortsToDeclarative(query.sort_by, query.fields || {});
     const { filters, attributeFilterConfigs } = yamlFiltersToDeclarative(
         entities,
@@ -1085,18 +1041,22 @@ function mergeDeclarativeResults(...results: YamlFilterToDeclarativeResult[]): Y
 
 export function yamlFiltersToDeclarative(
     entities: ExportEntities,
-    filters_by: QueryFilters | undefined,
+    filters_by: QueryFilters | Filter[] | undefined,
     attributeFilterConfigs: IAttributeFilterConfigs = {},
 ): {
     filters: IFilter[];
     attributeFilterConfigs: IAttributeFilterConfigs | undefined;
 } {
+    const isArray = Array.isArray(filters_by);
     const { filters, attributeFilterConfig } = mergeDeclarativeResults(
         { filters: [], attributeFilterConfig: attributeFilterConfigs },
-        ...(filters_by
+        ...(filters_by && !isArray
             ? Object.entries(filters_by).map(([key, filter]) =>
                   yamlFilterToDeclarative(entities, key, filter),
               )
+            : []),
+        ...(filters_by && isArray
+            ? filters_by.map((filter, i) => yamlFilterToDeclarative(entities, i.toString(), filter))
             : []),
     );
 
@@ -1122,7 +1082,71 @@ export function yamlReportTotalToDeclarative(totals: Total[] = [], attributeIden
 
 //BUCKETS
 
-export function yamlBucketsToDeclarative(input: Visualisation): VisBucket[] {
+export function yamlBucketsToDeclarative(
+    entities: ExportEntities,
+    input: Visualisation,
+): {
+    buckets: VisualisationDefinition["buckets"];
+    positions: Array<{ longitude: string; latitude: string }>;
+    attrFilterConfig: IAttributeFilterConfigs;
+} {
+    const visBuckets = mapBuckets(input);
+    const query = input.query;
+
+    const positions: Array<{ longitude: string; latitude: string }> = [];
+    let attrFilterConfig: IAttributeFilterConfigs = {};
+
+    const buckets = visBuckets
+        .map((bucket) => {
+            const { localIdentifier } = bucket;
+            const totals: ITotal[] = [];
+
+            //do not include empty buckets
+            if (bucket.items.length === 0) {
+                return null;
+            }
+
+            const items = bucket.items
+                .map((item) => {
+                    const { bucketItem, bucketTotals, longitude, latitude, filterConfig } =
+                        yamlBucketItemToDeclarative(
+                            entities,
+                            query,
+                            item,
+                            query.fields || {},
+                            localIdentifier,
+                        );
+
+                    attrFilterConfig = {
+                        ...attrFilterConfig,
+                        ...filterConfig,
+                    };
+
+                    totals.push(...bucketTotals);
+
+                    if (latitude && longitude) {
+                        positions.push({ latitude, longitude });
+                    }
+                    return bucketItem;
+                })
+                .filter(Boolean);
+
+            return {
+                localIdentifier,
+                items,
+                ...(totals.length ? { totals } : {}),
+            } as VisualisationDefinition["buckets"][number];
+        })
+        .filter(Boolean) as VisualisationDefinition["buckets"];
+
+    return {
+        buckets,
+        positions,
+        attrFilterConfig,
+    };
+}
+
+function mapBuckets(input: Visualisation): VisBucket[] {
     const buckets: VisBucket[] = [];
 
     switch (input.type) {

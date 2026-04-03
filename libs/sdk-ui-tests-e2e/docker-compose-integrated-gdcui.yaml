@@ -11,7 +11,7 @@ services:
             - ./nginx/templates:/etc/nginx/templates/
 
     integrated-tests:
-        image: ${E2E_IMAGE_URL:-020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.58.2-noble}
+        image: ${E2E_IMAGE_URL:-020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.59.1-noble}
         entrypoint: >
             bash -c "
               EXTRA_ARGS='';

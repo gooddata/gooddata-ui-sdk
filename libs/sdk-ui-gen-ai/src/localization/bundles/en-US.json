@@ -343,6 +343,10 @@
         "text": "Here is the key driver analysis for <metric>{title}</metric> between <b>{range}</b>.",
         "crowdinContext": "Default message for change analysis"
     },
+    "gd.gen-ai.kda.default_message": {
+        "text": "Here is the key driver analysis for **{title}** between **{range}**.",
+        "crowdinContext": "Default message for change analysis. Format for this messages is MARKDOWN."
+    },
     "gd.gen-ai.changeAnalysis.splitter": {
         "text": "and",
         "crowdinContext": "Splitter for date range in change analysis"

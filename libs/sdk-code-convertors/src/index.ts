@@ -15,6 +15,7 @@ export type {
     AacQuery,
     AacSection,
     AacVisualisation,
+    AacFilter,
 } from "./schemas/types.js";
 
 // Core types

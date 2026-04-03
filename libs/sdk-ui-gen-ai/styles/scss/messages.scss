@@ -1274,6 +1274,14 @@
             margin: 0;
         }
     }
+
+    &--kda {
+        &__button {
+            margin-top: 15px;
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
 }
 
 .gd-gen-ai-chat__conversation__item__feedback {

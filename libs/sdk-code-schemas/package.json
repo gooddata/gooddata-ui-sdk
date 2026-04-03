@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-schemas",
-    "version": "11.29.0-alpha.0",
+    "version": "11.29.0-alpha.1",
     "description": "GoodData AAC JSON Schema types and compiled schemas",
     "license": "MIT",
     "author": "GoodData",

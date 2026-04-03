@@ -12,6 +12,7 @@ import type {
     DashboardFilters,
     Dataset,
     DateDataset,
+    Filter,
     Metadata,
     Metric,
     Plugin,
@@ -42,3 +43,5 @@ export type AacQuery = Query;
 export type AacSection = Section;
 /** @public */
 export type AacVisualisation = Visualisation;
+/** @public */
+export type AacFilter = Filter;

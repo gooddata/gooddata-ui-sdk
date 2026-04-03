@@ -69,6 +69,7 @@ import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { DrillSelectDropdownMenu } from "./drill/DrillSelectDropdownMenu.js";
 import { MarkdownComponent } from "./Markdown.js";
 import { useExecution } from "./useExecution.js";
+import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
 import {
     mapVisualizationAnomalyDetectionToBackendConfig,
@@ -97,7 +98,6 @@ import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
 import { mapVisualizationWhatIfToScenarios } from "../../../whatIf/whatIfMapping.js";
 import { useConfig } from "../../ConfigContext.js";
-import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "../../hooks/useKdaDefinition.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 
