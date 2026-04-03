@@ -4,14 +4,21 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
+import { type IChatKdaDefinition } from "@gooddata/sdk-backend-spi";
 import {
+    type CatalogItem,
     type DateAttributeGranularity,
     type IAttribute,
     type IDashboardAttributeFilter,
     type IFilter,
     type IMeasure,
+    areObjRefsEqual,
     filterObjRef,
     isAttributeFilter,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
+    isSimpleMeasure,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent } from "@gooddata/sdk-ui";
@@ -23,33 +30,29 @@ import {
 } from "@gooddata/sdk-ui-dashboard";
 import { attributeFilterToDashboardAttributeFilter } from "@gooddata/sdk-ui-dashboard/internal";
 
-import { type ChangeAnalysisContents } from "../../model.js";
-
-export function useKdaDefinition(content: ChangeAnalysisContents, format?: string, locale?: string) {
+export function useKdaDefinition(content: IChatKdaDefinition, format?: string, locale?: string) {
     const intl = useIntl();
 
-    const measure = content.params.measure;
+    const measure = content.measure;
 
     const def: IKdaDefinition = useMemo(() => {
         return createKdaDefinition(
             measure,
-            content.params.dateAttribute,
-            content.params.filters
-                .map(getDashboardAttributeFilter)
-                .filter(Boolean) as IDashboardAttributeFilter[],
+            content.dateAttribute,
+            content.filters.map(getDashboardAttributeFilter).filter(Boolean) as IDashboardAttributeFilter[],
             "previous_period",
-            content.params.normalizedReferencePeriod,
-            content.params.normalizedAnalyzedPeriod,
+            content.referencePeriod,
+            content.analyzedPeriod,
             locale ?? intl.locale,
-            getFormatByGranularity(content.params.dateGranularity) ?? format,
+            getFormatByGranularity(content.dateGranularity) ?? format,
         );
     }, [
         measure,
-        content.params.dateAttribute,
-        content.params.filters,
-        content.params.normalizedReferencePeriod,
-        content.params.normalizedAnalyzedPeriod,
-        content.params.dateGranularity,
+        content.dateAttribute,
+        content.filters,
+        content.referencePeriod,
+        content.analyzedPeriod,
+        content.dateGranularity,
         locale,
         intl.locale,
         format,
@@ -58,8 +61,8 @@ export function useKdaDefinition(content: ChangeAnalysisContents, format?: strin
     return def;
 }
 
-export function useKdaInfo(def: IKdaDefinition, splitter: string) {
-    const title = def.metric.measure.title ?? def.metric.measure.alias ?? def.metric.measure.localIdentifier;
+export function useKdaInfo(catalogItems: CatalogItem[], def: IKdaDefinition, splitter: string) {
+    const title = getTitle(catalogItems, def.metric);
     const range = formatKeyDriverAnalysisDateRange(def?.range, splitter);
 
     return {
@@ -195,4 +198,31 @@ function getFormatByGranularity(granularity: DateAttributeGranularity) {
         default:
             return undefined;
     }
+}
+
+function getTitle(catalogItems: CatalogItem[], metric: IMeasure) {
+    const objRef = isSimpleMeasure(metric) ? metric.measure.definition.measureDefinition.item : undefined;
+
+    const operator = isSimpleMeasure(metric)
+        ? metric.measure.definition.measureDefinition.aggregation
+        : undefined;
+
+    function getOperatorTitle(title: string) {
+        return operator ? `${operator.toUpperCase()}({${title}})` : title;
+    }
+
+    return catalogItems
+        .map((i) => {
+            if (objRef && isCatalogMeasure(i) && areObjRefsEqual(i.measure.ref, objRef)) {
+                return getOperatorTitle(`measure/${objRefToString(objRef)}`);
+            }
+            if (objRef && isCatalogFact(i) && areObjRefsEqual(i.fact.ref, objRef)) {
+                return getOperatorTitle(`fact/${objRefToString(objRef)}`);
+            }
+            if (objRef && isCatalogAttribute(i) && areObjRefsEqual(i.attribute.ref, objRef)) {
+                return getOperatorTitle(`attribute/${objRefToString(objRef)}`);
+            }
+            return undefined;
+        })
+        .find((title) => title !== undefined) as string | undefined;
 }

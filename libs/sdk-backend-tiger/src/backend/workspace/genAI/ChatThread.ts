@@ -23,7 +23,6 @@ import type {
     IGenAIChatEvaluation,
 } from "@gooddata/sdk-backend-spi";
 import {
-    type DateAttributeGranularity,
     type GenAIChatInteractionUserFeedback,
     type GenAIChatInteractionUserVisualisation,
     type GenAIFilter,
@@ -31,7 +30,6 @@ import {
     type GenAIObjectType,
     type GenAIVisualizationType,
     type IAllowedRelationshipType,
-    type IAttribute,
     type IGenAIChangeAnalysisParams,
     type IGenAIChatInteraction,
     type IGenAIChatRouting,
@@ -51,6 +49,7 @@ import { convertAttribute } from "../../../convertors/fromBackend/AttributeConve
 import { type FormattingLocale } from "../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { getFormatByGranularity } from "../../../utils/dateUtils.js";
 
 /**
  * Chat thread service.
@@ -584,46 +583,6 @@ function convertChangeAnalysisParams(
         attributes: data.attributes?.map(convertAttribute) ?? [],
         filters: data.filters?.map(convertFilter) ?? [],
     };
-}
-
-function getFormatByGranularity(attr: IAttribute): DateAttributeGranularity {
-    const ref = objRefToString(attr.attribute.displayForm);
-    const granularity = ref.split(".")[1];
-
-    switch (granularity) {
-        case "day":
-            return "GDC.time.date";
-        case "dayOfMonth":
-            return "GDC.time.day_in_month";
-        case "dayOfWeek":
-            return "GDC.time.day_in_week";
-        case "dayOfYear":
-            return "GDC.time.day_in_year";
-        case "hour":
-            return "GDC.time.hour";
-        case "hourOfDay":
-            return "GDC.time.hour_in_day";
-        case "minute":
-            return "GDC.time.minute";
-        case "minuteOfHour":
-            return "GDC.time.minute_in_hour";
-        case "month":
-            return "GDC.time.month";
-        case "monthOfYear":
-            return "GDC.time.month_in_year";
-        case "quarter":
-            return "GDC.time.quarter";
-        case "quarterOfYear":
-            return "GDC.time.quarter_in_year";
-        case "week":
-            return "GDC.time.week_us";
-        case "weekOfYear":
-            return "GDC.time.week_in_year";
-        case "year":
-            return "GDC.time.year";
-        default:
-            throw new Error(`Unsupported granularity: ${granularity}`);
-    }
 }
 
 /**

@@ -41,6 +41,7 @@ import {
     type ConversationVisualisationProps,
 } from "./ConversationVisualisation.js";
 import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
+import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
 import { useSaveCheck } from "./useSaveCheck.js";
 import {
     type IChatConversationLocalItem,
@@ -56,7 +57,6 @@ import { newMessageAction } from "../../../store/messages/messagesSlice.js";
 import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getVisualizationHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
-import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "../../hooks/useKdaDefinition.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 import { DrillSelectDropdownMenu } from "../contents/drill/DrillSelectDropdownMenu.js";

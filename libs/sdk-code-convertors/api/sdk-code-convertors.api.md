@@ -32,6 +32,7 @@ import { DeclarativeReference } from '@gooddata/api-client-tiger';
 import { DeclarativeTable } from '@gooddata/api-client-tiger';
 import { DeclarativeVisualizationObject } from '@gooddata/api-client-tiger';
 import type { Fields } from '@gooddata/sdk-code-schemas/v1';
+import type { Filter } from '@gooddata/sdk-code-schemas/v1';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IArithmeticMeasureDefinition } from '@gooddata/sdk-model';
 import { IAttributeBody } from '@gooddata/sdk-model';
@@ -112,6 +113,9 @@ export type AacDataset = Dataset;
 
 // @public (undocumented)
 export type AacDateDataset = DateDataset;
+
+// @public (undocumented)
+export type AacFilter = Filter;
 
 // @public (undocumented)
 export type AacMetadata = Metadata;
@@ -1015,11 +1019,17 @@ export const waterfallChart: {
 // @public (undocumented)
 export function yamlAttributeHierarchyToDeclarative(input: AttributeHierarchy): DeclarativeAttributeHierarchy;
 
-// Warning: (ae-forgotten-export) The symbol "VisBucket" needs to be exported by the entry point index.d.ts
 // Warning: (ae-missing-release-tag) "yamlBucketsToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function yamlBucketsToDeclarative(input: Visualisation): VisBucket[];
+export function yamlBucketsToDeclarative(entities: ExportEntities, input: Visualisation): {
+    buckets: VisualisationDefinition["buckets"];
+    positions: Array<{
+        longitude: string;
+        latitude: string;
+    }>;
+    attrFilterConfig: IAttributeFilterConfigs;
+};
 
 // @public (undocumented)
 export function yamlDashboardToDeclarative(entities: ExportEntities, input: Dashboard): {
@@ -1048,7 +1058,7 @@ export function yamlFilterContextToDeclarative(baseId: string, yamlFilters: Dash
 // Warning: (ae-missing-release-tag) "yamlFiltersToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function yamlFiltersToDeclarative(entities: ExportEntities, filters_by: QueryFilters | undefined, attributeFilterConfigs?: IAttributeFilterConfigs): {
+export function yamlFiltersToDeclarative(entities: ExportEntities, filters_by: QueryFilters | Filter[] | undefined, attributeFilterConfigs?: IAttributeFilterConfigs): {
     filters: IFilter[];
     attributeFilterConfigs: IAttributeFilterConfigs | undefined;
 };
@@ -1180,7 +1190,7 @@ export function yamlWidgetToDeclarative(entities: ExportEntities, input: Visuali
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "load_15" needs to be exported by the entry point index.d.ts
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "save_15" needs to be exported by the entry point index.d.ts
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "DefaultProperties_15" needs to be exported by the entry point index.d.ts
-// src/to/yamlVisualisationToDeclarative.ts:308:5 - (ae-forgotten-export) The symbol "VisualisationDefinition" needs to be exported by the entry point index.d.ts
+// src/to/yamlVisualisationToDeclarative.ts:1089:5 - (ae-forgotten-export) The symbol "VisualisationDefinition" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

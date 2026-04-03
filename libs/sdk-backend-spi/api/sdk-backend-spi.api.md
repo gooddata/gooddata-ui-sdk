@@ -772,7 +772,17 @@ export type IChatConversationWhatIfContent = {
 // @internal
 export interface IChatKdaDefinition {
     // (undocumented)
-    id: string;
+    analyzedPeriod: string;
+    // (undocumented)
+    dateAttribute: IAttribute;
+    // (undocumented)
+    dateGranularity: DateAttributeGranularity;
+    // (undocumented)
+    filters: Array<IFilter>;
+    // (undocumented)
+    measure: IMeasure;
+    // (undocumented)
+    referencePeriod: string;
 }
 
 // @internal

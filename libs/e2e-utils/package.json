@@ -31,7 +31,7 @@
         "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "dependencies": {
-        "@playwright/test": "1.58.2"
+        "@playwright/test": "1.59.1"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",

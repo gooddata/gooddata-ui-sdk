@@ -183,7 +183,7 @@ export class ConversationThread implements IChatConversationThread {
 
         const data = items.data as { items: AiConversationItemResponse[] };
         return data.items.map((item) =>
-            convertChatConversationItemFromBackend(item, responses?.data.responses),
+            convertChatConversationItemFromBackend(item, responses?.data.responses, this.dateNormalizer),
         );
     }
 
@@ -362,7 +362,9 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             );
         });
         const data = response.data as { items: AiConversationItemResponse[] };
-        return data.items.map((item) => convertChatConversationItemFromBackend(item, undefined));
+        return data.items.map((item) =>
+            convertChatConversationItemFromBackend(item, undefined, this.dateNormalizer),
+        );
     }
     stream(): ReadableStream<IChatConversationItem | IChatConversationError> {
         // We are using Axios <1.7, which does not support streaming,
@@ -460,7 +462,7 @@ class ServerSentEventsDataConverter extends TransformStream<
     { type: "item" | "error" | "response_ended"; data: object },
     IChatConversationItem | IChatConversationError
 > {
-    constructor(_dateNormalizer: DateNormalizer, _locale?: FormattingLocale, _timezone?: string) {
+    constructor(dateNormalizer: DateNormalizer, locale?: FormattingLocale, timezone?: string) {
         super({
             transform(event, controller) {
                 if (event.type === "error") {
@@ -470,6 +472,9 @@ class ServerSentEventsDataConverter extends TransformStream<
                         convertChatConversationItemFromBackend(
                             event.data.item as AiConversationItemResponse,
                             undefined,
+                            dateNormalizer,
+                            locale,
+                            timezone,
                         ),
                     );
                 }

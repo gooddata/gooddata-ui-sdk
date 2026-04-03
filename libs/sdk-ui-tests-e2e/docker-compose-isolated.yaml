@@ -1,7 +1,7 @@
 version: "3.7"
 services:
     isolated-tests:
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.58.2-noble
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.59.1-noble
         entrypoint: >
             bash -c "
               EXTRA_ARGS='';

@@ -1,5 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { v4 as uuidv4 } from "uuid";
+
 import {
     type AiContent,
     type AiConversationItemResponse,
@@ -20,7 +22,12 @@ import {
     type IChatKdaDefinition,
     type IChatWhatIfDefinition,
 } from "@gooddata/sdk-backend-spi";
-import { type AacVisualisation, yamlVisualisationToMetadataObject } from "@gooddata/sdk-code-convertors";
+import {
+    type AacFilter,
+    type AacVisualisation,
+    yamlFiltersToDeclarative,
+    yamlVisualisationToMetadataObject,
+} from "@gooddata/sdk-code-convertors";
 import {
     type GenAIObjectType,
     type ISemanticSearchRelationship,
@@ -28,7 +35,12 @@ import {
     assertNever,
 } from "@gooddata/sdk-model";
 
+import { convertMeasure } from "./afm/MeasureConverter.js";
+import { convertAttribute } from "./AttributeConvertor.js";
+import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js";
+import { type DateNormalizer } from "./dateFormatting/types.js";
 import { visualizationObjectsItemToInsight } from "./InsightConverter.js";
+import { getFormatByGranularity } from "../../utils/dateUtils.js";
 
 export function convertChatConversationFromBackend(conversation: AiConversationResponse): IChatConversation {
     return {
@@ -41,6 +53,9 @@ export function convertChatConversationFromBackend(conversation: AiConversationR
 export function convertChatConversationItemFromBackend(
     item: AiConversationItemResponse,
     responses: AiConversationResponseList["responses"] | undefined,
+    dateNormalizer: DateNormalizer,
+    locale?: FormattingLocale,
+    timezone?: string,
 ): IChatConversationItem {
     const response = responses?.find((r) => r.responseId === item.responseId);
 
@@ -52,7 +67,7 @@ export function convertChatConversationItemFromBackend(
         replyTo: item.replyTo ?? undefined,
         createdAt: new Date(item.createdAt).getTime(),
         feedback: convertChatConversationFeedbackFromBackend(response),
-        content: convertChatConversationContentFromBackend(item.content),
+        content: convertChatConversationContentFromBackend(item.content, dateNormalizer, locale, timezone),
     };
 }
 
@@ -71,7 +86,12 @@ function convertChatConversationFeedbackFromBackend(
     };
 }
 
-function convertChatConversationContentFromBackend(content: AiContent): IChatConversationContent {
+function convertChatConversationContentFromBackend(
+    content: AiContent,
+    dateNormalizer: DateNormalizer,
+    locale?: FormattingLocale,
+    timezone?: string,
+): IChatConversationContent {
     switch (content.type) {
         case "text":
             return {
@@ -106,7 +126,12 @@ function convertChatConversationContentFromBackend(content: AiContent): IChatCon
                         case "kda":
                             return {
                                 type: "kda",
-                                kda: convertKda(part.kda),
+                                kda: convertKda(
+                                    part.kda as AiKeyDriverAnalysis,
+                                    dateNormalizer,
+                                    locale,
+                                    timezone,
+                                ),
                             };
                         case "whatIf":
                             return {
@@ -156,10 +181,38 @@ export function convertChatConversationErrorFromBackend(
     };
 }
 
-function convertKda(_kda?: AiKeyDriverAnalysis | null): IChatKdaDefinition {
-    //TODO: s.hacker Convert kda to frontend format
+function convertKda(
+    kda: AiKeyDriverAnalysis,
+    dateNormalizer: DateNormalizer,
+    locale?: FormattingLocale,
+    timezone?: string,
+): IChatKdaDefinition {
+    const dateAttribute = convertAttribute({
+        localIdentifier: uuidv4(),
+        label: {
+            identifier: {
+                id: kda.dateAttributeId,
+                type: "label",
+            },
+        },
+    });
+    const dateGranularity = getFormatByGranularity(dateAttribute);
+
     return {
-        id: "kda",
+        dateAttribute,
+        dateGranularity,
+        measure: convertMeasure({
+            localIdentifier: uuidv4(),
+            definition: {
+                measure: {
+                    item: { identifier: { id: kda.measure.id, type: kda.measure.type } },
+                    aggregation: kda.measure.aggregation ?? undefined,
+                },
+            },
+        }),
+        analyzedPeriod: dateNormalizer(kda.analyzedPeriod, dateGranularity, locale, timezone),
+        referencePeriod: dateNormalizer(kda.referencePeriod, dateGranularity, locale, timezone),
+        filters: yamlFiltersToDeclarative([], kda.filters as AacFilter[], {}).filters,
     };
 }
 

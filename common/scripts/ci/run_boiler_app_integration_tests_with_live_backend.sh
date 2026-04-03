@@ -7,7 +7,7 @@ set -ex
 export BOILER_APP_NAME=new-boiler-app-$SDK_LANG
 export BOILER_APP_VERSION=app-toolkit@$SDK_VERSION
 export BOILER_APP_HOST=https://127.0.0.1:3000
-PLAYWRIGHT_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.58.2-noble'
+PLAYWRIGHT_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.59.1-noble'
 
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))

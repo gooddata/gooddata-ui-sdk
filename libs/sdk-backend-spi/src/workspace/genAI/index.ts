@@ -1,10 +1,13 @@
 // (C) 2023-2026 GoodData Corporation
 
 import type {
+    DateAttributeGranularity,
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
     IAllowedRelationshipType,
+    IAttribute,
+    IFilter,
     IGenAIChangeAnalysisParams,
     IGenAIChatInteraction,
     IGenAIChatReasoning,
@@ -13,6 +16,7 @@ import type {
     IGenAIFoundObjects,
     IGenAIUserContext,
     IInsight,
+    IMeasure,
     IMemoryItemDefinition,
     IMemoryItemMetadataObject,
     ISemanticQualityIssuesCalculation,
@@ -978,8 +982,12 @@ export function isChatConversationVisualisationContent(
  * @internal
  */
 export interface IChatKdaDefinition {
-    id: string;
-    //TODO: s.hacker: Use yaml spec types
+    measure: IMeasure;
+    analyzedPeriod: string;
+    referencePeriod: string;
+    dateAttribute: IAttribute;
+    dateGranularity: DateAttributeGranularity;
+    filters: Array<IFilter>;
 }
 
 /**
