@@ -17,8 +17,8 @@ services:
             "
         volumes:
             - ./recordings:/app/playwright/recordings:ro
-            - ./results/:/app/playwright/results:rw
             - ./test-results/:/app/test-results:rw
+            - ./playwright/results:/app/playwright/results:rw
             - ./nginx:/app/nginx:ro
         user: "root"
         depends_on:

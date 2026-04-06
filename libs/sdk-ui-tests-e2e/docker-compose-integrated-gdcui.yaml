@@ -25,7 +25,7 @@ services:
               fi
             "
         volumes:
-            - ./test-results:/app/test-results:rw
+            - ./test-results/:/app/test-results:rw
             - ./playwright/results:/app/playwright/results:rw
         user: "root"
         depends_on:
