@@ -22,7 +22,7 @@ export default defineConfig({
     use: {
         baseURL: process.env["BASE_URL"] || "http://gooddata-ui-sdk-scenarios:9500",
         ignoreHTTPSErrors: true,
-        trace: "retain-on-failure",
+        trace: "on",
         video: "retain-on-failure",
         screenshot: "only-on-failure",
         actionTimeout: 30_000,
