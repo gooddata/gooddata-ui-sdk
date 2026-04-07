@@ -17,3 +17,5 @@ export {
 } from "./context.js";
 
 export { createBackendForModule, type ICreateBackendForModuleOptions } from "./backend.js";
+
+export { AppProviders, type IAppProvidersProps } from "./AppProviders.js";

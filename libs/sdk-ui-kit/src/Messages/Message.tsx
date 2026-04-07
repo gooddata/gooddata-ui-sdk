@@ -10,6 +10,7 @@ import { Button } from "../Button/Button.js";
  * @internal
  */
 export function Message({
+    id,
     onClose,
     type,
     children,
@@ -33,7 +34,7 @@ export function Message({
         id: "message.accessibility.dismiss.notification",
     });
     return (
-        <div className={classes} data-testid={dataTestId}>
+        <div id={id} className={classes} data-testid={dataTestId}>
             <div className="gd-message-text">
                 {children}
                 {onClose ? (

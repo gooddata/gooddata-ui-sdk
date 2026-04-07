@@ -20,7 +20,7 @@ import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model
  * backend-specific escape hatches (e.g., tiger-specific functions)
  * automatically.
  *
- * @public
+ * @alpha
  */
 export interface IClientPlatformContext extends IPlatformContext {
     /**
@@ -36,7 +36,7 @@ PlatformContext.displayName = "PlatformContext";
 /**
  * Props for {@link PlatformContextProvider}.
  *
- * @public
+ * @alpha
  */
 export interface IPlatformContextProviderProps extends PropsWithChildren {
     /**
@@ -48,7 +48,7 @@ export interface IPlatformContextProviderProps extends PropsWithChildren {
 /**
  * React provider that binds platform context into React context.
  *
- * @public
+ * @alpha
  */
 export function PlatformContextProvider({ value, children }: IPlatformContextProviderProps) {
     return <PlatformContext.Provider value={value}>{children}</PlatformContext.Provider>;
@@ -57,7 +57,7 @@ export function PlatformContextProvider({ value, children }: IPlatformContextPro
 /**
  * Returns client platform context snapshot (or undefined if not available yet).
  *
- * @public
+ * @alpha
  */
 export function usePlatformContext(): IClientPlatformContext | undefined {
     return useContext(PlatformContext);
@@ -66,7 +66,7 @@ export function usePlatformContext(): IClientPlatformContext | undefined {
 /**
  * Returns client platform context snapshot and throws if it's not available.
  *
- * @public
+ * @alpha
  */
 export function usePlatformContextStrict(context = "usePlatformContextStrict"): IClientPlatformContext {
     const value = usePlatformContext();

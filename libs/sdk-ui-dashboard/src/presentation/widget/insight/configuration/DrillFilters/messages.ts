@@ -39,6 +39,9 @@ export const messages = defineMessages({
     drillToDashboardDashboardFilterTooltip: {
         id: "configurationPanel.drillConfig.filterSelection.drillToDashboardDashboardFilter.tooltip",
     },
+    drillToDashboardFilterNotCompatibleTooltip: {
+        id: "configurationPanel.drillConfig.filterSelection.drillToDashboardFilterNotCompatible.tooltip",
+    },
     drillToDashboardMetricFilterTooltip: {
         id: "configurationPanel.drillConfig.filterSelection.drillToDashboardMetricFilter.tooltip",
     },

@@ -86,6 +86,8 @@ export class TigerOrganization implements IOrganization {
                 earlyAccess: result.data.data.attributes?.earlyAccess ?? undefined,
                 earlyAccessValues: result.data.data.attributes?.earlyAccessValues ?? undefined,
                 identityProviderType,
+                region: result.data.data.attributes?.region ?? undefined,
+                dataCenter: result.data.data.attributes?.dataCenter ?? undefined,
             };
         }
 

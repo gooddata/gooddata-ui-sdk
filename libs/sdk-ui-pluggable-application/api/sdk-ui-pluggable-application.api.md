@@ -6,14 +6,28 @@
 
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthCredentials } from '@gooddata/sdk-pluggable-application-model';
+import { ILocale } from '@gooddata/sdk-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
+import { ITranslations } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
 import { PropsWithChildren } from 'react';
 
 // @alpha
+export function AppProviders({ ctx, packageName, resolveMessages: resolveMessagesFn, defaultMessages, defaultLanguage, children }: PropsWithChildren<IAppProvidersProps>): JSX.Element;
+
+// @alpha
 export function createBackendForModule(auth: IAuthCredentials, options: ICreateBackendForModuleOptions): IAnalyticalBackend;
 
-// @public
+// @alpha
+export interface IAppProvidersProps {
+    ctx: IPlatformContext;
+    defaultLanguage?: ILocale;
+    defaultMessages: Record<string, ITranslations>;
+    packageName: string;
+    resolveMessages: (locale: string) => Promise<ITranslations>;
+}
+
+// @alpha
 export interface IClientPlatformContext extends IPlatformContext {
     backend: IAnalyticalBackend;
 }
@@ -24,18 +38,18 @@ export interface ICreateBackendForModuleOptions {
     packageVersion?: string;
 }
 
-// @public
+// @alpha
 export interface IPlatformContextProviderProps extends PropsWithChildren {
     value: IClientPlatformContext;
 }
 
-// @public
+// @alpha
 export function PlatformContextProvider({ value, children }: IPlatformContextProviderProps): JSX.Element;
 
-// @public
+// @alpha
 export function usePlatformContext(): IClientPlatformContext | undefined;
 
-// @public
+// @alpha
 export function usePlatformContextStrict(context?: string): IClientPlatformContext;
 
 ```

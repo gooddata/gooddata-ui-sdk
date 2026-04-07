@@ -42,7 +42,7 @@ export function MeasureHeader(params: AgGridHeaderParams) {
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);
     const measureIdentifier = getColumnMeasureIdentifier(columnScope);
 
-    const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
+    const isRegularValueColumn = columnDefinition?.type === "value";
     const isTotal = !isRegularValueColumn && isGrandTotalColumnDefinition(columnDefinition);
     const isSubtotal = !isRegularValueColumn && isSubtotalColumnDefinition(columnDefinition);
 

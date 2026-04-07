@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo, useMemo } from "react";
 
@@ -65,9 +65,12 @@ export const ConfirmDialogBase = memo<IConfirmDialogBaseProps>(function ConfirmD
         };
     }, [dialogBaseProps.accessibilityConfig, headline, titleElementIdWhenNotSet]);
 
+    const guardedOnSubmit = isSubmitDisabled ? undefined : dialogBaseProps.onSubmit;
+
     return (
         <DialogBase
             {...dialogBaseProps}
+            onSubmit={guardedOnSubmit}
             className={dialogClasses}
             displayCloseButton={displayCloseButton}
             accessibilityConfig={accessibilityConfig}

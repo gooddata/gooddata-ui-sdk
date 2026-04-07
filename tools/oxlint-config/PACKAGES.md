@@ -4,6 +4,7 @@ This table shows which packages are required for each configuration.
 
 | Package                       | base    | browser-esm | esm     | esm-playwright | esm-react | esm-react-playwright | esm-react-vitest | esm-react-vitest-storybook | esm-vitest | react   | react-playwright | react-vitest |
 | ----------------------------- | ------- | ----------- | ------- | -------------- | --------- | -------------------- | ---------------- | -------------------------- | ---------- | ------- | ---------------- | ------------ |
+| @vitest/eslint-plugin         |         |             |         |                |           |                      | 1.6.6            | 1.6.6                      | 1.6.6      |         |                  | 1.6.6        |
 | eslint-plugin-chai-friendly   |         |             |         | 1.1.0          |           | 1.1.0                |                  |                            |            |         | 1.1.0            |              |
 | eslint-plugin-headers         | 1.3.3   | 1.3.3       | 1.3.3   | 1.3.3          | 1.3.3     | 1.3.3                | 1.3.3            | 1.3.3                      | 1.3.3      | 1.3.3   | 1.3.3            | 1.3.3        |
 | eslint-plugin-import-esm      |         | 1.2.1       | 1.2.1   | 1.2.1          | 1.2.1     | 1.2.1                | 1.2.1            | 1.2.1                      | 1.2.1      |         |                  |              |

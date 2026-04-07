@@ -418,7 +418,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAmplitudeTracker: false,
     enableSlideshowExports: true,
     enableRawExports: false,
-    enableCustomizableCsvDelimiter: false,
+    enableCustomizableCsvDelimiter: true,
     enableExecutionCancelling: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
     enableRichTextDynamicReferences: true,

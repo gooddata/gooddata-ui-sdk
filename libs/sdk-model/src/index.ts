@@ -238,6 +238,8 @@ export {
     isNegativeAttributeFilter,
     isArbitraryAttributeFilter,
     isMatchAttributeFilter,
+    isTextAttributeFilter,
+    type TextAttributeFilter,
     isDateFilter,
     isMeasureValueFilter,
     isAttributeFilter,

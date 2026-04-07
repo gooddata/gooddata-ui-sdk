@@ -7706,7 +7706,7 @@ export function Menu({ alignment, children, closeOnScroll, defaultOpened, offset
 export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "right"] | ["top", "left"] | ["right", "top"] | ["right", "bottom"] | ["left", "top"] | ["left", "bottom"];
 
 // @internal (undocumented)
-export function Message({ onClose, type, children, className, contrast, intensive, dataTestId }: IMessageProps): JSX.Element;
+export function Message({ id, onClose, type, children, className, contrast, intensive, dataTestId }: IMessageProps): JSX.Element;
 
 // @internal (undocumented)
 export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail" | "id">;

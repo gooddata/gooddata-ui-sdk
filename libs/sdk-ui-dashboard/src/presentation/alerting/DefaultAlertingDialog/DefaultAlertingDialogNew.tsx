@@ -240,13 +240,14 @@ export function AlertingDialogRenderer({
 
     const validationContextValue = useValidationContextValue(createInvalidNode({ id: "AlertingDialog" }));
     const { setInvalidDatapoints, getInvalidDatapoints } = validationContextValue;
-    const invalidDatapoint = getInvalidDatapoints()[0];
+    const invalidDatapoints = getInvalidDatapoints();
 
     useEffect(() => {
         setInvalidDatapoints(() => [
             !!validationErrorMessage && createInvalidDatapoint({ message: validationErrorMessage }),
+            !!thresholdErrorMessage && createInvalidDatapoint({ message: thresholdErrorMessage }),
         ]);
-    }, [validationErrorMessage, setInvalidDatapoints]);
+    }, [validationErrorMessage, thresholdErrorMessage, setInvalidDatapoints]);
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
@@ -645,15 +646,16 @@ export function AlertingDialogRenderer({
                                         {warningMessage}
                                     </Message>
                                 ) : null}
-                                {invalidDatapoint ? (
+                                {invalidDatapoints.map((datapoint) => (
                                     <Message
+                                        key={datapoint.id}
                                         type="error"
-                                        id={invalidDatapoint.id}
+                                        id={datapoint.id}
                                         className="gd-notifications-channels-dialog-error gd-notifications-channels-dialog-error-scrollable"
                                     >
-                                        {invalidDatapoint.message}
+                                        {datapoint.message}
                                     </Message>
-                                ) : null}
+                                ))}
                             </ScrollablePanel>
                         </ConfirmDialogBase>
                     </ValidationContextStore>

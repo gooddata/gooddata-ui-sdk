@@ -489,13 +489,13 @@ const isGrandTotalValue = (colData: ITableDataValue) => {
 const isColumnSubtotal = (colData: ITableDataValue) => {
     const columnDefinition = colData.columnDefinition;
 
-    return columnDefinition && columnDefinition.type === "subtotal";
+    return columnDefinition?.type === "subtotal";
 };
 
 const isColumnGrandTotal = (colData: ITableDataValue) => {
     const columnDefinition = colData.columnDefinition;
 
-    return columnDefinition && columnDefinition.type === "grandTotal";
+    return columnDefinition?.type === "grandTotal";
 };
 
 const isNullValue = (colData: ITableDataValue) => {

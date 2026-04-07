@@ -25,6 +25,23 @@ describe("forecast mapping", () => {
         });
     });
 
+    it("maps yaml forecast to chart config", () => {
+        expect(
+            mapVisualizationForecastToChartConfig({
+                forecast: {
+                    period: 6,
+                    confidence: 0.6,
+                    seasonal: true,
+                },
+            }),
+        ).toEqual({
+            enabled: true,
+            period: 6,
+            confidence: 0.6,
+            seasonal: true,
+        });
+    });
+
     it("normalizes confidence from percentage for chart and backend mapping", () => {
         expect(
             mapVisualizationForecastToChartConfig({

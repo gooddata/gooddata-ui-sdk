@@ -3,12 +3,14 @@
 import { type ReactNode, createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
 
 import {
+    type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IDashboard,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type ObjRef,
     isDashboardAttributeFilter,
+    isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
@@ -22,6 +24,7 @@ interface ITargetDashboardFiltersCacheEntry {
     status: TTargetDashboardFiltersCacheStatus;
     targetDashboardFilters: FilterContextItem[];
     targetDashboardAttributeFilters: IDashboardAttributeFilter[];
+    targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
 }
 
@@ -59,6 +62,7 @@ function getTargetDashboardFilterData(
     return {
         targetDashboardFilters,
         targetDashboardAttributeFilters: targetDashboardFilters.filter(isDashboardAttributeFilter),
+        targetDashboardTextAttributeFilters: targetDashboardFilters.filter(isDashboardTextAttributeFilter),
         targetDashboardAttributeFilterConfigs: targetDashboard.attributeFilterConfigs ?? [],
     };
 }
@@ -70,6 +74,7 @@ function createEmptyCacheEntry(
         status,
         targetDashboardFilters: [],
         targetDashboardAttributeFilters: [],
+        targetDashboardTextAttributeFilters: [],
         targetDashboardAttributeFilterConfigs: [],
     };
 }

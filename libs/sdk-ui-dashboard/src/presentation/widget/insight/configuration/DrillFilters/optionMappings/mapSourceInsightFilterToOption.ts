@@ -3,25 +3,30 @@
 import { type IntlShape } from "react-intl";
 
 import {
+    type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type ICatalogMeasure,
     type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
     type IFilter,
     type IMeasure,
     type ObjRef,
+    isArbitraryAttributeFilter,
     isLocalIdRef,
+    isMatchAttributeFilter,
     isRankingFilter,
 } from "@gooddata/sdk-model";
 
 import { sourceInsightFilterObjRef as getSourceInsightFilterObjRef } from "../../../../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
 import {
+    canTransferAttributeFilterByDisplayForm,
     getDateDatasetTitle,
     getDisabledOptionProps,
+    getDisabledOptionPropsForTransferResult,
     getDisplayFormTitle,
     getMeasureTitleFromSourceInsightMeasures,
-    hasMatchingTargetDashboardAttributeFilterDisplayForm,
     hasMatchingTargetDashboardDateFilter,
     sourceFilterOptionId,
 } from "../drillFiltersConfigUtils.js";
@@ -36,6 +41,8 @@ interface IMapSourceInsightFilterToOptionParams {
     allCatalogMeasures: ICatalogMeasure[];
     targetDashboardFilters: FilterContextItem[];
     targetDashboardAttributeFilters: IDashboardAttributeFilter[];
+    targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
+    targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
     isDrillDown: boolean;
     isDrillToDashboard: boolean;
     intl: IntlShape;
@@ -49,6 +56,8 @@ export function mapSourceInsightFilterToOption({
     allCatalogMeasures,
     targetDashboardFilters,
     targetDashboardAttributeFilters,
+    targetDashboardTextAttributeFilters,
+    targetDashboardAttributeFilterConfigs,
     isDrillDown,
     isDrillToDashboard,
     intl,
@@ -79,9 +88,14 @@ export function mapSourceInsightFilterToOption({
         if (isLocalIdRef(displayFormRef)) {
             return undefined;
         }
-        const hasMatchingTargetAttributeFilter = hasMatchingTargetDashboardAttributeFilterDisplayForm(
+        const isSourceTextFilter =
+            isArbitraryAttributeFilter(sourceInsightFilter) || isMatchAttributeFilter(sourceInsightFilter);
+        const transferResult = canTransferAttributeFilterByDisplayForm(
             displayFormRef,
+            isSourceTextFilter,
             targetDashboardAttributeFilters,
+            targetDashboardAttributeFilterConfigs,
+            targetDashboardTextAttributeFilters,
         );
 
         return {
@@ -91,11 +105,7 @@ export function mapSourceInsightFilterToOption({
                 allCatalogDisplayFormsMap,
             }),
             ...disabled,
-            ...getDisabledOptionProps(
-                isDrillToDashboard && !hasMatchingTargetAttributeFilter,
-                intl.formatMessage(messages.drillToDashboardDashboardFilterTooltip),
-                false,
-            ),
+            ...getDisabledOptionPropsForTransferResult(isDrillToDashboard, transferResult, intl),
             sourceInsightFilterObjRef: sourceFilterObjRef,
         };
     }

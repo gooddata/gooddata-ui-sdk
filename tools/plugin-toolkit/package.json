@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/plugin-toolkit",
-    "version": "11.29.0-alpha.2",
+    "version": "11.29.0-alpha.3",
     "description": "GoodData Set of Tools for working with Plugins",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -77,8 +77,8 @@
         "@types/lodash-es": "^4.17.12",
         "@types/node": "22.13.0",
         "@types/tar": "^6.1.0",
-        "@typescript-eslint/eslint-plugin": "8.52.0",
-        "@typescript-eslint/parser": "8.52.0",
+        "@typescript-eslint/eslint-plugin": "8.58.0",
+        "@typescript-eslint/parser": "8.58.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "dependency-cruiser": "^14.1.2",
         "eslint": "^9.39.2",

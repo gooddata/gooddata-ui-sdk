@@ -428,6 +428,60 @@ export function isDashboardAttributeFilter(filter: unknown): filter is IDashboar
 }
 
 /**
+ * Arbitrary attribute filter for embedded dashboards.
+ * Filters by free-text values rather than element selection.
+ * @public
+ */
+export interface IDashboardArbitraryAttributeFilter {
+    arbitraryAttributeFilter: {
+        displayForm: string;
+        negativeSelection: boolean;
+        values: Array<string | null>;
+    };
+}
+
+/**
+ * @public
+ */
+export function isDashboardArbitraryAttributeFilter(
+    filter: unknown,
+): filter is IDashboardArbitraryAttributeFilter {
+    return (
+        !isEmpty(filter) &&
+        (filter as IDashboardArbitraryAttributeFilter).arbitraryAttributeFilter !== undefined
+    );
+}
+
+/**
+ * Match attribute filter for embedded dashboards.
+ * Filters by pattern matching on attribute values.
+ * @public
+ */
+export interface IDashboardMatchAttributeFilter {
+    matchAttributeFilter: {
+        displayForm: string;
+        negativeSelection: boolean;
+        operator: "contains" | "startsWith" | "endsWith";
+        literal: string;
+    };
+}
+
+/**
+ * @public
+ */
+export function isDashboardMatchAttributeFilter(filter: unknown): filter is IDashboardMatchAttributeFilter {
+    return !isEmpty(filter) && (filter as IDashboardMatchAttributeFilter).matchAttributeFilter !== undefined;
+}
+
+/**
+ * Union of text mode attribute filter types for embedded dashboards.
+ * @public
+ */
+export type DashboardTextAttributeFilter =
+    | IDashboardArbitraryAttributeFilter
+    | IDashboardMatchAttributeFilter;
+
+/**
  * @public
  */
 export interface IResolvedAttributeFilterValues {

@@ -1067,6 +1067,75 @@ describe("validateExistingAutomationFilters", () => {
     });
 
     //
+    // Selection type filters
+    //
+
+    describe("selection type filters", () => {
+        it("should ignore date filters when validating selection type compatibility", () => {
+            const result = validateExistingAutomationFilters({
+                savedAutomationFilters: [nonAllTimeDateFilter],
+                savedAutomationVisibleFilters: [],
+                hiddenFilters: [],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [nonAllTimeDateFilterContextItem],
+                selectionTypeMap: new Map([["nonCommonDateFilter", "list"]]),
+            });
+
+            expect(result.isValid).toBe(true);
+            expect(result.incompatibleSelectionTypeIsAppliedInSavedFilters).toBe(false);
+        });
+
+        it("should be invalid when saved list filter is incompatible with configured text selection type", () => {
+            const result = validateExistingAutomationFilters({
+                savedAutomationFilters: [attributeFilter],
+                savedAutomationVisibleFilters: [],
+                hiddenFilters: [],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [attributeFilterContextItem],
+                selectionTypeMap: new Map([["attribute", "text"]]),
+            });
+
+            expect(result.isValid).toBe(false);
+            expect(result.incompatibleSelectionTypeIsAppliedInSavedFilters).toBe(true);
+        });
+
+        it("should be invalid when saved text filter is incompatible with configured list selection type", () => {
+            const result = validateExistingAutomationFilters({
+                savedAutomationFilters: [arbitraryAttributeFilter],
+                savedAutomationVisibleFilters: [],
+                hiddenFilters: [],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [arbitraryAttributeFilterContextItem],
+                selectionTypeMap: new Map([["textAttribute", "list"]]),
+            });
+
+            expect(result.isValid).toBe(false);
+            expect(result.incompatibleSelectionTypeIsAppliedInSavedFilters).toBe(true);
+        });
+
+        it("should be valid when selection type is compatible", () => {
+            const result = validateExistingAutomationFilters({
+                savedAutomationFilters: [attributeFilter, arbitraryAttributeFilter],
+                savedAutomationVisibleFilters: [],
+                hiddenFilters: [],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [attributeFilterContextItem, arbitraryAttributeFilterContextItem],
+                selectionTypeMap: new Map([
+                    ["attribute", "list"],
+                    ["textAttribute", "text"],
+                ]),
+            });
+
+            expect(result.isValid).toBe(true);
+            expect(result.incompatibleSelectionTypeIsAppliedInSavedFilters).toBe(false);
+        });
+    });
+
+    //
     // Visible filters
     //
 

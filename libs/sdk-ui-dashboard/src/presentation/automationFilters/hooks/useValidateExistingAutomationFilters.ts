@@ -3,6 +3,7 @@
 import { differenceBy, omit } from "lodash-es";
 
 import {
+    type DashboardAttributeFilterSelectionType,
     type FilterContextItem,
     type IAbsoluteDateFilter,
     type IAutomationMetadataObject,
@@ -15,6 +16,9 @@ import {
     filterLocalIdentifier,
     isAllValuesAttributeFilter,
     isAllValuesDashboardAttributeFilter,
+    isAttributeFilter,
+    isAttributeFilterWithSelection,
+    isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDateFilter,
     isInsightWidget,
@@ -22,6 +26,7 @@ import {
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
+    isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
 import {
@@ -31,6 +36,7 @@ import {
     getAutomationVisualizationFilters,
 } from "../../../_staging/automation/index.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
+import { isFilterTypeCompatibleWithSelectionType } from "../../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     selectAutomationCommonDateFilterId,
@@ -39,6 +45,10 @@ import {
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
 } from "../../../model/store/filtering/dashboardFilterSelectors.js";
+import {
+    selectAttributeFilterConfigsSelectionTypeMap,
+    selectAttributeFilterConfigsSelectionTypeMapByTab,
+} from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import type { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 import { type IDashboardFilter } from "../../../types.js";
 import {
@@ -113,6 +123,7 @@ export interface IAutomationValidationResult {
     commonDateFilterIsMissingInSavedVisibleFilters: boolean;
     visibleFilterIsMissingInSavedFilters: boolean;
     visibleFiltersAreMissing: boolean;
+    incompatibleSelectionTypeIsAppliedInSavedFilters: boolean;
 }
 
 const defaultValidState: IAutomationValidationResult = {
@@ -126,6 +137,7 @@ const defaultValidState: IAutomationValidationResult = {
     commonDateFilterIsMissingInSavedVisibleFilters: false,
     visibleFilterIsMissingInSavedFilters: false,
     visibleFiltersAreMissing: false,
+    incompatibleSelectionTypeIsAppliedInSavedFilters: false,
 };
 
 export function useValidateExistingAutomationFilters({
@@ -144,6 +156,8 @@ export function useValidateExistingAutomationFilters({
     const dashboardFilters = useDashboardSelector(selectDashboardFiltersWithoutCrossFiltering);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const dashboardFiltersByTab = useDashboardSelector(selectAutomationFiltersByTab);
+    const selectionTypeMap = useDashboardSelector(selectAttributeFilterConfigsSelectionTypeMap);
+    const selectionTypeMapByTab = useDashboardSelector(selectAttributeFilterConfigsSelectionTypeMapByTab);
 
     const savedAutomationVisibleFilters = automationToEdit?.metadata?.visibleFilters;
     const savedAutomationVisibleFiltersByTab = automationToEdit?.metadata?.visibleFiltersByTab;
@@ -177,6 +191,7 @@ export function useValidateExistingAutomationFilters({
             savedAutomationVisibleFiltersByTab: savedAutomationVisibleFiltersByTab!,
             dashboardFiltersPerTab: dashboardFiltersByTab,
             commonDateFilterId,
+            selectionTypeMapByTab,
         });
     }
 
@@ -224,6 +239,7 @@ export function useValidateExistingAutomationFilters({
         dashboardFilters,
         widget,
         insight,
+        selectionTypeMap,
     });
 }
 
@@ -254,6 +270,7 @@ export function validateExistingAutomationFilters({
     dashboardFilters,
     widget,
     insight,
+    selectionTypeMap,
 }: {
     savedAutomationFilters: IFilter[];
     savedAutomationVisibleFilters: undefined | IAutomationVisibleFilter[];
@@ -263,6 +280,7 @@ export function validateExistingAutomationFilters({
     dashboardFilters: FilterContextItem[];
     widget?: ExtendedDashboardWidget;
     insight?: IInsight;
+    selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>;
 }): IAutomationValidationResult {
     const insightFilters = insight?.insight.filters ?? [];
 
@@ -278,12 +296,16 @@ export function validateExistingAutomationFilters({
         widget,
     );
 
-    // This is handling also changed display forms
     const { removedFilterIsAppliedInSavedFilters } = validateRemovedFilters(
         savedAutomationFilters,
         dashboardFilters,
         insightFilters,
         widget,
+    );
+
+    const { incompatibleSelectionTypeIsAppliedInSavedFilters } = validateSelectionTypeFilters(
+        savedAutomationFilters,
+        selectionTypeMap,
     );
 
     const {
@@ -307,6 +329,7 @@ export function validateExistingAutomationFilters({
         commonDateFilterIsMissingInSavedVisibleFilters,
         visibleFilterIsMissingInSavedFilters,
         visibleFiltersAreMissing,
+        incompatibleSelectionTypeIsAppliedInSavedFilters,
     ].every((validationError) => validationError === false);
 
     return {
@@ -320,6 +343,7 @@ export function validateExistingAutomationFilters({
         commonDateFilterIsMissingInSavedVisibleFilters,
         visibleFilterIsMissingInSavedFilters,
         visibleFiltersAreMissing,
+        incompatibleSelectionTypeIsAppliedInSavedFilters,
     };
 }
 
@@ -339,11 +363,13 @@ export function validateExistingAutomationFiltersPerTab({
     savedAutomationVisibleFiltersByTab,
     dashboardFiltersPerTab,
     commonDateFilterId,
+    selectionTypeMapByTab,
 }: {
     savedDashboardFiltersByTab: Record<string, FilterContextItem[]>;
     savedAutomationVisibleFiltersByTab: Record<string, IAutomationVisibleFilter[]>;
     dashboardFiltersPerTab: IAutomationFiltersPerTabData[];
     commonDateFilterId?: string;
+    selectionTypeMapByTab?: Record<string, Map<string, DashboardAttributeFilterSelectionType | undefined>>;
 }): IAutomationValidationResult {
     const tabValidationResults = Object.entries(savedDashboardFiltersByTab).map(([tabId, tabFilters]) => {
         const tabVisibleFilters = savedAutomationVisibleFiltersByTab[tabId] ?? [];
@@ -372,6 +398,7 @@ export function validateExistingAutomationFiltersPerTab({
             dashboardFilters: tabData.availableFilters,
             widget: undefined,
             insight: undefined,
+            selectionTypeMap: selectionTypeMapByTab?.[tabId],
         });
     });
 
@@ -405,6 +432,9 @@ export function validateExistingAutomationFiltersPerTab({
                 tabResult.visibleFilterIsMissingInSavedFilters,
             visibleFiltersAreMissing:
                 aggregated.visibleFiltersAreMissing || tabResult.visibleFiltersAreMissing,
+            incompatibleSelectionTypeIsAppliedInSavedFilters:
+                aggregated.incompatibleSelectionTypeIsAppliedInSavedFilters ||
+                tabResult.incompatibleSelectionTypeIsAppliedInSavedFilters,
         }),
         defaultValidState,
     );
@@ -581,6 +611,41 @@ function validateRemovedFilters(
     return {
         removedFilterIsAppliedInSavedFilters,
     };
+}
+
+function validateSelectionTypeFilters(
+    savedAutomationFilters: IFilter[],
+    selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>,
+): { incompatibleSelectionTypeIsAppliedInSavedFilters: boolean } {
+    let incompatibleSelectionTypeIsAppliedInSavedFilters = false;
+    for (const savedFilter of savedAutomationFilters) {
+        if (!isAttributeFilter(savedFilter)) {
+            continue;
+        }
+
+        const localIdentifier = filterLocalIdentifier(savedFilter);
+        if (!localIdentifier) {
+            continue;
+        }
+
+        const filterType = isAttributeFilterWithSelection(savedFilter) ? "list" : "text";
+        const configuredSelectionType = selectionTypeMap?.get(localIdentifier);
+        const singleSelectionDefault =
+            isDashboardAttributeFilter(savedFilter) && isSingleSelectionFilter(savedFilter)
+                ? "list"
+                : undefined;
+        const isIncompatible = !isFilterTypeCompatibleWithSelectionType(
+            filterType,
+            configuredSelectionType,
+            singleSelectionDefault,
+        );
+
+        if (isIncompatible) {
+            incompatibleSelectionTypeIsAppliedInSavedFilters = true;
+        }
+    }
+
+    return { incompatibleSelectionTypeIsAppliedInSavedFilters };
 }
 
 function validateVisibleFilters(

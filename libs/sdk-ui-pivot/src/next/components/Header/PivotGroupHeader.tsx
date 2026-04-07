@@ -41,7 +41,7 @@ export function PivotGroupHeader(params: IHeaderGroupCellProps) {
     const columnScope = getColumnScope(columnDefinition);
     const pivotAttributeDescriptors = getPivotAttributeDescriptors(columnScope);
 
-    const isRegularValueColumn = columnDefinition && columnDefinition.type === "value";
+    const isRegularValueColumn = columnDefinition?.type === "value";
     const isTotal = !isRegularValueColumn && isGrandTotalColumnDefinition(columnDefinition);
     const isTotalGroup =
         !!colGroupDef &&

@@ -63,6 +63,11 @@ export {
     isDashboardAbsoluteDateFilter,
     isDashboardRelativeDateFilter,
     isDashboardAttributeFilter,
+    type IDashboardArbitraryAttributeFilter,
+    isDashboardArbitraryAttributeFilter,
+    type IDashboardMatchAttributeFilter,
+    isDashboardMatchAttributeFilter,
+    type DashboardTextAttributeFilter,
 } from "./iframe/EmbeddedGdc.js";
 
 // EmbeddedAnalyticalDesigner
