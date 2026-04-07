@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.29.0-alpha.2",
+    "version": "11.29.0-alpha.3",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -49,8 +49,8 @@
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/lint-config": "workspace:*",
         "@types/node": "22.13.0",
-        "@typescript-eslint/eslint-plugin": "8.52.0",
-        "@typescript-eslint/parser": "8.52.0",
+        "@typescript-eslint/eslint-plugin": "8.58.0",
+        "@typescript-eslint/parser": "8.58.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",

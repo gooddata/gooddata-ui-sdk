@@ -53,7 +53,7 @@ export function* onVisualizationSave({
                 (message) => message.localId === payload.assistantMessageId,
             );
 
-            if (!assistantMessage || assistantMessage.content.type !== "multipart") {
+            if (assistantMessage?.content.type !== "multipart") {
                 return;
             }
 

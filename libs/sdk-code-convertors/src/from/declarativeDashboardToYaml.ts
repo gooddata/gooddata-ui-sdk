@@ -111,7 +111,7 @@ export function declarativeDashboardToYaml(
     // Note: If there's only 1 tab without a title (implicit first tab visible in edit mode),
     // treat as "no tabs" and use sections format to preserve previous YAML structure
     const hasMultipleTabs = content.tabs && content.tabs.length > 1;
-    const hasSingleTabWithTitle = content.tabs && content.tabs.length === 1 && content.tabs[0].title;
+    const hasSingleTabWithTitle = content.tabs?.length === 1 && content.tabs[0].title;
     const shouldUseTabs = hasMultipleTabs || hasSingleTabWithTitle;
 
     if (content.tabs && shouldUseTabs) {
@@ -119,7 +119,7 @@ export function declarativeDashboardToYaml(
         if (tabs) {
             doc.add(entryWithSpace("tabs", tabs));
         }
-    } else if (content.tabs && content.tabs.length === 1) {
+    } else if (content.tabs?.length === 1) {
         // Dashboard with implicit single tab - create root yaml structure like without tabs
         // but read all metadata from a single tab
         const tab = content.tabs[0];

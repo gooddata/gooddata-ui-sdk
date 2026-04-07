@@ -1,8 +1,32 @@
 {
     "targets": [
         {
-            "type": "target",
-            "app": "@gooddata/sdk-ui-tests-app"
+            "app": "@gooddata/sdk-ui-tests-app",
+            "changeDirs": [
+                {
+                    "glob": "*"
+                },
+                {
+                    "glob": "nginx/**/*"
+                },
+                {
+                    "glob": "playwright/playwright.config.ts"
+                },
+                {
+                    "glob": "recordings/**/*"
+                },
+                {
+                    "glob": "reference_workspace/**/*"
+                },
+                {
+                    "glob": "scripts/**/*"
+                },
+                {
+                    "glob": "playwright/**/*",
+                    "type": "fine-grained",
+                    "filter": "playwright/tests/**/*.spec.ts"
+                }
+            ]
         }
     ],
     "ignores": [

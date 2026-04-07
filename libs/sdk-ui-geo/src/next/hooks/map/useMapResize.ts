@@ -63,7 +63,7 @@ export function useMapResize(
         const prev = prevContainerRect.current?.client;
         const curr = chartContainerRect.client;
         const { width, height } = curr;
-        const hasResized = !prev || prev.width !== width || prev.height !== height;
+        const hasResized = prev?.width !== width || prev.height !== height;
 
         if (hasResized) {
             prevContainerRect.current = chartContainerRect;
