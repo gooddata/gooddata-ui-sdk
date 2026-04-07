@@ -9,6 +9,8 @@ import {
     type IAttributeFilter,
     type ObjRef,
     dashboardAttributeFilterItemFilterElementsBy,
+    dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
 import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
@@ -17,10 +19,10 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { selectSupportsSettingConnectingAttributes } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import {
-    selectFilterContextAttributeFilters,
-    selectFilterContextAttributeFiltersForTab,
-    selectWorkingFilterContextAttributeFilters,
-    selectWorkingFilterContextAttributeFiltersForTab,
+    selectFilterContextAttributeFilterItems,
+    selectFilterContextAttributeFilterItemsForTab,
+    selectWorkingFilterContextAttributeFilterItems,
+    selectWorkingFilterContextAttributeFilterItemsForTab,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
@@ -48,19 +50,21 @@ export const useParentFilters = (
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
     // Use tab-specific selectors when tabId is provided
-    const allAppliedAttributeFilters = useDashboardSelector(
-        tabId ? selectFilterContextAttributeFiltersForTab(tabId) : selectFilterContextAttributeFilters,
-    );
-
-    const allWorkingAttributeFilters = useDashboardSelector(
+    const allAppliedAttributeFilterItems = useDashboardSelector(
         tabId
-            ? selectWorkingFilterContextAttributeFiltersForTab(tabId)
-            : selectWorkingFilterContextAttributeFilters,
+            ? selectFilterContextAttributeFilterItemsForTab(tabId)
+            : selectFilterContextAttributeFilterItems,
     );
 
-    const allAttributeFilters = isApplyAllAtOnceEnabledAndSet
-        ? allWorkingAttributeFilters
-        : allAppliedAttributeFilters;
+    const allWorkingAttributeFilterItems = useDashboardSelector(
+        tabId
+            ? selectWorkingFilterContextAttributeFilterItemsForTab(tabId)
+            : selectWorkingFilterContextAttributeFilterItems,
+    );
+
+    const allAttributeFilterItems = isApplyAllAtOnceEnabledAndSet
+        ? allWorkingAttributeFilterItems
+        : allAppliedAttributeFilterItems;
     const supportsSettingConnectingAttributes = useDashboardSelector(
         selectSupportsSettingConnectingAttributes,
     );
@@ -68,16 +72,26 @@ export const useParentFilters = (
     const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(filter);
 
     const parentFiltersData = useMemo(() => {
-        return filterElementsBy?.map((parent) => {
-            const matchingFilter = allAttributeFilters.find(
-                (filter) => filter.attributeFilter.localIdentifier === parent.filterLocalIdentifier,
-            );
+        if (!filterElementsBy) {
+            return undefined;
+        }
 
-            invariant(matchingFilter); // if this blows up, the state is inconsistent
+        return filterElementsBy
+            .map((parent) => {
+                const matchingFilter = allAttributeFilterItems.find(
+                    (f) => dashboardAttributeFilterItemLocalIdentifier(f) === parent.filterLocalIdentifier,
+                );
 
-            return { filter: matchingFilter, over: parent.over.attributes[0] };
-        });
-    }, [allAttributeFilters, filterElementsBy]);
+                invariant(matchingFilter); // if this blows up, the state is inconsistent
+
+                return { filter: matchingFilter, over: parent.over.attributes[0] };
+            })
+            .filter((item) => {
+                // TODO INE: CQ-2101: Text mode (arbitrary/match) filters as parent limiting filters are not supported yet.
+                // Remove this filter when that combination is supported and pass those parents through like list filters.
+                return !isDashboardTextAttributeFilter(item.filter);
+            });
+    }, [allAttributeFilterItems, filterElementsBy]);
 
     const parentFilters = useMemo(() => {
         return parentFiltersData?.map((item) => dashboardAttributeFilterItemToAttributeFilter(item.filter));
@@ -86,7 +100,7 @@ export const useParentFilters = (
     const parentOverLookup = useMemo(() => {
         // no parents -> no need for the lookup function
         // no support for connecting attributes -> no need for the lookup function
-        if (!parentFiltersData || !supportsSettingConnectingAttributes) {
+        if (!parentFiltersData?.length || !supportsSettingConnectingAttributes) {
             return undefined;
         }
 
