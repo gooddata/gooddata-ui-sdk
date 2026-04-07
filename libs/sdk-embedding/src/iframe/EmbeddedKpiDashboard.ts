@@ -12,6 +12,7 @@ import {
 } from "./common.js";
 import {
     type DashboardDateFilter,
+    type DashboardTextAttributeFilter,
     type IDashboardAttributeFilter,
     type IFilterContextContent,
     type IRemoveFilterContextContent,
@@ -1039,7 +1040,9 @@ export type KdFilterContextChangedData = IGdcKdMessageEnvelope<
 /**
  * @public
  */
-export type KdDrillToUrlFilters = Array<DashboardDateFilter | IDashboardAttributeFilter>;
+export type KdDrillToUrlFilters = Array<
+    DashboardDateFilter | IDashboardAttributeFilter | DashboardTextAttributeFilter
+>;
 
 /**
  * @public

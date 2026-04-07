@@ -3736,6 +3736,8 @@ export interface IOrganizationDescriptor {
     bootstrapUser?: ObjRef;
     // (undocumented)
     bootstrapUserGroup?: ObjRef;
+    // (undocumented)
+    dataCenter?: string;
     // @deprecated (undocumented)
     earlyAccess?: string;
     // (undocumented)
@@ -3744,6 +3746,8 @@ export interface IOrganizationDescriptor {
     id: string;
     // (undocumented)
     identityProviderType?: string;
+    // (undocumented)
+    region?: string;
     // (undocumented)
     title: string;
 }
@@ -4926,6 +4930,9 @@ export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
 // @public
 export function isTestNotification(notification: unknown): notification is ITestNotification;
+
+// @alpha
+export function isTextAttributeFilter(obj: unknown): obj is TextAttributeFilter;
 
 // @public
 export function isTotal(obj: unknown): obj is ITotal;
@@ -6325,6 +6332,9 @@ export type SourceInsightFilterObjRef = ISourceInsightAttributeFilterRef | ISour
 
 // @public
 export type SourceMeasureFilterObjRef = Extract<SourceInsightFilterObjRef, ISourceInsightAttributeFilterRef | ISourceInsightDateFilterRef>;
+
+// @alpha
+export type TextAttributeFilter = IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @beta
 export type ThemeColor = string;

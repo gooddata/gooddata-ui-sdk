@@ -24,7 +24,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
       - name: Git config user
@@ -82,7 +82,7 @@ jobs:
             secret/data/v2/data-special/infra1-user-ecr-rw aws_ecr_access_key | AWS_ACCESS_KEY ;
             secret/data/v2/data-special/infra1-user-ecr-rw aws_ecr_secret_key | AWS_SECRET_KEY ;
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: ${{ env.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ env.AWS_SECRET_KEY }}

@@ -231,6 +231,7 @@ export function ViewModeDashboardVisualizationSwitcherContent({
 
     return (
         <DashboardItem
+            as="div"
             className={cx(
                 "type-visualization",
                 "gd-dashboard-view-widget",

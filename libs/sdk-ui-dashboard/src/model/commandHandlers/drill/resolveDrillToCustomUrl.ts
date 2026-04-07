@@ -7,20 +7,28 @@ import { type CallEffect, type SagaReturnType, all, call, select } from "redux-s
 
 import {
     type DashboardAttributeFilterItem,
+    type DashboardTextAttributeFilter,
     type IAttributeDisplayFormMetadataObject,
     type IDrillToCustomUrl as IDrillToCustomUrlModel,
     type IFilter,
     type IInsightWidget,
+    type MatchFilterOperator,
     type ObjRef,
+    type TextAttributeFilter,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
     filterAttributeElements,
     filterObjRef,
     idRef,
     insightId,
+    isArbitraryAttributeFilter,
     isAttributeDescriptor,
     isAttributeElementsByValue,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
+    isDashboardTextAttributeFilter,
     isNegativeAttributeFilter,
+    isTextAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
     type IDrillToUrlPlaceholder,
@@ -258,8 +266,25 @@ function* resolveDashboardAttributeFilterReplacement(
     attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides>,
     ctx: DashboardContext,
 ): SagaIterator<IDrillToUrlPlaceholderReplacement> {
-    // URL placeholder resolution only works with standard (element-based) attribute filters.
-    // Text filters (arbitrary/match) don't have element selections for URL placeholders.
+    // Check for text filters (arbitrary/match) first — they use different value structures.
+    const textFilter = attributeFilters.find((filter) => {
+        if (!isDashboardTextAttributeFilter(filter)) {
+            return false;
+        }
+        const df = catalogDisplayForms.get(dashboardAttributeFilterItemDisplayForm(filter));
+        return df && areObjRefsEqual(idRef(df.id), ref);
+    });
+
+    if (textFilter && isDashboardTextAttributeFilter(textFilter)) {
+        const parsedFilter = stringifyTextFilterSelection(textFilter);
+        const replacement = encodeParameterIfSet(parsedFilter);
+        return {
+            toBeReplaced,
+            replacement: replacement!,
+        };
+    }
+
+    // Standard (element-based) attribute filters
     const standardFilters = attributeFilters.filter(isDashboardAttributeFilter);
 
     let usedFilter = standardFilters.find((filter) => {
@@ -313,7 +338,6 @@ export function* getDashboardAttributeFilterReplacements(
         return [];
     }
 
-    // TODO INE: consider using narrow selector as text filters are ignored in resolveDashboardAttributeFilterReplacement
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
         selectFilterContextAttributeFilterItems,
     );
@@ -362,15 +386,18 @@ export function* getInsightAttributeFilterReplacements(
                 return df && areObjRefsEqual(idRef(df.id), ref);
             });
 
-            const elements = usedFilter ? filterAttributeElements(usedFilter) : undefined;
-            const attributeElementsValues = isAttributeElementsByValue(elements)
-                ? elements.values
-                : (elements?.uris ?? []);
-            const isNegative = isNegativeAttributeFilter(usedFilter);
+            let parsedFilter: string | undefined;
 
-            const parsedFilter = usedFilter
-                ? stringifyAttributeFilterSelection(attributeElementsValues, isNegative)
-                : undefined;
+            if (usedFilter && isTextAttributeFilter(usedFilter)) {
+                parsedFilter = stringifyTextFilterSelection(usedFilter);
+            } else if (usedFilter) {
+                const elements = filterAttributeElements(usedFilter);
+                const attributeElementsValues = isAttributeElementsByValue(elements)
+                    ? elements.values
+                    : (elements?.uris ?? []);
+                const isNegative = isNegativeAttributeFilter(usedFilter);
+                parsedFilter = stringifyAttributeFilterSelection(attributeElementsValues, isNegative);
+            }
 
             const replacement = encodeParameterIfSet(parsedFilter);
 
@@ -504,4 +531,30 @@ export function* resolveDrillToCustomUrl(
 
 function stringifyAttributeFilterSelection(selection: (string | null)[], isNegative: boolean): string {
     return `${isNegative ? "NOT_IN" : "IN"}${stringify(selection)}`;
+}
+
+/**
+ * @internal
+ */
+export function stringifyTextFilterSelection(
+    filter: DashboardTextAttributeFilter | TextAttributeFilter,
+): string {
+    if (isDashboardArbitraryAttributeFilter(filter) || isArbitraryAttributeFilter(filter)) {
+        const { values, negativeSelection } = filter.arbitraryAttributeFilter;
+        return stringifyAttributeFilterSelection(values, negativeSelection ?? false);
+    }
+    const { literal, operator, negativeSelection } = filter.matchAttributeFilter;
+    return stringifyMatchFilterSelection(literal, operator, negativeSelection ?? false);
+}
+
+const MATCH_OPERATOR_MAP: Record<MatchFilterOperator, string> = {
+    contains: "CONTAINS",
+    startsWith: "STARTS_WITH",
+    endsWith: "ENDS_WITH",
+};
+
+function stringifyMatchFilterSelection(literal: string, operator: string, isNegative: boolean): string {
+    const operatorStr = MATCH_OPERATOR_MAP[operator as MatchFilterOperator];
+    const prefix = isNegative ? `NOT_${operatorStr}` : operatorStr;
+    return `${prefix}${stringify([literal])}`;
 }

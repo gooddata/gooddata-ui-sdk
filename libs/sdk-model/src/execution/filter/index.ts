@@ -364,6 +364,16 @@ export type IAttributeFilter =
     | IMatchAttributeFilter;
 
 /**
+ * Union of text mode attribute filter types (arbitrary and match).
+ *
+ * @remarks
+ * These filters use free-text values rather than element selection.
+ *
+ * @alpha
+ */
+export type TextAttributeFilter = IArbitraryAttributeFilter | IMatchAttributeFilter;
+
+/**
  * Date filters limit the range of results to data within relative or absolute date range.
  *
  * @public
@@ -601,6 +611,15 @@ export function isArbitraryAttributeFilter(obj: unknown): obj is IArbitraryAttri
  */
 export function isMatchAttributeFilter(obj: unknown): obj is IMatchAttributeFilter {
     return !isEmpty(obj) && (obj as IMatchAttributeFilter).matchAttributeFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is a text attribute filter
+ * ({@link IArbitraryAttributeFilter} or {@link IMatchAttributeFilter}).
+ * @alpha
+ */
+export function isTextAttributeFilter(obj: unknown): obj is TextAttributeFilter {
+    return isArbitraryAttributeFilter(obj) || isMatchAttributeFilter(obj);
 }
 
 /**

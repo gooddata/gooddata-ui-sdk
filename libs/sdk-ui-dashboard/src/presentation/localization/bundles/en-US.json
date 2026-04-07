@@ -1879,6 +1879,10 @@
         "text": "Cannot be enabled. Add this filter to the target dashboard first.",
         "crowdinContext": "Tooltip shown for disabled source or dashboard filters in drill-to-dashboard configuration when the target dashboard does not contain a matching filter"
     },
+    "configurationPanel.drillConfig.filterSelection.drillToDashboardFilterNotCompatible.tooltip": {
+        "text": "Cannot be enabled. The matching filter on the target dashboard does not support this filter type.",
+        "crowdinContext": "Tooltip shown for disabled filters in drill-to-dashboard configuration when a matching filter exists on the target dashboard but its selection type configuration does not allow the filter type migration (e.g. text to list or list to text)"
+    },
     "configurationPanel.drillConfig.filterSelection.drillToDashboardMetricFilter.tooltip": {
         "text": "Metric filters cannot be passed to the target dashboard.",
         "crowdinContext": "Tooltip shown for disabled metric value filters in drill-to-dashboard configuration because metric filters are not supported on the target dashboard"

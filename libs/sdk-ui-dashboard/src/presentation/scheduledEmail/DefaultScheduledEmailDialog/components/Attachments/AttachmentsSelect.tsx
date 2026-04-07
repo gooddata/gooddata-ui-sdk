@@ -139,9 +139,9 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                             }
                         }}
                     >
-                        <div className="gd-list-title" id={AUTOMATION_ATTACHMENTS_DIALOG_TITLE_ID}>
+                        <h3 className="gd-list-title" id={AUTOMATION_ATTACHMENTS_DIALOG_TITLE_ID}>
                             {dialogTitle}
-                            <div className="gd-close-button">
+                            <span className="gd-close-button">
                                 <Button
                                     className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
                                     value=""
@@ -150,8 +150,8 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                                         ariaLabel: intl.formatMessage({ id: "close" }),
                                     }}
                                 />
-                            </div>
-                        </div>
+                            </span>
+                        </h3>
                         <div className="gd-attachment-types-content">
                             {attachments.map((item) => (
                                 <div className="gd-attachment-type-item" key={item.type}>

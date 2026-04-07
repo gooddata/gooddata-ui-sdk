@@ -117,6 +117,14 @@ async function getFeatureHubData(
         );
     }
 
+    if (context.region) {
+        featureHubFlags.push(`region=${encodeURIComponent(context.region)}`);
+    }
+
+    if (context.dataCenter) {
+        featureHubFlags.push(`dataCenter=${encodeURIComponent(context.dataCenter)}`);
+    }
+
     return axios.get("/features", {
         method: "GET",
         baseURL: host,

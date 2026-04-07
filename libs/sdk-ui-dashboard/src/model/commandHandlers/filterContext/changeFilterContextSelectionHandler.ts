@@ -59,6 +59,8 @@ import {
     selectFilterContextAttributeFilterByDisplayFormForTab,
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilterByLocalIdForTab,
+    selectFilterContextAttributeFilterItemByDisplayForm,
+    selectFilterContextAttributeFilterItemByDisplayFormForTab,
     selectFilterContextAttributeFilterItemByLocalId,
     selectFilterContextAttributeFilterItemByLocalIdForTab,
     selectFilterContextAttributeFilterItems,
@@ -78,6 +80,7 @@ import {
     type DisplayFormResolutionResult,
     resolveDisplayFormMetadata,
 } from "../../utils/displayFormResolver.js";
+import { canApplyFilterTypeToTarget } from "../dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 
 // Tab-aware select helpers — encapsulate the "if tab select ForTab else select" pattern.
 // Named after the base selector they wrap.
@@ -97,6 +100,17 @@ function* selectFilterContextAttributeFilterItemByLocalIdTabAware(
     return tabLocalIdentifier
         ? yield select(selectFilterContextAttributeFilterItemByLocalIdForTab(localId, tabLocalIdentifier))
         : yield select(selectFilterContextAttributeFilterItemByLocalId(localId));
+}
+
+function* selectFilterContextAttributeFilterItemByDisplayFormTabAware(
+    displayForm: ObjRef,
+    tabLocalIdentifier?: string,
+): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByDisplayForm>>> {
+    return tabLocalIdentifier
+        ? yield select(
+              selectFilterContextAttributeFilterItemByDisplayFormForTab(displayForm, tabLocalIdentifier),
+          )
+        : yield select(selectFilterContextAttributeFilterItemByDisplayForm(displayForm));
 }
 
 function* selectFilterContextAttributeFilterByLocalIdTabAware(
@@ -211,12 +225,12 @@ export function* changeFilterContextSelectionHandler(
 
     const uniqueFilters = uniqBy(supportedFilters, (filter) => {
         const identification = isDashboardAttributeFilter(filter)
-            ? filter.attributeFilter.displayForm
+            ? dashboardAttributeFilterItemDisplayForm(filter)
             : filter.dateFilter.dataSet;
         let config;
         if (isDashboardAttributeFilter(filter)) {
             config = attributeFilterConfigs.find(
-                (config) => config.localIdentifier === filter.attributeFilter.localIdentifier,
+                (config) => config.localIdentifier === dashboardAttributeFilterItemLocalIdentifier(filter),
             );
         }
         // do not remove duplicates using same primary label, but different display as label
@@ -323,10 +337,10 @@ function* getDashboardFilterByDisplayAsLabelMatching(
     let foundByDashboardFilterDisplayAsLabel = false;
     let dashboardFilter: IDashboardAttributeFilter | undefined = undefined;
 
-    const filterRef = attributeFilter.attributeFilter.displayForm;
+    const filterRef = dashboardAttributeFilterItemDisplayForm(attributeFilter);
 
     const filterConfig = attributeFilterConfigs.find(
-        (config) => config.localIdentifier === attributeFilter.attributeFilter.localIdentifier,
+        (config) => config.localIdentifier === dashboardAttributeFilterItemLocalIdentifier(attributeFilter),
     );
     if (filterConfig?.displayAsLabel) {
         dashboardFilter = yield call(
@@ -362,6 +376,50 @@ function* getDashboardFilterByDisplayAsLabelMatching(
     return { foundByDisplayAsLabel, foundByDashboardFilterDisplayAsLabel, dashboardFilter };
 }
 
+/**
+ * Finds a matching filter item on the target dashboard for a text filter using displayForm-based matching.
+ * Tries:
+ * 1. Direct displayForm match (works for text→text and text→list by primary displayForm)
+ * 2. DisplayAsLabel match (text filter's displayForm matches a list filter's displayAsLabel in config)
+ */
+function* findTargetFilterItemByDisplayForm(
+    displayFormRef: ObjRef,
+    tabLocalIdentifier?: string,
+): SagaIterator<DashboardAttributeFilterItem | undefined> {
+    // Direct displayForm match — covers text→text and text→list (by primary displayForm)
+    const directMatch: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByDisplayForm>> =
+        yield call(
+            selectFilterContextAttributeFilterItemByDisplayFormTabAware,
+            displayFormRef,
+            tabLocalIdentifier,
+        );
+    if (directMatch) {
+        return directMatch;
+    }
+
+    // DisplayAsLabel match — text filter's displayForm may match a list filter's displayAsLabel
+    const dashboardFiltersConfigsForActiveTab: SagaReturnType<typeof selectAttributeFilterConfigsOverrides> =
+        yield select(selectAttributeFilterConfigsOverrides);
+    const dashboardFiltersConfigsByTab: SagaReturnType<typeof selectAttributeFilterConfigsOverridesByTab> =
+        yield select(selectAttributeFilterConfigsOverridesByTab);
+    const dashboardFiltersConfigs = tabLocalIdentifier
+        ? dashboardFiltersConfigsByTab[tabLocalIdentifier]
+        : dashboardFiltersConfigsForActiveTab;
+
+    const matchingConfig = dashboardFiltersConfigs?.find((config) =>
+        areObjRefsEqual(config.displayAsLabel, displayFormRef),
+    );
+    if (matchingConfig) {
+        return yield call(
+            selectFilterContextAttributeFilterItemByLocalIdTabAware,
+            matchingConfig.localIdentifier,
+            tabLocalIdentifier,
+        );
+    }
+
+    return undefined;
+}
+
 function* getAttributeFiltersUpdateActions(
     attributeFilters: IDashboardAttributeFilter[],
     textAttributeFilters: DashboardAttributeFilterItem[],
@@ -377,11 +435,11 @@ function* getAttributeFiltersUpdateActions(
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
         ctx,
-        attributeFilters.map((af) => af.attributeFilter.displayForm),
+        attributeFilters.map((af) => dashboardAttributeFilterItemDisplayForm(af)),
     );
 
     for (const attributeFilter of attributeFilters) {
-        const filterRef = attributeFilter.attributeFilter.displayForm;
+        const filterRef = dashboardAttributeFilterItemDisplayForm(attributeFilter);
         // only attribute filters with elements are relevant
         let dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
             yield call(
@@ -418,6 +476,9 @@ function* getAttributeFiltersUpdateActions(
         const displayFormData = resolvedDisplayForms.resolved.get(filterRef);
 
         if (dashboardFilter) {
+            const dashboardFilterLocalId = dashboardAttributeFilterItemLocalIdentifier(dashboardFilter)!;
+            const dashboardFilterDisplayForm = dashboardAttributeFilterItemDisplayForm(dashboardFilter);
+
             if (foundByDisplayAsLabel && displayFormData) {
                 updateActions.push(
                     // keep the attribute display form field up to date
@@ -427,14 +488,14 @@ function* getAttributeFiltersUpdateActions(
                             : displayFormData,
                     ),
                     tabsActions.changeAttributeDisplayForm({
-                        filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
+                        filterLocalId: dashboardFilterLocalId,
                         displayForm: filterRef,
                         tabLocalIdentifier,
                     }),
                     // backup current displayForm to the displayAsLabel
                     tabsActions.changeDisplayAsLabel({
-                        localIdentifier: dashboardFilter.attributeFilter.localIdentifier!,
-                        displayAsLabel: dashboardFilter.attributeFilter.displayForm,
+                        localIdentifier: dashboardFilterLocalId,
+                        displayAsLabel: dashboardFilterDisplayForm,
                         tabLocalIdentifier,
                     }),
                 );
@@ -448,13 +509,13 @@ function* getAttributeFiltersUpdateActions(
                             : displayFormData,
                     ),
                     tabsActions.changeAttributeDisplayForm({
-                        filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
+                        filterLocalId: dashboardFilterLocalId,
                         displayForm: filterRef,
                         tabLocalIdentifier,
                     }),
                     // clear displayAsLabel
                     tabsActions.changeDisplayAsLabel({
-                        localIdentifier: dashboardFilter.attributeFilter.localIdentifier!,
+                        localIdentifier: dashboardFilterLocalId,
                         displayAsLabel: undefined,
                         tabLocalIdentifier,
                     }),
@@ -468,41 +529,66 @@ function* getAttributeFiltersUpdateActions(
                 }),
             );
 
-            handledLocalIds.add(dashboardFilter.attributeFilter.localIdentifier!);
+            handledLocalIds.add(dashboardFilterLocalId);
         } else {
-            // No list filter found by displayForm — check if a text filter exists with the same
-            // localIdentifier and selectionType config allows list type override
-            const localId = attributeFilter.attributeFilter.localIdentifier;
-            if (localId) {
-                const existingFilterItem: ReturnType<
-                    ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>
-                > = yield call(
+            // No list filter found by displayForm — check if a text filter exists
+            // that can accept the incoming list filter (list→text migration).
+            // Try localId first (same-dashboard), then displayForm fallback (cross-dashboard drill).
+            const sourceLocalId = dashboardAttributeFilterItemLocalIdentifier(attributeFilter);
+            const sourceDisplayForm = dashboardAttributeFilterItemDisplayForm(attributeFilter);
+            let targetTextFilter: DashboardAttributeFilterItem | undefined;
+
+            if (sourceLocalId) {
+                targetTextFilter = yield call(
                     selectFilterContextAttributeFilterItemByLocalIdTabAware,
-                    localId,
+                    sourceLocalId,
                     tabLocalIdentifier,
                 );
+            }
 
-                if (existingFilterItem && isDashboardTextAttributeFilter(existingFilterItem)) {
-                    const configSelectionType = selectionTypeMap?.get(localId);
-                    // Default is "listOrText" — only skip if config explicitly restricts to "text"
-                    if (configSelectionType !== "text") {
-                        // Text → list: set displayAsLabel to the text filter's displayForm
-                        // so the list filter visually shows the same label
-                        updateActions.push(
-                            tabsActions.replaceAttributeFilterItem({
-                                filterLocalId: localId,
-                                filter: attributeFilter,
-                                tabLocalIdentifier,
-                            }),
-                            tabsActions.changeDisplayAsLabel({
-                                localIdentifier: localId,
-                                displayAsLabel: dashboardAttributeFilterItemDisplayForm(existingFilterItem),
-                                tabLocalIdentifier,
-                            }),
+            // DisplayForm fallback for cross-dashboard drill where localIds differ
+            if (!targetTextFilter) {
+                targetTextFilter = yield call(
+                    findTargetFilterItemByDisplayForm,
+                    sourceDisplayForm,
+                    tabLocalIdentifier,
+                );
+                // Also try source's displayAsLabel from incoming attributeFilterConfigs
+                if (!targetTextFilter) {
+                    const incomingConfig = attributeFilterConfigs.find(
+                        (config) => config.localIdentifier === sourceLocalId,
+                    );
+                    if (incomingConfig?.displayAsLabel) {
+                        targetTextFilter = yield call(
+                            findTargetFilterItemByDisplayForm,
+                            incomingConfig.displayAsLabel,
+                            tabLocalIdentifier,
                         );
-                        displayFormsToResolve.push(attributeFilter.attributeFilter.displayForm);
-                        handledLocalIds.add(localId);
                     }
+                }
+            }
+
+            if (targetTextFilter && isDashboardTextAttributeFilter(targetTextFilter)) {
+                const targetLocalId = dashboardAttributeFilterItemLocalIdentifier(targetTextFilter)!;
+                const configSelectionType = selectionTypeMap?.get(targetLocalId);
+
+                if (canApplyFilterTypeToTarget("list", configSelectionType, targetTextFilter)) {
+                    // Text → list: set displayAsLabel to the text filter's displayForm
+                    // so the list filter visually shows the same label
+                    updateActions.push(
+                        tabsActions.replaceAttributeFilterItem({
+                            filterLocalId: targetLocalId,
+                            filter: attributeFilter,
+                            tabLocalIdentifier,
+                        }),
+                        tabsActions.changeDisplayAsLabel({
+                            localIdentifier: targetLocalId,
+                            displayAsLabel: dashboardAttributeFilterItemDisplayForm(targetTextFilter),
+                            tabLocalIdentifier,
+                        }),
+                    );
+                    displayFormsToResolve.push(sourceDisplayForm);
+                    handledLocalIds.add(targetLocalId);
                 }
             }
         }
@@ -511,60 +597,68 @@ function* getAttributeFiltersUpdateActions(
     // Build replace actions for text filter types (arbitrary, match).
     for (const textFilter of textAttributeFilters) {
         const localId = dashboardAttributeFilterItemLocalIdentifier(textFilter);
-        if (localId) {
-            const existingFilter: ReturnType<
-                ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>
-            > = yield call(
-                selectFilterContextAttributeFilterItemByLocalIdTabAware,
-                localId,
+        if (!localId) {
+            continue;
+        }
+
+        // 1. Try localId match first (same-dashboard scenario)
+        let existingFilter: DashboardAttributeFilterItem | undefined = yield call(
+            selectFilterContextAttributeFilterItemByLocalIdTabAware,
+            localId,
+            tabLocalIdentifier,
+        );
+
+        // 2. DisplayForm fallback for cross-dashboard drill where localIds differ
+        if (!existingFilter) {
+            const textDisplayForm = dashboardAttributeFilterItemDisplayForm(textFilter);
+            existingFilter = yield call(
+                findTargetFilterItemByDisplayForm,
+                textDisplayForm,
                 tabLocalIdentifier,
             );
+        }
 
-            if (!existingFilter) {
+        if (!existingFilter) {
+            continue;
+        }
+
+        const targetLocalId = dashboardAttributeFilterItemLocalIdentifier(existingFilter)!;
+        if (handledLocalIds.has(targetLocalId)) {
+            continue;
+        }
+
+        // Check if migration is allowed based on selection type config
+        const isExistingText = isDashboardTextAttributeFilter(existingFilter);
+        if (!isExistingText) {
+            // Text → list migration: check if target's selection type allows text
+            const configSelectionType = selectionTypeMap?.get(targetLocalId);
+            if (!canApplyFilterTypeToTarget("text", configSelectionType, existingFilter)) {
                 continue;
             }
+        }
 
-            // Allow replacement if existing filter is already text type,
-            // or if selectionType config allows text on a list filter target
-            const isExistingText = isDashboardTextAttributeFilter(existingFilter);
-            if (!isExistingText) {
-                const configSelectionType = selectionTypeMap?.get(localId);
-                // Default is "listOrText", except single selection list filters → "list"
-                if (configSelectionType === "list") {
-                    continue;
-                }
-                if (
-                    configSelectionType === undefined &&
-                    isDashboardAttributeFilter(existingFilter) &&
-                    isSingleSelectionFilter(existingFilter)
-                ) {
-                    continue;
-                }
-            }
+        updateActions.push(
+            tabsActions.replaceAttributeFilterItem({
+                filterLocalId: targetLocalId,
+                filter: textFilter,
+                tabLocalIdentifier,
+            }),
+        );
 
+        // List → text: update displayAsLabel to match the text filter's displayForm
+        if (!isExistingText) {
+            const textDisplayForm = dashboardAttributeFilterItemDisplayForm(textFilter);
             updateActions.push(
-                tabsActions.replaceAttributeFilterItem({
-                    filterLocalId: localId,
-                    filter: textFilter,
+                tabsActions.changeDisplayAsLabel({
+                    localIdentifier: targetLocalId,
+                    displayAsLabel: textDisplayForm,
                     tabLocalIdentifier,
                 }),
             );
-
-            // List → text: update displayAsLabel to match the text filter's displayForm
-            if (!isExistingText) {
-                const textDisplayForm = dashboardAttributeFilterItemDisplayForm(textFilter);
-                updateActions.push(
-                    tabsActions.changeDisplayAsLabel({
-                        localIdentifier: localId,
-                        displayAsLabel: textDisplayForm,
-                        tabLocalIdentifier,
-                    }),
-                );
-                displayFormsToResolve.push(textDisplayForm);
-            }
-
-            handledLocalIds.add(localId);
+            displayFormsToResolve.push(textDisplayForm);
         }
+
+        handledLocalIds.add(targetLocalId);
     }
 
     if (resetOthers) {
@@ -575,12 +669,14 @@ function* getAttributeFiltersUpdateActions(
 
         // for element-based filters that have not been handled, create clear selection actions
         const unhandledFilters = currentAttributeFilters.filter(
-            (filter) => !handledLocalIds.has(filter.attributeFilter.localIdentifier!),
+            (filter) => !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!),
         );
         if (unhandledFilters.length > 0) {
             updateActions.push(
                 tabsActions.clearAttributeFiltersSelection({
-                    filterLocalIds: unhandledFilters.map((filter) => filter.attributeFilter.localIdentifier!),
+                    filterLocalIds: unhandledFilters.map(
+                        (filter) => dashboardAttributeFilterItemLocalIdentifier(filter)!,
+                    ),
                     tabLocalIdentifier,
                 }),
             );

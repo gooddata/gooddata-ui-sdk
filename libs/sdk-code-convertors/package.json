@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.29.0-alpha.2",
+    "version": "11.29.0-alpha.3",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -54,8 +54,8 @@
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
         "@microsoft/api-extractor": "^7.55.2",
-        "@typescript-eslint/eslint-plugin": "8.52.0",
-        "@typescript-eslint/parser": "8.52.0",
+        "@typescript-eslint/eslint-plugin": "8.58.0",
+        "@typescript-eslint/parser": "8.58.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "dependency-cruiser": "^14.1.2",
         "eslint": "^9.39.2",

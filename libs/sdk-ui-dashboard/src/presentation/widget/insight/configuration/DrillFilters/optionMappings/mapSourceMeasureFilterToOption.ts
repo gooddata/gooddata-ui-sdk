@@ -3,9 +3,11 @@
 import { type IntlShape } from "react-intl";
 
 import {
+    type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilter,
+    type IDashboardAttributeFilterConfig,
     type IFilter,
     type ObjRef,
     type SourceMeasureFilterObjRef,
@@ -15,10 +17,11 @@ import {
 import { sourceInsightFilterObjRef as getSourceInsightFilterObjRef } from "../../../../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
 import {
+    canTransferAttributeFilterByDisplayForm,
     getDateDatasetTitle,
     getDisabledOptionProps,
+    getDisabledOptionPropsForTransferResult,
     getDisplayFormTitle,
-    hasMatchingTargetDashboardAttributeFilterDisplayForm,
     hasMatchingTargetDashboardDateFilter,
     sourceFilterOptionId,
 } from "../drillFiltersConfigUtils.js";
@@ -31,6 +34,8 @@ interface IMapSourceMeasureFilterToOptionParams {
     allCatalogDateDatasets: Array<{ dataSet: { ref: ObjRef; title?: string } }>;
     targetDashboardFilters: FilterContextItem[];
     targetDashboardAttributeFilters: IDashboardAttributeFilter[];
+    targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
+    targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
     isDrillToDashboard: boolean;
     intl: IntlShape;
 }
@@ -41,6 +46,8 @@ export function mapSourceMeasureFilterToOption({
     allCatalogDateDatasets,
     targetDashboardFilters,
     targetDashboardAttributeFilters,
+    targetDashboardTextAttributeFilters,
+    targetDashboardAttributeFilterConfigs,
     isDrillToDashboard,
     intl,
 }: IMapSourceMeasureFilterToOptionParams): IDrillFiltersConfigOption | undefined {
@@ -54,9 +61,13 @@ export function mapSourceMeasureFilterToOption({
         if (isLocalIdRef(displayFormRef)) {
             return undefined;
         }
-        const hasMatchingTargetAttributeFilter = hasMatchingTargetDashboardAttributeFilterDisplayForm(
+        // Measure filters are always list-type attribute filters (from execution model)
+        const transferResult = canTransferAttributeFilterByDisplayForm(
             displayFormRef,
+            false, // measure filters are list-type
             targetDashboardAttributeFilters,
+            targetDashboardAttributeFilterConfigs,
+            targetDashboardTextAttributeFilters,
         );
 
         return {
@@ -65,11 +76,7 @@ export function mapSourceMeasureFilterToOption({
                 displayFormRef,
                 allCatalogDisplayFormsMap,
             }),
-            ...getDisabledOptionProps(
-                isDrillToDashboard && !hasMatchingTargetAttributeFilter,
-                intl.formatMessage(messages.drillToDashboardDashboardFilterTooltip),
-                false,
-            ),
+            ...getDisabledOptionPropsForTransferResult(isDrillToDashboard, transferResult, intl),
             sourceMeasureFilterObjRef: sourceFilterObjRef as SourceMeasureFilterObjRef,
         };
     }

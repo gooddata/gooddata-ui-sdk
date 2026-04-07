@@ -266,4 +266,33 @@ describe("validateExistingAutomationFiltersPerTab", () => {
             expect(result.isValid).toBe(true);
         });
     });
+
+    describe("selection type filters", () => {
+        it("should be invalid when tab has incompatible selection type", () => {
+            const dashboardFiltersPerTab: IAutomationFiltersPerTabData[] = [
+                {
+                    tabId: "tab1",
+                    availableFilters: [attributeFilterContextItem],
+                    hiddenFilters: [],
+                    lockedFilters: [],
+                },
+            ];
+
+            const result = validateExistingAutomationFiltersPerTab({
+                savedDashboardFiltersByTab: {
+                    tab1: [attributeFilterContextItem],
+                },
+                savedAutomationVisibleFiltersByTab: {
+                    tab1: [createVisibleFilter(attributeFilterContextItem)],
+                },
+                dashboardFiltersPerTab,
+                selectionTypeMapByTab: {
+                    tab1: new Map([["attribute", "text"]]),
+                },
+            });
+
+            expect(result.isValid).toBe(false);
+            expect(result.incompatibleSelectionTypeIsAppliedInSavedFilters).toBe(true);
+        });
+    });
 });

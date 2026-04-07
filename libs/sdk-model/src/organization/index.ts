@@ -18,6 +18,8 @@ export interface IOrganizationDescriptor {
     earlyAccess?: string;
     earlyAccessValues?: string[];
     identityProviderType?: string;
+    region?: string;
+    dataCenter?: string;
 }
 
 /**

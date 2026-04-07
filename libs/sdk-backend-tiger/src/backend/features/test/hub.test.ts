@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import axios from "axios";
 import { describe, expect, it, vi } from "vitest";
@@ -25,6 +25,8 @@ describe("live features", () => {
         tier = "",
         jsSdkVersion = "",
         controlledFeatureRollout = false,
+        region = "",
+        dataCenter = "",
     ): ILiveFeatures["live"] {
         return {
             configuration: { host: "/", key: "" },
@@ -34,6 +36,8 @@ describe("live features", () => {
                 tier,
                 jsSdkVersion,
                 controlledFeatureRollout,
+                region,
+                dataCenter,
             },
         };
     }
@@ -131,6 +135,24 @@ describe("live features", () => {
             headers: {
                 "Content-type": "application/json",
                 "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,tier=TRIAL,jsSdkVersion=1.0.0",
+                "if-none-match": expect.anything(),
+            },
+            method: "GET",
+            params: { sdkUrl: "" },
+            validateStatus: expect.anything(),
+            timeout: 30000,
+        });
+    });
+
+    it("call axios with region and dataCenter context", async () => {
+        mockReturn([]);
+
+        await getFeatureHubFeatures(createFeatures([], "org", "", "", false, "eu-cluster-1", "eu-west-1"));
+        expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
+            baseURL: "/",
+            headers: {
+                "Content-type": "application/json",
+                "X-FeatureHub": "organizationId=org,region=eu-cluster-1,dataCenter=eu-west-1",
                 "if-none-match": expect.anything(),
             },
             method: "GET",

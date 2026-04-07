@@ -47,8 +47,9 @@ export function getNormalizedForecastValues(config?: Config): INormalizedForecas
         return undefined;
     }
 
-    const period = Number.parseInt(forecast.forecastPeriod.toString(), 10);
-    const confidence = Number(forecast.confidenceLevel);
+    const period = Number.parseInt((forecast.forecastPeriod ?? forecast.period ?? 3).toString(), 10);
+    const confidence = Number(forecast.confidenceLevel ?? forecast.confidence ?? 0.95);
+    const seasonal = forecast.seasonal ?? false;
 
     if (!Number.isFinite(period) || period <= 0 || !Number.isFinite(confidence)) {
         return undefined;
@@ -61,7 +62,7 @@ export function getNormalizedForecastValues(config?: Config): INormalizedForecas
 
     return {
         period,
+        seasonal,
         confidence: normalizedConfidence,
-        seasonal: forecast.seasonal,
     };
 }

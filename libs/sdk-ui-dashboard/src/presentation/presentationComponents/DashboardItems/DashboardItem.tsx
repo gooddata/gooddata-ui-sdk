@@ -14,6 +14,8 @@ interface IDashboardItemProps extends HTMLAttributes<HTMLDivElement> {
     titleId?: string;
     ref?: Ref<HTMLDivElement>;
     exportData?: CommonExportDataAttributes;
+    // Use "div" when DashboardItem is nested to avoid invalid figure elements
+    as?: "figure" | "div";
 }
 
 // done like this instead of a template string so that the code is greppable for the individual classes
@@ -26,11 +28,11 @@ const screenClasses: { [S in ScreenSize]: string } = {
 };
 
 export const DashboardItem = forwardRef<HTMLDivElement, IDashboardItemProps>(
-    ({ className, screen, description, exportData, titleId, ...props }, ref) => {
+    ({ className, screen, description, exportData, titleId, as: Element = "figure", ...props }, ref) => {
         const id = useId();
         const itemFigureId = `dashboard-item-${id}`;
         return (
-            <figure
+            <Element
                 {...props}
                 {...exportData}
                 className={cx(
@@ -41,7 +43,6 @@ export const DashboardItem = forwardRef<HTMLDivElement, IDashboardItemProps>(
                     screenClasses[screen],
                 )}
                 ref={ref}
-                role="figure"
                 aria-describedby={description && exportData ? itemFigureId : undefined}
                 aria-labelledby={titleId || undefined}
             >
@@ -51,7 +52,7 @@ export const DashboardItem = forwardRef<HTMLDivElement, IDashboardItemProps>(
                     </span>
                 ) : null}
                 {props.children}
-            </figure>
+            </Element>
         );
     },
 );

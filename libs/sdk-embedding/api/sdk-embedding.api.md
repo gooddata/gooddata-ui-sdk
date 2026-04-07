@@ -236,6 +236,9 @@ export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUA
 // @public (undocumented)
 export type DashboardDateFilter = IDashboardAllTimeDateFilter | IDashboardAbsoluteDateFilter | IDashboardRelativeDateFilter;
 
+// @public
+export type DashboardTextAttributeFilter = IDashboardArbitraryAttributeFilter | IDashboardMatchAttributeFilter;
+
 // @public (undocumented)
 export type DateFilterGranularity = "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year" | "GDC.time.fiscal_month" | "GDC.time.fiscal_quarter" | "GDC.time.fiscal_year";
 
@@ -484,6 +487,16 @@ export interface IDashboardAllTimeDateFilter {
     };
 }
 
+// @public
+export interface IDashboardArbitraryAttributeFilter {
+    // (undocumented)
+    arbitraryAttributeFilter: {
+        displayForm: string;
+        negativeSelection: boolean;
+        values: Array<string | null>;
+    };
+}
+
 // @public (undocumented)
 export interface IDashboardAttributeFilter {
     // (undocumented)
@@ -491,6 +504,17 @@ export interface IDashboardAttributeFilter {
         displayForm: string;
         negativeSelection: boolean;
         attributeElements: string[];
+    };
+}
+
+// @public
+export interface IDashboardMatchAttributeFilter {
+    // (undocumented)
+    matchAttributeFilter: {
+        displayForm: string;
+        negativeSelection: boolean;
+        operator: "contains" | "startsWith" | "endsWith";
+        literal: string;
     };
 }
 
@@ -1060,10 +1084,16 @@ export function isDashboardAbsoluteDateFilter(filter: unknown): filter is IDashb
 export function isDashboardAllTimeDateFilter(filter: unknown): filter is IDashboardAllTimeDateFilter;
 
 // @public (undocumented)
+export function isDashboardArbitraryAttributeFilter(filter: unknown): filter is IDashboardArbitraryAttributeFilter;
+
+// @public (undocumented)
 export function isDashboardAttributeFilter(filter: unknown): filter is IDashboardAttributeFilter;
 
 // @public (undocumented)
 export function isDashboardDateFilter(filter: unknown): filter is DashboardDateFilter;
+
+// @public (undocumented)
+export function isDashboardMatchAttributeFilter(filter: unknown): filter is IDashboardMatchAttributeFilter;
 
 // @public (undocumented)
 export function isDashboardRelativeDateFilter(filter: unknown): filter is IDashboardRelativeDateFilter;
@@ -1369,7 +1399,7 @@ export type KdDrillableItemsCommand = IGdcKdMessageEvent<GdcKdCommandType.Drilla
 export type KdDrillableItemsCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.DrillableItems, IDrillableItemsCommandBody>;
 
 // @public (undocumented)
-export type KdDrillToUrlFilters = Array<DashboardDateFilter | IDashboardAttributeFilter>;
+export type KdDrillToUrlFilters = Array<DashboardDateFilter | IDashboardAttributeFilter | DashboardTextAttributeFilter>;
 
 // @public (undocumented)
 export type KdDrillToUrlResolvedData = IGdcKdMessageEnvelope<GdcKdEventType.DrillToUrlResolved, IKdDrillToUrlResolvedDataBody>;

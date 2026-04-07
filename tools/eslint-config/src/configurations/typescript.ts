@@ -12,13 +12,13 @@ import type { IDualConfiguration } from "../types.js";
 
 const typescriptEslintPlugin: IPackage = {
     name: "@typescript-eslint/eslint-plugin",
-    version: "8.52.0",
+    version: "8.58.0",
 };
 
 const packages = [
     {
         name: "@typescript-eslint/parser",
-        version: "8.52.0",
+        version: "8.58.0",
     },
     typescriptEslintPlugin,
 ];

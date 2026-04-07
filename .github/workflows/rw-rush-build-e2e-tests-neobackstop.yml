@@ -22,7 +22,7 @@ jobs:
       group: infra1-runners-arc
       labels: runners-rxa-xlarge
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.source-ref }}
           fetch-depth: 2
@@ -48,7 +48,7 @@ jobs:
     outputs:
       results: ${{ steps.output-results.outputs.json }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           ref: ${{ inputs.source-ref }}
           fetch-depth: 2

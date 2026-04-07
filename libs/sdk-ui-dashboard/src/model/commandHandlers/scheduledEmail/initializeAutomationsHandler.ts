@@ -7,6 +7,7 @@ import { all, call, put, select } from "redux-saga/effects";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
+    type DashboardAttributeFilterSelectionType,
     type FilterContextItem,
     type IAutomationMetadataObject,
     type IAutomationVisibleFilter,
@@ -22,6 +23,8 @@ import {
     insightFilters,
     isAbsoluteDateFilter,
     isAttributeFilter,
+    isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDateFilter,
@@ -30,6 +33,7 @@ import {
     isFilterContextItem,
     isInsightWidget,
     isRelativeDateFilter,
+    isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
@@ -50,8 +54,10 @@ import {
 } from "../../store/automations/automationsSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 import {
+    selectEnableArbitraryFilterKD,
     selectEnableAutomations,
     selectEnableInPlatformNotifications,
+    selectEnableMatchFilterKD,
     selectEnableNotificationChannelIdentifiers,
     type selectEnableScheduling,
     selectExternalRecipient,
@@ -66,6 +72,10 @@ import { notificationChannelsActions } from "../../store/notificationChannels/in
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
 import { selectIsInExportMode } from "../../store/renderMode/renderModeSelectors.js";
 import {
+    selectAttributeFilterConfigsSelectionTypeMap,
+    selectAttributeFilterConfigsSelectionTypeMapByTab,
+} from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import {
     selectFilterContextFilters,
     selectFiltersForTab,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
@@ -75,6 +85,7 @@ import { uiActions } from "../../store/ui/index.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import { isFilterTypeCompatibleWithSelectionType } from "../dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
 
@@ -90,6 +101,11 @@ export function* initializeAutomationsHandler(
         yield select(selectEnableAutomations);
     const enableInPlatformNotifications: ReturnType<typeof selectEnableInPlatformNotifications> =
         yield select(selectEnableInPlatformNotifications);
+    const enableArbitraryFilterKD: ReturnType<typeof selectEnableArbitraryFilterKD> = yield select(
+        selectEnableArbitraryFilterKD,
+    );
+    const enableMatchFilterKD: ReturnType<typeof selectEnableMatchFilterKD> =
+        yield select(selectEnableMatchFilterKD);
     const enableNotificationChannelIdentifiers: ReturnType<
         typeof selectEnableNotificationChannelIdentifiers
     > = yield select(selectEnableNotificationChannelIdentifiers);
@@ -178,6 +194,16 @@ export function* initializeAutomationsHandler(
             const activeTabLocalIdentifier: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
                 selectActiveTabLocalIdentifier,
             );
+            const selectionTypeMapByTab: ReturnType<
+                typeof selectAttributeFilterConfigsSelectionTypeMapByTab
+            > = yield select(selectAttributeFilterConfigsSelectionTypeMapByTab);
+            const selectionTypeMap: ReturnType<typeof selectAttributeFilterConfigsSelectionTypeMap> =
+                yield select(selectAttributeFilterConfigsSelectionTypeMap);
+            const effectiveActiveTabSelectionTypeMap = resolveSelectionTypeMapForActiveTab(
+                selectionTypeMapByTab,
+                selectionTypeMap,
+                activeTabLocalIdentifier,
+            );
 
             const {
                 targetAlertFilters,
@@ -200,12 +226,25 @@ export function* initializeAutomationsHandler(
                               widget,
                           )
                         : targetAlertFilters;
+                const keepDateFilterDataSets = !!ctx.backend.capabilities.supportsMultipleDateFilters;
+                const filtersToSetAsFilterContextItems = filtersToSet.map((filter) =>
+                    dashboardFilterToFilterContextItem(filter, keepDateFilterDataSets),
+                );
+                const compatibleFiltersToSet = filtersToSetAsFilterContextItems.filter((filter) =>
+                    isFilterContextItemCompatibleWithSelectionType(
+                        filter,
+                        effectiveActiveTabSelectionTypeMap,
+                        enableArbitraryFilterKD,
+                        enableMatchFilterKD,
+                        filterContextFilters,
+                    ),
+                );
 
                 // Empty alert execution filters = reset all filters (set them to all).
                 // Empty sanitized filters = keep filters as they are, do not reset them (all alert execution filters are insight specific / ignored).
                 // Non-empty sanitized filters = set them (some alert execution filters are originating from the dashboard).
-                if (targetAlertFilters.length === 0 || filtersToSet.length > 0) {
-                    const cmd = changeFilterContextSelection(filtersToSet, true, automationId);
+                if (targetAlertFilters.length === 0 || compatibleFiltersToSet.length > 0) {
+                    const cmd = changeFilterContextSelection(compatibleFiltersToSet, true, automationId);
                     yield call(changeFilterContextSelectionHandler, ctx, cmd);
                 }
             }
@@ -246,13 +285,23 @@ export function* initializeAutomationsHandler(
                             filtersToSet,
                             tabCommonDateFilterLocalId,
                         );
+                        const tabSelectionTypeMap = selectionTypeMapByTab[tabId];
+                        const compatibleFilters = sanitizedFilters.filter((filter) =>
+                            isFilterContextItemCompatibleWithSelectionType(
+                                filter,
+                                tabSelectionTypeMap,
+                                enableArbitraryFilterKD,
+                                enableMatchFilterKD,
+                                tabCurrentFilters,
+                            ),
+                        );
 
                         // Empty tab filters = reset all filters (set them to all).
                         // Empty sanitized filters = keep filters as they are.
                         // Non-empty sanitized filters = set them.
-                        if (compactedTabFilters.length === 0 || sanitizedFilters.length > 0) {
+                        if (compactedTabFilters.length === 0 || compatibleFilters.length > 0) {
                             const cmd = changeFilterContextSelectionByParams({
-                                filters: sanitizedFilters,
+                                filters: compatibleFilters,
                                 resetOthers: true,
                                 correlationId: automationId,
                                 tabLocalIdentifier: tabId,
@@ -273,12 +322,21 @@ export function* initializeAutomationsHandler(
                         }) ?? [];
 
                     const sanitizedFiltersToSet = sanitizeDateFilters(filtersToSet, commonDateFilterLocalId);
+                    const compatibleFiltersToSet = sanitizedFiltersToSet.filter((filter) =>
+                        isFilterContextItemCompatibleWithSelectionType(
+                            filter,
+                            effectiveActiveTabSelectionTypeMap,
+                            enableArbitraryFilterKD,
+                            enableMatchFilterKD,
+                            filterContextFilters,
+                        ),
+                    );
 
                     // Empty schedule execution filters = reset all filters (set them to all).
                     // Empty sanitized filters = keep filters as they are, do not reset them (all schedule execution filters are ignored).
                     // Non-empty sanitized filters = set them (some schedule export definition filters are originating from the dashboard).
-                    if (targetExportDefinitionFilters.length === 0 || sanitizedFiltersToSet.length > 0) {
-                        const cmd = changeFilterContextSelection(sanitizedFiltersToSet, true, automationId);
+                    if (targetExportDefinitionFilters.length === 0 || compatibleFiltersToSet.length > 0) {
+                        const cmd = changeFilterContextSelection(compatibleFiltersToSet, true, automationId);
                         yield call(changeFilterContextSelectionHandler, ctx, cmd);
                     }
                 }
@@ -550,4 +608,58 @@ function removeDateFiltersIfDateFilterIsIgnored(filters: IFilter[], widget: IIns
 
     // If widget has ignored date filter, remove it
     return isDateIgnored ? filters.filter((f) => !isDateFilter(f)) : filters;
+}
+
+function isFilterContextItemCompatibleWithSelectionType(
+    filter: FilterContextItem,
+    selectionTypeMap?: Map<string, DashboardAttributeFilterSelectionType | undefined>,
+    enableArbitraryFilterKD?: boolean,
+    enableMatchFilterKD?: boolean,
+    dashboardFilters?: FilterContextItem[],
+): boolean {
+    if (!enableArbitraryFilterKD && !enableMatchFilterKD) {
+        return true;
+    }
+
+    if (!isDashboardAttributeFilterItem(filter)) {
+        return true;
+    }
+
+    const localIdentifier = dashboardFilterLocalIdentifier(filter);
+    if (!localIdentifier) {
+        return true;
+    }
+
+    const configuredSelectionType = selectionTypeMap?.get(localIdentifier);
+    const filterType = isDashboardAttributeFilter(filter) ? "list" : "text";
+
+    // Look up the corresponding filter in the dashboard's filter context to get its selection mode
+    const dashboardFilter = dashboardFilters?.find(
+        (f) => dashboardFilterLocalIdentifier(f) === localIdentifier,
+    );
+
+    const singleSelectionDefault =
+        dashboardFilter &&
+        isDashboardAttributeFilter(dashboardFilter) &&
+        isSingleSelectionFilter(dashboardFilter)
+            ? "list"
+            : undefined;
+
+    return isFilterTypeCompatibleWithSelectionType(
+        filterType,
+        configuredSelectionType,
+        singleSelectionDefault,
+    );
+}
+
+function resolveSelectionTypeMapForActiveTab(
+    selectionTypeMapByTab: ReturnType<typeof selectAttributeFilterConfigsSelectionTypeMapByTab>,
+    selectionTypeMap: ReturnType<typeof selectAttributeFilterConfigsSelectionTypeMap>,
+    activeTabLocalIdentifier?: string,
+) {
+    if (activeTabLocalIdentifier && selectionTypeMapByTab[activeTabLocalIdentifier]) {
+        return selectionTypeMapByTab[activeTabLocalIdentifier];
+    }
+
+    return selectionTypeMap;
 }

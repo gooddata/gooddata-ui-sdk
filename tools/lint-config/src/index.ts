@@ -32,5 +32,11 @@ export {
     typescriptRulesNativeNotSupported,
     typescriptRulesNativeSupported,
 } from "./configurations/typescript.js";
+export {
+    vitestPlugin,
+    vitestRules,
+    vitestRulesNativeNotSupported,
+    vitestRulesNativeSupported,
+} from "./configurations/vitest.js";
 
 export { scopeRules } from "./utils/scopeRules.js";

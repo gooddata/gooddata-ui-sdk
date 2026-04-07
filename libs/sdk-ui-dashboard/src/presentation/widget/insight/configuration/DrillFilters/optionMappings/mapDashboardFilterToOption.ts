@@ -3,6 +3,7 @@
 import { type IntlShape } from "react-intl";
 
 import {
+    type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilter,
@@ -14,18 +15,19 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardDateFilter,
-    isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
 import {
+    canTransferDashboardAttributeFilter,
+    canTransferTextAttributeFilter,
     getDashboardDateFilterCustomTitle,
     getDateDatasetTitle,
     getDisabledOptionProps,
+    getDisabledOptionPropsForTransferResult,
     getDisplayFormTitle,
-    hasMatchingTargetDashboardAttributeFilter,
-    hasMatchingTargetDashboardAttributeFilterDisplayForm,
     hasMatchingTargetDashboardDateFilter,
 } from "../drillFiltersConfigUtils.js";
 import { messages } from "../messages.js";
@@ -40,6 +42,7 @@ interface IMapDashboardFilterToOptionParams {
     sourceDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
     targetDashboardFilters: FilterContextItem[];
     targetDashboardAttributeFilters: IDashboardAttributeFilter[];
+    targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
     isDrillDown: boolean;
     isDrillToDashboard: boolean;
@@ -55,6 +58,7 @@ export function mapDashboardFilterToOption({
     sourceDashboardAttributeFilterConfigs,
     targetDashboardFilters,
     targetDashboardAttributeFilters,
+    targetDashboardTextAttributeFilters,
     targetDashboardAttributeFilterConfigs,
     isDrillDown,
     isDrillToDashboard,
@@ -66,43 +70,7 @@ export function mapDashboardFilterToOption({
         true,
     );
 
-    if (isDashboardAttributeFilter(dashboardFilter)) {
-        const displayFormRef = dashboardFilter.attributeFilter.displayForm;
-        const localIdentifier = dashboardFilter.attributeFilter.localIdentifier;
-        const customTitle = dashboardFilter.attributeFilter.title;
-
-        if (!localIdentifier) {
-            return undefined;
-        }
-
-        // In case of drill to dashboard, we need to check if the attribute filter is available
-        // on the target dashboard. Otherwise disable the option.
-        const hasMatchingTargetAttributeFilter = hasMatchingTargetDashboardAttributeFilter(
-            dashboardFilter,
-            sourceDashboardAttributeFilterConfigs,
-            targetDashboardAttributeFilters,
-            targetDashboardAttributeFilterConfigs,
-            allCatalogDisplayFormsMap,
-        );
-
-        return {
-            id: localIdentifier,
-            title:
-                customTitle ??
-                getDisplayFormTitle({
-                    displayFormRef,
-                    allCatalogDisplayFormsMap,
-                }),
-            ...disabled,
-            ...getDisabledOptionProps(
-                isDrillToDashboard && !hasMatchingTargetAttributeFilter,
-                intl.formatMessage(messages.drillToDashboardDashboardFilterTooltip),
-                false,
-            ),
-        };
-    }
-
-    if (isDashboardTextAttributeFilter(dashboardFilter)) {
+    if (isDashboardAttributeFilterItem(dashboardFilter)) {
         const displayFormRef = dashboardAttributeFilterItemDisplayForm(dashboardFilter);
         const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(dashboardFilter);
         const customTitle = dashboardAttributeFilterItemTitle(dashboardFilter);
@@ -111,10 +79,24 @@ export function mapDashboardFilterToOption({
             return undefined;
         }
 
-        const hasMatchingTargetAttributeFilter = hasMatchingTargetDashboardAttributeFilterDisplayForm(
-            displayFormRef,
-            targetDashboardAttributeFilters,
-        );
+        // In case of drill to dashboard, we need to check if the attribute filter is available
+        // on the target dashboard. Otherwise disable the option.
+        // This considers both list and text filters on the target, and selection type config.
+        const transferResult = isDashboardAttributeFilter(dashboardFilter)
+            ? canTransferDashboardAttributeFilter(
+                  dashboardFilter,
+                  sourceDashboardAttributeFilterConfigs,
+                  targetDashboardAttributeFilters,
+                  targetDashboardAttributeFilterConfigs,
+                  targetDashboardTextAttributeFilters,
+                  allCatalogDisplayFormsMap,
+              )
+            : canTransferTextAttributeFilter(
+                  dashboardFilter,
+                  targetDashboardAttributeFilters,
+                  targetDashboardAttributeFilterConfigs,
+                  targetDashboardTextAttributeFilters,
+              );
 
         return {
             id: localIdentifier,
@@ -125,11 +107,7 @@ export function mapDashboardFilterToOption({
                     allCatalogDisplayFormsMap,
                 }),
             ...disabled,
-            ...getDisabledOptionProps(
-                isDrillToDashboard && !hasMatchingTargetAttributeFilter,
-                intl.formatMessage(messages.drillToDashboardDashboardFilterTooltip),
-                false,
-            ),
+            ...getDisabledOptionPropsForTransferResult(isDrillToDashboard, transferResult, intl),
         };
     }
 

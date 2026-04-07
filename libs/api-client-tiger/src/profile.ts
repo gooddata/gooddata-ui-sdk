@@ -10,6 +10,8 @@ export type FeatureContext = {
     tier: string;
     jsSdkVersion: string;
     controlledFeatureRollout: boolean;
+    region?: string;
+    dataCenter?: string;
 };
 
 export interface ILiveFeatures {
