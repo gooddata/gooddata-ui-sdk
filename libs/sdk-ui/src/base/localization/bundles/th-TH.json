@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "ข้อผิดพลาด: ค่าไม่สามารถว่างได้",
     "attributeFilter.text.isNone": "ไม่มี",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "ค่า",
     "attributeFilter.text.match.value": "ค่า",
     "attributeFilter.text.values.tooltip": "แยกค่าด้วยเครื่องหมายจุลภาคหรือบรรทัดใหม่ ใช้เครื่องหมายอัญประกาศคู่สำหรับค่าที่มีเครื่องหมายจุลภาค\nใช้ {emptyValue} สำหรับค่าว่าง/null\nค่าสูงสุด {maxValues} ค่า",

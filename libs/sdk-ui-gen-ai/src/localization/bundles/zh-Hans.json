@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "跳至AI助手输入",
     "gd.gen-ai.skip-navigation": "跳过导航",
     "gd.gen-ai.changeAnalysis.default_message": "以下是关键驱动因素分析 <metric>{title}</metric> 之间 <b>{range}</b>。",
+    "gd.gen-ai.kda.default_message": "以下是 **{range}** 期间 **{title}** 的关键驱动因素分析。",
     "gd.gen-ai.changeAnalysis.splitter": "和",
     "gd.gen-ai.changeAnalysis.explain_the_change": "打开分析",
     "gd.gen-ai.drill_modal_picker.label": "钻取选择器",

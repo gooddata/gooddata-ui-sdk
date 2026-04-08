@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Fout: waarde mag niet leeg zijn.",
     "attributeFilter.text.isNone": "Geen",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Waarden",
     "attributeFilter.text.match.value": "Waarde",
     "attributeFilter.text.values.tooltip": "Scheid waarden met komma's of nieuwe regels. Gebruik dubbele aanhalingstekens voor waarden die komma's bevatten.\nGebruik {emptyValue} voor leeg/null.\nMax {maxValues} waarden.",

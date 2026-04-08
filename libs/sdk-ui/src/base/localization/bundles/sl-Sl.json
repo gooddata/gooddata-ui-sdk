@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Napaka: vrednost ne sme biti prazna.",
     "attributeFilter.text.isNone": "Noben",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Vrednosti",
     "attributeFilter.text.match.value": "Vrednost",
     "attributeFilter.text.values.tooltip": "Vrednosti ločite z vejicami ali prelomi vrstic. Uporabite dvojne narekovaje za vrednosti, ki vsebujejo vejice.\nZa prazno/null uporabite {emptyValue}.\nNajveč {maxValues} vrednosti.",

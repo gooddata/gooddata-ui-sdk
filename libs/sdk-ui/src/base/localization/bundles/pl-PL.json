@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Błąd: wartość nie może być pusta.",
     "attributeFilter.text.isNone": "Brak",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Wartości",
     "attributeFilter.text.match.value": "Wartość",
     "attributeFilter.text.values.tooltip": "Oddzielaj wartości przecinkami lub znakami nowego wiersza. Użyj podwójnych cudzysłowów dla wartości, które zawierają przecinki.\nUżyj {emptyValue} dla pustych/null.\nMaks. {maxValues} wartości.",

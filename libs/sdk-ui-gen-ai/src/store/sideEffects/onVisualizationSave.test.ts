@@ -181,6 +181,7 @@ describe("buildScatterPlot", () => {
                 clustering: {
                     enabled: true,
                     numberOfClusters: 4,
+                    threshold: 0.03,
                 },
             },
         });

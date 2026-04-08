@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Lewati ke input asisten AI",
     "gd.gen-ai.skip-navigation": "Lewati navigasi",
     "gd.gen-ai.changeAnalysis.default_message": "Berikut adalah analisis penggerak utama untuk <metric>{title}</metric> antara <b>{range}</b>.",
+    "gd.gen-ai.kda.default_message": "Berikut adalah analisis faktor utama untuk **{title}** antara **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "dan",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Buka analisis",
     "gd.gen-ai.drill_modal_picker.label": "Pemilih modal drill",

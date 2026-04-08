@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "오류: 값은 비워 둘 수 없습니다.",
     "attributeFilter.text.isNone": "없음",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "값",
     "attributeFilter.text.match.value": "값",
     "attributeFilter.text.values.tooltip": "값을 쉼표 또는 새 줄로 구분하십시오. 쉼표가 포함된 값에는 큰따옴표를 사용하십시오.\n비어 있음/null에는 {emptyValue}를 사용하십시오.\n최대 {maxValues}개 값.",

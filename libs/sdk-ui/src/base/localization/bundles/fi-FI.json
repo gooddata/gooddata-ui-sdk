@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Virhe: arvo ei voi olla tyhjä.",
     "attributeFilter.text.isNone": "Ei mitään",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Arvot",
     "attributeFilter.text.match.value": "Arvo",
     "attributeFilter.text.values.tooltip": "Erota arvot pilkuilla tai rivinvaihdoilla. Käytä kaksinkertaisia lainausmerkkejä arvoille, jotka sisältävät pilkkuja.\nKäytä {emptyValue} tyhjille/null-arvoille.\nEnintään {maxValues} arvoa.",

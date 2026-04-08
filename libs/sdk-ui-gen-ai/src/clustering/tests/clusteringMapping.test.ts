@@ -26,6 +26,7 @@ describe("clusteringMapping", () => {
             ).toEqual({
                 enabled: true,
                 numberOfClusters: 3,
+                threshold: 0.5,
             });
         });
     });

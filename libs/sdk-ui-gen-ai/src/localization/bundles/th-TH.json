@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "ข้ามไปยังช่องป้อนข้อมูลของผู้ช่วย AI",
     "gd.gen-ai.skip-navigation": "ข้ามการนำทาง",
     "gd.gen-ai.changeAnalysis.default_message": "นี่คือการวิเคราะห์ตัวขับเคลื่อนหลักสำหรับ <metric>{title}</metric> ระหว่าง <b>{range}</b>.",
+    "gd.gen-ai.kda.default_message": "นี่คือการวิเคราะห์ปัจจัยขับเคลื่อนหลักสำหรับ **{title}** ระหว่าง **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "และ",
     "gd.gen-ai.changeAnalysis.explain_the_change": "เปิดการวิเคราะห์",
     "gd.gen-ai.drill_modal_picker.label": "ตัวเลือกในโมดอลการเจาะลึก",

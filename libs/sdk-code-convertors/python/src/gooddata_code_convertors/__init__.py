@@ -9,9 +9,12 @@ YAML-to-Declarative functions accept parsed YAML dicts (e.g. from yaml.safe_load
 not raw YAML strings. Declarative-to-YAML functions accept Declarative API dicts.
 """
 
+from gooddata_code_convertors._types import *  # noqa: F401,F403 — generated TypedDict types
+from gooddata_code_convertors._types import __all__ as _types_all
 from gooddata_code_convertors._wasm_runtime import ConversionError, call as _call
 
 __all__ = [
+    *_types_all,
     "ConversionError",
     # YAML -> Declarative
     "yaml_dataset_to_declarative",

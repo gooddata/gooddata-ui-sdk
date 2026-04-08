@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Skip to AI assistant input",
     "gd.gen-ai.skip-navigation": "Skip to navigation",
     "gd.gen-ai.changeAnalysis.default_message": "Here is the key driver analysis for <metric>{title}</metric> between <b>{range}</b>",
+    "gd.gen-ai.kda.default_message": "Here is the key driver analysis for **{title}** between **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "and",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Open the analysis",
     "gd.gen-ai.drill_modal_picker.label": "Drill modal selector",

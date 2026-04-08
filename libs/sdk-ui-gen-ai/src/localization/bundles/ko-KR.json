@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "AI 어시스턴트 입력으로 건너뛰기",
     "gd.gen-ai.skip-navigation": "탐색 건너뛰기",
     "gd.gen-ai.changeAnalysis.default_message": "여기 <metric>{title}</metric>와 <b>{range}</b> 사이의 주요 동인 분석이 있습니다.",
+    "gd.gen-ai.kda.default_message": "다음은 **{range}** 기간의 **{title}**에 대한 주요 동인 분석입니다.",
     "gd.gen-ai.changeAnalysis.splitter": "및",
     "gd.gen-ai.changeAnalysis.explain_the_change": "분석 열기",
     "gd.gen-ai.drill_modal_picker.label": "드릴 모달 선택기",

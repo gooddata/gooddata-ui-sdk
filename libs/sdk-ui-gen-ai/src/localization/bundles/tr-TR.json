@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Yapay zeka asistanı girdisine atla",
     "gd.gen-ai.skip-navigation": "Gezintiyi atla",
     "gd.gen-ai.changeAnalysis.default_message": "İşte anahtar sürücü analizi: <metric>{title}</metric> arasında <b>{range}</b>.",
+    "gd.gen-ai.kda.default_message": "İşte **{range}** arasında **{title}** için anahtar etken analizi.",
     "gd.gen-ai.changeAnalysis.splitter": "ve",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Analizi aç",
     "gd.gen-ai.drill_modal_picker.label": "Detaylandırma modali seçici",

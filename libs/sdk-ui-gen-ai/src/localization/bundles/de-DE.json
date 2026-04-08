@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Zur Eingabe des KI-Assistenten springen",
     "gd.gen-ai.skip-navigation": "Navigation überspringen",
     "gd.gen-ai.changeAnalysis.default_message": "Hier ist die Haupttreiberanalyse für <metric>{title}</metric> zwischen <b>{range}</b>.",
+    "gd.gen-ai.kda.default_message": "Hier ist die Treiberanalyse für **{title}** zwischen **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "und",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Öffnen Sie die Analyse",
     "gd.gen-ai.drill_modal_picker.label": "Drill-Modal-Auswahl",

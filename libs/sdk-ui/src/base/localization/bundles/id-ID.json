@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Kesalahan: Nilai tidak boleh kosong.",
     "attributeFilter.text.isNone": "Tidak ada",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Nilai",
     "attributeFilter.text.match.value": "Nilai",
     "attributeFilter.text.values.tooltip": "Pisahkan nilai dengan koma atau baris baru. Gunakan tanda kutip ganda untuk nilai yang berisi koma.\nGunakan {emptyValue} untuk kosong/null.\nMaks {maxValues} nilai.",
