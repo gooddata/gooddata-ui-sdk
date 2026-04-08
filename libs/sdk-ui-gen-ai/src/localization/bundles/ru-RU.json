@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Перейти к вводу AI-ассистента",
     "gd.gen-ai.skip-navigation": "Пропустить навигацию",
     "gd.gen-ai.changeAnalysis.default_message": "Вот анализ ключевых факторов для <metric>{title}</metric> между <b>{range}</b>",
+    "gd.gen-ai.kda.default_message": "Вот анализ ключевых факторов для **{title}** за период **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "и",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Открыть анализ",
     "gd.gen-ai.drill_modal_picker.label": "Выборщик модального окна детализации",

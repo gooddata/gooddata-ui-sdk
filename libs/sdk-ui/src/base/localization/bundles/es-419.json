@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Error: El valor no puede estar vacío.",
     "attributeFilter.text.isNone": "Ninguno",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Valores",
     "attributeFilter.text.match.value": "Valor",
     "attributeFilter.text.values.tooltip": "Separe los valores con comas o nuevas líneas. Use comillas dobles para los valores que contienen comas.\nUse {emptyValue} para vacío/nulo.\nMáx. {maxValues} valores.",

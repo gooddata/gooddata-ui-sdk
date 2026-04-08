@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Hata: Değer boş olamaz.",
     "attributeFilter.text.isNone": "Hiçbiri",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Değerler",
     "attributeFilter.text.match.value": "Değer",
     "attributeFilter.text.values.tooltip": "Değerleri virgülle veya yeni satırlarla ayırın. Virgül içeren değerler için çift tırnak kullanın.\nBoş/null için {emptyValue} kullanın.\nEn fazla {maxValues} değer.",

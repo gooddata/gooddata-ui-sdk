@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.29.0-alpha.4",
+    "version": "11.29.0-alpha.5",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -35,13 +35,16 @@
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
+        "validate": "npm run lint && npm run dep-cruiser && npm run format-check && npm run check-python-types",
+        "check-python-types": "node scripts/check-python-types.mjs",
         "lint": "oxlint . --type-aware --quiet && eslint .",
         "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
         "test": "vitest watch",
         "test-once": "vitest run",
         "build-wasm": "bash wasm/build.sh",
-        "test-wasm": "bash wasm/test.sh"
+        "test-wasm": "bash wasm/test.sh",
+        "generate-python-types": "uv run --no-project --with datamodel-code-generator python python/scripts/generate_types.py",
+        "generate-python-types-check": "uv run --no-project --with datamodel-code-generator python python/scripts/generate_types.py --check"
     },
     "dependencies": {
         "@gooddata/api-client-tiger": "workspace:*",

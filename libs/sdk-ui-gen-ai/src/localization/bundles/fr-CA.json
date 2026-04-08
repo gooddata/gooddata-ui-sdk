@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Passer à l'entrée de l'assistant AI",
     "gd.gen-ai.skip-navigation": "Sauter la navigation",
     "gd.gen-ai.changeAnalysis.default_message": "Voici l'analyse des facteurs clés pour <metric>{title}</metric> entre <b>{range}</b>.",
+    "gd.gen-ai.kda.default_message": "Voici l’analyse des facteurs clés pour **{title}** entre **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "et",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Ouvrir l'analyse",
     "gd.gen-ai.drill_modal_picker.label": "Sélecteur de mode d'exploration",

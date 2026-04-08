@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Error: Value cannot be empty.",
     "attributeFilter.text.isNone": "None",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Values",
     "attributeFilter.text.match.value": "Value",
     "attributeFilter.text.values.tooltip": "Separate values with commas or new lines. Use double quotes for values that contain commas.\nUse {emptyValue} for empty/null.\nMax {maxValues} values.",

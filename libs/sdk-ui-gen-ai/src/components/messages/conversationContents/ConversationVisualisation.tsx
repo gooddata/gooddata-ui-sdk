@@ -598,14 +598,14 @@ const renderScatterPlot = (
         visualization.insight.properties["controls"],
     );
 
-    const { metrics, attribute, segment } = buckets;
+    const { metrics, secondary_metrics, attribute, segment } = buckets;
 
     return (
         <ScatterPlot
             locale={locale}
             height={VIS_HEIGHT}
             xAxisMeasure={metrics[0]}
-            yAxisMeasure={metrics[1]}
+            yAxisMeasure={secondary_metrics[0]}
             attribute={attribute[0]}
             segmentBy={segment[0]}
             filters={filters}
@@ -644,13 +644,14 @@ const renderTable = (
     },
 ) => {
     const TableComponent = props.enableNewPivotTable ? PivotTableNext : PivotTable;
-    const { metrics, rows } = buckets;
+    const { metrics, attribute, columns } = buckets;
 
     return (
         <TableComponent
             locale={locale}
             measures={metrics}
-            rows={rows}
+            rows={attribute}
+            columns={columns}
             filters={filters}
             sortBy={sortBy}
             config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
@@ -719,7 +720,7 @@ function useBucketData(buckets: IBucket[]) {
         const view = buckets.find((b) => b.localIdentifier === "view")?.items.filter(isAttribute) ?? [];
         const stack = buckets.find((b) => b.localIdentifier === "stack")?.items.filter(isAttribute) ?? [];
         const trend = buckets.find((b) => b.localIdentifier === "trend")?.items.filter(isAttribute) ?? [];
-        const rows = buckets.find((b) => b.localIdentifier === "rows")?.items.filter(isAttribute) ?? [];
+        const columns = buckets.find((b) => b.localIdentifier === "columns")?.items.filter(isAttribute) ?? [];
         const attribute =
             buckets.find((b) => b.localIdentifier === "attribute")?.items.filter(isAttribute) ?? [];
         const segment = buckets.find((b) => b.localIdentifier === "segment")?.items.filter(isAttribute) ?? [];
@@ -732,7 +733,7 @@ function useBucketData(buckets: IBucket[]) {
             trend,
             segment,
             attribute,
-            rows,
+            columns,
         };
     }, [buckets]);
 }

@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Preskoči na vhod pomočnika AI",
     "gd.gen-ai.skip-navigation": "Preskoči navigacijo",
     "gd.gen-ai.changeAnalysis.default_message": "Tu je analiza ključnih gonilnikov za <metric>{title}</metric> med <b>{range}</b>.",
+    "gd.gen-ai.kda.default_message": "Tukaj je analiza ključnih gonilnikov za **{title}** med **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "in",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Odpri analizo",
     "gd.gen-ai.drill_modal_picker.label": "Izbirnik modalnega okna vrtanja",

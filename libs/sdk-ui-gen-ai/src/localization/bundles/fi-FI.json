@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Siirry tekoälyavustajan syöttöön",
     "gd.gen-ai.skip-navigation": "Ohita navigointi",
     "gd.gen-ai.changeAnalysis.default_message": "Tässä on avaintekijäanalyysi <metric>{title}</metric>ajalle  <b>{range}</b>välillä.",
+    "gd.gen-ai.kda.default_message": "Tässä on avaintekijäanalyysi kohteelle **{title}** aikavälillä **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "ja",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Avaa analyysi",
     "gd.gen-ai.drill_modal_picker.label": "Porauksen modaalinen valitsin",

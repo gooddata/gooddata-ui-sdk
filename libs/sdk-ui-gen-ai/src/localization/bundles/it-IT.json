@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Passa all'input dell'assistente AI",
     "gd.gen-ai.skip-navigation": "Salta la navigazione",
     "gd.gen-ai.changeAnalysis.default_message": "Ecco l'analisi dei key driver per <metric>{title}</metric> tra <b>{range}</b>.",
+    "gd.gen-ai.kda.default_message": "Ecco l'analisi dei fattori chiave per **{title}** tra **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "e",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Aprire l'analisi",
     "gd.gen-ai.drill_modal_picker.label": "Picker modale del trapano",

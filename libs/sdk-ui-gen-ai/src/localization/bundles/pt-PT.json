@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Pular para a entrada do assistente de IA",
     "gd.gen-ai.skip-navigation": "Pular navegação",
     "gd.gen-ai.changeAnalysis.default_message": "Aqui está a análise dos principais fatores <metric>{title}</metric>entre  <b>{range}</b> .",
+    "gd.gen-ai.kda.default_message": "Aqui está a análise dos principais fatores para **{title}** entre **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "e",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Abrir a análise",
     "gd.gen-ai.drill_modal_picker.label": "Seletor modal de perfuração",

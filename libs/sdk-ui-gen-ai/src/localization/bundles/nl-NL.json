@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Doorgaan naar invoer AI-assistent",
     "gd.gen-ai.skip-navigation": "Navigatie overslaan",
     "gd.gen-ai.changeAnalysis.default_message": "Hier is de belangrijkste driveranalyse voor <metric>{title}</metric> tussen <b>{range}</b>.",
+    "gd.gen-ai.kda.default_message": "Hier is de analyse van de belangrijkste aanjagers voor **{title}** tussen **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "en",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Open de analyse",
     "gd.gen-ai.drill_modal_picker.label": "Drill-modale kiezer",

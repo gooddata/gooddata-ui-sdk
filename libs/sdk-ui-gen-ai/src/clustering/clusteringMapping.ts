@@ -17,7 +17,8 @@ export function mapVisualizationClusteringToChartConfig(config?: Config): IChart
 
     return {
         enabled: true,
-        numberOfClusters: clustering.numberOfClusters,
+        numberOfClusters: clustering.numberOfClusters ?? 3,
+        threshold: clustering.threshold ?? 0.03,
     };
 }
 
@@ -32,7 +33,7 @@ export function mapVisualizationClusteringToBackendConfig(config?: Config): IClu
     }
 
     return {
-        numberOfClusters: clustering.numberOfClusters,
-        threshold: clustering.threshold,
+        numberOfClusters: clustering.numberOfClusters ?? 3,
+        threshold: clustering.threshold ?? 0.03,
     };
 }

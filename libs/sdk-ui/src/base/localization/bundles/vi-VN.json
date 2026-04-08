@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Lỗi: Giá trị không được để trống.",
     "attributeFilter.text.isNone": "Không có",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Giá trị",
     "attributeFilter.text.match.value": "Giá trị",
     "attributeFilter.text.values.tooltip": "Phân tách các giá trị bằng dấu phẩy hoặc dòng mới. Dùng dấu ngoặc kép cho các giá trị có chứa dấu phẩy.\nDùng {emptyValue} cho trống/null.\nTối đa {maxValues} giá trị.",

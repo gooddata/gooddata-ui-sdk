@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Errore: il valore non può essere vuoto.",
     "attributeFilter.text.isNone": "Nessuno",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Valori",
     "attributeFilter.text.match.value": "Valore",
     "attributeFilter.text.values.tooltip": "Separare i valori con virgole o nuove righe. Utilizzare le virgolette doppie per i valori che contengono virgole.\nUtilizzare {emptyValue} per vuoto/nullo.\nMax {maxValues} valori.",

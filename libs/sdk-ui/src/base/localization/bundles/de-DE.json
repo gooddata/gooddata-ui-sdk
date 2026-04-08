@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Fehler: Wert darf nicht leer sein.",
     "attributeFilter.text.isNone": "Keine",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Werte",
     "attributeFilter.text.match.value": "Wert",
     "attributeFilter.text.values.tooltip": "Trennen Sie Werte durch Kommas oder neue Zeilen. Verwenden Sie doppelte Anführungszeichen für Werte, die Kommas enthalten.\nVerwenden Sie {emptyValue} für leer/NULL.\nMax. {maxValues} Werte.",

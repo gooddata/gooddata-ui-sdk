@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Ошибка: значение не может быть пустым.",
     "attributeFilter.text.isNone": "Нет",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Значения",
     "attributeFilter.text.match.value": "Значение",
     "attributeFilter.text.values.tooltip": "Разделяйте значения запятыми или переводами строк. Используйте двойные кавычки для значений, содержащих запятые.\nИспользуйте {emptyValue} для пустых/null.\nМакс. {maxValues} значений.",

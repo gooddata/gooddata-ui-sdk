@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "错误：值不能为空。",
     "attributeFilter.text.isNone": "无",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "数值",
     "attributeFilter.text.match.value": "数值",
     "attributeFilter.text.values.tooltip": "用逗号或换行分隔值。对包含逗号的值使用双引号。\n对空值/null 使用 {emptyValue}。\n最多 {maxValues} 个值。",

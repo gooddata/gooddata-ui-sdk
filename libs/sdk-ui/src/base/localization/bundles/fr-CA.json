@@ -428,7 +428,6 @@
     "attributeFilter.text.validation.valueCannotBeEmpty": "Erreur : la valeur ne peut pas être vide.",
     "attributeFilter.text.isNone": "Aucun(e)",
     "attributeFilter.text.summary.plain": "{operator} {value}",
-    "attributeFilter.text.summary.rich": "{operator} <b>{value}</b>",
     "attributeFilter.text.arbitrary.values": "Valeurs",
     "attributeFilter.text.match.value": "Valeur",
     "attributeFilter.text.values.tooltip": "Séparez les valeurs par des virgules ou des retours à la ligne. Utilisez des guillemets doubles pour les valeurs qui contiennent des virgules.\nUtilisez {emptyValue} pour vide/null.\nMax {maxValues} valeurs.",

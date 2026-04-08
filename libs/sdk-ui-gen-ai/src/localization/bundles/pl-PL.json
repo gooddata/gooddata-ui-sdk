@@ -85,6 +85,7 @@
     "gd.gen-ai.skip-messages-history": "Przejdź do wprowadzania asystenta AI",
     "gd.gen-ai.skip-navigation": "Pomiń nawigację",
     "gd.gen-ai.changeAnalysis.default_message": "Oto analiza kluczowych czynników dla <metric>{title}</metric> pomiędzy <b>{range}</b>",
+    "gd.gen-ai.kda.default_message": "Oto analiza kluczowych czynników dla **{title}** między **{range}**.",
     "gd.gen-ai.changeAnalysis.splitter": "i",
     "gd.gen-ai.changeAnalysis.explain_the_change": "Otwórz analizę",
     "gd.gen-ai.drill_modal_picker.label": "Selektor modalny drążenia",
