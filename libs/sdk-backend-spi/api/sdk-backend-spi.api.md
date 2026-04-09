@@ -846,9 +846,21 @@ export interface IChatThreadQuery {
 }
 
 // @internal
+export interface IChatWhatIfAdjustment {
+    ref: ObjRef;
+    scenarioMaql: string;
+}
+
+// @internal
 export interface IChatWhatIfDefinition {
-    // (undocumented)
-    id: string;
+    includeBaseline?: boolean;
+    scenarios: IChatWhatIfScenario[];
+}
+
+// @internal
+export interface IChatWhatIfScenario {
+    adjustments: IChatWhatIfAdjustment[];
+    label: string;
 }
 
 // @alpha (undocumented)

@@ -33,7 +33,7 @@ export interface IGoodmockOptions {
 }
 
 export interface IE2eTestDetails extends TestDetails {
-    featureFlags?: Record<string, unknown>;
+    workspaceSettings?: Record<string, unknown>;
 }
 
 export interface IFeatureHubFeature {
@@ -77,6 +77,19 @@ export interface IDescribeFunction {
 
 export type IE2eTest = typeof test & {
     topLevelDescribe: IDescribeFunction;
+    describe: {
+        (title: string, callback: () => void): void;
+        (title: string, details: IE2eTestDetails, callback: () => void): void;
+        skip: {
+            (title: string, callback: () => void): void;
+            (title: string, details: IE2eTestDetails, callback: () => void): void;
+        };
+        only: (typeof test)["describe"]["only"];
+        configure: (typeof test)["describe"]["configure"];
+        fixme: (typeof test)["describe"]["fixme"];
+        serial: (typeof test)["describe"]["serial"];
+        parallel: (typeof test)["describe"]["parallel"];
+    };
 };
 
 // --- Internal helpers ---
@@ -92,12 +105,21 @@ function parseArgs(
     };
 }
 
-/** Strip custom fields (featureFlags) before passing details to Playwright. */
+/** Strip custom fields before passing details to Playwright. */
 function toPlaywrightDetails(details: IE2eTestDetails | undefined): TestDetails | undefined {
     if (!details) return undefined;
     // oxlint-disable-next-line @typescript-eslint/no-unused-vars
-    const { featureFlags: _, ...rest } = details;
+    const { workspaceSettings: _ws, ...rest } = details;
     return Object.keys(rest).length > 0 ? rest : undefined;
+}
+
+/** Inject workspace settings via addInitScript. */
+function injectWorkspaceSettings(testInst: typeof test, settings: Record<string, unknown>): void {
+    testInst.beforeEach(async ({ page }) => {
+        await page.addInitScript((s: Record<string, unknown>) => {
+            (window as unknown as Record<string, unknown>)["customWorkspaceSettings"] = s;
+        }, settings);
+    });
 }
 
 // --- Factory ---
@@ -108,6 +130,31 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
     const testInstance: typeof test = options.fixtures
         ? (test.extend(options.fixtures) as typeof test)
         : test;
+
+    // Tracks whether we're inside a topLevelDescribe during synchronous registration.
+    let insideTopLevelDescribe = false;
+
+    // Stack tracks workspace settings hierarchy during synchronous describe registration.
+    // Each level merges its settings on top of the parent's. The beforeEach at each level
+    // captures the fully-merged snapshot, so the innermost beforeEach (which runs last) wins.
+    const settingsStack: Record<string, unknown>[] = [];
+
+    function currentSettings(): Record<string, unknown> {
+        return settingsStack.length > 0 ? settingsStack[settingsStack.length - 1] : {};
+    }
+
+    /** Push merged workspace settings onto the stack, register a beforeEach, call fn, pop. */
+    function withWorkspaceSettings(ws: Record<string, unknown> | undefined, fn: () => void): void {
+        if (!ws) {
+            fn();
+            return;
+        }
+        const merged = { ...currentSettings(), ...ws };
+        settingsStack.push(merged);
+        injectWorkspaceSettings(testInstance, merged);
+        fn();
+        settingsStack.pop();
+    }
 
     function buildSuiteCallback(
         specName: string,
@@ -126,19 +173,6 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
                             body,
                         });
                     });
-                });
-            }
-
-            // Feature flags beforeEach — defined first so it runs before any spec-defined hooks.
-            if (details?.featureFlags) {
-                const flags = details.featureFlags;
-                testInstance.beforeEach(async ({ page }) => {
-                    await page.addInitScript((settings: Record<string, unknown>) => {
-                        (window as unknown as Record<string, unknown>)["customWorkspaceSettings"] = settings;
-                        (window as unknown as Record<string, unknown>)[
-                            "useSafeWidgetLocalIdentifiersForE2e"
-                        ] = true;
-                    }, flags);
                 });
             }
 
@@ -176,9 +210,63 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
                 }
             }
 
-            fn(); // user's test.beforeAll/beforeEach calls stack on top naturally
+            // Workspace settings — merge with parent stack and inject beforeEach.
+            // Wraps fn() so nested describes see this level's settings on the stack.
+            insideTopLevelDescribe = true;
+            withWorkspaceSettings(details?.workspaceSettings, fn);
+            insideTopLevelDescribe = false;
         };
     }
+
+    // --- Override test.describe to support workspaceSettings merging ---
+
+    const originalDescribe = testInstance.describe;
+
+    function wrappedDescribe(title: string, callback: () => void): void;
+    function wrappedDescribe(title: string, details: IE2eTestDetails, callback: () => void): void;
+    function wrappedDescribe(
+        title: string,
+        detailsOrCb: IE2eTestDetails | (() => void),
+        cb?: () => void,
+    ): void {
+        if (!insideTopLevelDescribe) {
+            throw new Error(
+                `test.describe("${title}") must be nested inside a test.topLevelDescribe() block.`,
+            );
+        }
+
+        const hasDetails = typeof detailsOrCb !== "function";
+        const details = hasDetails ? (detailsOrCb as IE2eTestDetails) : undefined;
+        const callback = hasDetails ? (cb as () => void) : (detailsOrCb as () => void);
+        const pwDetails = toPlaywrightDetails(details);
+
+        const wrapped = () => withWorkspaceSettings(details?.workspaceSettings, callback);
+
+        if (pwDetails) {
+            originalDescribe(title, pwDetails, wrapped);
+        } else {
+            originalDescribe(title, wrapped);
+        }
+    }
+
+    // Wrap describe.skip with the same workspaceSettings merging logic.
+    const originalSkip = originalDescribe.skip;
+    function wrappedSkip(title: string, callback: () => void): void;
+    function wrappedSkip(title: string, details: IE2eTestDetails, callback: () => void): void;
+    function wrappedSkip(title: string, detailsOrCb: IE2eTestDetails | (() => void), cb?: () => void): void {
+        const hasDetails = typeof detailsOrCb !== "function";
+        const details = hasDetails ? (detailsOrCb as IE2eTestDetails) : undefined;
+        const callback = hasDetails ? (cb as () => void) : (detailsOrCb as () => void);
+
+        const wrapped = () => withWorkspaceSettings(details?.workspaceSettings, callback);
+        originalSkip(title, wrapped);
+    }
+
+    // Preserve all sub-methods (.only, .serial, .parallel, .configure, .fixme)
+    Object.assign(wrappedDescribe, originalDescribe);
+    wrappedDescribe.skip = wrappedSkip;
+    // oxlint-disable-next-line @typescript-eslint/no-explicit-any
+    (testInstance as any).describe = wrappedDescribe;
 
     // --- topLevelDescribe ---
 
@@ -201,10 +289,10 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
 
         if (pwDetails) {
             // oxlint-disable-next-line playwright/valid-describe-callback
-            testInstance.describe(suiteName, pwDetails, suite);
+            originalDescribe(suiteName, pwDetails, suite);
         } else {
             // oxlint-disable-next-line playwright/valid-describe-callback
-            testInstance.describe(suiteName, suite);
+            originalDescribe(suiteName, suite);
         }
     }
 
@@ -222,13 +310,13 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
         const suite = buildSuiteCallback(specName, details, fn);
 
         // oxlint-disable-next-line playwright/valid-describe-callback
-        testInstance.describe.skip(suiteName, suite);
+        originalSkip(suiteName, suite);
     }
 
     topLevelDescribe.skip = skip as IDescribeFunction["skip"];
 
     // Attach topLevelDescribe onto the test instance
-    const e2eTest = testInstance as IE2eTest;
+    const e2eTest = testInstance as unknown as IE2eTest;
     e2eTest.topLevelDescribe = topLevelDescribe as IDescribeFunction;
 
     return e2eTest;

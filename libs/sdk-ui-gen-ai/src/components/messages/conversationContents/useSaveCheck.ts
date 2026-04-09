@@ -5,14 +5,18 @@ import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@goo
 
 import type { IChatConversationMultipartLocalPart } from "../../../model.js";
 
-export function useSaveCheck(part: IChatConversationMultipartLocalPart, visualization: IInsight | undefined) {
+export function useSaveCheck(
+    part: IChatConversationMultipartLocalPart,
+    visualization: IInsight | undefined,
+    run: boolean,
+) {
     const backend = useBackendStrict();
     const workspaceId = useWorkspaceStrict();
 
     const { result, status, error } = useCancelablePromise(
         {
             promise: async () => {
-                if (!workspaceId || !visualization) {
+                if (!workspaceId || !visualization || !run) {
                     return false;
                 }
                 const res = await backend.workspace(workspaceId).insights().getInsight({
@@ -22,7 +26,7 @@ export function useSaveCheck(part: IChatConversationMultipartLocalPart, visualiz
                 return Boolean(res);
             },
         },
-        [workspaceId, visualization?.insight.identifier, part.saving?.completed],
+        [workspaceId, visualization?.insight.identifier, part.saving?.completed, run],
     );
 
     const visualisationSaved = Boolean(result && !error);

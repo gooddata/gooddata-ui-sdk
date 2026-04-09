@@ -19,3 +19,9 @@ export {
 export { createBackendForModule, type ICreateBackendForModuleOptions } from "./backend.js";
 
 export { AppProviders, type IAppProvidersProps } from "./AppProviders.js";
+export {
+    type IPluggableAppEventsContextValue,
+    type IPluggableAppEventsProviderProps,
+    PluggableAppEventsProvider,
+    usePluggableAppEvents,
+} from "./events.js";

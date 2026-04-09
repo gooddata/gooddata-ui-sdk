@@ -1,6 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
+// Constrain the overlay wrapper so it shrink-wraps to the filter menu dropdown content
+.overlay.dropdown-body:has(.gd-filter-menu__dropdown) {
+    width: max-content;
+}
+
 .gd-filter-menu {
     &__button {
         display: flex;
@@ -45,6 +50,7 @@
         padding: 0 0 8px;
 
         .gd-ui-kit-listbox {
+            width: 100%;
             min-width: 100%;
             max-height: none;
             overflow-y: hidden;

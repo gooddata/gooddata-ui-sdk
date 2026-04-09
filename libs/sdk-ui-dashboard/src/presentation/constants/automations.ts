@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type AutomationColumnDefinition } from "@gooddata/sdk-ui-ext";
 
@@ -33,5 +33,7 @@ export const AUTOMATION_FILTERS_DIALOG_TITLE_ID = "automation-filters-dialog-tit
 export const AUTOMATION_FILTERS_DIALOG_ID = "automation-filters-dialog";
 
 export const AUTOMATION_ATTACHMENTS_DIALOG_TITLE_ID = "automation-attachments-dialog-title";
+
+export const AUTOMATION_ATTACHMENT_SETTINGS_DIALOG_TITLE_ID = "automation-attachment-settings-dialog-title";
 
 export const AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID = "automation-attachments-group-label";

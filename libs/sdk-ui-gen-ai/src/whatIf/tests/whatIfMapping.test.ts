@@ -2,9 +2,31 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { IGenAIVisualization } from "@gooddata/sdk-model";
+import type { IGenAIVisualization, IInsight } from "@gooddata/sdk-model";
 
-import { mapVisualizationWhatIfToScenarios } from "../whatIfMapping.js";
+import type { IChatConversationLocalContent } from "../../model.js";
+import { loadWhatIfScenarios, mapVisualizationWhatIfToScenarios } from "../whatIfMapping.js";
+
+const insight: IInsight = {
+    insight: {
+        ref: {
+            identifier: "insight-id",
+            type: "insight",
+        },
+        identifier: "insight-id",
+        uri: "insight-uri",
+        title: "Insight Title",
+        visualizationUrl: "vis-url",
+        buckets: [],
+        filters: [],
+        sorts: [],
+        properties: {},
+        updated: "2024-01-01T00:00:00Z",
+        created: "2024-01-01T00:00:00Z",
+        tags: [],
+        summary: "",
+    },
+};
 
 const baseVisualization: IGenAIVisualization = {
     id: "vis-id",
@@ -204,5 +226,149 @@ describe("whatIfMapping", () => {
         expect(result[0].isBaseline).toBe(true);
         expect(result[1].label).toBe("Optimistic");
         expect(result[2].label).toBe("Pessimistic");
+    });
+});
+
+describe("loadWhatIfScenarios", () => {
+    it("returns undefined if no what-if part is present", () => {
+        const content: IChatConversationLocalContent = {
+            type: "multipart",
+            parts: [],
+        };
+        expect(loadWhatIfScenarios(content)).toBeUndefined();
+    });
+
+    it("returns undefined if what-if has no scenarios", () => {
+        const content: IChatConversationLocalContent = {
+            type: "multipart",
+            parts: [
+                {
+                    type: "whatIf",
+                    whatIf: {
+                        includeBaseline: true,
+                        scenarios: [],
+                    },
+                },
+            ],
+        };
+        expect(loadWhatIfScenarios(content)).toBeUndefined();
+    });
+
+    it("returns undefined if no visualization part is present", () => {
+        const content: IChatConversationLocalContent = {
+            type: "multipart",
+            parts: [
+                {
+                    type: "whatIf",
+                    whatIf: {
+                        includeBaseline: true,
+                        scenarios: [
+                            {
+                                label: "Scenario 1",
+                                adjustments: [],
+                            },
+                        ],
+                    },
+                },
+            ],
+        };
+        expect(loadWhatIfScenarios(content)).toBeUndefined();
+    });
+
+    it("correctly loads scenarios with baseline", () => {
+        const content: IChatConversationLocalContent = {
+            type: "multipart",
+            parts: [
+                {
+                    type: "visualization",
+                    visualization: insight,
+                },
+                {
+                    type: "whatIf",
+                    whatIf: {
+                        includeBaseline: true,
+                        scenarios: [
+                            {
+                                label: "Scenario 1",
+                                adjustments: [
+                                    {
+                                        ref: { identifier: "m1", type: "measure" },
+                                        scenarioMaql: "SELECT {m1} * 1.1",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+        };
+
+        const result = loadWhatIfScenarios(content);
+        expect(result).toBeDefined();
+        expect(result?.insight).toEqual(insight);
+        expect(result?.scenarios).toHaveLength(2);
+        expect(result?.scenarios[0]).toEqual({
+            label: "Insight Title",
+            execConfig: undefined,
+            isBaseline: true,
+        });
+        expect(result?.scenarios[1]).toEqual({
+            label: "Scenario 1",
+            execConfig: {
+                measureDefinitionOverrides: [
+                    {
+                        item: {
+                            identifier: {
+                                id: "m1",
+                                type: "metric",
+                            },
+                        },
+                        definition: {
+                            inline: {
+                                maql: "SELECT {m1} * 1.1",
+                            },
+                        },
+                    },
+                ],
+            },
+            isBaseline: false,
+        });
+    });
+
+    it("handles URI refs correctly", () => {
+        const content: IChatConversationLocalContent = {
+            type: "multipart",
+            parts: [
+                {
+                    type: "visualization",
+                    visualization: insight,
+                },
+                {
+                    type: "whatIf",
+                    whatIf: {
+                        includeBaseline: false,
+                        scenarios: [
+                            {
+                                label: "Scenario 1",
+                                adjustments: [
+                                    {
+                                        ref: { uri: "/uri/1" },
+                                        scenarioMaql: "SELECT {m1} * 1.1",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                },
+            ],
+        };
+
+        const result = loadWhatIfScenarios(content);
+        expect(result?.scenarios[0].execConfig?.measureDefinitionOverrides?.[0].item).toEqual({
+            identifier: {
+                id: "/uri/1",
+                type: "metric",
+            },
+        });
     });
 });

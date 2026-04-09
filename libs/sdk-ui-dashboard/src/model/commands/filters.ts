@@ -4,6 +4,7 @@ import {
     type DashboardAttributeFilterConfigMode,
     type DashboardAttributeFilterItem,
     type DashboardAttributeFilterSelectionMode,
+    type DashboardTextAttributeFilter,
     type DateFilterGranularity,
     type DateFilterType,
     type DateString,
@@ -424,6 +425,69 @@ export function addAttributeFilter(
             initialIsNegativeSelection,
             localIdentifier,
             title,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload of the {@link IAddTextAttributeFilter} command.
+ * @beta
+ */
+export interface IAddTextAttributeFilterPayload {
+    /**
+     * The text attribute filter to add (arbitrary or match).
+     */
+    readonly filter: DashboardTextAttributeFilter;
+
+    /**
+     * Index among the attribute filters at which the new filter should be placed.
+     * Index of -1 adds the filter at the end.
+     */
+    readonly index: number;
+
+    /**
+     * Specify the visibility mode of the attribute filter.
+     */
+    readonly mode?: DashboardAttributeFilterConfigMode;
+}
+
+/**
+ * @beta
+ */
+export interface IAddTextAttributeFilter extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.TEXT_ATTRIBUTE_FILTER.ADD";
+    readonly payload: IAddTextAttributeFilterPayload;
+}
+
+/**
+ * Creates the AddTextAttributeFilter command. Dispatching this command will result in the addition
+ * of a text attribute filter (arbitrary or match) to the dashboard's filter bar, at desired position,
+ * or error in case of invalid update (e.g. wrong or duplicated displayForm).
+ *
+ * @param filter - the text attribute filter to add (IDashboardArbitraryAttributeFilter or IDashboardMatchAttributeFilter)
+ * @param index - specify index among the attribute filters at which the new filter should be placed.
+ *  The index starts at zero and there is convenience that index of -1 would add the filter at the end.
+ * @param correlationId - specify correlation id to use for this command
+ * @param mode - specify the visibility mode of attribute filter
+ * @beta
+ */
+export function addTextAttributeFilter(
+    filter: DashboardTextAttributeFilter,
+    index: number,
+    correlationId?: string,
+    mode?: DashboardAttributeFilterConfigMode,
+): IAddTextAttributeFilter {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.TEXT_ATTRIBUTE_FILTER.ADD",
+        correlationId,
+        payload: {
+            filter,
+            index,
+            mode,
         },
     };
 }

@@ -8,6 +8,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthCredentials } from '@gooddata/sdk-pluggable-application-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
+import { IPluggableAppEvent } from '@gooddata/sdk-pluggable-application-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
 import { PropsWithChildren } from 'react';
@@ -44,12 +45,29 @@ export interface IPlatformContextProviderProps extends PropsWithChildren {
 }
 
 // @alpha
+export interface IPluggableAppEventsContextValue {
+    emit: (event: IPluggableAppEvent) => void;
+    emitPlatformContextReload: () => void;
+}
+
+// @alpha
+export interface IPluggableAppEventsProviderProps extends PropsWithChildren {
+    onEvent?: (event: IPluggableAppEvent) => void;
+}
+
+// @alpha
 export function PlatformContextProvider({ value, children }: IPlatformContextProviderProps): JSX.Element;
+
+// @alpha
+export function PluggableAppEventsProvider({ onEvent, children }: IPluggableAppEventsProviderProps): JSX.Element;
 
 // @alpha
 export function usePlatformContext(): IClientPlatformContext | undefined;
 
 // @alpha
 export function usePlatformContextStrict(context?: string): IClientPlatformContext;
+
+// @alpha
+export function usePluggableAppEvents(): IPluggableAppEventsContextValue;
 
 ```

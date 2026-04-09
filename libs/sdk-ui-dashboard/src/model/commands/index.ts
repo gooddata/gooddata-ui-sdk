@@ -44,6 +44,7 @@ import {
     type ChangeFilterContextSelection,
     type IAddAttributeFilter,
     type IAddDateFilter,
+    type IAddTextAttributeFilter,
     type IApplyFilterContextWorkingSelection,
     type IApplyFilterView,
     type IDeleteFilterView,
@@ -173,6 +174,7 @@ export type DashboardCommands =
     | ITriggerEvent
     | IUpsertExecutionResult
     | IAddAttributeFilter
+    | IAddTextAttributeFilter
     | IRemoveAttributeFilters
     | IMoveAttributeFilter
     | ISetAttributeFilterParents

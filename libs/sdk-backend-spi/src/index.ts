@@ -172,6 +172,8 @@ export {
     type IChatConversationSearchContent,
     type IChatKdaDefinition,
     type IChatWhatIfDefinition,
+    type IChatWhatIfAdjustment,
+    type IChatWhatIfScenario,
     type IChatSuggestion,
     isChatConversationError,
     isChatConversationItem,

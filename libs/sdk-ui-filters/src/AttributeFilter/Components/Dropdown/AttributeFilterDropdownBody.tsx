@@ -2,6 +2,7 @@
 
 import { type KeyboardEvent, useCallback, useMemo } from "react";
 
+import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type IAttributeElement } from "@gooddata/sdk-model";
@@ -236,7 +237,13 @@ export function AttributeFilterDropdownBody({
 
     return (
         <ValidationContextStore value={validationContextValue}>
-            <div className={ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS} style={style} onKeyDown={handleKeyDown}>
+            <div
+                className={cx(ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS, {
+                    "gd-attribute-filter-dropdown-body--text-mode": currentSelectionType === "text",
+                })}
+                style={style}
+                onKeyDown={handleKeyDown}
+            >
                 {renderFilterBody()}
                 <DropdownActionsComponent
                     onApplyButtonClick={onApplyButtonClick}

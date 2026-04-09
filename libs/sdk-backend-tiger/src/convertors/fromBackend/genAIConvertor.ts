@@ -32,6 +32,7 @@ import {
     type GenAIObjectType,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
+    type ObjectType,
     assertNever,
 } from "@gooddata/sdk-model";
 
@@ -136,7 +137,7 @@ function convertChatConversationContentFromBackend(
                         case "whatIf":
                             return {
                                 type: "whatIf",
-                                whatIf: convertWhatIf(part.whatIf),
+                                whatIf: convertWhatIf(part.whatIf as AiWhatIfScenario),
                             };
                         case "searchResults":
                             return {
@@ -216,10 +217,21 @@ function convertKda(
     };
 }
 
-function convertWhatIf(_whatIf?: AiWhatIfScenario | null): IChatWhatIfDefinition {
-    //TODO: s.hacker Convert what if to frontend format
+function convertWhatIf(whatIf: AiWhatIfScenario): IChatWhatIfDefinition {
     return {
-        id: "whatif",
+        includeBaseline: whatIf.includeBaseline,
+        scenarios: whatIf.scenarios.map((s) => {
+            return {
+                label: s.label,
+                adjustments: s.adjustments.map((a) => ({
+                    scenarioMaql: a.scenarioMaql,
+                    ref: {
+                        identifier: a.metricId,
+                        type: (a.metricType === "metric" ? "measure" : a.metricType) as ObjectType,
+                    },
+                })),
+            };
+        }),
     };
 }
 

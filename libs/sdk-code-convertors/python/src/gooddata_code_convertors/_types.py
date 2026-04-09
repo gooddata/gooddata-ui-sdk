@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 6072e12e9d7fbe4039c6accb9ceff45ee94596f58c0587316a133e5c7e064832
+# schema-hash: 6615e077e8cfb7bcba0b0a44a1ec4800d367359b121687ccb9838f85f2fe8793
 
 from __future__ import annotations
 
@@ -38,6 +38,8 @@ __all__ = [
     "DashboardFiltersNoGroups1",
     "DashboardRelativeDateFilter",
     "DashboardTextFilter",
+    "DashboardTextFilter1",
+    "DashboardTextFilter2",
     "DataType",
     "Dataset",
     "Dataset1",
@@ -105,6 +107,8 @@ __all__ = [
     "QuerySort",
     "QuerySorts",
     "QueryTextFilter",
+    "QueryTextFilter1",
+    "QueryTextFilter2",
     "Reference",
     "Section",
     "SimpleColorItem",
@@ -217,13 +221,33 @@ class DashboardAttributeFilter1(TypedDict):
 DashboardAttributeFilter: TypeAlias = DashboardAttributeFilter1
 
 
-class DashboardTextFilter(TypedDict):
+class DashboardTextFilter1(TypedDict):
     title: NotRequired[str]
-    type: Literal['text_filter']
     using: AttributeIdentifier | LabelIdentifier
+    case_sensitive: NotRequired[bool]
+    display_as: NotRequired[str]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active', 'readonly', 'hidden', 'active']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    type: Literal['text_filter']
+    condition: Literal['is', 'isNot']
+    values: list[str | None]
+
+
+class DashboardTextFilter2(TypedDict):
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    case_sensitive: NotRequired[bool]
+    display_as: NotRequired[str]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active', 'readonly', 'hidden', 'active']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    type: Literal['text_filter']
     condition: Literal[
-        'is',
-        'isNot',
         'contains',
         'doesNotContain',
         'startsWith',
@@ -231,12 +255,10 @@ class DashboardTextFilter(TypedDict):
         'endsWith',
         'doesNotEndWith',
     ]
-    values: NotRequired[list[str | None]]
-    value: NotRequired[str]
-    case_sensitive: NotRequired[bool]
-    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
-    parents: NotRequired[list[str | Parents]]
-    metric_filters: NotRequired[list[str]]
+    value: str
+
+
+DashboardTextFilter: TypeAlias = DashboardTextFilter1 | DashboardTextFilter2
 
 
 class DashboardFiltersNoGroups1(TypedDict):
@@ -283,12 +305,21 @@ class QueryAttributeFilter(TypedDict):
     state: NotRequired[State]
 
 
-class QueryTextFilter(TypedDict):
-    type: Literal['text_filter']
+class QueryTextFilter1(TypedDict):
+    type: Literal['text_filter', 'text_filter']
     using: AttributeIdentifier | LabelIdentifier
+    case_sensitive: NotRequired[bool]
+    display_as: NotRequired[str]
+    condition: Literal['is', 'isNot']
+    values: list[str | None]
+
+
+class QueryTextFilter2(TypedDict):
+    type: Literal['text_filter', 'text_filter']
+    using: AttributeIdentifier | LabelIdentifier
+    case_sensitive: NotRequired[bool]
+    display_as: NotRequired[str]
     condition: Literal[
-        'is',
-        'isNot',
         'contains',
         'doesNotContain',
         'startsWith',
@@ -296,9 +327,10 @@ class QueryTextFilter(TypedDict):
         'endsWith',
         'doesNotEndWith',
     ]
-    values: NotRequired[list[str | None]]
-    value: NotRequired[str]
-    case_sensitive: NotRequired[bool]
+    value: str
+
+
+QueryTextFilter: TypeAlias = QueryTextFilter1 | QueryTextFilter2
 
 
 class QueryRankingFilter1(TypedDict):

@@ -3252,7 +3252,7 @@ export interface IMeasureDefinitionOverride {
     item: {
         identifier: {
             id: string;
-            type: "metric";
+            type: "metric" | "attribute" | "fact";
         };
     };
 }

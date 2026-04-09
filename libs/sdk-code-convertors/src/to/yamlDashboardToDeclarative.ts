@@ -1005,18 +1005,25 @@ export function yamlFilterContextToDeclarative(
             }
             if (isDashboardArbitraryTextFilter(filter)) {
                 const attributeFilterConfig: Partial<IDashboardAttributeFilterConfig> = {};
-                if (filter["mode"] && filter["mode"] !== "active") {
-                    attributeFilterConfig.mode = filter["mode"];
+                if (filter.mode && filter.mode !== "active") {
+                    attributeFilterConfig.mode = filter.mode;
+                }
+                if (filter.display_as) {
+                    attributeFilterConfig.displayAsLabel = createIdentifier<any>(filter.display_as, {
+                        forceType: "label",
+                    });
+                }
+                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
                     attributeFilterConfig.localIdentifier = key;
                     attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
                 }
-                const { attributeParents, dateParents } = resolveFilterParents(filter["parents"], true);
+                const { attributeParents, dateParents } = resolveFilterParents(filter.parents, true);
 
                 return {
                     arbitraryAttributeFilter: {
-                        displayForm: createIdentifier(filter["using"] ?? ""),
-                        values: filter["values"] ?? [],
-                        negativeSelection: filter["condition"] === "isNot",
+                        displayForm: createIdentifier(filter.using ?? ""),
+                        values: filter.values ?? [],
+                        negativeSelection: filter.condition === "isNot",
                         localIdentifier: key,
                         ...(attributeParents && attributeParents.length > 0
                             ? {
@@ -1040,36 +1047,43 @@ export function yamlFilterContextToDeclarative(
                                   }),
                               }
                             : {}),
-                        ...(filter["metric_filters"]
+                        ...(filter.metric_filters
                             ? {
                                   validateElementsBy: filter["metric_filters"].map((metricFilter) =>
                                       createIdentifier(metricFilter),
                                   ),
                               }
                             : {}),
-                        title: filter["title"],
+                        title: filter.title,
                     },
                 };
             }
             if (isDashboardMatchTextFilter(filter)) {
                 const attributeFilterConfig: Partial<IDashboardAttributeFilterConfig> = {};
-                if (filter["mode"] && filter["mode"] !== "active") {
-                    attributeFilterConfig.mode = filter["mode"];
+                if (filter.mode && filter.mode !== "active") {
+                    attributeFilterConfig.mode = filter.mode;
+                }
+                if (filter.display_as) {
+                    attributeFilterConfig.displayAsLabel = createIdentifier<any>(filter.display_as, {
+                        forceType: "label",
+                    });
+                }
+                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
                     attributeFilterConfig.localIdentifier = key;
                     attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
                 }
 
-                const { operator, negativeSelection } = yamlConditionToMatch(filter["condition"]);
+                const { operator, negativeSelection } = yamlConditionToMatch(filter.condition);
 
                 return {
                     matchAttributeFilter: {
-                        displayForm: createIdentifier(filter["using"] ?? ""),
+                        displayForm: createIdentifier(filter.using ?? ""),
                         operator,
-                        literal: filter["value"] as string,
-                        caseSensitive: filter["case_sensitive"],
+                        literal: filter.value,
+                        caseSensitive: filter.case_sensitive,
                         negativeSelection,
                         localIdentifier: key,
-                        title: filter["title"],
+                        title: filter.title,
                     },
                 };
             }

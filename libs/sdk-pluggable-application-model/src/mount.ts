@@ -3,6 +3,35 @@
 import { type IPlatformContext } from "./platformContext.js";
 
 /**
+ * Known generic pluggable application event types.
+ *
+ * @alpha
+ */
+export const PluggableAppEventType = {
+    RELOAD_PLATFORM_CONTEXT_REQUESTED: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED",
+} as const;
+
+/**
+ * Union of known pluggable application event type names.
+ *
+ * @alpha
+ */
+export type KnownPluggableAppEventTypeName =
+    (typeof PluggableAppEventType)[keyof typeof PluggableAppEventType];
+
+/**
+ * Event type name accepted by pluggable application to host events.
+ *
+ * @remarks
+ * This type is intentionally open for extension (`string & {}`) to preserve forward compatibility:
+ * newly introduced app-specific or future platform event types should not break existing consumers at compile time.
+ * For built-in platform events, prefer values from {@link PluggableAppEventType}.
+ *
+ * @alpha
+ */
+export type PluggableAppEventTypeName = KnownPluggableAppEventTypeName | (string & {});
+
+/**
  * Event emitted by the pluggable application towards the host.
  *
  * @remarks
@@ -13,9 +42,42 @@ import { type IPlatformContext } from "./platformContext.js";
  * @alpha
  */
 export interface IPluggableAppEvent {
-    // TODO: This should be a union of known event types
-    type: string;
-    payload?: unknown;
+    readonly type: PluggableAppEventTypeName;
+    readonly payload?: unknown;
+}
+
+/**
+ * Event requesting the host to reload the platform context.
+ *
+ * @alpha
+ */
+export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent {
+    readonly type: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED";
+}
+
+/**
+ * Creates an {@link IReloadPlatformContextRequestedEvent}.
+ *
+ * @alpha
+ */
+export function reloadPlatformContextRequested(): IReloadPlatformContextRequestedEvent {
+    return { type: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED" };
+}
+
+/**
+ * Type guard for {@link IReloadPlatformContextRequestedEvent}.
+ *
+ * @alpha
+ */
+export function isReloadPlatformContextRequestedEvent(
+    obj: unknown,
+): obj is IReloadPlatformContextRequestedEvent {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "type" in obj &&
+        (obj as { type?: unknown }).type === "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED"
+    );
 }
 
 /**

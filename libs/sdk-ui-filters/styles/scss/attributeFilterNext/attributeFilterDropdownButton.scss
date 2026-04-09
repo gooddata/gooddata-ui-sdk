@@ -154,6 +154,11 @@
     }
 }
 
+.gd-attribute-filter__next .gd-is-mobile {
+    display: flex;
+    align-items: center;
+}
+
 .gd-is-mobile {
     .gd-attribute-filter-dropdown-button-content__next {
         padding-right: 20px;
@@ -162,7 +167,8 @@
     }
 
     .gd-attribute-filter-dropdown-button__next.gd-is-active {
-        width: 100%;
+        flex: 1;
+        min-width: 0;
         height: 47px;
         max-width: none;
         margin: 0;
@@ -177,6 +183,24 @@
             &::after {
                 right: 0;
             }
+        }
+    }
+}
+
+// When the mobile menu (three-dot button) is present next to the filter button,
+// flatten the button to a clean bar without border/radius.
+.gd-is-mobile--with-menu {
+    background-color: var(--gd-palette-complementary-0, #fff);
+    border-bottom: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+
+    .gd-attribute-filter-dropdown-button__next.gd-is-active {
+        height: 45px;
+        padding: 0 10px;
+        border-radius: 0;
+        background-color: var(--gd-palette-complementary-0, #fff);
+
+        &::after {
+            display: none;
         }
     }
 }

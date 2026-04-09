@@ -125,7 +125,7 @@
 
         .gd-ui-kit-tooltip__anchor {
             display: flex;
-            flex: 1 1 auto;
+            flex: 0 1 auto;
             min-width: 0;
             overflow: hidden;
             width: auto;
@@ -147,6 +147,12 @@
     &__operator {
         flex: 0 0 auto;
         white-space: nowrap;
+    }
+
+    &__tooltip {
+        display: block;
+        max-width: 300px;
+        word-wrap: break-word;
     }
 }
 
@@ -233,6 +239,72 @@
             border-bottom: none;
             background-color: var(--gd-palette-complementary-3, #dde4eb);
         }
+    }
+}
+
+// Mobile-specific styles for text filter body layout
+.gd-is-mobile .gd-attribute-filter-dropdown-body--text-mode {
+    .gd-text-filter-body {
+        flex: 1;
+        min-height: 0;
+    }
+
+    .gd-text-filter-body__values {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .gd-text-filter-body--has-options .gd-text-filter-body__values {
+        flex: 0 0 auto;
+        overflow-y: visible;
+    }
+
+    .gd-text-filter-body--has-options .gd-text-filter-body__options {
+        flex: 1;
+    }
+
+    .gd-text-filter-body__operator {
+        flex-shrink: 0;
+    }
+
+    .gd-text-filter-state-summary {
+        flex-shrink: 0;
+    }
+
+    .gd-text-filter-body__label {
+        font-size: 14px;
+    }
+}
+
+// Mobile-specific styles for operator dropdown (rendered in portal/overlay, not under .gd-is-mobile)
+@media #{variables.$xsmall-only}, #{variables.$small-only} {
+    .gd-text-filter-operator-dropdown {
+        &__divider.gd-list-item.gd-list-item-separator {
+            display: none;
+        }
+
+        &__item {
+            min-height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            padding: 0 10px;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+
+        &__button {
+            height: 32px;
+            font-size: 14px;
+        }
+    }
+
+    .gd-text-filter-state-summary__text {
+        font-size: 14px;
     }
 }
 

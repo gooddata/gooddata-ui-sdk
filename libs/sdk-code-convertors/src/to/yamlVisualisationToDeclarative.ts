@@ -25,6 +25,7 @@ import type {
     RangeCondition,
     RankingFilter,
     Sorts,
+    TextFilter,
     Total,
     Visualisation,
     VisualizationDataLayer,
@@ -76,7 +77,6 @@ import { convertGranularity, convertGranularityToId } from "../utils/granularity
 import { mapLocationLabel } from "../utils/locationUtils.js";
 import { assertUnreachable, convertIdToTitle, getFullBucket, getFullField } from "../utils/sharedUtils.js";
 import {
-    type YamlTextFilter,
     isAbsoluteDateFilter,
     isArbitraryTextFilter,
     isArithmeticMetricField,
@@ -918,24 +918,49 @@ function yamlNegativeAttributeFilterToDeclarative(
     };
 }
 
-function yamlTextFilterToDeclarative(key: string, filter: YamlTextFilter): YamlFilterToDeclarativeResult {
+function yamlTextFilterToDeclarative(
+    key: string,
+    filter: Extract<TextFilter, { condition: "is" | "isNot" }>,
+): YamlFilterToDeclarativeResult {
     return {
         filters: [
             {
                 arbitraryAttributeFilter: {
                     localIdentifier: key,
-                    label: createIdentifier<any>(filter["using"]),
-                    values: filter["values"] ?? [],
+                    label: createIdentifier<any>(filter.using),
+                    values: filter.values ?? [],
                     negativeSelection: filter["condition"] === "isNot",
                 },
             },
         ],
+        ...(filter.display_as
+            ? {
+                  attributeFilterConfig: {
+                      [key]: {
+                          displayAsLabel: createIdentifier<any>(filter.display_as, {
+                              forceType: "label",
+                          }),
+                      },
+                  },
+              }
+            : {}),
     };
 }
 
 function yamlTextMatchFilterToDeclarative(
     key: string,
-    filter: YamlTextFilter,
+    filter: Extract<
+        TextFilter,
+        {
+            condition:
+                | "contains"
+                | "doesNotContain"
+                | "startsWith"
+                | "doesNotStartWith"
+                | "endsWith"
+                | "doesNotEndWith";
+        }
+    >,
 ): YamlFilterToDeclarativeResult {
     const { operator, negativeSelection } = yamlConditionToMatch(filter["condition"]);
     return {
@@ -943,14 +968,25 @@ function yamlTextMatchFilterToDeclarative(
             {
                 matchAttributeFilter: {
                     localIdentifier: key,
-                    label: createIdentifier<any>(filter["using"]),
+                    label: createIdentifier<any>(filter.using),
                     operator,
-                    literal: filter["value"] as string,
+                    literal: filter.value as string,
                     caseSensitive: filter["case_sensitive"],
                     negativeSelection,
                 },
             },
         ],
+        ...(filter.display_as
+            ? {
+                  attributeFilterConfig: {
+                      [key]: {
+                          displayAsLabel: createIdentifier<any>(filter.display_as, {
+                              forceType: "label",
+                          }),
+                      },
+                  },
+              }
+            : {}),
     };
 }
 
