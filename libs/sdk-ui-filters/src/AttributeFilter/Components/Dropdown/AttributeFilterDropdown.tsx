@@ -8,6 +8,7 @@ import { Dropdown, isArrowKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
+import { useAttributeFilterDropdownHeader } from "../../hooks/useAttributeFilterDropdownHeader.js";
 import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle.js";
 import {
     createFilterFromOperator,
@@ -35,8 +36,13 @@ const ALIGN_POINTS = [
  * @internal
  */
 export function AttributeFilterDropdown() {
-    const { DropdownButtonComponent, DropdownBodyComponent, LoadingComponent, ErrorComponent } =
-        useAttributeFilterComponentsContext();
+    const {
+        DropdownButtonComponent,
+        DropdownBodyComponent,
+        LoadingComponent,
+        ErrorComponent,
+        FilterMenuComponent,
+    } = useAttributeFilterComponentsContext();
 
     const {
         title,
@@ -65,9 +71,11 @@ export function AttributeFilterDropdown() {
         isSelectionInvalid,
         overlayPositionType,
         alignPoints,
+        hideTooltips,
     } = useAttributeFilterContext();
 
     const isMobile = useMediaQuery("mobileDevice");
+    const { showFilterHeader, headerProps } = useAttributeFilterDropdownHeader();
 
     const isSelectionInverted = useLastValidValue(
         withoutApply ? isWorkingSelectionInverted : isCommittedSelectionInverted,
@@ -133,8 +141,14 @@ export function AttributeFilterDropdown() {
             overlayPositionType={overlayPositionType}
             renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId }) => {
                 const handleClickAction = disabled ? () => {} : toggleDropdown;
+                const showMobileMenu = fullscreenOnMobile && isMobile && isOpen && showFilterHeader;
                 return (
-                    <div className={cx({ "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen })}>
+                    <div
+                        className={cx({
+                            "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen,
+                            "gd-is-mobile--with-menu": showMobileMenu,
+                        })}
+                    >
                         {!!isInitializing && <LoadingComponent onClick={handleClickAction} isOpen={isOpen} />}
                         {!isInitializing && !!initError && !title && (
                             <ErrorComponent message={initError.message} error={initError} />
@@ -159,6 +173,19 @@ export function AttributeFilterDropdown() {
                                 />
                             </AttributeFilterButtonErrorTooltip>
                         )}
+                        {showMobileMenu ? (
+                            <div className="gd-attribute-filter-mobile-menu">
+                                <FilterMenuComponent
+                                    currentSelectionType={headerProps.currentSelectionType ?? "elements"}
+                                    availableSelectionTypes={headerProps.availableInternalSelectionTypes}
+                                    onSelectionTypeChange={headerProps.onSelectionTypeChange ?? (() => {})}
+                                    labels={headerProps.labels}
+                                    selectedLabelRef={headerProps.selectedLabelRef}
+                                    onLabelChange={headerProps.onLabelChange}
+                                    hideTooltips={hideTooltips}
+                                />
+                            </div>
+                        ) : null}
                     </div>
                 );
             }}

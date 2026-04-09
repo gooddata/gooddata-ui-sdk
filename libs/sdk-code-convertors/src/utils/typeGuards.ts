@@ -13,6 +13,7 @@ import type {
     DashboardAbsoluteDateFilter,
     DashboardAttributeFilter,
     DashboardRelativeDateFilter,
+    DashboardTextFilter,
     Dataset,
     DateDataset,
     DateFilter,
@@ -28,6 +29,7 @@ import type {
     Range,
     RankingFilter,
     RichTextWidget,
+    TextFilter,
     VisualisationWidget,
     VisualizationSwitcherWidget,
 } from "@gooddata/sdk-code-schemas/v1";
@@ -46,28 +48,7 @@ export type ReferenceObject = {
     identifier: string;
 };
 
-export type YamlTextFilterCondition =
-    | "is"
-    | "isNot"
-    | "contains"
-    | "doesNotContain"
-    | "startsWith"
-    | "doesNotStartWith"
-    | "endsWith"
-    | "doesNotEndWith";
-
-export type YamlTextFilter = {
-    type: "text_filter";
-    using: string;
-    condition: YamlTextFilterCondition;
-    values?: Array<string | null>;
-    value?: string;
-    case_sensitive?: boolean;
-    mode?: "readonly" | "hidden" | "active";
-    title?: string;
-    parents?: Array<string | { using: string; common: boolean }>;
-    metric_filters?: string[];
-};
+export type TextFilterCondition = TextFilter["condition"];
 
 export const SupportedReferenceTypes = ["fact", "label", "metric", "dataset", "attribute"] as const;
 
@@ -206,7 +187,7 @@ export function isAttributeFilter(obj: unknown): obj is AttributeFilter {
     return false;
 }
 
-export function isTextFilter(obj: unknown): obj is YamlTextFilter {
+export function isTextFilter(obj: unknown): obj is TextFilter {
     return (
         typeof obj === "object" &&
         obj !== null &&
@@ -226,7 +207,9 @@ const matchTextFilterConditions = new Set([
     "doesNotEndWith",
 ]);
 
-export function isArbitraryTextFilter(obj: unknown): obj is YamlTextFilter {
+export function isArbitraryTextFilter(
+    obj: unknown,
+): obj is Extract<TextFilter, { condition: "is" | "isNot" }> {
     return (
         isTextFilter(obj) &&
         "condition" in obj &&
@@ -235,7 +218,18 @@ export function isArbitraryTextFilter(obj: unknown): obj is YamlTextFilter {
     );
 }
 
-export function isMatchTextFilter(obj: unknown): obj is YamlTextFilter {
+export function isMatchTextFilter(obj: unknown): obj is Extract<
+    TextFilter,
+    {
+        condition:
+            | "contains"
+            | "doesNotContain"
+            | "startsWith"
+            | "doesNotStartWith"
+            | "endsWith"
+            | "doesNotEndWith";
+    }
+> {
     return (
         isTextFilter(obj) &&
         "condition" in obj &&
@@ -422,7 +416,7 @@ export function isDashboardAttributeFilter(obj: unknown): obj is DashboardAttrib
     );
 }
 
-export function isDashboardTextFilter(obj: unknown): obj is YamlTextFilter {
+export function isDashboardTextFilter(obj: unknown): obj is DashboardTextFilter {
     return (
         typeof obj === "object" &&
         obj !== null &&
@@ -432,7 +426,9 @@ export function isDashboardTextFilter(obj: unknown): obj is YamlTextFilter {
     );
 }
 
-export function isDashboardArbitraryTextFilter(obj: unknown): obj is YamlTextFilter {
+export function isDashboardArbitraryTextFilter(
+    obj: unknown,
+): obj is Extract<DashboardTextFilter, { condition: "is" | "isNot" }> {
     return (
         isDashboardTextFilter(obj) &&
         "condition" in obj &&
@@ -441,7 +437,18 @@ export function isDashboardArbitraryTextFilter(obj: unknown): obj is YamlTextFil
     );
 }
 
-export function isDashboardMatchTextFilter(obj: unknown): obj is YamlTextFilter {
+export function isDashboardMatchTextFilter(obj: unknown): obj is Extract<
+    DashboardTextFilter,
+    {
+        condition:
+            | "contains"
+            | "doesNotContain"
+            | "startsWith"
+            | "doesNotStartWith"
+            | "endsWith"
+            | "doesNotEndWith";
+    }
+> {
     return (
         isDashboardTextFilter(obj) &&
         "condition" in obj &&

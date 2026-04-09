@@ -26,6 +26,7 @@ import type {
     ISemanticSearchResultItem,
     IUser,
     MemoryItemStrategy,
+    ObjRef,
     ObjectOrigin,
     ObjectType,
 } from "@gooddata/sdk-model";
@@ -1014,8 +1015,44 @@ export function isChatConversationKeyDriverAnalysisContent(
  * @internal
  */
 export interface IChatWhatIfDefinition {
-    id: string;
-    //TODO: s.hacker: Use yaml spec types
+    /**
+     * List of what-if scenarios.
+     */
+    scenarios: IChatWhatIfScenario[];
+    /**
+     * Whether to include the baseline (unmodified) visualization.
+     */
+    includeBaseline?: boolean;
+}
+
+/**
+ * A single what-if scenario.
+ * @internal
+ */
+export interface IChatWhatIfScenario {
+    /**
+     * Display label for the scenario.
+     */
+    label: string;
+    /**
+     * Metric adjustments for this scenario.
+     */
+    adjustments: IChatWhatIfAdjustment[];
+}
+
+/**
+ * A metric adjustment within a what-if scenario.
+ * @internal
+ */
+export interface IChatWhatIfAdjustment {
+    /**
+     * Reference to the metric updated object.
+     */
+    ref: ObjRef;
+    /**
+     * MAQL expression to use as the scenario override.
+     */
+    scenarioMaql: string;
 }
 
 /**

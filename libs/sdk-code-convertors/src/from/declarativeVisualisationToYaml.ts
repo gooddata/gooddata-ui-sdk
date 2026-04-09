@@ -32,6 +32,7 @@ import {
     type MeasureValueFilterCondition,
     type VisualizationProperties,
     filterAttributeElements,
+    filterLocalIdentifier,
     filterObjRef,
     getAttributeElementsItems,
     isAbsoluteDateFilter,
@@ -273,12 +274,7 @@ export function declarativeFiltersConfigToYaml(
     Object.keys(insight.attributeFilterConfigs ?? {}).forEach((key) => {
         const filter = filtersMap[key];
         if (filter) {
-            let localIdentifier: string | undefined = undefined;
-            if (isPositiveAttributeFilter(filter.filter) || isNegativeAttributeFilter(filter.filter)) {
-                localIdentifier = isPositiveAttributeFilter(filter.filter)
-                    ? filter.filter.positiveAttributeFilter.localIdentifier
-                    : filter.filter.negativeAttributeFilter.localIdentifier;
-            }
+            const localIdentifier = filterLocalIdentifier(filter.filter);
             if (localIdentifier) {
                 if (insight.attributeFilterConfigs![localIdentifier].displayAsLabel) {
                     filter.yaml.add(

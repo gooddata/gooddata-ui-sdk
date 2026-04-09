@@ -4,7 +4,7 @@ import type { DateDataset } from "@gooddata/sdk-code-schemas/v1";
 import type { MatchFilterOperator } from "@gooddata/sdk-model";
 
 import { convertGranularityToId, parseGranularityValue } from "./granularityUtils.js";
-import type { YamlTextFilterCondition } from "./typeGuards.js";
+import type { TextFilterCondition } from "./typeGuards.js";
 import { type ExportEntities, type FromEntities } from "../types.js";
 
 export function parseDateValues(
@@ -44,12 +44,12 @@ export function matchConditionToYaml(operator: MatchFilterOperator, negativeSele
     return negativeOperatorMap[operator];
 }
 
-export function yamlConditionToMatch(condition: YamlTextFilterCondition): {
+export function yamlConditionToMatch(condition: TextFilterCondition): {
     operator: MatchFilterOperator;
     negativeSelection: boolean;
 } {
     const conditionMap: Partial<
-        Record<YamlTextFilterCondition, { operator: MatchFilterOperator; negativeSelection: boolean }>
+        Record<TextFilterCondition, { operator: MatchFilterOperator; negativeSelection: boolean }>
     > = {
         contains: { operator: "contains", negativeSelection: false },
         doesNotContain: { operator: "contains", negativeSelection: true },

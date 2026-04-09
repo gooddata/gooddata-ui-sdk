@@ -2,36 +2,45 @@
 
 import cx from "classnames";
 
-import { type IChatWhatIfDefinition } from "@gooddata/sdk-backend-spi";
+import { ConversationVisualizationContent } from "./ConversationVisualizationContent.js";
+import type { IChatConversationLocalItem, IChatConversationMultipartLocalPart } from "../../../model.js";
+import { type IWhatIfDefinition } from "../../../whatIf/whatIfMapping.js";
 
 export type ConversationWhatIfContentProps = {
-    whatIf: IChatWhatIfDefinition;
+    message: IChatConversationLocalItem;
+    part: IChatConversationMultipartLocalPart;
+    whatIf: IWhatIfDefinition | undefined;
     className?: string;
 };
 
-export function ConversationWhatIfContent({ className }: ConversationWhatIfContentProps) {
+export function ConversationWhatIfContent({
+    className,
+    part,
+    message,
+    whatIf,
+}: ConversationWhatIfContentProps) {
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",
         "gd-gen-ai-chat__conversation__item__content--whatIf",
         className,
     );
 
-    //TODO: s.hacker What if component here
+    if (!whatIf) {
+        return null;
+    }
+
     return (
         <div className={classNames}>
-            <div
-                style={{
-                    width: "100%",
-                    height: "200px",
-                    backgroundColor: "#f0f0f0",
-                    border: "1px solid #ccc",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                There is whatIf
-            </div>
+            {whatIf.scenarios.map((scenario, index) => (
+                <ConversationVisualizationContent
+                    useMarkdown
+                    key={index}
+                    message={message}
+                    part={part}
+                    scenario={scenario}
+                    visualization={whatIf.insight}
+                />
+            ))}
         </div>
     );
 }

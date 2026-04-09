@@ -749,12 +749,14 @@ describe("visualisation conversion", () => {
                         t1: {
                             type: "text_filter",
                             using: "label/region",
+                            display_as: "label/region_name",
                             condition: "is",
                             values: ["US", null],
                         },
                         t2: {
                             type: "text_filter",
                             using: "label/region",
+                            display_as: "label/region_name2",
                             condition: "doesNotContain",
                             value: "North",
                             case_sensitive: true,
@@ -771,12 +773,14 @@ describe("visualisation conversion", () => {
             expect(filterValues).toContainEqual({
                 type: "text_filter",
                 using: "label/region",
+                display_as: "label/region_name",
                 condition: "is",
                 values: ["US", null],
             });
             expect(filterValues).toContainEqual({
                 type: "text_filter",
                 using: "label/region",
+                display_as: "label/region_name2",
                 condition: "doesNotContain",
                 value: "North",
                 case_sensitive: true,

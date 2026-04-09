@@ -39,6 +39,7 @@ import { addDrillTargetsHandler } from "./drillTargets/addDrillTargetsHandler.js
 import { triggerEventHandler } from "./events/triggerEventHandler.js";
 import { upsertExecutionResultHandler } from "./executionResults/upsertExecutionResultHandler.js";
 import { addAttributeFilterHandler } from "./filterContext/attributeFilter/addAttributeFilterHandler.js";
+import { addTextAttributeFilterHandler } from "./filterContext/attributeFilter/addTextAttributeFilterHandler.js";
 import { changeAttributeDisplayFormHandler } from "./filterContext/attributeFilter/changeAttributeDisplayFormHandler.js";
 import { changeAttributeFilterSelectionHandler } from "./filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
 import { changeAttributeSelectionModeHandler } from "./filterContext/attributeFilter/changeAttributeSelectionModeHandler.js";
@@ -158,6 +159,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.TEXT_ATTRIBUTE_FILTER.ADD": addTextAttributeFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE": removeAttributeFiltersHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE": moveAttributeFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION": changeAttributeFilterSelectionHandler,

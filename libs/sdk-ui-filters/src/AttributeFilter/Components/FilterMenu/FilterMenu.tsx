@@ -12,7 +12,12 @@ import { FilterMenuDropdownBody } from "./FilterMenuDropdownBody.js";
 import { type IFilterMenuProps, type ILabelItemData, type ISelectionTypeItemData } from "./types.js";
 import { type AttributeFilterSelectionType } from "../../selectionTypes.js";
 
-const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
+const ALIGN_POINTS: IAlignPoint[] = [
+    { align: "bl tl" },
+    { align: "br tr" },
+    { align: "tl bl" },
+    { align: "tr br" },
+];
 const selectionTypeMessages = defineMessages({
     list: { id: "attributeFilter.selectionType.list" },
     text: { id: "attributeFilter.selectionType.text" },
@@ -100,6 +105,7 @@ export function FilterMenu(props: IFilterMenuProps) {
                 closeOnOutsideClick
                 shouldTrapFocus
                 autofocusOnOpen
+                fullscreenOnMobile={false}
                 renderButton={({
                     toggleDropdown,
                     isOpen: dropdownIsOpen,

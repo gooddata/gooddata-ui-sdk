@@ -148,6 +148,7 @@ export function AttachmentsSelect<T extends WidgetAttachmentType | DashboardAtta
                                     onClick={closeDropdown}
                                     accessibilityConfig={{
                                         ariaLabel: intl.formatMessage({ id: "close" }),
+                                        ariaDescribedBy: AUTOMATION_ATTACHMENTS_DIALOG_TITLE_ID,
                                     }}
                                 />
                             </span>

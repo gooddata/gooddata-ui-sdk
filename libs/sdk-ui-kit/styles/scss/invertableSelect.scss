@@ -12,7 +12,7 @@
 
 .gd-invertable-select-search-input {
     margin: 10px;
-    width: 100%;
+    width: calc(100% - 20px);
     min-width: 0;
 }
 
@@ -38,7 +38,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .gd-invertable-select-list {
-    .gd-invertable-select-all-checkbox:focus-visible,
     .gd-list-item:focus-visible {
         outline-offset: -2px; // pull outline inside to not have it clipped by item's overflow: hidden
     }
@@ -48,11 +47,20 @@ input[type="search"]::-webkit-search-cancel-button {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 0 10px 4px;
+    position: relative;
+    margin: 0 10px 10px;
     font-size: 12px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
     cursor: pointer;
+
+    // Separator line rendered outside the focus ring via ::after
+    &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -6px;
+        border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    }
 
     .input-checkbox-label {
         cursor: pointer;
@@ -110,12 +118,7 @@ input[type="search"]::-webkit-search-cancel-button {
             background-color: variables.$gd-palette-primary-dimmed;
         }
 
-        // Focus visible state
-        &:focus-visible .input-label-text::before {
-            outline: 2px solid variables.$gd-input-text-border-outline;
-            outline-offset: 2px;
-            transition: none;
-        }
+        // Focus visible state - use default browser outline
     }
 }
 

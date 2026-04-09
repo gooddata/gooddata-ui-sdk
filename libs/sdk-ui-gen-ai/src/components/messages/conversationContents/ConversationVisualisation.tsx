@@ -88,6 +88,7 @@ export type ConversationVisualisationProps = {
             event: IDrillEvent;
         } | null,
     ) => void;
+    enableDrilling?: boolean;
     enableChangeAnalysis?: boolean;
     enableNewPivotTable?: boolean;
     enableAccessibleChartTooltip?: boolean;
@@ -102,6 +103,7 @@ export function ConversationVisualisation({
     isTable,
     onVisualisationError,
     onDrillFired,
+    enableDrilling = true,
     enableChangeAnalysis = false,
     enableNewPivotTable = true,
     enableAccessibleChartTooltip = false,
@@ -115,7 +117,7 @@ export function ConversationVisualisation({
     const bucketsData = useBucketData(buckets);
 
     const drillableItems = useMemo(() => {
-        if (visualization && enableChangeAnalysis) {
+        if (visualization && enableChangeAnalysis && enableDrilling) {
             if (visualization.insight.visualizationUrl === "local:table") {
                 return visualization.insight.buckets
                     .map((bucket) => {
@@ -136,7 +138,7 @@ export function ConversationVisualisation({
                 .filter(Boolean) as ObjRef[];
         }
         return undefined;
-    }, [enableChangeAnalysis, visualization]);
+    }, [enableChangeAnalysis, visualization, enableDrilling]);
 
     const handleSdkError = useCallback(
         (error: GoodDataSdkError) => {

@@ -26,13 +26,19 @@ export { type ILocale } from "@gooddata/sdk-model";
 
 export {
     type IAppInstance,
+    type KnownPluggableAppEventTypeName,
     type IPluggableApp,
     type IPluggableApplicationMountHandle,
     type IPluggableApplicationMountOptions,
     type IPluggableAppEvent,
     type IPluggableAppTelemetryCallbacks,
+    type IReloadPlatformContextRequestedEvent,
     type ITelemetryEventOptions,
+    isReloadPlatformContextRequestedEvent,
     type PluggableApplicationMount,
+    PluggableAppEventType,
+    type PluggableAppEventTypeName,
+    reloadPlatformContextRequested,
     type TelemetryChannel,
 } from "./mount.js";
 

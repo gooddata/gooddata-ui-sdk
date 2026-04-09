@@ -73,9 +73,7 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
             !hasSegmentAttribute(insight) &&
             !hasColorMeasure(insight) &&
             !hasSizeMeasure(insight);
-        const isLegendVisible =
-            hasSegmentAttribute(insight) || hasColorMeasure(insight) || hasSizeMeasure(insight);
-        const controlsDisabled = this.isControlDisabled() || !isLegendVisible;
+        const controlsDisabled = this.isControlDisabled();
 
         const legendSectionProps = {
             properties,

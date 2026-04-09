@@ -315,6 +315,9 @@ export {
     changeDateFilterSelection,
     clearDateFilterSelection,
     addAttributeFilter,
+    addTextAttributeFilter,
+    type IAddTextAttributeFilter,
+    type IAddTextAttributeFilterPayload,
     moveAttributeFilter,
     removeAttributeFilter,
     removeAttributeFilters,
@@ -1502,6 +1505,7 @@ export type { TabsReducer } from "./model/store/tabs/tabsReducers.js";
 export type { IdentityMapping } from "./_staging/dashboard/dashboardLayout.js";
 export type {
     IAddAttributeFilterPayload,
+    IAddTextAttributeFilterReducerPayload,
     IRemoveAttributeFilterPayload,
     ISetAttributeFilterDependentDateFiltersPayload,
     ISetAttributeFilterParentsPayload,

@@ -15,6 +15,7 @@ import { ConversationToolCallContent } from "./conversationContents/Conversation
 import { ConversationToolResultContent } from "./conversationContents/ConversationToolResultContent.js";
 import { ConversationVisualizationContent } from "./conversationContents/ConversationVisualizationContent.js";
 import { ConversationWhatIfContent } from "./conversationContents/ConversationWhatIfContent.js";
+import { loadWhatIfScenarios } from "../../whatIf/whatIfMapping.js";
 
 type ConversationItemContentsProps = {
     message: IChatConversationLocalItem;
@@ -53,6 +54,8 @@ export function ConversationItemContents({ message, isLoading, isLast }: Convers
     }
 
     if (content.type === "multipart") {
+        const whatIf = loadWhatIfScenarios(content);
+
         return (
             <>
                 {content.parts?.map((part: IChatConversationMultipartLocalPart, index) => {
@@ -66,7 +69,7 @@ export function ConversationItemContents({ message, isLoading, isLast }: Convers
                             />
                         );
                     }
-                    if (part.type === "visualization") {
+                    if (part.type === "visualization" && !whatIf) {
                         return (
                             <ConversationVisualizationContent
                                 useMarkdown
@@ -92,7 +95,14 @@ export function ConversationItemContents({ message, isLoading, isLast }: Convers
                         return <ConversationKdaContent key={index} kda={part.kda} />;
                     }
                     if (part.type === "whatIf") {
-                        return <ConversationWhatIfContent key={index} whatIf={part.whatIf} />;
+                        return (
+                            <ConversationWhatIfContent
+                                key={index}
+                                message={message}
+                                part={part}
+                                whatIf={whatIf}
+                            />
+                        );
                     }
                     // Add more multipart types if needed
                     return null;

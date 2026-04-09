@@ -123,9 +123,9 @@ export interface IPluggableApp {
 // @alpha
 export interface IPluggableAppEvent {
     // (undocumented)
-    payload?: unknown;
+    readonly payload?: unknown;
     // (undocumented)
-    type: string;
+    readonly type: PluggableAppEventTypeName;
 }
 
 // @alpha
@@ -160,6 +160,12 @@ export interface IPluggableAppTelemetryCallbacks {
 }
 
 // @alpha
+export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent {
+    // (undocumented)
+    readonly type: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED";
+}
+
+// @alpha
 export interface IShellUiModule {
     // (undocumented)
     mount: ShellUiMount;
@@ -188,9 +194,15 @@ export interface IShellUiMountOptions {
 export function isPlatformContextV1(context: unknown): context is IPlatformContextV1;
 
 // @alpha
+export function isReloadPlatformContextRequestedEvent(obj: unknown): obj is IReloadPlatformContextRequestedEvent;
+
+// @alpha
 export interface ITelemetryEventOptions {
     channel?: TelemetryChannel;
 }
+
+// @alpha
+export type KnownPluggableAppEventTypeName = (typeof PluggableAppEventType)[keyof typeof PluggableAppEventType];
 
 // @alpha
 export enum PantherTier {
@@ -207,7 +219,18 @@ export enum PantherTier {
 }
 
 // @alpha
+export const PluggableAppEventType: {
+    readonly RELOAD_PLATFORM_CONTEXT_REQUESTED: "GDC.PLUGGABLE_APP/EVT.RELOAD_PLATFORM_CONTEXT.REQUESTED";
+};
+
+// @alpha
+export type PluggableAppEventTypeName = KnownPluggableAppEventTypeName | (string & {});
+
+// @alpha
 export type PluggableApplicationMount = (options: IPluggableApplicationMountOptions) => IPluggableApplicationMountHandle;
+
+// @alpha
+export function reloadPlatformContextRequested(): IReloadPlatformContextRequestedEvent;
 
 // @alpha
 export type ShellUiMount = (options: IShellUiMountOptions) => IShellUiMountHandle;

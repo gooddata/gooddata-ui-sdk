@@ -24,6 +24,8 @@ import {
     isEscapeKey,
 } from "@gooddata/sdk-ui-kit";
 
+import { AUTOMATION_ATTACHMENT_SETTINGS_DIALOG_TITLE_ID } from "../../../../constants/automations.js";
+
 const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
     {
         align: "bc tc",
@@ -220,6 +222,8 @@ export function AttachmentSettings({
             renderBody={({ closeDropdown }) => (
                 <div
                     className={`gd-attachment-settings-dropdown${isCsv ? " gd-attachment-settings-dropdown--csv" : ""}`}
+                    role="dialog"
+                    aria-labelledby={AUTOMATION_ATTACHMENT_SETTINGS_DIALOG_TITLE_ID}
                     onKeyDown={(e) => {
                         if (isEscapeKey(e)) {
                             e.stopPropagation();
@@ -227,19 +231,20 @@ export function AttachmentSettings({
                         }
                     }}
                 >
-                    <div className="gd-list-title">
+                    <h3 className="gd-list-title" id={AUTOMATION_ATTACHMENT_SETTINGS_DIALOG_TITLE_ID}>
                         {settingsLabel}
-                        <div className="gd-close-button">
+                        <span className="gd-close-button">
                             <Button
                                 className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
                                 value=""
                                 onClick={closeDropdown}
                                 accessibilityConfig={{
                                     ariaLabel: intl.formatMessage({ id: "close" }),
+                                    ariaDescribedBy: AUTOMATION_ATTACHMENT_SETTINGS_DIALOG_TITLE_ID,
                                 }}
                             />
-                        </div>
-                    </div>
+                        </span>
+                    </h3>
                     <div className="gd-attachment-settings-dropdown-content">
                         {isPdfTabular ? (
                             <>

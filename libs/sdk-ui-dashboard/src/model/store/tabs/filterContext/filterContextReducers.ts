@@ -7,6 +7,7 @@ import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
     type DashboardAttributeFilterSelectionMode,
+    type DashboardTextAttributeFilter,
     type DateFilterGranularity,
     type DateFilterType,
     type DateString,
@@ -697,6 +698,81 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
         activeTab.filterContext.filterContextDefinition.filters.push(filter);
     } else {
         activeTab.filterContext.filterContextDefinition.filters.splice(attributeFilterIndex, 0, filter);
+    }
+};
+
+//
+//
+//
+
+/**
+ * @internal
+ */
+export interface IAddTextAttributeFilterReducerPayload {
+    readonly filter: DashboardTextAttributeFilter;
+    readonly index: number;
+}
+
+const addTextAttributeFilter: FilterContextReducer<PayloadAction<IAddTextAttributeFilterReducerPayload>> = (
+    state,
+    action,
+) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
+
+    const { filter, index } = action.payload;
+
+    // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
+    const isDateFilterPresent =
+        activeTab.filterContext.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
+    const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
+    const generatedLocalIdentifierIndex = Math.max(0, attributeFilterIndex);
+    const filterWithLocalIdentifier: DashboardTextAttributeFilter = isDashboardArbitraryAttributeFilter(
+        filter,
+    )
+        ? {
+              arbitraryAttributeFilter: {
+                  ...filter.arbitraryAttributeFilter,
+                  localIdentifier:
+                      filter.arbitraryAttributeFilter.localIdentifier ??
+                      generateFilterLocalIdentifier(
+                          filter.arbitraryAttributeFilter.displayForm,
+                          generatedLocalIdentifierIndex,
+                      ),
+              },
+          }
+        : isDashboardMatchAttributeFilter(filter)
+          ? {
+                matchAttributeFilter: {
+                    ...filter.matchAttributeFilter,
+                    localIdentifier:
+                        filter.matchAttributeFilter.localIdentifier ??
+                        generateFilterLocalIdentifier(
+                            filter.matchAttributeFilter.displayForm,
+                            generatedLocalIdentifierIndex,
+                        ),
+                },
+            }
+          : filter;
+
+    if (index === -1) {
+        activeTab.filterContext.filterContextDefinition.filters.push(filterWithLocalIdentifier);
+    } else {
+        activeTab.filterContext.filterContextDefinition.filters.splice(
+            attributeFilterIndex,
+            0,
+            filterWithLocalIdentifier,
+        );
     }
 };
 
@@ -1427,6 +1503,7 @@ export const filterContextReducers = {
     removeAttributeFilterDisplayForms,
     addAttributeFilterDisplayForm,
     addAttributeFilter,
+    addTextAttributeFilter,
     removeAttributeFilter,
     moveAttributeFilter,
     addDateFilter,

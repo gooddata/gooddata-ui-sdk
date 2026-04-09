@@ -60,7 +60,7 @@ export function TextFilterStateSummary(props: ITextFilterStateSummaryProps) {
                     <UiTooltip
                         arrowPlacement="top-start"
                         triggerBy={["hover"]}
-                        content={tooltipText}
+                        content={<span className="gd-text-filter-state-summary__tooltip">{tooltipText}</span>}
                         anchor={
                             <>
                                 <span className="gd-shortened-text gd-selection-list s-text-filter-state-summary-value">

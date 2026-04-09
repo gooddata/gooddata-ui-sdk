@@ -90,7 +90,11 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
         <>
             {showFilterHeader ? <AttributeFilterDropdownHeader {...headerProps} /> : null}
             <ValidationContextStore value={validationContextValue}>
-                <div className="gd-text-filter-body s-text-filter-body">
+                <div
+                    className={cx("gd-text-filter-body", "s-text-filter-body", {
+                        "gd-text-filter-body--has-options": isMatchOperator(operator),
+                    })}
+                >
                     <div className="gd-text-filter-body__operator">
                         <label htmlFor={operatorSelectId} className="gd-text-filter-body__label">
                             <FormattedMessage id="attributeFilter.text.condition" />

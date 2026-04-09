@@ -3185,7 +3185,6 @@
             "additionalProperties": false,
             "properties": {
                 "title": { "type": "string", "description": "Optional title of the filter" },
-                "type": { "type": "string", "enum": ["text_filter"] },
                 "using": {
                     "description": "Attribute or label to use in this filter.",
                     "oneOf": [
@@ -3194,22 +3193,12 @@
                     ],
                     "$semantic": { "type": "one_attribute_item_only" }
                 },
-                "condition": {
-                    "type": "string",
-                    "enum": [
-                        "is",
-                        "isNot",
-                        "contains",
-                        "doesNotContain",
-                        "startsWith",
-                        "doesNotStartWith",
-                        "endsWith",
-                        "doesNotEndWith"
-                    ]
-                },
-                "values": { "type": "array", "items": { "type": ["string", "null"] } },
-                "value": { "type": "string" },
                 "case_sensitive": { "type": "boolean" },
+                "display_as": {
+                    "type": "string",
+                    "description": "Configures the label used for representing attribute filter elements in UI.",
+                    "$ref": "#/$defs/displayAsLabelIdentifier"
+                },
                 "mode": {
                     "type": "string",
                     "enum": ["readonly", "hidden", "active"],
@@ -3217,18 +3206,19 @@
                 },
                 "parents": {
                     "type": "array",
-                    "description": "An ids of the parent local attribute or label filter",
+                    "description": "An ids of the parent local attribute, text, or date filter",
                     "uniqueItems": true,
                     "items": {
                         "oneOf": [
                             {
                                 "type": "string",
                                 "title": "Local attribute filter",
-                                "description": "Local attribute or date filter to use as parent",
+                                "description": "Local attribute, text, or date filter to use as parent",
                                 "$semantic": {
                                     "type": "reference",
                                     "sources": [
                                         "current.dashboard.attribute_filter.localId",
+                                        "current.dashboard.text_filter.localId",
                                         "current.dashboard.date_filter.localId"
                                     ]
                                 }
@@ -3269,37 +3259,131 @@
                     }
                 }
             },
-            "allOf": [
+            "oneOf": [
                 {
-                    "if": {
-                        "properties": { "condition": { "enum": ["is", "isNot"] } },
-                        "required": ["condition"]
-                    },
-                    "then": { "required": ["type", "using", "condition", "values"] }
-                },
-                {
-                    "if": {
-                        "properties": {
-                            "condition": {
-                                "enum": [
-                                    "contains",
-                                    "doesNotContain",
-                                    "startsWith",
-                                    "doesNotStartWith",
-                                    "endsWith",
-                                    "doesNotEndWith"
+                    "properties": {
+                        "title": { "type": "string", "description": "Optional title of the filter" },
+                        "type": { "type": "string", "enum": ["text_filter"] },
+                        "using": {
+                            "description": "Attribute or label to use in this filter.",
+                            "oneOf": [
+                                { "$ref": "#/$defs/attributeIdentifier" },
+                                { "$ref": "#/$defs/labelIdentifier" }
+                            ],
+                            "$semantic": { "type": "one_attribute_item_only" }
+                        },
+                        "condition": { "enum": ["is", "isNot"] },
+                        "values": { "type": "array", "items": { "type": ["string", "null"] } },
+                        "case_sensitive": { "type": "boolean" },
+                        "display_as": {
+                            "type": "string",
+                            "description": "Configures the label used for representing attribute filter elements in UI.",
+                            "$ref": "#/$defs/displayAsLabelIdentifier"
+                        },
+                        "mode": {
+                            "type": "string",
+                            "enum": ["readonly", "hidden", "active"],
+                            "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                        },
+                        "parents": {
+                            "type": "array",
+                            "description": "An ids of the parent local attribute, text, or date filter",
+                            "uniqueItems": true,
+                            "items": {
+                                "oneOf": [
+                                    {
+                                        "type": "string",
+                                        "title": "Local attribute filter",
+                                        "description": "Local attribute, text, or date filter to use as parent",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": [
+                                                "current.dashboard.attribute_filter.localId",
+                                                "current.dashboard.text_filter.localId",
+                                                "current.dashboard.date_filter.localId"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "type": "object",
+                                        "title": "Local date filter",
+                                        "properties": {
+                                            "using": {
+                                                "type": "string",
+                                                "description": "Local date filter to use as parent",
+                                                "$semantic": {
+                                                    "type": "reference",
+                                                    "source": "current.dashboard.date_filter.localId"
+                                                }
+                                            },
+                                            "common": {
+                                                "type": "boolean",
+                                                "description": "Whether the parent filter is common date or special date"
+                                            }
+                                        },
+                                        "required": ["using", "common"]
+                                    }
                                 ]
                             }
                         },
-                        "required": ["condition"]
+                        "metric_filters": {
+                            "type": "array",
+                            "description": "An id of the attributes, labels, facts or metrics to validate the filter by",
+                            "uniqueItems": true,
+                            "items": {
+                                "type": "string",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "sources": ["attribute.id", "label.id", "fact.id", "metric.id"],
+                                    "typePrefix": true
+                                }
+                            }
+                        }
                     },
-                    "then": { "required": ["type", "using", "condition", "value"] }
+                    "required": ["type", "using", "condition", "values"]
+                },
+                {
+                    "properties": {
+                        "title": { "type": "string", "description": "Optional title of the filter" },
+                        "type": { "type": "string", "enum": ["text_filter"] },
+                        "using": {
+                            "description": "Attribute or label to use in this filter.",
+                            "oneOf": [
+                                { "$ref": "#/$defs/attributeIdentifier" },
+                                { "$ref": "#/$defs/labelIdentifier" }
+                            ],
+                            "$semantic": { "type": "one_attribute_item_only" }
+                        },
+                        "condition": {
+                            "enum": [
+                                "contains",
+                                "doesNotContain",
+                                "startsWith",
+                                "doesNotStartWith",
+                                "endsWith",
+                                "doesNotEndWith"
+                            ]
+                        },
+                        "value": { "type": "string" },
+                        "case_sensitive": { "type": "boolean" },
+                        "display_as": {
+                            "type": "string",
+                            "description": "Configures the label used for representing attribute filter elements in UI.",
+                            "$ref": "#/$defs/displayAsLabelIdentifier"
+                        },
+                        "mode": {
+                            "type": "string",
+                            "enum": ["readonly", "hidden", "active"],
+                            "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                        }
+                    },
+                    "required": ["type", "using", "condition", "value"]
                 }
             ],
             "required": ["type", "using", "condition"],
             "$semantic": {
                 "type": "definition",
-                "source": "current.dashboard.attribute_filter.localId",
+                "source": "current.dashboard.text_filter.localId",
                 "mode": "property"
             }
         },
@@ -3685,48 +3769,64 @@
                         { "$ref": "#/$defs/labelIdentifier" }
                     ]
                 },
-                "condition": {
+                "case_sensitive": { "type": "boolean" },
+                "display_as": {
                     "type": "string",
-                    "enum": [
-                        "is",
-                        "isNot",
-                        "contains",
-                        "doesNotContain",
-                        "startsWith",
-                        "doesNotStartWith",
-                        "endsWith",
-                        "doesNotEndWith"
-                    ]
-                },
-                "values": { "type": "array", "items": { "type": ["string", "null"] } },
-                "value": { "type": "string" },
-                "case_sensitive": { "type": "boolean" }
+                    "description": "Configures the label used for representing attribute filter elements in UI.",
+                    "$ref": "#/$defs/displayAsLabelIdentifier"
+                }
             },
-            "allOf": [
+            "oneOf": [
                 {
-                    "if": {
-                        "properties": { "condition": { "enum": ["is", "isNot"] } },
-                        "required": ["condition"]
+                    "properties": {
+                        "type": { "type": "string", "enum": ["text_filter"] },
+                        "using": {
+                            "description": "Attribute or label to use in this filter.",
+                            "oneOf": [
+                                { "$ref": "#/$defs/attributeIdentifier" },
+                                { "$ref": "#/$defs/labelIdentifier" }
+                            ]
+                        },
+                        "condition": { "enum": ["is", "isNot"] },
+                        "values": { "type": "array", "items": { "type": ["string", "null"] } },
+                        "case_sensitive": { "type": "boolean" },
+                        "display_as": {
+                            "type": "string",
+                            "description": "Configures the label used for representing attribute filter elements in UI.",
+                            "$ref": "#/$defs/displayAsLabelIdentifier"
+                        }
                     },
-                    "then": { "required": ["type", "using", "condition", "values"] }
+                    "required": ["type", "using", "condition", "values"]
                 },
                 {
-                    "if": {
-                        "properties": {
-                            "condition": {
-                                "enum": [
-                                    "contains",
-                                    "doesNotContain",
-                                    "startsWith",
-                                    "doesNotStartWith",
-                                    "endsWith",
-                                    "doesNotEndWith"
-                                ]
-                            }
+                    "properties": {
+                        "type": { "type": "string", "enum": ["text_filter"] },
+                        "using": {
+                            "description": "Attribute or label to use in this filter.",
+                            "oneOf": [
+                                { "$ref": "#/$defs/attributeIdentifier" },
+                                { "$ref": "#/$defs/labelIdentifier" }
+                            ]
                         },
-                        "required": ["condition"]
+                        "condition": {
+                            "enum": [
+                                "contains",
+                                "doesNotContain",
+                                "startsWith",
+                                "doesNotStartWith",
+                                "endsWith",
+                                "doesNotEndWith"
+                            ]
+                        },
+                        "value": { "type": "string" },
+                        "case_sensitive": { "type": "boolean" },
+                        "display_as": {
+                            "type": "string",
+                            "description": "Configures the label used for representing attribute filter elements in UI.",
+                            "$ref": "#/$defs/displayAsLabelIdentifier"
+                        }
                     },
-                    "then": { "required": ["type", "using", "condition", "value"] }
+                    "required": ["type", "using", "condition", "value"]
                 }
             ],
             "required": ["type", "using", "condition"],
