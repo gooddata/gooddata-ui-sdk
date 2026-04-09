@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import {
     type AfmIdentifier,
     type AfmLocalIdentifier,
@@ -20,9 +21,18 @@ import {
 import { type TigerAfmType, type TigerObjectType } from "../../types/index.js";
 import {
     type TigerCompatibleObjectType,
+    isTigerAfmCompatibleType,
     isTigerCompatibleType,
+    objectTypeToTigerAfmType,
     objectTypeToTigerIdType,
 } from "../../types/refTypeMapping.js";
+
+type TigerObjectIdentifier = {
+    identifier: {
+        id: string;
+        type: TigerObjectType;
+    };
+};
 
 // TODO: get rid of the defaultValue, tiger should explode if ref is not provided correctly
 export function toTigerType(
@@ -33,18 +43,35 @@ export function toTigerType(
         if (!defaultValue) {
             throw new UnexpectedError("No value or default value was provided to toTigerType ");
         }
-
         return defaultValue;
     }
 
     if (!isTigerCompatibleType(value)) {
-        throw new UnexpectedError(`Cannot convert ${value} to AFM type, ${value} is not valid AfmObjectType`);
+        throw new UnexpectedError(`Cannot convert ${value} to Tiger object type, ${value} is not valid.`);
     }
 
     return objectTypeToTigerIdType[value];
 }
 
-export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): AfmObjectIdentifier {
+function toTigerAfmType(
+    value: TigerCompatibleObjectType | undefined,
+    defaultValue?: TigerAfmType,
+): TigerAfmType {
+    if (!value) {
+        if (!defaultValue) {
+            throw new UnexpectedError("No value or default value was provided to toTigerAfmType ");
+        }
+        return defaultValue;
+    }
+
+    if (!isTigerAfmCompatibleType(value)) {
+        throw new UnexpectedError(`Cannot convert ${value} to AFM type, ${value} is not valid AfmObjectType`);
+    }
+
+    return objectTypeToTigerAfmType[value];
+}
+
+export function toObjQualifier(ref: ObjRef, defaultValue?: TigerObjectType): TigerObjectIdentifier {
     if (isUriRef(ref)) {
         throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
     }
@@ -52,7 +79,20 @@ export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): AfmObj
     return {
         identifier: {
             id: ref.identifier,
-            type: toTigerType(ref.type as TigerCompatibleObjectType, defaultValue),
+            type: toTigerType(ref.type as TigerCompatibleObjectType | undefined, defaultValue),
+        },
+    };
+}
+
+function toAfmObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): AfmObjectIdentifier {
+    if (isUriRef(ref)) {
+        throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
+    }
+
+    return {
+        identifier: {
+            id: ref.identifier,
+            type: toTigerAfmType(ref.type as TigerCompatibleObjectType | undefined, defaultValue),
         },
     };
 }
@@ -61,28 +101,28 @@ export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): AfmObj
  * @internal
  */
 export function toFactQualifier(ref: ObjRef): AfmObjectIdentifierCore {
-    return toObjQualifier(ref, "fact") as AfmObjectIdentifierCore;
+    return toAfmObjQualifier(ref, "fact") as AfmObjectIdentifierCore;
 }
 
 /**
  * @internal
  */
 export function toLabelQualifier(ref: ObjRef): AfmObjectIdentifierLabel {
-    return toObjQualifier(ref, "label") as AfmObjectIdentifierLabel;
+    return toAfmObjQualifier(ref, "label") as AfmObjectIdentifierLabel;
 }
 
 /**
  * @internal
  */
 export function toAttributeQualifier(ref: ObjRef): AfmObjectIdentifierAttribute {
-    return toObjQualifier(ref, "attribute") as AfmObjectIdentifierAttribute;
+    return toAfmObjQualifier(ref, "attribute") as AfmObjectIdentifierAttribute;
 }
 
 /**
  * @internal
  */
 export function toDateDataSetQualifier(ref: ObjRef): AfmObjectIdentifierDataset {
-    return toObjQualifier(ref, "dataset") as AfmObjectIdentifierDataset;
+    return toAfmObjQualifier(ref, "dataset") as AfmObjectIdentifierDataset;
 }
 
 /**
@@ -108,7 +148,7 @@ export function toAfmIdentifier(ref: ObjRefInScope): AfmIdentifier {
                 )}. You must provide both id and type of object you want to reference.`,
             );
         }
-        return toObjQualifier(ref);
+        return toAfmObjQualifier(ref);
     } else {
         throw new UnexpectedError(
             `Invalid object specification in ${JSON.stringify(

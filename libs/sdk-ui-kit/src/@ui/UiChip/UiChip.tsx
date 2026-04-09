@@ -22,6 +22,8 @@ export function UiChip({
     isDisabled = false,
     maxWidth,
     iconBefore,
+    iconAfter,
+    iconColor = "primary",
     onClick,
     onDelete,
     onKeyDown,
@@ -52,6 +54,8 @@ export function UiChip({
             label={label}
             tag={tag}
             iconBefore={iconBefore}
+            iconAfter={iconAfter}
+            iconColor={iconColor}
             onClick={onClick}
             onKeyDown={onKeyDown}
             isActive={isActive}

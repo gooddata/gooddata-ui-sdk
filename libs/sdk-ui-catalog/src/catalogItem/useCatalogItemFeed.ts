@@ -9,8 +9,10 @@ import type {
     IFactsQueryResult,
     IInsightsQueryResult,
     IMeasuresQueryResult,
+    IParametersQueryResult,
 } from "@gooddata/sdk-backend-spi";
 
+import { useCatalogFeedActions } from "./CatalogFeedContext.js";
 import { convertEntityToCatalogItem } from "./converter.js";
 import {
     getAttributesQuery,
@@ -19,6 +21,7 @@ import {
     getFactsQuery,
     getInsightsQuery,
     getMetricsQuery,
+    getParametersQuery,
 } from "./query.js";
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
 import { useUpdateItemCallback } from "./useUpdateItemCallback.js";
@@ -27,14 +30,31 @@ import { useFilterState, useQualityFilter } from "../filter/FilterContext.js";
 import { useMounted } from "../hooks/useMounted.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
+import { useIsParametersEnabled } from "../parameter/gate.js";
 import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
+
+type FeedEndpoint = {
+    type: ObjectType;
+    query: () => Promise<EndpointResult>;
+};
+
+type EndpointResult =
+    | IMeasuresQueryResult
+    | IDashboardsQueryResult
+    | IFactsQueryResult
+    | IInsightsQueryResult
+    | IAttributesQueryResult
+    | IDatasetsQueryResult
+    | IParametersQueryResult;
 
 export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalogItemFeedOptions) {
     const state = useFeedState();
     const cache = useFeedCache();
+    const { registerRefetchHandler } = useCatalogFeedActions();
     const { searchTerm: search } = useFullTextSearchState();
     const { types, origin, createdBy, tags, isHidden, certification } = useFilterState();
     const qualityIds = useQualityFilter();
+    const isParametersEnabled = useIsParametersEnabled();
     const { status, totalCount, totalCounts, error, items, setItems } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
@@ -77,13 +97,16 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
         isHidden,
         certification,
     ]);
-    const endpoints = useEndpoints(types, queryOptions);
+    const endpoints = useEndpoints(types, queryOptions, isParametersEnabled);
 
     // reset
     useReset(state, cache, endpoints);
 
     // load first pages (cached)
     useFirstLoad(state, cache, endpoints);
+
+    // refetch particular object type
+    useObjectTypeRefetch(state, cache, endpoints, registerRefetchHandler);
 
     // total count by type calculation
     const totalCountByType = useMemo(
@@ -144,7 +167,11 @@ function useReset(
     ]);
 }
 
-function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOptions) {
+function useEndpoints(
+    types: ObjectType[],
+    queryOptions: ICatalogItemQueryOptions,
+    isParametersEnabled: boolean,
+): FeedEndpoint[] {
     return useMemo(() => {
         if (queryOptions.id?.length === 0) {
             return [];
@@ -164,6 +191,12 @@ function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOption
         }
         if (types.includes(ObjectTypes.METRIC) || types.length === 0) {
             promises.push({ query: () => getMetricsQuery(queryOptions).query(), type: ObjectTypes.METRIC });
+        }
+        if (isParametersEnabled && (types.includes(ObjectTypes.PARAMETER) || types.length === 0)) {
+            promises.push({
+                query: () => getParametersQuery(queryOptions).query(),
+                type: ObjectTypes.PARAMETER,
+            });
         }
         if (
             !queryOptions.createdBy?.length &&
@@ -187,20 +220,11 @@ function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOption
             }
         }
         return promises;
-    }, [queryOptions, types]);
+    }, [isParametersEnabled, queryOptions, types]);
 }
 
 function useFeedCache() {
-    const endpointCache = useRef<
-        (
-            | IMeasuresQueryResult
-            | IDashboardsQueryResult
-            | IFactsQueryResult
-            | IInsightsQueryResult
-            | IAttributesQueryResult
-            | IDatasetsQueryResult
-        )[]
-    >([]);
+    const endpointCache = useRef<EndpointResult[]>([]);
     const initialized = useRef(false);
     const endpointItems = useRef<ICatalogItem[][]>([]);
 
@@ -274,7 +298,7 @@ function useFirstLoad(
                 currentEndpoint = currentEndpoint === -1 ? firstPages.length : currentEndpoint;
 
                 setCurrentEndpoint(currentEndpoint);
-                setItems(endpointItems.current.slice(0, currentEndpoint + 1).flat());
+                setItems(getItemsThroughEndpoint(endpointItems.current, currentEndpoint));
                 setTotalCounts(firstPages.map((page) => page.totalCount));
                 setStatus("success");
             } catch (error) {
@@ -351,7 +375,7 @@ function useNextCallback(
                         items[o] = convertEntityToCatalogItem(nextPage.items[i++]);
                     }
 
-                    setItems(endpointItems.current.slice(0, currentEndpoint + 1).flat());
+                    setItems(getItemsThroughEndpoint(endpointItems.current, currentEndpoint));
                     setCurrentEndpoint(idx);
                     setStatus("success");
                     setError(null);
@@ -368,7 +392,7 @@ function useNextCallback(
 
         setStatus("success");
         setCurrentEndpoint(idx); // finished last endpoint
-        setItems(endpointItems.current.slice(0, currentEndpoint + 1).flat());
+        setItems(getItemsThroughEndpoint(endpointItems.current, currentEndpoint));
     }, [
         mounted,
         currentEndpoint,
@@ -390,8 +414,108 @@ function useNextCallback(
     };
 }
 
+function useObjectTypeRefetch(
+    state: ReturnType<typeof useFeedState>,
+    cache: ReturnType<typeof useFeedCache>,
+    endpoints: ReturnType<typeof useEndpoints>,
+    registerRefetchHandler: ReturnType<typeof useCatalogFeedActions>["registerRefetchHandler"],
+) {
+    const mounted = useMounted();
+    const { initialized, endpointCache, endpointItems } = cache;
+    const { currentEndpoint, setCurrentEndpoint, setItems, setTotalCounts, setError } = state;
+
+    const refetchObjectType = useCallback(
+        async (type: ObjectType) => {
+            if (!initialized.current) {
+                return;
+            }
+
+            const endpointIndex = endpoints.findIndex((endpoint) => endpoint.type === type);
+            if (endpointIndex === -1) {
+                return;
+            }
+
+            try {
+                const refreshedEndpoint = await queryRefreshedEndpoint(
+                    endpoints[endpointIndex],
+                    endpointItems.current[endpointIndex]?.length ?? 0,
+                );
+
+                if (!mounted.current) {
+                    return;
+                }
+
+                endpointCache.current[endpointIndex] = refreshedEndpoint.page;
+                endpointItems.current[endpointIndex] = refreshedEndpoint.items;
+
+                const nextCurrentEndpoint =
+                    endpointIndex < currentEndpoint &&
+                    refreshedEndpoint.items.length < refreshedEndpoint.page.totalCount
+                        ? endpointIndex
+                        : currentEndpoint;
+
+                setCurrentEndpoint(nextCurrentEndpoint);
+                setItems(getItemsThroughEndpoint(endpointItems.current, nextCurrentEndpoint));
+                setTotalCounts((currentCounts) => {
+                    const nextCounts = [...currentCounts];
+                    nextCounts[endpointIndex] = refreshedEndpoint.page.totalCount;
+                    return nextCounts;
+                });
+                setError(null);
+            } catch (error) {
+                console.error(error);
+                throw error;
+            }
+        },
+        [
+            currentEndpoint,
+            endpointCache,
+            endpointItems,
+            endpoints,
+            initialized,
+            mounted,
+            setCurrentEndpoint,
+            setError,
+            setItems,
+            setTotalCounts,
+        ],
+    );
+
+    useEffect(() => {
+        registerRefetchHandler(refetchObjectType);
+        return () => {
+            registerRefetchHandler(null);
+        };
+    }, [refetchObjectType, registerRefetchHandler]);
+}
+
+async function queryRefreshedEndpoint(endpoint: FeedEndpoint, loadedItemCount: number) {
+    let page = await endpoint.query();
+    const items: ICatalogItem[] = [];
+    mergeEndpointPageItems(items, page);
+
+    const targetItemCount = Math.min(Math.max(loadedItemCount, page.items.length), page.totalCount);
+
+    while (items.length < targetItemCount) {
+        page = await page.next();
+        mergeEndpointPageItems(items, page);
+    }
+
+    return { page, items };
+}
+
 function getTotalCount(totalCounts: number[]) {
     return totalCounts.reduce((acc, count) => acc + count, 0);
+}
+
+function getItemsThroughEndpoint(endpointItems: ICatalogItem[][], currentEndpoint: number) {
+    return endpointItems.slice(0, currentEndpoint + 1).flat();
+}
+
+function mergeEndpointPageItems(items: ICatalogItem[], page: EndpointResult) {
+    page.items.forEach((item, index) => {
+        items[page.offset + index] = convertEntityToCatalogItem(item);
+    });
 }
 
 function getTotalCountByType(endpoints: ReturnType<typeof useEndpoints>, totalCounts: number[]) {
@@ -402,6 +526,7 @@ function getTotalCountByType(endpoints: ReturnType<typeof useEndpoints>, totalCo
         [ObjectTypes.ATTRIBUTE]: 0,
         [ObjectTypes.FACT]: 0,
         [ObjectTypes.DATASET]: 0,
+        [ObjectTypes.PARAMETER]: 0,
     };
 
     endpoints.forEach((endpoint, idx) => {

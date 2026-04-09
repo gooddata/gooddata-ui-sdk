@@ -52,6 +52,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -242,6 +243,9 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         measures(): IWorkspaceMeasuresService {
+            throw new NotSupported("not supported");
+        },
+        parameters(): IWorkspaceParametersService {
             throw new NotSupported("not supported");
         },
         facts(): IWorkspaceFactsService {

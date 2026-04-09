@@ -1855,7 +1855,7 @@ export function IconTrash({ color, className, width, height }: IIconProps): JSX.
 export function IconTreeMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "fileAi" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "fileAi" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter";
 
 // @internal (undocumented)
 export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
@@ -5795,6 +5795,8 @@ export interface IUiAsyncTableFilterOption {
 // @internal (undocumented)
 export interface IUiAsyncTableProps<T extends {
     id: string;
+} | {
+    ref: ObjRef;
 }> {
     // (undocumented)
     accessibilityConfig?: IUiAsyncTableAccessibilityConfig<T>;
@@ -5973,7 +5975,7 @@ export interface IUiButtonProps {
     // (undocumented)
     tooltip?: ReactNode;
     // (undocumented)
-    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink;
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger | VariantTooltip | VariantLink | VariantDropdownInline;
 }
 
 // @internal (undocumented)
@@ -6023,7 +6025,11 @@ export interface IUiChipProps {
     // (undocumented)
     dataTestId?: string;
     // (undocumented)
+    iconAfter?: IconType;
+    // (undocumented)
     iconBefore?: IconType;
+    // (undocumented)
+    iconColor?: ThemeColor | "currentColor";
     // (undocumented)
     isActive?: boolean;
     // (undocumented)
@@ -8181,6 +8187,8 @@ export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 // @internal (undocumented)
 export function UiAsyncTable<T extends {
     id: string;
+} | {
+    ref: ObjRef;
 }>(props: IUiAsyncTableProps<T>): JSX.Element;
 
 // @internal (undocumented)
@@ -8243,7 +8251,7 @@ export const UiCard: ForwardRefExoticComponent<IUiCardProps & RefAttributes<HTML
 export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label }: IUiCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton }: IUiChipProps): JSX.Element;
+export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, iconAfter, iconColor, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton }: IUiChipProps): JSX.Element;
 
 // @internal
 export function UiCombobox({ children, ...props }: IUiComboboxProps): JSX.Element;
@@ -8700,6 +8708,9 @@ export type VariantBare = "bare";
 
 // @internal (undocumented)
 export type VariantDanger = "danger";
+
+// @internal
+export type VariantDropdownInline = "dropdownInline";
 
 // @internal (undocumented)
 export type VariantLink = "link";

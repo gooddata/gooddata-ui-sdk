@@ -10,6 +10,7 @@ const objectTypeMessages: Record<ObjectType, MessageDescriptor> = defineMessages
     [ObjectTypes.DASHBOARD]: { id: "analyticsCatalog.objectType.dashboard.name" },
     [ObjectTypes.VISUALIZATION]: { id: "analyticsCatalog.objectType.visualization.name" },
     [ObjectTypes.METRIC]: { id: "analyticsCatalog.objectType.metric.name" },
+    [ObjectTypes.PARAMETER]: { id: "analyticsCatalog.objectType.parameter.name" },
     [ObjectTypes.ATTRIBUTE]: { id: "analyticsCatalog.objectType.attribute.name" },
     [ObjectTypes.FACT]: { id: "analyticsCatalog.objectType.fact.name" },
     [ObjectTypes.DATASET]: { id: "analyticsCatalog.objectType.dateDataset.name" },

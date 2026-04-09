@@ -1063,7 +1063,7 @@ describe("PluggableGeoPushpinChartNext", () => {
             expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.COLOR].canAddItems).toBe(true);
         });
 
-        it("should disable size and color drops for oneIcon shape", async () => {
+        it("should disable size, color, and segment drops for oneIcon shape", async () => {
             const { visualization } = createComponent(undefined, {
                 enableGeoPushpinIcon: true,
             });
@@ -1088,6 +1088,7 @@ describe("PluggableGeoPushpinChartNext", () => {
 
             expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.SIZE].canAddItems).toBe(false);
             expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.COLOR].canAddItems).toBe(false);
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.SEGMENT].canAddItems).toBe(false);
         });
 
         it("should keep size and color drops available when visualization properties already switched to circle", async () => {

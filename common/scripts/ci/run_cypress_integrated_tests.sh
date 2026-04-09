@@ -29,24 +29,26 @@ else
   RUSH_REPO_ROOT="../.."
 fi
 
-pushd $REF_WS_DIR
-CLI_CREATE_ARGS=(
-    --prefix E2E_SDK_cypress_test
-    --host "$HOST"
-    --token "$TIGER_API_TOKEN"
-    --datasource "$TIGER_DATASOURCES_NAME"
-    --fixture-type "$FIXTURE_TYPE"
-    --metadata-extension-local "fixtures/$FIXTURE_TYPE/tiger_metadata_extension.json"
-)
+if [ -z "$GDC_UI" ] || [ -z "$TEST_WORKSPACE_ID" ] || [ -z "$TEST_CHILD_WORKSPACE_ID" ]; then
+  pushd $REF_WS_DIR
+  CLI_CREATE_ARGS=(
+      --prefix E2E_SDK_cypress_test
+      --host "$HOST"
+      --token "$TIGER_API_TOKEN"
+      --datasource "$TIGER_DATASOURCES_NAME"
+      --fixture-type "$FIXTURE_TYPE"
+      --metadata-extension-local "fixtures/$FIXTURE_TYPE/tiger_metadata_extension.json"
+  )
 
-echo "Creating reference workspaces..."
-eval "$(reference-workspace-cli create "${CLI_CREATE_ARGS[@]}")"
-echo "TEST_WORKSPACE_ID=$TEST_WORKSPACE_ID"
-echo "TEST_CHILD_WORKSPACE_ID=$TEST_CHILD_WORKSPACE_ID"
-export TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID
-popd
+  echo "Creating reference workspaces..."
+  eval "$(reference-workspace-cli create "${CLI_CREATE_ARGS[@]}")"
+  echo "TEST_WORKSPACE_ID=$TEST_WORKSPACE_ID"
+  echo "TEST_CHILD_WORKSPACE_ID=$TEST_CHILD_WORKSPACE_ID"
+  export TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID
+  popd
 
-WORKSPACE_CREATED=true
+  WORKSPACE_CREATED=true
+fi
 DELETE_MODE="${DELETE_MODE:-delete_always}"
 
 # Write .env for the e2e tests
@@ -63,8 +65,8 @@ EOF
 
 cleanup() {
     echo "Executing cleanup before exiting..."
-    # remove previously created workspace
-    if [ -n "$WORKSPACE_CREATED" ]; then
+    # remove previously created workspace (skip if GDC_UI — workspace is managed externally)
+    if [ -n "$WORKSPACE_CREATED" ] && [ -z "$GDC_UI" ]; then
       if [ "$DELETE_MODE" = "delete_never" ]; then
         echo "DELETE_MODE is delete_never, skip deleting the created workspace"
       else

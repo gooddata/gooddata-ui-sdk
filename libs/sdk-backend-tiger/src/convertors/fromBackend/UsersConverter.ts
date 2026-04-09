@@ -6,12 +6,14 @@ import {
     type IUserProfile,
     type JsonApiAnalyticalDashboardOutIncludes,
     type JsonApiMetricOutIncludes,
+    type JsonApiUserGroupOutWithLinks,
     type JsonApiUserIdentifierLinkage,
     type JsonApiUserIdentifierOutAttributes,
+    type JsonApiUserIdentifierOutWithLinks,
     type JsonApiWorkspaceAutomationOut,
     type JsonApiWorkspaceAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
-import { type IUser, idRef, uriRef } from "@gooddata/sdk-model";
+import { type IUser, type IUserGroup, idRef, uriRef } from "@gooddata/sdk-model";
 
 /**
  * To preserve the typing and bootstrap concept, we are using firstName
@@ -65,6 +67,7 @@ function isJsonApiUserIdentifierOutAttributes(
 
 export type IIncludedWithUserIdentifier =
     | JsonApiMetricOutIncludes
+    | JsonApiUserIdentifierOutWithLinks
     | JsonApiWorkspaceAutomationOutWithLinks
     | JsonApiAnalyticalDashboardOutIncludes
     | JsonApiWorkspaceAutomationOut;
@@ -75,6 +78,12 @@ export type IIncludedWithUserIdentifier =
  * @param included - included objects to the entity query
  * @returns converted user or undefined if link is empty or does not link to anything in included array
  */
+export const convertIncludedUserGroup = (group: JsonApiUserGroupOutWithLinks): IUserGroup => ({
+    ref: idRef(group.id),
+    id: group.id,
+    name: group.attributes?.name,
+});
+
 export function convertUserIdentifier(
     userIdentifierLinkage?: IUserIdentifierLinkage,
     included: IIncludedWithUserIdentifier[] = [],

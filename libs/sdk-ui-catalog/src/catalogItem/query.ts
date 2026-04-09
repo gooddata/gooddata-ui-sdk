@@ -142,6 +142,40 @@ export function getMetricsQuery({
         .withMethod("POST");
 }
 
+export function getParametersQuery({
+    backend,
+    workspace,
+    search,
+    origin,
+    id,
+    excludeId,
+    createdBy,
+    excludeCreatedBy,
+    tags,
+    excludeTags,
+    pageSize = PAGE_SIZE,
+}: ICatalogItemQueryOptions) {
+    return backend
+        .workspace(workspace)
+        .parameters()
+        .getParametersQuery()
+        .withPage(0)
+        .withSize(pageSize)
+        .withInclude(["createdBy", "modifiedBy"])
+        .withSorting(["title,asc"])
+        .withOrigin(origin)
+        .withFilter({
+            search,
+            id,
+            excludeId,
+            tags,
+            excludeTags,
+            createdBy,
+            excludeCreatedBy,
+        })
+        .withMethod("POST");
+}
+
 export function getAttributesQuery({
     backend,
     workspace,

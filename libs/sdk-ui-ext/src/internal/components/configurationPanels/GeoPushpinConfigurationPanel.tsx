@@ -208,7 +208,9 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
     protected override renderColorSection(): ReactNode {
         const { properties, propertiesMeta, pushData, colors, references, isLoading } = this.props;
 
-        const controlsDisabled = this.isControlDisabled();
+        const shapeType = properties?.controls?.["points"]?.shapeType ?? "circle";
+        const isIconShape = shapeType === "iconByValue" || shapeType === "oneIcon";
+        const controlsDisabled = this.isControlDisabled() || isIconShape;
 
         return (
             <ColorsSection

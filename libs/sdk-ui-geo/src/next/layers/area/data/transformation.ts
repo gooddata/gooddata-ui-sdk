@@ -8,9 +8,7 @@ import {
     attributeLocalId,
     isAttribute,
     isMeasure,
-    isResultAttributeHeader,
     measureLocalId,
-    resultHeaderName,
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
@@ -22,13 +20,8 @@ import {
     type IGeoMeasureItem,
     type IGeoSegmentItem,
 } from "../../../types/geoData/common.js";
-import { EMPTY_SEGMENT_VALUE } from "../../pushpin/constants.js";
+import { getAttributeDataAndUris, getSegmentDataAndUris } from "../../common/headerItemUtils.js";
 import { getMinMax } from "../../pushpin/size/calculations.js";
-
-interface ISegmentData {
-    uris: string[];
-    data: string[];
-}
 
 interface IAreaDataBuckets {
     area?: IGeoAreaItem;
@@ -41,6 +34,7 @@ type BucketItemInfo = {
     [key in keyof IAreaDataBuckets]?: {
         index: number;
         name: string;
+        displayFormId?: string;
         data?: string[] | number[];
         format?: string;
         uris?: string[];
@@ -70,82 +64,12 @@ function getFormatFromExecutionResponse(dv: DataViewFacade, indexMeasure: number
 }
 
 /**
- * Extracts segment data and URIs from attribute header items
- */
-function getSegmentDataAndUris(
-    attributeHeaderItems: IResultHeader[][],
-    dataIndex: number,
-    emptyHeaderString: string,
-    nullHeaderString: string,
-): ISegmentData {
-    const headerItems = attributeHeaderItems[dataIndex];
-    return headerItems.reduce<ISegmentData>(
-        (result: ISegmentData, headerItem: IResultHeader): ISegmentData => {
-            if (headerItem && isResultAttributeHeader(headerItem)) {
-                const { uri, name } = headerItem.attributeHeaderItem;
-                const displayName = name ?? nullHeaderString;
-                const finalName = name === "" ? emptyHeaderString : displayName;
-                return {
-                    uris: [...result.uris, uri ?? EMPTY_SEGMENT_VALUE],
-                    data: [...result.data, finalName],
-                };
-            }
-            return result;
-        },
-        { uris: [], data: [] },
-    );
-}
-
-/**
- * Extracts area data and URIs from attribute header items
- */
-function getAreaDataAndUris(
-    attributeHeaderItems: IResultHeader[][],
-    dataIndex: number,
-    emptyHeaderString: string,
-    nullHeaderString: string,
-): ISegmentData {
-    const headerItems = attributeHeaderItems[dataIndex];
-    return headerItems.reduce<ISegmentData>(
-        (result: ISegmentData, headerItem: IResultHeader): ISegmentData => {
-            if (headerItem && isResultAttributeHeader(headerItem)) {
-                const { uri, name } = headerItem.attributeHeaderItem;
-                const displayName = name ?? nullHeaderString;
-                const finalName = name === "" ? emptyHeaderString : displayName;
-                return { uris: [...result.uris, uri], data: [...result.data, finalName] };
-            }
-            return result;
-        },
-        { uris: [], data: [] },
-    );
-}
-
-/**
  * Extracts measure data from data view
  */
 function getMeasureData(dv: DataViewFacade, dataIndex: number): number[] {
     const twoDimData = dv.rawData().twoDimData();
     const measureValues = twoDimData[dataIndex];
     return measureValues.map(dataValueAsFloat);
-}
-
-/**
- * Extracts attribute data from attribute header items
- */
-function getAttributeData(
-    attributeHeaderItems: IResultHeader[][],
-    dataIndex: number,
-    emptyHeaderString: string,
-    nullHeaderString: string,
-): string[] {
-    const headerItems = attributeHeaderItems[dataIndex];
-    return headerItems.map((i) => {
-        const name = resultHeaderName(i);
-        if (name) {
-            return name;
-        }
-        return name === "" ? emptyHeaderString : nullHeaderString;
-    });
 }
 
 /**
@@ -187,7 +111,7 @@ function getAttributeBucketInfo(
     buckets: IBucket[],
     attributeDescriptors: IAttributeDescriptor[],
     bucketName: string,
-): { index: number; name: string } | undefined {
+): { index: number; name: string; displayFormId?: string } | undefined {
     const bucket = buckets.find((item) => item.localIdentifier === bucketName);
     if (!bucket) {
         return undefined;
@@ -210,6 +134,9 @@ function getAttributeBucketInfo(
     return {
         index,
         name: attributeDescriptors[index].attributeHeader.formOf.name,
+        displayFormId:
+            attributeDescriptors[index].attributeHeader.identifier ??
+            attributeDescriptors[index].attributeHeader.uri,
     };
 }
 
@@ -266,7 +193,7 @@ function processAreaBucket(ctx: IAreaBucketProcessingContext): IGeoAreaItem | un
         return undefined;
     }
 
-    const { data, uris } = getAreaDataAndUris(
+    const { data, uris } = getAttributeDataAndUris(
         attributeHeaderItems,
         areaIndex,
         emptyHeaderString,
@@ -276,6 +203,7 @@ function processAreaBucket(ctx: IAreaBucketProcessingContext): IGeoAreaItem | un
     return {
         index: areaBucket.index,
         name: areaBucket.name,
+        displayFormId: areaBucket.displayFormId,
         data,
         uris,
     };
@@ -303,6 +231,7 @@ function processSegmentBucket(ctx: IAreaBucketProcessingContext): IGeoSegmentIte
     return {
         index: segmentBucket.index,
         name: segmentBucket.name,
+        displayFormId: segmentBucket.displayFormId,
         data,
         uris,
     };
@@ -320,7 +249,7 @@ function processTooltipTextBucket(ctx: IAreaBucketProcessingContext): IGeoAttrib
         return undefined;
     }
 
-    const data = getAttributeData(
+    const { data, uris } = getAttributeDataAndUris(
         attributeHeaderItems,
         tooltipTextIndex,
         emptyHeaderString,
@@ -329,7 +258,9 @@ function processTooltipTextBucket(ctx: IAreaBucketProcessingContext): IGeoAttrib
     return {
         index: tooltipTextBucket.index,
         name: tooltipTextBucket.name,
+        displayFormId: tooltipTextBucket.displayFormId,
         data,
+        uris,
     };
 }
 

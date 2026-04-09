@@ -13,6 +13,7 @@ import { CatalogResourceProvider } from "./catalogResource/CatalogResourceProvid
 import { FilterProvider } from "./filter/FilterContext.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { ObjectTypeProvider } from "./objectType/ObjectTypeContext.js";
+import type { CatalogCreateObjectType } from "./objectType/types.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
 import { PermissionsProvider } from "./permission/PermissionsContext.js";
 import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
@@ -60,6 +61,11 @@ export interface IAnalyticsCatalogProps {
      * Handler when closing catalog detail.
      */
     onCatalogDetailClosed?: () => void;
+
+    /**
+     * Handler for creating a new object from the catalog header.
+     */
+    onCreateObject?: (objectType: CatalogCreateObjectType) => void;
 }
 
 /**
@@ -88,6 +94,7 @@ export function AnalyticsCatalog(props: IAnalyticsCatalogProps) {
                                                 onCatalogDetailOpened={props.onCatalogDetailOpened}
                                                 onCatalogDetailClosed={props.onCatalogDetailClosed}
                                                 onCatalogItemNavigation={props.onCatalogItemNavigation}
+                                                onCreateObject={props.onCreateObject}
                                             />
                                         </CatalogResourceProvider>
                                     </QualityProvider>

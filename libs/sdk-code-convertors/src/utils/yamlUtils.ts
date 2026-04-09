@@ -16,10 +16,14 @@ import {
     type ObjRef,
     type ObjRefInScope,
     isAbsoluteDateFilter,
+    isArbitraryAttributeFilter,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
     isIdentifierRef,
     isLocalIdRef,
+    isMatchAttributeFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
@@ -134,6 +138,18 @@ export function createFilterContextItemKeyName(item: FilterContextItem, type: st
             `${getIdentifier(item.attributeFilter.displayForm, true)}_filter`
         );
     }
+    if (isDashboardArbitraryAttributeFilter(item)) {
+        return (
+            item.arbitraryAttributeFilter.localIdentifier ??
+            `${getIdentifier(item.arbitraryAttributeFilter.displayForm, true)}_text_filter`
+        );
+    }
+    if (isDashboardMatchAttributeFilter(item)) {
+        return (
+            item.matchAttributeFilter.localIdentifier ??
+            `${getIdentifier(item.matchAttributeFilter.displayForm, true)}_text_filter`
+        );
+    }
     throw newError(CoreErrorCode.ItemNotSupported, [JSON.stringify(item)]);
 }
 
@@ -169,6 +185,18 @@ export function createFilterItemKeyName(item: IFilter, type: string = "date") {
         return (
             item.negativeAttributeFilter.localIdentifier ??
             `${getIdentifier(item.negativeAttributeFilter.displayForm, true)}_filter`
+        );
+    }
+    if (isArbitraryAttributeFilter(item)) {
+        return (
+            item.arbitraryAttributeFilter.localIdentifier ??
+            `${getIdentifier(item.arbitraryAttributeFilter.label, true)}_text_filter`
+        );
+    }
+    if (isMatchAttributeFilter(item)) {
+        return (
+            item.matchAttributeFilter.localIdentifier ??
+            `${getIdentifier(item.matchAttributeFilter.label, true)}_text_filter`
         );
     }
     if (isMeasureValueFilter(item)) {

@@ -3,6 +3,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 @use "./objectType.scss";
+@use "./parameter.scss";
 
 $width: 545px;
 $title-font-size: 24px;

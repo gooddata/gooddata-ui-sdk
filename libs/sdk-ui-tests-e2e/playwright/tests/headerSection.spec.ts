@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import { enterEditMode, mockFeatureHub, saveDashboard, visit, waitForCatalogReload } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Header section", "headerSection", () => {
+test.topLevelDescribe("Header section", "headerSection", () => {
     test.describe("Default language", () => {
         test("can update header for all sections", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {
             // Navigate and verify not in edit mode

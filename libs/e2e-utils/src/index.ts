@@ -13,7 +13,16 @@ export {
     startRecording,
     snapshotAndSaveRecording,
 } from "./goodmock.js";
-export { createDescribe } from "./playwright.js";
+export {
+    type ICreateTestOptions,
+    type IDescribeFunction,
+    type IE2eTest,
+    type IE2eTestDetails,
+    type IFeatureHubEnvironment,
+    type IFeatureHubFeature,
+    type IGoodmockOptions,
+    createTest,
+} from "./playwright.js";
 export { clickByBoundingBox, hoverByBoundingBox } from "./helpers/mouse-actions.js";
 export {
     GOODMOCK_HOST,

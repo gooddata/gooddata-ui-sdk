@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 
@@ -25,6 +25,7 @@ export function ShowAllFiltersButton({
                 className="button-filter-bar-show-all"
                 type="button"
                 tabIndex={-1}
+                aria-hidden="true"
                 onClick={() => onToggle(!isFilterBarExpanded)}
             >
                 <span className="gd-button-text gd-label">

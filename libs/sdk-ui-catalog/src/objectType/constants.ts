@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { ObjectType } from "./types.js";
 
@@ -9,6 +9,7 @@ export const ObjectTypes = {
     DASHBOARD: "analyticalDashboard",
     VISUALIZATION: "insight",
     METRIC: "measure",
+    PARAMETER: "parameter",
     ATTRIBUTE: "attribute",
     FACT: "fact",
     DATASET: "dataSet",
@@ -21,6 +22,7 @@ export const OBJECT_TYPE_ORDER: ObjectType[] = [
     ObjectTypes.DASHBOARD,
     ObjectTypes.VISUALIZATION,
     ObjectTypes.METRIC,
+    ObjectTypes.PARAMETER,
     ObjectTypes.ATTRIBUTE,
     ObjectTypes.FACT,
     ObjectTypes.DATASET,

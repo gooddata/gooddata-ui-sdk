@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import type { IOutliersConfig } from "@gooddata/sdk-backend-spi";
+import { type IColor } from "@gooddata/sdk-model";
 import type { IAnomalies } from "@gooddata/sdk-ui-charts";
 
 import { type Config } from "../types.js";
@@ -10,6 +11,8 @@ import { type Config } from "../types.js";
  */
 export interface INormalizedAnomalyDetectionValues {
     sensitivity: "low" | "medium" | "high";
+    size: "small" | "medium" | "big";
+    color: IColor;
 }
 
 /**
@@ -25,15 +28,8 @@ export function mapVisualizationAnomalyDetectionToChartConfig(config?: Config): 
     return {
         enabled: true,
         sensitivity: anomalyValues.sensitivity,
-        size: "small",
-        color: {
-            type: "rgb",
-            value: {
-                r: 255,
-                g: 0,
-                b: 0,
-            },
-        },
+        color: anomalyValues.color,
+        size: anomalyValues.size,
     };
 }
 
@@ -60,13 +56,15 @@ export function mapVisualizationAnomalyDetectionToBackendConfig(
 export function getNormalizedAnomalyDetectionValues(
     config?: Config,
 ): INormalizedAnomalyDetectionValues | undefined {
-    const anomalyDetection = config?.anomalyDetection;
+    const anomalyDetection = config?.anomalyDetection ?? config?.anomalies;
 
     if (!anomalyDetection) {
         return undefined;
     }
 
-    const sensitivity = anomalyDetection.sensitivity?.toLowerCase();
+    const sensitivity = anomalyDetection.sensitivity?.toLowerCase() ?? "medium";
+    const color = parseColor(anomalyDetection.color?.toLowerCase() ?? "#FF0000");
+    const size = anomalyDetection.size?.toLowerCase() ?? "small";
 
     if (sensitivity !== "low" && sensitivity !== "medium" && sensitivity !== "high") {
         return undefined;
@@ -74,5 +72,39 @@ export function getNormalizedAnomalyDetectionValues(
 
     return {
         sensitivity,
+        size,
+        color,
+    };
+}
+
+function parseColor(color: string): IColor {
+    if (color.startsWith("#")) {
+        const hex = color.substring(1);
+        const r = parseInt(hex.substring(0, 2), 16);
+        const g = parseInt(hex.substring(2, 4), 16);
+        const b = parseInt(hex.substring(4, 6), 16);
+        return {
+            type: "rgb",
+            value: { r, g, b },
+        };
+    } else if (color.startsWith("rgb")) {
+        const match = color.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/);
+        if (match) {
+            const [, r, g, b] = match;
+            return {
+                type: "rgb",
+                value: {
+                    r: parseInt(r, 10),
+                    g: parseInt(g, 10),
+                    b: parseInt(b, 10),
+                },
+            };
+        }
+    }
+
+    // Default to red if parsing fails
+    return {
+        type: "rgb",
+        value: { r: 255, g: 0, b: 0 },
     };
 }

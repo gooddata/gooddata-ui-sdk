@@ -396,6 +396,7 @@ export const objectTypeToTigerIdType: {
     measure: TigerObjectType;
     memoryItem: TigerObjectType;
     notificationChannel: TigerObjectType;
+    parameter: TigerObjectType;
     theme: TigerObjectType;
     user: TigerObjectType;
     userDataFilter: TigerObjectType;
@@ -469,7 +470,7 @@ export class TigerJwtAuthProvider extends TigerTokenAuthProvider {
 }
 
 // @public
-export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext" | "dashboardPlugin";
+export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext" | "dashboardPlugin" | "parameter";
 
 // @public
 export type TigerObjectType = TigerAfmType | TigerMetadataType;

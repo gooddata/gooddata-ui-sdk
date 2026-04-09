@@ -4,6 +4,8 @@ import { useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
+import { type ObjRef } from "@gooddata/sdk-model";
+
 import { ASYNC_TABLE_FILTER_LABEL_ID, ASYNC_TABLE_SELECTED_COUNT_ID } from "./constants.js";
 import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
@@ -14,9 +16,12 @@ import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { type IUiAsyncTableToolbarProps } from "../types.js";
+import { getItemKey } from "./utils.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
 
-export function UiAsyncTableToolbar<T extends { id: string }>(props: IUiAsyncTableToolbarProps<T>) {
+export function UiAsyncTableToolbar<T extends { id: string } | { ref: ObjRef }>(
+    props: IUiAsyncTableToolbarProps<T>,
+) {
     const { hasContent, renderBulkActions, renderFilters, renderSearchSection } = useAsyncTableToolbar(props);
 
     const { isMobileView, variant } = props;
@@ -34,7 +39,7 @@ export function UiAsyncTableToolbar<T extends { id: string }>(props: IUiAsyncTab
     ) : null;
 }
 
-const useAsyncTableToolbar = <T extends { id: string }>({
+const useAsyncTableToolbar = <T extends { id: string } | { ref: ObjRef }>({
     filters,
     isFiltersTooLarge,
     bulkActions,
@@ -53,7 +58,7 @@ const useAsyncTableToolbar = <T extends { id: string }>({
     const { searchValue, setSearchValue } = useAsyncTableSearch(onSearch);
 
     const handleCheckboxChange = useCallback(() => {
-        setSelectedItemIds(selectedItemIds?.length === 0 ? items.map((item) => item.id) : []);
+        setSelectedItemIds(selectedItemIds?.length === 0 ? items.map((item) => getItemKey(item)) : []);
     }, [selectedItemIds, items, setSelectedItemIds]);
 
     const isCheckboxDisabled = useMemo(() => {

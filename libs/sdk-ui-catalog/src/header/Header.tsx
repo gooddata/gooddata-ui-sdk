@@ -8,9 +8,10 @@ import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 type Props = {
     searchNode?: ReactNode;
+    createNode?: ReactNode;
 };
 
-export function Header({ searchNode }: Props) {
+export function Header({ searchNode, createNode }: Props) {
     const intl = useIntl();
 
     return (
@@ -37,6 +38,7 @@ export function Header({ searchNode }: Props) {
             />
             <div className="gd-analytics-catalog__header__separator" />
             {searchNode}
+            {createNode}
         </div>
     );
 }

@@ -41,7 +41,7 @@ import { selectAllCatalogDisplayFormsMap } from "../../../model/store/catalog/ca
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
-    selectOtherContextAttributeFilters,
+    selectOtherContextAttributeFilterItems,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
@@ -124,8 +124,8 @@ export function AttributeFilterParentFilteringProvider({
         return filterObjRef(attributeFilter);
     }, [attributeFilter]);
 
-    const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
-        selectOtherContextAttributeFilters(filterRef),
+    const neighborFilters: DashboardAttributeFilterItem[] = useDashboardSelector(
+        selectOtherContextAttributeFilterItems(filterRef),
     );
 
     const neighborDateFilters: IDashboardDateFilter[] = useDashboardSelector(

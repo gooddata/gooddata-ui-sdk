@@ -2,14 +2,16 @@
 
 import { type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { type ObjRef } from "@gooddata/sdk-model";
+
 import { useSkeletonItem } from "./SkeletonItemFactory.js";
-import { getCellId, getRowId } from "./utils.js";
+import { getCellId, getItemKey, getRowId } from "./utils.js";
 import { isEnterKey } from "../../../utils/events.js";
 import { makeGridKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { type IUiAsyncTableBodyProps } from "../types.js";
 
-export function UiAsyncTableBody<T extends { id: string }>({
+export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
     items,
     maxHeight,
     itemHeight,
@@ -34,7 +36,7 @@ export function UiAsyncTableBody<T extends { id: string }>({
         if (focusedRowIndex === undefined || focusedRowIndex < 0 || focusedRowIndex >= items.length) {
             return undefined;
         }
-        const itemId = items[focusedRowIndex].id;
+        const itemId = getItemKey(items[focusedRowIndex]);
         if (focusedColumnIndex !== undefined) {
             return getCellId(itemId, focusedColumnIndex);
         }

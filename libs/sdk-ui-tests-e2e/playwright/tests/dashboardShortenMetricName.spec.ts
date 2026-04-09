@@ -1,10 +1,10 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import {
     mockFeatureHub,
     visit,
@@ -19,7 +19,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Dashboard Shorten Metric Name", "dashboardShortenMetricName", () => {
+test.topLevelDescribe("Dashboard Shorten Metric Name", "dashboardShortenMetricName", () => {
     test(
         "Table should shorten metric name",
         {

@@ -119,7 +119,10 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                         "apply-all-at-once": isApplyAllAtOnceEnabledAndSet,
                     })}
                 >
-                    <AllFiltersContainer setCalculatedRows={setCalculatedRows}>
+                    <AllFiltersContainer
+                        setCalculatedRows={setCalculatedRows}
+                        isAutoExpanded={expandedAutomatically}
+                    >
                         {children}
                     </AllFiltersContainer>
                     <FiltersRows rows={rows} />
@@ -197,9 +200,11 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
 
 function AllFiltersContainer({
     setCalculatedRows,
+    isAutoExpanded,
     children,
 }: {
     setCalculatedRows: (data: CalculatedRows) => void;
+    isAutoExpanded?: boolean;
     children?: ReactNode;
 }) {
     const ref = useRef<Element | null>(null);
@@ -237,16 +242,22 @@ function AllFiltersContainer({
             }}
             onResize={handleResize}
         >
-            {({ measureRef }) => <MeasuredDiv measureRef={measureRef}>{children}</MeasuredDiv>}
+            {({ measureRef }) => (
+                <MeasuredDiv measureRef={measureRef} isAutoExpanded={isAutoExpanded}>
+                    {children}
+                </MeasuredDiv>
+            )}
         </Measure>
     );
 }
 
 function MeasuredDiv({
     measureRef,
+    isAutoExpanded,
     children,
 }: {
     measureRef: (node: Element | null) => void;
+    isAutoExpanded?: boolean;
     children?: ReactNode;
 }) {
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -343,11 +354,15 @@ function MeasuredDiv({
     );
     const intl = useIntl();
 
+    const regionLabel = isAutoExpanded
+        ? `${intl.formatMessage({ id: "filterBar.label" })}. ${intl.formatMessage({ id: "filterBar.filterListAutoExpanded" })}`
+        : intl.formatMessage({ id: "filterBar.label" });
+
     return (
         <div
             className="dash-filters-all"
             role="region"
-            aria-label={intl.formatMessage({ id: "filterBar.label" })}
+            aria-label={regionLabel}
             tabIndex={-1}
             ref={setRefs}
             onKeyDown={keyboardNavigation}

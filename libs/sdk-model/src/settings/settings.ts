@@ -1107,6 +1107,11 @@ export interface IFeatureFlags {
     enableAnalyticalCatalog?: boolean;
 
     /**
+     * Enable AI Hub.
+     */
+    enableAiHub?: boolean;
+
+    /**
      * Enable ad-hoc triggering of existing automations from the manage dialog.
      */
     enableAutomationTrigger?: boolean;

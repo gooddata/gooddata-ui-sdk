@@ -4,14 +4,19 @@ import { describe, expect, it } from "vitest";
 
 import {
     isAbsoluteDateFilter,
+    isArbitraryTextFilter,
     isArithmeticMetricField,
     isAttributeField,
     isAttributeFilter,
     isAttributeSort,
     isCalculatedMetricField,
+    isDashboardArbitraryTextFilter,
+    isDashboardMatchTextFilter,
+    isDashboardTextFilter,
     isDateFilter,
     isInlineMetricField,
     isInsightWidget,
+    isMatchTextFilter,
     isMetricField,
     isMetricSort,
     isMetricValueFilter,
@@ -151,6 +156,26 @@ describe("typeGuards", () => {
             expect(isPositiveAttributeFilter(negative)).toBe(false);
         });
 
+        it("isTextFilter / arbitrary / match", () => {
+            const arbitrary = {
+                using: "label/region",
+                type: "text_filter",
+                condition: "is",
+                values: ["US", null],
+            };
+            const match = {
+                using: "label/region",
+                type: "text_filter",
+                condition: "doesNotContain",
+                value: "North",
+            };
+
+            expect(isArbitraryTextFilter(arbitrary)).toBe(true);
+            expect(isMatchTextFilter(arbitrary)).toBe(false);
+            expect(isArbitraryTextFilter(match)).toBe(false);
+            expect(isMatchTextFilter(match)).toBe(true);
+        });
+
         it("isMetricValueFilter", () => {
             expect(
                 isMetricValueFilter({
@@ -198,6 +223,31 @@ describe("typeGuards", () => {
         it("isRichTextWidget", () => {
             expect(isRichTextWidget({ content: "Hello **world**" })).toBe(true);
             expect(isRichTextWidget({ visualization: "vis/chart1" })).toBe(false);
+        });
+    });
+
+    describe("dashboard text filter guards", () => {
+        it("detects dashboard text filter variants", () => {
+            const arbitrary = {
+                using: "label/region",
+                type: "text_filter",
+                condition: "isNot",
+                values: ["US"],
+            };
+            const match = {
+                using: "label/region",
+                type: "text_filter",
+                condition: "startsWith",
+                value: "North",
+            };
+
+            expect(isDashboardTextFilter(arbitrary)).toBe(true);
+            expect(isDashboardArbitraryTextFilter(arbitrary)).toBe(true);
+            expect(isDashboardMatchTextFilter(arbitrary)).toBe(false);
+
+            expect(isDashboardTextFilter(match)).toBe(true);
+            expect(isDashboardArbitraryTextFilter(match)).toBe(false);
+            expect(isDashboardMatchTextFilter(match)).toBe(true);
         });
     });
 });

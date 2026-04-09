@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IColorPalette } from "@gooddata/sdk-model";
-import { type ISeparators } from "@gooddata/sdk-ui";
+import { type IDrillEventIntersectionElement, type ISeparators } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoAreasConfig } from "./areas.js";
@@ -53,6 +53,17 @@ export interface IGeoChartConfig {
      * Segment values that should stay visible when using legend-driven filtering.
      */
     selectedSegmentItems?: string[];
+
+    /**
+     * Cross-filtering selected points expressed as drill intersections.
+     *
+     * @remarks
+     * When present, selected features render at full opacity while
+     * unselected features are faded out.
+     *
+     * @internal
+     */
+    selectedPoints?: IDrillEventIntersectionElement[][];
 
     /**
      * MapLibre style URL or inline style specification.

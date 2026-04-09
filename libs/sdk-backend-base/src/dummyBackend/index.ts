@@ -78,6 +78,7 @@ import {
     type IMeasuresQuery,
     type IMeasuresQueryResult,
     type IOrganization,
+    type IOrganizationAgentsService,
     type IOrganizationAutomationService,
     type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
@@ -92,6 +93,8 @@ import {
     type IOutliersResult,
     type IOutliersView,
     type IPagedResource,
+    type IParametersQuery,
+    type IParametersQueryResult,
     type IPreparedExecution,
     type IPreparedExecutionOptions,
     type IRawExportCustomOverrides,
@@ -121,6 +124,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
@@ -196,6 +200,8 @@ import {
     type INotificationChannelMetadataObject,
     type IObjectCertificationWrite,
     type IOrganizationDescriptor,
+    type IParameterMetadataObject,
+    type IParameterMetadataObjectDefinition,
     type IRelativeDateFilter,
     type IScheduledMail,
     type IScheduledMailDefinition,
@@ -464,6 +470,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         },
         measures(): IWorkspaceMeasuresService {
             return new DummyWorkspaceMeasuresService(workspace);
+        },
+        parameters(): IWorkspaceParametersService {
+            return new DummyWorkspaceParametersService(workspace);
         },
         facts(): IWorkspaceFactsService {
             return new DummyWorkspaceFactsService(workspace);
@@ -1083,6 +1092,7 @@ class DummyOrganization implements IOrganization {
             setColorPalette: () => Promise.resolve(),
             setOpenAiConfig: () => Promise.resolve(),
             setDashboardFiltersApplyMode: () => Promise.resolve(),
+            setEnableAiOnData: () => Promise.resolve(),
             setEnableDrillToUrlByDefault: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
@@ -1246,6 +1256,26 @@ class DummyOrganization implements IOrganization {
             resumeAutomations: () => Promise.resolve(),
             unsubscribeAutomation: () => Promise.resolve(),
             unsubscribeAutomations: () => Promise.resolve(),
+        };
+    }
+
+    public agents(): IOrganizationAgentsService {
+        return {
+            getAvailableSkills: () => Promise.resolve([]),
+            getAgentsQuery: () => {
+                throw new NotSupported("not supported");
+            },
+            getAgent: () => Promise.resolve(undefined),
+            createAgent: () => {
+                throw new NotSupported("not supported");
+            },
+            updateAgent: () => {
+                throw new NotSupported("not supported");
+            },
+            patchAgent: () => {
+                throw new NotSupported("not supported");
+            },
+            deleteAgent: () => Promise.resolve(),
         };
     }
 }
@@ -1682,6 +1712,67 @@ class DummyWorkspaceDatasetsService implements IWorkspaceDatasetsService {
 
     public getDatasetsQuery(): IDatasetsQuery {
         return new DummyDatasetsQuery();
+    }
+}
+
+class DummyWorkspaceParametersService implements IWorkspaceParametersService {
+    constructor(public readonly workspace: string) {}
+
+    public async createParameter(
+        parameter: IParameterMetadataObjectDefinition,
+    ): Promise<IParameterMetadataObject> {
+        const id = parameter.id ?? "dummyParameter";
+
+        return {
+            id,
+            uri: id,
+            ref: idRef(id, "parameter"),
+            type: "parameter",
+            title: parameter.title ?? "",
+            description: parameter.description ?? "",
+            tags: parameter.tags ?? [],
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition: parameter.definition,
+        };
+    }
+
+    public getParametersQuery(): IParametersQuery {
+        return new DummyParametersQuery();
+    }
+
+    public async getParameter(ref: ObjRef): Promise<IParameterMetadataObject> {
+        const id = isIdentifierRef(ref) ? ref.identifier : "dummyParameter";
+
+        return {
+            id,
+            uri: isUriRef(ref) ? ref.uri : id,
+            ref,
+            type: "parameter",
+            title: "Dummy parameter",
+            description: "Dummy parameter",
+            tags: [],
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition: {
+                type: "NUMBER",
+                defaultValue: 0,
+            },
+        };
+    }
+
+    public async updateParameterMeta(
+        parameter: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    ): Promise<IParameterMetadataObject> {
+        const existing = await this.getParameter(parameter.ref);
+
+        return {
+            ...existing,
+            ...parameter,
+            type: "parameter",
+        };
     }
 }
 
@@ -2165,6 +2256,40 @@ class DummyDatasetsQuery implements IDatasetsQuery {
     }
 
     withSorting(): IDatasetsQuery {
+        return this;
+    }
+}
+
+class DummyParametersQuery implements IParametersQuery {
+    query(): Promise<IParametersQueryResult> {
+        return Promise.resolve(createEmptyPagedResource<IParameterMetadataObject>());
+    }
+
+    withFilter(): IParametersQuery {
+        return this;
+    }
+
+    withInclude(): IParametersQuery {
+        return this;
+    }
+
+    withMethod(): IParametersQuery {
+        return this;
+    }
+
+    withOrigin(): IParametersQuery {
+        return this;
+    }
+
+    withPage(): IParametersQuery {
+        return this;
+    }
+
+    withSize(): IParametersQuery {
+        return this;
+    }
+
+    withSorting(): IParametersQuery {
         return this;
     }
 }

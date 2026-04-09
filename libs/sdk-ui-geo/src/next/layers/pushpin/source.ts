@@ -1,10 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type DataViewFacade } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
-import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
 import { getPushpinColors } from "./coloring/palette.js";
 import {
     DEFAULT_CLUSTER_MAX_ZOOM,
@@ -13,12 +11,13 @@ import {
     PUSHPIN_SIZE_OPTIONS_MAP,
     PUSHPIN_STYLE_FEATURE_PROPERTIES,
 } from "./constants.js";
+import { SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
+import { getSelectedIntersections, isFeatureSelected } from "../common/selectionUtils.js";
 import { getMinMax } from "./size/calculations.js";
 import { type IGeoLngLat } from "../../types/common/coordinates.js";
 import { type IGeoChartPointsConfig } from "../../types/config/points.js";
 import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
 import { type IPushpinColor, type IPushpinGeoData } from "../../types/geoData/pushpin.js";
-import type { IGeoAdapterContext, IPushpinLayerOutput } from "../registry/adapterTypes.js";
 
 /**
  * Properties for creating a pushpin data source
@@ -44,6 +43,7 @@ export type IPushpinDataSourceFeatures = IPushpinDataSourceFeature[];
  */
 interface IPushpinFeatureContext {
     locationNameTitle: string;
+    locationNameUris: string[];
     colorTitle: string;
     sizeTitle: string;
     segmentTitle: string;
@@ -92,6 +92,7 @@ function buildPushpinFeatureProperties(
 ): GeoJSON.GeoJsonProperties {
     const {
         locationNameTitle,
+        locationNameUris,
         colorTitle,
         sizeTitle,
         segmentTitle,
@@ -127,6 +128,7 @@ function buildPushpinFeatureProperties(
             title: locationNameTitle,
             value: locationNameData[index],
             attrId: locationNameAttrId,
+            uri: locationNameUris[index],
         },
         locationIndex: index,
         color: {
@@ -190,9 +192,12 @@ function createPushpinFeatures({
     const { min: minSizeFromData, max: maxSizeFromData } = getMinMax(sizeData);
     const fallbackLocationNameData = buildFallbackLocationLabels(location.data);
     const locationNameData = tooltipText?.data?.length ? tooltipText.data : fallbackLocationNameData;
+    const locationNameUris = tooltipText?.uris ?? [];
+    const selectedIntersections = getSelectedIntersections(config?.selectedPoints);
 
     const ctx: IPushpinFeatureContext = {
         locationNameTitle: tooltipText?.name ?? DEFAULT_LOCATION_TITLE,
+        locationNameUris,
         colorTitle: color?.name ?? "",
         sizeTitle: size?.name ?? "",
         segmentTitle: segment?.name ?? "",
@@ -210,8 +215,8 @@ function createPushpinFeatures({
         minSizeFromData,
         maxSizeFromData,
         hasSize: size !== undefined,
-        locationNameAttrId: tooltipAttrIds?.locationName,
-        segmentAttrId: tooltipAttrIds?.segment,
+        locationNameAttrId: tooltipText?.displayFormId ?? tooltipAttrIds?.locationName,
+        segmentAttrId: segment?.displayFormId ?? tooltipAttrIds?.segment,
     };
 
     return location.data.reduce(
@@ -220,13 +225,18 @@ function createPushpinFeatures({
                 return result;
             }
 
+            const properties = buildPushpinFeatureProperties(ctx, index)!;
+            if (selectedIntersections) {
+                properties[SELECTED_FEATURE_PROPERTY] = isFeatureSelected(properties, selectedIntersections);
+            }
+
             result.push({
                 type: "Feature",
                 geometry: {
                     type: "Point",
                     coordinates: [coordinates.lng, coordinates.lat],
                 },
-                properties: buildPushpinFeatureProperties(ctx, index),
+                properties,
             });
 
             return result;
@@ -287,81 +297,4 @@ export function createPushpinDataSource(
         };
     }
     return source;
-}
-
-/**
- * Applies current palette/mapping colors to a pushpin GeoJSON source specification.
- *
- * @remarks
- * Pushpin styling reads colors from flattened GeoJSON feature properties.
- * To update colors in-place (via `setData`), we patch those properties according to `properties.locationIndex`.
- *
- * If the source data is not a FeatureCollection, the source is returned unchanged.
- *
- * @internal
- */
-function recolorPushpinDataSource(
-    source: GeoJSONSourceSpecification,
-    pushpinColors: IPushpinColor[],
-): GeoJSONSourceSpecification {
-    const data = source.data;
-    if (!data || typeof data === "string" || data.type !== "FeatureCollection") {
-        return source;
-    }
-
-    const nextFeatures = data.features.map((feature) => {
-        const properties = feature.properties;
-        if (!properties) {
-            return feature;
-        }
-
-        const index: unknown = properties["locationIndex"];
-        if (typeof index !== "number") {
-            return feature;
-        }
-
-        const pushpinColor = pushpinColors[index] || pushpinColors[0];
-        if (!pushpinColor) {
-            return feature;
-        }
-
-        const nextProperties: GeoJSON.GeoJsonProperties = {
-            ...properties,
-            [PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBackground]: pushpinColor.background,
-            [PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBorder]: pushpinColor.border,
-        };
-
-        const previousColor: unknown = properties["color"];
-        if (previousColor && typeof previousColor === "object") {
-            nextProperties["color"] = { ...previousColor, ...pushpinColor };
-        }
-
-        return { ...feature, properties: nextProperties };
-    });
-
-    return { ...source, data: { ...data, features: nextFeatures } };
-}
-
-/**
- * Applies current palette/mapping colors to a prepared pushpin output source.
- *
- * @remarks
- * Matches area-layer pattern: compute current colors, then delegate patching to a concise
- * `recolor...DataSource(...)` helper.
- *
- * @internal
- */
-export function applyCurrentColorsToPushpinOutputSource(
-    output: IPushpinLayerOutput,
-    dataView: DataViewFacade,
-    context: IGeoAdapterContext,
-): GeoJSONSourceSpecification {
-    const { colorPalette = [], colorMapping = [] } = context;
-    const colorStrategy = getPushpinColorStrategy(colorPalette, colorMapping, output.geoData, dataView);
-
-    const colorData = output.geoData.color?.data ?? [];
-    const segmentData = output.geoData.segment?.data ?? [];
-    const pushpinColors = getPushpinColors(colorData, segmentData, colorStrategy);
-
-    return recolorPushpinDataSource(output.source, pushpinColors);
 }

@@ -17,6 +17,12 @@ export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUser
 // @public
 export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
+// @alpha
+export type AgentCustomSkill = "alert" | "anomaly_detection" | "clustering" | "forecasting" | "key_driver_analysis" | "metric" | "schedule_export" | "visualization" | "visualization_summary" | "what_if_analysis" | "knowledge";
+
+// @alpha
+export type AgentSkillsMode = "all" | "custom";
+
 // @public
 export type AlertDescriptionStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
@@ -831,6 +837,36 @@ export interface IActiveCalendars {
     default: CalendarType;
     fiscal: boolean;
     standard: boolean;
+}
+
+// @alpha
+export interface IAgent {
+    aiKnowledge?: boolean;
+    availableToAll?: boolean;
+    createdAt?: string;
+    createdBy?: IUser;
+    customSkills?: AgentCustomSkill[] | null;
+    description?: string;
+    enabled?: boolean;
+    modifiedAt?: string;
+    modifiedBy?: IUser;
+    personality?: string;
+    ref: ObjRef;
+    skillsMode?: AgentSkillsMode;
+    title?: string;
+    userGroups?: IUserGroup[];
+}
+
+// @alpha
+export type IAgentPatch = Partial<Omit<IAgent, "ref" | "createdAt" | "modifiedAt" | "createdBy" | "modifiedBy">> & Pick<IAgent, "ref">;
+
+// @alpha
+export interface IAgentSkill {
+    description: string;
+    examples: string[];
+    name: string;
+    tags: string[];
+    title: string;
 }
 
 // @alpha (undocumented)
@@ -2254,7 +2290,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount" | "AiLake";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount" | "AiLake" | "AiModule" | "AiQueryLimit" | "AiKnowledgeStorageLimit" | "AiAgentLimit";
 
 // @public
 export interface IExecutionConfig {
@@ -2415,6 +2451,7 @@ export interface IFeatureFlags {
     enableAiAgenticConversations?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
+    enableAiHub?: boolean;
     enableAIKnowledge?: boolean;
     enableAiOnData?: boolean;
     enableAlertAttributes?: boolean;
@@ -3669,6 +3706,24 @@ export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 // @public
 export type INullableFilter = IFilter | undefined | null;
 
+// @public
+export interface INumberParameterConstraints {
+    // (undocumented)
+    max?: number;
+    // (undocumented)
+    min?: number;
+}
+
+// @public
+export interface INumberParameterDefinition {
+    // (undocumented)
+    constraints?: INumberParameterConstraints;
+    // (undocumented)
+    defaultValue: number;
+    // (undocumented)
+    type: "NUMBER";
+}
+
 // @internal
 export interface IObjectCertification {
     certifiedAt?: string;
@@ -3809,6 +3864,39 @@ export interface IOrganizationUserGroup {
 }
 
 // @public
+export type IParameterDefinition = INumberParameterDefinition;
+
+// @public
+export interface IParameterMetadataObject extends IMetadataObject, IAuditable {
+    // (undocumented)
+    areRelationsValid?: boolean;
+    // (undocumented)
+    definition: IParameterDefinition;
+    // (undocumented)
+    isLocked?: boolean;
+    // (undocumented)
+    type: "parameter";
+}
+
+// @public
+export interface IParameterMetadataObjectDefinition {
+    // (undocumented)
+    areRelationsValid?: boolean;
+    // (undocumented)
+    definition: IParameterDefinition;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    type: "parameter";
+}
+
+// @public
 export interface IPermanentSettings {
     activeCalendars?: IActiveCalendars;
     activeLlmProvider?: ILlmActiveProvider;
@@ -3855,6 +3943,7 @@ export interface IPluggableApplicationMetaV1 {
     id: string;
     isEnabled?: boolean;
     localizedTitle?: LocalizedTitle;
+    maintainer?: string;
     menuOrder: number;
     requiredEntitlements?: RequiredEntitlements;
     requiredOrganizationPermissions?: RequiredOrganizationPermissions;
@@ -3862,6 +3951,16 @@ export interface IPluggableApplicationMetaV1 {
     requiredWorkspacePermissions?: RequiredWorkspacePermissions;
     title: string;
 }
+
+// @alpha
+export type IPluggableApplicationOrganizationPermissions = {
+    [permission in PluggableApplicationOrganizationPermission]: boolean;
+};
+
+// @alpha
+export type IPluggableApplicationWorkspacePermissions = {
+    [permission in PluggableApplicationWorkspacePermission]: boolean;
+};
 
 // @public
 export interface IPoPMeasureDefinition {
@@ -4814,6 +4913,12 @@ export interface ISourceInsightRankingFilterRef {
     // (undocumented)
     type: "rankingFilter";
 }
+
+// @public
+export function isParameterMetadataObject(obj: unknown): obj is IParameterMetadataObject;
+
+// @public
+export function isParameterMetadataObjectDefinition(obj: unknown): obj is IParameterMetadataObjectDefinition;
 
 // @public
 export function isPoPMeasure(obj: unknown): obj is IMeasure<IPoPMeasureDefinition>;
@@ -6000,7 +6105,7 @@ export type MemoryItemStrategy = "ALWAYS" | "AUTO";
 export function mergeFilters(originalFilters: IFilter[], addedFilters: INullableFilter[] | undefined, commonDateFilterId?: string): IFilter[];
 
 // @public
-export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject | IAttributeHierarchyMetadataObject | IMemoryItemMetadataObject;
+export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IParameterMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject | IAttributeHierarchyMetadataObject | IMemoryItemMetadataObject;
 
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
@@ -6153,7 +6258,7 @@ export type NotificationType = "alertNotification" | "scheduleNotification" | "t
 export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -6184,7 +6289,73 @@ export type PlatformEdition = "free" | "growth" | "enterprise";
 export type PluggableApplicationMeta = IPluggableApplicationMetaV1;
 
 // @alpha
+export type PluggableApplicationOrganizationPermission =
+/**
+* Whether the user can manage the organization (settings, users, etc.).
+* Maps to Tiger `MANAGE` permission.
+*/
+"canManageOrganization"
+/**
+* Whether the user can create API tokens.
+* Maps to Tiger `SELF_CREATE_TOKEN` permission.
+*/
+| "canCreateDevToken"
+/**
+* Whether the user has access to the base UI.
+* Maps to Tiger `BASE_UI_ACCESS` permission.
+*/
+| "hasBaseUiAccess";
+
+// @alpha
 export type PluggableApplicationRegistryItem = RemotePluggableApplicationRegistryItem | LocalPluggableApplicationRegistryItem | ExternalPluggableApplicationRegistryItem;
+
+// @alpha
+export type PluggableApplicationWorkspacePermission =
+/**
+* Whether the user can view the workspace and its contents.
+* Maps to Tiger `VIEW` permission.
+*/
+"canViewWorkspace"
+/**
+* Whether the user can create and edit analytical objects (visualizations, dashboards, metrics).
+* Maps to Tiger `ANALYZE` permission.
+*/
+| "canAnalyze"
+/**
+* Whether the user can manage workspace-level settings and metadata objects.
+* Maps to Tiger `MANAGE` permission.
+*/
+| "canManageWorkspace"
+/**
+* Whether the user can export reports.
+* Maps to Tiger `EXPORT` permission.
+*/
+| "canExport"
+/**
+* Whether the user can export tabular reports.
+* Maps to Tiger `EXPORT_TABULAR` permission.
+*/
+| "canExportTabular"
+/**
+* Whether the user can export PDF documents.
+* Maps to Tiger `EXPORT_PDF` permission.
+*/
+| "canExportPdf"
+/**
+* Whether the user can create dashboard filter views.
+* Maps to Tiger `CREATE_FILTER_VIEW` permission.
+*/
+| "canCreateFilterView"
+/**
+* Whether the user can create automations.
+* Maps to Tiger `CREATE_AUTOMATION` permission.
+*/
+| "canCreateAutomation"
+/**
+* Whether the user can use AI Assistant.
+* Maps to Tiger `USE_AI_ASSISTANT` permission.
+*/
+| "canUseAiAssistant";
 
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
@@ -6246,15 +6417,13 @@ export type RequiredEntitlements = Condition<Partial<{
 }>>;
 
 // @alpha
-export type RequiredOrganizationPermissions = Condition<Partial<{
-    [permission in OrganizationPermissionAssignment]: boolean;
-}>>;
+export type RequiredOrganizationPermissions = Condition<Partial<IPluggableApplicationOrganizationPermissions>>;
 
 // @alpha
 export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFlags>>;
 
 // @alpha
-export type RequiredWorkspacePermissions = Condition<Partial<IWorkspacePermissions>>;
+export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
 
 // @public
 export function resultHeaderName(header: IResultHeader): string | null;
@@ -6350,6 +6519,9 @@ export type ToMdObjectDefinition<T extends IMdObject> = Omit<T, "id">;
 
 // @beta
 export type ToNotificationChannelMetadataObject<T extends INotificationChannelMetadataObjectDefinition> = T extends IWebhookNotificationChannelMetadataObjectDefinition ? IWebhookNotificationChannelMetadataObject : T extends ISmtpNotificationChannelMetadataObjectDefinition ? ISmtpNotificationChannelMetadataObject : T extends IInPlatformNotificationChannelMetadataObjectDefinition ? IInPlatformNotificationChannelMetadataObject : never;
+
+// @alpha
+export function toPluggableApplicationWorkspacePermissions(permissions: IWorkspacePermissions): IPluggableApplicationWorkspacePermissions;
 
 // @public
 export function totalIsNative(total: ITotal): boolean;

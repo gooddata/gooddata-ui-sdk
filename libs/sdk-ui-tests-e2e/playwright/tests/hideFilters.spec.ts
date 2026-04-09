@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import {
     addAttributeFilter,
     assertSaveButtonEnabled,
@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Hide Filters", "hideFilters", () => {
+test.topLevelDescribe("Hide Filters", "hideFilters", () => {
     test("Hide hidden date filter on view mode", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
         await visit(page, "dashboard/dashboard-tiger-hide-filters");
         await expect(page.locator(".s-edit_button")).toBeVisible();

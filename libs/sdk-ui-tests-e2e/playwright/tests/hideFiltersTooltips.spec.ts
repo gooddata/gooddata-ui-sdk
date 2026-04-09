@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import {
     assertSaveButtonEnabled,
     enterEditMode,
@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Hide Filters Tooltips", "hideFiltersTooltips", () => {
+test.topLevelDescribe("Hide Filters Tooltips", "hideFiltersTooltips", () => {
     test(
         "Tooltip hide filter displays on date configuration when hover on hidden option",
         {

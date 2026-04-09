@@ -4,11 +4,11 @@ import { useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import Skeleton from "react-loading-skeleton";
 import { connect } from "react-redux";
 
 import { type CatalogItem } from "@gooddata/sdk-model";
 
+import { ChatSkeleton } from "./ChatSkeleton.js";
 import { isAssistantMessage, isUserMessage } from "../model.js";
 import { parseReferences } from "./completion/references.js";
 import { useCustomization } from "./CustomizationProvider.js";
@@ -72,7 +72,7 @@ function MessagesComponent({
                 aria-label={intl.formatMessage({ id: "gd.gen-ai.messages.label" })}
             >
                 {isEmpty ? <LandingScreenComponent /> : null}
-                {isLoading ? <Skeleton count={3} height="2em" /> : null}
+                {isLoading ? <ChatSkeleton /> : null}
                 {isLoading ? null : (
                     <>
                         {conversation ? (

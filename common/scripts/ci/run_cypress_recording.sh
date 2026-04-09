@@ -24,9 +24,10 @@ else
   RUSH_REPO_ROOT="../.."
 fi
 
-echo "⭐️ Create reference workspace"
-if [ -n "$IMAGE_URL" ]; then
-    # Pre-built mode: use reference-workspace-cli
+if [ -n "$GDC_UI" ] && [ -n "$TEST_WORKSPACE_ID" ] && [ -n "$TEST_CHILD_WORKSPACE_ID" ]; then
+    echo "⭐️ GDC_UI mode: using pre-created workspaces TEST_WORKSPACE_ID=$TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID=$TEST_CHILD_WORKSPACE_ID"
+elif [ -n "$IMAGE_URL" ]; then
+    echo "⭐️ Create reference workspace (pre-built mode)"
     pushd $REF_WS_DIR
     eval "$(reference-workspace-cli create \
         --prefix E2E_SDK_cypress_test \
@@ -40,6 +41,7 @@ if [ -n "$IMAGE_URL" ]; then
     export TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID
     popd
 else
+    echo "⭐️ Create reference workspace"
     (cd $REF_WS_DIR && npm run create-ref-workspace)
     # Read workspace IDs created by create-ref-workspace
     export TEST_WORKSPACE_ID=$(grep "^TEST_WORKSPACE_ID=" $REF_WS_DIR/.env | cut -d= -f2)
@@ -59,7 +61,7 @@ EOF
 
 cleanup() {
     echo "Executing cleanup before exiting..."
-    if [ -n "$_PREBUILT" ]; then
+    if [ -n "$_PREBUILT" ] && [ -z "$GDC_UI" ]; then
         echo "Deleting reference workspaces..."
         (cd $REF_WS_DIR && reference-workspace-cli delete \
             --host "$HOST" --token "$TIGER_API_TOKEN" \
@@ -109,7 +111,7 @@ NO_COLOR=1 docker compose -f $COMPOSE_FILE -p "$PROJECT_NAME" up $NO_BUILD \
     --abort-on-container-exit --exit-code-from isolated-tests \
     --force-recreate --always-recreate-deps --renew-anon-volumes --no-color
 
-if [ -z "$_PREBUILT" ]; then
+if [ -z "$_PREBUILT" ] && [ -z "$GDC_UI" ]; then
     echo "⭐️ Delete reference workspace on the host"
     (cd $REF_WS_DIR && npm run delete-ref-workspace)
 fi

@@ -3334,6 +3334,7 @@
                                     "memoryItem",
                                     "knowledgeRecommendation",
                                     "prompt",
+                                    "parameter",
                                     "visualizationObject",
                                     "filterContext",
                                     "workspaceSettings",

@@ -631,7 +631,7 @@ interface DashboardAbsoluteDateFilter {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "date_filter" | "attribute_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
 }
 
 // Warning: (ae-missing-release-tag) "DashboardAttributeFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -675,21 +675,21 @@ type DashboardAttributeFilter1 = {
 // @public
 interface DashboardFilterGroup {
     // (undocumented)
-    type: "date_filter" | "attribute_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
 interface DashboardFilters {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters1 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardRelativeDateFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -699,8 +699,27 @@ interface DashboardRelativeDateFilter {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "date_filter" | "attribute_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
 }
+
+// Warning: (ae-missing-release-tag) "DashboardTextFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardTextFilter = DashboardTextFilter1 | DashboardTextFilter2;
+
+// Warning: (ae-missing-release-tag) "DashboardTextFilter1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardTextFilter1 = {
+    [k: string]: unknown;
+};
+
+// Warning: (ae-missing-release-tag) "DashboardTextFilter2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DashboardTextFilter2 = {
+    [k: string]: unknown;
+};
 
 // Warning: (ae-missing-release-tag) "Dataset" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -886,7 +905,7 @@ interface Fields2 {
 // Warning: (ae-missing-release-tag) "Filter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
-type Filter = Filter1 | Filter2 | Filter3 | Filter4 | Filter5;
+type Filter = Filter1 | Filter2 | Filter3 | Filter4 | Filter5 | Filter6;
 
 // Warning: (ae-missing-release-tag) "Filter1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -901,17 +920,22 @@ type Filter2 = AttributeFilter1;
 // Warning: (ae-missing-release-tag) "Filter3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Filter3 = MetricValueFilter;
+type Filter3 = TextFilter;
 
 // Warning: (ae-missing-release-tag) "Filter4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Filter4 = RankingFilter;
+type Filter4 = MetricValueFilter;
 
 // Warning: (ae-missing-release-tag) "Filter5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Filter5 = {
+type Filter5 = RankingFilter;
+
+// Warning: (ae-missing-release-tag) "Filter6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type Filter6 = {
     [k: string]: unknown;
 };
 
@@ -4801,6 +4825,122 @@ export const metadata_v1: {
                 mode: string;
             };
         };
+        dashboardTextFilter: {
+            type: string;
+            title: string;
+            description: string;
+            additionalProperties: boolean;
+            properties: {
+                title: {
+                    type: string;
+                    description: string;
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                using: {
+                    description: string;
+                    oneOf: {
+                        $ref: string;
+                    }[];
+                    $semantic: {
+                        type: string;
+                    };
+                };
+                condition: {
+                    type: string;
+                    enum: string[];
+                };
+                values: {
+                    type: string;
+                    items: {
+                        type: string[];
+                    };
+                };
+                value: {
+                    type: string;
+                };
+                case_sensitive: {
+                    type: string;
+                };
+                mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                parents: {
+                    type: string;
+                    description: string;
+                    uniqueItems: boolean;
+                    items: {
+                        oneOf: ({
+                            properties?: undefined;
+                            required?: undefined;
+                            type: string;
+                            title: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                sources: string[];
+                            };
+                        } | {
+                            $semantic?: undefined;
+                            description?: undefined;
+                            type: string;
+                            title: string;
+                            properties: {
+                                using: {
+                                    type: string;
+                                    description: string;
+                                    $semantic: {
+                                        type: string;
+                                        source: string;
+                                    };
+                                };
+                                common: {
+                                    type: string;
+                                    description: string;
+                                };
+                            };
+                            required: string[];
+                        })[];
+                    };
+                };
+                metric_filters: {
+                    type: string;
+                    description: string;
+                    uniqueItems: boolean;
+                    items: {
+                        type: string;
+                        $semantic: {
+                            type: string;
+                            sources: string[];
+                            typePrefix: boolean;
+                        };
+                    };
+                };
+            };
+            allOf: {
+                if: {
+                    properties: {
+                        condition: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    required: string[];
+                };
+            }[];
+            required: string[];
+            $semantic: {
+                type: string;
+                source: string;
+                mode: string;
+            };
+        };
         dashboardFilterGroup: {
             type: string;
             title: string;
@@ -5167,6 +5307,58 @@ export const metadata_v1: {
                     };
                 };
             };
+            required: string[];
+            $semantic: {
+                type: string;
+                source: string;
+                mode: string;
+            }[];
+        };
+        queryTextFilter: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                using: {
+                    description: string;
+                    oneOf: {
+                        $ref: string;
+                    }[];
+                };
+                condition: {
+                    type: string;
+                    enum: string[];
+                };
+                values: {
+                    type: string;
+                    items: {
+                        type: string[];
+                    };
+                };
+                value: {
+                    type: string;
+                };
+                case_sensitive: {
+                    type: string;
+                };
+            };
+            allOf: {
+                if: {
+                    properties: {
+                        condition: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    required: string[];
+                };
+            }[];
             required: string[];
             $semantic: {
                 type: string;
@@ -9384,6 +9576,25 @@ type Tags8 = string[];
 // @public
 type Tags9 = string[];
 
+// Warning: (ae-missing-release-tag) "TextFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type TextFilter = TextFilter1 | TextFilter2;
+
+// Warning: (ae-missing-release-tag) "TextFilter1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type TextFilter1 = {
+    [k: string]: unknown;
+};
+
+// Warning: (ae-missing-release-tag) "TextFilter2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type TextFilter2 = {
+    [k: string]: unknown;
+};
+
 // Warning: (ae-missing-release-tag) "TOP" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -9519,6 +9730,9 @@ declare namespace v1 {
         LabelIdentifier3,
         DisplayAsLabelIdentifier1,
         LocalAttributeFilter1,
+        DashboardTextFilter,
+        DashboardTextFilter1,
+        DashboardTextFilter2,
         Id12,
         Id13,
         Id14,
@@ -9558,6 +9772,10 @@ declare namespace v1 {
         DateFilter2,
         Filter2,
         Filter3,
+        TextFilter,
+        TextFilter1,
+        TextFilter2,
+        Filter4,
         MetricValueFilter,
         MultipleConditions,
         MetricIdentifier,
@@ -9572,13 +9790,13 @@ declare namespace v1 {
         MetricIdentifier2,
         All,
         MetricIdentifier3,
-        Filter4,
+        Filter5,
         RankingFilter,
         MetricIdentifier4,
         AttributeIdentifier8,
         MetricIdentifier5,
         AttributeIdentifier9,
-        Filter5,
+        Filter6,
         MetricIdentifier6,
         CalculatedMetricFieldGuard,
         AttributeIdentifier10,

@@ -16,6 +16,7 @@ import { type IWorkspaceCatalogFactory } from "./ldm/catalog.js";
 import { type IWorkspaceDatasetsService } from "./ldm/datasets.js";
 import { type IWorkspaceLogicalModelService } from "./ldm/model.js";
 import { type IWorkspaceMeasuresService } from "./measures/index.js";
+import { type IWorkspaceParametersService } from "./parameters/index.js";
 import { type IWorkspacePermissionsService } from "./permissions/index.js";
 import { type IWorkspaceSettingsService } from "./settings/index.js";
 import { type IWorkspaceStylingService } from "./styling/index.js";
@@ -99,6 +100,11 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to query additional measures data.
      */
     measures(): IWorkspaceMeasuresService;
+
+    /**
+     * Returns service that can be used to query additional parameters data.
+     */
+    parameters(): IWorkspaceParametersService;
 
     /**
      * Returns service that can be used to query additional facts data.

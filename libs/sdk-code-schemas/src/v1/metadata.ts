@@ -345,6 +345,22 @@ export type DisplayAsLabelIdentifier1 = string;
  */
 export type LocalAttributeFilter1 = string;
 /**
+ * A dashboard text filter
+ */
+export type DashboardTextFilter = DashboardTextFilter1 | DashboardTextFilter2;
+/**
+ * A dashboard text filter
+ */
+export type DashboardTextFilter1 = {
+    [k: string]: unknown;
+};
+/**
+ * A dashboard text filter
+ */
+export type DashboardTextFilter2 = {
+    [k: string]: unknown;
+};
+/**
  * An unique identifier of the plugin.
  */
 export type Id12 = string;
@@ -480,7 +496,7 @@ export type MetricFieldGuard = MetricField | MetricFieldGuard1;
  * This interface was referenced by `QueryFilters2`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
  */
-export type Filter = Filter1 | Filter2 | Filter3 | Filter4 | Filter5;
+export type Filter = Filter1 | Filter2 | Filter3 | Filter4 | Filter5 | Filter6;
 export type Filter1 = DateFilter;
 export type DateFilter = DateFilter1 | DateFilter2;
 export type DateFilter1 = {
@@ -571,7 +587,15 @@ export type DateFilter2 = {
     [k: string]: unknown;
 };
 export type Filter2 = AttributeFilter1;
-export type Filter3 = MetricValueFilter;
+export type Filter3 = TextFilter;
+export type TextFilter = TextFilter1 | TextFilter2;
+export type TextFilter1 = {
+    [k: string]: unknown;
+};
+export type TextFilter2 = {
+    [k: string]: unknown;
+};
+export type Filter4 = MetricValueFilter;
 export type MetricValueFilter = MultipleConditions | Comparison | Range | All;
 export type MultipleConditions = MultipleConditions1;
 /**
@@ -604,7 +628,7 @@ export type All = All1;
  * Metric or local metric to use in this filter.
  */
 export type MetricIdentifier3 = string;
-export type Filter4 = RankingFilter;
+export type Filter5 = RankingFilter;
 export type RankingFilter = BOTTOM | TOP;
 /**
  * Metric identifier to use for this filter.
@@ -622,7 +646,7 @@ export type MetricIdentifier5 = string;
  * Attribute identifier to use for this filter.
  */
 export type AttributeIdentifier9 = string;
-export type Filter5 = {
+export type Filter6 = {
     [k: string]: unknown;
 };
 /**
@@ -1896,20 +1920,21 @@ export interface DashboardFilters {
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
         | DashboardAttributeFilter
+        | DashboardTextFilter
         | DashboardFilterGroup;
 }
 /**
  * A dashboard absolute date filter
  */
 export interface DashboardAbsoluteDateFilter {
-    type: "date_filter" | "attribute_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
     [k: string]: unknown;
 }
 /**
  * A dashboard relative date filter
  */
 export interface DashboardRelativeDateFilter {
-    type: "date_filter" | "attribute_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
     [k: string]: unknown;
 }
 export interface LocalDateFilter {
@@ -1938,7 +1963,7 @@ export interface LocalDateFilter1 {
  * A group of dashboard filters displayed together in the filter bar
  */
 export interface DashboardFilterGroup {
-    type: "date_filter" | "attribute_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
 }
 export interface Tab {
     id: Id14;
@@ -1966,6 +1991,7 @@ export interface DashboardFilters1 {
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
         | DashboardAttributeFilter
+        | DashboardTextFilter
         | DashboardFilterGroup;
 }
 /**

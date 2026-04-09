@@ -1,10 +1,8 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { test } from "@playwright/test";
-
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import {
     applyAttributeFilter,
     assertCommonDateFilterVisible,
@@ -46,7 +44,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Available value filter", "availableValueFilter", () => {
+test.topLevelDescribe("Available value filter", "availableValueFilter", () => {
     test("should add metric filter by", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {
         const headlineSelector = ".s-dash-item.viz-type-headline";
 

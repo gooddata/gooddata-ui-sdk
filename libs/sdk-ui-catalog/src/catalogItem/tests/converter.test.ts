@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
-import type { IMeasureMetadataObject, MetricType } from "@gooddata/sdk-model";
+import type { IMeasureMetadataObject, IParameterMetadataObject, MetricType } from "@gooddata/sdk-model";
 
-import { convertMeasureToCatalogItem } from "../converter.js";
+import { convertMeasureToCatalogItem, convertParameterToCatalogItem } from "../converter.js";
 
 function createMeasure(overrides: Partial<IMeasureMetadataObject> = {}): IMeasureMetadataObject {
     const base: IMeasureMetadataObject = {
@@ -45,5 +45,50 @@ describe("convertMeasureToCatalogItem", () => {
         const catalogItem = convertMeasureToCatalogItem(createMeasure({ format: "" }));
 
         expect(catalogItem.format).toBeNull();
+    });
+});
+
+describe("convertParameterToCatalogItem", () => {
+    it("should convert parameter audit metadata and keep it read-only", () => {
+        const parameter: IParameterMetadataObject = {
+            id: "parameter.id",
+            uri: "/gdc/md/parameter.id",
+            ref: { identifier: "parameter.id", type: "parameter" },
+            type: "parameter",
+            title: "Threshold",
+            description: "Alert threshold",
+            tags: ["alerts"],
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            created: "2024-01-01",
+            updated: "2024-01-03",
+            definition: {
+                type: "NUMBER",
+                defaultValue: 10,
+                constraints: {
+                    min: 0,
+                    max: 100,
+                },
+            },
+            createdBy: {
+                ref: { identifier: "user1" },
+                login: "user1",
+                firstName: "Jane",
+                lastName: "Doe",
+            },
+            updatedBy: {
+                ref: { identifier: "user2" },
+                login: "user2",
+                fullName: "John Smith",
+            },
+        };
+
+        const catalogItem = convertParameterToCatalogItem(parameter);
+
+        expect(catalogItem.type).toBe("parameter");
+        expect(catalogItem.createdBy).toBe("Jane Doe");
+        expect(catalogItem.updatedBy).toBe("John Smith");
+        expect(catalogItem.isEditable).toBe(false);
     });
 });

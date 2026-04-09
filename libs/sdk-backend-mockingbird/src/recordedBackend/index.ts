@@ -55,6 +55,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettings,
     type IWorkspaceSettingsService,
@@ -92,6 +93,7 @@ import { RecordedExecutionFactory } from "./execution.js";
 import { RecordedFacts } from "./facts.js";
 import { RecordedInsights } from "./insights.js";
 import { RecordedMeasures } from "./measures.js";
+import { RecordedParameters } from "./parameters.js";
 import { type RecordedBackendConfig, type RecordingIndex } from "./types.js";
 import {
     RecordedWorkspaceUsersQuery,
@@ -235,6 +237,9 @@ function recordedWorkspace(
         },
         measures(): IWorkspaceMeasuresService {
             return new RecordedMeasures();
+        },
+        parameters(): IWorkspaceParametersService {
+            return new RecordedParameters();
         },
         facts(): IWorkspaceFactsService {
             return new RecordedFacts();
@@ -611,6 +616,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setColorPalette: () => Promise.resolve(),
                 setOpenAiConfig: () => Promise.resolve(),
                 setDashboardFiltersApplyMode: () => Promise.resolve(),
+                setEnableAiOnData: () => Promise.resolve(),
                 setEnableDrillToUrlByDefault: () => Promise.resolve(),
                 setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
@@ -768,6 +774,26 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                     Promise.resolve({
                         success: true,
                     }),
+            };
+        },
+
+        agents: () => {
+            return {
+                getAvailableSkills: () => Promise.resolve([]),
+                getAgentsQuery: () => {
+                    throw new NotSupported("not supported");
+                },
+                getAgent: () => Promise.resolve(undefined),
+                createAgent: () => {
+                    throw new NotSupported("not supported");
+                },
+                updateAgent: () => {
+                    throw new NotSupported("not supported");
+                },
+                patchAgent: () => {
+                    throw new NotSupported("not supported");
+                },
+                deleteAgent: () => Promise.resolve(),
             };
         },
     };

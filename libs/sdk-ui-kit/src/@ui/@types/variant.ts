@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 /**
  * @internal
@@ -46,3 +46,9 @@ export type VariantLink = "link";
  * Icon button variant same as tertiary but removing extra padding around the icon
  */
 export type VariantBare = "bare";
+
+/**
+ * @internal
+ * Button variant for inline dropdown triggers — no underline, text truncation, non-shrinking icon
+ */
+export type VariantDropdownInline = "dropdownInline";

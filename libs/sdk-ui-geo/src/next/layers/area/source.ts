@@ -1,11 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IGeoJsonFeature, geoFeatureId } from "@gooddata/sdk-model";
-import { type DataViewFacade } from "@gooddata/sdk-ui";
+import { type DataViewFacade, type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
+import { getSelectedIntersections, isFeatureSelected } from "../common/selectionUtils.js";
 import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
+import { SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
 import { getAreaAreaColors } from "./coloring/palette.js";
 import { DEFAULT_AREA_FILL_COLOR } from "./constants.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
@@ -94,6 +96,8 @@ interface IAggregatedAreaData {
     firstIndex: number;
     /** Tooltip value from first row */
     tooltipValue?: string;
+    /** Tooltip attribute-item URI from first row */
+    tooltipUri?: string;
     /** Color value from first row (for measure-based coloring) */
     colorValue?: number;
     /** Fill color from first row */
@@ -112,6 +116,7 @@ function buildAreaProperties(args: {
     areaUri: string;
     areaNameTitle: string;
     tooltipValue?: string;
+    tooltipUri?: string;
     tooltipTitle?: string;
     tooltipAttrId?: string;
     colorTitle?: string;
@@ -130,6 +135,7 @@ function buildAreaProperties(args: {
         areaUri,
         areaNameTitle,
         tooltipValue,
+        tooltipUri,
         tooltipTitle,
         tooltipAttrId,
         colorTitle,
@@ -149,6 +155,7 @@ function buildAreaProperties(args: {
             title: tooltipTitle ?? areaNameTitle,
             value: tooltipValue ?? areaIdentifier,
             attrId: tooltipAttrId,
+            uri: tooltipUri ?? areaUri,
         },
         locationIndex: index,
         color: {
@@ -190,6 +197,7 @@ function aggregateByUniqueArea(
     segmentUris: string[],
     colorData: (number | null)[],
     tooltipTextData: string[],
+    tooltipTextUris: string[],
     areaColors: { fill: string }[],
     segmentTitle: string | undefined,
 ): Map<string, IAggregatedAreaData> {
@@ -221,6 +229,7 @@ function aggregateByUniqueArea(
                 areaUri,
                 firstIndex: i,
                 tooltipValue: tooltipTextData[i],
+                tooltipUri: tooltipTextUris[i],
                 colorValue: typeof colorValue === "number" ? colorValue : undefined,
                 areaColorFill: areaColors[i]?.fill || areaColors[0]?.fill || "#20B2E2",
                 segmentUris: segmentUri ? [segmentUri] : [],
@@ -282,8 +291,7 @@ export function recolorAreaDataSource(
  * Area styling reads fill color from GeoJSON feature properties, so palette/mapping updates require
  * producing a new GeoJSON payload and pushing it via `setData` (or by re-initializing the layer).
  *
- * This helper keeps the "apply current colors" logic colocated with other area source utilities
- * (similar to pushpin's `applyCurrentColorsToPushpinOutputSource`).
+ * This helper keeps the "apply current colors" logic colocated with other area source utilities.
  *
  * @internal
  */
@@ -320,6 +328,37 @@ export function applyCurrentColorsToAreaOutputSource(
 }
 
 /**
+ * Stamps `__selected` on area features based on cross-filtering selectedPoints.
+ *
+ * @remarks
+ * Matches each feature's `locationName.value` against the attribute item names
+ * from the selectedPoints intersections.
+ *
+ * @internal
+ */
+export function applySelectionToAreaSource(
+    source: GeoJSONSourceSpecification,
+    selectedPoints: IDrillEventIntersectionElement[][] | undefined,
+): GeoJSONSourceSpecification {
+    const selectedIntersections = getSelectedIntersections(selectedPoints);
+    const data = source.data;
+    if (!selectedIntersections || !data || typeof data === "string" || data.type !== "FeatureCollection") {
+        return source;
+    }
+
+    const updatedFeatures = data.features.map((feature) => {
+        const props = feature.properties;
+        if (!props) {
+            return feature;
+        }
+        const isSelected = isFeatureSelected(props, selectedIntersections);
+        return { ...feature, properties: { ...props, [SELECTED_FEATURE_PROPERTY]: isSelected } };
+    });
+
+    return { ...source, data: { ...data, features: updatedFeatures } };
+}
+
+/**
  * Creates GeoJSON features for area visualization.
  *
  * @remarks
@@ -347,6 +386,7 @@ function createAreaFeatures({
     const areaIdentifiers = area.data;
     const areaUris = area.uris;
     const tooltipTextData = tooltipText?.data ?? [];
+    const tooltipTextUris = tooltipText?.uris ?? [];
     const tooltipTextTitle = tooltipText?.name ?? (tooltipTextData.length ? "Tooltip" : undefined);
     const segmentData = segment?.data ?? [];
     const segmentUris = (segment?.uris ?? []).map((uri) => uri ?? EMPTY_SEGMENT_VALUE);
@@ -364,6 +404,7 @@ function createAreaFeatures({
         segmentUris,
         colorData,
         tooltipTextData,
+        tooltipTextUris,
         areaColors,
         segmentTitle,
     );
@@ -385,22 +426,25 @@ function createAreaFeatures({
             areaUri,
             areaNameTitle,
             tooltipValue: areaData.tooltipValue,
+            tooltipUri: areaData.tooltipUri,
             tooltipTitle: tooltipTextTitle,
-            tooltipAttrId: tooltipAttrIds?.locationName,
+            tooltipAttrId: tooltipText?.displayFormId ?? area.displayFormId ?? tooltipAttrIds?.locationName,
             colorTitle,
             colorValue: areaData.colorValue,
             colorFormat,
             areaColorFill: areaData.areaColorFill,
             segmentTitle: areaData.segmentTitle,
             segmentValue: areaData.segmentValue,
-            segmentAttrId: tooltipAttrIds?.segment,
+            segmentAttrId: segment?.displayFormId ?? tooltipAttrIds?.segment,
             segmentUris: areaData.segmentUris,
         });
+
+        const mergedProperties = toMaplibreProperties(baseFeature?.properties, properties);
 
         result.push({
             type: "Feature",
             geometry,
-            properties: toMaplibreProperties(baseFeature?.properties, properties),
+            properties: mergedProperties,
         });
     }
 

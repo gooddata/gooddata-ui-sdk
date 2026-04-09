@@ -15,7 +15,11 @@ import { deriveCollectionBoundingBox } from "./boundingBox.js";
 import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
 import { transformAreaData } from "./data/transformation.js";
 import { getAreaLayerIds, removeAreaLayer, syncAreaLayerToMap } from "./operations.js";
-import { applyCurrentColorsToAreaOutputSource, createAreaDataSource } from "./source.js";
+import {
+    applyCurrentColorsToAreaOutputSource,
+    applySelectionToAreaSource,
+    createAreaDataSource,
+} from "./source.js";
 import { createAreaTooltipConfig } from "./tooltip/tooltipManagement.js";
 import { bboxToViewport } from "../../map/viewport/viewportCalculation.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
@@ -201,7 +205,11 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
 
         const sourceWithCurrentColors = applyCurrentColorsToAreaOutputSource(output, dataView, context);
         const config = context.config ?? {};
-        syncAreaLayerToMap(map, layer.id, sourceWithCurrentColors, config);
+        const sourceWithSelection = applySelectionToAreaSource(
+            sourceWithCurrentColors,
+            config.selectedPoints,
+        );
+        syncAreaLayerToMap(map, layer.id, sourceWithSelection, config);
     },
 
     updateOnMap(layer, map, output, dataView, context): void {
@@ -211,6 +219,11 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         }
 
         const sourceWithCurrentColors = applyCurrentColorsToAreaOutputSource(output, dataView, context);
+        const config = context.config ?? {};
+        const sourceWithSelection = applySelectionToAreaSource(
+            sourceWithCurrentColors,
+            config.selectedPoints,
+        );
 
         // Update path: in-place GeoJSON data update (no remove+add = no flicker).
         const ids = getAreaLayerIds(layer.id);
@@ -218,13 +231,15 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
             return;
         }
 
-        trySetGeoJsonSourceData(map, ids.sourceId, sourceWithCurrentColors.data);
+        trySetGeoJsonSourceData(map, ids.sourceId, sourceWithSelection.data);
     },
 
     getMapSyncKey(layer, context): string {
         // Keep this strictly about MapLibre layer/source structure or paint properties.
         // Segment filtering + visibility is handled outside (Effect 2/3 in useSyncLayersToMap).
         const areas = context.config?.areas;
+        const selectedPoints = context.config?.selectedPoints;
+        const selectionKey = selectedPoints?.length ? JSON.stringify(selectedPoints) : "none";
         return [
             "area",
             layer.id,
@@ -232,6 +247,8 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
             String(areas?.fillOpacity),
             String(areas?.borderColor),
             String(areas?.borderWidth),
+            "sel",
+            selectionKey,
         ].join(":");
     },
 

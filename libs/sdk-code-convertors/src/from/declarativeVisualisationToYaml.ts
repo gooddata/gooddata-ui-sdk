@@ -6,6 +6,7 @@ import { type DeclarativeVisualizationObject } from "@gooddata/api-client-tiger"
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import {
     type IAbsoluteDateFilter,
+    type IArbitraryAttributeFilterBody,
     type IArithmeticMeasureDefinition,
     type IAttributeBody,
     type IAttributeSortItem,
@@ -14,6 +15,7 @@ import {
     type IInlineMeasureDefinition,
     type IInsightDefinition,
     type IInsightLayerDefinition,
+    type IMatchAttributeFilterBody,
     type IMeasureBody,
     type IMeasureDefinition,
     type IMeasureSortItem,
@@ -33,6 +35,7 @@ import {
     filterObjRef,
     getAttributeElementsItems,
     isAbsoluteDateFilter,
+    isArbitraryAttributeFilter,
     isArithmeticMeasureDefinition,
     isAttribute,
     isAttributeElementsByValue,
@@ -45,6 +48,7 @@ import {
     isInlineMeasureDefinition,
     isInsight,
     isLocalIdRef,
+    isMatchAttributeFilter,
     isMeasure,
     isMeasureDefinition,
     isMeasureLocator,
@@ -85,7 +89,7 @@ import { treemapChart } from "../configs/treemapChart.js";
 import { waterfallChart } from "../configs/waterfallChart.js";
 import { BucketsType, type FromEntities } from "../types.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
-import { parseDateValues } from "../utils/filterUtils.js";
+import { matchConditionToYaml, parseDateValues } from "../utils/filterUtils.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
 import { remapLocationAttribute } from "../utils/locationUtils.js";
 import { VISUALISATION_COMMENT } from "../utils/texts.js";
@@ -928,6 +932,20 @@ function declarativeFilterToYaml(
             filter,
         };
     }
+    if (isArbitraryAttributeFilter(filter)) {
+        return {
+            key,
+            yaml: declarativeArbitraryAttributeFilterToYaml(filter.arbitraryAttributeFilter),
+            filter,
+        };
+    }
+    if (isMatchAttributeFilter(filter)) {
+        return {
+            key,
+            yaml: declarativeMatchAttributeFilterToYaml(filter.matchAttributeFilter),
+            filter,
+        };
+    }
     if (isMeasureValueFilter(filter)) {
         return {
             key,
@@ -1097,6 +1115,38 @@ export function declarativeNegativeAttributeFilterToYaml(
         if (values.length > 0) {
             map.add(new Pair("state", new Pair("exclude", parseDateValues(entities, id, values))));
         }
+    }
+
+    return map;
+}
+
+export function declarativeArbitraryAttributeFilterToYaml(
+    attributeFilter: IArbitraryAttributeFilterBody,
+): YAMLMap {
+    const map = new YAMLMap();
+
+    map.add(new Pair("type", "text_filter"));
+    map.add(new Pair("using", getIdentifier(attributeFilter.label)));
+    map.add(new Pair("condition", attributeFilter.negativeSelection ? "isNot" : "is"));
+    map.add(new Pair("values", attributeFilter.values));
+
+    return map;
+}
+
+export function declarativeMatchAttributeFilterToYaml(attributeFilter: IMatchAttributeFilterBody): YAMLMap {
+    const map = new YAMLMap();
+
+    map.add(new Pair("type", "text_filter"));
+    map.add(new Pair("using", getIdentifier(attributeFilter.label)));
+    map.add(
+        new Pair(
+            "condition",
+            matchConditionToYaml(attributeFilter.operator, attributeFilter.negativeSelection),
+        ),
+    );
+    map.add(new Pair("value", attributeFilter.literal));
+    if (attributeFilter.caseSensitive !== undefined) {
+        map.add(new Pair("case_sensitive", attributeFilter.caseSensitive));
     }
 
     return map;

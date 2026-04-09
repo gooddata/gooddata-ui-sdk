@@ -825,6 +825,7 @@ export type {
     VariantTable,
     VariantLink,
     VariantBare,
+    VariantDropdownInline,
 } from "./@ui/@types/variant.js";
 export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";

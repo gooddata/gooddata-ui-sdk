@@ -20,6 +20,7 @@ describe("ObjectTypeSelect", () => {
             dataSet: 0,
             insight: 0,
             analyticalDashboard: 0,
+            parameter: 0,
         },
     };
 
@@ -28,15 +29,17 @@ describe("ObjectTypeSelect", () => {
             analyticalDashboard: 1,
             insight: 2,
             measure: 3,
+            parameter: 4,
             fact: 4,
             attribute: 5,
             dataSet: 6,
         };
-        render(<ObjectTypeSelect {...commonProps} counter={counter} />, { wrapper });
+        render(<ObjectTypeSelect {...commonProps} counter={counter} showParameter />, { wrapper });
 
         expect(screen.getByRole("button", { name: "Dashboard: 1" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Visualization: 2" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Metric: 3" })).toBeInTheDocument();
+        expect(screen.getByRole("button", { name: "Parameter: 4" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Fact: 4" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Attribute: 5" })).toBeInTheDocument();
         expect(screen.getByRole("button", { name: "Date dataset: 6" })).toBeInTheDocument();
@@ -77,5 +80,15 @@ describe("ObjectTypeSelect", () => {
         expect(screen.getByTestId(`${objectType}/fact`)).toBeVisible();
         expect(screen.getByTestId(`${objectType}/attribute`)).toBeVisible();
         expect(screen.getByTestId(`${objectType}/dataSet`)).toBeVisible();
+    });
+
+    it("shows parameter button only when enabled", () => {
+        const { rerender } = render(<ObjectTypeSelect {...commonProps} />, { wrapper });
+
+        expect(screen.queryByTestId(`${objectType}/parameter`)).not.toBeInTheDocument();
+
+        rerender(<ObjectTypeSelect {...commonProps} showParameter />);
+
+        expect(screen.getByTestId(`${objectType}/parameter`)).toBeVisible();
     });
 });

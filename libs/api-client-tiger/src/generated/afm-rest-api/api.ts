@@ -228,6 +228,34 @@ export interface AfmValidObjectsResponse {
 }
 
 /**
+ * Aggregate key model — pre-aggregates rows sharing the same key columns.
+ */
+export interface AggregateKeyConfig {
+    /**
+     * Key columns. Defaults to first inferred column.
+     */
+    'columns'?: Array<string>;
+}
+
+/**
+ * AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit).
+ */
+export interface AiUsageMetadataItem {
+    /**
+     * Type of usage counter, e.g. AI_QUERIES.
+     */
+    'counterType': string;
+    /**
+     * Current usage value after this request.
+     */
+    'currentValue': number;
+    /**
+     * Entitlement limit. 0 means unlimited.
+     */
+    'limit': number;
+}
+
+/**
  * An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled.
  */
 export interface AllTimeDateFilter {
@@ -797,6 +825,10 @@ export interface ChatResult {
      * Tool call events emitted during the agentic loop (only present when GEN_AI_YIELD_TOOL_CALL_EVENTS is enabled).
      */
     'toolCallEvents'?: Array<ToolCallEventResult>;
+    /**
+     * AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit).
+     */
+    'usage'?: Array<AiUsageMetadataItem>;
 }
 
 export interface ChatUsageResponse {
@@ -846,6 +878,30 @@ export interface ClusteringResult {
     'clusters': Array<number | null>;
     'xcoord': Array<number>;
     'ycoord': Array<number>;
+}
+
+/**
+ * A single column definition inferred from the parquet schema
+ */
+export interface ColumnInfo {
+    /**
+     * Column name
+     */
+    'name': string;
+    /**
+     * SQL column type (e.g. VARCHAR(200), BIGINT, DOUBLE)
+     */
+    'type': string;
+}
+
+/**
+ * Partition by column expression.
+ */
+export interface ColumnPartitionConfig {
+    /**
+     * Columns to partition by.
+     */
+    'columns': Array<string>;
 }
 
 /**
@@ -910,6 +966,43 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
     'measure': AfmIdentifier;
+}
+
+/**
+ * Request to create a new pipe-backed OLAP table in the AI Lake
+ */
+export interface CreatePipeTableRequest {
+    /**
+     * Name of the OLAP table to create. Must match ^[a-z][a-z0-9_]{0,62}$
+     */
+    'tableName': string;
+    /**
+     * Name of the pre-configured S3/MinIO ObjectStorage source
+     */
+    'sourceStorageName': string;
+    /**
+     * Path prefix to the parquet files (e.g. \'my-dataset/year=2024/\'). All parquet files must be at a uniform depth under the prefix — either all directly under the prefix, or all under a consistent Hive partition hierarchy (e.g. year=2024/month=01/). Mixed layouts (files at multiple depths) are not supported.
+     */
+    'pathPrefix': string;
+    'keyConfig'?: KeyConfig;
+    'distributionConfig'?: DistributionConfig;
+    'partitionConfig'?: PartitionConfig;
+    /**
+     * CREATE TABLE PROPERTIES key-value pairs. Defaults to {\"replication_num\": \"1\"}.
+     */
+    'tableProperties'?: { [key: string]: string; };
+    /**
+     * Cap VARCHAR(N) to this length when N exceeds it. 0 = no cap.
+     */
+    'maxVarcharLength'?: number;
+    /**
+     * Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference.
+     */
+    'columnOverrides'?: { [key: string]: string; };
+    /**
+     * How often (in seconds) the pipe polls for new files. 0 or null = use server default.
+     */
+    'pollingIntervalSeconds'?: number;
 }
 
 /**
@@ -1050,6 +1143,22 @@ export interface DateRelativeFilter {
 export type DateRelativeFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 /**
+ * Partition by date_trunc() expression.
+ */
+export interface DateTruncPartitionConfig {
+    /**
+     * Column to partition on.
+     */
+    'column': string;
+    /**
+     * Date/time unit for partition granularity
+     */
+    'unit': DateTruncPartitionConfigUnitEnum;
+}
+
+export type DateTruncPartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond' | 'microsecond';
+
+/**
  * Filter definition type specified by label and values.
  */
 export interface DependsOn {
@@ -1072,6 +1181,13 @@ export interface DependsOn {
  */
 export interface DependsOnDateFilter {
     'dateFilter': DateFilter;
+}
+
+/**
+ * Filter definition for string matching.
+ */
+export interface DependsOnMatchFilter {
+    'matchFilter': MatchAttributeFilter;
 }
 
 /**
@@ -1120,6 +1236,23 @@ export interface DimensionHeader {
      * An array containing header groups.
      */
     'headerGroups': Array<HeaderGroup>;
+}
+
+/**
+ * Distribution configuration for the OLAP table.
+ */
+export interface DistributionConfig {
+    'type': string;
+}
+
+/**
+ * Duplicate key model — allows duplicate rows for the given key columns.
+ */
+export interface DuplicateKeyConfig {
+    /**
+     * Key columns. Defaults to first inferred column.
+     */
+    'columns'?: Array<string>;
 }
 
 /**
@@ -1186,7 +1319,7 @@ export type ElementsRequestSortOrderEnum = 'ASC' | 'DESC';
 /**
  * @type ElementsRequestDependsOnInner
  */
-export type ElementsRequestDependsOnInner = DependsOn | DependsOnDateFilter;
+export type ElementsRequestDependsOnInner = DependsOn | DependsOnDateFilter | DependsOnMatchFilter;
 
 /**
  * Entity holding list of sorted & filtered label elements, related primary label of attribute owning requested label and paging.
@@ -1525,6 +1658,20 @@ export interface GetServiceStatusResponse {
 }
 
 /**
+ * Hash-based distribution across buckets.
+ */
+export interface HashDistributionConfig {
+    /**
+     * Columns to distribute by. Defaults to first column.
+     */
+    'columns'?: Array<string>;
+    /**
+     * Number of hash buckets. Defaults to 1.
+     */
+    'buckets'?: number;
+}
+
+/**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  */
 export interface HeaderGroup {
@@ -1577,6 +1724,10 @@ export interface InsightWidgetDescriptor {
      */
     'title': string;
     /**
+     * Filters currently applied to the dashboard.
+     */
+    'filters'?: Array<FilterDefinition>;
+    /**
      * Signed result ID for this widget\'s cached execution result.
      */
     'resultId'?: string;
@@ -1584,6 +1735,13 @@ export interface InsightWidgetDescriptor {
      * Visualization object ID referenced by this insight widget.
      */
     'visualizationId': string;
+}
+
+/**
+ * Key configuration for the table data model.
+ */
+export interface KeyConfig {
+    'type': string;
 }
 
 export interface KeyDriversDimension {
@@ -1653,6 +1811,16 @@ export interface ListLlmProviderModelsResponse {
      * Available models on the provider.
      */
     'models': Array<LlmModel>;
+}
+
+/**
+ * List of pipe tables for a database instance
+ */
+export interface ListPipeTablesResponse {
+    /**
+     * Pipe tables in the requested database
+     */
+    'pipeTables': Array<PipeTableSummary>;
 }
 
 /**
@@ -1999,13 +2167,13 @@ export interface Operation {
      */
     'id': string;
     /**
-     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. 
+     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `create-pipe-table` — Creating a pipe table backed by an S3 data source. * `delete-pipe-table` — Deleting a pipe table. 
      */
     'kind': OperationKindEnum;
     'status': string;
 }
 
-export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command';
+export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'create-pipe-table' | 'delete-pipe-table';
 
 /**
  * Error information for a failed operation
@@ -2095,11 +2263,100 @@ export interface Paging {
 }
 
 /**
+ * Partition configuration for the table.
+ */
+export interface PartitionConfig {
+    'type': string;
+}
+
+/**
  * Operation that is still pending
  */
 export interface PendingOperation extends Operation {
 }
 
+
+/**
+ * Full details of a pipe-backed OLAP table
+ */
+export interface PipeTable {
+    /**
+     * Internal UUID of the pipe table record
+     */
+    'pipeTableId': string;
+    /**
+     * OLAP table name
+     */
+    'tableName': string;
+    /**
+     * Database name
+     */
+    'databaseName': string;
+    /**
+     * Source ObjectStorage name
+     */
+    'sourceStorageName': string;
+    /**
+     * Path prefix to the parquet files
+     */
+    'pathPrefix': string;
+    /**
+     * Hive partition columns detected from the path structure
+     */
+    'partitionColumns': Array<string>;
+    /**
+     * Inferred column schema
+     */
+    'columns': Array<ColumnInfo>;
+    'keyConfig': PipeTableKeyConfig;
+    'distributionConfig': PipeTableDistributionConfig;
+    'partitionConfig'?: PipeTablePartitionConfig;
+    /**
+     * CREATE TABLE PROPERTIES key-value pairs
+     */
+    'tableProperties': { [key: string]: string; };
+    /**
+     * How often (in seconds) the pipe polls for new files. 0 = server default.
+     */
+    'pollingIntervalSeconds': number;
+}
+
+/**
+ * @type PipeTableDistributionConfig
+ */
+export type PipeTableDistributionConfig = HashDistributionConfig | RandomDistributionConfig;
+
+/**
+ * @type PipeTableKeyConfig
+ */
+export type PipeTableKeyConfig = AggregateKeyConfig | DuplicateKeyConfig | PrimaryKeyConfig | UniqueKeyConfig;
+
+/**
+ * @type PipeTablePartitionConfig
+ */
+export type PipeTablePartitionConfig = ColumnPartitionConfig | DateTruncPartitionConfig | TimeSlicePartitionConfig;
+
+/**
+ * Lightweight pipe table entry used in list responses
+ */
+export interface PipeTableSummary {
+    /**
+     * Internal UUID of the pipe table record
+     */
+    'pipeTableId': string;
+    /**
+     * OLAP table name
+     */
+    'tableName': string;
+    /**
+     * Path prefix to the parquet files
+     */
+    'pathPrefix': string;
+    /**
+     * Inferred column schema
+     */
+    'columns': Array<ColumnInfo>;
+}
 
 /**
  * Combination of the date data set to use and how many periods ago to calculate the previous period for.
@@ -2174,6 +2431,16 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
      */
     'usesArbitraryValues'?: boolean;
     'label': AfmIdentifier;
+}
+
+/**
+ * Primary key model — enforces uniqueness, replaces on conflict.
+ */
+export interface PrimaryKeyConfig {
+    /**
+     * Key columns. Defaults to first inferred column.
+     */
+    'columns'?: Array<string>;
 }
 
 /**
@@ -2256,6 +2523,16 @@ export interface QualityIssuesCalculationStatusResponse {
 }
 
 export type QualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
+
+/**
+ * Random distribution across buckets.
+ */
+export interface RandomDistributionConfig {
+    /**
+     * Number of random distribution buckets. Defaults to 1.
+     */
+    'buckets'?: number;
+}
 
 /**
  * Condition that checks if the metric value is within a given range.
@@ -2488,6 +2765,10 @@ export interface RichTextWidgetDescriptor {
      * Widget title as displayed on the dashboard.
      */
     'title': string;
+    /**
+     * Filters currently applied to the dashboard.
+     */
+    'filters'?: Array<FilterDefinition>;
 }
 
 /**
@@ -2866,6 +3147,26 @@ export interface Thought {
 }
 
 /**
+ * Partition by time_slice() expression.
+ */
+export interface TimeSlicePartitionConfig {
+    /**
+     * Column to partition on.
+     */
+    'column': string;
+    /**
+     * Date/time unit for partition granularity
+     */
+    'unit': TimeSlicePartitionConfigUnitEnum;
+    /**
+     * How many units per slice.
+     */
+    'slices': number;
+}
+
+export type TimeSlicePartitionConfigUnitEnum = 'year' | 'quarter' | 'month' | 'week' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond' | 'microsecond';
+
+/**
  * Tool call events emitted during the agentic loop (only present when GEN_AI_YIELD_TOOL_CALL_EVENTS is enabled).
  */
 export interface ToolCallEventResult {
@@ -3029,6 +3330,16 @@ export interface UIContext {
 }
 
 /**
+ * Unique key model — enforces uniqueness, replaces on conflict.
+ */
+export interface UniqueKeyConfig {
+    /**
+     * Key columns. Defaults to first inferred column.
+     */
+    'columns'?: Array<string>;
+}
+
+/**
  * User context with ambient UI state (view) and explicitly referenced objects.
  */
 export interface UserContext {
@@ -3118,6 +3429,14 @@ export interface VisualizationConfig {
     'whatIf'?: WhatIfScenarioConfig;
 }
 
+export interface VisualizationObjectExecution {
+    /**
+     * Additional AFM filters merged on top of the visualization object\'s own filters.
+     */
+    'filters'?: Array<FilterDefinition>;
+    'settings'?: ExecutionSettings;
+}
+
 /**
  * Visualization switcher widget allowing users to toggle between multiple visualizations.
  */
@@ -3130,6 +3449,10 @@ export interface VisualizationSwitcherWidgetDescriptor {
      * Widget title as displayed on the dashboard.
      */
     'title': string;
+    /**
+     * Filters currently applied to the dashboard.
+     */
+    'filters'?: Array<FilterDefinition>;
     /**
      * Signed result ID for the currently active visualization\'s execution result.
      */
@@ -3194,6 +3517,7 @@ export interface WhatIfScenarioItem {
  * Descriptor for a widget on the dashboard.
  */
 export interface WidgetDescriptor {
+    'filters'?: Array<OutlierDetectionRequestFiltersInner>;
     'title': string;
     'widgetId': string;
     'widgetType': string;
@@ -3221,6 +3545,127 @@ export interface WorkflowStatusResponseDto {
     'currentPhase'?: string;
 }
 
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Create a new AI Lake pipe table
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {CreatePipeTableRequest} createPipeTableRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_CreateAiLakePipeTable(
+    instanceId: string, createPipeTableRequest: CreatePipeTableRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('createAiLakePipeTable', 'instanceId', instanceId)
+    // verify required parameter 'createPipeTableRequest' is not null or undefined
+    assertParamExists('createAiLakePipeTable', 'createPipeTableRequest', createPipeTableRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof createPipeTableRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(createPipeTableRequest !== undefined ? createPipeTableRequest : {})
+        : createPipeTableRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Delete an AI Lake pipe table
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} tableName Pipe table name.
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_DeleteAiLakePipeTable(
+    instanceId: string, tableName: string, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('deleteAiLakePipeTable', 'instanceId', instanceId)
+    // verify required parameter 'tableName' is not null or undefined
+    assertParamExists('deleteAiLakePipeTable', 'tableName', tableName)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
 
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
@@ -3365,6 +3810,55 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeOperation(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
+ * (BETA) Returns full details of the specified pipe table.
+ * @summary (BETA) Get an AI Lake pipe table
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} tableName Pipe table name.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_GetAiLakePipeTable(
+    instanceId: string, tableName: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('getAiLakePipeTable', 'instanceId', instanceId)
+    // verify required parameter 'tableName' is not null or undefined
+    assertParamExists('getAiLakePipeTable', 'tableName', tableName)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
  * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
  * @summary (BETA) Get AI Lake service status
  * @param {string} serviceId 
@@ -3446,6 +3940,51 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
     }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+ * @summary (BETA) List AI Lake pipe tables
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_ListAiLakePipeTables(
+    instanceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('listAiLakePipeTables', 'instanceId', instanceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
 
 
     
@@ -3657,6 +4196,58 @@ export async function AILakeApiAxiosParamCreator_RunAiLakeServiceCommand(
 
 // AILakeApi Api FP
 /**
+ * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Create a new AI Lake pipe table
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_CreateAiLakePipeTable(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiCreateAiLakePipeTableRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_CreateAiLakePipeTable(
+        requestParameters.instanceId, requestParameters.createPipeTableRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
+ * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Delete an AI Lake pipe table
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_DeleteAiLakePipeTable(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiDeleteAiLakePipeTableRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_DeleteAiLakePipeTable(
+        requestParameters.instanceId, requestParameters.tableName, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
  * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
  * @summary (BETA) Delete an existing AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
@@ -3735,6 +4326,32 @@ export async function AILakeApi_GetAiLakeOperation(
 
 // AILakeApi Api FP
 /**
+ * (BETA) Returns full details of the specified pipe table.
+ * @summary (BETA) Get an AI Lake pipe table
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiGetAiLakePipeTableRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_GetAiLakePipeTable(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiGetAiLakePipeTableRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<PipeTable> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_GetAiLakePipeTable(
+        requestParameters.instanceId, requestParameters.tableName, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
  * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
  * @summary (BETA) Get AI Lake service status
  * @param {AxiosInstance} axios Axios instance.
@@ -3778,6 +4395,32 @@ export async function AILakeApi_ListAiLakeDatabaseInstances(
 ): AxiosPromise<ListDatabaseInstancesResponse> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
         requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
+ * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+ * @summary (BETA) List AI Lake pipe tables
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiListAiLakePipeTablesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_ListAiLakePipeTables(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiListAiLakePipeTablesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListPipeTablesResponse> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakePipeTables(
+        requestParameters.instanceId, 
         options || {},
         configuration,
     );
@@ -3870,6 +4513,26 @@ export async function AILakeApi_RunAiLakeServiceCommand(
  */
 export interface AILakeApiInterface {
     /**
+     * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Create a new AI Lake pipe table
+     * @param {AILakeApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    createAiLakePipeTable(requestParameters: AILakeApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
+     * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Delete an AI Lake pipe table
+     * @param {AILakeApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    deleteAiLakePipeTable(requestParameters: AILakeApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
      * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
      * @param {AILakeApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
@@ -3900,6 +4563,16 @@ export interface AILakeApiInterface {
     getAiLakeOperation(requestParameters: AILakeApiGetAiLakeOperationRequest, options?: AxiosRequestConfig): AxiosPromise<GetAiLakeOperation200Response>;
 
     /**
+     * (BETA) Returns full details of the specified pipe table.
+     * @summary (BETA) Get an AI Lake pipe table
+     * @param {AILakeApiGetAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    getAiLakePipeTable(requestParameters: AILakeApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<PipeTable>;
+
+    /**
      * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
      * @summary (BETA) Get AI Lake service status
      * @param {AILakeApiGetAiLakeServiceStatusRequest} requestParameters Request parameters.
@@ -3918,6 +4591,16 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseInstancesResponse>;
+
+    /**
+     * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+     * @summary (BETA) List AI Lake pipe tables
+     * @param {AILakeApiListAiLakePipeTablesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    listAiLakePipeTables(requestParameters: AILakeApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<ListPipeTablesResponse>;
 
     /**
      * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
@@ -3949,6 +4632,62 @@ export interface AILakeApiInterface {
      */
     runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
 
+}
+
+/**
+ * Request parameters for createAiLakePipeTable operation in AILakeApi.
+ * @export
+ * @interface AILakeApiCreateAiLakePipeTableRequest
+ */
+export interface AILakeApiCreateAiLakePipeTableRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiCreateAiLakePipeTable
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {CreatePipeTableRequest}
+     * @memberof AILakeApiCreateAiLakePipeTable
+     */
+    readonly createPipeTableRequest: CreatePipeTableRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeApiCreateAiLakePipeTable
+     */
+    readonly operationId?: string
+}
+
+/**
+ * Request parameters for deleteAiLakePipeTable operation in AILakeApi.
+ * @export
+ * @interface AILakeApiDeleteAiLakePipeTableRequest
+ */
+export interface AILakeApiDeleteAiLakePipeTableRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiDeleteAiLakePipeTable
+     */
+    readonly instanceId: string
+
+    /**
+     * Pipe table name.
+     * @type {string}
+     * @memberof AILakeApiDeleteAiLakePipeTable
+     */
+    readonly tableName: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeApiDeleteAiLakePipeTable
+     */
+    readonly operationId?: string
 }
 
 /**
@@ -4001,6 +4740,27 @@ export interface AILakeApiGetAiLakeOperationRequest {
 }
 
 /**
+ * Request parameters for getAiLakePipeTable operation in AILakeApi.
+ * @export
+ * @interface AILakeApiGetAiLakePipeTableRequest
+ */
+export interface AILakeApiGetAiLakePipeTableRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiGetAiLakePipeTable
+     */
+    readonly instanceId: string
+
+    /**
+     * Pipe table name.
+     * @type {string}
+     * @memberof AILakeApiGetAiLakePipeTable
+     */
+    readonly tableName: string
+}
+
+/**
  * Request parameters for getAiLakeServiceStatus operation in AILakeApi.
  * @export
  * @interface AILakeApiGetAiLakeServiceStatusRequest
@@ -4040,6 +4800,20 @@ export interface AILakeApiListAiLakeDatabaseInstancesRequest {
      * @memberof AILakeApiListAiLakeDatabaseInstances
      */
     readonly metaInclude?: Array<string>
+}
+
+/**
+ * Request parameters for listAiLakePipeTables operation in AILakeApi.
+ * @export
+ * @interface AILakeApiListAiLakePipeTablesRequest
+ */
+export interface AILakeApiListAiLakePipeTablesRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiListAiLakePipeTables
+     */
+    readonly instanceId: string
 }
 
 /**
@@ -4134,6 +4908,30 @@ export interface AILakeApiRunAiLakeServiceCommandRequest {
  */
 export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     /**
+     * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Create a new AI Lake pipe table
+     * @param {AILakeApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public createAiLakePipeTable(requestParameters: AILakeApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_CreateAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Delete an AI Lake pipe table
+     * @param {AILakeApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public deleteAiLakePipeTable(requestParameters: AILakeApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_DeleteAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
      * @param {AILakeApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
@@ -4170,6 +4968,18 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
+     * (BETA) Returns full details of the specified pipe table.
+     * @summary (BETA) Get an AI Lake pipe table
+     * @param {AILakeApiGetAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public getAiLakePipeTable(requestParameters: AILakeApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_GetAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
      * @summary (BETA) Get AI Lake service status
      * @param {AILakeApiGetAiLakeServiceStatusRequest} requestParameters Request parameters.
@@ -4191,6 +5001,18 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest = {}, options?: AxiosRequestConfig) {
         return AILakeApi_ListAiLakeDatabaseInstances(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+     * @summary (BETA) List AI Lake pipe tables
+     * @param {AILakeApiListAiLakePipeTablesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public listAiLakePipeTables(requestParameters: AILakeApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_ListAiLakePipeTables(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -4227,6 +5049,1548 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig) {
         return AILakeApi_RunAiLakeServiceCommand(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+ * @summary (BETA) Delete an existing AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstance(
+    instanceId: string, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('deprovisionAiLakeDatabaseInstance', 'instanceId', instanceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Retrieve details of the specified AI Lake database instance in the organization\'s AI Lake.
+ * @summary (BETA) Get the specified AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_GetAiLakeDatabaseInstance(
+    instanceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('getAiLakeDatabaseInstance', 'instanceId', instanceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * @summary (BETA) List AI Lake Database instances
+ * @param {number} [size] 
+ * @param {number} [offset] 
+ * @param {Array<string>} [metaInclude] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInstances(
+    size?: number, offset?: number, metaInclude?: Array<string>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ailake/database/instances`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (offset !== undefined) {
+        localVarQueryParameter['offset'] = offset;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+ * @summary (BETA) Create a new AILake Database instance
+ * @param {ProvisionDatabaseInstanceRequest} provisionDatabaseInstanceRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance(
+    provisionDatabaseInstanceRequest: ProvisionDatabaseInstanceRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'provisionDatabaseInstanceRequest' is not null or undefined
+    assertParamExists('provisionAiLakeDatabaseInstance', 'provisionDatabaseInstanceRequest', provisionDatabaseInstanceRequest)
+    const localVarPath = `/api/v1/ailake/database/instances`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof provisionDatabaseInstanceRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(provisionDatabaseInstanceRequest !== undefined ? provisionDatabaseInstanceRequest : {})
+        : provisionDatabaseInstanceRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AILakeDatabasesApi Api FP
+/**
+ * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+ * @summary (BETA) Delete an existing AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_DeprovisionAiLakeDatabaseInstance(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstance(
+        requestParameters.instanceId, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeDatabasesApi Api FP
+/**
+ * (BETA) Retrieve details of the specified AI Lake database instance in the organization\'s AI Lake.
+ * @summary (BETA) Get the specified AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_GetAiLakeDatabaseInstance(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<DatabaseInstance> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_GetAiLakeDatabaseInstance(
+        requestParameters.instanceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeDatabasesApi Api FP
+/**
+ * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * @summary (BETA) List AI Lake Database instances
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_ListAiLakeDatabaseInstances(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiListAiLakeDatabaseInstancesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListDatabaseInstancesResponse> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInstances(
+        requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeDatabasesApi Api FP
+/**
+ * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+ * @summary (BETA) Create a new AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_ProvisionAiLakeDatabaseInstance(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance(
+        requestParameters.provisionDatabaseInstanceRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * AILakeDatabasesApi - interface
+ * @export
+ * @interface AILakeDatabasesApi
+ */
+export interface AILakeDatabasesApiInterface {
+    /**
+     * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+     * @summary (BETA) Delete an existing AILake Database instance
+     * @param {AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    deprovisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
+     * (BETA) Retrieve details of the specified AI Lake database instance in the organization\'s AI Lake.
+     * @summary (BETA) Get the specified AILake Database instance
+     * @param {AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    getAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<DatabaseInstance>;
+
+    /**
+     * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * @summary (BETA) List AI Lake Database instances
+     * @param {AILakeDatabasesApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    listAiLakeDatabaseInstances(requestParameters: AILakeDatabasesApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseInstancesResponse>;
+
+    /**
+     * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+     * @summary (BETA) Create a new AILake Database instance
+     * @param {AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    provisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+}
+
+/**
+ * Request parameters for deprovisionAiLakeDatabaseInstance operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest
+ */
+export interface AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeDatabasesApiDeprovisionAiLakeDatabaseInstance
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeDatabasesApiDeprovisionAiLakeDatabaseInstance
+     */
+    readonly operationId?: string
+}
+
+/**
+ * Request parameters for getAiLakeDatabaseInstance operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest
+ */
+export interface AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeDatabasesApiGetAiLakeDatabaseInstance
+     */
+    readonly instanceId: string
+}
+
+/**
+ * Request parameters for listAiLakeDatabaseInstances operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiListAiLakeDatabaseInstancesRequest
+ */
+export interface AILakeDatabasesApiListAiLakeDatabaseInstancesRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AILakeDatabasesApiListAiLakeDatabaseInstances
+     */
+    readonly size?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AILakeDatabasesApiListAiLakeDatabaseInstances
+     */
+    readonly offset?: number
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AILakeDatabasesApiListAiLakeDatabaseInstances
+     */
+    readonly metaInclude?: Array<string>
+}
+
+/**
+ * Request parameters for provisionAiLakeDatabaseInstance operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest
+ */
+export interface AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest {
+    /**
+     * 
+     * @type {ProvisionDatabaseInstanceRequest}
+     * @memberof AILakeDatabasesApiProvisionAiLakeDatabaseInstance
+     */
+    readonly provisionDatabaseInstanceRequest: ProvisionDatabaseInstanceRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeDatabasesApiProvisionAiLakeDatabaseInstance
+     */
+    readonly operationId?: string
+}
+
+/**
+ * AILakeDatabasesApi - object-oriented interface
+ * @export
+ * @class AILakeDatabasesApi
+ * @extends {BaseAPI}
+ */
+export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInterface {
+    /**
+     * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+     * @summary (BETA) Delete an existing AILake Database instance
+     * @param {AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public deprovisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiDeprovisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_DeprovisionAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Retrieve details of the specified AI Lake database instance in the organization\'s AI Lake.
+     * @summary (BETA) Get the specified AILake Database instance
+     * @param {AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public getAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_GetAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * @summary (BETA) List AI Lake Database instances
+     * @param {AILakeDatabasesApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public listAiLakeDatabaseInstances(requestParameters: AILakeDatabasesApiListAiLakeDatabaseInstancesRequest = {}, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_ListAiLakeDatabaseInstances(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
+     * @summary (BETA) Create a new AILake Database instance
+     * @param {AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public provisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_ProvisionAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
+/**
+ * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Create a new AI Lake pipe table
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {CreatePipeTableRequest} createPipeTableRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApiAxiosParamCreator_CreateAiLakePipeTable(
+    instanceId: string, createPipeTableRequest: CreatePipeTableRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('createAiLakePipeTable', 'instanceId', instanceId)
+    // verify required parameter 'createPipeTableRequest' is not null or undefined
+    assertParamExists('createAiLakePipeTable', 'createPipeTableRequest', createPipeTableRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof createPipeTableRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(createPipeTableRequest !== undefined ? createPipeTableRequest : {})
+        : createPipeTableRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
+/**
+ * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Delete an AI Lake pipe table
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} tableName Pipe table name.
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApiAxiosParamCreator_DeleteAiLakePipeTable(
+    instanceId: string, tableName: string, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('deleteAiLakePipeTable', 'instanceId', instanceId)
+    // verify required parameter 'tableName' is not null or undefined
+    assertParamExists('deleteAiLakePipeTable', 'tableName', tableName)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
+/**
+ * (BETA) Returns full details of the specified pipe table.
+ * @summary (BETA) Get an AI Lake pipe table
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} tableName Pipe table name.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApiAxiosParamCreator_GetAiLakePipeTable(
+    instanceId: string, tableName: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('getAiLakePipeTable', 'instanceId', instanceId)
+    // verify required parameter 'tableName' is not null or undefined
+    assertParamExists('getAiLakePipeTable', 'tableName', tableName)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
+/**
+ * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+ * @summary (BETA) List AI Lake pipe tables
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
+    instanceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('listAiLakePipeTables', 'instanceId', instanceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AILakePipeTablesApi Api FP
+/**
+ * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Create a new AI Lake pipe table
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakePipeTablesApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApi_CreateAiLakePipeTable(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_CreateAiLakePipeTable(
+        requestParameters.instanceId, requestParameters.createPipeTableRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakePipeTablesApi Api FP
+/**
+ * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Delete an AI Lake pipe table
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakePipeTablesApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApi_DeleteAiLakePipeTable(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_DeleteAiLakePipeTable(
+        requestParameters.instanceId, requestParameters.tableName, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakePipeTablesApi Api FP
+/**
+ * (BETA) Returns full details of the specified pipe table.
+ * @summary (BETA) Get an AI Lake pipe table
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakePipeTablesApiGetAiLakePipeTableRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApi_GetAiLakePipeTable(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<PipeTable> {
+    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_GetAiLakePipeTable(
+        requestParameters.instanceId, requestParameters.tableName, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakePipeTablesApi Api FP
+/**
+ * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+ * @summary (BETA) List AI Lake pipe tables
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakePipeTablesApiListAiLakePipeTablesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApi_ListAiLakePipeTables(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListPipeTablesResponse> {
+    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
+        requestParameters.instanceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * AILakePipeTablesApi - interface
+ * @export
+ * @interface AILakePipeTablesApi
+ */
+export interface AILakePipeTablesApiInterface {
+    /**
+     * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Create a new AI Lake pipe table
+     * @param {AILakePipeTablesApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApiInterface
+     */
+    createAiLakePipeTable(requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
+     * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Delete an AI Lake pipe table
+     * @param {AILakePipeTablesApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApiInterface
+     */
+    deleteAiLakePipeTable(requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
+     * (BETA) Returns full details of the specified pipe table.
+     * @summary (BETA) Get an AI Lake pipe table
+     * @param {AILakePipeTablesApiGetAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApiInterface
+     */
+    getAiLakePipeTable(requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<PipeTable>;
+
+    /**
+     * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+     * @summary (BETA) List AI Lake pipe tables
+     * @param {AILakePipeTablesApiListAiLakePipeTablesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApiInterface
+     */
+    listAiLakePipeTables(requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<ListPipeTablesResponse>;
+
+}
+
+/**
+ * Request parameters for createAiLakePipeTable operation in AILakePipeTablesApi.
+ * @export
+ * @interface AILakePipeTablesApiCreateAiLakePipeTableRequest
+ */
+export interface AILakePipeTablesApiCreateAiLakePipeTableRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakePipeTablesApiCreateAiLakePipeTable
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {CreatePipeTableRequest}
+     * @memberof AILakePipeTablesApiCreateAiLakePipeTable
+     */
+    readonly createPipeTableRequest: CreatePipeTableRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakePipeTablesApiCreateAiLakePipeTable
+     */
+    readonly operationId?: string
+}
+
+/**
+ * Request parameters for deleteAiLakePipeTable operation in AILakePipeTablesApi.
+ * @export
+ * @interface AILakePipeTablesApiDeleteAiLakePipeTableRequest
+ */
+export interface AILakePipeTablesApiDeleteAiLakePipeTableRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakePipeTablesApiDeleteAiLakePipeTable
+     */
+    readonly instanceId: string
+
+    /**
+     * Pipe table name.
+     * @type {string}
+     * @memberof AILakePipeTablesApiDeleteAiLakePipeTable
+     */
+    readonly tableName: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakePipeTablesApiDeleteAiLakePipeTable
+     */
+    readonly operationId?: string
+}
+
+/**
+ * Request parameters for getAiLakePipeTable operation in AILakePipeTablesApi.
+ * @export
+ * @interface AILakePipeTablesApiGetAiLakePipeTableRequest
+ */
+export interface AILakePipeTablesApiGetAiLakePipeTableRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakePipeTablesApiGetAiLakePipeTable
+     */
+    readonly instanceId: string
+
+    /**
+     * Pipe table name.
+     * @type {string}
+     * @memberof AILakePipeTablesApiGetAiLakePipeTable
+     */
+    readonly tableName: string
+}
+
+/**
+ * Request parameters for listAiLakePipeTables operation in AILakePipeTablesApi.
+ * @export
+ * @interface AILakePipeTablesApiListAiLakePipeTablesRequest
+ */
+export interface AILakePipeTablesApiListAiLakePipeTablesRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakePipeTablesApiListAiLakePipeTables
+     */
+    readonly instanceId: string
+}
+
+/**
+ * AILakePipeTablesApi - object-oriented interface
+ * @export
+ * @class AILakePipeTablesApi
+ * @extends {BaseAPI}
+ */
+export class AILakePipeTablesApi extends BaseAPI implements AILakePipeTablesApiInterface {
+    /**
+     * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Create a new AI Lake pipe table
+     * @param {AILakePipeTablesApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApi
+     */
+    public createAiLakePipeTable(requestParameters: AILakePipeTablesApiCreateAiLakePipeTableRequest, options?: AxiosRequestConfig) {
+        return AILakePipeTablesApi_CreateAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Delete an AI Lake pipe table
+     * @param {AILakePipeTablesApiDeleteAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApi
+     */
+    public deleteAiLakePipeTable(requestParameters: AILakePipeTablesApiDeleteAiLakePipeTableRequest, options?: AxiosRequestConfig) {
+        return AILakePipeTablesApi_DeleteAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Returns full details of the specified pipe table.
+     * @summary (BETA) Get an AI Lake pipe table
+     * @param {AILakePipeTablesApiGetAiLakePipeTableRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApi
+     */
+    public getAiLakePipeTable(requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig) {
+        return AILakePipeTablesApi_GetAiLakePipeTable(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+     * @summary (BETA) List AI Lake pipe tables
+     * @param {AILakePipeTablesApiListAiLakePipeTablesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApi
+     */
+    public listAiLakePipeTables(requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig) {
+        return AILakePipeTablesApi_ListAiLakePipeTables(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// AILakeServicesOperationsApi FP - AILakeServicesOperationsApiAxiosParamCreator
+/**
+ * (BETA) Retrieves details of a Long Running Operation specified by the operation-id.
+ * @summary (BETA) Get Long Running Operation details
+ * @param {string} operationId Operation ID
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeServicesOperationsApiAxiosParamCreator_GetAiLakeOperation(
+    operationId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'operationId' is not null or undefined
+    assertParamExists('getAiLakeOperation', 'operationId', operationId)
+    const localVarPath = `/api/v1/ailake/operations/{operationId}`
+        .replace(`{${"operationId"}}`, encodeURIComponent(String(operationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeServicesOperationsApi FP - AILakeServicesOperationsApiAxiosParamCreator
+/**
+ * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
+ * @summary (BETA) Get AI Lake service status
+ * @param {string} serviceId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeServicesOperationsApiAxiosParamCreator_GetAiLakeServiceStatus(
+    serviceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'serviceId' is not null or undefined
+    assertParamExists('getAiLakeServiceStatus', 'serviceId', serviceId)
+    const localVarPath = `/api/v1/ailake/services/{serviceId}/status`
+        .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeServicesOperationsApi FP - AILakeServicesOperationsApiAxiosParamCreator
+/**
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * @summary (BETA) List AI Lake services
+ * @param {number} [size] 
+ * @param {number} [offset] 
+ * @param {Array<string>} [metaInclude] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeServicesOperationsApiAxiosParamCreator_ListAiLakeServices(
+    size?: number, offset?: number, metaInclude?: Array<string>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ailake/services`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (offset !== undefined) {
+        localVarQueryParameter['offset'] = offset;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeServicesOperationsApi FP - AILakeServicesOperationsApiAxiosParamCreator
+/**
+ * (BETA) Runs a specific AI Lake service command.
+ * @summary (BETA) Run an AI Lake services command
+ * @param {string} serviceId 
+ * @param {string} commandName 
+ * @param {RunServiceCommandRequest} runServiceCommandRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeServicesOperationsApiAxiosParamCreator_RunAiLakeServiceCommand(
+    serviceId: string, commandName: string, runServiceCommandRequest: RunServiceCommandRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'serviceId' is not null or undefined
+    assertParamExists('runAiLakeServiceCommand', 'serviceId', serviceId)
+    // verify required parameter 'commandName' is not null or undefined
+    assertParamExists('runAiLakeServiceCommand', 'commandName', commandName)
+    // verify required parameter 'runServiceCommandRequest' is not null or undefined
+    assertParamExists('runAiLakeServiceCommand', 'runServiceCommandRequest', runServiceCommandRequest)
+    const localVarPath = `/api/v1/ailake/services/{serviceId}/commands/{commandName}/run`
+        .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)))
+        .replace(`{${"commandName"}}`, encodeURIComponent(String(commandName)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof runServiceCommandRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(runServiceCommandRequest !== undefined ? runServiceCommandRequest : {})
+        : runServiceCommandRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AILakeServicesOperationsApi Api FP
+/**
+ * (BETA) Retrieves details of a Long Running Operation specified by the operation-id.
+ * @summary (BETA) Get Long Running Operation details
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeServicesOperationsApiGetAiLakeOperationRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeServicesOperationsApi_GetAiLakeOperation(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeServicesOperationsApiGetAiLakeOperationRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GetAiLakeOperation200Response> {
+    const localVarAxiosArgs = await AILakeServicesOperationsApiAxiosParamCreator_GetAiLakeOperation(
+        requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeServicesOperationsApi Api FP
+/**
+ * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
+ * @summary (BETA) Get AI Lake service status
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeServicesOperationsApiGetAiLakeServiceStatusRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeServicesOperationsApi_GetAiLakeServiceStatus(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeServicesOperationsApiGetAiLakeServiceStatusRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GetServiceStatusResponse> {
+    const localVarAxiosArgs = await AILakeServicesOperationsApiAxiosParamCreator_GetAiLakeServiceStatus(
+        requestParameters.serviceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeServicesOperationsApi Api FP
+/**
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * @summary (BETA) List AI Lake services
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeServicesOperationsApiListAiLakeServicesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeServicesOperationsApi_ListAiLakeServices(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeServicesOperationsApiListAiLakeServicesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListServicesResponse> {
+    const localVarAxiosArgs = await AILakeServicesOperationsApiAxiosParamCreator_ListAiLakeServices(
+        requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeServicesOperationsApi Api FP
+/**
+ * (BETA) Runs a specific AI Lake service command.
+ * @summary (BETA) Run an AI Lake services command
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeServicesOperationsApiRunAiLakeServiceCommandRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeServicesOperationsApi_RunAiLakeServiceCommand(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeServicesOperationsApiRunAiLakeServiceCommandRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakeServicesOperationsApiAxiosParamCreator_RunAiLakeServiceCommand(
+        requestParameters.serviceId, requestParameters.commandName, requestParameters.runServiceCommandRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * AILakeServicesOperationsApi - interface
+ * @export
+ * @interface AILakeServicesOperationsApi
+ */
+export interface AILakeServicesOperationsApiInterface {
+    /**
+     * (BETA) Retrieves details of a Long Running Operation specified by the operation-id.
+     * @summary (BETA) Get Long Running Operation details
+     * @param {AILakeServicesOperationsApiGetAiLakeOperationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeServicesOperationsApiInterface
+     */
+    getAiLakeOperation(requestParameters: AILakeServicesOperationsApiGetAiLakeOperationRequest, options?: AxiosRequestConfig): AxiosPromise<GetAiLakeOperation200Response>;
+
+    /**
+     * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
+     * @summary (BETA) Get AI Lake service status
+     * @param {AILakeServicesOperationsApiGetAiLakeServiceStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeServicesOperationsApiInterface
+     */
+    getAiLakeServiceStatus(requestParameters: AILakeServicesOperationsApiGetAiLakeServiceStatusRequest, options?: AxiosRequestConfig): AxiosPromise<GetServiceStatusResponse>;
+
+    /**
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * @summary (BETA) List AI Lake services
+     * @param {AILakeServicesOperationsApiListAiLakeServicesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeServicesOperationsApiInterface
+     */
+    listAiLakeServices(requestParameters: AILakeServicesOperationsApiListAiLakeServicesRequest, options?: AxiosRequestConfig): AxiosPromise<ListServicesResponse>;
+
+    /**
+     * (BETA) Runs a specific AI Lake service command.
+     * @summary (BETA) Run an AI Lake services command
+     * @param {AILakeServicesOperationsApiRunAiLakeServiceCommandRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeServicesOperationsApiInterface
+     */
+    runAiLakeServiceCommand(requestParameters: AILakeServicesOperationsApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+}
+
+/**
+ * Request parameters for getAiLakeOperation operation in AILakeServicesOperationsApi.
+ * @export
+ * @interface AILakeServicesOperationsApiGetAiLakeOperationRequest
+ */
+export interface AILakeServicesOperationsApiGetAiLakeOperationRequest {
+    /**
+     * Operation ID
+     * @type {string}
+     * @memberof AILakeServicesOperationsApiGetAiLakeOperation
+     */
+    readonly operationId: string
+}
+
+/**
+ * Request parameters for getAiLakeServiceStatus operation in AILakeServicesOperationsApi.
+ * @export
+ * @interface AILakeServicesOperationsApiGetAiLakeServiceStatusRequest
+ */
+export interface AILakeServicesOperationsApiGetAiLakeServiceStatusRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeServicesOperationsApiGetAiLakeServiceStatus
+     */
+    readonly serviceId: string
+}
+
+/**
+ * Request parameters for listAiLakeServices operation in AILakeServicesOperationsApi.
+ * @export
+ * @interface AILakeServicesOperationsApiListAiLakeServicesRequest
+ */
+export interface AILakeServicesOperationsApiListAiLakeServicesRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AILakeServicesOperationsApiListAiLakeServices
+     */
+    readonly size?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AILakeServicesOperationsApiListAiLakeServices
+     */
+    readonly offset?: number
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AILakeServicesOperationsApiListAiLakeServices
+     */
+    readonly metaInclude?: Array<string>
+}
+
+/**
+ * Request parameters for runAiLakeServiceCommand operation in AILakeServicesOperationsApi.
+ * @export
+ * @interface AILakeServicesOperationsApiRunAiLakeServiceCommandRequest
+ */
+export interface AILakeServicesOperationsApiRunAiLakeServiceCommandRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeServicesOperationsApiRunAiLakeServiceCommand
+     */
+    readonly serviceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeServicesOperationsApiRunAiLakeServiceCommand
+     */
+    readonly commandName: string
+
+    /**
+     * 
+     * @type {RunServiceCommandRequest}
+     * @memberof AILakeServicesOperationsApiRunAiLakeServiceCommand
+     */
+    readonly runServiceCommandRequest: RunServiceCommandRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeServicesOperationsApiRunAiLakeServiceCommand
+     */
+    readonly operationId?: string
+}
+
+/**
+ * AILakeServicesOperationsApi - object-oriented interface
+ * @export
+ * @class AILakeServicesOperationsApi
+ * @extends {BaseAPI}
+ */
+export class AILakeServicesOperationsApi extends BaseAPI implements AILakeServicesOperationsApiInterface {
+    /**
+     * (BETA) Retrieves details of a Long Running Operation specified by the operation-id.
+     * @summary (BETA) Get Long Running Operation details
+     * @param {AILakeServicesOperationsApiGetAiLakeOperationRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeServicesOperationsApi
+     */
+    public getAiLakeOperation(requestParameters: AILakeServicesOperationsApiGetAiLakeOperationRequest, options?: AxiosRequestConfig) {
+        return AILakeServicesOperationsApi_GetAiLakeOperation(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
+     * @summary (BETA) Get AI Lake service status
+     * @param {AILakeServicesOperationsApiGetAiLakeServiceStatusRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeServicesOperationsApi
+     */
+    public getAiLakeServiceStatus(requestParameters: AILakeServicesOperationsApiGetAiLakeServiceStatusRequest, options?: AxiosRequestConfig) {
+        return AILakeServicesOperationsApi_GetAiLakeServiceStatus(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * @summary (BETA) List AI Lake services
+     * @param {AILakeServicesOperationsApiListAiLakeServicesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeServicesOperationsApi
+     */
+    public listAiLakeServices(requestParameters: AILakeServicesOperationsApiListAiLakeServicesRequest = {}, options?: AxiosRequestConfig) {
+        return AILakeServicesOperationsApi_ListAiLakeServices(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Runs a specific AI Lake service command.
+     * @summary (BETA) Run an AI Lake services command
+     * @param {AILakeServicesOperationsApiRunAiLakeServiceCommandRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeServicesOperationsApi
+     */
+    public runAiLakeServiceCommand(requestParameters: AILakeServicesOperationsApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig) {
+        return AILakeServicesOperationsApi_RunAiLakeServiceCommand(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -5146,6 +7510,75 @@ export async function ActionsApiAxiosParamCreator_ComputeReport(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
         : afmExecution || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization\'s own filters.
+ * @summary (BETA) Executes a visualization object and returns link to the result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} visualizationObjectId 
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {VisualizationObjectExecution} [visualizationObjectExecution] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ComputeReportForVisualizationObject(
+    workspaceId: string, visualizationObjectId: string, skipCache?: boolean, visualizationObjectExecution?: VisualizationObjectExecution, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('computeReportForVisualizationObject', 'workspaceId', workspaceId)
+    // verify required parameter 'visualizationObjectId' is not null or undefined
+    assertParamExists('computeReportForVisualizationObject', 'visualizationObjectId', visualizationObjectId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/visualization/{visualizationObjectId}/execute`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"visualizationObjectId"}}`, encodeURIComponent(String(visualizationObjectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter['skip-cache'] = String(JSON.stringify(skipCache));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof visualizationObjectExecution !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(visualizationObjectExecution !== undefined ? visualizationObjectExecution : {})
+        : visualizationObjectExecution || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -7272,6 +9705,32 @@ export async function ActionsApi_ComputeReport(
 
 // ActionsApi Api FP
 /**
+ * (BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization\'s own filters.
+ * @summary (BETA) Executes a visualization object and returns link to the result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiComputeReportForVisualizationObjectRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ComputeReportForVisualizationObject(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiComputeReportForVisualizationObjectRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmExecutionResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ComputeReportForVisualizationObject(
+        requestParameters.workspaceId, requestParameters.visualizationObjectId, requestParameters.skipCache, requestParameters.visualizationObjectExecution, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
  * @summary (BETA) Valid descendants
  * @param {AxiosInstance} axios Axios instance.
@@ -8230,6 +10689,16 @@ export interface ActionsApiInterface {
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
 
     /**
+     * (BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization\'s own filters.
+     * @summary (BETA) Executes a visualization object and returns link to the result
+     * @param {ActionsApiComputeReportForVisualizationObjectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    computeReportForVisualizationObject(requestParameters: ActionsApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
+
+    /**
      * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
      * @summary (BETA) Valid descendants
      * @param {ActionsApiComputeValidDescendantsRequest} requestParameters Request parameters.
@@ -8939,6 +11408,41 @@ export interface ActionsApiComputeReportRequest {
      * @memberof ActionsApiComputeReport
      */
     readonly timestamp?: string
+}
+
+/**
+ * Request parameters for computeReportForVisualizationObject operation in ActionsApi.
+ * @export
+ * @interface ActionsApiComputeReportForVisualizationObjectRequest
+ */
+export interface ActionsApiComputeReportForVisualizationObjectRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiComputeReportForVisualizationObject
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiComputeReportForVisualizationObject
+     */
+    readonly visualizationObjectId: string
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiComputeReportForVisualizationObject
+     */
+    readonly skipCache?: boolean
+
+    /**
+     * 
+     * @type {VisualizationObjectExecution}
+     * @memberof ActionsApiComputeReportForVisualizationObject
+     */
+    readonly visualizationObjectExecution?: VisualizationObjectExecution
 }
 
 /**
@@ -9807,6 +12311,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * (BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization\'s own filters.
+     * @summary (BETA) Executes a visualization object and returns link to the result
+     * @param {ActionsApiComputeReportForVisualizationObjectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public computeReportForVisualizationObject(requestParameters: ActionsApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ComputeReportForVisualizationObject(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
      * @summary (BETA) Valid descendants
      * @param {ActionsApiComputeValidDescendantsRequest} requestParameters Request parameters.
@@ -10495,6 +13011,75 @@ export async function ComputationApiAxiosParamCreator_ComputeReport(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(afmExecution !== undefined ? afmExecution : {})
         : afmExecution || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * (BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization\'s own filters.
+ * @summary (BETA) Executes a visualization object and returns link to the result
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} visualizationObjectId 
+ * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+ * @param {VisualizationObjectExecution} [visualizationObjectExecution] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_ComputeReportForVisualizationObject(
+    workspaceId: string, visualizationObjectId: string, skipCache?: boolean, visualizationObjectExecution?: VisualizationObjectExecution, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('computeReportForVisualizationObject', 'workspaceId', workspaceId)
+    // verify required parameter 'visualizationObjectId' is not null or undefined
+    assertParamExists('computeReportForVisualizationObject', 'visualizationObjectId', visualizationObjectId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/visualization/{visualizationObjectId}/execute`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"visualizationObjectId"}}`, encodeURIComponent(String(visualizationObjectId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (skipCache !== undefined && skipCache !== null) {
+        localVarHeaderParameter['skip-cache'] = String(JSON.stringify(skipCache));
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof visualizationObjectExecution !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(visualizationObjectExecution !== undefined ? visualizationObjectExecution : {})
+        : visualizationObjectExecution || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -11251,6 +13836,32 @@ export async function ComputationApi_ComputeReport(
 
 // ComputationApi Api FP
 /**
+ * (BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization\'s own filters.
+ * @summary (BETA) Executes a visualization object and returns link to the result
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiComputeReportForVisualizationObjectRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_ComputeReportForVisualizationObject(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputationApiComputeReportForVisualizationObjectRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmExecutionResponse> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_ComputeReportForVisualizationObject(
+        requestParameters.workspaceId, requestParameters.visualizationObjectId, requestParameters.skipCache, requestParameters.visualizationObjectExecution, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputationApi Api FP
+/**
  * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
  * @summary (BETA) Valid descendants
  * @param {AxiosInstance} axios Axios instance.
@@ -11566,6 +14177,16 @@ export interface ComputationApiInterface {
     computeReport(requestParameters: ComputationApiComputeReportRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
 
     /**
+     * (BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization\'s own filters.
+     * @summary (BETA) Executes a visualization object and returns link to the result
+     * @param {ComputationApiComputeReportForVisualizationObjectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    computeReportForVisualizationObject(requestParameters: ComputationApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
+
+    /**
      * (BETA) Returns map of lists of attributes that can be used as descendants of the given attributes.
      * @summary (BETA) Valid descendants
      * @param {ComputationApiComputeValidDescendantsRequest} requestParameters Request parameters.
@@ -11805,6 +14426,41 @@ export interface ComputationApiComputeReportRequest {
      * @memberof ComputationApiComputeReport
      */
     readonly timestamp?: string
+}
+
+/**
+ * Request parameters for computeReportForVisualizationObject operation in ComputationApi.
+ * @export
+ * @interface ComputationApiComputeReportForVisualizationObjectRequest
+ */
+export interface ComputationApiComputeReportForVisualizationObjectRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiComputeReportForVisualizationObject
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputationApiComputeReportForVisualizationObject
+     */
+    readonly visualizationObjectId: string
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ComputationApiComputeReportForVisualizationObject
+     */
+    readonly skipCache?: boolean
+
+    /**
+     * 
+     * @type {VisualizationObjectExecution}
+     * @memberof ComputationApiComputeReportForVisualizationObject
+     */
+    readonly visualizationObjectExecution?: VisualizationObjectExecution
 }
 
 /**
@@ -12166,6 +14822,18 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
      */
     public computeReport(requestParameters: ComputationApiComputeReportRequest, options?: AxiosRequestConfig) {
         return ComputationApi_ComputeReport(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization\'s own filters.
+     * @summary (BETA) Executes a visualization object and returns link to the result
+     * @param {ComputationApiComputeReportForVisualizationObjectRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public computeReportForVisualizationObject(requestParameters: ComputationApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig) {
+        return ComputationApi_ComputeReportForVisualizationObject(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

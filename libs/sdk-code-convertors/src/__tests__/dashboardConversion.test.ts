@@ -46,6 +46,67 @@ describe("dashboard conversion", () => {
             expect((result.filterContext.content as any)?.filters).toBeDefined();
             expect((result.filterContext.content as any).filters.length).toBeGreaterThan(0);
         });
+
+        it("should convert dashboard text filters", () => {
+            const filters = {
+                date_common: {
+                    type: "date_filter",
+                    granularity: "YEAR",
+                    from: -1,
+                    to: 0,
+                },
+                region_text: {
+                    type: "text_filter",
+                    using: "label/region",
+                    title: "Region Text",
+                    mode: "hidden",
+                    condition: "is",
+                    values: ["US", "UK"],
+                    parents: ["date_common"],
+                    metric_filters: ["metric/revenue"],
+                },
+                region_match: {
+                    type: "text_filter",
+                    using: "label/region",
+                    title: "Region Search",
+                    condition: "doesNotStartWith",
+                    value: "North",
+                    case_sensitive: true,
+                },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+            const convertedFilters = (result.filterContext.content as any).filters;
+
+            expect(convertedFilters).toEqual(
+                expect.arrayContaining([
+                    expect.objectContaining({
+                        arbitraryAttributeFilter: expect.objectContaining({
+                            localIdentifier: "region_text",
+                            negativeSelection: false,
+                            values: ["US", "UK"],
+                            title: "Region Text",
+                        }),
+                    }),
+                    expect.objectContaining({
+                        matchAttributeFilter: expect.objectContaining({
+                            localIdentifier: "region_match",
+                            operator: "startsWith",
+                            negativeSelection: true,
+                            literal: "North",
+                            caseSensitive: true,
+                            title: "Region Search",
+                        }),
+                    }),
+                ]),
+            );
+            expect(result.attributeFilterConfigs).toEqual([
+                expect.objectContaining({
+                    localIdentifier: "region_text",
+                    mode: "hidden",
+                }),
+            ]);
+        });
     });
 
     describe("yamlWidgetToDeclarative", () => {
@@ -156,6 +217,57 @@ describe("dashboard conversion", () => {
             const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
 
             expect(json.cross_filtering).toBe(false);
+        });
+
+        it("should round-trip dashboard text filters", () => {
+            const input = makeDashboard({
+                filters: {
+                    date_common: {
+                        type: "date_filter",
+                        granularity: "YEAR",
+                        from: -1,
+                        to: 0,
+                    },
+                    region_text: {
+                        type: "text_filter",
+                        using: "label/region",
+                        title: "Region Text",
+                        condition: "isNot",
+                        values: ["US", null],
+                        parents: ["date_common"],
+                        metric_filters: ["metric/revenue"],
+                    },
+                    region_match: {
+                        type: "text_filter",
+                        using: "label/region",
+                        title: "Region Search",
+                        condition: "contains",
+                        value: "North",
+                        case_sensitive: true,
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+
+            expect(json.filters?.["region_text"]).toEqual({
+                type: "text_filter",
+                using: "label/region",
+                title: "Region Text",
+                condition: "isNot",
+                values: ["US", null],
+                parents: ["date_common"],
+                metric_filters: ["metric/revenue"],
+            });
+            expect(json.filters?.["region_match"]).toEqual({
+                type: "text_filter",
+                using: "label/region",
+                title: "Region Search",
+                condition: "contains",
+                value: "North",
+                case_sensitive: true,
+            });
         });
     });
 });

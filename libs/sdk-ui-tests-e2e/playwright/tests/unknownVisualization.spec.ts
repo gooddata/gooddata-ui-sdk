@@ -1,10 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import { mockFeatureHub, visit } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Dashboard with unknown visualization class", "unknownVisualization", () => {
+test.topLevelDescribe("Dashboard with unknown visualization class", "unknownVisualization", () => {
     test.describe("Basic case", () => {
         test(
             "should render dashboard even if it contains unknown visualization class",

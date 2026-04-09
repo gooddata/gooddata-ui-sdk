@@ -19,6 +19,9 @@ import { GeoCollectionKind } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
+import { IAgent } from '@gooddata/sdk-model';
+import { IAgentPatch } from '@gooddata/sdk-model';
+import { IAgentSkill } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
 import type { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -116,6 +119,8 @@ import { IOrganizationDescriptorUpdate } from '@gooddata/sdk-model';
 import { IOrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { IOrganizationUser } from '@gooddata/sdk-model';
 import { IOrganizationUserGroup } from '@gooddata/sdk-model';
+import { IParameterMetadataObject } from '@gooddata/sdk-model';
+import { IParameterMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
@@ -270,6 +275,21 @@ export type FiltersByTab = {
 // @public
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
+// @alpha
+export interface IAgentsQuery {
+    query(): Promise<IAgentsQueryResult>;
+    queryAll(): Promise<IAgent[]>;
+    withFilter(filter: {
+        title?: string;
+    }): IAgentsQuery;
+    withPage(page: number): IAgentsQuery;
+    withSize(size: number): IAgentsQuery;
+    withSorting(sort: string[]): IAgentsQuery;
+}
+
+// @alpha
+export type IAgentsQueryResult = IPagedResource<IAgent>;
+
 // @public
 export interface IAnalyticalBackend {
     authenticate(force?: boolean): Promise<IAuthenticatedPrincipal>;
@@ -325,6 +345,7 @@ export interface IAnalyticalWorkspace {
     // @internal
     logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
+    parameters(): IWorkspaceParametersService;
     permissions(): IWorkspacePermissionsService;
     references(): IReferencesService;
     settings(): IWorkspaceSettingsService;
@@ -1794,6 +1815,8 @@ export interface IObjectExpressionToken {
 // @public
 export interface IOrganization {
     // @alpha
+    agents(): IOrganizationAgentsService;
+    // @alpha
     automations(): IOrganizationAutomationService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
     llmEndpoints(): IOrganizationLlmEndpointsService;
@@ -1807,6 +1830,17 @@ export interface IOrganization {
     styling(): IOrganizationStylingService;
     updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
     users(): IOrganizationUserService;
+}
+
+// @alpha
+export interface IOrganizationAgentsService {
+    createAgent(agent: IAgent): Promise<IAgent>;
+    deleteAgent(ref: ObjRef): Promise<void>;
+    getAgent(ref: ObjRef): Promise<IAgent | undefined>;
+    getAgentsQuery(): IAgentsQuery;
+    getAvailableSkills(): Promise<IAgentSkill[]>;
+    patchAgent(agent: IAgentPatch): Promise<IAgent>;
+    updateAgent(agent: IAgent): Promise<IAgent>;
 }
 
 // @alpha
@@ -1957,6 +1991,8 @@ export interface IOrganizationSettingsService {
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     // @alpha
+    setEnableAiOnData(enabled: boolean): Promise<void>;
+    // @alpha
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
     // @alpha
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
@@ -2095,6 +2131,22 @@ export interface IPagedResource<TItem> {
     // (undocumented)
     readonly totalCount: number;
 }
+
+// @public
+export interface IParametersQuery {
+    query(): Promise<IParametersQueryResult>;
+    withFilter(filter: IFilterBaseOptions): IParametersQuery;
+    withInclude(include: string[]): IParametersQuery;
+    // @beta
+    withMethod(method: QueryMethod): IParametersQuery;
+    withOrigin(origin: ObjectOrigin | (string & {})): IParametersQuery;
+    withPage(page: number): IParametersQuery;
+    withSize(size: number): IParametersQuery;
+    withSorting(sort: string[]): IParametersQuery;
+}
+
+// @public
+export type IParametersQueryResult = IPagedResource<IParameterMetadataObject>;
 
 // @internal
 export interface IPatchKnowledgeDocumentRequest {
@@ -2653,6 +2705,14 @@ export interface IWorkspaceMeasuresService {
     setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
     updateMeasureMeta(measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IMeasureMetadataObject>;
+}
+
+// @public
+export interface IWorkspaceParametersService {
+    createParameter(parameter: IParameterMetadataObjectDefinition): Promise<IParameterMetadataObject>;
+    getParameter(ref: ObjRef): Promise<IParameterMetadataObject>;
+    getParametersQuery(): IParametersQuery;
+    updateParameterMeta(updatedParameter: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IParameterMetadataObject>;
 }
 
 // @public

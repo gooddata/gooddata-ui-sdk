@@ -8,11 +8,13 @@ import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { FilterGroupLayout } from "./FilterGroupLayout.js";
 import { useObjectTypeState } from "../objectType/ObjectTypeContext.js";
 import { ObjectTypeSelectMemo } from "../objectType/ObjectTypeSelect.js";
+import { useIsParametersEnabled } from "../parameter/gate.js";
 
 export function FilterObjectType() {
     const { counter } = useObjectTypeState();
     const { types } = useFilterState();
     const { setTypes } = useFilterActions();
+    const isParametersEnabled = useIsParametersEnabled();
     const id = useId();
     const titleId = `filter-object-type-title/${id}`;
 
@@ -26,6 +28,7 @@ export function FilterObjectType() {
                 counter={counter}
                 selectedTypes={types}
                 onSelect={setTypes}
+                showParameter={isParametersEnabled}
                 ariaLabelledBy={titleId}
             />
         </FilterGroupLayout>

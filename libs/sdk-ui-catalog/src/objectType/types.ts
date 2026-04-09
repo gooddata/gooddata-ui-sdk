@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { ObjectType as ModelObjectType } from "@gooddata/sdk-model";
 
@@ -9,5 +9,15 @@ import type { ObjectType as ModelObjectType } from "@gooddata/sdk-model";
  */
 export type ObjectType = Extract<
     ModelObjectType,
-    "analyticalDashboard" | "insight" | "measure" | "fact" | "attribute" | "dataSet"
+    "analyticalDashboard" | "insight" | "measure" | "parameter" | "fact" | "attribute" | "dataSet"
+>;
+
+/**
+ * Represents the object types that can be created from the Analytics Catalog.
+ *
+ * @internal
+ */
+export type CatalogCreateObjectType = Extract<
+    ObjectType,
+    "analyticalDashboard" | "insight" | "measure" | "parameter"
 >;

@@ -46,6 +46,29 @@ export type ReferenceObject = {
     identifier: string;
 };
 
+export type YamlTextFilterCondition =
+    | "is"
+    | "isNot"
+    | "contains"
+    | "doesNotContain"
+    | "startsWith"
+    | "doesNotStartWith"
+    | "endsWith"
+    | "doesNotEndWith";
+
+export type YamlTextFilter = {
+    type: "text_filter";
+    using: string;
+    condition: YamlTextFilterCondition;
+    values?: Array<string | null>;
+    value?: string;
+    case_sensitive?: boolean;
+    mode?: "readonly" | "hidden" | "active";
+    title?: string;
+    parents?: Array<string | { using: string; common: boolean }>;
+    metric_filters?: string[];
+};
+
 export const SupportedReferenceTypes = ["fact", "label", "metric", "dataset", "attribute"] as const;
 
 export function parseReferenceObject(obj: string): ReferenceObject | null {
@@ -181,6 +204,44 @@ export function isAttributeFilter(obj: unknown): obj is AttributeFilter {
         return Boolean(id && ["attribute", "label"].includes(id.type));
     }
     return false;
+}
+
+export function isTextFilter(obj: unknown): obj is YamlTextFilter {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "using" in obj &&
+        "type" in obj &&
+        obj.type === "text_filter"
+    );
+}
+
+const arbitraryTextFilterConditions = new Set(["is", "isNot"]);
+const matchTextFilterConditions = new Set([
+    "contains",
+    "doesNotContain",
+    "startsWith",
+    "doesNotStartWith",
+    "endsWith",
+    "doesNotEndWith",
+]);
+
+export function isArbitraryTextFilter(obj: unknown): obj is YamlTextFilter {
+    return (
+        isTextFilter(obj) &&
+        "condition" in obj &&
+        typeof obj["condition"] === "string" &&
+        arbitraryTextFilterConditions.has(obj["condition"])
+    );
+}
+
+export function isMatchTextFilter(obj: unknown): obj is YamlTextFilter {
+    return (
+        isTextFilter(obj) &&
+        "condition" in obj &&
+        typeof obj["condition"] === "string" &&
+        matchTextFilterConditions.has(obj["condition"])
+    );
 }
 
 export function isPositiveAttributeFilter(obj: unknown): obj is AttributeFilter {
@@ -358,6 +419,34 @@ export function isDashboardAttributeFilter(obj: unknown): obj is DashboardAttrib
         "type" in obj &&
         obj.type === "attribute_filter" &&
         "using" in obj
+    );
+}
+
+export function isDashboardTextFilter(obj: unknown): obj is YamlTextFilter {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "type" in obj &&
+        obj.type === "text_filter" &&
+        "using" in obj
+    );
+}
+
+export function isDashboardArbitraryTextFilter(obj: unknown): obj is YamlTextFilter {
+    return (
+        isDashboardTextFilter(obj) &&
+        "condition" in obj &&
+        typeof obj["condition"] === "string" &&
+        arbitraryTextFilterConditions.has(obj["condition"])
+    );
+}
+
+export function isDashboardMatchTextFilter(obj: unknown): obj is YamlTextFilter {
+    return (
+        isDashboardTextFilter(obj) &&
+        "condition" in obj &&
+        typeof obj["condition"] === "string" &&
+        matchTextFilterConditions.has(obj["condition"])
     );
 }
 

@@ -26,6 +26,9 @@ export function AnalyticsCatalogDetailContent({ backend, workspace, locale, ...r
 // @internal
 export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;
 
+// @internal
+export type CatalogCreateObjectType = Extract<ObjectType, "analyticalDashboard" | "insight" | "measure" | "parameter">;
+
 // @internal (undocumented)
 export interface IAnalyticsCatalogDetailContentProps extends Omit<ICatalogDetailContentProps, "objectId" | "objectType"> {
     backend?: IAnalyticalBackend;
@@ -68,6 +71,7 @@ export interface IAnalyticsCatalogProps {
     onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
     onCatalogItemNavigation?: (event: MouseEvent_2, ref: ICatalogItemRef) => void;
     onCatalogItemOpenClick?: (e: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
+    onCreateObject?: (objectType: CatalogCreateObjectType) => void;
     openCatalogItemRef?: ICatalogItemRef;
     workspace?: string;
 }
@@ -141,7 +145,7 @@ export interface ICatalogItemRef extends IdentifierRef {
 }
 
 // @internal
-export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "fact" | "attribute" | "dataSet">;
+export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "parameter" | "fact" | "attribute" | "dataSet">;
 
 // @internal (undocumented)
 export type OpenHandlerEvent = {

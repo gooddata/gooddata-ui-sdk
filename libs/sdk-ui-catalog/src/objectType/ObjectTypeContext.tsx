@@ -15,6 +15,7 @@ interface IObjectTypeActions {
 const initialState: IObjectTypeState = {
     counter: {
         [ObjectTypes.METRIC]: 0,
+        [ObjectTypes.PARAMETER]: 0,
         [ObjectTypes.FACT]: 0,
         [ObjectTypes.ATTRIBUTE]: 0,
         [ObjectTypes.DATASET]: 0,

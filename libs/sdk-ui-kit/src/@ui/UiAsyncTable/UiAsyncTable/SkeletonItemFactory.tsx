@@ -4,6 +4,8 @@ import { type ComponentType, useEffect, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
 
+import { type ObjRef } from "@gooddata/sdk-model";
+
 import { COLUMN_PADDING, SKELETON_ITEM_HEIGHT } from "./constants.js";
 import { getColumnWidths } from "./utils.js";
 import { type IUiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
@@ -29,7 +31,7 @@ export function skeletonItemFactory(
     return SkeletonItem;
 }
 
-export const useSkeletonItem = <T extends { id: string }>(
+export const useSkeletonItem = <T extends { id: string } | { ref: ObjRef }>(
     columns: IUiAsyncTableColumn<T>[],
     bulkActions: IUiAsyncTableBulkAction[] | undefined,
     isLargeRow: boolean,

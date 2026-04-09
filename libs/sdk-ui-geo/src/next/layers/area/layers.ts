@@ -4,12 +4,21 @@ import { BucketNames } from "@gooddata/sdk-ui";
 
 import { DEFAULT_AREA_LAYER_NAME, DEFAULT_AREA_OUTLINE_LAYER_NAME } from "./constants.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
+import { CROSS_FILTER_UNSELECTED_OPACITY, SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
 import type {
+    ExpressionSpecification,
     FillLayerSpecification,
     FilterSpecification,
     LineLayerSpecification,
 } from "../common/mapFacade.js";
 import { EMPTY_SEGMENT_VALUE } from "../pushpin/constants.js";
+
+const SELECTION_OPACITY_EXPRESSION: ExpressionSpecification = [
+    "case",
+    ["boolean", ["get", SELECTED_FEATURE_PROPERTY], false],
+    1,
+    CROSS_FILTER_UNSELECTED_OPACITY,
+];
 
 /**
  * Creates a filter expression for geographic areas based on selected segment items.
@@ -64,7 +73,7 @@ export function createAreaFillLayer(
     config: IGeoAreaChartConfig,
     layerId: string = DEFAULT_AREA_LAYER_NAME,
 ): FillLayerSpecification {
-    const { selectedSegmentItems = [], areas = {} } = config || {};
+    const { selectedSegmentItems = [], selectedPoints, areas = {} } = config || {};
     const { fillOpacity = 0.7 } = areas;
 
     const layer: FillLayerSpecification = {
@@ -74,7 +83,7 @@ export function createAreaFillLayer(
         paint: {
             // Use data-driven styling from flattened feature properties
             "fill-color": ["coalesce", ["get", "color_fill"], "#20B2E2"],
-            "fill-opacity": fillOpacity,
+            "fill-opacity": selectedPoints?.length ? SELECTION_OPACITY_EXPRESSION : fillOpacity,
         },
     };
 
@@ -103,7 +112,7 @@ export function createAreaOutlineLayer(
     config: IGeoAreaChartConfig,
     layerId: string = DEFAULT_AREA_OUTLINE_LAYER_NAME,
 ): LineLayerSpecification {
-    const { selectedSegmentItems = [], areas = {} } = config || {};
+    const { selectedSegmentItems = [], selectedPoints, areas = {} } = config || {};
     const { borderColor = "#FFFFFF", borderWidth = 1 } = areas;
 
     const layer: LineLayerSpecification = {
@@ -113,6 +122,7 @@ export function createAreaOutlineLayer(
         paint: {
             "line-color": borderColor,
             "line-width": borderWidth,
+            ...(selectedPoints?.length ? { "line-opacity": SELECTION_OPACITY_EXPRESSION } : {}),
         },
     };
 

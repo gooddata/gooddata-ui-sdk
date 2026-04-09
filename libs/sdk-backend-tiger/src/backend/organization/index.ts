@@ -8,6 +8,7 @@ import {
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 import {
     type IOrganization,
+    type IOrganizationAgentsService,
     type IOrganizationAutomationService,
     type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
@@ -22,6 +23,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
 
+import { OrganizationAgentsService } from "./agents.js";
 import { TigerOrganizationAutomationService } from "./automations/index.js";
 import { OrganizationLlmEndpointsService } from "./llmEndpoints.js";
 import { OrganizationLlmProvidersService } from "./llmProviders.js";
@@ -181,6 +183,10 @@ export class TigerOrganization implements IOrganization {
 
     public automations(): IOrganizationAutomationService {
         return new TigerOrganizationAutomationService(this.authCall);
+    }
+
+    public agents(): IOrganizationAgentsService {
+        return new OrganizationAgentsService(this.authCall);
     }
 }
 

@@ -2,6 +2,8 @@
 
 import { type KeyboardEvent, type MouseEvent } from "react";
 
+import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
+
 import {
     ASYNC_TABLE_ID_PREFIX,
     CHECKBOX_COLUMN_WIDTH,
@@ -14,7 +16,14 @@ export const getColumnWidth = (renderMenu: boolean, isLarge: boolean, widthProp?
     return renderMenu ? (isLarge ? MENU_COLUMN_WIDTH_LARGE : MENU_COLUMN_WIDTH) : widthProp;
 };
 
-export const getColumnWidths = <T extends { id: string }>(
+export const getItemKey = <T extends { id: string } | { ref: ObjRef }>(item: T): string => {
+    if ("id" in item) {
+        return (item as { id: string }).id;
+    }
+    return objRefToString((item as { ref: ObjRef }).ref);
+};
+
+export const getColumnWidths = <T extends { id: string } | { ref: ObjRef }>(
     columns: IUiAsyncTableColumn<T>[],
     hasCheckbox: boolean,
     isLargeRow: boolean,

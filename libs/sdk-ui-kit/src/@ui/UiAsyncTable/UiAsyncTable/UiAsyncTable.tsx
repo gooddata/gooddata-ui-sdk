@@ -4,6 +4,7 @@ import { type Ref, useCallback, useContext, useMemo } from "react";
 
 import { IntlContext } from "react-intl";
 
+import { type ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { CHECKBOX_COLUMN_WIDTH, ROW_HEIGHT_LARGE, ROW_HEIGHT_NORMAL, SCROLLBAR_WIDTH } from "./constants.js";
@@ -12,11 +13,11 @@ import { UiAsyncTableEmptyState } from "./UiAsyncTableEmptyState.js";
 import { UiAsyncTableHeader } from "./UiAsyncTableHeader.js";
 import { UiAsyncTableRow } from "./UiAsyncTableRow.js";
 import { UiAsyncTableToolbar } from "./UiAsyncTableToolbar.js";
-import { getColumnWidth } from "./utils.js";
+import { getColumnWidth, getItemKey } from "./utils.js";
 import { b } from "../asyncTableBem.js";
 import { type IUiAsyncTableProps } from "../types.js";
 
-function AsyncTableCore<T extends { id: string }>(props: IUiAsyncTableProps<T>) {
+function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAsyncTableProps<T>) {
     const { width, itemHeight, isLargeRow, renderHeader, renderItem, renderEmptyState, shouldLoadNextPage } =
         useAsyncTable<T>(props);
 
@@ -90,7 +91,7 @@ function AsyncTableCore<T extends { id: string }>(props: IUiAsyncTableProps<T>) 
     );
 }
 
-const useAsyncTable = <T extends { id: string }>({
+const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
     columns,
     renderItem: renderItemProp,
     renderHeader: renderHeaderProp,
@@ -118,10 +119,11 @@ const useAsyncTable = <T extends { id: string }>({
 
     const onItemSelect = useCallback(
         (item: T) => {
-            const filteredItemIds = selectedItemIds?.filter((id) => id !== item.id) ?? [];
+            const key = getItemKey(item);
+            const filteredItemIds = selectedItemIds?.filter((id) => id !== key) ?? [];
             setSelectedItemIds?.(
                 filteredItemIds.length === selectedItemIds?.length
-                    ? [...(selectedItemIds ?? []), item.id]
+                    ? [...(selectedItemIds ?? []), key]
                     : filteredItemIds,
             );
         },
@@ -130,7 +132,7 @@ const useAsyncTable = <T extends { id: string }>({
 
     const isItemSelected = useCallback(
         (item: T) => {
-            return selectedItemIds?.includes(item.id);
+            return selectedItemIds?.includes(getItemKey(item));
         },
         [selectedItemIds],
     );
@@ -244,7 +246,7 @@ const useAsyncTable = <T extends { id: string }>({
 /**
  * @internal
  */
-export function UiAsyncTable<T extends { id: string }>(props: IUiAsyncTableProps<T>) {
+export function UiAsyncTable<T extends { id: string } | { ref: ObjRef }>(props: IUiAsyncTableProps<T>) {
     const intlContext = useContext(IntlContext);
     if (!intlContext) {
         return (

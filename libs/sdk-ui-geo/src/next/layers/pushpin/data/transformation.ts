@@ -11,7 +11,6 @@ import {
     attributeLocalId,
     isAttribute,
     isIdentifierRef,
-    isResultAttributeHeader,
     measureItem,
     measureLocalId,
     resultHeaderName,
@@ -28,7 +27,7 @@ import {
 } from "../../../types/geoData/common.js";
 import { type IPushpinGeoData, type IPushpinLocationItem } from "../../../types/geoData/pushpin.js";
 import { type JsonValue } from "../../../utils/guards.js";
-import { EMPTY_SEGMENT_VALUE } from "../constants.js";
+import { getAttributeDataAndUris, getSegmentDataAndUris } from "../../common/headerItemUtils.js";
 import { getMinMax } from "../size/calculations.js";
 
 /**
@@ -41,11 +40,6 @@ interface IBucketItemInfo {
     uri?: Identifier;
     identifier?: Identifier;
     localIdentifier: Identifier;
-}
-
-interface ISegmentData {
-    uris: string[];
-    data: string[];
 }
 
 interface IPushpinGeoDataBuckets {
@@ -66,6 +60,7 @@ type BucketItemInfo = {
     [key in keyof IPushpinGeoDataBuckets]?: {
         index: number;
         name: string;
+        displayFormId?: string;
         data?: string[] | number[] | IGeoLngLat[];
         format?: string;
         uris?: string[];
@@ -97,33 +92,6 @@ function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: BucketItemInfo)
 function getFormatFromExecutionResponse(dv: DataViewFacade, indexMeasure: number): string {
     const measureDescriptors = dv.meta().measureDescriptors();
     return measureDescriptors[indexMeasure].measureHeaderItem.format;
-}
-
-/**
- * Extracts segment data and URIs from attribute header items
- */
-function getSegmentDataAndUris(
-    attributeHeaderItems: IResultHeader[][],
-    dataIndex: number,
-    emptyHeaderString: string,
-    nullHeaderString: string,
-): ISegmentData {
-    const headerItems = attributeHeaderItems[dataIndex];
-    return headerItems.reduce<ISegmentData>(
-        (result: ISegmentData, headerItem: IResultHeader): ISegmentData => {
-            if (headerItem && isResultAttributeHeader(headerItem)) {
-                const { uri, name } = headerItem.attributeHeaderItem;
-                const displayName = name ?? nullHeaderString;
-                const finalName = name === "" ? emptyHeaderString : displayName;
-                return {
-                    uris: [...result.uris, uri ?? EMPTY_SEGMENT_VALUE],
-                    data: [...result.data, finalName],
-                };
-            }
-            return result;
-        },
-        { uris: [], data: [] },
-    );
 }
 
 /**
@@ -238,7 +206,13 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): BucketItemInfo {
             const {
                 formOf: { name },
             } = attributeDescriptors[index].attributeHeader;
-            result[bucketName] = { index, name };
+            result[bucketName] = {
+                index,
+                name,
+                displayFormId:
+                    attributeDescriptors[index].attributeHeader.identifier ??
+                    attributeDescriptors[index].attributeHeader.uri,
+            };
         }
     });
 
@@ -343,6 +317,7 @@ function processSegmentBucket(ctx: IBucketProcessingContext): IGeoSegmentItem | 
     return {
         index: segmentBucket.index,
         name: segmentBucket.name,
+        displayFormId: segmentBucket.displayFormId,
         data,
         uris,
     };
@@ -360,7 +335,7 @@ function processTooltipTextBucket(ctx: IBucketProcessingContext): IGeoAttributeI
         return undefined;
     }
 
-    const { data, uris } = getSegmentDataAndUris(
+    const { data, uris } = getAttributeDataAndUris(
         attributeHeaderItems,
         tooltipTextIndex,
         emptyHeaderString,
@@ -369,6 +344,7 @@ function processTooltipTextBucket(ctx: IBucketProcessingContext): IGeoAttributeI
     return {
         index: tooltipTextBucket.index,
         name: tooltipTextBucket.name,
+        displayFormId: tooltipTextBucket.displayFormId,
         data,
         uris,
     };
@@ -390,6 +366,7 @@ function processGeoIconBucket(ctx: IBucketProcessingContext): IGeoAttributeItem 
     return {
         index: geoIconBucket.index,
         name: geoIconBucket.name,
+        displayFormId: geoIconBucket.displayFormId,
         data,
     };
 }

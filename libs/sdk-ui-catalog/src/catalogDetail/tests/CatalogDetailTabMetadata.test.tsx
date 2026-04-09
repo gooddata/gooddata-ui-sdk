@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -55,5 +55,28 @@ describe("CatalogDetailTabMetadata", () => {
 
         expect(screen.getByText("Metric type")).toBeInTheDocument();
         expect(screen.getByText("Number format")).toBeInTheDocument();
+    });
+
+    it("keeps parameters read-only and without visibility controls", () => {
+        render(
+            <TestIntlProvider>
+                <CatalogDetailTabMetadata
+                    item={{ ...baseItem, type: "parameter", isEditable: false }}
+                    canEdit={false}
+                    onTagClick={noop}
+                    onTagAdd={noop}
+                    onTagRemove={noop}
+                    onIsHiddenChange={noop}
+                    onIsHiddenFromKdaChange={noop}
+                    onMetricTypeChange={noop}
+                    onFormatChange={noop}
+                    enableMetricFormatOverrides
+                />
+            </TestIntlProvider>,
+        );
+
+        expect(screen.queryByText("Show in AI results")).not.toBeInTheDocument();
+        expect(screen.queryByText("Use for key driver analysis")).not.toBeInTheDocument();
+        expect(screen.queryByText("Metric type")).not.toBeInTheDocument();
     });
 });

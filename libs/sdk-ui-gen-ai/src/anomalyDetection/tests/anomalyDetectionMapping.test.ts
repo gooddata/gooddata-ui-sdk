@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    getNormalizedAnomalyDetectionValues,
     mapVisualizationAnomalyDetectionToBackendConfig,
     mapVisualizationAnomalyDetectionToChartConfig,
 } from "../anomalyDetectionMapping.js";
@@ -10,6 +11,66 @@ import {
 const baseVisualization = {};
 
 describe("anomalyDetectionMapping", () => {
+    describe("getNormalizedAnomalyDetectionValues", () => {
+        it("empty anomaly detection convert", () => {
+            const result = getNormalizedAnomalyDetectionValues({
+                anomalyDetection: {},
+            });
+            expect(result).toEqual({
+                color: {
+                    type: "rgb",
+                    value: {
+                        b: 0,
+                        g: 0,
+                        r: 255,
+                    },
+                },
+                sensitivity: "medium",
+                size: "small",
+            });
+        });
+
+        it("should parse hex colors correctly", () => {
+            const result = getNormalizedAnomalyDetectionValues({
+                anomalyDetection: { sensitivity: "LOW", color: "#FF0000" },
+            });
+            expect(result?.color).toEqual({
+                type: "rgb",
+                value: { r: 255, g: 0, b: 0 },
+            });
+        });
+
+        it("should parse rgb colors correctly", () => {
+            const result = getNormalizedAnomalyDetectionValues({
+                anomalyDetection: { sensitivity: "LOW", color: "rgb(0, 255, 0)" },
+            });
+            expect(result?.color).toEqual({
+                type: "rgb",
+                value: { r: 0, g: 255, b: 0 },
+            });
+        });
+
+        it("should parse rgb colors with spaces correctly", () => {
+            const result = getNormalizedAnomalyDetectionValues({
+                anomalyDetection: { sensitivity: "LOW", color: "rgb(  10 ,20,  30  )" },
+            });
+            expect(result?.color).toEqual({
+                type: "rgb",
+                value: { r: 10, g: 20, b: 30 },
+            });
+        });
+
+        it("should use default color if not provided", () => {
+            const result = getNormalizedAnomalyDetectionValues({
+                anomalyDetection: { sensitivity: "LOW" },
+            });
+            expect(result?.color).toEqual({
+                type: "rgb",
+                value: { r: 255, g: 0, b: 0 },
+            });
+        });
+    });
+
     describe("mapVisualizationAnomalyDetectionToChartConfig", () => {
         it("should return undefined if anomalyDetection is missing", () => {
             expect(mapVisualizationAnomalyDetectionToChartConfig(baseVisualization)).toBeUndefined();
