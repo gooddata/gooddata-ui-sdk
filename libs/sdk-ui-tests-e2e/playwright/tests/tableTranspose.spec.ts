@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import { expectTableCellValue, mockFeatureHub, visit, waitTableLoaded, widgetSelector } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Dashboard with Table Transpose", "tableTranspose", () => {
+test.topLevelDescribe("Dashboard with Table Transpose", "tableTranspose", () => {
     test(
         "rendering",
         {

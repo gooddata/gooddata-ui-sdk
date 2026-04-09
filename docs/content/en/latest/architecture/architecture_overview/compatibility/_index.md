@@ -14,7 +14,7 @@ We develop GoodData.UI with the following javascript libraries in mind:
 
 - React 18, 19
 - TypeScript >= 5.8.3
-- Node ^22.13.0 LTS
+- Node ^24.12.0 LTS
 
 ## Supported Versions
 

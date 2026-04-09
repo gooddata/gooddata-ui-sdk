@@ -1,10 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import { mockFeatureHub, visit } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Dashboard with charts", "dashboardTigerWithCharts", () => {
+test.topLevelDescribe("Dashboard with charts", "dashboardTigerWithCharts", () => {
     test.describe("rendering", () => {
         test("should render charts", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-charts");

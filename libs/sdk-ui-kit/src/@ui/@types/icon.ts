@@ -4,6 +4,8 @@
  * @internal
  */
 export type IconType =
+    | "aiAgent"
+    | "aiAgentDisabled"
     | "brain"
     | "brainDisabled"
     | "check"

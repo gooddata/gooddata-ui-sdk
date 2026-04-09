@@ -10,7 +10,6 @@ import {
     type ObjRef,
     dashboardAttributeFilterItemFilterElementsBy,
     dashboardAttributeFilterItemLocalIdentifier,
-    isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
 import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
@@ -76,21 +75,15 @@ export const useParentFilters = (
             return undefined;
         }
 
-        return filterElementsBy
-            .map((parent) => {
-                const matchingFilter = allAttributeFilterItems.find(
-                    (f) => dashboardAttributeFilterItemLocalIdentifier(f) === parent.filterLocalIdentifier,
-                );
+        return filterElementsBy.map((parent) => {
+            const matchingFilter = allAttributeFilterItems.find(
+                (f) => dashboardAttributeFilterItemLocalIdentifier(f) === parent.filterLocalIdentifier,
+            );
 
-                invariant(matchingFilter); // if this blows up, the state is inconsistent
+            invariant(matchingFilter); // if this blows up, the state is inconsistent
 
-                return { filter: matchingFilter, over: parent.over.attributes[0] };
-            })
-            .filter((item) => {
-                // TODO INE: CQ-2101: Text mode (arbitrary/match) filters as parent limiting filters are not supported yet.
-                // Remove this filter when that combination is supported and pass those parents through like list filters.
-                return !isDashboardTextAttributeFilter(item.filter);
-            });
+            return { filter: matchingFilter, over: parent.over.attributes[0] };
+        });
     }, [allAttributeFilterItems, filterElementsBy]);
 
     const parentFilters = useMemo(() => {

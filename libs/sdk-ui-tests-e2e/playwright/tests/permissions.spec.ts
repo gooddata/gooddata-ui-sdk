@@ -1,11 +1,11 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 import { Dashboards } from "@gooddata/sdk-ui-tests-reference-workspace/current_tiger";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import {
     assignGroupPermissionToDashboard,
     assignUserPermissionToDashboard,
@@ -27,7 +27,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Dashboard", "permissions", () => {
+test.topLevelDescribe("Dashboard", "permissions", () => {
     test.describe("Basic case", () => {
         test(
             "should render topBar with share button",

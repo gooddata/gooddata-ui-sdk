@@ -71,17 +71,20 @@ import { BucketsType, type ExportEntities } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
-import { parseDateValues } from "../utils/filterUtils.js";
+import { parseDateValues, yamlConditionToMatch } from "../utils/filterUtils.js";
 import { convertGranularity, convertGranularityToId } from "../utils/granularityUtils.js";
 import { mapLocationLabel } from "../utils/locationUtils.js";
 import { assertUnreachable, convertIdToTitle, getFullBucket, getFullField } from "../utils/sharedUtils.js";
 import {
+    type YamlTextFilter,
     isAbsoluteDateFilter,
+    isArbitraryTextFilter,
     isArithmeticMetricField,
     isAttributeField,
     isAttributeSort,
     isCalculatedMetricField,
     isInlineMetricField,
+    isMatchTextFilter,
     isMetricAllValueFilter,
     isMetricComparisonValueFilter,
     isMetricField,
@@ -915,6 +918,42 @@ function yamlNegativeAttributeFilterToDeclarative(
     };
 }
 
+function yamlTextFilterToDeclarative(key: string, filter: YamlTextFilter): YamlFilterToDeclarativeResult {
+    return {
+        filters: [
+            {
+                arbitraryAttributeFilter: {
+                    localIdentifier: key,
+                    label: createIdentifier<any>(filter["using"]),
+                    values: filter["values"] ?? [],
+                    negativeSelection: filter["condition"] === "isNot",
+                },
+            },
+        ],
+    };
+}
+
+function yamlTextMatchFilterToDeclarative(
+    key: string,
+    filter: YamlTextFilter,
+): YamlFilterToDeclarativeResult {
+    const { operator, negativeSelection } = yamlConditionToMatch(filter["condition"]);
+    return {
+        filters: [
+            {
+                matchAttributeFilter: {
+                    localIdentifier: key,
+                    label: createIdentifier<any>(filter["using"]),
+                    operator,
+                    literal: filter["value"] as string,
+                    caseSensitive: filter["case_sensitive"],
+                    negativeSelection,
+                },
+            },
+        ],
+    };
+}
+
 function yamlMetricValueFilterWithConditionsToDeclarative(
     filter: MultipleConditions,
 ): YamlFilterToDeclarativeResult {
@@ -1009,6 +1048,12 @@ function yamlFilterToDeclarative(
     }
     if (isNegativeAttributeFilter(filter)) {
         return yamlNegativeAttributeFilterToDeclarative(entities, key, filter);
+    }
+    if (isArbitraryTextFilter(filter)) {
+        return yamlTextFilterToDeclarative(key, filter);
+    }
+    if (isMatchTextFilter(filter)) {
+        return yamlTextMatchFilterToDeclarative(key, filter);
     }
     if (isMetricValueFilterWithConditions(filter)) {
         return yamlMetricValueFilterWithConditionsToDeclarative(filter);

@@ -213,6 +213,16 @@ export interface IOrganizationSettingsService {
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
 
     /**
+     * Sets enable AI on data setting for organization.
+     *
+     * @param enabled - whether to enable sending aggregated data to LLM.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableAiOnData(enabled: boolean): Promise<void>;
+
+    /**
      * Sets enable drill to URL by default configuration for organization.
      *
      * @param enabled - whether to enable drill to URL by default for dashboard widgets.

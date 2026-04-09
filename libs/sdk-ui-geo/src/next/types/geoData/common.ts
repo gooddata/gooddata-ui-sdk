@@ -23,6 +23,10 @@ export interface IGeoDataItem {
  */
 export interface IGeoAttributeItem extends IGeoDataItem {
     /**
+     * Identifier or URI of the display form used to produce this attribute data.
+     */
+    displayFormId?: string;
+    /**
      * Array of string values for the attribute
      */
     data: string[];

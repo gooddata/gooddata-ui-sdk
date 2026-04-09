@@ -20,6 +20,12 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
+export interface AiActiveObjectIdentification {
+    'id': string;
+    'type': string;
+    'workspaceId': string;
+}
+
 export interface AiAllowedRelationshipType {
     'sourceType': string;
     'targetType': string;
@@ -156,6 +162,28 @@ export interface AiDateFilterAbsolute {
 
 export type AiDateFilterAbsoluteTypeEnum = 'date_filter';
 
+
+export const AiDateFilterGranularity = {
+    MINUTE: 'MINUTE',
+    HOUR: 'HOUR',
+    DAY: 'DAY',
+    WEEK: 'WEEK',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR',
+    MINUTE_OF_HOUR: 'MINUTE_OF_HOUR',
+    HOUR_OF_DAY: 'HOUR_OF_DAY',
+    DAY_OF_WEEK: 'DAY_OF_WEEK',
+    DAY_OF_MONTH: 'DAY_OF_MONTH',
+    DAY_OF_YEAR: 'DAY_OF_YEAR',
+    WEEK_OF_YEAR: 'WEEK_OF_YEAR',
+    MONTH_OF_YEAR: 'MONTH_OF_YEAR',
+    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR'
+} as const;
+
+export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeof AiDateFilterGranularity];
+
+
 export interface AiDateFilterRelative {
     'type': AiDateFilterRelativeTypeEnum;
     'using': string;
@@ -233,7 +261,6 @@ export interface AiFilterByValue {
     'to': number;
     'granularity': AiDateGranularity;
     'attribute'?: string;
-    'attributes'?: Array<string>;
     'top'?: number;
     'bottom'?: number;
 }
@@ -241,6 +268,9 @@ export interface AiFilterByValue {
 export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter';
 
 export interface AiForecastPeriod {
+}
+
+export interface AiFrom {
 }
 
 export interface AiFunctionCallContent {
@@ -348,6 +378,28 @@ export interface AiListDocumentsResponse {
     'nextPageToken'?: string | null;
 }
 
+
+export const AiMetricValueFilterConditionComparison = {
+    GREATER_THAN: 'GREATER_THAN',
+    GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO',
+    LESS_THAN: 'LESS_THAN',
+    LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO',
+    EQUAL_TO: 'EQUAL_TO',
+    NOT_EQUAL_TO: 'NOT_EQUAL_TO'
+} as const;
+
+export type AiMetricValueFilterConditionComparison = typeof AiMetricValueFilterConditionComparison[keyof typeof AiMetricValueFilterConditionComparison];
+
+
+
+export const AiMetricValueFilterConditionRange = {
+    BETWEEN: 'BETWEEN',
+    NOT_BETWEEN: 'NOT_BETWEEN'
+} as const;
+
+export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterConditionRange[keyof typeof AiMetricValueFilterConditionRange];
+
+
 export interface AiMultipartContent {
     /**
      * Type of item content.
@@ -420,7 +472,6 @@ export interface AiRankingFilter {
     'type': AiRankingFilterTypeEnum;
     'using': string;
     'attribute'?: string;
-    'attributes'?: Array<string>;
     'top'?: number;
     'bottom'?: number;
 }
@@ -593,12 +644,24 @@ export interface AiSendMessageOptions {
 export interface AiSendMessageRequest {
     'item': AiSendMessageItem;
     'options'?: AiSendMessageOptions | null;
+    'userContext'?: AiUserContext | null;
 }
 
 export interface AiSendMessageSearchOptions {
     'objectTypes'?: Array<AiObjectType> | null;
     'searchLimit'?: number | null;
     'allowedRelationshipTypes'?: Array<AiAllowedRelationshipType> | null;
+}
+
+/**
+ * A single skill available to the organization.
+ */
+export interface AiSkillResponse {
+    'name': string;
+    'title': string;
+    'description': string;
+    'tags': Array<string>;
+    'examples': Array<string>;
 }
 
 export interface AiTextMessageContent {
@@ -627,6 +690,9 @@ export interface AiTextPart {
 
 export type AiTextPartTypeEnum = 'text';
 
+export interface AiTo {
+}
+
 /**
  * Response for POST/PUT /documents.
  */
@@ -638,6 +704,78 @@ export interface AiUploadDocumentResponse {
     'numChunks': number;
 }
 
+export interface AiUserContext {
+    'view'?: AiUserContextView | null;
+    'referencedObjects'?: Array<AiUserContextObjectReferenceGroup> | null;
+    'activeObject'?: AiActiveObjectIdentification | null;
+}
+
+export interface AiUserContextDashboard {
+    'id': string;
+    'widgets'?: Array<AiUserContextWidgetDescriptor>;
+}
+
+export interface AiUserContextInsightWidgetDescriptor {
+    'widgetId': string;
+    'title': string;
+    'filters'?: Array<AiVisualizationFilter> | null;
+    'widgetType': AiUserContextInsightWidgetDescriptorWidgetTypeEnum;
+    'resultId'?: string | null;
+    'visualizationId': string;
+}
+
+export type AiUserContextInsightWidgetDescriptorWidgetTypeEnum = 'insight';
+
+export interface AiUserContextObjectReference {
+    'type': AiUserContextObjectReferenceTypeEnum;
+    'id': string;
+}
+
+export type AiUserContextObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIBUTE' | 'DASHBOARD' | 'FACT';
+
+export interface AiUserContextObjectReferenceGroup {
+    'context'?: AiUserContextObjectReference | null;
+    'objects': Array<AiUserContextObjectReference>;
+}
+
+export interface AiUserContextRichTextWidgetDescriptor {
+    'widgetId': string;
+    'title': string;
+    'filters'?: Array<AiVisualizationFilter> | null;
+    'widgetType': AiUserContextRichTextWidgetDescriptorWidgetTypeEnum;
+}
+
+export type AiUserContextRichTextWidgetDescriptorWidgetTypeEnum = 'richText';
+
+export interface AiUserContextView {
+    'dashboard'?: AiUserContextDashboard | null;
+}
+
+export interface AiUserContextVisualizationSwitcherWidgetDescriptor {
+    'widgetId': string;
+    'title': string;
+    'filters'?: Array<AiVisualizationFilter> | null;
+    'widgetType': AiUserContextVisualizationSwitcherWidgetDescriptorWidgetTypeEnum;
+    'resultId'?: string | null;
+    'activeVisualizationId': string;
+    'visualizationIds'?: Array<string>;
+}
+
+export type AiUserContextVisualizationSwitcherWidgetDescriptorWidgetTypeEnum = 'visualizationSwitcher';
+
+export interface AiUserContextWidgetDescriptor {
+    'widgetId': string;
+    'title': string;
+    'filters'?: Array<AiVisualizationFilter>;
+    'widgetType': AiUserContextWidgetDescriptorWidgetTypeEnum;
+    'resultId'?: string;
+    'visualizationId': string;
+    'activeVisualizationId': string;
+    'visualizationIds'?: Array<string>;
+}
+
+export type AiUserContextWidgetDescriptorWidgetTypeEnum = 'visualizationSwitcher';
+
 export interface AiValidationError {
     'loc': Array<AiValidationErrorLocInner>;
     'msg': string;
@@ -647,6 +785,9 @@ export interface AiValidationError {
 }
 
 export interface AiValidationErrorLocInner {
+}
+
+export interface AiValue {
 }
 
 export interface AiVisualization {
@@ -666,6 +807,37 @@ export interface AiVisualization {
 
 export type AiVisualizationTypeEnum = 'table' | 'headline_chart' | 'bar_chart' | 'column_chart' | 'line_chart' | 'pie_chart' | 'scatter_chart';
 
+export interface AiVisualizationAbsoluteDateFilter {
+    'type': AiVisualizationAbsoluteDateFilterTypeEnum;
+    'using': string;
+    'from': string;
+    'to': string;
+}
+
+export type AiVisualizationAbsoluteDateFilterTypeEnum = 'date_filter';
+
+export interface AiVisualizationAttributeFilter {
+    'type': AiVisualizationAttributeFilterTypeEnum;
+    'using': string;
+    'state': AiVisualizationAttributeFilterState;
+}
+
+export type AiVisualizationAttributeFilterTypeEnum = 'attribute_filter';
+
+export interface AiVisualizationAttributeFilterState {
+    'include'?: Array<string> | null;
+    'exclude'?: Array<string> | null;
+}
+
+export interface AiVisualizationBottomRankingFilter {
+    'type': AiVisualizationBottomRankingFilterTypeEnum;
+    'using': string;
+    'attribute'?: string | null;
+    'bottom': number;
+}
+
+export type AiVisualizationBottomRankingFilterTypeEnum = 'ranking_filter';
+
 export interface AiVisualizationConfig {
     'forecast_enabled'?: boolean;
     'forecast_confidence'?: number;
@@ -674,7 +846,19 @@ export interface AiVisualizationConfig {
     'clustering_enabled'?: boolean;
     'clustering_amount'?: AiClusteringAmount;
     'clustering_threshold'?: number;
+    'anomaly_detection_enabled'?: boolean;
+    'anomaly_detection_sensitivity'?: AiVisualizationConfigAnomalyDetectionSensitivityEnum;
+    'anomaly_detection_size'?: AiVisualizationConfigAnomalyDetectionSizeEnum;
+    'anomaly_detection_color'?: string;
 }
+
+export type AiVisualizationConfigAnomalyDetectionSensitivityEnum = 'low' | 'medium' | 'high';
+export type AiVisualizationConfigAnomalyDetectionSizeEnum = 'small' | 'medium' | 'large';
+
+/**
+ * @type AiVisualizationFilter
+ */
+export type AiVisualizationFilter = AiVisualizationAbsoluteDateFilter | AiVisualizationAttributeFilter | AiVisualizationBottomRankingFilter | AiVisualizationMetricValueComparisonFilter | AiVisualizationMetricValueRangeFilter | AiVisualizationRelativeDateFilter | AiVisualizationTopRankingFilter;
 
 /**
  * PATCH /conversations/{conversationId}/visualizations/{visualizationId} body.
@@ -682,6 +866,27 @@ export interface AiVisualizationConfig {
 export interface AiVisualizationIdUpdateRequest {
     'id': string;
 }
+
+export interface AiVisualizationMetricValueComparisonFilter {
+    'type': AiVisualizationMetricValueComparisonFilterTypeEnum;
+    'using': string;
+    'condition': AiMetricValueFilterConditionComparison;
+    'value': AiValue;
+    'nullValuesAsZero': boolean;
+}
+
+export type AiVisualizationMetricValueComparisonFilterTypeEnum = 'metric_value_filter';
+
+export interface AiVisualizationMetricValueRangeFilter {
+    'type': AiVisualizationMetricValueRangeFilterTypeEnum;
+    'using': string;
+    'condition': AiMetricValueFilterConditionRange;
+    'from': AiFrom;
+    'to': AiTo;
+    'nullValuesAsZero': boolean;
+}
+
+export type AiVisualizationMetricValueRangeFilterTypeEnum = 'metric_value_filter';
 
 export interface AiVisualizationMetricsInner {
     'field': string;
@@ -696,6 +901,25 @@ export interface AiVisualizationPart {
 }
 
 export type AiVisualizationPartTypeEnum = 'visualization';
+
+export interface AiVisualizationRelativeDateFilter {
+    'type': AiVisualizationRelativeDateFilterTypeEnum;
+    'using': string;
+    'granularity': AiDateFilterGranularity;
+    'from': number;
+    'to': number;
+}
+
+export type AiVisualizationRelativeDateFilterTypeEnum = 'date_filter';
+
+export interface AiVisualizationTopRankingFilter {
+    'type': AiVisualizationTopRankingFilterTypeEnum;
+    'using': string;
+    'attribute'?: string | null;
+    'top': number;
+}
+
+export type AiVisualizationTopRankingFilterTypeEnum = 'ranking_filter';
 
 export interface AiWhatIfAnalysisPart {
     /**
@@ -748,6 +972,110 @@ export interface AiWhatIfScenarioVariant {
     'adjustments': Array<AiWhatIfMeasureAdjustment>;
 }
 
+
+
+// AgentAi FP - AgentAiAxiosParamCreator
+/**
+ * 
+ * @summary Get Skills
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentAiAxiosParamCreator_ListAvailableSkills(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ai/agent/skills`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AgentAi Api FP
+/**
+ * 
+ * @summary Get Skills
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentAi_ListAvailableSkills(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<AiSkillResponse>> {
+    const localVarAxiosArgs = await AgentAiAxiosParamCreator_ListAvailableSkills(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * AgentAi - interface
+ * @export
+ * @interface AgentAi
+ */
+export interface AgentAiInterface {
+    /**
+     * 
+     * @summary Get Skills
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentAiInterface
+     */
+    listAvailableSkills(options?: AxiosRequestConfig): AxiosPromise<Array<AiSkillResponse>>;
+
+}
+
+/**
+ * AgentAi - object-oriented interface
+ * @export
+ * @class AgentAi
+ * @extends {BaseAPI}
+ */
+export class AgentAi extends BaseAPI implements AgentAiInterface {
+    /**
+     * 
+     * @summary Get Skills
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentAi
+     */
+    public listAvailableSkills(options?: AxiosRequestConfig) {
+        return AgentAi_ListAvailableSkills(this.axios, this.basePath, options, this.configuration);
+    }
+}
 
 
 // ConversationsAi FP - ConversationsAiAxiosParamCreator

@@ -11,6 +11,7 @@ import {
     type IListedDashboard,
     type IMeasureMetadataObject,
     type IObjectCertification,
+    type IParameterMetadataObject,
     type IUser,
     isAttributeMetadataObject,
     isDashboard,
@@ -19,6 +20,7 @@ import {
     isInsight,
     isListedDashboard,
     isMeasureMetadataObject,
+    isParameterMetadataObject,
 } from "@gooddata/sdk-model";
 
 import type { ICatalogItem, VisualizationType } from "./types.js";
@@ -30,6 +32,7 @@ export function convertEntityToCatalogItem(
         | IInsight
         | IListedDashboard
         | IMeasureMetadataObject
+        | IParameterMetadataObject
         | IFactMetadataObject
         | IAttributeMetadataObject
         | IDataSetMetadataObject
@@ -43,6 +46,9 @@ export function convertEntityToCatalogItem(
     }
     if (isMeasureMetadataObject(entity)) {
         return convertMeasureToCatalogItem(entity);
+    }
+    if (isParameterMetadataObject(entity)) {
+        return convertParameterToCatalogItem(entity);
     }
     if (isFactMetadataObject(entity)) {
         return convertFactToCatalogItem(entity);
@@ -134,6 +140,24 @@ export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogIte
         isEditable: true,
         isHidden: fact.isHidden,
         dataSet: fact.dataSet,
+    };
+}
+
+export function convertParameterToCatalogItem(parameter: IParameterMetadataObject): ICatalogItem {
+    const updatedAt = parameter.updated || parameter.created;
+
+    return {
+        identifier: parameter.id,
+        type: "parameter",
+        title: parameter.title,
+        description: parameter.description,
+        tags: parameter.tags ?? [],
+        createdBy: getDisplayName(parameter.createdBy),
+        createdAt: parameter.created ? parseBackendDate(parameter.created) : null,
+        updatedBy: getDisplayName(parameter.updatedBy),
+        updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
+        isLocked: parameter.isLocked ?? false,
+        isEditable: false,
     };
 }
 

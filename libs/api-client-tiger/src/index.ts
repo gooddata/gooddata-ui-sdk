@@ -295,6 +295,7 @@ export type {
     AfmValidDescendantsResponse,
     DependsOn,
     DependsOnDateFilter,
+    DependsOnMatchFilter,
     ValidateByItem,
     ForecastRequest,
     ActionsApiForecastRequest,

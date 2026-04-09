@@ -23,7 +23,6 @@ import {
 import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { getAreaLayerIds } from "../../layers/area/operations.js";
 import {
-    COORDINATE_FORM_TYPES,
     GEO_LAYER_DRILL_ELEMENT,
     GEO_LAYER_DRILL_TYPE,
     TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID,
@@ -71,10 +70,6 @@ function getLocationIndexFromProperties(
 /**
  * Check if a display form type is a geo coordinate type.
  */
-function isCoordinateFormType(labelType: AttributeDisplayFormType | undefined): boolean {
-    return labelType !== undefined && COORDINATE_FORM_TYPES.includes(labelType);
-}
-
 function isGeoDisplayFormType(labelType: AttributeDisplayFormType | undefined): boolean {
     return typeof labelType === "string" && labelType.startsWith("GDC.geo.");
 }
@@ -96,8 +91,15 @@ function resolveDrillIdentityDescriptor(
         );
     };
 
+    const preferredCandidate = findDescriptorByRef(preferredDisplayFormRef);
+    // Only use the preferred display form if it belongs to the same parent attribute.
+    // Otherwise a shared tooltip ref (e.g. from Customer region) would incorrectly resolve
+    // a different attribute (e.g. Customer country) to the tooltip's parent.
+    const usePreferred =
+        preferredCandidate && preferredCandidate.attributeHeader.formOf?.identifier === formOf.identifier;
+
     const resolvedDescriptor =
-        findDescriptorByRef(preferredDisplayFormRef) ?? findDescriptorByRef(primaryLabel) ?? descriptor;
+        (usePreferred ? preferredCandidate : undefined) ?? findDescriptorByRef(primaryLabel) ?? descriptor;
 
     return {
         key: formOf.identifier,
@@ -141,9 +143,10 @@ function getDrillHeaders(
     const resolvedTooltipRowHeader =
         tooltipRowHeader && isResultAttributeHeader(tooltipRowHeader) ? tooltipRowHeader : undefined;
 
-    // Track processed coordinate attributes by their parent attribute key
-    // This ensures we only include one coordinate attribute per parent (e.g., City, not City lat + City lon)
-    const processedCoordinateParents = new Set<string>();
+    // Track processed attributes by their parent attribute key.
+    // This ensures we only include one display form per parent attribute
+    // (e.g., City, not City lat + City lon + City icon + City default label).
+    const processedParents = new Set<string>();
 
     descriptors.forEach((descriptor, attrIndex) => {
         if (isAttributeDescriptor(descriptor)) {
@@ -157,10 +160,16 @@ function getDrillHeaders(
             }
 
             const labelType = descriptor.attributeHeader.labelType;
-            const resolvedRowHeader =
-                resolvedTooltipRowHeader && isGeoDisplayFormType(labelType)
-                    ? resolvedTooltipRowHeader
-                    : rowHeader;
+            // Only substitute the tooltip row header for geo display forms that share
+            // the same parent attribute as the tooltip. Otherwise each attribute should
+            // keep its own header value (e.g. Customer country → "CA", not "Ontario").
+            const sameParentAsTooltip =
+                resolvedTooltipRowHeader &&
+                isGeoDisplayFormType(labelType) &&
+                isAttributeDescriptor(tooltipDescriptor) &&
+                descriptor.attributeHeader.formOf?.identifier ===
+                    tooltipDescriptor.attributeHeader.formOf?.identifier;
+            const resolvedRowHeader = sameParentAsTooltip ? resolvedTooltipRowHeader : rowHeader;
 
             const drillIdentity = isGeoDisplayFormType(labelType)
                 ? resolveDrillIdentityDescriptor(descriptor, preferredDrillRef, descriptors)
@@ -168,14 +177,14 @@ function getDrillHeaders(
             const descriptorForDrill = drillIdentity ? drillIdentity.descriptor : descriptor;
             const normalizedDescriptor = normalizeAttributeDescriptorLocalIdentifier(descriptorForDrill);
 
-            // Coordinate display forms (lat/lon/pin) - deduplicate by resolved drill identity.
-            if (isCoordinateFormType(labelType)) {
-                if (drillIdentity && processedCoordinateParents.has(drillIdentity.key)) {
-                    return;
-                }
-                if (drillIdentity) {
-                    processedCoordinateParents.add(drillIdentity.key);
-                }
+            // Deduplicate by parent attribute. Geo display forms use the resolved drill
+            // identity key; non-geo display forms use formOf.identifier directly.
+            const parentKey = drillIdentity?.key ?? descriptor.attributeHeader.formOf?.identifier;
+            if (parentKey && processedParents.has(parentKey)) {
+                return;
+            }
+            if (parentKey) {
+                processedParents.add(parentKey);
             }
 
             drillHeaders.push(resolvedRowHeader);

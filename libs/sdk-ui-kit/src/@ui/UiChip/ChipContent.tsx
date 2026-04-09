@@ -10,6 +10,8 @@ export function ChipContent({
     label,
     tag,
     iconBefore,
+    iconAfter,
+    iconColor = "primary",
     onClick,
     onKeyDown,
     isActive,
@@ -50,7 +52,7 @@ export function ChipContent({
         >
             {iconBefore ? (
                 <span className={e("icon-before")}>
-                    <UiIcon type={iconBefore} color="primary" size={15} />
+                    <UiIcon type={iconBefore} color={iconColor} size={15} />
                 </span>
             ) : null}
             <span className={e("label")}>{label}</span>
@@ -68,6 +70,10 @@ export function ChipContent({
                                 color="complementary-7"
                                 size={8}
                             />
+                        </span>
+                    ) : iconAfter ? (
+                        <span className={e("icon-after")}>
+                            <UiIcon type={iconAfter} color={iconColor} size={15} />
                         </span>
                     ) : null}
                 </>

@@ -1,10 +1,8 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { test } from "@playwright/test";
-
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import {
     addInteraction,
     assertCustomUrlDialogHasItem,
@@ -35,7 +33,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Interaction", "drilling", () => {
+test.topLevelDescribe("Interaction", "drilling", () => {
     //Cover ticket: RAIL-4559
     test(
         "Should able to remove existing interactions",

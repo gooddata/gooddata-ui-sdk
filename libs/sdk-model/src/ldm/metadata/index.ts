@@ -8,6 +8,7 @@ import { type IDataSetMetadataObject } from "./dataSet/index.js";
 import { type IFactMetadataObject } from "./fact/index.js";
 import { type IMeasureMetadataObject } from "./measure/index.js";
 import { type IMemoryItemMetadataObject } from "./memoryItem/index.js";
+import { type IParameterMetadataObject } from "./parameter/index.js";
 import { type IVariableMetadataObject } from "./variable/index.js";
 
 /**
@@ -20,6 +21,7 @@ export type MetadataObject =
     | IAttributeDisplayFormMetadataObject
     | IFactMetadataObject
     | IMeasureMetadataObject
+    | IParameterMetadataObject
     | IDataSetMetadataObject
     | IVariableMetadataObject
     | IDashboardMetadataObject

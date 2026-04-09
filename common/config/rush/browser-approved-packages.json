@@ -1425,6 +1425,10 @@
     {
       "name": "yaml",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "zod",
+      "allowedCategories": [ "production" ]
     }
   ]
 }

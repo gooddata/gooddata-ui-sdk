@@ -128,6 +128,10 @@ export class OrganizationSettingsService
         return this.setSetting("DASHBOARD_FILTERS_APPLY_MODE", dashboardFiltersApplyMode);
     }
 
+    public async setEnableAiOnData(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_AI_ON_DATA", { value: enabled });
+    }
+
     public async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
         return this.setSetting("ENABLE_DRILL_TO_URL_BY_DEFAULT", { value: enabled });
     }

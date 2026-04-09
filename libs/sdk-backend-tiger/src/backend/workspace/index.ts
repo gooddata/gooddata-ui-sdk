@@ -27,6 +27,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -53,6 +54,7 @@ import { TigerWorkspaceInsights } from "./insights/index.js";
 import { TigerWorkspaceKeyDriverAnalysis } from "./keyDriverAnalysis/index.js";
 import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
 import { TigerWorkspaceMeasures } from "./measures/index.js";
+import { TigerWorkspaceParameters } from "./parameters/index.js";
 import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
 import { TigerReferencesService } from "./references/index.js";
 import { TigerWorkspaceSettings } from "./settings/index.js";
@@ -155,6 +157,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public measures(): IWorkspaceMeasuresService {
         return new TigerWorkspaceMeasures(this.authCall, this.workspace);
+    }
+
+    public parameters(): IWorkspaceParametersService {
+        return new TigerWorkspaceParameters(this.authCall, this.workspace);
     }
 
     public facts(): IWorkspaceFactsService {

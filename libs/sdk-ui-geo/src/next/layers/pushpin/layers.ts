@@ -18,12 +18,24 @@ import { createSegmentFilter } from "../../map/style/sharedLayers.js";
 import { type GeoChartPushpinSizeOption, type IGeoChartPointsConfig } from "../../types/config/points.js";
 import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
 import { type IPushpinGeoData } from "../../types/geoData/pushpin.js";
+import { CROSS_FILTER_UNSELECTED_OPACITY, SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
 import type {
     CircleLayerSpecification,
     ExpressionSpecification,
     FilterSpecification,
     SymbolLayerSpecification,
 } from "../common/mapFacade.js";
+
+/**
+ * MapLibre expression that returns full opacity for selected features
+ * and reduced opacity for unselected ones.
+ */
+const SELECTION_OPACITY_EXPRESSION: ExpressionSpecification = [
+    "case",
+    ["boolean", ["get", SELECTED_FEATURE_PROPERTY], false],
+    1,
+    CROSS_FILTER_UNSELECTED_OPACITY,
+];
 
 const CLUSTER_STROKE_COLOR: ExpressionSpecification = [
     "step",
@@ -169,26 +181,33 @@ export function createPushpinDataLayer(
     config: IGeoPushpinChartConfig,
     layerId: string = DEFAULT_LAYER_NAME,
 ): CircleLayerSpecification {
-    const { selectedSegmentItems = [], points: geoPointsConfig = {} } = config || {};
+    const { selectedSegmentItems = [], selectedPoints, points: geoPointsConfig = {} } = config || {};
+    const paint: CircleLayerSpecification["paint"] = {
+        ...DEFAULT_PUSHPIN_OPTIONS,
+        // Use data-driven styling from flattened feature properties
+        [PUSHPIN_STYLE_CIRCLE_COLOR]: [
+            "coalesce",
+            ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBackground],
+            "rgba(20,178,226,0.7)",
+        ],
+        [PUSHPIN_STYLE_CIRCLE_STROKE_COLOR]: [
+            "coalesce",
+            ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBorder],
+            "rgb(233,237,241)",
+        ],
+        [PUSHPIN_STYLE_CIRCLE_SIZE]: createPushpinSizeOptions(geoData, geoPointsConfig),
+    };
+
+    if (selectedPoints?.length) {
+        paint["circle-opacity"] = SELECTION_OPACITY_EXPRESSION;
+        paint["circle-stroke-opacity"] = SELECTION_OPACITY_EXPRESSION;
+    }
+
     const layer: CircleLayerSpecification = {
         id: layerId,
         type: PUSHPIN_STYLE_CIRCLE,
         source: dataSourceName,
-        paint: {
-            ...DEFAULT_PUSHPIN_OPTIONS,
-            // Use data-driven styling from flattened feature properties
-            [PUSHPIN_STYLE_CIRCLE_COLOR]: [
-                "coalesce",
-                ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBackground],
-                "rgba(20,178,226,0.7)",
-            ],
-            [PUSHPIN_STYLE_CIRCLE_STROKE_COLOR]: [
-                "coalesce",
-                ["get", PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBorder],
-                "rgb(233,237,241)",
-            ],
-            [PUSHPIN_STYLE_CIRCLE_SIZE]: createPushpinSizeOptions(geoData, geoPointsConfig),
-        },
+        paint,
     };
     if (selectedSegmentItems.length > 0) {
         layer.filter = createPushpinFilter(selectedSegmentItems);
@@ -257,7 +276,7 @@ export function createPushpinIconLayer(
     _geoData: IPushpinGeoData,
     layerId: string = DEFAULT_LAYER_NAME,
 ): SymbolLayerSpecification {
-    const { selectedSegmentItems = [], points: geoPointsConfig = {} } = config || {};
+    const { selectedSegmentItems = [], selectedPoints, points: geoPointsConfig = {} } = config || {};
     const shapeType = geoPointsConfig.shapeType ?? "circle";
     const staticIcon = geoPointsConfig.icon ?? "";
 
@@ -274,6 +293,12 @@ export function createPushpinIconLayer(
             "icon-size": 1,
         },
     };
+
+    if (selectedPoints?.length) {
+        layer.paint = {
+            "icon-opacity": SELECTION_OPACITY_EXPRESSION,
+        };
+    }
 
     if (selectedSegmentItems.length > 0) {
         layer.filter = createPushpinFilter(selectedSegmentItems);

@@ -813,6 +813,15 @@ export {
     isMeasureMetadataObjectDefinition,
 } from "./ldm/metadata/measure/index.js";
 export {
+    type INumberParameterConstraints,
+    type INumberParameterDefinition,
+    type IParameterDefinition,
+    type IParameterMetadataObject,
+    type IParameterMetadataObjectDefinition,
+    isParameterMetadataObject,
+    isParameterMetadataObjectDefinition,
+} from "./ldm/metadata/parameter/index.js";
+export {
     type IMemoryItemDefinition,
     type IMemoryItemMetadataObject,
     type MemoryItemStrategy,
@@ -1297,6 +1306,14 @@ export type {
     LlmProviderListModelsResults,
 } from "./llmProviders/index.js";
 
+export type {
+    IAgent,
+    IAgentPatch,
+    IAgentSkill,
+    AgentCustomSkill,
+    AgentSkillsMode,
+} from "./agentSkill/index.js";
+
 export {
     type ISemanticQualityReport,
     type ISemanticQualityIssue,
@@ -1337,6 +1354,11 @@ export {
     type RequiredSettings,
     type LocalizedTitle,
     type ApplicationScope,
+    type PluggableApplicationWorkspacePermission,
+    type IPluggableApplicationWorkspacePermissions,
+    toPluggableApplicationWorkspacePermissions,
+    type PluggableApplicationOrganizationPermission,
+    type IPluggableApplicationOrganizationPermissions,
     isExternalPluggableApplicationRegistryItem,
     isLocalPluggableApplicationRegistryItem,
     isRemotePluggableApplicationRegistryItem,

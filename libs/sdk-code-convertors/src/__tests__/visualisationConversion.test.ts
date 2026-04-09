@@ -54,6 +54,62 @@ describe("visualisation conversion", () => {
             });
         });
 
+        it("should convert arbitrary text filter", () => {
+            const filters_by = {
+                f1: {
+                    type: "text_filter",
+                    using: "label/region",
+                    condition: "isNot",
+                    values: ["East", null, "West"],
+                },
+            };
+            const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by as any);
+            expect(filters).toHaveLength(1);
+            expect(filters[0]).toEqual({
+                arbitraryAttributeFilter: {
+                    localIdentifier: "f1",
+                    label: { identifier: { id: "region", type: "label" } },
+                    values: ["East", null, "West"],
+                    negativeSelection: true,
+                },
+            });
+        });
+
+        it("should convert match text filter for all conditions", () => {
+            const conditions = [
+                ["contains", "contains", false],
+                ["doesNotContain", "contains", true],
+                ["startsWith", "startsWith", false],
+                ["doesNotStartWith", "startsWith", true],
+                ["endsWith", "endsWith", false],
+                ["doesNotEndWith", "endsWith", true],
+            ] as const;
+
+            conditions.forEach(([condition, expectedOperator, expectedNegative]) => {
+                const filters_by = {
+                    f1: {
+                        type: "text_filter",
+                        using: "label/region",
+                        condition,
+                        value: "North",
+                        case_sensitive: true,
+                    },
+                };
+                const { filters } = yamlFiltersToDeclarative(emptyEntities, filters_by as any);
+                expect(filters).toHaveLength(1);
+                expect(filters[0]).toEqual({
+                    matchAttributeFilter: {
+                        localIdentifier: "f1",
+                        label: { identifier: { id: "region", type: "label" } },
+                        operator: expectedOperator,
+                        literal: "North",
+                        caseSensitive: true,
+                        negativeSelection: expectedNegative,
+                    },
+                });
+            });
+        });
+
         it("should convert absolute date filter", () => {
             const filters_by = {
                 f1: {
@@ -679,6 +735,52 @@ describe("visualisation conversion", () => {
             expect(roundTripped.id).toBe("trend_line");
             expect(roundTripped.title).toBe("Trend Line");
             expect((roundTripped.content as any).visualizationUrl).toBe("local:line");
+        });
+
+        it("should round-trip text filters", () => {
+            const input: Visualisation = {
+                type: "bar_chart",
+                id: "text_filters_chart",
+                query: {
+                    fields: {
+                        m1: { using: "metric/revenue" },
+                    },
+                    filter_by: {
+                        t1: {
+                            type: "text_filter",
+                            using: "label/region",
+                            condition: "is",
+                            values: ["US", null],
+                        },
+                        t2: {
+                            type: "text_filter",
+                            using: "label/region",
+                            condition: "doesNotContain",
+                            value: "North",
+                            case_sensitive: true,
+                        },
+                    } as any,
+                },
+                metrics: [{ field: "m1" }],
+            } as any;
+
+            const declarative = yamlVisualisationToDeclarative(emptyEntities, input);
+            const { json } = declarativeVisualisationToYaml(emptyFromEntities, declarative);
+            const filterValues = Object.values((json?.query.filter_by ?? {}) as Record<string, unknown>);
+
+            expect(filterValues).toContainEqual({
+                type: "text_filter",
+                using: "label/region",
+                condition: "is",
+                values: ["US", null],
+            });
+            expect(filterValues).toContainEqual({
+                type: "text_filter",
+                using: "label/region",
+                condition: "doesNotContain",
+                value: "North",
+                case_sensitive: true,
+            });
         });
     });
 });

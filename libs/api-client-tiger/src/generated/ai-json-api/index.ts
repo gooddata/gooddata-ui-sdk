@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-/* eslint-disable */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 /**
  * Gen-AI HTTP API
  * HTTP API for chat sessions, items, and SSE messages.

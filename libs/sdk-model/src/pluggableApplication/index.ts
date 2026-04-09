@@ -4,9 +4,127 @@ import { isEmpty } from "lodash-es";
 
 import { type ILocale } from "../base/localization.js";
 import { type IEntitlementsName } from "../entitlements/index.js";
-import { type OrganizationPermissionAssignment } from "../organization/index.js";
 import { type IWorkspacePermissions } from "../permissions/index.js";
 import { type IFeatureFlags, type IPermanentSettings } from "../settings/settings.js";
+
+/**
+ * Workspace permission keys supported by the pluggable application manifest.
+ *
+ * These map directly to the Tiger backend workspace permission levels, replacing the legacy
+ * fine-grained Bear-era permissions with their real Tiger equivalents.
+ *
+ * @alpha
+ */
+export type PluggableApplicationWorkspacePermission =
+    /**
+     * Whether the user can view the workspace and its contents.
+     * Maps to Tiger `VIEW` permission.
+     */
+    | "canViewWorkspace"
+    /**
+     * Whether the user can create and edit analytical objects (visualizations, dashboards, metrics).
+     * Maps to Tiger `ANALYZE` permission.
+     */
+    | "canAnalyze"
+    /**
+     * Whether the user can manage workspace-level settings and metadata objects.
+     * Maps to Tiger `MANAGE` permission.
+     */
+    | "canManageWorkspace"
+    /**
+     * Whether the user can export reports.
+     * Maps to Tiger `EXPORT` permission.
+     */
+    | "canExport"
+    /**
+     * Whether the user can export tabular reports.
+     * Maps to Tiger `EXPORT_TABULAR` permission.
+     */
+    | "canExportTabular"
+    /**
+     * Whether the user can export PDF documents.
+     * Maps to Tiger `EXPORT_PDF` permission.
+     */
+    | "canExportPdf"
+    /**
+     * Whether the user can create dashboard filter views.
+     * Maps to Tiger `CREATE_FILTER_VIEW` permission.
+     */
+    | "canCreateFilterView"
+    /**
+     * Whether the user can create automations.
+     * Maps to Tiger `CREATE_AUTOMATION` permission.
+     */
+    | "canCreateAutomation"
+    /**
+     * Whether the user can use AI Assistant.
+     * Maps to Tiger `USE_AI_ASSISTANT` permission.
+     */
+    | "canUseAiAssistant";
+
+/**
+ * Dictionary of workspace permissions supported by the pluggable application manifest.
+ *
+ * @alpha
+ */
+export type IPluggableApplicationWorkspacePermissions = {
+    [permission in PluggableApplicationWorkspacePermission]: boolean;
+};
+
+/**
+ * Converts the full workspace permissions (as returned by the backend SPI) to the
+ * reduced set used by the pluggable application manifest.
+ *
+ * @alpha
+ */
+export function toPluggableApplicationWorkspacePermissions(
+    permissions: IWorkspacePermissions,
+): IPluggableApplicationWorkspacePermissions {
+    return {
+        canViewWorkspace: permissions.canAccessWorkbench,
+        canAnalyze: permissions.canCreateVisualization,
+        canManageWorkspace: permissions.canManageProject,
+        canExport: permissions.canExportReport,
+        canExportTabular: permissions.canExportTabular,
+        canExportPdf: permissions.canExportPdf,
+        canCreateFilterView: permissions.canCreateFilterView,
+        canCreateAutomation: permissions.canCreateAutomation,
+        canUseAiAssistant: permissions.canUseAiAssistant,
+    };
+}
+
+/**
+ * Organization permission keys supported by the pluggable application manifest.
+ *
+ * These map directly to the Tiger backend organization permission levels.
+ *
+ * @alpha
+ */
+export type PluggableApplicationOrganizationPermission =
+    /**
+     * Whether the user can manage the organization (settings, users, etc.).
+     * Maps to Tiger `MANAGE` permission.
+     */
+    | "canManageOrganization"
+    /**
+     * Whether the user can create API tokens.
+     * Maps to Tiger `SELF_CREATE_TOKEN` permission.
+     */
+    | "canCreateDevToken"
+    /**
+     * Whether the user has access to the base UI.
+     * Maps to Tiger `BASE_UI_ACCESS` permission.
+     */
+    | "hasBaseUiAccess";
+
+/**
+ * Dictionary of organization permissions supported by the pluggable application manifest.
+ *
+ * @alpha
+ */
+export type IPluggableApplicationOrganizationPermissions = {
+    [permission in PluggableApplicationOrganizationPermission]: boolean;
+};
 
 /**
  * Defines in which scope the application should be registered.
@@ -102,7 +220,7 @@ export type RequiredEntitlements = Condition<
  *
  * @alpha
  */
-export type RequiredWorkspacePermissions = Condition<Partial<IWorkspacePermissions>>;
+export type RequiredWorkspacePermissions = Condition<Partial<IPluggableApplicationWorkspacePermissions>>;
 
 /**
  * Organization permissions that must be set for the pluggable application to be accessible for
@@ -111,9 +229,7 @@ export type RequiredWorkspacePermissions = Condition<Partial<IWorkspacePermissio
  * @alpha
  */
 export type RequiredOrganizationPermissions = Condition<
-    Partial<{
-        [permission in OrganizationPermissionAssignment]: boolean;
-    }>
+    Partial<IPluggableApplicationOrganizationPermissions>
 >;
 
 /**
@@ -177,6 +293,12 @@ export interface IPluggableApplicationMetaV1 {
      * to the highest.
      */
     menuOrder: number;
+
+    /**
+     * Maintainer of the application.
+     * The name of the team, person, email, or other information about the maintainer.
+     */
+    maintainer?: string;
 
     /**
      * Settings (and feature flags) and their values that must be set for the pluggable application to be

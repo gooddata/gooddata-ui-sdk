@@ -1,10 +1,10 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import { enterEditMode, mockFeatureHub, visit } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 const STAGE_NAME_FILTER_SELECTOR = ".s-attribute-filter.s-stage_name";
 const ORDER_DISPLAY_FORM_VALUE = ".gd-list-item.s-attribute-display-form-name-order";
 
-describe("Attribute filter", "attributeFilterConfig", () => {
+test.topLevelDescribe("Attribute filter", "attributeFilterConfig", () => {
     //Cover ticket: RAIL-4671
     test.describe("Config attribute filter", () => {
         test(

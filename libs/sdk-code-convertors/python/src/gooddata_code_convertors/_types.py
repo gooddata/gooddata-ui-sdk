@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 54e9928af2e890dc3a3fa20d4a6effc052467dc6847081285ad12633083cdf6a
+# schema-hash: 6072e12e9d7fbe4039c6accb9ceff45ee94596f58c0587316a133e5c7e064832
 
 from __future__ import annotations
 
@@ -37,6 +37,7 @@ __all__ = [
     "DashboardFiltersNoGroups",
     "DashboardFiltersNoGroups1",
     "DashboardRelativeDateFilter",
+    "DashboardTextFilter",
     "DataType",
     "Dataset",
     "Dataset1",
@@ -103,6 +104,7 @@ __all__ = [
     "QueryRankingFilter2",
     "QuerySort",
     "QuerySorts",
+    "QueryTextFilter",
     "Reference",
     "Section",
     "SimpleColorItem",
@@ -190,7 +192,7 @@ class Permission(TypedDict):
 
 
 class DashboardFilters(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'filter_group']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
 
 
 DashboardFilters1: TypeAlias = dict[str, DashboardFilters]
@@ -215,8 +217,30 @@ class DashboardAttributeFilter1(TypedDict):
 DashboardAttributeFilter: TypeAlias = DashboardAttributeFilter1
 
 
+class DashboardTextFilter(TypedDict):
+    title: NotRequired[str]
+    type: Literal['text_filter']
+    using: AttributeIdentifier | LabelIdentifier
+    condition: Literal[
+        'is',
+        'isNot',
+        'contains',
+        'doesNotContain',
+        'startsWith',
+        'doesNotStartWith',
+        'endsWith',
+        'doesNotEndWith',
+    ]
+    values: NotRequired[list[str | None]]
+    value: NotRequired[str]
+    case_sensitive: NotRequired[bool]
+    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+
+
 class DashboardFiltersNoGroups1(TypedDict):
-    type: Literal['date_filter', 'attribute_filter']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter']
 
 
 DashboardFiltersNoGroups: TypeAlias = dict[str, DashboardFiltersNoGroups1]
@@ -239,7 +263,11 @@ DateFilterGranularity: TypeAlias = Literal[
 
 class QueryFilter(TypedDict):
     type: Literal[
-        'date_filter', 'attribute_filter', 'metric_value_filter', 'ranking_filter'
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'metric_value_filter',
+        'ranking_filter',
     ]
 
 
@@ -253,6 +281,24 @@ class QueryAttributeFilter(TypedDict):
     using: AttributeIdentifier | LabelIdentifier
     display_as: NotRequired[str]
     state: NotRequired[State]
+
+
+class QueryTextFilter(TypedDict):
+    type: Literal['text_filter']
+    using: AttributeIdentifier | LabelIdentifier
+    condition: Literal[
+        'is',
+        'isNot',
+        'contains',
+        'doesNotContain',
+        'startsWith',
+        'doesNotStartWith',
+        'endsWith',
+        'doesNotEndWith',
+    ]
+    values: NotRequired[list[str | None]]
+    value: NotRequired[str]
+    case_sensitive: NotRequired[bool]
 
 
 class QueryRankingFilter1(TypedDict):
@@ -487,7 +533,7 @@ class TextWrapping(TypedDict):
 
 
 class DashboardFilters2(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'filter_group']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
 
 
 DashboardFiltersModel: TypeAlias = dict[str, DashboardFilters2]

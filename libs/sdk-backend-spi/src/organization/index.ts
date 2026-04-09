@@ -2,6 +2,7 @@
 
 import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
+import { type IOrganizationAgentsService } from "./agents/index.js";
 import { type IOrganizationAutomationService } from "./automations/index.js";
 import { type IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
 import { type IOrganizationLlmProvidersService } from "./llmProviders/index.js";
@@ -90,6 +91,13 @@ export interface IOrganization {
      * @alpha
      */
     automations(): IOrganizationAutomationService;
+
+    /**
+     * Returns service that can be used to query AI agent skills available in the organization.
+     *
+     * @alpha
+     */
+    agents(): IOrganizationAgentsService;
 }
 
 /**

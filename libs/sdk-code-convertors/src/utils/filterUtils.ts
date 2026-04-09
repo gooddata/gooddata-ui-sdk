@@ -1,8 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
 import type { DateDataset } from "@gooddata/sdk-code-schemas/v1";
+import type { MatchFilterOperator } from "@gooddata/sdk-model";
 
 import { convertGranularityToId, parseGranularityValue } from "./granularityUtils.js";
+import type { YamlTextFilterCondition } from "./typeGuards.js";
 import { type ExportEntities, type FromEntities } from "../types.js";
 
 export function parseDateValues(
@@ -26,6 +28,43 @@ export function parseDateValues(
         }
     }
     return values;
+}
+
+export function matchConditionToYaml(operator: MatchFilterOperator, negativeSelection?: boolean): string {
+    if (!negativeSelection) {
+        return operator;
+    }
+
+    const negativeOperatorMap: Record<MatchFilterOperator, string> = {
+        contains: "doesNotContain",
+        startsWith: "doesNotStartWith",
+        endsWith: "doesNotEndWith",
+    };
+
+    return negativeOperatorMap[operator];
+}
+
+export function yamlConditionToMatch(condition: YamlTextFilterCondition): {
+    operator: MatchFilterOperator;
+    negativeSelection: boolean;
+} {
+    const conditionMap: Partial<
+        Record<YamlTextFilterCondition, { operator: MatchFilterOperator; negativeSelection: boolean }>
+    > = {
+        contains: { operator: "contains", negativeSelection: false },
+        doesNotContain: { operator: "contains", negativeSelection: true },
+        startsWith: { operator: "startsWith", negativeSelection: false },
+        doesNotStartWith: { operator: "startsWith", negativeSelection: true },
+        endsWith: { operator: "endsWith", negativeSelection: false },
+        doesNotEndWith: { operator: "endsWith", negativeSelection: true },
+    };
+
+    const mappedCondition = conditionMap[condition];
+    if (!mappedCondition) {
+        throw new Error(`Unsupported match filter condition: ${condition}`);
+    }
+
+    return mappedCondition;
 }
 
 function convertDateValues(gran: string, values: (string | number | boolean)[]) {

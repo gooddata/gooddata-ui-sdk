@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { type APIRequestContext, expect, test } from "@playwright/test";
+import { type APIRequestContext, expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import {
     assignRulePermissionToDashboard,
     assignUserPermissionToWorkspace,
@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Share Dashboard To Everyone", "shareDashboardToEveryone", () => {
+test.topLevelDescribe("Share Dashboard To Everyone", "shareDashboardToEveryone", () => {
     test.describe("Basic cases", () => {
         test(
             "should not display All users when opening the share dialog",

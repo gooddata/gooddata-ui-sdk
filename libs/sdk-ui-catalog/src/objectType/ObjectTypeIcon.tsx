@@ -45,6 +45,9 @@ export function ObjectTypeIcon({
             {type === "measure" ? (
                 <UiIcon type="metric" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
             ) : null}
+            {type === "parameter" ? (
+                <UiIcon type="parameter" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
+            ) : null}
             {type === "analyticalDashboard" ? (
                 <UiIcon type="dashboard" accessibilityConfig={{ ariaLabel: label }} {...sizes} />
             ) : null}

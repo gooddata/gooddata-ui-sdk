@@ -157,6 +157,7 @@ export function getTooltipHtml(
     separators?: ISeparators,
     drillableItems?: IHeaderPredicate[],
     intl?: IntlShape,
+    showStroke: boolean = true,
 ): string {
     const interactionMessage = getInteractionMessage(drillableItems, intl);
     const properties = getTooltipProperties(geoProperties);
@@ -184,8 +185,12 @@ export function getTooltipHtml(
         .filter((item): item is string => item !== null)
         .join("");
 
+    const strokeHtml = showStroke
+        ? `<span class="gd-viz-tooltip-stroke" style="border-top-color: ${tooltipStroke}"></span>`
+        : "";
+
     return `<div class="gd-viz-tooltip" style="max-width:${maxWidth}px">
-                <span class="gd-viz-tooltip-stroke" style="border-top-color: ${tooltipStroke}"></span>
+                ${strokeHtml}
                 <div class="gd-viz-tooltip-content">${tooltipItems}${interactionMessage}</div>
             </div>`;
 }
@@ -257,6 +262,8 @@ export function createPushpinTooltipConfig(
                 chartWidth,
                 TOOLTIP_MAX_WIDTH,
             );
+            const shapeType = config.points?.shapeType ?? "circle";
+            const isIconShape = shapeType === "iconByValue" || shapeType === "oneIcon";
             const tooltipHtml = getTooltipHtml(
                 parsedProps,
                 tooltipStroke,
@@ -264,6 +271,7 @@ export function createPushpinTooltipConfig(
                 separators,
                 drillableItems,
                 intl,
+                !isIconShape,
             );
 
             tooltip

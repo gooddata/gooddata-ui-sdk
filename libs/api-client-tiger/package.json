@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.29.0-alpha.5",
+    "version": "11.29.0-alpha.6",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -81,7 +81,7 @@
         "@typescript-eslint/parser": "8.58.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "commander": "^8.1.0",
-        "dependency-cruiser": "^14.1.2",
+        "dependency-cruiser": "17.3.10",
         "dotenv": "16.4.5",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",

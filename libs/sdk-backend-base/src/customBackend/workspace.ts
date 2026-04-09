@@ -21,6 +21,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -94,6 +95,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public measures(): IWorkspaceMeasuresService {
         throw new NotSupported("measures service is not supported");
+    }
+
+    public parameters(): IWorkspaceParametersService {
+        throw new NotSupported("parameters service is not supported");
     }
 
     public facts(): IWorkspaceFactsService {

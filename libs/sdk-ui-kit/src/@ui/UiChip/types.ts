@@ -11,6 +11,7 @@ import {
 import { type IDropdownButtonAccessibilityConfig } from "../../Button/typings.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { type IconType } from "../@types/icon.js";
+import { type ThemeColor } from "../@types/themeColors.js";
 
 /**
  * @internal
@@ -34,6 +35,8 @@ export interface IUiChipProps {
     isDisabled?: boolean;
     maxWidth?: number;
     iconBefore?: IconType;
+    iconAfter?: IconType;
+    iconColor?: ThemeColor | "currentColor";
     onClick?: () => void;
     onDelete?: () => void;
     onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
@@ -49,6 +52,8 @@ export interface IChipContentProps {
     label: string;
     tag?: string;
     iconBefore?: IconType;
+    iconAfter?: IconType;
+    iconColor?: ThemeColor | "currentColor";
     onClick?: () => void;
     onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
     isActive: boolean;

@@ -10,6 +10,7 @@ import {
     convertFactToCatalogItem,
     convertInsightToCatalogItem,
     convertMeasureToCatalogItem,
+    convertParameterToCatalogItem,
 } from "../../catalogItem/converter.js";
 import { type ICatalogItem } from "../../catalogItem/types.js";
 import { type ObjectType } from "../../objectType/types.js";
@@ -154,6 +155,14 @@ async function loadObjectDefinition(
                     },
                 )
                 .then(convertMeasureToCatalogItem);
+        case "parameter":
+            return workspace
+                .parameters()
+                .getParameter({
+                    type: "parameter",
+                    identifier: id,
+                })
+                .then(convertParameterToCatalogItem);
         case "fact":
             return workspace
                 .facts()

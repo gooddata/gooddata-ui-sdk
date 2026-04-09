@@ -153,7 +153,8 @@
             }
         }
 
-        &-tertiary {
+        &-tertiary,
+        &-dropdownInline {
             --gd-icon-fill-color: var(--gd-palette-complementary-5);
             color: var(--gd-palette-complementary-7);
             padding: 0;
@@ -183,6 +184,15 @@
             }
             &#{$root}--hasIconBefore {
                 padding-left: 0;
+            }
+        }
+
+        &-dropdownInline {
+            text-decoration: none;
+            max-width: 100%;
+
+            svg {
+                flex-shrink: 0;
             }
         }
 

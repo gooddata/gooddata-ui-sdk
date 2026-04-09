@@ -2,7 +2,7 @@
 
 import { type ReactNode, type Ref } from "react";
 
-import { type SortDirection } from "@gooddata/sdk-model";
+import { type ObjRef, type SortDirection } from "@gooddata/sdk-model";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { type IconType } from "../@types/icon.js";
@@ -36,7 +36,7 @@ export interface IUiAsyncTableColumnAccessibilityConfig {
 /**
  * @internal
  */
-export interface IUiAsyncTableProps<T extends { id: string }> {
+export interface IUiAsyncTableProps<T extends { id: string } | { ref: ObjRef }> {
     items: T[];
     totalItemsCount?: number;
     columns: Array<IUiAsyncTableColumn<T>>;
@@ -194,7 +194,7 @@ export interface IUiAsyncTableFilterProps extends IUiAsyncTableFilter {
     width?: number;
 }
 
-export interface IUiAsyncTableRowProps<T extends { id: string }> {
+export interface IUiAsyncTableRowProps<T extends { id: string } | { ref: ObjRef }> {
     item?: T;
     itemIndex: number;
     columns: Array<IUiAsyncTableColumn<T>>;
@@ -221,7 +221,7 @@ export type UiAsyncTableCheckboxProps = {
     cellId?: string;
 };
 
-export interface IUiAsyncTableToolbarProps<T extends { id: string }> {
+export interface IUiAsyncTableToolbarProps<T extends { id: string } | { ref: ObjRef }> {
     filters?: Array<IUiAsyncTableFilter>;
     isFiltersTooLarge?: boolean;
     bulkActions?: Array<IUiAsyncTableBulkAction>;
@@ -257,7 +257,7 @@ export interface IUiAsyncTableIconRendererProps<T> {
     item: T;
 }
 
-export interface IUiAsyncTableBodyProps<T extends { id: string }> {
+export interface IUiAsyncTableBodyProps<T extends { id: string } | { ref: ObjRef }> {
     items: T[];
     maxHeight: number;
     itemHeight: number;

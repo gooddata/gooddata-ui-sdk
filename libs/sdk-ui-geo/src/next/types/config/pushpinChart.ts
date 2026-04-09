@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IAttribute, type IColorPalette } from "@gooddata/sdk-model";
-import { type ISeparators } from "@gooddata/sdk-ui";
+import { type IDrillEventIntersectionElement, type ISeparators } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoChartLegendConfig } from "./legend.js";
@@ -30,6 +30,11 @@ export interface IGeoPushpinChartConfig {
     legend?: IGeoChartLegendConfig;
     limit?: number;
     selectedSegmentItems?: string[];
+    /**
+     * {@inheritDoc IGeoChartConfig.selectedPoints}
+     * @internal
+     */
+    selectedPoints?: IDrillEventIntersectionElement[][];
     /**
      * Location tooltip label attribute.
      *

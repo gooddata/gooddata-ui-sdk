@@ -1190,7 +1190,7 @@ export function yamlWidgetToDeclarative(entities: ExportEntities, input: Visuali
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "load_15" needs to be exported by the entry point index.d.ts
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "save_15" needs to be exported by the entry point index.d.ts
 // src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "DefaultProperties_15" needs to be exported by the entry point index.d.ts
-// src/to/yamlVisualisationToDeclarative.ts:1089:5 - (ae-forgotten-export) The symbol "VisualisationDefinition" needs to be exported by the entry point index.d.ts
+// src/to/yamlVisualisationToDeclarative.ts:1134:5 - (ae-forgotten-export) The symbol "VisualisationDefinition" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

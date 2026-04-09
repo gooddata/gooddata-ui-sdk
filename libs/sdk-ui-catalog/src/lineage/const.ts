@@ -18,6 +18,7 @@ export const HIDDEN_ITEMS: ObjectType[] = [
     "exportDefinition",
     "memoryItem",
     "notificationChannel",
+    "parameter",
     "theme",
     "userGroup",
     "variable",

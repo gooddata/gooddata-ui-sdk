@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { defaultDateFormatter } from "../defaultDateFormatter.js";
@@ -16,14 +17,14 @@ describe("createDefaultDateFormatter localization", () => {
         expect(actual).toBe("November");
     });
 
-    it("should fallback to 'en-US' when invalid locale is provided and not respect the formatting pattern", () => {
+    it("should fallback to 'en-US' when invalid locale is provided and preserve the formatting pattern", () => {
         const actual = defaultDateFormatter(
             DATE,
             "GDC.time.month_in_year",
             "surely this is not a locale" as any,
             "LLLLLL",
         );
-        expect(actual).toBe("Nov");
+        expect(actual).toBe("November");
     });
 
     it("should throw when invalid granularity is provided and no pattern is present", () => {

@@ -15,7 +15,7 @@ import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
 import { transformPushpinData } from "./data/transformation.js";
 import { UNCLUSTER_FILTER } from "./layers.js";
 import { getPushpinLayerIds, removePushpinLayer, syncPushpinLayerToMap } from "./operations.js";
-import { applyCurrentColorsToPushpinOutputSource, createPushpinDataSource } from "./source.js";
+import { createPushpinDataSource } from "./source.js";
 import { createPushpinTooltipConfig } from "./tooltip/tooltipManagement.js";
 import { calculateViewport } from "../../map/viewport/viewportCalculation.js";
 import type { IGeoLngLat } from "../../types/common/coordinates.js";
@@ -111,6 +111,7 @@ export function filterPushpinGeoDataToRenderablePoints(geoData: IPushpinGeoData)
             ? {
                   ...geoData.tooltipText,
                   data: pickByValidIndex(geoData.tooltipText.data) as string[],
+                  uris: pickByValidIndex(geoData.tooltipText.uris) as string[],
               }
             : undefined,
     };
@@ -174,7 +175,9 @@ function createPushpinSource(
     const config = createPushpinConfig(context);
     const shapeType = config.points?.shapeType ?? "circle";
     const isIconShape = shapeType === "iconByValue" || shapeType === "oneIcon";
-    const hasClustering = !isIconShape && isClusteringAllowed(geoData, config.points?.groupNearbyPoints);
+    const hasSelectedPoints = Boolean(config.selectedPoints?.length);
+    const hasClustering =
+        !hasSelectedPoints && !isIconShape && isClusteringAllowed(geoData, config.points?.groupNearbyPoints);
 
     return {
         config,
@@ -326,13 +329,19 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
             return;
         }
 
-        const nextSource = applyCurrentColorsToPushpinOutputSource(output, dataView, context);
+        const { colorPalette = [], colorMapping = [] } = context;
+        const colorStrategy = getPushpinColorStrategy(colorPalette, colorMapping, output.geoData, dataView);
+        const { source: nextSource } = createPushpinSource(layer, output.geoData, colorStrategy, context);
         trySetGeoJsonSourceData(map, ids.sourceId, nextSource.data);
     },
 
     getMapSyncKey(layer, context): string {
         // Only include settings configurable from AD that affect MapLibre source/feature props.
         const points = context.config?.points;
+        const selectedPoints = context.config?.selectedPoints;
+        // Include a fingerprint of selectedPoints so that cross-filtering selection
+        // triggers a full layer sync (both paint properties and feature data change).
+        const selectionKey = selectedPoints?.length ? JSON.stringify(selectedPoints) : "none";
         return [
             "pushpin",
             layer.id,
@@ -342,6 +351,8 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
             String(points?.maxSize),
             String(points?.shapeType),
             String(points?.icon),
+            "sel",
+            selectionKey,
         ].join(":");
     },
 

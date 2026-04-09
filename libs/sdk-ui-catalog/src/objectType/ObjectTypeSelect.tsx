@@ -17,12 +17,14 @@ const icons: Record<ObjectType, IconType> = {
     [ObjectTypes.ATTRIBUTE]: "ldmAttribute",
     [ObjectTypes.FACT]: "fact",
     [ObjectTypes.DATASET]: "date",
+    [ObjectTypes.PARAMETER]: "parameter",
 };
 
 const messages: Record<ObjectType, MessageDescriptor> = defineMessages({
     [ObjectTypes.DASHBOARD]: { id: "analyticsCatalog.objectType.dashboard.button.ariaLabel" },
     [ObjectTypes.VISUALIZATION]: { id: "analyticsCatalog.objectType.visualization.button.ariaLabel" },
     [ObjectTypes.METRIC]: { id: "analyticsCatalog.objectType.metric.button.ariaLabel" },
+    [ObjectTypes.PARAMETER]: { id: "analyticsCatalog.objectType.parameter.button.ariaLabel" },
     [ObjectTypes.FACT]: { id: "analyticsCatalog.objectType.fact.button.ariaLabel" },
     [ObjectTypes.ATTRIBUTE]: { id: "analyticsCatalog.objectType.attribute.button.ariaLabel" },
     [ObjectTypes.DATASET]: { id: "analyticsCatalog.objectType.dateDataset.button.ariaLabel" },
@@ -32,11 +34,21 @@ type Props = {
     counter: Record<ObjectType, number>;
     selectedTypes: ObjectType[];
     onSelect: (selectedTypes: ObjectType[]) => void;
+    showParameter?: boolean;
     ariaLabelledBy?: string;
 };
 
-export function ObjectTypeSelect({ selectedTypes, onSelect, counter, ariaLabelledBy }: Props) {
+export function ObjectTypeSelect({
+    selectedTypes,
+    onSelect,
+    counter,
+    showParameter = false,
+    ariaLabelledBy,
+}: Props) {
     const intl = useIntl();
+    const visibleObjectTypes = showParameter
+        ? OBJECT_TYPE_ORDER
+        : OBJECT_TYPE_ORDER.filter((type) => type !== ObjectTypes.PARAMETER);
 
     const handleSelect = (type: ObjectType) => {
         if (selectedTypes.includes(type)) {
@@ -48,7 +60,7 @@ export function ObjectTypeSelect({ selectedTypes, onSelect, counter, ariaLabelle
 
     return (
         <UiButtonSegmentedControl role="group" aria-labelledby={ariaLabelledBy}>
-            {OBJECT_TYPE_ORDER.map((type) => {
+            {visibleObjectTypes.map((type) => {
                 const isSelected = selectedTypes.includes(type);
                 const ariaLabel = intl.formatMessage(messages[type], { count: counter[type] });
                 return (

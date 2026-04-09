@@ -50,7 +50,9 @@ export function syncPushpinLayerToMap(
 ): void {
     const ids = getPushpinLayerIds(layerId);
     const { points: geoPointsConfig = {} } = config;
-    const hasClustering = isClusteringAllowed(geoData, geoPointsConfig.groupNearbyPoints);
+    const hasSelectedPoints = Boolean(config.selectedPoints?.length);
+    const hasClustering =
+        !hasSelectedPoints && isClusteringAllowed(geoData, geoPointsConfig.groupNearbyPoints);
 
     // Build plan using pre-computed source - no transformation needed
     const planBuilder = createStylePlan().addSource(ids.sourceId, source);

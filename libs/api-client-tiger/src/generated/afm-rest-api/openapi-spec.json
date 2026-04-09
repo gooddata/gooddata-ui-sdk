@@ -24,6 +24,7 @@
         "/api/v1/ailake/services/{serviceId}/commands/{commandName}/run": {
             "post": {
                 "tags": [
+                    "AI Lake - Services & Operations",
                     "AI Lake"
                 ],
                 "summary": "(BETA) Run an AI Lake services command",
@@ -105,9 +106,128 @@
                 }
             }
         },
+        "/api/v1/ailake/database/instances/{instanceId}/pipeTables": {
+            "get": {
+                "tags": [
+                    "AI Lake",
+                    "AI Lake - Pipe Tables"
+                ],
+                "summary": "(BETA) List AI Lake pipe tables",
+                "description": "(BETA) Lists all active pipe tables in the given AI Lake database instance.",
+                "operationId": "listAiLakePipeTables",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AI Lake pipe tables successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListPipeTablesResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to list AI Lake pipe tables."
+                }
+            },
+            "post": {
+                "tags": [
+                    "AI Lake",
+                    "AI Lake - Pipe Tables"
+                ],
+                "summary": "(BETA) Create a new AI Lake pipe table",
+                "description": "(BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.",
+                "operationId": "createAiLakePipeTable",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    },
+                    {
+                        "name": "operation-id",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreatePipeTableRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "headers": {
+                            "operation-location": {
+                                "description": "Operation location URL.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            },
+                            "operation-id": {
+                                "description": "Operation ID to use for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to create an AI Lake pipe table."
+                }
+            }
+        },
         "/api/v1/ailake/database/instances": {
             "get": {
                 "tags": [
+                    "AI Lake - Databases",
                     "AI Lake"
                 ],
                 "summary": "(BETA) List AI Lake Database instances",
@@ -168,6 +288,7 @@
             },
             "post": {
                 "tags": [
+                    "AI Lake - Databases",
                     "AI Lake"
                 ],
                 "summary": "(BETA) Create a new AILake Database instance",
@@ -230,6 +351,83 @@
                         "MANAGE"
                     ],
                     "description": "Permissions required to provision an AI Lake database instance."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/visualization/{visualizationObjectId}/execute": {
+            "post": {
+                "tags": [
+                    "Computation",
+                    "actions"
+                ],
+                "summary": "(BETA) Executes a visualization object and returns link to the result",
+                "description": "(BETA) Fetches a stored visualization object by ID, converts it to an AFM execution, and returns a link to the result. Optionally accepts additional AFM filters merged on top of the visualization's own filters.",
+                "operationId": "computeReportForVisualizationObject",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "visualizationObjectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "skip-cache",
+                        "in": "header",
+                        "description": "Ignore all caches during execution of current request.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VisualizationObjectExecution"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "AFM Execution response with links to the result and server-enhanced dimensions.",
+                        "headers": {
+                            "X-GDC-CANCEL-TOKEN": {
+                                "description": "A token that can be used to cancel this execution",
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AfmExecutionResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Requires workspace VIEW permission."
                 }
             }
         },
@@ -1597,6 +1795,7 @@
         "/api/v1/ailake/services/{serviceId}/status": {
             "get": {
                 "tags": [
+                    "AI Lake - Services & Operations",
                     "AI Lake"
                 ],
                 "summary": "(BETA) Get AI Lake service status",
@@ -1635,6 +1834,7 @@
         "/api/v1/ailake/services": {
             "get": {
                 "tags": [
+                    "AI Lake - Services & Operations",
                     "AI Lake"
                 ],
                 "summary": "(BETA) List AI Lake services",
@@ -1697,6 +1897,7 @@
         "/api/v1/ailake/operations/{operationId}": {
             "get": {
                 "tags": [
+                    "AI Lake - Services & Operations",
                     "AI Lake"
                 ],
                 "summary": "(BETA) Get Long Running Operation details",
@@ -1744,9 +1945,138 @@
                 }
             }
         },
+        "/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}": {
+            "get": {
+                "tags": [
+                    "AI Lake",
+                    "AI Lake - Pipe Tables"
+                ],
+                "summary": "(BETA) Get an AI Lake pipe table",
+                "description": "(BETA) Returns full details of the specified pipe table.",
+                "operationId": "getAiLakePipeTable",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    },
+                    {
+                        "name": "tableName",
+                        "in": "path",
+                        "description": "Pipe table name.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Pipe table name."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AI Lake pipe table successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PipeTable"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to get an AI Lake pipe table."
+                }
+            },
+            "delete": {
+                "tags": [
+                    "AI Lake",
+                    "AI Lake - Pipe Tables"
+                ],
+                "summary": "(BETA) Delete an AI Lake pipe table",
+                "description": "(BETA) Drops the pipe and OLAP table and removes the record. Returns an operation-id header the client can use to poll for progress.",
+                "operationId": "deleteAiLakePipeTable",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    },
+                    {
+                        "name": "tableName",
+                        "in": "path",
+                        "description": "Pipe table name.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Pipe table name."
+                        }
+                    },
+                    {
+                        "name": "operation-id",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "headers": {
+                            "operation-location": {
+                                "description": "Operation location URL.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            },
+                            "operation-id": {
+                                "description": "Operation ID to use for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to delete an AI Lake pipe table."
+                }
+            }
+        },
         "/api/v1/ailake/database/instances/{instanceId}": {
             "get": {
                 "tags": [
+                    "AI Lake - Databases",
                     "AI Lake"
                 ],
                 "summary": "(BETA) Get the specified AILake Database instance",
@@ -1785,6 +2115,7 @@
             },
             "delete": {
                 "tags": [
+                    "AI Lake - Databases",
                     "AI Lake"
                 ],
                 "summary": "(BETA) Delete an existing AILake Database instance",
@@ -2830,6 +3161,296 @@
             "Unit": {
                 "type": "object"
             },
+            "AggregateKeyConfig": {
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Key columns. Defaults to first inferred column.",
+                        "items": {
+                            "type": "string",
+                            "description": "Key columns. Defaults to first inferred column."
+                        }
+                    }
+                },
+                "description": "Aggregate key model — pre-aggregates rows sharing the same key columns."
+            },
+            "ColumnPartitionConfig": {
+                "required": [
+                    "columns"
+                ],
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Columns to partition by.",
+                        "items": {
+                            "type": "string",
+                            "description": "Columns to partition by."
+                        }
+                    }
+                },
+                "description": "Partition by column expression."
+            },
+            "CreatePipeTableRequest": {
+                "required": [
+                    "pathPrefix",
+                    "sourceStorageName",
+                    "tableName"
+                ],
+                "type": "object",
+                "properties": {
+                    "tableName": {
+                        "type": "string",
+                        "description": "Name of the OLAP table to create. Must match ^[a-z][a-z0-9_]{0,62}$"
+                    },
+                    "sourceStorageName": {
+                        "type": "string",
+                        "description": "Name of the pre-configured S3/MinIO ObjectStorage source"
+                    },
+                    "pathPrefix": {
+                        "type": "string",
+                        "description": "Path prefix to the parquet files (e.g. 'my-dataset/year=2024/'). All parquet files must be at a uniform depth under the prefix — either all directly under the prefix, or all under a consistent Hive partition hierarchy (e.g. year=2024/month=01/). Mixed layouts (files at multiple depths) are not supported."
+                    },
+                    "keyConfig": {
+                        "$ref": "#/components/schemas/KeyConfig"
+                    },
+                    "distributionConfig": {
+                        "$ref": "#/components/schemas/DistributionConfig"
+                    },
+                    "partitionConfig": {
+                        "$ref": "#/components/schemas/PartitionConfig"
+                    },
+                    "tableProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "CREATE TABLE PROPERTIES key-value pairs. Defaults to {\"replication_num\": \"1\"}."
+                        },
+                        "description": "CREATE TABLE PROPERTIES key-value pairs. Defaults to {\"replication_num\": \"1\"}."
+                    },
+                    "maxVarcharLength": {
+                        "type": "integer",
+                        "description": "Cap VARCHAR(N) to this length when N exceeds it. 0 = no cap.",
+                        "format": "int32"
+                    },
+                    "columnOverrides": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference."
+                        },
+                        "description": "Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference."
+                    },
+                    "pollingIntervalSeconds": {
+                        "type": "integer",
+                        "description": "How often (in seconds) the pipe polls for new files. 0 or null = use server default.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Request to create a new pipe-backed OLAP table in the AI Lake"
+            },
+            "DateTruncPartitionConfig": {
+                "required": [
+                    "column",
+                    "unit"
+                ],
+                "type": "object",
+                "properties": {
+                    "column": {
+                        "type": "string",
+                        "description": "Column to partition on."
+                    },
+                    "unit": {
+                        "type": "string",
+                        "description": "Date/time unit for partition granularity",
+                        "enum": [
+                            "year",
+                            "quarter",
+                            "month",
+                            "week",
+                            "day",
+                            "hour",
+                            "minute",
+                            "second",
+                            "millisecond",
+                            "microsecond"
+                        ]
+                    }
+                },
+                "description": "Partition by date_trunc() expression."
+            },
+            "DistributionConfig": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "description": "Distribution configuration for the OLAP table.",
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "hash": "#/components/schemas/HashDistributionConfig",
+                        "random": "#/components/schemas/RandomDistributionConfig"
+                    }
+                }
+            },
+            "DuplicateKeyConfig": {
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Key columns. Defaults to first inferred column.",
+                        "items": {
+                            "type": "string",
+                            "description": "Key columns. Defaults to first inferred column."
+                        }
+                    }
+                },
+                "description": "Duplicate key model — allows duplicate rows for the given key columns."
+            },
+            "HashDistributionConfig": {
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Columns to distribute by. Defaults to first column.",
+                        "items": {
+                            "type": "string",
+                            "description": "Columns to distribute by. Defaults to first column."
+                        }
+                    },
+                    "buckets": {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "Number of hash buckets. Defaults to 1.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Hash-based distribution across buckets."
+            },
+            "KeyConfig": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "description": "Key configuration for the table data model.",
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "duplicate": "#/components/schemas/DuplicateKeyConfig",
+                        "primary": "#/components/schemas/PrimaryKeyConfig",
+                        "unique": "#/components/schemas/UniqueKeyConfig",
+                        "aggregate": "#/components/schemas/AggregateKeyConfig"
+                    }
+                }
+            },
+            "PartitionConfig": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "description": "Partition configuration for the table.",
+                "discriminator": {
+                    "propertyName": "type",
+                    "mapping": {
+                        "column": "#/components/schemas/ColumnPartitionConfig",
+                        "dateTrunc": "#/components/schemas/DateTruncPartitionConfig",
+                        "timeSlice": "#/components/schemas/TimeSlicePartitionConfig"
+                    }
+                }
+            },
+            "PrimaryKeyConfig": {
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Key columns. Defaults to first inferred column.",
+                        "items": {
+                            "type": "string",
+                            "description": "Key columns. Defaults to first inferred column."
+                        }
+                    }
+                },
+                "description": "Primary key model — enforces uniqueness, replaces on conflict."
+            },
+            "RandomDistributionConfig": {
+                "type": "object",
+                "properties": {
+                    "buckets": {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "Number of random distribution buckets. Defaults to 1.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Random distribution across buckets."
+            },
+            "TimeSlicePartitionConfig": {
+                "required": [
+                    "column",
+                    "slices",
+                    "unit"
+                ],
+                "type": "object",
+                "properties": {
+                    "column": {
+                        "type": "string",
+                        "description": "Column to partition on."
+                    },
+                    "unit": {
+                        "type": "string",
+                        "description": "Date/time unit for partition granularity",
+                        "enum": [
+                            "year",
+                            "quarter",
+                            "month",
+                            "week",
+                            "day",
+                            "hour",
+                            "minute",
+                            "second",
+                            "millisecond",
+                            "microsecond"
+                        ]
+                    },
+                    "slices": {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "How many units per slice.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Partition by time_slice() expression."
+            },
+            "UniqueKeyConfig": {
+                "type": "object",
+                "properties": {
+                    "columns": {
+                        "type": "array",
+                        "description": "Key columns. Defaults to first inferred column.",
+                        "items": {
+                            "type": "string",
+                            "description": "Key columns. Defaults to first inferred column."
+                        }
+                    }
+                },
+                "description": "Unique key model — enforces uniqueness, replaces on conflict."
+            },
             "ProvisionDatabaseInstanceRequest": {
                 "required": [
                     "name",
@@ -2852,93 +3473,6 @@
                     }
                 },
                 "description": "Request to provision a new AILake Database instance"
-            },
-            "ForecastRequest": {
-                "required": [
-                    "forecastPeriod"
-                ],
-                "type": "object",
-                "properties": {
-                    "forecastPeriod": {
-                        "type": "integer",
-                        "description": "Number of future periods that should be forecasted",
-                        "format": "int32"
-                    },
-                    "confidenceLevel": {
-                        "maximum": 1,
-                        "exclusiveMaximum": true,
-                        "minimum": 0,
-                        "exclusiveMinimum": true,
-                        "type": "number",
-                        "description": "Confidence interval boundary value.",
-                        "format": "float",
-                        "default": 0.95
-                    },
-                    "seasonal": {
-                        "type": "boolean",
-                        "description": "Whether the input data is seasonal",
-                        "default": false
-                    }
-                }
-            },
-            "ExecutionLinks": {
-                "required": [
-                    "executionResult"
-                ],
-                "type": "object",
-                "properties": {
-                    "executionResult": {
-                        "type": "string",
-                        "description": "Link to the result data."
-                    }
-                },
-                "description": "Links to the execution result."
-            },
-            "SmartFunctionResponse": {
-                "required": [
-                    "links"
-                ],
-                "type": "object",
-                "properties": {
-                    "links": {
-                        "$ref": "#/components/schemas/ExecutionLinks"
-                    }
-                }
-            },
-            "ClusteringRequest": {
-                "required": [
-                    "numberOfClusters"
-                ],
-                "type": "object",
-                "properties": {
-                    "numberOfClusters": {
-                        "minimum": 1,
-                        "type": "integer",
-                        "description": "Number of clusters to create",
-                        "format": "int32"
-                    },
-                    "threshold": {
-                        "minimum": 0,
-                        "exclusiveMinimum": true,
-                        "type": "number",
-                        "description": "Threshold used for algorithm",
-                        "format": "double",
-                        "default": 0.03
-                    }
-                }
-            },
-            "AnomalyDetectionRequest": {
-                "required": [
-                    "sensitivity"
-                ],
-                "type": "object",
-                "properties": {
-                    "sensitivity": {
-                        "type": "number",
-                        "description": "Anomaly detection sensitivity.",
-                        "format": "float"
-                    }
-                }
             },
             "AbsoluteDateFilter": {
                 "required": [
@@ -3250,43 +3784,6 @@
                 },
                 "description": "An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled."
             },
-            "ArithmeticMeasureDefinition": {
-                "required": [
-                    "arithmeticMeasure"
-                ],
-                "type": "object",
-                "properties": {
-                    "arithmeticMeasure": {
-                        "required": [
-                            "measureIdentifiers",
-                            "operator"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "measureIdentifiers": {
-                                "type": "array",
-                                "description": "List of metrics to apply arithmetic operation by chosen operator.",
-                                "items": {
-                                    "$ref": "#/components/schemas/AfmLocalIdentifier"
-                                }
-                            },
-                            "operator": {
-                                "type": "string",
-                                "description": "Arithmetic operator describing operation between metrics.",
-                                "example": "SUM",
-                                "enum": [
-                                    "SUM",
-                                    "DIFFERENCE",
-                                    "MULTIPLICATION",
-                                    "RATIO",
-                                    "CHANGE"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "description": "Metric representing arithmetics between other metrics."
-            },
             "AttributeFilter": {
                 "type": "object",
                 "description": "Abstract filter definition type attributes",
@@ -3323,29 +3820,6 @@
                     }
                 },
                 "description": "Filter on specific set of label values."
-            },
-            "AttributeItem": {
-                "required": [
-                    "label",
-                    "localIdentifier"
-                ],
-                "type": "object",
-                "properties": {
-                    "localIdentifier": {
-                        "pattern": "^[.a-zA-Z0-9_-]+$",
-                        "type": "string",
-                        "description": "Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.",
-                        "example": "attribute_1"
-                    },
-                    "label": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifierLabel"
-                    },
-                    "showAllValues": {
-                        "type": "boolean",
-                        "description": "Indicates whether to show all values of given attribute even if the data bound to those values is not available.",
-                        "default": false
-                    }
-                }
             },
             "BoundedFilter": {
                 "required": [
@@ -3547,6 +4021,26 @@
                     }
                 ]
             },
+            "ExecutionSettings": {
+                "type": "object",
+                "properties": {
+                    "dataSamplingPercentage": {
+                        "maximum": 100,
+                        "exclusiveMaximum": true,
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
+                        "format": "float"
+                    },
+                    "timestamp": {
+                        "type": "string",
+                        "description": "Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.",
+                        "format": "date-time"
+                    }
+                },
+                "description": "Various settings affecting the process of AFM execution or its result"
+            },
             "FilterDefinition": {
                 "type": "object",
                 "description": "Abstract filter definition type",
@@ -3625,27 +4119,6 @@
                 },
                 "description": "Filter in form of direct MAQL query."
             },
-            "InlineMeasureDefinition": {
-                "required": [
-                    "inline"
-                ],
-                "type": "object",
-                "properties": {
-                    "inline": {
-                        "required": [
-                            "maql"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "maql": {
-                                "type": "string",
-                                "description": "MAQL query defining the metric."
-                            }
-                        }
-                    }
-                },
-                "description": "Metric defined by the raw MAQL query."
-            },
             "MatchAttributeFilter": {
                 "required": [
                     "matchAttributeFilter"
@@ -3697,43 +4170,6 @@
                     }
                 },
                 "description": "Filter via label with given match type and literal value."
-            },
-            "MeasureDefinition": {
-                "type": "object",
-                "description": "Abstract metric definition type",
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/InlineMeasureDefinition"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ArithmeticMeasureDefinition"
-                    },
-                    {
-                        "$ref": "#/components/schemas/SimpleMeasureDefinition"
-                    },
-                    {
-                        "$ref": "#/components/schemas/PopMeasureDefinition"
-                    }
-                ]
-            },
-            "MeasureItem": {
-                "required": [
-                    "definition",
-                    "localIdentifier"
-                ],
-                "type": "object",
-                "properties": {
-                    "localIdentifier": {
-                        "pattern": "^[.a-zA-Z0-9_-]+$",
-                        "type": "string",
-                        "description": "Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.",
-                        "example": "metric_1"
-                    },
-                    "definition": {
-                        "$ref": "#/components/schemas/MeasureDefinition"
-                    }
-                },
-                "description": "Metric is a quantity that is calculated from the data."
             },
             "MeasureValueCondition": {
                 "type": "object",
@@ -3795,182 +4231,6 @@
                     }
                 },
                 "description": "Filter able to limit element values by label and related selected negated elements."
-            },
-            "OutlierDetectionRequest": {
-                "required": [
-                    "attributes",
-                    "filters",
-                    "granularity",
-                    "measures",
-                    "sensitivity"
-                ],
-                "type": "object",
-                "properties": {
-                    "attributes": {
-                        "type": "array",
-                        "description": "Attributes to be used in the computation.",
-                        "items": {
-                            "$ref": "#/components/schemas/AttributeItem"
-                        }
-                    },
-                    "filters": {
-                        "type": "array",
-                        "description": "Various filter types to filter the execution result.",
-                        "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/InlineFilterDefinition"
-                                }
-                            ]
-                        }
-                    },
-                    "measures": {
-                        "minItems": 1,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/MeasureItem"
-                        }
-                    },
-                    "auxMeasures": {
-                        "type": "array",
-                        "description": "Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.",
-                        "items": {
-                            "$ref": "#/components/schemas/MeasureItem"
-                        }
-                    },
-                    "sensitivity": {
-                        "type": "string",
-                        "description": "Sensitivity level for outlier detection",
-                        "enum": [
-                            "LOW",
-                            "MEDIUM",
-                            "HIGH"
-                        ]
-                    },
-                    "granularity": {
-                        "type": "string",
-                        "description": "Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).",
-                        "enum": [
-                            "HOUR",
-                            "DAY",
-                            "WEEK",
-                            "MONTH",
-                            "QUARTER",
-                            "YEAR"
-                        ]
-                    }
-                }
-            },
-            "PopDataset": {
-                "required": [
-                    "dataset",
-                    "periodsAgo"
-                ],
-                "type": "object",
-                "properties": {
-                    "dataset": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
-                    },
-                    "periodsAgo": {
-                        "type": "integer",
-                        "description": "Number of periods ago to calculate the previous period for.",
-                        "format": "int32",
-                        "example": 1
-                    }
-                },
-                "description": "Combination of the date data set to use and how many periods ago to calculate the previous period for."
-            },
-            "PopDatasetMeasureDefinition": {
-                "required": [
-                    "previousPeriodMeasure"
-                ],
-                "type": "object",
-                "properties": {
-                    "previousPeriodMeasure": {
-                        "required": [
-                            "dateDatasets",
-                            "measureIdentifier"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "measureIdentifier": {
-                                "$ref": "#/components/schemas/AfmLocalIdentifier"
-                            },
-                            "dateDatasets": {
-                                "type": "array",
-                                "description": "Specification of which date data sets to use for determining the period to calculate the previous period for.",
-                                "items": {
-                                    "$ref": "#/components/schemas/PopDataset"
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "Previous period type of metric."
-            },
-            "PopDate": {
-                "required": [
-                    "attribute",
-                    "periodsAgo"
-                ],
-                "type": "object",
-                "properties": {
-                    "attribute": {
-                        "$ref": "#/components/schemas/AfmObjectIdentifierAttribute"
-                    },
-                    "periodsAgo": {
-                        "type": "integer",
-                        "description": "Number of periods ago to calculate the previous period for.",
-                        "format": "int32",
-                        "example": 1
-                    }
-                },
-                "description": "Combination of the date attribute to use and how many periods ago to calculate the PoP for."
-            },
-            "PopDateMeasureDefinition": {
-                "required": [
-                    "overPeriodMeasure"
-                ],
-                "type": "object",
-                "properties": {
-                    "overPeriodMeasure": {
-                        "required": [
-                            "dateAttributes",
-                            "measureIdentifier"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "measureIdentifier": {
-                                "$ref": "#/components/schemas/AfmLocalIdentifier"
-                            },
-                            "dateAttributes": {
-                                "type": "array",
-                                "description": "Attributes to use for determining the period to calculate the PoP for.",
-                                "items": {
-                                    "$ref": "#/components/schemas/PopDate"
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "Period over period type of metric."
-            },
-            "PopMeasureDefinition": {
-                "type": "object",
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/PopDatasetMeasureDefinition"
-                    },
-                    {
-                        "$ref": "#/components/schemas/PopDateMeasureDefinition"
-                    }
-                ]
             },
             "PositiveAttributeFilter": {
                 "required": [
@@ -4231,6 +4491,662 @@
                 },
                 "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The 'from' and 'to' properties mark the boundaries of the interval. If 'from' is omitted, all values earlier than 'to' are included. If 'to' is omitted, all values later than 'from' are included. It is not allowed to omit both."
             },
+            "VisualizationObjectExecution": {
+                "type": "object",
+                "properties": {
+                    "filters": {
+                        "type": "array",
+                        "description": "Additional AFM filters merged on top of the visualization object's own filters.",
+                        "items": {
+                            "$ref": "#/components/schemas/FilterDefinition"
+                        }
+                    },
+                    "settings": {
+                        "$ref": "#/components/schemas/ExecutionSettings"
+                    }
+                }
+            },
+            "AfmExecutionResponse": {
+                "required": [
+                    "executionResponse"
+                ],
+                "type": "object",
+                "properties": {
+                    "executionResponse": {
+                        "$ref": "#/components/schemas/ExecutionResponse"
+                    }
+                },
+                "description": "Response to AFM execution request"
+            },
+            "AttributeFormat": {
+                "required": [
+                    "locale",
+                    "pattern"
+                ],
+                "type": "object",
+                "properties": {
+                    "locale": {
+                        "type": "string",
+                        "description": "Format locale code like 'en-US', 'cs-CZ', etc."
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "ICU formatting pattern like 'y', 'dd.MM.y', etc."
+                    },
+                    "timezone": {
+                        "type": "string",
+                        "description": "Timezone for date formatting like 'America/New_York', 'Europe/Prague', etc."
+                    }
+                },
+                "description": "Attribute format describes formatting information to effectively format attribute values when needed."
+            },
+            "AttributeHeader": {
+                "required": [
+                    "attributeHeader"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributeHeader": {
+                        "required": [
+                            "attribute",
+                            "attributeName",
+                            "label",
+                            "labelName",
+                            "localIdentifier",
+                            "primaryLabel"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "localIdentifier": {
+                                "pattern": "^[.a-zA-Z0-9_-]+$",
+                                "type": "string",
+                                "description": "Local identifier of the attribute this header relates to."
+                            },
+                            "label": {
+                                "$ref": "#/components/schemas/RestApiIdentifier"
+                            },
+                            "labelName": {
+                                "type": "string",
+                                "description": "Label name."
+                            },
+                            "attribute": {
+                                "$ref": "#/components/schemas/RestApiIdentifier"
+                            },
+                            "attributeName": {
+                                "type": "string",
+                                "description": "Attribute name."
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "description": "Date granularity of the attribute, only filled for date attributes.",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_QUARTER",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR",
+                                    "FISCAL_MONTH",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_YEAR"
+                                ]
+                            },
+                            "primaryLabel": {
+                                "$ref": "#/components/schemas/RestApiIdentifier"
+                            },
+                            "format": {
+                                "$ref": "#/components/schemas/AttributeFormat"
+                            },
+                            "valueType": {
+                                "type": "string",
+                                "description": "Attribute value type.",
+                                "enum": [
+                                    "TEXT",
+                                    "HYPERLINK",
+                                    "GEO",
+                                    "GEO_LONGITUDE",
+                                    "GEO_LATITUDE",
+                                    "GEO_AREA",
+                                    "GEO_ICON",
+                                    "IMAGE",
+                                    "HYPERLOGLOG"
+                                ]
+                            },
+                            "geoAreaConfig": {
+                                "$ref": "#/components/schemas/GeoAreaConfig"
+                            }
+                        }
+                    }
+                }
+            },
+            "ExecutionLinks": {
+                "required": [
+                    "executionResult"
+                ],
+                "type": "object",
+                "properties": {
+                    "executionResult": {
+                        "type": "string",
+                        "description": "Link to the result data."
+                    }
+                },
+                "description": "Links to the execution result."
+            },
+            "ExecutionResponse": {
+                "required": [
+                    "dimensions",
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "dimensions": {
+                        "type": "array",
+                        "description": "Dimensions of the result",
+                        "items": {
+                            "$ref": "#/components/schemas/ResultDimension"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ExecutionLinks"
+                    }
+                },
+                "description": "Response to AFM execution request body"
+            },
+            "GeoAreaConfig": {
+                "required": [
+                    "collection"
+                ],
+                "type": "object",
+                "properties": {
+                    "collection": {
+                        "$ref": "#/components/schemas/GeoCollectionIdentifier"
+                    }
+                },
+                "description": "Configuration specific to geo area labels."
+            },
+            "GeoCollectionIdentifier": {
+                "required": [
+                    "id"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Geo collection identifier."
+                    },
+                    "kind": {
+                        "type": "string",
+                        "description": "Type of geo collection.",
+                        "default": "STATIC",
+                        "enum": [
+                            "STATIC",
+                            "CUSTOM"
+                        ]
+                    }
+                }
+            },
+            "MeasureGroupHeaders": {
+                "type": "object",
+                "properties": {
+                    "measureGroupHeaders": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureHeader"
+                        }
+                    }
+                },
+                "description": "Measure group headers"
+            },
+            "MeasureHeader": {
+                "required": [
+                    "localIdentifier"
+                ],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string",
+                        "description": "Local identifier of the measure this header relates to."
+                    },
+                    "format": {
+                        "type": "string",
+                        "description": "Format to be used to format the measure data."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the measure."
+                    }
+                }
+            },
+            "RestApiIdentifier": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "example": "sample_item.price"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "fact"
+                    }
+                },
+                "description": "Object identifier."
+            },
+            "ResultDimension": {
+                "required": [
+                    "headers",
+                    "localIdentifier"
+                ],
+                "type": "object",
+                "properties": {
+                    "headers": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ResultDimensionHeader"
+                        }
+                    },
+                    "localIdentifier": {
+                        "type": "string",
+                        "description": "Local identifier of the dimension."
+                    }
+                },
+                "description": "Single result dimension"
+            },
+            "ResultDimensionHeader": {
+                "type": "object",
+                "description": "One of the headers in a result dimension.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/MeasureGroupHeaders"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AttributeHeader"
+                    }
+                ]
+            },
+            "ForecastRequest": {
+                "required": [
+                    "forecastPeriod"
+                ],
+                "type": "object",
+                "properties": {
+                    "forecastPeriod": {
+                        "type": "integer",
+                        "description": "Number of future periods that should be forecasted",
+                        "format": "int32"
+                    },
+                    "confidenceLevel": {
+                        "maximum": 1,
+                        "exclusiveMaximum": true,
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Confidence interval boundary value.",
+                        "format": "float",
+                        "default": 0.95
+                    },
+                    "seasonal": {
+                        "type": "boolean",
+                        "description": "Whether the input data is seasonal",
+                        "default": false
+                    }
+                }
+            },
+            "SmartFunctionResponse": {
+                "required": [
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "links": {
+                        "$ref": "#/components/schemas/ExecutionLinks"
+                    }
+                }
+            },
+            "ClusteringRequest": {
+                "required": [
+                    "numberOfClusters"
+                ],
+                "type": "object",
+                "properties": {
+                    "numberOfClusters": {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "Number of clusters to create",
+                        "format": "int32"
+                    },
+                    "threshold": {
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Threshold used for algorithm",
+                        "format": "double",
+                        "default": 0.03
+                    }
+                }
+            },
+            "AnomalyDetectionRequest": {
+                "required": [
+                    "sensitivity"
+                ],
+                "type": "object",
+                "properties": {
+                    "sensitivity": {
+                        "type": "number",
+                        "description": "Anomaly detection sensitivity.",
+                        "format": "float"
+                    }
+                }
+            },
+            "ArithmeticMeasureDefinition": {
+                "required": [
+                    "arithmeticMeasure"
+                ],
+                "type": "object",
+                "properties": {
+                    "arithmeticMeasure": {
+                        "required": [
+                            "measureIdentifiers",
+                            "operator"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifiers": {
+                                "type": "array",
+                                "description": "List of metrics to apply arithmetic operation by chosen operator.",
+                                "items": {
+                                    "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                }
+                            },
+                            "operator": {
+                                "type": "string",
+                                "description": "Arithmetic operator describing operation between metrics.",
+                                "example": "SUM",
+                                "enum": [
+                                    "SUM",
+                                    "DIFFERENCE",
+                                    "MULTIPLICATION",
+                                    "RATIO",
+                                    "CHANGE"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "Metric representing arithmetics between other metrics."
+            },
+            "AttributeItem": {
+                "required": [
+                    "label",
+                    "localIdentifier"
+                ],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
+                        "type": "string",
+                        "description": "Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.",
+                        "example": "attribute_1"
+                    },
+                    "label": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierLabel"
+                    },
+                    "showAllValues": {
+                        "type": "boolean",
+                        "description": "Indicates whether to show all values of given attribute even if the data bound to those values is not available.",
+                        "default": false
+                    }
+                }
+            },
+            "InlineMeasureDefinition": {
+                "required": [
+                    "inline"
+                ],
+                "type": "object",
+                "properties": {
+                    "inline": {
+                        "required": [
+                            "maql"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "maql": {
+                                "type": "string",
+                                "description": "MAQL query defining the metric."
+                            }
+                        }
+                    }
+                },
+                "description": "Metric defined by the raw MAQL query."
+            },
+            "MeasureDefinition": {
+                "type": "object",
+                "description": "Abstract metric definition type",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/InlineMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ArithmeticMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/SimpleMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PopMeasureDefinition"
+                    }
+                ]
+            },
+            "MeasureItem": {
+                "required": [
+                    "definition",
+                    "localIdentifier"
+                ],
+                "type": "object",
+                "properties": {
+                    "localIdentifier": {
+                        "pattern": "^[.a-zA-Z0-9_-]+$",
+                        "type": "string",
+                        "description": "Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.",
+                        "example": "metric_1"
+                    },
+                    "definition": {
+                        "$ref": "#/components/schemas/MeasureDefinition"
+                    }
+                },
+                "description": "Metric is a quantity that is calculated from the data."
+            },
+            "OutlierDetectionRequest": {
+                "required": [
+                    "attributes",
+                    "filters",
+                    "granularity",
+                    "measures",
+                    "sensitivity"
+                ],
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "array",
+                        "description": "Attributes to be used in the computation.",
+                        "items": {
+                            "$ref": "#/components/schemas/AttributeItem"
+                        }
+                    },
+                    "filters": {
+                        "type": "array",
+                        "description": "Various filter types to filter the execution result.",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/InlineFilterDefinition"
+                                }
+                            ]
+                        }
+                    },
+                    "measures": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    },
+                    "auxMeasures": {
+                        "type": "array",
+                        "description": "Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
+                    },
+                    "sensitivity": {
+                        "type": "string",
+                        "description": "Sensitivity level for outlier detection",
+                        "enum": [
+                            "LOW",
+                            "MEDIUM",
+                            "HIGH"
+                        ]
+                    },
+                    "granularity": {
+                        "type": "string",
+                        "description": "Date granularity for anomaly detection. Only time-based granularities are supported (HOUR, DAY, WEEK, MONTH, QUARTER, YEAR).",
+                        "enum": [
+                            "HOUR",
+                            "DAY",
+                            "WEEK",
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR"
+                        ]
+                    }
+                }
+            },
+            "PopDataset": {
+                "required": [
+                    "dataset",
+                    "periodsAgo"
+                ],
+                "type": "object",
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                    },
+                    "periodsAgo": {
+                        "type": "integer",
+                        "description": "Number of periods ago to calculate the previous period for.",
+                        "format": "int32",
+                        "example": 1
+                    }
+                },
+                "description": "Combination of the date data set to use and how many periods ago to calculate the previous period for."
+            },
+            "PopDatasetMeasureDefinition": {
+                "required": [
+                    "previousPeriodMeasure"
+                ],
+                "type": "object",
+                "properties": {
+                    "previousPeriodMeasure": {
+                        "required": [
+                            "dateDatasets",
+                            "measureIdentifier"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifier": {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            },
+                            "dateDatasets": {
+                                "type": "array",
+                                "description": "Specification of which date data sets to use for determining the period to calculate the previous period for.",
+                                "items": {
+                                    "$ref": "#/components/schemas/PopDataset"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Previous period type of metric."
+            },
+            "PopDate": {
+                "required": [
+                    "attribute",
+                    "periodsAgo"
+                ],
+                "type": "object",
+                "properties": {
+                    "attribute": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierAttribute"
+                    },
+                    "periodsAgo": {
+                        "type": "integer",
+                        "description": "Number of periods ago to calculate the previous period for.",
+                        "format": "int32",
+                        "example": 1
+                    }
+                },
+                "description": "Combination of the date attribute to use and how many periods ago to calculate the PoP for."
+            },
+            "PopDateMeasureDefinition": {
+                "required": [
+                    "overPeriodMeasure"
+                ],
+                "type": "object",
+                "properties": {
+                    "overPeriodMeasure": {
+                        "required": [
+                            "dateAttributes",
+                            "measureIdentifier"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "measureIdentifier": {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            },
+                            "dateAttributes": {
+                                "type": "array",
+                                "description": "Attributes to use for determining the period to calculate the PoP for.",
+                                "items": {
+                                    "$ref": "#/components/schemas/PopDate"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Period over period type of metric."
+            },
+            "PopMeasureDefinition": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/PopDatasetMeasureDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PopDateMeasureDefinition"
+                    }
+                ]
+            },
             "SimpleMeasureDefinition": {
                 "required": [
                     "measure"
@@ -4317,28 +5233,6 @@
                     }
                 }
             },
-            "AttributeFormat": {
-                "required": [
-                    "locale",
-                    "pattern"
-                ],
-                "type": "object",
-                "properties": {
-                    "locale": {
-                        "type": "string",
-                        "description": "Format locale code like 'en-US', 'cs-CZ', etc."
-                    },
-                    "pattern": {
-                        "type": "string",
-                        "description": "ICU formatting pattern like 'y', 'dd.MM.y', etc."
-                    },
-                    "timezone": {
-                        "type": "string",
-                        "description": "Timezone for date formatting like 'America/New_York', 'Europe/Prague', etc."
-                    }
-                },
-                "description": "Attribute format describes formatting information to effectively format attribute values when needed."
-            },
             "KeyDriversDimension": {
                 "required": [
                     "attribute",
@@ -4420,25 +5314,6 @@
                         "$ref": "#/components/schemas/ExecutionLinks"
                     }
                 }
-            },
-            "RestApiIdentifier": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "example": "sample_item.price"
-                    },
-                    "type": {
-                        "type": "string",
-                        "example": "fact"
-                    }
-                },
-                "description": "Object identifier."
             },
             "ChangeAnalysisRequest": {
                 "required": [
@@ -4699,6 +5574,26 @@
                 "type": "object",
                 "nullable": true
             },
+            "DependsOnMatchFilter": {
+                "required": [
+                    "matchFilter"
+                ],
+                "type": "object",
+                "description": "Filter definition for string matching.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DependsOnItem"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "matchFilter": {
+                                "$ref": "#/components/schemas/MatchAttributeFilter"
+                            }
+                        }
+                    }
+                ]
+            },
             "ElementsRequest": {
                 "required": [
                     "label"
@@ -4754,6 +5649,9 @@
                                 },
                                 {
                                     "$ref": "#/components/schemas/DependsOnDateFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DependsOnMatchFilter"
                                 }
                             ]
                         }
@@ -4955,26 +5853,6 @@
                     }
                 },
                 "description": "Single dimension description."
-            },
-            "ExecutionSettings": {
-                "type": "object",
-                "properties": {
-                    "dataSamplingPercentage": {
-                        "maximum": 100,
-                        "exclusiveMaximum": true,
-                        "minimum": 0,
-                        "exclusiveMinimum": true,
-                        "type": "number",
-                        "description": "Specifies the percentage of rows from fact datasets to use during computation. This feature is available only for workspaces that use a Vertica Data Source without table views.",
-                        "format": "float"
-                    },
-                    "timestamp": {
-                        "type": "string",
-                        "description": "Specifies the timestamp of the execution from which relative filters are resolved. If not set, the current time is used.",
-                        "format": "date-time"
-                    }
-                },
-                "description": "Various settings affecting the process of AFM execution or its result"
             },
             "MetricDefinitionOverride": {
                 "required": [
@@ -5194,225 +6072,6 @@
                     }
                 },
                 "description": "A list of dimensions across which the total will be computed. Total headers for only these dimensions will be returned in the result."
-            },
-            "AfmExecutionResponse": {
-                "required": [
-                    "executionResponse"
-                ],
-                "type": "object",
-                "properties": {
-                    "executionResponse": {
-                        "$ref": "#/components/schemas/ExecutionResponse"
-                    }
-                },
-                "description": "Response to AFM execution request"
-            },
-            "AttributeHeader": {
-                "required": [
-                    "attributeHeader"
-                ],
-                "type": "object",
-                "properties": {
-                    "attributeHeader": {
-                        "required": [
-                            "attribute",
-                            "attributeName",
-                            "label",
-                            "labelName",
-                            "localIdentifier",
-                            "primaryLabel"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "localIdentifier": {
-                                "pattern": "^[.a-zA-Z0-9_-]+$",
-                                "type": "string",
-                                "description": "Local identifier of the attribute this header relates to."
-                            },
-                            "label": {
-                                "$ref": "#/components/schemas/RestApiIdentifier"
-                            },
-                            "labelName": {
-                                "type": "string",
-                                "description": "Label name."
-                            },
-                            "attribute": {
-                                "$ref": "#/components/schemas/RestApiIdentifier"
-                            },
-                            "attributeName": {
-                                "type": "string",
-                                "description": "Attribute name."
-                            },
-                            "granularity": {
-                                "type": "string",
-                                "description": "Date granularity of the attribute, only filled for date attributes.",
-                                "enum": [
-                                    "MINUTE",
-                                    "HOUR",
-                                    "DAY",
-                                    "WEEK",
-                                    "MONTH",
-                                    "QUARTER",
-                                    "YEAR",
-                                    "MINUTE_OF_HOUR",
-                                    "HOUR_OF_DAY",
-                                    "DAY_OF_WEEK",
-                                    "DAY_OF_MONTH",
-                                    "DAY_OF_QUARTER",
-                                    "DAY_OF_YEAR",
-                                    "WEEK_OF_YEAR",
-                                    "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR",
-                                    "FISCAL_MONTH",
-                                    "FISCAL_QUARTER",
-                                    "FISCAL_YEAR"
-                                ]
-                            },
-                            "primaryLabel": {
-                                "$ref": "#/components/schemas/RestApiIdentifier"
-                            },
-                            "format": {
-                                "$ref": "#/components/schemas/AttributeFormat"
-                            },
-                            "valueType": {
-                                "type": "string",
-                                "description": "Attribute value type.",
-                                "enum": [
-                                    "TEXT",
-                                    "HYPERLINK",
-                                    "GEO",
-                                    "GEO_LONGITUDE",
-                                    "GEO_LATITUDE",
-                                    "GEO_AREA",
-                                    "GEO_ICON",
-                                    "IMAGE",
-                                    "HYPERLOGLOG"
-                                ]
-                            },
-                            "geoAreaConfig": {
-                                "$ref": "#/components/schemas/GeoAreaConfig"
-                            }
-                        }
-                    }
-                }
-            },
-            "ExecutionResponse": {
-                "required": [
-                    "dimensions",
-                    "links"
-                ],
-                "type": "object",
-                "properties": {
-                    "dimensions": {
-                        "type": "array",
-                        "description": "Dimensions of the result",
-                        "items": {
-                            "$ref": "#/components/schemas/ResultDimension"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ExecutionLinks"
-                    }
-                },
-                "description": "Response to AFM execution request body"
-            },
-            "GeoAreaConfig": {
-                "required": [
-                    "collection"
-                ],
-                "type": "object",
-                "properties": {
-                    "collection": {
-                        "$ref": "#/components/schemas/GeoCollectionIdentifier"
-                    }
-                },
-                "description": "Configuration specific to geo area labels."
-            },
-            "GeoCollectionIdentifier": {
-                "required": [
-                    "id"
-                ],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "maxLength": 255,
-                        "type": "string",
-                        "description": "Geo collection identifier."
-                    },
-                    "kind": {
-                        "type": "string",
-                        "description": "Type of geo collection.",
-                        "default": "STATIC",
-                        "enum": [
-                            "STATIC",
-                            "CUSTOM"
-                        ]
-                    }
-                }
-            },
-            "MeasureGroupHeaders": {
-                "type": "object",
-                "properties": {
-                    "measureGroupHeaders": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/MeasureHeader"
-                        }
-                    }
-                },
-                "description": "Measure group headers"
-            },
-            "MeasureHeader": {
-                "required": [
-                    "localIdentifier"
-                ],
-                "type": "object",
-                "properties": {
-                    "localIdentifier": {
-                        "type": "string",
-                        "description": "Local identifier of the measure this header relates to."
-                    },
-                    "format": {
-                        "type": "string",
-                        "description": "Format to be used to format the measure data."
-                    },
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the measure."
-                    }
-                }
-            },
-            "ResultDimension": {
-                "required": [
-                    "headers",
-                    "localIdentifier"
-                ],
-                "type": "object",
-                "properties": {
-                    "headers": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ResultDimensionHeader"
-                        }
-                    },
-                    "localIdentifier": {
-                        "type": "string",
-                        "description": "Local identifier of the dimension."
-                    }
-                },
-                "description": "Single result dimension"
-            },
-            "ResultDimensionHeader": {
-                "type": "object",
-                "description": "One of the headers in a result dimension.",
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/MeasureGroupHeaders"
-                    },
-                    {
-                        "$ref": "#/components/schemas/AttributeHeader"
-                    }
-                ]
             },
             "AfmValidObjectsQuery": {
                 "required": [
@@ -6000,6 +6659,13 @@
                         "type": "string",
                         "description": "Widget title as displayed on the dashboard."
                     },
+                    "filters": {
+                        "type": "array",
+                        "description": "Filters currently applied to the dashboard.",
+                        "items": {
+                            "$ref": "#/components/schemas/FilterDefinition"
+                        }
+                    },
                     "resultId": {
                         "type": "string",
                         "description": "Signed result ID for this widget's cached execution result."
@@ -6066,6 +6732,13 @@
                     "title": {
                         "type": "string",
                         "description": "Widget title as displayed on the dashboard."
+                    },
+                    "filters": {
+                        "type": "array",
+                        "description": "Filters currently applied to the dashboard.",
+                        "items": {
+                            "$ref": "#/components/schemas/FilterDefinition"
+                        }
                     }
                 },
                 "description": "Rich text widget displaying static content. Has no execution result."
@@ -6115,6 +6788,13 @@
                         "type": "string",
                         "description": "Widget title as displayed on the dashboard."
                     },
+                    "filters": {
+                        "type": "array",
+                        "description": "Filters currently applied to the dashboard.",
+                        "items": {
+                            "$ref": "#/components/schemas/FilterDefinition"
+                        }
+                    },
                     "resultId": {
                         "type": "string",
                         "description": "Signed result ID for the currently active visualization's execution result."
@@ -6141,6 +6821,22 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "filters": {
+                        "type": "array",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/AbstractMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/FilterDefinitionForSimpleMeasure"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/InlineFilterDefinition"
+                                }
+                            ]
+                        }
+                    },
                     "title": {
                         "type": "string"
                     },
@@ -6967,6 +7663,31 @@
                 },
                 "description": "Scenarios with alternative measure calculations"
             },
+            "AiUsageMetadataItem": {
+                "required": [
+                    "counterType",
+                    "currentValue",
+                    "limit"
+                ],
+                "type": "object",
+                "properties": {
+                    "counterType": {
+                        "type": "string",
+                        "description": "Type of usage counter, e.g. AI_QUERIES."
+                    },
+                    "currentValue": {
+                        "type": "integer",
+                        "description": "Current usage value after this request.",
+                        "format": "int64"
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Entitlement limit. 0 means unlimited.",
+                        "format": "int64"
+                    }
+                },
+                "description": "AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit)."
+            },
             "ChatResult": {
                 "type": "object",
                 "properties": {
@@ -7009,6 +7730,13 @@
                         "description": "Tool call events emitted during the agentic loop (only present when GEN_AI_YIELD_TOOL_CALL_EVENTS is enabled).",
                         "items": {
                             "$ref": "#/components/schemas/ToolCallEventResult"
+                        }
+                    },
+                    "usage": {
+                        "type": "array",
+                        "description": "AI usage metadata returned after the interaction (e.g. current query count vs. entitlement limit).",
+                        "items": {
+                            "$ref": "#/components/schemas/AiUsageMetadataItem"
                         }
                     }
                 }
@@ -7666,11 +8394,13 @@
                     },
                     "kind": {
                         "type": "string",
-                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n",
+                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `create-pipe-table` — Creating a pipe table backed by an S3 data source.\n* `delete-pipe-table` — Deleting a pipe table.\n",
                         "enum": [
                             "provision-database",
                             "deprovision-database",
-                            "run-service-command"
+                            "run-service-command",
+                            "create-pipe-table",
+                            "delete-pipe-table"
                         ]
                     },
                     "status": {
@@ -7745,6 +8475,177 @@
                         }
                     }
                 ]
+            },
+            "ColumnInfo": {
+                "required": [
+                    "name",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Column name"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "SQL column type (e.g. VARCHAR(200), BIGINT, DOUBLE)"
+                    }
+                },
+                "description": "A single column definition inferred from the parquet schema"
+            },
+            "PipeTable": {
+                "required": [
+                    "columns",
+                    "databaseName",
+                    "distributionConfig",
+                    "keyConfig",
+                    "partitionColumns",
+                    "pathPrefix",
+                    "pipeTableId",
+                    "pollingIntervalSeconds",
+                    "sourceStorageName",
+                    "tableName",
+                    "tableProperties"
+                ],
+                "type": "object",
+                "properties": {
+                    "pipeTableId": {
+                        "type": "string",
+                        "description": "Internal UUID of the pipe table record"
+                    },
+                    "tableName": {
+                        "type": "string",
+                        "description": "OLAP table name"
+                    },
+                    "databaseName": {
+                        "type": "string",
+                        "description": "Database name"
+                    },
+                    "sourceStorageName": {
+                        "type": "string",
+                        "description": "Source ObjectStorage name"
+                    },
+                    "pathPrefix": {
+                        "type": "string",
+                        "description": "Path prefix to the parquet files"
+                    },
+                    "partitionColumns": {
+                        "type": "array",
+                        "description": "Hive partition columns detected from the path structure",
+                        "items": {
+                            "type": "string",
+                            "description": "Hive partition columns detected from the path structure"
+                        }
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "Inferred column schema",
+                        "items": {
+                            "$ref": "#/components/schemas/ColumnInfo"
+                        }
+                    },
+                    "keyConfig": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/AggregateKeyConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DuplicateKeyConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PrimaryKeyConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/UniqueKeyConfig"
+                            }
+                        ]
+                    },
+                    "distributionConfig": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/HashDistributionConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/RandomDistributionConfig"
+                            }
+                        ]
+                    },
+                    "partitionConfig": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/ColumnPartitionConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DateTruncPartitionConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/TimeSlicePartitionConfig"
+                            }
+                        ]
+                    },
+                    "tableProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "CREATE TABLE PROPERTIES key-value pairs"
+                        },
+                        "description": "CREATE TABLE PROPERTIES key-value pairs"
+                    },
+                    "pollingIntervalSeconds": {
+                        "type": "integer",
+                        "description": "How often (in seconds) the pipe polls for new files. 0 = server default.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Full details of a pipe-backed OLAP table"
+            },
+            "ListPipeTablesResponse": {
+                "required": [
+                    "pipeTables"
+                ],
+                "type": "object",
+                "properties": {
+                    "pipeTables": {
+                        "type": "array",
+                        "description": "Pipe tables in the requested database",
+                        "items": {
+                            "$ref": "#/components/schemas/PipeTableSummary"
+                        }
+                    }
+                },
+                "description": "List of pipe tables for a database instance"
+            },
+            "PipeTableSummary": {
+                "required": [
+                    "columns",
+                    "pathPrefix",
+                    "pipeTableId",
+                    "tableName"
+                ],
+                "type": "object",
+                "properties": {
+                    "pipeTableId": {
+                        "type": "string",
+                        "description": "Internal UUID of the pipe table record"
+                    },
+                    "tableName": {
+                        "type": "string",
+                        "description": "OLAP table name"
+                    },
+                    "pathPrefix": {
+                        "type": "string",
+                        "description": "Path prefix to the parquet files"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "Inferred column schema",
+                        "items": {
+                            "$ref": "#/components/schemas/ColumnInfo"
+                        }
+                    }
+                },
+                "description": "Lightweight pipe table entry used in list responses"
             },
             "DatabaseInstance": {
                 "required": [

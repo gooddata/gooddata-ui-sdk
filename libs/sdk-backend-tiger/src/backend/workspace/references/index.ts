@@ -34,8 +34,8 @@ export class TigerReferencesService implements IReferencesService {
                 ? objectTypeToTigerIdType[root.type as TigerCompatibleObjectType]
                 : "visualizationObject";
 
-        // Prompt is not supported.
-        if (type === "prompt") {
+        // Prompt and parameter are not supported by the dependency graph endpoint.
+        if (type === "prompt" || type === "parameter") {
             return {
                 nodes: [],
                 edges: [],

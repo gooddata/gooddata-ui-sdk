@@ -2,6 +2,7 @@
 
 import {
     type IOrganization,
+    type IOrganizationAgentsService,
     type IOrganizationAutomationService,
     type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
@@ -80,5 +81,9 @@ export class OrganizationDecorator implements IOrganization {
 
     public automations(): IOrganizationAutomationService {
         return this.decorated.automations();
+    }
+
+    public agents(): IOrganizationAgentsService {
+        return this.decorated.agents();
     }
 }

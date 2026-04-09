@@ -2,9 +2,11 @@
 
 import { type MouseEvent, type ReactNode, type Ref, useCallback } from "react";
 
+import { type ObjRef } from "@gooddata/sdk-model";
+
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
-import { getCellId, getColumnWidth, getRowId, getRowLabelId } from "./utils.js";
+import { getCellId, getColumnWidth, getItemKey, getRowId, getRowLabelId } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
@@ -16,7 +18,7 @@ import {
     type UiAsyncTableMenuRenderer,
 } from "../types.js";
 
-export function UiAsyncTableRow<T extends { id: string }>({
+export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
     item,
     itemIndex,
     columns,
@@ -59,7 +61,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
             })}
             ref={isRowFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined}
             role="row"
-            id={item ? getRowId(item.id) : undefined}
+            id={item ? getRowId(getItemKey(item)) : undefined}
             aria-rowindex={itemIndex + 1}
             aria-labelledby={getRowLabelId(itemIndex)}
         >
@@ -70,7 +72,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
                     ariaLabel={accessibilityConfig?.getCheckboxItemAriaLabel?.(item)}
                     isCellFocused={isFocused ? focusedColumnIndex === 0 : undefined}
                     cellRef={isFocused && focusedColumnIndex === 0 ? focusedElementRef : undefined}
-                    cellId={getCellId(item.id, 0)}
+                    cellId={getCellId(getItemKey(item), 0)}
                 />
             ) : null}
             {columns.map((column, index) => {
@@ -83,7 +85,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
                     <div
                         style={{ width }}
                         key={index}
-                        id={item ? getCellId(item.id, totalColumnIndex) : undefined}
+                        id={item ? getCellId(getItemKey(item), totalColumnIndex) : undefined}
                         className={e("cell", {
                             bold: bold ?? false,
                             align: column.align ?? false,
@@ -107,7 +109,11 @@ export function UiAsyncTableRow<T extends { id: string }>({
     );
 }
 
-const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: boolean }) => {
+const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
+    isLarge,
+}: {
+    isLarge: boolean;
+}) => {
     const renderRoleIconWithWrapper = useCallback((renderRoleIcon: (item: T) => ReactNode, item: T) => {
         return (
             <UiAsyncTableIconRenderer renderIcon={renderRoleIcon} className={e("role-icon")} item={item} />

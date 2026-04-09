@@ -1096,6 +1096,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAiHub,
+            "enableAiHub",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAiHub,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAutomationTrigger,
             "enableAutomationTrigger",
             "BOOLEAN",

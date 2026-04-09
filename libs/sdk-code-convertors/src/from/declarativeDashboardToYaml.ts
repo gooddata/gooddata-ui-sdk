@@ -10,6 +10,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import type { Dashboard, Filter, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 import {
+    type IDashboardArbitraryAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilter,
@@ -20,6 +21,7 @@ import {
     type IDashboardLayout,
     type IDashboardLayoutItem,
     type IDashboardLayoutWidget,
+    type IDashboardMatchAttributeFilter,
     type IDashboardWidget,
     type IDrillDownIntersectionIgnoredAttributes,
     type IDrillDownReference,
@@ -32,8 +34,10 @@ import {
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isAttributeHierarchyReference,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
     isDrillToDashboard,
@@ -46,6 +50,7 @@ import { VisualisationsTypes } from "../conts.js";
 import { type DashboardTab, type FromEntities } from "../types.js";
 import { serializeUrlTarget } from "../utils/customUrl.js";
 import { CoreErrorCode, newError } from "../utils/errors.js";
+import { matchConditionToYaml } from "../utils/filterUtils.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
 import { fromDeclarativePermissions } from "../utils/permissionUtils.js";
 import { collectFieldLevelFilters } from "../utils/sharedUtils.js";
@@ -781,6 +786,22 @@ export function declarativeFilterContextToYaml(
                 filter: filter as IFilterContextDefinition["filters"][number],
             };
         }
+        if (isDashboardArbitraryAttributeFilter(filter)) {
+            const def = declarativeArbitraryTextFilterToYaml(filter);
+            filters.push(new Pair(key, def));
+            filtersMap[key] = {
+                yaml: def,
+                filter: filter as IFilterContextDefinition["filters"][number],
+            };
+        }
+        if (isDashboardMatchAttributeFilter(filter)) {
+            const def = declarativeMatchTextFilterToYaml(filter);
+            filters.push(new Pair(key, def));
+            filtersMap[key] = {
+                yaml: def,
+                filter: filter as IFilterContextDefinition["filters"][number],
+            };
+        }
     });
 
     // create default date if config is specified but no common date
@@ -808,16 +829,19 @@ export function declarativeFilterContextToYaml(
     }
 
     Object.values(filtersMap).forEach(({ filter, yaml }) => {
-        if (isDashboardAttributeFilter(filter)) {
+        if (isDashboardAttributeFilter(filter) || isDashboardArbitraryAttributeFilter(filter)) {
+            const filterBody = isDashboardAttributeFilter(filter)
+                ? filter.attributeFilter
+                : filter.arbitraryAttributeFilter;
             //parents attribute filters
-            const attrsIds = filter.attributeFilter.filterElementsBy
+            const attrsIds = filterBody.filterElementsBy
                 ?.map((element) => {
                     return element.filterLocalIdentifier ?? null;
                 })
                 .filter(Boolean);
 
             //parents date filters
-            const datesIds = filter.attributeFilter.filterElementsByDate
+            const datesIds = filterBody.filterElementsByDate
                 ?.map((element) => {
                     if (!element.isCommonDate && element.filterLocalIdentifier) {
                         return {
@@ -836,7 +860,7 @@ export function declarativeFilterContextToYaml(
             }
 
             //metric filters
-            const metricsIds = filter.attributeFilter.validateElementsBy
+            const metricsIds = filterBody.validateElementsBy
                 ?.map((element) => getIdentifier(element))
                 .filter(Boolean);
 
@@ -930,6 +954,45 @@ function declarativeAttributeFilterToYaml(filter: IDashboardAttributeFilter) {
     }
 
     return attributeFilter;
+}
+
+function declarativeArbitraryTextFilterToYaml(filter: IDashboardArbitraryAttributeFilter) {
+    const textFilter = new YAMLMap();
+
+    textFilter.add(new Pair("type", "text_filter"));
+    if (filter.arbitraryAttributeFilter.title) {
+        textFilter.add(new Pair("title", filter.arbitraryAttributeFilter.title));
+    }
+    textFilter.add(new Pair("using", getIdentifier(filter.arbitraryAttributeFilter.displayForm)));
+    textFilter.add(new Pair("condition", filter.arbitraryAttributeFilter.negativeSelection ? "isNot" : "is"));
+    textFilter.add(new Pair("values", filter.arbitraryAttributeFilter.values));
+
+    return textFilter;
+}
+
+function declarativeMatchTextFilterToYaml(filter: IDashboardMatchAttributeFilter) {
+    const textFilter = new YAMLMap();
+
+    textFilter.add(new Pair("type", "text_filter"));
+    if (filter.matchAttributeFilter.title) {
+        textFilter.add(new Pair("title", filter.matchAttributeFilter.title));
+    }
+    textFilter.add(new Pair("using", getIdentifier(filter.matchAttributeFilter.displayForm)));
+    textFilter.add(
+        new Pair(
+            "condition",
+            matchConditionToYaml(
+                filter.matchAttributeFilter.operator,
+                filter.matchAttributeFilter.negativeSelection,
+            ),
+        ),
+    );
+    textFilter.add(new Pair("value", filter.matchAttributeFilter.literal));
+    if (filter.matchAttributeFilter.caseSensitive !== undefined) {
+        textFilter.add(new Pair("case_sensitive", filter.matchAttributeFilter.caseSensitive));
+    }
+
+    return textFilter;
 }
 
 export function declarativeFiltersConfigToYaml(

@@ -199,6 +199,13 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
         margin-right: 5px;
     }
 
+    &__icon-after {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 5px;
+    }
+
     &__icon-chevron {
         align-items: center;
         justify-content: center;

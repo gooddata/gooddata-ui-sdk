@@ -1,10 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { test } from "@playwright/test";
-
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import {
     clickChartSeriesPoint,
     enterEditMode,
@@ -30,7 +28,7 @@ test.beforeEach(async ({ page }) => {
 const FIRST_WIDGET = widgetSelector(0, 0);
 const SECOND_WIDGET = widgetSelector(0, 1);
 
-describe("Cross filtering", "crossFiltering", () => {
+test.topLevelDescribe("Cross filtering", "crossFiltering", () => {
     test(
         "should add virtual filter when cross-filtering in view mode",
         { tag: ["@pre-merge-isolated"] },

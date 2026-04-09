@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "https://staging-automation.staging-ui.stg11.panther.intgdc.com",
+            "url": "https://staging.dev-latest.stg11.panther.intgdc.com",
             "description": "Generated server url"
         },
         {
@@ -513,14 +513,7 @@
                         }
                     },
                     "404": {
-                        "description": "Collection not found",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/GeoJsonFeatureCollection"
-                                }
-                            }
-                        }
+                        "description": "Collection not found"
                     }
                 },
                 "x-gdc-security-info": {
@@ -598,14 +591,7 @@
                         }
                     },
                     "404": {
-                        "description": "Collection not found",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/GeoJsonFeatureCollection"
-                                }
-                            }
-                        }
+                        "description": "Collection not found"
                     }
                 },
                 "x-gdc-security-info": {

@@ -9,6 +9,10 @@ import { type IGeoCommonData, type IGeoDataItem } from "./common.js";
  */
 export interface IGeoAreaItem extends IGeoDataItem {
     /**
+     * Identifier or URI of the display form used to produce this area data.
+     */
+    displayFormId?: string;
+    /**
      * Geographic identifiers for areas (e.g., ISO country codes, region IDs)
      */
     data: string[];

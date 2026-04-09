@@ -33,7 +33,11 @@ export type IEntitlementsName =
     | "AuditLogging"
     | "ControlledFeatureRollout"
     | "ManagedIdpUserCount"
-    | "AiLake";
+    | "AiLake"
+    | "AiModule"
+    | "AiQueryLimit"
+    | "AiKnowledgeStorageLimit"
+    | "AiAgentLimit";
 /**
  * Entitlement descriptor
  *

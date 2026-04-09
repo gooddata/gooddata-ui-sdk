@@ -1,22 +1,29 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { type IDashboardAttributeFilter, type IDashboardAttributeFilterParent } from "@gooddata/sdk-model";
+import {
+    type DashboardAttributeFilterItem,
+    type IDashboardAttributeFilterParent,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemTitle,
+} from "@gooddata/sdk-model";
 
 /**
  * @internal
  */
 export function useOriginalConfigurationState(
-    neighborFilters: IDashboardAttributeFilter[],
+    neighborFilters: DashboardAttributeFilterItem[],
     filterElementsBy: IDashboardAttributeFilterParent[] | undefined,
 ) {
     return useMemo(() => {
         return neighborFilters.map((neighborFilter) => {
-            const neighborFilterLocalId = neighborFilter.attributeFilter.localIdentifier;
-            const neighborFilterDisplayForm = neighborFilter.attributeFilter.displayForm;
-            const neighborFilterTitle = neighborFilter.attributeFilter.title;
+            const neighborFilterLocalId = dashboardAttributeFilterItemLocalIdentifier(neighborFilter);
+            const neighborFilterDisplayForm = dashboardAttributeFilterItemDisplayForm(neighborFilter);
+            const neighborFilterTitle = dashboardAttributeFilterItemTitle(neighborFilter);
 
             const isSelected =
                 filterElementsBy?.some((by) => by.filterLocalIdentifier === neighborFilterLocalId) || false;

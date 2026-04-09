@@ -22,6 +22,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettingsService,
     type IWorkspaceStylingService,
@@ -90,6 +91,10 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public measures(): IWorkspaceMeasuresService {
         return this.decorated.measures();
+    }
+
+    public parameters(): IWorkspaceParametersService {
+        return this.decorated.parameters();
     }
 
     public facts(): IWorkspaceFactsService {

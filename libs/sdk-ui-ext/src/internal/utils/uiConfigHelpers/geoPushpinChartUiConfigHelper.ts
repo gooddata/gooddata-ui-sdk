@@ -83,7 +83,7 @@ export function setGeoPushpinUiConfig(
     set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.SEGMENT, "canAddItems"],
-        canAddItemsToBucket(referencePointConfigured, BucketNames.SEGMENT),
+        canAddItemsToBucket(referencePointConfigured, BucketNames.SEGMENT) && sizeColorBucketsEditable,
     );
     set(
         referencePointConfigured,

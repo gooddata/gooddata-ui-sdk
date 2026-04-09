@@ -13,7 +13,6 @@ import {
     type ObjRef,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
-    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -112,9 +111,7 @@ export function AttributeFilterConfiguration({
     const showDependentFiltersConfiguration = !capabilities.supportsAttributeFilterElementsLimiting;
 
     const neighborFilterDisplayForms = useMemo(() => {
-        return neighborFilters
-            .filter(isDashboardAttributeFilter)
-            .map((filter) => filter.attributeFilter.displayForm);
+        return neighborFilters.map((filter) => dashboardAttributeFilterItemDisplayForm(filter));
     }, [neighborFilters]);
 
     const currentFilterItem = useDashboardSelector(selectFilterContextAttributeFilterItems).find((filter) =>

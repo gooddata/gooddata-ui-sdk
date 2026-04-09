@@ -21,6 +21,7 @@ import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDataVisualizationProps } from '@gooddata/sdk-ui';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDrillConfig } from '@gooddata/sdk-ui';
+import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
@@ -164,6 +165,8 @@ export interface IGeoAreaChartConfig {
     maxZoomLevel?: number | null;
     // (undocumented)
     respectLegendPosition?: boolean;
+    // @internal
+    selectedPoints?: IDrillEventIntersectionElement[][];
     // (undocumented)
     selectedSegmentItems?: string[];
     // (undocumented)
@@ -223,6 +226,8 @@ export interface IGeoChartConfig {
     maxZoomLevel?: number | null;
     points?: IGeoChartPointsConfig;
     respectLegendPosition?: boolean;
+    // @internal
+    selectedPoints?: IDrillEventIntersectionElement[][];
     selectedSegmentItems?: string[];
     separators?: ISeparators;
     showLabels?: boolean;
@@ -569,6 +574,8 @@ export interface IGeoPushpinChartConfig {
     points?: IGeoChartPointsConfig;
     // (undocumented)
     respectLegendPosition?: boolean;
+    // @internal
+    selectedPoints?: IDrillEventIntersectionElement[][];
     // (undocumented)
     selectedSegmentItems?: string[];
     // (undocumented)

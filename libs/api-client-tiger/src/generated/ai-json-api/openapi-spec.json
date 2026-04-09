@@ -487,6 +487,31 @@
                 }
             }
         },
+        "/api/v1/ai/agent/skills": {
+            "get": {
+                "tags": [
+                    "Agent"
+                ],
+                "summary": "Get Skills",
+                "operationId": "listAvailableSkills",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/SkillResponse"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Listavailableskills"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents": {
             "post": {
                 "tags": [
@@ -1040,6 +1065,29 @@
     },
     "components": {
         "schemas": {
+            "ActiveObjectIdentification": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type"
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "title": "Workspaceid"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "type",
+                    "workspaceId"
+                ],
+                "title": "ActiveObjectIdentification"
+            },
             "AllowedRelationshipType": {
                 "properties": {
                     "sourceType": {
@@ -1464,6 +1512,26 @@
                 ],
                 "title": "DateFilterAbsolute"
             },
+            "DateFilterGranularity": {
+                "type": "string",
+                "enum": [
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR"
+                ]
+            },
             "DateFilterRelative": {
                 "properties": {
                     "type": {
@@ -1879,6 +1947,24 @@
                 "title": "ListDocumentsResponse",
                 "description": "Response for GET /documents."
             },
+            "MetricValueFilterConditionComparison": {
+                "type": "string",
+                "enum": [
+                    "GREATER_THAN",
+                    "GREATER_THAN_OR_EQUAL_TO",
+                    "LESS_THAN",
+                    "LESS_THAN_OR_EQUAL_TO",
+                    "EQUAL_TO",
+                    "NOT_EQUAL_TO"
+                ]
+            },
+            "MetricValueFilterConditionRange": {
+                "type": "string",
+                "enum": [
+                    "BETWEEN",
+                    "NOT_BETWEEN"
+                ]
+            },
             "MultipartContent": {
                 "properties": {
                     "type": {
@@ -2105,13 +2191,6 @@
                     "attribute": {
                         "type": "string",
                         "title": "Attribute"
-                    },
-                    "attributes": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "title": "Attributes"
                     },
                     "top": {
                         "type": "integer",
@@ -2652,6 +2731,16 @@
                                 "type": "null"
                             }
                         ]
+                    },
+                    "userContext": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/UserContext"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
                     }
                 },
                 "type": "object",
@@ -2707,6 +2796,46 @@
                 },
                 "type": "object",
                 "title": "SendMessageSearchOptions"
+            },
+            "SkillResponse": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags"
+                    },
+                    "examples": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Examples"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "title",
+                    "description",
+                    "tags",
+                    "examples"
+                ],
+                "title": "SkillResponse",
+                "description": "A single skill available to the organization."
             },
             "TextMessageContent": {
                 "properties": {
@@ -2785,6 +2914,299 @@
                 ],
                 "title": "UploadDocumentResponse",
                 "description": "Response for POST/PUT /documents."
+            },
+            "UserContext": {
+                "properties": {
+                    "view": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/UserContextView"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "referencedObjects": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/UserContextObjectReferenceGroup"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Referencedobjects"
+                    },
+                    "activeObject": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ActiveObjectIdentification"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "UserContext"
+            },
+            "UserContextDashboard": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "widgets": {
+                        "items": {
+                            "$ref": "#/components/schemas/UserContextWidgetDescriptor"
+                        },
+                        "type": "array",
+                        "title": "Widgets"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "title": "UserContextDashboard"
+            },
+            "UserContextInsightWidgetDescriptor": {
+                "properties": {
+                    "widgetId": {
+                        "type": "string",
+                        "title": "Widgetid"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/VisualizationFilter"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters"
+                    },
+                    "widgetType": {
+                        "type": "string",
+                        "const": "insight",
+                        "title": "Widgettype"
+                    },
+                    "resultId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Resultid"
+                    },
+                    "visualizationId": {
+                        "type": "string",
+                        "title": "Visualizationid"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "widgetId",
+                    "title",
+                    "widgetType",
+                    "visualizationId"
+                ],
+                "title": "UserContextInsightWidgetDescriptor"
+            },
+            "UserContextObjectReference": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "WIDGET",
+                            "METRIC",
+                            "ATTRIBUTE",
+                            "DASHBOARD",
+                            "FACT"
+                        ],
+                        "title": "Type"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "id"
+                ],
+                "title": "UserContextObjectReference"
+            },
+            "UserContextObjectReferenceGroup": {
+                "properties": {
+                    "context": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/UserContextObjectReference"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "objects": {
+                        "items": {
+                            "$ref": "#/components/schemas/UserContextObjectReference"
+                        },
+                        "type": "array",
+                        "title": "Objects"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "objects"
+                ],
+                "title": "UserContextObjectReferenceGroup"
+            },
+            "UserContextRichTextWidgetDescriptor": {
+                "properties": {
+                    "widgetId": {
+                        "type": "string",
+                        "title": "Widgetid"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/VisualizationFilter"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters"
+                    },
+                    "widgetType": {
+                        "type": "string",
+                        "const": "richText",
+                        "title": "Widgettype"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "widgetId",
+                    "title",
+                    "widgetType"
+                ],
+                "title": "UserContextRichTextWidgetDescriptor"
+            },
+            "UserContextView": {
+                "properties": {
+                    "dashboard": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/UserContextDashboard"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "UserContextView"
+            },
+            "UserContextVisualizationSwitcherWidgetDescriptor": {
+                "properties": {
+                    "widgetId": {
+                        "type": "string",
+                        "title": "Widgetid"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/VisualizationFilter"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters"
+                    },
+                    "widgetType": {
+                        "type": "string",
+                        "const": "visualizationSwitcher",
+                        "title": "Widgettype"
+                    },
+                    "resultId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Resultid"
+                    },
+                    "activeVisualizationId": {
+                        "type": "string",
+                        "title": "Activevisualizationid"
+                    },
+                    "visualizationIds": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Visualizationids"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "widgetId",
+                    "title",
+                    "widgetType",
+                    "activeVisualizationId"
+                ],
+                "title": "UserContextVisualizationSwitcherWidgetDescriptor"
+            },
+            "UserContextWidgetDescriptor": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/UserContextInsightWidgetDescriptor"
+                    },
+                    {
+                        "$ref": "#/components/schemas/UserContextRichTextWidgetDescriptor"
+                    },
+                    {
+                        "$ref": "#/components/schemas/UserContextVisualizationSwitcherWidgetDescriptor"
+                    }
+                ]
             },
             "ValidationError": {
                 "properties": {
@@ -2946,6 +3368,131 @@
                 ],
                 "title": "Visualization"
             },
+            "VisualizationAbsoluteDateFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "date_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "from": {
+                        "type": "string",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "string",
+                        "title": "To"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "from",
+                    "to"
+                ],
+                "title": "VisualizationAbsoluteDateFilter"
+            },
+            "VisualizationAttributeFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "attribute_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/VisualizationAttributeFilterState"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "state"
+                ],
+                "title": "VisualizationAttributeFilter"
+            },
+            "VisualizationAttributeFilterState": {
+                "properties": {
+                    "include": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Include"
+                    },
+                    "exclude": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Exclude"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "VisualizationAttributeFilterState"
+            },
+            "VisualizationBottomRankingFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ranking_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "attribute": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Attribute"
+                    },
+                    "bottom": {
+                        "type": "integer",
+                        "title": "Bottom"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "bottom"
+                ],
+                "title": "VisualizationBottomRankingFilter"
+            },
             "VisualizationConfig": {
                 "properties": {
                     "forecast_enabled": {
@@ -2989,11 +3536,62 @@
                     "clustering_threshold": {
                         "type": "number",
                         "title": "Clustering Threshold"
+                    },
+                    "anomaly_detection_enabled": {
+                        "type": "boolean",
+                        "title": "Anomaly Detection Enabled"
+                    },
+                    "anomaly_detection_sensitivity": {
+                        "type": "string",
+                        "enum": [
+                            "low",
+                            "medium",
+                            "high"
+                        ],
+                        "title": "Anomaly Detection Sensitivity"
+                    },
+                    "anomaly_detection_size": {
+                        "type": "string",
+                        "enum": [
+                            "small",
+                            "medium",
+                            "large"
+                        ],
+                        "title": "Anomaly Detection Size"
+                    },
+                    "anomaly_detection_color": {
+                        "type": "string",
+                        "title": "Anomaly Detection Color"
                     }
                 },
                 "additionalProperties": false,
                 "type": "object",
                 "title": "VisualizationConfig"
+            },
+            "VisualizationFilter": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/VisualizationAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationAbsoluteDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationRelativeDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationMetricValueComparisonFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationMetricValueRangeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationTopRankingFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationBottomRankingFilter"
+                    }
+                ]
             },
             "VisualizationIdUpdateRequest": {
                 "properties": {
@@ -3009,6 +3607,100 @@
                 ],
                 "title": "VisualizationIdUpdateRequest",
                 "description": "PATCH /conversations/{conversationId}/visualizations/{visualizationId} body."
+            },
+            "VisualizationMetricValueComparisonFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "metric_value_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "condition": {
+                        "$ref": "#/components/schemas/MetricValueFilterConditionComparison"
+                    },
+                    "value": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            }
+                        ],
+                        "title": "Value"
+                    },
+                    "nullValuesAsZero": {
+                        "type": "boolean",
+                        "title": "Nullvaluesaszero"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "value",
+                    "nullValuesAsZero"
+                ],
+                "title": "VisualizationMetricValueComparisonFilter"
+            },
+            "VisualizationMetricValueRangeFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "metric_value_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "condition": {
+                        "$ref": "#/components/schemas/MetricValueFilterConditionRange"
+                    },
+                    "from": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            }
+                        ],
+                        "title": "From"
+                    },
+                    "to": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "integer"
+                            }
+                        ],
+                        "title": "To"
+                    },
+                    "nullValuesAsZero": {
+                        "type": "boolean",
+                        "title": "Nullvaluesaszero"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "from",
+                    "to",
+                    "nullValuesAsZero"
+                ],
+                "title": "VisualizationMetricValueRangeFilter"
             },
             "VisualizationPart": {
                 "properties": {
@@ -3034,6 +3726,76 @@
                 "additionalProperties": false,
                 "type": "object",
                 "title": "VisualizationPart"
+            },
+            "VisualizationRelativeDateFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "date_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/DateFilterGranularity"
+                    },
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "granularity",
+                    "from",
+                    "to"
+                ],
+                "title": "VisualizationRelativeDateFilter"
+            },
+            "VisualizationTopRankingFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ranking_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "attribute": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Attribute"
+                    },
+                    "top": {
+                        "type": "integer",
+                        "title": "Top"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "top"
+                ],
+                "title": "VisualizationTopRankingFilter"
             },
             "WhatIfAnalysisPart": {
                 "properties": {

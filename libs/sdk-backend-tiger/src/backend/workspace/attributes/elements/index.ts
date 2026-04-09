@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 import {
     type DependsOn,
     type DependsOnDateFilter,
+    type DependsOnMatchFilter,
     type ElementsRequest,
     type ElementsResponseGranularityEnum,
 } from "@gooddata/api-client-tiger";
@@ -27,7 +28,9 @@ import {
     type IAbsoluteDateFilter,
     type IAttributeElement,
     type IAttributeFilter,
+    type IMatchAttributeFilter,
     type IRelativeDateFilter,
+    type MatchFilterOperator,
     type ObjRef,
     filterAttributeElements,
     filterIsEmpty,
@@ -36,6 +39,7 @@ import {
     isAttributeFilter,
     isAttributeFilterWithSelection,
     isIdentifierRef,
+    isMatchAttributeFilter,
     isNegativeAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -48,8 +52,14 @@ import { createDateValueNormalizer } from "../../../../convertors/fromBackend/da
 import { type FormattingLocale } from "../../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import { type DateFormatter } from "../../../../convertors/fromBackend/dateFormatting/types.js";
 import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
-import { toObjQualifier } from "../../../../convertors/toBackend/ObjRefConverter.js";
+import { toLabelQualifier, toObjQualifier } from "../../../../convertors/toBackend/ObjRefConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../../types/index.js";
+
+const MATCH_OPERATOR_TO_TIGER: Record<MatchFilterOperator, "STARTS_WITH" | "ENDS_WITH" | "CONTAINS"> = {
+    startsWith: "STARTS_WITH",
+    endsWith: "ENDS_WITH",
+    contains: "CONTAINS",
+};
 
 export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(
@@ -160,10 +170,10 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     private getDependsOnSpec(): Partial<ElementsRequest> {
         const { attributeFilters, dateFilters } = this;
 
-        let result: Array<DependsOn | DependsOnDateFilter> = [];
+        let result: Array<DependsOn | DependsOnDateFilter | DependsOnMatchFilter> = [];
         if (attributeFilters) {
-            const dependsOn = attributeFilters
-                // Do not include empty parent filters
+            const selectionFilters = attributeFilters
+                // Only include non-empty selection-based parent filters
                 .filter(
                     (filter) =>
                         isAttributeFilterWithSelection(filter.attributeFilter) &&
@@ -183,7 +193,33 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                     };
                 });
 
-            result = [...result, ...dependsOn];
+            result = [...result, ...selectionFilters];
+
+            const matchFilters: DependsOnMatchFilter[] = attributeFilters
+                .filter(
+                    (
+                        filter,
+                    ): filter is IElementsQueryAttributeFilter & { attributeFilter: IMatchAttributeFilter } =>
+                        isMatchAttributeFilter(filter.attributeFilter),
+                )
+                .map((filter) => {
+                    const { label, literal, operator, caseSensitive, negativeSelection } =
+                        filter.attributeFilter.matchAttributeFilter;
+
+                    return {
+                        matchFilter: {
+                            matchAttributeFilter: {
+                                label: toLabelQualifier(label),
+                                literal,
+                                matchType: MATCH_OPERATOR_TO_TIGER[operator],
+                                ...(caseSensitive ? { caseSensitive } : {}),
+                                ...(negativeSelection ? { negate: true } : {}),
+                            },
+                        },
+                    };
+                });
+
+            result = [...result, ...matchFilters];
         }
 
         if (dateFilters) {

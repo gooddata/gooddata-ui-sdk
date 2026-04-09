@@ -31,7 +31,8 @@ export type TigerMetadataType =
     | "analyticalDashboard"
     | "visualizationObject"
     | "filterContext"
-    | "dashboardPlugin";
+    | "dashboardPlugin"
+    | "parameter";
 
 /**
  * Tiger entity types

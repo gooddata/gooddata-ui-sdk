@@ -11,6 +11,7 @@ import {
     fi,
     fr,
     frCA,
+    id,
     it,
     ja,
     ko,
@@ -20,7 +21,9 @@ import {
     ptBR,
     ru,
     sl,
+    th,
     tr,
+    vi,
     zhCN,
 } from "date-fns/locale";
 import { formatInTimeZone } from "date-fns-tz";
@@ -82,6 +85,9 @@ const localeConversions = {
     "fi-FI": fi,
     "zh-HK": zhCN,
     "tr-TR": tr,
+    "vi-VN": vi,
+    "id-ID": id,
+    "th-TH": th,
     "pl-PL": pl,
     "ko-KR": ko,
     "sl-SI": sl,
@@ -137,13 +143,14 @@ export const defaultDateFormatter = (
     timezone?: string,
 ) => {
     let convertedLocale = localeConversions[locale];
-    let formatPattern = pattern ?? defaultGranularityFormatPatterns[granularity];
+    const formatPattern = pattern ?? defaultGranularityFormatPatterns[granularity];
 
     if (!convertedLocale) {
-        // fallback to default locale
+        // Fallback to default locale for unsupported locale codes.
+        // Note: we intentionally keep the backend's format pattern (if provided) rather than
+        // resetting it to the default. The pattern may contain locale-independent parts like
+        // custom fiscal prefixes (e.g., "'FYCUS'y") that must be preserved regardless of locale.
         convertedLocale = localeConversions[defaultLocaleCode];
-        // override pattern to match default locale
-        formatPattern = defaultGranularityFormatPatterns[granularity];
     }
 
     if (!formatPattern) {

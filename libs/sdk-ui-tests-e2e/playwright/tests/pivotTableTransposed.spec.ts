@@ -1,10 +1,10 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { expect, test } from "@playwright/test";
+import { expect } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config.js";
+import { API_TOKEN, test } from "../config.js";
 import { mockFeatureHub, visit, waitAllHidden, waitTableLoaded } from "../helpers.js";
 
 const PARENT = ".s-table-component-transpose";
@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
     await mockFeatureHub(page);
 });
 
-describe("Pivot table transposed", "pivotTableTransposed", () => {
+test.topLevelDescribe("Pivot table transposed", "pivotTableTransposed", () => {
     test.describe("Table Component", () => {
         test(
             "should display Metric in row, Column header on top",

@@ -151,7 +151,7 @@ export function CatalogDetailContent({
     const isCertificationVisible = useIsCertificationAllowed(item?.type);
 
     // Lineage
-    const isLineageVisible = useIsLineageEnabled();
+    const isLineageVisible = useIsLineageEnabled(item?.type);
 
     const headerRef = useRef<ICatalogDetailHeaderRef>(null);
 

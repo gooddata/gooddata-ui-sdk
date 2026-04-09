@@ -1,0 +1,125 @@
+// (C) 2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-parameter-dialog {
+    width: 640px;
+    height: 560px;
+    flex-direction: column;
+    display: flex;
+    overflow: hidden;
+
+    // Override default dialog styles
+    &.overlay.gd-dialog:not(.gd-dropdown) {
+        max-width: calc(100vw - 40px);
+        padding: 0;
+    }
+
+    .gd-dialog-header-wrapper {
+        padding: 20px 20px 0;
+    }
+
+    .gd-dialog-content {
+        flex: auto;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .gd-dialog-footer {
+        display: flex;
+        align-items: center;
+        margin-top: 0;
+        padding: 20px;
+        border-top: 1px solid var(--gd-palette-complementary-3);
+    }
+}
+
+.gd-parameter-dialog-content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    background-color: #fcfcfd;
+    border-top: 1px solid var(--gd-palette-complementary-3);
+}
+
+.gd-parameter-dialog-section-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 15px 20px 10px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gd-palette-complementary-6);
+}
+
+.gd-parameter-dialog-editor {
+    height: 100%;
+    overflow: hidden;
+    padding: 10px 20px 20px;
+
+    .gd-input-syntax-highlighting-input {
+        height: 100%;
+        font-family: "Andale Mono", monospace;
+        font-size: 14px;
+        line-height: 22px;
+
+        .cm-editor {
+            height: 100%;
+            border-color: transparent;
+            background-color: transparent;
+            box-shadow: none;
+            transition: none;
+
+            &.cm-focused {
+                border-color: kit-variables.$gd-palette-primary-base;
+            }
+        }
+
+        .cm-content {
+            font-family: "Andale Mono", monospace;
+        }
+
+        .cm-gutters {
+            background-color: transparent;
+            border-right: none;
+            color: var(--gd-palette-complementary-6);
+            padding-right: 10px;
+        }
+    }
+}
+
+.gd-parameter-dialog-error {
+    background-color: var(--gd-palette-error-lightest, #fff2f1);
+    color: var(--gd-palette-error-base, #e54d42);
+    font-size: 14px;
+    line-height: 20px;
+    padding: 4px 10px;
+    margin: 0 20px 10px;
+    border-radius: 3px;
+
+    .gd-parameter-dialog-error-label {
+        font-weight: 700;
+    }
+}
+
+.gd-parameter-dialog-footer-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-right: auto;
+}
+
+.gd-parameter-dialog-help-link {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: kit-variables.$gd-color-highlight;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

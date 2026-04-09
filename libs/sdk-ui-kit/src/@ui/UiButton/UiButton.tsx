@@ -9,6 +9,7 @@ import { type IconType } from "../@types/icon.js";
 import { type SizeLarge, type SizeMedium, type SizeSmall } from "../@types/size.js";
 import {
     type VariantDanger,
+    type VariantDropdownInline,
     type VariantLink,
     type VariantPopOut,
     type VariantPrimary,
@@ -39,7 +40,8 @@ export interface IUiButtonProps {
         | VariantPopOut
         | VariantDanger
         | VariantTooltip
-        | VariantLink;
+        | VariantLink
+        | VariantDropdownInline;
     disableIconAnimation?: boolean;
     iconBefore?: IconType;
     iconBeforeSize?: number;

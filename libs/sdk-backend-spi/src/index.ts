@@ -60,6 +60,11 @@ export type {
 } from "./workspace/execution/index.js";
 
 export type { IWorkspaceSettingsService } from "./workspace/settings/index.js";
+export type {
+    IWorkspaceParametersService,
+    IParametersQuery,
+    IParametersQueryResult,
+} from "./workspace/parameters/index.js";
 
 export type { CancelableOptions, ICancelable } from "./cancelation/index.js";
 
@@ -382,6 +387,12 @@ export type {
     IOrganizationAutomationsQuery,
     IOrganizationAutomationsQueryResult,
 } from "./organization/automations/index.js";
+
+export type {
+    IOrganizationAgentsService,
+    IAgentsQuery,
+    IAgentsQueryResult,
+} from "./organization/agents/index.js";
 
 export type {
     AutomationType,

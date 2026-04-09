@@ -155,7 +155,7 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "enum": ["date_filter", "attribute_filter", "filter_group"]
+                            "enum": ["date_filter", "attribute_filter", "text_filter", "filter_group"]
                         }
                     },
                     "required": ["type"],
@@ -212,6 +212,18 @@
                             },
                             "then": {
                                 "$ref": "#/$defs/dashboardAttributeFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "text_filter"
+                                    }
+                                }
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardTextFilter"
                             }
                         },
                         {
@@ -266,7 +278,7 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "enum": ["date_filter", "attribute_filter"]
+                            "enum": ["date_filter", "attribute_filter", "text_filter"]
                         }
                     },
                     "required": ["type"],
@@ -323,6 +335,18 @@
                             },
                             "then": {
                                 "$ref": "#/$defs/dashboardAttributeFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "text_filter"
+                                    }
+                                }
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardTextFilter"
                             }
                         }
                     ]
@@ -716,6 +740,160 @@
                 "mode": "property"
             }
         },
+        "dashboardTextFilter": {
+            "type": "object",
+            "title": "Dashboard text filter",
+            "description": "A dashboard text filter",
+            "additionalProperties": false,
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Optional title of the filter"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["text_filter"]
+                },
+                "using": {
+                    "description": "Attribute or label to use in this filter.",
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/attributeIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/labelIdentifier"
+                        }
+                    ],
+                    "$semantic": {
+                        "type": "one_attribute_item_only"
+                    }
+                },
+                "condition": {
+                    "type": "string",
+                    "enum": [
+                        "is",
+                        "isNot",
+                        "contains",
+                        "doesNotContain",
+                        "startsWith",
+                        "doesNotStartWith",
+                        "endsWith",
+                        "doesNotEndWith"
+                    ]
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "value": {
+                    "type": "string"
+                },
+                "case_sensitive": {
+                    "type": "boolean"
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["readonly", "hidden", "active"],
+                    "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                },
+                "parents": {
+                    "type": "array",
+                    "description": "An ids of the parent local attribute or label filter",
+                    "uniqueItems": true,
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "title": "Local attribute filter",
+                                "description": "Local attribute or date filter to use as parent",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "sources": [
+                                        "current.dashboard.attribute_filter.localId",
+                                        "current.dashboard.date_filter.localId"
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "title": "Local date filter",
+                                "properties": {
+                                    "using": {
+                                        "type": "string",
+                                        "description": "Local date filter to use as parent",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "current.dashboard.date_filter.localId"
+                                        }
+                                    },
+                                    "common": {
+                                        "type": "boolean",
+                                        "description": "Whether the parent filter is common date or special date"
+                                    }
+                                },
+                                "required": ["using", "common"]
+                            }
+                        ]
+                    }
+                },
+                "metric_filters": {
+                    "type": "array",
+                    "description": "An id of the attributes, labels, facts or metrics to validate the filter by",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "$semantic": {
+                            "type": "reference",
+                            "sources": ["attribute.id", "label.id", "fact.id", "metric.id"],
+                            "typePrefix": true
+                        }
+                    }
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "condition": {
+                                "enum": ["is", "isNot"]
+                            }
+                        },
+                        "required": ["condition"]
+                    },
+                    "then": {
+                        "required": ["type", "using", "condition", "values"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "condition": {
+                                "enum": [
+                                    "contains",
+                                    "doesNotContain",
+                                    "startsWith",
+                                    "doesNotStartWith",
+                                    "endsWith",
+                                    "doesNotEndWith"
+                                ]
+                            }
+                        },
+                        "required": ["condition"]
+                    },
+                    "then": {
+                        "required": ["type", "using", "condition", "value"]
+                    }
+                }
+            ],
+            "required": ["type", "using", "condition"],
+            "$semantic": {
+                "type": "definition",
+                "source": "current.dashboard.attribute_filter.localId",
+                "mode": "property"
+            }
+        },
         "dateFilterGranularity": {
             "type": "string",
             "enum": [
@@ -823,6 +1001,19 @@
                     "if": {
                         "properties": {
                             "type": {
+                                "enum": ["text_filter"]
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/queryTextFilter"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
                                 "enum": ["metric_value_filter"]
                             }
                         },
@@ -867,7 +1058,13 @@
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["date_filter", "attribute_filter", "metric_value_filter", "ranking_filter"]
+                    "enum": [
+                        "date_filter",
+                        "attribute_filter",
+                        "text_filter",
+                        "metric_value_filter",
+                        "ranking_filter"
+                    ]
                 }
             },
             "required": ["type"]
@@ -1076,6 +1273,101 @@
                         "current.query.absolute_date_filter_datasets"
                     ]
                 },
+                {
+                    "type": "definition",
+                    "source": "current.widget.visualization.query.filter.localId",
+                    "mode": "property"
+                },
+                {
+                    "type": "definition",
+                    "source": "current.widget.visualization.query.field.filter.localId",
+                    "mode": "property"
+                }
+            ]
+        },
+        "queryTextFilter": {
+            "title": "Text Filter",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["text_filter"]
+                },
+                "using": {
+                    "description": "Attribute or label to use in this filter.",
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/attributeIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/labelIdentifier"
+                        }
+                    ]
+                },
+                "condition": {
+                    "type": "string",
+                    "enum": [
+                        "is",
+                        "isNot",
+                        "contains",
+                        "doesNotContain",
+                        "startsWith",
+                        "doesNotStartWith",
+                        "endsWith",
+                        "doesNotEndWith"
+                    ]
+                },
+                "values": {
+                    "type": "array",
+                    "items": {
+                        "type": ["string", "null"]
+                    }
+                },
+                "value": {
+                    "type": "string"
+                },
+                "case_sensitive": {
+                    "type": "boolean"
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "condition": {
+                                "enum": ["is", "isNot"]
+                            }
+                        },
+                        "required": ["condition"]
+                    },
+                    "then": {
+                        "required": ["type", "using", "condition", "values"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "condition": {
+                                "enum": [
+                                    "contains",
+                                    "doesNotContain",
+                                    "startsWith",
+                                    "doesNotStartWith",
+                                    "endsWith",
+                                    "doesNotEndWith"
+                                ]
+                            }
+                        },
+                        "required": ["condition"]
+                    },
+                    "then": {
+                        "required": ["type", "using", "condition", "value"]
+                    }
+                }
+            ],
+            "required": ["type", "using", "condition"],
+            "$semantic": [
                 {
                     "type": "definition",
                     "source": "current.widget.visualization.query.filter.localId",

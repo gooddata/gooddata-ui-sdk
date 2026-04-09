@@ -6,6 +6,7 @@ import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
+    type DashboardAttributeFilterItem,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterParent,
     type ObjRef,
@@ -18,7 +19,7 @@ import { useDispatchDashboardCommand } from "../../../../../../model/react/useDi
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/types/attributeFilterTypes.js";
 
 export function useParentsConfiguration(
-    neighborFilters: IDashboardAttributeFilter[],
+    neighborFilters: DashboardAttributeFilterItem[],
     currentFilter: IDashboardAttributeFilter,
 ) {
     const { filterElementsBy, localIdentifier: currentFilterLocalId } = currentFilter.attributeFilter;
