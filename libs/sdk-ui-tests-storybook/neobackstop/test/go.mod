@@ -1,6 +1,6 @@
 module neobackstop
 
-go 1.26.0
+go 1.26.2
 
 require (
 	github.com/gooddata/gooddata-neobackstop v0.21.2

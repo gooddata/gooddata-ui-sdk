@@ -145,6 +145,8 @@ export function AttributeFilterDropdown() {
                 return (
                     <div
                         className={cx({
+                            "gd-attribute-filter-mobile-button-wrapper":
+                                fullscreenOnMobile && isMobile && isOpen,
                             "gd-is-mobile": fullscreenOnMobile && isMobile && isOpen,
                             "gd-is-mobile--with-menu": showMobileMenu,
                         })}

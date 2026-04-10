@@ -1,5 +1,6 @@
 {
     "targets": [
+        {},
         {
             "type": "virtual-target",
             "targetName": "@gooddata/sdk-ui-web-components-unit-tests",

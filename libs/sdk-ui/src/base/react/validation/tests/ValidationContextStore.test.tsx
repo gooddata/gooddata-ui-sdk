@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -134,10 +134,10 @@ describe("ValidationContext", () => {
                 children: {},
             };
 
-            let unregister: (() => void) | undefined;
+            let registration: ReturnType<typeof result.current.registerChild> | undefined;
 
             act(() => {
-                unregister = result.current.registerChild(childNode);
+                registration = result.current.registerChild(childNode);
             });
 
             // Child should be registered with a unique key
@@ -149,7 +149,7 @@ describe("ValidationContext", () => {
             expect(result.current.rootNode.children[childKey]).toEqual(childNode);
 
             act(() => {
-                unregister?.();
+                registration?.unregister();
             });
 
             // Child should be unregistered
@@ -194,15 +194,15 @@ describe("ValidationContext", () => {
                 children: {},
             };
 
-            let unregister1: (() => void) | undefined;
+            let registration1: ReturnType<typeof result.current.registerChild> | undefined;
 
             act(() => {
-                unregister1 = result.current.registerChild(newChild1);
+                registration1 = result.current.registerChild(newChild1);
                 result.current.registerChild(newChild2);
             });
 
             act(() => {
-                unregister1?.();
+                registration1?.unregister();
             });
 
             expect(result.current.rootNode.children["child1"]).toBeDefined();

@@ -219,6 +219,7 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                     "gd-chips-input__container--warning":
                         hasValuesLimitReachedWarning && !hasValuesLimitExceededError,
                     "gd-chips-input__container--with-values": hasValues,
+                    "gd-chips-input__container--empty": !hasValues,
                 })}
             >
                 {hasValues ? (

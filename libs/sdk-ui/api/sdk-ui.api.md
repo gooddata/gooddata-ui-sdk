@@ -740,6 +740,12 @@ export interface IChartCoordinates {
     chartY?: number;
 }
 
+// @internal (undocumented)
+export type IChildRegistration = {
+    update: (child: IInvalidNode) => void;
+    unregister: () => void;
+};
+
 // @alpha
 export interface IClientWorkspaceIdentifiers {
     children?: ReactNode;
@@ -2100,7 +2106,7 @@ export type IValidationContextValue<T extends IInvalidNode> = {
         recursive?: boolean;
     }) => IInvalidDatapoint[];
     isValid: boolean;
-    registerChild: (child: IInvalidNode) => () => void;
+    registerChild: (child: IInvalidNode) => IChildRegistration;
 };
 
 // @internal (undocumented)

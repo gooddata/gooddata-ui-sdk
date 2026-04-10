@@ -150,7 +150,7 @@ jobs:
           cp -r libs/sdk-ui-tests/neobackstop/output output-artifact/output
           touch output-artifact/placeholder
       - name: Archive the neobackstop test artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: ${{ !cancelled() && (failure() || inputs.keep-passing-screenshots == true) }}
         with:
           name: neobackstop-test-artifacts-failed

@@ -4613,9 +4613,6 @@ importers:
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
-      '@gooddata/sdk-code-convertors':
-        specifier: workspace:*
-        version: link:../sdk-code-convertors
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../sdk-model
