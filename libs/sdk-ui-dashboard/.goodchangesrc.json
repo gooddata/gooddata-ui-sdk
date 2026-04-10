@@ -11,5 +11,10 @@
                 }
             ]
         }
+    ],
+    "changeDirs": [
+        {
+            "glob": "src/presentation/localization/bundles/en-US.json"
+        }
     ]
 }

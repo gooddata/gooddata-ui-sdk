@@ -101,6 +101,16 @@ export type GenAIAssistantProps = {
      * Custom React node rendered when no conversation exists yet.
      */
     LandingScreenComponentProvider?: () => ComponentType;
+
+    /**
+     * Custom React component rendered below the input as a disclaimer.
+     */
+    DisclaimerComponentProvider?: () => ComponentType | null;
+
+    /**
+     * Additional class name applied to the root element.
+     */
+    className?: string;
 };
 
 /**
@@ -167,7 +177,13 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
 export const GenAIChat = GenAIAssistant;
 
 function GenAIContent(props: GenAIChatProps) {
-    const { onLinkClick, catalogItems, LandingScreenComponentProvider } = props;
+    const {
+        onLinkClick,
+        catalogItems,
+        LandingScreenComponentProvider,
+        DisclaimerComponentProvider,
+        className,
+    } = props;
     const { permissions, loading } = usePermissions();
 
     return (
@@ -179,8 +195,11 @@ function GenAIContent(props: GenAIChatProps) {
             canManage={props.disableManage ? false : (permissions.canManageProject ?? false)}
             canAnalyze={props.disableAnalyze ? false : (permissions.canCreateVisualization ?? false)}
         >
-            <CustomizationProvider landingScreenComponentProvider={LandingScreenComponentProvider}>
-                <GenAIChatWrapper initializing={loading} />
+            <CustomizationProvider
+                landingScreenComponentProvider={LandingScreenComponentProvider}
+                disclaimerComponentProvider={DisclaimerComponentProvider}
+            >
+                <GenAIChatWrapper initializing={loading} className={className} />
             </CustomizationProvider>
         </ConfigProvider>
     );

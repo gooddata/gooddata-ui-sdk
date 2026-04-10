@@ -28,7 +28,7 @@ export function convertAgentToBackend(agent: IAgent): JsonApiAgentInDocument {
             id: isIdentifierRef(agent.ref) && agent.ref.identifier ? agent.ref.identifier : uuidv4(),
             attributes: {
                 enabled: agent.enabled,
-                title: agent.title,
+                name: agent.name,
                 description: agent.description,
                 personality: agent.personality,
                 skillsMode: agent.skillsMode,
@@ -51,7 +51,7 @@ export function convertAgentPatchToBackend(agent: IAgentPatch): JsonApiAgentPatc
             attributes: Object.fromEntries(
                 Object.entries({
                     enabled: agent.enabled,
-                    title: agent.title,
+                    name: agent.name,
                     description: agent.description,
                     personality: agent.personality,
                     skillsMode: agent.skillsMode,

@@ -2,6 +2,7 @@
 
 import { type ComponentType, type PropsWithChildren, createContext, useContext, useMemo } from "react";
 
+import { DefaultDisclaimer } from "./customized/Disclaimer.js";
 import { DefaultLandingScreen } from "./customized/LandingScreen.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
@@ -11,6 +12,7 @@ export type CustomizationContext = {
         isBigScreen: boolean;
         isSmallScreen: boolean;
     }) => ComponentType;
+    disclaimerComponentProvider?: () => ComponentType | null;
 };
 
 const defaultCustomizationContext: Required<CustomizationContext> = {
@@ -18,6 +20,7 @@ const defaultCustomizationContext: Required<CustomizationContext> = {
         (props: { isFullscreen: boolean; isBigScreen: boolean; isSmallScreen: boolean }) => () => (
             <DefaultLandingScreen {...props} />
         ),
+    disclaimerComponentProvider: () => DefaultDisclaimer,
 };
 
 const customizationContext = createContext(defaultCustomizationContext);
@@ -25,6 +28,7 @@ const customizationContext = createContext(defaultCustomizationContext);
 export function CustomizationProvider({
     children,
     landingScreenComponentProvider,
+    disclaimerComponentProvider,
 }: PropsWithChildren<CustomizationContext>) {
     const { isFullscreen, isBigScreen, isSmallScreen } = useFullscreenCheck();
     const value = useMemo(
@@ -46,15 +50,22 @@ export function CustomizationProvider({
                       ),
                   }
                 : {}),
+            ...(disclaimerComponentProvider ? { disclaimerComponentProvider } : {}),
         }),
-        [landingScreenComponentProvider, isFullscreen, isBigScreen, isSmallScreen],
+        [
+            landingScreenComponentProvider,
+            disclaimerComponentProvider,
+            isFullscreen,
+            isBigScreen,
+            isSmallScreen,
+        ],
     );
 
     return <customizationContext.Provider value={value}>{children}</customizationContext.Provider>;
 }
 
 export const useCustomization = () => {
-    const { landingScreenComponentProvider } = useContext(customizationContext);
+    const { landingScreenComponentProvider, disclaimerComponentProvider } = useContext(customizationContext);
     const { isFullscreen, isBigScreen, isSmallScreen } = useFullscreenCheck();
 
     return useMemo(
@@ -64,7 +75,14 @@ export const useCustomization = () => {
                 isBigScreen,
                 isSmallScreen,
             }),
+            DisclaimerComponent: disclaimerComponentProvider(),
         }),
-        [landingScreenComponentProvider, isFullscreen, isBigScreen, isSmallScreen],
+        [
+            landingScreenComponentProvider,
+            disclaimerComponentProvider,
+            isFullscreen,
+            isBigScreen,
+            isSmallScreen,
+        ],
     );
 };

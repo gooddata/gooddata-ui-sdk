@@ -3,73 +3,73 @@
 name: Block Merge - Check Sync Label
 
 on:
-  workflow_call:
-    inputs:
-      commit-sha:
-        description: 'Commit SHA to check for associated PR'
-        required: false
-        type: string
-        default: ${{ github.sha }}
+    workflow_call:
+        inputs:
+            commit-sha:
+                description: "Commit SHA to check for associated PR"
+                required: false
+                type: string
+                default: ${{ github.sha }}
 
 jobs:
-  check-sync-label:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    steps:
-      - uses: actions/github-script@v7
-        id: check-sync-label
-        with:
-          script: |
-            let pullRequests;
-            let retries = 3;
-            let lastError;
-            
-            // Retry logic for flaky GitHub API
-            while (retries > 0) {
-              try {
-                pullRequests = await github.rest.repos.listPullRequestsAssociatedWithCommit({
-                  commit_sha: '${{ inputs.commit-sha }}',
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                });
-                break; // Success, exit retry loop
-              } catch (error) {
-                lastError = error;
-                retries--;
-                if (retries > 0) {
-                  console.log(`GitHub API call failed, retrying... (${retries} retries left)`);
-                  await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds before retry
-                }
-              }
-            }
-            
-            if (!pullRequests) {
-              console.error('Failed to fetch pull requests after all retries:', lastError);
-              core.setFailed(`GitHub API error: ${lastError.message || 'Failed to fetch pull requests'}`);
-              return;
-            }
+    check-sync-label:
+        runs-on:
+            group: infra1-runners-arc
+            labels: runners-small
+        steps:
+            - uses: actions/github-script@v8
+              id: check-sync-label
+              with:
+                  script: |
+                      let pullRequests;
+                      let retries = 3;
+                      let lastError;
 
-            const pr = pullRequests?.data[0];
-            if (!pr) {
-              core.setFailed('No pull request found for this commit');
-              return;
-            }
+                      // Retry logic for flaky GitHub API
+                      while (retries > 0) {
+                        try {
+                          pullRequests = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+                            commit_sha: '${{ inputs.commit-sha }}',
+                            owner: context.repo.owner,
+                            repo: context.repo.repo,
+                          });
+                          break; // Success, exit retry loop
+                        } catch (error) {
+                          lastError = error;
+                          retries--;
+                          if (retries > 0) {
+                            console.log(`GitHub API call failed, retrying... (${retries} retries left)`);
+                            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait 2 seconds before retry
+                          }
+                        }
+                      }
 
-            const hasSync = pr.labels?.some((label) => label.name === 'sync');
-            
-            if (!hasSync) {
-              const errorMessage = `❌ Pull request #${pr.number} cannot be merged.
+                      if (!pullRequests) {
+                        console.error('Failed to fetch pull requests after all retries:', lastError);
+                        core.setFailed(`GitHub API error: ${lastError.message || 'Failed to fetch pull requests'}`);
+                        return;
+                      }
 
-              🚫 MERGE BLOCKED: Only automated PRs generated from GDC-UI are allowed to be merged.
+                      const pr = pullRequests?.data[0];
+                      if (!pr) {
+                        core.setFailed('No pull request found for this commit');
+                        return;
+                      }
 
-              ℹ️  This PR is missing the required 'sync' label which indicates it's an automated PR from GDC-UI.
+                      const hasSync = pr.labels?.some((label) => label.name === 'sync');
 
-              Please ensure this PR is generated through the proper GDC-UI automation process.`;
+                      if (!hasSync) {
+                        const errorMessage = `❌ Pull request #${pr.number} cannot be merged.
 
-              core.setFailed(errorMessage);
-              return;
-            }
+                        🚫 MERGE BLOCKED: Only automated PRs generated from GDC-UI are allowed to be merged.
 
-            console.log(`✅ Pull request #${pr.number} has the required 'sync' label and is allowed to merge`);
-          result-encoding: string
+                        ℹ️  This PR is missing the required 'sync' label which indicates it's an automated PR from GDC-UI.
+
+                        Please ensure this PR is generated through the proper GDC-UI automation process.`;
+
+                        core.setFailed(errorMessage);
+                        return;
+                      }
+
+                      console.log(`✅ Pull request #${pr.number} has the required 'sync' label and is allowed to merge`);
+                  result-encoding: string

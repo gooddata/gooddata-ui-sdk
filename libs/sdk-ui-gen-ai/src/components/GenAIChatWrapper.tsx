@@ -2,14 +2,16 @@
 
 import { type FC, type MouseEvent, useCallback, useEffect } from "react";
 
-import { FormattedMessage, useIntl } from "react-intl";
+import cx from "classnames";
+import { useIntl } from "react-intl";
 import { connect } from "react-redux";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { Button, Typography, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
+import { Button, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
 
 import { useConfig } from "./ConfigContext.js";
+import { useCustomization } from "./CustomizationProvider.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
 import { GlobalError } from "./GlobalError.js";
 import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
@@ -28,6 +30,7 @@ import { type RootState } from "../store/types.js";
 export type GenAIChatOwnProps = {
     autofocus?: boolean;
     initializing?: boolean;
+    className?: string;
 };
 
 type GenAIChatWrapperProps = GenAIChatOwnProps & {
@@ -58,10 +61,12 @@ function GenAIChatWrapperComponent({
     initializing,
     isClearing,
     settings,
+    className,
 }: GenAIChatWrapperProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
     const { linkHandler, allowNativeLinks, canManage, canAnalyze, canFullControl } = useConfig();
+    const { DisclaimerComponent } = useCustomization();
     const { checking, evaluated, count, restart } = useEndpointCheck(settings, canFullControl);
 
     const canEdit = canFullControl || canManage || canAnalyze;
@@ -126,7 +131,7 @@ function GenAIChatWrapperComponent({
 
     return (
         <ErrorBoundary>
-            <div className="gd-gen-ai-chat">
+            <div className={cx("gd-gen-ai-chat", className)}>
                 <NavigationBypass />
                 <Messages />
                 <Input
@@ -135,9 +140,7 @@ function GenAIChatWrapperComponent({
                     canManage={canManage}
                     canAnalyze={canAnalyze}
                 />
-                <Typography tagName="p" className="gd-gen-ai-chat__disclaimer">
-                    <FormattedMessage id="gd.gen-ai.disclaimer" />
-                </Typography>
+                {DisclaimerComponent ? <DisclaimerComponent /> : null}
                 <KeyDriverAnalysis />
             </div>
         </ErrorBoundary>

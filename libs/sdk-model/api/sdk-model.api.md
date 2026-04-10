@@ -850,10 +850,10 @@ export interface IAgent {
     enabled?: boolean;
     modifiedAt?: string;
     modifiedBy?: IUser;
+    name?: string;
     personality?: string;
     ref: ObjRef;
     skillsMode?: AgentSkillsMode;
-    title?: string;
     userGroups?: IUserGroup[];
 }
 

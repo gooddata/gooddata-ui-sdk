@@ -45,9 +45,9 @@ export interface IAgent {
     enabled?: boolean;
 
     /**
-     * Agent title.
+     * Agent name.
      */
-    title?: string;
+    name?: string;
 
     /**
      * Agent description.
