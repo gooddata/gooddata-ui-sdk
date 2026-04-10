@@ -901,6 +901,91 @@ export function yamlFilterContextToDeclarative(
             const isAbsoluteDateFilter = isDashboardAbsoluteDateFilter(filter);
             const isRelativeDateFilter = isDashboardRelativeDateFilter(filter);
 
+            if (isDashboardArbitraryTextFilter(filter)) {
+                const attributeFilterConfig: Partial<IDashboardAttributeFilterConfig> = {};
+                if (filter.mode && filter.mode !== "active") {
+                    attributeFilterConfig.mode = filter.mode;
+                }
+                if (filter.display_as) {
+                    attributeFilterConfig.displayAsLabel = createIdentifier<any>(filter.display_as, {
+                        forceType: "label",
+                    });
+                }
+                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
+                    attributeFilterConfig.localIdentifier = key;
+                    attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
+                }
+                const { attributeParents, dateParents } = resolveFilterParents(filter.parents, true);
+
+                return {
+                    arbitraryAttributeFilter: {
+                        displayForm: createIdentifier(filter.using ?? ""),
+                        values: filter.values ?? [],
+                        negativeSelection: filter.condition === "isNot",
+                        localIdentifier: key,
+                        ...(attributeParents && attributeParents.length > 0
+                            ? {
+                                  filterElementsBy: attributeParents.map((parent) => ({
+                                      filterLocalIdentifier:
+                                          typeof parent === "string" ? parent : parent.using,
+                                      over: {
+                                          attributes: [],
+                                      },
+                                  })),
+                              }
+                            : {}),
+                        ...(dateParents && dateParents.length > 0
+                            ? {
+                                  filterElementsByDate: dateParents.map((parent) => {
+                                      const item = normalizeLocalDateFilter(parent);
+                                      return {
+                                          filterLocalIdentifier: item.using,
+                                          isCommonDate: item.common,
+                                      };
+                                  }),
+                              }
+                            : {}),
+                        ...(filter.metric_filters
+                            ? {
+                                  validateElementsBy: filter["metric_filters"].map((metricFilter) =>
+                                      createIdentifier(metricFilter),
+                                  ),
+                              }
+                            : {}),
+                        title: filter.title,
+                    },
+                };
+            }
+            if (isDashboardMatchTextFilter(filter)) {
+                const attributeFilterConfig: Partial<IDashboardAttributeFilterConfig> = {};
+                if (filter.mode && filter.mode !== "active") {
+                    attributeFilterConfig.mode = filter.mode;
+                }
+                if (filter.display_as) {
+                    attributeFilterConfig.displayAsLabel = createIdentifier<any>(filter.display_as, {
+                        forceType: "label",
+                    });
+                }
+                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
+                    attributeFilterConfig.localIdentifier = key;
+                    attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
+                }
+
+                const { operator, negativeSelection } = yamlConditionToMatch(filter.condition);
+
+                return {
+                    matchAttributeFilter: {
+                        displayForm: createIdentifier(filter.using ?? ""),
+                        operator,
+                        literal: filter.value,
+                        caseSensitive: filter.case_sensitive,
+                        negativeSelection,
+                        localIdentifier: key,
+                        title: filter.title,
+                    },
+                };
+            }
+
             if (isAbsoluteDateFilter || isRelativeDateFilter) {
                 const emptyValueHandling = extractDashboardEmptyValueHandling(filter);
                 //others date filters
@@ -1000,90 +1085,6 @@ export function yamlFilterContextToDeclarative(
                             : {}),
                         title: filter.title,
                         selectionMode: filter.multiselect === false ? "single" : "multi",
-                    },
-                };
-            }
-            if (isDashboardArbitraryTextFilter(filter)) {
-                const attributeFilterConfig: Partial<IDashboardAttributeFilterConfig> = {};
-                if (filter.mode && filter.mode !== "active") {
-                    attributeFilterConfig.mode = filter.mode;
-                }
-                if (filter.display_as) {
-                    attributeFilterConfig.displayAsLabel = createIdentifier<any>(filter.display_as, {
-                        forceType: "label",
-                    });
-                }
-                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
-                    attributeFilterConfig.localIdentifier = key;
-                    attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
-                }
-                const { attributeParents, dateParents } = resolveFilterParents(filter.parents, true);
-
-                return {
-                    arbitraryAttributeFilter: {
-                        displayForm: createIdentifier(filter.using ?? ""),
-                        values: filter.values ?? [],
-                        negativeSelection: filter.condition === "isNot",
-                        localIdentifier: key,
-                        ...(attributeParents && attributeParents.length > 0
-                            ? {
-                                  filterElementsBy: attributeParents.map((parent) => ({
-                                      filterLocalIdentifier:
-                                          typeof parent === "string" ? parent : parent.using,
-                                      over: {
-                                          attributes: [],
-                                      },
-                                  })),
-                              }
-                            : {}),
-                        ...(dateParents && dateParents.length > 0
-                            ? {
-                                  filterElementsByDate: dateParents.map((parent) => {
-                                      const item = normalizeLocalDateFilter(parent);
-                                      return {
-                                          filterLocalIdentifier: item.using,
-                                          isCommonDate: item.common,
-                                      };
-                                  }),
-                              }
-                            : {}),
-                        ...(filter.metric_filters
-                            ? {
-                                  validateElementsBy: filter["metric_filters"].map((metricFilter) =>
-                                      createIdentifier(metricFilter),
-                                  ),
-                              }
-                            : {}),
-                        title: filter.title,
-                    },
-                };
-            }
-            if (isDashboardMatchTextFilter(filter)) {
-                const attributeFilterConfig: Partial<IDashboardAttributeFilterConfig> = {};
-                if (filter.mode && filter.mode !== "active") {
-                    attributeFilterConfig.mode = filter.mode;
-                }
-                if (filter.display_as) {
-                    attributeFilterConfig.displayAsLabel = createIdentifier<any>(filter.display_as, {
-                        forceType: "label",
-                    });
-                }
-                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
-                    attributeFilterConfig.localIdentifier = key;
-                    attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
-                }
-
-                const { operator, negativeSelection } = yamlConditionToMatch(filter.condition);
-
-                return {
-                    matchAttributeFilter: {
-                        displayForm: createIdentifier(filter.using ?? ""),
-                        operator,
-                        literal: filter.value,
-                        caseSensitive: filter.case_sensitive,
-                        negativeSelection,
-                        localIdentifier: key,
-                        title: filter.title,
                     },
                 };
             }

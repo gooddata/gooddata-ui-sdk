@@ -2022,6 +2022,7 @@ export interface DashboardTextFilter1 {
      * An id of the attributes, labels, facts or metrics to validate the filter by
      */
     metric_filters?: string[];
+    [k: string]: unknown;
 }
 export interface LocalDateFilter2 {
     /**
@@ -2061,6 +2062,7 @@ export interface DashboardTextFilter2 {
      * Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.
      */
     mode?: "readonly" | "hidden" | "active";
+    [k: string]: unknown;
 }
 /**
  * A group of dashboard filters displayed together in the filter bar

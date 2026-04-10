@@ -40,7 +40,7 @@ jobs:
         run: |
           sleep 100
       - name: Generate FOSSA Attribution Report
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         env:
           FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
           MINIMUM_LINES: 30000

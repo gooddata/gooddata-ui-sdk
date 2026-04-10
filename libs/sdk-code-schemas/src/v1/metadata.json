@@ -3182,7 +3182,6 @@
             "type": "object",
             "title": "Dashboard text filter",
             "description": "A dashboard text filter",
-            "additionalProperties": false,
             "properties": {
                 "title": { "type": "string", "description": "Optional title of the filter" },
                 "using": {
