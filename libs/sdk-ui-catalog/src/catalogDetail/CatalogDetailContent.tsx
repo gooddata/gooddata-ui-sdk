@@ -57,6 +57,11 @@ export type OpenHandlerEvent = {
 /**
  * @internal
  */
+export type EditHandlerEvent = OpenHandlerEvent;
+
+/**
+ * @internal
+ */
 export interface ICatalogDetailContentProps {
     /**
      * An object id of the catalog item.
@@ -69,11 +74,15 @@ export interface ICatalogDetailContentProps {
     /**
      * An object definition of the catalog item.
      */
-    objectDefinition?: Partial<ICatalogItem> | null;
+    objectDefinition?: ICatalogItemRef | ICatalogItem | null;
     /**
      * Handler for opening catalog items.
      */
     onOpenClick?: (event: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    /**
+     * Handler for editing catalog items.
+     */
+    onEditClick?: (event: MouseEvent, editClickEvent: EditHandlerEvent) => void;
     /**
      * Handler for tag click.
      */
@@ -85,7 +94,7 @@ export interface ICatalogDetailContentProps {
     /**
      * Handler for catalog item update.
      */
-    onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
+    onCatalogItemUpdate?: (item: ICatalogItem) => void;
     /**
      * Handler for catalog item update error.
      */
@@ -100,6 +109,7 @@ export function CatalogDetailContent({
     objectType,
     objectDefinition,
     onOpenClick,
+    onEditClick,
     onTagClick,
     onCatalogItemUpdate,
     onCatalogItemUpdateError,
@@ -214,19 +224,40 @@ export function CatalogDetailContent({
                             isDescriptionGenerationEnabled={isDescriptionGenerationEnabled}
                             headerRef={headerRef}
                             actions={
-                                <UiButton
-                                    label={intl.formatMessage({ id: "analyticsCatalog.catalogItem.open" })}
-                                    variant="primary"
-                                    accessibilityConfig={{ role: "link" }}
-                                    onClick={(event) => {
-                                        onOpenClick?.(event, {
-                                            item,
-                                            workspaceId,
-                                            newTab: event.metaKey || event.ctrlKey,
-                                            preventDefault: event.preventDefault.bind(event),
-                                        });
-                                    }}
-                                />
+                                item.type === "parameter" ? (
+                                    canEdit ? (
+                                        <UiButton
+                                            label={intl.formatMessage({
+                                                id: "analyticsCatalog.edit",
+                                            })}
+                                            variant="primary"
+                                            onClick={(event) => {
+                                                onEditClick?.(event, {
+                                                    item,
+                                                    workspaceId,
+                                                    newTab: event.metaKey || event.ctrlKey,
+                                                    preventDefault: event.preventDefault.bind(event),
+                                                });
+                                            }}
+                                        />
+                                    ) : null
+                                ) : (
+                                    <UiButton
+                                        label={intl.formatMessage({
+                                            id: "analyticsCatalog.catalogItem.open",
+                                        })}
+                                        variant="primary"
+                                        accessibilityConfig={{ role: "link" }}
+                                        onClick={(event) => {
+                                            onOpenClick?.(event, {
+                                                item,
+                                                workspaceId,
+                                                newTab: event.metaKey || event.ctrlKey,
+                                                preventDefault: event.preventDefault.bind(event),
+                                            });
+                                        }}
+                                    />
+                                )
                             }
                         />
                         <UiTabs

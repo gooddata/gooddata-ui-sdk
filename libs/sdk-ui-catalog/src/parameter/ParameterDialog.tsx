@@ -7,21 +7,16 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { ConfirmDialog, UiButton, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import type { ParameterSchemaInput } from "./parameterSchema.js";
+import { serializeParameterToYaml } from "./parameterSerialization.js";
 import { validateParameterYaml } from "./parameterValidation.js";
 import { ParameterYamlEditor } from "./ParameterYamlEditor.js";
-
-const DEFAULT_YAML_TEMPLATE = `title: "My Parameter"
-description: ""
-
-definition:
-  type: NUMBER
-  defaultValue: 0
-`;
 
 const messages = defineMessages({
     empty: { id: "analyticsCatalog.parameter.validation.empty" },
     syntax: { id: "analyticsCatalog.parameter.validation.syntax" },
     invalidStructure: { id: "analyticsCatalog.parameter.validation.invalidStructure" },
+    idImmutable: { id: "analyticsCatalog.parameter.dialog.edit.idImmutable" },
     unsupportedType: { id: "analyticsCatalog.parameter.validation.unsupportedType" },
     invalidDefaultValue: { id: "analyticsCatalog.parameter.validation.invalidDefaultValue" },
     invalidConstraints: { id: "analyticsCatalog.parameter.validation.invalidConstraints" },
@@ -36,19 +31,21 @@ const messages = defineMessages({
     dialogSaveAsNew: { id: "analyticsCatalog.parameter.dialog.edit.saveAsNew" },
 });
 
+export type ParameterDialogInitialParameter = ParameterSchemaInput;
+
 type Props = {
     mode: "create" | "edit";
-    initialValue?: string;
+    initialParameter?: ParameterDialogInitialParameter;
     onClose: () => void;
     onSubmit: (parameter: IParameterMetadataObjectDefinition, saveAsNew?: boolean) => Promise<void>;
 };
 
 export function ParameterDialog(props: Props) {
-    const { mode, initialValue = "", onClose, onSubmit } = props;
+    const { mode, initialParameter, onClose, onSubmit } = props;
     const intl = useIntl();
     const isEdit = mode === "edit";
-    const yamlInitialValue = isEdit ? initialValue : DEFAULT_YAML_TEMPLATE;
-    const yamlValue = useRef(yamlInitialValue);
+    const initialYaml = initialParameter ? serializeParameterToYaml(initialParameter) : "";
+    const yamlValue = useRef(initialYaml);
     const [validationError, setValidationError] = useState<string | null>(null);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,14 +57,17 @@ export function ParameterDialog(props: Props) {
         isEdit ? messages.dialogEditSubmit : messages.dialogCreateSubmit,
     );
     const cancelMessage = intl.formatMessage(messages.dialogCancel);
+    const fixedIdentifier = isEdit ? initialParameter?.id : undefined;
 
     const validate = useCallback(
-        (value: string) => {
-            const result = validateParameterYaml(value);
+        (value: string, saveAsNew?: boolean) => {
+            const result = validateParameterYaml(value, {
+                fixedIdentifier: isEdit && saveAsNew !== true ? fixedIdentifier : undefined,
+            });
             setValidationError(result.isValid ? null : intl.formatMessage(messages[result.errorCode]));
             return result;
         },
-        [intl],
+        [fixedIdentifier, intl, isEdit],
     );
 
     const handleClose = useCallback(() => {
@@ -87,7 +87,7 @@ export function ParameterDialog(props: Props) {
 
     const handleSubmit = useCallback(
         async (saveAsNew?: boolean) => {
-            const result = validate(yamlValue.current);
+            const result = validate(yamlValue.current, saveAsNew);
             if (!result.isValid) {
                 return;
             }
@@ -165,7 +165,7 @@ export function ParameterDialog(props: Props) {
                 </div>
                 <div className="gd-parameter-dialog-editor">
                     <ParameterYamlEditor
-                        initialValue={yamlInitialValue}
+                        initialValue={initialYaml}
                         onChange={handleChange}
                         disabled={isSubmitting}
                     />

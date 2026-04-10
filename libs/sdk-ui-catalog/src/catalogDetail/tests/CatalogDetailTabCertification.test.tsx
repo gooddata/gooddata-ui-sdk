@@ -11,6 +11,7 @@ const wrapper = TestIntlProvider;
 
 const baseItem: ICatalogItem = {
     type: "insight",
+    visualizationType: "column",
     identifier: "insight.id",
     title: "Revenue insight",
     description: "Description",

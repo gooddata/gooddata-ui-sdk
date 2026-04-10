@@ -8,6 +8,7 @@ import type { CertificationStatus } from '@gooddata/sdk-model';
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import type { IdentifierRef } from '@gooddata/sdk-model';
+import type { IParameterDefinition } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import type { MetricType } from '@gooddata/sdk-model';
 import { MouseEvent as MouseEvent_2 } from 'react';
@@ -28,6 +29,9 @@ export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>
 
 // @internal
 export type CatalogCreateObjectType = Extract<ObjectType, "analyticalDashboard" | "insight" | "measure" | "parameter">;
+
+// @internal (undocumented)
+export type EditHandlerEvent = OpenHandlerEvent;
 
 // @internal (undocumented)
 export interface IAnalyticsCatalogDetailContentProps extends Omit<ICatalogDetailContentProps, "objectId" | "objectType"> {
@@ -78,12 +82,13 @@ export interface IAnalyticsCatalogProps {
 
 // @internal (undocumented)
 export interface ICatalogDetailContentProps {
-    objectDefinition?: Partial<ICatalogItem> | null;
+    objectDefinition?: ICatalogItemRef | ICatalogItem | null;
     objectId?: string | null;
     objectType?: ObjectType | null;
     onCatalogItemNavigation?: (event: MouseEvent_2, ref: ICatalogItemRef) => void;
-    onCatalogItemUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
+    onCatalogItemUpdate?: (item: ICatalogItem) => void;
     onCatalogItemUpdateError?: (error: Error) => void;
+    onEditClick?: (event: MouseEvent_2, editClickEvent: EditHandlerEvent) => void;
     onOpenClick?: (event: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     onTagClick?: (tag: string) => void;
 }
@@ -98,7 +103,18 @@ export interface ICatalogDetailProps extends ICatalogDetailContentProps {
 }
 
 // @internal
-export interface ICatalogItem extends ICatalogItemRef {
+export type ICatalogItem = ICatalogItemDashboard | ICatalogItemInsight | ICatalogItemMeasure | ICatalogItemParameter | ICatalogItemAttribute | ICatalogItemFact | ICatalogItemDataSet;
+
+// @internal
+export interface ICatalogItemAttribute extends ICatalogItemBase {
+    // (undocumented)
+    dataSet?: IDataSetMetadataObject;
+    // (undocumented)
+    type: "attribute";
+}
+
+// @internal
+export interface ICatalogItemBase extends ICatalogItemRef {
     // (undocumented)
     certification?: {
         status: CertificationStatus;
@@ -111,21 +127,13 @@ export interface ICatalogItem extends ICatalogItemRef {
     // (undocumented)
     createdBy: string;
     // (undocumented)
-    dataSet?: IDataSetMetadataObject;
-    // (undocumented)
     description: string;
-    // (undocumented)
-    format?: string | null;
     // (undocumented)
     isEditable: boolean;
     // (undocumented)
     isHidden?: boolean;
     // (undocumented)
-    isHiddenFromKda?: boolean;
-    // (undocumented)
     isLocked: boolean;
-    // (undocumented)
-    metricType?: MetricType;
     // (undocumented)
     tags: string[];
     // (undocumented)
@@ -134,8 +142,56 @@ export interface ICatalogItem extends ICatalogItemRef {
     updatedAt: Date | null;
     // (undocumented)
     updatedBy: string;
+}
+
+// @internal
+export interface ICatalogItemDashboard extends ICatalogItemBase {
     // (undocumented)
-    visualizationType?: VisualizationType;
+    type: "analyticalDashboard";
+}
+
+// @internal
+export interface ICatalogItemDataSet extends ICatalogItemBase {
+    // (undocumented)
+    dataSet: IDataSetMetadataObject;
+    // (undocumented)
+    type: "dataSet";
+}
+
+// @internal
+export interface ICatalogItemFact extends ICatalogItemBase {
+    // (undocumented)
+    dataSet?: IDataSetMetadataObject;
+    // (undocumented)
+    type: "fact";
+}
+
+// @internal
+export interface ICatalogItemInsight extends ICatalogItemBase {
+    // (undocumented)
+    type: "insight";
+    // (undocumented)
+    visualizationType: VisualizationType;
+}
+
+// @internal
+export interface ICatalogItemMeasure extends ICatalogItemBase {
+    // (undocumented)
+    format?: string | null;
+    // (undocumented)
+    isHiddenFromKda?: boolean;
+    // (undocumented)
+    metricType?: MetricType;
+    // (undocumented)
+    type: "measure";
+}
+
+// @internal
+export interface ICatalogItemParameter extends ICatalogItemBase {
+    // (undocumented)
+    definition: IParameterDefinition;
+    // (undocumented)
+    type: "parameter";
 }
 
 // @internal
@@ -143,6 +199,27 @@ export interface ICatalogItemRef extends IdentifierRef {
     // (undocumented)
     type: ObjectType;
 }
+
+// @internal (undocumented)
+export function isCatalogItemAttribute(item: ICatalogItem | undefined | null): item is ICatalogItemAttribute;
+
+// @internal (undocumented)
+export function isCatalogItemDashboard(item: ICatalogItem | undefined | null): item is ICatalogItemDashboard;
+
+// @internal (undocumented)
+export function isCatalogItemDataSet(item: ICatalogItem | undefined | null): item is ICatalogItemDataSet;
+
+// @internal (undocumented)
+export function isCatalogItemFact(item: ICatalogItem | undefined | null): item is ICatalogItemFact;
+
+// @internal (undocumented)
+export function isCatalogItemInsight(item: ICatalogItem | undefined | null): item is ICatalogItemInsight;
+
+// @internal (undocumented)
+export function isCatalogItemMeasure(item: ICatalogItem | undefined | null): item is ICatalogItemMeasure;
+
+// @internal (undocumented)
+export function isCatalogItemParameter(item: ICatalogItem | undefined | null): item is ICatalogItemParameter;
 
 // @internal
 export type ObjectType = Extract<ObjectType_2, "analyticalDashboard" | "insight" | "measure" | "parameter" | "fact" | "attribute" | "dataSet">;

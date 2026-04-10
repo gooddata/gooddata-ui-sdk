@@ -2,6 +2,75 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.29.0",
+            "tag": "@gooddata/sdk-ui-all_v11.29.0",
+            "date": "Fri, 10 Apr 2026 11:31:09 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-backend-tiger: Fix custom fiscal prefix lost when format locale is unsupported. Add Vietnamese, Indonesian, and Thai locale support for date formatting."
+                    },
+                    {
+                        "comment": "sdk-backend-*,sdk-model: Introduce `parameter` metadata object support."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce loading and creation flow for parameter object type in the catalog."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: enhance bucket mapping for pivot table support  "
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: add and check support for anomaly detection in new chatbot"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: add \"What-If\" scenario support in conversations"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: introduce KDA support in new GenAI conversations"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: support seasonal forecasts in chart config mapping"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: update clustering configs and update scatter plot mapping"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Feature flag enableCustomizableCsvDelimiter true by default."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Mobile view for text filters."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Allow text filters as parent for others."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Prevent crash when text filter used as parent."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Support text filters in drilling."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Commands to better support text filters."
+                    },
+                    {
+                        "comment": "Add generated Python TypedDict types from AAC JSON Schema"
+                    },
+                    {
+                        "comment": "add ENABLE_AI_ON_DATA toggle for organization settings"
+                    },
+                    {
+                        "comment": "fix(sdk-ui-geo): update opacity and highlight selected point(s) when cross-filtering"
+                    },
+                    {
+                        "comment": "Update minimal node to 24.12.0"
+                    },
+                    {
+                        "comment": "chore: Migrate vitest plugin to oxlint"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.28.0",
             "tag": "@gooddata/sdk-ui-all_v11.28.0",
             "date": "Thu, 02 Apr 2026 12:48:18 GMT",

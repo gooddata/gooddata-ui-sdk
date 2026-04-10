@@ -106,8 +106,10 @@
 .gd-parameter-dialog-footer-left {
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-right: auto;
+    justify-content: space-between;
+    gap: 12px;
+    flex: auto;
+    margin-right: 10px;
 }
 
 .gd-parameter-dialog-help-link {

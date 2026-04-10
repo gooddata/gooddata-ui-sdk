@@ -1,7 +1,6 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IParameterMetadataObject,
     type IParameterMetadataObjectDefinition,
@@ -43,12 +42,12 @@ export interface IWorkspaceParametersService {
     getParameter(ref: ObjRef): Promise<IParameterMetadataObject>;
 
     /**
-     * Updates metadata of the parameter.
+     * Applies a partial update to a parameter, including definition fields when provided.
      *
      * @param updatedParameter - update to apply
      */
-    updateParameterMeta(
-        updatedParameter: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    updateParameter(
+        updatedParameter: Partial<IParameterMetadataObjectDefinition> & IMetadataObjectIdentity,
     ): Promise<IParameterMetadataObject>;
 }
 

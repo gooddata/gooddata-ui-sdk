@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { isEqual, transform } from "lodash-es";
+import { isEqual } from "lodash-es";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IUser, MetricType } from "@gooddata/sdk-model";
@@ -10,8 +10,13 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { useCatalogItemLoad } from "./useCatalogItemLoad.js";
 import { getDisplayName } from "../../catalogItem/converter.js";
+import { isCatalogItemHidable, isCatalogItemLoaded, isCatalogItemMeasure } from "../../catalogItem/guards.js";
 import { updateCatalogItem, updateCatalogItemCertification } from "../../catalogItem/query.js";
-import type { ICatalogItem, ICatalogItemRef } from "../../catalogItem/types.js";
+import {
+    type ICatalogItem,
+    type ICatalogItemMeasure,
+    type ICatalogItemRef,
+} from "../../catalogItem/types.js";
 import { useMounted } from "../../hooks/useMounted.js";
 import { type ObjectType } from "../../objectType/types.js";
 
@@ -19,15 +24,12 @@ export interface IUseCatalogItemUpdate {
     currentUser: IUser | null | undefined;
     objectId?: string | null;
     objectType?: ObjectType | null;
-    objectDefinition?: Partial<ICatalogItem> | null;
-    onUpdate?: (item: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void;
+    objectDefinition?: ICatalogItemRef | ICatalogItem | null;
+    onUpdate?: (item: ICatalogItem) => void;
     onError?: (error: Error) => void;
 }
 
-type PersistHandler = (
-    changes: Partial<ICatalogItem> & ICatalogItemRef,
-    newItem: ICatalogItem,
-) => Promise<void> | void;
+type PersistHandler<TItem extends ICatalogItem> = (item: TItem) => Promise<void> | void;
 
 export function useCatalogItemUpdate({
     currentUser,
@@ -56,6 +58,26 @@ export function useCatalogItemUpdate({
         setItem(loadedItem);
     }, [loadedItem]);
 
+    // useCatalogItemLoad will not re-run when the identity/filled status is unchanged,
+    // so this effect handles parent-driven replacements (e.g. dialog saves).
+    useEffect(() => {
+        if (isCatalogItemLoaded(objectDefinition)) {
+            setItem(objectDefinition);
+        }
+    }, [objectDefinition]);
+
+    const revertItemUpdate = useCallback(
+        (err: Error, currentItem: ICatalogItem | null | undefined) => {
+            if (!mounted.current || !currentItem) {
+                return;
+            }
+            setItem(currentItem);
+            onError?.(err);
+            onUpdate?.(currentItem);
+        },
+        [mounted, onError, onUpdate],
+    );
+
     const updateItemTitle = useCallback(
         (title: string) => {
             updateItem(
@@ -67,22 +89,16 @@ export function useCatalogItemUpdate({
                 () => ({
                     title,
                 }),
-                (newItem, changes) => {
+                (newItem) => {
                     setItem(newItem);
-                    onUpdate?.(newItem, changes);
+                    onUpdate?.(newItem);
                 },
                 (err) => {
-                    if (!mounted.current || !item) {
-                        return;
-                    }
-                    // Revert changes
-                    setItem(item);
-                    onError?.(err);
-                    onUpdate?.(item, item);
+                    revertItemUpdate(err, item);
                 },
             );
         },
-        [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
+        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
     );
     const updateItemDescription = useCallback(
         (description: string) => {
@@ -95,22 +111,16 @@ export function useCatalogItemUpdate({
                 () => ({
                     description,
                 }),
-                (newItem, changes) => {
+                (newItem) => {
                     setItem(newItem);
-                    onUpdate?.(newItem, changes);
+                    onUpdate?.(newItem);
                 },
                 (err) => {
-                    if (!mounted.current || !item) {
-                        return;
-                    }
-                    // Revert changes
-                    setItem(item);
-                    onError?.(err);
-                    onUpdate?.(item, item);
+                    revertItemUpdate(err, item);
                 },
             );
         },
-        [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
+        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
     );
     const updateItemTags = useCallback(
         (tags: string[]) => {
@@ -123,25 +133,23 @@ export function useCatalogItemUpdate({
                 () => ({
                     tags,
                 }),
-                (newItem, changes) => {
+                (newItem) => {
                     setItem(newItem);
-                    onUpdate?.(newItem, changes);
+                    onUpdate?.(newItem);
                 },
                 (err) => {
-                    if (!mounted.current || !item) {
-                        return;
-                    }
-                    // Revert changes
-                    setItem(item);
-                    onError?.(err);
-                    onUpdate?.(item, item);
+                    revertItemUpdate(err, item);
                 },
             );
         },
-        [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
+        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
     );
     const updateItemIsHidden = useCallback(
         (isHidden: boolean) => {
+            if (!isCatalogItemHidable(item)) {
+                return;
+            }
+
             updateItem(
                 backend,
                 workspace,
@@ -151,25 +159,23 @@ export function useCatalogItemUpdate({
                 () => ({
                     isHidden,
                 }),
-                (newItem, changes) => {
+                (newItem) => {
                     setItem(newItem);
-                    onUpdate?.(newItem, changes);
+                    onUpdate?.(newItem);
                 },
                 (err) => {
-                    if (!mounted.current || !item) {
-                        return;
-                    }
-                    // Revert changes
-                    setItem(item);
-                    onError?.(err);
-                    onUpdate?.(item, item);
+                    revertItemUpdate(err, item);
                 },
             );
         },
-        [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
+        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
     );
     const updateItemIsHiddenFromKda = useCallback(
         (isHiddenFromKda: boolean) => {
+            if (!isCatalogItemMeasure(item)) {
+                return;
+            }
+
             updateItem(
                 backend,
                 workspace,
@@ -179,30 +185,27 @@ export function useCatalogItemUpdate({
                 () => ({
                     isHiddenFromKda,
                 }),
-                (newItem, changes) => {
+                (newItem) => {
                     setItem(newItem);
-                    onUpdate?.(newItem, changes);
+                    onUpdate?.(newItem);
                 },
                 (err) => {
-                    if (!mounted.current || !item) {
-                        return;
-                    }
-                    // Revert changes
-                    setItem(item);
-                    onError?.(err);
-                    onUpdate?.(item, item);
+                    revertItemUpdate(err, item);
                 },
             );
         },
-        [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
+        [backend, currentUser, item, onUpdate, revertItemUpdate, status, workspace],
     );
     const persistMeasureChanges = useCallback(
-        (changes: Partial<ICatalogItem> & ICatalogItemRef) =>
-            persistMeasureMetadata(backend, workspace, changes),
+        (nextItem: ICatalogItemMeasure) => persistMeasureMetadata(backend, workspace, nextItem),
         [backend, workspace],
     );
     const updateItemMetricType = useCallback(
         (metricType: MetricType | undefined) => {
+            if (!isCatalogItemMeasure(item)) {
+                return;
+            }
+
             updateItem(
                 backend,
                 workspace,
@@ -212,25 +215,24 @@ export function useCatalogItemUpdate({
                 () => ({
                     metricType,
                 }),
-                (newItem, changes) => {
+                (newItem) => {
                     setItem(newItem);
-                    onUpdate?.(newItem, changes);
+                    onUpdate?.(newItem);
                 },
                 (err) => {
-                    if (!mounted.current || !item) {
-                        return;
-                    }
-                    setItem(item);
-                    onError?.(err);
-                    onUpdate?.(item, item);
+                    revertItemUpdate(err, item);
                 },
                 persistMeasureChanges,
             );
         },
-        [mounted, backend, currentUser, item, onError, onUpdate, persistMeasureChanges, status, workspace],
+        [backend, currentUser, item, onUpdate, persistMeasureChanges, revertItemUpdate, status, workspace],
     );
     const updateItemFormat = useCallback(
         (format: string | null) => {
+            if (!isCatalogItemMeasure(item)) {
+                return;
+            }
+
             updateItem(
                 backend,
                 workspace,
@@ -240,31 +242,20 @@ export function useCatalogItemUpdate({
                 () => ({
                     format,
                 }),
-                (newItem, changes) => {
+                (newItem) => {
                     setItem(newItem);
-                    onUpdate?.(newItem, changes);
+                    onUpdate?.(newItem);
                 },
                 (err) => {
-                    if (!mounted.current || !item) {
-                        return;
-                    }
-                    setItem(item);
-                    onError?.(err);
-                    onUpdate?.(item, item);
+                    revertItemUpdate(err, item);
                 },
                 persistMeasureChanges,
             );
         },
-        [mounted, backend, currentUser, item, onError, onUpdate, persistMeasureChanges, status, workspace],
+        [backend, currentUser, item, onUpdate, persistMeasureChanges, revertItemUpdate, status, workspace],
     );
     const persistCertificationChanges = useCallback(
-        (_changes: Partial<ICatalogItem> & ICatalogItemRef, newItem: ICatalogItem) => {
-            return updateCatalogItemCertification(backend, workspace, {
-                type: newItem.type,
-                identifier: newItem.identifier,
-                certification: newItem.certification,
-            });
-        },
+        (newItem: ICatalogItem) => updateCatalogItemCertification(backend, workspace, newItem),
         [backend, workspace],
     );
     const updateItemCertification = useCallback(
@@ -288,29 +279,23 @@ export function useCatalogItemUpdate({
                           }
                         : undefined,
                 }),
-                (newItem, changes) => {
+                (newItem) => {
                     setItem(newItem);
-                    onUpdate?.(newItem, changes);
+                    onUpdate?.(newItem);
                 },
                 (err) => {
-                    if (!mounted.current || !item) {
-                        return;
-                    }
-                    setItem(item);
-                    onError?.(err);
-                    onUpdate?.(item, item);
+                    revertItemUpdate(err, item);
                 },
                 persistCertificationChanges,
             );
         },
         [
-            mounted,
             backend,
             currentUser,
             item,
-            onError,
             onUpdate,
             persistCertificationChanges,
+            revertItemUpdate,
             status,
             workspace,
         ],
@@ -331,43 +316,41 @@ export function useCatalogItemUpdate({
     };
 }
 
-function updateItem(
+function updateItem<TItem extends ICatalogItem>(
     backend: IAnalyticalBackend,
     workspace: string,
     user: IUser | null | undefined,
-    item: ICatalogItem | undefined | null,
+    item: TItem | undefined | null,
     disabled: boolean,
-    updater: () => Partial<ICatalogItem>,
-    onUpdate: (newItem: ICatalogItem, changes: Partial<ICatalogItem> & ICatalogItemRef) => void,
+    updater: () => Partial<TItem>,
+    onUpdate: (newItem: TItem) => void,
     onError: (error: Error) => void,
-    persist?: PersistHandler,
+    persist?: PersistHandler<TItem>,
 ) {
     if (disabled || !item) {
         return;
     }
 
-    const { newItem, changes, changed } = makeUpdateToItem(user, item, updater);
-
-    if (!changed) {
+    const itemChanges = updater();
+    if (!hasChanges(item, itemChanges)) {
         return;
     }
 
-    onUpdate(newItem, changes);
-    const persistFn =
-        persist ??
-        ((itemChanges: Partial<ICatalogItem> & ICatalogItemRef) =>
-            updateCatalogItem(backend, workspace, itemChanges));
-    Promise.resolve(persistFn(changes, newItem)).catch(onError);
+    const newItem = makeUpdatedItem(user, item, itemChanges);
+
+    onUpdate(newItem);
+    const persistFn = persist ?? ((nextItem: TItem) => updateCatalogItem(backend, workspace, nextItem));
+    Promise.resolve(persistFn(newItem)).catch(onError);
 }
 
-function makeUpdateToItem(
+function makeUpdatedItem<TItem extends ICatalogItem>(
     user: IUser | undefined | null,
-    item: ICatalogItem,
-    updater: () => Partial<ICatalogItem>,
-) {
-    const newItem: ICatalogItem = {
+    item: TItem,
+    changes: Partial<TItem>,
+): TItem {
+    return {
         ...item,
-        ...updater(),
+        ...changes,
         ...(user
             ? {
                   updatedBy: getDisplayName(user),
@@ -377,57 +360,23 @@ function makeUpdateToItem(
               }),
         updatedAt: new Date(),
     };
-
-    const diff = calculateDiff(item, newItem);
-
-    const changes: Partial<ICatalogItem> & ICatalogItemRef = {
-        ...diff,
-        type: item.type,
-        identifier: item.identifier,
-    };
-    const changed = Object.keys(diff).length > 0;
-
-    return {
-        newItem,
-        changes,
-        changed,
-    };
 }
 
-function calculateDiff<T extends object>(oldItem: Partial<T>, newItem: Partial<T>) {
-    return transform(
-        oldItem,
-        (result, oldValue, key: keyof T) => {
-            const newValue = newItem[key];
-
-            if (Array.isArray(oldValue)) {
-                if (!isEqual(oldValue, newValue)) {
-                    result[key] = newValue as T[keyof T];
-                }
-            } else if (!isEqual(oldValue, newValue)) {
-                result[key] = newValue as T[keyof T];
-            }
-        },
-        {} as Partial<T>,
-    );
+function hasChanges<TItem extends ICatalogItem>(item: TItem, changes: Partial<TItem>): boolean {
+    return Object.keys(changes).some((key) => {
+        const typedKey = key as keyof TItem;
+        return !isEqual(item[typedKey], changes[typedKey]);
+    });
 }
 
-function persistMeasureMetadata(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    changes: Partial<ICatalogItem> & ICatalogItemRef,
-) {
-    if (changes.type !== "measure" || (changes.format === undefined && changes.metricType === undefined)) {
-        return Promise.resolve();
-    }
-
+function persistMeasureMetadata(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemMeasure) {
     return backend
         .workspace(workspace)
         .measures()
         .getMeasure(
             {
                 type: "measure",
-                identifier: changes.identifier,
+                identifier: item.identifier,
             },
             {
                 loadUserData: true,
@@ -439,8 +388,8 @@ function persistMeasureMetadata(
                 .measures()
                 .updateMeasure({
                     ...measure,
-                    format: changes.format ?? measure.format,
-                    metricType: changes.metricType ?? measure.metricType,
+                    format: item.format ?? measure.format,
+                    metricType: item.metricType ?? measure.metricType,
                 })
                 .then(() => undefined),
         );

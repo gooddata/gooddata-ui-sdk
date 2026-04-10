@@ -1763,14 +1763,15 @@ class DummyWorkspaceParametersService implements IWorkspaceParametersService {
         };
     }
 
-    public async updateParameterMeta(
-        parameter: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    public async updateParameter(
+        parameter: Partial<IParameterMetadataObjectDefinition> & IMetadataObjectIdentity,
     ): Promise<IParameterMetadataObject> {
         const existing = await this.getParameter(parameter.ref);
 
         return {
             ...existing,
             ...parameter,
+            id: parameter.id ?? existing.id,
             type: "parameter",
         };
     }

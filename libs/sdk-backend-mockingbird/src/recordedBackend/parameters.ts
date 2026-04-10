@@ -6,7 +6,6 @@ import {
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import type {
-    IMetadataObjectBase,
     IMetadataObjectIdentity,
     IParameterMetadataObject,
     IParameterMetadataObjectDefinition,
@@ -28,8 +27,8 @@ export class RecordedParameters implements IWorkspaceParametersService {
         throw new NotSupported("not supported");
     }
 
-    public async updateParameterMeta(
-        _updatedParameter: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    public async updateParameter(
+        _updatedParameter: Partial<IParameterMetadataObjectDefinition> & IMetadataObjectIdentity,
     ): Promise<IParameterMetadataObject> {
         throw new NotSupported("not supported");
     }

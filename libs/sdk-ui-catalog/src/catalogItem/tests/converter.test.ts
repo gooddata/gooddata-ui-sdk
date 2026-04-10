@@ -49,7 +49,7 @@ describe("convertMeasureToCatalogItem", () => {
 });
 
 describe("convertParameterToCatalogItem", () => {
-    it("should convert parameter audit metadata and keep it read-only", () => {
+    it("should convert parameter audit metadata and keep its definition for editing", () => {
         const parameter: IParameterMetadataObject = {
             id: "parameter.id",
             uri: "/gdc/md/parameter.id",
@@ -89,6 +89,7 @@ describe("convertParameterToCatalogItem", () => {
         expect(catalogItem.type).toBe("parameter");
         expect(catalogItem.createdBy).toBe("Jane Doe");
         expect(catalogItem.updatedBy).toBe("John Smith");
-        expect(catalogItem.isEditable).toBe(false);
+        expect(catalogItem.isEditable).toBe(true);
+        expect(catalogItem.definition).toEqual(parameter.definition);
     });
 });

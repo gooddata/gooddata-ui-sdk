@@ -23,7 +23,17 @@ import {
     isParameterMetadataObject,
 } from "@gooddata/sdk-model";
 
-import type { ICatalogItem, VisualizationType } from "./types.js";
+import type {
+    ICatalogItem,
+    ICatalogItemAttribute,
+    ICatalogItemDashboard,
+    ICatalogItemDataSet,
+    ICatalogItemFact,
+    ICatalogItemInsight,
+    ICatalogItemMeasure,
+    ICatalogItemParameter,
+    VisualizationType,
+} from "./types.js";
 import { mapObjectType } from "../objectType/mapping.js";
 import { parseBackendDate } from "../utils/date.js";
 
@@ -62,7 +72,9 @@ export function convertEntityToCatalogItem(
     throw new Error("Unknown entity type");
 }
 
-export function convertDashboardToCatalogItem(dashboard: IDashboard | IListedDashboard): ICatalogItem {
+export function convertDashboardToCatalogItem(
+    dashboard: IDashboard | IListedDashboard,
+): ICatalogItemDashboard {
     const updatedAt = dashboard.updated || dashboard.created;
 
     return {
@@ -81,7 +93,7 @@ export function convertDashboardToCatalogItem(dashboard: IDashboard | IListedDas
     };
 }
 
-export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem {
+export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItemInsight {
     const updatedAt = insight.updated || insight.created;
     return {
         identifier: insight.identifier,
@@ -101,7 +113,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
     };
 }
 
-export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): ICatalogItem {
+export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): ICatalogItemMeasure {
     const updatedAt = measure.updated || measure.created;
     const format = measure.format && measure.format.length > 0 ? measure.format : null;
 
@@ -125,7 +137,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
     };
 }
 
-export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogItem {
+export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogItemFact {
     return {
         identifier: fact.id,
         type: "fact",
@@ -143,7 +155,7 @@ export function convertFactToCatalogItem(fact: IFactMetadataObject): ICatalogIte
     };
 }
 
-export function convertParameterToCatalogItem(parameter: IParameterMetadataObject): ICatalogItem {
+export function convertParameterToCatalogItem(parameter: IParameterMetadataObject): ICatalogItemParameter {
     const updatedAt = parameter.updated || parameter.created;
 
     return {
@@ -157,11 +169,12 @@ export function convertParameterToCatalogItem(parameter: IParameterMetadataObjec
         updatedBy: getDisplayName(parameter.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: parameter.isLocked ?? false,
-        isEditable: false,
+        isEditable: true,
+        definition: parameter.definition,
     };
 }
 
-export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObject): ICatalogItem {
+export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObject): ICatalogItemAttribute {
     return {
         identifier: attribute.id,
         type: "attribute",
@@ -179,7 +192,7 @@ export function convertAttributeToCatalogItem(attribute: IAttributeMetadataObjec
     };
 }
 
-export function convertDataSetToCatalogItem(dataSet: IDataSetMetadataObject): ICatalogItem {
+export function convertDataSetToCatalogItem(dataSet: IDataSetMetadataObject): ICatalogItemDataSet {
     return {
         identifier: dataSet.id,
         type: "dataSet",
@@ -192,7 +205,6 @@ export function convertDataSetToCatalogItem(dataSet: IDataSetMetadataObject): IC
         updatedAt: null,
         isLocked: dataSet.isLocked ?? false,
         isEditable: true,
-        isHidden: dataSet.isHidden,
         dataSet: dataSet,
     };
 }
@@ -244,5 +256,5 @@ export function convertTrendingObjectToCatalogItem(obj: IAnalyticsCatalogTrendin
         visualizationType: obj.visualizationUrl
             ? (obj.visualizationUrl.replace("local:", "") as VisualizationType)
             : undefined,
-    };
+    } as ICatalogItem;
 }

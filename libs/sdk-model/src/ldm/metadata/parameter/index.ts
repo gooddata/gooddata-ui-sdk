@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type IAuditable } from "../../../base/metadata.js";
-import { type IMetadataObject, isMetadataObject } from "../types.js";
+import { type IMetadataObject, type IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 
 /**
  * Parameter metadata object.
@@ -20,14 +20,9 @@ export interface IParameterMetadataObject extends IMetadataObject, IAuditable {
  *
  * @public
  */
-export interface IParameterMetadataObjectDefinition {
+export interface IParameterMetadataObjectDefinition extends IMetadataObjectDefinition {
     type: "parameter";
-    id?: string;
-    title?: string;
-    description?: string;
-    tags?: string[];
     definition: IParameterDefinition;
-    areRelationsValid?: boolean;
 }
 
 /**

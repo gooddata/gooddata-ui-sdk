@@ -4,9 +4,9 @@ import { describe, expect, it } from "vitest";
 
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import { convertParameterToBackend } from "../ParameterConverter.js";
+import { convertParameterToBackendCreate, convertParameterToBackendUpdate } from "../ParameterConverter.js";
 
-describe("convertParameterToBackend", () => {
+describe("convertParameterToBackendCreate", () => {
     it("should convert parameter definition for create requests", () => {
         const parameter: IParameterMetadataObjectDefinition = {
             type: "parameter",
@@ -24,7 +24,7 @@ describe("convertParameterToBackend", () => {
             },
         };
 
-        expect(convertParameterToBackend(parameter)).toEqual({
+        expect(convertParameterToBackendCreate(parameter)).toEqual({
             title: "Threshold",
             description: "Alert threshold",
             tags: ["alerts"],
@@ -35,6 +35,26 @@ describe("convertParameterToBackend", () => {
                     min: 0,
                     max: 100,
                 },
+            },
+        });
+    });
+});
+
+describe("convertParameterToBackendUpdate", () => {
+    it("should include only provided fields for update requests", () => {
+        expect(
+            convertParameterToBackendUpdate({
+                title: "Updated threshold",
+                definition: {
+                    type: "NUMBER",
+                    defaultValue: 5,
+                },
+            }),
+        ).toEqual({
+            title: "Updated threshold",
+            definition: {
+                type: "NUMBER",
+                defaultValue: 5,
             },
         });
     });

@@ -4,9 +4,20 @@ import type {
     AnalyticsCatalogGenerateDescriptionObjectType,
     IAnalyticalBackend,
 } from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
+import { type IParameterMetadataObjectDefinition, idRef } from "@gooddata/sdk-model";
 
-import type { ICatalogItem, ICatalogItemQueryOptions, ICatalogItemRef } from "./types.js";
+import type {
+    ICatalogItem,
+    ICatalogItemAttribute,
+    ICatalogItemDashboard,
+    ICatalogItemDataSet,
+    ICatalogItemFact,
+    ICatalogItemInsight,
+    ICatalogItemMeasure,
+    ICatalogItemParameter,
+    ICatalogItemQueryOptions,
+    ICatalogItemRef,
+} from "./types.js";
 import type { ObjectType } from "../objectType/types.js";
 
 const PAGE_SIZE = 50;
@@ -284,11 +295,7 @@ export function getDateDatasetsQuery({
     );
 }
 
-export function updateCatalogItem(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    item: Partial<ICatalogItem> & ICatalogItemRef,
-) {
+export function updateCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItem) {
     switch (item.type) {
         case "analyticalDashboard":
             return updateDashboardCatalogItem(backend, workspace, item);
@@ -302,15 +309,17 @@ export function updateCatalogItem(
             return updateFactCatalogItem(backend, workspace, item);
         case "dataSet":
             return updateDataSetCatalogItem(backend, workspace, item);
+        case "parameter":
+            return updateParameterCatalogItem(backend, workspace, item);
         default:
-            throw new Error(`Unsupported catalog item type: ${item.type}`);
+            throw new Error(`Unsupported catalog item type`);
     }
 }
 
 function updateDashboardCatalogItem(
     backend: IAnalyticalBackend,
     workspace: string,
-    item: Partial<ICatalogItem> & ICatalogItemRef,
+    item: ICatalogItemDashboard,
 ) {
     return backend
         .workspace(workspace)
@@ -323,11 +332,7 @@ function updateDashboardCatalogItem(
         });
 }
 
-function updateMeasureCatalogItem(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    item: Partial<ICatalogItem> & ICatalogItemRef,
-) {
+function updateMeasureCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemMeasure) {
     return backend
         .workspace(workspace)
         .measures()
@@ -341,11 +346,7 @@ function updateMeasureCatalogItem(
         });
 }
 
-function updateInsightCatalogItem(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    item: Partial<ICatalogItem> & ICatalogItemRef,
-) {
+function updateInsightCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemInsight) {
     return backend
         .workspace(workspace)
         .insights()
@@ -361,7 +362,7 @@ function updateInsightCatalogItem(
 function updateAttributeCatalogItem(
     backend: IAnalyticalBackend,
     workspace: string,
-    item: Partial<ICatalogItem> & ICatalogItemRef,
+    item: ICatalogItemAttribute,
 ) {
     return backend
         .workspace(workspace)
@@ -375,11 +376,7 @@ function updateAttributeCatalogItem(
         });
 }
 
-function updateFactCatalogItem(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    item: Partial<ICatalogItem> & ICatalogItemRef,
-) {
+function updateFactCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemFact) {
     return backend
         .workspace(workspace)
         .facts()
@@ -392,11 +389,7 @@ function updateFactCatalogItem(
         });
 }
 
-function updateDataSetCatalogItem(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    item: Partial<ICatalogItem> & ICatalogItemRef,
-) {
+function updateDataSetCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemDataSet) {
     return backend
         .workspace(workspace)
         .datasets()
@@ -405,6 +398,31 @@ function updateDataSetCatalogItem(
             title: item.title,
             description: item.description,
             tags: item.tags,
+        });
+}
+
+export async function createParameterCatalogItem(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    parameter: IParameterMetadataObjectDefinition,
+) {
+    return backend.workspace(workspace).parameters().createParameter(parameter);
+}
+
+export function updateParameterCatalogItem(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemParameter,
+) {
+    return backend
+        .workspace(workspace)
+        .parameters()
+        .updateParameter({
+            ...buildIdentity(item),
+            title: item.title,
+            description: item.description,
+            tags: item.tags,
+            definition: item.definition,
         });
 }
 

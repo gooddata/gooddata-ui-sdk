@@ -3,14 +3,12 @@
 import { parse as parseYaml } from "yaml";
 import type * as z from "zod/mini";
 
-import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
-
-import { parameterSchema } from "./parameterSchema.js";
+import { type ParameterSchema, parameterSchema } from "./parameterSchema.js";
 
 export type ParameterValidationResult =
     | {
           isValid: true;
-          parameter: IParameterMetadataObjectDefinition;
+          parameter: ParameterSchema;
       }
     | {
           isValid: false;
@@ -21,13 +19,21 @@ export type ParameterValidationErrorCode =
     | "empty"
     | "syntax"
     | "invalidStructure"
+    | "idImmutable"
     | "unsupportedType"
     | "invalidDefaultValue"
     | "invalidConstraints"
     | "invalidConstraintRange"
     | "invalidTags";
 
-export function validateParameterYaml(value: string): ParameterValidationResult {
+type ValidateParameterYamlOptions = {
+    fixedIdentifier?: string;
+};
+
+export function validateParameterYaml(
+    value: string,
+    options: ValidateParameterYamlOptions = {},
+): ParameterValidationResult {
     if (value.trim() === "") {
         return invalid("empty");
     }
@@ -42,6 +48,10 @@ export function validateParameterYaml(value: string): ParameterValidationResult 
     const result = parameterSchema.safeParse(parsed);
     if (!result.success) {
         return classifySchemaError(result.error);
+    }
+
+    if (options.fixedIdentifier !== undefined && result.data.id !== options.fixedIdentifier) {
+        return invalid("idImmutable");
     }
 
     return {

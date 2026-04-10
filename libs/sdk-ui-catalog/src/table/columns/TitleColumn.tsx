@@ -8,7 +8,8 @@ import { type IUiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
 import { CatalogItemLockMemo } from "../../catalogItem/CatalogItemLock.js";
 import { CatalogItemVisibilityIconMemo } from "../../catalogItem/CatalogItemVisibilityIcon.js";
-import { type ICatalogItem } from "../../catalogItem/types.js";
+import { getVisualizationType } from "../../catalogItem/guards.js";
+import { type ICatalogItem, type VisualizationType } from "../../catalogItem/types.js";
 import { CertificationIconMemo } from "../../certification/CertificationIcon.js";
 import { ObjectTypeIconMemo } from "../../objectType/ObjectTypeIcon.js";
 import { ObjectTypeTooltip } from "../../objectType/ObjectTypeTooltip.js";
@@ -28,7 +29,7 @@ export const titleColumn: (intl: IntlShape, width: number) => IUiAsyncTableColum
                 <ObjectTypeRoleIconMemo
                     intl={intl}
                     type={item.type}
-                    visualizationType={item.visualizationType}
+                    visualizationType={getVisualizationType(item)}
                 />
             );
         },
@@ -64,7 +65,7 @@ export const titleColumn: (intl: IntlShape, width: number) => IUiAsyncTableColum
 type ObjectTypeRoleIconProps = {
     intl: IntlShape;
     type: ICatalogItem["type"];
-    visualizationType?: ICatalogItem["visualizationType"];
+    visualizationType?: VisualizationType;
 };
 
 const ObjectTypeRoleIconMemo = memo(function ObjectTypeRoleIcon(props: ObjectTypeRoleIconProps) {

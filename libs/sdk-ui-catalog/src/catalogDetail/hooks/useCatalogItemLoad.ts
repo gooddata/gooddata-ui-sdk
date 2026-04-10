@@ -12,13 +12,14 @@ import {
     convertMeasureToCatalogItem,
     convertParameterToCatalogItem,
 } from "../../catalogItem/converter.js";
-import { type ICatalogItem } from "../../catalogItem/types.js";
+import { isCatalogItemLoaded } from "../../catalogItem/guards.js";
+import { type ICatalogItem, type ICatalogItemRef } from "../../catalogItem/types.js";
 import { type ObjectType } from "../../objectType/types.js";
 
 export interface IUseCatalogItemLoad {
     objectId?: string | null;
     objectType?: ObjectType | null;
-    objectDefinition?: Partial<ICatalogItem> | null;
+    objectDefinition?: ICatalogItemRef | ICatalogItem | null;
 }
 
 export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: IUseCatalogItemLoad): {
@@ -28,7 +29,7 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
 } {
     const id = objectId ?? objectDefinition?.identifier;
     const type = objectType ?? objectDefinition?.type;
-    const filled = isCatalogItemFilled(objectDefinition ?? undefined);
+    const filled = isCatalogItemLoaded(objectDefinition);
 
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
@@ -42,7 +43,7 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
                 }
                 // Object is already loaded
                 if (filled) {
-                    return Promise.resolve(objectDefinition as ICatalogItem);
+                    return Promise.resolve(objectDefinition);
                 }
                 return loadObjectDefinition(backend.workspace(workspace), id, type);
             },
@@ -70,22 +71,6 @@ export function useCatalogItemLoad({ objectDefinition, objectId, objectType }: I
         error,
         item: result,
     };
-}
-
-function isCatalogItemFilled(item: Partial<ICatalogItem> = {}): item is ICatalogItem {
-    const keys: (keyof ICatalogItem)[] = [
-        "identifier",
-        "type",
-        "title",
-        "description",
-        "tags",
-        "createdBy",
-        "createdAt",
-        "updatedBy",
-        "updatedAt",
-    ];
-
-    return keys.every((key) => !(item[key] === undefined));
 }
 
 async function loadObjectDefinition(
@@ -177,6 +162,6 @@ async function loadObjectDefinition(
                 )
                 .then(convertFactToCatalogItem);
         default:
-            throw new Error(`Unsupported object type: ${type}`);
+            throw new Error("Unsupported object type");
     }
 }

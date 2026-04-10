@@ -203,18 +203,13 @@
         }
     }
 
-    &__item {
+    &__item.gd-list-item {
         font-size: 12px;
-        line-height: 28px;
-        padding: 0 5px 0 10px;
-        min-height: 28px;
+        line-height: 18px;
+        padding: 5px 5px 5px 10px;
 
         span::first-letter {
             text-transform: capitalize;
-        }
-
-        &:first-child {
-            margin-top: 5px;
         }
 
         &.is-selected {
@@ -286,16 +281,12 @@
             display: none;
         }
 
-        &__item {
+        &__item.gd-list-item {
             min-height: 40px;
             line-height: 40px;
             font-size: 14px;
             padding: 0 10px;
             border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
-
-            &:first-child {
-                margin-top: 0;
-            }
         }
 
         &__button {
