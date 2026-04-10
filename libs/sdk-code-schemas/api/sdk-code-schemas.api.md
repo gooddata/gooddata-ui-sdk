@@ -732,6 +732,8 @@ type DashboardTextFilter = DashboardTextFilter1 | DashboardTextFilter2;
 // @public
 interface DashboardTextFilter1 {
     // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
     case_sensitive?: boolean;
     // (undocumented)
     condition: "is" | "isNot";
@@ -752,6 +754,8 @@ interface DashboardTextFilter1 {
 //
 // @public
 interface DashboardTextFilter2 {
+    // (undocumented)
+    [k: string]: unknown;
     // (undocumented)
     case_sensitive?: boolean;
     // (undocumented)
@@ -4930,7 +4934,6 @@ export const metadata_v1: {
             type: string;
             title: string;
             description: string;
-            additionalProperties: boolean;
             properties: {
                 title: {
                     type: string;

@@ -40,7 +40,7 @@ jobs:
             group: infra1-runners-arc
             labels: runners-small
         steps:
-            - uses: actions/github-script@v8
+            - uses: actions/github-script@v9
               with:
                   github-token: ${{secrets.GITHUB_TOKEN}}
                   script: |
@@ -165,7 +165,7 @@ jobs:
             group: infra1-runners-arc
             labels: runners-small
         steps:
-            - uses: actions/github-script@v8
+            - uses: actions/github-script@v9
               with:
                   github-token: ${{secrets.GITHUB_TOKEN}}
                   script: |
