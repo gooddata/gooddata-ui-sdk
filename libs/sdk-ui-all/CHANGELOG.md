@@ -1,9 +1,34 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 02 Apr 2026 12:48:18 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Apr 2026 11:31:09 GMT and should not be manually modified.
+
+## 11.29.0
+Fri, 10 Apr 2026 11:31:09 GMT
+
+### Updates
+
+- sdk-backend-tiger: Fix custom fiscal prefix lost when format locale is unsupported. Add Vietnamese, Indonesian, and Thai locale support for date formatting.
+- sdk-backend-*,sdk-model: Introduce `parameter` metadata object support.
+- sdk-ui-catalog: Introduce loading and creation flow for parameter object type in the catalog.
+- sdk-ui-gen-ai: enhance bucket mapping for pivot table support  
+- sdk-ui-gen-ai: add and check support for anomaly detection in new chatbot
+- sdk-ui-gen-ai: add "What-If" scenario support in conversations
+- sdk-ui-gen-ai: introduce KDA support in new GenAI conversations
+- sdk-ui-gen-ai: support seasonal forecasts in chart config mapping
+- sdk-ui-gen-ai: update clustering configs and update scatter plot mapping
+- sdk-backend-tiger: Feature flag enableCustomizableCsvDelimiter true by default.
+- sdk-ui-filters: Mobile view for text filters.
+- sdk-ui-all: Allow text filters as parent for others.
+- sdk-ui-dashboard: Prevent crash when text filter used as parent.
+- sdk-ui-all: Support text filters in drilling.
+- sdk-ui-dashboard: Commands to better support text filters.
+- Add generated Python TypedDict types from AAC JSON Schema
+- add ENABLE_AI_ON_DATA toggle for organization settings
+- fix(sdk-ui-geo): update opacity and highlight selected point(s) when cross-filtering
+- Update minimal node to 24.12.0
+- chore: Migrate vitest plugin to oxlint
 
 ## 11.28.0
-
 Thu, 02 Apr 2026 12:48:18 GMT
 
 ### Updates
@@ -37,7 +62,6 @@ Thu, 02 Apr 2026 12:48:18 GMT
 - Add playwright tests for new new agentic ui
 
 ## 11.27.0
-
 Thu, 26 Mar 2026 07:00:37 GMT
 
 ### Updates
@@ -60,7 +84,6 @@ Thu, 26 Mar 2026 07:00:37 GMT
 - sdk-backend-spi: Introduce SPI for user data filters management
 
 ## 11.26.0
-
 Thu, 19 Mar 2026 07:54:08 GMT
 
 ### Updates
@@ -81,7 +104,6 @@ Thu, 19 Mar 2026 07:54:08 GMT
 - Fix search widget disappearing after reloading page
 
 ## 11.25.0
-
 Thu, 12 Mar 2026 11:37:55 GMT
 
 ### Updates
@@ -100,7 +122,6 @@ Thu, 12 Mar 2026 11:37:55 GMT
 - sdk-ui-dashboard: Introduce experimental dashboard layout density setting
 
 ## 11.24.0
-
 Thu, 05 Mar 2026 08:43:40 GMT
 
 ### Updates
@@ -120,7 +141,7 @@ Thu, 05 Mar 2026 08:43:40 GMT
 - sdk-ui-gen-ai: support clustering and SCATTER chart in gen ai
 - sdk-ui-catalog: add certifiedBy field to certification details in catalog items
 - sdk-ui-catalog: update design of lineage
-- sdk-ui-dashboard: repair of crash when selectiong anomaly detection in alerts
+- sdk-ui-dashboard: repair of crash when selectiong anomaly detection in alerts 
 - Added what-if analysis in AI Assistant UI
 - Added support for metrics definitions override in visualizations
 - sdk-ui-dashboard: Use global IDs when converting MVF dimensionality for alerts
@@ -139,7 +160,6 @@ Thu, 05 Mar 2026 08:43:40 GMT
 - Fix crashing trending tab in analytics catalog
 
 ## 11.22.0
-
 Thu, 19 Feb 2026 10:02:57 GMT
 
 ### Updates
@@ -156,7 +176,6 @@ Thu, 19 Feb 2026 10:02:57 GMT
 - "gen-ai: Add AI-generated catalog description flow and Tiger support updates"
 
 ## 11.21.0
-
 Thu, 12 Feb 2026 18:33:21 GMT
 
 ### Updates
@@ -169,7 +188,6 @@ Thu, 12 Feb 2026 18:33:21 GMT
 - sdk-ui-ext: Persist grand total position.
 
 ## 11.20.0
-
 Thu, 12 Feb 2026 08:00:41 GMT
 
 ### Updates
@@ -192,7 +210,6 @@ Thu, 12 Feb 2026 08:00:41 GMT
 - sdk-ui-kit: Introduce SCSS variables with hardcoded colors for catalog item types icons and use them instead of hardcoded colors everywhere in the code across our libs and apps.
 
 ## 11.19.0
-
 Fri, 06 Feb 2026 10:30:03 GMT
 
 ### Updates
@@ -233,7 +250,6 @@ Fri, 06 Feb 2026 10:30:03 GMT
 - update fixture to 3.3.10
 
 ## 11.18.0
-
 Thu, 29 Jan 2026 08:15:37 GMT
 
 ### Minor changes
@@ -255,7 +271,6 @@ Thu, 29 Jan 2026 08:15:37 GMT
 - sdk-ui-filters: Allow application of metric value filter with ranking value filter if a feature flag is enabled.
 
 ## 11.17.0
-
 Thu, 22 Jan 2026 10:30:55 GMT
 
 ### Patches
@@ -284,18 +299,17 @@ Thu, 22 Jan 2026 10:30:55 GMT
 - Added support for tables in AI Asisstant response
 - sdk-ui-kit: Enhance dropdown accessibility props.
 - sdk-ui-dashboard: Add settings to tabular pdf scheduling option.
-- sdk-ui: Extend dashboard url builders to accept isEmbedded option. Switch to single object argument.
+- sdk-ui: Extend dashboard url builders to accept isEmbedded option. Switch to single object argument. 
 - Add Amazon Athena data source support
 - chore: Rename various @internal, @alpha and @beta interfaces to conform with naming standards (added I to start of names)
 - chore: Remove barrel files from all packages
 - Integrate new FilterGroup into a dashboard
 - sdk-ui-filters: Allow metric value filter in headline visualization type and empty insights
-- sdk-ui-ext: Enable enableImprovedAdFilters by default
+- sdk-ui-ext: Enable enableImprovedAdFilters by default 
 - sdk-ui-gen-ai: Merging reasoning thoughts under steps
 - sdk-ui-gen-ai: Change the logic for handling multiple interaction IDs in the assistant message stream.
 
 ## 11.16.0
-
 Thu, 15 Jan 2026 09:13:41 GMT
 
 ### Patches
@@ -304,7 +318,7 @@ Thu, 15 Jan 2026 09:13:41 GMT
 
 ### Updates
 
--   - sdk-ui-ext: Introduce TypeScript strict mode.
+- - sdk-ui-ext: Introduce TypeScript strict mode.
 - sdk-ui-kit: Fix `UiAsyncTable` tab stop when there are no sortable columns in the header.
 - sdk-ui-kit: Make `EditableLabel` accessible by keyboard.
 - sdk-ui-kit: Restore focus on `UiDrawer` close and add `returnFocusTo` option.
@@ -330,7 +344,7 @@ Thu, 15 Jan 2026 09:13:41 GMT
 - sdk-ui-kit: Extend accessibility props in UiIcon component.
 - sdk-ui-dashboards: Introduce disabled drill option e.g. for cases when drill to url attributes are missing
 - Changed: Feature flag enableDashboardTabs has been removed
-- sdk-ui-dashboard: Allow to hide 'Add Tab' button in dashboard edit mode
+- sdk-ui-dashboard: Allow to hide 'Add Tab' button in dashboard edit mode 
 - Add FilterGroup component to sdk-ui-filters
 - sdk-ui-filters: Shorten the long preview text in metric filter, align the preview with UX designs.
 - sdk-ui-filters: Fixed date dataset dropdown clipping issue in mvf attribute picker (use overlay instead of absolutely positioned div)
@@ -339,7 +353,6 @@ Thu, 15 Jan 2026 09:13:41 GMT
 - sdk-ui-gen-ai: Updating the logic for reasoning completion.
 
 ## 11.15.0
-
 Thu, 08 Jan 2026 08:13:01 GMT
 
 ### Updates
@@ -362,7 +375,6 @@ Thu, 08 Jan 2026 08:13:01 GMT
 - revert Crowdin structure to investigate blocker
 
 ## 11.14.0
-
 Thu, 18 Dec 2025 07:14:24 GMT
 
 ### Updates
@@ -391,7 +403,6 @@ Thu, 18 Dec 2025 07:14:24 GMT
 - Added Reasoning to the chatbot
 
 ## 11.13.0
-
 Thu, 11 Dec 2025 17:13:20 GMT
 
 ### Updates
@@ -437,7 +448,6 @@ Thu, 11 Dec 2025 17:13:20 GMT
 - sdk-ui-dashboard: Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
 
 ## 11.12.0
-
 Thu, 04 Dec 2025 08:44:09 GMT
 
 ### Updates
@@ -480,7 +490,6 @@ Thu, 04 Dec 2025 08:44:09 GMT
 - sdk-backend-tiger: Exclude alerts created on dashboard with evaluation frequency from schedule list.
 
 ## 11.11.0
-
 Thu, 27 Nov 2025 07:59:24 GMT
 
 ### Updates
@@ -519,7 +528,6 @@ Thu, 27 Nov 2025 07:59:24 GMT
 - sdk-ui-gen-ai: fix accessibility issues with feedback
 
 ## 11.10.0
-
 Thu, 20 Nov 2025 08:13:37 GMT
 
 ### Updates
@@ -552,7 +560,6 @@ Thu, 20 Nov 2025 08:13:37 GMT
 - AI feedback fixes
 
 ## 11.9.0
-
 Thu, 13 Nov 2025 07:39:54 GMT
 
 ### Updates
@@ -561,7 +568,7 @@ Thu, 13 Nov 2025 07:39:54 GMT
 - sdk-ui-catalog: Implement artificial `Without issues` filtering option so that users can filter out objects without any semantic quality issues.
 - sdk-ui-kit: Update empty state color in `UiAsyncTableEmptyState`.
 - sdk-backend: Add `excludeStrategy` to `IMemoryItemsFilterOptions`.
-- sdk-ui-gen-ai: Support KDA in chatbot visualisation drill, repair summary if no keys drivers
+- sdk-ui-gen-ai: Support KDA in chatbot visualisation drill, repair summary if no keys drivers 
 - sdk-ui-gen-ai: Key driver analysis use metric title and right granularity format, updated SDK client
 - feat: Ability to create a new dashboard tab
 - sdk-ui-dashboard: Add ability to delete dashboard tabs.
@@ -572,11 +579,10 @@ Thu, 13 Nov 2025 07:39:54 GMT
 - sdk-ui-geo: Increase data points limit for geo charts from 25,000 to 50,000.
 - sdk-ui-semantic-search: Migrate to css modules
 - chore: Upgrade sass to 1.70.0
-- sdk-ui-dashboard: Changed: Feature flag enableDashboardFiltersApplyModes has been removed. The "Apply all dashboard filter changes at once" is available to everyone by default.
+- sdk-ui-dashboard: Changed: Feature flag enableDashboardFiltersApplyModes has been removed. The "Apply all dashboard filter changes at once" is available to everyone by default. 
 - sdk-ui-kit: Fixing UIAsyncTable row height
 
 ## 11.8.0
-
 Thu, 06 Nov 2025 08:32:11 GMT
 
 ### Updates
@@ -614,13 +620,11 @@ Thu, 06 Nov 2025 08:32:11 GMT
 - sdk-ui-gen-ai: add chat feedback popup
 
 ## 11.7.1
-
 Mon, 03 Nov 2025 08:30:02 GMT
 
 _Version update only_
 
 ## 11.7.0
-
 Thu, 30 Oct 2025 08:25:43 GMT
 
 ### Updates
@@ -637,7 +641,7 @@ Thu, 30 Oct 2025 08:25:43 GMT
 - sdk-ui-kit: adding data-testid for some elements
 - sdk-ui-catalog: fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
 - sdk-ui-catalog: Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
-- sdk-ui-gen-ai: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- sdk-ui-gen-ai: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized" 
 - sdk-ui-dashboard: Use filters from dashboard and also drill (apply filter) on graph click
 - sdk-ui-dashboard: fix error that appears when drilling into some drivers
 - sdk-ui-dashboard: blank page appears when clicking on certain data points
@@ -649,7 +653,6 @@ Thu, 30 Oct 2025 08:25:43 GMT
 - sdk-ui-kit: Ability to specify to the header menu item use the starting path to check if the item is active.
 
 ## 11.6.0
-
 Thu, 23 Oct 2025 07:42:08 GMT
 
 ### Updates
@@ -662,7 +665,7 @@ Thu, 23 Oct 2025 07:42:08 GMT
 - sdk-backend: Rename `getQualityIssues` to `getQualityReport`.
 - fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
 - Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
-- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized" 
 - [sdk-ui-dashboard] KDA Cannot Be Triggered When Visualization Is Sliced by Date–Week/Year, Support table chart for drill
 - [sdk-ui-dashboard]: repair KDA graph to show relevant key drivers
 - [api-client-tiger]: Update definition from new server openapi specs
@@ -683,7 +686,6 @@ Thu, 23 Oct 2025 07:42:08 GMT
 - Removing AI Memory POC UI
 
 ## 11.5.0
-
 Fri, 17 Oct 2025 07:29:11 GMT
 
 ### Updates
@@ -699,7 +701,7 @@ Fri, 17 Oct 2025 07:29:11 GMT
 - sdk-ui-catalog: Introduce semantic quality score card with capability to run a semantic quality check.
 - fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
 - Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
-- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized" 
 - [sdk-ui]: Support normalizedValue in execution, propagate into KDA dialog, update date formatter
 - key driver analysis implementation, load from backend, update dialog
 - [sdk-ui-dashboard]: Support for graph in key driver detail
@@ -716,14 +718,13 @@ Fri, 17 Oct 2025 07:29:11 GMT
 - Added: Tiger API client has been updated to match the latest backend state.
 
 ## 11.4.0
-
 Fri, 10 Oct 2025 08:42:12 GMT
 
 ### Updates
 
 - fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
 - Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
-- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized" 
 - [sdk-ui-kit]: Chatbot icon does not have enough contrast against the background
 - [sdk-ui-kit]: Upgrade codemirror
 - [sdk-ui-dashboard]: support KDA drill menu in graph with date attribute
@@ -731,7 +732,6 @@ Fri, 10 Oct 2025 08:42:12 GMT
 - Fix issue with latest Safari not rendering dashboards visualizations.
 
 ## 11.3.0
-
 Wed, 08 Oct 2025 11:02:53 GMT
 
 ### Updates
@@ -754,7 +754,7 @@ Wed, 08 Oct 2025 11:02:53 GMT
 - [sdk-ui-kit] Support badge on button
 - [sdk-ui-gen-ai] Switch to table on every visualisation
 - [sdk-ui-gen-ai]: Save button incorrectly available in AI chatbot when insight fails to render
-- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized"
+- [sdk-ui-gen-ai]: AI chatbot UI shows Chatbot restart when backend return "Some terms weren't recognized" 
 - [sdk-ui-backend-tiger]: feature flag for enableChangeAnalysis
 - Fix: Add proper a11y attributes to saved views
 - Return default feature flags on FeatureHub request failure.
@@ -771,7 +771,6 @@ Wed, 08 Oct 2025 11:02:53 GMT
 - Remove unused feature flag: enableNewNavigationForResponsiveUi
 
 ## 11.2.0
-
 Thu, 02 Oct 2025 09:04:26 GMT
 
 ### Updates
@@ -862,7 +861,6 @@ Thu, 02 Oct 2025 09:04:26 GMT
 - create alert/schedule dialog accessibility, changes to sdk components
 
 ## 11.1.0
-
 Thu, 25 Sep 2025 08:07:44 GMT
 
 ### Updates
@@ -876,7 +874,7 @@ Thu, 25 Sep 2025 08:07:44 GMT
 - sdk-model: Introduce `dataSet` property to attribute `IAttributeMetadataObject` and fact `IFactMetadataObject` metadata objects.
 - sdk-backend: Expose dataset metadata on attribute/fact builders and tiger converters.
 - sdk-ui-catalog: Show dataset title in the catalog detail view for attributes and facts.
-- [sdk-ui-catalog] Detail drawer is open fullscreen
+- [sdk-ui-catalog] Detail drawer is open fullscreen 
 - fix: [Catalog] Detail view - "Last modified by" show User Id when update by user Manage ws permission
 - Can NOT remove the description of object detail, Object details - Visualization - Missing "Created by" and "Last modified by" after refresh page
 - [sdk-ui-ext] Added KDA dialog component designs
@@ -894,7 +892,6 @@ Thu, 25 Sep 2025 08:07:44 GMT
 - Remove unused feature flag: hideKpiDrillInEmbedded
 
 ## 11.0.0
-
 Mon, 22 Sep 2025 08:18:19 GMT
 
 ### Minor changes
@@ -908,7 +905,7 @@ Mon, 22 Sep 2025 08:18:19 GMT
 - sdk-ui-catalog: Add support for tags filtering
 - sdk-ui-catalog: Update the tooltip text content for the catalog help icon.
 - sdk-ui-kit: Extend `DropdownInvertableSelect` with `header` prop to support custom header in the dropdown.
-- sdk-ui-kit: Extend `DropdownInvertableSelect` with `renderNoData` prop
+- sdk-ui-kit: Extend `DropdownInvertableSelect` with  `renderNoData` prop
 - sdk-ui-kit: Extend `DropdownInvertableSelect` with `alignPoints` prop to support custom alignment.
 - sdk-ui-catalog: Improve responsiveness on smaller screens.
 - sdk-ui-catalog: Render `createdAt` in the table as a fallback when `updatedAt` is not defined in the measure metadata object.
@@ -927,14 +924,13 @@ Mon, 22 Sep 2025 08:18:19 GMT
 - Use proper color for pattern fill chart tooltips
 - Add cron-parser to sdk-ui-ext
 - Remove code related to the obsolete enableKDWidgetCustomHeight setting
-- remove legacy code related to the old layouting
+- remove legacy code related to the old layouting 
 - Prevent re-mounting of automation date filter button
 - propagate properly onExportReady callback in Headline
 - enable charts accessibility improvements by default
 - Add support for React 19 and drop support for older React versions (16, 17). See [migration guide](https://www.gooddata.com/docs/gooddata-ui/latest/quick_start/#update-from-v10-to-v11).
 
 ## 10.43.0
-
 Thu, 11 Sep 2025 07:36:12 GMT
 
 ### Updates
@@ -953,7 +949,7 @@ Thu, 11 Sep 2025 07:36:12 GMT
 - Suppress row click to open the tag component, Long object ID content overflows the infomation dialog.
 - limit for ai assistant search in feature flag
 - sdk-ui-catalog: design QA of Analytics Catalogue
-- sdk-ui-catalog: design QA of Analytics Catalogue
+-  sdk-ui-catalog: design QA of Analytics Catalogue
 - fe support for ranking filter in AI Assistant
 - Updates to tooltip and popover components
 - Update table component to support align and some css tune
@@ -974,7 +970,6 @@ Thu, 11 Sep 2025 07:36:12 GMT
 - Added: data test id prop to SDK UI Kit Input component.
 
 ## 10.42.0
-
 Thu, 04 Sep 2025 08:00:17 GMT
 
 ### Updates
@@ -983,7 +978,7 @@ Thu, 04 Sep 2025 08:00:17 GMT
 - Introduce optional `id` array field to `IFilterBaseOptions`
 - Updated the `useSemanticSearch` hook to pass `deepSearch` boolean value. This fixes previous behavior when `true` value was always passed.
 - Updated the `useSemanticSearch` hook to ignore state changes when the search request is aborted, ensuring that no updates occur after cancellation.
-- Integrate the semantic search functionality into the Analytics Catalog.
+-  Integrate the semantic search functionality into the Analytics Catalog. 
 - Show created by display name in Analytics Catalog when possible
 - sdk-model: Added `ObjectOrigin` type to define the origin of objects for inheritance-based filtering.
 - sdk-backend-spi/tiger: Add origin filtering to query interfaces
@@ -1008,7 +1003,6 @@ Thu, 04 Sep 2025 08:00:17 GMT
 - convert minute/hour granularities of en-US-x-24h locale to UTC before passing to formatInTimezone due to time conversion already happening on BE and then again within this function
 
 ## 10.41.0
-
 Thu, 28 Aug 2025 07:43:12 GMT
 
 ### Updates
@@ -1022,7 +1016,6 @@ Thu, 28 Aug 2025 07:43:12 GMT
 - Show as table/original visualization on drill dialog only affects this specific insight.
 
 ## 10.40.0
-
 Thu, 21 Aug 2025 07:17:56 GMT
 
 ### Updates
@@ -1032,7 +1025,6 @@ Thu, 21 Aug 2025 07:17:56 GMT
 - Remove enableNewHeadline feature flag and old headline code
 
 ## 10.39.0
-
 Thu, 14 Aug 2025 10:14:08 GMT
 
 ### Updates
@@ -1045,13 +1037,11 @@ Thu, 14 Aug 2025 10:14:08 GMT
 - Make various dashboard menu icons to respect the theme (schedules, drills, save dashboard as new).
 
 ## 10.38.0
-
 Thu, 07 Aug 2025 08:23:00 GMT
 
 _Version update only_
 
 ## 10.37.0
-
 Thu, 31 Jul 2025 07:50:16 GMT
 
 ### Updates
@@ -1059,7 +1049,6 @@ Thu, 31 Jul 2025 07:50:16 GMT
 - Fix focusing of hidden legend items
 
 ## 10.36.0
-
 Tue, 29 Jul 2025 13:43:27 GMT
 
 ### Updates
@@ -1067,7 +1056,6 @@ Tue, 29 Jul 2025 13:43:27 GMT
 - Fix keyboard navigation in chart legend
 
 ## 10.35.0
-
 Thu, 24 Jul 2025 10:25:27 GMT
 
 ### Updates
@@ -1080,12 +1068,11 @@ Thu, 24 Jul 2025 10:25:27 GMT
 - feat(api-client-tiger): upgrade the API client to match the latest backend REST API capabilities
 
 ## 10.34.0
-
 Mon, 14 Jul 2025 09:23:49 GMT
 
 ### Updates
 
-- remove obsolete UiMenu props
+- remove obsolete UiMenu props 
 - fix(sdk-ui-dashboard): documentation link displayed in tooltip shown over the new Column container item of dashboard leads to the related part of documentation page now
 - fix(sdk-ui-dashboard): render row end hotspot only when a widget is dragged to fix the row height resizer offset in the column container
 - fix(sdk-ui-dashboard): make widget a width resizer the same thickness as a height resizer
@@ -1093,7 +1080,6 @@ Mon, 14 Jul 2025 09:23:49 GMT
 - fix(sdk-ui-dashboard): introduce and use a new feature flag to enable Flexible Layout to not enable the uncomplete feature in previously released SDKs
 
 ## 10.33.0
-
 Thu, 10 Jul 2025 06:54:29 GMT
 
 ### Updates
@@ -1108,19 +1094,16 @@ Thu, 10 Jul 2025 06:54:29 GMT
 - Do not render the flexible layout previous row's row end drop zone.
 
 ## 10.32.0
-
 Mon, 30 Jun 2025 11:32:45 GMT
 
 _Version update only_
 
 ## 10.31.0
-
 Mon, 16 Jun 2025 14:58:30 GMT
 
 _Version update only_
 
 ## 10.30.0
-
 Mon, 09 Jun 2025 16:54:46 GMT
 
 ### Updates
@@ -1128,13 +1111,11 @@ Mon, 09 Jun 2025 16:54:46 GMT
 - Added method for setting metadata locale to settings services
 
 ## 10.29.0
-
 Thu, 05 Jun 2025 07:23:01 GMT
 
 _Version update only_
 
 ## 10.28.0
-
 Thu, 29 May 2025 06:57:15 GMT
 
 ### Updates
@@ -1145,7 +1126,6 @@ Thu, 29 May 2025 06:57:15 GMT
 - Change chart's X axis label autorotation value from -90° to -45°
 
 ## 10.27.0
-
 Fri, 16 May 2025 08:01:14 GMT
 
 ### Updates
@@ -1153,7 +1133,6 @@ Fri, 16 May 2025 08:01:14 GMT
 - Fix irrelevant values info in attribute filter when apply all at once is on
 
 ## 10.26.0
-
 Mon, 05 May 2025 06:30:05 GMT
 
 ### Updates
@@ -1161,13 +1140,11 @@ Mon, 05 May 2025 06:30:05 GMT
 - add property drillStep into InsightBody component so dashboard customizations can behave based on drill context
 
 ## 10.25.1
-
 Wed, 23 Apr 2025 14:19:46 GMT
 
 _Version update only_
 
 ## 10.25.0
-
 Thu, 17 Apr 2025 06:58:58 GMT
 
 ### Updates
@@ -1176,7 +1153,6 @@ Thu, 17 Apr 2025 06:58:58 GMT
 - Make relative range picker more accessible
 
 ## 10.24.0
-
 Thu, 03 Apr 2025 11:48:06 GMT
 
 ### Updates
@@ -1187,7 +1163,6 @@ Thu, 03 Apr 2025 11:48:06 GMT
 - Dashboard execution and rendering is not blocked by loading of catalog
 
 ## 10.23.0
-
 Thu, 20 Mar 2025 09:15:55 GMT
 
 ### Updates
@@ -1197,7 +1172,6 @@ Thu, 20 Mar 2025 09:15:55 GMT
 - Support of new filter mode Apply all at once in Dashboard
 
 ## 10.22.0
-
 Thu, 06 Mar 2025 08:46:39 GMT
 
 ### Updates
@@ -1210,19 +1184,16 @@ Thu, 06 Mar 2025 08:46:39 GMT
 - Update HighCharts library to latest version
 
 ## 10.20.0
-
 Thu, 20 Feb 2025 08:45:08 GMT
 
 _Version update only_
 
 ## 10.19.0
-
 Thu, 06 Feb 2025 07:58:07 GMT
 
 _Version update only_
 
 ## 10.18.0
-
 Thu, 23 Jan 2025 08:58:58 GMT
 
 ### Updates
@@ -1230,33 +1201,28 @@ Thu, 23 Jan 2025 08:58:58 GMT
 - Introduce NotificationPanel component.
 
 ## 10.17.0
-
 Thu, 09 Jan 2025 09:00:05 GMT
 
 _Version update only_
 
 ## 10.16.0
-
 Thu, 12 Dec 2024 07:29:13 GMT
 
 ### Updates
 
-- Add support for nested dashboard layouts (hidden behind a feature flag)
+- Add support for nested dashboard layouts (hidden behind a feature flag) 
 
 ## 10.15.0
-
 Thu, 28 Nov 2024 11:23:13 GMT
 
 _Version update only_
 
 ## 10.14.0
-
 Thu, 14 Nov 2024 11:46:42 GMT
 
 _Version update only_
 
 ## 10.13.0
-
 Thu, 31 Oct 2024 08:50:19 GMT
 
 ### Updates
@@ -1265,7 +1231,6 @@ Thu, 31 Oct 2024 08:50:19 GMT
 - Added new Visualization Switcher widget to render group of visualizations together on dashboard (available for GoodData.CN / GoodData Cloud only).
 
 ## 10.12.0
-
 Thu, 17 Oct 2024 06:56:12 GMT
 
 ### Updates
@@ -1273,7 +1238,6 @@ Thu, 17 Oct 2024 06:56:12 GMT
 - Introduce support for saved filter views on dashboards. It allows to customize filter context for individual user and dashboard and save it for later use.
 
 ## 10.11.0
-
 Thu, 03 Oct 2024 07:11:15 GMT
 
 ### Updates
@@ -1281,7 +1245,6 @@ Thu, 03 Oct 2024 07:11:15 GMT
 - Introduce support for saved filter views on dashboards. It allows to customize filter context for individual user and dashboard and save it for later use.
 
 ## 10.10.0
-
 Thu, 19 Sep 2024 06:58:04 GMT
 
 ### Updates
@@ -1289,7 +1252,6 @@ Thu, 19 Sep 2024 06:58:04 GMT
 - Improved Handling of Secondary Labels in AttributeFilter
 
 ## 10.9.0
-
 Thu, 05 Sep 2024 08:14:25 GMT
 
 ### Updates
@@ -1297,7 +1259,6 @@ Thu, 05 Sep 2024 08:14:25 GMT
 - Add possibility to ignore specified attributes in the drill down intersection. Modify addDrillDownForInsightWidget and modifyDrillDownForInsightWidget commands to be able to configure it (breaking).
 
 ## 10.8.0
-
 Thu, 22 Aug 2024 07:33:19 GMT
 
 ### Updates
@@ -1305,7 +1266,6 @@ Thu, 22 Aug 2024 07:33:19 GMT
 - Introduce user filter views to dashboard component
 
 ## 10.7.0
-
 Thu, 08 Aug 2024 09:46:36 GMT
 
 ### Updates
@@ -1315,13 +1275,11 @@ Thu, 08 Aug 2024 09:46:36 GMT
 - Top menu UI component now supports a new search button
 
 ## 10.6.0
-
 Thu, 25 Jul 2024 08:35:32 GMT
 
 _Version update only_
 
 ## 10.5.1
-
 Fri, 12 Jul 2024 11:00:39 GMT
 
 ### Updates
@@ -1329,7 +1287,6 @@ Fri, 12 Jul 2024 11:00:39 GMT
 - Fixed display of tooltips in drill dialog
 
 ## 10.5.0
-
 Thu, 11 Jul 2024 08:01:45 GMT
 
 ### Updates
@@ -1339,23 +1296,20 @@ Thu, 11 Jul 2024 08:01:45 GMT
 - Using visualizationObject whenever provided as alternative to executionResult for export.
 
 ## 10.4.0
-
 Thu, 27 Jun 2024 08:11:53 GMT
 
 _Version update only_
 
 ## 10.3.0
-
 Thu, 13 Jun 2024 08:17:52 GMT
 
 ### Updates
 
-- Allow different position of ellipsis in ShortenedText component
+- Allow different position of ellipsis in ShortenedText component 
 - F1-349 Implement webhooks api in tiger functions
 - allow creating a workspace as a child
 
 ## 10.2.0
-
 Thu, 30 May 2024 08:50:26 GMT
 
 ### Updates
@@ -1368,7 +1322,6 @@ Thu, 30 May 2024 08:50:26 GMT
 - Enhanced export function to support PDF format and added PDF configuration option.
 
 ## 10.1.0
-
 Thu, 16 May 2024 08:08:00 GMT
 
 ### Updates
@@ -1376,7 +1329,6 @@ Thu, 16 May 2024 08:08:00 GMT
 - Added a workspace service for working with export definitions metadata objects
 
 ## 10.0.0
-
 Thu, 18 Apr 2024 08:07:32 GMT
 
 ### Updates
@@ -1390,7 +1342,6 @@ Thu, 18 Apr 2024 08:07:32 GMT
 - Introduce ability to limit attribute filter values by dependent date filters on GoodData Cloud dashboards.
 
 ## 9.9.2
-
 Wed, 19 Mar 2025 11:50:06 GMT
 
 ### Updates
@@ -1398,13 +1349,11 @@ Wed, 19 Mar 2025 11:50:06 GMT
 - Update ag-grid-community and ag-grid-react library to latest version
 
 ## 9.9.1
-
 Thu, 18 Apr 2024 11:19:00 GMT
 
 _Version update only_
 
 ## 9.9.0
-
 Thu, 21 Mar 2024 09:56:41 GMT
 
 ### Updates
@@ -1414,7 +1363,6 @@ Thu, 21 Mar 2024 09:56:41 GMT
 - Add tags to 'measure' objects
 
 ## 9.8.1
-
 Fri, 15 Mar 2024 13:31:24 GMT
 
 ### Updates
@@ -1422,7 +1370,6 @@ Fri, 15 Mar 2024 13:31:24 GMT
 - Introduce theme loading status with better information about state of theme loading
 
 ## 9.8.0
-
 Thu, 07 Mar 2024 09:02:52 GMT
 
 ### Updates
@@ -1431,7 +1378,6 @@ Thu, 07 Mar 2024 09:02:52 GMT
 - Add services to list insights and dashboards with paging
 
 ## 9.7.0
-
 Thu, 22 Feb 2024 09:17:23 GMT
 
 ### Updates
@@ -1441,7 +1387,6 @@ Thu, 22 Feb 2024 09:17:23 GMT
 - Introduce ability to limit attribute filter values by metric on GoodData Cloud dashboards.
 
 ## 9.6.0
-
 Thu, 25 Jan 2024 10:00:31 GMT
 
 ### Updates
@@ -1450,7 +1395,6 @@ Thu, 25 Jan 2024 10:00:31 GMT
 - Introduce cross-filtering highlighting in charts.
 
 ## 9.5.0
-
 Thu, 11 Jan 2024 12:13:13 GMT
 
 ### Updates
@@ -1465,16 +1409,14 @@ Thu, 11 Jan 2024 12:13:13 GMT
 - Enable decorating dashboard content in plugins customization API.
 
 ## 9.4.0
-
 Thu, 30 Nov 2023 11:57:11 GMT
 
 ### Updates
 
 - Users can configure the dashboard filter to be interactive, locked, or hidden.
-- Remove `isDomainAdmin` method from Bear Legacy Functions.
+- Remove `isDomainAdmin` method from Bear Legacy Functions. 
 
 ## 9.3.0
-
 Thu, 02 Nov 2023 11:25:49 GMT
 
 ### Updates
@@ -1484,7 +1426,6 @@ Thu, 02 Nov 2023 11:25:49 GMT
 - Introduce possibility to cache client calls
 
 ## 9.2.0
-
 Fri, 06 Oct 2023 13:12:04 GMT
 
 ### Updates
@@ -1493,7 +1434,6 @@ Fri, 06 Oct 2023 13:12:04 GMT
 - Introduce new attribute hierarchy catalog entity which is used for implicit drill-down in dashboards.
 
 ## 9.1.0
-
 Fri, 08 Sep 2023 07:19:23 GMT
 
 ### Updates
@@ -1506,13 +1446,11 @@ Fri, 08 Sep 2023 07:19:23 GMT
 - Added support for Waterfall chart visualizations.
 
 ## 9.0.1
-
 Thu, 17 Aug 2023 13:20:29 GMT
 
 _Version update only_
 
 ## 9.0.0
-
 Thu, 27 Jul 2023 12:35:32 GMT
 
 ### Updates
@@ -1535,7 +1473,6 @@ Thu, 27 Jul 2023 12:35:32 GMT
 - Add the continuous line configuration for the Line, Area and Combo charts
 
 ## 8.12.3
-
 Thu, 05 Oct 2023 07:58:45 GMT
 
 ### Updates
@@ -1543,7 +1480,6 @@ Thu, 05 Oct 2023 07:58:45 GMT
 - Use @gooddata/number-formatter instead of @gooddata/numberjs library
 
 ## 8.12.2
-
 Wed, 19 Jul 2023 14:12:54 GMT
 
 ### Updates
@@ -1551,7 +1487,6 @@ Wed, 19 Jul 2023 14:12:54 GMT
 - The new SPI export methods for downloading of insight and dashboard export data were added. The methods attach exported data as a blob to current browser window instance and return Object URL pointing to the blob and name of the downloaded file. There is no need to export data manually via URI. The dashboard component uses these new methods now. This means that export from dashboard component works even when provided backend uses Tiger token authentication.
 
 ## 8.12.1
-
 Mon, 17 Apr 2023 08:24:37 GMT
 
 ### Updates
@@ -1559,7 +1494,6 @@ Mon, 17 Apr 2023 08:24:37 GMT
 - Add fallback for unknown visualization types of insights
 
 ## 8.12.0
-
 Thu, 09 Mar 2023 08:43:20 GMT
 
 ### Updates
@@ -1573,7 +1507,6 @@ Thu, 09 Mar 2023 08:43:20 GMT
 - Support Geo Pushpin chart for GoodData Cloud.
 
 ## 8.11.0
-
 Thu, 20 Oct 2022 09:18:18 GMT
 
 ### Updates
@@ -1586,7 +1519,6 @@ Thu, 20 Oct 2022 09:18:18 GMT
 - The withCaching backend decorator has been made public. RecommendedCachingConfiguration from @gooddata/sdk-backend-base can be used to configure backend caching.
 
 ## 8.10.0
-
 Thu, 14 Jul 2022 08:56:22 GMT
 
 ### Updates
@@ -1603,7 +1535,6 @@ Thu, 14 Jul 2022 08:56:22 GMT
 - The useDashboardAsyncRender hook and related commands and events that inform about the dashboard rendering status are now public.
 
 ## 8.9.0
-
 Thu, 17 Mar 2022 12:48:39 GMT
 
 ### Updates
@@ -1614,7 +1545,6 @@ Thu, 17 Mar 2022 12:48:39 GMT
 - The DashboardStoreAccessor, SingleDashboardStoreAccessor and DashboardStoreAccessorRepository classes were added to enable handling of the state of the Dashboard component outside the component itself.
 
 ## 8.8.0
-
 Thu, 27 Jan 2022 08:25:24 GMT
 
 ### Updates
@@ -1632,7 +1562,6 @@ Thu, 27 Jan 2022 08:25:24 GMT
 - The option for setting compatibility of dashboard plugins with the minEngineVersion and maxEngineVersion properties was added.
 
 ## 8.7.1
-
 Tue, 14 Dec 2021 13:31:37 GMT
 
 ### Updates
@@ -1640,7 +1569,6 @@ Tue, 14 Dec 2021 13:31:37 GMT
 - Fixed bug with dashboardPluginHosts validation
 
 ## 8.7.0
-
 Thu, 02 Dec 2021 08:24:11 GMT
 
 ### Updates
@@ -1648,7 +1576,6 @@ Thu, 02 Dec 2021 08:24:11 GMT
 - Dashboard, a component for embedding dashboards created in KPI Dashboards, is added in the beta stage.
 
 ## 8.6.0
-
 Thu, 07 Oct 2021 11:37:01 GMT
 
 ### Updates
@@ -1657,7 +1584,6 @@ Thu, 07 Oct 2021 11:37:01 GMT
 - Support for data sampling in the charts and the DashboardView component through execution configuration was added (available only in GoodData.CN for Vertica).
 
 ## 8.5.1
-
 Thu, 26 Aug 2021 13:55:29 GMT
 
 ### Updates
@@ -1665,7 +1591,6 @@ Thu, 26 Aug 2021 13:55:29 GMT
 - Some redundant token requests prevented.
 
 ## 8.5.0
-
 Thu, 08 Jul 2021 09:09:51 GMT
 
 ### Updates
@@ -1676,7 +1601,6 @@ Thu, 08 Jul 2021 09:09:51 GMT
 - Support for parent-child filtering was added to the AttributeFilter and AttributeFilterButton components.
 
 ## 8.4.0
-
 Thu, 03 Jun 2021 09:24:58 GMT
 
 ### Updates
@@ -1693,7 +1617,6 @@ Thu, 03 Jun 2021 09:24:58 GMT
 - The useBackendStrict and useWorkspaceStrict hooks are added for better developer experience.
 
 ## 8.3.1
-
 Fri, 14 May 2021 12:00:31 GMT
 
 ### Updates
@@ -1701,7 +1624,6 @@ Fri, 14 May 2021 12:00:31 GMT
 - Fixed logout flow on Tiger >=1.1
 
 ## 8.3.0
-
 Wed, 14 Apr 2021 11:56:54 GMT
 
 ### Updates
@@ -1713,7 +1635,6 @@ Wed, 14 Apr 2021 11:56:54 GMT
 - GoodData.CN compatibility - this version is the first version fully compatible with GoodData.CN backend
 
 ## 8.2.0
-
 Thu, 11 Mar 2021 10:47:16 GMT
 
 ### Updates
@@ -1723,7 +1644,6 @@ Thu, 11 Mar 2021 10:47:16 GMT
 - The capability to validate URLs against an organization’s whitelist is added to the backend. Currently, the implementation supports only the sdk-backend-bear package backend. The sdk-backend-tiger package backend considers all validation requests valid. The responses from the backend are cached by the decorated caching backend layer.
 
 ## 8.1.0
-
 Thu, 03 Dec 2020 09:40:04 GMT
 
 ### Updates
@@ -1738,7 +1658,7 @@ Thu, 03 Dec 2020 09:40:04 GMT
 - Hook alternatives for the Execute component (useCancelablePromise, useDataView, useExecution, and useDataExport) are added.
 
 ## 8.0.0
-
 Thu, 08 Oct 2020 07:51:36 GMT
 
 _Initial release_
+
