@@ -280,7 +280,7 @@ export interface IAgentsQuery {
     query(): Promise<IAgentsQueryResult>;
     queryAll(): Promise<IAgent[]>;
     withFilter(filter: {
-        title?: string;
+        name?: string;
     }): IAgentsQuery;
     withPage(page: number): IAgentsQuery;
     withSize(size: number): IAgentsQuery;

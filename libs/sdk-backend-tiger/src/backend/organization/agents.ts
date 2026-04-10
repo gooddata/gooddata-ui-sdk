@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { AgentsQuery } from "./agentsQuery.js";
-import { convertAgent } from "../../convertors/fromBackend/agentConvertor.js";
+import { convertAgent } from "../../convertors/fromBackend/AgentConverter.js";
 import { convertAgentSkill } from "../../convertors/fromBackend/agentSkillConvertor.js";
 import {
     convertAgentPatchToBackend,

@@ -11,5 +11,10 @@
                 }
             ]
         }
+    ],
+    "changeDirs": [
+        {
+            "glob": "src/internal/translations/en-US.json"
+        }
     ]
 }

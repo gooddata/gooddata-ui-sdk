@@ -185,6 +185,8 @@ export type GenAIAssistantProps = {
     excludeTags?: string[];
     onDispatcher?: (dispatch: (action: unknown) => void) => void;
     LandingScreenComponentProvider?: () => ComponentType;
+    DisclaimerComponentProvider?: () => ComponentType | null;
+    className?: string;
 };
 
 // @public @deprecated
