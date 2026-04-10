@@ -2393,6 +2393,7 @@ export interface TextFilter1 {
     values: (string | null)[];
     case_sensitive?: boolean;
     display_as?: DisplayAsLabelIdentifier5;
+    [k: string]: unknown;
 }
 export interface TextFilter2 {
     type: "text_filter";
@@ -2410,6 +2411,7 @@ export interface TextFilter2 {
     value: string;
     case_sensitive?: boolean;
     display_as?: DisplayAsLabelIdentifier6;
+    [k: string]: unknown;
 }
 export interface MultipleConditions1 {
     type: "metric_value_filter";

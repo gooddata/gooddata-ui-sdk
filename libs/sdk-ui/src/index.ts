@@ -210,6 +210,7 @@ export {
     validationSeverity,
 } from "./base/react/validation/utils.js";
 export type {
+    IChildRegistration,
     IInvalidDatapoint,
     IValidationSeverity,
     IValidationContextValue,

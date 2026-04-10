@@ -5,6 +5,7 @@
 import { describe, expectTypeOf, it } from "vitest";
 
 import {
+    type IChildRegistration,
     type IInvalidDatapoint,
     type IInvalidNode,
     type IInvalidNodeAtPath,
@@ -195,7 +196,9 @@ describe("Validation Types", () => {
         });
 
         it("should have registerChild method with correct signature", () => {
-            expectTypeOf<TestContext["registerChild"]>().toEqualTypeOf<(child: IInvalidNode) => () => void>();
+            expectTypeOf<TestContext["registerChild"]>().toEqualTypeOf<
+                (child: IInvalidNode) => IChildRegistration
+            >();
         });
 
         describe("setInvalidDatapoints method", () => {

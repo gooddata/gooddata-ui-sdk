@@ -42,7 +42,7 @@ jobs:
         run: |
           tar czvf ./libs/sdk-ui-web-components/web-components.tar.gz -C ./$WEB_COMPONENTS_DIR/esm .
       - name: Archive the build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: web-components-artifact
           path: ./${{ env.WEB_COMPONENTS_DIR }}/web-components.tar.gz

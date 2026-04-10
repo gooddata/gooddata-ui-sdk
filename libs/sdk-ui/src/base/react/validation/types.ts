@@ -1,4 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 /**
  * @internal
  */
@@ -68,6 +69,14 @@ export type IInvalidNodeAtPath<T extends IInvalidNode, Path extends IInvalidNode
 /**
  * @internal
  */
+export type IChildRegistration = {
+    update: (child: IInvalidNode) => void;
+    unregister: () => void;
+};
+
+/**
+ * @internal
+ */
 export type IValidationContextValue<T extends IInvalidNode> = {
     rootNode: T;
 
@@ -84,5 +93,5 @@ export type IValidationContextValue<T extends IInvalidNode> = {
 
     isValid: boolean;
 
-    registerChild: (child: IInvalidNode) => () => void;
+    registerChild: (child: IInvalidNode) => IChildRegistration;
 };

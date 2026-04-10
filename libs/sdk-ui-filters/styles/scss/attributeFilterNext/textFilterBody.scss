@@ -1,6 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
 
 .gd-text-filter-body {
     padding: 10px;
@@ -356,6 +357,15 @@
         &.gd-chips-input__container--with-values .gd-chips-input__chips-frame {
             border-bottom-color: var(--gd-palette-warning-base, variables.$gd-color-warning);
         }
+
+        &.gd-chips-input__container--empty .gd-chips-input__input .gd-input-field {
+            border-color: var(--gd-palette-warning-base, variables.$gd-color-warning);
+
+            &:focus,
+            &:focus-visible {
+                border-color: var(--gd-palette-warning-base, variables.$gd-color-warning);
+            }
+        }
     }
 
     &__container--error {
@@ -368,6 +378,15 @@
         &.gd-chips-input__container--with-values .gd-chips-input__chips-frame {
             border-bottom-color: var(--gd-palette-error-base, variables.$gd-color-negative);
         }
+
+        &.gd-chips-input__container--empty .gd-chips-input__input .gd-input-field {
+            border-color: var(--gd-palette-error-base, variables.$gd-color-negative);
+
+            &:focus,
+            &:focus-visible {
+                border-color: var(--gd-palette-error-base, variables.$gd-color-negative);
+            }
+        }
     }
 
     &__chips {
@@ -379,7 +398,7 @@
 
     &__input-frame {
         &--standalone {
-            padding: 4px 8px;
+            padding: 0;
         }
     }
 
@@ -407,6 +426,34 @@
 
         .gd-input-field:disabled {
             cursor: not-allowed;
+        }
+    }
+
+    &__container--empty {
+        border: none;
+        min-height: auto;
+        background: transparent;
+
+        &:focus-within {
+            border-color: transparent;
+        }
+
+        .gd-chips-input__input .gd-input-field {
+            @include form-mixins.gd-input-base;
+            @include form-mixins.gd-input-small-base;
+            @include mixins.border-radius(3px);
+            border: 1px solid variables.$gd-input-text-border;
+            box-shadow: inset 0 1px 2px 0 rgba(31, 53, 74, 0.15);
+
+            &:focus,
+            &:focus-visible {
+                outline: none;
+                border-color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
+            }
+
+            &::placeholder {
+                color: var(--gd-palette-complementary-5, #b0beca);
+            }
         }
     }
 

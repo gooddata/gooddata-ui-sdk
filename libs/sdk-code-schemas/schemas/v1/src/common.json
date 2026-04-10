@@ -1390,7 +1390,6 @@
         "queryTextFilter": {
             "title": "Text Filter",
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "type": {
                     "type": "string",

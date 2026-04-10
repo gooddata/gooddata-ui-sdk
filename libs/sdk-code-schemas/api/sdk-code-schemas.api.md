@@ -5535,7 +5535,6 @@ export const metadata_v1: {
         queryTextFilter: {
             title: string;
             type: string;
-            additionalProperties: boolean;
             properties: {
                 type: {
                     type: string;
@@ -9845,6 +9844,8 @@ type TextFilter = TextFilter1 | TextFilter2;
 // @public (undocumented)
 interface TextFilter1 {
     // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
     case_sensitive?: boolean;
     // (undocumented)
     condition: "is" | "isNot";
@@ -9861,6 +9862,8 @@ interface TextFilter1 {
 //
 // @public (undocumented)
 interface TextFilter2 {
+    // (undocumented)
+    [k: string]: unknown;
     // (undocumented)
     case_sensitive?: boolean;
     // (undocumented)

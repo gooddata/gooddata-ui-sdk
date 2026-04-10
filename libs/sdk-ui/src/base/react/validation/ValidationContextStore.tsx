@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
 import {
+    type IChildRegistration,
     type IInvalidDatapoint,
     type IInvalidNode,
     type IInvalidNodeAtPath,
@@ -37,16 +38,31 @@ export const useValidationContextValue = <T extends IInvalidNode>(
 
     const [rootNode, setRootNode] = useState(initialValue);
 
+    // Latest rootNode ref — allows mutators to read current state and propagate to parent without effects.
+    const rootNodeRef = useRef(initialValue);
+    rootNodeRef.current = rootNode;
+
+    const registrationRef = useRef<IChildRegistration | null>(null);
+
     useEffect(() => {
         if (!isChildContext) {
             return;
         }
 
-        const unregister = registerOnParentRef.current?.(rootNode);
+        registrationRef.current = registerOnParentRef.current?.(rootNodeRef.current) ?? null;
+
         return () => {
-            unregister?.();
+            registrationRef.current?.unregister();
+            registrationRef.current = null;
         };
-    }, [isChildContext, registerOnParentRef, rootNode]);
+    }, [isChildContext, registerOnParentRef]);
+
+    const updateRootNode = useCallback((updater: (current: T) => T) => {
+        const next = updater(rootNodeRef.current);
+        rootNodeRef.current = next;
+        setRootNode(next);
+        registrationRef.current?.update(next);
+    }, []);
 
     const getInvalidDatapoints = useCallback(
         <P extends IInvalidNodePath<T>>({
@@ -75,31 +91,47 @@ export const useValidationContextValue = <T extends IInvalidNode>(
                 };
             };
 
-            setRootNode((currentRootNode) => getUpdatedInvalidTree(currentRootNode, invalidNodeSetter, path));
+            updateRootNode((current) => getUpdatedInvalidTree(current, invalidNodeSetter, path));
         },
-        [],
+        [updateRootNode],
     );
 
-    const registerChild = useCallback((child: IInvalidNode) => {
-        const id = `${child.id}-${uuid()}`;
+    const registerChild = useCallback(
+        (child: IInvalidNode): IChildRegistration => {
+            const id = `${child.id}-${uuid()}`;
 
-        setRootNode((currentRootNode) => ({
-            ...currentRootNode,
-            children: {
-                ...currentRootNode.children,
-                [id]: child,
-            },
-        }));
-
-        return () => {
-            setRootNode((currentRootNode) => ({
-                ...currentRootNode,
-                children: Object.fromEntries(
-                    Object.entries(currentRootNode.children).filter(([key]) => key !== id),
-                ),
+            updateRootNode((current) => ({
+                ...current,
+                children: {
+                    ...current.children,
+                    [id]: child,
+                },
             }));
-        };
-    }, []);
+
+            return {
+                update: (updatedChild: IInvalidNode) => {
+                    // Spread with an existing key preserves its position in the object,
+                    // so the child order remains stable across updates.
+                    updateRootNode((current) => ({
+                        ...current,
+                        children: {
+                            ...current.children,
+                            [id]: updatedChild,
+                        },
+                    }));
+                },
+                unregister: () => {
+                    updateRootNode((current) => ({
+                        ...current,
+                        children: Object.fromEntries(
+                            Object.entries(current.children).filter(([key]) => key !== id),
+                        ),
+                    }));
+                },
+            };
+        },
+        [updateRootNode],
+    );
 
     const isValid = useMemo(() => {
         return getInvalidDatapointsInTree(rootNode).every(
