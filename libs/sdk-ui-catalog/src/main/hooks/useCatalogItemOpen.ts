@@ -13,7 +13,7 @@ export function useCatalogItemOpen(
     onCatalogDetailClosed?: () => void,
     openCatalogItemRef?: ICatalogItemRef,
 ) {
-    const [openedItem, setItemOpened] = useState<Partial<ICatalogItem> | null>(null);
+    const [openedItem, setItemOpened] = useState<ICatalogItemRef | ICatalogItem | null>(null);
     const [open, setOpen] = useState<boolean>(false);
     useEffect(() => {
         if (

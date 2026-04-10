@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -15,10 +15,13 @@ function buildPermissions(overrides: Partial<IWorkspacePermissions> = {}): IWork
     } as IWorkspacePermissions;
 }
 
-function buildItem(overrides: Partial<ICatalogItem> = {}): ICatalogItem {
+function buildItem(
+    overrides: { type?: ICatalogItem["type"]; isLocked?: boolean; isEditable?: boolean } = {},
+): ICatalogItem {
     return {
         identifier: "obj.id",
         type: "insight",
+        visualizationType: "column",
         title: "Title",
         description: "Desc",
         tags: [],
@@ -29,7 +32,7 @@ function buildItem(overrides: Partial<ICatalogItem> = {}): ICatalogItem {
         isLocked: false,
         isEditable: true,
         ...overrides,
-    };
+    } as ICatalogItem;
 }
 
 describe("canEditCatalogItem", () => {

@@ -9,6 +9,7 @@ import { EditableLabel, UiCard, UiCopyButton } from "@gooddata/sdk-ui-kit";
 import { CatalogDetailGenerateDescription } from "./CatalogDetailGenerateDescription.js";
 import { CatalogDetailGenerateTitle } from "./CatalogDetailGenerateTitle.js";
 import { CatalogItemLockMemo } from "../catalogItem/CatalogItemLock.js";
+import { getVisualizationType } from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
 import { CertificationIconMemo } from "../certification/CertificationIcon.js";
 import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
@@ -41,7 +42,7 @@ export function CatalogDetailHeader({
     const intl = useIntl();
 
     const type = item.type ?? "analyticalDashboard";
-    const visualizationType = item.visualizationType;
+    const visualizationType = getVisualizationType(item);
     const canGenerateText = canEdit && item.type !== "dataSet" && isDescriptionGenerationEnabled;
 
     const titleRef = useRef<HTMLDivElement>(null);

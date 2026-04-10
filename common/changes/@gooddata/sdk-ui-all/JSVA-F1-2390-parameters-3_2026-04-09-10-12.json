@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-dashboard: Prevent crash when text filter used as parent.",
+            "comment": "sdk-ui-catalog: Introduce edit flow for parameter object type in the catalog.",
             "type": "none"
         }
     ],

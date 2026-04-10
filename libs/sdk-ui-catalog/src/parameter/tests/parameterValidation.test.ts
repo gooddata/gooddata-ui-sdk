@@ -240,6 +240,22 @@ definition:
         });
     });
 
+    it("rejects id changes when a fixed identifier is required", () => {
+        const result = validateParameterYaml(
+            `id: another
+definition:
+  type: NUMBER
+  defaultValue: 10
+`,
+            { fixedIdentifier: "test" },
+        );
+
+        expect(result).toEqual({
+            isValid: false,
+            errorCode: "idImmutable",
+        });
+    });
+
     it("rejects unknown properties inside definition", () => {
         const result = validateParameterYaml(`definition:
   type: NUMBER

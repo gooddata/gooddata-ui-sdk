@@ -10,11 +10,14 @@ import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
 import { CatalogDetailTags } from "./CatalogDetailTags.js";
+import {
+    isCatalogItemAttribute,
+    isCatalogItemDataSet,
+    isCatalogItemFact,
+    isCatalogItemHidable,
+    isCatalogItemMeasure,
+} from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
-import type { ObjectType } from "../objectType/types.js";
-
-const TYPES_SUPPORTING_IS_HIDDEN: ObjectType[] = ["insight", "measure", "attribute", "fact"];
-const TYPES_SUPPORTING_IS_HIDDEN_FROM_KDA: ObjectType[] = ["measure"];
 
 type Props = {
     item: ICatalogItem;
@@ -46,13 +49,13 @@ export function CatalogDetailTabMetadata({
     enableMetricFormatOverrides,
 }: Props) {
     const intl = useIntl();
-    const isMeasure = item.type === "measure";
-    const isDataSet = item.type === "dataSet";
-    const granularities = item.dataSet?.attributes ?? [];
+    const isMeasure = isCatalogItemMeasure(item);
+    const isDataSet = isCatalogItemDataSet(item);
+    const granularities = isDataSet ? (item.dataSet.attributes ?? []) : [];
 
     return (
         <dl className="gd-analytics-catalog-detail__tab-content">
-            {item.dataSet && !isDataSet ? (
+            {(isCatalogItemAttribute(item) || isCatalogItemFact(item)) && item.dataSet ? (
                 <CatalogDetailContentRow
                     title={<FormattedMessage id="analyticsCatalog.column.title.dataSet" />}
                     content={item.dataSet.title}
@@ -86,7 +89,7 @@ export function CatalogDetailTabMetadata({
                     }
                 />
             )}
-            {TYPES_SUPPORTING_IS_HIDDEN.includes(item.type) ? (
+            {isCatalogItemHidable(item) ? (
                 <CatalogDetailContentRow
                     title={
                         <>
@@ -123,7 +126,7 @@ export function CatalogDetailTabMetadata({
                     }
                 />
             ) : null}
-            {TYPES_SUPPORTING_IS_HIDDEN_FROM_KDA.includes(item.type) ? (
+            {isMeasure ? (
                 <CatalogDetailContentRow
                     title={
                         <>

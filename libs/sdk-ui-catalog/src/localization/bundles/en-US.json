@@ -639,6 +639,10 @@
         "text": "Create",
         "crowdinContext": "Analytics Catalog header: Label for the Create dropdown button that opens a menu to create new objects."
     },
+    "analyticsCatalog.edit": {
+        "text": "Edit",
+        "crowdinContext": "Analytics Catalog detail drawer: Label for the Edit button that opens the edit flow for a catalog item."
+    },
     "analyticsCatalog.parameter.dialog.create.title": {
         "text": "Create parameter",
         "crowdinContext": "Title of the dialog for creating a new parameter."
@@ -666,6 +670,10 @@
     "analyticsCatalog.parameter.dialog.edit.saveAsNew": {
         "text": "Save as new",
         "crowdinContext": "Label for the save as new button in the edit parameter dialog."
+    },
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": {
+        "text": "Parameter id cannot be changed when saving an existing parameter. Use Save as new instead.",
+        "crowdinContext": "Error shown when the user tries to change the parameter id while saving an existing parameter."
     },
     "analyticsCatalog.parameter.dialog.cancel": {
         "text": "Cancel",
@@ -710,6 +718,10 @@
     "analyticsCatalog.parameter.create.success": {
         "text": "Parameter created.",
         "crowdinContext": "Toast shown after a parameter is created successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.parameter.update.success": {
+        "text": "Parameter updated.",
+        "crowdinContext": "Toast shown after a parameter is updated successfully from the Analytics Catalog."
     },
     "analyticsCatalog.parameter.validation.syntax": {
         "text": "YAML syntax error",

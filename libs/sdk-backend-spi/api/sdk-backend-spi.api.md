@@ -2724,7 +2724,7 @@ export interface IWorkspaceParametersService {
     createParameter(parameter: IParameterMetadataObjectDefinition): Promise<IParameterMetadataObject>;
     getParameter(ref: ObjRef): Promise<IParameterMetadataObject>;
     getParametersQuery(): IParametersQuery;
-    updateParameterMeta(updatedParameter: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IParameterMetadataObject>;
+    updateParameter(updatedParameter: Partial<IParameterMetadataObjectDefinition> & IMetadataObjectIdentity): Promise<IParameterMetadataObject>;
 }
 
 // @public

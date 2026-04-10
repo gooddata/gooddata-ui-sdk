@@ -9,7 +9,6 @@ import {
 } from "@gooddata/api-client-tiger";
 import type { IParametersQuery, IWorkspaceParametersService } from "@gooddata/sdk-backend-spi";
 import {
-    type IMetadataObjectBase,
     type IMetadataObjectIdentity,
     type IParameterMetadataObject,
     type IParameterMetadataObjectDefinition,
@@ -19,7 +18,10 @@ import {
 
 import { ParametersQuery } from "./parametersQuery.js";
 import { convertParameterFromBackend } from "../../../convertors/fromBackend/ParameterConverter.js";
-import { convertParameterToBackend } from "../../../convertors/toBackend/ParameterConverter.js";
+import {
+    convertParameterToBackendCreate,
+    convertParameterToBackendUpdate,
+} from "../../../convertors/toBackend/ParameterConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
@@ -45,7 +47,7 @@ export class TigerWorkspaceParameters implements IWorkspaceParametersService {
                     data: {
                         ...(parameter.id === undefined ? {} : { id: parameter.id }),
                         type: "parameter",
-                        attributes: convertParameterToBackend(parameter),
+                        attributes: convertParameterToBackendCreate(parameter),
                     },
                 },
                 include: ["createdBy", "modifiedBy"],
@@ -69,8 +71,8 @@ export class TigerWorkspaceParameters implements IWorkspaceParametersService {
         return convertParameterFromBackend(result.data);
     }
 
-    public async updateParameterMeta(
-        updatedParameter: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
+    public async updateParameter(
+        updatedParameter: Partial<IParameterMetadataObjectDefinition> & IMetadataObjectIdentity,
     ): Promise<IParameterMetadataObject> {
         const ref = updatedParameter.ref;
         invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
@@ -83,17 +85,10 @@ export class TigerWorkspaceParameters implements IWorkspaceParametersService {
                     data: {
                         id: ref.identifier,
                         type: "parameter",
-                        attributes: {
-                            ...(updatedParameter.title === undefined
-                                ? {}
-                                : { title: updatedParameter.title }),
-                            ...(updatedParameter.description === undefined
-                                ? {}
-                                : { description: updatedParameter.description }),
-                            ...(updatedParameter.tags === undefined ? {} : { tags: updatedParameter.tags }),
-                        },
+                        attributes: convertParameterToBackendUpdate(updatedParameter),
                     },
                 },
+                include: ["createdBy", "modifiedBy"],
             }),
         );
 

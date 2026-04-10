@@ -9,6 +9,7 @@ import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
+import type { ParameterDialogInitialParameter } from "../ParameterDialog.js";
 
 // Mock SyntaxHighlightingInput since CodeMirror doesn't work in happy-dom
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
@@ -36,16 +37,6 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
 
 const { ParameterDialog } = await import("../ParameterDialog.js");
 
-const validYaml = `id: test
-title: "Test parameter"
-description: ""
-tags: []
-
-definition:
-  type: NUMBER
-  defaultValue: 1
-`;
-
 const validParameter: IParameterMetadataObjectDefinition = {
     type: "parameter",
     id: "test",
@@ -58,6 +49,40 @@ const validParameter: IParameterMetadataObjectDefinition = {
     },
 };
 
+const createParameter: ParameterDialogInitialParameter = {
+    title: "My Parameter",
+    description: "",
+    definition: {
+        type: "NUMBER",
+        defaultValue: 0,
+    },
+};
+
+const validInitialParameter: ParameterDialogInitialParameter = {
+    id: "test",
+    title: "Test parameter",
+    description: "",
+    tags: [],
+    definition: {
+        type: "NUMBER",
+        defaultValue: 1,
+    },
+};
+
+const canonicalCreateYaml = `title: My Parameter
+description: ""
+definition:
+  type: NUMBER
+  defaultValue: 0`;
+
+const validYaml = `id: test
+title: Test parameter
+description: ""
+tags: []
+definition:
+  type: NUMBER
+  defaultValue: 1`;
+
 function wrapper({ children }: PropsWithChildren) {
     return (
         <TestIntlProvider>
@@ -68,16 +93,29 @@ function wrapper({ children }: PropsWithChildren) {
 
 describe("ParameterDialog", () => {
     it("renders with 'Create parameter' title in create mode", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         expect(screen.getByText("Create parameter")).toBeInTheDocument();
     });
 
     it("renders with 'Edit parameter' title in edit mode", () => {
         render(
-            <ParameterDialog mode="edit" initialValue={validYaml} onClose={vi.fn()} onSubmit={vi.fn()} />,
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
             { wrapper },
         );
 
@@ -85,9 +123,17 @@ describe("ParameterDialog", () => {
     });
 
     it("renders Cancel and Create buttons in create mode", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         expect(screen.getByText("Cancel")).toBeInTheDocument();
         expect(screen.getByText("Create", { selector: "button span, button" })).toBeInTheDocument();
@@ -95,7 +141,12 @@ describe("ParameterDialog", () => {
 
     it("renders Save button in edit mode", () => {
         render(
-            <ParameterDialog mode="edit" initialValue={validYaml} onClose={vi.fn()} onSubmit={vi.fn()} />,
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
             { wrapper },
         );
 
@@ -104,7 +155,12 @@ describe("ParameterDialog", () => {
 
     it("renders 'Save as new' button in edit mode", () => {
         render(
-            <ParameterDialog mode="edit" initialValue={validYaml} onClose={vi.fn()} onSubmit={vi.fn()} />,
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
             { wrapper },
         );
 
@@ -112,9 +168,17 @@ describe("ParameterDialog", () => {
     });
 
     it("does not render 'Save as new' button in create mode", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         expect(screen.queryByText("Save as new")).not.toBeInTheDocument();
     });
@@ -122,7 +186,12 @@ describe("ParameterDialog", () => {
     it("calls submit with save as new flag in edit mode", () => {
         const onSubmit = vi.fn();
         render(
-            <ParameterDialog mode="edit" initialValue={validYaml} onClose={vi.fn()} onSubmit={onSubmit} />,
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={vi.fn()}
+                onSubmit={onSubmit}
+            />,
             { wrapper },
         );
 
@@ -133,9 +202,17 @@ describe("ParameterDialog", () => {
 
     it("calls onClose when Cancel is clicked", () => {
         const onClose = vi.fn();
-        render(<ParameterDialog mode="create" onClose={onClose} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={onClose}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         fireEvent.click(screen.getByText("Cancel"));
 
@@ -143,17 +220,33 @@ describe("ParameterDialog", () => {
     });
 
     it("renders the help link", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         expect(screen.getByText("How to create a parameter?")).toBeInTheDocument();
     });
 
     it("shows error when content is empty", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         fireEvent.change(screen.getByTestId("yaml-editor"), { target: { value: "" } });
 
@@ -162,9 +255,17 @@ describe("ParameterDialog", () => {
     });
 
     it("disables submit and shows an error for invalid YAML immediately", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         fireEvent.change(screen.getByTestId("yaml-editor"), { target: { value: "id: [foo" } });
 
@@ -173,9 +274,17 @@ describe("ParameterDialog", () => {
     });
 
     it("disables submit and shows an error for unsupported parameter types", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         fireEvent.change(screen.getByTestId("yaml-editor"), {
             target: {
@@ -192,9 +301,17 @@ describe("ParameterDialog", () => {
 
     it("submits parsed parameter definition in create mode", () => {
         const onSubmit = vi.fn();
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={onSubmit} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={onSubmit}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         fireEvent.change(screen.getByTestId("yaml-editor"), {
             target: {
@@ -207,23 +324,47 @@ describe("ParameterDialog", () => {
     });
 
     it("renders the YAML editor", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            {
+                wrapper,
+            },
+        );
 
         expect(screen.getByTestId("yaml-editor")).toBeInTheDocument();
     });
 
-    it("uses numeric parameter template by default", () => {
-        render(<ParameterDialog mode="create" onClose={vi.fn()} onSubmit={vi.fn()} />, {
-            wrapper,
-        });
+    it("serializes the provided create parameter in stable property order", () => {
+        render(
+            <ParameterDialog
+                mode="create"
+                initialParameter={createParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            { wrapper },
+        );
 
-        const value = (screen.getByTestId("yaml-editor") as HTMLTextAreaElement).value;
-        expect(value).toContain('title: "My Parameter"');
-        expect(value).toContain("type: NUMBER");
-        expect(value).toContain("defaultValue: 0");
-        expect(value).not.toContain("id:");
+        expect((screen.getByTestId("yaml-editor") as HTMLTextAreaElement).value).toBe(canonicalCreateYaml);
+    });
+
+    it("prefills the YAML editor in edit mode", () => {
+        render(
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+            />,
+            { wrapper },
+        );
+
+        expect((screen.getByTestId("yaml-editor") as HTMLTextAreaElement).value).toBe(validYaml);
     });
 
     it("locks the dialog while submitting", async () => {
@@ -232,7 +373,12 @@ describe("ParameterDialog", () => {
         const onClose = vi.fn();
 
         render(
-            <ParameterDialog mode="edit" initialValue={validYaml} onClose={onClose} onSubmit={onSubmit} />,
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={onClose}
+                onSubmit={onSubmit}
+            />,
             { wrapper },
         );
 
@@ -253,5 +399,60 @@ describe("ParameterDialog", () => {
 
         // Resolve the submit to clean up
         await act(async () => resolveSubmit());
+    });
+
+    it("rejects id changes on Save in edit mode", () => {
+        const onSubmit = vi.fn();
+        render(
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={vi.fn()}
+                onSubmit={onSubmit}
+            />,
+            { wrapper },
+        );
+
+        fireEvent.change(screen.getByTestId("yaml-editor"), {
+            target: {
+                value: validYaml.replace(`id: test`, `id: another`),
+            },
+        });
+        fireEvent.click(screen.getByText("Save", { selector: "button span, button" }));
+
+        expect(onSubmit).not.toHaveBeenCalled();
+        expect(
+            screen.getByText(
+                "Parameter id cannot be changed when saving an existing parameter. Use Save as new instead.",
+            ),
+        ).toBeInTheDocument();
+    });
+
+    it("allows id changes on Save as new in edit mode", () => {
+        const onSubmit = vi.fn();
+        render(
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={vi.fn()}
+                onSubmit={onSubmit}
+            />,
+            { wrapper },
+        );
+
+        fireEvent.change(screen.getByTestId("yaml-editor"), {
+            target: {
+                value: validYaml.replace(`id: test`, `id: another`),
+            },
+        });
+        fireEvent.click(screen.getByText("Save as new"));
+
+        expect(onSubmit).toHaveBeenCalledWith(
+            {
+                ...validParameter,
+                id: "another",
+            },
+            true,
+        );
     });
 });

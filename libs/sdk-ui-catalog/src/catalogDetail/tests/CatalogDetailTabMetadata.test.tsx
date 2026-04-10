@@ -3,6 +3,8 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import { type IDataSetMetadataObject, idRef } from "@gooddata/sdk-model";
+
 import type { ICatalogItem } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { CatalogDetailTabMetadata } from "../CatalogDetailTabMetadata.js";
@@ -22,6 +24,32 @@ const baseItem: ICatalogItem = {
 };
 
 const noop = vi.fn();
+const dataSetMetadata: IDataSetMetadataObject = {
+    type: "dataSet",
+    id: "dataset.id",
+    uri: "/gdc/md/workspaceId/obj/1",
+    ref: idRef("dataset.id", "dataSet"),
+    title: "Orders",
+    description: "Orders dataset",
+    tags: [],
+    production: false,
+    deprecated: false,
+    unlisted: false,
+    attributes: [
+        {
+            type: "attribute",
+            id: "attr.id",
+            uri: "/gdc/md/workspaceId/obj/2",
+            ref: idRef("attr.id", "attribute"),
+            title: "Order date",
+            description: "Order date",
+            tags: [],
+            production: false,
+            deprecated: false,
+            unlisted: false,
+        },
+    ],
+};
 
 function renderComponent(enableMetricFormatOverrides = false) {
     return render(
@@ -57,12 +85,17 @@ describe("CatalogDetailTabMetadata", () => {
         expect(screen.getByText("Number format")).toBeInTheDocument();
     });
 
-    it("keeps parameters read-only and without visibility controls", () => {
+    it("keeps parameters limited to supported metadata controls", () => {
         render(
             <TestIntlProvider>
                 <CatalogDetailTabMetadata
-                    item={{ ...baseItem, type: "parameter", isEditable: false }}
-                    canEdit={false}
+                    item={{
+                        ...baseItem,
+                        type: "parameter",
+                        isEditable: true,
+                        definition: { type: "NUMBER", defaultValue: 0 },
+                    }}
+                    canEdit
                     onTagClick={noop}
                     onTagAdd={noop}
                     onTagRemove={noop}
@@ -78,5 +111,29 @@ describe("CatalogDetailTabMetadata", () => {
         expect(screen.queryByText("Show in AI results")).not.toBeInTheDocument();
         expect(screen.queryByText("Use for key driver analysis")).not.toBeInTheDocument();
         expect(screen.queryByText("Metric type")).not.toBeInTheDocument();
+        expect(screen.getByText("Tags")).toBeInTheDocument();
+    });
+
+    it("keeps datasets limited to supported metadata controls", () => {
+        render(
+            <TestIntlProvider>
+                <CatalogDetailTabMetadata
+                    item={{ ...baseItem, type: "dataSet", dataSet: dataSetMetadata }}
+                    canEdit
+                    onTagClick={noop}
+                    onTagAdd={noop}
+                    onTagRemove={noop}
+                    onIsHiddenChange={noop}
+                    onIsHiddenFromKdaChange={noop}
+                    onMetricTypeChange={noop}
+                    onFormatChange={noop}
+                    enableMetricFormatOverrides
+                />
+            </TestIntlProvider>,
+        );
+
+        expect(screen.queryByText("Show in AI results")).not.toBeInTheDocument();
+        expect(screen.queryByText("Use for key driver analysis")).not.toBeInTheDocument();
+        expect(screen.getByText("Granularities")).toBeInTheDocument();
     });
 });

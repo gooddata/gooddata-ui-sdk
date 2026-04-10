@@ -4,7 +4,8 @@ import { useIntl } from "react-intl";
 
 import { UiDate } from "@gooddata/sdk-ui-kit";
 
-import type { ICatalogItem } from "../catalogItem/types.js";
+import { getVisualizationType } from "../catalogItem/guards.js";
+import { type ICatalogItem } from "../catalogItem/types.js";
 import { ObjectTypeIcon } from "../objectType/ObjectTypeIcon.js";
 
 const DATE_FORMAT_OPTIONS: Intl.DateTimeFormatOptions = {
@@ -30,7 +31,7 @@ export function CatalogItemCard({ item, onClick }: Props) {
                 className="gd-analytics-catalog__item-card__icon"
                 intl={intl}
                 type={item.type}
-                visualizationType={item.visualizationType}
+                visualizationType={getVisualizationType(item)}
                 size={18}
                 backgroundSize={32}
             />

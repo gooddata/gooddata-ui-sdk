@@ -34,6 +34,9 @@ export const parameterSchema = z.strictObject({
     definition: definitionSchema,
 });
 
+export type ParameterSchemaInput = z.input<typeof parameterSchema>;
+export type ParameterSchema = z.infer<typeof parameterSchema>;
+
 export const PARAMETER_SCHEMA_KEYS = deriveSchemaKeys(parameterSchema);
 
 /**

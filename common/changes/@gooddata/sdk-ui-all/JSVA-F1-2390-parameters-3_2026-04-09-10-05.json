@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "fix(sdk-ui-geo): update opacity and highlight selected point(s) when cross-filtering",
+            "comment": "sdk-backend-*: Replace `updateParameterMeta` with `updateParameter` method in the workspace parameters service.",
             "type": "none"
         }
     ],

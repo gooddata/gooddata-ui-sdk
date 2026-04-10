@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type MouseEvent, Suspense, lazy, useCallback, useMemo, useState } from "react";
+import { type KeyboardEvent, type MouseEvent, useCallback, useMemo, useState } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
@@ -19,13 +19,11 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
+import { createParameterCatalogItem } from "../catalogItem/query.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { getObjectTypeLabel } from "../objectType/labels.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
-
-const ParameterDialog = lazy(() =>
-    import("../parameter/ParameterDialog.js").then((m) => ({ default: m.ParameterDialog })),
-);
+import { ParameterCreateDialog } from "../parameter/ParameterCreateDialog.js";
 
 type CreateItemData = {
     interactive: CatalogCreateObjectType;
@@ -116,7 +114,7 @@ export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
 
     const handleParameterCreate = useCallback(
         async (parameter: IParameterMetadataObjectDefinition) => {
-            await backend.workspace(workspace).parameters().createParameter(parameter);
+            await createParameterCatalogItem(backend, workspace, parameter);
             setIsParameterDialogOpen(false);
             addSuccess(messages.parameterCreateSuccess);
 
@@ -169,13 +167,10 @@ export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
                 autofocusOnOpen
             />
             {isParameterDialogOpen ? (
-                <Suspense fallback={null}>
-                    <ParameterDialog
-                        mode="create"
-                        onClose={handleParameterDialogClose}
-                        onSubmit={handleParameterCreate}
-                    />
-                </Suspense>
+                <ParameterCreateDialog
+                    onClose={handleParameterDialogClose}
+                    onSubmit={handleParameterCreate}
+                />
             ) : null}
         </>
     );

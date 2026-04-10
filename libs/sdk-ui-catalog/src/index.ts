@@ -23,7 +23,29 @@ export { type ICatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
 export {
     type ICatalogDetailContentProps,
     type OpenHandlerEvent,
+    type EditHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
 
 export type { ObjectType, CatalogCreateObjectType } from "./objectType/types.js";
-export { type ICatalogItem, type ICatalogItemRef, type VisualizationType } from "./catalogItem/types.js";
+export {
+    type ICatalogItem,
+    type ICatalogItemBase,
+    type ICatalogItemRef,
+    type ICatalogItemInsight,
+    type ICatalogItemMeasure,
+    type ICatalogItemParameter,
+    type ICatalogItemAttribute,
+    type ICatalogItemFact,
+    type ICatalogItemDataSet,
+    type ICatalogItemDashboard,
+    type VisualizationType,
+} from "./catalogItem/types.js";
+export {
+    isCatalogItemAttribute,
+    isCatalogItemDashboard,
+    isCatalogItemDataSet,
+    isCatalogItemFact,
+    isCatalogItemInsight,
+    isCatalogItemMeasure,
+    isCatalogItemParameter,
+} from "./catalogItem/guards.js";

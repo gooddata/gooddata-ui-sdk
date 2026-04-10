@@ -18,7 +18,7 @@ type Props = ICatalogItemFeedOptions & {
         next: () => Promise<void>;
         hasNext: boolean;
         status: AsyncStatus;
-        updateItem: (changes: Partial<ICatalogItem> & Pick<ICatalogItem, "identifier" | "type">) => void;
+        updateItem: (item: ICatalogItem) => void;
     }) => ReactNode;
 };
 

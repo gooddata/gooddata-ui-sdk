@@ -3879,19 +3879,9 @@ export interface IParameterMetadataObject extends IMetadataObject, IAuditable {
 }
 
 // @public
-export interface IParameterMetadataObjectDefinition {
-    // (undocumented)
-    areRelationsValid?: boolean;
+export interface IParameterMetadataObjectDefinition extends IMetadataObjectDefinition {
     // (undocumented)
     definition: IParameterDefinition;
-    // (undocumented)
-    description?: string;
-    // (undocumented)
-    id?: string;
-    // (undocumented)
-    tags?: string[];
-    // (undocumented)
-    title?: string;
     // (undocumented)
     type: "parameter";
 }

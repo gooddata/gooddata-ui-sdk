@@ -1,6 +1,33 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 02 Apr 2026 12:48:18 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Apr 2026 11:31:09 GMT and should not be manually modified.
+
+## 11.29.0
+
+Fri, 10 Apr 2026 11:31:09 GMT
+
+### Updates
+
+- sdk-backend-tiger: Fix custom fiscal prefix lost when format locale is unsupported. Add Vietnamese, Indonesian, and Thai locale support for date formatting.
+- sdk-backend-\*,sdk-model: Introduce `parameter` metadata object support.
+- sdk-ui-catalog: Introduce loading and creation flow for parameter object type in the catalog.
+- sdk-ui-gen-ai: enhance bucket mapping for pivot table support
+- sdk-ui-gen-ai: add and check support for anomaly detection in new chatbot
+- sdk-ui-gen-ai: add "What-If" scenario support in conversations
+- sdk-ui-gen-ai: introduce KDA support in new GenAI conversations
+- sdk-ui-gen-ai: support seasonal forecasts in chart config mapping
+- sdk-ui-gen-ai: update clustering configs and update scatter plot mapping
+- sdk-backend-tiger: Feature flag enableCustomizableCsvDelimiter true by default.
+- sdk-ui-filters: Mobile view for text filters.
+- sdk-ui-all: Allow text filters as parent for others.
+- sdk-ui-dashboard: Prevent crash when text filter used as parent.
+- sdk-ui-all: Support text filters in drilling.
+- sdk-ui-dashboard: Commands to better support text filters.
+- Add generated Python TypedDict types from AAC JSON Schema
+- add ENABLE_AI_ON_DATA toggle for organization settings
+- fix(sdk-ui-geo): update opacity and highlight selected point(s) when cross-filtering
+- Update minimal node to 24.12.0
+- chore: Migrate vitest plugin to oxlint
 
 ## 11.28.0
 

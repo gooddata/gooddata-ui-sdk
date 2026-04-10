@@ -1,36 +1,30 @@
-// (C) 2025 GoodData Corporation
-import { type Dispatch, type MutableRefObject, type SetStateAction, useCallback } from "react";
+// (C) 2025-2026 GoodData Corporation
+
+import { type Dispatch, type RefObject, type SetStateAction, useCallback } from "react";
 
 import type { ICatalogItem } from "./types.js";
 
 export function useUpdateItemCallback(
-    endpointItems: MutableRefObject<ICatalogItem[][]>,
+    endpointItems: RefObject<ICatalogItem[][]>,
     setItems: Dispatch<SetStateAction<ICatalogItem[]>>,
 ) {
     return useCallback(
-        (updatedItem: Partial<ICatalogItem>) => {
+        (updatedItem: ICatalogItem) => {
             endpointItems.current.forEach((items) => {
                 items.forEach((item, i) => {
-                    if (item.identifier === updatedItem.identifier && item.type === updatedItem.type) {
-                        items[i] = {
-                            ...item,
-                            ...updatedItem,
-                        };
+                    if (isMatch(item, updatedItem)) {
+                        items[i] = updatedItem;
                     }
                 });
             });
             setItems((items) => {
-                return items.map((item) => {
-                    if (item.identifier === updatedItem.identifier && item.type === updatedItem.type) {
-                        return {
-                            ...item,
-                            ...updatedItem,
-                        };
-                    }
-                    return item;
-                });
+                return items.map((item) => (isMatch(item, updatedItem) ? updatedItem : item));
             });
         },
         [endpointItems, setItems],
     );
+}
+
+function isMatch(item: ICatalogItem, updatedItem: ICatalogItem): boolean {
+    return item.identifier === updatedItem.identifier && item.type === updatedItem.type;
 }

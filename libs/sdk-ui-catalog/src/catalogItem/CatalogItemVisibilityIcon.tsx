@@ -6,7 +6,8 @@ import type { IntlShape } from "react-intl";
 
 import { UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import type { ICatalogItem } from "./types.js";
+import { isCatalogItemHidable } from "./guards.js";
+import { type ICatalogItem } from "./types.js";
 
 type Props = ComponentProps<"div"> & {
     intl: IntlShape;
@@ -14,7 +15,7 @@ type Props = ComponentProps<"div"> & {
 };
 
 export function CatalogItemVisibilityIcon({ intl, item, ...htmlProps }: Props) {
-    if (!item.isHidden) {
+    if (!isCatalogItemHidable(item) || !item.isHidden) {
         return null;
     }
 
