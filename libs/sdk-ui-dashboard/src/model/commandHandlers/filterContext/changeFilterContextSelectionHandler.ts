@@ -25,6 +25,7 @@ import {
     dashboardAttributeFilterItemValidateElementsBy,
     getAttributeElementsItems,
     isAllTimeDashboardDateFilter,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
@@ -574,11 +575,21 @@ function* getAttributeFiltersUpdateActions(
 
                 if (canApplyFilterTypeToTarget("list", configSelectionType, targetTextFilter)) {
                     // Text → list: set displayAsLabel to the text filter's displayForm
-                    // so the list filter visually shows the same label
+                    // so the list filter visually shows the same label.
+                    // Normalize: use target's localIdentifier so attributeFilterConfigs
+                    // (keyed by localId) keep matching, and strip selectionMode so the
+                    // target's own config determines single/multi presentation.
+                    const normalizedListFilter: IDashboardAttributeFilter = {
+                        attributeFilter: {
+                            ...attributeFilter.attributeFilter,
+                            localIdentifier: targetLocalId,
+                            selectionMode: undefined,
+                        },
+                    };
                     updateActions.push(
                         tabsActions.replaceAttributeFilterItem({
                             filterLocalId: targetLocalId,
-                            filter: attributeFilter,
+                            filter: normalizedListFilter,
                             tabLocalIdentifier,
                         }),
                         tabsActions.changeDisplayAsLabel({
@@ -637,10 +648,13 @@ function* getAttributeFiltersUpdateActions(
             }
         }
 
+        // Normalize: use target's localIdentifier so attributeFilterConfigs
+        // (keyed by localId) keep matching after the replacement.
+        const normalizedTextFilter = normalizeFilterLocalIdentifier(textFilter, targetLocalId);
         updateActions.push(
             tabsActions.replaceAttributeFilterItem({
                 filterLocalId: targetLocalId,
-                filter: textFilter,
+                filter: normalizedTextFilter,
                 tabLocalIdentifier,
             }),
         );
@@ -898,4 +912,33 @@ const getAttributeFilterSelectionPayload = (
  */
 function canMapDashboardFilterFromAnotherDisplayForm(ctx: DashboardContext) {
     return ctx.backend.capabilities.supportsElementUris;
+}
+
+/**
+ * Returns a shallow copy of the filter with its localIdentifier replaced.
+ * Used when replacing a target filter with an incoming filter from another dashboard
+ * to preserve the target's localIdentifier so that attributeFilterConfigs (keyed by localId)
+ * continue to match.
+ */
+function normalizeFilterLocalIdentifier(
+    filter: DashboardAttributeFilterItem,
+    localIdentifier: string,
+): DashboardAttributeFilterItem {
+    if (isDashboardAttributeFilter(filter)) {
+        return {
+            attributeFilter: { ...filter.attributeFilter, localIdentifier },
+        };
+    }
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        return {
+            arbitraryAttributeFilter: { ...filter.arbitraryAttributeFilter, localIdentifier },
+        };
+    }
+    // IDashboardMatchAttributeFilter
+    return {
+        matchAttributeFilter: {
+            ...(filter as { matchAttributeFilter: Record<string, unknown> }).matchAttributeFilter,
+            localIdentifier,
+        },
+    } as DashboardAttributeFilterItem;
 }
