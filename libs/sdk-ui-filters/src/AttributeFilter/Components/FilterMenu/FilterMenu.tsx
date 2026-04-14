@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { Dropdown, type IAlignPoint, type IUiListboxItem } from "@gooddata/sdk-ui-kit";
+import { Dropdown, type IAlignPoint, type IUiListboxItem, UiAutofocus } from "@gooddata/sdk-ui-kit";
 
 import { FilterMenuButton } from "./FilterMenuButton.js";
 import { FilterMenuDropdownBody } from "./FilterMenuDropdownBody.js";
@@ -112,12 +112,14 @@ export function FilterMenu(props: IFilterMenuProps) {
                     ariaAttributes,
                     accessibilityConfig,
                 }) => (
-                    <FilterMenuButton
-                        isOpen={dropdownIsOpen}
-                        onClick={toggleDropdown}
-                        ariaAttributes={ariaAttributes}
-                        accessibilityConfig={accessibilityConfig}
-                    />
+                    <UiAutofocus>
+                        <FilterMenuButton
+                            isOpen={dropdownIsOpen}
+                            onClick={toggleDropdown}
+                            ariaAttributes={ariaAttributes}
+                            accessibilityConfig={accessibilityConfig}
+                        />
+                    </UiAutofocus>
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => {
                     return (

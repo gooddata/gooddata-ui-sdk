@@ -14,13 +14,17 @@ import {
     createTestUser,
     deleteTestGroup,
     deleteTestUser,
-    generateUUID,
+    generateRandomId,
     getWorkspaceId,
     mockFeatureHub,
     setEarlyAccess,
     switchToUser,
     visit,
 } from "../helpers.js";
+
+const USER_PREFIX = "SDK_test_user";
+const USER_AUTH_PREFIX = "SDK_test_authId";
+const USERGROUP_PREFIX = "SDK_test_usergroup";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
@@ -59,16 +63,15 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
             async ({ page, request }) => {
                 const workspaceId = getWorkspaceId();
                 const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
-                const guid = generateUUID();
-                const username = `test-viewer-${guid}`;
-                const groupname = `test-viewers-${guid}`;
+                const username = generateRandomId(`${USER_PREFIX}_viewer`);
+                const groupname = generateRandomId(`${USERGROUP_PREFIX}_viewers`);
 
                 // Setup
                 await setEarlyAccess(request, workspaceId, permissionsFeatureFlagEarlyAccess);
                 await deleteTestUser(request, username);
                 await deleteTestGroup(request, groupname);
                 await createTestGroup(request, groupname);
-                await createTestUser(request, username, [groupname]);
+                await createTestUser(request, username, [groupname], generateRandomId(USER_AUTH_PREFIX));
                 await assignUserPermissionToWorkspace(request, workspaceId, [
                     { user: username, permission: "VIEW" },
                 ]);
@@ -104,16 +107,15 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
             async ({ page, request }) => {
                 const workspaceId = getWorkspaceId();
                 const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
-                const guid = generateUUID();
-                const username = `test-viewer-${guid}`;
-                const groupname = `test-viewers-${guid}`;
+                const username = generateRandomId(`${USER_PREFIX}_viewer`);
+                const groupname = generateRandomId(`${USERGROUP_PREFIX}_viewers`);
 
                 // Setup
                 await setEarlyAccess(request, workspaceId, permissionsFeatureFlagEarlyAccess);
                 await deleteTestUser(request, username);
                 await deleteTestGroup(request, groupname);
                 await createTestGroup(request, groupname);
-                await createTestUser(request, username, [groupname]);
+                await createTestUser(request, username, [groupname], generateRandomId(USER_AUTH_PREFIX));
                 await assignUserPermissionToWorkspace(request, workspaceId, [
                     { user: username, permission: "VIEW" },
                 ]);
@@ -181,16 +183,15 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
             async ({ page, request }) => {
                 const workspaceId = getWorkspaceId();
                 const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
-                const guid = generateUUID();
-                const username = `test-viewer-${guid}`;
-                const groupname = `test-viewers-${guid}`;
+                const username = generateRandomId(`${USER_PREFIX}_viewer`);
+                const groupname = generateRandomId(`${USERGROUP_PREFIX}_viewers`);
 
                 // Setup
                 await setEarlyAccess(request, workspaceId, permissionsFeatureFlagEarlyAccess);
                 await deleteTestUser(request, username);
                 await deleteTestGroup(request, groupname);
                 await createTestGroup(request, groupname);
-                await createTestUser(request, username, [groupname]);
+                await createTestUser(request, username, [groupname], generateRandomId(USER_AUTH_PREFIX));
                 await assignUserPermissionToWorkspace(request, workspaceId, [
                     { user: username, permission: "VIEW" },
                 ]);
@@ -235,16 +236,15 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
             async ({ page, request }) => {
                 const workspaceId = getWorkspaceId();
                 const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
-                const guid = generateUUID();
-                const username = `test-viewer-${guid}`;
-                const groupname = `test-viewers-${guid}`;
+                const username = generateRandomId(`${USER_PREFIX}_viewer`);
+                const groupname = generateRandomId(`${USERGROUP_PREFIX}_viewers`);
 
                 // Setup
                 await setEarlyAccess(request, workspaceId, permissionsFeatureFlagEarlyAccess);
                 await deleteTestUser(request, username);
                 await deleteTestGroup(request, groupname);
                 await createTestGroup(request, groupname);
-                await createTestUser(request, username, [groupname]);
+                await createTestUser(request, username, [groupname], generateRandomId(USER_AUTH_PREFIX));
                 await assignUserPermissionToWorkspace(request, workspaceId, [
                     { user: username, permission: "VIEW" },
                 ]);
@@ -311,16 +311,15 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
             async ({ page, request }) => {
                 const workspaceId = getWorkspaceId();
                 const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
-                const guid = generateUUID();
-                const username = `test-viewer-${guid}`;
-                const groupname = `test-viewers-${guid}`;
+                const username = generateRandomId(`${USER_PREFIX}_viewer`);
+                const groupname = generateRandomId(`${USERGROUP_PREFIX}_viewers`);
 
                 // Setup
                 await setEarlyAccess(request, workspaceId, permissionsFeatureFlagEarlyAccess);
                 await deleteTestUser(request, username);
                 await deleteTestGroup(request, groupname);
                 await createTestGroup(request, groupname);
-                await createTestUser(request, username, [groupname]);
+                await createTestUser(request, username, [groupname], generateRandomId(USER_AUTH_PREFIX));
                 await assignUserPermissionToWorkspace(request, workspaceId, [
                     { user: username, permission: "VIEW" },
                 ]);
@@ -383,16 +382,15 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
             async ({ page, request }) => {
                 const workspaceId = getWorkspaceId();
                 const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
-                const guid = generateUUID();
-                const username = `test-viewer-${guid}`;
-                const groupname = `test-viewers-${guid}`;
+                const username = generateRandomId(`${USER_PREFIX}_viewer`);
+                const groupname = generateRandomId(`${USERGROUP_PREFIX}_viewers`);
 
                 // Setup
                 await setEarlyAccess(request, workspaceId, permissionsFeatureFlagEarlyAccess);
                 await deleteTestUser(request, username);
                 await deleteTestGroup(request, groupname);
                 await createTestGroup(request, groupname);
-                await createTestUser(request, username, [groupname]);
+                await createTestUser(request, username, [groupname], generateRandomId(USER_AUTH_PREFIX));
                 await assignUserPermissionToWorkspace(request, workspaceId, [
                     { user: username, permission: "VIEW" },
                 ]);
@@ -449,11 +447,10 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
             async ({ page, request }) => {
                 const workspaceId = getWorkspaceId();
                 const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
-                const guid = generateUUID();
-                const firstUser = `test-viewer-1-${guid}`;
-                const firstGroup = `test-viewers-1-${guid}`;
-                const secondUser = `test-viewer-2-${guid}`;
-                const secondGroup = `test-viewers-2-${guid}`;
+                const firstUser = generateRandomId(`${USER_PREFIX}_view-1`);
+                const firstGroup = generateRandomId(`${USERGROUP_PREFIX}_viewers-1`);
+                const secondUser = generateRandomId(`${USER_PREFIX}_view-2`);
+                const secondGroup = generateRandomId(`${USERGROUP_PREFIX}_viewers-2`);
 
                 // Setup
                 await setEarlyAccess(request, workspaceId, permissionsFeatureFlagEarlyAccess);
@@ -464,8 +461,13 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
                 await createTestGroup(request, firstGroup);
                 await createTestGroup(request, secondGroup);
                 // first user is part of both groups
-                await createTestUser(request, firstUser, [firstGroup, secondGroup]);
-                await createTestUser(request, secondUser, [firstGroup]);
+                await createTestUser(
+                    request,
+                    firstUser,
+                    [firstGroup, secondGroup],
+                    generateRandomId(USER_AUTH_PREFIX),
+                );
+                await createTestUser(request, secondUser, [firstGroup], generateRandomId(USER_AUTH_PREFIX));
                 await assignUserPermissionToWorkspace(request, workspaceId, [
                     { user: firstUser, permission: "VIEW" },
                     { user: secondUser, permission: "VIEW" },
@@ -534,11 +536,10 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
             async ({ page, request }) => {
                 const workspaceId = getWorkspaceId();
                 const permissionsFeatureFlagEarlyAccess = "enableAnalyticalDashboardPermissions";
-                const guid = generateUUID();
-                const firstUser = `test-viewer-1-${guid}`;
-                const firstGroup = `test-viewers-1-${guid}`;
-                const secondUser = `test-viewer-2-${guid}`;
-                const secondGroup = `test-viewers-2-${guid}`;
+                const firstUser = generateRandomId(`${USER_PREFIX}_view-1`);
+                const firstGroup = generateRandomId(`${USERGROUP_PREFIX}_viewer-1`);
+                const secondUser = generateRandomId(`${USER_PREFIX}_view-2`);
+                const secondGroup = generateRandomId(`${USERGROUP_PREFIX}_viewer-2`);
 
                 // Setup
                 await setEarlyAccess(request, workspaceId, permissionsFeatureFlagEarlyAccess);
@@ -549,8 +550,13 @@ test.topLevelDescribe("Dashboard", "permissions", () => {
                 await createTestGroup(request, firstGroup);
                 await createTestGroup(request, secondGroup);
                 // first user is part of both groups
-                await createTestUser(request, firstUser, [firstGroup, secondGroup]);
-                await createTestUser(request, secondUser, [firstGroup]);
+                await createTestUser(
+                    request,
+                    firstUser,
+                    [firstGroup, secondGroup],
+                    generateRandomId(USER_AUTH_PREFIX),
+                );
+                await createTestUser(request, secondUser, [firstGroup], generateRandomId(USER_AUTH_PREFIX));
                 await assignUserPermissionToWorkspace(request, workspaceId, [
                     { user: firstUser, permission: "VIEW" },
                     { user: secondUser, permission: "VIEW" },

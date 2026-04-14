@@ -143,6 +143,7 @@ export enum TigerFeaturesNames {
     EnableAIKnowledge = "enableAIKnowledge",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     EnableAiAgenticConversations = "enableAiAgenticConversations",
+    EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
@@ -324,6 +325,7 @@ export type ITigerFeatureFlags = {
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableAiHub: (typeof FeatureFlagsValues)["enableAiHub"][number];
     enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
+    enableGenAiAgenticDataShareOptOut: (typeof FeatureFlagsValues)["enableGenAiAgenticDataShareOptOut"][number];
     enableGenAiVisualizationSummarySkill: (typeof FeatureFlagsValues)["enableGenAiVisualizationSummarySkill"][number];
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
@@ -484,6 +486,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardDensitySetting: false,
     enableAiHub: false,
     enableAiAgenticConversations: false,
+    enableGenAiAgenticDataShareOptOut: false,
     enableGenAiVisualizationSummarySkill: false,
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
@@ -645,6 +648,7 @@ export const FeatureFlagsValues = {
     enableDashboardDensitySetting: [true, false] as const,
     enableAiHub: [true, false] as const,
     enableAiAgenticConversations: [true, false] as const,
+    enableGenAiAgenticDataShareOptOut: [true, false] as const,
     enableGenAiVisualizationSummarySkill: [false, true] as const,
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,

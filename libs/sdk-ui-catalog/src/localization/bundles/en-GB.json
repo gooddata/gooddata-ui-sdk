@@ -159,6 +159,7 @@
     "analyticsCatalog.tabs.trending": "Trending",
     "analyticsCatalog.tabs.quality": "Quality",
     "analyticsCatalog.create": "Create",
+    "analyticsCatalog.edit": "Edit",
     "analyticsCatalog.parameter.dialog.create.title": "Create parameter",
     "analyticsCatalog.parameter.dialog.edit.title": "Edit parameter",
     "analyticsCatalog.parameter.dialog.sectionHeader": "Parameter definition",

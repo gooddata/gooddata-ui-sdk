@@ -159,6 +159,7 @@
     "analyticsCatalog.tabs.trending": "인기",
     "analyticsCatalog.tabs.quality": "품질",
     "analyticsCatalog.create": "생성",
+    "analyticsCatalog.edit": "편집",
     "analyticsCatalog.parameter.dialog.create.title": "매개변수 생성",
     "analyticsCatalog.parameter.dialog.edit.title": "매개변수 편집",
     "analyticsCatalog.parameter.dialog.sectionHeader": "매개변수 정의",

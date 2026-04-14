@@ -170,6 +170,13 @@ export interface IAttributeFilterDropdownButtonProps {
     buttonRef?: MutableRefObject<HTMLElement | null>;
 
     /**
+     * Id of the dropdown trigger button.
+     *
+     * @beta
+     */
+    buttonId?: string;
+
+    /**
      * Id of the Attribute filter dropdown body.
      *
      * @beta
@@ -209,6 +216,7 @@ export function AttributeFilterDropdownButton({
     onClick,
     className,
     buttonRef,
+    buttonId,
     dropdownId,
 }: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
@@ -260,6 +268,7 @@ export function AttributeFilterDropdownButton({
 
     const buttonComponent = (
         <div
+            id={buttonId}
             className={cx(
                 "gd-attribute-filter-dropdown-button__next",
                 "s-attribute-filter",

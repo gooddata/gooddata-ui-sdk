@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.30.0-alpha.1",
+    "version": "11.30.0-alpha.2",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -43,8 +43,8 @@
         "test-once": "vitest run",
         "build-wasm": "bash wasm/build.sh",
         "test-wasm": "bash wasm/test.sh",
-        "generate-python-types": "uv run --no-project --with datamodel-code-generator python python/scripts/generate_types.py",
-        "generate-python-types-check": "uv run --no-project --with datamodel-code-generator python python/scripts/generate_types.py --check"
+        "generate-python-types": "uv run python/scripts/generate_types.py",
+        "generate-python-types-check": "uv run python/scripts/generate_types.py --check"
     },
     "dependencies": {
         "@gooddata/api-client-tiger": "workspace:*",

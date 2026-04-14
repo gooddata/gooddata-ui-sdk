@@ -1,4 +1,8 @@
 # (C) 2026 GoodData Corporation
+# /// script
+# dependencies = ["datamodel-code-generator[ruff]>=0.56.0"]
+# requires-python = ">=3.10"
+# ///
 
 """Generate Python TypedDict types from the AAC JSON Schema.
 
@@ -13,11 +17,14 @@ import hashlib
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PYTHON_PKG_DIR = SCRIPT_DIR.parent
-SCHEMA_PATH = PYTHON_PKG_DIR.parent.parent / "sdk-code-schemas" / "src" / "v1" / "metadata.json"
+SCHEMAS_PKG_DIR = PYTHON_PKG_DIR.parent.parent / "sdk-code-schemas"
+SCHEMA_PATH = SCHEMAS_PKG_DIR / "src" / "v1" / "metadata.json"
+REFRESH_SCRIPT = SCHEMAS_PKG_DIR / "scripts" / "refresh-schema.mjs"
 OUTPUT_PATH = PYTHON_PKG_DIR / "src" / "gooddata_code_convertors" / "_types.py"
 
 COPYRIGHT_HEADER = f"# (C) {2026} GoodData Corporation\n"
@@ -27,9 +34,7 @@ SCHEMA_HASH_PREFIX = "# schema-hash: "
 # - --no-use-closed-typed-dict: closed=True (PEP 728) requires Python 3.13+
 # - NotRequired is imported from typing_extensions (moved to typing in 3.11)
 # - TypeAlias and union operator (X | Y) work in 3.10 with __future__.annotations
-CODEGEN_ARGS = [
-    sys.executable, "-m", "datamodel_code_generator",
-    "--input", str(SCHEMA_PATH),
+CODEGEN_BASE_ARGS = [
     "--input-file-type", "jsonschema",
     "--output-model-type", "typing.TypedDict",
     "--use-standard-collections",
@@ -81,13 +86,36 @@ def post_process(source: str) -> str:
     return header + "\n" + source
 
 
-def generate() -> str:
+def get_narrowed_schema() -> str:
+    """Run the Node.js schema script to produce the narrowed JSON Schema."""
     result = subprocess.run(
-        CODEGEN_ARGS,
+        ["node", str(REFRESH_SCRIPT), "--narrowed-json"],
         capture_output=True,
         text=True,
+        cwd=str(SCHEMAS_PKG_DIR),
         check=False,
     )
+    if result.returncode != 0:
+        print(f"Schema narrowing failed:\n{result.stderr}", file=sys.stderr)
+        sys.exit(result.returncode)
+    return result.stdout
+
+
+def generate() -> str:
+    narrowed_json = get_narrowed_schema()
+
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".json", delete=True) as tmp:
+        tmp.write(narrowed_json)
+        tmp.flush()
+
+        result = subprocess.run(
+            [sys.executable, "-m", "datamodel_code_generator",
+             "--input", tmp.name, *CODEGEN_BASE_ARGS],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
     if result.returncode != 0:
         print(result.stderr, file=sys.stderr)
         sys.exit(result.returncode)
@@ -97,6 +125,9 @@ def generate() -> str:
 def main() -> None:
     if not SCHEMA_PATH.exists():
         print(f"Schema not found: {SCHEMA_PATH}", file=sys.stderr)
+        sys.exit(1)
+    if not REFRESH_SCRIPT.exists():
+        print(f"Schema script not found: {REFRESH_SCRIPT}", file=sys.stderr)
         sys.exit(1)
 
     content = generate()

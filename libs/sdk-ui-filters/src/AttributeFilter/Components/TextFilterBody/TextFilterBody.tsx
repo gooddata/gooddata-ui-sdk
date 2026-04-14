@@ -48,6 +48,7 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
         onAutocompleteSearch,
         isAutocompleteLoading,
         hideTooltips,
+        validationMessageId,
     } = props;
     const { showFilterHeader, headerProps } = useAttributeFilterDropdownHeader();
 
@@ -74,17 +75,25 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
             hasValuesEmptyError,
             hasValuesLimitReachedWarning,
             hasValuesLimitExceededError,
+            validationMessageId,
         });
 
     const { getInvalidDatapoints } = validationContextValue;
     const invalidDatapoint = getInvalidDatapoints()[0];
-    const inputErrorId = invalidDatapoint?.id ?? "";
+    const inputErrorId = validationMessageId ?? invalidDatapoint?.id ?? "";
 
     const clearAllValues = useCallback(() => {
         if (!disabled) {
             onValuesChange?.([]);
         }
     }, [disabled, onValuesChange]);
+
+    const focusValuesInput = useCallback(() => {
+        requestAnimationFrame(() => {
+            const valuesInput = document.getElementById(valuesInputId);
+            valuesInput?.focus();
+        });
+    }, [valuesInputId]);
 
     return (
         <>
@@ -133,10 +142,11 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
                                             if (isEnterKey(event)) {
                                                 event.preventDefault();
                                                 clearAllValues();
+                                                focusValuesInput();
                                             }
                                         }}
                                         aria-label={intl.formatMessage({
-                                            id: "attributeFilter.text.values.clearAll",
+                                            id: "attributeFilter.text.values.clearAllAriaLabel",
                                         })}
                                         aria-disabled={disabled}
                                         tabIndex={disabled ? -1 : 0}

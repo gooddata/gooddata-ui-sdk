@@ -335,7 +335,7 @@ export function convertGeoInsightToTableDefinition(
             ...insightDefinitionWithoutLayers,
             visualizationUrl: "local:table",
             buckets: [
-                { localIdentifier: BucketNames.MEASURES, items: measures },
+                ...(measures.length ? [{ localIdentifier: BucketNames.MEASURES, items: measures }] : []),
                 { localIdentifier: BucketNames.ATTRIBUTE, items: geoAttributes.rowAttributes },
                 { localIdentifier: BucketNames.COLUMNS, items: geoAttributes.columnAttributes },
             ],

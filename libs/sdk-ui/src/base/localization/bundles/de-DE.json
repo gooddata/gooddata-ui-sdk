@@ -65,7 +65,6 @@
     "visualizations.totals.dropdown.tooltip.nat.disabled.ranking": "Rollup (Gesamt) Aggregation ist nicht verfügbar, wenn die Visualisierung nach Ranking-Filter gefiltert wird. Um Rollup (Gesamt) zu verwenden, entfernen Sie den Ranking-Filter aus der Filterleiste.",
     "visualizations.totals.dropdown.title.med": "Medianwert",
     "visualizations.headline.tertiary.title": "im Vergleich zu",
-    "visualizations.headline.comparison.title.change": "Änderen",
     "visualizations.headline.comparison.title.change.positive": "Erhöhen",
     "visualizations.headline.comparison.title.change.negative": "Verringeren",
     "visualizations.headline.comparison.title.change.equals": "Keine Änderung",

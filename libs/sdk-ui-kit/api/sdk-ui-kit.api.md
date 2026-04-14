@@ -5839,6 +5839,8 @@ export interface IUiAsyncTableProps<T extends {
     // (undocumented)
     scrollToIndex?: number;
     // (undocumented)
+    searchPlaceholder?: string;
+    // (undocumented)
     selectedItemIds?: Array<string>;
     // (undocumented)
     setSelectedItemIds?: (items: Array<string>) => void;

@@ -12,7 +12,7 @@
  */
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { type INullableFilter } from "@gooddata/sdk-model";
+import { type IInsightDefinition, type INullableFilter, type ISettings } from "@gooddata/sdk-model";
 import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 
 import { type IGeoChartProps } from "./public.js";
@@ -23,7 +23,29 @@ import { type GeoLayerType, type IGeoLayer } from "../../layers/index.js";
  *
  * @internal
  */
-export type ICoreGeoChartProps = Omit<IGeoChartResolvedProps, "layers"> & IDataVisualizationProps;
+export type ICoreGeoChartProps = Omit<IGeoChartResolvedProps, "layers"> &
+    IDataVisualizationProps &
+    IGeoExportNormalizationProps;
+
+/**
+ * Props needed for geo export normalization (replacing geo display forms with human-readable labels).
+ * These are only provided when the component is rendered through a pluggable visualization (InsightView).
+ *
+ * @internal
+ */
+export interface IGeoExportNormalizationProps {
+    /**
+     * The insight definition, used to determine which attributes need normalization during export.
+     * Only provided in InsightView/pluggable visualization context.
+     */
+    insight?: IInsightDefinition;
+
+    /**
+     * Feature flag settings, used to check if geo export normalization is applicable.
+     * Only provided in InsightView/pluggable visualization context.
+     */
+    settings?: ISettings;
+}
 
 /**
  * Resolved props for GeoChart after placeholder resolution.

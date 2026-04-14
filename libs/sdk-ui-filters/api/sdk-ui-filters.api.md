@@ -121,7 +121,7 @@ export function AttributeFilterDropdownActions({ isApplyDisabled, onApplyButtonC
 export function AttributeFilterDropdownBody({ onApplyButtonClick, onCancelButtonClick, width }: IAttributeFilterDropdownBodyProps): JSX.Element;
 
 // @beta
-export function AttributeFilterDropdownButton({ isOpen, title, selectedItemsCount, totalItemsCount, showSelectionCount, subtitle, disabled, customIcon, isFiltering, isLoading, isLoaded, isError, isDraggable, icon, TooltipContentComponent, titleExtension, onClick, className, buttonRef, dropdownId }: IAttributeFilterDropdownButtonProps): JSX.Element;
+export function AttributeFilterDropdownButton({ isOpen, title, selectedItemsCount, totalItemsCount, showSelectionCount, subtitle, disabled, customIcon, isFiltering, isLoading, isLoaded, isError, isDraggable, icon, TooltipContentComponent, titleExtension, onClick, className, buttonRef, buttonId, dropdownId }: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
 export function AttributeFilterElementsActions(props: IAttributeFilterElementsActionsProps): JSX.Element;
@@ -660,6 +660,7 @@ export interface IAttributeFilterDropdownBodyProps {
 
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
+    buttonId?: string;
     buttonRef?: MutableRefObject<HTMLElement | null>;
     className?: string;
     // @alpha
@@ -1414,6 +1415,7 @@ export interface ITextFilterBodyProps {
     onValuesBlur?: () => void;
     onValuesChange?: (values: Array<string | null>) => void;
     operator: TextFilterOperator;
+    validationMessageId?: string;
     values: Array<string | null>;
 }
 

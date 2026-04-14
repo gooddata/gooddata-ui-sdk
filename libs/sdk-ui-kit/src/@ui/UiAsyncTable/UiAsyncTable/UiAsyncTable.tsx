@@ -39,6 +39,7 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
         loadNextPage,
         setSelectedItemIds,
         onSearch,
+        searchPlaceholder,
         renderToolbarCustomElement,
         accessibilityConfig,
     } = props;
@@ -57,6 +58,7 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
                 isMobileView={isMobileView}
                 width={width}
                 onSearch={onSearch}
+                searchPlaceholder={searchPlaceholder}
                 renderToolbarCustomElement={renderToolbarCustomElement}
                 accessibilityConfig={accessibilityConfig}
             />

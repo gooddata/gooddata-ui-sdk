@@ -159,6 +159,7 @@
     "analyticsCatalog.tabs.trending": "トレンド",
     "analyticsCatalog.tabs.quality": "品質",
     "analyticsCatalog.create": "作成",
+    "analyticsCatalog.edit": "編集",
     "analyticsCatalog.parameter.dialog.create.title": "パラメーターを作成",
     "analyticsCatalog.parameter.dialog.edit.title": "パラメーターを編集",
     "analyticsCatalog.parameter.dialog.sectionHeader": "パラメーター定義",

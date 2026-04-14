@@ -50,6 +50,7 @@ const useAsyncTableToolbar = <T extends { id: string } | { ref: ObjRef }>({
     variant,
     isMobileView,
     width,
+    searchPlaceholder,
     onSearch,
     renderToolbarCustomElement,
     accessibilityConfig,
@@ -154,7 +155,7 @@ const useAsyncTableToolbar = <T extends { id: string } | { ref: ObjRef }>({
     }, [filters, intl, isFiltersTooLarge, variant, isMobileView, width]);
 
     const renderSearchSection = useCallback(() => {
-        const placeholder = intl.formatMessage(messages["titleSearchPlaceholder"]);
+        const placeholder = searchPlaceholder ?? intl.formatMessage(messages["titleSearchPlaceholder"]);
         return (
             <div className={e("toolbar-search-section")}>
                 {onSearch ? (
@@ -183,6 +184,7 @@ const useAsyncTableToolbar = <T extends { id: string } | { ref: ObjRef }>({
         );
     }, [
         onSearch,
+        searchPlaceholder,
         renderToolbarCustomElement,
         intl,
         searchValue,

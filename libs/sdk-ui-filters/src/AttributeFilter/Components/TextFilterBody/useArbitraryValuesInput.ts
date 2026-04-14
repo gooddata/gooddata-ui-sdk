@@ -11,6 +11,8 @@ import {
     useState,
 } from "react";
 
+import { useIntl } from "react-intl";
+
 import { isArrowDownKey, isEnterKey, isEscapeKey } from "@gooddata/sdk-ui-kit";
 
 import { parseArbitraryValues } from "../../parseArbitraryValues.js";
@@ -34,11 +36,14 @@ export function useArbitraryValuesInput({
     onAutocompleteSearch,
     isAutocompleteLoading,
 }: IUseArbitraryValuesInputParams) {
+    const intl = useIntl();
     const [inputValue, setInputValue] = useState("");
     const [activeAutocompleteIndex, setActiveAutocompleteIndex] = useState<number | null>(null);
     const [autocompletesDismissed, setAutocompleteDismissed] = useState(false);
+    const [valuesAnnouncement, setValuesAnnouncement] = useState<string>("");
 
     const chipsContainerRef = useRef<HTMLDivElement>(null);
+    const valuesGroupRef = useRef<HTMLDivElement>(null);
     const prevValuesLengthRef = useRef<number>(values.length);
 
     const filteredSuggestions = useMemo(() => {
@@ -77,18 +82,64 @@ export function useArbitraryValuesInput({
         prevValuesLengthRef.current = values.length;
     }, [values]);
 
+    const focusValuesGroup = useCallback(() => {
+        requestAnimationFrame(() => {
+            if (valuesGroupRef.current) {
+                // set tabindex to 0 to make the filter group focusable and preserve the tab order
+                valuesGroupRef.current.tabIndex = 0;
+                valuesGroupRef.current.focus();
+            }
+        });
+    }, []);
+
+    const getDisplayLabel = useCallback(
+        (value: string | null) => {
+            if (value === null) {
+                return emptyValueDisplay;
+            }
+            if (value === "") {
+                return '""';
+            }
+            return value;
+        },
+        [emptyValueDisplay],
+    );
+
+    const announceValuesChanged = useCallback((message: string) => {
+        setTimeout(() => {
+            // Defer announcement to next render so screen reader doesn't skip it
+            setValuesAnnouncement(message);
+        });
+    }, []);
+
     const mergeParsedValues = useCallback(
         (parsed: Array<string | null>) => {
             const combined: Array<string | null> = [...values];
+            const addedValues: Array<string | null> = [];
             for (const v of parsed) {
                 const alreadyExists = combined.includes(v);
                 if (!alreadyExists) {
                     combined.push(v);
+                    addedValues.push(v);
                 }
             }
+
+            if (!addedValues.length) {
+                return;
+            }
+
             onValuesChange?.(combined);
+
+            const addedValuesLabel = addedValues.map((value) => getDisplayLabel(value)).join(", ");
+            const message = intl.formatMessage(
+                {
+                    id: "attributeFilter.text.values.announcement.valueAdded",
+                },
+                { values: addedValuesLabel },
+            );
+            announceValuesChanged(message);
         },
-        [values, onValuesChange],
+        [values, onValuesChange, getDisplayLabel, intl, announceValuesChanged],
     );
 
     const handleParseAndAdd = useCallback(
@@ -134,10 +185,18 @@ export function useArbitraryValuesInput({
     );
 
     const handleRemoveValue = useCallback(
-        (index: number) => {
+        (value: string | null, index: number) => {
+            const message = intl.formatMessage(
+                { id: "attributeFilter.text.values.announcement.valueRemoved" },
+                { value },
+            );
+            announceValuesChanged(message);
             onValuesChange?.(values.filter((_, i) => i !== index));
+            if (values.length > 1) {
+                focusValuesGroup();
+            }
         },
-        [values, onValuesChange],
+        [values, onValuesChange, focusValuesGroup, announceValuesChanged, intl],
     );
 
     const handleKeyDown = useCallback(
@@ -172,26 +231,32 @@ export function useArbitraryValuesInput({
                     handleParseAndAdd(inputValue);
                     setInputValue("");
                 }
-            } else if (event.key === "Backspace" && !inputValue && values.length > 0) {
-                event.preventDefault();
-                onValuesChange?.(values.slice(0, -1));
             }
         },
         [
             isAutocompleteOpen,
             filteredSuggestions,
             inputValue,
-            values,
-            onValuesChange,
             handleParseAndAdd,
             activeAutocompleteIndex,
             handleSelectSuggestion,
         ],
     );
 
+    const makeValuesGroupUnfocusable = useCallback(() => {
+        requestAnimationFrame(() => {
+            if (valuesGroupRef.current) {
+                valuesGroupRef.current.removeAttribute("tabindex");
+            }
+        });
+    }, []);
+
     return {
         chipsContainerRef,
+        valuesGroupRef,
         inputValue,
+        valuesAnnouncement,
+        getDisplayLabel,
         setInputValue,
         activeAutocompleteIndex,
         filteredSuggestions,
@@ -202,5 +267,6 @@ export function useArbitraryValuesInput({
         handlePaste,
         handleSelectSuggestion,
         handleRemoveValue,
+        makeValuesGroupUnfocusable,
     };
 }

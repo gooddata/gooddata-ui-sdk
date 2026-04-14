@@ -562,6 +562,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             onError: this.onError,
             onExportReady: this.onExportReady,
             onLoadingChanged: this.onLoadingChanged,
+            onDataView: this.onDataView,
             onDrill: this.onDrill,
             onCenterPositionChanged: isViewportConfigEnabled ? this.handleCenterPositionChanged : undefined,
             onZoomChanged: isViewportConfigEnabled ? this.handleZoomChanged : undefined,
@@ -569,6 +570,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             onViewportInteractionEnd: isViewportConfigEnabled
                 ? this.handleViewportInteractionEnded
                 : undefined,
+            insight,
+            settings: this.featureFlags,
         };
 
         this.renderFun(<GeoChartInternal {...geoChartProps} />, this.getElement());

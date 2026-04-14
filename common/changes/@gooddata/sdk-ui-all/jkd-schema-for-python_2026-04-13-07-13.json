@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Use narrowed JSON Schema for Python type generation",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.kadlec@gooddata.com"
+}

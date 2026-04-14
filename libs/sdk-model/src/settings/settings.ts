@@ -1127,6 +1127,13 @@ export interface IFeatureFlags {
     enableAiAgenticConversations?: boolean;
 
     /**
+     * Enable per-workspace opt-out from sharing data with the LLM. When this flag is on,
+     * GenAI features that send data to the LLM (e.g. visualization summarization) require
+     * the workspace setting `enableAiOnData` to be set to true.
+     */
+    enableGenAiAgenticDataShareOptOut?: boolean;
+
+    /**
      * Enable parameters feature.
      */
     enableParameters?: boolean;
