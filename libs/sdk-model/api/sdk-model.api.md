@@ -2509,6 +2509,7 @@ export interface IFeatureFlags {
     enableExternalRecipients?: boolean;
     enableFilterControlInDrillingConfiguration?: boolean;
     enableFiscalCalendars?: boolean;
+    enableGenAiAgenticDataShareOptOut?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;

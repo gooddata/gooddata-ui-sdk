@@ -1667,6 +1667,10 @@
         "text": "Choose which label is used for value lists and typed-text matching.",
         "crowdinContext": "Tooltip explaining the values as display form selection in attribute filter."
     },
+    "attributeFilter.selectionType.moreOptions": {
+        "text": "More options",
+        "crowdinContext": "Accessible label and tooltip for the ellipsis button that opens additional options in the attribute filter menu."
+    },
     "attributeFilter.text.caseSensitive": {
         "text": "Case sensitive",
         "crowdinContext": "Label for toggling case sensitivity in text attribute filter."
@@ -1742,6 +1746,22 @@
     "attributeFilter.text.values.clearAll": {
         "text": "Clear",
         "crowdinContext": "Link to remove all values from the arbitrary text filter input. Shown next to the Values label when values are present."
+    },
+    "attributeFilter.text.values.clearAllAriaLabel": {
+        "text": "Clear all values",
+        "crowdinContext": "Accessible label for the Clear action in text filter values input."
+    },
+    "attributeFilter.text.values": {
+        "text": "Values ({count})",
+        "crowdinContext": "Label for values selection in text filters, with count of selected values"
+    },
+    "attributeFilter.text.values.announcement.valueAdded": {
+        "text": "Values {values} added.",
+        "crowdinContext": "Live region announcement when values are added in text filter values input. Example: 'Values 2, 3, 4, 5 added.'"
+    },
+    "attributeFilter.text.values.announcement.valueRemoved": {
+        "text": "Value {value} removed.",
+        "crowdinContext": "Screen reader announcement when a text filter value is removed. Example: 'Value Email removed.'"
     },
     "attributeFilter.details.infoButtonLabel": {
         "text": "Show attribute details",

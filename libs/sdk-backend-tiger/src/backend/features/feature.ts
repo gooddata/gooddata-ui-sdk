@@ -956,6 +956,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiAgenticDataShareOptOut,
+            "enableGenAiAgenticDataShareOptOut",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiAgenticDataShareOptOut,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.AIChatSearchLimit,
             "aiChatSearchLimit",
             "NUMBER",

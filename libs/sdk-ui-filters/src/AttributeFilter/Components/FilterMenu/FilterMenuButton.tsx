@@ -3,9 +3,15 @@
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 
-import { type IDropdownButtonRenderProps, UiIconButton } from "@gooddata/sdk-ui-kit";
+import { type IDropdownButtonRenderProps, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { TEXT_FILTER_MENU_BUTTON_ID } from "./accessibility/elementId.js";
+
+const filterMenuButtonMessages = defineMessages({
+    moreOptions: {
+        id: "attributeFilter.selectionType.moreOptions",
+    },
+});
 
 /**
  * Props for FilterMenuButton component.
@@ -34,10 +40,6 @@ export interface IFilterMenuButtonProps {
     accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
 }
 
-const selectionTypeMessages = defineMessages({
-    selection: { id: "attributeFilter.selectionType.selection" },
-});
-
 /**
  * Button that triggers the filter menu dropdown.
  *
@@ -46,25 +48,43 @@ const selectionTypeMessages = defineMessages({
 export function FilterMenuButton(props: IFilterMenuButtonProps) {
     const { isOpen, onClick, ariaAttributes, accessibilityConfig } = props;
     const { formatMessage } = useIntl();
+    const moreOptionsLabel = formatMessage(filterMenuButtonMessages.moreOptions);
+    const mergedAccessibilityConfig = {
+        ...accessibilityConfig,
+        ariaLabel: moreOptionsLabel,
+    };
 
     return (
         <div
-            className={cx("gd-filter-menu__button", "gd-filter-menu__button--icon", "s-filter-menu-button", {
-                "is-active": isOpen,
-            })}
+            className={cx(
+                "gd-filter-menu__button",
+                "gd-filter-menu__button--icon",
+                "s-filter-menu-button",
+
+                {
+                    "is-active": isOpen,
+                },
+            )}
             data-testid="filter-menu-button"
         >
-            <UiIconButton
-                id={TEXT_FILTER_MENU_BUTTON_ID}
-                icon="ellipsis"
-                size="large"
-                variant="tertiary"
-                iconColor="complementary-7"
-                isActive={isOpen}
-                onClick={onClick}
-                ariaAttributes={ariaAttributes}
-                label={formatMessage(selectionTypeMessages.selection)}
-                accessibilityConfig={accessibilityConfig}
+            <UiTooltip
+                triggerBy={["hover", "focus"]}
+                content={moreOptionsLabel}
+                arrowPlacement="left"
+                anchor={
+                    <UiIconButton
+                        id={TEXT_FILTER_MENU_BUTTON_ID}
+                        icon="ellipsis"
+                        size="large"
+                        variant="tertiary"
+                        iconColor="complementary-7"
+                        isActive={isOpen}
+                        onClick={onClick}
+                        ariaAttributes={ariaAttributes}
+                        label={moreOptionsLabel}
+                        accessibilityConfig={mergedAccessibilityConfig}
+                    />
+                }
             />
         </div>
     );

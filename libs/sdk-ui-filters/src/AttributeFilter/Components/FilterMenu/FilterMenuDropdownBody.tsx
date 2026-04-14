@@ -45,6 +45,11 @@ export function FilterMenuDropdownBody({
     valuesAsTooltip,
     hideTooltips,
 }: IFilterMenuDropdownBodyProps) {
+    const selectionTitleId = `${ariaAttributes.id}-selection-title`;
+    const selectionAriaAttributes: UiListboxAriaAttributes = {
+        ...ariaAttributes,
+        "aria-labelledby": selectionTitleId,
+    };
     const valuesAsAriaAttributes: UiListboxAriaAttributes = {
         ...ariaAttributes,
         id: `${ariaAttributes.id}-values-as`,
@@ -60,13 +65,14 @@ export function FilterMenuDropdownBody({
                         title={selectionTitle}
                         tooltip={selectionTooltip}
                         hideTooltip={hideTooltips}
+                        titleId={selectionTitleId}
                     />
                     <FilterMenuSelectableSection<ISelectionTypeItemData>
                         items={selectionTypeListboxItems}
                         selectedItemId={selectedSelectionTypeItemId}
                         onSelect={onSelectionTypeSelect}
                         onClose={closeDropdown}
-                        ariaAttributes={ariaAttributes}
+                        ariaAttributes={selectionAriaAttributes}
                     />
                 </>
             ) : null}

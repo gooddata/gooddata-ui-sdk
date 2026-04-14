@@ -1498,6 +1498,12 @@ export async function createTestGroup(request: APIRequestContext, id: string): P
     });
 }
 
+export function generateRandomId(prefix?: string): string {
+    const id = Math.floor(Math.random() * 1e6);
+    const time = Date.now();
+    return prefix ? `${prefix}_${id}--${time}` : `${id}--${time}`;
+}
+
 export async function deleteTestGroup(request: APIRequestContext, id: string): Promise<void> {
     await request.delete(`/api/v1/entities/userGroups/${id}`, {
         headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -1509,6 +1515,7 @@ export async function createTestUser(
     request: APIRequestContext,
     id: string,
     groups: string[],
+    authenticationId?: string,
 ): Promise<void> {
     await request.post("/api/v1/entities/users", {
         headers: { Authorization: `Bearer ${getAuthToken()}` },
@@ -1516,7 +1523,7 @@ export async function createTestUser(
             data: {
                 id,
                 type: "user",
-                attributes: { authenticationId: `authId_${id}` },
+                attributes: { authenticationId: authenticationId ?? `authId_${id}` },
                 relationships: {
                     userGroups: {
                         data: groups.map((g) => ({ id: g, type: "userGroup" })),
@@ -1539,14 +1546,12 @@ export async function assignUserPermissionToWorkspace(
     workspaceId: string,
     permissions: Array<{ user: string; permission: string }>,
 ): Promise<void> {
-    await request.put(`/api/v1/layout/workspaces/${workspaceId}/permissions`, {
+    await request.post(`/api/v1/actions/workspaces/${workspaceId}/managePermissions`, {
         headers: { Authorization: `Bearer ${getAuthToken()}` },
-        data: {
-            permissions: permissions.map(({ user, permission }) => ({
-                assignee: { id: user, type: "user" },
-                name: permission,
-            })),
-        },
+        data: permissions.map(({ user, permission }) => ({
+            assigneeIdentifier: { id: user, type: "user" },
+            permissions: [permission],
+        })),
     });
 }
 

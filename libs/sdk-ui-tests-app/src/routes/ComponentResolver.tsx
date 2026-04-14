@@ -16,6 +16,7 @@ import { DashboardScenario } from "../components/Scenarios/Dashboard/DashboardSc
 import { DashboardScenarioTiger } from "../components/Scenarios/Dashboard/DashboardScenarioTiger";
 import { DashboardScenarioTigerCharts } from "../components/Scenarios/Dashboard/DashboardScenarioTigerCharts";
 import { DashboardScenarioTigerPermissions } from "../components/Scenarios/Dashboard/DashboardScenarioTigerPermissions";
+import { DashboardScenarioTigerShareEveryonePermission } from "../components/Scenarios/Dashboard/DashboardScenarioTigerShareEveryonePermission";
 import { DashboardScenarioTigerUnknownVisualization } from "../components/Scenarios/Dashboard/DashboardScenarioTigerUnknownVisualization";
 import { DashboardShortenMetricNameScenario } from "../components/Scenarios/Dashboard/DashboardShortenMetricNameScenario";
 import { DashboardStageNameScenario } from "../components/Scenarios/Dashboard/DashboardStageNameScenario";
@@ -84,6 +85,7 @@ export const SCENARIO_KEYS = {
     DASHBOARD_CROSS_FILTERING: "dashboard/dashboard-cross-filtering",
     DASHBOARD_TIGER_READONLY_DATE_FILTER: "dashboard/dashboard-tiger-readonly-date-filter",
     DASHBOARD_TIGER_PERMISSIONS: "dashboard/dashboard-tiger-permissions",
+    DASHBOARD_TIGER_SHARE_EVERYONE_PERMISSION: "dashboard/dashboard-tiger-share-everyone-permission",
     DASHBOARD_TIGER_UNKNOWN_VISUALIZATION_CLASS: "dashboard/dashboard-tiger-unknown-visualization",
     DASHBOARD_TIGER_CHARTS: "dashboard/dashboard-tiger-charts",
     DASHBOARD_STAGE_NAME: "dashboard/stage-name",
@@ -149,6 +151,7 @@ const scenarios = new Map<string, ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_CROSS_FILTERING, CrossFilteringScenario],
     [SCENARIO_KEYS.DASHBOARD_TIGER_READONLY_DATE_FILTER, DashboardTigerReadonlyDateFilter],
     [SCENARIO_KEYS.DASHBOARD_TIGER_PERMISSIONS, DashboardScenarioTigerPermissions],
+    [SCENARIO_KEYS.DASHBOARD_TIGER_SHARE_EVERYONE_PERMISSION, DashboardScenarioTigerShareEveryonePermission],
     [SCENARIO_KEYS.DASHBOARD_TIGER_UNKNOWN_VISUALIZATION_CLASS, DashboardScenarioTigerUnknownVisualization],
     [SCENARIO_KEYS.DASHBOARD_TIGER_CHARTS, DashboardScenarioTigerCharts],
     [SCENARIO_KEYS.DASHBOARD_STAGE_NAME, DashboardStageNameScenario],

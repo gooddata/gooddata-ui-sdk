@@ -4,9 +4,12 @@ import { type ReactNode, createContext, useContext } from "react";
 
 import { useDeepMemo } from "@gooddata/sdk-ui/internal";
 
-import { type IGeoChartResolvedProps } from "../types/props/geoChart/internal.js";
+import {
+    type IGeoChartResolvedProps,
+    type IGeoExportNormalizationProps,
+} from "../types/props/geoChart/internal.js";
 
-type IGeoChartContextProps = IGeoChartResolvedProps;
+type IGeoChartContextProps = IGeoChartResolvedProps & IGeoExportNormalizationProps;
 
 const GeoChartContext = createContext<IGeoChartContextProps | undefined>(undefined);
 
@@ -30,7 +33,7 @@ export function GeoChartPropsProvider({
  *
  * @internal
  */
-export function useGeoChartProps(): IGeoChartResolvedProps {
+export function useGeoChartProps(): IGeoChartContextProps {
     const context = useContext(GeoChartContext);
     const memoizeDeep = useDeepMemo();
 

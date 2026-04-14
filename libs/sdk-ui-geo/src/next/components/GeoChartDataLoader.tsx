@@ -20,6 +20,7 @@ import { useGeoChartProps } from "../context/GeoChartContext.js";
 import { useGeoChartData } from "../hooks/dataLoading/useGeoChartDataPipeline.js";
 import { useCallbackOnChange } from "../hooks/utils/useCallbackOnChange.js";
 import { type ILayerExecutionRecord } from "../types/props/geoChart/internal.js";
+import { createGeoExportFunction } from "../utils/createGeoExportFunction.js";
 
 /**
  * Component that loads all layer data before rendering.
@@ -90,12 +91,29 @@ export function GeoChartDataLoader({
     );
 
     useCallbackOnChange(
+        primaryDataView,
+        (dataView) => props.onDataView?.(dataView!),
+        status === "success" && Boolean(primaryDataView) && Boolean(props.onDataView),
+    );
+
+    useCallbackOnChange(
         exportReadyState,
         () => {
             if (!primaryDataView || combinedError) {
                 return;
             }
-            props.onExportReady?.(createExportFunction(primaryDataView.result(), props.exportTitle));
+
+            const exportFn = props.insight
+                ? createGeoExportFunction(
+                      backend,
+                      workspace,
+                      primaryDataView,
+                      props.insight,
+                      props.settings,
+                      props.exportTitle,
+                  )
+                : createExportFunction(primaryDataView.result(), props.exportTitle);
+            props.onExportReady?.(exportFn);
         },
         status === "success" && Boolean(primaryDataView) && Boolean(props.onExportReady),
     );

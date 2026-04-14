@@ -4,7 +4,7 @@ import { type KeyboardEventHandler, useCallback, useRef } from "react";
 
 import cx from "classnames";
 
-import { Dropdown, isArrowKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { Dropdown, isArrowKey, useIdPrefixed, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
@@ -43,6 +43,8 @@ export function AttributeFilterDropdown() {
         ErrorComponent,
         FilterMenuComponent,
     } = useAttributeFilterComponentsContext();
+
+    const dropdownButtonId = useIdPrefixed("attribute-filter-dropdown-button");
 
     const {
         title,
@@ -126,6 +128,19 @@ export function AttributeFilterDropdown() {
             e.stopPropagation();
         }
     }, []);
+    const focusDropdownButton = useCallback(() => {
+        requestAnimationFrame(() => {
+            const button = document.getElementById(dropdownButtonId);
+            if (button) {
+                button.focus();
+                return;
+            }
+            // Fallback for cases where trigger remount happens after dropdown close.
+            setTimeout(() => {
+                document.getElementById(dropdownButtonId)?.focus();
+            }, 0);
+        });
+    }, [dropdownButtonId]);
 
     return (
         <Dropdown
@@ -133,15 +148,19 @@ export function AttributeFilterDropdown() {
             closeOnParentScroll
             closeOnMouseDrag
             closeOnOutsideClick
+            ignoreClicksOnByClass={[".gd-filter-menu__dropdown"]}
             enableEventPropagation
+            closeOnEscape
             alignPoints={alignPoints ?? ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
             autofocusOnOpen
             initialFocus={initialFocus}
+            returnFocusTo={dropdownButtonId}
             overlayPositionType={overlayPositionType}
-            renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId }) => {
+            renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId, isMobile: isMobileButton }) => {
                 const handleClickAction = disabled ? () => {} : toggleDropdown;
-                const showMobileMenu = fullscreenOnMobile && isMobile && isOpen && showFilterHeader;
+                const showMobileMenu =
+                    fullscreenOnMobile && isMobile && isMobileButton && isOpen && showFilterHeader;
                 return (
                     <div
                         className={cx({
@@ -171,6 +190,7 @@ export function AttributeFilterDropdown() {
                                     onClick={handleClickAction}
                                     isError={!!initError}
                                     buttonRef={buttonRef}
+                                    buttonId={dropdownButtonId}
                                     dropdownId={dropdownId}
                                 />
                             </AttributeFilterButtonErrorTooltip>
@@ -211,6 +231,7 @@ export function AttributeFilterDropdown() {
                         onApplyButtonClick={() => {
                             onApply(true, withoutApply);
                             closeDropdown();
+                            focusDropdownButton();
                         }}
                         onCancelButtonClick={closeDropdown}
                     />

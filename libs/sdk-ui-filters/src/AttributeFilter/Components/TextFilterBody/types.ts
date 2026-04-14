@@ -116,4 +116,10 @@ export interface ITextFilterBodyProps {
      * If true, tooltips in the filter body are hidden.
      */
     hideTooltips?: boolean;
+
+    /**
+     * Optional id for the validation message element.
+     * When provided, inputs and action buttons can reference this id in aria-describedby.
+     */
+    validationMessageId?: string;
 }

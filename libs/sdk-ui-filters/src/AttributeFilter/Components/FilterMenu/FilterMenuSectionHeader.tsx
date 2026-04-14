@@ -6,13 +6,21 @@ export type IFilterMenuSectionHeaderProps = {
     title: string;
     tooltip: string;
     hideTooltip?: boolean;
+    titleId?: string;
 };
 
-export function FilterMenuSectionHeader({ title, tooltip, hideTooltip }: IFilterMenuSectionHeaderProps) {
+export function FilterMenuSectionHeader({
+    title,
+    tooltip,
+    hideTooltip,
+    titleId,
+}: IFilterMenuSectionHeaderProps) {
     return (
         <div className="gd-filter-menu__section">
             <div className="gd-filter-menu__section-label">
-                <span className="gd-filter-menu__section-text">{title}</span>
+                <span id={titleId} className="gd-filter-menu__section-text">
+                    {title}
+                </span>
                 {hideTooltip ? null : (
                     <UiTooltip
                         anchor={

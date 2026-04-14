@@ -178,8 +178,10 @@
 
         &:focus,
         &:focus-visible {
-            outline: none;
-            border-color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
+            box-shadow: none;
+            border-color: initial;
+            outline: auto 5px Highlight; /* For Firefox */
+            outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
         }
 
         &:disabled {

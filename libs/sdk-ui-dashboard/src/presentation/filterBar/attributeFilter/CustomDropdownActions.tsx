@@ -113,6 +113,7 @@ export function CustomAttributeFilterDropdownActions({
                                     accessibilityConfig={{
                                         ariaDescribedBy: isSelectionChanged ? undefined : tooltipId,
                                     }}
+                                    describedByFromValidation
                                 />
                             }
                         />

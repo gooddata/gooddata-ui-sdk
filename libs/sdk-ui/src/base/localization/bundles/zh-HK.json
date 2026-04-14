@@ -766,7 +766,7 @@
     "userManagement.tab.workspaces": "工作區（{count}）",
     "userManagement.tab.groups": "組（{count}）",
     "userManagement.tab.users": "成員（{count}）",
-    "userManagement.tab.details": "詳",
+    "userManagement.tab.details": "詳情",
     "userManagement.buttons.addWorkspace": "添加工作區權限",
     "userManagement.buttons.addToGroup": "添加到組",
     "userManagement.buttons.addUser": "添加成員",

@@ -16,6 +16,7 @@ type ITextFilterBodyValidationParams = Pick<
     | "hasValuesEmptyError"
     | "hasValuesLimitReachedWarning"
     | "hasValuesLimitExceededError"
+    | "validationMessageId"
 >;
 
 type ITextFilterValidationMessages = {
@@ -73,32 +74,24 @@ const getTextFilterValidationMessages = (
     };
 };
 
-const getTextFilterInvalidDatapoints = (messages: ITextFilterValidationMessages) => {
+const getTextFilterInvalidDatapoints = (
+    messages: ITextFilterValidationMessages,
+    validationMessageId?: string,
+) => {
+    const createTextFilterInvalidDatapoint = (message: string, severity: "error" | "warning") =>
+        createInvalidDatapoint(
+            validationMessageId ? { id: validationMessageId, message, severity } : { message, severity },
+        );
+
     return [
-        messages.valuesEmpty
-            ? createInvalidDatapoint({
-                  message: messages.valuesEmpty,
-                  severity: "error",
-              })
-            : undefined,
+        messages.valuesEmpty ? createTextFilterInvalidDatapoint(messages.valuesEmpty, "error") : undefined,
         messages.valuesLimitExceeded
-            ? createInvalidDatapoint({
-                  message: messages.valuesLimitExceeded,
-                  severity: "error",
-              })
+            ? createTextFilterInvalidDatapoint(messages.valuesLimitExceeded, "error")
             : undefined,
         messages.valuesLimitReachedWarning
-            ? createInvalidDatapoint({
-                  message: messages.valuesLimitReachedWarning,
-                  severity: "warning",
-              })
+            ? createTextFilterInvalidDatapoint(messages.valuesLimitReachedWarning, "warning")
             : undefined,
-        messages.literalEmpty
-            ? createInvalidDatapoint({
-                  message: messages.literalEmpty,
-                  severity: "error",
-              })
-            : undefined,
+        messages.literalEmpty ? createTextFilterInvalidDatapoint(messages.literalEmpty, "error") : undefined,
     ];
 };
 
@@ -114,6 +107,7 @@ export function useTextFilterBodyValidation(params: ITextFilterBodyValidationPar
         hasValuesEmptyError,
         hasValuesLimitReachedWarning,
         hasValuesLimitExceededError,
+        validationMessageId,
     } = params;
     const isArbitraryOperator = operator === "is" || operator === "isNot";
     const intl = useIntl();
@@ -133,7 +127,7 @@ export function useTextFilterBodyValidation(params: ITextFilterBodyValidationPar
             intl,
         );
 
-        setInvalidDatapoints(() => getTextFilterInvalidDatapoints(messages));
+        setInvalidDatapoints(() => getTextFilterInvalidDatapoints(messages, validationMessageId));
     }, [
         hasLiteralEmptyError,
         hasValuesEmptyError,
@@ -142,11 +136,16 @@ export function useTextFilterBodyValidation(params: ITextFilterBodyValidationPar
         intl,
         isArbitraryOperator,
         setInvalidDatapoints,
+        validationMessageId,
     ]);
 
     const validationDatapoints = getInvalidDatapoints();
     const describedByFromValidation = useMemo(
-        () => validationDatapoints.map((datapoint) => datapoint.id).join(" ") || undefined,
+        () =>
+            validationDatapoints
+                .map((datapoint) => datapoint.id)
+                .filter(Boolean)
+                .join(" ") || undefined,
         [validationDatapoints],
     );
     const hasErrorInValidation = validationDatapoints.some((datapoint) => datapoint.severity === "error");

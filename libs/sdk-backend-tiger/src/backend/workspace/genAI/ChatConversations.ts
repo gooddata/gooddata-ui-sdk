@@ -2,7 +2,7 @@
 
 import { type EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
-import { type AiConversationItemResponse } from "@gooddata/api-client-tiger";
+import { type AiConversationItemResponse, type AiSendMessageRequest } from "@gooddata/api-client-tiger";
 import {
     GenAiApi_DeleteConversation,
     GenAiApi_GetConversation,
@@ -30,6 +30,7 @@ import {
     type GenAIObjectType,
     type IAllowedRelationshipType,
     type IGenAIUserContext,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
 import { type FormattingLocale } from "../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
@@ -356,6 +357,9 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                 allowedRelationshipTypes: this.requestParameters.allowedRelationshipTypes,
                             },
                         },
+                        userContext: convertUserContext(
+                            this.requestParameters.userContext,
+                        ) as AiSendMessageRequest["userContext"],
                     },
                 },
                 options,
@@ -398,6 +402,9 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                         allowedRelationshipTypes: requestParameters.allowedRelationshipTypes,
                                     },
                                 },
+                                userContext: convertUserContext(
+                                    requestParameters.userContext,
+                                ) as AiSendMessageRequest["userContext"],
                             },
                         },
                         {
@@ -481,4 +488,59 @@ class ServerSentEventsDataConverter extends TransformStream<
             },
         });
     }
+}
+
+/**
+ * Convert SDK model user context (with ObjRef) to the API user context (with plain string IDs).
+ */
+function convertUserContext(userContext: IGenAIUserContext | undefined) {
+    if (!userContext) {
+        return undefined;
+    }
+
+    return {
+        ...(userContext.activeObject
+            ? {
+                  activeObject: {
+                      id: objRefToString(userContext.activeObject.ref),
+                      type: userContext.activeObject.type,
+                      workspaceId: userContext.activeObject.workspaceId,
+                  },
+              }
+            : {}),
+        ...(userContext.view?.dashboard
+            ? {
+                  view: {
+                      dashboard: {
+                          id: objRefToString(userContext.view.dashboard.ref),
+                          widgets: userContext.view.dashboard.widgets.map((w) => ({
+                              title: w.title,
+                              widgetId: objRefToString(w.widgetRef),
+                              widgetType: w.widgetType,
+                              ...(w.insightRef ? { visualizationId: objRefToString(w.insightRef) } : {}),
+                              ...(w.resultId ? { resultId: w.resultId } : {}),
+                          })),
+                      },
+                  },
+              }
+            : {}),
+        ...(userContext.referencedObjects
+            ? {
+                  referencedObjects: userContext.referencedObjects.map((group) => ({
+                      ...(group.context
+                          ? {
+                                context: {
+                                    type: group.context.type,
+                                    id: objRefToString(group.context.ref),
+                                },
+                            }
+                          : {}),
+                      objects: group.objects.map((o) => ({
+                          type: o.type,
+                          id: objRefToString(o.ref),
+                      })),
+                  })),
+              }
+            : {}),
+    };
 }

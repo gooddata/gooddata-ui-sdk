@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Literal, TypeAlias, TypedDict
+from typing import Any, Literal, TypeAlias, TypedDict, Union
 
 from typing_extensions import NotRequired
 
@@ -26,16 +26,32 @@ __all__ = [
     "ComplexColorItem",
     "Config",
     "Dashboard",
+    "Dashboard1",
     "DashboardAbsoluteDateFilter",
     "DashboardAttributeFilter",
     "DashboardAttributeFilter1",
+    "DashboardAttributeFilter2",
     "DashboardFilterGroup",
     "DashboardFilters",
     "DashboardFilters1",
+    "DashboardFilters10",
+    "DashboardFilters11",
+    "DashboardFilters12",
+    "DashboardFilters13",
+    "DashboardFilters14",
     "DashboardFilters2",
+    "DashboardFilters3",
+    "DashboardFilters4",
+    "DashboardFilters5",
+    "DashboardFilters6",
+    "DashboardFilters7",
+    "DashboardFilters8",
+    "DashboardFilters9",
     "DashboardFiltersModel",
     "DashboardFiltersNoGroups",
     "DashboardFiltersNoGroups1",
+    "DashboardFiltersNoGroups2",
+    "DashboardFiltersNoGroups3",
     "DashboardRelativeDateFilter",
     "DashboardTextFilter",
     "DashboardTextFilter1",
@@ -44,6 +60,9 @@ __all__ = [
     "Dataset",
     "Dataset1",
     "Dataset2",
+    "Dataset3",
+    "Dataset4",
+    "Dataset5",
     "DateDataset",
     "DateFilterGranularity",
     "Description",
@@ -53,9 +72,14 @@ __all__ = [
     "FactIdentifier",
     "Fields",
     "Fields1",
+    "Fields2",
+    "Fields3",
+    "Fields4",
     "GeoAreaConfig",
     "Identifier",
     "IgnoredDrillDown",
+    "IgnoredDrillDown1",
+    "IgnoredDrillDown2",
     "IgnoredDrillDownsIntersection",
     "Interaction",
     "InteractionClickOn",
@@ -76,35 +100,63 @@ __all__ = [
     "LayerItem",
     "LayerItem1",
     "LayerItem2",
-    "LayerItem3",
-    "LayerItem4",
-    "LayerItem5",
     "LayerItemBase",
     "Locale",
     "Metadata",
+    "Metadata1",
+    "Metadata2",
+    "Metadata3",
+    "Metadata4",
+    "Metadata5",
+    "Metadata6",
+    "Metadata8",
     "Metric",
     "MetricIdentifier",
     "Metrics",
     "MvfCondition",
+    "MvfCondition1",
+    "MvfCondition2",
+    "MvfCondition3",
     "OpenUrl",
     "Parents",
     "Permission",
     "Permissions",
     "Plugin",
     "Plugins",
+    "Query",
     "QueryAttributeFilter",
     "QueryAttributeSort",
     "QueryDateFilter",
+    "QueryDateFilter1",
+    "QueryDateFilter2",
     "QueryField",
     "QueryField1",
+    "QueryField11",
+    "QueryField13",
+    "QueryField2",
+    "QueryField3",
+    "QueryField5",
+    "QueryField7",
+    "QueryField9",
     "QueryFields",
     "QueryFilter",
+    "QueryFilter2",
+    "QueryFilter3",
+    "QueryFilter6",
+    "QueryFilters",
     "QueryMetricSort",
     "QueryMetricValueFilter",
+    "QueryMetricValueFilter1",
+    "QueryMetricValueFilter2",
+    "QueryMetricValueFilter3",
+    "QueryMetricValueFilter4",
     "QueryRankingFilter",
     "QueryRankingFilter1",
     "QueryRankingFilter2",
     "QuerySort",
+    "QuerySort1",
+    "QuerySort2",
+    "QuerySort3",
     "QuerySorts",
     "QueryTextFilter",
     "QueryTextFilter1",
@@ -121,16 +173,74 @@ __all__ = [
     "Title",
     "TotalItem",
     "Using",
+    "Using1",
+    "Using2",
+    "Using3",
+    "Using4",
+    "Visualisation",
+    "Visualisation1",
+    "Visualisation10",
+    "Visualisation11",
+    "Visualisation12",
+    "Visualisation13",
+    "Visualisation14",
+    "Visualisation15",
+    "Visualisation16",
+    "Visualisation17",
+    "Visualisation18",
+    "Visualisation19",
+    "Visualisation2",
+    "Visualisation20",
+    "Visualisation21",
+    "Visualisation22",
+    "Visualisation3",
+    "Visualisation4",
+    "Visualisation5",
+    "Visualisation6",
+    "Visualisation7",
+    "Visualisation8",
+    "Visualisation9",
     "VisualizationWidget",
     "Widget",
+    "Widget1",
+    "Widget2",
+    "Widget3",
     "WidthItem",
     "WorkspaceDataFilter",
 ]
 
 
 
-class Metadata(TypedDict):
+class Metadata8(TypedDict):
     type: Literal[
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
         'dataset',
         'date',
         'metric',
@@ -195,30 +305,207 @@ class Permission(TypedDict):
     user_groups: NotRequired[list[str]]
 
 
-class DashboardFilters(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
-
-
-DashboardFilters1: TypeAlias = dict[str, DashboardFilters]
-
-
 class Parents(TypedDict):
     using: str
     common: bool
 
 
-class DashboardAttributeFilter1(TypedDict):
+class DashboardFilters2(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'attribute_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'attribute_filter',
+        'attribute_filter',
+    ]
     title: NotRequired[str]
-    type: Literal['attribute_filter']
     using: AttributeIdentifier | LabelIdentifier
     multiselect: NotRequired[bool]
-    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
+    mode: NotRequired[
+        Literal[
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+        ]
+    ]
     display_as: NotRequired[str]
     parents: NotRequired[list[str | Parents]]
     metric_filters: NotRequired[list[str]]
+    state: NotRequired[Any]
 
 
-DashboardAttributeFilter: TypeAlias = DashboardAttributeFilter1
+class DashboardFilters3(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'attribute_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'attribute_filter',
+        'attribute_filter',
+    ]
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    multiselect: NotRequired[bool]
+    mode: NotRequired[
+        Literal[
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+        ]
+    ]
+    display_as: NotRequired[str]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    state: NotRequired[Any]
+
+
+class DashboardFilters4(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'text_filter',
+    ]
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    case_sensitive: NotRequired[bool]
+    display_as: NotRequired[str]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active', 'readonly', 'hidden', 'active']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    condition: Literal['is', 'isNot']
+    values: list[str | None]
+
+
+class DashboardFilters5(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'text_filter',
+    ]
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    case_sensitive: NotRequired[bool]
+    display_as: NotRequired[str]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active', 'readonly', 'hidden', 'active']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    condition: Literal[
+        'contains',
+        'doesNotContain',
+        'startsWith',
+        'doesNotStartWith',
+        'endsWith',
+        'doesNotEndWith',
+    ]
+    value: str
+
+
+class DashboardAttributeFilter1(TypedDict):
+    title: NotRequired[str]
+    type: Literal['attribute_filter', 'attribute_filter', 'attribute_filter']
+    using: AttributeIdentifier | LabelIdentifier
+    multiselect: NotRequired[bool]
+    mode: NotRequired[
+        Literal[
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+        ]
+    ]
+    display_as: NotRequired[str]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    state: NotRequired[Any]
+
+
+class DashboardAttributeFilter2(TypedDict):
+    title: NotRequired[str]
+    type: Literal['attribute_filter', 'attribute_filter', 'attribute_filter']
+    using: AttributeIdentifier | LabelIdentifier
+    multiselect: NotRequired[bool]
+    mode: NotRequired[
+        Literal[
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+        ]
+    ]
+    display_as: NotRequired[str]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    state: NotRequired[Any]
+
+
+DashboardAttributeFilter: TypeAlias = (
+    DashboardAttributeFilter1 | DashboardAttributeFilter2
+)
 
 
 class DashboardTextFilter1(TypedDict):
@@ -261,11 +548,15 @@ class DashboardTextFilter2(TypedDict):
 DashboardTextFilter: TypeAlias = DashboardTextFilter1 | DashboardTextFilter2
 
 
-class DashboardFiltersNoGroups1(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter']
-
-
-DashboardFiltersNoGroups: TypeAlias = dict[str, DashboardFiltersNoGroups1]
+class DashboardFiltersNoGroups3(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+    ]
 
 
 DateFilterGranularity: TypeAlias = Literal[
@@ -283,8 +574,13 @@ DateFilterGranularity: TypeAlias = Literal[
 ]
 
 
-class QueryFilter(TypedDict):
+class QueryFilter6(TypedDict):
     type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'metric_value_filter',
+        'ranking_filter',
         'date_filter',
         'attribute_filter',
         'text_filter',
@@ -334,7 +630,7 @@ QueryTextFilter: TypeAlias = QueryTextFilter1 | QueryTextFilter2
 
 
 class QueryRankingFilter1(TypedDict):
-    type: Literal['ranking_filter']
+    type: Literal['ranking_filter', 'ranking_filter']
     using: MetricIdentifier | str
     attribute: NotRequired[AttributeIdentifier | str]
     bottom: float
@@ -342,7 +638,7 @@ class QueryRankingFilter1(TypedDict):
 
 
 class QueryRankingFilter2(TypedDict):
-    type: Literal['ranking_filter']
+    type: Literal['ranking_filter', 'ranking_filter']
     using: MetricIdentifier | str
     attribute: NotRequired[AttributeIdentifier | str]
     bottom: NotRequired[float]
@@ -352,7 +648,7 @@ class QueryRankingFilter2(TypedDict):
 QueryRankingFilter: TypeAlias = QueryRankingFilter1 | QueryRankingFilter2
 
 
-class MvfCondition(TypedDict):
+class MvfCondition1(TypedDict):
     condition: NotRequired[
         Literal[
             'GREATER_THAN',
@@ -363,8 +659,76 @@ class MvfCondition(TypedDict):
             'NOT_EQUAL_TO',
             'BETWEEN',
             'NOT_BETWEEN',
+            'GREATER_THAN',
+            'GREATER_THAN_OR_EQUAL_TO',
+            'LESS_THAN',
+            'LESS_THAN_OR_EQUAL_TO',
+            'EQUAL_TO',
+            'NOT_EQUAL_TO',
+            'BETWEEN',
+            'NOT_BETWEEN',
         ]
     ]
+
+
+class MvfCondition2(TypedDict):
+    condition: Literal[
+        'GREATER_THAN',
+        'GREATER_THAN_OR_EQUAL_TO',
+        'LESS_THAN',
+        'LESS_THAN_OR_EQUAL_TO',
+        'EQUAL_TO',
+        'NOT_EQUAL_TO',
+        'BETWEEN',
+        'NOT_BETWEEN',
+        'GREATER_THAN',
+        'GREATER_THAN_OR_EQUAL_TO',
+        'LESS_THAN',
+        'LESS_THAN_OR_EQUAL_TO',
+        'EQUAL_TO',
+        'NOT_EQUAL_TO',
+        'BETWEEN',
+        'NOT_BETWEEN',
+        'GREATER_THAN',
+        'GREATER_THAN_OR_EQUAL_TO',
+        'LESS_THAN',
+        'LESS_THAN_OR_EQUAL_TO',
+        'EQUAL_TO',
+        'NOT_EQUAL_TO',
+    ]
+    value: float
+
+
+MvfCondition3 = TypedDict(
+    'MvfCondition3',
+    {
+        'condition': Literal[
+            'GREATER_THAN',
+            'GREATER_THAN_OR_EQUAL_TO',
+            'LESS_THAN',
+            'LESS_THAN_OR_EQUAL_TO',
+            'EQUAL_TO',
+            'NOT_EQUAL_TO',
+            'BETWEEN',
+            'NOT_BETWEEN',
+            'GREATER_THAN',
+            'GREATER_THAN_OR_EQUAL_TO',
+            'LESS_THAN',
+            'LESS_THAN_OR_EQUAL_TO',
+            'EQUAL_TO',
+            'NOT_EQUAL_TO',
+            'BETWEEN',
+            'NOT_BETWEEN',
+            'BETWEEN',
+            'NOT_BETWEEN',
+        ],
+        'from': float,
+        'to': float,
+    },
+)
+
+
+MvfCondition: TypeAlias = MvfCondition1 | MvfCondition2 | MvfCondition3
 
 
 class Using(TypedDict):
@@ -388,15 +752,17 @@ SimpleColorItem: TypeAlias = float | str
 ComplexColorItem: TypeAlias = float | str
 
 
-class Widget(TypedDict):
-    pass
+class IgnoredDrillDown1(TypedDict):
+    hierarchy: str
+    on: str
 
 
-Interaction: TypeAlias = Any
+class IgnoredDrillDown2(TypedDict):
+    template: Literal['default']
+    on: str
 
 
-class IgnoredDrillDown(TypedDict):
-    pass
+IgnoredDrillDown: TypeAlias = IgnoredDrillDown1 | IgnoredDrillDown2
 
 
 class IgnoredDrillDownsIntersection(TypedDict):
@@ -434,11 +800,10 @@ class InteractionFilters(TypedDict):
     include: NotRequired[InteractionFiltersInclude]
 
 
-class Fields1(TypedDict):
-    type: Literal['fact', 'attribute', 'aggregated_fact']
-
-
-Fields: TypeAlias = dict[str, Fields1]
+class Fields4(TypedDict):
+    type: Literal[
+        'fact', 'attribute', 'aggregated_fact', 'fact', 'attribute', 'aggregated_fact'
+    ]
 
 
 SourceColumn: TypeAlias = str
@@ -473,23 +838,83 @@ class Source(TypedDict):
     null_value_join_replacement: NotRequired[str]
 
 
-class QueryField1(TypedDict):
+class QueryField2(TypedDict):
     aggregation: NotRequired[
         Literal[
-            'SUM', 'COUNT', 'APPROXIMATE_COUNT', 'AVG', 'MIN', 'MAX', 'MEDIAN', 'RUNSUM'
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
         ]
     ]
     using: NotRequired[str | list[str]]
     maql: NotRequired[str]
     operator: NotRequired[
-        Literal['SUM', 'DIFFERENCE', 'MULTIPLICATION', 'RATIO', 'CHANGE']
+        Literal[
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+        ]
     ]
-    type: NotRequired[Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD']]
+    type: NotRequired[
+        Literal[
+            'PREVIOUS_YEAR',
+            'PREVIOUS_PERIOD',
+            'PREVIOUS_YEAR',
+            'PREVIOUS_PERIOD',
+            'PREVIOUS_YEAR',
+            'PREVIOUS_PERIOD',
+        ]
+    ]
     date_filter: NotRequired[str]
 
 
-class QuerySort(TypedDict):
-    type: Literal['attribute_sort', 'metric_sort']
+Using1: TypeAlias = str
+
+
+Using2: TypeAlias = list[str]
+
+
+Using3: TypeAlias = str
+
+
+Using4: TypeAlias = list[str]
+
+
+class QuerySort3(TypedDict):
+    type: Literal['attribute_sort', 'metric_sort', 'attribute_sort', 'metric_sort']
 
 
 BucketEmptyItem: TypeAlias = None
@@ -564,11 +989,207 @@ class TextWrapping(TypedDict):
     column_overrides: NotRequired[list[ColumnOverride]]
 
 
-class DashboardFilters2(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+DashboardFilters8 = TypedDict(
+    'DashboardFilters8',
+    {
+        'type': Literal[
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+            'date_filter',
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+        ],
+        'title': NotRequired[str],
+        'granularity': NotRequired[DateFilterGranularity],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+        'mode': NotRequired[Literal['readonly', 'hidden', 'active']],
+        'empty_values': NotRequired[Literal['only', 'include', 'exclude']],
+        'date': NotRequired[Identifier],
+    },
+)
 
 
-DashboardFiltersModel: TypeAlias = dict[str, DashboardFilters2]
+DashboardFilters9 = TypedDict(
+    'DashboardFilters9',
+    {
+        'type': Literal[
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+            'date_filter',
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+        ],
+        'title': NotRequired[str],
+        'granularity': NotRequired[DateFilterGranularity],
+        'from': float,
+        'to': float,
+        'mode': NotRequired[Literal['readonly', 'hidden', 'active']],
+        'empty_values': NotRequired[Literal['only', 'include', 'exclude']],
+        'date': NotRequired[Identifier],
+    },
+)
+
+
+class DashboardFilters10(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'attribute_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'attribute_filter',
+        'attribute_filter',
+    ]
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    multiselect: NotRequired[bool]
+    mode: NotRequired[
+        Literal[
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+        ]
+    ]
+    display_as: NotRequired[str]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    state: NotRequired[Any]
+
+
+class DashboardFilters11(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'attribute_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'attribute_filter',
+        'attribute_filter',
+    ]
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    multiselect: NotRequired[bool]
+    mode: NotRequired[
+        Literal[
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+            'readonly',
+            'hidden',
+            'active',
+        ]
+    ]
+    display_as: NotRequired[str]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    state: NotRequired[Any]
+
+
+class DashboardFilters12(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'text_filter',
+    ]
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    case_sensitive: NotRequired[bool]
+    display_as: NotRequired[str]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active', 'readonly', 'hidden', 'active']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    condition: Literal['is', 'isNot']
+    values: list[str | None]
+
+
+class DashboardFilters13(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'text_filter',
+    ]
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    case_sensitive: NotRequired[bool]
+    display_as: NotRequired[str]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active', 'readonly', 'hidden', 'active']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    condition: Literal[
+        'contains',
+        'doesNotContain',
+        'startsWith',
+        'doesNotStartWith',
+        'endsWith',
+        'doesNotEndWith',
+    ]
+    value: str
 
 
 class AttributeHierarchy(TypedDict):
@@ -578,6 +1199,64 @@ class AttributeHierarchy(TypedDict):
     description: NotRequired[Description]
     tags: NotRequired[Tags]
     attributes: list[AttributeIdentifier]
+
+
+DashboardFilters = TypedDict(
+    'DashboardFilters',
+    {
+        'type': Literal[
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+            'date_filter',
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+        ],
+        'title': NotRequired[str],
+        'granularity': NotRequired[DateFilterGranularity],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+        'mode': NotRequired[Literal['readonly', 'hidden', 'active']],
+        'empty_values': NotRequired[Literal['only', 'include', 'exclude']],
+        'date': NotRequired[Identifier],
+    },
+)
+
+
+DashboardFilters1 = TypedDict(
+    'DashboardFilters1',
+    {
+        'type': Literal[
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+            'date_filter',
+            'date_filter',
+            'attribute_filter',
+            'text_filter',
+            'filter_group',
+        ],
+        'title': NotRequired[str],
+        'granularity': NotRequired[DateFilterGranularity],
+        'from': float,
+        'to': float,
+        'mode': NotRequired[Literal['readonly', 'hidden', 'active']],
+        'empty_values': NotRequired[Literal['only', 'include', 'exclude']],
+        'date': NotRequired[Identifier],
+    },
+)
 
 
 DashboardAbsoluteDateFilter = TypedDict(
@@ -610,16 +1289,152 @@ DashboardRelativeDateFilter = TypedDict(
 )
 
 
-class DashboardFilterGroup(TypedDict):
-    type: Literal['filter_group']
-    title: str
-    filters: DashboardFiltersNoGroups
+class DashboardFiltersNoGroups1(DashboardAbsoluteDateFilter):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+    ]
 
 
-QueryDateFilter = TypedDict(
-    'QueryDateFilter',
+class DashboardFiltersNoGroups2(DashboardRelativeDateFilter):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+    ]
+
+
+DashboardFiltersNoGroups: TypeAlias = dict[
+    str,
+    DashboardFiltersNoGroups1 | DashboardFiltersNoGroups2 | DashboardFiltersNoGroups3,
+]
+
+
+class QueryFilter2(QueryAttributeFilter):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'metric_value_filter',
+        'ranking_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'metric_value_filter',
+        'ranking_filter',
+    ]
+
+
+class QueryFilter3(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'metric_value_filter',
+        'ranking_filter',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'metric_value_filter',
+        'ranking_filter',
+    ]
+
+
+QueryDateFilter1 = TypedDict(
+    'QueryDateFilter1',
     {
-        'type': Literal['date_filter'],
+        'type': Literal['date_filter', 'date_filter', 'date_filter'],
+        'using': str,
+        'granularity': Literal[
+            'MINUTE',
+            'HOUR',
+            'DAY',
+            'WEEK',
+            'WEEK_US',
+            'MONTH',
+            'QUARTER',
+            'YEAR',
+            'MINUTE_OF_HOUR',
+            'HOUR_OF_DAY',
+            'DAY_OF_WEEK',
+            'DAY_OF_MONTH',
+            'DAY_OF_YEAR',
+            'WEEK_OF_YEAR',
+            'MONTH_OF_YEAR',
+            'QUARTER_OF_YEAR',
+            'FISCAL_YEAR',
+            'FISCAL_QUARTER',
+            'FISCAL_MONTH',
+            'MINUTE',
+            'HOUR',
+            'DAY',
+            'WEEK',
+            'WEEK_US',
+            'MONTH',
+            'QUARTER',
+            'YEAR',
+            'MINUTE_OF_HOUR',
+            'HOUR_OF_DAY',
+            'DAY_OF_WEEK',
+            'DAY_OF_MONTH',
+            'DAY_OF_YEAR',
+            'WEEK_OF_YEAR',
+            'MONTH_OF_YEAR',
+            'QUARTER_OF_YEAR',
+            'FISCAL_YEAR',
+            'FISCAL_QUARTER',
+            'FISCAL_MONTH',
+            'MINUTE',
+            'HOUR',
+            'DAY',
+            'WEEK',
+            'WEEK_US',
+            'MONTH',
+            'QUARTER',
+            'YEAR',
+            'MINUTE_OF_HOUR',
+            'HOUR_OF_DAY',
+            'DAY_OF_WEEK',
+            'DAY_OF_MONTH',
+            'DAY_OF_YEAR',
+            'WEEK_OF_YEAR',
+            'MONTH_OF_YEAR',
+            'QUARTER_OF_YEAR',
+            'FISCAL_YEAR',
+            'FISCAL_QUARTER',
+            'FISCAL_MONTH',
+        ],
+        'from': NotRequired[float],
+        'to': NotRequired[float],
+        'with': NotRequired[dict[str, QueryAttributeFilter]],
+        'empty_values': NotRequired[
+            Literal[
+                'only',
+                'include',
+                'exclude',
+                'only',
+                'include',
+                'exclude',
+                'only',
+                'include',
+                'exclude',
+            ]
+        ],
+    },
+)
+
+
+QueryDateFilter2 = TypedDict(
+    'QueryDateFilter2',
+    {
+        'type': Literal['date_filter', 'date_filter', 'date_filter'],
         'using': str,
         'granularity': NotRequired[
             Literal[
@@ -642,18 +1457,149 @@ QueryDateFilter = TypedDict(
                 'FISCAL_YEAR',
                 'FISCAL_QUARTER',
                 'FISCAL_MONTH',
+                'MINUTE',
+                'HOUR',
+                'DAY',
+                'WEEK',
+                'WEEK_US',
+                'MONTH',
+                'QUARTER',
+                'YEAR',
+                'MINUTE_OF_HOUR',
+                'HOUR_OF_DAY',
+                'DAY_OF_WEEK',
+                'DAY_OF_MONTH',
+                'DAY_OF_YEAR',
+                'WEEK_OF_YEAR',
+                'MONTH_OF_YEAR',
+                'QUARTER_OF_YEAR',
+                'FISCAL_YEAR',
+                'FISCAL_QUARTER',
+                'FISCAL_MONTH',
             ]
         ],
-        'from': NotRequired[str | float],
-        'to': NotRequired[str | float],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
         'with': NotRequired[dict[str, QueryAttributeFilter]],
-        'empty_values': NotRequired[Literal['only', 'include', 'exclude']],
+        'empty_values': NotRequired[
+            Literal[
+                'only',
+                'include',
+                'exclude',
+                'only',
+                'include',
+                'exclude',
+                'only',
+                'include',
+                'exclude',
+            ]
+        ],
     },
 )
 
 
-class QueryMetricValueFilter(TypedDict):
-    type: Literal['metric_value_filter']
+QueryDateFilter: TypeAlias = QueryDateFilter1 | QueryDateFilter2
+
+
+class QueryMetricValueFilter1(TypedDict):
+    type: Literal['metric_value_filter', 'metric_value_filter', 'metric_value_filter']
+    conditions: list[MvfCondition]
+    condition: NotRequired[
+        Literal[
+            'GREATER_THAN',
+            'GREATER_THAN_OR_EQUAL_TO',
+            'LESS_THAN',
+            'LESS_THAN_OR_EQUAL_TO',
+            'EQUAL_TO',
+            'NOT_EQUAL_TO',
+            'BETWEEN',
+            'NOT_BETWEEN',
+            'GREATER_THAN',
+            'GREATER_THAN_OR_EQUAL_TO',
+            'LESS_THAN',
+            'LESS_THAN_OR_EQUAL_TO',
+            'EQUAL_TO',
+            'NOT_EQUAL_TO',
+            'BETWEEN',
+            'NOT_BETWEEN',
+        ]
+    ]
+    using: MetricIdentifier | str
+    null_values_as_zero: NotRequired[bool]
+    dimensionality: NotRequired[list[LabelIdentifier | str]]
+
+
+class QueryMetricValueFilter2(TypedDict):
+    type: Literal['metric_value_filter', 'metric_value_filter', 'metric_value_filter']
+    conditions: NotRequired[list[MvfCondition]]
+    condition: Literal[
+        'GREATER_THAN',
+        'GREATER_THAN_OR_EQUAL_TO',
+        'LESS_THAN',
+        'LESS_THAN_OR_EQUAL_TO',
+        'EQUAL_TO',
+        'NOT_EQUAL_TO',
+        'BETWEEN',
+        'NOT_BETWEEN',
+        'GREATER_THAN',
+        'GREATER_THAN_OR_EQUAL_TO',
+        'LESS_THAN',
+        'LESS_THAN_OR_EQUAL_TO',
+        'EQUAL_TO',
+        'NOT_EQUAL_TO',
+        'BETWEEN',
+        'NOT_BETWEEN',
+        'GREATER_THAN',
+        'GREATER_THAN_OR_EQUAL_TO',
+        'LESS_THAN',
+        'LESS_THAN_OR_EQUAL_TO',
+        'EQUAL_TO',
+        'NOT_EQUAL_TO',
+    ]
+    using: MetricIdentifier | str
+    value: float
+    null_values_as_zero: NotRequired[bool]
+    dimensionality: NotRequired[list[LabelIdentifier | str]]
+
+
+QueryMetricValueFilter3 = TypedDict(
+    'QueryMetricValueFilter3',
+    {
+        'type': Literal[
+            'metric_value_filter', 'metric_value_filter', 'metric_value_filter'
+        ],
+        'conditions': NotRequired[list[MvfCondition]],
+        'condition': Literal[
+            'GREATER_THAN',
+            'GREATER_THAN_OR_EQUAL_TO',
+            'LESS_THAN',
+            'LESS_THAN_OR_EQUAL_TO',
+            'EQUAL_TO',
+            'NOT_EQUAL_TO',
+            'BETWEEN',
+            'NOT_BETWEEN',
+            'GREATER_THAN',
+            'GREATER_THAN_OR_EQUAL_TO',
+            'LESS_THAN',
+            'LESS_THAN_OR_EQUAL_TO',
+            'EQUAL_TO',
+            'NOT_EQUAL_TO',
+            'BETWEEN',
+            'NOT_BETWEEN',
+            'BETWEEN',
+            'NOT_BETWEEN',
+        ],
+        'using': MetricIdentifier | str,
+        'from': float,
+        'to': float,
+        'null_values_as_zero': NotRequired[bool],
+        'dimensionality': NotRequired[list[LabelIdentifier | str]],
+    },
+)
+
+
+class QueryMetricValueFilter4(TypedDict):
+    type: Literal['metric_value_filter', 'metric_value_filter', 'metric_value_filter']
     conditions: NotRequired[list[MvfCondition]]
     condition: NotRequired[
         Literal[
@@ -665,8 +1611,26 @@ class QueryMetricValueFilter(TypedDict):
             'NOT_EQUAL_TO',
             'BETWEEN',
             'NOT_BETWEEN',
+            'GREATER_THAN',
+            'GREATER_THAN_OR_EQUAL_TO',
+            'LESS_THAN',
+            'LESS_THAN_OR_EQUAL_TO',
+            'EQUAL_TO',
+            'NOT_EQUAL_TO',
+            'BETWEEN',
+            'NOT_BETWEEN',
         ]
     ]
+    using: MetricIdentifier | str
+    dimensionality: NotRequired[list[LabelIdentifier | str]]
+
+
+QueryMetricValueFilter: TypeAlias = (
+    QueryMetricValueFilter1
+    | QueryMetricValueFilter2
+    | QueryMetricValueFilter3
+    | QueryMetricValueFilter4
+)
 
 
 ColorItems: TypeAlias = dict[str, ComplexColorItem]
@@ -689,33 +1653,11 @@ class Permissions(TypedDict):
     SHARE: NotRequired[Permission]
 
 
-class Section(TypedDict):
-    title: NotRequired[str]
-    description: NotRequired[str]
-    widgets: list[Widget]
-
-
-class Tab(TypedDict):
-    id: Identifier
-    title: Title
-    filters: NotRequired[DashboardFiltersModel]
-    sections: list[Section]
-
-
-class VisualizationWidget(TypedDict):
+class Widget1(TypedDict):
     id: NotRequired[Identifier]
-    visualization: str
-    title: NotRequired[str | Literal[False]]
-    description: NotRequired[str | Literal[False] | Literal['inherit']]
+    content: str
     columns: NotRequired[Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]
     rows: NotRequired[float]
-    date: NotRequired[Identifier]
-    ignored_filters: NotRequired[list[str]]
-    zoom_data: NotRequired[bool]
-    interactions: NotRequired[list[Interaction]]
-    ignored_drill_downs: NotRequired[list[IgnoredDrillDown]]
-    ignored_drill_downs_intersections: NotRequired[list[IgnoredDrillDownsIntersection]]
-    ignored_cross_filtering: NotRequired[bool]
 
 
 class InteractionOpenPlainUrl(TypedDict):
@@ -878,16 +1820,237 @@ class Plugin(TypedDict):
     url: str
 
 
-QuerySorts: TypeAlias = list[QuerySort]
+class QueryField1(TypedDict):
+    aggregation: NotRequired[
+        Literal[
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+        ]
+    ]
+    using: str | list[str]
+    maql: NotRequired[str]
+    operator: NotRequired[
+        Literal[
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+        ]
+    ]
+    type: NotRequired[
+        Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD', 'PREVIOUS_YEAR', 'PREVIOUS_PERIOD']
+    ]
+    date_filter: NotRequired[str]
+    title: NotRequired[Title]
+    show_all_values: NotRequired[bool]
 
 
-QueryField: TypeAlias = (
-    AttributeIdentifier
-    | LabelIdentifier
-    | MetricIdentifier
-    | FactIdentifier
-    | QueryField1
-)
+class QueryField7(TypedDict):
+    aggregation: NotRequired[
+        Literal[
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+        ]
+    ]
+    using: NotRequired[str | list[str]]
+    maql: str
+    operator: NotRequired[
+        Literal[
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+        ]
+    ]
+    type: NotRequired[
+        Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD', 'PREVIOUS_YEAR', 'PREVIOUS_PERIOD']
+    ]
+    date_filter: NotRequired[str]
+    title: NotRequired[Title]
+
+
+class QueryField9(TypedDict):
+    aggregation: NotRequired[
+        Literal[
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+        ]
+    ]
+    using: list[str]
+    maql: NotRequired[str]
+    operator: Literal[
+        'SUM',
+        'DIFFERENCE',
+        'MULTIPLICATION',
+        'RATIO',
+        'CHANGE',
+        'SUM',
+        'DIFFERENCE',
+        'MULTIPLICATION',
+        'RATIO',
+        'CHANGE',
+        'SUM',
+        'DIFFERENCE',
+        'MULTIPLICATION',
+        'RATIO',
+        'CHANGE',
+    ]
+    type: NotRequired[
+        Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD', 'PREVIOUS_YEAR', 'PREVIOUS_PERIOD']
+    ]
+    date_filter: NotRequired[str]
+    title: NotRequired[Title]
+
+
+class QueryField11(TypedDict):
+    aggregation: NotRequired[
+        Literal[
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+        ]
+    ]
+    using: str | list[str]
+    maql: NotRequired[str]
+    operator: NotRequired[
+        Literal[
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+        ]
+    ]
+    type: Literal[
+        'PREVIOUS_YEAR',
+        'PREVIOUS_PERIOD',
+        'PREVIOUS_YEAR',
+        'PREVIOUS_PERIOD',
+        'PREVIOUS_YEAR',
+    ]
+    date_filter: str
+    title: NotRequired[Title]
+
+
+class QueryField13(TypedDict):
+    aggregation: NotRequired[
+        Literal[
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+        ]
+    ]
+    using: str | list[str]
+    maql: NotRequired[str]
+    operator: NotRequired[
+        Literal[
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+        ]
+    ]
+    type: Literal[
+        'PREVIOUS_YEAR',
+        'PREVIOUS_PERIOD',
+        'PREVIOUS_YEAR',
+        'PREVIOUS_PERIOD',
+        'PREVIOUS_PERIOD',
+    ]
+    date_filter: str
+    title: NotRequired[Title]
+    period: NotRequired[float]
 
 
 class QueryAttributeSort(TypedDict):
@@ -1053,57 +2216,361 @@ class Config(TypedDict):
     line_style_excluded_metrics: NotRequired[list[str]]
 
 
-class Dashboard(TypedDict):
-    id: Identifier
-    type: Literal['dashboard']
-    title: NotRequired[Title]
-    description: NotRequired[Description]
-    tags: NotRequired[Tags]
-    cross_filtering: NotRequired[bool]
-    user_filters_reset: NotRequired[bool]
-    user_filters_save: NotRequired[bool]
-    filter_views: NotRequired[bool]
-    enable_section_headers: NotRequired[bool]
-    sections: NotRequired[list[Section]]
-    filters: NotRequired[DashboardFiltersModel]
-    plugins: NotRequired[list[Plugins | Identifier]]
-    tabs: NotRequired[list[Tab]]
-    permissions: NotRequired[Permissions]
+class DashboardFilters14(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+    ]
+    title: str
+    filters: DashboardFiltersNoGroups
 
 
-class Dataset1(TypedDict):
-    id: Identifier
-    type: Literal['dataset']
-    title: NotRequired[Title]
-    description: NotRequired[Description]
-    tags: NotRequired[Tags]
-    table_path: str
-    sql: NotRequired[str]
-    primary_key: NotRequired[str | list[Identifier]]
-    fields: NotRequired[Fields]
-    references: NotRequired[list[Reference]]
-    workspace_data_filters: NotRequired[list[WorkspaceDataFilter]]
-    data_source: NotRequired[str]
-    precedence: NotRequired[float]
+DashboardFiltersModel: TypeAlias = dict[
+    str,
+    DashboardFilters8
+    | DashboardFilters9
+    | DashboardFilters10
+    | DashboardFilters11
+    | DashboardFilters12
+    | DashboardFilters13
+    | DashboardFilters14,
+]
 
 
-class Dataset2(TypedDict):
-    id: Identifier
-    type: Literal['dataset']
-    title: NotRequired[Title]
-    description: NotRequired[Description]
-    tags: NotRequired[Tags]
-    table_path: NotRequired[str]
-    sql: str
-    primary_key: NotRequired[str | list[Identifier]]
-    fields: NotRequired[Fields]
-    references: NotRequired[list[Reference]]
-    workspace_data_filters: NotRequired[list[WorkspaceDataFilter]]
-    data_source: NotRequired[str]
-    precedence: NotRequired[float]
+class Metadata2(DateDataset):
+    type: Literal[
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+    ]
 
 
-Dataset: TypeAlias = Dataset1 | Dataset2
+class Metadata3(Metric):
+    type: Literal[
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+    ]
+
+
+class Metadata5(Plugin):
+    type: Literal[
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+    ]
+
+
+class Metadata6(AttributeHierarchy):
+    type: Literal[
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+    ]
+
+
+class DashboardFilters6(TypedDict):
+    type: Literal[
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+        'filter_group',
+        'date_filter',
+        'attribute_filter',
+        'text_filter',
+        'filter_group',
+    ]
+    title: str
+    filters: DashboardFiltersNoGroups
+
+
+DashboardFilters7: TypeAlias = dict[
+    str,
+    DashboardFilters
+    | DashboardFilters1
+    | DashboardFilters2
+    | DashboardFilters3
+    | DashboardFilters4
+    | DashboardFilters5
+    | DashboardFilters6,
+]
+
+
+class DashboardFilterGroup(TypedDict):
+    type: Literal['filter_group']
+    title: str
+    filters: DashboardFiltersNoGroups
+
+
+QueryFilter: TypeAlias = QueryFilter3 | QueryFilter2 | QueryFilter6
+
+
+Interaction: TypeAlias = (
+    InteractionOpenPlainUrl
+    | Any
+    | InteractionOpenParamUrl
+    | Any
+    | InteractionOpenDashboard
+    | Any
+    | InteractionOpenVisualization
+    | Any
+)
+
+
+class VisualizationWidget(TypedDict):
+    id: NotRequired[Identifier]
+    visualization: str
+    title: NotRequired[str | Literal[False]]
+    description: NotRequired[str | Literal[False] | Literal['inherit']]
+    columns: NotRequired[Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]
+    rows: NotRequired[float]
+    date: NotRequired[Identifier]
+    ignored_filters: NotRequired[list[str]]
+    zoom_data: NotRequired[bool]
+    interactions: NotRequired[list[Interaction]]
+    ignored_drill_downs: NotRequired[list[IgnoredDrillDown]]
+    ignored_drill_downs_intersections: NotRequired[list[IgnoredDrillDownsIntersection]]
+    ignored_cross_filtering: NotRequired[bool]
+
+
+class Fields2(Fact):
+    type: Literal[
+        'fact', 'attribute', 'aggregated_fact', 'fact', 'attribute', 'aggregated_fact'
+    ]
+
+
+class Fields3(AggregatedFact):
+    type: Literal[
+        'fact', 'attribute', 'aggregated_fact', 'fact', 'attribute', 'aggregated_fact'
+    ]
 
 
 class Attribute(TypedDict):
@@ -1124,7 +2591,15 @@ class Attribute(TypedDict):
     labels: NotRequired[dict[str, Label]]
 
 
-QueryFields: TypeAlias = dict[str, QueryField]
+class QuerySort1(QueryAttributeSort):
+    type: Literal['attribute_sort', 'metric_sort', 'attribute_sort', 'metric_sort']
+
+
+class QuerySort2(QueryMetricSort):
+    type: Literal['attribute_sort', 'metric_sort', 'attribute_sort', 'metric_sort']
+
+
+QuerySort: TypeAlias = QuerySort1 | QuerySort2 | QuerySort3
 
 
 class BucketItem1(TypedDict):
@@ -1148,16 +2623,1814 @@ class LayerItemBase(TypedDict):
     segment_by: NotRequired[list[BucketItem]]
 
 
-class LayerItem3(LayerItemBase):
-    pass
+QueryFilters: TypeAlias = dict[str, QueryFilter]
 
 
-class LayerItem4(LayerItem1, LayerItem3):
-    pass
+class Widget2(TypedDict):
+    id: NotRequired[Identifier]
+    columns: NotRequired[Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]
+    rows: NotRequired[float]
+    visualizations: list[VisualizationWidget]
 
 
-class LayerItem5(LayerItem2, LayerItem3):
-    pass
+class Fields1(Attribute):
+    type: Literal[
+        'fact', 'attribute', 'aggregated_fact', 'fact', 'attribute', 'aggregated_fact'
+    ]
 
 
-LayerItem: TypeAlias = LayerItem4 | LayerItem5
+Fields: TypeAlias = dict[str, Fields1 | Fields2 | Fields3 | Fields4]
+
+
+QuerySorts: TypeAlias = list[QuerySort]
+
+
+class QueryField3(TypedDict):
+    aggregation: NotRequired[
+        Literal[
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+            'SUM',
+            'COUNT',
+            'APPROXIMATE_COUNT',
+            'AVG',
+            'MIN',
+            'MAX',
+            'MEDIAN',
+            'RUNSUM',
+        ]
+    ]
+    using: Using1 | Using2 | Using3 | Using4
+    maql: NotRequired[str]
+    operator: NotRequired[
+        Literal[
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+        ]
+    ]
+    type: NotRequired[
+        Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD', 'PREVIOUS_YEAR', 'PREVIOUS_PERIOD']
+    ]
+    date_filter: NotRequired[str]
+    title: NotRequired[Title]
+    compute_ratio: NotRequired[bool]
+    filter_by: NotRequired[QueryFilters]
+
+
+class QueryField5(TypedDict):
+    aggregation: Literal[
+        'SUM',
+        'COUNT',
+        'APPROXIMATE_COUNT',
+        'AVG',
+        'MIN',
+        'MAX',
+        'MEDIAN',
+        'RUNSUM',
+        'SUM',
+        'COUNT',
+        'APPROXIMATE_COUNT',
+        'AVG',
+        'MIN',
+        'MAX',
+        'MEDIAN',
+        'RUNSUM',
+        'SUM',
+        'COUNT',
+        'APPROXIMATE_COUNT',
+        'AVG',
+        'MIN',
+        'MAX',
+        'MEDIAN',
+        'RUNSUM',
+    ]
+    using: str | list[str]
+    maql: NotRequired[str]
+    operator: NotRequired[
+        Literal[
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+            'SUM',
+            'DIFFERENCE',
+            'MULTIPLICATION',
+            'RATIO',
+            'CHANGE',
+        ]
+    ]
+    type: NotRequired[
+        Literal['PREVIOUS_YEAR', 'PREVIOUS_PERIOD', 'PREVIOUS_YEAR', 'PREVIOUS_PERIOD']
+    ]
+    date_filter: NotRequired[str]
+    title: NotRequired[Title]
+    compute_ratio: NotRequired[bool]
+    filter_by: NotRequired[QueryFilters]
+
+
+QueryField: TypeAlias = (
+    AttributeIdentifier
+    | LabelIdentifier
+    | MetricIdentifier
+    | FactIdentifier
+    | QueryField1
+    | QueryField2
+    | QueryField3
+    | QueryField2
+    | QueryField5
+    | QueryField2
+    | QueryField7
+    | QueryField2
+    | QueryField9
+    | QueryField2
+    | QueryField11
+    | QueryField2
+    | QueryField13
+    | QueryField2
+)
+
+
+LayerItem: TypeAlias = LayerItemBase | LayerItem1 | LayerItem2
+
+
+class Dataset4(TypedDict):
+    id: Identifier
+    type: Literal['dataset', 'dataset']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    table_path: str
+    sql: NotRequired[str]
+    primary_key: NotRequired[str | list[Identifier]]
+    fields: NotRequired[Fields]
+    references: NotRequired[list[Reference]]
+    workspace_data_filters: NotRequired[list[WorkspaceDataFilter]]
+    data_source: NotRequired[str]
+    precedence: NotRequired[float]
+
+
+class Dataset5(TypedDict):
+    id: Identifier
+    type: Literal['dataset', 'dataset']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    table_path: NotRequired[str]
+    sql: str
+    primary_key: NotRequired[str | list[Identifier]]
+    fields: NotRequired[Fields]
+    references: NotRequired[list[Reference]]
+    workspace_data_filters: NotRequired[list[WorkspaceDataFilter]]
+    data_source: NotRequired[str]
+    precedence: NotRequired[float]
+
+
+Dataset: TypeAlias = Dataset4 | Dataset5
+
+
+class Metadata1(TypedDict):
+    type: Literal[
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+    ]
+
+
+class Dataset2(TypedDict):
+    id: Identifier
+    type: Literal['dataset', 'dataset']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    table_path: str
+    sql: NotRequired[str]
+    primary_key: NotRequired[str | list[Identifier]]
+    fields: NotRequired[Fields]
+    references: NotRequired[list[Reference]]
+    workspace_data_filters: NotRequired[list[WorkspaceDataFilter]]
+    data_source: NotRequired[str]
+    precedence: NotRequired[float]
+
+
+class Dataset3(TypedDict):
+    id: Identifier
+    type: Literal['dataset', 'dataset']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    table_path: NotRequired[str]
+    sql: str
+    primary_key: NotRequired[str | list[Identifier]]
+    fields: NotRequired[Fields]
+    references: NotRequired[list[Reference]]
+    workspace_data_filters: NotRequired[list[WorkspaceDataFilter]]
+    data_source: NotRequired[str]
+    precedence: NotRequired[float]
+
+
+Dataset1: TypeAlias = Dataset2 | Dataset3
+
+
+QueryFields: TypeAlias = dict[str, QueryField]
+
+
+class Query(TypedDict):
+    fields: QueryFields
+    filter_by: NotRequired[QueryFilters]
+    sort_by: NotRequired[QuerySorts]
+
+
+class Visualisation1(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+    rows: NotRequired[list[BucketItem]]
+    columns: NotRequired[list[BucketItem]]
+
+
+class Visualisation2(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'bar_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+    stack_by: NotRequired[list[BucketItem]]
+
+
+class Visualisation3(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'column_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+    stack_by: NotRequired[list[BucketItem]]
+
+
+class Visualisation4(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'line_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    trend_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+
+
+class Visualisation5(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'area_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    stack_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+
+
+class Visualisation6(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'scatter_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem | BucketEmptyItem]]
+    view_by: NotRequired[list[BucketItem]]
+    attributes: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+
+
+class Visualisation7(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'bubble_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem | BucketEmptyItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+    size_by: NotRequired[list[BucketItem]]
+
+
+class Visualisation8(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'pie_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[Any]]
+
+
+class Visualisation9(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'donut_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[Any]]
+
+
+class Visualisation10(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'treemap_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+
+
+class Visualisation11(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'pyramid_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[Any]]
+
+
+class Visualisation12(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'funnel_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[Any]]
+
+
+class Visualisation13(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'heatmap_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+    rows: NotRequired[list[BucketItem]]
+    columns: NotRequired[list[BucketItem]]
+
+
+class Visualisation14(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'bullet_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem | BucketEmptyItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[Any]]
+
+
+class Visualisation15(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'waterfall_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[Any]]
+
+
+Visualisation16 = TypedDict(
+    'Visualisation16',
+    {
+        'type': Literal[
+            'table',
+            'bar_chart',
+            'column_chart',
+            'line_chart',
+            'area_chart',
+            'scatter_chart',
+            'bubble_chart',
+            'pie_chart',
+            'donut_chart',
+            'treemap_chart',
+            'pyramid_chart',
+            'funnel_chart',
+            'heatmap_chart',
+            'bullet_chart',
+            'waterfall_chart',
+            'dependency_wheel_chart',
+            'sankey_chart',
+            'headline_chart',
+            'combo_chart',
+            'geo_chart',
+            'geo_area_chart',
+            'repeater_chart',
+            'table',
+            'bar_chart',
+            'column_chart',
+            'line_chart',
+            'area_chart',
+            'scatter_chart',
+            'bubble_chart',
+            'pie_chart',
+            'donut_chart',
+            'treemap_chart',
+            'pyramid_chart',
+            'funnel_chart',
+            'heatmap_chart',
+            'bullet_chart',
+            'waterfall_chart',
+            'dependency_wheel_chart',
+            'sankey_chart',
+            'headline_chart',
+            'combo_chart',
+            'geo_chart',
+            'geo_area_chart',
+            'repeater_chart',
+            'dependency_wheel_chart',
+        ],
+        'id': Identifier,
+        'title': NotRequired[Title],
+        'description': NotRequired[Description],
+        'tags': NotRequired[Tags],
+        'show_in_ai_results': NotRequired[bool],
+        'is_hidden': NotRequired[bool],
+        'query': Query,
+        'config': NotRequired[Config],
+        'metrics': NotRequired[list[BucketItem]],
+        'view_by': NotRequired[list[BucketItem | BucketEmptyItem]],
+        'from': NotRequired[BucketItem],
+        'to': NotRequired[BucketItem],
+        'segment_by': NotRequired[list[Any]],
+    },
+)
+
+
+Visualisation17 = TypedDict(
+    'Visualisation17',
+    {
+        'type': Literal[
+            'table',
+            'bar_chart',
+            'column_chart',
+            'line_chart',
+            'area_chart',
+            'scatter_chart',
+            'bubble_chart',
+            'pie_chart',
+            'donut_chart',
+            'treemap_chart',
+            'pyramid_chart',
+            'funnel_chart',
+            'heatmap_chart',
+            'bullet_chart',
+            'waterfall_chart',
+            'dependency_wheel_chart',
+            'sankey_chart',
+            'headline_chart',
+            'combo_chart',
+            'geo_chart',
+            'geo_area_chart',
+            'repeater_chart',
+            'table',
+            'bar_chart',
+            'column_chart',
+            'line_chart',
+            'area_chart',
+            'scatter_chart',
+            'bubble_chart',
+            'pie_chart',
+            'donut_chart',
+            'treemap_chart',
+            'pyramid_chart',
+            'funnel_chart',
+            'heatmap_chart',
+            'bullet_chart',
+            'waterfall_chart',
+            'dependency_wheel_chart',
+            'sankey_chart',
+            'headline_chart',
+            'combo_chart',
+            'geo_chart',
+            'geo_area_chart',
+            'repeater_chart',
+            'sankey_chart',
+        ],
+        'id': Identifier,
+        'title': NotRequired[Title],
+        'description': NotRequired[Description],
+        'tags': NotRequired[Tags],
+        'show_in_ai_results': NotRequired[bool],
+        'is_hidden': NotRequired[bool],
+        'query': Query,
+        'config': NotRequired[Config],
+        'metrics': NotRequired[list[BucketItem]],
+        'view_by': NotRequired[list[BucketItem | BucketEmptyItem]],
+        'from': NotRequired[BucketItem],
+        'to': NotRequired[BucketItem],
+        'segment_by': NotRequired[list[Any]],
+    },
+)
+
+
+class Visualisation18(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'headline_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[Any]]
+    segment_by: NotRequired[list[Any]]
+
+
+class Visualisation19(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'combo_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[Any]]
+
+
+class Visualisation20(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'geo_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem | BucketEmptyItem]]
+    view_by: NotRequired[list[BucketPushpinLocationItem]]
+    segment_by: NotRequired[list[BucketItem]]
+    layers: NotRequired[list[LayerItem]]
+
+
+class Visualisation21(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'geo_area_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketGeoAreaItem]]
+    segment_by: NotRequired[list[BucketItem]]
+    layers: NotRequired[list[LayerItem]]
+
+
+class Visualisation22(TypedDict):
+    type: Literal[
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'repeater_chart',
+    ]
+    id: Identifier
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    show_in_ai_results: NotRequired[bool]
+    is_hidden: NotRequired[bool]
+    query: Query
+    config: NotRequired[Config]
+    metrics: NotRequired[list[BucketItem]]
+    view_by: NotRequired[list[BucketItem]]
+    segment_by: NotRequired[list[BucketItem]]
+    rows: NotRequired[list[BucketItem]]
+    columns: NotRequired[list[BucketItem]]
+
+
+Visualisation: TypeAlias = (
+    Visualisation1
+    | Visualisation2
+    | Visualisation3
+    | Visualisation4
+    | Visualisation5
+    | Visualisation6
+    | Visualisation7
+    | Visualisation8
+    | Visualisation9
+    | Visualisation10
+    | Visualisation11
+    | Visualisation12
+    | Visualisation13
+    | Visualisation14
+    | Visualisation15
+    | Visualisation16
+    | Visualisation17
+    | Visualisation18
+    | Visualisation19
+    | Visualisation20
+    | Visualisation21
+    | Visualisation22
+)
+
+
+Metadata: TypeAlias = Union[
+    Metadata1,
+    Metadata2,
+    Metadata3,
+    "Metadata4",
+    Metadata5,
+    Metadata6,
+    Metadata1,
+    Metadata8,
+]
+
+
+class Dashboard1(TypedDict):
+    id: Identifier
+    type: Literal['dashboard']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    cross_filtering: NotRequired[bool]
+    user_filters_reset: NotRequired[bool]
+    user_filters_save: NotRequired[bool]
+    filter_views: NotRequired[bool]
+    enable_section_headers: NotRequired[bool]
+    sections: NotRequired[list[Section]]
+    filters: NotRequired[DashboardFiltersModel]
+    plugins: NotRequired[list[Plugins | Identifier]]
+    tabs: NotRequired[list[Tab]]
+    permissions: NotRequired[Permissions]
+
+
+class Section(TypedDict):
+    title: NotRequired[str]
+    description: NotRequired[str]
+    widgets: list[Widget]
+
+
+class Tab(TypedDict):
+    id: Identifier
+    title: Title
+    filters: NotRequired[DashboardFiltersModel]
+    sections: list[Section]
+
+
+class Widget3(TypedDict):
+    container: Identifier
+    columns: NotRequired[Literal[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]
+    rows: NotRequired[float]
+    layout_direction: NotRequired[Literal['row', 'column']]
+    enable_section_headers: NotRequired[bool]
+    sections: list[Section]
+
+
+Widget: TypeAlias = VisualizationWidget | Widget1 | Widget2 | Widget3
+
+
+class Dashboard(TypedDict):
+    id: Identifier
+    type: Literal['dashboard']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    cross_filtering: NotRequired[bool]
+    user_filters_reset: NotRequired[bool]
+    user_filters_save: NotRequired[bool]
+    filter_views: NotRequired[bool]
+    enable_section_headers: NotRequired[bool]
+    sections: NotRequired[list[Section]]
+    filters: NotRequired[DashboardFiltersModel]
+    plugins: NotRequired[list[Plugins | Identifier]]
+    tabs: NotRequired[list[Tab]]
+    permissions: NotRequired[Permissions]
+
+
+class Metadata4(Dashboard):
+    type: Literal[
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+        'dataset',
+        'date',
+        'metric',
+        'dashboard',
+        'plugin',
+        'table',
+        'bar_chart',
+        'column_chart',
+        'line_chart',
+        'area_chart',
+        'scatter_chart',
+        'bubble_chart',
+        'pie_chart',
+        'donut_chart',
+        'treemap_chart',
+        'pyramid_chart',
+        'funnel_chart',
+        'heatmap_chart',
+        'bullet_chart',
+        'waterfall_chart',
+        'dependency_wheel_chart',
+        'sankey_chart',
+        'headline_chart',
+        'combo_chart',
+        'geo_chart',
+        'geo_area_chart',
+        'repeater_chart',
+        'attribute_hierarchy',
+    ]

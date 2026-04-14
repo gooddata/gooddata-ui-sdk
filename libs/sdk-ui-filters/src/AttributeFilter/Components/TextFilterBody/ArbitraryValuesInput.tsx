@@ -1,9 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type FocusEventHandler, type JSX } from "react";
+import { type FocusEventHandler, type JSX, useEffect, useRef } from "react";
 
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { Input, LoadingSpinner, UiTag, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
@@ -144,13 +144,19 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
     } = props;
 
     const intl = useIntl();
+    const previousValuesLengthRef = useRef<number>(values.length);
+    const inputRef = useRef<Input | null>(null);
     const generatedInputId = useIdPrefixed("text-filter-values-input");
     const inputId = inputIdProp ?? generatedInputId;
     const autocompleteListId = `${inputId}-autocomplete-list`;
+    const groupValuesId = `${inputId}-group-values`;
 
     const {
         chipsContainerRef,
+        valuesGroupRef,
         inputValue,
+        valuesAnnouncement,
+        getDisplayLabel,
         setInputValue,
         activeAutocompleteIndex,
         filteredSuggestions,
@@ -160,6 +166,7 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
         handlePaste,
         handleSelectSuggestion,
         handleRemoveValue,
+        makeValuesGroupUnfocusable,
     } = useArbitraryValuesInput({
         values,
         onValuesChange,
@@ -170,20 +177,22 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
         isAutocompleteLoading,
     });
 
-    const getDisplayLabel = (value: string | null) => {
-        if (value === null) {
-            return emptyValueDisplay;
-        }
-        if (value === "") {
-            return '""';
-        }
-        return value;
-    };
-
     const hasValues = values.length > 0;
+    const ariaDescribedByWithSummary =
+        [ariaDescribedBy, hasValues ? groupValuesId : undefined].filter(Boolean).join(" ") || undefined;
+
+    useEffect(() => {
+        if (previousValuesLengthRef.current === 1 && values.length === 0) {
+            requestAnimationFrame(() => {
+                inputRef.current?.inputNodeRef?.focus();
+            });
+        }
+        previousValuesLengthRef.current = values.length;
+    }, [values.length]);
 
     const inputElement = (
         <Input
+            ref={inputRef}
             id={inputId}
             type="text"
             className="gd-chips-input__input s-chips-input-field"
@@ -204,7 +213,7 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                         ? undefined
                         : `${autocompleteListId}-item-${activeAutocompleteIndex}`,
                 ariaLabelledBy: ariaLabelledBy,
-                ariaDescribedBy: ariaDescribedBy,
+                ariaDescribedBy: ariaDescribedByWithSummary,
                 ariaInvalid: hasEmptyError || hasValuesLimitExceededError || undefined,
             }}
         />
@@ -212,6 +221,10 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
 
     return (
         <div className="gd-chips-input s-chips-input">
+            <div className="sr-only" id={groupValuesId}>
+                <FormattedMessage id="attributeFilter.text.values" values={{ count: values.length }} />
+            </div>
+
             <div
                 className={cx("gd-chips-input__container", {
                     "gd-chips-input__container--error s-chips-input-error":
@@ -228,7 +241,13 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                         onPaste={handlePaste}
                         ref={chipsContainerRef}
                     >
-                        <div className="gd-chips-input__chips">
+                        <div
+                            className="gd-chips-input__chips"
+                            role="group"
+                            aria-labelledby={groupValuesId}
+                            ref={valuesGroupRef}
+                            onBlur={makeValuesGroupUnfocusable}
+                        >
                             {values.map((value, index) => (
                                 <UiTag
                                     key={`${value ?? "__null__"}-${index}`}
@@ -237,7 +256,14 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                                     isDisabled={disabled}
                                     dataTestId={`s-text-filter-value-tag-${index}`}
                                     tabIndex={-1}
-                                    onDelete={() => handleRemoveValue(index)}
+                                    onDelete={() => handleRemoveValue(value, index)}
+                                    onDeleteKeyDown={(event) => {
+                                        if (event.key === "Enter" || event.key === " ") {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                            handleRemoveValue(value, index);
+                                        }
+                                    }}
                                     accessibilityConfig={{
                                         deleteAriaLabel: intl.formatMessage(
                                             {
@@ -297,6 +323,9 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                     )
                 ) : null}
             </ul>
+            <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">
+                {valuesAnnouncement}
+            </div>
         </div>
     );
 }

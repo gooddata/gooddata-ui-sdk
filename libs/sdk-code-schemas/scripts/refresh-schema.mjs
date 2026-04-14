@@ -20,6 +20,14 @@ const OXFMT_OPTIONS = { printWidth: 110, tabWidth: 4, trailingComma: "all" };
 const GOODDATA_COPYRIGHT = `// (C) ${new Date().getFullYear()} GoodData Corporation\n\n`;
 
 const checkMode = process.argv.includes("--check");
+const narrowedJsonMode = process.argv.includes("--narrowed-json");
+
+/** @param {string} text */
+function log(text) {
+    if (!narrowedJsonMode) {
+        console.log(text);
+    }
+}
 
 /**
  * Sanitize generated TSDoc comments for api-extractor compatibility.
@@ -57,14 +65,14 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
         files.push(entry.fullPath);
     }
 
-    console.log(`Found ${files.length} schema files in ${Date.now() - start}ms`);
+    log(`Found ${files.length} schema files in ${Date.now() - start}ms`);
 
     start = Date.now();
     const contents = files.map((file) => ({
         file,
         content: JSON.parse(readFileSync(file, "utf-8")),
     }));
-    console.log(`Read ${files.length} schema files in ${Date.now() - start}ms`);
+    log(`Read ${files.length} schema files in ${Date.now() - start}ms`);
 
     start = Date.now();
     const root = contents.find((item) => item.file.includes(rootSchema));
@@ -74,17 +82,24 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
         root.content,
         items.map((item) => item.content),
     );
-    console.log(`Created schema in ${Date.now() - start}ms`);
+    log(`Created schema in ${Date.now() - start}ms`);
 
     start = Date.now();
     // narrowSchema expands allOf/if/then/else into oneOf for json-schema-to-typescript.
     // This is only needed for type generation, not for the runtime JSON schema.
     const narrowedSchema = narrowSchema(structuredClone(mergedSchema));
-    console.log(`Narrowed schema in ${Date.now() - start}ms`);
+    log(`Narrowed schema in ${Date.now() - start}ms`);
+
+    // --narrowed-json: output narrowed schema to stdout and exit early.
+    // Skips TS compilation, formatting, and file writes.
+    if (narrowedJsonMode) {
+        process.stdout.write(JSON.stringify(narrowedSchema));
+        return;
+    }
 
     start = Date.now();
     const def = await compile(narrowedSchema, name, { cwd: basedir });
-    console.log(`Compiled schema in ${Date.now() - start}ms`);
+    log(`Compiled schema in ${Date.now() - start}ms`);
 
     const typeFilename = join(saveDir, `${name}.ts`);
     const schemaFilename = join(saveDir, `${name}.json`);
@@ -108,11 +123,11 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
             console.error(`Run 'rushx schema-write' to regenerate.`);
             process.exit(1);
         }
-        console.log(`Schema check passed — compiled metadata is up to date.`);
+        log(`Schema check passed — compiled metadata is up to date.`);
     } else {
         writeFileSync(typeFilename, typeContent);
         writeFileSync(schemaFilename, schemaContent);
-        console.log(`Generated ${typeFilename} and ${schemaFilename} from ${files.length} schema files.`);
+        log(`Generated ${typeFilename} and ${schemaFilename} from ${files.length} schema files.`);
     }
 }
 
@@ -329,7 +344,7 @@ function narrowThen(schema) {
 
 main().then(
     () => {
-        console.log("Definitions generated");
+        log("Definitions generated");
     },
     (err) => {
         console.error(err);

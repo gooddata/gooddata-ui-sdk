@@ -659,9 +659,10 @@ function* getAttributeFiltersUpdateActions(
             }),
         );
 
+        const textDisplayForm = dashboardAttributeFilterItemDisplayForm(textFilter);
+
         // List → text: update displayAsLabel to match the text filter's displayForm
         if (!isExistingText) {
-            const textDisplayForm = dashboardAttributeFilterItemDisplayForm(textFilter);
             updateActions.push(
                 tabsActions.changeDisplayAsLabel({
                     localIdentifier: targetLocalId,
@@ -669,8 +670,11 @@ function* getAttributeFiltersUpdateActions(
                     tabLocalIdentifier,
                 }),
             );
-            displayFormsToResolve.push(textDisplayForm);
         }
+
+        // Ensure display-form metadata is available for both list → text
+        // and text → text replacement.
+        displayFormsToResolve.push(textDisplayForm);
 
         handledLocalIds.add(targetLocalId);
     }

@@ -26,6 +26,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
+    type IArbitraryAttributeFilter,
     type IAttributeElement,
     type IAttributeFilter,
     type IMatchAttributeFilter,
@@ -35,6 +36,7 @@ import {
     filterAttributeElements,
     filterIsEmpty,
     filterObjRef,
+    isArbitraryAttributeFilter,
     isAttributeElementsByRef,
     isAttributeFilter,
     isAttributeFilterWithSelection,
@@ -194,6 +196,29 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 });
 
             result = [...result, ...selectionFilters];
+
+            const arbitraryFilters = attributeFilters
+                .filter(
+                    (
+                        filter,
+                    ): filter is IElementsQueryAttributeFilter & {
+                        attributeFilter: IArbitraryAttributeFilter;
+                    } =>
+                        isArbitraryAttributeFilter(filter.attributeFilter) &&
+                        !filterIsEmpty(filter.attributeFilter),
+                )
+                .map((filter) => {
+                    const { label, values, negativeSelection } =
+                        filter.attributeFilter.arbitraryAttributeFilter;
+
+                    return {
+                        label: objRefToString(label),
+                        values,
+                        complementFilter: negativeSelection ?? false,
+                    };
+                });
+
+            result = [...result, ...arbitraryFilters];
 
             const matchFilters: DependsOnMatchFilter[] = attributeFilters
                 .filter(

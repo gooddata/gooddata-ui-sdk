@@ -69,6 +69,7 @@ export interface IUiAsyncTableProps<T extends { id: string } | { ref: ObjRef }> 
     onSort?: (key: keyof T) => void;
 
     //search
+    searchPlaceholder?: string;
     onSearch?: (search: string) => void;
 
     //toolbar custom element
@@ -232,6 +233,7 @@ export interface IUiAsyncTableToolbarProps<T extends { id: string } | { ref: Obj
     variant?: UiAsyncTableVariant;
     isMobileView?: boolean;
     width?: number;
+    searchPlaceholder?: string;
     onSearch?: (search: string) => void;
     renderToolbarCustomElement?: () => ReactNode;
     accessibilityConfig?: IUiAsyncTableAccessibilityConfig<T>;

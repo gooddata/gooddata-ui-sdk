@@ -159,6 +159,7 @@
     "analyticsCatalog.tabs.trending": "Popularne",
     "analyticsCatalog.tabs.quality": "Jakość",
     "analyticsCatalog.create": "Utwórz",
+    "analyticsCatalog.edit": "Edytuj",
     "analyticsCatalog.parameter.dialog.create.title": "Utwórz parametr",
     "analyticsCatalog.parameter.dialog.edit.title": "Edytuj parametr",
     "analyticsCatalog.parameter.dialog.sectionHeader": "Definicja parametru",

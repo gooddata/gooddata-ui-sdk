@@ -446,7 +446,7 @@
     "automations.column.nextRun": "Seuraava suoritus",
     "automations.column.recipients": "Vastaanottajat",
     "automations.column.lastSent": "Lähetetty viimeksi",
-    "automations.column.state": "Osavaltio",
+    "automations.column.state": "Tila",
     "automations.column.lastRunStatus": "Viimeisen ajon tila",
     "automations.column.createdBy": "Luotu",
     "automations.column.createdAt": "Luotu",

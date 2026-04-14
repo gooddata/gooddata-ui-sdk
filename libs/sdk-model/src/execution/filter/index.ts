@@ -601,7 +601,11 @@ export function isNegativeFilter(filter: IAttributeFilter): boolean {
  * @alpha
  */
 export function isArbitraryAttributeFilter(obj: unknown): obj is IArbitraryAttributeFilter {
-    return !isEmpty(obj) && (obj as IArbitraryAttributeFilter).arbitraryAttributeFilter !== undefined;
+    return (
+        !isEmpty(obj) &&
+        (obj as IArbitraryAttributeFilter).arbitraryAttributeFilter !== undefined &&
+        isObjRef((obj as IArbitraryAttributeFilter).arbitraryAttributeFilter.label)
+    );
 }
 
 /**
@@ -610,7 +614,11 @@ export function isArbitraryAttributeFilter(obj: unknown): obj is IArbitraryAttri
  * @alpha
  */
 export function isMatchAttributeFilter(obj: unknown): obj is IMatchAttributeFilter {
-    return !isEmpty(obj) && (obj as IMatchAttributeFilter).matchAttributeFilter !== undefined;
+    return (
+        !isEmpty(obj) &&
+        (obj as IMatchAttributeFilter).matchAttributeFilter !== undefined &&
+        isObjRef((obj as IMatchAttributeFilter).matchAttributeFilter.label)
+    );
 }
 
 /**
