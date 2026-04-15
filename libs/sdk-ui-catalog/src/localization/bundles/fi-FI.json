@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Luo YAML-lauseke, joka määrittää numeerisen parametrin.",
     "analyticsCatalog.parameter.dialog.create.submit": "Luo",
     "analyticsCatalog.parameter.dialog.edit.submit": "Tallenna",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Tallenna uutena",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Tallenna uutena",
     "analyticsCatalog.parameter.dialog.cancel": "Peruuta",
     "analyticsCatalog.parameter.dialog.help": "Miten luoda parametri?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parametria ei voitu tallentaa.",

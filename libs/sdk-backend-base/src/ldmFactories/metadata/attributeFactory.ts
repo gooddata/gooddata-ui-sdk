@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -45,6 +45,11 @@ export class AttributeMetadataObjectBuilder<
 
     public displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this {
         this.item.displayForms = displayForms;
+        return this;
+    }
+
+    public sourceColumn(value: string | undefined): this {
+        this.item.sourceColumn = value;
         return this;
     }
 }

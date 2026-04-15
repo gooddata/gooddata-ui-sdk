@@ -455,6 +455,10 @@
         "text": "You can't edit or delete this catalog item — it was created in the parent workspace. To make changes, open the parent workspace.",
         "crowdinContext": "Tooltip content for lock icon indicating the catalog item is locked and cannot be edited."
     },
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": {
+        "text": "Actions for {name}",
+        "crowdinContext": "Accessible label for the catalog detail actions menu trigger button. {name} is the item title or fallback ID."
+    },
     "analyticsCatalog.tooltip.content": {
         "text": "Centralized catalog of dashboards, metrics, visualizations, facts, and attributes. Explore, manage, and update all objects in one place to support consistent governance, quicker insights, and improved collaboration.",
         "crowdinContext": "Tooltip content for the help icon in the header."
@@ -587,6 +591,14 @@
         "text": "Last checked: {date}",
         "crowdinContext": "Text that is prepended to the date of the last check of the quality score card."
     },
+    "analyticsCatalog.quality.scoreCard.checkFailed": {
+        "text": "Check failed!",
+        "crowdinContext": "Message shown when the quality check fails. It is followed by a description of the error."
+    },
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": {
+        "text": "Something went wrong.",
+        "crowdinContext": "Message shown when the quality check fails. It provides details about the error."
+    },
     "analyticsCatalog.quality.severity.warning": {
         "text": "{count, plural, one {warning} other {warnings}}",
         "crowdinContext": "Semantic quality score card: Accessibility label for the warning severity icon. The number is displayed next to the icon; this label provides only the severity word. Example output: if count is 1, output is 'warning'; if count is 3, output is 'warnings'."
@@ -667,9 +679,9 @@
         "text": "Save",
         "crowdinContext": "Label for the submit button in the edit parameter dialog."
     },
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": {
+    "analyticsCatalog.parameter.dialog.edit.duplicate": {
         "text": "Save as new",
-        "crowdinContext": "Label for the save as new button in the edit parameter dialog."
+        "crowdinContext": "Label for the duplicate action button in the edit parameter dialog."
     },
     "analyticsCatalog.parameter.dialog.edit.idImmutable": {
         "text": "Parameter id cannot be changed when saving an existing parameter. Use Save as new instead.",
@@ -726,5 +738,25 @@
     "analyticsCatalog.parameter.validation.syntax": {
         "text": "YAML syntax error",
         "crowdinContext": "Inline error tooltip shown in the YAML editor when the syntax is invalid."
+    },
+    "analyticsCatalog.parameter.dialog.delete.title": {
+        "text": "Delete parameter?",
+        "crowdinContext": "Title of the confirmation dialog shown when deleting a parameter."
+    },
+    "analyticsCatalog.parameter.dialog.delete.body": {
+        "text": "Are you sure you want to delete <b>{name}</b>?",
+        "crowdinContext": "Body text of the parameter delete confirmation dialog. {name} is the parameter title or fallback ID. <b>...</b> wraps the name in bold."
+    },
+    "analyticsCatalog.parameter.dialog.delete.submit": {
+        "text": "Delete",
+        "crowdinContext": "Label for the Delete button in the parameter delete confirmation dialog."
+    },
+    "analyticsCatalog.parameter.delete.success": {
+        "text": "Parameter deleted.",
+        "crowdinContext": "Toast shown after a parameter is deleted successfully from the Analytics Catalog."
+    },
+    "analyticsCatalog.parameter.delete.error": {
+        "text": "Parameter could not be deleted.",
+        "crowdinContext": "Error toast shown when parameter deletion fails."
     }
 }

@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Sayısal bir parametre tanımlayan bir YAML ifadesi oluşturun.",
     "analyticsCatalog.parameter.dialog.create.submit": "Oluştur",
     "analyticsCatalog.parameter.dialog.edit.submit": "Kaydet",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Yeni olarak kaydet",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Yeni olarak kaydet",
     "analyticsCatalog.parameter.dialog.cancel": "İptal",
     "analyticsCatalog.parameter.dialog.help": "Parametre nasıl oluşturulur?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parametre kaydedilemedi.",

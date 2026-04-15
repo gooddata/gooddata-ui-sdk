@@ -1,0 +1,67 @@
+{
+    "id": "210ce8f6-bbf4-4051-8d50-f2c7679285fe",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes",
+    "request": {
+        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/attributes",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            }
+        },
+        "queryParameters": {
+            "include": {
+                "hasExactly": [
+                    {
+                        "equalTo": "labels,defaultView,dataset"
+                    }
+                ]
+            },
+            "metaInclude": {
+                "hasExactly": [
+                    {
+                        "equalTo": "page"
+                    }
+                ]
+            },
+            "size": {
+                "hasExactly": [
+                    {
+                        "equalTo": "250"
+                    }
+                ]
+            },
+            "page": {
+                "hasExactly": [
+                    {
+                        "equalTo": "0"
+                    }
+                ]
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes-210ce8f6-bbf4-4051-8d50-f2c7679285fe.json",
+        "headers": {
+            "X-Gdc-Trace-Id": "92f2091c98db1079f74a2f6c4596b6ca",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "X-Content-Type-Options": "nosniff",
+            "X-Xss-Protection": "1; mode=block",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Pragma": "no-cache",
+            "Expires": "0",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "210ce8f6-bbf4-4051-8d50-f2c7679285fe",
+    "persistent": true,
+    "insertionIndex": 26
+}

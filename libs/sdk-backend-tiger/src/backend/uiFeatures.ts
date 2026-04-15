@@ -99,6 +99,7 @@ export enum TigerFeaturesNames {
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableSlideshowExports = "enableSlideshowExports",
+    EnableExportTemplateSelection = "enableExportTemplateSelection",
     EnableRawExports = "enableRawExports",
     EnableCustomizableCsvDelimiter = "enableCustomizableCsvDelimiter",
     EnableExecutionCancelling = "enableExecutionCancelling",
@@ -129,7 +130,7 @@ export enum TigerFeaturesNames {
     EnableNewPivotTable = "enableNewPivotTable",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableGeoArea = "enableGeoArea",
-    EnableHyperLogLog = "enableHyperLogLog",
+    EnableHLL = "enableHLL",
     EnableGeoPushpinIcon = "enableGeoPushpinIcon",
     EnableGeoChartA11yImprovements = "enableGeoChartA11yImprovements",
     EnableGeoChartsViewportConfig = "enableGeoChartsViewportConfig",
@@ -260,6 +261,7 @@ export type ITigerFeatureFlags = {
     enableDashboardDescriptionDynamicHeight: (typeof FeatureFlagsValues)["enableDashboardDescriptionDynamicHeight"][number];
     enableAmplitudeTracker: (typeof FeatureFlagsValues)["enableAmplitudeTracker"][number];
     enableSlideshowExports: (typeof FeatureFlagsValues)["enableSlideshowExports"][number];
+    enableExportTemplateSelection: (typeof FeatureFlagsValues)["enableExportTemplateSelection"][number];
     enableRawExports: (typeof FeatureFlagsValues)["enableRawExports"][number];
     enableCustomizableCsvDelimiter: (typeof FeatureFlagsValues)["enableCustomizableCsvDelimiter"][number];
     enableExecutionCancelling: (typeof FeatureFlagsValues)["enableExecutionCancelling"][number];
@@ -290,7 +292,7 @@ export type ITigerFeatureFlags = {
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
-    enableHyperLogLog: (typeof FeatureFlagsValues)["enableHyperLogLog"][number];
+    enableHLL: (typeof FeatureFlagsValues)["enableHLL"][number];
     enableGeoPushpinIcon: (typeof FeatureFlagsValues)["enableGeoPushpinIcon"][number];
     enableGeoChartA11yImprovements: (typeof FeatureFlagsValues)["enableGeoChartA11yImprovements"][number];
     enableGeoChartsViewportConfig: (typeof FeatureFlagsValues)["enableGeoChartsViewportConfig"][number];
@@ -421,6 +423,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardDescriptionDynamicHeight: false,
     enableAmplitudeTracker: false,
     enableSlideshowExports: true,
+    enableExportTemplateSelection: false,
     enableRawExports: false,
     enableCustomizableCsvDelimiter: true,
     enableExecutionCancelling: false,
@@ -451,7 +454,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewPivotTable: true,
     enableNewGeoPushpin: true,
     enableGeoArea: true,
-    enableHyperLogLog: false,
+    enableHLL: false,
     enableGeoPushpinIcon: true,
     enableGeoChartA11yImprovements: true,
     enableGeoChartsViewportConfig: true,
@@ -583,6 +586,7 @@ export const FeatureFlagsValues = {
     enableDashboardDescriptionDynamicHeight: [true, false] as const,
     enableAmplitudeTracker: [true, false] as const,
     enableSlideshowExports: [true, false] as const,
+    enableExportTemplateSelection: [true, false] as const,
     enableRawExports: [true, false] as const,
     enableCustomizableCsvDelimiter: [true, false] as const,
     enableHighchartsAccessibility: [true, false] as const,
@@ -613,7 +617,7 @@ export const FeatureFlagsValues = {
     enableNewPivotTable: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
     enableGeoArea: [true, false] as const,
-    enableHyperLogLog: [true, false] as const,
+    enableHLL: [true, false] as const,
     enableGeoPushpinIcon: [true, false] as const,
     enableGeoChartA11yImprovements: [true, false] as const,
     enableGeoChartsViewportConfig: [true, false] as const,

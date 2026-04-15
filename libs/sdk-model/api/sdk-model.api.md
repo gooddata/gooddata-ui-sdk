@@ -174,11 +174,7 @@ export type AttributeDisplayFormType =
 /**
 * Display form representing geo icon (pushpin).
 */
-| "GDC.geo.icon"
-/**
-* Display form representing HyperLogLog sketch values.
-*/
-| "GDC.hyperloglog";
+| "GDC.geo.icon";
 
 // @internal
 export function attributeElementsCount(attributeElements: IAttributeElements): number;
@@ -1142,6 +1138,7 @@ export interface IAttributeMetadataObject extends IMetadataObject {
     drillDownStep?: ObjRef;
     drillToAttributeLink?: ObjRef;
     isLocked?: boolean;
+    sourceColumn?: string;
     // (undocumented)
     type: "attribute";
 }
@@ -2341,6 +2338,7 @@ export type IExportDefinitionDashboardRequestPayload = {
     format: DashboardAttachmentType;
     settings?: IExportDefinitionDashboardSettings;
     content: IExportDefinitionDashboardContent;
+    templateId?: string;
 };
 
 // @alpha
@@ -2385,6 +2383,7 @@ export type IExportDefinitionVisualizationObjectRequestPayload = {
     format: WidgetAttachmentType;
     settings?: IExportDefinitionVisualizationObjectSettings;
     content: IExportDefinitionVisualizationObjectContent;
+    templateId?: string;
 };
 
 // @alpha
@@ -2424,6 +2423,12 @@ export interface IExportResult {
 
 // @public
 export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
+
+// @beta
+export interface IExportTemplate {
+    id: string;
+    name: string;
+}
 
 // @alpha
 export interface IExternalPluggableApplicationRegistryItemV1 extends IPluggableApplicationMetaV1 {
@@ -2505,6 +2510,7 @@ export interface IFeatureFlags {
     enableEmbedButtonInKD?: boolean;
     enableExecutionCancelling?: boolean;
     enableExecutionTimestamp?: boolean;
+    enableExportTemplateSelection?: boolean;
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
     enableFilterControlInDrillingConfiguration?: boolean;
@@ -2524,7 +2530,7 @@ export interface IFeatureFlags {
     enableGeoSegmentConflictRecommendation?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
-    enableHyperLogLog?: boolean;
+    enableHLL?: boolean;
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImplicitDrillToUrl?: boolean;

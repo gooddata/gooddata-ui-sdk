@@ -15,6 +15,12 @@ fi
 
 # Detect platform
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+case "$OS" in
+    darwin) OS="macos" ;;
+    linux) OS="linux" ;;
+    *) echo "Unsupported OS: $OS"; exit 1 ;;
+esac
+
 ARCH="$(uname -m)"
 case "$ARCH" in
     aarch64|arm64) ARCH="aarch64" ;;

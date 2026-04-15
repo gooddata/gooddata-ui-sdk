@@ -59,6 +59,7 @@ import { useExportTabularPdfDialogContext } from "../../dashboardContexts/Export
 import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
 import { getDefaultPdfPageSize } from "../../scheduledEmail/utils/pdfPageSize.js";
 import { useExportToTabular } from "../../topBar/menuButton/useExportToTabular.js";
+import { useExportWithTemplateSelection } from "../../topBar/menuButton/useExportWithTemplateSelection.js";
 
 export const useInsightExport = (config: {
     title: string;
@@ -124,10 +125,10 @@ export const useInsightExport = (config: {
     );
 
     const exportSlidesFunction = useCallback(
-        (title: string, exportType: "pdf" | "pptx") =>
+        (title: string, exportType: "pdf" | "pptx", templateId?: string) =>
             dispatchAndWaitFor<IExportSlidesInsightWidget, IDashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportSlidesInsightWidget(widgetRef, title, exportType, uuid()),
+                exportSlidesInsightWidget(widgetRef, title, exportType, uuid(), templateId),
             ).then((result) => result.payload.result),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [widgetRef],
@@ -157,6 +158,7 @@ export const useInsightExport = (config: {
     const exportRawHandler = useRawExportHandler();
     const exportSlidesHandler = useSlidesExportHandler();
     const exportImageHandler = useImageExportHandler();
+    const resolveTemplateAndExport = useExportWithTemplateSelection();
     const { openDialog: openXlsxDialog, closeDialog: closeXlsxDialog } = useExportXlsxDialogContext();
     const { openDialog: openCsvDialog } = useExportCsvDialogContext();
     const { openDialog: openPdfDialog, closeDialog: closePdfDialog } = useExportTabularPdfDialogContext();
@@ -221,20 +223,34 @@ export const useInsightExport = (config: {
     }, [csvDelimiterDialogEnabled, exportRawFunction, exportRawHandler, openCsvDialog, settings, title]);
 
     const onExportPowerPointPresentation = useCallback(() => {
-        setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportSlidesFunction);
-        void exportSlidesHandler(exportSlidesFunction, title, "pptx").finally(() => setIsExporting(false));
+        setIsExporting(true);
+        resolveTemplateAndExport(
+            (templateId) => {
+                void exportSlidesHandler(exportSlidesFunction, title, "pptx", templateId).finally(() =>
+                    setIsExporting(false),
+                );
+            },
+            () => setIsExporting(false),
+        );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exportSlidesFunction, title]);
+    }, [exportSlidesFunction, title, resolveTemplateAndExport]);
 
     const onExportPdfPresentation = useCallback(() => {
-        setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportSlidesFunction);
-        void exportSlidesHandler(exportSlidesFunction, title, "pdf").finally(() => setIsExporting(false));
+        setIsExporting(true);
+        resolveTemplateAndExport(
+            (templateId) => {
+                void exportSlidesHandler(exportSlidesFunction, title, "pdf", templateId).finally(() =>
+                    setIsExporting(false),
+                );
+            },
+            () => setIsExporting(false),
+        );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exportSlidesFunction, title]);
+    }, [exportSlidesFunction, title, resolveTemplateAndExport]);
 
     const onExportPngImage = useCallback(() => {
         setIsExporting(true);

@@ -1137,6 +1137,7 @@ export type { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/i
 export type { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";
 
 export {
+    type IExportTemplate,
     type IExportDefinitionMetadataObject,
     type IExportDefinitionBase,
     type IExportDefinitionDashboardSettings,

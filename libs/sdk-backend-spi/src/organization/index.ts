@@ -4,6 +4,7 @@ import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate } from
 
 import { type IOrganizationAgentsService } from "./agents/index.js";
 import { type IOrganizationAutomationService } from "./automations/index.js";
+import { type IOrganizationExportTemplatesService } from "./exportTemplates/index.js";
 import { type IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
 import { type IOrganizationLlmProvidersService } from "./llmProviders/index.js";
 import { type IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
@@ -98,6 +99,13 @@ export interface IOrganization {
      * @alpha
      */
     agents(): IOrganizationAgentsService;
+
+    /**
+     * Returns service that can be used to query organization-level export templates for slide exports.
+     *
+     * @beta
+     */
+    exportTemplates(): IOrganizationExportTemplatesService;
 }
 
 /**

@@ -14,6 +14,7 @@ import { useDeleteDialogProps } from "../../deleteDialog/DefaultDeleteDialog.js"
 import { DeleteDialog } from "../../deleteDialog/DeleteDialog.js";
 import { ExportCsvDialogProvider } from "../../dialogs/ExportCsvDialogProvider.js";
 import { ExportTabularPdfDialogProvider } from "../../dialogs/ExportTabularPdfDialogProvider.js";
+import { ExportTemplateDialogProvider } from "../../dialogs/ExportTemplateDialogProvider.js";
 import { ExportXlsxDialogProvider } from "../../dialogs/ExportXlsxDialogProvider.js";
 import { useFilterBarProps } from "../../filterBar/filterBar/DefaultFilterBar.js";
 import { FilterBar } from "../../filterBar/filterBar/FilterBar.js";
@@ -78,6 +79,7 @@ export function DashboardHeader(): ReactElement {
             <ExportXlsxDialogProvider />
             <ExportCsvDialogProvider />
             <ExportTabularPdfDialogProvider />
+            <ExportTemplateDialogProvider />
             <ScheduledEmailDialogProvider />
             <AlertingDialogProvider />
             <ShareDialogDashboardHeader />

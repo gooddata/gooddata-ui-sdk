@@ -1827,7 +1827,7 @@ export function exportRawInsightWidget(ref: ObjRef, widget: IInsightWidget, insi
 export function exportRawInsightWidget(ref: ObjRef, widget: IInsightWidget, insight: IInsight, filename: string, options: IExportRawInsightWidgetOptions | undefined, correlationId?: string): IExportRawInsightWidget;
 
 // @alpha
-export function exportSlidesInsightWidget(ref: ObjRef, filename: string, exportType: "pdf" | "pptx", correlationId?: string): IExportSlidesInsightWidget;
+export function exportSlidesInsightWidget(ref: ObjRef, filename: string, exportType: "pdf" | "pptx", correlationId?: string, templateId?: string): IExportSlidesInsightWidget;
 
 // @alpha (undocumented)
 export function ExportThemeProvider({ children }: IExportThemeProviderProps): JSX.Element;
@@ -5600,6 +5600,7 @@ export interface IExportSlidesInsightWidgetPayload {
     readonly exportType: "pdf" | "pptx";
     readonly filename: string;
     readonly ref: ObjRef;
+    readonly templateId?: string;
 }
 
 // @alpha (undocumented)

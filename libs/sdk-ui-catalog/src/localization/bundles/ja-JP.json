@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "数値パラメーターを定義するYAMLステートメントを作成します。",
     "analyticsCatalog.parameter.dialog.create.submit": "作成",
     "analyticsCatalog.parameter.dialog.edit.submit": "保存",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "新規として保存",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "新規として保存",
     "analyticsCatalog.parameter.dialog.cancel": "キャンセル",
     "analyticsCatalog.parameter.dialog.help": "パラメーターを作成する方法は？",
     "analyticsCatalog.parameter.dialog.submit.error": "パラメーターを保存できませんでした。",

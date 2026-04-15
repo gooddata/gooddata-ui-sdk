@@ -23,6 +23,7 @@ export function QualityScoreCard() {
 
     const isLoading = status === "pending" || status === "loading";
     const isSyncing = reportStatus === "SYNCING";
+    const isError = reportStatus === "FAILED" || status === "error";
 
     const handleActionClick = () => {
         const codes = getQualityIssueCodes(issues);
@@ -45,15 +46,18 @@ export function QualityScoreCard() {
             </h3>
             <QualityScoreCardAnnouncements isLoading={isLoading} />
             <QualityScoreCardButton intl={intl} onRunCheck={handleRunCheck} isLoading={isLoading} />
-            <QualityScoreCardScore issues={issues} isLoading={isLoading || isSyncing} />
+            <QualityScoreCardScore issues={issues} isLoading={isLoading || isSyncing} isError={isError} />
             <QualityScoreCardAction
                 intl={intl}
                 isEmpty={issues.length === 0}
                 isLoading={isLoading}
                 isSyncing={isSyncing}
+                isError={isError}
                 onActionClick={handleActionClick}
             />
-            {updatedAt && !isSyncing ? <QualityScoreCardDate date={updatedAt} locale={intl.locale} /> : null}
+            {updatedAt && !isSyncing && !isError ? (
+                <QualityScoreCardDate date={updatedAt} locale={intl.locale} />
+            ) : null}
         </section>
     );
 }

@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Erstellen Sie eine YAML-Anweisung, die einen numerischen Parameter definiert.",
     "analyticsCatalog.parameter.dialog.create.submit": "Erstellen",
     "analyticsCatalog.parameter.dialog.edit.submit": "Speichern",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Als neu speichern",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Als neu speichern",
     "analyticsCatalog.parameter.dialog.cancel": "Abbrechen",
     "analyticsCatalog.parameter.dialog.help": "Wie erstelle ich einen Parameter?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parameter konnte nicht gespeichert werden.",

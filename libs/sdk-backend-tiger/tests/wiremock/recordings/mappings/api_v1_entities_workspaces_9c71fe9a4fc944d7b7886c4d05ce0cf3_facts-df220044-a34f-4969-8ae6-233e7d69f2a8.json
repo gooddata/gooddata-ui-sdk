@@ -1,0 +1,53 @@
+{
+    "id": "df220044-a34f-4969-8ae6-233e7d69f2a8",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_facts",
+    "request": {
+        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            }
+        },
+        "queryParameters": {
+            "size": {
+                "hasExactly": [
+                    {
+                        "equalTo": "250"
+                    }
+                ]
+            },
+            "page": {
+                "hasExactly": [
+                    {
+                        "equalTo": "0"
+                    }
+                ]
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_facts-df220044-a34f-4969-8ae6-233e7d69f2a8.json",
+        "headers": {
+            "X-Gdc-Trace-Id": "811e4f4e3c9d917cc3dc5d3e6d622d95",
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "X-Xss-Protection": "1; mode=block",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Expires": "0",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "df220044-a34f-4969-8ae6-233e7d69f2a8",
+    "persistent": true,
+    "insertionIndex": 24
+}

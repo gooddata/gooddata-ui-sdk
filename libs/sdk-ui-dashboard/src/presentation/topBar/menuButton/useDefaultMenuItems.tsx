@@ -11,6 +11,7 @@ import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
 import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
 import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
 import { useExportToTabular } from "./useExportToTabular.js";
+import { useExportWithTemplateSelection } from "./useExportWithTemplateSelection.js";
 import { requestOpenDensityDialog } from "../../../model/commands/density.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
@@ -177,21 +178,27 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     const { exportDashboardToPdfPresentation, exportDashboardToPdfPresentationStatus } =
         useExportDashboardToPdfPresentation();
+    const { exportDashboardToPptPresentation, exportDashboardToPptPresentationStatus } =
+        useExportDashboardToPowerPointPresentation();
+    const resolveTemplateAndExport = useExportWithTemplateSelection();
+
     const defaultOnExportToPdfPresentation = useCallback(() => {
         if (isNewDashboard) {
             return;
         }
-        exportDashboardToPdfPresentation();
-    }, [exportDashboardToPdfPresentation, isNewDashboard]);
+        resolveTemplateAndExport((templateId) => {
+            exportDashboardToPdfPresentation(templateId ? { options: { templateId } } : undefined);
+        });
+    }, [exportDashboardToPdfPresentation, isNewDashboard, resolveTemplateAndExport]);
 
-    const { exportDashboardToPptPresentation, exportDashboardToPptPresentationStatus } =
-        useExportDashboardToPowerPointPresentation();
     const defaultOnExportToPowerPointPresentation = useCallback(() => {
         if (isNewDashboard) {
             return;
         }
-        exportDashboardToPptPresentation();
-    }, [exportDashboardToPptPresentation, isNewDashboard]);
+        resolveTemplateAndExport((templateId) => {
+            exportDashboardToPptPresentation(templateId ? { options: { templateId } } : undefined);
+        });
+    }, [exportDashboardToPptPresentation, isNewDashboard, resolveTemplateAndExport]);
 
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);

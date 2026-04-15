@@ -345,6 +345,7 @@ export type { IGeoService, IGeoStyleListItem, IGeoStyleParams, IGeoStyleSpecific
 export type { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings/index.js";
 export type { IOrganizationStylingService } from "./organization/styling/index.js";
 export type { IOrganizationSettingsService } from "./organization/settings/index.js";
+export type { IOrganizationExportTemplatesService } from "./organization/exportTemplates/index.js";
 
 export type {
     IWorkspaceUserGroupsQuery,

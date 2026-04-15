@@ -21,6 +21,7 @@ interface IQualityState {
     issues: ISemanticQualityIssue[];
     updatedAt: ISemanticQualityReport["updatedAt"];
     reportStatus: ISemanticQualityReport["status"];
+    error?: Error;
 }
 
 interface IQualityActions {
@@ -86,8 +87,9 @@ export function QualityProvider({ backend, workspace, children }: Props) {
     const state = useMemo(
         () => ({
             status: qualityReport.status,
-            issues: qualityReport.result?.issues ?? initialState.issues,
+            error: qualityReport.error as Error | undefined,
             updatedAt: qualityReport.result?.updatedAt,
+            issues: qualityReport.result?.issues ?? initialState.issues,
             reportStatus: qualityReport.result?.status ?? lastReportStatus ?? initialState.reportStatus,
         }),
         [qualityReport, lastReportStatus],

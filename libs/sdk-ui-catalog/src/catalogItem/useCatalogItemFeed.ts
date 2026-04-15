@@ -24,7 +24,7 @@ import {
     getParametersQuery,
 } from "./query.js";
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
-import { useUpdateItemCallback } from "./useUpdateItemCallback.js";
+import { useCatalogItemRemoveCallback, useCatalogItemUpdateCallback } from "./useCatalogItemMutations.js";
 import { type AsyncStatus } from "../async/types.js";
 import { useFilterState, useQualityFilter } from "../filter/FilterContext.js";
 import { useMounted } from "../hooks/useMounted.js";
@@ -115,7 +115,8 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
     );
 
     // cache update
-    const updateItem = useUpdateItemCallback(cache.endpointItems, setItems);
+    const updateItem = useCatalogItemUpdateCallback(cache.endpointItems, setItems);
+    const removeItem = useCatalogItemRemoveCallback(cache.endpointItems, setItems);
 
     // Next page callback
     const { hasNext, next } = useNextCallback(state, cache, endpoints);
@@ -129,6 +130,7 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
         hasNext,
         next,
         updateItem,
+        removeItem,
     };
 }
 
@@ -463,8 +465,8 @@ function useObjectTypeRefetch(
                 });
                 setError(null);
             } catch (error) {
+                // Refetch failure should not affect other operations, using console.error instead of throwing
                 console.error(error);
-                throw error;
             }
         },
         [

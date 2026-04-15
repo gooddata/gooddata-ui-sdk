@@ -30,7 +30,11 @@ export function AssistantItemComponent({ message, group, isLast }: AssistantItem
     );
 
     return (
-        <div className={classNames} data-state={messageState}>
+        <div
+            className={classNames}
+            data-state={messageState}
+            data-testid="gen-ai-conversation-assistant-message"
+        >
             <span className="gd-gen-ai-chat__visually__hidden">
                 {intl.formatMessage({ id: "gd.gen-ai.message.label.assistant" })}
             </span>

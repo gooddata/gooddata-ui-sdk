@@ -10,14 +10,14 @@ import type {
 } from "@gooddata/sdk-code-schemas/v1";
 
 import { convertGranularityToId } from "./granularityUtils.js";
-import { isRelativeDateFilter } from "./typeGuards.js";
+import { isDateFilter } from "./typeGuards.js";
 import { createIdentifier } from "./yamlUtils.js";
 
 export function mapDateAttribute(query: Query, field: PoPMetricField): AfmObjectIdentifier | null {
     let filter: DateFilter | undefined;
     Object.keys(query.filter_by ?? {}).forEach((key) => {
         const filterFound = query.filter_by![key];
-        if (isRelativeDateFilter(filterFound) && filterFound.using === field.date_filter) {
+        if (isDateFilter(filterFound) && filterFound.using === field.date_filter) {
             filter = {
                 type: "date_filter",
                 granularity: filterFound.granularity,
@@ -31,7 +31,7 @@ export function mapDateAttribute(query: Query, field: PoPMetricField): AfmObject
     if (filter) {
         return createIdentifier(
             `${filter.using}.${convertGranularityToId(
-                filter.granularity as Required<DateDataset>["granularities"][number],
+                (filter.granularity ?? "YEAR") as Required<DateDataset>["granularities"][number],
             )}`,
             { forceType: "attribute" },
         );
@@ -44,7 +44,7 @@ export function mapDateDataset(query: Query, field: PreviousPeriodMetricField): 
 
     Object.keys(query.filter_by ?? {}).forEach((key) => {
         const filterFound = query.filter_by![key];
-        if (isRelativeDateFilter(filterFound) && filterFound.using === field.date_filter) {
+        if (isDateFilter(filterFound) && filterFound.using === field.date_filter) {
             filter = {
                 type: "date_filter",
                 granularity: filterFound.granularity,

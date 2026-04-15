@@ -37,6 +37,7 @@ function AssistantMessageComponentCore({ message, setUserFeedback, isLast }: Ass
                 messageState === "cancelled" && "gd-gen-ai-chat__messages__message--cancelled",
             )}
             data-state={messageState}
+            data-testid="gen-ai-thread-assistant-message"
         >
             <span className="gd-gen-ai-chat__visually__hidden">
                 {intl.formatMessage({ id: "gd.gen-ai.message.label.assistant" })}

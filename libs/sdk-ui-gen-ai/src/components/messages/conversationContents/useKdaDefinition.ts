@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
 import { type IChatKdaDefinition } from "@gooddata/sdk-backend-spi";
 import {
@@ -30,13 +31,17 @@ import {
 } from "@gooddata/sdk-ui-dashboard";
 import { attributeFilterToDashboardAttributeFilter } from "@gooddata/sdk-ui-dashboard/internal";
 
+import { catalogItemsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+
 export function useKdaDefinition(content: IChatKdaDefinition, format?: string, locale?: string) {
     const intl = useIntl();
 
     const measure = content.measure;
+    const catalogItems = useSelector(catalogItemsSelector);
 
     const def: IKdaDefinition = useMemo(() => {
         return createKdaDefinition(
+            catalogItems,
             measure,
             content.dateAttribute,
             content.filters.map(getDashboardAttributeFilter).filter(Boolean) as IDashboardAttributeFilter[],
@@ -47,6 +52,7 @@ export function useKdaDefinition(content: IChatKdaDefinition, format?: string, l
             getFormatByGranularity(content.dateGranularity) ?? format,
         );
     }, [
+        catalogItems,
         measure,
         content.dateAttribute,
         content.filters,
@@ -62,7 +68,7 @@ export function useKdaDefinition(content: IChatKdaDefinition, format?: string, l
 }
 
 export function useKdaInfo(catalogItems: CatalogItem[], def: IKdaDefinition, splitter: string) {
-    const title = getTitle(catalogItems, def.metric);
+    const title = getMeasureIdentifier(catalogItems, def.metric);
     const range = formatKeyDriverAnalysisDateRange(def?.range, splitter);
 
     return {
@@ -72,6 +78,7 @@ export function useKdaInfo(catalogItems: CatalogItem[], def: IKdaDefinition, spl
 }
 
 export function createKdaDefinition(
+    catalogItems: CatalogItem[],
     measure: IMeasure,
     dateAttribute: IAttribute,
     filters: IDashboardAttributeFilter[],
@@ -86,7 +93,7 @@ export function createKdaDefinition(
             ...measure,
             measure: {
                 ...measure.measure,
-                title: measure.measure.title ?? measure.measure.alias ?? measure.measure.localIdentifier,
+                title: getTitle(catalogItems, measure),
             },
         },
         metrics: [],
@@ -115,6 +122,7 @@ export function createKdaDefinition(
 }
 
 export function createKdaDefinitionFromDrill(
+    catalogItems: CatalogItem[],
     locale: string,
     data: IDashboardKeyDriverCombinationItem,
     event: IDrillEvent,
@@ -137,6 +145,7 @@ export function createKdaDefinitionFromDrill(
     }
 
     return createKdaDefinition(
+        catalogItems,
         measure,
         {
             attribute: {
@@ -200,7 +209,7 @@ function getFormatByGranularity(granularity: DateAttributeGranularity) {
     }
 }
 
-function getTitle(catalogItems: CatalogItem[], metric: IMeasure) {
+function getMeasureIdentifier(catalogItems: CatalogItem[], metric: IMeasure) {
     const objRef = isSimpleMeasure(metric) ? metric.measure.definition.measureDefinition.item : undefined;
 
     const operator = isSimpleMeasure(metric)
@@ -221,6 +230,25 @@ function getTitle(catalogItems: CatalogItem[], metric: IMeasure) {
             }
             if (objRef && isCatalogAttribute(i) && areObjRefsEqual(i.attribute.ref, objRef)) {
                 return getOperatorTitle(`attribute/${objRefToString(objRef)}`);
+            }
+            return undefined;
+        })
+        .find((title) => title !== undefined) as string | undefined;
+}
+
+function getTitle(catalogItems: CatalogItem[], metric: IMeasure) {
+    const objRef = isSimpleMeasure(metric) ? metric.measure.definition.measureDefinition.item : undefined;
+
+    return catalogItems
+        .map((i) => {
+            if (objRef && isCatalogMeasure(i) && areObjRefsEqual(i.measure.ref, objRef)) {
+                return metric.measure.alias ?? i.measure.title ?? metric.measure.localIdentifier;
+            }
+            if (objRef && isCatalogFact(i) && areObjRefsEqual(i.fact.ref, objRef)) {
+                return metric.measure.alias ?? i.fact.title ?? metric.measure.localIdentifier;
+            }
+            if (objRef && isCatalogAttribute(i) && areObjRefsEqual(i.attribute.ref, objRef)) {
+                return metric.measure.alias ?? i.attribute.title ?? metric.measure.localIdentifier;
             }
             return undefined;
         })

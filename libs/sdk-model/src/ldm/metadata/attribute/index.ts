@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ObjRef } from "../../../objRef/index.js";
 import { type IAttributeDisplayFormMetadataObject } from "../attributeDisplayForm/index.js";
@@ -45,6 +45,11 @@ export interface IAttributeMetadataObject extends IMetadataObject {
      * Display forms of the attribute
      */
     displayForms: IAttributeDisplayFormMetadataObject[];
+
+    /**
+     * Source column name in the underlying data source table.
+     */
+    sourceColumn?: string;
 }
 
 /**

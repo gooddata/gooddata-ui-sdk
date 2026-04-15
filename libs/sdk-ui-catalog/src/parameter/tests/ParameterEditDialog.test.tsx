@@ -2,11 +2,11 @@
 
 import type { PropsWithChildren } from "react";
 
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IParameterMetadataObject } from "@gooddata/sdk-model";
+import type { IParameterMetadataObject, IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
@@ -54,7 +54,7 @@ const parameterItem: ICatalogItemParameter = {
     definition: { type: "NUMBER", defaultValue: 10 },
 };
 
-const createdParameter: IParameterMetadataObject = {
+const updatedParameter: IParameterMetadataObject = {
     id: "param.id",
     uri: "/gdc/md/param.id",
     ref: { identifier: "param.id", type: "parameter" },
@@ -66,7 +66,7 @@ const createdParameter: IParameterMetadataObject = {
     deprecated: false,
     unlisted: false,
     created: "2024-01-01",
-    updated: "2024-01-03",
+    updated: "2024-02-01",
     definition: { type: "NUMBER", defaultValue: 10 },
     createdBy: {
         ref: { identifier: "user1" },
@@ -75,29 +75,17 @@ const createdParameter: IParameterMetadataObject = {
         lastName: "Doe",
     },
     updatedBy: {
-        ref: { identifier: "user2" },
-        login: "user2",
-        fullName: "John Smith",
-    },
-};
-
-const updatedParameter: IParameterMetadataObject = {
-    ...createdParameter,
-    updated: "2024-02-01",
-    updatedBy: {
         ref: { identifier: "user3" },
         login: "user3",
         fullName: "Updated User",
     },
 };
 
-const createParameterMock = vi.fn();
 const updateParameterMock = vi.fn();
 
 const backend = {
     workspace: () => ({
         parameters: () => ({
-            createParameter: createParameterMock,
             updateParameter: updateParameterMock,
         }),
     }),
@@ -120,12 +108,11 @@ function Wrapper({ children }: PropsWithChildren) {
 describe("ParameterEditDialog", () => {
     beforeEach(() => {
         vi.clearAllMocks();
-        createParameterMock.mockResolvedValue(createdParameter);
         updateParameterMock.mockResolvedValue(updatedParameter);
     });
 
-    it("creates a new parameter and converts it for onSaved", async () => {
-        const onSaved = vi.fn();
+    it("passes the current parameter to onDuplicate", async () => {
+        const onDuplicate = vi.fn();
 
         render(
             <ParameterEditDialog
@@ -133,39 +120,34 @@ describe("ParameterEditDialog", () => {
                 workspace="test-workspace"
                 item={parameterItem}
                 onClose={vi.fn()}
-                onSaved={onSaved}
+                onSaved={vi.fn()}
+                onDuplicate={onDuplicate}
             />,
             { wrapper: Wrapper },
         );
 
-        const saveAsNewButton = await screen.findByText("Save as new");
-        await act(async () => {
-            saveAsNewButton.click();
+        fireEvent.change(await screen.findByTestId("yaml-editor"), {
+            target: {
+                value: `id: custom.id
+title: Edited Param
+description: "Description"
+tags: []
+definition:
+  type: NUMBER
+  defaultValue: 15`,
+            },
         });
+        fireEvent.click(await screen.findByText("Save as new"));
 
-        await waitFor(() => {
-            expect(createParameterMock).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    id: "param.id",
-                    type: "parameter",
-                    title: "My Param",
-                    description: "Description",
-                    tags: [],
-                    definition: { type: "NUMBER", defaultValue: 10 },
-                }),
-            );
-        });
-
+        expect(onDuplicate).toHaveBeenCalledWith({
+            id: "custom.id",
+            type: "parameter",
+            title: "Edited Param",
+            description: "Description",
+            tags: [],
+            definition: { type: "NUMBER", defaultValue: 15 },
+        } satisfies IParameterMetadataObjectDefinition);
         expect(updateParameterMock).not.toHaveBeenCalled();
-        expect(onSaved).toHaveBeenCalledWith(
-            expect.objectContaining({
-                identifier: "param.id",
-                type: "parameter",
-                createdBy: "Jane Doe",
-                updatedBy: "John Smith",
-                definition: { type: "NUMBER", defaultValue: 10 },
-            }),
-        );
     });
 
     it("updates an existing parameter with definition", async () => {
@@ -178,11 +160,24 @@ describe("ParameterEditDialog", () => {
                 item={parameterItem}
                 onClose={vi.fn()}
                 onSaved={onSaved}
+                onDuplicate={vi.fn()}
             />,
             { wrapper: Wrapper },
         );
 
-        const saveButton = await screen.findByText("Save", { selector: "button span, button" });
+        const validYaml = `id: param.id
+title: My Param
+description: Updated
+tags: []
+definition:
+  type: NUMBER
+  defaultValue: 10`;
+
+        fireEvent.change(await screen.findByTestId("yaml-editor"), {
+            target: { value: validYaml },
+        });
+
+        const saveButton = screen.getByText("Save", { selector: "button span, button" });
         await act(async () => {
             saveButton.click();
         });
@@ -193,7 +188,7 @@ describe("ParameterEditDialog", () => {
                     id: "param.id",
                     identifier: "param.id",
                     uri: "param.id",
-                    description: "Description",
+                    description: "Updated",
                     tags: [],
                     title: "My Param",
                     definition: { type: "NUMBER", defaultValue: 10 },
@@ -201,7 +196,6 @@ describe("ParameterEditDialog", () => {
             );
         });
 
-        expect(createParameterMock).not.toHaveBeenCalled();
         expect(onSaved).toHaveBeenCalledWith(
             expect.objectContaining({
                 identifier: "param.id",

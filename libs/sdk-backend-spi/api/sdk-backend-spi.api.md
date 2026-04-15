@@ -72,6 +72,7 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import type { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IExportTemplate } from '@gooddata/sdk-model';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import type { IFilterContext } from '@gooddata/sdk-model';
@@ -1830,6 +1831,8 @@ export interface IOrganization {
     agents(): IOrganizationAgentsService;
     // @alpha
     automations(): IOrganizationAutomationService;
+    // @beta
+    exportTemplates(): IOrganizationExportTemplatesService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
     llmEndpoints(): IOrganizationLlmEndpointsService;
     llmProviders(): IOrganizationLlmProvidersService;
@@ -1902,6 +1905,11 @@ export interface IOrganizationAutomationsQuery {
 
 // @alpha
 export type IOrganizationAutomationsQueryResult = IPagedResource<IAutomationMetadataObject>;
+
+// @beta
+export interface IOrganizationExportTemplatesService {
+    getExportTemplates(): Promise<IExportTemplate[]>;
+}
 
 // @alpha
 export interface IOrganizationGeoCollectionsService {
@@ -2722,6 +2730,7 @@ export interface IWorkspaceMeasuresService {
 // @public
 export interface IWorkspaceParametersService {
     createParameter(parameter: IParameterMetadataObjectDefinition): Promise<IParameterMetadataObject>;
+    deleteParameter(ref: ObjRef): Promise<void>;
     getParameter(ref: ObjRef): Promise<IParameterMetadataObject>;
     getParametersQuery(): IParametersQuery;
     updateParameter(updatedParameter: Partial<IParameterMetadataObjectDefinition> & IMetadataObjectIdentity): Promise<IParameterMetadataObject>;

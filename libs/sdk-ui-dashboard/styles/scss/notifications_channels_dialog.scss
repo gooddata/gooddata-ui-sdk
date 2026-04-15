@@ -415,6 +415,73 @@ $min-content-height: 110px;
     }
 }
 
+@property --fade-top {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 0%;
+}
+
+@property --fade-bottom {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 6%;
+}
+
+@keyframes scroll-fade {
+    0% {
+        --fade-top: 0%;
+        --fade-bottom: 6%;
+    }
+
+    1% {
+        --fade-top: 6%;
+        --fade-bottom: 6%;
+    }
+
+    99% {
+        --fade-top: 6%;
+        --fade-bottom: 6%;
+    }
+
+    100% {
+        --fade-top: 6%;
+        --fade-bottom: 0%;
+    }
+}
+
+.gd-slides-template-dropdown-list,
+.gd-export-template-list {
+    max-height: 200px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        #000 var(--fade-top),
+        #000 calc(100% - var(--fade-bottom)),
+        transparent
+    );
+    animation: scroll-fade linear both;
+    animation-timeline: scroll(self);
+
+    .input-radio-label {
+        display: block;
+        height: auto;
+        min-height: 20px;
+        margin-left: 0;
+        margin-bottom: 8px;
+        line-height: 20px;
+    }
+}
+
+.gd-export-template-selection-dialog {
+    width: 400px;
+
+    .gd-export-template-list {
+        max-height: 350px;
+    }
+}
+
 .gd-notifications-channels-management-dialog {
     display: flex;
     flex-direction: column;

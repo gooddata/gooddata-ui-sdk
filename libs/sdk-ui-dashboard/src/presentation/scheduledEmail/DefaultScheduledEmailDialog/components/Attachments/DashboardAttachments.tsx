@@ -8,6 +8,7 @@ import {
     type DashboardAttachmentType,
     type FilterContextItem,
     type IExportDefinitionVisualizationObjectSettings,
+    type IExportTemplate,
 } from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
 
@@ -26,6 +27,9 @@ export interface IDashboardAttachmentsProps {
     xlsxSettings: IExportDefinitionVisualizationObjectSettings;
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
+    exportTemplates?: IExportTemplate[];
+    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string };
+    onSlidesTemplateIdChange?: (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES") => void;
 }
 
 export function DashboardAttachments({
@@ -36,6 +40,9 @@ export function DashboardAttachments({
     xlsxSettings,
     onXlsxSettingsChange,
     defaultPdfPageSize,
+    exportTemplates,
+    slidesTemplateIds,
+    onSlidesTemplateIdChange,
 }: IDashboardAttachmentsProps) {
     const intl = useIntl();
     const attachmentListRef = useRef<HTMLDivElement>(null);
@@ -122,6 +129,9 @@ export function DashboardAttachments({
                         onXlsxSettingsChange={onXlsxSettingsChange}
                         defaultPdfPageSize={defaultPdfPageSize}
                         mode="dashboard"
+                        exportTemplates={exportTemplates}
+                        slidesTemplateIds={slidesTemplateIds}
+                        onSlidesTemplateIdChange={onSlidesTemplateIdChange}
                     />
                     <AttachmentsSelect<DashboardAttachmentType>
                         attachments={SUPPORTED_DASHBOARD_ATTACHMENTS.map((format) => ({

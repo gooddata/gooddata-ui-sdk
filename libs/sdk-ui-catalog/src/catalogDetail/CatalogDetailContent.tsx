@@ -9,6 +9,7 @@ import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
 import { useLocalStorage, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IUiTab, UiButton, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
+import { CatalogDetailActionBar } from "./CatalogDetailActionBar.js";
 import { CatalogDetailHeader, type ICatalogDetailHeaderRef } from "./CatalogDetailHeader.js";
 import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
 import { CatalogDetailTabCertification } from "./CatalogDetailTabCertification.js";
@@ -16,6 +17,7 @@ import { CatalogDetailTabLineage } from "./CatalogDetailTabLineage.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
+import type { EditHandlerEvent, ICatalogDetailAction, OpenHandlerEvent } from "./types.js";
 import { canEditCatalogItem } from "../catalogItem/permission.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { useIsCertificationAllowed } from "../certification/gate.js";
@@ -31,33 +33,6 @@ const Tabs = {
     CERTIFICATION: "certification",
     LINEAGE: "lineage",
 } as const;
-
-/**
- * @internal
- */
-export type OpenHandlerEvent = {
-    /**
-     * Catalog item to open.
-     */
-    item: ICatalogItem;
-    /**
-     * Workspace ID.
-     */
-    workspaceId: string;
-    /**
-     * Whether to open the catalog item in a new tab.
-     */
-    newTab: boolean;
-    /**
-     * Prevents the default action.
-     */
-    preventDefault: () => void;
-};
-
-/**
- * @internal
- */
-export type EditHandlerEvent = OpenHandlerEvent;
 
 /**
  * @internal
@@ -99,6 +74,14 @@ export interface ICatalogDetailContentProps {
      * Handler for catalog item update error.
      */
     onCatalogItemUpdateError?: (error: Error) => void;
+    /**
+     * Returns item-specific actions for the detail actions menu.
+     */
+    getItemActions?: (item: ICatalogItem) => ICatalogDetailAction[];
+    /**
+     * Handles selection of an item-specific detail action.
+     */
+    onItemAction?: (item: ICatalogItem, actionId: string) => void;
 }
 
 /**
@@ -114,6 +97,8 @@ export function CatalogDetailContent({
     onCatalogItemUpdate,
     onCatalogItemUpdateError,
     onCatalogItemNavigation,
+    getItemActions,
+    onItemAction,
 }: ICatalogDetailContentProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
@@ -142,6 +127,9 @@ export function CatalogDetailContent({
     });
 
     const canEdit = canEditCatalogItem(permissions, item);
+
+    const itemActions = useMemo(() => (item ? (getItemActions?.(item) ?? []) : []), [getItemActions, item]);
+
     const separators = settings?.separators;
     const enableMetricFormatOverrides = Boolean(settings?.["enableMetricFormatOverrides"]);
     const currencyFormatOverride = settings?.currencyFormatOverride ?? null;
@@ -226,18 +214,13 @@ export function CatalogDetailContent({
                             actions={
                                 item.type === "parameter" ? (
                                     canEdit ? (
-                                        <UiButton
-                                            label={intl.formatMessage({
-                                                id: "analyticsCatalog.edit",
-                                            })}
-                                            variant="primary"
-                                            onClick={(event) => {
-                                                onEditClick?.(event, {
-                                                    item,
-                                                    workspaceId,
-                                                    newTab: event.metaKey || event.ctrlKey,
-                                                    preventDefault: event.preventDefault.bind(event),
-                                                });
+                                        <CatalogDetailActionBar
+                                            item={item}
+                                            workspaceId={workspaceId}
+                                            actions={itemActions}
+                                            onEditClick={onEditClick}
+                                            onActionsMenuSelect={(actionId) => {
+                                                onItemAction?.(item, actionId);
                                             }}
                                         />
                                     ) : null

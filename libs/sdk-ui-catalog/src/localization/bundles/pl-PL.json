@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Utwórz instrukcję YAML definiującą parametr liczbowy.",
     "analyticsCatalog.parameter.dialog.create.submit": "Utwórz",
     "analyticsCatalog.parameter.dialog.edit.submit": "Zapisz",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Zapisz jako nowy",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Zapisz jako nowy",
     "analyticsCatalog.parameter.dialog.cancel": "Anuluj",
     "analyticsCatalog.parameter.dialog.help": "Jak utworzyć parametr?",
     "analyticsCatalog.parameter.dialog.submit.error": "Nie udało się zapisać parametru.",

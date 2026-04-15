@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "创建用于定义数值参数的 YAML 语句。",
     "analyticsCatalog.parameter.dialog.create.submit": "创建",
     "analyticsCatalog.parameter.dialog.edit.submit": "保存",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "另存为新的",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "另存为新的",
     "analyticsCatalog.parameter.dialog.cancel": "取消",
     "analyticsCatalog.parameter.dialog.help": "如何创建参数？",
     "analyticsCatalog.parameter.dialog.submit.error": "无法保存参数。",

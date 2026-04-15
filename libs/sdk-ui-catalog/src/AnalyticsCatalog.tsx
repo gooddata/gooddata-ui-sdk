@@ -7,7 +7,7 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { Catalog } from "./catalog/Catalog.js";
-import type { OpenHandlerEvent } from "./catalogDetail/CatalogDetailContent.js";
+import type { OpenHandlerEvent } from "./catalogDetail/types.js";
 import { type ICatalogItemRef } from "./catalogItem/types.js";
 import { CatalogResourceProvider } from "./catalogResource/CatalogResourceProvider.js";
 import { FilterProvider } from "./filter/FilterContext.js";

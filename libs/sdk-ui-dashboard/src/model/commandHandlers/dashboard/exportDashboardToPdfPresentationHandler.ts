@@ -49,7 +49,11 @@ export function* exportDashboardToPdfPresentationHandler(
 
     const dashboardRef = yield select(selectDashboardRef);
     if (!dashboardRef) {
-        throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to EXCEL must have an ObjRef.");
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            "Dashboard to export to PDF presentation must have an ObjRef.",
+        );
     }
 
     const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =

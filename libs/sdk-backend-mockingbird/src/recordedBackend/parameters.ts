@@ -32,4 +32,8 @@ export class RecordedParameters implements IWorkspaceParametersService {
     ): Promise<IParameterMetadataObject> {
         throw new NotSupported("not supported");
     }
+
+    public async deleteParameter(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("not supported");
+    }
 }

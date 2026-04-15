@@ -796,6 +796,11 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 deleteAgent: () => Promise.resolve(),
             };
         },
+        exportTemplates() {
+            return {
+                getExportTemplates: () => Promise.resolve([]),
+            };
+        },
     };
 }
 

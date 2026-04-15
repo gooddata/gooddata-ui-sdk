@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "建立一個定義數值參數的 YAML 陳述式。",
     "analyticsCatalog.parameter.dialog.create.submit": "創建",
     "analyticsCatalog.parameter.dialog.edit.submit": "儲存",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "另存新檔",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "另存新檔",
     "analyticsCatalog.parameter.dialog.cancel": "取消",
     "analyticsCatalog.parameter.dialog.help": "如何建立參數？",
     "analyticsCatalog.parameter.dialog.submit.error": "無法儲存參數。",

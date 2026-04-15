@@ -154,6 +154,17 @@ $content-font-size: 14px;
 
         &__actions {
             flex-grow: 0;
+            align-self: flex-start;
+        }
+    }
+
+    &__detail-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .gd-dropdown {
+            display: flex;
         }
     }
 

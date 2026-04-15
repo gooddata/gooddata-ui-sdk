@@ -9,8 +9,8 @@ import { CatalogDetail, type ICatalogDetailProps } from "./catalogDetail/Catalog
 import {
     CatalogDetailContent,
     type ICatalogDetailContentProps,
-    type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
+import type { OpenHandlerEvent } from "./catalogDetail/types.js";
 import { CatalogResourceProvider } from "./catalogResource/CatalogResourceProvider.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { type ObjectType } from "./objectType/types.js";

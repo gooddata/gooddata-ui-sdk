@@ -1,8 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type IExecutionFactory,
     type IGeoService,
+    type IOrganizationExportTemplatesService,
     type ISecuritySettingsService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
@@ -66,6 +67,14 @@ export type DashboardsDecoratorFactory = (
 export type GeoDecoratorFactory = (geo: IGeoService) => IGeoService;
 
 /**
+ * @alpha
+ */
+export type OrganizationExportTemplatesDecoratorFactory = (
+    exportTemplates: IOrganizationExportTemplatesService,
+    organizationId: string,
+) => IOrganizationExportTemplatesService;
+
+/**
  * Provides factory functions for the different decorators (currently only supports execution
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
@@ -81,4 +90,5 @@ export type DecoratorFactories = {
     automations?: AutomationsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
     geo?: GeoDecoratorFactory;
+    organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
 };

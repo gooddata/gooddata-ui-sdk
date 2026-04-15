@@ -16,7 +16,7 @@ import {
 import cx from "classnames";
 import copy from "copy-to-clipboard";
 import { useIntl } from "react-intl";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 import { type IChatConversationVisualisationContent, type IChatSuggestion } from "@gooddata/sdk-backend-spi";
 import { type IColorPalette, type IDashboardAttributeFilter, type IFilter } from "@gooddata/sdk-model";
@@ -48,10 +48,14 @@ import {
     type IChatConversationMultipartLocalPart,
     makeUserItem,
 } from "../../../model.js";
-import { colorPaletteSelector, settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+import {
+    catalogItemsSelector,
+    colorPaletteSelector,
+    settingsSelector,
+} from "../../../store/chatWindow/chatWindowSelectors.js";
 import {
     copyToClipboardAction,
-    type setKeyDriverAnalysisAction,
+    setKeyDriverAnalysisAction,
 } from "../../../store/chatWindow/chatWindowSlice.js";
 import { newMessageAction } from "../../../store/messages/messagesSlice.js";
 import { type RootState } from "../../../store/types.js";
@@ -531,6 +535,7 @@ function useDrillState({ containerRef, filters, setKeyDriverAnalysis }: IUseDril
         keyDriverData: IDashboardKeyDriverCombinationItem[];
         event: IDrillEvent;
     } | null>(null);
+    const catalogItems = useSelector(catalogItemsSelector);
 
     const DrillChooser = useCallback(
         ({ children }: { children: ReactNode }) => {
@@ -577,6 +582,7 @@ function useDrillState({ containerRef, filters, setKeyDriverAnalysis }: IUseDril
                                     );
 
                                     const definition = createKdaDefinitionFromDrill(
+                                        catalogItems,
                                         intl.locale,
                                         data,
                                         event,
@@ -594,7 +600,7 @@ function useDrillState({ containerRef, filters, setKeyDriverAnalysis }: IUseDril
                 />
             );
         },
-        [containerRef, drillState, filters, intl.locale, setKeyDriverAnalysis],
+        [catalogItems, containerRef, drillState, filters, intl.locale, setKeyDriverAnalysis],
     );
 
     const DrillOverlay = useCallback(
@@ -734,6 +740,7 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
 
 const mapDispatchToProps = {
     onCopyToClipboard: copyToClipboardAction,
+    setKeyDriverAnalysis: setKeyDriverAnalysisAction,
 };
 
 const mapStateToProps = (

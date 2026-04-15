@@ -357,4 +357,7 @@ export {
     // AutomationOrganizationViewControllerApi
     AutomationOrganizationViewControllerApi_GetAllAutomationsWorkspaceAutomations,
     type AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest,
+    // ExportTemplatesApi
+    ExportTemplatesApi_GetAllEntitiesExportTemplates,
+    type ExportTemplatesApiGetAllEntitiesExportTemplatesRequest,
 } from "../../generated/metadata-json-api/index.js";
