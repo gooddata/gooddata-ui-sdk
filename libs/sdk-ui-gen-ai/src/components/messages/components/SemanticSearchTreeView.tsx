@@ -46,7 +46,7 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
         canEdit,
     });
     const id = useId();
-    const treeViewId = `gen-ai-chat/${id}/treeview`;
+    const treeViewId = `gen-ai-chat-${id}-treeview`;
 
     const handleSelect = useCallback<LeveledSearchTreeViewProps["onSelect"]>(
         (item, mods, event: MouseEvent | KeyboardEvent) => {

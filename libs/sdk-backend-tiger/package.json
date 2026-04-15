@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.30.0-alpha.3",
+    "version": "11.30.0-alpha.4",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -30,7 +30,7 @@
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "build-ts": "tsgo -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
-        "clear-recordings": "rm -rf ./tests/wiremock/recordings/mappings/* ./tests/wiremock/recordings/__files/*",
+        "clear-recordings": "./scripts/clear-recordings.sh",
         "create-ref-workspaces": "node ./tests/reference_workspace/create_test_workspaces.mjs",
         "delete-ref-workspaces": "node ./tests/reference_workspace/delete_test_workspaces.mjs",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",

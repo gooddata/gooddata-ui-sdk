@@ -1,23 +1,23 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    type JsonApiParameterOutDocument,
+    type JsonApiParameterOut,
     type JsonApiParameterOutWithLinks,
+    type JsonApiUserIdentifierOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { type IParameterDefinition, type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
 
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 
-export function convertParameterFromBackend(
-    data: JsonApiParameterOutDocument | JsonApiParameterOutWithLinks,
+export function convertParameter(
+    parameter: JsonApiParameterOut | JsonApiParameterOutWithLinks,
+    included: JsonApiUserIdentifierOutWithLinks[] = [],
 ): IParameterMetadataObject {
-    const parameter = "data" in data ? data.data : data;
-    const included = "data" in data ? (data.included ?? []) : [];
-
+    const links = "links" in parameter ? parameter.links : undefined;
     return {
         id: parameter.id,
-        uri: data.links?.self ?? parameter.id,
+        uri: links?.self ?? "",
         ref: idRef(parameter.id, "parameter"),
         type: "parameter",
         title: parameter.attributes.title ?? "",

@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Выполняется обновление модели, подождите...",
     "analyticsCatalog.quality.scoreCard.action.success": "Показать объекты",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Последняя проверка: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Проверка не выполнена!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Произошла ошибка.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {предупреждение} few {предупреждения} many {предупреждений} other {предупреждения}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {рекомендация} few {рекомендации} many {рекомендаций} other {рекомендации}}",
     "analyticsCatalog.lineage.direction.up": "Входящие",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Создайте инструкцию YAML, которая определяет числовой параметр.",
     "analyticsCatalog.parameter.dialog.create.submit": "Создать",
     "analyticsCatalog.parameter.dialog.edit.submit": "Сохранить",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Сохранить как новую",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Сохранить как новую",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "Идентификатор параметра нельзя изменить при сохранении существующего параметра. Вместо этого используйте \"Сохранить как новый\".",
     "analyticsCatalog.parameter.dialog.cancel": "Отмена",
     "analyticsCatalog.parameter.dialog.help": "Как создать параметр?",
     "analyticsCatalog.parameter.dialog.submit.error": "Не удалось сохранить параметр.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "Значение min ограничения не может быть больше значения max.",
     "analyticsCatalog.parameter.validation.invalidTags": "Теги должны быть списком строк.",
     "analyticsCatalog.parameter.create.success": "Параметр создан.",
+    "analyticsCatalog.parameter.update.success": "Параметр обновлен.",
     "analyticsCatalog.parameter.validation.syntax": "Синтаксическая ошибка YAML"
 }

@@ -6,6 +6,7 @@ import { type AfmObjectIdentifier, type DeclarativeAttributeHierarchy } from "@g
 import type { AttributeHierarchy } from "@gooddata/sdk-code-schemas/v1";
 import { type IAttributeHierarchyMetadataObject } from "@gooddata/sdk-model";
 
+import { type IErrorContext, updateErrorContext } from "../utils/errors.js";
 import { ATTRIBUTE_HIERARCHY_COMMENT } from "../utils/texts.js";
 import { entryWithSpace, fillOptionalMetaFields, getIdentifier } from "../utils/yamlUtils.js";
 
@@ -14,10 +15,18 @@ export type OverrideAttributeHierarchyDefinition = Omit<IAttributeHierarchyMetad
 };
 
 /** @public */
-export function declarativeAttributeHierarchyToYaml(hierarchy: DeclarativeAttributeHierarchy): {
+export function declarativeAttributeHierarchyToYaml(
+    hierarchy: DeclarativeAttributeHierarchy,
+    context?: IErrorContext,
+): {
     content: string;
     json: AttributeHierarchy;
 } {
+    const errorContext = updateErrorContext(context, {
+        type: "attribute_hierarchy",
+        path: ["attribute_hierarchy", hierarchy.id],
+        data: {},
+    });
     const content = hierarchy.content as OverrideAttributeHierarchyDefinition;
 
     // Create new doc and add mandatory fields right away
@@ -36,7 +45,13 @@ export function declarativeAttributeHierarchyToYaml(hierarchy: DeclarativeAttrib
     doc.add(
         entryWithSpace(
             "attributes",
-            content.attributes.map((attr) => getIdentifier(attr)),
+            content.attributes.map((attr, ai) =>
+                getIdentifier(
+                    attr,
+                    undefined,
+                    updateErrorContext(errorContext, { path: ["attributes", ai.toString()] }),
+                ),
+            ),
         ),
     );
 

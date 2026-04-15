@@ -177,9 +177,9 @@ export const useAttributeFilterController = (
     const elementsModeFilter = useMemo(
         (): IAttributeFilter =>
             (!resolvedFilter || originalIsTextFilter
-                ? createEmptyFilterForSelectionType("elements", resolvedDisplayFormRef)
+                ? createEmptyFilterForSelectionType("elements", effectiveDisplayFormRef)
                 : resolvedFilter) as IAttributeFilter,
-        [resolvedFilter, originalIsTextFilter, resolvedDisplayFormRef],
+        [resolvedFilter, originalIsTextFilter, effectiveDisplayFormRef],
     );
 
     const effectiveOnApply = isTextSelectionType ? NOOP_ON_APPLY : (onApply ?? NOOP_ON_APPLY);
@@ -518,8 +518,28 @@ export const useAttributeFilterController = (
             setElementsDisplayForm?.(newDisplayFormRef);
             // Reset text controller's values for display form change
             onTextResetForDisplayFormChange?.(newDisplayFormRef);
+            // Notify parent about display form change so it can update its state
+            // without waiting for Apply (display form changes are immediate).
+            // This covers both elements and text mode.
+            onChange?.(
+                elementsModeFilter,
+                elementsFilterController.isCommittedSelectionInverted,
+                selectionMode,
+                elementsFilterController.committedSelectionElements,
+                newDisplayFormRef,
+                false,
+                {},
+            );
         },
-        [setElementsDisplayForm, onTextResetForDisplayFormChange],
+        [
+            setElementsDisplayForm,
+            onTextResetForDisplayFormChange,
+            onChange,
+            elementsModeFilter,
+            elementsFilterController.isCommittedSelectionInverted,
+            elementsFilterController.committedSelectionElements,
+            selectionMode,
+        ],
     );
 
     // Reconstruct committed filter from text controller's committed state + root's display form.

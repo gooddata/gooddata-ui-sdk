@@ -89,7 +89,7 @@ import { table } from "../configs/table.js";
 import { treemapChart } from "../configs/treemapChart.js";
 import { waterfallChart } from "../configs/waterfallChart.js";
 import { BucketsType, type FromEntities } from "../types.js";
-import { CoreErrorCode, newError } from "../utils/errors.js";
+import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
 import { matchConditionToYaml, parseDateValues } from "../utils/filterUtils.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
 import { remapLocationAttribute } from "../utils/locationUtils.js";
@@ -106,14 +106,20 @@ import {
 export function declarativeVisualisationToYaml(
     entities: FromEntities,
     visualisation: DeclarativeVisualizationObject,
+    context?: IErrorContext,
 ): {
     content: string;
     json?: Visualisation;
 } {
+    const errorContext = updateErrorContext(context, {
+        type: "visualisation",
+        path: ["visualisation", visualisation.id],
+        data: {},
+    });
     // Build visualisation object
     const insight = { insight: visualisation.content };
     if (!isInsight(insight)) {
-        throw newError(CoreErrorCode.VisualizationNotSupported, [JSON.stringify(insight)]);
+        throw newError(CoreErrorCode.VisualizationNotSupported, [JSON.stringify(insight)], errorContext);
     }
 
     // Load type
@@ -142,10 +148,24 @@ export function declarativeVisualisationToYaml(
         doc.add(doc.createPair("show_in_ai_results", false));
     }
 
-    const report = declarativeReportToYaml(entities, insight.insight);
+    const report = declarativeReportToYaml(
+        entities,
+        insight.insight,
+        updateErrorContext(errorContext, {
+            path: ["insight"],
+        }),
+    );
     doc.add(entryWithSpace("query", report.report));
 
-    declarativeVisToYaml(doc, insight.insight, report, entities);
+    declarativeVisToYaml(
+        doc,
+        insight.insight,
+        report,
+        entities,
+        updateErrorContext(errorContext, {
+            path: ["insight"],
+        }),
+    );
 
     return {
         content: doc.toString({
@@ -160,32 +180,79 @@ type Report = {
     derivedBuckets: BucketGroup[];
 };
 
-function declarativeReportToYaml(entities: FromEntities, def: IInsightDefinition["insight"]): Report {
+function declarativeReportToYaml(
+    entities: FromEntities,
+    def: IInsightDefinition["insight"],
+    errorContext?: IErrorContext,
+): Report {
     const report = new YAMLMap();
 
     const {
         fieldsMap,
         postProcessors,
         groups: derivedBuckets,
-    } = declarativeBucketsToYaml(entities, def.buckets);
-    appendLayerFieldsToReport(fieldsMap, postProcessors, entities, def.layers);
+    } = declarativeBucketsToYaml(
+        entities,
+        def.buckets,
+        updateErrorContext(errorContext, {
+            path: ["buckets"],
+        }),
+    );
+    appendLayerFieldsToReport(
+        fieldsMap,
+        postProcessors,
+        entities,
+        def.layers,
+        updateErrorContext(errorContext, {
+            path: ["layers"],
+        }),
+    );
     if (fieldsMap.items.length > 0) {
         report.add(new Pair("fields", fieldsMap));
     }
-    const { filtersArray, filtersMap } = declarativeFiltersToYaml(entities, def.filters ?? []);
-    declarativeFiltersConfigToYaml(def, filtersMap);
+    const { filtersArray, filtersMap } = declarativeFiltersToYaml(
+        entities,
+        def.filters ?? [],
+        updateErrorContext(errorContext, {
+            path: ["filters"],
+        }),
+    );
+    declarativeFiltersConfigToYaml(
+        def,
+        filtersMap,
+        updateErrorContext(errorContext, {
+            path: ["filters"],
+        }),
+    );
     if (filtersArray.items.length > 0) {
         report.add(entryWithSpace("filter_by", filtersArray));
     }
 
-    const { sortsArray } = declarativeSortsToYaml(def.sorts ?? []);
+    const { sortsArray } = declarativeSortsToYaml(
+        def.sorts ?? [],
+        updateErrorContext(errorContext, {
+            path: ["sorts"],
+        }),
+    );
     if (sortsArray.length > 0) {
         report.add(entryWithSpace("sort_by", sortsArray));
     }
 
-    postProcessors.filters?.forEach(({ filters, item }) => {
-        const { filtersArray, filtersMap } = declarativeFiltersToYaml(entities, filters);
-        declarativeFiltersConfigToYaml(def, filtersMap);
+    postProcessors.filters?.forEach(({ filters, item }, i) => {
+        const { filtersArray, filtersMap } = declarativeFiltersToYaml(
+            entities,
+            filters,
+            updateErrorContext(errorContext, {
+                path: ["filters", i.toString()],
+            }),
+        );
+        declarativeFiltersConfigToYaml(
+            def,
+            filtersMap,
+            updateErrorContext(errorContext, {
+                path: ["filters", i.toString()],
+            }),
+        );
         if (filtersArray.items.length > 0) {
             item.add(new Pair("filter_by", filtersArray));
         }
@@ -202,6 +269,7 @@ function appendLayerFieldsToReport(
     postProcessors: PostProcessors,
     entities: FromEntities,
     layers?: IInsightLayerDefinition[],
+    errorContext?: IErrorContext,
 ) {
     if (!layers || layers.length === 0) {
         return;
@@ -213,10 +281,13 @@ function appendLayerFieldsToReport(
             .filter((key): key is string => typeof key === "string" && key.length > 0),
     );
 
-    layers.forEach((layer) => {
+    layers.forEach((layer, li) => {
         const { fieldsMap: layerFieldsMap, postProcessors: layerPostProcessors } = declarativeBucketsToYaml(
             entities,
             layer.buckets ?? [],
+            updateErrorContext(errorContext, {
+                path: [li.toString(), "buckets"],
+            }),
         );
         const valueMapping = new Map<YAMLMap, YAMLMap>();
 
@@ -270,6 +341,7 @@ function getPairKeyValue(pair: Pair): string | undefined {
 export function declarativeFiltersConfigToYaml(
     insight: IInsightDefinition["insight"],
     filtersMap: Record<string, FilterMapEntry>,
+    errorContext?: IErrorContext,
 ) {
     Object.keys(insight.attributeFilterConfigs ?? {}).forEach((key) => {
         const filter = filtersMap[key];
@@ -280,7 +352,13 @@ export function declarativeFiltersConfigToYaml(
                     filter.yaml.add(
                         new Pair(
                             "display_as",
-                            getIdentifier(insight.attributeFilterConfigs![localIdentifier].displayAsLabel),
+                            getIdentifier(
+                                insight.attributeFilterConfigs![localIdentifier].displayAsLabel,
+                                undefined,
+                                updateErrorContext(errorContext, {
+                                    path: ["attributeFilterConfigs", key, "displayAsLabel"],
+                                }),
+                            ),
                         ),
                     );
                 }
@@ -345,73 +423,81 @@ function declarativeVisToYaml(
     def: IInsightDefinition["insight"],
     report: Report,
     entities: FromEntities,
+    errorContext?: IErrorContext,
 ) {
+    const context = updateErrorContext(errorContext, {
+        data: {
+            ...(errorContext?.data ?? {}),
+            type: def.visualizationUrl,
+        },
+    });
+
     switch (def.visualizationUrl) {
         case "local:table":
-            declarativeVisTableToYaml(doc, def, report);
+            declarativeVisTableToYaml(doc, def, report, context);
             break;
         case "local:bar":
-            declarativeVisBarToYaml(doc, def, report);
+            declarativeVisBarToYaml(doc, def, report, context);
             break;
         case "local:column":
-            declarativeVisColumnToYaml(doc, def, report);
+            declarativeVisColumnToYaml(doc, def, report, context);
             break;
         case "local:line":
-            declarativeVisLineToYaml(doc, def, report);
+            declarativeVisLineToYaml(doc, def, report, context);
             break;
         case "local:area":
-            declarativeVisAreaToYaml(doc, def, report);
+            declarativeVisAreaToYaml(doc, def, report, context);
             break;
         case "local:scatter":
-            declarativeVisScatterToYaml(doc, def, report);
+            declarativeVisScatterToYaml(doc, def, report, context);
             break;
         case "local:bubble":
-            declarativeVisBubbleToYaml(doc, def, report);
+            declarativeVisBubbleToYaml(doc, def, report, context);
             break;
         case "local:pie":
-            declarativeVisPieToYaml(doc, def, report);
+            declarativeVisPieToYaml(doc, def, report, context);
             break;
         case "local:donut":
-            declarativeVisDonutToYaml(doc, def, report);
+            declarativeVisDonutToYaml(doc, def, report, context);
             break;
         case "local:treemap":
-            declarativeVisTreemapToYaml(doc, def, report);
+            declarativeVisTreemapToYaml(doc, def, report, context);
             break;
         case "local:pyramid":
-            declarativeVisPyramidToYaml(doc, def, report);
+            declarativeVisPyramidToYaml(doc, def, report, context);
             break;
         case "local:funnel":
-            declarativeVisFunnelToYaml(doc, def, report);
+            declarativeVisFunnelToYaml(doc, def, report, context);
             break;
         case "local:heatmap":
-            declarativeVisHeatmapToYaml(doc, def, report);
+            declarativeVisHeatmapToYaml(doc, def, report, context);
             break;
         case "local:bullet":
-            declarativeVisBulletToYaml(doc, def, report);
+            declarativeVisBulletToYaml(doc, def, report, context);
             break;
         case "local:waterfall":
-            declarativeVisWaterfallToYaml(doc, def, report);
+            declarativeVisWaterfallToYaml(doc, def, report, context);
             break;
         case "local:dependencywheel":
-            declarativeVisDependencyWheelToYaml(doc, def, report);
+            declarativeVisDependencyWheelToYaml(doc, def, report, context);
             break;
         case "local:sankey":
-            declarativeVisSankeyToYaml(doc, def, report);
+            declarativeVisSankeyToYaml(doc, def, report, context);
             break;
         case "local:headline":
-            declarativeVisHeadlineToYaml(doc, def, report);
+            declarativeVisHeadlineToYaml(doc, def, report, context);
             break;
         case "local:combo2":
-            declarativeVisComboToYaml(doc, def, report);
+            declarativeVisComboToYaml(doc, def, report, context);
             break;
         case "local:pushpin":
-            declarativeVisGeoToYaml(doc, def, report, entities);
+            declarativeVisGeoToYaml(doc, def, report, entities, context);
             break;
         case "local:choropleth":
-            declarativeVisGeoAreaToYaml(doc, def, report, entities);
+            declarativeVisGeoAreaToYaml(doc, def, report, entities, context);
             break;
         case "local:repeater":
-            declarativeVisRepeaterToYaml(doc, def, report);
+            declarativeVisRepeaterToYaml(doc, def, report, context);
             break;
         default:
             break;
@@ -448,7 +534,11 @@ type FieldData = {
     axis?: "primary" | "secondary";
 };
 
-export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[]): Buckets {
+export function declarativeBucketsToYaml(
+    entities: FromEntities,
+    buckets: IBucket[],
+    errorContext?: IErrorContext,
+): Buckets {
     const fullFieldsMap = new YAMLMap();
     const groups: BucketGroup[] = [];
     const postProcessors: PostProcessors = {
@@ -461,23 +551,36 @@ export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucke
     };
 
     //create buckets
-    buckets.forEach((bucket) => {
+    buckets.forEach((bucket, bi) => {
         if (isBucket(bucket)) {
             const group: BucketGroup = { items: [], type: bucket.localIdentifier as BucketsType };
             const attributesMap: Record<string, YAMLMap> = {};
             const isLocation = bucket.localIdentifier === BucketsType.Location;
 
             //items
-            bucket.items.forEach((item) => {
+            bucket.items.forEach((item, ii) => {
+                const bucketItemErrorContext = updateErrorContext(errorContext, {
+                    path: [bi.toString(), "items", ii.toString()],
+                });
                 if (isAttribute(item) && isLocation) {
                     const remapped = remapLocationAttribute(entities, item);
-                    const def = declarativeAttributeToYaml(remapped.attribute);
+                    const def = declarativeAttributeToYaml(
+                        remapped.attribute,
+                        updateErrorContext(bucketItemErrorContext, {
+                            path: ["attribute"],
+                        }),
+                    );
                     addField(item.attribute.localIdentifier, def, group);
                     attributesMap[item.attribute.localIdentifier] = def;
                     return;
                 }
                 if (isAttribute(item)) {
-                    const def = declarativeAttributeToYaml(item.attribute);
+                    const def = declarativeAttributeToYaml(
+                        item.attribute,
+                        updateErrorContext(bucketItemErrorContext, {
+                            path: ["attribute"],
+                        }),
+                    );
                     addField(item.attribute.localIdentifier, def, group);
                     attributesMap[item.attribute.localIdentifier] = def;
                     return;
@@ -493,6 +596,9 @@ export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucke
                         item.measure,
                         item.measure.definition,
                         postProcessors,
+                        updateErrorContext(bucketItemErrorContext, {
+                            path: ["measure"],
+                        }),
                     );
                     addField(item.measure.localIdentifier, def, group, { format: item.measure.format });
                     attributesMap[item.measure.localIdentifier] = def;
@@ -505,23 +611,42 @@ export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucke
                     return;
                 }
                 if (isMeasure(item) && isPoPMeasureDefinition(item.measure.definition)) {
-                    const def = declarativePoPMetricToYaml(item.measure, item.measure.definition);
+                    const def = declarativePoPMetricToYaml(
+                        item.measure,
+                        item.measure.definition,
+                        updateErrorContext(bucketItemErrorContext, {
+                            path: ["measure"],
+                        }),
+                    );
                     addField(item.measure.localIdentifier, def, group, { format: item.measure.format });
                     attributesMap[item.measure.localIdentifier] = def;
                     return;
                 }
                 if (isMeasure(item) && isPreviousPeriodMeasureDefinition(item.measure.definition)) {
-                    const def = declarativePreviousPeriodMetricToYaml(item.measure, item.measure.definition);
+                    const def = declarativePreviousPeriodMetricToYaml(
+                        item.measure,
+                        item.measure.definition,
+                        updateErrorContext(bucketItemErrorContext, {
+                            path: ["measure"],
+                        }),
+                    );
                     addField(item.measure.localIdentifier, def, group, { format: item.measure.format });
                     attributesMap[item.measure.localIdentifier] = def;
                     return;
                 }
-                throw newError(CoreErrorCode.BucketItemTypeNotSupported, [JSON.stringify(item)]);
+                throw newError(
+                    CoreErrorCode.BucketItemTypeNotSupported,
+                    [JSON.stringify(item)],
+                    bucketItemErrorContext,
+                );
             });
 
             //totals
-            bucket.totals?.forEach((total) => {
-                const { totalMap, attribute } = declarativeTotalToYaml(total);
+            bucket.totals?.forEach((total, ti) => {
+                const totalItemErrorContext = updateErrorContext(errorContext, {
+                    path: [bi.toString(), "totals", ti.toString()],
+                });
+                const { totalMap, attribute } = declarativeTotalToYaml(total, totalItemErrorContext);
                 const item = group.items.find((item) => item?.field === attribute);
                 if (item) {
                     item.totals = [...(item.totals ?? []), totalMap];
@@ -554,13 +679,19 @@ export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucke
     };
 }
 
-export function declarativeAttributeToYaml(def: IAttributeBody): YAMLMap {
+export function declarativeAttributeToYaml(def: IAttributeBody, errorContext?: IErrorContext): YAMLMap {
     const map = new YAMLMap();
 
     if (def.alias) {
         map.add(new Pair("title", def.alias));
     }
-    const id = getIdentifier(def.displayForm);
+    const id = getIdentifier(
+        def.displayForm,
+        undefined,
+        updateErrorContext(errorContext, {
+            path: ["displayForm"],
+        }),
+    );
     map.add(new Pair("using", id));
 
     if (def.showAllValues) {
@@ -588,6 +719,7 @@ export function declarativeNormalMetricToYaml(
     def: IMeasureBody,
     metricDefinition: IMeasureDefinition,
     postProcessors: PostProcessors,
+    errorContext?: IErrorContext,
 ): YAMLMap {
     const map = new YAMLMap();
 
@@ -604,7 +736,13 @@ export function declarativeNormalMetricToYaml(
         postProcessors.filters.push({ item: map, filters: md.filters });
     }
 
-    const id = getIdentifier(md.item);
+    const id = getIdentifier(
+        md.item,
+        undefined,
+        updateErrorContext(errorContext, {
+            path: ["item"],
+        }),
+    );
     map.add(new Pair("using", id));
 
     return map;
@@ -625,13 +763,23 @@ export function declarativeArithmeticMetricToYaml(
     return map;
 }
 
-export function declarativePoPMetricToYaml(def: IMeasureBody, popDefinition: IPoPMeasureDefinition): YAMLMap {
+export function declarativePoPMetricToYaml(
+    def: IMeasureBody,
+    popDefinition: IPoPMeasureDefinition,
+    errorContext?: IErrorContext,
+): YAMLMap {
     const map = new YAMLMap();
 
     fillDefaultMetricProperties(map, def);
 
     const pop = popDefinition.popMeasureDefinition;
-    const id = getIdentifier(pop.popAttribute, true);
+    const id = getIdentifier(
+        pop.popAttribute,
+        true,
+        updateErrorContext(errorContext, {
+            path: ["popAttribute"],
+        }),
+    );
     const [date] = id.split(".");
 
     map.add(new Pair("type", "PREVIOUS_YEAR"));
@@ -644,6 +792,7 @@ export function declarativePoPMetricToYaml(def: IMeasureBody, popDefinition: IPo
 export function declarativePreviousPeriodMetricToYaml(
     def: IMeasureBody,
     previousDefinition: IPreviousPeriodMeasureDefinition,
+    errorContext?: IErrorContext,
 ): YAMLMap {
     const map = new YAMLMap();
 
@@ -652,11 +801,23 @@ export function declarativePreviousPeriodMetricToYaml(
     const previous = previousDefinition.previousPeriodMeasure;
 
     if (previous.dateDataSets.length > 1) {
-        throw newError(CoreErrorCode.MultipleDateDataSets, [JSON.stringify(previous)]);
+        throw newError(
+            CoreErrorCode.MultipleDateDataSets,
+            [JSON.stringify(previous)],
+            updateErrorContext(errorContext, {
+                path: ["previousPeriodMeasure", "dateDataSets"],
+            }),
+        );
     }
 
     const prev = previous.dateDataSets[0];
-    const id = getIdentifier(prev.dataSet, true);
+    const id = getIdentifier(
+        prev.dataSet,
+        true,
+        updateErrorContext(errorContext, {
+            path: ["dateSet"],
+        }),
+    );
     const [date] = id.split(".");
 
     map.add(new Pair("type", "PREVIOUS_PERIOD"));
@@ -761,8 +922,10 @@ function getObjRefGroupingKey(objRef: unknown): string | undefined {
  * @param filters
  */
 function groupFiltersByDateFilter(filters: IFilter[]): {
-    grouped: { [datasetId: string]: { dateFilter: IFilter; attributeFilters: IFilter[] } };
-    rest: IFilter[];
+    grouped: {
+        [datasetId: string]: { dateFilter: [IFilter, number]; attributeFilters: [IFilter, number][] };
+    };
+    rest: [IFilter, number][];
 } {
     const dateFilters = [...filters].filter(isDateFilter);
     const nonDateFilters = [...filters].filter((f) => !isDateFilter(f));
@@ -786,24 +949,26 @@ function groupFiltersByDateFilter(filters: IFilter[]): {
 
     dateFilters.forEach((dateFilter) => {
         const { filterRef: datasetId } = getFilterRefDetails(dateFilter);
+        const fi = filters.indexOf(dateFilter);
 
         if (datasetId === undefined) {
-            result.rest.push(dateFilter);
+            result.rest.push([dateFilter, fi]);
             return;
         }
 
         if (result.grouped[datasetId]) {
-            result.rest.push(dateFilter);
+            result.rest.push([dateFilter, fi]);
         } else {
-            result.grouped[datasetId] = { dateFilter, attributeFilters: [] };
+            result.grouped[datasetId] = { dateFilter: [dateFilter, fi], attributeFilters: [] };
         }
     });
 
     nonDateFilters.forEach((filter) => {
         const { filterRef: filterId } = getFilterRefDetails(filter);
+        const fi = filters.indexOf(filter);
 
         if (filterId === undefined) {
-            result.rest.push(filter);
+            result.rest.push([filter, fi]);
             return;
         }
 
@@ -811,16 +976,20 @@ function groupFiltersByDateFilter(filters: IFilter[]): {
 
         const group = result.grouped[datasetId];
         if (group) {
-            group.attributeFilters.push(filter);
+            group.attributeFilters.push([filter, fi]);
         } else {
-            result.rest.push(filter);
+            result.rest.push([filter, fi]);
         }
     });
 
     return result;
 }
 
-export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[]): Filters {
+export function declarativeFiltersToYaml(
+    entities: FromEntities,
+    filters: IFilter[],
+    errorContext?: IErrorContext,
+): Filters {
     const filtersArray: Array<Pair> = [];
     const filtersMap: Record<string, FilterMapEntry> = {};
     const usedKeys = new Set<string>();
@@ -841,8 +1010,16 @@ export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilte
 
     const filtersGroupedByDateFilter = groupFiltersByDateFilter(filters);
 
-    filtersGroupedByDateFilter.rest.forEach((filter) => {
-        const result = declarativeFilterToYaml(entities, filter, getUniqueKey);
+    filtersGroupedByDateFilter.rest.forEach(([filter, fi]) => {
+        const result = declarativeFilterToYaml(
+            entities,
+            filter,
+            getUniqueKey,
+            undefined,
+            updateErrorContext(errorContext, {
+                path: [fi.toString()],
+            }),
+        );
         if (!result) {
             return;
         }
@@ -856,7 +1033,15 @@ export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilte
     });
 
     Object.values(filtersGroupedByDateFilter.grouped).forEach(({ dateFilter, attributeFilters }) => {
-        const result = declarativeFilterToYaml(entities, dateFilter, getUniqueKey, attributeFilters);
+        const result = declarativeFilterToYaml(
+            entities,
+            dateFilter[0],
+            getUniqueKey,
+            attributeFilters.map(([f]) => f),
+            updateErrorContext(errorContext, {
+                path: [dateFilter[1].toString()],
+            }),
+        );
         if (!result) {
             return;
         }
@@ -883,12 +1068,21 @@ function declarativeFilterToYaml(
     filter: IFilter,
     getUniqueKey: (baseKey: string) => string,
     connectedAttributeFilters?: IFilter[],
+    errorContext?: IErrorContext,
 ): { key: string; yaml: YAMLMap; filter: IFilter } | null {
     if (!isFilter(filter)) {
         return null;
     }
 
-    const key = getUniqueKey(createFilterItemKeyName(filter));
+    const key = getUniqueKey(
+        createFilterItemKeyName(
+            filter,
+            "date",
+            updateErrorContext(errorContext, {
+                path: ["date"],
+            }),
+        ),
+    );
 
     if (isAbsoluteDateFilter(filter)) {
         return {
@@ -898,6 +1092,9 @@ function declarativeFilterToYaml(
                 connectedAttributeFilters,
                 entities,
                 getUniqueKey,
+                updateErrorContext(errorContext, {
+                    path: ["absoluteDateFilter"],
+                }),
             ),
             filter,
         };
@@ -910,6 +1107,9 @@ function declarativeFilterToYaml(
                 connectedAttributeFilters,
                 entities,
                 getUniqueKey,
+                updateErrorContext(errorContext, {
+                    path: ["relativeDateFilter"],
+                }),
             ),
             filter,
         };
@@ -917,47 +1117,79 @@ function declarativeFilterToYaml(
     if (isPositiveAttributeFilter(filter)) {
         return {
             key,
-            yaml: declarativePositiveAttributeFilterToYaml(entities, filter.positiveAttributeFilter),
+            yaml: declarativePositiveAttributeFilterToYaml(
+                entities,
+                filter.positiveAttributeFilter,
+                updateErrorContext(errorContext, {
+                    path: ["positiveAttributeFilter"],
+                }),
+            ),
             filter,
         };
     }
     if (isNegativeAttributeFilter(filter)) {
         return {
             key,
-            yaml: declarativeNegativeAttributeFilterToYaml(entities, filter.negativeAttributeFilter),
+            yaml: declarativeNegativeAttributeFilterToYaml(
+                entities,
+                filter.negativeAttributeFilter,
+                updateErrorContext(errorContext, {
+                    path: ["negativeAttributeFilter"],
+                }),
+            ),
             filter,
         };
     }
     if (isArbitraryAttributeFilter(filter)) {
         return {
             key,
-            yaml: declarativeArbitraryAttributeFilterToYaml(filter.arbitraryAttributeFilter),
+            yaml: declarativeArbitraryAttributeFilterToYaml(
+                filter.arbitraryAttributeFilter,
+                updateErrorContext(errorContext, {
+                    path: ["arbitraryAttributeFilter"],
+                }),
+            ),
             filter,
         };
     }
     if (isMatchAttributeFilter(filter)) {
         return {
             key,
-            yaml: declarativeMatchAttributeFilterToYaml(filter.matchAttributeFilter),
+            yaml: declarativeMatchAttributeFilterToYaml(
+                filter.matchAttributeFilter,
+                updateErrorContext(errorContext, {
+                    path: ["matchAttributeFilter"],
+                }),
+            ),
             filter,
         };
     }
     if (isMeasureValueFilter(filter)) {
         return {
             key,
-            yaml: declarativeMeasureValueFilterToYaml(filter.measureValueFilter),
+            yaml: declarativeMeasureValueFilterToYaml(
+                filter.measureValueFilter,
+                updateErrorContext(errorContext, {
+                    path: ["measureValueFilter"],
+                }),
+            ),
             filter,
         };
     }
     if (isRankingFilter(filter)) {
         return {
             key,
-            yaml: declarativeRankingFilterToYaml(filter.rankingFilter),
+            yaml: declarativeRankingFilterToYaml(
+                filter.rankingFilter,
+                updateErrorContext(errorContext, {
+                    path: ["rankingFilter"],
+                }),
+            ),
             filter,
         };
     }
 
-    throw newError(CoreErrorCode.FilterItemTypeNotSupported, [JSON.stringify(filter)]);
+    throw newError(CoreErrorCode.FilterItemTypeNotSupported, [JSON.stringify(filter)], errorContext);
 }
 
 /**
@@ -968,6 +1200,7 @@ function processConnectedAttributeFilters(
     connectedAttributeFilters: IFilter[],
     entities: FromEntities,
     getUniqueKey: (baseKey: string) => string,
+    errorContext?: IErrorContext,
 ) {
     // empty values filter
 
@@ -991,7 +1224,7 @@ function processConnectedAttributeFilters(
     map.add(new Pair("with", withMap));
 
     additionalAttributeFilters?.forEach((filter) => {
-        const converted = declarativeFilterToYaml(entities, filter, getUniqueKey);
+        const converted = declarativeFilterToYaml(entities, filter, getUniqueKey, undefined, errorContext);
         if (!converted) {
             return;
         }
@@ -1005,6 +1238,7 @@ export function declarativeAbsoluteDateFilterToYaml(
     connectedAttributeFilters: IFilter[] = [],
     entities: FromEntities,
     getUniqueKey: (baseKey: string) => string,
+    errorContext?: IErrorContext,
 ): YAMLMap {
     const map = new YAMLMap();
 
@@ -1015,12 +1249,18 @@ export function declarativeAbsoluteDateFilterToYaml(
     map.add(new Pair("from", absoluteDateFilter.from));
     map.add(new Pair("to", absoluteDateFilter.to));
 
-    const id = getIdentifier(absoluteDateFilter.dataSet, true);
+    const id = getIdentifier(
+        absoluteDateFilter.dataSet,
+        true,
+        updateErrorContext(errorContext, {
+            path: ["dateSet"],
+        }),
+    );
     map.add(new Pair("using", id));
 
     // connected attribute filters
 
-    processConnectedAttributeFilters(map, connectedAttributeFilters, entities, getUniqueKey);
+    processConnectedAttributeFilters(map, connectedAttributeFilters, entities, getUniqueKey, errorContext);
 
     return map;
 }
@@ -1044,6 +1284,7 @@ export function declarativeRelativeDateFilterToYaml(
     connectedAttributeFilters: IFilter[] = [],
     entities: FromEntities,
     getUniqueKey: (baseKey: string) => string,
+    errorContext?: IErrorContext,
 ): YAMLMap {
     const map = new YAMLMap();
 
@@ -1064,10 +1305,16 @@ export function declarativeRelativeDateFilterToYaml(
         }
     }
 
-    const id = getIdentifier(relativeDateFilter.dataSet, true);
+    const id = getIdentifier(
+        relativeDateFilter.dataSet,
+        true,
+        updateErrorContext(errorContext, {
+            path: ["dataSet"],
+        }),
+    );
     map.add(new Pair("using", id));
 
-    processConnectedAttributeFilters(map, connectedAttributeFilters, entities, getUniqueKey);
+    processConnectedAttributeFilters(map, connectedAttributeFilters, entities, getUniqueKey, errorContext);
 
     return map;
 }
@@ -1075,12 +1322,19 @@ export function declarativeRelativeDateFilterToYaml(
 export function declarativePositiveAttributeFilterToYaml(
     entities: FromEntities,
     attributeFilter: IPositiveAttributeFilterBody,
+    errorContext?: IErrorContext,
 ): YAMLMap {
     const map = new YAMLMap();
 
     map.add(new Pair("type", "attribute_filter"));
 
-    const id = getIdentifier(attributeFilter.displayForm);
+    const id = getIdentifier(
+        attributeFilter.displayForm,
+        undefined,
+        updateErrorContext(errorContext, {
+            path: ["displayForm"],
+        }),
+    );
     map.add(new Pair("using", id));
 
     if (isAttributeElementsByValue(attributeFilter.in)) {
@@ -1096,12 +1350,19 @@ export function declarativePositiveAttributeFilterToYaml(
 export function declarativeNegativeAttributeFilterToYaml(
     entities: FromEntities,
     attributeFilter: INegativeAttributeFilterBody,
+    errorContext?: IErrorContext,
 ): YAMLMap {
     const map = new YAMLMap();
 
     map.add(new Pair("type", "attribute_filter"));
 
-    const id = getIdentifier(attributeFilter.displayForm);
+    const id = getIdentifier(
+        attributeFilter.displayForm,
+        undefined,
+        updateErrorContext(errorContext, {
+            path: ["displayForm"],
+        }),
+    );
     map.add(new Pair("using", id));
 
     if (isAttributeElementsByValue(attributeFilter.notIn)) {
@@ -1118,22 +1379,48 @@ export function declarativeNegativeAttributeFilterToYaml(
 
 export function declarativeArbitraryAttributeFilterToYaml(
     attributeFilter: IArbitraryAttributeFilterBody,
+    errorContext?: IErrorContext,
 ): YAMLMap {
     const map = new YAMLMap();
 
     map.add(new Pair("type", "text_filter"));
-    map.add(new Pair("using", getIdentifier(attributeFilter.label)));
+    map.add(
+        new Pair(
+            "using",
+            getIdentifier(
+                attributeFilter.label,
+                undefined,
+                updateErrorContext(errorContext, {
+                    path: ["label"],
+                }),
+            ),
+        ),
+    );
     map.add(new Pair("condition", attributeFilter.negativeSelection ? "isNot" : "is"));
     map.add(new Pair("values", attributeFilter.values));
 
     return map;
 }
 
-export function declarativeMatchAttributeFilterToYaml(attributeFilter: IMatchAttributeFilterBody): YAMLMap {
+export function declarativeMatchAttributeFilterToYaml(
+    attributeFilter: IMatchAttributeFilterBody,
+    errorContext?: IErrorContext,
+): YAMLMap {
     const map = new YAMLMap();
 
     map.add(new Pair("type", "text_filter"));
-    map.add(new Pair("using", getIdentifier(attributeFilter.label)));
+    map.add(
+        new Pair(
+            "using",
+            getIdentifier(
+                attributeFilter.label,
+                undefined,
+                updateErrorContext(errorContext, {
+                    path: ["label"],
+                }),
+            ),
+        ),
+    );
     map.add(
         new Pair(
             "condition",
@@ -1186,7 +1473,10 @@ function addConditionToYamlMap(conditionMap: YAMLMap, condition: MeasureValueFil
     return hasTreatNullValues;
 }
 
-export function declarativeMeasureValueFilterToYaml(measureValueFilter: IMeasureValueFilterBody): YAMLMap {
+export function declarativeMeasureValueFilterToYaml(
+    measureValueFilter: IMeasureValueFilterBody,
+    errorContext?: IErrorContext,
+): YAMLMap {
     const map = new YAMLMap();
 
     map.add(new Pair("type", "metric_value_filter"));
@@ -1194,7 +1484,18 @@ export function declarativeMeasureValueFilterToYaml(measureValueFilter: IMeasure
     if (isLocalIdRef(measureValueFilter.measure)) {
         map.add(new Pair("using", measureValueFilter.measure.localIdentifier));
     } else {
-        map.add(new Pair("using", getIdentifier(measureValueFilter.measure)));
+        map.add(
+            new Pair(
+                "using",
+                getIdentifier(
+                    measureValueFilter.measure,
+                    undefined,
+                    updateErrorContext(errorContext, {
+                        path: ["measure"],
+                    }),
+                ),
+            ),
+        );
     }
 
     // Handle multiple conditions (new SDK model feature)
@@ -1240,7 +1541,10 @@ export function declarativeMeasureValueFilterToYaml(measureValueFilter: IMeasure
     return map;
 }
 
-export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody): YAMLMap {
+export function declarativeRankingFilterToYaml(
+    rankingFilter: IRankingFilterBody,
+    errorContext?: IErrorContext,
+): YAMLMap {
     const map = new YAMLMap();
 
     map.add(new Pair("type", "ranking_filter"));
@@ -1248,7 +1552,18 @@ export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody
     if (isLocalIdRef(rankingFilter.measure)) {
         map.add(new Pair("using", rankingFilter.measure.localIdentifier));
     } else {
-        map.add(new Pair("using", getIdentifier(rankingFilter.measure)));
+        map.add(
+            new Pair(
+                "using",
+                getIdentifier(
+                    rankingFilter.measure,
+                    undefined,
+                    updateErrorContext(errorContext, {
+                        path: ["measure"],
+                    }),
+                ),
+            ),
+        );
     }
 
     if (rankingFilter.operator === "TOP") {
@@ -1277,7 +1592,7 @@ type Sorts = {
     sortsArray: YAMLMap[];
 };
 
-export function declarativeSortsToYaml(sorts: ISortItem[]): Sorts {
+export function declarativeSortsToYaml(sorts: ISortItem[], _errorContext?: IErrorContext): Sorts {
     const sortsArray: YAMLMap[] = [];
 
     sorts.forEach((sort) => {
@@ -1346,7 +1661,12 @@ export function declarativeMeasureSortToYaml(sort: IMeasureSortItem): YAMLMap {
 
 //visualisations
 
-function declarativeVisTableToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisTableToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _context?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1369,7 +1689,12 @@ function declarativeVisTableToYaml(doc: Document, def: IInsightDefinition["insig
     }
 }
 
-function declarativeVisBarToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisBarToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1392,7 +1717,12 @@ function declarativeVisBarToYaml(doc: Document, def: IInsightDefinition["insight
     }
 }
 
-function declarativeVisColumnToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisColumnToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1415,7 +1745,12 @@ function declarativeVisColumnToYaml(doc: Document, def: IInsightDefinition["insi
     }
 }
 
-function declarativeVisLineToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisLineToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1438,7 +1773,12 @@ function declarativeVisLineToYaml(doc: Document, def: IInsightDefinition["insigh
     }
 }
 
-function declarativeVisAreaToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisAreaToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1461,7 +1801,12 @@ function declarativeVisAreaToYaml(doc: Document, def: IInsightDefinition["insigh
     }
 }
 
-function declarativeVisScatterToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisScatterToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
@@ -1492,7 +1837,12 @@ function declarativeVisScatterToYaml(doc: Document, def: IInsightDefinition["ins
     }
 }
 
-function declarativeVisBubbleToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisBubbleToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
@@ -1523,7 +1873,12 @@ function declarativeVisBubbleToYaml(doc: Document, def: IInsightDefinition["insi
     }
 }
 
-function declarativeVisPieToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisPieToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1541,7 +1896,12 @@ function declarativeVisPieToYaml(doc: Document, def: IInsightDefinition["insight
     }
 }
 
-function declarativeVisDonutToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisDonutToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1559,7 +1919,12 @@ function declarativeVisDonutToYaml(doc: Document, def: IInsightDefinition["insig
     }
 }
 
-function declarativeVisTreemapToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisTreemapToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1582,7 +1947,12 @@ function declarativeVisTreemapToYaml(doc: Document, def: IInsightDefinition["ins
     }
 }
 
-function declarativeVisPyramidToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisPyramidToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1600,7 +1970,12 @@ function declarativeVisPyramidToYaml(doc: Document, def: IInsightDefinition["ins
     }
 }
 
-function declarativeVisFunnelToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisFunnelToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1618,7 +1993,12 @@ function declarativeVisFunnelToYaml(doc: Document, def: IInsightDefinition["insi
     }
 }
 
-function declarativeVisHeatmapToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisHeatmapToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1641,7 +2021,12 @@ function declarativeVisHeatmapToYaml(doc: Document, def: IInsightDefinition["ins
     }
 }
 
-function declarativeVisBulletToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisBulletToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
@@ -1669,7 +2054,12 @@ function declarativeVisBulletToYaml(doc: Document, def: IInsightDefinition["insi
     }
 }
 
-function declarativeVisWaterfallToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisWaterfallToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1691,6 +2081,7 @@ function declarativeVisDependencyWheelToYaml(
     doc: Document,
     def: IInsightDefinition["insight"],
     report: Report,
+    _errorContext?: IErrorContext,
 ) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
@@ -1718,7 +2109,12 @@ function declarativeVisDependencyWheelToYaml(
     }
 }
 
-function declarativeVisSankeyToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisSankeyToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     if (metrics && metrics.items.length > 0) {
@@ -1745,7 +2141,12 @@ function declarativeVisSankeyToYaml(doc: Document, def: IInsightDefinition["insi
     }
 }
 
-function declarativeVisHeadlineToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisHeadlineToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
@@ -1763,7 +2164,12 @@ function declarativeVisHeadlineToYaml(doc: Document, def: IInsightDefinition["in
     }
 }
 
-function declarativeVisComboToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisComboToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     //buckets
     const metrics1 = addAxisTypeToGroup(
         report.derivedBuckets.find((item) => item.type === BucketsType.Measures),
@@ -1848,6 +2254,7 @@ function declarativeVisGeoToYaml(
     def: IInsightDefinition["insight"],
     report: Report,
     entities: FromEntities,
+    errorContext?: IErrorContext,
 ) {
     //buckets
     addPushpinBucketsToYaml(doc, report.derivedBuckets);
@@ -1856,13 +2263,14 @@ function declarativeVisGeoToYaml(
     if (config) {
         doc.add(config);
     }
-    appendLayers(doc, def, entities);
+    appendLayers(doc, def, entities, errorContext);
 }
 function declarativeVisGeoAreaToYaml(
     doc: Document,
     def: IInsightDefinition["insight"],
     report: Report,
     entities: FromEntities,
+    errorContext?: IErrorContext,
 ) {
     //buckets
     addGeoAreaBucketsToYaml(doc, report.derivedBuckets);
@@ -1871,23 +2279,37 @@ function declarativeVisGeoAreaToYaml(
     if (config) {
         doc.add(config);
     }
-    appendLayers(doc, def, entities);
+    appendLayers(doc, def, entities, errorContext);
 }
 
-function appendLayers(doc: Document, def: IInsightDefinition["insight"], entities: FromEntities) {
+function appendLayers(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    entities: FromEntities,
+    errorContext?: IErrorContext,
+) {
     const layersDefinition = def.layers ?? [];
     if (layersDefinition.length === 0) {
         return;
     }
 
-    const layers = declarativeLayersToYaml(entities, layersDefinition);
+    const layers = declarativeLayersToYaml(
+        entities,
+        layersDefinition,
+        updateErrorContext(errorContext, { path: ["layers"] }),
+    );
 
     if (layers.items.length > 0) {
         doc.add(entryWithSpace("layers", layers));
     }
 }
 
-function declarativeVisRepeaterToYaml(doc: Document, def: IInsightDefinition["insight"], report: Report) {
+function declarativeVisRepeaterToYaml(
+    doc: Document,
+    def: IInsightDefinition["insight"],
+    report: Report,
+    _errorContext?: IErrorContext,
+) {
     const columns = report.derivedBuckets.find((item) => item.type === BucketsType.Columns);
     const columnsMapped = addChartTypeToGroup(columns, def.properties);
     if (columnsMapped && columnsMapped.items.length > 0) {
@@ -1912,7 +2334,7 @@ function declarativeVisRepeaterToYaml(doc: Document, def: IInsightDefinition["in
 
 //TOTALS
 
-export function declarativeTotalToYaml(total: ITotal) {
+export function declarativeTotalToYaml(total: ITotal, _errorContext?: IErrorContext) {
     const map = new YAMLMap();
 
     if (total.alias) {
@@ -2004,12 +2426,20 @@ function addChartTypeToGroup(
 function declarativeLayersToYaml(
     entities: FromEntities,
     layersDefinition: IInsightLayerDefinition[],
+    errorContext?: IErrorContext,
 ): YAMLSeq {
     const layers = new YAMLSeq();
 
-    layersDefinition.forEach((layer) => {
-        const { groups } = declarativeBucketsToYaml(entities, layer.buckets ?? []);
-        const layerKind = resolveLayerExportKind(layer.type);
+    layersDefinition.forEach((layer, li) => {
+        const { groups } = declarativeBucketsToYaml(
+            entities,
+            layer.buckets ?? [],
+            updateErrorContext(errorContext, { path: [li.toString(), "buckets"] }),
+        );
+        const layerKind = resolveLayerExportKind(
+            layer.type,
+            updateErrorContext(errorContext, { path: [li.toString(), "type"] }),
+        );
         const layerMap = new YAMLMap();
 
         layerMap.add(new Pair("id", layer.id));
@@ -2022,7 +2452,12 @@ function declarativeLayersToYaml(
             layerMap.add(new Pair("type", layer.type));
         }
 
-        appendLayerBucketsForKind(layerMap, groups, layerKind);
+        appendLayerBucketsForKind(
+            layerMap,
+            groups,
+            layerKind,
+            updateErrorContext(errorContext, { path: [li.toString()] }),
+        );
 
         addLayerConfig(layerMap, layerKind, layer.properties);
 
@@ -2034,7 +2469,7 @@ function declarativeLayersToYaml(
 
 type LayerExportKind = "pushpin" | "area";
 
-function resolveLayerExportKind(rawLayerType?: string): LayerExportKind {
+function resolveLayerExportKind(rawLayerType?: string, errorContext?: IErrorContext): LayerExportKind {
     if (rawLayerType === "pushpin") {
         return "pushpin";
     }
@@ -2042,10 +2477,15 @@ function resolveLayerExportKind(rawLayerType?: string): LayerExportKind {
         return "area";
     }
 
-    throw newError(CoreErrorCode.LayerTypeNotSupported, [rawLayerType ?? "<missing>"]);
+    throw newError(CoreErrorCode.LayerTypeNotSupported, [rawLayerType ?? "<missing>"], errorContext);
 }
 
-function appendLayerBucketsForKind(layerMap: YAMLMap, groups: BucketGroup[], kind: LayerExportKind) {
+function appendLayerBucketsForKind(
+    layerMap: YAMLMap,
+    groups: BucketGroup[],
+    kind: LayerExportKind,
+    errorContext?: IErrorContext,
+) {
     if (kind === "pushpin") {
         addPushpinBucketsToYaml(layerMap, groups);
         return;
@@ -2056,7 +2496,7 @@ function appendLayerBucketsForKind(layerMap: YAMLMap, groups: BucketGroup[], kin
         return;
     }
 
-    throw newError(CoreErrorCode.LayerTypeNotSupported, [kind]);
+    throw newError(CoreErrorCode.LayerTypeNotSupported, [kind], errorContext);
 }
 
 function addLayerConfig(

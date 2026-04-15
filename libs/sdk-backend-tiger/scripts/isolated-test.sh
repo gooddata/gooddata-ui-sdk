@@ -13,6 +13,7 @@ echo "Running with $USER_UID, $USER_GID"
 
 if [[ $GD_TIGER_REC == "true" ]]; then
     echo "Running isolated record"
+    ./scripts/clear-recordings.sh
     if [ -n "$GDC_UI" ]; then
         TIGER_API_TOKEN=$TIGER_API_TOKEN USER_UID=$USER_UID USER_GID=$USER_GID UPDATE_SNAPSHOTS=$UPDATE_SNAPSHOTS docker compose -f ./docker-compose-isolated-record-gdcui.yaml up --quiet-pull --abort-on-container-exit --exit-code-from isolated-tests --force-recreate --always-recreate-deps --renew-anon-volumes
     else

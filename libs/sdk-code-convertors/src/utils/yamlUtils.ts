@@ -31,7 +31,7 @@ import {
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { CoreErrorCode, newError } from "./errors.js";
+import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "./errors.js";
 import { parseGranularity } from "./granularityUtils.js";
 import { TABLE_PATH_DELIMITER, getTableRootId } from "./sharedUtils.js";
 import { type Profile } from "../types.js";
@@ -121,13 +121,23 @@ export function findTable(
     return {};
 }
 
-export function createFilterContextItemKeyName(item: FilterContextItem, type: string = "date") {
+export function createFilterContextItemKeyName(
+    item: FilterContextItem,
+    type: string = "date",
+    errorContext?: IErrorContext,
+) {
     if (isDashboardDateFilter(item)) {
         // Use localIdentifier if present, otherwise generate from dataSet/granularity
         if (item.dateFilter.localIdentifier) {
             return item.dateFilter.localIdentifier;
         }
-        const localIdentifier = item.dateFilter.dataSet ? getIdentifier(item.dateFilter.dataSet, true) : type;
+        const localIdentifier = item.dateFilter.dataSet
+            ? getIdentifier(
+                  item.dateFilter.dataSet,
+                  true,
+                  updateErrorContext(errorContext, { path: ["dateFilter", "dataSet"] }),
+              )
+            : type;
         return `${localIdentifier}_${parseGranularity(
             item.dateFilter.granularity ?? "unknown",
         )?.toLocaleLowerCase()}`;
@@ -135,34 +145,41 @@ export function createFilterContextItemKeyName(item: FilterContextItem, type: st
     if (isDashboardAttributeFilter(item)) {
         return (
             item.attributeFilter.localIdentifier ??
-            `${getIdentifier(item.attributeFilter.displayForm, true)}_filter`
+            `${getIdentifier(item.attributeFilter.displayForm, true, updateErrorContext(errorContext, { path: ["attributeFilter", "displayForm"] }))}_filter`
         );
     }
     if (isDashboardArbitraryAttributeFilter(item)) {
         return (
             item.arbitraryAttributeFilter.localIdentifier ??
-            `${getIdentifier(item.arbitraryAttributeFilter.displayForm, true)}_text_filter`
+            `${getIdentifier(item.arbitraryAttributeFilter.displayForm, true, updateErrorContext(errorContext, { path: ["arbitraryAttributeFilter", "displayForm"] }))}_text_filter`
         );
     }
     if (isDashboardMatchAttributeFilter(item)) {
         return (
             item.matchAttributeFilter.localIdentifier ??
-            `${getIdentifier(item.matchAttributeFilter.displayForm, true)}_text_filter`
+            `${getIdentifier(item.matchAttributeFilter.displayForm, true, updateErrorContext(errorContext, { path: ["matchAttributeFilter", "displayForm"] }))}_text_filter`
         );
     }
-    throw newError(CoreErrorCode.ItemNotSupported, [JSON.stringify(item)]);
+    throw newError(CoreErrorCode.ItemNotSupported, [JSON.stringify(item)], errorContext);
 }
 
-export function createFilterItemKeyName(item: IFilter, type: string = "date") {
+export function createFilterItemKeyName(item: IFilter, type: string = "date", errorContext?: IErrorContext) {
     if (isAbsoluteDateFilter(item)) {
-        const localIdentifier = item.absoluteDateFilter.dataSet
-            ? getIdentifier(item.absoluteDateFilter.dataSet, true)
+        return item.absoluteDateFilter.dataSet
+            ? getIdentifier(
+                  item.absoluteDateFilter.dataSet,
+                  true,
+                  updateErrorContext(errorContext, { path: ["absoluteDateFilter", "dataSet"] }),
+              )
             : type;
-        return localIdentifier;
     }
     if (isRelativeDateFilter(item)) {
         const localIdentifier = item.relativeDateFilter.dataSet
-            ? getIdentifier(item.relativeDateFilter.dataSet, true)
+            ? getIdentifier(
+                  item.relativeDateFilter.dataSet,
+                  true,
+                  updateErrorContext(errorContext, { path: ["relativeDateFilter", "dataSet"] }),
+              )
             : type;
         if (
             item.relativeDateFilter.granularity !== "ALL_TIME_GRANULARITY" &&
@@ -178,39 +195,43 @@ export function createFilterItemKeyName(item: IFilter, type: string = "date") {
     if (isPositiveAttributeFilter(item)) {
         return (
             item.positiveAttributeFilter.localIdentifier ??
-            `${getIdentifier(item.positiveAttributeFilter.displayForm, true)}_filter`
+            `${getIdentifier(item.positiveAttributeFilter.displayForm, true, updateErrorContext(errorContext, { path: ["positiveAttributeFilter", "displayForm"] }))}_filter`
         );
     }
     if (isNegativeAttributeFilter(item)) {
         return (
             item.negativeAttributeFilter.localIdentifier ??
-            `${getIdentifier(item.negativeAttributeFilter.displayForm, true)}_filter`
+            `${getIdentifier(item.negativeAttributeFilter.displayForm, true, updateErrorContext(errorContext, { path: ["negativeAttributeFilter", "displayForm"] }))}_filter`
         );
     }
     if (isArbitraryAttributeFilter(item)) {
         return (
             item.arbitraryAttributeFilter.localIdentifier ??
-            `${getIdentifier(item.arbitraryAttributeFilter.label, true)}_text_filter`
+            `${getIdentifier(item.arbitraryAttributeFilter.label, true, updateErrorContext(errorContext, { path: ["arbitraryAttributeFilter", "label"] }))}_text_filter`
         );
     }
     if (isMatchAttributeFilter(item)) {
         return (
             item.matchAttributeFilter.localIdentifier ??
-            `${getIdentifier(item.matchAttributeFilter.label, true)}_text_filter`
+            `${getIdentifier(item.matchAttributeFilter.label, true, updateErrorContext(errorContext, { path: ["matchAttributeFilter", "label"] }))}_text_filter`
         );
     }
     if (isMeasureValueFilter(item)) {
-        return `maf_${getIdentifier(item.measureValueFilter.measure, true)}_filter`;
+        return `maf_${getIdentifier(item.measureValueFilter.measure, true, updateErrorContext(errorContext, { path: ["measureValueFilter", "measure"] }))}_filter`;
     }
     if (isRankingFilter(item)) {
-        return `${getIdentifier(item.rankingFilter.measure, true)}_filter`;
+        return `${getIdentifier(item.rankingFilter.measure, true, updateErrorContext(errorContext, { path: ["rankingFilter", "measure"] }))}_filter`;
     }
 
-    throw newError(CoreErrorCode.ItemNotSupported, [JSON.stringify(item)]);
+    throw newError(CoreErrorCode.ItemNotSupported, [JSON.stringify(item)], errorContext);
 }
 
 /** @public */
-export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier, untype?: boolean): string {
+export function getIdentifier(
+    obj: ObjRef | ObjRefInScope | AfmObjectIdentifier,
+    untype?: boolean,
+    errorContext?: IErrorContext,
+): string {
     const idRef = isAfmObjectIdentifier(obj)
         ? { type: obj.identifier.type, identifier: obj.identifier.id }
         : obj;
@@ -225,7 +246,7 @@ export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier,
     if (isIdentifierRef(idRef) && untype) {
         return idRef.identifier;
     }
-    throw newError(CoreErrorCode.ReferenceTypeNotSupported, [JSON.stringify(obj)]);
+    throw newError(CoreErrorCode.ReferenceTypeNotSupported, [JSON.stringify(obj)], errorContext);
 }
 
 /** @public */

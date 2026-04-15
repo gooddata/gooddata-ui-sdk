@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { ParametersQuery } from "./parametersQuery.js";
-import { convertParameterFromBackend } from "../../../convertors/fromBackend/ParameterConverter.js";
+import { convertParameter } from "../../../convertors/fromBackend/ParameterConverter.js";
 import {
     convertParameterToBackendCreate,
     convertParameterToBackendUpdate,
@@ -55,7 +55,7 @@ export class TigerWorkspaceParameters implements IWorkspaceParametersService {
             }),
         );
 
-        return convertParameterFromBackend(result.data);
+        return convertParameter(result.data.data, result.data.included);
     }
 
     public async getParameter(ref: ObjRef): Promise<IParameterMetadataObject> {
@@ -69,7 +69,7 @@ export class TigerWorkspaceParameters implements IWorkspaceParametersService {
             }),
         );
 
-        return convertParameterFromBackend(result.data);
+        return convertParameter(result.data.data, result.data.included);
     }
 
     public async updateParameter(
@@ -93,7 +93,7 @@ export class TigerWorkspaceParameters implements IWorkspaceParametersService {
             }),
         );
 
-        return convertParameterFromBackend(result.data);
+        return convertParameter(result.data.data, result.data.included);
     }
 
     public async deleteParameter(ref: ObjRef): Promise<void> {

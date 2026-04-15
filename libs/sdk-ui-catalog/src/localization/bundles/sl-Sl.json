@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Posodobitev modela je v teku, prosimo, počakajte...",
     "analyticsCatalog.quality.scoreCard.action.success": "Pokaži predmete",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Zadnje preverjanje: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Preverjanje ni uspelo!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Nekaj je šlo narobe.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {opozorilo} two {opozorili} few {opozorila} other {opozoril}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {predlog} two {predloga} few {predlogi} other {predlogov}}",
     "analyticsCatalog.lineage.direction.up": "Navzgor",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Ustvarite stavek YAML, ki določa numerični parameter.",
     "analyticsCatalog.parameter.dialog.create.submit": "Ustvari",
     "analyticsCatalog.parameter.dialog.edit.submit": "Shrani",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Shrani kot novo",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Shrani kot novo",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "ID parametra ni mogoče spremeniti pri shranjevanju obstoječega parametra. Namesto tega uporabite Shrani kot novo.",
     "analyticsCatalog.parameter.dialog.cancel": "Prekliči",
     "analyticsCatalog.parameter.dialog.help": "Kako ustvariti parameter?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parametra ni bilo mogoče shraniti.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "Vrednost min omejitve ne more biti večja od vrednosti max.",
     "analyticsCatalog.parameter.validation.invalidTags": "Tagi morajo biti seznam nizov.",
     "analyticsCatalog.parameter.create.success": "Parameter je ustvarjen.",
+    "analyticsCatalog.parameter.update.success": "Parameter je posodobljen.",
     "analyticsCatalog.parameter.validation.syntax": "Sintaktična napaka YAML"
 }

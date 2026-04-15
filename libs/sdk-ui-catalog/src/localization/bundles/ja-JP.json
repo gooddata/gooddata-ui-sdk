@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "モデルの更新を実行中です。お待ちください...",
     "analyticsCatalog.quality.scoreCard.action.success": "オブジェクトを表示",
     "analyticsCatalog.quality.scoreCard.lastCheck": "最終チェック日時: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "チェックに失敗しました！",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "問題が発生しました。",
     "analyticsCatalog.quality.severity.warning": "{count, plural, other {警告}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, other {提案}}",
     "analyticsCatalog.lineage.direction.up": "上流",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "数値パラメーターを定義するYAMLステートメントを作成します。",
     "analyticsCatalog.parameter.dialog.create.submit": "作成",
     "analyticsCatalog.parameter.dialog.edit.submit": "保存",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "新規として保存",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "新規として保存",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "既存のパラメーターを保存する際、パラメーター id は変更できません。代わりに「新規として保存」を使用してください。",
     "analyticsCatalog.parameter.dialog.cancel": "キャンセル",
     "analyticsCatalog.parameter.dialog.help": "パラメーターを作成する方法は？",
     "analyticsCatalog.parameter.dialog.submit.error": "パラメーターを保存できませんでした。",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "制約のminはmaxより大きくできません。",
     "analyticsCatalog.parameter.validation.invalidTags": "タグは文字列のリストである必要があります。",
     "analyticsCatalog.parameter.create.success": "パラメーターが作成されました。",
+    "analyticsCatalog.parameter.update.success": "パラメーターが更新されました。",
     "analyticsCatalog.parameter.validation.syntax": "YAML構文エラー"
 }

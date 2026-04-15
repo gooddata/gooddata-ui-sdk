@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 
-import { convertParameterFromBackend } from "../../../convertors/fromBackend/ParameterConverter.js";
+import { convertParameter } from "../../../convertors/fromBackend/ParameterConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { buildFilterQuery } from "../../common/filtering.js";
 import { buildSortQuery } from "../../common/sorting.js";
@@ -139,7 +139,7 @@ export class ParametersQuery implements IParametersQuery {
                             this.setTotalCount(totalCount);
                         }
                         return data.data.map((parameter: JsonApiParameterOutWithLinks) =>
-                            convertParameterFromBackend(parameter),
+                            convertParameter(parameter, data.included),
                         );
                     });
 

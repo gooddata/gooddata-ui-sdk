@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Actualización del modelo en curso, espere...",
     "analyticsCatalog.quality.scoreCard.action.success": "Mostrar objetos",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Última comprobación: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "¡La verificación falló!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Algo salió mal.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {advertencia} other {advertencias}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {sugerencia} other {sugerencias}}",
     "analyticsCatalog.lineage.direction.up": "Aguas arriba",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Cree una instrucción YAML que defina un parámetro numérico.",
     "analyticsCatalog.parameter.dialog.create.submit": "Crear",
     "analyticsCatalog.parameter.dialog.edit.submit": "Guardar",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Guardar como nuevo",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Guardar como nuevo",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "El id del parámetro no se puede cambiar al guardar un parámetro existente. Use Guardar como nuevo en su lugar.",
     "analyticsCatalog.parameter.dialog.cancel": "Cancelar",
     "analyticsCatalog.parameter.dialog.help": "¿Cómo crear un parámetro?",
     "analyticsCatalog.parameter.dialog.submit.error": "No se pudo guardar el parámetro.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "El valor mínimo de la restricción no puede ser mayor que el máximo.",
     "analyticsCatalog.parameter.validation.invalidTags": "Las etiquetas deben ser una lista de cadenas.",
     "analyticsCatalog.parameter.create.success": "Parámetro creado.",
+    "analyticsCatalog.parameter.update.success": "Parámetro actualizado.",
     "analyticsCatalog.parameter.validation.syntax": "Error de sintaxis de YAML"
 }

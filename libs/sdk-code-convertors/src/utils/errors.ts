@@ -58,22 +58,59 @@ export const CoreErrorTypes: Record<CoreErrorCode, string> = {
 /**
  * @public
  */
+export interface IErrorContext {
+    type?: string;
+    path?: string[];
+    data?: unknown;
+}
+
+/**
+ * Update error context with new values
+ */
+export function updateErrorContext(
+    context: IErrorContext | undefined,
+    props: Partial<IErrorContext>,
+): IErrorContext {
+    if (context) {
+        return {
+            ...context,
+            ...props,
+            path: [...(context.path ?? []), ...(props.path ?? [])],
+        };
+    }
+    return {
+        type: props.type ?? "unknown",
+        path: props.path ?? [],
+        data: props.data ?? {},
+    };
+}
+
+/**
+ * @public
+ */
 export interface ICoreError extends Error {
     code: CoreErrorCode;
     type: (typeof CoreErrorTypes)[keyof typeof CoreErrorTypes];
+    context?: IErrorContext;
 }
 
-export function newError(code: CoreErrorCode, params: Array<string> = []) {
-    const err = new Error(buildMessage(CoreErrorMessages[code], params)) as ICoreError;
+export function newError(code: CoreErrorCode, params: Array<string> = [], context?: IErrorContext) {
+    const err = new Error(buildMessage(CoreErrorMessages[code], params, context)) as ICoreError;
 
     err.type = CoreErrorTypes[code];
     err.code = code;
+    err.context = context;
     return err;
 }
 
-export function buildMessage(message: string, params: Array<string>) {
-    return params.reduce(
+export function buildMessage(message: string, params: Array<string>, context?: IErrorContext) {
+    const m = params.reduce(
         (msg, param, index) => msg.replace(new RegExp(`\\{${index}}`, "gi"), param),
         message,
     );
+
+    if (context?.path) {
+        return `${m} in: ${context.path.join("/")}`;
+    }
+    return m;
 }

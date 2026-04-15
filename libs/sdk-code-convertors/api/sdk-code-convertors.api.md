@@ -313,6 +313,40 @@ export const comboChart: {
 export function convertBucketToTitle(entities: ExportEntities, query: Query, field: FullFields, location?: boolean): string | null;
 
 // @public (undocumented)
+export enum CoreErrorCode {
+    // (undocumented)
+    BucketItemTypeNotSupported = "core.bucketItemTypeNotSupported",
+    // (undocumented)
+    DuplicateFilterLocalIdentifier = "core.duplicateFilterLocalIdentifier",
+    // (undocumented)
+    DuplicateTabIdentifier = "core.duplicateTabIdentifier",
+    // (undocumented)
+    FilterItemTypeNotSupported = "core.filterItemTypeNotSupported",
+    // (undocumented)
+    ItemNotSupported = "core.itemNotSupported",
+    // (undocumented)
+    LayerTypeNotSupported = "core.layerTypeNotSupported",
+    // (undocumented)
+    MultipleCommonDateFilters = "core.multipleCommonDateFilters",
+    // (undocumented)
+    MultipleDateDataSets = "core.multipleDateDataSets",
+    // (undocumented)
+    OnlyOneAttributeItemAllowed = "core.onlyOneAttributeItemAllowed",
+    // (undocumented)
+    OnlyOneDateDatasetAllowed = "core.onlyOneDateDatasetAllowed",
+    // (undocumented)
+    ReferenceTypeNotSupported = "core.referenceTypeNotSupported",
+    // (undocumented)
+    VisualizationNotSupported = "core.visualizationNotSupported"
+}
+
+// @public (undocumented)
+export const CoreErrorMessages: Record<CoreErrorCode, string>;
+
+// @public (undocumented)
+export const CoreErrorTypes: Record<CoreErrorCode, string>;
+
+// @public (undocumented)
 export function createIdentifier<T = AfmObjectIdentifier>(data: string, { forceMetric, forceType }?: {
     forceMetric?: boolean;
     forceType?: "user" | "userGroup" | "dataset" | "date" | "attribute" | "label" | "measure" | "workspaceDataFilter" | "visualizationObject" | "analyticalDashboard" | "dashboardPlugin" | "filterContext";
@@ -348,7 +382,7 @@ export const DateDatasetTypes: string[];
 // Warning: (ae-missing-release-tag) "declarativeAbsoluteDateFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeAbsoluteDateFilterToYaml(absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string): YAMLMap;
+export function declarativeAbsoluteDateFilterToYaml(absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-missing-release-tag) "declarativeArithmeticMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -356,7 +390,7 @@ export function declarativeAbsoluteDateFilterToYaml(absoluteDateFilter: IAbsolut
 export function declarativeArithmeticMetricToYaml(def: IMeasureBody, arithmeticDefinition: IArithmeticMeasureDefinition): YAMLMap;
 
 // @public (undocumented)
-export function declarativeAttributeHierarchyToYaml(hierarchy: DeclarativeAttributeHierarchy): {
+export function declarativeAttributeHierarchyToYaml(hierarchy: DeclarativeAttributeHierarchy, context?: IErrorContext): {
     content: string;
     json: AttributeHierarchy;
 };
@@ -369,16 +403,16 @@ export function declarativeAttributeSortToYaml(sort: IAttributeSortItem): YAMLMa
 // Warning: (ae-missing-release-tag) "declarativeAttributeToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeAttributeToYaml(def: IAttributeBody): YAMLMap;
+export function declarativeAttributeToYaml(def: IAttributeBody, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-forgotten-export) The symbol "Buckets" needs to be exported by the entry point index.d.ts
 // Warning: (ae-missing-release-tag) "declarativeBucketsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[]): Buckets;
+export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[], errorContext?: IErrorContext): Buckets;
 
 // @public (undocumented)
-export function declarativeDashboardToYaml(entities: FromEntities, dashboard: DeclarativeAnalyticalDashboard, filterContexts?: DeclarativeFilterContext[]): {
+export function declarativeDashboardToYaml(entities: FromEntities, dashboard: DeclarativeAnalyticalDashboard, filterContexts?: DeclarativeFilterContext[], context?: IErrorContext): {
     content: string;
     json: Dashboard;
 };
@@ -398,12 +432,12 @@ export function declarativeDateInstanceToYaml(dataset: DeclarativeDateDataset): 
 // Warning: (ae-missing-release-tag) "declarativeDrillToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeDrillToYaml(drill: InsightDrillDefinition, entities?: FromEntities, sourceVisualizationId?: string): YAMLMap<unknown, unknown>;
+export function declarativeDrillToYaml(drill: InsightDrillDefinition, entities?: FromEntities, sourceVisualizationId?: string, errorContext?: IErrorContext): YAMLMap<unknown, unknown>;
 
 // Warning: (ae-missing-release-tag) "declarativeFilterContextToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDateFilterConfig, filterContext?: DeclarativeFilterContext): {
+export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDateFilterConfig, filterContext?: DeclarativeFilterContext, errorContext?: IErrorContext): {
     filters: YAMLMap<unknown, unknown>;
     filtersMap: {
         [key: string]: FilterContextItem;
@@ -413,13 +447,13 @@ export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDate
 // Warning: (ae-missing-release-tag) "declarativeFiltersConfigToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeFiltersConfigToYaml(filtersMap: Record<string, FilterContextItem>, dateFilterConfig?: IDashboardDateFilterConfig, dateFilterConfigs?: IDashboardDateFilterConfigItem[], attributeFilterConfigs?: IDashboardAttributeFilterConfig[]): void;
+export function declarativeFiltersConfigToYaml(filtersMap: Record<string, FilterContextItem>, dateFilterConfig?: IDashboardDateFilterConfig, dateFilterConfigs?: IDashboardDateFilterConfigItem[], attributeFilterConfigs?: IDashboardAttributeFilterConfig[], errorContext?: IErrorContext): void;
 
 // Warning: (ae-forgotten-export) The symbol "Filters" needs to be exported by the entry point index.d.ts
 // Warning: (ae-missing-release-tag) "declarativeFiltersToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[]): Filters;
+export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[], errorContext?: IErrorContext): Filters;
 
 // Warning: (ae-missing-release-tag) "declarativeInlineMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -434,7 +468,7 @@ export function declarativeMeasureSortToYaml(sort: IMeasureSortItem): YAMLMap;
 // Warning: (ae-missing-release-tag) "declarativeMeasureValueFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeMeasureValueFilterToYaml(measureValueFilter: IMeasureValueFilterBody): YAMLMap;
+export function declarativeMeasureValueFilterToYaml(measureValueFilter: IMeasureValueFilterBody, errorContext?: IErrorContext): YAMLMap;
 
 // @public (undocumented)
 export function declarativeMetricToYaml(metric: DeclarativeMetric): {
@@ -445,18 +479,18 @@ export function declarativeMetricToYaml(metric: DeclarativeMetric): {
 // Warning: (ae-missing-release-tag) "declarativeNegativeAttributeFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeNegativeAttributeFilterToYaml(entities: FromEntities, attributeFilter: INegativeAttributeFilterBody): YAMLMap;
+export function declarativeNegativeAttributeFilterToYaml(entities: FromEntities, attributeFilter: INegativeAttributeFilterBody, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-forgotten-export) The symbol "PostProcessors" needs to be exported by the entry point index.d.ts
 // Warning: (ae-missing-release-tag) "declarativeNormalMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeNormalMetricToYaml(def: IMeasureBody, metricDefinition: IMeasureDefinition, postProcessors: PostProcessors): YAMLMap;
+export function declarativeNormalMetricToYaml(def: IMeasureBody, metricDefinition: IMeasureDefinition, postProcessors: PostProcessors, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-missing-release-tag) "declarativePluginsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativePluginsToYaml(dashboard: IDashboardDefinition): YAMLSeq<unknown> | undefined;
+export function declarativePluginsToYaml(dashboard: IDashboardDefinition, errorContext?: IErrorContext): YAMLSeq<unknown> | undefined;
 
 // @public (undocumented)
 export function declarativePluginToYaml(plugin: DeclarativeDashboardPlugin): {
@@ -467,48 +501,48 @@ export function declarativePluginToYaml(plugin: DeclarativeDashboardPlugin): {
 // Warning: (ae-missing-release-tag) "declarativePoPMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativePoPMetricToYaml(def: IMeasureBody, popDefinition: IPoPMeasureDefinition): YAMLMap;
+export function declarativePoPMetricToYaml(def: IMeasureBody, popDefinition: IPoPMeasureDefinition, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-missing-release-tag) "declarativePositiveAttributeFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativePositiveAttributeFilterToYaml(entities: FromEntities, attributeFilter: IPositiveAttributeFilterBody): YAMLMap;
+export function declarativePositiveAttributeFilterToYaml(entities: FromEntities, attributeFilter: IPositiveAttributeFilterBody, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-missing-release-tag) "declarativePreviousPeriodMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativePreviousPeriodMetricToYaml(def: IMeasureBody, previousDefinition: IPreviousPeriodMeasureDefinition): YAMLMap;
+export function declarativePreviousPeriodMetricToYaml(def: IMeasureBody, previousDefinition: IPreviousPeriodMeasureDefinition, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-missing-release-tag) "declarativeRankingFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody): YAMLMap;
+export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-missing-release-tag) "declarativeRelativeDateFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeRelativeDateFilterToYaml(relativeDateFilter: IRelativeDateFilter["relativeDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string): YAMLMap;
+export function declarativeRelativeDateFilterToYaml(relativeDateFilter: IRelativeDateFilter["relativeDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string, errorContext?: IErrorContext): YAMLMap;
 
 // Warning: (ae-missing-release-tag) "declarativeSectionsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: FromEntities): YAMLSeq<unknown> | undefined;
+export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: FromEntities, errorContext?: IErrorContext): YAMLSeq<unknown> | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "Sorts_2" needs to be exported by the entry point index.d.ts
 // Warning: (ae-missing-release-tag) "declarativeSortsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeSortsToYaml(sorts: ISortItem[]): Sorts_2;
+export function declarativeSortsToYaml(sorts: ISortItem[], _errorContext?: IErrorContext): Sorts_2;
 
 // Warning: (ae-missing-release-tag) "declarativeTabsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeTabsToYaml(tabs: DashboardTab[], filterContexts?: DeclarativeFilterContext[], entities?: FromEntities): YAMLSeq | undefined;
+export function declarativeTabsToYaml(tabs: DashboardTab[], filterContexts?: DeclarativeFilterContext[], entities?: FromEntities, errorContext?: IErrorContext): YAMLSeq | undefined;
 
 // Warning: (ae-missing-release-tag) "declarativeTotalToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeTotalToYaml(total: ITotal): {
+export function declarativeTotalToYaml(total: ITotal, _errorContext?: IErrorContext): {
     totalMap: YAMLMap<unknown, unknown>;
     attribute: string;
 };
@@ -519,7 +553,7 @@ export function declarativeTotalToYaml(total: ITotal): {
 export function declarativeVisTypeToYaml(def: IInsightDefinition["insight"]): string | null;
 
 // @public (undocumented)
-export function declarativeVisualisationToYaml(entities: FromEntities, visualisation: DeclarativeVisualizationObject): {
+export function declarativeVisualisationToYaml(entities: FromEntities, visualisation: DeclarativeVisualizationObject, context?: IErrorContext): {
     content: string;
     json?: Visualisation;
 };
@@ -527,7 +561,7 @@ export function declarativeVisualisationToYaml(entities: FromEntities, visualisa
 // Warning: (ae-missing-release-tag) "declarativeWidgetToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeWidgetToYaml(widget?: IDashboardWidget | null, size?: IDashboardLayoutItem["size"], entities?: FromEntities): YAMLMap<unknown, unknown> | undefined;
+export function declarativeWidgetToYaml(widget?: IDashboardWidget | null, size?: IDashboardLayoutItem["size"], entities?: FromEntities, errorContext?: IErrorContext): YAMLMap<unknown, unknown> | undefined;
 
 // Warning: (ae-missing-release-tag) "dependencyWheelChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -637,7 +671,7 @@ export const geoChart: {
 };
 
 // @public (undocumented)
-export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier, untype?: boolean): string;
+export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier, untype?: boolean, errorContext?: IErrorContext): string;
 
 // @public (undocumented)
 export function getValueOrDefault<T>(value: T, defaultValue: T, type?: ValueType, undefinedAsDefault?: boolean): T | undefined;
@@ -728,6 +762,26 @@ export interface IAttributeColumnWidthItemBody {
 export interface IAutoColumnWidth {
     // (undocumented)
     value: "auto";
+}
+
+// @public (undocumented)
+export interface ICoreError extends Error {
+    // (undocumented)
+    code: CoreErrorCode;
+    // (undocumented)
+    context?: IErrorContext;
+    // (undocumented)
+    type: (typeof CoreErrorTypes)[keyof typeof CoreErrorTypes];
+}
+
+// @public (undocumented)
+export interface IErrorContext {
+    // (undocumented)
+    data?: unknown;
+    // (undocumented)
+    path?: string[];
+    // (undocumented)
+    type?: string;
 }
 
 // Warning: (ae-missing-release-tag) "IMeasureColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
