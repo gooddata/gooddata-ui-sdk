@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Mallipäivitys käynnissä, odota...",
     "analyticsCatalog.quality.scoreCard.action.success": "Näytä objektit",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Viimeksi tarkistettu: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Tarkistus epäonnistui!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Jotain meni pieleen.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {varoitus} other {varoitukset}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {ehdotus} other {ehdotukset}}",
     "analyticsCatalog.lineage.direction.up": "Ylävirtaan",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Luo YAML-lauseke, joka määrittää numeerisen parametrin.",
     "analyticsCatalog.parameter.dialog.create.submit": "Luo",
     "analyticsCatalog.parameter.dialog.edit.submit": "Tallenna",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Tallenna uutena",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Tallenna uutena",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "Parametrin tunnusta ei voi muuttaa tallennettaessa olemassa olevaa parametria. Käytä sen sijaan \"Tallenna uutena\".",
     "analyticsCatalog.parameter.dialog.cancel": "Peruuta",
     "analyticsCatalog.parameter.dialog.help": "Miten luoda parametri?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parametria ei voitu tallentaa.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "Rajoitteen min ei voi olla suurempi kuin max.",
     "analyticsCatalog.parameter.validation.invalidTags": "Tagien on oltava merkkijonojen luettelo.",
     "analyticsCatalog.parameter.create.success": "Parametri luotu.",
+    "analyticsCatalog.parameter.update.success": "Parametri päivitetty.",
     "analyticsCatalog.parameter.validation.syntax": "YAML-syntaksivirhe"
 }

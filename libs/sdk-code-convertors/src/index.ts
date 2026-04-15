@@ -175,6 +175,13 @@ export { assertUnreachable, type FilePath } from "./utils/sharedUtils.js";
 export { convertBucketToTitle } from "./utils/convertBucketToTitle.js";
 export { createIdentifier, getIdentifier } from "./utils/yamlUtils.js";
 export {
+    type IErrorContext,
+    type ICoreError,
+    CoreErrorCode,
+    CoreErrorTypes,
+    CoreErrorMessages,
+} from "./utils/errors.js";
+export {
     loadColorMapping,
     loadColumnsWidth,
     saveColorMapping,

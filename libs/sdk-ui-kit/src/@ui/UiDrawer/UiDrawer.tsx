@@ -99,7 +99,7 @@ export function UiDrawer({
                                             </div>
                                         ) : null}
                                         <UiAutofocus
-                                            root={<div tabIndex={-1} className={e("scrollable")} />}
+                                            root={<div className={e("scrollable")} />}
                                             active={isFullyOpen}
                                             refocusKey={refocusKey}
                                             initialFocus={initialFocus || ref}

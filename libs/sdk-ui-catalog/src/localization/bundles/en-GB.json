@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Model update in progress, please wait...",
     "analyticsCatalog.quality.scoreCard.action.success": "Show objects",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Last checked: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Check unsuccessful!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "An error occurred.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {warning} other {warnings}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {suggestion} other {suggestions}}",
     "analyticsCatalog.lineage.direction.up": "Upstream",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Create a YAML statement that defines a numeric parameter.",
     "analyticsCatalog.parameter.dialog.create.submit": "Create",
     "analyticsCatalog.parameter.dialog.edit.submit": "Save",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Save as new",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Save as new",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "Parameter id cannot be changed when saving an existing parameter. Use Save as new instead.",
     "analyticsCatalog.parameter.dialog.cancel": "Cancel",
     "analyticsCatalog.parameter.dialog.help": "How to create a parameter?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parameter could not be saved.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "Constraint min cannot be greater than max.",
     "analyticsCatalog.parameter.validation.invalidTags": "Tags must be a list of strings.",
     "analyticsCatalog.parameter.create.success": "Parameter created.",
+    "analyticsCatalog.parameter.update.success": "Parameter updated.",
     "analyticsCatalog.parameter.validation.syntax": "YAML syntax error"
 }

@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "模型更新正在进行中，请稍候...",
     "analyticsCatalog.quality.scoreCard.action.success": "显示对象",
     "analyticsCatalog.quality.scoreCard.lastCheck": "上次检查时间：{date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "检查失败！",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "出现了一些问题。",
     "analyticsCatalog.quality.severity.warning": "{count, plural, other {警告}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, other {建议}}",
     "analyticsCatalog.lineage.direction.up": "上游",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "创建用于定义数值参数的 YAML 语句。",
     "analyticsCatalog.parameter.dialog.create.submit": "创建",
     "analyticsCatalog.parameter.dialog.edit.submit": "保存",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "另存为新的",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "另存为新的",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "保存现有参数时，不能更改参数 id。请改用另存为新参数。",
     "analyticsCatalog.parameter.dialog.cancel": "取消",
     "analyticsCatalog.parameter.dialog.help": "如何创建参数？",
     "analyticsCatalog.parameter.dialog.submit.error": "无法保存参数。",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "约束的 min 不能大于 max。",
     "analyticsCatalog.parameter.validation.invalidTags": "标签必须是字符串列表。",
     "analyticsCatalog.parameter.create.success": "参数已创建。",
+    "analyticsCatalog.parameter.update.success": "参数已更新。",
     "analyticsCatalog.parameter.validation.syntax": "YAML 语法错误"
 }

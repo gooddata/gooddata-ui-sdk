@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Atualização do modelo em andamento, aguarde...",
     "analyticsCatalog.quality.scoreCard.action.success": "Mostrar objetos",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Última verificação: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Verificação falhou!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Algo deu errado.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {aviso} other {avisos}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {sugestão} other {sugestões}}",
     "analyticsCatalog.lineage.direction.up": "Ascendente",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Crie uma instrução YAML que defina um parâmetro numérico.",
     "analyticsCatalog.parameter.dialog.create.submit": "Criar",
     "analyticsCatalog.parameter.dialog.edit.submit": "Salvar",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Salvar como novo",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Salvar como novo",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "O id do parâmetro não pode ser alterado ao salvar um parâmetro existente. Use Salvar como novo.",
     "analyticsCatalog.parameter.dialog.cancel": "Cancelar",
     "analyticsCatalog.parameter.dialog.help": "Como criar um parâmetro?",
     "analyticsCatalog.parameter.dialog.submit.error": "Não foi possível salvar o parâmetro.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "O min da restrição não pode ser maior que o max.",
     "analyticsCatalog.parameter.validation.invalidTags": "As tags devem ser uma lista de strings.",
     "analyticsCatalog.parameter.create.success": "Parâmetro criado.",
+    "analyticsCatalog.parameter.update.success": "Parâmetro atualizado.",
     "analyticsCatalog.parameter.validation.syntax": "Erro de sintaxe YAML"
 }

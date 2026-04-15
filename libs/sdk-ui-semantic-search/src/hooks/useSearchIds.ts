@@ -1,4 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { useId } from "react";
 
 /**
@@ -7,7 +8,7 @@ import { useId } from "react";
  */
 export function useSearchIds() {
     const id = useId();
-    const inputId = `semantic-search/${id}/input`;
-    const treeViewId = `semantic-search/${id}/treeview`;
+    const inputId = `semantic-search-${id}-input`;
+    const treeViewId = `semantic-search-${id}-treeview`;
     return { inputId, treeViewId };
 }

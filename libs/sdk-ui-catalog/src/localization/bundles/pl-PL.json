@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Trwa aktualizacja modelu, proszę czekać...",
     "analyticsCatalog.quality.scoreCard.action.success": "Pokaż obiekty",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Ostatnie sprawdzenie: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Sprawdzenie nie powiodło się!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Coś poszło nie tak.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {ostrzeżenie} few {ostrzeżenia} many {ostrzeżeń} other {ostrzeżenia}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {podpowiedź} few {podpowiedzi} many {podpowiedzi} other {podpowiedzi}}",
     "analyticsCatalog.lineage.direction.up": "W górę strumienia",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Utwórz instrukcję YAML definiującą parametr liczbowy.",
     "analyticsCatalog.parameter.dialog.create.submit": "Utwórz",
     "analyticsCatalog.parameter.dialog.edit.submit": "Zapisz",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Zapisz jako nowy",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Zapisz jako nowy",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "Id parametru nie można zmienić podczas zapisywania istniejącego parametru. Zamiast tego użyj opcji Zapisz jako nowy.",
     "analyticsCatalog.parameter.dialog.cancel": "Anuluj",
     "analyticsCatalog.parameter.dialog.help": "Jak utworzyć parametr?",
     "analyticsCatalog.parameter.dialog.submit.error": "Nie udało się zapisać parametru.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "Wartość min ograniczenia nie może być większa niż max.",
     "analyticsCatalog.parameter.validation.invalidTags": "Tagi muszą być listą napisów.",
     "analyticsCatalog.parameter.create.success": "Parametr został utworzony.",
+    "analyticsCatalog.parameter.update.success": "Parametr został zaktualizowany.",
     "analyticsCatalog.parameter.validation.syntax": "Błąd składni YAML"
 }

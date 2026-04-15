@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "กำลังอัปเดตโมเดล โปรดรอสักครู่...",
     "analyticsCatalog.quality.scoreCard.action.success": "แสดงอ็อบเจ็กต์",
     "analyticsCatalog.quality.scoreCard.lastCheck": "ตรวจสอบล่าสุด: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "การตรวจสอบล้มเหลว!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "เกิดข้อผิดพลาดบางอย่าง.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, other {คำเตือน}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, other {คำแนะนำ}}",
     "analyticsCatalog.lineage.direction.up": "ต้นทาง",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "สร้างคำสั่ง YAML ที่กำหนดพารามิเตอร์ตัวเลข",
     "analyticsCatalog.parameter.dialog.create.submit": "สร้าง",
     "analyticsCatalog.parameter.dialog.edit.submit": "บันทึก",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "บันทึกเป็นใหม่",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "บันทึกเป็นใหม่",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "ไม่สามารถเปลี่ยนรหัสพารามิเตอร์ได้เมื่อบันทึกพารามิเตอร์ที่มีอยู่แล้ว ให้ใช้ บันทึกเป็นใหม่ แทน",
     "analyticsCatalog.parameter.dialog.cancel": "ยกเลิก",
     "analyticsCatalog.parameter.dialog.help": "จะสร้างพารามิเตอร์ได้อย่างไร?",
     "analyticsCatalog.parameter.dialog.submit.error": "ไม่สามารถบันทึกพารามิเตอร์ได้",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "ค่า min ของข้อจำกัดต้องไม่มากกว่า max",
     "analyticsCatalog.parameter.validation.invalidTags": "แท็กต้องเป็นรายการของสตริง",
     "analyticsCatalog.parameter.create.success": "สร้างพารามิเตอร์แล้ว",
+    "analyticsCatalog.parameter.update.success": "อัปเดตพารามิเตอร์แล้ว",
     "analyticsCatalog.parameter.validation.syntax": "ข้อผิดพลาดทางไวยากรณ์ YAML"
 }

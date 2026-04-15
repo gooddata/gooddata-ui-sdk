@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Modellaktualisierung wird durchgeführt, bitte warten...",
     "analyticsCatalog.quality.scoreCard.action.success": "Objekte anzeigen",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Zuletzt geprüft: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Prüfung fehlgeschlagen!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Etwas ist schiefgelaufen.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {Warnung} other {Warnungen}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {Vorschlag} other {Vorschläge}}",
     "analyticsCatalog.lineage.direction.up": "Vorgelagert",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Erstellen Sie eine YAML-Anweisung, die einen numerischen Parameter definiert.",
     "analyticsCatalog.parameter.dialog.create.submit": "Erstellen",
     "analyticsCatalog.parameter.dialog.edit.submit": "Speichern",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Als neu speichern",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Als neu speichern",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "Die Parameter-ID kann beim Speichern eines vorhandenen Parameters nicht geändert werden. Verwenden Sie stattdessen „Als neu speichern“.",
     "analyticsCatalog.parameter.dialog.cancel": "Abbrechen",
     "analyticsCatalog.parameter.dialog.help": "Wie erstelle ich einen Parameter?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parameter konnte nicht gespeichert werden.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "Min. der Einschränkung darf nicht größer als Max. sein.",
     "analyticsCatalog.parameter.validation.invalidTags": "Tags müssen eine Liste von Zeichenfolgen sein.",
     "analyticsCatalog.parameter.create.success": "Parameter erstellt.",
+    "analyticsCatalog.parameter.update.success": "Parameter aktualisiert.",
     "analyticsCatalog.parameter.validation.syntax": "YAML-Syntaxfehler"
 }

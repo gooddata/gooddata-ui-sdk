@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Mise à jour du modèle en cours, veuillez patienter...",
     "analyticsCatalog.quality.scoreCard.action.success": "Afficher les objets",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Dernière vérification : {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Vérification échouée!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Une erreur s’est produite.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {avertissement} other {avertissements}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {suggestion} other {suggestions}}",
     "analyticsCatalog.lineage.direction.up": "En amont",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Créez une instruction YAML qui définit un paramètre numérique.",
     "analyticsCatalog.parameter.dialog.create.submit": "Créer",
     "analyticsCatalog.parameter.dialog.edit.submit": "Enregistrer",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Enregistrer sous un nouveau nom",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Enregistrer sous un nouveau nom",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "L’identifiant du paramètre ne peut pas être modifié lors de l’enregistrement d’un paramètre existant. Utilisez Enregistrer comme nouveau à la place.",
     "analyticsCatalog.parameter.dialog.cancel": "Annuler",
     "analyticsCatalog.parameter.dialog.help": "Comment créer un paramètre?",
     "analyticsCatalog.parameter.dialog.submit.error": "Le paramètre n'a pas pu être enregistré.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "La valeur min de la contrainte ne peut pas être supérieure à la valeur max.",
     "analyticsCatalog.parameter.validation.invalidTags": "Les balises doivent être une liste de chaînes.",
     "analyticsCatalog.parameter.create.success": "Paramètre créé.",
+    "analyticsCatalog.parameter.update.success": "Paramètre mis à jour.",
     "analyticsCatalog.parameter.validation.syntax": "Erreur de syntaxe YAML"
 }

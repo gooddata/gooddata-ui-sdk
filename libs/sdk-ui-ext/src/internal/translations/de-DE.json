@@ -316,6 +316,7 @@
     "properties.interactions.kda.tooltip": " Analysieren Sie, welche Faktoren Änderungen in einer ausgewählten metrik bewirken. Das System identifiziert und ordnet die Schlüsseltreiber nach ihrer Auswirkung, sodass Sie Leistungsänderungen ohne manuellen Aufwand verstehen können.",
     "properties.comparison.title": "Vergleich",
     "properties.comparison.calculationType.title": "Berechnet als",
+    "properties.comparison.calculationType.as.change": "Änderung",
     "properties.comparison.calculationType.as.ratio": "Verhältnis",
     "properties.comparison.calculationType.as.difference": "Differenz",
     "properties.comparison.calculationType.as.changeDifference": "Änderung (Differenz)",

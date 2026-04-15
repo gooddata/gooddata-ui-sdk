@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Modelupdate bezig, even wachten...",
     "analyticsCatalog.quality.scoreCard.action.success": "Objecten weergeven",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Laatst gecontroleerd: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Controle mislukt!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Er is iets misgegaan.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {waarschuwing} other {waarschuwingen}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {suggestie} other {suggesties}}",
     "analyticsCatalog.lineage.direction.up": "Upstream",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Maak een YAML-instructie die een numerieke parameter definieert.",
     "analyticsCatalog.parameter.dialog.create.submit": "Creëren",
     "analyticsCatalog.parameter.dialog.edit.submit": "Opslaan",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Opslaan als nieuw",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Opslaan als nieuw",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "Parameter-id kan niet worden gewijzigd bij het opslaan van een bestaande parameter. Gebruik in plaats daarvan Opslaan als nieuw.",
     "analyticsCatalog.parameter.dialog.cancel": "Annuleren",
     "analyticsCatalog.parameter.dialog.help": "Hoe maakt u een parameter aan?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parameter kon niet worden opgeslagen.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "Minimum van beperking mag niet groter zijn dan maximum.",
     "analyticsCatalog.parameter.validation.invalidTags": "Tags moeten een lijst met strings zijn.",
     "analyticsCatalog.parameter.create.success": "Parameter gemaakt.",
+    "analyticsCatalog.parameter.update.success": "Parameter bijgewerkt.",
     "analyticsCatalog.parameter.validation.syntax": "YAML-syntaxisfout"
 }

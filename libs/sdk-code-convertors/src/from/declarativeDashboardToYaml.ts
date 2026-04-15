@@ -49,7 +49,7 @@ import {
 import { VisualisationsTypes } from "../conts.js";
 import { type DashboardTab, type FromEntities } from "../types.js";
 import { serializeUrlTarget } from "../utils/customUrl.js";
-import { CoreErrorCode, newError } from "../utils/errors.js";
+import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
 import { matchConditionToYaml } from "../utils/filterUtils.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
 import { fromDeclarativePermissions } from "../utils/permissionUtils.js";
@@ -73,10 +73,16 @@ export function declarativeDashboardToYaml(
     entities: FromEntities,
     dashboard: DeclarativeAnalyticalDashboard,
     filterContexts?: DeclarativeFilterContext[],
+    context?: IErrorContext,
 ): {
     content: string;
     json: Dashboard;
 } {
+    const errorContext = updateErrorContext(context, {
+        type: "dashboard",
+        path: ["dashboard", dashboard.id],
+        data: {},
+    });
     const content = dashboard.content as OverrideDashboardDefinition;
 
     // Create new doc and add mandatory fields right away
@@ -120,7 +126,12 @@ export function declarativeDashboardToYaml(
     const shouldUseTabs = hasMultipleTabs || hasSingleTabWithTitle;
 
     if (content.tabs && shouldUseTabs) {
-        const tabs = declarativeTabsToYaml(content.tabs, filterContexts, entities);
+        const tabs = declarativeTabsToYaml(
+            content.tabs,
+            filterContexts,
+            entities,
+            updateErrorContext(errorContext, { path: ["tabs"] }),
+        );
         if (tabs) {
             doc.add(entryWithSpace("tabs", tabs));
         }
@@ -128,21 +139,33 @@ export function declarativeDashboardToYaml(
         // Dashboard with implicit single tab - create root yaml structure like without tabs
         // but read all metadata from a single tab
         const tab = content.tabs[0];
-        const section = declarativeSectionsToYaml(tab.layout, entities);
+        const section = declarativeSectionsToYaml(
+            tab.layout,
+            entities,
+            updateErrorContext(errorContext, { path: ["tabs", "0"] }),
+        );
         if (section) {
             doc.add(entryWithSpace("sections", section));
         }
 
-        const filterContextId = tab.filterContextRef ? getIdentifier(tab.filterContextRef, true) : undefined;
+        const filterContextId = tab.filterContextRef
+            ? getIdentifier(
+                  tab.filterContextRef,
+                  true,
+                  updateErrorContext(errorContext, { path: ["filterContext"] }),
+              )
+            : undefined;
         const { filters, filtersMap } = declarativeFilterContextToYaml(
             tab.dateFilterConfig,
             filterContexts?.find((fc) => fc.id === filterContextId),
+            updateErrorContext(errorContext, { path: ["dateFilterConfig"] }),
         );
         declarativeFiltersConfigToYaml(
             filtersMap,
             tab.dateFilterConfig,
             tab.dateFilterConfigs,
             tab.attributeFilterConfigs,
+            errorContext,
         );
         const groupedFilters = declarativeFilterGroupsToYaml(filters, tab.filterGroupsConfig);
         if (groupedFilters.items.length > 0) {
@@ -150,23 +173,33 @@ export function declarativeDashboardToYaml(
         }
     } else {
         // Dashboard without tabs - add sections and filters
-        const section = declarativeSectionsToYaml(content.layout, entities);
+        const section = declarativeSectionsToYaml(
+            content.layout,
+            entities,
+            updateErrorContext(errorContext, { path: ["layout"] }),
+        );
         if (section) {
             doc.add(entryWithSpace("sections", section));
         }
 
         const filterContextId = content.filterContextRef
-            ? getIdentifier(content.filterContextRef, true)
+            ? getIdentifier(
+                  content.filterContextRef,
+                  true,
+                  updateErrorContext(errorContext, { path: ["filterContext"] }),
+              )
             : undefined;
         const { filters, filtersMap } = declarativeFilterContextToYaml(
             content.dateFilterConfig,
             filterContexts?.find((fc) => fc.id === filterContextId),
+            updateErrorContext(errorContext, { path: ["dateFilterConfig"] }),
         );
         declarativeFiltersConfigToYaml(
             filtersMap,
             content.dateFilterConfig,
             content.dateFilterConfigs,
             content.attributeFilterConfigs,
+            errorContext,
         );
         if (filters.items.length > 0) {
             doc.add(entryWithSpace("filters", filters));
@@ -174,7 +207,10 @@ export function declarativeDashboardToYaml(
     }
 
     // Add KD plugins definitions
-    const plugins = declarativePluginsToYaml(content);
+    const plugins = declarativePluginsToYaml(
+        content,
+        updateErrorContext(errorContext, { path: ["plugins"] }),
+    );
     if (plugins) {
         doc.add(entryWithSpace("plugins", plugins));
     }
@@ -197,6 +233,7 @@ export function declarativeTabsToYaml(
     tabs: DashboardTab[],
     filterContexts?: DeclarativeFilterContext[],
     entities?: FromEntities,
+    errorContext?: IErrorContext,
 ): YAMLSeq | undefined {
     // no tabs
     if (!tabs || tabs.length === 0) {
@@ -205,8 +242,9 @@ export function declarativeTabsToYaml(
 
     const yamlTabs = new YAMLSeq();
 
-    tabs.forEach((tab) => {
+    tabs.forEach((tab, ti) => {
         const yamlTab = new YAMLMap();
+        const tabErrorContext = updateErrorContext(errorContext, { path: [ti.toString()] });
 
         // Add tab id and name
         yamlTab.add(new Pair("id", tab.localIdentifier));
@@ -215,7 +253,7 @@ export function declarativeTabsToYaml(
         // Add tab filters
         let filterContext: DeclarativeFilterContext | undefined;
         if (tab.filterContextRef && filterContexts?.length) {
-            const filterContextId = getIdentifier(tab.filterContextRef, true);
+            const filterContextId = getIdentifier(tab.filterContextRef, true, tabErrorContext);
             filterContext = filterContexts.find((fc) => fc.id === filterContextId);
         }
 
@@ -223,12 +261,14 @@ export function declarativeTabsToYaml(
             const { filters, filtersMap } = declarativeFilterContextToYaml(
                 tab.dateFilterConfig,
                 filterContext,
+                updateErrorContext(tabErrorContext, { path: ["dateFilterConfig"] }),
             );
             declarativeFiltersConfigToYaml(
                 filtersMap,
                 tab.dateFilterConfig,
                 tab.dateFilterConfigs,
                 tab.attributeFilterConfigs,
+                tabErrorContext,
             );
             const groupedFilters = declarativeFilterGroupsToYaml(filters, tab.filterGroupsConfig);
 
@@ -243,7 +283,11 @@ export function declarativeTabsToYaml(
                 layout: tab.layout,
             } as IDashboardDefinition;
 
-            const sections = declarativeSectionsToYaml(tempDashboard.layout, entities);
+            const sections = declarativeSectionsToYaml(
+                tempDashboard.layout,
+                entities,
+                updateErrorContext(tabErrorContext, { path: ["layout"] }),
+            );
             if (sections) {
                 yamlTab.add(new Pair("sections", sections));
             }
@@ -255,7 +299,11 @@ export function declarativeTabsToYaml(
     return yamlTabs;
 }
 
-export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: FromEntities) {
+export function declarativeSectionsToYaml(
+    layout?: IDashboardLayout,
+    entities?: FromEntities,
+    errorContext?: IErrorContext,
+) {
     //no sections at all
     if (!layout?.sections?.length) {
         return;
@@ -263,8 +311,9 @@ export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: 
 
     const sections = new YAMLSeq();
 
-    layout.sections.forEach((section) => {
+    layout.sections.forEach((section, si) => {
         const yamlSection = new YAMLMap();
+        const sectionErrorContext = updateErrorContext(errorContext, { path: ["sections", si.toString()] });
 
         if (section.header?.title) {
             yamlSection.add(new Pair("title", section.header.title));
@@ -276,8 +325,13 @@ export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: 
 
         if (section.items?.length) {
             const items = new YAMLSeq();
-            section.items.forEach((item: IDashboardLayoutItem) => {
-                const widget = declarativeWidgetToYaml(item.widget, item.size, entities);
+            section.items.forEach((item: IDashboardLayoutItem, i) => {
+                const widget = declarativeWidgetToYaml(
+                    item.widget,
+                    item.size,
+                    entities,
+                    updateErrorContext(sectionErrorContext, { path: ["items", i.toString()] }),
+                );
                 if (widget) {
                     items.add(widget);
                 }
@@ -296,13 +350,19 @@ export function declarativeWidgetToYaml(
     widget?: IDashboardWidget | null,
     size?: IDashboardLayoutItem["size"],
     entities?: FromEntities,
+    errorContext?: IErrorContext,
 ) {
     if (!widget) {
         return;
     }
     switch (widget?.type) {
         case "insight":
-            return declarativeInsightWidgetToYaml(widget as IInsightWidget, size, entities);
+            return declarativeInsightWidgetToYaml(
+                widget as IInsightWidget,
+                size,
+                entities,
+                updateErrorContext(errorContext, { path: ["insight"] }),
+            );
         case "richText":
             return declarativeRichTextWidgetToYaml(widget as IRichTextWidget, size);
         case "visualizationSwitcher":
@@ -310,11 +370,17 @@ export function declarativeWidgetToYaml(
                 widget as IVisualizationSwitcherWidget,
                 size,
                 entities,
+                updateErrorContext(errorContext, { path: ["visualizationSwitcher"] }),
             );
         case "IDashboardLayout":
-            return declarativeContainerWidgetToYaml(widget as IDashboardLayoutWidget, size, entities);
+            return declarativeContainerWidgetToYaml(
+                widget as IDashboardLayoutWidget,
+                size,
+                entities,
+                updateErrorContext(errorContext, { path: ["layout"] }),
+            );
         default:
-            throw newError(CoreErrorCode.ReferenceTypeNotSupported, [String(widget?.type)]);
+            throw newError(CoreErrorCode.ReferenceTypeNotSupported, [String(widget?.type)], errorContext);
     }
 }
 
@@ -322,6 +388,7 @@ export function declarativeInsightWidgetToYaml(
     widget: IInsightWidget,
     size?: IDashboardLayoutItem["size"],
     entities?: FromEntities,
+    errorContext?: IErrorContext,
 ) {
     const yamlWidget = new YAMLMap();
 
@@ -331,7 +398,16 @@ export function declarativeInsightWidgetToYaml(
     }
 
     // The visualization
-    yamlWidget.add(new Pair("visualization", getIdentifier(widget.insight, true)));
+    yamlWidget.add(
+        new Pair(
+            "visualization",
+            getIdentifier(
+                widget.insight,
+                true,
+                updateErrorContext(errorContext, { path: ["visualisation"] }),
+            ),
+        ),
+    );
 
     // Title
     if (widget.configuration?.hideTitle) {
@@ -359,14 +435,23 @@ export function declarativeInsightWidgetToYaml(
 
     // Filtering
     if (widget.dateDataSet) {
-        yamlWidget.add(new Pair("date", getIdentifier(widget.dateDataSet, true)));
+        yamlWidget.add(
+            new Pair(
+                "date",
+                getIdentifier(widget.dateDataSet, true, updateErrorContext(errorContext, { path: ["date"] })),
+            ),
+        );
     }
     if (widget.ignoreDashboardFilters?.length) {
         yamlWidget.add(
             new Pair(
                 "ignored_filters",
-                widget.ignoreDashboardFilters.map((df) => {
-                    return getIdentifier(dashboardFilterReferenceObjRef(df));
+                widget.ignoreDashboardFilters.map((df, i) => {
+                    return getIdentifier(
+                        dashboardFilterReferenceObjRef(df),
+                        undefined,
+                        updateErrorContext(errorContext, { path: ["ignoreDashboardFilters", i.toString()] }),
+                    );
                 }),
             ),
         );
@@ -378,21 +463,42 @@ export function declarativeInsightWidgetToYaml(
     }
     if (widget.drills?.length) {
         const drills = new YAMLSeq();
-        const sourceVisualizationId = getIdentifier(widget.insight, true);
-        widget.drills.forEach((drill) => {
-            drills.add(declarativeDrillToYaml(drill, entities, sourceVisualizationId));
+        const sourceVisualizationId = getIdentifier(
+            widget.insight,
+            true,
+            updateErrorContext(errorContext, { path: ["insight"] }),
+        );
+        widget.drills.forEach((drill, id) => {
+            drills.add(
+                declarativeDrillToYaml(
+                    drill,
+                    entities,
+                    sourceVisualizationId,
+                    updateErrorContext(errorContext, { path: ["drills", id.toString()] }),
+                ),
+            );
         });
         yamlWidget.add(new Pair("interactions", drills));
     }
     if (widget.ignoredDrillDownHierarchies?.length) {
-        const ignores = widget.ignoredDrillDownHierarchies.map((hierarchy) =>
-            declarativeIgnoreDrillDownHierarchyToYaml(hierarchy),
+        const ignores = widget.ignoredDrillDownHierarchies.map((hierarchy, hi) =>
+            declarativeIgnoreDrillDownHierarchyToYaml(
+                hierarchy,
+                updateErrorContext(errorContext, { path: ["ignoredDrillDownHierarchies", hi.toString()] }),
+            ),
         );
         yamlWidget.add(new Pair("ignored_drill_downs", ignores));
     }
     if (widget.drillDownIntersectionIgnoredAttributes?.length) {
         const ignores = widget.drillDownIntersectionIgnoredAttributes
-            .map((hierarchy) => declarativeDrillDownIntersectionIgnoredAttributesToYaml(hierarchy))
+            .map((hierarchy, hi) =>
+                declarativeDrillDownIntersectionIgnoredAttributesToYaml(
+                    hierarchy,
+                    updateErrorContext(errorContext, {
+                        path: ["drillDownIntersectionIgnoredAttributes", hi.toString()],
+                    }),
+                ),
+            )
             .filter(Boolean);
         yamlWidget.add(new Pair("ignored_drill_downs_intersections", ignores));
     }
@@ -405,29 +511,44 @@ export function declarativeInsightWidgetToYaml(
     return yamlWidget;
 }
 
-export function declarativeIgnoreDrillDownHierarchyToYaml(hierarchy: IDrillDownReference) {
+export function declarativeIgnoreDrillDownHierarchyToYaml(
+    hierarchy: IDrillDownReference,
+    errorContext?: IErrorContext,
+) {
     if (isAttributeHierarchyReference(hierarchy)) {
         return {
             hierarchy: hierarchy.attributeHierarchy as unknown as string,
-            on: getIdentifier(hierarchy.attribute),
+            on: getIdentifier(
+                hierarchy.attribute,
+                undefined,
+                updateErrorContext(errorContext, { path: ["attribute"] }),
+            ),
         };
     }
 
     return {
         template: hierarchy.dateHierarchyTemplate as unknown as string,
-        on: getIdentifier(hierarchy.dateDatasetAttribute),
+        on: getIdentifier(
+            hierarchy.dateDatasetAttribute,
+            undefined,
+            updateErrorContext(errorContext, { path: ["dateDatasetAttribute"] }),
+        ),
     };
 }
 
 export function declarativeDrillDownIntersectionIgnoredAttributesToYaml(
     hierarchy: IDrillDownIntersectionIgnoredAttributes,
+    errorContext?: IErrorContext,
 ) {
     if (hierarchy.ignoredAttributes.length === 0) {
         return null;
     }
     return {
         attributes: hierarchy.ignoredAttributes,
-        hierarchy: declarativeIgnoreDrillDownHierarchyToYaml(hierarchy.drillDownReference),
+        hierarchy: declarativeIgnoreDrillDownHierarchyToYaml(
+            hierarchy.drillDownReference,
+            updateErrorContext(errorContext, { path: ["drillDownReference"] }),
+        ),
     };
 }
 
@@ -460,6 +581,7 @@ export function declarativeVisualizationSwitcherWidgetToYaml(
     widget: IVisualizationSwitcherWidget,
     size?: IDashboardLayoutItem["size"],
     entities?: FromEntities,
+    errorContext?: IErrorContext,
 ) {
     const yamlWidget = new YAMLMap();
 
@@ -472,7 +594,14 @@ export function declarativeVisualizationSwitcherWidgetToYaml(
     yamlWidget.add(
         new Pair(
             "visualizations",
-            widget.visualizations.map((vis) => declarativeInsightWidgetToYaml(vis, undefined, entities)),
+            widget.visualizations.map((vis, vi) =>
+                declarativeInsightWidgetToYaml(
+                    vis,
+                    undefined,
+                    entities,
+                    updateErrorContext(errorContext, { path: ["visualizations", vi.toString()] }),
+                ),
+            ),
         ),
     );
 
@@ -491,6 +620,7 @@ export function declarativeContainerWidgetToYaml(
     widget: IDashboardLayoutWidget,
     size?: IDashboardLayoutItem["size"],
     entities?: FromEntities,
+    errorContext?: IErrorContext,
 ) {
     const yamlWidget = new YAMLMap();
 
@@ -520,7 +650,7 @@ export function declarativeContainerWidgetToYaml(
     // Nested sections
     if (widget.sections?.length) {
         const nestedSections = new YAMLSeq();
-        widget.sections.forEach((section) => {
+        widget.sections.forEach((section, si) => {
             const yamlSection = new YAMLMap();
 
             if (section.header?.title) {
@@ -533,8 +663,15 @@ export function declarativeContainerWidgetToYaml(
 
             if (section.items?.length) {
                 const widgets = new YAMLSeq();
-                section.items.forEach((item) => {
-                    const yamlNestedWidget = declarativeWidgetToYaml(item.widget, item.size, entities);
+                section.items.forEach((item, ii) => {
+                    const yamlNestedWidget = declarativeWidgetToYaml(
+                        item.widget,
+                        item.size,
+                        entities,
+                        updateErrorContext(errorContext, {
+                            path: ["sections", si.toString(), "items", ii.toString()],
+                        }),
+                    );
                     if (yamlNestedWidget) {
                         widgets.add(yamlNestedWidget);
                     }
@@ -554,17 +691,33 @@ export function declarativeDrillToYaml(
     drill: InsightDrillDefinition,
     entities?: FromEntities,
     sourceVisualizationId?: string,
+    errorContext?: IErrorContext,
 ) {
     const drillYaml = new YAMLMap();
 
     const originIdentifier =
         drill.origin.type === "drillFromMeasure" ? drill.origin.measure : drill.origin.attribute;
+    const originPath = drill.origin.type === "drillFromMeasure" ? "measure" : "attribute";
 
-    drillYaml.add(new Pair("click_on", getIdentifier(originIdentifier)));
+    drillYaml.add(
+        new Pair(
+            "click_on",
+            getIdentifier(
+                originIdentifier,
+                undefined,
+                updateErrorContext(errorContext, { path: ["origin", originPath] }),
+            ),
+        ),
+    );
 
     if (isDrillToInsight(drill)) {
-        drillYaml.add(new Pair("open_visualization", getIdentifier(drill.target, true)));
-        const filters = drillFiltersToYaml(drill, entities, sourceVisualizationId);
+        drillYaml.add(
+            new Pair(
+                "open_visualization",
+                getIdentifier(drill.target, true, updateErrorContext(errorContext, { path: ["target"] })),
+            ),
+        );
+        const filters = drillFiltersToYaml(drill, entities, sourceVisualizationId, errorContext);
         if (filters) {
             drillYaml.add(new Pair("filters", filters));
         }
@@ -577,11 +730,16 @@ export function declarativeDrillToYaml(
             includedSourceInsightFiltersObjRefs?: any[];
             includedSourceMeasureFiltersObjRefs?: any[];
         };
-        drillYaml.add(new Pair("open_dashboard", getIdentifier(drill.target, true)));
+        drillYaml.add(
+            new Pair(
+                "open_dashboard",
+                getIdentifier(drill.target, true, updateErrorContext(errorContext, { path: ["target"] })),
+            ),
+        );
         if (drill.targetTabLocalIdentifier) {
             drillYaml.add(new Pair("open_dashboard_tab", drill.targetTabLocalIdentifier));
         }
-        const filters = drillFiltersToYaml(dashboardDrill, entities, sourceVisualizationId);
+        const filters = drillFiltersToYaml(dashboardDrill, entities, sourceVisualizationId, errorContext);
         if (filters) {
             drillYaml.add(new Pair("filters", filters));
         }
@@ -606,8 +764,16 @@ export function declarativeDrillToYaml(
         }
         drillYaml.add(
             new Pair("open_url", {
-                label: getIdentifier(drill.target.displayForm),
-                href: getIdentifier(drill.target.hyperlinkDisplayForm),
+                label: getIdentifier(
+                    drill.target.displayForm,
+                    undefined,
+                    updateErrorContext(errorContext, { path: ["target", "displayForm"] }),
+                ),
+                href: getIdentifier(
+                    drill.target.hyperlinkDisplayForm,
+                    undefined,
+                    updateErrorContext(errorContext, { path: ["target", "hyperlinkDisplayForm"] }),
+                ),
             }),
         );
         return drillYaml;
@@ -624,6 +790,7 @@ function drillFiltersToYaml(
     },
     entities?: FromEntities,
     sourceVisualizationId?: string,
+    errorContext?: IErrorContext,
 ) {
     const filtersYaml = new YAMLMap();
     const excludeYaml = new YAMLMap();
@@ -645,7 +812,12 @@ function drillFiltersToYaml(
         includeYaml.add(
             new Pair(
                 "visualization_filters",
-                filterRefsToYaml(drill.includedSourceInsightFiltersObjRefs, entities, sourceVisualizationId),
+                filterRefsToYaml(
+                    drill.includedSourceInsightFiltersObjRefs,
+                    entities,
+                    sourceVisualizationId,
+                    updateErrorContext(errorContext, { path: ["includedSourceInsightFiltersObjRefs"] }),
+                ),
             ),
         );
     }
@@ -658,6 +830,7 @@ function drillFiltersToYaml(
                     drill.includedSourceMeasureFiltersObjRefs,
                     entities,
                     sourceVisualizationId,
+                    updateErrorContext(errorContext, { path: ["includedSourceMeasureFiltersObjRefs"] }),
                 ),
             ),
         );
@@ -677,6 +850,7 @@ function filterRefsToYaml(
     refs: Array<{ type: string; [key: string]: any }>,
     entities?: FromEntities,
     sourceVisualizationId?: string,
+    errorContext?: IErrorContext,
 ): string[] {
     const visualisation = entities?.find(
         (entity) => VisualisationsTypes.includes(entity.type) && entity.id === sourceVisualizationId,
@@ -684,45 +858,108 @@ function filterRefsToYaml(
     const filters = visualisation?.query?.filter_by;
 
     return refs
-        .map((ref) => findSourceInsightFilterId(filters, ref) ?? sourceInsightFilterRefFallbackId(ref))
+        .map(
+            (ref) =>
+                findSourceInsightFilterId(filters, ref, errorContext) ??
+                sourceInsightFilterRefFallbackId(ref, errorContext),
+        )
         .filter(Boolean) as string[];
 }
 
 function findSourceInsightFilterId(
     filters: NonNullable<Visualisation["query"]>["filter_by"] | undefined,
     ref: { type: string; [key: string]: any },
+    errorContext?: IErrorContext,
 ): string | undefined {
     if (!filters) {
         return undefined;
     }
 
-    return Object.entries(filters).find(([_, filter]) => matchesSourceInsightFilterRef(filter, ref))?.[0];
+    return Object.entries(filters).find(([_, filter]) =>
+        matchesSourceInsightFilterRef(filter, ref, errorContext),
+    )?.[0];
 }
 
-function matchesSourceInsightFilterRef(filter: Filter, ref: { type: string; [key: string]: any }) {
+function matchesSourceInsightFilterRef(
+    filter: Filter,
+    ref: { type: string; [key: string]: any },
+    errorContext?: IErrorContext,
+) {
     switch (ref.type) {
         case "attributeFilter":
-            return filter.type === "attribute_filter" && filter.using === getIdentifier(ref["label"]);
+            return (
+                filter.type === "attribute_filter" &&
+                filter.using ===
+                    getIdentifier(
+                        ref["label"],
+                        undefined,
+                        updateErrorContext(errorContext, { path: ["attributeFilter"] }),
+                    )
+            );
         case "dateFilter":
-            return filter.type === "date_filter" && filter.using === getIdentifier(ref["dataSet"], true);
+            return (
+                filter.type === "date_filter" &&
+                filter.using ===
+                    getIdentifier(
+                        ref["dataSet"],
+                        true,
+                        updateErrorContext(errorContext, { path: ["dateFilter"] }),
+                    )
+            );
         case "measureValueFilter":
-            return filter.type === "metric_value_filter" && filter.using === getIdentifier(ref["measure"]);
+            return (
+                filter.type === "metric_value_filter" &&
+                filter.using ===
+                    getIdentifier(
+                        ref["measure"],
+                        undefined,
+                        updateErrorContext(errorContext, { path: ["measureValueFilter"] }),
+                    )
+            );
         case "rankingFilter":
-            return filter.type === "ranking_filter" && filter.using === getIdentifier(ref["measure"]);
+            return (
+                filter.type === "ranking_filter" &&
+                filter.using ===
+                    getIdentifier(
+                        ref["measure"],
+                        undefined,
+                        updateErrorContext(errorContext, { path: ["rankingFilter"] }),
+                    )
+            );
         default:
             return false;
     }
 }
 
-function sourceInsightFilterRefFallbackId(ref: { type: string; [key: string]: any }): string | null {
+function sourceInsightFilterRefFallbackId(
+    ref: { type: string; [key: string]: any },
+    errorContext?: IErrorContext,
+): string | null {
     switch (ref.type) {
         case "attributeFilter":
-            return getIdentifier(ref["label"]);
+            return getIdentifier(
+                ref["label"],
+                undefined,
+                updateErrorContext(errorContext, { path: ["attributeFilter"] }),
+            );
         case "dateFilter":
-            return getIdentifier(ref["dataSet"], true);
+            return getIdentifier(
+                ref["dataSet"],
+                true,
+                updateErrorContext(errorContext, { path: ["dateFilter"] }),
+            );
         case "measureValueFilter":
+            return getIdentifier(
+                ref["measure"],
+                undefined,
+                updateErrorContext(errorContext, { path: ["measureValueFilter"] }),
+            );
         case "rankingFilter":
-            return getIdentifier(ref["measure"]);
+            return getIdentifier(
+                ref["measure"],
+                undefined,
+                updateErrorContext(errorContext, { path: ["rankingFilter"] }),
+            );
         default:
             return null;
     }
@@ -732,6 +969,7 @@ function sourceMeasureFilterRefsToYaml(
     refs: Array<{ type: string; [key: string]: any }>,
     entities?: FromEntities,
     sourceVisualizationId?: string,
+    errorContext?: IErrorContext,
 ): string[] {
     const visualisation = entities?.find(
         (entity) => VisualisationsTypes.includes(entity.type) && entity.id === sourceVisualizationId,
@@ -739,7 +977,11 @@ function sourceMeasureFilterRefsToYaml(
     const fieldFilters = collectFieldLevelFilters(visualisation);
 
     return refs
-        .map((ref) => findSourceInsightFilterId(fieldFilters, ref) ?? sourceInsightFilterRefFallbackId(ref))
+        .map(
+            (ref) =>
+                findSourceInsightFilterId(fieldFilters, ref, errorContext) ??
+                sourceInsightFilterRefFallbackId(ref, errorContext),
+        )
         .filter(Boolean) as string[];
 }
 
@@ -757,6 +999,7 @@ function getDateFilterEmptyValueHandling(filter: IDashboardDateFilter): EmptyVal
 export function declarativeFilterContextToYaml(
     dateFilterConfig?: IDashboardDateFilterConfig,
     filterContext?: DeclarativeFilterContext,
+    errorContext?: IErrorContext,
 ) {
     const filters: Array<Pair> = [];
     const filtersMap: { [key: string]: FilterContextItem } = {};
@@ -769,9 +1012,13 @@ export function declarativeFilterContextToYaml(
             return;
         }
 
-        const key = createFilterContextItemKeyName(filter);
+        const key = createFilterContextItemKeyName(
+            filter,
+            "date",
+            updateErrorContext(errorContext, { path: ["date"] }),
+        );
         if (isDashboardDateFilter(filter)) {
-            const def = declarativeDateFilterToYaml(filter);
+            const def = declarativeDateFilterToYaml(filter, errorContext);
             filters.push(new Pair(key, def));
             filtersMap[key] = {
                 yaml: def,
@@ -779,7 +1026,7 @@ export function declarativeFilterContextToYaml(
             };
         }
         if (isDashboardAttributeFilter(filter)) {
-            const def = declarativeAttributeFilterToYaml(filter);
+            const def = declarativeAttributeFilterToYaml(filter, errorContext);
             filters.push(new Pair(key, def));
             filtersMap[key] = {
                 yaml: def,
@@ -787,7 +1034,7 @@ export function declarativeFilterContextToYaml(
             };
         }
         if (isDashboardArbitraryAttributeFilter(filter)) {
-            const def = declarativeArbitraryTextFilterToYaml(filter);
+            const def = declarativeArbitraryTextFilterToYaml(filter, errorContext);
             filters.push(new Pair(key, def));
             filtersMap[key] = {
                 yaml: def,
@@ -795,7 +1042,7 @@ export function declarativeFilterContextToYaml(
             };
         }
         if (isDashboardMatchAttributeFilter(filter)) {
-            const def = declarativeMatchTextFilterToYaml(filter);
+            const def = declarativeMatchTextFilterToYaml(filter, errorContext);
             filters.push(new Pair(key, def));
             filtersMap[key] = {
                 yaml: def,
@@ -818,8 +1065,12 @@ export function declarativeFilterContextToYaml(
                 type: "absolute",
             },
         };
-        const key = createFilterContextItemKeyName(filter, "common");
-        const def = declarativeDateFilterToYaml(filter);
+        const key = createFilterContextItemKeyName(
+            filter,
+            "common",
+            updateErrorContext(errorContext, { path: ["common"] }),
+        );
+        const def = declarativeDateFilterToYaml(filter, errorContext);
 
         filters.unshift(new Pair(key, def));
         filtersMap[key] = {
@@ -861,7 +1112,13 @@ export function declarativeFilterContextToYaml(
 
             //metric filters
             const metricsIds = filterBody.validateElementsBy
-                ?.map((element) => getIdentifier(element))
+                ?.map((element, i) =>
+                    getIdentifier(
+                        element,
+                        undefined,
+                        updateErrorContext(errorContext, { path: ["validateElementsBy", i.toString()] }),
+                    ),
+                )
                 .filter(Boolean);
 
             if (metricsIds?.length) {
@@ -879,7 +1136,7 @@ export function declarativeFilterContextToYaml(
     };
 }
 
-function declarativeDateFilterToYaml(filter: IDashboardDateFilter) {
+function declarativeDateFilterToYaml(filter: IDashboardDateFilter, errorContext?: IErrorContext) {
     const dateFilter = new YAMLMap();
 
     dateFilter.add(new Pair("type", "date_filter"));
@@ -890,7 +1147,16 @@ function declarativeDateFilterToYaml(filter: IDashboardDateFilter) {
     }
 
     if (filter.dateFilter.dataSet) {
-        dateFilter.add(new Pair("date", getIdentifier(filter.dateFilter.dataSet, true)));
+        dateFilter.add(
+            new Pair(
+                "date",
+                getIdentifier(
+                    filter.dateFilter.dataSet,
+                    true,
+                    updateErrorContext(errorContext, { path: ["date"] }),
+                ),
+            ),
+        );
     }
 
     if (isRelativeDashboardDateFilter(filter)) {
@@ -918,7 +1184,7 @@ function declarativeDateFilterToYaml(filter: IDashboardDateFilter) {
     return dateFilter;
 }
 
-function declarativeAttributeFilterToYaml(filter: IDashboardAttributeFilter) {
+function declarativeAttributeFilterToYaml(filter: IDashboardAttributeFilter, errorContext?: IErrorContext) {
     const attributeFilter = new YAMLMap();
 
     attributeFilter.add(new Pair("type", "attribute_filter"));
@@ -926,7 +1192,11 @@ function declarativeAttributeFilterToYaml(filter: IDashboardAttributeFilter) {
         attributeFilter.add(new Pair("title", filter.attributeFilter.title));
     }
 
-    const attributeId = getIdentifier(filter.attributeFilter.displayForm);
+    const attributeId = getIdentifier(
+        filter.attributeFilter.displayForm,
+        undefined,
+        updateErrorContext(errorContext, { path: ["attributeFilter", "displayForm"] }),
+    );
     attributeFilter.add(new Pair("using", attributeId));
 
     if (filter.attributeFilter.selectionMode === "single") {
@@ -956,28 +1226,52 @@ function declarativeAttributeFilterToYaml(filter: IDashboardAttributeFilter) {
     return attributeFilter;
 }
 
-function declarativeArbitraryTextFilterToYaml(filter: IDashboardArbitraryAttributeFilter) {
+function declarativeArbitraryTextFilterToYaml(
+    filter: IDashboardArbitraryAttributeFilter,
+    errorContext?: IErrorContext,
+) {
     const textFilter = new YAMLMap();
 
     textFilter.add(new Pair("type", "text_filter"));
     if (filter.arbitraryAttributeFilter.title) {
         textFilter.add(new Pair("title", filter.arbitraryAttributeFilter.title));
     }
-    textFilter.add(new Pair("using", getIdentifier(filter.arbitraryAttributeFilter.displayForm)));
+    textFilter.add(
+        new Pair(
+            "using",
+            getIdentifier(
+                filter.arbitraryAttributeFilter.displayForm,
+                undefined,
+                updateErrorContext(errorContext, { path: ["arbitraryAttributeFilter", "displayForm"] }),
+            ),
+        ),
+    );
     textFilter.add(new Pair("condition", filter.arbitraryAttributeFilter.negativeSelection ? "isNot" : "is"));
     textFilter.add(new Pair("values", filter.arbitraryAttributeFilter.values));
 
     return textFilter;
 }
 
-function declarativeMatchTextFilterToYaml(filter: IDashboardMatchAttributeFilter) {
+function declarativeMatchTextFilterToYaml(
+    filter: IDashboardMatchAttributeFilter,
+    errorContext?: IErrorContext,
+) {
     const textFilter = new YAMLMap();
 
     textFilter.add(new Pair("type", "text_filter"));
     if (filter.matchAttributeFilter.title) {
         textFilter.add(new Pair("title", filter.matchAttributeFilter.title));
     }
-    textFilter.add(new Pair("using", getIdentifier(filter.matchAttributeFilter.displayForm)));
+    textFilter.add(
+        new Pair(
+            "using",
+            getIdentifier(
+                filter.matchAttributeFilter.displayForm,
+                undefined,
+                updateErrorContext(errorContext, { path: ["matchAttributeFilter", "displayForm"] }),
+            ),
+        ),
+    );
     textFilter.add(
         new Pair(
             "condition",
@@ -1000,21 +1294,41 @@ export function declarativeFiltersConfigToYaml(
     dateFilterConfig?: IDashboardDateFilterConfig,
     dateFilterConfigs?: IDashboardDateFilterConfigItem[],
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
+    errorContext?: IErrorContext,
 ) {
-    attributeFilterConfigs?.forEach((filterSettings) => {
+    attributeFilterConfigs?.forEach((filterSettings, i) => {
         const filter = filtersMap[filterSettings.localIdentifier];
         if (filter) {
             if (filterSettings.mode && filterSettings.mode !== "active") {
                 filter.yaml.add(new Pair("mode", filterSettings.mode));
             }
             if (filterSettings.displayAsLabel) {
-                filter.yaml.add(new Pair("display_as", getIdentifier(filterSettings.displayAsLabel)));
+                filter.yaml.add(
+                    new Pair(
+                        "display_as",
+                        getIdentifier(
+                            filterSettings.displayAsLabel,
+                            undefined,
+                            updateErrorContext(errorContext, {
+                                path: ["attributeFilterConfig", i.toString(), "displayAsLabel"],
+                            }),
+                        ),
+                    ),
+                );
             }
         }
     });
-    dateFilterConfigs?.forEach((filterSettings) => {
+    dateFilterConfigs?.forEach((filterSettings, i) => {
         const filter = Object.values(filtersMap).find(
-            (filter) => filter.yaml.get("date") === getIdentifier(filterSettings.dateDataSet, true),
+            (filter) =>
+                filter.yaml.get("date") ===
+                getIdentifier(
+                    filterSettings.dateDataSet,
+                    true,
+                    updateErrorContext(errorContext, {
+                        path: ["dateFilterConfig", i.toString(), "dateDataSet"],
+                    }),
+                ),
         );
         fillDateFilterConfig(filterSettings.config, filter);
     });
@@ -1129,15 +1443,19 @@ function getFilterGroupIdBase({ title, localIdentifier }: IDashboardFilterGroup)
         .toLowerCase();
 }
 
-export function declarativePluginsToYaml(dashboard: IDashboardDefinition) {
+export function declarativePluginsToYaml(dashboard: IDashboardDefinition, errorContext?: IErrorContext) {
     if (!dashboard.plugins?.length) {
         return;
     }
 
     const plugins = new YAMLSeq();
 
-    dashboard.plugins.forEach((plugin) => {
-        const pluginId = getIdentifier(plugin.plugin, true);
+    dashboard.plugins.forEach((plugin, i) => {
+        const pluginId = getIdentifier(
+            plugin.plugin,
+            true,
+            updateErrorContext(errorContext, { path: [i.toString(), "plugin"] }),
+        );
         if (plugin.parameters?.length) {
             plugins.add({
                 id: pluginId,

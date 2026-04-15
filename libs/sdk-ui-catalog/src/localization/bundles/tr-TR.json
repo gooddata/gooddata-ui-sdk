@@ -146,6 +146,8 @@
     "analyticsCatalog.quality.scoreCard.action.syncing": "Model güncellemesi devam ediyor, lütfen bekleyin...",
     "analyticsCatalog.quality.scoreCard.action.success": "Nesneleri göster",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Son denetim: {date}",
+    "analyticsCatalog.quality.scoreCard.checkFailed": "Kontrol başarısız oldu!",
+    "analyticsCatalog.quality.scoreCard.checkFailed.description": "Bir şeyler ters gitti.",
     "analyticsCatalog.quality.severity.warning": "{count, plural, one {uyarı} other {uyarılar}}",
     "analyticsCatalog.quality.severity.suggestion": "{count, plural, one {öneri} other {öneriler}}",
     "analyticsCatalog.lineage.direction.up": "Yukarı akış",
@@ -166,7 +168,8 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Sayısal bir parametre tanımlayan bir YAML ifadesi oluşturun.",
     "analyticsCatalog.parameter.dialog.create.submit": "Oluştur",
     "analyticsCatalog.parameter.dialog.edit.submit": "Kaydet",
-    "analyticsCatalog.parameter.dialog.edit.duplicate": "Yeni olarak kaydet",
+    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Yeni olarak kaydet",
+    "analyticsCatalog.parameter.dialog.edit.idImmutable": "Mevcut bir parametre kaydedilirken parametre kimliği değiştirilemez. Bunun yerine Yeni olarak kaydet seçeneğini kullanın.",
     "analyticsCatalog.parameter.dialog.cancel": "İptal",
     "analyticsCatalog.parameter.dialog.help": "Parametre nasıl oluşturulur?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parametre kaydedilemedi.",
@@ -178,5 +181,6 @@
     "analyticsCatalog.parameter.validation.invalidConstraintRange": "Kısıt min değeri max değerinden büyük olamaz.",
     "analyticsCatalog.parameter.validation.invalidTags": "Etiketler, bir dize listesi olmalıdır.",
     "analyticsCatalog.parameter.create.success": "Parametre oluşturuldu.",
+    "analyticsCatalog.parameter.update.success": "Parametre güncellendi.",
     "analyticsCatalog.parameter.validation.syntax": "YAML söz dizimi hatası"
 }

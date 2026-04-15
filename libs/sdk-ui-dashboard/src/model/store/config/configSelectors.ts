@@ -549,7 +549,7 @@ export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: Dashbo
 export const selectEnableArbitraryFilterKD: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableArbitraryFilterKD ?? false;
+        return state.settings?.enableArbitraryFilterKD ?? true;
     },
 );
 
@@ -559,7 +559,7 @@ export const selectEnableArbitraryFilterKD: DashboardSelector<boolean> = createS
  * @alpha
  */
 export const selectEnableMatchFilterKD: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableMatchFilterKD ?? false;
+    return state.settings?.enableMatchFilterKD ?? true;
 });
 
 /**
