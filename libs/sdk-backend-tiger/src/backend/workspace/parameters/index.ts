@@ -4,6 +4,7 @@ import { invariant } from "ts-invariant";
 
 import {
     EntitiesApi_CreateEntityParameters,
+    EntitiesApi_DeleteEntityParameters,
     EntitiesApi_GetEntityParameters,
     EntitiesApi_PatchEntityParameters,
 } from "@gooddata/api-client-tiger";
@@ -93,5 +94,15 @@ export class TigerWorkspaceParameters implements IWorkspaceParametersService {
         );
 
         return convertParameterFromBackend(result.data);
+    }
+
+    public async deleteParameter(ref: ObjRef): Promise<void> {
+        const objectId = objRefToIdentifier(ref, this.authCall);
+        await this.authCall((client) =>
+            EntitiesApi_DeleteEntityParameters(client.axios, client.basePath, {
+                objectId,
+                workspaceId: this.workspace,
+            }),
+        );
     }
 }

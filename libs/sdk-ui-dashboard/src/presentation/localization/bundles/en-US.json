@@ -127,6 +127,18 @@
         "text": "Data",
         "crowdinContext": "Header for data export options in the export submenu"
     },
+    "export.template.dialog.title": {
+        "text": "Select export template",
+        "crowdinContext": "Title for the dialog that lets users choose which slide export template to apply"
+    },
+    "export.template.dialog.export": {
+        "text": "Export",
+        "crowdinContext": "Confirm button in the export template selection dialog"
+    },
+    "export.template.settings.title": {
+        "text": "Export template",
+        "crowdinContext": "Header for the export template selection section in scheduled export settings"
+    },
     "options.menu.export_to_pdf": {
         "text": "Export to PDF",
         "crowdinContext": "Menu option to export the entire dashboard as a PDF document"

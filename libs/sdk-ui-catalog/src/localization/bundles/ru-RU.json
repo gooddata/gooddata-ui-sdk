@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Создайте инструкцию YAML, которая определяет числовой параметр.",
     "analyticsCatalog.parameter.dialog.create.submit": "Создать",
     "analyticsCatalog.parameter.dialog.edit.submit": "Сохранить",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Сохранить как новую",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Сохранить как новую",
     "analyticsCatalog.parameter.dialog.cancel": "Отмена",
     "analyticsCatalog.parameter.dialog.help": "Как создать параметр?",
     "analyticsCatalog.parameter.dialog.submit.error": "Не удалось сохранить параметр.",

@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Maak een YAML-instructie die een numerieke parameter definieert.",
     "analyticsCatalog.parameter.dialog.create.submit": "Creëren",
     "analyticsCatalog.parameter.dialog.edit.submit": "Opslaan",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Opslaan als nieuw",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Opslaan als nieuw",
     "analyticsCatalog.parameter.dialog.cancel": "Annuleren",
     "analyticsCatalog.parameter.dialog.help": "Hoe maakt u een parameter aan?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parameter kon niet worden opgeslagen.",

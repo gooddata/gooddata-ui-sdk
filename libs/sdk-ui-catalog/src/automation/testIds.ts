@@ -14,3 +14,7 @@ export const filterCertification = `${filter}/certification`;
 export const filterQuality = `${filter}/quality`;
 export const filterTags = `${filter}/tags`;
 export const filterReset = `${filter}/reset`;
+export const catalogDetail = `${catalog}-detail`;
+export const catalogDetailActionsTrigger = `${catalogDetail}-actions/trigger`;
+export const catalogDetailActionDuplicate = `${catalogDetail}-actions/duplicate`;
+export const catalogDetailActionDelete = `${catalogDetail}-actions/delete`;

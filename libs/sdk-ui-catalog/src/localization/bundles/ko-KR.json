@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "숫자 매개변수를 정의하는 YAML 문을 만드세요.",
     "analyticsCatalog.parameter.dialog.create.submit": "생성",
     "analyticsCatalog.parameter.dialog.edit.submit": "저장",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "새로 저장",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "새로 저장",
     "analyticsCatalog.parameter.dialog.cancel": "취소",
     "analyticsCatalog.parameter.dialog.help": "매개변수를 만드는 방법은?",
     "analyticsCatalog.parameter.dialog.submit.error": "매개변수를 저장할 수 없습니다.",

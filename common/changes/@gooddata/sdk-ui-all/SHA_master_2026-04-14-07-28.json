@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: Fix KDA window not opening",
+            "type": "patch"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

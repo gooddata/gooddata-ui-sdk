@@ -1,11 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MouseEvent, useCallback, useEffect, useState } from "react";
+import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
-import type { OpenHandlerEvent } from "../../catalogDetail/CatalogDetailContent.js";
-import { type ICatalogItem, type ICatalogItemRef } from "../../catalogItem/types.js";
+import type { OpenHandlerEvent } from "../../catalogDetail/types.js";
+import { isCatalogItemLoaded } from "../../catalogItem/guards.js";
+import type { ICatalogItem, ICatalogItemRef } from "../../catalogItem/types.js";
 
 export function useCatalogItemOpen(
     onCatalogItemOpenClick?: (e: MouseEvent, item: OpenHandlerEvent) => void,
@@ -15,16 +16,21 @@ export function useCatalogItemOpen(
 ) {
     const [openedItem, setItemOpened] = useState<ICatalogItemRef | ICatalogItem | null>(null);
     const [open, setOpen] = useState<boolean>(false);
+    const lastOpenCatalogItemRef = useRef<ICatalogItemRef | undefined>(undefined);
+
     useEffect(() => {
-        if (
-            openCatalogItemRef &&
-            !areObjRefsEqual(openCatalogItemRef, openedItem as ICatalogItemRef) &&
-            !open
-        ) {
-            setOpen(true);
-            setItemOpened(openCatalogItemRef);
+        if (openCatalogItemRef) {
+            const externalRefChanged = !areObjRefsEqual(openCatalogItemRef, lastOpenCatalogItemRef.current);
+            const shouldSyncExternalRef = !(
+                isCatalogItemLoaded(openedItem) && areObjRefsEqual(openCatalogItemRef, openedItem)
+            );
+            if (externalRefChanged && shouldSyncExternalRef) {
+                setOpen(true);
+                setItemOpened(openCatalogItemRef);
+            }
         }
-    }, [open, openCatalogItemRef, openedItem]);
+        lastOpenCatalogItemRef.current = openCatalogItemRef;
+    }, [openCatalogItemRef, openedItem]);
 
     const onOpenDetail = useCallback(
         (item: ICatalogItem) => {

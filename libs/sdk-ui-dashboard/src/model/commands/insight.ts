@@ -1170,6 +1170,11 @@ export interface IExportSlidesInsightWidgetPayload {
      * Type of export to perform.
      */
     readonly exportType: "pdf" | "pptx";
+
+    /**
+     * Identifier of the export template to use.
+     */
+    readonly templateId?: string;
 }
 
 /**
@@ -1187,6 +1192,7 @@ export interface IExportSlidesInsightWidget extends IDashboardCommand {
  * @param exportType - type of export to perform
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
+ * @param templateId - identifier of the export template to use
  *
  * @alpha
  */
@@ -1195,6 +1201,7 @@ export function exportSlidesInsightWidget(
     filename: string,
     exportType: "pdf" | "pptx",
     correlationId?: string,
+    templateId?: string,
 ): IExportSlidesInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_SLIDES",
@@ -1203,6 +1210,7 @@ export function exportSlidesInsightWidget(
             ref,
             filename,
             exportType,
+            templateId,
         },
     };
 }

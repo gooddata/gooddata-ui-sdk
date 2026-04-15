@@ -10,6 +10,23 @@ import { type IMetadataObject, type IMetadataObjectDefinition } from "../ldm/met
 import { type Identifier } from "../objRef/index.js";
 
 /**
+ * Export template metadata.
+ *
+ * @beta
+ */
+export interface IExportTemplate {
+    /**
+     * Unique identifier of the export template.
+     */
+    id: string;
+
+    /**
+     * User-facing name of the export template.
+     */
+    name: string;
+}
+
+/**
  * Export definition dashboard settings
  *
  * @alpha
@@ -82,6 +99,10 @@ export type IExportDefinitionDashboardRequestPayload = {
     format: DashboardAttachmentType;
     settings?: IExportDefinitionDashboardSettings;
     content: IExportDefinitionDashboardContent;
+    /**
+     * Identifier of the export template to use for slide exports.
+     */
+    templateId?: string;
 };
 
 /**
@@ -119,6 +140,10 @@ export type IExportDefinitionVisualizationObjectRequestPayload = {
     format: WidgetAttachmentType;
     settings?: IExportDefinitionVisualizationObjectSettings;
     content: IExportDefinitionVisualizationObjectContent;
+    /**
+     * Identifier of the export template to use for slide exports.
+     */
+    templateId?: string;
 };
 
 /**

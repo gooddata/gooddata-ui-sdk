@@ -994,6 +994,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "attr.f_account.account",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "Account",
         ],
@@ -1119,6 +1120,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_account.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Account",
         ],
@@ -1244,6 +1246,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "attr.f_activity.activity",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "Activity",
         ],
@@ -1392,6 +1395,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_activity.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Activity",
         ],
@@ -1497,6 +1501,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_activity.activitytype_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__activitytype_id__nm_activitytype",
         "tags": [
           "Activity",
         ],
@@ -1837,6 +1842,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_city.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "City",
         ],
@@ -2107,6 +2113,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "county_name",
           "type": "attribute",
         },
+        "sourceColumn": "county_name",
         "tags": [
           "City",
         ],
@@ -2283,6 +2290,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_owner.department_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__department_id__nm_department",
         "tags": [
           "owner",
         ],
@@ -2432,6 +2440,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_opportunitysnapshot.forecastcategory_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__forecastcategory_id__nm_forecastcategory",
         "tags": [
           "OpportunitySnapshot",
         ],
@@ -2537,6 +2546,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_stage.isactive_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__isactive_id__nm_isactive",
         "tags": [
           "Stage",
         ],
@@ -2642,6 +2652,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_activity.isclosed_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__isclosed_id__nm_isclosed",
         "tags": [
           "Activity",
         ],
@@ -2747,6 +2758,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_stage.isclosed_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__isclosed_id__nm_isclosed",
         "tags": [
           "Stage",
         ],
@@ -2852,6 +2864,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_activity.istask_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__istask_id__nm_istask",
         "tags": [
           "Activity",
         ],
@@ -2957,6 +2970,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_stage.iswon_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__iswon_id__nm_iswon",
         "tags": [
           "Stage",
         ],
@@ -3168,6 +3182,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "attr.f_opportunitysnapshot.oppsnapshot",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "OpportunitySnapshot",
         ],
@@ -3296,6 +3311,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_opportunitysnapshot.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "OpportunitySnapshot",
         ],
@@ -3446,6 +3462,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "attr.f_opportunity.opportunity",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "Opportunity",
         ],
@@ -3592,6 +3609,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_opportunity.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Opportunity",
         ],
@@ -3697,6 +3715,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_owner.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "owner",
         ],
@@ -3845,6 +3864,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_activity.priority_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__priority_id__nm_priority",
         "tags": [
           "Activity",
         ],
@@ -4059,6 +4079,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "attr.f_product.product",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "product",
         ],
@@ -4226,6 +4247,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_product.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "product",
         ],
@@ -4356,6 +4378,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "productthatisrenamedtotestthelongattributename",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_name",
         "tags": [
           "product",
         ],
@@ -4507,6 +4530,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_owner.region_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__region_id__nm_region",
         "tags": [
           "owner",
         ],
@@ -4653,6 +4677,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "attr.f_owner.salesrep",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "owner",
         ],
@@ -4778,6 +4803,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "attr.f_stagehistory.stagehistory",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "stagehistory",
         ],
@@ -4883,6 +4909,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_stagehistory.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "stagehistory",
         ],
@@ -4988,6 +5015,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_stage.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Stage",
         ],
@@ -5133,6 +5161,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "attr.f_stage.stagename",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_stagename",
         "tags": [
           "Stage",
         ],
@@ -5298,6 +5327,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "state_id",
           "type": "attribute",
         },
+        "sourceColumn": "state_id",
         "tags": [
           "City",
         ],
@@ -5423,6 +5453,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_activity.status_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__status_id__nm_status",
         "tags": [
           "Activity",
         ],
@@ -5529,6 +5560,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_stage.status_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__status_id__nm_status",
         "tags": [
           "Stage",
           "attribute_image_url",
@@ -5641,6 +5673,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "f_timeline.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Timeline",
         ],
@@ -5809,6 +5842,7 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
           "identifier": "user_id",
           "type": "attribute",
         },
+        "sourceColumn": "user_id",
         "tags": [
           "owner",
         ],
@@ -10967,6 +11001,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "attr.f_account.account",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "Account",
         ],
@@ -11092,6 +11127,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_account.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Account",
         ],
@@ -11217,6 +11253,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "attr.f_activity.activity",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "Activity",
         ],
@@ -11365,6 +11402,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_activity.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Activity",
         ],
@@ -11470,6 +11508,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_activity.activitytype_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__activitytype_id__nm_activitytype",
         "tags": [
           "Activity",
         ],
@@ -11810,6 +11849,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_city.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "City",
         ],
@@ -12080,6 +12120,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "county_name",
           "type": "attribute",
         },
+        "sourceColumn": "county_name",
         "tags": [
           "City",
         ],
@@ -12256,6 +12297,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_owner.department_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__department_id__nm_department",
         "tags": [
           "owner",
         ],
@@ -12405,6 +12447,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_opportunitysnapshot.forecastcategory_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__forecastcategory_id__nm_forecastcategory",
         "tags": [
           "OpportunitySnapshot",
         ],
@@ -12510,6 +12553,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_stage.isactive_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__isactive_id__nm_isactive",
         "tags": [
           "Stage",
         ],
@@ -12615,6 +12659,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_activity.isclosed_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__isclosed_id__nm_isclosed",
         "tags": [
           "Activity",
         ],
@@ -12720,6 +12765,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_stage.isclosed_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__isclosed_id__nm_isclosed",
         "tags": [
           "Stage",
         ],
@@ -12825,6 +12871,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_activity.istask_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__istask_id__nm_istask",
         "tags": [
           "Activity",
         ],
@@ -12930,6 +12977,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_stage.iswon_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__iswon_id__nm_iswon",
         "tags": [
           "Stage",
         ],
@@ -13141,6 +13189,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "attr.f_opportunitysnapshot.oppsnapshot",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "OpportunitySnapshot",
         ],
@@ -13269,6 +13318,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_opportunitysnapshot.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "OpportunitySnapshot",
         ],
@@ -13419,6 +13469,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "attr.f_opportunity.opportunity",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "Opportunity",
         ],
@@ -13565,6 +13616,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_opportunity.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Opportunity",
         ],
@@ -13670,6 +13722,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_owner.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "owner",
         ],
@@ -13818,6 +13871,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_activity.priority_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__priority_id__nm_priority",
         "tags": [
           "Activity",
         ],
@@ -14032,6 +14086,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "attr.f_product.product",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "product",
         ],
@@ -14199,6 +14254,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_product.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "product",
         ],
@@ -14329,6 +14385,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "productthatisrenamedtotestthelongattributename",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_name",
         "tags": [
           "product",
         ],
@@ -14480,6 +14537,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_owner.region_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__region_id__nm_region",
         "tags": [
           "owner",
         ],
@@ -14626,6 +14684,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "attr.f_owner.salesrep",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "owner",
         ],
@@ -14751,6 +14810,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "attr.f_stagehistory.stagehistory",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_id",
         "tags": [
           "stagehistory",
         ],
@@ -14856,6 +14916,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_stagehistory.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "stagehistory",
         ],
@@ -14961,6 +15022,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_stage.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Stage",
         ],
@@ -15106,6 +15168,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "attr.f_stage.stagename",
           "type": "attribute",
         },
+        "sourceColumn": "ls__id__nm_stagename",
         "tags": [
           "Stage",
         ],
@@ -15271,6 +15334,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "state_id",
           "type": "attribute",
         },
+        "sourceColumn": "state_id",
         "tags": [
           "City",
         ],
@@ -15396,6 +15460,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_activity.status_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__status_id__nm_status",
         "tags": [
           "Activity",
         ],
@@ -15502,6 +15567,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_stage.status_id",
           "type": "attribute",
         },
+        "sourceColumn": "ls__status_id__nm_status",
         "tags": [
           "Stage",
           "attribute_image_url",
@@ -15614,6 +15680,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "f_timeline.id",
           "type": "attribute",
         },
+        "sourceColumn": "id",
         "tags": [
           "Timeline",
         ],
@@ -15782,6 +15849,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
           "identifier": "user_id",
           "type": "attribute",
         },
+        "sourceColumn": "user_id",
         "tags": [
           "owner",
         ],

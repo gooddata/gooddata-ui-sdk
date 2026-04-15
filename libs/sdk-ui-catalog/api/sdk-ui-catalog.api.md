@@ -80,8 +80,21 @@ export interface IAnalyticsCatalogProps {
     workspace?: string;
 }
 
+// @internal
+export interface ICatalogDetailAction {
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDestructive?: boolean;
+    // (undocumented)
+    label: string;
+}
+
 // @internal (undocumented)
 export interface ICatalogDetailContentProps {
+    getItemActions?: (item: ICatalogItem) => ICatalogDetailAction[];
     objectDefinition?: ICatalogItemRef | ICatalogItem | null;
     objectId?: string | null;
     objectType?: ObjectType | null;
@@ -89,6 +102,7 @@ export interface ICatalogDetailContentProps {
     onCatalogItemUpdate?: (item: ICatalogItem) => void;
     onCatalogItemUpdateError?: (error: Error) => void;
     onEditClick?: (event: MouseEvent_2, editClickEvent: EditHandlerEvent) => void;
+    onItemAction?: (item: ICatalogItem, actionId: string) => void;
     onOpenClick?: (event: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     onTagClick?: (tag: string) => void;
 }

@@ -34,6 +34,7 @@ $content-font-size: 14px;
             font-weight: 700;
             line-height: 1.25;
             margin: 0;
+            color: kit-variables.$gd-color-text;
         }
 
         .gd-ui-kit-tooltip__anchor {
@@ -354,6 +355,10 @@ $content-font-size: 14px;
             font-size: 24px;
             font-weight: 700;
 
+            &.with-error {
+                height: 43px;
+            }
+
             &__loading {
                 flex: none;
 
@@ -367,6 +372,24 @@ $content-font-size: 14px;
                 display: flex;
                 align-items: center;
                 gap: 5px;
+            }
+
+            &__error {
+                font-weight: 400;
+                display: flex;
+                align-items: flex-start;
+                flex-direction: column;
+                margin-top: 5px;
+                color: kit-variables.$gd-palette-error-base;
+                background: kit-variables.$gd-palette-error-dimmed;
+                font-size: 12px;
+                font-style: normal;
+                line-height: 17px;
+                padding: 4px 10px;
+                border-radius: 3px;
+                height: 35px;
+                width: 100%;
+                overflow: hidden;
             }
         }
 

@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "สร้างคำสั่ง YAML ที่กำหนดพารามิเตอร์ตัวเลข",
     "analyticsCatalog.parameter.dialog.create.submit": "สร้าง",
     "analyticsCatalog.parameter.dialog.edit.submit": "บันทึก",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "บันทึกเป็นใหม่",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "บันทึกเป็นใหม่",
     "analyticsCatalog.parameter.dialog.cancel": "ยกเลิก",
     "analyticsCatalog.parameter.dialog.help": "จะสร้างพารามิเตอร์ได้อย่างไร?",
     "analyticsCatalog.parameter.dialog.submit.error": "ไม่สามารถบันทึกพารามิเตอร์ได้",

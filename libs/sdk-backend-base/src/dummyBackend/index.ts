@@ -80,6 +80,7 @@ import {
     type IOrganization,
     type IOrganizationAgentsService,
     type IOrganizationAutomationService,
+    type IOrganizationExportTemplatesService,
     type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
@@ -1278,6 +1279,12 @@ class DummyOrganization implements IOrganization {
             deleteAgent: () => Promise.resolve(),
         };
     }
+
+    public exportTemplates(): IOrganizationExportTemplatesService {
+        return {
+            getExportTemplates: () => Promise.resolve([]),
+        };
+    }
 }
 
 class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
@@ -1775,6 +1782,8 @@ class DummyWorkspaceParametersService implements IWorkspaceParametersService {
             type: "parameter",
         };
     }
+
+    public async deleteParameter(_ref: ObjRef): Promise<void> {}
 }
 
 class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {

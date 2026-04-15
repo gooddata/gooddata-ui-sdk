@@ -5,11 +5,13 @@ import { useIntl } from "react-intl";
 import {
     type DashboardAttachmentType,
     type IExportDefinitionVisualizationObjectSettings,
+    type IExportTemplate,
     type WidgetAttachmentType,
 } from "@gooddata/sdk-model";
 
 import { AttachmentSettings } from "./AttachmentSettings.js";
 import { attachmentIcons, dashboardAttachmentLabels, widgetAttachmentLabels } from "./AttachmentsSelect.js";
+import { SlidesTemplateSettings } from "./SlidesTemplateSettings.js";
 
 export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttachmentType>({
     attachments,
@@ -25,6 +27,9 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
     isCsvSettingsEnabled,
     defaultPdfPageSize,
     mode,
+    exportTemplates,
+    slidesTemplateIds,
+    onSlidesTemplateIdChange,
 }: {
     attachments: T[];
     onDelete: (attachment: T) => void;
@@ -39,6 +44,9 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
     isCsvSettingsEnabled?: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     mode: "widget" | "dashboard";
+    exportTemplates?: IExportTemplate[];
+    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string };
+    onSlidesTemplateIdChange?: (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES") => void;
 }) {
     const intl = useIntl();
 
@@ -81,6 +89,20 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                             type="CSV_RAW"
                             settings={csvRawSettings}
                             onSettingsChange={onCsvRawSettingsChange}
+                        />
+                    ) : null}
+                    {attachment === "PPTX" && exportTemplates && onSlidesTemplateIdChange ? (
+                        <SlidesTemplateSettings
+                            templates={exportTemplates}
+                            templateId={slidesTemplateIds?.PPTX}
+                            onTemplateIdChange={(id) => onSlidesTemplateIdChange(id, "PPTX")}
+                        />
+                    ) : null}
+                    {attachment === "PDF_SLIDES" && exportTemplates && onSlidesTemplateIdChange ? (
+                        <SlidesTemplateSettings
+                            templates={exportTemplates}
+                            templateId={slidesTemplateIds?.PDF_SLIDES}
+                            onTemplateIdChange={(id) => onSlidesTemplateIdChange(id, "PDF_SLIDES")}
                         />
                     ) : null}
                     <button

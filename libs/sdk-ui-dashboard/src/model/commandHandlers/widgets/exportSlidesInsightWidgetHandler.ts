@@ -25,12 +25,12 @@ export function* exportSlidesInsightWidgetHandler(
     ctx: DashboardContext,
     cmd: IExportSlidesInsightWidget,
 ): SagaIterator<IDashboardInsightWidgetExportResolved> {
-    const { ref, filename, exportType } = cmd.payload;
+    const { ref, filename, exportType, templateId } = cmd.payload;
     const { workspace, backend } = ctx;
 
     const dashboardRef = yield select(selectDashboardRef);
     if (!dashboardRef) {
-        throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to EXCEL must have an ObjRef.");
+        throw invalidArgumentsProvided(ctx, cmd, "Dashboard to export to slides must have an ObjRef.");
     }
     const filterContextFilters = yield select(selectFilterContextFilters);
     const effectiveFilters = ensureAllTimeFilterForExport(filterContextFilters);
@@ -59,6 +59,7 @@ export function* exportSlidesInsightWidgetHandler(
             widgetIds: [ref],
             filename,
             timeout,
+            templateId,
         },
     );
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

@@ -153,7 +153,22 @@ describe("ParameterDialog", () => {
         expect(screen.getByText("Save")).toBeInTheDocument();
     });
 
-    it("renders 'Save as new' button in edit mode", () => {
+    it("renders 'Save as new' button in edit mode when onDuplicate is provided", () => {
+        render(
+            <ParameterDialog
+                mode="edit"
+                initialParameter={validInitialParameter}
+                onClose={vi.fn()}
+                onSubmit={vi.fn()}
+                onDuplicate={vi.fn()}
+            />,
+            { wrapper },
+        );
+
+        expect(screen.getByText("Save as new")).toBeInTheDocument();
+    });
+
+    it("does not render 'Save as new' button in edit mode without onDuplicate", () => {
         render(
             <ParameterDialog
                 mode="edit"
@@ -164,7 +179,7 @@ describe("ParameterDialog", () => {
             { wrapper },
         );
 
-        expect(screen.getByText("Save as new")).toBeInTheDocument();
+        expect(screen.queryByText("Save as new")).not.toBeInTheDocument();
     });
 
     it("does not render 'Save as new' button in create mode", () => {
@@ -183,21 +198,24 @@ describe("ParameterDialog", () => {
         expect(screen.queryByText("Save as new")).not.toBeInTheDocument();
     });
 
-    it("calls submit with save as new flag in edit mode", () => {
+    it("passes the current parameter to onDuplicate in edit mode", () => {
         const onSubmit = vi.fn();
+        const onDuplicate = vi.fn();
         render(
             <ParameterDialog
                 mode="edit"
                 initialParameter={validInitialParameter}
                 onClose={vi.fn()}
                 onSubmit={onSubmit}
+                onDuplicate={onDuplicate}
             />,
             { wrapper },
         );
 
         fireEvent.click(screen.getByText("Save as new"));
 
-        expect(onSubmit).toHaveBeenCalledWith(validParameter, true);
+        expect(onSubmit).not.toHaveBeenCalled();
+        expect(onDuplicate).toHaveBeenCalledWith(validParameter);
     });
 
     it("calls onClose when Cancel is clicked", () => {
@@ -235,55 +253,54 @@ describe("ParameterDialog", () => {
         expect(screen.getByText("How to create a parameter?")).toBeInTheDocument();
     });
 
-    it("shows error when content is empty", () => {
+    it("shows error on submit when content is empty", () => {
+        const onSubmit = vi.fn();
         render(
             <ParameterDialog
                 mode="create"
                 initialParameter={createParameter}
                 onClose={vi.fn()}
-                onSubmit={vi.fn()}
+                onSubmit={onSubmit}
             />,
-            {
-                wrapper,
-            },
+            { wrapper },
         );
 
         fireEvent.change(screen.getByTestId("yaml-editor"), { target: { value: "" } });
+        fireEvent.click(screen.getByTestId("create"));
 
-        expect(screen.getByTestId("create")).toHaveAttribute("aria-disabled", "true");
+        expect(onSubmit).not.toHaveBeenCalled();
         expect(screen.getByText("Parameter definition cannot be empty.")).toBeInTheDocument();
     });
 
-    it("disables submit and shows an error for invalid YAML immediately", () => {
+    it("shows error on submit for invalid YAML", () => {
+        const onSubmit = vi.fn();
         render(
             <ParameterDialog
                 mode="create"
                 initialParameter={createParameter}
                 onClose={vi.fn()}
-                onSubmit={vi.fn()}
+                onSubmit={onSubmit}
             />,
-            {
-                wrapper,
-            },
+            { wrapper },
         );
 
         fireEvent.change(screen.getByTestId("yaml-editor"), { target: { value: "id: [foo" } });
+        fireEvent.click(screen.getByTestId("create"));
 
-        expect(screen.getByTestId("create")).toHaveAttribute("aria-disabled", "true");
+        expect(onSubmit).not.toHaveBeenCalled();
         expect(screen.getByText("YAML syntax error")).toBeInTheDocument();
     });
 
-    it("disables submit and shows an error for unsupported parameter types", () => {
+    it("shows error on submit for unsupported parameter types", () => {
+        const onSubmit = vi.fn();
         render(
             <ParameterDialog
                 mode="create"
                 initialParameter={createParameter}
                 onClose={vi.fn()}
-                onSubmit={vi.fn()}
+                onSubmit={onSubmit}
             />,
-            {
-                wrapper,
-            },
+            { wrapper },
         );
 
         fireEvent.change(screen.getByTestId("yaml-editor"), {
@@ -294,8 +311,9 @@ describe("ParameterDialog", () => {
 `,
             },
         });
+        fireEvent.click(screen.getByTestId("create"));
 
-        expect(screen.getByTestId("create")).toHaveAttribute("aria-disabled", "true");
+        expect(onSubmit).not.toHaveBeenCalled();
         expect(screen.getByText("Only NUMBER parameters are supported.")).toBeInTheDocument();
     });
 
@@ -320,7 +338,7 @@ describe("ParameterDialog", () => {
         });
         fireEvent.click(screen.getByTestId("create"));
 
-        expect(onSubmit).toHaveBeenCalledWith(validParameter, false);
+        expect(onSubmit).toHaveBeenCalledWith(validParameter);
     });
 
     it("renders the YAML editor", () => {
@@ -382,6 +400,11 @@ describe("ParameterDialog", () => {
             { wrapper },
         );
 
+        // Make a change to enable the Save button
+        fireEvent.change(screen.getByTestId("yaml-editor"), {
+            target: { value: validYaml.replace("Test parameter", "Edited parameter") },
+        });
+
         // Trigger submit to enter submitting state
         await act(async () => {
             fireEvent.click(screen.getByText("Save", { selector: "button span, button" }));
@@ -428,31 +451,29 @@ describe("ParameterDialog", () => {
         ).toBeInTheDocument();
     });
 
-    it("allows id changes on Save as new in edit mode", () => {
-        const onSubmit = vi.fn();
+    it("uses unsaved YAML edits as the source when duplicating", () => {
+        const onDuplicate = vi.fn();
         render(
             <ParameterDialog
                 mode="edit"
                 initialParameter={validInitialParameter}
                 onClose={vi.fn()}
-                onSubmit={onSubmit}
+                onSubmit={vi.fn()}
+                onDuplicate={onDuplicate}
             />,
             { wrapper },
         );
 
         fireEvent.change(screen.getByTestId("yaml-editor"), {
             target: {
-                value: validYaml.replace(`id: test`, `id: another`),
+                value: validYaml.replace("Test parameter", "Edited parameter"),
             },
         });
         fireEvent.click(screen.getByText("Save as new"));
 
-        expect(onSubmit).toHaveBeenCalledWith(
-            {
-                ...validParameter,
-                id: "another",
-            },
-            true,
-        );
+        expect(onDuplicate).toHaveBeenCalledWith({
+            ...validParameter,
+            title: "Edited parameter",
+        });
     });
 });

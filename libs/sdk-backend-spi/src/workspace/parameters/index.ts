@@ -49,6 +49,13 @@ export interface IWorkspaceParametersService {
     updateParameter(
         updatedParameter: Partial<IParameterMetadataObjectDefinition> & IMetadataObjectIdentity,
     ): Promise<IParameterMetadataObject>;
+
+    /**
+     * Delete parameter by reference.
+     *
+     * @param ref - ref of the parameter to delete
+     */
+    deleteParameter(ref: ObjRef): Promise<void>;
 }
 
 /**

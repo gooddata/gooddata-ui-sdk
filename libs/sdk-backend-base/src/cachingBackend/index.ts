@@ -33,6 +33,7 @@ import {
     type IGetAutomationOptions,
     type IGetAutomationsOptions,
     type IGetAutomationsQueryOptions,
+    type IOrganizationExportTemplatesService,
     type IOutliersConfig,
     type IOutliersResult,
     type IPreparedExecution,
@@ -59,6 +60,7 @@ import {
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IExecutionDefinition,
+    type IExportTemplate,
     type IFiscalYear,
     type IGeoJsonFeature,
     type IMeasure,
@@ -95,6 +97,7 @@ import {
     type PreparedExecutionWrapper,
 } from "../decoratedBackend/execution.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
+import { DecoratedOrganizationExportTemplatesService } from "../decoratedBackend/organizationExportTemplates.js";
 import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings.js";
 import {
     type AttributesDecoratorFactory,
@@ -102,6 +105,7 @@ import {
     type CatalogDecoratorFactory,
     type ExecutionDecoratorFactory,
     type GeoDecoratorFactory,
+    type OrganizationExportTemplatesDecoratorFactory,
     type SecuritySettingsDecoratorFactory,
     type WorkspaceSettingsDecoratorFactory,
 } from "../decoratedBackend/types.js";
@@ -162,6 +166,7 @@ type CachingContext = {
         securitySettings?: LRUCache<string, SecuritySettingsCacheEntry>;
         workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
         workspaceAutomations?: LRUCache<string, AutomationCacheEntry>;
+        organizationExportTemplates?: LRUCache<string, Promise<IExportTemplate[]>>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
         geo?: GeoCacheEntry;
     };
@@ -1668,6 +1673,44 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
 }
 
 //
+// ORGANIZATION EXPORT TEMPLATES CACHING
+//
+
+class WithOrganizationExportTemplatesCaching extends DecoratedOrganizationExportTemplatesService {
+    constructor(
+        decorated: IOrganizationExportTemplatesService,
+        private readonly ctx: CachingContext,
+        private readonly organizationId: string,
+    ) {
+        super(decorated);
+    }
+
+    public override getExportTemplates(): Promise<IExportTemplate[]> {
+        const cache = this.ctx.caches.organizationExportTemplates!;
+        const key = this.organizationId;
+
+        const result = cache.get(key);
+
+        if (!result) {
+            const promise = super.getExportTemplates().catch((e) => {
+                cache.delete(key);
+                throw e;
+            });
+
+            cache.set(key, promise);
+            return promise;
+        }
+
+        return result;
+    }
+}
+
+function cachedOrganizationExportTemplates(ctx: CachingContext): OrganizationExportTemplatesDecoratorFactory {
+    return (original, organizationId) =>
+        new WithOrganizationExportTemplatesCaching(original, ctx, organizationId);
+}
+
+//
 //
 //
 
@@ -1847,6 +1890,10 @@ function cacheControl(ctx: CachingContext): CacheControl {
             }
         },
 
+        resetExportTemplates: () => {
+            ctx.caches.organizationExportTemplates?.clear();
+        },
+
         resetAll: () => {
             control.resetExecutions();
             control.resetCatalogs();
@@ -1854,6 +1901,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
             control.resetAttributes();
             control.resetWorkspaceSettings();
             control.resetGeoStyles();
+            control.resetExportTemplates();
         },
     };
 
@@ -1903,6 +1951,11 @@ export type CacheControl = {
      * Resets the cached geo style.
      */
     resetGeoStyles: () => void;
+
+    /**
+     * Resets the export templates cache.
+     */
+    resetExportTemplates: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).
@@ -2082,6 +2135,20 @@ export type CachingConfiguration = {
     maxAutomationsWorkspaces?: number;
 
     /**
+     * Maximum number of organizations for which to cache export templates.
+     * Export templates are organization-level, so typically a single entry suffices.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxExportTemplatesOrgs?: number;
+
+    /**
+     * @deprecated Use {@link CachingConfiguration.maxExportTemplatesOrgs} instead.
+     * Export templates are organization-scoped, not workspace-scoped.
+     */
+    maxExportTemplatesWorkspaces?: number;
+
+    /**
      * Maximum number of attribute display forms to cache per workspace.
      *
      * When limit is reached, cache entries will be evicted using LRU policy.
@@ -2182,6 +2249,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxAttributeElementResultsPerWorkspace: 100,
     maxWorkspaceSettings: 1,
     maxAutomationsWorkspaces: 1,
+    maxExportTemplatesOrgs: 1,
     cacheGeoStyles: true,
 };
 
@@ -2211,6 +2279,9 @@ export function withCaching(
     const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
     const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
     const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
+    // Accept both the new and deprecated config names for backward compatibility
+    const exportTemplatesMaxOrgs = config.maxExportTemplatesOrgs ?? config.maxExportTemplatesWorkspaces;
+    const exportTemplatesCaching = cachingEnabled(exportTemplatesMaxOrgs);
     const geoCaching = config.cacheGeoStyles === true;
 
     // Determine execution cache configuration: count-based (maxExecutions) takes precedence over time-based (maxExecutionsAge)
@@ -2234,6 +2305,9 @@ export function withCaching(
             workspaceAutomations: automationsCaching
                 ? new LRUCache({ max: config.maxAutomationsWorkspaces! })
                 : undefined,
+            organizationExportTemplates: exportTemplatesCaching
+                ? new LRUCache({ max: exportTemplatesMaxOrgs! })
+                : undefined,
             geo: geoCaching
                 ? {
                       stylesByParams: new LRUCache({ max: MAX_GEO_STYLE_CACHE_ENTRIES }),
@@ -2250,6 +2324,9 @@ export function withCaching(
     const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : (v: any) => v;
     const attributes = attributeCaching ? cachedAttributes(ctx) : (v: any) => v;
     const automations = automationsCaching ? cachedAutomations(ctx) : (v: any) => v;
+    const organizationExportTemplates = exportTemplatesCaching
+        ? cachedOrganizationExportTemplates(ctx)
+        : undefined;
     const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : (v: any) => v;
     const geo = geoCaching ? cachedGeo(ctx) : undefined;
 
@@ -2264,6 +2341,7 @@ export function withCaching(
         attributes,
         workspaceSettings,
         automations,
+        organizationExportTemplates,
         geo,
     });
 }

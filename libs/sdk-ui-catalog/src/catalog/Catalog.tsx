@@ -9,7 +9,7 @@ import { ErrorComponent } from "@gooddata/sdk-ui";
 import { LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import { Layout } from "./Layout.js";
-import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
+import type { OpenHandlerEvent } from "../catalogDetail/types.js";
 import { CatalogFeedProvider } from "../catalogItem/CatalogFeedContext.js";
 import { type ICatalogItemRef } from "../catalogItem/types.js";
 import { CreateObjectButton } from "../header/CreateObjectButton.js";

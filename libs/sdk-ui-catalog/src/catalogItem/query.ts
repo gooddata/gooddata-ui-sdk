@@ -4,7 +4,7 @@ import type {
     AnalyticsCatalogGenerateDescriptionObjectType,
     IAnalyticalBackend,
 } from "@gooddata/sdk-backend-spi";
-import { type IParameterMetadataObjectDefinition, idRef } from "@gooddata/sdk-model";
+import { type IParameterMetadataObjectDefinition, type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import type {
     ICatalogItem,
@@ -424,6 +424,10 @@ export function updateParameterCatalogItem(
             tags: item.tags,
             definition: item.definition,
         });
+}
+
+export function deleteParameterCatalogItem(backend: IAnalyticalBackend, workspace: string, ref: ObjRef) {
+    return backend.workspace(workspace).parameters().deleteParameter(ref);
 }
 
 export function updateCatalogItemCertification(

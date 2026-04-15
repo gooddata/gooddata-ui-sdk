@@ -207,6 +207,7 @@ export const convertToSlidesExportRequest = (
             fileName: exportRequest.fileName,
             format,
             dashboardId: dashboard,
+            ...(exportRequest.templateId ? { templateId: exportRequest.templateId } : {}),
             ...metadataObj,
         };
     }
@@ -222,6 +223,7 @@ export const convertToSlidesExportRequest = (
         format,
         dashboardId: dashboard,
         widgetIds: [widget],
+        ...(exportRequest.templateId ? { templateId: exportRequest.templateId } : {}),
         metadata: {
             widget,
             ...(filters ? { filters: convertSdkFiltersToTiger(filters) } : {}),

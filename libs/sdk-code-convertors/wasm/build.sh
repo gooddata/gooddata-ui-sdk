@@ -10,9 +10,16 @@ JAVY_BIN="$WASM_DIR/.bin/javy"
 
 # Detect platform
 OS="$(uname -s | tr '[:upper:]' '[:lower:]')"
+case "$OS" in
+    darwin) OS="macos" ;;
+    linux) OS="linux" ;;
+    *) echo "Unsupported OS: $OS"; exit 1 ;;
+esac
+
 ARCH="$(uname -m)"
 case "$ARCH" in
-    aarch64|arm64) ARCH="aarch64" ;;
+    aarch64) ARCH="aarch64" ;;
+    arm64) ARCH="arm" ;;
     x86_64|amd64) ARCH="x86_64" ;;
     *) echo "Unsupported architecture: $ARCH"; exit 1 ;;
 esac

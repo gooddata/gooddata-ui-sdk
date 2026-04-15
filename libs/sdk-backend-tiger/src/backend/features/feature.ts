@@ -641,6 +641,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableExportTemplateSelection,
+            "enableExportTemplateSelection",
+            "BOOLEAN",
+            FeatureFlagsValues.enableExportTemplateSelection,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableRawExports,
             "enableRawExports",
             "BOOLEAN",
@@ -851,10 +858,10 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableHyperLogLog,
-            "enableHyperLogLog",
+            TigerFeaturesNames.EnableHLL,
+            "enableHLL",
             "BOOLEAN",
-            FeatureFlagsValues.enableHyperLogLog,
+            FeatureFlagsValues.enableHLL,
         ),
         ...loadFeature(
             features,

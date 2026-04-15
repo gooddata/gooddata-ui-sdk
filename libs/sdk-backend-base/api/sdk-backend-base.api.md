@@ -86,6 +86,7 @@ import { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExplainProvider } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
+import { IExportTemplate } from '@gooddata/sdk-model';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-model';
@@ -115,6 +116,7 @@ import { IMetricFormatOverrideSetting } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IObjectCertificationWrite } from '@gooddata/sdk-model';
+import { IOrganizationExportTemplatesService } from '@gooddata/sdk-backend-spi';
 import { IOutliersConfig } from '@gooddata/sdk-backend-spi';
 import { IOutliersResult } from '@gooddata/sdk-backend-spi';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
@@ -235,6 +237,8 @@ export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject =
     drillToAttributeLink(ref: ObjRef | undefined): this;
     // (undocumented)
     isLocked(value: boolean): this;
+    // (undocumented)
+    sourceColumn(value: string | undefined): this;
 }
 
 // @alpha (undocumented)
@@ -300,6 +304,7 @@ export type CacheControl = {
     resetAttributes: () => void;
     resetWorkspaceSettings: () => void;
     resetGeoStyles: () => void;
+    resetExportTemplates: () => void;
     resetAll: () => void;
 };
 
@@ -317,6 +322,8 @@ export type CachingConfiguration = {
     maxSecuritySettingsOrgUrlsAge?: number;
     maxAttributeWorkspaces?: number;
     maxAutomationsWorkspaces?: number;
+    maxExportTemplatesOrgs?: number;
+    maxExportTemplatesWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
     maxAttributesPerWorkspace?: number;
     maxAttributeElementResultsPerWorkspace?: number;
@@ -499,6 +506,15 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     transform(): IPreparedExecution;
     // (undocumented)
     withSignal(signal: AbortSignal): IExecutionResult;
+}
+
+// @alpha (undocumented)
+export abstract class DecoratedOrganizationExportTemplatesService implements IOrganizationExportTemplatesService {
+    protected constructor(decorated: IOrganizationExportTemplatesService);
+    // (undocumented)
+    protected readonly decorated: IOrganizationExportTemplatesService;
+    // (undocumented)
+    getExportTemplates(): Promise<IExportTemplate[]>;
 }
 
 // @alpha
@@ -768,6 +784,7 @@ export type DecoratorFactories = {
     automations?: AutomationsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
     geo?: GeoDecoratorFactory;
+    organizationExportTemplates?: OrganizationExportTemplatesDecoratorFactory;
 };
 
 // @internal (undocumented)
@@ -1235,6 +1252,9 @@ export class Normalizer {
     // (undocumented)
     readonly original: IExecutionDefinition;
 }
+
+// @alpha (undocumented)
+export type OrganizationExportTemplatesDecoratorFactory = (exportTemplates: IOrganizationExportTemplatesService, organizationId: string) => IOrganizationExportTemplatesService;
 
 // @alpha (undocumented)
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;

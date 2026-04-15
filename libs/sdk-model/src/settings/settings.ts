@@ -789,6 +789,13 @@ export interface IFeatureFlags {
     enableCustomizableCsvDelimiter?: boolean;
 
     /**
+     * Enable export template selection for slide exports.
+     * When enabled, the user can choose which export template to apply
+     * when exporting dashboards or widgets as slides.
+     */
+    enableExportTemplateSelection?: boolean;
+
+    /**
      * Enable new PDF tabular export option for insights.
      */
     enableNewPdfTabularExport?: boolean;
@@ -930,9 +937,10 @@ export interface IFeatureFlags {
     enableGeoArea?: boolean;
 
     /**
-     * Enable HyperLogLog labels.
+     * Enable HLL catalog filtering.
+     * When true, attributes without sourceColumn are hidden from the catalog.
      */
-    enableHyperLogLog?: boolean;
+    enableHLL?: boolean;
 
     /**
      * Enables geo accessibility enhancements introduced for map canvas, legend semantics,

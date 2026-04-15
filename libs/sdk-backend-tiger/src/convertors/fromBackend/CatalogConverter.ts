@@ -85,7 +85,8 @@ export const convertAttribute = (
                 a
                     .modify(commonMetadataObjectModifications(attribute))
                     .displayForms(displayForms)
-                    .drillToAttributeLink(drillToAttributeLink),
+                    .drillToAttributeLink(drillToAttributeLink)
+                    .sourceColumn(attribute.attributes?.sourceColumn),
             )
             .defaultDisplayForm(defaultDisplayForm)
             .geoPinDisplayForms(geoPinDisplayForms)

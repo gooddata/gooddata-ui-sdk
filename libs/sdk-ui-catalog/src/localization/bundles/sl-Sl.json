@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Ustvarite stavek YAML, ki določa numerični parameter.",
     "analyticsCatalog.parameter.dialog.create.submit": "Ustvari",
     "analyticsCatalog.parameter.dialog.edit.submit": "Shrani",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Shrani kot novo",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Shrani kot novo",
     "analyticsCatalog.parameter.dialog.cancel": "Prekliči",
     "analyticsCatalog.parameter.dialog.help": "Kako ustvariti parameter?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parametra ni bilo mogoče shraniti.",

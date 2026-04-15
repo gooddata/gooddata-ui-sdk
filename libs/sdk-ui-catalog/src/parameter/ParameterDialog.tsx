@@ -28,20 +28,22 @@ const messages = defineMessages({
     dialogCreateSubmit: { id: "analyticsCatalog.parameter.dialog.create.submit" },
     dialogEditSubmit: { id: "analyticsCatalog.parameter.dialog.edit.submit" },
     dialogCancel: { id: "analyticsCatalog.parameter.dialog.cancel" },
-    dialogSaveAsNew: { id: "analyticsCatalog.parameter.dialog.edit.saveAsNew" },
+    dialogDuplicate: { id: "analyticsCatalog.parameter.dialog.edit.duplicate" },
 });
 
 export type ParameterDialogInitialParameter = ParameterSchemaInput;
+export type ParameterDialogMode = "create" | "edit";
 
 type Props = {
-    mode: "create" | "edit";
+    mode: ParameterDialogMode;
     initialParameter?: ParameterDialogInitialParameter;
     onClose: () => void;
-    onSubmit: (parameter: IParameterMetadataObjectDefinition, saveAsNew?: boolean) => Promise<void>;
+    onSubmit: (parameter: IParameterMetadataObjectDefinition) => Promise<void>;
+    onDuplicate?: (parameter: IParameterMetadataObjectDefinition) => void;
 };
 
 export function ParameterDialog(props: Props) {
-    const { mode, initialParameter, onClose, onSubmit } = props;
+    const { mode, initialParameter, onClose, onSubmit, onDuplicate } = props;
     const intl = useIntl();
     const isEdit = mode === "edit";
     const initialYaml = initialParameter ? serializeParameterToYaml(initialParameter) : "";
@@ -49,6 +51,7 @@ export function ParameterDialog(props: Props) {
     const [validationError, setValidationError] = useState<string | null>(null);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isDirty, setIsDirty] = useState(false);
 
     const headlineMessage = intl.formatMessage(
         isEdit ? messages.dialogEditTitle : messages.dialogCreateTitle,
@@ -60,14 +63,12 @@ export function ParameterDialog(props: Props) {
     const fixedIdentifier = isEdit ? initialParameter?.id : undefined;
 
     const validate = useCallback(
-        (value: string, saveAsNew?: boolean) => {
-            const result = validateParameterYaml(value, {
-                fixedIdentifier: isEdit && saveAsNew !== true ? fixedIdentifier : undefined,
+        (value: string, allowIdChange = false) => {
+            return validateParameterYaml(value, {
+                fixedIdentifier: isEdit && !allowIdChange ? fixedIdentifier : undefined,
             });
-            setValidationError(result.isValid ? null : intl.formatMessage(messages[result.errorCode]));
-            return result;
         },
-        [fixedIdentifier, intl, isEdit],
+        [fixedIdentifier, isEdit],
     );
 
     const handleClose = useCallback(() => {
@@ -76,36 +77,46 @@ export function ParameterDialog(props: Props) {
         }
     }, [isSubmitting, onClose]);
 
-    const handleChange = useCallback(
-        (nextValue: string) => {
-            yamlValue.current = nextValue;
-            setSubmitError(null);
-            validate(nextValue);
-        },
-        [validate],
-    );
+    const handleChange = useCallback((nextValue: string) => {
+        yamlValue.current = nextValue;
+        setIsDirty(true);
+        setSubmitError(null);
+        setValidationError(null);
+    }, []);
 
-    const handleSubmit = useCallback(
-        async (saveAsNew?: boolean) => {
-            const result = validate(yamlValue.current, saveAsNew);
-            if (!result.isValid) {
-                return;
-            }
+    const handleSubmit = useCallback(async () => {
+        const result = validate(yamlValue.current);
+        if (!result.isValid) {
+            setValidationError(intl.formatMessage(messages[result.errorCode]));
+            return;
+        }
 
-            setIsSubmitting(true);
-            setSubmitError(null);
+        setIsSubmitting(true);
+        setSubmitError(null);
 
-            try {
-                await onSubmit(result.parameter, saveAsNew === true);
-            } catch (error) {
-                const message = error instanceof Error && error.message ? error.message : undefined;
-                setSubmitError(message ?? intl.formatMessage(messages.dialogSubmitError));
-            } finally {
-                setIsSubmitting(false);
-            }
-        },
-        [intl, onSubmit, validate],
-    );
+        try {
+            await onSubmit(result.parameter);
+        } catch (error) {
+            const message = error instanceof Error && error.message ? error.message : undefined;
+            setSubmitError(message ?? intl.formatMessage(messages.dialogSubmitError));
+        } finally {
+            setIsSubmitting(false);
+        }
+    }, [intl, onSubmit, validate]);
+
+    const handleDuplicate = useCallback(() => {
+        if (!onDuplicate) {
+            return;
+        }
+        setSubmitError(null);
+        const result = validate(yamlValue.current, true);
+        if (!result.isValid) {
+            setValidationError(intl.formatMessage(messages[result.errorCode]));
+            return;
+        }
+
+        onDuplicate(result.parameter);
+    }, [intl, onDuplicate, validate]);
 
     const footerLeftRenderer = useCallback(
         (): ReactElement => (
@@ -119,17 +130,17 @@ export function ParameterDialog(props: Props) {
                     <UiIcon type="question" size={14} color="complementary-6" />
                     <FormattedMessage id="analyticsCatalog.parameter.dialog.help" />
                 </a>
-                {isEdit ? (
+                {isEdit && onDuplicate ? (
                     <UiButton
-                        label={intl.formatMessage(messages.dialogSaveAsNew)}
+                        label={intl.formatMessage(messages.dialogDuplicate)}
                         variant="tertiary"
                         isDisabled={isSubmitting}
-                        onClick={() => handleSubmit(true)}
+                        onClick={handleDuplicate}
                     />
                 ) : null}
             </div>
         ),
-        [intl, isEdit, isSubmitting, handleSubmit],
+        [handleDuplicate, intl, isEdit, isSubmitting, onDuplicate],
     );
 
     return (
@@ -140,9 +151,8 @@ export function ParameterDialog(props: Props) {
             cancelButtonText={cancelMessage}
             submitButtonText={submitMessage}
             isPositive
-            isSubmitDisabled={validationError !== null || isSubmitting}
+            isSubmitDisabled={isSubmitting || (isEdit && !isDirty)}
             isCancelDisabled={isSubmitting}
-            showProgressIndicator={isSubmitting}
             shouldCloseOnEscape={!isSubmitting}
             onCancel={handleClose}
             onClose={handleClose}

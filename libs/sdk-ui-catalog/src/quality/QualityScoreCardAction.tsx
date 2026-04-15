@@ -11,10 +11,21 @@ type Props = {
     isEmpty: boolean;
     isLoading: boolean;
     isSyncing: boolean;
+    isError: boolean;
     onActionClick: () => void;
 };
 
-export function QualityScoreCardAction({ intl, isEmpty, isLoading, isSyncing, onActionClick }: Props) {
+export function QualityScoreCardAction({
+    intl,
+    isEmpty,
+    isLoading,
+    isSyncing,
+    onActionClick,
+    isError,
+}: Props) {
+    if (isError) {
+        return <div></div>;
+    }
     if (isSyncing) {
         return (
             <Layout>{intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.action.syncing" })}</Layout>

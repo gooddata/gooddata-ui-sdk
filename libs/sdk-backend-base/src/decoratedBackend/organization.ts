@@ -4,6 +4,7 @@ import {
     type IOrganization,
     type IOrganizationAgentsService,
     type IOrganizationAutomationService,
+    type IOrganizationExportTemplatesService,
     type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
@@ -85,5 +86,15 @@ export class OrganizationDecorator implements IOrganization {
 
     public agents(): IOrganizationAgentsService {
         return this.decorated.agents();
+    }
+
+    public exportTemplates(): IOrganizationExportTemplatesService {
+        const { organizationExportTemplates } = this.factories;
+
+        if (organizationExportTemplates) {
+            return organizationExportTemplates(this.decorated.exportTemplates(), this.organizationId);
+        }
+
+        return this.decorated.exportTemplates();
     }
 }

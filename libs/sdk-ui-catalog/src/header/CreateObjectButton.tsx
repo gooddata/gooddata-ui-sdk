@@ -117,13 +117,7 @@ export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
             await createParameterCatalogItem(backend, workspace, parameter);
             setIsParameterDialogOpen(false);
             addSuccess(messages.parameterCreateSuccess);
-
-            // Refetch failure should not affect the creation of the parameter
-            try {
-                await refetchObjectType(ObjectTypes.PARAMETER);
-            } catch (error) {
-                console.error(error);
-            }
+            await refetchObjectType(ObjectTypes.PARAMETER);
         },
         [addSuccess, backend, refetchObjectType, workspace],
     );

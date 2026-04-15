@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Tạo câu lệnh YAML xác định một tham số số.",
     "analyticsCatalog.parameter.dialog.create.submit": "Tạo",
     "analyticsCatalog.parameter.dialog.edit.submit": "Lưu",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Lưu dưới dạng mới",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Lưu dưới dạng mới",
     "analyticsCatalog.parameter.dialog.cancel": "Hủy",
     "analyticsCatalog.parameter.dialog.help": "Cách tạo tham số?",
     "analyticsCatalog.parameter.dialog.submit.error": "Không thể lưu tham số.",

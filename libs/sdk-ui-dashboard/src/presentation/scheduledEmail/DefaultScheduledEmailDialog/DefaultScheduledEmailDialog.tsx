@@ -48,6 +48,7 @@ import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useExportTemplates } from "../../../model/react/useExportTemplates.js";
 import {
     selectDateFormat,
     selectEnableAutomationFilterContext,
@@ -168,6 +169,7 @@ export function ScheduledMailDialogRenderer({
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
     const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const exportTemplates = useExportTemplates();
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -237,6 +239,8 @@ export function ScheduledMailDialogRenderer({
         onPdfSettingsChange,
         onCsvSettingsChange,
         onCsvRawSettingsChange,
+        slidesTemplateIds,
+        onSlidesTemplateIdChange,
         onDestinationChange,
         onMessageChange,
         onRecipientsChange,
@@ -673,6 +677,9 @@ export function ScheduledMailDialogRenderer({
                                                 xlsxSettings={xlsxSettings}
                                                 onXlsxSettingsChange={onXlsxSettingsChange}
                                                 defaultPdfPageSize={defaultPdfPageSize}
+                                                exportTemplates={exportTemplates}
+                                                slidesTemplateIds={slidesTemplateIds}
+                                                onSlidesTemplateIdChange={onSlidesTemplateIdChange}
                                             />
                                         ) : (
                                             <DashboardAttachmentsOld

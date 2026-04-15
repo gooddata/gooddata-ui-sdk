@@ -638,6 +638,31 @@ export function useEditScheduledEmail({
         [setEditedAutomation],
     );
 
+    const onSlidesTemplateIdChange = useCallback(
+        (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES") => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (
+                        !isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload) ||
+                        exportDefinition.requestPayload.format !== format
+                    ) {
+                        return exportDefinition;
+                    }
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            templateId,
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
+
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[], enableNewScheduledExport: boolean, storeFiltersParam?: boolean) => {
             setEditedAutomationFilters(filters);
@@ -950,6 +975,22 @@ export function useEditScheduledEmail({
         delimiter: csvRawExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
     };
 
+    // Extract templateId per slides format
+    const getTemplateIdForFormat = (format: "PPTX" | "PDF_SLIDES") => {
+        const def = editedAutomation.exportDefinitions?.find(
+            (ed) =>
+                isExportDefinitionDashboardRequestPayload(ed.requestPayload) &&
+                ed.requestPayload.format === format,
+        );
+        return def && isExportDefinitionDashboardRequestPayload(def.requestPayload)
+            ? def.requestPayload.templateId
+            : undefined;
+    };
+    const slidesTemplateIds = {
+        PPTX: getTemplateIdForFormat("PPTX"),
+        PDF_SLIDES: getTemplateIdForFormat("PDF_SLIDES"),
+    };
+
     const startDate = toNormalizedStartDate(
         editedAutomation.schedule?.firstRun,
         editedAutomation.schedule?.timezone,
@@ -1040,6 +1081,8 @@ export function useEditScheduledEmail({
         onPdfSettingsChange,
         onCsvSettingsChange,
         onCsvRawSettingsChange,
+        slidesTemplateIds,
+        onSlidesTemplateIdChange,
         onFiltersChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
@@ -1054,12 +1097,14 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
     dashboardFilters,
     filtersByTab,
     format,
+    templateId,
 }: {
     dashboardId: string;
     dashboardTitle: string;
     dashboardFilters?: FilterContextItem[];
     filtersByTab?: Record<string, FilterContextItem[]>;
     format: DashboardAttachmentType;
+    templateId?: string;
 }): IExportDefinitionMetadataObjectDefinition {
     // Use filtersByTab if provided, otherwise fall back to simple filters
     const filtersObj = filtersByTab
@@ -1082,6 +1127,7 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
                 ...filtersObj,
             },
             ...settingsObj,
+            ...(templateId ? { templateId } : {}),
         },
     };
 }

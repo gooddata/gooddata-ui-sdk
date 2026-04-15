@@ -1,7 +1,11 @@
 // (C) 2023-2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
+import { useIntl } from "react-intl";
+
 import { type ICatalogAttributeHierarchy, type ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
-import { DropdownList, withBubble } from "@gooddata/sdk-ui-kit";
+import { DropdownList, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { AttributeHierarchyListFooter } from "./AttributeHierarchyListFooter.js";
 import { AttributeHierarchyListItem } from "./AttributeHierarchyListItem.js";
@@ -31,14 +35,13 @@ export interface IAttributeHierarchyListProps {
 const ITEM_HEIGHT = 28;
 const DROPDOWN_BODY_WIDTH = 187;
 
-const AttributeHierarchyListItemWithBubble = withBubble(AttributeHierarchyListItem);
-
 export function AttributeHierarchyList({
     hierarchies,
     onSelect,
     closeDropdown,
     onOpenAttributeHierarchyDialog,
 }: IAttributeHierarchyListProps) {
+    const intl = useIntl();
     const userInteraction = useDashboardUserInteraction();
 
     const onClick = (item: IAttributeHierarchyItem) => {
@@ -63,15 +66,25 @@ export function AttributeHierarchyList({
             footer={() => <AttributeHierarchyListFooter onClick={handleFooterButtonClick} />}
             renderItem={({ item }) => {
                 return (
-                    <AttributeHierarchyListItemWithBubble
-                        item={item.hierarchy}
-                        isDisabled={item.isDisabled}
-                        onEdit={onOpenAttributeHierarchyDialog}
-                        onClick={() => {
-                            onClick(item);
-                        }}
-                        showBubble={item.isDisabled}
-                        bubbleTextId={messages.disableUsedDrillDownTooltip.id}
+                    <UiTooltip
+                        disabled={!item.isDisabled}
+                        triggerBy={["hover"]}
+                        arrowPlacement="left"
+                        optimalPlacement
+                        anchorWrapperStyles={{ width: "100%" }}
+                        anchor={
+                            <AttributeHierarchyListItem
+                                item={item.hierarchy}
+                                isDisabled={item.isDisabled}
+                                onEdit={onOpenAttributeHierarchyDialog}
+                                onClick={() => {
+                                    onClick(item);
+                                }}
+                            />
+                        }
+                        content={intl.formatMessage(messages.disableUsedDrillDownTooltip, {
+                            strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                        })}
                     />
                 );
             }}

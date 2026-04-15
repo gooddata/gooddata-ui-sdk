@@ -789,6 +789,16 @@ export const selectEnableSlideshowExports: DashboardSelector<boolean> = createSe
 /**
  * @internal
  */
+export const selectEnableExportTemplateSelection: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableExportTemplateSelection ?? false;
+    },
+);
+
+/**
+ * @internal
+ */
 export const selectEnableRichTextDynamicReferences: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {

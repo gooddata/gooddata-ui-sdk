@@ -166,7 +166,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Buat pernyataan YAML yang mendefinisikan parameter numerik.",
     "analyticsCatalog.parameter.dialog.create.submit": "Buat",
     "analyticsCatalog.parameter.dialog.edit.submit": "Simpan",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Simpan sebagai baru",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Simpan sebagai baru",
     "analyticsCatalog.parameter.dialog.cancel": "Batal",
     "analyticsCatalog.parameter.dialog.help": "Bagaimana cara membuat parameter?",
     "analyticsCatalog.parameter.dialog.submit.error": "Parameter tidak dapat disimpan.",

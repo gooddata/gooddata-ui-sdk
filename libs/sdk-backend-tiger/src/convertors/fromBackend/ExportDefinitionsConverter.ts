@@ -244,7 +244,7 @@ export const convertSlidesExportRequest = (
     exportRequest: AutomationAutomationSlidesExport,
 ): IExportDefinitionVisualizationObjectRequestPayload | IExportDefinitionDashboardRequestPayload => {
     const {
-        requestPayload: { fileName, format, dashboardId, widgetIds, metadata },
+        requestPayload: { fileName, format, dashboardId, widgetIds, metadata, templateId },
     } = exportRequest;
 
     if (Array.isArray(widgetIds) && widgetIds.length > 0) {
@@ -254,6 +254,7 @@ export const convertSlidesExportRequest = (
             type: "visualizationObject",
             fileName,
             format,
+            ...(templateId ? { templateId } : {}),
             content: {
                 visualizationObject: widgetIds?.[0] ?? "",
                 dashboard: dashboardId,
@@ -281,6 +282,7 @@ export const convertSlidesExportRequest = (
         type: "dashboard",
         fileName,
         format: format === "PDF" ? "PDF_SLIDES" : format,
+        ...(templateId ? { templateId } : {}),
         content: {
             dashboard: dashboardId,
             filters,

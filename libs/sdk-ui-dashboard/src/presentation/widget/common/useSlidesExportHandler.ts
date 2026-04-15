@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useCallback, useRef } from "react";
 
 import { type IExportResult, isProtectedDataError } from "@gooddata/sdk-backend-spi";
@@ -8,15 +9,20 @@ import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 import { messages } from "../../../locales.js";
 
 type ExportSlidesHandler = (
-    exportFunction: (title: string, exportType: "pdf" | "pptx") => Promise<IExportResult>,
+    exportFunction: (
+        title: string,
+        exportType: "pdf" | "pptx",
+        templateId?: string,
+    ) => Promise<IExportResult>,
     title: string,
     exportType: "pdf" | "pptx",
+    templateId?: string,
 ) => Promise<void>;
 
 export const useSlidesExportHandler = (): ExportSlidesHandler => {
     const { addProgress, addSuccess, addError, removeMessage } = useToastMessage();
     const lastExportMessageId = useRef("");
-    return useCallback<ExportSlidesHandler>(async (exportFunction, title, exportType) => {
+    return useCallback<ExportSlidesHandler>(async (exportFunction, title, exportType, templateId) => {
         try {
             lastExportMessageId.current = addProgress(
                 messages.messagesExportResultStart,
@@ -24,7 +30,7 @@ export const useSlidesExportHandler = (): ExportSlidesHandler => {
                 { duration: 0 },
             ).id;
 
-            const exportResult = await exportFunction(title, exportType);
+            const exportResult = await exportFunction(title, exportType, templateId);
 
             if (lastExportMessageId.current) {
                 removeMessage(lastExportMessageId.current);
