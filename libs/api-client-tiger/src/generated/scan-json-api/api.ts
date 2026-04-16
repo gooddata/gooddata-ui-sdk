@@ -32,6 +32,30 @@ export interface ColumnStatisticWarning {
     'message': string;
 }
 
+export interface ColumnStatisticsEntry {
+    'columnName': string;
+    /**
+     * NDV (Number of Distinct Values) — approximate cardinality of the column.
+     */
+    'ndv'?: number;
+    /**
+     * Number of NULL values in the column.
+     */
+    'nullCount'?: number;
+    /**
+     * Minimum value in the column (string-encoded).
+     */
+    'min'?: string;
+    /**
+     * Maximum value in the column (string-encoded).
+     */
+    'max'?: string;
+    /**
+     * Total data size of the column in bytes.
+     */
+    'dataSize'?: number;
+}
+
 /**
  * A request to retrieve statistics for a column.
  */
@@ -126,7 +150,7 @@ export interface DeclarativeColumn {
     'isNullable'?: boolean;
 }
 
-export type DeclarativeColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN';
+export type DeclarativeColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 /**
  * A database table.
@@ -274,7 +298,7 @@ export interface SqlColumn {
     'description'?: string;
 }
 
-export type SqlColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN';
+export type SqlColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN' | 'HLL';
 
 export interface SqlQuery {
     'sql': string;
@@ -282,6 +306,35 @@ export interface SqlQuery {
 
 export interface Table {
     'tableName': string;
+}
+
+export interface TableStatisticsEntry {
+    'schemaName': string;
+    'tableName': string;
+    /**
+     * Total number of rows in the table.
+     */
+    'rowCount'?: number;
+    /**
+     * Total data size of the table in bytes.
+     */
+    'dataSize'?: number;
+    'columns': Array<ColumnStatisticsEntry>;
+}
+
+export interface TableStatisticsRequest {
+    'schemata': Array<string>;
+    'tableNames'?: Array<string>;
+}
+
+export interface TableStatisticsResponse {
+    'tables': Array<TableStatisticsEntry>;
+    'warnings': Array<TableStatisticsWarning>;
+}
+
+export interface TableStatisticsWarning {
+    'tableName'?: string;
+    'message': string;
 }
 
 /**
@@ -655,6 +708,68 @@ export async function ActionsApiAxiosParamCreator_ScanSql(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
+ * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+ * @param {string} dataSourceId 
+ * @param {TableStatisticsRequest} tableStatisticsRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ScanStatistics(
+    dataSourceId: string, tableStatisticsRequest: TableStatisticsRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists('scanStatistics', 'dataSourceId', dataSourceId)
+    // verify required parameter 'tableStatisticsRequest' is not null or undefined
+    assertParamExists('scanStatistics', 'tableStatisticsRequest', tableStatisticsRequest)
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanStatistics`
+        .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof tableStatisticsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(tableStatisticsRequest !== undefined ? tableStatisticsRequest : {})
+        : tableStatisticsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Test if it is possible to connect to a database using an existing data source definition.
  * @summary Test data source connection by data source id
  * @param {string} dataSourceId Data source id
@@ -880,6 +995,32 @@ export async function ActionsApi_ScanSql(
 
 // ActionsApi Api FP
 /**
+ * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
+ * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiScanStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ScanStatistics(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiScanStatisticsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TableStatisticsResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ScanStatistics(
+        requestParameters.dataSourceId, requestParameters.tableStatisticsRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Test if it is possible to connect to a database using an existing data source definition.
  * @summary Test data source connection by data source id
  * @param {AxiosInstance} axios Axios instance.
@@ -975,6 +1116,16 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     scanSql(requestParameters: ActionsApiScanSqlRequest, options?: AxiosRequestConfig): AxiosPromise<ScanSqlResponse>;
+
+    /**
+     * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
+     * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+     * @param {ActionsApiScanStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    scanStatistics(requestParameters: ActionsApiScanStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<TableStatisticsResponse>;
 
     /**
      * Test if it is possible to connect to a database using an existing data source definition.
@@ -1076,6 +1227,27 @@ export interface ActionsApiScanSqlRequest {
 }
 
 /**
+ * Request parameters for scanStatistics operation in ActionsApi.
+ * @export
+ * @interface ActionsApiScanStatisticsRequest
+ */
+export interface ActionsApiScanStatisticsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiScanStatistics
+     */
+    readonly dataSourceId: string
+
+    /**
+     * 
+     * @type {TableStatisticsRequest}
+     * @memberof ActionsApiScanStatistics
+     */
+    readonly tableStatisticsRequest: TableStatisticsRequest
+}
+
+/**
  * Request parameters for testDataSource operation in ActionsApi.
  * @export
  * @interface ActionsApiTestDataSourceRequest
@@ -1163,6 +1335,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public scanSql(requestParameters: ActionsApiScanSqlRequest, options?: AxiosRequestConfig) {
         return ActionsApi_ScanSql(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
+     * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+     * @param {ActionsApiScanStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public scanStatistics(requestParameters: ActionsApiScanStatisticsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ScanStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -1336,6 +1520,155 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
      */
     public columnStatistics(requestParameters: ComputationApiColumnStatisticsRequest, options?: AxiosRequestConfig) {
         return ComputationApi_ColumnStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// DataSourceStatisticsApi FP - DataSourceStatisticsApiAxiosParamCreator
+/**
+ * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
+ * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+ * @param {string} dataSourceId 
+ * @param {TableStatisticsRequest} tableStatisticsRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceStatisticsApiAxiosParamCreator_ScanStatistics(
+    dataSourceId: string, tableStatisticsRequest: TableStatisticsRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists('scanStatistics', 'dataSourceId', dataSourceId)
+    // verify required parameter 'tableStatisticsRequest' is not null or undefined
+    assertParamExists('scanStatistics', 'tableStatisticsRequest', tableStatisticsRequest)
+    const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/scanStatistics`
+        .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof tableStatisticsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(tableStatisticsRequest !== undefined ? tableStatisticsRequest : {})
+        : tableStatisticsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// DataSourceStatisticsApi Api FP
+/**
+ * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
+ * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {DataSourceStatisticsApiScanStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function DataSourceStatisticsApi_ScanStatistics(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: DataSourceStatisticsApiScanStatisticsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TableStatisticsResponse> {
+    const localVarAxiosArgs = await DataSourceStatisticsApiAxiosParamCreator_ScanStatistics(
+        requestParameters.dataSourceId, requestParameters.tableStatisticsRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * DataSourceStatisticsApi - interface
+ * @export
+ * @interface DataSourceStatisticsApi
+ */
+export interface DataSourceStatisticsApiInterface {
+    /**
+     * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
+     * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+     * @param {DataSourceStatisticsApiScanStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceStatisticsApiInterface
+     */
+    scanStatistics(requestParameters: DataSourceStatisticsApiScanStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<TableStatisticsResponse>;
+
+}
+
+/**
+ * Request parameters for scanStatistics operation in DataSourceStatisticsApi.
+ * @export
+ * @interface DataSourceStatisticsApiScanStatisticsRequest
+ */
+export interface DataSourceStatisticsApiScanStatisticsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof DataSourceStatisticsApiScanStatistics
+     */
+    readonly dataSourceId: string
+
+    /**
+     * 
+     * @type {TableStatisticsRequest}
+     * @memberof DataSourceStatisticsApiScanStatistics
+     */
+    readonly tableStatisticsRequest: TableStatisticsRequest
+}
+
+/**
+ * DataSourceStatisticsApi - object-oriented interface
+ * @export
+ * @class DataSourceStatisticsApi
+ * @extends {BaseAPI}
+ */
+export class DataSourceStatisticsApi extends BaseAPI implements DataSourceStatisticsApiInterface {
+    /**
+     * (BETA) Reads pre-computed CBO statistics from StarRocks. Supports both internal catalog (native/PIPE tables) and external catalog (Iceberg tables). Statistics include row counts, data sizes, NDV (number of distinct values), null counts, and min/max values.
+     * @summary (BETA) Collect physical table and column statistics from a StarRocks data source
+     * @param {DataSourceStatisticsApiScanStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceStatisticsApi
+     */
+    public scanStatistics(requestParameters: DataSourceStatisticsApiScanStatisticsRequest, options?: AxiosRequestConfig) {
+        return DataSourceStatisticsApi_ScanStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

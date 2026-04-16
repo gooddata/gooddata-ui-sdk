@@ -267,6 +267,10 @@ export type DashboardAttributeFilter1 =
            */
           mode?: "readonly" | "hidden" | "active";
           display_as?: DisplayAsLabelIdentifier;
+          /**
+           * Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.
+           */
+          selection_type?: "list" | "text" | "listOrText";
           state?: {
               [k: string]: unknown;
           };
@@ -299,6 +303,10 @@ export type DashboardAttributeFilter1 =
            */
           mode?: "readonly" | "hidden" | "active";
           display_as?: DisplayAsLabelIdentifier1;
+          /**
+           * Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.
+           */
+          selection_type?: "list" | "text" | "listOrText";
           state?: {
               [k: string]: unknown;
           };
@@ -2015,6 +2023,10 @@ export interface DashboardTextFilter1 {
      */
     mode?: "readonly" | "hidden" | "active";
     /**
+     * Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.
+     */
+    selection_type?: "list" | "text" | "listOrText";
+    /**
      * An ids of the parent local attribute, text, or date filter
      */
     parents?: (LocalAttributeFilter2 | LocalDateFilter2)[];
@@ -2062,6 +2074,10 @@ export interface DashboardTextFilter2 {
      * Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.
      */
     mode?: "readonly" | "hidden" | "active";
+    /**
+     * Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available.
+     */
+    selection_type?: "list" | "text" | "listOrText";
     [k: string]: unknown;
 }
 /**

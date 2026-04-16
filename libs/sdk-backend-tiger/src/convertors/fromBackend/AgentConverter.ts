@@ -25,9 +25,9 @@ export function convertAgent(agent: JsonApiAgentOutWithLinks, included?: JsonApi
     return {
         ref: idRef(agent.id),
         enabled: agent.attributes?.enabled,
-        name: agent.attributes?.name,
-        description: agent.attributes?.description,
-        personality: agent.attributes?.personality,
+        name: agent.attributes?.name ?? undefined,
+        description: agent.attributes?.description ?? undefined,
+        personality: agent.attributes?.personality ?? undefined,
         skillsMode: agent.attributes?.skillsMode,
         customSkills: agent.attributes?.customSkills,
         aiKnowledge: agent.attributes?.aiKnowledge,

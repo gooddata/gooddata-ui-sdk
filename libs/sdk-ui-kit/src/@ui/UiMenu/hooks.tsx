@@ -96,9 +96,13 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         [isDisabledFocusable],
     );
 
-    const [focusedId, setFocusedId_internal] = useState<string | undefined>(
-        () => unwrapGroupItems(items).find(isItemFocusable)?.id,
-    );
+    const [focusedId, setFocusedId_internal] = useState<string | undefined>(() => {
+        const flatItems = unwrapGroupItems(items);
+        const selectedItem = flatItems.find(
+            (item) => isItemFocusable(item) && item.type === "interactive" && item.isSelected,
+        );
+        return selectedItem?.id ?? flatItems.find(isItemFocusable)?.id;
+    });
 
     // If the focusedId is no longer viable, refocus the default one
     useEffect(() => {

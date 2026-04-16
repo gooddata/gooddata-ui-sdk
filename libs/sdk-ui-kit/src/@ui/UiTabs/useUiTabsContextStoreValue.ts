@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -46,6 +46,7 @@ export function useUiTabsContextStoreValue<
     tabs,
     selectedTabId,
     onTabSelect,
+    onTabDoubleClick,
     size = "medium",
     maxLabelLength,
     accessibilityConfig: accessibilityConfigProp,
@@ -111,6 +112,7 @@ export function useUiTabsContextStoreValue<
             tabs,
             selectedTabId,
             onTabSelect,
+            onTabDoubleClick,
             size,
             maxLabelLength,
             disableBottomBorder,
@@ -135,6 +137,7 @@ export function useUiTabsContextStoreValue<
             tabs,
             selectedTabId,
             onTabSelect,
+            onTabDoubleClick,
             size,
             maxLabelLength,
             disableBottomBorder,

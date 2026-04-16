@@ -16,7 +16,13 @@ import { type IUiTabComponentProps } from "../types.js";
 export function DefaultUiTabsTab<
     TTabProps extends Record<any, any> = EmptyObject,
     TTabActionProps extends Record<any, any> = EmptyObject,
->({ tab, isSelected, onSelect, isFocused }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>) {
+>({
+    tab,
+    isSelected,
+    onSelect,
+    onDoubleClick,
+    isFocused,
+}: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>) {
     const store = getTypedUiTabsContextStore<TTabProps, TTabActionProps>();
     const { accessibilityConfig, TabValue, TabActions, maxLabelLength } = store.useContextStoreValues([
         "accessibilityConfig",
@@ -51,6 +57,7 @@ export function DefaultUiTabsTab<
         <button
             className={UiTabsBem.e("item", { selected: isSelected })}
             onClick={onSelect}
+            onDoubleClick={onDoubleClick}
             onFocus={handleFocus}
             role={accessibilityConfig?.tabRole}
             aria-selected={isSelected}

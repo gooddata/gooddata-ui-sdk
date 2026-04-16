@@ -1,6 +1,12 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type EnhancedStore, type Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+    type EnhancedStore,
+    type Middleware,
+    type Reducer,
+    combineReducers,
+    configureStore,
+} from "@reduxjs/toolkit";
 import { defaultImport } from "default-import";
 import { keyBy, merge } from "lodash-es";
 import { enableBatching } from "redux-batched-actions";
@@ -211,6 +217,11 @@ export interface IDashboardStoreConfig {
      * If you do not specify initialRenderMode, the dashboard component will be display in view mode.
      */
     initialRenderMode: RenderMode;
+
+    /**
+     * Preload redux store with particular state. Useful in component testing.
+     */
+    preloadedState?: DashboardState;
 }
 
 function* rootSaga(
@@ -284,24 +295,10 @@ function mergeQueryServices(
     );
 }
 
-/**
- * Creates a new store for a dashboard.
- *
- * @param config - runtime configuration to apply on the middlewares and the store
- */
-export function createDashboardStore(config: IDashboardStoreConfig): IReduxedDashboardStore {
-    const queryProcessing = createQueryProcessingModule(
-        mergeQueryServices(AllQueryServices, config.queryServices),
-    );
-    const privateContext = config.privateContext ?? {};
-    const sagaMiddleware = createSagaMiddleware({
-        context: {
-            dashboardContext: config.dashboardContext,
-            privateContext,
-        },
-    });
-
-    const rootReducer = combineReducers({
+export function createDashboardRootReducer({
+    queryCache = (state = {}) => state,
+}: { queryCache?: Reducer } = {}) {
+    return combineReducers({
         loading: loadingSliceReducer,
         saving: savingSliceReducer,
         executed: executedSliceReducer,
@@ -329,9 +326,28 @@ export function createDashboardStore(config: IDashboardStoreConfig): IReduxedDas
         users: usersSliceReducer,
         filterViews: filterViewsSliceReducer,
         dashboardSummaryWorkflow: dashboardSummaryWorkflowSliceReducer,
-        _queryCache: queryProcessing.queryCacheReducer,
+        _queryCache: queryCache,
+    });
+}
+
+/**
+ * Creates a new store for a dashboard.
+ *
+ * @param config - runtime configuration to apply on the middlewares and the store
+ */
+export function createDashboardStore(config: IDashboardStoreConfig): IReduxedDashboardStore {
+    const queryProcessing = createQueryProcessingModule(
+        mergeQueryServices(AllQueryServices, config.queryServices),
+    );
+    const privateContext = config.privateContext ?? {};
+    const sagaMiddleware = createSagaMiddleware({
+        context: {
+            dashboardContext: config.dashboardContext,
+            privateContext,
+        },
     });
 
+    const rootReducer = createDashboardRootReducer({ queryCache: queryProcessing.queryCacheReducer });
     const store = configureStore({
         reducer: enableBatching(rootReducer),
         middleware: (getDefaultMiddleware) => {
@@ -358,6 +374,7 @@ export function createDashboardStore(config: IDashboardStoreConfig): IReduxedDas
                         // executions can have Errors stored, also some decorated execution results are non-serializable too
                         "executionResults",
                         "automations.error",
+                        "loading.error",
                     ],
                     // prolong the check limit, otherwise this will flood the logs on CI with non-actionable warnings
                     warnAfter: 4096,
@@ -379,6 +396,7 @@ export function createDashboardStore(config: IDashboardStoreConfig): IReduxedDas
                     : ""
             }`,
         },
+        preloadedState: config.preloadedState,
     });
 
     const { eventing = {} } = config;

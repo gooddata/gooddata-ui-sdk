@@ -27,6 +27,7 @@ export function DefaultUiTabsContainer<
         tabs,
         selectedTabId,
         onTabSelect,
+        onTabDoubleClick,
         containerRef: resizeContainerRef,
         AllTabs,
         disableBottomBorder,
@@ -38,6 +39,7 @@ export function DefaultUiTabsContainer<
         "tabs",
         "selectedTabId",
         "onTabSelect",
+        "onTabDoubleClick",
         "containerRef",
         "AllTabs",
         "disableBottomBorder",
@@ -101,6 +103,7 @@ export function DefaultUiTabsContainer<
                     {tabs.map((tab) => {
                         const isSelected = selectedTabId === tab.id;
                         const onSelect = () => onTabSelect(tab);
+                        const onDoubleClick = () => onTabDoubleClick?.(tab);
                         const isFocused = focusedItem === tab;
 
                         return (
@@ -110,6 +113,7 @@ export function DefaultUiTabsContainer<
                                 isSelected={isSelected}
                                 isFocused={isFocused}
                                 onSelect={onSelect}
+                                onDoubleClick={onDoubleClick}
                             />
                         );
                     })}

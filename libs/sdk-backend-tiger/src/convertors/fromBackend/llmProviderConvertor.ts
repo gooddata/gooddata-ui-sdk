@@ -2,7 +2,7 @@
 
 import {
     type JsonApiLlmProviderIn,
-    type JsonApiLlmProviderInAttributesProviderConfig,
+    type JsonApiLlmProviderOutAttributesProviderConfig,
     type JsonApiLlmProviderOutWithLinks,
     type JsonApiLlmProviderPatch,
 } from "@gooddata/api-client-tiger";
@@ -20,7 +20,7 @@ export function convertLlmProviderFromBackend(provider: JsonApiLlmProviderOutWit
         name: attributes?.name ?? null,
         description: attributes?.description,
         providerConfig: convertLlmProviderConfigFromBackend(
-            attributes?.providerConfig as JsonApiLlmProviderInAttributesProviderConfig,
+            attributes?.providerConfig as JsonApiLlmProviderOutAttributesProviderConfig,
         ),
         models:
             attributes?.models?.map((model): ILlmModel => {
@@ -75,7 +75,7 @@ export function convertLlmProviderPatchToBackend(provider: LlmProviderPatch): Js
 
 function convertLlmProviderConfigToBackend(
     config: LlmProviderConfig | undefined | null,
-): JsonApiLlmProviderInAttributesProviderConfig | undefined {
+): JsonApiLlmProviderOutAttributesProviderConfig | undefined {
     if (!config) {
         return undefined;
     }
@@ -114,7 +114,7 @@ function convertLlmProviderConfigToBackend(
 }
 
 function convertLlmProviderConfigFromBackend(
-    config: JsonApiLlmProviderInAttributesProviderConfig | null | undefined,
+    config: JsonApiLlmProviderOutAttributesProviderConfig | null | undefined,
 ): LlmProviderConfig | undefined {
     if (!config) {
         return undefined;

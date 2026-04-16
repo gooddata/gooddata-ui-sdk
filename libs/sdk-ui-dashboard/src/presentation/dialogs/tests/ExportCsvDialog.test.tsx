@@ -87,7 +87,7 @@ describe("ExportCsvDialog", () => {
         selectDelimiterOption("Custom");
         fireEvent.change(getCustomInput(), { target: { value: "abc" } });
 
-        expect(screen.getByText("Use a single character")).toBeInTheDocument();
+        expect(screen.getByText(/Use a single character/)).toBeInTheDocument();
         expect(screen.getByText("Export").closest("button")).toHaveAttribute("aria-disabled", "true");
     });
 
@@ -97,6 +97,6 @@ describe("ExportCsvDialog", () => {
         selectDelimiterOption("Custom");
         fireEvent.change(getCustomInput(), { target: { value: "é" } });
 
-        expect(screen.getByText("This character isn't supported")).toBeInTheDocument();
+        expect(screen.getByText(/Invalid delimiter/)).toBeInTheDocument();
     });
 });

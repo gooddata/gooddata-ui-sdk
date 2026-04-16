@@ -9,6 +9,7 @@ import {
     getCsvDelimiterValidationError,
     getCsvDelimiterValue,
 } from "@gooddata/sdk-model";
+import { ValidationContextStore, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import { ConfirmDialogBase, CsvDelimiterPicker, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { type IExportCsvDialogData } from "../dashboardContexts/ExportCsvDialogContext.js";
@@ -35,6 +36,7 @@ export const ExportCsvDialog = memo(function ExportCsvDialog({
 }: IExportCsvDialogProps) {
     const intl = useIntl();
     const [value, setValue] = useState(() => getCsvDelimiterState(initialDelimiter));
+    const validationContextValue = useValidationContextValue(createInvalidNode());
 
     const validationError =
         value.selectedPreset === "custom" ? getCsvDelimiterValidationError(value.customDelimiter) : undefined;
@@ -48,28 +50,30 @@ export const ExportCsvDialog = memo(function ExportCsvDialog({
 
     return (
         <Overlay alignPoints={alignPoints} isModal positionType="fixed">
-            <ConfirmDialogBase
-                className="gd-csv-export-dialog s-gd-csv-export-dialog"
-                displayCloseButton
-                isPositive
-                isSubmitDisabled={isSubmitDisabled}
-                headline={intl.formatMessage(messages.headline)}
-                cancelButtonText={intl.formatMessage(messages.cancel)}
-                submitButtonText={intl.formatMessage(messages.submit)}
-                onCancel={onCancel}
-                onSubmit={handleSubmit}
-                autofocusOnOpen
-            >
-                <div className="gd-csv-export-dialog-item">
-                    <CsvDelimiterPicker
-                        value={value}
-                        onChange={setValue}
-                        validationError={validationError}
-                        label={intl.formatMessage(messages.delimiterLabel)}
-                        onEnterKeyPress={isSubmitDisabled ? undefined : handleSubmit}
-                    />
-                </div>
-            </ConfirmDialogBase>
+            <ValidationContextStore value={validationContextValue}>
+                <ConfirmDialogBase
+                    className="gd-csv-export-dialog s-gd-csv-export-dialog"
+                    displayCloseButton
+                    isPositive
+                    isSubmitDisabled={isSubmitDisabled}
+                    headline={intl.formatMessage(messages.headline)}
+                    cancelButtonText={intl.formatMessage(messages.cancel)}
+                    submitButtonText={intl.formatMessage(messages.submit)}
+                    onCancel={onCancel}
+                    onSubmit={handleSubmit}
+                    autofocusOnOpen
+                >
+                    <div className="gd-csv-export-dialog-item">
+                        <CsvDelimiterPicker
+                            value={value}
+                            onChange={setValue}
+                            validationError={validationError}
+                            label={intl.formatMessage(messages.delimiterLabel)}
+                            onEnterKeyPress={isSubmitDisabled ? undefined : handleSubmit}
+                        />
+                    </div>
+                </ConfirmDialogBase>
+            </ValidationContextStore>
         </Overlay>
     );
 });

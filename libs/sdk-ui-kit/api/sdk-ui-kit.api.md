@@ -325,7 +325,7 @@ export function createTemplates(formatMessage: (descriptor: {
 }) => string, definitions: readonly ITemplateDefinition[], messageIdPrefix?: string): IFormatTemplate[];
 
 // @internal
-export function CsvDelimiterPicker({ value, onChange, validationError, label, onEnterKeyPress }: ICsvDelimiterPickerProps): JSX.Element;
+export function CsvDelimiterPicker({ value, onChange, validationError, label, onEnterKeyPress, layout }: ICsvDelimiterPickerProps): JSX.Element;
 
 // @internal
 export const CURRENCY_PRESET_DEFINITIONS: readonly ICurrencyPresetDefinition[];
@@ -427,7 +427,7 @@ export const DefaultUiTabsAllTabsButton: <TTabProps extends Record<any, any> = E
 export function DefaultUiTabsContainer<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"Container", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, isFocused }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, onDoubleClick, isFocused }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
 export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex, isOpen, onToggleOpen }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element | null;
@@ -1887,6 +1887,7 @@ export function IconWidget({ color, className, width, height }: IIconProps): JSX
 // @internal (undocumented)
 export interface ICsvDelimiterPickerProps {
     label?: string;
+    layout?: "row" | "column";
     onChange: (value: ICsvDelimiterPickerValue) => void;
     onEnterKeyPress?: () => void;
     validationError?: CsvDelimiterValidationError;
@@ -6977,6 +6978,8 @@ export interface IUiPopoverProps {
 // @internal (undocumented)
 export interface IUiReturnFocusOnUnmountOptions {
     // (undocumented)
+    focusVisible?: boolean;
+    // (undocumented)
     returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
 }
 
@@ -7080,6 +7083,7 @@ export type IUiTabComponents<TTabProps extends Record<any, any> = EmptyObject, T
         tab: IUiTab<TTabProps, TTabActionProps>;
         isSelected: boolean;
         onSelect: () => void;
+        onDoubleClick?: () => void;
         isFocused?: boolean;
     }>;
     TabValue: ComponentType<{
@@ -7114,7 +7118,7 @@ export type IUiTabComponents<TTabProps extends Record<any, any> = EmptyObject, T
 };
 
 // @internal (undocumented)
-export type IUiTabContext<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = Pick<IUiTabsProps<TTabProps, TTabActionProps>, "tabs" | "selectedTabId" | "onTabSelect" | "size" | "accessibilityConfig" | "maxLabelLength" | "disableBottomBorder"> & {
+export type IUiTabContext<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject> = Pick<IUiTabsProps<TTabProps, TTabActionProps>, "tabs" | "selectedTabId" | "onTabSelect" | "onTabDoubleClick" | "size" | "accessibilityConfig" | "maxLabelLength" | "disableBottomBorder"> & {
     isOverflowing: boolean;
     containerRef: RefCallback<Element>;
     onActionTriggered: (context: IUiTabActionEventContext<TTabProps, TTabActionProps>) => void;
@@ -7132,6 +7136,7 @@ export type IUiTabsProps<TTabProps extends Record<any, any> = EmptyObject, TTabA
     tabs: IUiTab<TTabProps, TTabActionProps>[];
     selectedTabId: string;
     onTabSelect: (tab: IUiTab<TTabProps, TTabActionProps>) => void;
+    onTabDoubleClick?: (tab: IUiTab<TTabProps, TTabActionProps>) => void;
     size?: SizeSmall | SizeMedium | SizeLarge;
     maxLabelLength?: number;
     accessibilityConfig?: IUiTabsAccessibilityConfig;
@@ -8679,13 +8684,13 @@ export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>(
 export const useUiFocusTrapConnectors: <T extends HTMLElement = HTMLElement>(focusCheckFn: (element: HTMLElement) => boolean) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>({ returnFocusTo, }?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;
+export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>({ returnFocusTo, focusVisible, }?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
 export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: ((event: KeyboardEvent_2<Element>) => void) | undefined) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, disableBottomBorder, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
+export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, onTabDoubleClick, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, disableBottomBorder, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
 
 // @internal (undocumented)
 export function useUiTreeViewEventPublisher<T extends UiTreeViewEventType>(eventType: T): (event: UiTreeViewEvents[T]) => void;

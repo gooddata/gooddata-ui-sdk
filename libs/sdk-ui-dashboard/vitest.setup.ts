@@ -52,6 +52,3 @@ expect.extend(matchers);
 afterEach(() => {
     cleanup();
 });
-global.CSS = {
-    supports: (_property: string, _value: string) => false,
-} as any;
