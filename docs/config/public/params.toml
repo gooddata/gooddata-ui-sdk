@@ -12,9 +12,13 @@
     versionPage = "https://sdk.gooddata.com/gooddata-ui-apidocs/VERSION/docs/index.html"
 
 [[versions]]
-    version = "11.29"
+    version = "11.30"
     dirpath = "latest"
     url = "/latest/"
+[[versions]]
+    version = "11.29"
+    dirpath = "11.29"
+    url = "/11.29/"
 [[versions]]
     version = "11.28"
     dirpath = "11.28"
@@ -83,10 +87,6 @@
     version = "11.11"
     dirpath = "11.11"
     url = "/11.11/"
-[[versions]]
-    version = "11.10"
-    dirpath = "11.10"
-    url = "/11.10/"
 [[versions]]
     version = "6.3"
     changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#630"

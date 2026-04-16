@@ -2,6 +2,68 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.30.0",
+            "tag": "@gooddata/sdk-ui-all_v11.30.0",
+            "date": "Thu, 16 Apr 2026 06:23:45 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Add template selection for slides exports."
+                    },
+                    {
+                        "comment": "sdk-backend-*: Replace `updateParameterMeta` with `updateParameter` method in the workspace parameters service."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce edit flow for parameter object type in the catalog."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce `deleteParameter` method in the workspace parameters service."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Introduce delete and duplicate flows for parameter object type in the catalog."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Added the ability to rename dashboard tabs by double-clicking."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: introduce customizable search placeholders in `UiAsyncTable` for better UX"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: add error handling for Quality Score Card components"
+                    },
+                    {
+                        "comment": "sdk-code-convertors: repair of converting pop and pp filters"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: improved title and measure identifier resolution"
+                    },
+                    {
+                        "comment": "sdk-code-convertors: add context-aware error handling across conversion funcs"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Turn on text filters by default."
+                    },
+                    {
+                        "comment": "Use narrowed JSON Schema for Python type generation"
+                    },
+                    {
+                        "comment": "fix(sdk-ui-geo): trigger onDataView callback, fix onExportReady callback."
+                    },
+                    {
+                        "comment": "gdc-dashboard: migrating AI summaries to conversation flow"
+                    },
+                    {
+                        "comment": "Add new test ids for agent e2e tests"
+                    }
+                ],
+                "patch": [
+                    {
+                        "comment": "sdk-ui-gen-ai: Fix KDA window not opening"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.29.0",
             "tag": "@gooddata/sdk-ui-all_v11.29.0",
             "date": "Fri, 10 Apr 2026 11:31:09 GMT",
