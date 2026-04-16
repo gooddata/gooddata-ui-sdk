@@ -89,6 +89,7 @@ export type IUiTabComponents<
         tab: IUiTab<TTabProps, TTabActionProps>;
         isSelected: boolean;
         onSelect: () => void;
+        onDoubleClick?: () => void;
         /**
          * Whether this tab is the currently focused tab in keyboard navigation.
          * When true, the tab button and its actions button become tabbable (tabIndex=0).
@@ -158,6 +159,7 @@ export type IUiTabContext<
     | "tabs"
     | "selectedTabId"
     | "onTabSelect"
+    | "onTabDoubleClick"
     | "size"
     | "accessibilityConfig"
     | "maxLabelLength"
@@ -181,6 +183,7 @@ export type IUiTabsProps<
     tabs: IUiTab<TTabProps, TTabActionProps>[];
     selectedTabId: string;
     onTabSelect: (tab: IUiTab<TTabProps, TTabActionProps>) => void;
+    onTabDoubleClick?: (tab: IUiTab<TTabProps, TTabActionProps>) => void;
     size?: SizeSmall | SizeMedium | SizeLarge;
     maxLabelLength?: number;
     accessibilityConfig?: IUiTabsAccessibilityConfig;

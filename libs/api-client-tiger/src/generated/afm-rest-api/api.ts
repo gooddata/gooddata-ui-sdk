@@ -41,6 +41,10 @@ export interface AFM {
      */
     'auxMeasures'?: Array<MeasureItem>;
     /**
+     * (EXPERIMENTAL) Parameter values to use for this execution.
+     */
+    'parameters'?: Array<ParameterItem>;
+    /**
      * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
      */
     'measureDefinitionOverrides'?: Array<MetricDefinitionOverride>;
@@ -191,6 +195,20 @@ export interface AfmObjectIdentifierLabelIdentifier {
 export type AfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
 
 /**
+ * Reference to the parameter.
+ */
+export interface AfmObjectIdentifierParameter {
+    'identifier': AfmObjectIdentifierParameterIdentifier;
+}
+
+export interface AfmObjectIdentifierParameterIdentifier {
+    'id': string;
+    'type': AfmObjectIdentifierParameterIdentifierTypeEnum;
+}
+
+export type AfmObjectIdentifierParameterIdentifierTypeEnum = 'parameter';
+
+/**
  * Entity describing the valid descendants request.
  */
 export interface AfmValidDescendantsQuery {
@@ -331,6 +349,16 @@ export interface AnalyticsCatalogUser {
      * Last name of the user who created any objects
      */
     'lastname': string;
+}
+
+/**
+ * Request to run ANALYZE TABLE for tables in a database instance
+ */
+export interface AnalyzeStatisticsRequest {
+    /**
+     * Table names to analyze. If empty or null, all tables in the database are analyzed.
+     */
+    'tableNames'?: Array<string>;
 }
 
 /**
@@ -999,6 +1027,10 @@ export interface CreatePipeTableRequest {
      * Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference.
      */
     'columnOverrides'?: { [key: string]: string; };
+    /**
+     * Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is \'aggregate\'. Ignored for other key types.
+     */
+    'aggregationOverrides'?: { [key: string]: string; };
     /**
      * How often (in seconds) the pipe polls for new files. 0 or null = use server default.
      */
@@ -2167,13 +2199,13 @@ export interface Operation {
      */
     'id': string;
     /**
-     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `create-pipe-table` — Creating a pipe table backed by an S3 data source. * `delete-pipe-table` — Deleting a pipe table. 
+     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `create-pipe-table` — Creating a pipe table backed by an S3 data source. * `delete-pipe-table` — Deleting a pipe table. * `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection. 
      */
     'kind': OperationKindEnum;
     'status': string;
 }
 
-export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'create-pipe-table' | 'delete-pipe-table';
+export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'create-pipe-table' | 'delete-pipe-table' | 'analyze-statistics';
 
 /**
  * Error information for a failed operation
@@ -2260,6 +2292,17 @@ export interface Paging {
      * Link to next page, or null if this is last page.
      */
     'next'?: string;
+}
+
+/**
+ * (EXPERIMENTAL) Parameter value for this execution.
+ */
+export interface ParameterItem {
+    'parameter': AfmObjectIdentifierParameter;
+    /**
+     * Value to use for this parameter instead of its default.
+     */
+    'value': string;
 }
 
 /**
@@ -3549,6 +3592,73 @@ export interface WorkflowStatusResponseDto {
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
+ * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+ * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {AnalyzeStatisticsRequest} analyzeStatisticsRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_AnalyzeStatistics(
+    instanceId: string, analyzeStatisticsRequest: AnalyzeStatisticsRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('analyzeStatistics', 'instanceId', instanceId)
+    // verify required parameter 'analyzeStatisticsRequest' is not null or undefined
+    assertParamExists('analyzeStatistics', 'analyzeStatisticsRequest', analyzeStatisticsRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/analyzeStatistics`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof analyzeStatisticsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(analyzeStatisticsRequest !== undefined ? analyzeStatisticsRequest : {})
+        : analyzeStatisticsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
  * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
  * @summary (BETA) Create a new AI Lake pipe table
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
@@ -4196,6 +4306,32 @@ export async function AILakeApiAxiosParamCreator_RunAiLakeServiceCommand(
 
 // AILakeApi Api FP
 /**
+ * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+ * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_AnalyzeStatistics(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiAnalyzeStatisticsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_AnalyzeStatistics(
+        requestParameters.instanceId, requestParameters.analyzeStatisticsRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
  * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
  * @summary (BETA) Create a new AI Lake pipe table
  * @param {AxiosInstance} axios Axios instance.
@@ -4513,6 +4649,16 @@ export async function AILakeApi_RunAiLakeServiceCommand(
  */
 export interface AILakeApiInterface {
     /**
+     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+     * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+     * @param {AILakeApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    analyzeStatistics(requestParameters: AILakeApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
      * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
      * @summary (BETA) Create a new AI Lake pipe table
      * @param {AILakeApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
@@ -4632,6 +4778,34 @@ export interface AILakeApiInterface {
      */
     runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
 
+}
+
+/**
+ * Request parameters for analyzeStatistics operation in AILakeApi.
+ * @export
+ * @interface AILakeApiAnalyzeStatisticsRequest
+ */
+export interface AILakeApiAnalyzeStatisticsRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiAnalyzeStatistics
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {AnalyzeStatisticsRequest}
+     * @memberof AILakeApiAnalyzeStatistics
+     */
+    readonly analyzeStatisticsRequest: AnalyzeStatisticsRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeApiAnalyzeStatistics
+     */
+    readonly operationId?: string
 }
 
 /**
@@ -4907,6 +5081,18 @@ export interface AILakeApiRunAiLakeServiceCommandRequest {
  * @extends {BaseAPI}
  */
 export class AILakeApi extends BaseAPI implements AILakeApiInterface {
+    /**
+     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+     * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+     * @param {AILakeApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public analyzeStatistics(requestParameters: AILakeApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_AnalyzeStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
     /**
      * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
      * @summary (BETA) Create a new AI Lake pipe table
@@ -5563,6 +5749,73 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
 
 // AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
 /**
+ * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+ * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {AnalyzeStatisticsRequest} analyzeStatisticsRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApiAxiosParamCreator_AnalyzeStatistics(
+    instanceId: string, analyzeStatisticsRequest: AnalyzeStatisticsRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('analyzeStatistics', 'instanceId', instanceId)
+    // verify required parameter 'analyzeStatisticsRequest' is not null or undefined
+    assertParamExists('analyzeStatistics', 'analyzeStatisticsRequest', analyzeStatisticsRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/analyzeStatistics`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof analyzeStatisticsRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(analyzeStatisticsRequest !== undefined ? analyzeStatisticsRequest : {})
+        : analyzeStatisticsRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
+/**
  * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
  * @summary (BETA) Create a new AI Lake pipe table
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
@@ -5779,6 +6032,32 @@ export async function AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
 
 // AILakePipeTablesApi Api FP
 /**
+ * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+ * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakePipeTablesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApi_AnalyzeStatistics(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_AnalyzeStatistics(
+        requestParameters.instanceId, requestParameters.analyzeStatisticsRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakePipeTablesApi Api FP
+/**
  * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
  * @summary (BETA) Create a new AI Lake pipe table
  * @param {AxiosInstance} axios Axios instance.
@@ -5888,6 +6167,16 @@ export async function AILakePipeTablesApi_ListAiLakePipeTables(
  */
 export interface AILakePipeTablesApiInterface {
     /**
+     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+     * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+     * @param {AILakePipeTablesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApiInterface
+     */
+    analyzeStatistics(requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
      * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
      * @summary (BETA) Create a new AI Lake pipe table
      * @param {AILakePipeTablesApiCreateAiLakePipeTableRequest} requestParameters Request parameters.
@@ -5927,6 +6216,34 @@ export interface AILakePipeTablesApiInterface {
      */
     listAiLakePipeTables(requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<ListPipeTablesResponse>;
 
+}
+
+/**
+ * Request parameters for analyzeStatistics operation in AILakePipeTablesApi.
+ * @export
+ * @interface AILakePipeTablesApiAnalyzeStatisticsRequest
+ */
+export interface AILakePipeTablesApiAnalyzeStatisticsRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakePipeTablesApiAnalyzeStatistics
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {AnalyzeStatisticsRequest}
+     * @memberof AILakePipeTablesApiAnalyzeStatistics
+     */
+    readonly analyzeStatisticsRequest: AnalyzeStatisticsRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakePipeTablesApiAnalyzeStatistics
+     */
+    readonly operationId?: string
 }
 
 /**
@@ -6027,6 +6344,18 @@ export interface AILakePipeTablesApiListAiLakePipeTablesRequest {
  * @extends {BaseAPI}
  */
 export class AILakePipeTablesApi extends BaseAPI implements AILakePipeTablesApiInterface {
+    /**
+     * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
+     * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
+     * @param {AILakePipeTablesApiAnalyzeStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApi
+     */
+    public analyzeStatistics(requestParameters: AILakePipeTablesApiAnalyzeStatisticsRequest, options?: AxiosRequestConfig) {
+        return AILakePipeTablesApi_AnalyzeStatistics(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
     /**
      * (BETA) Creates a pipe-backed OLAP table in the given AI Lake database instance. Infers schema from parquet files. Returns an operation-id header the client can use to poll for progress.
      * @summary (BETA) Create a new AI Lake pipe table

@@ -32,6 +32,7 @@ import type {
     Widget,
 } from "@gooddata/sdk-code-schemas/v1";
 import {
+    type DashboardAttributeFilterSelectionType,
     type DashboardDateFilterConfigMode,
     type DrillOrigin,
     type IDashboardAttributeFilterConfig,
@@ -911,7 +912,11 @@ export function yamlFilterContextToDeclarative(
                         forceType: "label",
                     });
                 }
-                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
+                if (filter.selection_type) {
+                    attributeFilterConfig.selectionType =
+                        filter.selection_type as DashboardAttributeFilterSelectionType;
+                }
+                if ((filter.mode && filter.mode !== "active") || filter.display_as || filter.selection_type) {
                     attributeFilterConfig.localIdentifier = key;
                     attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
                 }
@@ -966,7 +971,11 @@ export function yamlFilterContextToDeclarative(
                         forceType: "label",
                     });
                 }
-                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
+                if (filter.selection_type) {
+                    attributeFilterConfig.selectionType =
+                        filter.selection_type as DashboardAttributeFilterSelectionType;
+                }
+                if ((filter.mode && filter.mode !== "active") || filter.display_as || filter.selection_type) {
                     attributeFilterConfig.localIdentifier = key;
                     attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
                 }
@@ -1039,7 +1048,12 @@ export function yamlFilterContextToDeclarative(
                     });
                 }
 
-                if ((filter.mode && filter.mode !== "active") || filter.display_as) {
+                if (filter.selection_type) {
+                    attributeFilterConfig.selectionType =
+                        filter.selection_type as DashboardAttributeFilterSelectionType;
+                }
+
+                if ((filter.mode && filter.mode !== "active") || filter.display_as || filter.selection_type) {
                     attributeFilterConfig.localIdentifier = key;
                     attributeFilterConfigs.push(attributeFilterConfig as IDashboardAttributeFilterConfig);
                 }

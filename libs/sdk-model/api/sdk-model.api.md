@@ -344,26 +344,30 @@ export enum ComputeRatioRule {
 export type Condition<T> = T | IConditionOr<T> | IConditionAnd<T>;
 
 // @alpha
-export const CSV_DELIMITER_PRESETS: readonly [{
-    readonly id: "comma";
-    readonly delimiter: ",";
-    readonly previewSymbol: ",";
-}, {
-    readonly id: "semicolon";
-    readonly delimiter: ";";
-    readonly previewSymbol: ";";
-}, {
-    readonly id: "pipe";
-    readonly delimiter: "|";
-    readonly previewSymbol: "|";
-}, {
-    readonly id: "tab";
-    readonly delimiter: "\t";
-    readonly previewSymbol: "⇥";
-}];
+export const CSV_DELIMITER_PRESETS: {
+    readonly comma: {
+        readonly delimiter: ",";
+        readonly previewSymbol: ",";
+    };
+    readonly semicolon: {
+        readonly delimiter: ";";
+        readonly previewSymbol: ";";
+    };
+    readonly pipe: {
+        readonly delimiter: "|";
+        readonly previewSymbol: "|";
+    };
+    readonly tab: {
+        readonly delimiter: "\t";
+        readonly previewSymbol: "⇥";
+    };
+};
 
 // @alpha
-export type CsvDelimiterPreset = (typeof CSV_DELIMITER_PRESETS)[number]["id"] | "custom";
+export type CsvDelimiterPreset = CsvDelimiterPresetId | "custom";
+
+// @alpha
+export type CsvDelimiterPresetId = keyof typeof CSV_DELIMITER_PRESETS;
 
 // @alpha
 export type CsvDelimiterValidationError = "singleCharacter" | "unsupportedCharacter";
@@ -490,6 +494,9 @@ export type DateString = string;
 
 // @alpha
 export const DEFAULT_CSV_DELIMITER: ",";
+
+// @alpha
+export const DEFAULT_CSV_DELIMITER_PRESET_ID = "comma";
 
 // @public
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];

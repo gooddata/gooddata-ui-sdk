@@ -1156,6 +1156,40 @@
                 "type": "object",
                 "title": "AttributeFilterState"
             },
+            "AttributeSortItem": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "attribute_sort",
+                        "title": "Type"
+                    },
+                    "by": {
+                        "type": "string",
+                        "title": "By"
+                    },
+                    "direction": {
+                        "type": "string",
+                        "enum": [
+                            "ASC",
+                            "DESC"
+                        ],
+                        "title": "Direction"
+                    },
+                    "aggregation": {
+                        "type": "string",
+                        "const": "SUM",
+                        "title": "Aggregation"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "by",
+                    "direction"
+                ],
+                "title": "AttributeSortItem"
+            },
             "Body_createDocument": {
                 "properties": {
                     "file": {
@@ -1947,6 +1981,67 @@
                 "title": "ListDocumentsResponse",
                 "description": "Response for GET /documents."
             },
+            "MetricSortItem": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "metric_sort",
+                        "title": "Type"
+                    },
+                    "direction": {
+                        "type": "string",
+                        "enum": [
+                            "ASC",
+                            "DESC"
+                        ],
+                        "title": "Direction"
+                    },
+                    "metrics": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/MetricSortLocatorItem"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Metrics"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "direction",
+                    "metrics"
+                ],
+                "title": "MetricSortItem"
+            },
+            "MetricSortLocatorItem": {
+                "properties": {
+                    "by": {
+                        "type": "string",
+                        "title": "By"
+                    },
+                    "element": {
+                        "type": "string",
+                        "title": "Element"
+                    },
+                    "function": {
+                        "type": "string",
+                        "title": "Function"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "by"
+                ],
+                "title": "MetricSortLocatorItem"
+            },
             "MetricValueFilterConditionComparison": {
                 "type": "string",
                 "enum": [
@@ -2115,6 +2210,20 @@
                         },
                         "type": "object",
                         "title": "Filter By"
+                    },
+                    "sort_by": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/AttributeSortItem"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/MetricSortItem"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Sort By"
                     }
                 },
                 "additionalProperties": false,
@@ -3274,17 +3383,6 @@
                         "type": "string",
                         "title": "Title"
                     },
-                    "description": {
-                        "type": "string",
-                        "title": "Description"
-                    },
-                    "tags": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "title": "Tags"
-                    },
                     "metrics": {
                         "items": {
                             "anyOf": [
@@ -3326,34 +3424,6 @@
                         },
                         "type": "array",
                         "title": "Segment By"
-                    },
-                    "rows": {
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/BucketRefObject"
-                                }
-                            ]
-                        },
-                        "type": "array",
-                        "title": "Rows"
-                    },
-                    "columns": {
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/BucketRefObject"
-                                }
-                            ]
-                        },
-                        "type": "array",
-                        "title": "Columns"
                     },
                     "config": {
                         "$ref": "#/components/schemas/VisualizationConfig"

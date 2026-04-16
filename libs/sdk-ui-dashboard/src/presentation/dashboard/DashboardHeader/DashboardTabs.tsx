@@ -17,7 +17,6 @@ import {
     DefaultUiTabsTabValue,
     type IUiTab,
     type IUiTabComponentProps,
-    SELECT_ITEM_ACTION,
     UiFocusManager,
     UiIcon,
     UiIconButton,
@@ -161,6 +160,14 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
         },
         [activeTabLocalIdentifier, dispatch],
     );
+    const handleTabRename = useCallback(
+        (tab: IDashboardUiTab) => {
+            if (isEditMode) {
+                dispatch(startRenamingDashboardTab(tab.id));
+            }
+        },
+        [isEditMode, dispatch],
+    );
 
     const uiTabs = useMemo<IDashboardUiTab[]>(() => {
         const isOnlyOneTab = tabs.length < 2;
@@ -192,6 +199,7 @@ export function useDashboardTabsProps(): IDashboardTabsProps {
         activeTabLocalIdentifier: effectiveActiveTabLocalIdentifier,
         uiTabs,
         handleTabSelect,
+        handleTabRename,
     };
 }
 
@@ -201,6 +209,7 @@ interface IDashboardTabsProps {
     activeTabLocalIdentifier?: string;
     uiTabs: IDashboardUiTab[];
     handleTabSelect: (tab: IDashboardUiTab) => void;
+    handleTabRename: (tab: IDashboardUiTab) => void;
 }
 /**
  * @internal
@@ -209,6 +218,7 @@ export function DashboardTabs({
     activeTabLocalIdentifier,
     uiTabs,
     handleTabSelect,
+    handleTabRename,
 }: IDashboardTabsProps): ReactElement | null {
     const intl = useIntl();
     const isEditMode = useDashboardSelector(selectIsInEditMode);
@@ -252,6 +262,7 @@ export function DashboardTabs({
                     size="large"
                     tabs={uiTabs}
                     onTabSelect={handleTabSelect}
+                    onTabDoubleClick={handleTabRename}
                     selectedTabId={activeTabLocalIdentifier ?? uiTabs[0].id}
                     accessibilityConfig={ACCESSIBILITY_CONFIG}
                     maxLabelLength={255}
@@ -292,7 +303,7 @@ function RenamableTabValue(props: IUiTabComponentProps<"TabValue", IDashboardUiT
     const { location, tab } = props;
 
     const dispatch = useDashboardDispatch();
-    const returnFocusId = useScopedIdOptional(tab, SELECT_ITEM_ACTION);
+    const returnFocusId = useScopedIdOptional(tab, "tab");
 
     const [name, setName] = usePropState(tab.label);
 
@@ -319,7 +330,10 @@ function RenamableTabValue(props: IUiTabComponentProps<"TabValue", IDashboardUiT
 
     return (
         <div onKeyDown={preventPropagateKeydown} className={tabsBem.e("rename-wrapper")}>
-            <UiFocusManager enableAutofocus enableReturnFocusOnUnmount={{ returnFocusTo: returnFocusId }}>
+            <UiFocusManager
+                enableAutofocus
+                enableReturnFocusOnUnmount={{ returnFocusTo: returnFocusId, focusVisible: false }}
+            >
                 {/*
                 We are autosizing the input by using a little trick.
                 The input field is absolutely positioned and fills the available space.

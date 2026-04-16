@@ -224,6 +224,74 @@
                 }
             }
         },
+        "/api/v1/ailake/database/instances/{instanceId}/analyzeStatistics": {
+            "post": {
+                "tags": [
+                    "AI Lake",
+                    "AI Lake - Pipe Tables"
+                ],
+                "summary": "(BETA) Run ANALYZE TABLE for tables in a database instance",
+                "description": "(BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.",
+                "operationId": "analyzeStatistics",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    },
+                    {
+                        "name": "operation-id",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnalyzeStatisticsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Statistics analysis scheduled.",
+                        "headers": {
+                            "operation-id": {
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                }
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to analyze statistics."
+                }
+            }
+        },
         "/api/v1/ailake/database/instances": {
             "get": {
                 "tags": [
@@ -3242,6 +3310,14 @@
                         },
                         "description": "Override inferred column types. Maps column names to SQL type strings (e.g. {\"year\": \"INT\", \"event_date\": \"DATE\"}). Applied after parquet schema inference."
                     },
+                    "aggregationOverrides": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is 'aggregate'. Ignored for other key types."
+                        },
+                        "description": "Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is 'aggregate'. Ignored for other key types."
+                    },
                     "pollingIntervalSeconds": {
                         "type": "integer",
                         "description": "How often (in seconds) the pipe polls for new files. 0 or null = use server default.",
@@ -3450,6 +3526,20 @@
                     }
                 },
                 "description": "Unique key model — enforces uniqueness, replaces on conflict."
+            },
+            "AnalyzeStatisticsRequest": {
+                "type": "object",
+                "properties": {
+                    "tableNames": {
+                        "type": "array",
+                        "description": "Table names to analyze. If empty or null, all tables in the database are analyzed.",
+                        "items": {
+                            "type": "string",
+                            "description": "Table names to analyze. If empty or null, all tables in the database are analyzed."
+                        }
+                    }
+                },
+                "description": "Request to run ANALYZE TABLE for tables in a database instance"
             },
             "ProvisionDatabaseInstanceRequest": {
                 "required": [
@@ -3720,6 +3810,35 @@
                         }
                     }
                 }
+            },
+            "AfmObjectIdentifierParameter": {
+                "required": [
+                    "identifier"
+                ],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": [
+                            "id",
+                            "type"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "example": "sample_item.price"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "parameter"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "Reference to the parameter."
             },
             "AllTimeDateFilter": {
                 "required": [
@@ -5746,6 +5865,13 @@
                             "$ref": "#/components/schemas/MeasureItem"
                         }
                     },
+                    "parameters": {
+                        "type": "array",
+                        "description": "(EXPERIMENTAL) Parameter values to use for this execution.",
+                        "items": {
+                            "$ref": "#/components/schemas/ParameterItem"
+                        }
+                    },
                     "measureDefinitionOverrides": {
                         "type": "array",
                         "description": "(EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric's MAQL definition without modifying the stored definition.",
@@ -5869,6 +5995,23 @@
                     }
                 },
                 "description": "(EXPERIMENTAL) Override for a catalog metric definition."
+            },
+            "ParameterItem": {
+                "required": [
+                    "parameter",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "parameter": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierParameter"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Value to use for this parameter instead of its default."
+                    }
+                },
+                "description": "(EXPERIMENTAL) Parameter value for this execution."
             },
             "ResultSpec": {
                 "required": [
@@ -8394,13 +8537,14 @@
                     },
                     "kind": {
                         "type": "string",
-                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `create-pipe-table` — Creating a pipe table backed by an S3 data source.\n* `delete-pipe-table` — Deleting a pipe table.\n",
+                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `create-pipe-table` — Creating a pipe table backed by an S3 data source.\n* `delete-pipe-table` — Deleting a pipe table.\n* `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection.\n",
                         "enum": [
                             "provision-database",
                             "deprovision-database",
                             "run-service-command",
                             "create-pipe-table",
-                            "delete-pipe-table"
+                            "delete-pipe-table",
+                            "analyze-statistics"
                         ]
                     },
                     "status": {

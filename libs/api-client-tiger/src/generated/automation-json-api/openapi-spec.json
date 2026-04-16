@@ -384,6 +384,13 @@
                             "$ref": "#/components/schemas/MeasureItem"
                         }
                     },
+                    "parameters": {
+                        "type": "array",
+                        "description": "(EXPERIMENTAL) Parameter values to use for this execution.",
+                        "items": {
+                            "$ref": "#/components/schemas/ParameterItem"
+                        }
+                    },
                     "measureDefinitionOverrides": {
                         "type": "array",
                         "description": "(EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric's MAQL definition without modifying the stored definition.",
@@ -744,6 +751,35 @@
                         }
                     }
                 }
+            },
+            "AfmObjectIdentifierParameter": {
+                "required": [
+                    "identifier"
+                ],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "required": [
+                            "id",
+                            "type"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "example": "sample_item.price"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "parameter"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "Reference to the parameter."
             },
             "AlertAfm": {
                 "required": [
@@ -2104,13 +2140,13 @@
                                     "label",
                                     "metric",
                                     "userDataFilter",
+                                    "parameter",
                                     "exportDefinition",
                                     "automation",
                                     "automationResult",
                                     "memoryItem",
                                     "knowledgeRecommendation",
                                     "prompt",
-                                    "parameter",
                                     "visualizationObject",
                                     "filterContext",
                                     "workspaceSettings",
@@ -2450,6 +2486,23 @@
                         }
                     }
                 }
+            },
+            "ParameterItem": {
+                "required": [
+                    "parameter",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "parameter": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierParameter"
+                    },
+                    "value": {
+                        "type": "string",
+                        "description": "Value to use for this parameter instead of its default."
+                    }
+                },
+                "description": "(EXPERIMENTAL) Parameter value for this execution."
             },
             "PdfTableStyle": {
                 "required": [

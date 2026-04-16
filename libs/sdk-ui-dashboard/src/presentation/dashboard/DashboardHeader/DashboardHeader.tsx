@@ -65,7 +65,7 @@ function CancelEditDialogWrapper() {
     return <CancelEditDialog {...cancelEditDialogProps} />;
 }
 
-function DashboardTabsWrapper() {
+export function DashboardTabsWrapper() {
     const dashboardTabsProps = useDashboardTabsProps();
     return <DashboardTabs {...dashboardTabsProps} />;
 }

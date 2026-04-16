@@ -1162,7 +1162,9 @@ export {
 export {
     CSV_DELIMITER_PRESETS,
     DEFAULT_CSV_DELIMITER,
+    DEFAULT_CSV_DELIMITER_PRESET_ID,
     type CsvDelimiterPreset,
+    type CsvDelimiterPresetId,
     type CsvDelimiterValidationError,
     getCsvDelimiterValidationError,
     getCsvDelimiterPreset,

@@ -45,6 +45,17 @@ export interface AiAttributeFilterState {
     'exclude'?: Array<string>;
 }
 
+export interface AiAttributeSortItem {
+    'type': AiAttributeSortItemTypeEnum;
+    'by': string;
+    'direction': AiAttributeSortItemDirectionEnum;
+    'aggregation'?: AiAttributeSortItemAggregationEnum;
+}
+
+export type AiAttributeSortItemTypeEnum = 'attribute_sort';
+export type AiAttributeSortItemDirectionEnum = 'ASC' | 'DESC';
+export type AiAttributeSortItemAggregationEnum = 'SUM';
+
 export interface AiBucketRefObject {
     'field': string;
 }
@@ -378,6 +389,27 @@ export interface AiListDocumentsResponse {
     'nextPageToken'?: string | null;
 }
 
+export interface AiMetricSortItem {
+    'type': AiMetricSortItemTypeEnum;
+    'direction': AiMetricSortItemDirectionEnum;
+    'metrics': Array<AiMetricSortItemMetricsInner>;
+}
+
+export type AiMetricSortItemTypeEnum = 'metric_sort';
+export type AiMetricSortItemDirectionEnum = 'ASC' | 'DESC';
+
+export interface AiMetricSortItemMetricsInner {
+    'by': string;
+    'element'?: string;
+    'function'?: string;
+}
+
+export interface AiMetricSortLocatorItem {
+    'by': string;
+    'element'?: string;
+    'function'?: string;
+}
+
 
 export const AiMetricValueFilterConditionComparison = {
     GREATER_THAN: 'GREATER_THAN',
@@ -449,6 +481,7 @@ export interface AiPatchDocumentRequest {
 export interface AiQuery {
     'fields': { [key: string]: AiFieldsValue; };
     'filter_by'?: { [key: string]: AiFilterByValue; };
+    'sort_by'?: Array<AiQuerySortByInner>;
 }
 
 export interface AiQueryFieldAttribute {
@@ -467,6 +500,18 @@ export interface AiQueryFieldMeasure {
 }
 
 export type AiQueryFieldMeasureAggregationEnum = 'SUM' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'COUNT';
+
+export interface AiQuerySortByInner {
+    'type': AiQuerySortByInnerTypeEnum;
+    'by': string;
+    'direction': AiQuerySortByInnerDirectionEnum;
+    'aggregation'?: AiQuerySortByInnerAggregationEnum;
+    'metrics': Array<AiMetricSortItemMetricsInner>;
+}
+
+export type AiQuerySortByInnerTypeEnum = 'attribute_sort' | 'metric_sort';
+export type AiQuerySortByInnerDirectionEnum = 'ASC' | 'DESC';
+export type AiQuerySortByInnerAggregationEnum = 'SUM';
 
 export interface AiRankingFilter {
     'type': AiRankingFilterTypeEnum;
@@ -795,13 +840,9 @@ export interface AiVisualization {
     'id': string;
     'query': AiQuery;
     'title'?: string;
-    'description'?: string;
-    'tags'?: Array<string>;
     'metrics'?: Array<AiVisualizationMetricsInner>;
     'view_by'?: Array<AiVisualizationMetricsInner>;
     'segment_by'?: Array<AiVisualizationMetricsInner>;
-    'rows'?: Array<AiVisualizationMetricsInner>;
-    'columns'?: Array<AiVisualizationMetricsInner>;
     'config'?: AiVisualizationConfig;
 }
 

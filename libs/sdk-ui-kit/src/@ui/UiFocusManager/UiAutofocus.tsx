@@ -5,6 +5,7 @@ import {
     type ReactNode,
     type RefObject,
     cloneElement,
+    useCallback,
     useEffect,
     useMemo,
     useState,
@@ -34,6 +35,15 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
     initialFocus,
 }: IUiAutofocusOptions = {}): IUiFocusHelperConnectors<T> => {
     const [element, setElement] = useState<HTMLElement | null>(null);
+
+    // Skip setState(null) on unmount — the effect cleanup handles observer teardown, and
+    // calling setElement(null) during commit would trigger a state update outside act() in tests.
+    // On re-mount, the ref callback fires with the new element, setting fresh state.
+    const ref = useCallback((el: HTMLElement | null) => {
+        if (el) {
+            setElement(el);
+        }
+    }, []);
 
     // If the element is outside of the viewport, calling focus() will not work.
     // This can happen for example with floating elements, that are repositioned after they mount
@@ -69,7 +79,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         return () => observer.disconnect();
     }, [refocusKey, element, initialFocus, active]);
 
-    return useMemo(() => ({ ref: setElement }), []);
+    return useMemo(() => ({ ref }), [ref]);
 };
 
 function getElementToFocus(

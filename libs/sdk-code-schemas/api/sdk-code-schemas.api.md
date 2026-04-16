@@ -669,6 +669,7 @@ type DashboardAttributeFilter1 = {
     multiselect?: boolean;
     mode?: "readonly" | "hidden" | "active";
     display_as?: DisplayAsLabelIdentifier;
+    selection_type?: "list" | "text" | "listOrText";
     state?: {
         [k: string]: unknown;
     };
@@ -682,6 +683,7 @@ type DashboardAttributeFilter1 = {
     multiselect?: boolean;
     mode?: "readonly" | "hidden" | "active";
     display_as?: DisplayAsLabelIdentifier1;
+    selection_type?: "list" | "text" | "listOrText";
     state?: {
         [k: string]: unknown;
     };
@@ -742,6 +744,7 @@ interface DashboardTextFilter1 {
     metric_filters?: string[];
     mode?: "readonly" | "hidden" | "active";
     parents?: (LocalAttributeFilter2 | LocalDateFilter2)[];
+    selection_type?: "list" | "text" | "listOrText";
     title?: string;
     // (undocumented)
     type: "text_filter";
@@ -763,6 +766,7 @@ interface DashboardTextFilter2 {
     // (undocumented)
     display_as?: DisplayAsLabelIdentifier3;
     mode?: "readonly" | "hidden" | "active";
+    selection_type?: "list" | "text" | "listOrText";
     title?: string;
     // (undocumented)
     type: "text_filter";
@@ -4702,6 +4706,11 @@ export const metadata_v1: {
                     description: string;
                     $ref: string;
                 };
+                selection_type: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
                 parents: {
                     type: string;
                     description: string;
@@ -4779,6 +4788,11 @@ export const metadata_v1: {
                             type: string;
                             description: string;
                             $ref: string;
+                        };
+                        selection_type: {
+                            type: string;
+                            enum: string[];
+                            description: string;
                         };
                         state: {
                             ref: string;
@@ -4865,6 +4879,11 @@ export const metadata_v1: {
                             type: string;
                             description: string;
                             $ref: string;
+                        };
+                        selection_type: {
+                            type: string;
+                            enum: string[];
+                            description: string;
                         };
                         state: {
                             ref: string;
@@ -4957,6 +4976,11 @@ export const metadata_v1: {
                     $ref: string;
                 };
                 mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                selection_type: {
                     type: string;
                     enum: string[];
                     description: string;
@@ -5054,6 +5078,11 @@ export const metadata_v1: {
                         enum: string[];
                         description: string;
                     };
+                    selection_type: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
                     parents: {
                         type: string;
                         description: string;
@@ -5145,6 +5174,11 @@ export const metadata_v1: {
                         $ref: string;
                     };
                     mode: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    selection_type: {
                         type: string;
                         enum: string[];
                         description: string;

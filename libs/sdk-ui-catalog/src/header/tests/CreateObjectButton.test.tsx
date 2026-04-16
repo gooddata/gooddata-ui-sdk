@@ -148,7 +148,7 @@ describe("CreateObjectButton", () => {
 
         expect(refetchHandler).toHaveBeenCalledWith("parameter");
         expect(screen.queryByText("Create parameter")).not.toBeInTheDocument();
-        expect(await screen.findByText("Parameter created.")).toBeInTheDocument();
+        expect(await screen.findByRole("status")).toHaveTextContent(/Parameter created\./);
     });
 
     it("keeps dialog open and shows backend error when parameter creation fails", async () => {
@@ -197,7 +197,7 @@ describe("CreateObjectButton", () => {
 
         expect(refetchHandler).toHaveBeenCalledWith("parameter");
         expect(screen.queryByText("Create parameter")).not.toBeInTheDocument();
-        expect(await screen.findByText("Parameter created.")).toBeInTheDocument();
+        expect(await screen.findByRole("status")).toHaveTextContent(/Parameter created\./);
 
         consoleErrorSpy.mockRestore();
     });

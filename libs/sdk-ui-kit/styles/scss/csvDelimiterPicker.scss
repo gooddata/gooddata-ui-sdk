@@ -1,9 +1,15 @@
 // (C) 2026 GoodData Corporation
 
+.gd-csv-delimiter-picker-label {
+    white-space: nowrap;
+}
+
+.gd-csv-delimiter-picker-preview-char {
+    font-family: menlo, monaco, consolas, "Courier New", monospace;
+    font-weight: 400;
+}
+
 .gd-csv-delimiter-picker-preview {
-    display: inline-flex;
-    min-width: 28px;
-    justify-content: flex-end;
     color: var(--gd-palette-complementary-6);
     opacity: 0;
     visibility: hidden;
@@ -18,9 +24,27 @@
     visibility: visible;
 }
 
+.gd-csv-delimiter-picker-controls {
+    display: flex;
+    gap: 10px;
+
+    &--column {
+        flex-direction: column;
+        align-items: stretch;
+        max-width: 260px;
+    }
+
+    &--row {
+        flex-direction: row;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
 .gd-csv-delimiter-picker-error {
     margin-top: 6px;
     color: var(--gd-message-error-textColor);
     font-size: 12px;
     line-height: 16px;
+    overflow-wrap: break-word;
 }

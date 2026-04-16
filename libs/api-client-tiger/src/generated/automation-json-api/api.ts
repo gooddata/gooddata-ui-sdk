@@ -41,6 +41,10 @@ export interface AutomationAFM {
      */
     'auxMeasures'?: Array<AutomationMeasureItem>;
     /**
+     * (EXPERIMENTAL) Parameter values to use for this execution.
+     */
+    'parameters'?: Array<AutomationParameterItem>;
+    /**
      * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
      */
     'measureDefinitionOverrides'?: Array<AutomationMetricDefinitionOverride>;
@@ -181,6 +185,20 @@ export interface AutomationAfmObjectIdentifierLabelIdentifier {
 }
 
 export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+
+/**
+ * Reference to the parameter.
+ */
+export interface AutomationAfmObjectIdentifierParameter {
+    'identifier': AutomationAfmObjectIdentifierParameterIdentifier;
+}
+
+export interface AutomationAfmObjectIdentifierParameterIdentifier {
+    'id': string;
+    'type': AutomationAfmObjectIdentifierParameterIdentifierTypeEnum;
+}
+
+export type AutomationAfmObjectIdentifierParameterIdentifierTypeEnum = 'parameter';
 
 export interface AutomationAlertAfm {
     /**
@@ -837,7 +855,7 @@ export interface AutomationIdentifierRefIdentifier {
     'type': AutomationIdentifierRefIdentifierTypeEnum;
 }
 
-export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'parameter' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
+export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -1064,6 +1082,17 @@ export interface AutomationNotificationsMetaTotal {
 
 export interface AutomationOver {
     'attributes': Array<AutomationIdentifierRef>;
+}
+
+/**
+ * (EXPERIMENTAL) Parameter value for this execution.
+ */
+export interface AutomationParameterItem {
+    'parameter': AutomationAfmObjectIdentifierParameter;
+    /**
+     * Value to use for this parameter instead of its default.
+     */
+    'value': string;
 }
 
 /**

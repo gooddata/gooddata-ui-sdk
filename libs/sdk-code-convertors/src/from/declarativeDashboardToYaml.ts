@@ -1316,6 +1316,9 @@ export function declarativeFiltersConfigToYaml(
                     ),
                 );
             }
+            if (filterSettings.selectionType) {
+                filter.yaml.add(new Pair("selection_type", filterSettings.selectionType));
+            }
         }
     });
     dateFilterConfigs?.forEach((filterSettings, i) => {

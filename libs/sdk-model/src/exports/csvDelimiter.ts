@@ -1,35 +1,46 @@
 // (C) 2026 GoodData Corporation
 
 /**
- * Built-in CSV delimiter presets.
- *
- * Each entry contains the preset identifier, the delimiter character,
- * and a preview symbol for display purposes.
+ * Built-in CSV delimiter presets keyed by preset id.
  *
  * @alpha
  */
-export const CSV_DELIMITER_PRESETS = [
-    { id: "comma", delimiter: ",", previewSymbol: "," },
-    { id: "semicolon", delimiter: ";", previewSymbol: ";" },
-    { id: "pipe", delimiter: "|", previewSymbol: "|" },
-    { id: "tab", delimiter: "\t", previewSymbol: "⇥" },
-] as const;
+export const CSV_DELIMITER_PRESETS = {
+    comma: { delimiter: ",", previewSymbol: "," },
+    semicolon: { delimiter: ";", previewSymbol: ";" },
+    pipe: { delimiter: "|", previewSymbol: "|" },
+    tab: { delimiter: "\t", previewSymbol: "⇥" },
+} as const;
+
+/**
+ * Identifier of the default CSV delimiter preset.
+ *
+ * @alpha
+ */
+export const DEFAULT_CSV_DELIMITER_PRESET_ID = "comma";
 
 /**
  * The default CSV delimiter character (comma).
  *
  * @alpha
  */
-export const DEFAULT_CSV_DELIMITER = CSV_DELIMITER_PRESETS[0].delimiter;
+export const DEFAULT_CSV_DELIMITER = CSV_DELIMITER_PRESETS[DEFAULT_CSV_DELIMITER_PRESET_ID].delimiter;
 
 const SUPPORTED_CSV_DELIMITER_REGEXP = /^[\t !#$%&()*+\-.,/:;<=>?@\[\]\\^_{|}~]$/;
+
+/**
+ * Identifier of a built-in CSV delimiter preset.
+ *
+ * @alpha
+ */
+export type CsvDelimiterPresetId = keyof typeof CSV_DELIMITER_PRESETS;
 
 /**
  * Identifier of a CSV delimiter preset, or "custom" when the user provides their own character.
  *
  * @alpha
  */
-export type CsvDelimiterPreset = (typeof CSV_DELIMITER_PRESETS)[number]["id"] | "custom";
+export type CsvDelimiterPreset = CsvDelimiterPresetId | "custom";
 
 /**
  * Validation error codes returned by {@link getCsvDelimiterValidationError}.
@@ -71,13 +82,14 @@ export function getCsvDelimiterValidationError(delimiter: string): CsvDelimiterV
  * @alpha
  */
 export function getCsvDelimiterPreset(delimiter?: string): CsvDelimiterPreset {
-    const preset = CSV_DELIMITER_PRESETS.find((item) => item.delimiter === delimiter);
-
-    if (preset) {
-        return preset.id;
+    let id: CsvDelimiterPresetId;
+    for (id in CSV_DELIMITER_PRESETS) {
+        if (CSV_DELIMITER_PRESETS[id].delimiter === delimiter) {
+            return id;
+        }
     }
 
-    return delimiter ? "custom" : CSV_DELIMITER_PRESETS[0].id;
+    return delimiter ? "custom" : DEFAULT_CSV_DELIMITER_PRESET_ID;
 }
 
 /**
@@ -95,9 +107,7 @@ export function getCsvDelimiterValue(selectedPreset: CsvDelimiterPreset, customD
         return customDelimiter;
     }
 
-    return (
-        CSV_DELIMITER_PRESETS.find((item) => item.id === selectedPreset)?.delimiter ?? DEFAULT_CSV_DELIMITER
-    );
+    return CSV_DELIMITER_PRESETS[selectedPreset]?.delimiter ?? DEFAULT_CSV_DELIMITER;
 }
 
 /**

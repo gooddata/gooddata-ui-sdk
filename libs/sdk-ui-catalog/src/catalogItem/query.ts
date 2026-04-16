@@ -298,25 +298,25 @@ export function getDateDatasetsQuery({
 export function updateCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItem) {
     switch (item.type) {
         case "analyticalDashboard":
-            return updateDashboardCatalogItem(backend, workspace, item);
+            return updateDashboardCatalogItemMeta(backend, workspace, item);
         case "measure":
-            return updateMeasureCatalogItem(backend, workspace, item);
+            return updateMeasureCatalogItemMeta(backend, workspace, item);
         case "insight":
-            return updateInsightCatalogItem(backend, workspace, item);
+            return updateInsightCatalogItemMeta(backend, workspace, item);
         case "attribute":
-            return updateAttributeCatalogItem(backend, workspace, item);
+            return updateAttributeCatalogItemMeta(backend, workspace, item);
         case "fact":
-            return updateFactCatalogItem(backend, workspace, item);
+            return updateFactCatalogItemMeta(backend, workspace, item);
         case "dataSet":
-            return updateDataSetCatalogItem(backend, workspace, item);
+            return updateDataSetCatalogItemMeta(backend, workspace, item);
         case "parameter":
-            return updateParameterCatalogItem(backend, workspace, item);
+            return updateParameterCatalogItemMeta(backend, workspace, item);
         default:
             throw new Error(`Unsupported catalog item type`);
     }
 }
 
-function updateDashboardCatalogItem(
+function updateDashboardCatalogItemMeta(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemDashboard,
@@ -332,7 +332,11 @@ function updateDashboardCatalogItem(
         });
 }
 
-function updateMeasureCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemMeasure) {
+function updateMeasureCatalogItemMeta(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemMeasure,
+) {
     return backend
         .workspace(workspace)
         .measures()
@@ -346,7 +350,11 @@ function updateMeasureCatalogItem(backend: IAnalyticalBackend, workspace: string
         });
 }
 
-function updateInsightCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemInsight) {
+function updateInsightCatalogItemMeta(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemInsight,
+) {
     return backend
         .workspace(workspace)
         .insights()
@@ -359,7 +367,7 @@ function updateInsightCatalogItem(backend: IAnalyticalBackend, workspace: string
         });
 }
 
-function updateAttributeCatalogItem(
+function updateAttributeCatalogItemMeta(
     backend: IAnalyticalBackend,
     workspace: string,
     item: ICatalogItemAttribute,
@@ -376,7 +384,7 @@ function updateAttributeCatalogItem(
         });
 }
 
-function updateFactCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemFact) {
+function updateFactCatalogItemMeta(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemFact) {
     return backend
         .workspace(workspace)
         .facts()
@@ -389,7 +397,11 @@ function updateFactCatalogItem(backend: IAnalyticalBackend, workspace: string, i
         });
 }
 
-function updateDataSetCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItemDataSet) {
+function updateDataSetCatalogItemMeta(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemDataSet,
+) {
     return backend
         .workspace(workspace)
         .datasets()
@@ -407,6 +419,22 @@ export async function createParameterCatalogItem(
     parameter: IParameterMetadataObjectDefinition,
 ) {
     return backend.workspace(workspace).parameters().createParameter(parameter);
+}
+
+function updateParameterCatalogItemMeta(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemParameter,
+) {
+    return backend
+        .workspace(workspace)
+        .parameters()
+        .updateParameter({
+            ...buildIdentity(item),
+            title: item.title,
+            description: item.description,
+            tags: item.tags,
+        });
 }
 
 export function updateParameterCatalogItem(

@@ -4291,12 +4291,16 @@
         "text": "CSV delimiter",
         "crowdinContext": "Accessible label for the CSV delimiter dropdown menu"
     },
+    "csvDelimiterPicker.validation.errorPrefix": {
+        "text": "Error:",
+        "crowdinContext": "Prefix shown before validation error messages in the CSV delimiter picker"
+    },
     "csvDelimiterPicker.validation.singleCharacter": {
         "text": "Use a single character",
         "crowdinContext": "Validation error shown when the custom delimiter is more than one character"
     },
     "csvDelimiterPicker.validation.unsupported": {
-        "text": "This character isn't supported",
-        "crowdinContext": "Validation error shown when the custom delimiter character is not allowed"
+        "text": "Invalid delimiter — use a single special character, e.g. , ; | tab or space. Quotes not allowed.",
+        "crowdinContext": "Validation error shown when the custom delimiter character is not allowed. Lists example valid characters."
     }
 }

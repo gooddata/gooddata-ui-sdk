@@ -1,6 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type FC, type ReactNode, createContext, useContext, useEffect, useRef, useState } from "react";
+import {
+    type FC,
+    type ReactNode,
+    createContext,
+    useCallback,
+    useContext,
+    useLayoutEffect,
+    useRef,
+    useSyncExternalStore,
+} from "react";
 
 import { pick } from "lodash-es";
 import isEqual from "react-fast-compare";
@@ -10,6 +19,8 @@ type Subscriber<T> = (state: T, prevState: T) => void;
 type Store<T> = {
     getState: () => T;
     setState: (setter: (prevState: T) => T) => void;
+    /** Update state without notifying subscribers. */
+    setStateSilent: (newState: T) => void;
     subscribe: (subscriber: Subscriber<T>) => () => void;
 };
 
@@ -26,6 +37,10 @@ function createStore<T>(initialState: T): Store<T> {
         subscribers.forEach((subscriber) => subscriber(state, prevState));
     };
 
+    const setStateSilent: Store<T>["setStateSilent"] = (newState) => {
+        state = newState;
+    };
+
     const subscribe = (subscriber: Subscriber<T>) => {
         subscribers.add(subscriber);
         return () => {
@@ -36,6 +51,7 @@ function createStore<T>(initialState: T): Store<T> {
     return {
         getState,
         setState,
+        setStateSilent,
         subscribe,
     };
 }
@@ -87,9 +103,24 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
     const Context = createContext<Store<T> | null>(null);
 
     function Provider({ value, children }: { value: T; children: ReactNode }) {
-        const [store] = useState(() => createStore<T>(value));
+        const storeRef = useRef<Store<T> | null>(null);
+        if (!storeRef.current) {
+            storeRef.current = createStore<T>(value);
+        }
+        const store = storeRef.current;
 
-        useEffect(() => {
+        // Update state synchronously so children in this render pass see the new value
+        // via getSnapshot(). This avoids a wasted render with stale data.
+        // We use setStateSilent (no subscriber notification) to avoid triggering state
+        // updates in other components during render.
+        store.setStateSilent(value);
+
+        // Notify subscribers synchronously after commit for any consumers that skipped
+        // this render pass (e.g. memoized, or passed as children from a parent that didn't re-render).
+        // useLayoutEffect fires before macrotasks (setTimeout), ensuring consumers see each
+        // intermediate state update. For non-memoized consumers that already rendered in this pass,
+        // useSyncExternalStore already has the latest value from getSnapshot(), so this is a no-op.
+        useLayoutEffect(() => {
             store.setState(() => value);
         }, [store, value]);
 
@@ -103,29 +134,48 @@ export const createContextStore = <T,>(name: string): IContextStore<T> => {
     ) => {
         const store = useContext(Context);
 
-        const [selectedState, setSelectedState] = useState<SelectorResult | undefined>(() =>
-            store ? selector(store.getState()) : undefined,
+        // Keep selector/equalityFn in refs so subscribe & getSnapshot callbacks stay stable,
+        // while still using the latest functions on each render.
+        const selectorRef = useRef(selector);
+        const equalityFnRef = useRef(equalityFn);
+        const prevSnapshotRef = useRef<SelectorResult | undefined>(undefined);
+        const isInitializedRef = useRef(false);
+
+        selectorRef.current = selector;
+        equalityFnRef.current = equalityFn;
+
+        const subscribe = useCallback(
+            (onStoreChange: () => void) => {
+                if (!store) {
+                    return () => {};
+                }
+                return store.subscribe(onStoreChange);
+            },
+            [store],
         );
 
-        const prevSelectedStateRef = useRef<SelectorResult | undefined>(selectedState);
-
-        useEffect(() => {
+        const getSnapshot = useCallback((): SelectorResult | undefined => {
             if (!store) {
                 return undefined;
             }
 
-            return store.subscribe((newState) => {
-                const newSelectedState = selector(newState);
-                const prevSelectedState = prevSelectedStateRef.current;
+            const nextSnapshot = selectorRef.current(store.getState());
 
-                if (prevSelectedState === undefined || !equalityFn(newSelectedState, prevSelectedState)) {
-                    prevSelectedStateRef.current = newSelectedState;
-                    setSelectedState(() => newSelectedState);
-                }
-            });
-        }, [selector, equalityFn, store]);
+            // Preserve referential identity when the value is deeply equal,
+            // since useSyncExternalStore uses Object.is for comparison.
+            if (
+                isInitializedRef.current &&
+                equalityFnRef.current(prevSnapshotRef.current as SelectorResult, nextSnapshot)
+            ) {
+                return prevSnapshotRef.current;
+            }
 
-        return selectedState;
+            isInitializedRef.current = true;
+            prevSnapshotRef.current = nextSnapshot;
+            return nextSnapshot;
+        }, [store]);
+
+        return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
     };
 
     const useContextStore = <SelectorResult,>(

@@ -41,6 +41,10 @@ export interface ExportAFM {
      */
     'auxMeasures'?: Array<ExportMeasureItem>;
     /**
+     * (EXPERIMENTAL) Parameter values to use for this execution.
+     */
+    'parameters'?: Array<ExportParameterItem>;
+    /**
      * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
      */
     'measureDefinitionOverrides'?: Array<ExportMetricDefinitionOverride>;
@@ -148,6 +152,20 @@ export interface ExportAfmObjectIdentifierLabelIdentifier {
 }
 
 export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+
+/**
+ * Reference to the parameter.
+ */
+export interface ExportAfmObjectIdentifierParameter {
+    'identifier': ExportAfmObjectIdentifierParameterIdentifier;
+}
+
+export interface ExportAfmObjectIdentifierParameterIdentifier {
+    'id': string;
+    'type': ExportAfmObjectIdentifierParameterIdentifierTypeEnum;
+}
+
+export type ExportAfmObjectIdentifierParameterIdentifierTypeEnum = 'parameter';
 
 /**
  * An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled.
@@ -565,7 +583,7 @@ export interface ExportIdentifierRefIdentifier {
     'type': ExportIdentifierRefIdentifierTypeEnum;
 }
 
-export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'parameter' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
+export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'parameter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
 
 /**
  * Export request object describing the export properties and metadata for image exports.
@@ -713,6 +731,17 @@ export interface ExportNegativeAttributeFilterNegativeAttributeFilter {
 
 export interface ExportOver {
     'attributes': Array<ExportIdentifierRef>;
+}
+
+/**
+ * (EXPERIMENTAL) Parameter value for this execution.
+ */
+export interface ExportParameterItem {
+    'parameter': ExportAfmObjectIdentifierParameter;
+    /**
+     * Value to use for this parameter instead of its default.
+     */
+    'value': string;
 }
 
 /**

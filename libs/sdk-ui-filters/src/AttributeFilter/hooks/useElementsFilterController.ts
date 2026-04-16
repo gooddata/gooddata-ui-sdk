@@ -487,6 +487,16 @@ function useInitOrReload(
     }, [handler]);
 
     useEffect(() => {
+        if (isTextMode) {
+            const textDisplayFormRef = filterObjRef(filter);
+            if (!areObjRefsEqual(filterObjRef(handler.getFilter()), textDisplayFormRef)) {
+                handler.setDisplayForm(textDisplayFormRef);
+            }
+            if (!areObjRefsEqual(handler.getDisplayAsLabel(), displayAsLabel)) {
+                handler.setDisplayAsLabel(displayAsLabel);
+            }
+        }
+
         const limitingAttributesChanged =
             shouldIncludeLimitingFilters &&
             !isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters());

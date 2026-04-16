@@ -2965,6 +2965,11 @@
                     "description": "Configures the label used for representing attribute filter elements in UI.",
                     "$ref": "#/$defs/displayAsLabelIdentifier"
                 },
+                "selection_type": {
+                    "type": "string",
+                    "enum": ["list", "text", "listOrText"],
+                    "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
+                },
                 "parents": {
                     "type": "array",
                     "description": "An ids of the parent local attribute or label filter",
@@ -3031,6 +3036,11 @@
                                 "type": "string",
                                 "description": "Configures the label used for representing attribute filter elements in UI.",
                                 "$ref": "#/$defs/displayAsLabelIdentifier"
+                            },
+                            "selection_type": {
+                                "type": "string",
+                                "enum": ["list", "text", "listOrText"],
+                                "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                             },
                             "state": { "ref": "#/$defs/dashboardStateMultiselect" },
                             "parents": {
@@ -3112,6 +3122,11 @@
                                 "type": "string",
                                 "description": "If specified, the attribute filter will display the elements in selected label form.",
                                 "$ref": "#/$defs/displayAsLabelIdentifier"
+                            },
+                            "selection_type": {
+                                "type": "string",
+                                "enum": ["list", "text", "listOrText"],
+                                "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                             },
                             "state": { "ref": "#/$defs/dashboardStateSelect" },
                             "parents": {
@@ -3203,6 +3218,11 @@
                     "enum": ["readonly", "hidden", "active"],
                     "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
                 },
+                "selection_type": {
+                    "type": "string",
+                    "enum": ["list", "text", "listOrText"],
+                    "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
+                },
                 "parents": {
                     "type": "array",
                     "description": "An ids of the parent local attribute, text, or date filter",
@@ -3283,6 +3303,11 @@
                             "type": "string",
                             "enum": ["readonly", "hidden", "active"],
                             "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                        },
+                        "selection_type": {
+                            "type": "string",
+                            "enum": ["list", "text", "listOrText"],
+                            "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                         },
                         "parents": {
                             "type": "array",
@@ -3374,6 +3399,11 @@
                             "type": "string",
                             "enum": ["readonly", "hidden", "active"],
                             "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                        },
+                        "selection_type": {
+                            "type": "string",
+                            "enum": ["list", "text", "listOrText"],
+                            "description": "Controls which filter presentation types are available to the user in View mode. 'list' means only elements/list selection, 'text' means only text-based filtering, 'listOrText' means both types are available."
                         }
                     },
                     "required": ["type", "using", "condition", "value"]
