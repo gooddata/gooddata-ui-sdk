@@ -1,6 +1,33 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 10 Apr 2026 11:31:09 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Apr 2026 06:23:45 GMT and should not be manually modified.
+
+## 11.30.0
+
+Thu, 16 Apr 2026 06:23:45 GMT
+
+### Patches
+
+- sdk-ui-gen-ai: Fix KDA window not opening
+
+### Updates
+
+- sdk-ui-dashboard: Add template selection for slides exports.
+- sdk-backend-\*: Replace `updateParameterMeta` with `updateParameter` method in the workspace parameters service.
+- sdk-ui-catalog: Introduce edit flow for parameter object type in the catalog.
+- sdk-ui-catalog: Introduce `deleteParameter` method in the workspace parameters service.
+- sdk-ui-catalog: Introduce delete and duplicate flows for parameter object type in the catalog.
+- sdk-ui-dashboard: Added the ability to rename dashboard tabs by double-clicking.
+- sdk-ui-kit: introduce customizable search placeholders in `UiAsyncTable` for better UX
+- sdk-ui-catalog: add error handling for Quality Score Card components
+- sdk-code-convertors: repair of converting pop and pp filters
+- sdk-ui-gen-ai: improved title and measure identifier resolution
+- sdk-code-convertors: add context-aware error handling across conversion funcs
+- sdk-ui-all: Turn on text filters by default.
+- Use narrowed JSON Schema for Python type generation
+- fix(sdk-ui-geo): trigger onDataView callback, fix onExportReady callback.
+- gdc-dashboard: migrating AI summaries to conversation flow
+- Add new test ids for agent e2e tests
 
 ## 11.29.0
 
