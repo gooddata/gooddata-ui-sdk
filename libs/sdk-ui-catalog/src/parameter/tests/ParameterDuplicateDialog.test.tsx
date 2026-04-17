@@ -13,7 +13,10 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 import { CatalogFeedProvider } from "../../catalogItem/CatalogFeedContext.js";
 import type { ICatalogItemParameter } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
+import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import { ParameterDuplicateDialog } from "../ParameterDuplicateDialog.js";
+
+vi.mock("../../catalogItem/useCatalogItemFeed.js");
 
 // Mock SyntaxHighlightingInput (CodeMirror doesn't work in happy-dom)
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
@@ -83,9 +86,11 @@ function Wrapper({ children }: PropsWithChildren) {
         <TestIntlProvider>
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace="test-workspace">
-                    <CatalogFeedProvider>
-                        <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
-                    </CatalogFeedProvider>
+                    <TestPermissionsProvider>
+                        <CatalogFeedProvider backend={backend} workspace="test-workspace">
+                            <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                        </CatalogFeedProvider>
+                    </TestPermissionsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </TestIntlProvider>

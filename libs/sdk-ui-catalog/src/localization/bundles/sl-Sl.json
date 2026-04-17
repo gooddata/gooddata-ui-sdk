@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Izvor",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Ni najdenih težav s preverjanjem.",
     "analyticsCatalog.catalogItem.lock": "Tega kataloškega izdelka ne morete urejati ali izbrisati - ustvarjen je bil v matični delovni prostor. Za spremembe odprite matični delovni prostor.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Dejanja za {name}",
     "analyticsCatalog.tooltip.content": "Centraliziran katalog nadzornih plošč, metrik, vizualizacij, dejstev in atributov. Raziskujte, upravljajte in posodabljajte vse objekte na enem mestu, da podprete dosledno upravljanje, hitrejše vpoglede in izboljšano sodelovanje.",
     "analyticsCatalog.search.label": "Iskanje po naslovu ali opisu…",
     "analyticsCatalog.empty.search.title": "Ni najdenih zadetkov",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Ustvarite stavek YAML, ki določa numerični parameter.",
     "analyticsCatalog.parameter.dialog.create.submit": "Ustvari",
     "analyticsCatalog.parameter.dialog.edit.submit": "Shrani",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Shrani kot novo",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Shrani kot novo",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "ID parametra ni mogoče spremeniti pri shranjevanju obstoječega parametra. Namesto tega uporabite Shrani kot novo.",
     "analyticsCatalog.parameter.dialog.cancel": "Prekliči",
     "analyticsCatalog.parameter.dialog.help": "Kako ustvariti parameter?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Tagi morajo biti seznam nizov.",
     "analyticsCatalog.parameter.create.success": "Parameter je ustvarjen.",
     "analyticsCatalog.parameter.update.success": "Parameter je posodobljen.",
-    "analyticsCatalog.parameter.validation.syntax": "Sintaktična napaka YAML"
+    "analyticsCatalog.parameter.validation.syntax": "Sintaktična napaka YAML",
+    "analyticsCatalog.parameter.dialog.delete.title": "Izbriši parameter?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Ali ste prepričani, da želite izbrisati <b>{name}</b>?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Izbriši",
+    "analyticsCatalog.parameter.delete.success": "Parameter je izbrisan.",
+    "analyticsCatalog.parameter.delete.error": "Parametra ni bilo mogoče izbrisati."
 }

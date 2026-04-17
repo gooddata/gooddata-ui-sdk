@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "カスタム",
     "csvDelimiterPicker.customInput": "カスタムCSV区切り文字",
     "csvDelimiterPicker.menuLabel": "CSV区切り文字",
+    "csvDelimiterPicker.validation.errorPrefix": "エラー：",
     "csvDelimiterPicker.validation.singleCharacter": "1文字のみ使用できます",
-    "csvDelimiterPicker.validation.unsupported": "この文字はサポートされていません"
+    "csvDelimiterPicker.validation.unsupported": "無効な区切り文字です — 単一の特殊文字を使用してください（例: , ; | tab または space）。引用符は使用できません。"
 }

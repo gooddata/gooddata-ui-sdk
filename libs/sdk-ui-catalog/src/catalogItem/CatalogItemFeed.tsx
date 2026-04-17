@@ -6,34 +6,24 @@ import { useIntl } from "react-intl";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
-import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemRef } from "./types.js";
-import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
+import { useCatalogFeedActions, useCatalogFeedState } from "./CatalogFeedContext.js";
+import type { ICatalogItem } from "./types.js";
 import { type AsyncStatus } from "../async/types.js";
-import { useObjectTypeCounterSync } from "../objectType/ObjectTypeContext.js";
 
-type Props = ICatalogItemFeedOptions & {
+type Props = {
     children: (props: {
         items: ICatalogItem[];
         totalCount: number;
         next: () => Promise<void>;
         hasNext: boolean;
         status: AsyncStatus;
-        updateItem: (item: ICatalogItem) => void;
-        removeItem: (item: ICatalogItemRef) => void;
     }) => ReactNode;
 };
 
-export function CatalogItemFeed({ backend, workspace, children, pageSize }: Props) {
+export function CatalogItemFeed({ children }: Props) {
     const intl = useIntl();
-    const { items, status, next, hasNext, totalCount, totalCountByType, updateItem, removeItem } =
-        useCatalogItemFeed({
-            backend,
-            workspace,
-            pageSize,
-        });
-
-    // Sync total count into the object type counter
-    useObjectTypeCounterSync(totalCountByType);
+    const { items, status, hasNext, totalCount } = useCatalogFeedState();
+    const { next } = useCatalogFeedActions();
 
     if (status === "error") {
         return (
@@ -45,5 +35,5 @@ export function CatalogItemFeed({ backend, workspace, children, pageSize }: Prop
         );
     }
 
-    return <>{children({ items, next, hasNext, totalCount, status, updateItem, removeItem })}</>;
+    return <>{children({ items, next, hasNext, totalCount, status })}</>;
 }

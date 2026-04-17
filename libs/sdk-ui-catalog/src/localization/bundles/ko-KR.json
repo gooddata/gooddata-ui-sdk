@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "계보",
     "analyticsCatalog.catalogItem.tab.quality.empty": "검증 문제를 찾지 못했습니다.",
     "analyticsCatalog.catalogItem.lock": "이 카탈로그 항목은 상위 작업 공간에서 생성되어 편집하거나 삭제할 수 없습니다. 변경하려면 상위 작업 공간을 여세요.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "{name}에 대한 작업",
     "analyticsCatalog.tooltip.content": "대시보드, 메트릭, 시각화, 팩트 및 속성에 대한 중앙 집중식 카탈로그입니다. 한 곳에서 모든 오브젝트를 탐색, 관리 및 업데이트하여 일관된 거버넌스, 더 빠른 인사이트 및 개선된 협업을 지원합니다.",
     "analyticsCatalog.search.label": "제목 또는 설명으로 검색…",
     "analyticsCatalog.empty.search.title": "일치하는 항목이 없습니다",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "숫자 매개변수를 정의하는 YAML 문을 만드세요.",
     "analyticsCatalog.parameter.dialog.create.submit": "생성",
     "analyticsCatalog.parameter.dialog.edit.submit": "저장",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "새로 저장",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "새로 저장",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "기존 매개변수를 저장할 때는 매개변수 id를 변경할 수 없습니다. 대신 다른 이름으로 저장을 사용하세요.",
     "analyticsCatalog.parameter.dialog.cancel": "취소",
     "analyticsCatalog.parameter.dialog.help": "매개변수를 만드는 방법은?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "태그는 문자열 목록이어야 합니다.",
     "analyticsCatalog.parameter.create.success": "매개변수가 생성되었습니다.",
     "analyticsCatalog.parameter.update.success": "매개변수가 업데이트되었습니다.",
-    "analyticsCatalog.parameter.validation.syntax": "YAML 구문 오류"
+    "analyticsCatalog.parameter.validation.syntax": "YAML 구문 오류",
+    "analyticsCatalog.parameter.dialog.delete.title": "매개변수를 삭제하시겠습니까?",
+    "analyticsCatalog.parameter.dialog.delete.body": "<b>{name}</b>을(를) 삭제하시겠습니까?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "삭제",
+    "analyticsCatalog.parameter.delete.success": "매개변수가 삭제되었습니다.",
+    "analyticsCatalog.parameter.delete.error": "매개변수를 삭제할 수 없습니다."
 }

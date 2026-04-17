@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "血缘关系",
     "analyticsCatalog.catalogItem.tab.quality.empty": "未发现验证问题。",
     "analyticsCatalog.catalogItem.lock": "您无法编辑或删除此目录项 — 它是在父工作区中创建的。若要进行更改，请打开父工作区。",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "{name} 的操作",
     "analyticsCatalog.tooltip.content": "集中式目录，包含仪表板、指标、可视化、事实和属性。在一个位置探索、管理和更新所有对象，以支持一致的治理、更快速的洞察以及改进的协作。",
     "analyticsCatalog.search.label": "按标题或描述搜索…",
     "analyticsCatalog.empty.search.title": "未找到匹配项",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "创建用于定义数值参数的 YAML 语句。",
     "analyticsCatalog.parameter.dialog.create.submit": "创建",
     "analyticsCatalog.parameter.dialog.edit.submit": "保存",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "另存为新的",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "另存为新的",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "保存现有参数时，不能更改参数 id。请改用另存为新参数。",
     "analyticsCatalog.parameter.dialog.cancel": "取消",
     "analyticsCatalog.parameter.dialog.help": "如何创建参数？",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "标签必须是字符串列表。",
     "analyticsCatalog.parameter.create.success": "参数已创建。",
     "analyticsCatalog.parameter.update.success": "参数已更新。",
-    "analyticsCatalog.parameter.validation.syntax": "YAML 语法错误"
+    "analyticsCatalog.parameter.validation.syntax": "YAML 语法错误",
+    "analyticsCatalog.parameter.dialog.delete.title": "删除参数？",
+    "analyticsCatalog.parameter.dialog.delete.body": "您确定要删除<b>{name}</b>吗？",
+    "analyticsCatalog.parameter.dialog.delete.submit": "删除",
+    "analyticsCatalog.parameter.delete.success": "参数已删除。",
+    "analyticsCatalog.parameter.delete.error": "无法删除参数。"
 }

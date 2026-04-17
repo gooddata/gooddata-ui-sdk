@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Dòng dõi",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Không tìm thấy vấn đề xác thực nào.",
     "analyticsCatalog.catalogItem.lock": "Bạn không thể chỉnh sửa hoặc xóa mục danh mục này — mục này được tạo trong không gian làm việc cha. Để thực hiện thay đổi, hãy mở không gian làm việc cha.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Hành động cho {name}",
     "analyticsCatalog.tooltip.content": "Danh mục tập trung của bảng điều khiển, chỉ số, trực quan hóa, sự kiện và thuộc tính. Khám phá, quản lý và cập nhật tất cả đối tượng tại một nơi để hỗ trợ quản trị nhất quán, thông tin chuyên sâu nhanh hơn và cải thiện cộng tác.",
     "analyticsCatalog.search.label": "Tìm kiếm theo tiêu đề hoặc mô tả…",
     "analyticsCatalog.empty.search.title": "Không tìm thấy kết quả khớp",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Tạo câu lệnh YAML xác định một tham số số.",
     "analyticsCatalog.parameter.dialog.create.submit": "Tạo",
     "analyticsCatalog.parameter.dialog.edit.submit": "Lưu",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Lưu dưới dạng mới",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Lưu dưới dạng mới",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "Không thể thay đổi id tham số khi lưu tham số hiện có. Hãy dùng Lưu dưới dạng mới thay thế.",
     "analyticsCatalog.parameter.dialog.cancel": "Hủy",
     "analyticsCatalog.parameter.dialog.help": "Cách tạo tham số?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Thẻ phải là một danh sách chuỗi.",
     "analyticsCatalog.parameter.create.success": "Đã tạo tham số.",
     "analyticsCatalog.parameter.update.success": "Đã cập nhật tham số.",
-    "analyticsCatalog.parameter.validation.syntax": "Lỗi cú pháp YAML"
+    "analyticsCatalog.parameter.validation.syntax": "Lỗi cú pháp YAML",
+    "analyticsCatalog.parameter.dialog.delete.title": "Xóa tham số?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Bạn có chắc chắn muốn xóa <b>{name}</b> không?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Xóa",
+    "analyticsCatalog.parameter.delete.success": "Đã xóa tham số.",
+    "analyticsCatalog.parameter.delete.error": "Không thể xóa tham số."
 }

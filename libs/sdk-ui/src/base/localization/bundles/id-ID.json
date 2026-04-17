@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Kustom",
     "csvDelimiterPicker.customInput": "Pembatas CSV kustom",
     "csvDelimiterPicker.menuLabel": "Pemisah CSV",
+    "csvDelimiterPicker.validation.errorPrefix": "Kesalahan:",
     "csvDelimiterPicker.validation.singleCharacter": "Gunakan satu karakter",
-    "csvDelimiterPicker.validation.unsupported": "Karakter ini tidak didukung"
+    "csvDelimiterPicker.validation.unsupported": "Pemisah tidak valid — gunakan satu karakter khusus, mis. , ; | tab atau spasi. Tanda kutip tidak diizinkan."
 }

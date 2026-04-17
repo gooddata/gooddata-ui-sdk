@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Personalizado",
     "csvDelimiterPicker.customInput": "Delimitador CSV personalizado",
     "csvDelimiterPicker.menuLabel": "Delimitador CSV",
+    "csvDelimiterPicker.validation.errorPrefix": "Error:",
     "csvDelimiterPicker.validation.singleCharacter": "Use un solo carácter",
-    "csvDelimiterPicker.validation.unsupported": "Este carácter no es compatible"
+    "csvDelimiterPicker.validation.unsupported": "Delimitador no válido: use un solo carácter especial, p. ej., ; | tab o espacio. No se permiten comillas."
 }

@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Veri soyağacı",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Herhangi bir doğrulama sorunu bulunamadı.",
     "analyticsCatalog.catalogItem.lock": "Bu katalog öğesini düzenleyemez veya silemezsiniz — üst çalışma alanında oluşturulmuştur. Değişiklik yapmak için üst çalışma alanını açın.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "{name} için eylemler",
     "analyticsCatalog.tooltip.content": "Gösterge tablolarının, metriklerin, görselleştirmelerin, olgusal verilerin ve özniteliklerin merkezi kataloğu. Tutarlı yönetişimi, daha hızlı içgörüleri ve gelişmiş iş birliğini desteklemek için tüm nesneleri tek bir yerde keşfedin, yönetin ve güncelleyin.",
     "analyticsCatalog.search.label": "Başlığa veya açıklamaya göre arayın…",
     "analyticsCatalog.empty.search.title": "Eşleşme bulunamadı",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Sayısal bir parametre tanımlayan bir YAML ifadesi oluşturun.",
     "analyticsCatalog.parameter.dialog.create.submit": "Oluştur",
     "analyticsCatalog.parameter.dialog.edit.submit": "Kaydet",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Yeni olarak kaydet",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Yeni olarak kaydet",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "Mevcut bir parametre kaydedilirken parametre kimliği değiştirilemez. Bunun yerine Yeni olarak kaydet seçeneğini kullanın.",
     "analyticsCatalog.parameter.dialog.cancel": "İptal",
     "analyticsCatalog.parameter.dialog.help": "Parametre nasıl oluşturulur?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Etiketler, bir dize listesi olmalıdır.",
     "analyticsCatalog.parameter.create.success": "Parametre oluşturuldu.",
     "analyticsCatalog.parameter.update.success": "Parametre güncellendi.",
-    "analyticsCatalog.parameter.validation.syntax": "YAML söz dizimi hatası"
+    "analyticsCatalog.parameter.validation.syntax": "YAML söz dizimi hatası",
+    "analyticsCatalog.parameter.dialog.delete.title": "Parametre silinsin mi?",
+    "analyticsCatalog.parameter.dialog.delete.body": "<b>{name}</b> parametresini silmek istediğinizden emin misiniz?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Sil",
+    "analyticsCatalog.parameter.delete.success": "Parametre silindi.",
+    "analyticsCatalog.parameter.delete.error": "Parametre silinemedi."
 }

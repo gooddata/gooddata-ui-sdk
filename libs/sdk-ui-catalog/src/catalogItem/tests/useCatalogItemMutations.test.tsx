@@ -54,11 +54,17 @@ describe("useCatalogItemMutations", () => {
         const endpointItems: { current: ICatalogItem[][] } = { current: [[itemA, itemB]] };
         const firstEndpointItems = endpointItems.current[0];
         let renderedItems: ICatalogItem[] = [itemA, itemB];
+        let totalCounts = [2];
         const setItems = (nextValue: ICatalogItem[] | ((items: ICatalogItem[]) => ICatalogItem[])) => {
             renderedItems = typeof nextValue === "function" ? nextValue(renderedItems) : nextValue;
         };
+        const setTotalCounts = (nextValue: number[] | ((counts: number[]) => number[])) => {
+            totalCounts = typeof nextValue === "function" ? nextValue(totalCounts) : nextValue;
+        };
 
-        const { result } = renderHook(() => useCatalogItemRemoveCallback(endpointItems, setItems));
+        const { result } = renderHook(() =>
+            useCatalogItemRemoveCallback(endpointItems, setItems, setTotalCounts),
+        );
 
         act(() => {
             result.current(itemA);
@@ -67,5 +73,6 @@ describe("useCatalogItemMutations", () => {
         expect(endpointItems.current).toEqual([[itemB]]);
         expect(endpointItems.current[0]).toBe(firstEndpointItems);
         expect(renderedItems).toEqual([itemB]);
+        expect(totalCounts).toEqual([1]);
     });
 });

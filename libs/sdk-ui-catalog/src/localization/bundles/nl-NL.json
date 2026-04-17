@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Afstammingslijn",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Geen validatieproblemen gevonden.",
     "analyticsCatalog.catalogItem.lock": "U kunt dit catalogusitem niet bewerken of verwijderen, omdat het is gemaakt in de bovenliggende werkruimte. Open de bovenliggende werkruimte om wijzigingen aan te brengen.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Acties voor {name}",
     "analyticsCatalog.tooltip.content": "Gecentraliseerde catalogus van dashboards, metrieken, visualisaties, feiten en attributen. Verken, beheer en werk alle objecten op één locatie bij om consistente governance, snellere inzichten en betere samenwerking te ondersteunen.",
     "analyticsCatalog.search.label": "Zoeken op titel of beschrijving…",
     "analyticsCatalog.empty.search.title": "Geen overeenkomst gevonden",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Maak een YAML-instructie die een numerieke parameter definieert.",
     "analyticsCatalog.parameter.dialog.create.submit": "Creëren",
     "analyticsCatalog.parameter.dialog.edit.submit": "Opslaan",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Opslaan als nieuw",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Opslaan als nieuw",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "Parameter-id kan niet worden gewijzigd bij het opslaan van een bestaande parameter. Gebruik in plaats daarvan Opslaan als nieuw.",
     "analyticsCatalog.parameter.dialog.cancel": "Annuleren",
     "analyticsCatalog.parameter.dialog.help": "Hoe maakt u een parameter aan?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Tags moeten een lijst met strings zijn.",
     "analyticsCatalog.parameter.create.success": "Parameter gemaakt.",
     "analyticsCatalog.parameter.update.success": "Parameter bijgewerkt.",
-    "analyticsCatalog.parameter.validation.syntax": "YAML-syntaxisfout"
+    "analyticsCatalog.parameter.validation.syntax": "YAML-syntaxisfout",
+    "analyticsCatalog.parameter.dialog.delete.title": "Parameter verwijderen?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Weet u zeker dat u <b>{name}</b> wilt verwijderen?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Verwijderen",
+    "analyticsCatalog.parameter.delete.success": "Parameter verwijderd.",
+    "analyticsCatalog.parameter.delete.error": "Parameter kon niet worden verwijderd."
 }

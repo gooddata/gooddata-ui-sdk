@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Lignée",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Aucun problème de validation détecté.",
     "analyticsCatalog.catalogItem.lock": "Vous ne pouvez pas modifier ou supprimer cet élément de catalogue, car il a été créé dans l’espace de travail parent. Pour apporter des modifications, ouvrez l’espace de travail parent.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Actions pour {name}",
     "analyticsCatalog.tooltip.content": "Catalogue centralisé de tableaux de bord, métriques, visualisations, faits et attributs. Explorez, gérez et mettez à jour tous les objets en un seul endroit pour assurer une gouvernance cohérente, des analyses plus rapides et une meilleure collaboration.",
     "analyticsCatalog.search.label": "Rechercher par titre ou description…",
     "analyticsCatalog.empty.search.title": "Aucune correspondance trouvée",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Créez une instruction YAML qui définit un paramètre numérique.",
     "analyticsCatalog.parameter.dialog.create.submit": "Créer",
     "analyticsCatalog.parameter.dialog.edit.submit": "Enregistrer",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Enregistrer sous un nouveau nom",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Enregistrer sous un nouveau nom",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "L'identifiant du paramètre ne peut pas être modifié lors de l'enregistrement d'un paramètre existant. Utilisez Enregistrer comme nouveau à la place.",
     "analyticsCatalog.parameter.dialog.cancel": "Annuler",
     "analyticsCatalog.parameter.dialog.help": "Comment créer un paramètre ?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Les balises doivent être une liste de chaînes.",
     "analyticsCatalog.parameter.create.success": "Paramètre créé.",
     "analyticsCatalog.parameter.update.success": "Paramètre mis à jour.",
-    "analyticsCatalog.parameter.validation.syntax": "Erreur de syntaxe YAML"
+    "analyticsCatalog.parameter.validation.syntax": "Erreur de syntaxe YAML",
+    "analyticsCatalog.parameter.dialog.delete.title": "Supprimer le paramètre ?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Voulez-vous vraiment supprimer <b>{name}</b> ?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Supprimer",
+    "analyticsCatalog.parameter.delete.success": "Paramètre supprimé.",
+    "analyticsCatalog.parameter.delete.error": "Le paramètre n'a pas pu être supprimé."
 }

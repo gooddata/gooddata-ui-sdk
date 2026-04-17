@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type PropsWithChildren, useEffect } from "react";
+import { type PropsWithChildren } from "react";
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { type Mock, describe, expect, it, vi } from "vitest";
@@ -9,10 +9,12 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
-import { CatalogFeedProvider, useCatalogFeedActions } from "../../catalogItem/CatalogFeedContext.js";
+import { CatalogFeedProvider } from "../../catalogItem/CatalogFeedContext.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import type { CatalogCreateObjectType } from "../../objectType/types.js";
 import { CreateObjectButton } from "../CreateObjectButton.js";
+
+vi.mock("../../catalogItem/useCatalogItemFeed.js");
 
 function createBackend(createParameter: Mock = vi.fn().mockResolvedValue({})) {
     return {
@@ -31,27 +33,13 @@ function wrapper({ children, createParameter }: PropsWithChildren<{ createParame
         <TestIntlProvider>
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace="test-workspace">
-                    <CatalogFeedProvider>
+                    <CatalogFeedProvider backend={backend} workspace="test-workspace">
                         <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
                     </CatalogFeedProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </TestIntlProvider>
     );
-}
-
-function RegisterRefetchHandler({ refetchHandler }: { refetchHandler: (type: string) => Promise<void> }) {
-    const { registerRefetchHandler } = useCatalogFeedActions();
-
-    useEffect(() => {
-        registerRefetchHandler(refetchHandler);
-
-        return () => {
-            registerRefetchHandler(null);
-        };
-    }, [refetchHandler, registerRefetchHandler]);
-
-    return null;
 }
 
 describe("CreateObjectButton", () => {
@@ -117,17 +105,12 @@ describe("CreateObjectButton", () => {
         expect(onCreateObject).not.toHaveBeenCalled();
     });
 
-    it("creates a parameter via backend and requests parameter refetch", async () => {
+    it("creates a parameter via backend and shows success", async () => {
         const createParameter = vi.fn().mockResolvedValue({});
-        const refetchHandler = vi.fn().mockResolvedValue(undefined);
 
-        render(
-            <>
-                <CreateObjectButton onCreateObject={vi.fn()} showParameter />
-                <RegisterRefetchHandler refetchHandler={refetchHandler} />
-            </>,
-            { wrapper: ({ children }) => wrapper({ children, createParameter }) },
-        );
+        render(<CreateObjectButton onCreateObject={vi.fn()} showParameter />, {
+            wrapper: ({ children }) => wrapper({ children, createParameter }),
+        });
 
         fireEvent.click(screen.getByText("Create"));
         fireEvent.click(screen.getByText("Parameter"));
@@ -146,22 +129,16 @@ describe("CreateObjectButton", () => {
             });
         });
 
-        expect(refetchHandler).toHaveBeenCalledWith("parameter");
         expect(screen.queryByText("Create parameter")).not.toBeInTheDocument();
         expect(await screen.findByRole("status")).toHaveTextContent(/Parameter created\./);
     });
 
     it("keeps dialog open and shows backend error when parameter creation fails", async () => {
         const createParameter = vi.fn().mockRejectedValue(new Error("Identifier already exists"));
-        const refetchHandler = vi.fn().mockResolvedValue(undefined);
 
-        render(
-            <>
-                <CreateObjectButton onCreateObject={vi.fn()} showParameter />
-                <RegisterRefetchHandler refetchHandler={refetchHandler} />
-            </>,
-            { wrapper: ({ children }) => wrapper({ children, createParameter }) },
-        );
+        render(<CreateObjectButton onCreateObject={vi.fn()} showParameter />, {
+            wrapper: ({ children }) => wrapper({ children, createParameter }),
+        });
 
         fireEvent.click(screen.getByText("Create"));
         fireEvent.click(screen.getByText("Parameter"));
@@ -170,35 +147,5 @@ describe("CreateObjectButton", () => {
 
         expect(await screen.findByText("Identifier already exists")).toBeInTheDocument();
         expect(screen.getByText("Create parameter")).toBeInTheDocument();
-        expect(refetchHandler).not.toHaveBeenCalled();
-    });
-
-    it("keeps create success when parameter refetch fails", async () => {
-        const createParameter = vi.fn().mockResolvedValue({});
-        const refetchHandler = vi.fn().mockRejectedValue(new Error("Refresh failed"));
-        const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-
-        render(
-            <>
-                <CreateObjectButton onCreateObject={vi.fn()} showParameter />
-                <RegisterRefetchHandler refetchHandler={refetchHandler} />
-            </>,
-            { wrapper: ({ children }) => wrapper({ children, createParameter }) },
-        );
-
-        fireEvent.click(screen.getByText("Create"));
-        fireEvent.click(screen.getByText("Parameter"));
-        await screen.findByText("Create parameter");
-        fireEvent.click((await screen.findAllByTestId("create"))[1]);
-
-        await waitFor(() => {
-            expect(createParameter).toHaveBeenCalledTimes(1);
-        });
-
-        expect(refetchHandler).toHaveBeenCalledWith("parameter");
-        expect(screen.queryByText("Create parameter")).not.toBeInTheDocument();
-        expect(await screen.findByRole("status")).toHaveTextContent(/Parameter created\./);
-
-        consoleErrorSpy.mockRestore();
     });
 });

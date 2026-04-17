@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Mukautettu",
     "csvDelimiterPicker.customInput": "Mukautettu CSV-erotin",
     "csvDelimiterPicker.menuLabel": "CSV-erotin",
+    "csvDelimiterPicker.validation.errorPrefix": "Virhe:",
     "csvDelimiterPicker.validation.singleCharacter": "Käytä yhtä merkkiä",
-    "csvDelimiterPicker.validation.unsupported": "Tätä merkkiä ei tueta"
+    "csvDelimiterPicker.validation.unsupported": "Virheellinen erotinmerkki — käytä yhtä erikoismerkkiä, esim. , ; | sarkain tai välilyönti. Lainausmerkit eivät ole sallittuja."
 }

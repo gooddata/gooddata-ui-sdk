@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Свои правила",
     "csvDelimiterPicker.customInput": "Пользовательский разделитель CSV",
     "csvDelimiterPicker.menuLabel": "Разделитель CSV",
+    "csvDelimiterPicker.validation.errorPrefix": "Ошибка:",
     "csvDelimiterPicker.validation.singleCharacter": "Используйте один символ",
-    "csvDelimiterPicker.validation.unsupported": "Этот символ не поддерживается"
+    "csvDelimiterPicker.validation.unsupported": "Недопустимый разделитель — используйте один специальный символ, например , ; | tab или пробел. Кавычки не допускаются."
 }

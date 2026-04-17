@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Pochodzenie danych",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Nie znaleziono problemów z walidacją.",
     "analyticsCatalog.catalogItem.lock": "Nie można edytować ani usunąć tego elementu katalogu — został utworzony w nadrzędnej przestrzeni roboczej. Aby wprowadzić zmiany, otwórz nadrzędną przestrzeń roboczą.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Akcje dla {name}",
     "analyticsCatalog.tooltip.content": "Scentralizowany katalog pulpitów, metryk, wizualizacji, faktów i atrybutów. Eksploruj, zarządzaj i aktualizuj wszystkie obiekty w jednym miejscu, aby zapewnić spójne zarządzanie, szybsze uzyskiwanie wglądów i lepszą współpracę.",
     "analyticsCatalog.search.label": "Szukaj po tytule lub opisie…",
     "analyticsCatalog.empty.search.title": "Nie znaleziono dopasowania",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Utwórz instrukcję YAML definiującą parametr liczbowy.",
     "analyticsCatalog.parameter.dialog.create.submit": "Utwórz",
     "analyticsCatalog.parameter.dialog.edit.submit": "Zapisz",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Zapisz jako nowy",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Zapisz jako nowy",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "Id parametru nie można zmienić podczas zapisywania istniejącego parametru. Zamiast tego użyj opcji Zapisz jako nowy.",
     "analyticsCatalog.parameter.dialog.cancel": "Anuluj",
     "analyticsCatalog.parameter.dialog.help": "Jak utworzyć parametr?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Tagi muszą być listą napisów.",
     "analyticsCatalog.parameter.create.success": "Parametr został utworzony.",
     "analyticsCatalog.parameter.update.success": "Parametr został zaktualizowany.",
-    "analyticsCatalog.parameter.validation.syntax": "Błąd składni YAML"
+    "analyticsCatalog.parameter.validation.syntax": "Błąd składni YAML",
+    "analyticsCatalog.parameter.dialog.delete.title": "Usunąć parametr?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Czy na pewno chcesz usunąć <b>{name}</b>?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Usuń",
+    "analyticsCatalog.parameter.delete.success": "Parametr został usunięty.",
+    "analyticsCatalog.parameter.delete.error": "Nie udało się usunąć parametru."
 }

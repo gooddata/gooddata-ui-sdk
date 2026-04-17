@@ -1,42 +1,100 @@
 // (C) 2026 GoodData Corporation
 
-import { type PropsWithChildren, createContext, useContext, useMemo, useRef } from "react";
+import { type PropsWithChildren, createContext, useContext, useMemo } from "react";
 
+import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+
+import type { ICatalogItem, ICatalogItemRef } from "./types.js";
+import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
+import { type AsyncStatus } from "../async/types.js";
+import { useObjectTypeCounterSync } from "../objectType/ObjectTypeContext.js";
 import type { ObjectType } from "../objectType/types.js";
 
-type RefetchHandler = (type: ObjectType) => Promise<void>;
+export interface ICatalogFeedState {
+    items: ICatalogItem[];
+    status: AsyncStatus;
+    error: Error | null;
+    totalCount: number;
+    totalCountByType: Readonly<Record<ObjectType, number>>;
+    hasNext: boolean;
+}
 
-type CatalogFeedActions = {
-    refetchObjectType: RefetchHandler;
-    registerRefetchHandler: (handler: RefetchHandler | null) => void;
-};
+export interface ICatalogFeedActions {
+    next: () => Promise<void>;
+    updateItem: (item: ICatalogItem) => void;
+    removeItem: (item: ICatalogItemRef) => void;
+    refetchObjectType: (type: ObjectType) => Promise<void>;
+}
 
-const CatalogFeedActionsContext = createContext<CatalogFeedActions | null>(null);
+const CatalogFeedStateContext = createContext<ICatalogFeedState | null>(null);
+const CatalogFeedActionsContext = createContext<ICatalogFeedActions | null>(null);
 
-export function CatalogFeedProvider({ children }: PropsWithChildren) {
-    const handlerRef = useRef<RefetchHandler | null>(null);
+export type CatalogFeedProviderProps = PropsWithChildren<{
+    backend: IAnalyticalBackend;
+    workspace: string;
+}>;
 
-    const actions = useMemo<CatalogFeedActions>(
+export function CatalogFeedProvider({ children, ...props }: CatalogFeedProviderProps) {
+    const feed = useCatalogItemFeed(props);
+    const {
+        items,
+        status,
+        error,
+        totalCount,
+        totalCountByType,
+        hasNext,
+        next,
+        updateItem,
+        removeItem,
+        refetchObjectType,
+    } = feed;
+
+    useObjectTypeCounterSync(totalCountByType);
+
+    const state = useMemo<ICatalogFeedState>(
         () => ({
-            async refetchObjectType(type: ObjectType) {
-                await handlerRef.current?.(type);
-            },
-            registerRefetchHandler(handler) {
-                handlerRef.current = handler;
-            },
+            items,
+            status,
+            error,
+            totalCount,
+            totalCountByType,
+            hasNext,
         }),
-        [],
+        [items, status, error, totalCount, totalCountByType, hasNext],
+    );
+
+    const actions = useMemo<ICatalogFeedActions>(
+        () => ({
+            next,
+            updateItem,
+            removeItem,
+            refetchObjectType,
+        }),
+        [next, updateItem, removeItem, refetchObjectType],
     );
 
     return (
-        <CatalogFeedActionsContext.Provider value={actions}>{children}</CatalogFeedActionsContext.Provider>
+        <CatalogFeedStateContext.Provider value={state}>
+            <CatalogFeedActionsContext.Provider value={actions}>
+                {children}
+            </CatalogFeedActionsContext.Provider>
+        </CatalogFeedStateContext.Provider>
     );
 }
 
-export function useCatalogFeedActions(): CatalogFeedActions {
+export function useCatalogFeedState(): ICatalogFeedState {
+    const state = useContext(CatalogFeedStateContext);
+    return getCatalogFeedContext(state, "useCatalogFeedState");
+}
+
+export function useCatalogFeedActions(): ICatalogFeedActions {
     const actions = useContext(CatalogFeedActionsContext);
-    if (!actions) {
-        throw new Error("useCatalogFeedActions must be used within CatalogFeedProvider");
+    return getCatalogFeedContext(actions, "useCatalogFeedActions");
+}
+
+function getCatalogFeedContext<T>(value: T | null, hookName: string): T {
+    if (!value) {
+        throw new Error(`${hookName} must be used within CatalogFeedProvider`);
     }
-    return actions;
+    return value;
 }

@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Benutzerdefiniert",
     "csvDelimiterPicker.customInput": "Benutzerdefiniertes CSV-Trennzeichen",
     "csvDelimiterPicker.menuLabel": "CSV-Trennzeichen",
+    "csvDelimiterPicker.validation.errorPrefix": "Fehler:",
     "csvDelimiterPicker.validation.singleCharacter": "Verwenden Sie ein einzelnes Zeichen",
-    "csvDelimiterPicker.validation.unsupported": "Dieses Zeichen wird nicht unterstützt"
+    "csvDelimiterPicker.validation.unsupported": "Ungültiges Trennzeichen — verwenden Sie ein einzelnes Sonderzeichen, z. B. , ; | Tab oder Leerzeichen. Anführungszeichen sind nicht zulässig."
 }
