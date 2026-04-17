@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Custom",
     "csvDelimiterPicker.customInput": "Custom CSV delimiter",
     "csvDelimiterPicker.menuLabel": "CSV delimiter",
+    "csvDelimiterPicker.validation.errorPrefix": "Error:",
     "csvDelimiterPicker.validation.singleCharacter": "Use a single character",
-    "csvDelimiterPicker.validation.unsupported": "This character isn't supported"
+    "csvDelimiterPicker.validation.unsupported": "Invalid delimiter — use a single special character, e.g. , ; | tab or space. Quotes not allowed."
 }

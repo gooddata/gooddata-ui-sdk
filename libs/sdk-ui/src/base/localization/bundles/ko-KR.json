@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "사용자 정의",
     "csvDelimiterPicker.customInput": "사용자 지정 CSV 구분 기호",
     "csvDelimiterPicker.menuLabel": "CSV 구분 기호",
+    "csvDelimiterPicker.validation.errorPrefix": "오류:",
     "csvDelimiterPicker.validation.singleCharacter": "단일 문자를 사용하세요",
-    "csvDelimiterPicker.validation.unsupported": "이 문자는 지원되지 않습니다"
+    "csvDelimiterPicker.validation.unsupported": "잘못된 구분 기호입니다 — 단일 특수 문자를 사용하세요(예: , ; | tab 또는 space). 따옴표는 허용되지 않습니다."
 }

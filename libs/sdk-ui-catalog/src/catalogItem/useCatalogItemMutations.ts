@@ -30,20 +30,29 @@ export function useCatalogItemUpdateCallback(
 export function useCatalogItemRemoveCallback(
     endpointItems: RefObject<ICatalogItem[][]>,
     setItems: Dispatch<SetStateAction<ICatalogItem[]>>,
+    setTotalCounts: Dispatch<SetStateAction<number[]>>,
 ) {
     return useCallback(
         (removedItem: ICatalogItemRef) => {
-            endpointItems.current.forEach((items) => {
+            const removedCounts = new Map<number, number>();
+
+            endpointItems.current.forEach((items, endpointIndex) => {
                 for (let index = items.length - 1; index >= 0; index -= 1) {
                     if (areObjRefsEqual(items[index], removedItem)) {
                         items.splice(index, 1);
+                        removedCounts.set(endpointIndex, (removedCounts.get(endpointIndex) ?? 0) + 1);
                     }
                 }
             });
             setItems((items) => {
                 return items.filter((item) => !areObjRefsEqual(item, removedItem));
             });
+            if (removedCounts.size > 0) {
+                setTotalCounts((counts) =>
+                    counts.map((count, index) => count - (removedCounts.get(index) ?? 0)),
+                );
+            }
         },
-        [endpointItems, setItems],
+        [endpointItems, setItems, setTotalCounts],
     );
 }

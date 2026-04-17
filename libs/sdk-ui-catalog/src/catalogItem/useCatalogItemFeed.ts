@@ -12,7 +12,6 @@ import type {
     IParametersQueryResult,
 } from "@gooddata/sdk-backend-spi";
 
-import { useCatalogFeedActions } from "./CatalogFeedContext.js";
 import { convertEntityToCatalogItem } from "./converter.js";
 import {
     getAttributesQuery,
@@ -50,12 +49,11 @@ type EndpointResult =
 export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalogItemFeedOptions) {
     const state = useFeedState();
     const cache = useFeedCache();
-    const { registerRefetchHandler } = useCatalogFeedActions();
     const { searchTerm: search } = useFullTextSearchState();
     const { types, origin, createdBy, tags, isHidden, certification } = useFilterState();
     const qualityIds = useQualityFilter();
     const isParametersEnabled = useIsParametersEnabled();
-    const { status, totalCount, totalCounts, error, items, setItems } = state;
+    const { status, totalCount, totalCounts, error, items, setItems, setTotalCounts } = state;
 
     const queryOptions = useMemo<ICatalogItemQueryOptions>(() => {
         let includeIds: string[] | undefined = id;
@@ -106,7 +104,7 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
     useFirstLoad(state, cache, endpoints);
 
     // refetch particular object type
-    useObjectTypeRefetch(state, cache, endpoints, registerRefetchHandler);
+    const refetchObjectType = useObjectTypeRefetch(state, cache, endpoints);
 
     // total count by type calculation
     const totalCountByType = useMemo(
@@ -116,7 +114,7 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
 
     // cache update
     const updateItem = useCatalogItemUpdateCallback(cache.endpointItems, setItems);
-    const removeItem = useCatalogItemRemoveCallback(cache.endpointItems, setItems);
+    const removeItem = useCatalogItemRemoveCallback(cache.endpointItems, setItems, setTotalCounts);
 
     // Next page callback
     const { hasNext, next } = useNextCallback(state, cache, endpoints);
@@ -131,6 +129,7 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
         next,
         updateItem,
         removeItem,
+        refetchObjectType,
     };
 }
 
@@ -338,12 +337,10 @@ function useNextCallback(
     const { endpointCache, endpointItems } = cache;
 
     // Check if there are more endpointItems to load
-    const hasNext = useMemo(
-        () => state.items.length < state.totalCount,
-        [state.items.length, state.totalCount],
-    );
+    const hasNext = state.items.length < state.totalCount;
 
-    const next = useCallback(async () => {
+    const nextRef = useRef(async () => {});
+    nextRef.current = async () => {
         let idx = currentEndpoint;
 
         if (status !== "success" || !hasNext) {
@@ -377,7 +374,7 @@ function useNextCallback(
                         items[o] = convertEntityToCatalogItem(nextPage.items[i++]);
                     }
 
-                    setItems(getItemsThroughEndpoint(endpointItems.current, currentEndpoint));
+                    setItems(getItemsThroughEndpoint(endpointItems.current, idx));
                     setCurrentEndpoint(idx);
                     setStatus("success");
                     setError(null);
@@ -394,21 +391,10 @@ function useNextCallback(
 
         setStatus("success");
         setCurrentEndpoint(idx); // finished last endpoint
-        setItems(getItemsThroughEndpoint(endpointItems.current, currentEndpoint));
-    }, [
-        mounted,
-        currentEndpoint,
-        status,
-        totalCounts,
-        hasNext,
-        setStatus,
-        setError,
-        setCurrentEndpoint,
-        setItems,
-        endpointItems,
-        endpointCache,
-        endpoints.length,
-    ]);
+        setItems(getItemsThroughEndpoint(endpointItems.current, idx));
+    };
+
+    const next = useCallback(() => nextRef.current(), []);
 
     return {
         next,
@@ -420,75 +406,56 @@ function useObjectTypeRefetch(
     state: ReturnType<typeof useFeedState>,
     cache: ReturnType<typeof useFeedCache>,
     endpoints: ReturnType<typeof useEndpoints>,
-    registerRefetchHandler: ReturnType<typeof useCatalogFeedActions>["registerRefetchHandler"],
 ) {
     const mounted = useMounted();
     const { initialized, endpointCache, endpointItems } = cache;
     const { currentEndpoint, setCurrentEndpoint, setItems, setTotalCounts, setError } = state;
 
-    const refetchObjectType = useCallback(
-        async (type: ObjectType) => {
-            if (!initialized.current) {
+    const refetchRef = useRef(async (_type: ObjectType) => {});
+    refetchRef.current = async (type: ObjectType) => {
+        if (!initialized.current) {
+            return;
+        }
+
+        const endpointIndex = endpoints.findIndex((endpoint) => endpoint.type === type);
+        if (endpointIndex === -1) {
+            return;
+        }
+
+        try {
+            const refreshedEndpoint = await queryRefreshedEndpoint(
+                endpoints[endpointIndex],
+                endpointItems.current[endpointIndex]?.length ?? 0,
+            );
+
+            if (!mounted.current) {
                 return;
             }
 
-            const endpointIndex = endpoints.findIndex((endpoint) => endpoint.type === type);
-            if (endpointIndex === -1) {
-                return;
-            }
+            endpointCache.current[endpointIndex] = refreshedEndpoint.page;
+            endpointItems.current[endpointIndex] = refreshedEndpoint.items;
 
-            try {
-                const refreshedEndpoint = await queryRefreshedEndpoint(
-                    endpoints[endpointIndex],
-                    endpointItems.current[endpointIndex]?.length ?? 0,
-                );
+            const nextCurrentEndpoint =
+                endpointIndex < currentEndpoint &&
+                refreshedEndpoint.items.length < refreshedEndpoint.page.totalCount
+                    ? endpointIndex
+                    : currentEndpoint;
 
-                if (!mounted.current) {
-                    return;
-                }
+            setCurrentEndpoint(nextCurrentEndpoint);
+            setItems(getItemsThroughEndpoint(endpointItems.current, nextCurrentEndpoint));
+            setTotalCounts((currentCounts) => {
+                const nextCounts = [...currentCounts];
+                nextCounts[endpointIndex] = refreshedEndpoint.page.totalCount;
+                return nextCounts;
+            });
+            setError(null);
+        } catch (error) {
+            // Refetch failure should not affect other operations, using console.error instead of throwing
+            console.error(error);
+        }
+    };
 
-                endpointCache.current[endpointIndex] = refreshedEndpoint.page;
-                endpointItems.current[endpointIndex] = refreshedEndpoint.items;
-
-                const nextCurrentEndpoint =
-                    endpointIndex < currentEndpoint &&
-                    refreshedEndpoint.items.length < refreshedEndpoint.page.totalCount
-                        ? endpointIndex
-                        : currentEndpoint;
-
-                setCurrentEndpoint(nextCurrentEndpoint);
-                setItems(getItemsThroughEndpoint(endpointItems.current, nextCurrentEndpoint));
-                setTotalCounts((currentCounts) => {
-                    const nextCounts = [...currentCounts];
-                    nextCounts[endpointIndex] = refreshedEndpoint.page.totalCount;
-                    return nextCounts;
-                });
-                setError(null);
-            } catch (error) {
-                // Refetch failure should not affect other operations, using console.error instead of throwing
-                console.error(error);
-            }
-        },
-        [
-            currentEndpoint,
-            endpointCache,
-            endpointItems,
-            endpoints,
-            initialized,
-            mounted,
-            setCurrentEndpoint,
-            setError,
-            setItems,
-            setTotalCounts,
-        ],
-    );
-
-    useEffect(() => {
-        registerRefetchHandler(refetchObjectType);
-        return () => {
-            registerRefetchHandler(null);
-        };
-    }, [refetchObjectType, registerRefetchHandler]);
+    return useCallback((type: ObjectType) => refetchRef.current(type), []);
 }
 
 async function queryRefreshedEndpoint(endpoint: FeedEndpoint, loadedItemCount: number) {

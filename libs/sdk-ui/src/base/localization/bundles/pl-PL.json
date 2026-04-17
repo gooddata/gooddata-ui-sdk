@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Niestandardowy",
     "csvDelimiterPicker.customInput": "Niestandardowy separator CSV",
     "csvDelimiterPicker.menuLabel": "Separator CSV",
+    "csvDelimiterPicker.validation.errorPrefix": "Błąd:",
     "csvDelimiterPicker.validation.singleCharacter": "Użyj pojedynczego znaku",
-    "csvDelimiterPicker.validation.unsupported": "Ten znak nie jest obsługiwany"
+    "csvDelimiterPicker.validation.unsupported": "Nieprawidłowy separator — użyj pojedynczego znaku specjalnego, np. , ; | tabulatora lub spacji. Cudzysłowy są niedozwolone."
 }

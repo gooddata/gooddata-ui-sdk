@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Tùy chỉnh",
     "csvDelimiterPicker.customInput": "Dấu phân cách CSV tùy chỉnh",
     "csvDelimiterPicker.menuLabel": "Dấu phân cách CSV",
+    "csvDelimiterPicker.validation.errorPrefix": "Lỗi:",
     "csvDelimiterPicker.validation.singleCharacter": "Sử dụng một ký tự duy nhất",
-    "csvDelimiterPicker.validation.unsupported": "Ký tự này không được hỗ trợ"
+    "csvDelimiterPicker.validation.unsupported": "Dấu phân cách không hợp lệ — hãy dùng một ký tự đặc biệt duy nhất, ví dụ: , ; | tab hoặc dấu cách. Không cho phép dấu ngoặc kép."
 }

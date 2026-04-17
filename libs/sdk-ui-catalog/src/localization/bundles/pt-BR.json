@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Linhagem",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Nenhum problema de validação encontrado.",
     "analyticsCatalog.catalogItem.lock": "Você não pode editar ou excluir este item de catálogo — ele foi criado no espaço de trabalho principal. Para fazer alterações, abra o espaço de trabalho principal.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Ações para {name}",
     "analyticsCatalog.tooltip.content": "Catálogo centralizado de Painéis, Métricas, Visualizações, fatos e Atributos. Explore, gerencie e atualize todos os objetos em um só lugar para garantir governança consistente, obter Análises detalhadas mais rápidas e melhorar a colaboração.",
     "analyticsCatalog.search.label": "Pesquisar por título ou descrição…",
     "analyticsCatalog.empty.search.title": "Nenhum resultado encontrado",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Crie uma instrução YAML que defina um parâmetro numérico.",
     "analyticsCatalog.parameter.dialog.create.submit": "Criar",
     "analyticsCatalog.parameter.dialog.edit.submit": "Salvar",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Salvar como novo",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Salvar como novo",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "O id do parâmetro não pode ser alterado ao salvar um parâmetro existente. Use Salvar como novo.",
     "analyticsCatalog.parameter.dialog.cancel": "Cancelar",
     "analyticsCatalog.parameter.dialog.help": "Como criar um parâmetro?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "As tags devem ser uma lista de strings.",
     "analyticsCatalog.parameter.create.success": "Parâmetro criado.",
     "analyticsCatalog.parameter.update.success": "Parâmetro atualizado.",
-    "analyticsCatalog.parameter.validation.syntax": "Erro de sintaxe YAML"
+    "analyticsCatalog.parameter.validation.syntax": "Erro de sintaxe YAML",
+    "analyticsCatalog.parameter.dialog.delete.title": "Excluir parâmetro?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Tem certeza de que deseja excluir <b>{name}</b>?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Excluir",
+    "analyticsCatalog.parameter.delete.success": "Parâmetro excluído.",
+    "analyticsCatalog.parameter.delete.error": "Não foi possível excluir o parâmetro."
 }

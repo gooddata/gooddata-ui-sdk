@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Özel",
     "csvDelimiterPicker.customInput": "Özel CSV ayırıcısı",
     "csvDelimiterPicker.menuLabel": "CSV ayırıcı",
+    "csvDelimiterPicker.validation.errorPrefix": "Hata:",
     "csvDelimiterPicker.validation.singleCharacter": "Tek bir karakter kullanın",
-    "csvDelimiterPicker.validation.unsupported": "Bu karakter desteklenmiyor"
+    "csvDelimiterPicker.validation.unsupported": "Geçersiz ayırıcı — tek bir özel karakter kullanın; ör. , ; | sekme veya boşluk. Tırnak işaretlerine izin verilmez."
 }

@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Lineage",
     "analyticsCatalog.catalogItem.tab.quality.empty": "ไม่พบปัญหาการตรวจสอบความถูกต้อง",
     "analyticsCatalog.catalogItem.lock": "คุณไม่สามารถแก้ไขหรือลบรายการแค็ตตาล็อกนี้ได้ — เนื่องจากสร้างในพื้นที่ทำงานแม่ หากต้องการทำการเปลี่ยนแปลง ให้เปิดพื้นที่ทำงานแม่",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "การดำเนินการสำหรับ {name}",
     "analyticsCatalog.tooltip.content": "แค็ตตาล็อกแบบรวมศูนย์ของแดชบอร์ด เมตริก การแสดงภาพข้อมูล ข้อเท็จจริง และแอตทริบิวต์ สำรวจ จัดการ และอัปเดตอ็อบเจ็กต์ทั้งหมดได้ในที่เดียว เพื่อสนับสนุนการกำกับดูแลที่สอดคล้อง ข้อมูลเชิงลึกที่รวดเร็วยิ่งขึ้น และการทำงานร่วมกันที่ดีขึ้น",
     "analyticsCatalog.search.label": "ค้นหาตามชื่อเรื่องหรือคำอธิบาย…",
     "analyticsCatalog.empty.search.title": "ไม่พบรายการที่ตรงกัน",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "สร้างคำสั่ง YAML ที่กำหนดพารามิเตอร์ตัวเลข",
     "analyticsCatalog.parameter.dialog.create.submit": "สร้าง",
     "analyticsCatalog.parameter.dialog.edit.submit": "บันทึก",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "บันทึกเป็นใหม่",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "บันทึกเป็นใหม่",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "ไม่สามารถเปลี่ยนรหัสพารามิเตอร์ได้เมื่อบันทึกพารามิเตอร์ที่มีอยู่แล้ว ให้ใช้ บันทึกเป็นใหม่ แทน",
     "analyticsCatalog.parameter.dialog.cancel": "ยกเลิก",
     "analyticsCatalog.parameter.dialog.help": "จะสร้างพารามิเตอร์ได้อย่างไร?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "แท็กต้องเป็นรายการของสตริง",
     "analyticsCatalog.parameter.create.success": "สร้างพารามิเตอร์แล้ว",
     "analyticsCatalog.parameter.update.success": "อัปเดตพารามิเตอร์แล้ว",
-    "analyticsCatalog.parameter.validation.syntax": "ข้อผิดพลาดทางไวยากรณ์ YAML"
+    "analyticsCatalog.parameter.validation.syntax": "ข้อผิดพลาดทางไวยากรณ์ YAML",
+    "analyticsCatalog.parameter.dialog.delete.title": "ลบพารามิเตอร์?",
+    "analyticsCatalog.parameter.dialog.delete.body": "คุณแน่ใจหรือไม่ว่าต้องการลบ <b>{name}</b>?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "ลบ",
+    "analyticsCatalog.parameter.delete.success": "ลบพารามิเตอร์แล้ว",
+    "analyticsCatalog.parameter.delete.error": "ไม่สามารถลบพารามิเตอร์ได้"
 }

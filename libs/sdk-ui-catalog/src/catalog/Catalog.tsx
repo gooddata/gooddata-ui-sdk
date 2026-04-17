@@ -79,7 +79,7 @@ export function Catalog({
                     />
                 }
             >
-                <CatalogFeedProvider>
+                <CatalogFeedProvider backend={backend} workspace={workspace}>
                     <Header
                         searchNode={<FullTextSearchInput />}
                         createNode={

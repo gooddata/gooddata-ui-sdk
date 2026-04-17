@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "กำหนดเอง",
     "csvDelimiterPicker.customInput": "ตัวคั่น CSV แบบกำหนดเอง",
     "csvDelimiterPicker.menuLabel": "ตัวคั่น CSV",
+    "csvDelimiterPicker.validation.errorPrefix": "ข้อผิดพลาด:",
     "csvDelimiterPicker.validation.singleCharacter": "ใช้อักขระเดียว",
-    "csvDelimiterPicker.validation.unsupported": "ไม่รองรับอักขระนี้"
+    "csvDelimiterPicker.validation.unsupported": "ตัวคั่นไม่ถูกต้อง — ใช้อักขระพิเศษเพียงตัวเดียว เช่น , ; | tab หรือช่องว่าง ไม่อนุญาตให้ใช้เครื่องหมายอัญประกาศ"
 }

@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Personnalisé",
     "csvDelimiterPicker.customInput": "Délimiteur CSV personnalisé",
     "csvDelimiterPicker.menuLabel": "Délimiteur CSV",
+    "csvDelimiterPicker.validation.errorPrefix": "Erreur :",
     "csvDelimiterPicker.validation.singleCharacter": "Utilisez un seul caractère",
-    "csvDelimiterPicker.validation.unsupported": "Ce caractère n’est pas pris en charge"
+    "csvDelimiterPicker.validation.unsupported": "Délimiteur non valide — utilisez un seul caractère spécial, p. ex. , ; | tabulation ou espace. Guillemets non autorisés."
 }

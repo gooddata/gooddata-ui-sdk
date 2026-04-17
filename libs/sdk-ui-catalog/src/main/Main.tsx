@@ -75,53 +75,49 @@ export function Main({
                     <FilterResetButtonMemo />
                 </FilterGroupLayout>
             </div>
-            <CatalogItemFeed backend={backend} workspace={workspace}>
-                {({ items, next, hasNext, totalCount, status, updateItem, removeItem }) => (
-                    <>
-                        <Table
-                            status={status}
-                            items={items}
-                            next={next}
-                            hasNext={hasNext}
-                            totalCount={totalCount}
-                            onItemClick={onOpenDetail}
-                            onTagClick={toggleTag}
-                        />
-                        <ParameterActions
-                            backend={backend}
-                            workspace={workspace}
-                            updateItem={updateItem}
-                            removeItem={removeItem}
-                            setItemOpened={setItemOpened}
-                            onCloseDetail={onCloseDetail}
-                        >
-                            {({ getItemActions, onItemAction, onEditClick, onItemUpdate }) => (
-                                <CatalogDetail
-                                    open={open}
-                                    objectDefinition={openedItem}
-                                    onClose={onCloseDetail}
-                                    onOpenClick={onOpenClick}
-                                    onCatalogItemNavigation={(event, ref) => {
-                                        setItemOpened(ref);
-                                        onCatalogItemNavigation?.(event, ref);
-                                    }}
-                                    onEditClick={onEditClick}
-                                    getItemActions={getItemActions}
-                                    onItemAction={onItemAction}
-                                    onCatalogItemUpdate={onItemUpdate}
-                                    onCatalogItemUpdateError={(err) => {
-                                        addError(messages.updateFailed, {
-                                            showLess: intl.formatMessage(messages.showLess),
-                                            showMore: intl.formatMessage(messages.showMore),
-                                            errorDetail: `${err.name} ${err.message}`,
-                                        });
-                                    }}
-                                />
-                            )}
-                        </ParameterActions>
-                    </>
+            <CatalogItemFeed>
+                {({ items, next, hasNext, totalCount, status }) => (
+                    <Table
+                        status={status}
+                        items={items}
+                        next={next}
+                        hasNext={hasNext}
+                        totalCount={totalCount}
+                        onItemClick={onOpenDetail}
+                        onTagClick={toggleTag}
+                    />
                 )}
             </CatalogItemFeed>
+            <ParameterActions
+                backend={backend}
+                workspace={workspace}
+                setItemOpened={setItemOpened}
+                onCloseDetail={onCloseDetail}
+            >
+                {({ getItemActions, onItemAction, onEditClick, onItemUpdate }) => (
+                    <CatalogDetail
+                        open={open}
+                        objectDefinition={openedItem}
+                        onClose={onCloseDetail}
+                        onOpenClick={onOpenClick}
+                        onCatalogItemNavigation={(event, ref) => {
+                            setItemOpened(ref);
+                            onCatalogItemNavigation?.(event, ref);
+                        }}
+                        onEditClick={onEditClick}
+                        getItemActions={getItemActions}
+                        onItemAction={onItemAction}
+                        onCatalogItemUpdate={onItemUpdate}
+                        onCatalogItemUpdateError={(err) => {
+                            addError(messages.updateFailed, {
+                                showLess: intl.formatMessage(messages.showLess),
+                                showMore: intl.formatMessage(messages.showMore),
+                                errorDetail: `${err.name} ${err.message}`,
+                            });
+                        }}
+                    />
+                )}
+            </ParameterActions>
         </section>
     );
 }

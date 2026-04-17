@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "自訂",
     "csvDelimiterPicker.customInput": "自訂 CSV 分隔符號",
     "csvDelimiterPicker.menuLabel": "CSV 分隔符號",
+    "csvDelimiterPicker.validation.errorPrefix": "錯誤：",
     "csvDelimiterPicker.validation.singleCharacter": "請使用單一字元",
-    "csvDelimiterPicker.validation.unsupported": "不支援此字元"
+    "csvDelimiterPicker.validation.unsupported": "分隔符無效 — 請使用單一特殊字元，例如 , ; | tab 或空格。不允許使用引號。"
 }

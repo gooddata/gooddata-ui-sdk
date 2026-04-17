@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Lineage",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Validointiongelmia ei löytynyt.",
     "analyticsCatalog.catalogItem.lock": "Et voi muokata tai poistaa tätä katalogikohdetta, koska se luotiin ylätason työtilassa. Jos haluat tehdä muutoksia, avaa ylätason työtila.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Kohteen {name} toiminnot",
     "analyticsCatalog.tooltip.content": "Keskitetty koontinäyttöjen, metrikkojen, visualisointien, faktojen ja attribuuttien katalogi. Tutki, hallitse ja päivitä kaikkia objekteja yhdessä paikassa tukeaksesi yhdenmukaista hallintaa, nopeampia oivalluksia ja parempaa yhteistyötä.",
     "analyticsCatalog.search.label": "Hae otsikon tai kuvauksen perusteella…",
     "analyticsCatalog.empty.search.title": "Ei osumia",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Luo YAML-lauseke, joka määrittää numeerisen parametrin.",
     "analyticsCatalog.parameter.dialog.create.submit": "Luo",
     "analyticsCatalog.parameter.dialog.edit.submit": "Tallenna",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Tallenna uutena",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Tallenna uutena",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "Parametrin tunnusta ei voi muuttaa tallennettaessa olemassa olevaa parametria. Käytä sen sijaan \"Tallenna uutena\".",
     "analyticsCatalog.parameter.dialog.cancel": "Peruuta",
     "analyticsCatalog.parameter.dialog.help": "Miten luoda parametri?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Tagien on oltava merkkijonojen luettelo.",
     "analyticsCatalog.parameter.create.success": "Parametri luotu.",
     "analyticsCatalog.parameter.update.success": "Parametri päivitetty.",
-    "analyticsCatalog.parameter.validation.syntax": "YAML-syntaksivirhe"
+    "analyticsCatalog.parameter.validation.syntax": "YAML-syntaksivirhe",
+    "analyticsCatalog.parameter.dialog.delete.title": "Poistetaanko parametri?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Haluatko varmasti poistaa kohteen <b>{name}</b>?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Poista",
+    "analyticsCatalog.parameter.delete.success": "Parametri poistettu.",
+    "analyticsCatalog.parameter.delete.error": "Parametria ei voitu poistaa."
 }

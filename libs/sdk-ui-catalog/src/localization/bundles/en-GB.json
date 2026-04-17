@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Lineage",
     "analyticsCatalog.catalogItem.tab.quality.empty": "No validation issues found.",
     "analyticsCatalog.catalogItem.lock": "You can't edit or delete this Catalog Item — it was created in the Parent workspace. To make changes, open the Parent workspace.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Actions for {name}",
     "analyticsCatalog.tooltip.content": "Centralised catalogue of dashboards, metrics, visualisations, facts, and attributes. Explore, manage, and update all objects in one place to support consistent governance, quicker insights, and improved collaboration.",
     "analyticsCatalog.search.label": "Search by title or description…",
     "analyticsCatalog.empty.search.title": "No match found",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Create a YAML statement that defines a numeric parameter.",
     "analyticsCatalog.parameter.dialog.create.submit": "Create",
     "analyticsCatalog.parameter.dialog.edit.submit": "Save",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Save as new",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Save as new",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "Parameter id cannot be changed when saving an existing parameter. Use Save as new instead.",
     "analyticsCatalog.parameter.dialog.cancel": "Cancel",
     "analyticsCatalog.parameter.dialog.help": "How to create a parameter?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Tags must be a list of strings.",
     "analyticsCatalog.parameter.create.success": "Parameter created.",
     "analyticsCatalog.parameter.update.success": "Parameter updated.",
-    "analyticsCatalog.parameter.validation.syntax": "YAML syntax error"
+    "analyticsCatalog.parameter.validation.syntax": "YAML syntax error",
+    "analyticsCatalog.parameter.dialog.delete.title": "Delete parameter?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Are you sure you want to delete <b>{name}</b>?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Delete",
+    "analyticsCatalog.parameter.delete.success": "Parameter deleted.",
+    "analyticsCatalog.parameter.delete.error": "Parameter could not be deleted."
 }

@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Происхождение",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Замечаний при проверке не обнаружено.",
     "analyticsCatalog.catalogItem.lock": "Вы не можете редактировать или удалять этот объект каталога, так как он был создан в родительской рабочей области. Чтобы внести изменения, откройте родительскую рабочую область.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Действия для {name}",
     "analyticsCatalog.tooltip.content": "Централизованный каталог дашбордов, метрик, визуализаций, фактов и атрибутов. Исследуйте, управляйте и обновляйте все объекты в одном месте, чтобы обеспечить единые правила управления, быстрее получать инсайты и улучшить сотрудничество.",
     "analyticsCatalog.search.label": "Поиск по заголовку или описанию…",
     "analyticsCatalog.empty.search.title": "Совпадений не найдено",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Создайте инструкцию YAML, которая определяет числовой параметр.",
     "analyticsCatalog.parameter.dialog.create.submit": "Создать",
     "analyticsCatalog.parameter.dialog.edit.submit": "Сохранить",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Сохранить как новую",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Сохранить как новую",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "Идентификатор параметра нельзя изменить при сохранении существующего параметра. Вместо этого используйте \"Сохранить как новый\".",
     "analyticsCatalog.parameter.dialog.cancel": "Отмена",
     "analyticsCatalog.parameter.dialog.help": "Как создать параметр?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Теги должны быть списком строк.",
     "analyticsCatalog.parameter.create.success": "Параметр создан.",
     "analyticsCatalog.parameter.update.success": "Параметр обновлен.",
-    "analyticsCatalog.parameter.validation.syntax": "Синтаксическая ошибка YAML"
+    "analyticsCatalog.parameter.validation.syntax": "Синтаксическая ошибка YAML",
+    "analyticsCatalog.parameter.dialog.delete.title": "Удалить параметр?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Вы уверены, что хотите удалить <b>{name}</b>?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Удалить",
+    "analyticsCatalog.parameter.delete.success": "Параметр удален.",
+    "analyticsCatalog.parameter.delete.error": "Не удалось удалить параметр."
 }

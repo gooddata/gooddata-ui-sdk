@@ -12,6 +12,7 @@ import { ParameterDuplicateDialog } from "./ParameterDuplicateDialog.js";
 import { ParameterEditDialog } from "./ParameterEditDialog.js";
 import { catalogDetailActionDelete, catalogDetailActionDuplicate } from "../automation/testIds.js";
 import type { EditHandlerEvent, ICatalogDetailAction } from "../catalogDetail/types.js";
+import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
 import { isCatalogItemParameter } from "../catalogItem/guards.js";
 import type { ICatalogItem, ICatalogItemParameter, ICatalogItemRef } from "../catalogItem/types.js";
 
@@ -41,23 +42,14 @@ export type ParameterActionsRenderProps = {
 type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
-    updateItem: (item: ICatalogItem) => void;
-    removeItem: (item: ICatalogItemRef) => void;
     setItemOpened: (item: ICatalogItemRef | ICatalogItem | null) => void;
     onCloseDetail: () => void;
     children: (props: ParameterActionsRenderProps) => ReactNode;
 };
 
-export function ParameterActions({
-    backend,
-    workspace,
-    updateItem,
-    removeItem,
-    setItemOpened,
-    onCloseDetail,
-    children,
-}: Props) {
+export function ParameterActions({ backend, workspace, setItemOpened, onCloseDetail, children }: Props) {
     const intl = useIntl();
+    const { updateItem, removeItem } = useCatalogFeedActions();
     const [parameterDialog, setParameterDialog] = useState<ParameterDialogState | undefined>(undefined);
 
     const openDialog = useCallback((type: ParameterDialogState["type"], item: ICatalogItemParameter) => {

@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "Silsilah",
     "analyticsCatalog.catalogItem.tab.quality.empty": "Tidak ditemukan masalah validasi.",
     "analyticsCatalog.catalogItem.lock": "Anda tidak dapat mengedit atau menghapus item katalog ini — item ini dibuat di ruang kerja induk. Untuk membuat perubahan, buka ruang kerja induk.",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "Tindakan untuk {name}",
     "analyticsCatalog.tooltip.content": "Katalog terpusat untuk dasbor, metrik, visualisasi, fakta, dan atribut. Jelajahi, kelola, dan perbarui semua objek di satu tempat untuk mendukung tata kelola yang konsisten, wawasan yang lebih cepat, dan kolaborasi yang lebih baik.",
     "analyticsCatalog.search.label": "Cari berdasarkan judul atau deskripsi…",
     "analyticsCatalog.empty.search.title": "Tidak ditemukan kecocokan",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "Buat pernyataan YAML yang mendefinisikan parameter numerik.",
     "analyticsCatalog.parameter.dialog.create.submit": "Buat",
     "analyticsCatalog.parameter.dialog.edit.submit": "Simpan",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "Simpan sebagai baru",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "Simpan sebagai baru",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "ID parameter tidak dapat diubah saat menyimpan parameter yang sudah ada. Gunakan Simpan sebagai baru sebagai gantinya.",
     "analyticsCatalog.parameter.dialog.cancel": "Batal",
     "analyticsCatalog.parameter.dialog.help": "Bagaimana cara membuat parameter?",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "Tag harus berupa daftar string.",
     "analyticsCatalog.parameter.create.success": "Parameter dibuat.",
     "analyticsCatalog.parameter.update.success": "Parameter diperbarui.",
-    "analyticsCatalog.parameter.validation.syntax": "Kesalahan sintaks YAML"
+    "analyticsCatalog.parameter.validation.syntax": "Kesalahan sintaks YAML",
+    "analyticsCatalog.parameter.dialog.delete.title": "Hapus parameter?",
+    "analyticsCatalog.parameter.dialog.delete.body": "Apakah Anda yakin ingin menghapus <b>{name}</b>?",
+    "analyticsCatalog.parameter.dialog.delete.submit": "Hapus",
+    "analyticsCatalog.parameter.delete.success": "Parameter dihapus.",
+    "analyticsCatalog.parameter.delete.error": "Parameter tidak dapat dihapus."
 }

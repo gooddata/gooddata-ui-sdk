@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "血緣",
     "analyticsCatalog.catalogItem.tab.quality.empty": "未發現驗證問題。",
     "analyticsCatalog.catalogItem.lock": "您無法編輯或刪除此目錄項目，因為它是在父工作區中建立的。若要進行變更，請開啟父工作區。",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "{name} 的動作",
     "analyticsCatalog.tooltip.content": "集中式目錄包含儀表板、指標、視覺化、事實和屬性。請在單一位置瀏覽、管理和更新所有物件，以支援一致的治理、更快速的洞察以及更佳的協作。",
     "analyticsCatalog.search.label": "依標題或說明搜尋…",
     "analyticsCatalog.empty.search.title": "未找到匹配項",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "建立定義數值參數的 YAML 陳述式。",
     "analyticsCatalog.parameter.dialog.create.submit": "建立",
     "analyticsCatalog.parameter.dialog.edit.submit": "儲存",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "另存為新的",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "另存為新的",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "儲存現有參數時，無法變更參數 id。請改用另存為新參數。",
     "analyticsCatalog.parameter.dialog.cancel": "取消",
     "analyticsCatalog.parameter.dialog.help": "如何建立參數？",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "標籤必須是字串清單。",
     "analyticsCatalog.parameter.create.success": "參數已建立。",
     "analyticsCatalog.parameter.update.success": "參數已更新。",
-    "analyticsCatalog.parameter.validation.syntax": "YAML 語法錯誤"
+    "analyticsCatalog.parameter.validation.syntax": "YAML 語法錯誤",
+    "analyticsCatalog.parameter.dialog.delete.title": "刪除參數？",
+    "analyticsCatalog.parameter.dialog.delete.body": "您確定要刪除 <b>{name}</b> 嗎？",
+    "analyticsCatalog.parameter.dialog.delete.submit": "刪除",
+    "analyticsCatalog.parameter.delete.success": "參數已刪除。",
+    "analyticsCatalog.parameter.delete.error": "無法刪除參數。"
 }

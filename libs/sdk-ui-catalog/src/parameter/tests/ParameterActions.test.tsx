@@ -13,7 +13,10 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 import { CatalogFeedProvider } from "../../catalogItem/CatalogFeedContext.js";
 import type { ICatalogItemParameter } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
+import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import { ParameterActions } from "../ParameterActions.js";
+
+vi.mock("../../catalogItem/useCatalogItemFeed.js");
 
 vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
     const original = await importOriginal<Record<string, unknown>>();
@@ -97,9 +100,11 @@ function Wrapper({ children }: PropsWithChildren) {
         <TestIntlProvider>
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace="test-workspace">
-                    <CatalogFeedProvider>
-                        <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
-                    </CatalogFeedProvider>
+                    <TestPermissionsProvider>
+                        <CatalogFeedProvider backend={backend} workspace="test-workspace">
+                            <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                        </CatalogFeedProvider>
+                    </TestPermissionsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </TestIntlProvider>
@@ -113,15 +118,12 @@ describe("ParameterActions", () => {
     });
 
     it("switches from edit dialog to create dialog using unsaved YAML edits", async () => {
-        const updateItem = vi.fn();
         const setItemOpened = vi.fn();
 
         render(
             <ParameterActions
                 backend={backend}
                 workspace="test-workspace"
-                updateItem={updateItem}
-                removeItem={vi.fn()}
                 setItemOpened={setItemOpened}
                 onCloseDetail={vi.fn()}
             >
@@ -180,13 +182,6 @@ definition:
         });
 
         expect(updateParameterMock).not.toHaveBeenCalled();
-        expect(updateItem).toHaveBeenCalledWith(
-            expect.objectContaining({
-                identifier: "edited_param__2_",
-                title: "Edited Param (2)",
-                definition: { type: "NUMBER", defaultValue: 15 },
-            }),
-        );
         expect(setItemOpened).toHaveBeenCalledWith(
             expect.objectContaining({
                 identifier: "edited_param__2_",
@@ -199,8 +194,6 @@ definition:
             <ParameterActions
                 backend={backend}
                 workspace="test-workspace"
-                updateItem={vi.fn()}
-                removeItem={vi.fn()}
                 setItemOpened={vi.fn()}
                 onCloseDetail={vi.fn()}
             >
@@ -252,8 +245,6 @@ definition:
             <ParameterActions
                 backend={backend}
                 workspace="test-workspace"
-                updateItem={vi.fn()}
-                removeItem={vi.fn()}
                 setItemOpened={vi.fn()}
                 onCloseDetail={vi.fn()}
             >

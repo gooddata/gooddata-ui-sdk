@@ -113,6 +113,7 @@
     "analyticsCatalog.catalogItem.tab.lineage": "リネージ",
     "analyticsCatalog.catalogItem.tab.quality.empty": "バリデーションの問題は見つかりませんでした。",
     "analyticsCatalog.catalogItem.lock": "このカタログ項目は親ワークスペースで作成されているため、編集または削除することはできません。変更するには、親ワークスペースを開いてください。",
+    "analyticsCatalog.catalogItem.actionsMenu.ariaLabel": "{name} のアクション",
     "analyticsCatalog.tooltip.content": "ダッシュボード、メトリック、可視化、ファクト、属性を集中管理するカタログです。すべてのオブジェクトを 1 か所で探索、管理、更新し、一貫したガバナンスの維持、インサイト取得の高速化、およびコラボレーションの向上を実現します。",
     "analyticsCatalog.search.label": "タイトルまたは説明で検索…",
     "analyticsCatalog.empty.search.title": "一致するものがありません",
@@ -168,7 +169,7 @@
     "analyticsCatalog.parameter.dialog.sectionHeader.tooltip": "数値パラメーターを定義するYAMLステートメントを作成します。",
     "analyticsCatalog.parameter.dialog.create.submit": "作成",
     "analyticsCatalog.parameter.dialog.edit.submit": "保存",
-    "analyticsCatalog.parameter.dialog.edit.saveAsNew": "新規として保存",
+    "analyticsCatalog.parameter.dialog.edit.duplicate": "新規として保存",
     "analyticsCatalog.parameter.dialog.edit.idImmutable": "既存のパラメーターを保存する際、パラメーター id は変更できません。代わりに「新規として保存」を使用してください。",
     "analyticsCatalog.parameter.dialog.cancel": "キャンセル",
     "analyticsCatalog.parameter.dialog.help": "パラメーターを作成する方法は？",
@@ -182,5 +183,10 @@
     "analyticsCatalog.parameter.validation.invalidTags": "タグは文字列のリストである必要があります。",
     "analyticsCatalog.parameter.create.success": "パラメーターが作成されました。",
     "analyticsCatalog.parameter.update.success": "パラメーターが更新されました。",
-    "analyticsCatalog.parameter.validation.syntax": "YAML構文エラー"
+    "analyticsCatalog.parameter.validation.syntax": "YAML構文エラー",
+    "analyticsCatalog.parameter.dialog.delete.title": "パラメーターを削除しますか？",
+    "analyticsCatalog.parameter.dialog.delete.body": "<b>{name}</b> を削除してもよろしいですか？",
+    "analyticsCatalog.parameter.dialog.delete.submit": "削除",
+    "analyticsCatalog.parameter.delete.success": "パラメーターが削除されました。",
+    "analyticsCatalog.parameter.delete.error": "パラメーターを削除できませんでした。"
 }

@@ -1072,6 +1072,7 @@
     "csvDelimiterPicker.option.custom": "Aangepast",
     "csvDelimiterPicker.customInput": "Aangepast CSV-scheidingsteken",
     "csvDelimiterPicker.menuLabel": "CSV-scheidingsteken",
+    "csvDelimiterPicker.validation.errorPrefix": "Fout:",
     "csvDelimiterPicker.validation.singleCharacter": "Gebruik één teken",
-    "csvDelimiterPicker.validation.unsupported": "Dit teken wordt niet ondersteund"
+    "csvDelimiterPicker.validation.unsupported": "Ongeldig scheidingsteken — gebruik één speciaal teken, bijv. , ; | tab of spatie. Aanhalingstekens zijn niet toegestaan."
 }

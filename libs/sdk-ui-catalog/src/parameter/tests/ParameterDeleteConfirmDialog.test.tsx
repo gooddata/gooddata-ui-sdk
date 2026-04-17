@@ -12,7 +12,10 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 import { CatalogFeedProvider } from "../../catalogItem/CatalogFeedContext.js";
 import type { ICatalogItemParameter } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
+import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import { ParameterDeleteDialog } from "../ParameterDeleteDialog.js";
+
+vi.mock("../../catalogItem/useCatalogItemFeed.js");
 
 const parameterItem: ICatalogItemParameter = {
     identifier: "param.id",
@@ -44,9 +47,11 @@ function Wrapper({ children }: PropsWithChildren) {
         <TestIntlProvider>
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace="test-workspace">
-                    <CatalogFeedProvider>
-                        <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
-                    </CatalogFeedProvider>
+                    <TestPermissionsProvider>
+                        <CatalogFeedProvider backend={backend} workspace="test-workspace">
+                            <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                        </CatalogFeedProvider>
+                    </TestPermissionsProvider>
                 </WorkspaceProvider>
             </BackendProvider>
         </TestIntlProvider>
