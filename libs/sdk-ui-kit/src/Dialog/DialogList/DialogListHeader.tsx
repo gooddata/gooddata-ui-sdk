@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -56,14 +56,14 @@ export function DialogListHeader({
             {buttonTitle ? (
                 <div className="gd-dialog-list-header-button">
                     <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-                        <a
+                        <button
+                            type="button"
                             className={buttonClassNames}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            disabled={buttonDisabled}
                             onClick={onClick}
                         >
                             {buttonTitle}
-                        </a>
+                        </button>
                         {buttonTooltipText ? (
                             <Bubble className="bubble-primary" alignPoints={BUTTON_TOOLTIP_ALIGN_POINTS}>
                                 {buttonTooltipText}

@@ -103,6 +103,12 @@ export function yamlDatasetToDeclarative(
         output.precedence = input.precedence;
     }
 
+    if (input.dataset_type === "auxiliary") {
+        output.type = "AUXILIARY";
+    } else if (input.dataset_type === "standard") {
+        output.type = "NORMAL";
+    }
+
     output.facts = buildFacts(input.fields);
     output.attributes = buildAttributes(input.fields);
 

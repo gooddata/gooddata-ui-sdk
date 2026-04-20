@@ -5,7 +5,7 @@ import { useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import { type IExportTemplate } from "@gooddata/sdk-model";
-import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
+import { ConfirmDialog, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 const messages = defineMessages({
     dialogTitle: { id: "export.template.dialog.title" },
@@ -49,20 +49,25 @@ export function ExportTemplateSelectionDialog({
                 aria-label={intl.formatMessage(messages.dialogTitle)}
             >
                 {templates.map((template) => (
-                    <label
+                    <UiTooltip
                         key={template.id}
-                        className="gd-export-template-item input-radio-label s-export-template-item"
-                    >
-                        <input
-                            type="radio"
-                            className="input-radio"
-                            name="exportTemplate"
-                            value={template.id}
-                            checked={selectedTemplateId === template.id}
-                            onChange={() => setSelectedTemplateId(template.id)}
-                        />
-                        <span className="input-label-text">{template.name}</span>
-                    </label>
+                        triggerBy={["hover", "focus"]}
+                        arrowPlacement="bottom"
+                        content={template.name}
+                        anchor={
+                            <label className="gd-export-template-item input-radio-label s-export-template-item">
+                                <input
+                                    type="radio"
+                                    className="input-radio"
+                                    name="exportTemplate"
+                                    value={template.id}
+                                    checked={selectedTemplateId === template.id}
+                                    onChange={() => setSelectedTemplateId(template.id)}
+                                />
+                                <span className="input-label-text">{template.name}</span>
+                            </label>
+                        }
+                    />
                 ))}
             </div>
         </ConfirmDialog>

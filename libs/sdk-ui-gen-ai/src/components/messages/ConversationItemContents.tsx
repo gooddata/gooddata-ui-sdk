@@ -28,7 +28,15 @@ export function ConversationItemContents({ message, isLoading, isLast }: Convers
     const content = message.content as IChatConversationLocalContent | IChatConversationErrorContent;
 
     if (content.type === "error") {
-        return <ConversationErrorContent useMarkdown message={content.message} isLoading={isLoading} />;
+        return (
+            <ConversationErrorContent
+                useMarkdown
+                message={content.message}
+                traceId={content.traceId}
+                code={content.code}
+                isLoading={isLoading}
+            />
+        );
     }
 
     if (content.type === "text") {

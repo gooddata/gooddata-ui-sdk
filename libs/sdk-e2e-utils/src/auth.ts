@@ -3,6 +3,7 @@
 import { type Page } from "@playwright/test";
 
 /**
+ * @internal
  * Injects Authorization bearer token into all /api/ requests via Playwright route interception.
  */
 export async function injectAuthHeader(page: Page, token: string): Promise<void> {
@@ -16,4 +17,7 @@ export async function injectAuthHeader(page: Page, token: string): Promise<void>
     });
 }
 
+/**
+ * @internal
+ */
 export const authHeader = (token: string) => ({ authorization: `Bearer ${token}` });

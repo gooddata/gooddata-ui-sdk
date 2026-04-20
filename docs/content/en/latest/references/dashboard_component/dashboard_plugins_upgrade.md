@@ -36,7 +36,7 @@ If bootstrapping a new plugin is not suitable for you, you can follow these step
 Upgrade all the `@gooddata` dependencies to the latest stable version.
 To find the version used in your plugin, check your `package.json` file for the version next to the `"@gooddata/sdk-ui-dashboard"` entry.
 
-> **Note:** Starting with version 10.0.0, the **gooddata-ui-sdk** no longer supports the GoodData Platform. It is necessary to remove `"@gooddata/sdk-backend-bear"` from the `package.json`.
+> **Note:** Starting with version 10.0.0, the **gooddata-ui-sdk** no longer supports the GoodData Legacy. It is necessary to remove `"@gooddata/sdk-backend-bear"` from the `package.json`.
 
 To find the latest stable version available, run the following in your terminal:
 

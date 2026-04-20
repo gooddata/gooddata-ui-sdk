@@ -3,6 +3,7 @@
 import { type Locator, type Page } from "@playwright/test";
 
 /**
+ * @internal
  * Click at the center of the bounding box of the given locator.
  * Throws if the element is not visible (no bounding box).
  * Allows to use mouse up and down instead of click for some fragile cases.
@@ -28,6 +29,7 @@ export async function clickByBoundingBox(
 }
 
 /**
+ * @internal
  * Hover (move mouse) to the center of the bounding box of the given locator.
  * Throws if the element is not visible (no bounding box).
  */

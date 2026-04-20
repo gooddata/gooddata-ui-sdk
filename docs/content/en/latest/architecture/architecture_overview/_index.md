@@ -11,7 +11,7 @@ The **Analytical Backend** is designed as a Service Provider Interface (SPI) wit
 
 GoodData.UI comes with a full implementation of the Analytical Backend SPI for [GoodData Cloud](https://www.gooddata.com/docs/cloud/) and [GoodData.CN](https://www.gooddata.com/docs/cloud-native/latest/). GoodData.UI uses the **tiger** codename, for these two GoodData products, in all developer-facing artifacts and APIs. We find that it can better withstand the test of time.
 
-> GoodData Platform uses the **bear** codename in all developer-facing artifacts and APIs. This codename can only be found in GoodData.UI versions 9.x and lower. GoodData Platform is no longer supported by GoodData.UI version 10 or newer.
+> GoodData Legacy uses the **bear** codename in all developer-facing artifacts and APIs. This codename can only be found in GoodData.UI versions 9.x and lower. GoodData Legacy is no longer supported by GoodData.UI version 10 or newer.
 
 The **Analytical Backend** abstraction ultimately allows you to develop applications that can be backend-agnostic.
 

@@ -21,7 +21,7 @@ export const DialogCloseButtonCore = memo<IDialogCloseButtonProps>(function Dial
     const intl = useIntl();
     const closeButtonAccessibilityConfig = {
         ariaLabel: intl.formatMessage({ id: "dialogs.closeLabel" }),
-        ariaDescribedBy: accessibilityConfig?.titleElementId,
+        ariaDescribedBy: accessibilityConfig?.descriptionElementId ?? accessibilityConfig?.titleElementId,
         ...accessibilityConfig?.closeButton,
     };
 

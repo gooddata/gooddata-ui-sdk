@@ -9,7 +9,7 @@ import {
     type IFeatureHubEnvironment,
     createTest,
     getBaseUrl,
-} from "@gooddata/e2e-utils";
+} from "@gooddata/sdk-e2e-utils";
 import recordings from "@gooddata/sdk-ui-tests-reference-workspace/recordings_workspace" with { type: "json" };
 
 const __filename = fileURLToPath(import.meta.url);

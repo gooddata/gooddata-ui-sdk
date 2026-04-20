@@ -2,7 +2,7 @@
 
 import { expect } from "@playwright/test";
 
-import { injectAuthHeader } from "@gooddata/e2e-utils";
+import { injectAuthHeader } from "@gooddata/sdk-e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
 

@@ -15,6 +15,14 @@
         "text": "Error trace ID",
         "crowdinContext": "Button label to show more detailed error information"
     },
+    "gd.gen-ai.global-error.show-more": {
+        "text": "show more",
+        "crowdinContext": "Button label to show more detailed error information"
+    },
+    "gd.gen-ai.global-error.show-less": {
+        "text": "show less",
+        "crowdinContext": "Button label to show less detailed error information"
+    },
     "gd.gen-ai.global-error.traceId.copy": {
         "text": "Copy to clipboard",
         "crowdinContext": "Button label to copy error trace ID to clipboard"

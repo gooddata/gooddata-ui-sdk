@@ -1,9 +1,14 @@
 {
-    "name": "@gooddata/e2e-utils",
+    "name": "@gooddata/sdk-e2e-utils",
     "version": "1.0.0",
-    "description": "",
-    "license": "ISC",
-    "author": "",
+    "description": "GoodData utility functions for Playwright E2E tests",
+    "license": "MIT",
+    "author": "GoodData",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-e2e-utils"
+    },
     "files": [
         "esm"
     ],
@@ -20,10 +25,11 @@
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "build": "npm-run-all -p build-check build-ts",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "build": "npm-run-all -p build-check build-ts && npm run api-extractor",
         "build-check": "tsgo",
         "build-ts": "tsgo -p tsconfig.build.json",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf esm",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf esm api temp",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "lint": "oxlint . --type-aware --quiet && eslint .",
@@ -36,6 +42,8 @@
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
+        "@microsoft/api-documenter": "^7.17.0",
+        "@microsoft/api-extractor": "^7.55.2",
         "@types/node": "24.12.0",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",

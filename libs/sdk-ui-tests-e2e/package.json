@@ -45,9 +45,9 @@
         "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {
-        "@gooddata/e2e-utils": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
+        "@gooddata/sdk-e2e-utils": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui-tests-app": "workspace:*",
         "@gooddata/sdk-ui-tests-reference-workspace": "workspace:*",

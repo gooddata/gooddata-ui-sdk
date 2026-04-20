@@ -4,6 +4,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname } from "path";
 
 /**
+ * @internal
  * Load goodmock stub mappings from a JSON file on disk.
  *
  * @param host - Goodmock host:port (e.g. "backend-mock:8080")
@@ -37,6 +38,7 @@ export async function loadMappings(host: string, mappingFilePath: string): Promi
 }
 
 /**
+ * @internal
  * Reset goodmock scenario state (sequence counters) without clearing mappings.
  * Must be called between tests so scenario-driven stubs start from the
  * beginning for every test — mirrors the Cypress `resetRecordingsScenarios` task.
@@ -50,6 +52,7 @@ export async function resetScenarios(host: string): Promise<void> {
 }
 
 /**
+ * @internal
  * Clear all goodmock stub mappings.
  */
 export async function resetMappings(host: string): Promise<void> {
@@ -61,6 +64,7 @@ export async function resetMappings(host: string): Promise<void> {
 }
 
 /**
+ * @internal
  * Add a goodmock stub that mocks log requests (POST /gdc/app/projects/.../log).
  * This prevents the app from failing when it tries to send logs.
  */
@@ -84,6 +88,7 @@ export async function mockLogRequests(host: string): Promise<void> {
 }
 
 /**
+ * @internal
  * Which mode goodmock is running in
  */
 export enum GoodmockMode {
@@ -92,11 +97,15 @@ export enum GoodmockMode {
     Proxy = "proxy",
 }
 
+/**
+ * @internal
+ */
 export function goodmockMode(): GoodmockMode {
     return process.env["GOODMOCK_MODE"] as GoodmockMode;
 }
 
 /**
+ * @internal
  * Add a catch-all proxy mapping so goodmock forwards every request to the
  * real backend and records the interactions.  Must be called after
  * {@link resetMappings} in recording mode.
@@ -128,6 +137,9 @@ export interface IGoodmockMapping {
     response: { headers?: Record<string, string>; jsonBody?: Map<string, any> };
 }
 
+/**
+ * @internal
+ */
 export interface IWorkspaceIdMapping {
     sourceWorkspaceId: string;
     targetWorkspaceId: string;
@@ -153,6 +165,7 @@ function sanitizeWorkspaceId(
 }
 
 /**
+ * @internal
  * Snapshot goodmock recordings, save the combined mappings to a JSON file
  * on disk, and sanitize any credentials from the output.
  *
@@ -160,8 +173,8 @@ function sanitizeWorkspaceId(
  * one for executionResults URLs (with repeatsAsScenarios) and one for
  * everything else — then the results are merged and written out.
  *
- * @param host
- * @param mappingFilePath
+ * @param host -
+ * @param mappingFilePath -
  * @param workspaceIdMappings - Optional source/target workspace ID rewrite(s)
  * applied before mappings are saved. Accepts a single mapping or an array.
  * @param backendHost - Optional real backend URL (e.g. "https://example.gooddata.com").

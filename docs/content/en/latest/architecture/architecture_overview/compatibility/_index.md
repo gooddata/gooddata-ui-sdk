@@ -54,9 +54,9 @@ The following table provides the lifecycle phases of GoodData.UI versions:
 | 8             | End-of-Support      | October 8, 2020    | July 27, 2023      | October 18, 2023   |
 | 7             | End-of-Support      | May 21, 2019       | October 8, 2020    | March 31, 2022     |
 
-### GoodData Platform
+### GoodData Legacy
 
-GoodData Platform users must stay on GoodData.UI version 9, do not update to version 10 or higher. From version 10 onwards, the GoodData.UI SDK only supports GoodData Cloud and GoodData.CN.
+GoodData Legacy users must stay on GoodData.UI version 9, do not update to version 10 or higher. From version 10 onwards, the GoodData.UI SDK only supports GoodData Cloud and GoodData.CN.
 
 | Major Version | Status              | GA              | EOD               | EOS               |
 | :------------ | :------------------ | :-------------- | :---------------- | :---------------- |

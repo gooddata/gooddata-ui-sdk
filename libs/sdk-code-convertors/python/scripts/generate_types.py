@@ -79,6 +79,21 @@ def post_process(source: str) -> str:
     insert_pos = source.index("\n", last_import + 1) + 1
     source = source[:insert_pos] + "\n" + all_block + source[insert_pos:]
 
+    # Deduplicate Literal values. The narrowed JSON Schema repeats enum values
+    # across oneOf branches and datamodel-code-generator concatenates them,
+    # producing e.g. Literal['a', 'b', 'a', 'b'] instead of Literal['a', 'b'].
+    source = re.sub(
+        r"Literal\[([^\]]+)\]",
+        lambda m: "Literal[{}]".format(
+            ", ".join(
+                dict.fromkeys(
+                    v for v in (s.strip() for s in m.group(1).split(",")) if v
+                )
+            )
+        ),
+        source,
+    )
+
     # Embed schema hash so a Node.js check can detect staleness without Python.
     schema_hash = hashlib.sha256(Path(SCHEMA_PATH).read_bytes()).hexdigest()
     header = COPYRIGHT_HEADER + f"{SCHEMA_HASH_PREFIX}{schema_hash}\n"

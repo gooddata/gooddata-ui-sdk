@@ -200,6 +200,7 @@ export type IChatConversationErrorContent = {
     type: "error";
     message: string;
     code?: number;
+    traceId?: string;
 };
 
 // @public

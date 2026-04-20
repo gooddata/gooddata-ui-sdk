@@ -407,10 +407,11 @@
             "shouldPublish": false
         },
         {
-            "packageName": "@gooddata/e2e-utils",
-            "projectFolder": "libs/e2e-utils",
+            "packageName": "@gooddata/sdk-e2e-utils",
+            "projectFolder": "libs/sdk-e2e-utils",
             "reviewCategory": "production",
-            "shouldPublish": false
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         },
         {
             "packageName": "@gooddata/sdk-ui-tests-e2e",

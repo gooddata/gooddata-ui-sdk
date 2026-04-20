@@ -4,6 +4,7 @@
 
 export { authHeader, injectAuthHeader } from "./auth.js";
 export {
+    type IWorkspaceIdMapping,
     loadMappings,
     resetMappings,
     resetScenarios,
@@ -14,6 +15,8 @@ export {
     snapshotAndSaveRecording,
 } from "./goodmock.js";
 export {
+    type BaseTestArgs,
+    type BaseWorkerArgs,
     type ICreateTestOptions,
     type IDescribeFunction,
     type IE2eTest,

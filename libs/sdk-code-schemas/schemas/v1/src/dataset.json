@@ -152,6 +152,11 @@
                 "precedence": {
                     "type": "number",
                     "description": "An optional precedence value for the dataset (whole positive number)."
+                },
+                "dataset_type": {
+                    "type": "string",
+                    "enum": ["standard", "auxiliary"],
+                    "description": "An optional dataset type. Standard datasets have direct data mapping. Auxiliary datasets are helper datasets without data mapping. Defaults to standard."
                 }
             },
             "$semantic": [
