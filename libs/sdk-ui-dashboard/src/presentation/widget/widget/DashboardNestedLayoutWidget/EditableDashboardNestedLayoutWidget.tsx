@@ -6,7 +6,6 @@ import { FormattedMessage } from "react-intl";
 import { type IDashboardLayoutContainerDirection } from "@gooddata/sdk-model";
 import { IconSmallDragHandle } from "@gooddata/sdk-ui-kit";
 
-import { Toolbar } from "./Toolbar.js";
 import {
     eagerRemoveSectionItemByWidgetRef,
     toggleLayoutDirection,
@@ -24,6 +23,7 @@ import { DashboardItem } from "../../../presentationComponents/DashboardItems/Da
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
 import { type IDashboardLayoutProps } from "../../dashboardLayout/types.js";
+import { Toolbar } from "./Toolbar.js";
 
 /**
  * @internal

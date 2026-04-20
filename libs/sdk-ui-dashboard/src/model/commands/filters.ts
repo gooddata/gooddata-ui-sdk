@@ -33,8 +33,8 @@ import {
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardCommand } from "./base.js";
 import { type IDashboardFilter } from "../../types.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload type for {@link ChangeDateFilterSelection} command.

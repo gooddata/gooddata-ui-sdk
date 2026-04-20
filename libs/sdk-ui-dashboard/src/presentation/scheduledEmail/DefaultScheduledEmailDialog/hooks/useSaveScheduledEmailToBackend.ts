@@ -19,11 +19,11 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
-import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectEnableAutomationFilterContext } from "../../../../model/store/config/configSelectors.js";
 import { type IScheduledEmailDialogProps } from "../../types.js";
+import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
+import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,

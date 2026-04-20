@@ -15,7 +15,6 @@ import {
     deleteTestUser,
     generateRandomId,
     getWorkspaceId,
-    mockFeatureHub,
     setEarlyAccess,
     switchToUser,
     visit,
@@ -23,7 +22,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Share Dashboard To Everyone", "shareDashboardToEveryone", () => {

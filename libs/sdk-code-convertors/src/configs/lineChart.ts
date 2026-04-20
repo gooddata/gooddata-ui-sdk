@@ -2,6 +2,7 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
+import { loadColorMapping, saveColorMapping } from "../utils/configUtils.js";
 import { type ColorMapping, type PointShapeSymbol } from "./types.js";
 import {
     type ConfigDefaults,
@@ -10,7 +11,6 @@ import {
     loadConfig,
     saveConfigObject,
 } from "./utils.js";
-import { loadColorMapping, saveColorMapping } from "../utils/configUtils.js";
 
 type DefaultProperties = {
     colorMapping: Array<ColorMapping>;

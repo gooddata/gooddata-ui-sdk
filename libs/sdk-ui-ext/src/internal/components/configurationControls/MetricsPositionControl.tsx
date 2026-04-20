@@ -1,13 +1,13 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
-import { ConfigSubsection } from "./ConfigSubsection.js";
-import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { metricsPositionDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { ConfigSubsection } from "./ConfigSubsection.js";
+import { DropdownControl } from "./DropdownControl.js";
 
 export interface IMetricsPositionControlProps {
     pushData?: (data: any) => any;

@@ -21,17 +21,6 @@ import {
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
 
-import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
-import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
-import { type IDashboardLayoutWidgetRenderProps } from "./DefaultDashboardLayoutRenderer/interfaces.js";
-import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
-import { getDashboardLayoutItemHeightForRatioAndScreen } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
-import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
-import { useShouldShowRowEndHotspot } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
-import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
-import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
-import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
-import { getRefsForItem, getRefsForSection } from "./refs.js";
 import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../_staging/dashboard/flexibleLayout/config.js";
 import { type IDashboardLayoutItemFacade } from "../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
@@ -72,6 +61,17 @@ import { useDashboardDrag } from "../dragAndDrop/useDashboardDrag.js";
 import { useWidgetExportData } from "../export/useExportData.js";
 import { DashboardWidget } from "../widget/widget/DashboardWidget.js";
 import { type IDashboardWidgetProps } from "../widget/widget/types.js";
+import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
+import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
+import { type IDashboardLayoutWidgetRenderProps } from "./DefaultDashboardLayoutRenderer/interfaces.js";
+import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
+import { getDashboardLayoutItemHeightForRatioAndScreen } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
+import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
+import { useShouldShowRowEndHotspot } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
+import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
+import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
+import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
+import { getRefsForItem, getRefsForSection } from "./refs.js";
 
 function logInvalidWidth(
     isValid: boolean,

@@ -11,13 +11,13 @@ import {
     isResultTotalHeader,
 } from "@gooddata/sdk-model";
 
-import { type LeafDataCol, type TransposedMeasureDataCol, isScopeCol } from "./tableDescriptorTypes.js";
 import {
     type ColumnLocator,
     type IAttributeColumnLocator,
     type IMeasureColumnLocator,
     type ITotalColumnLocator,
 } from "../../columnWidths.js";
+import { type LeafDataCol, type TransposedMeasureDataCol, isScopeCol } from "./tableDescriptorTypes.js";
 
 function createAttributeLocator(
     descriptor: IAttributeDescriptor | undefined,

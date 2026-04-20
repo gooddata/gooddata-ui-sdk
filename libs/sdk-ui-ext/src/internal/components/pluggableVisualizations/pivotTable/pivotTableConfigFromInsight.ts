@@ -1,12 +1,13 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { type IInsightDefinition, insightProperties } from "@gooddata/sdk-model";
 import { type IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
 
-import { createPivotTableConfig } from "./PluggablePivotTable.js";
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { getColumnWidthsFromProperties } from "../../../utils/propertiesHelper.js";
+import { createPivotTableConfig } from "./PluggablePivotTable.js";
 
 export function pivotTableConfigFromInsight(
     insight: IInsightDefinition,

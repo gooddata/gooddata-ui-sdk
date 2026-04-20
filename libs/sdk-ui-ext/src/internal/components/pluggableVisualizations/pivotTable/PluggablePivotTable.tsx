@@ -35,17 +35,6 @@ import {
     pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 
-import {
-    adaptReferencePointSortItemsToPivotTable,
-    addDefaultSort,
-    getSanitizedSortItems,
-    sanitizePivotTableSorts,
-} from "./sortItemsHelpers.js";
-import { removeInvalidTotals } from "./totalsHelpers.js";
-import {
-    adaptMdObjectWidthItemsToPivotTable,
-    adaptReferencePointWidthItemsToPivotTable,
-} from "./widthItemsHelpers.js";
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -94,6 +83,17 @@ import {
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
 } from "../drillDownUtil.js";
+import {
+    adaptReferencePointSortItemsToPivotTable,
+    addDefaultSort,
+    getSanitizedSortItems,
+    sanitizePivotTableSorts,
+} from "./sortItemsHelpers.js";
+import { removeInvalidTotals } from "./totalsHelpers.js";
+import {
+    adaptMdObjectWidthItemsToPivotTable,
+    adaptReferencePointWidthItemsToPivotTable,
+} from "./widthItemsHelpers.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

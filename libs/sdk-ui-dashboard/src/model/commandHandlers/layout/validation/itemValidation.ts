@@ -23,7 +23,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { type IItemResolutionResult } from "./stashValidation.js";
 import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { type IDashboardCommand } from "../../../commands/base.js";
@@ -47,6 +46,7 @@ import {
     validateDatasetForKpiWidgetDateFilter,
     validateDatasetForRichTextWidgetDateFilter,
 } from "../../widgets/validation/filterValidation.js";
+import { type IItemResolutionResult } from "./stashValidation.js";
 
 function normalizeItems(
     items: ExtendedDashboardItem[],

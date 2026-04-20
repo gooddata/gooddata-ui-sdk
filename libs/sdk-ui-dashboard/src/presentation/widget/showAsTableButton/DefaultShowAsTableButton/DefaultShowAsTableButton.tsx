@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
-import { ShowAsTableButton } from "./ShowAsTableButton.js";
 import { type IShowAsTableButtonProps } from "../types.js";
+import { ShowAsTableButton } from "./ShowAsTableButton.js";
 
 /**
  * @internal

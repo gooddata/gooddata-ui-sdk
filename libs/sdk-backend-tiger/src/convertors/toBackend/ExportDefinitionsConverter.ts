@@ -25,10 +25,10 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 
+import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 import { convertAttribute } from "./afm/AttributeConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
-import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,

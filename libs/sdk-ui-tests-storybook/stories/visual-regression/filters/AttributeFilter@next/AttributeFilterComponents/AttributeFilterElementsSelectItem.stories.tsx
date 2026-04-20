@@ -10,7 +10,6 @@ import { AttributeFilterElementsSelectItem } from "@gooddata/sdk-ui-filters";
 
 import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const item: IAttributeElement = {

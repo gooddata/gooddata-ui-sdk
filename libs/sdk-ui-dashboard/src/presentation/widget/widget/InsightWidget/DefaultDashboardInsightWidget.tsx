@@ -9,10 +9,6 @@ import { type IInsight, insightVisualizationType, widgetTitle } from "@gooddata/
 import { type VisType } from "@gooddata/sdk-ui";
 import { useId } from "@gooddata/sdk-ui-kit";
 
-import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
-import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
-import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
-import { useInsightMenu } from "./useInsightMenu.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useDashboardAlerts } from "../../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
@@ -37,6 +33,10 @@ import {
 } from "../../insight/insightToTable.js";
 import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
+import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
+import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
+import { useInsightMenu } from "./useInsightMenu.js";
 
 export function DefaultDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
     return <DashboardWidgetInsightGuard {...props} Component={DefaultDashboardInsightWidgetCore} />;

@@ -4,8 +4,8 @@ import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type GeoChartShapeType } from "@gooddata/sdk-ui-geo";
 
-import { getItemsCount } from "./bucketHelper.js";
 import { type IBucketOfFun } from "../interfaces/Visualization.js";
+import { getItemsCount } from "./bucketHelper.js";
 
 function isPushpinIconShape(shapeType: GeoChartShapeType = "circle"): boolean {
     return shapeType === "iconByValue" || shapeType === "oneIcon";

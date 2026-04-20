@@ -11,9 +11,9 @@ import {
     getColorsPreviewFromTheme,
 } from "@gooddata/sdk-ui-kit";
 
-import { customThemeItems } from "./itemsMock.js";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+import { customThemeItems } from "./itemsMock.js";
 
 const emptyMessage = () => (
     <div>

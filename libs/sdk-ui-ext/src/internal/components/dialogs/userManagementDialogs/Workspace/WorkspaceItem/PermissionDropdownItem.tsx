@@ -1,13 +1,13 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
+import { type IPermissionsItem, type WorkspacePermission } from "../../types.js";
 import { getPermissionTitle } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
-import { type IPermissionsItem, type WorkspacePermission } from "../../types.js";
 
 interface IPermissionItemProps {
     permission: IPermissionsItem;

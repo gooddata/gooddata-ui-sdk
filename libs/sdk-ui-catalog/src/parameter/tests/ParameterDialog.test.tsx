@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import type { PropsWithChildren } from "react";
-
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import type { PropsWithChildren } from "react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";

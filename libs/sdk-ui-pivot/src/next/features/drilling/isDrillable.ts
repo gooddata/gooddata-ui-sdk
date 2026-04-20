@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type DataViewFacade,
@@ -9,13 +9,13 @@ import {
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
+import { type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
+import { type AgGridRowData } from "../../types/internal.js";
 import {
     extractAllColumnMappingHeaders,
     extractAllRowMeasureMappingHeaders,
     extractRowMappingHeadersAtPosition,
 } from "./headerMapping.js";
-import { type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
-import { type AgGridRowData } from "../../types/internal.js";
 
 /**
  * Extracts headers for drill intersection for a cell

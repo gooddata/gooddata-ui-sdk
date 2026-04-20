@@ -2,8 +2,8 @@
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import { type IDashboardCommand } from "./base.js";
 import { type IWidgetFilterOperation } from "../types/widgetTypes.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link IChangeRichTextWidgetContent} command.

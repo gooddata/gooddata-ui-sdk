@@ -2,9 +2,9 @@
 
 import { useIntl } from "react-intl";
 
-import { ParameterDetail } from "./ParameterDetail.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectDashboardId } from "../../../../../model/store/meta/metaSelectors.js";
+import { ParameterDetail } from "./ParameterDetail.js";
 
 interface IIdentifierDetailProps {
     title: string;

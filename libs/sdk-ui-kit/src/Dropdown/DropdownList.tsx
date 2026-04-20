@@ -14,7 +14,6 @@ import {
 import cx from "classnames";
 import { type WrappedComponentProps, injectIntl } from "react-intl";
 
-import { DropdownTabs } from "./DropdownTabs.js";
 import {
     type IUiPagedVirtualListSkeletonItemProps,
     UiPagedVirtualList,
@@ -30,6 +29,7 @@ import { NoData } from "../NoData/NoData.js";
 import { type ITab } from "../Tabs/Tabs.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { isTypingKey } from "../utils/events.js";
+import { DropdownTabs } from "./DropdownTabs.js";
 
 /**
  * @internal

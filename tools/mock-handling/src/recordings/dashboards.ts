@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import fs from "fs";
 import path from "path";
@@ -6,11 +6,11 @@ import path from "path";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
-import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 import { DataRecorderError } from "../base/types.js";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 import { logError } from "../cli/loggers.js";
 import { RecordingFiles } from "../interface.js";
+import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 
 //
 // Public API

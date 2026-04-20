@@ -6,13 +6,13 @@ import { type IAutomationMetadataObject, type IWidget } from "@gooddata/sdk-mode
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardAlertsCommands } from "./useDashboardAlertsCommands.js";
 import { messages } from "../../../locales.js";
 import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectIsAlertingManagementDialogContext } from "../../store/ui/uiSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
+import { useDashboardAlertsCommands } from "./useDashboardAlertsCommands.js";
 
 /**
  * @internal

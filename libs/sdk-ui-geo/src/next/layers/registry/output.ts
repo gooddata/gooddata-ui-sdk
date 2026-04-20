@@ -1,7 +1,7 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import type { IGeoLayerOutput } from "./adapterTypes.js";
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
+import type { IGeoLayerOutput } from "./adapterTypes.js";
 
 /**
  * Converts loaded layer data into adapter output shape.

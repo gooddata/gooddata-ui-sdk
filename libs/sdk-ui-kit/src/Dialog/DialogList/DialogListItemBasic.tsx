@@ -6,10 +6,10 @@ import cx from "classnames";
 
 import { simplifyText } from "@gooddata/util";
 
-import { type IDialogListItemComponentProps } from "./typings.js";
 import { Bubble } from "../../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger.js";
 import { ShortenedText } from "../../ShortenedText/ShortenedText.js";
+import { type IDialogListItemComponentProps } from "./typings.js";
 
 const ICON_TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 10, y: 0 } },

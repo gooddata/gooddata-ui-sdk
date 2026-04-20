@@ -1,12 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { getViewportOptions } from "./viewportPresets.js";
 import type { IMapFacade, LngLatBoundsLike, LngLatLike } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat } from "../../types/common/coordinates.js";
 import { type IMapViewport, type IPushpinMapConfig } from "../../types/map/provider.js";
 import { isLngLatTupleBounds } from "../../utils/guards.js";
 import { normalizeBoundsForShortestPath } from "../runtime/bounds.js";
 import { DEFAULT_BOUNDS_PADDING } from "../runtime/mapConfig.js";
+import { getViewportOptions } from "./viewportPresets.js";
 
 /**
  * Convert GeoJSON bbox array to viewport bounds.

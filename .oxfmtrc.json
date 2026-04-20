@@ -3,7 +3,35 @@
     "printWidth": 110,
     "tabWidth": 4,
     "trailingComma": "all",
-    "experimentalSortPackageJson": true,
+    "sortImports": {
+        "order": "asc",
+        "ignoreCase": true,
+        "newlinesBetween": true,
+        "internalPattern": [],
+        "groups": [
+            "builtin",
+            "react-group",
+            "external",
+            "gooddata-group",
+            "internal",
+            ["parent", "sibling", "index"],
+            "unknown"
+        ],
+        "customGroups": [
+            {
+                "groupName": "react-group",
+                "elementNamePattern": ["react"],
+                "modifiers": ["value"]
+            },
+            {
+                "groupName": "gooddata-group",
+                "elementNamePattern": ["@gooddata/**", "gdc-*"]
+            }
+        ]
+    },
+    "sortPackageJson": {
+        "sortScripts": true
+    },
     "ignorePatterns": [
         "**/*.api.md",
         "**/node_modules/**",

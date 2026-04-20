@@ -1,8 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IChipContentProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
+import { type IChipContentProps } from "./types.js";
 
 const { e } = bem("gd-ui-kit-chip");
 

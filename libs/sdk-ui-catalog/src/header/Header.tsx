@@ -1,7 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
 import type { ReactNode } from "react";
-
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";

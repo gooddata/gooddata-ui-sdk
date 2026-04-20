@@ -2,7 +2,6 @@
 
 import { type ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 
-import { SankeyChartWithMeasureAndAttributeFrom, SankeyChartWithMeasureAttributeFromAndTo } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
@@ -12,6 +11,7 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendForceEnabledCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { SankeyChartWithMeasureAndAttributeFrom, SankeyChartWithMeasureAttributeFromAndTo } from "./base.js";
 
 const legendScenarios = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

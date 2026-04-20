@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
@@ -15,8 +15,8 @@ import {
 } from "@gooddata/sdk-model";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
-import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures.js";
 import { type IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
+import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures.js";
 
 export const SimpleDashboardIdentifier = "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0";
 export const SimpleDashboardWithReferences = ReferenceRecordings.Recordings.metadata?.dashboards?.[

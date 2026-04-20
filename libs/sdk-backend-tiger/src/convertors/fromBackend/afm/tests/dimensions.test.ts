@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -13,8 +13,8 @@ import {
     newTotal,
 } from "@gooddata/sdk-model";
 
-import { mockDimensions, mockGeoAreaDimensions, mockMultipleDimensions } from "./dimensions.fixture.js";
 import { transformResultDimensions } from "../dimensions.js";
+import { mockDimensions, mockGeoAreaDimensions, mockMultipleDimensions } from "./dimensions.fixture.js";
 
 describe("transformResultDimensions", () => {
     it("should fill in uris and refs for attribute descriptors", () => {

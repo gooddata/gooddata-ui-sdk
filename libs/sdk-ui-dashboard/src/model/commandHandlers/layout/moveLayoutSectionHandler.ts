@@ -3,8 +3,6 @@
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation.js";
 import {
     areLayoutPathsEqual,
     findSection,
@@ -21,6 +19,8 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveRelativeIndex } from "../../utils/arrayOps.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation.js";
 
 type MoveLayoutSectionContext = {
     readonly ctx: DashboardContext;

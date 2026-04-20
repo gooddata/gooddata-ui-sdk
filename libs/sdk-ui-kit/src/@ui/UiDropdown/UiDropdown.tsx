@@ -4,17 +4,17 @@ import { type KeyboardEvent, type RefObject, useCallback, useMemo, useRef } from
 
 import { usePropState } from "@gooddata/sdk-ui";
 
-import {
-    type IUiDropdownBodyRenderProps,
-    type IUiDropdownButtonRenderProps,
-    type IUiDropdownProps,
-} from "./types.js";
 import { isElementTextInput } from "../../utils/domUtilities.js";
 import { useId } from "../../utils/useId.js";
 import { bem } from "../@utils/bem.js";
 import { UiFloatingElement } from "../UiFloatingElement/UiFloatingElement.js";
 import { UiFocusManager } from "../UiFocusManager/UiFocusManager.js";
 import { resolveRef } from "../UiFocusManager/utils.js";
+import {
+    type IUiDropdownBodyRenderProps,
+    type IUiDropdownButtonRenderProps,
+    type IUiDropdownProps,
+} from "./types.js";
 
 const { e } = bem("gd-ui-kit-dropdown");
 

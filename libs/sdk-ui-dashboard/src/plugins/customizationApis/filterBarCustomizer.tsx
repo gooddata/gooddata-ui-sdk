@@ -3,8 +3,6 @@
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { type CustomizerMutationsContext } from "./types.js";
 import {
     type FilterBarComponentProvider,
     type OptionalFilterBarComponentProvider,
@@ -13,6 +11,8 @@ import { HiddenFilterBar } from "../../presentation/filterBar/filterBar/HiddenFi
 import { RenderModeAwareFilterBar } from "../../presentation/filterBar/filterBar/RenderModeAwareFilterBar.js";
 import { type CustomFilterBarComponent } from "../../presentation/filterBar/filterBar/types.js";
 import { type FilterBarRenderingMode, type IFilterBarCustomizer } from "../customizer.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 
 const DefaultFilterBarRendererProvider: FilterBarComponentProvider = () => {
     return RenderModeAwareFilterBar;

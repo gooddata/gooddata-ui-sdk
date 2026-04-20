@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ElementType, type ReactElement, useCallback, useMemo, useState } from "react";
 
@@ -6,11 +6,11 @@ import cx from "classnames";
 import { has, keyBy, take } from "lodash-es";
 import { FormattedMessage, type WrappedComponentProps, injectIntl } from "react-intl";
 
+import { Input } from "../Form/Input.js";
+import { Message } from "../Messages/Message.js";
 import { guidFor } from "./guid.js";
 import { LegacyMultiSelectListWithIntl } from "./LegacyMultiSelectList.js";
 import { LegacyMultiSelectListItem } from "./LegacyMultiSelectListItem.js";
-import { Input } from "../Form/Input.js";
-import { Message } from "../Messages/Message.js";
 
 function NoItemsFound() {
     return (

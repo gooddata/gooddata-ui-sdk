@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useCallback, useContext, useMemo } from "react";
 
@@ -6,14 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import { type AccessGranularPermission, type IUser, type ShareStatus } from "@gooddata/sdk-model";
 
-import { type GranteeItem, isGranularGrantee, isGranularGranteeUser } from "./types.js";
-import { getGranularPermissionFromUserPermissions, getIsGranteeCurrentUser } from "./utils.js";
 import {
     type CurrentUserPermissions,
     type IShareDialogInteractionData,
     type ShareDialogInteractionGranteeData,
     type ShareDialogInteractionType,
 } from "../types.js";
+import { type GranteeItem, isGranularGrantee, isGranularGranteeUser } from "./types.js";
+import { getGranularPermissionFromUserPermissions, getIsGranteeCurrentUser } from "./utils.js";
 
 interface IComponentInteractionData extends ShareDialogInteractionGranteeData {
     type: ShareDialogInteractionType;

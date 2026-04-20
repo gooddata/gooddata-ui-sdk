@@ -12,20 +12,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
-import {
-    expectedInsightDefinitionDrillToRegion,
-    expectedInsightDefinitionWithStackByDrillToDepartment,
-    expectedInsightDefinitionWithStackByDrillToRegion,
-    insightDefinition,
-    insightDefinitionWithStackBy,
-    intersection,
-    targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
-import {
-    createDrillDefinition,
-    createDrillEvent,
-    insightDefinitionToInsight,
-} from "./pluggableVisualizations.test.helpers.js";
 import { AXIS } from "../../../constants/axis.js";
 import {
     COLUMN_CHART_SUPPORTED_PROPERTIES,
@@ -65,6 +51,20 @@ import {
 } from "../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { PluggableColumnChart } from "../columnChart/PluggableColumnChart.js";
+import {
+    expectedInsightDefinitionDrillToRegion,
+    expectedInsightDefinitionWithStackByDrillToDepartment,
+    expectedInsightDefinitionWithStackByDrillToRegion,
+    insightDefinition,
+    insightDefinitionWithStackBy,
+    intersection,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock.js";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    insightDefinitionToInsight,
+} from "./pluggableVisualizations.test.helpers.js";
 
 const { Department, Region } = ReferenceMd;
 

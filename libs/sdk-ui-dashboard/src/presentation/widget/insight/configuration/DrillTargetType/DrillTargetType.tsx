@@ -4,10 +4,10 @@ import { useIntl } from "react-intl";
 
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 
-import { DrillTargetTypeListItem } from "./DrillTargetTypeListItem.js";
 import { DRILL_TARGET_TYPE } from "../../../../drill/types.js";
 import { ButtonWithIcon } from "../ButtonWithIcon.js";
 import { type IDrillTargetType } from "../useDrillTargetTypeItems.js";
+import { DrillTargetTypeListItem } from "./DrillTargetTypeListItem.js";
 
 export interface IDrillTargetProps {
     onSelect: (target: DRILL_TARGET_TYPE) => void;

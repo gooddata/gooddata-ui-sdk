@@ -42,7 +42,6 @@ import {
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
 
-import { getElementTitle, getElementsSecondaryTitles } from "./getElementTitle.js";
 import { type IDrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
@@ -59,6 +58,7 @@ import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelec
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import { getElementTitle, getElementsSecondaryTitles } from "./getElementTitle.js";
 
 interface IDrillToUrlPlaceholderReplacement {
     toBeReplaced: string;

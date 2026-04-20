@@ -12,7 +12,6 @@ import {
     expectChartDataLabels,
     expectSeriesPointHasClass,
     expectTableCellValue,
-    mockFeatureHub,
     selectCrossFiltering,
     visit,
     waitChartLoaded,
@@ -22,7 +21,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 const FIRST_WIDGET = widgetSelector(0, 0);

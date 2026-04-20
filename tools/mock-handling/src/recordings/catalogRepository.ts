@@ -2,10 +2,10 @@
 
 import * as path from "path";
 
-import { CatalogDefinition, CatalogRecording } from "./catalog.js";
-import { type IRecording, isNonNullRecording } from "./common.js";
 import { findFiles } from "../base/utils.js";
 import { logWarn } from "../cli/loggers.js";
+import { CatalogDefinition, CatalogRecording } from "./catalog.js";
+import { type IRecording, isNonNullRecording } from "./common.js";
 
 function createRecording(directory: string): IRecording | null {
     try {

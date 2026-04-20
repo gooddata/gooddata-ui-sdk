@@ -11,11 +11,7 @@ export {
 } from "./configurations/eslint.js";
 export { headersPlugin, headersRules } from "./configurations/headers.js";
 export { importEsmPlugin, importEsmRules } from "./configurations/import-esm.js";
-export {
-    importXRules,
-    importXRulesNativeSupported,
-    importXRulesNativeNotSupported,
-} from "./configurations/import-x.js";
+export { importXRules } from "./configurations/import-x.js";
 export {
     noBarrelFilesOverrides,
     noBarrelFilesPlugin,

@@ -1,17 +1,17 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
 import { type IDashboardLayoutItem, type ScreenSize } from "@gooddata/sdk-model";
 
+import { asLayoutItemPath } from "../../../layout/coordinates.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../config.js";
 import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutItemsFacade,
     type IDashboardLayoutSectionFacade,
 } from "./interfaces.js";
 import { DashboardLayoutItemFacade } from "./item.js";
-import { asLayoutItemPath } from "../../../layout/coordinates.js";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../config.js";
 
 /**
  * @alpha

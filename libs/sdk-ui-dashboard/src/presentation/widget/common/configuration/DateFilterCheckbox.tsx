@@ -8,8 +8,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { type ICatalogDateDataset, type IWidget, type ObjRef, isInsightWidget } from "@gooddata/sdk-model";
 import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
 
-import { getUnrelatedDateDataset } from "./utils.js";
 import { useCurrentDateFilterConfig } from "../../../dragAndDrop/useCurrentDateFilterConfig.js";
+import { getUnrelatedDateDataset } from "./utils.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 

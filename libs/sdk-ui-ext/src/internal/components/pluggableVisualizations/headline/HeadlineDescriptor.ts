@@ -4,12 +4,6 @@ import { type IInsight, type IInsightDefinition, type ISettings } from "@gooddat
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IHeadlineProps } from "@gooddata/sdk-ui-charts";
 
-import {
-    multipleSecondaryMeasuresBucketConversion,
-    singleSecondaryMeasureBucketConversion,
-} from "./headlineBucketConversion.js";
-import { headlineConfigFromInsight } from "./headlineConfigFromInsight.js";
-import { PluggableHeadline } from "./PluggableHeadline.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     type IVisualizationDescriptor,
@@ -29,6 +23,12 @@ import {
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { MAX_VISUALIZATION_HEIGHT } from "../constants.js";
+import {
+    multipleSecondaryMeasuresBucketConversion,
+    singleSecondaryMeasureBucketConversion,
+} from "./headlineBucketConversion.js";
+import { headlineConfigFromInsight } from "./headlineConfigFromInsight.js";
+import { PluggableHeadline } from "./PluggableHeadline.js";
 
 const hasSecondaryMeasure = (insight: IInsightDefinition) =>
     insight.insight.buckets.filter((bucket) => bucket.items.length > 0).length > 1;

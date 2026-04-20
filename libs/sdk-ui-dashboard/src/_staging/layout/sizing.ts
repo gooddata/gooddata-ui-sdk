@@ -38,17 +38,17 @@ import {
     getInsightSizeInfo,
 } from "@gooddata/sdk-ui-ext";
 
+import { type ExtendedDashboardWidget, isCustomWidget } from "../../model/types/layoutTypes.js";
+import { type ILayoutItemPath } from "../../types.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../dashboard/flexibleLayout/config.js";
+import { getLayoutConfiguration } from "../dashboard/flexibleLayout/layoutConfiguration.js";
+import { type ObjRefMap } from "../metadata/objRefMap.js";
 import {
     GRID_ROW_HEIGHT_IN_PX,
     KPI_WITHOUT_COMPARISON_SIZE_INFO,
     KPI_WITH_COMPARISON_SIZE_INFO,
 } from "./constants.js";
 import { findItem, hasParent } from "./coordinates.js";
-import { type ExtendedDashboardWidget, isCustomWidget } from "../../model/types/layoutTypes.js";
-import { type ILayoutItemPath } from "../../types.js";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../dashboard/flexibleLayout/config.js";
-import { getLayoutConfiguration } from "../dashboard/flexibleLayout/layoutConfiguration.js";
-import { type ObjRefMap } from "../metadata/objRefMap.js";
 
 /**
  * @internal

@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IAttribute, type ITotal, bucketSetTotals } from "@gooddata/sdk-model";
 
-import { orderTotals } from "./ordering.js";
 import { addTotalsToDimension } from "../data/executionDefinition/dimensions.js";
 import { type IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
+import { orderTotals } from "./ordering.js";
 
 /**
  * Applies totals to execution definition.

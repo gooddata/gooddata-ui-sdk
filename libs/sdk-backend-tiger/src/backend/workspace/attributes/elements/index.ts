@@ -46,8 +46,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { getRelativeDateFilterShiftedValues } from "./date.js";
-import { mapDashboardDateFilterToDependentDateFilter } from "./dependentDateFilters.js";
 import { TigerCancellationConverter } from "../../../../cancelation/index.js";
 import { createDateValueFormatter } from "../../../../convertors/fromBackend/dateFormatting/dateValueFormatter.js";
 import { createDateValueNormalizer } from "../../../../convertors/fromBackend/dateFormatting/dateValueNormalizer.js";
@@ -56,6 +54,8 @@ import { type DateFormatter } from "../../../../convertors/fromBackend/dateForma
 import { toSdkGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
 import { toLabelQualifier, toObjQualifier } from "../../../../convertors/toBackend/ObjRefConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../../types/index.js";
+import { getRelativeDateFilterShiftedValues } from "./date.js";
+import { mapDashboardDateFilterToDependentDateFilter } from "./dependentDateFilters.js";
 
 const MATCH_OPERATOR_TO_TIGER: Record<MatchFilterOperator, "STARTS_WITH" | "ENDS_WITH" | "CONTAINS"> = {
     startsWith: "STARTS_WITH",

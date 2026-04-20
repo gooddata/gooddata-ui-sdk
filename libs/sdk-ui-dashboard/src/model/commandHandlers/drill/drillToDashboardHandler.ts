@@ -28,13 +28,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    type IConversionResult,
-    convertIntersectionToAttributeFilters,
-    removeIgnoredValuesFromDrillIntersection,
-} from "./common/intersectionUtils.js";
-import { mergeDashboardAndSourceFilters } from "./common/mergeFilters.js";
-import { getIncludedSourceFiltersForDashboard } from "./common/sourceDrillFilters.js";
-import {
     dashboardAttributeFilterItemToAttributeFilter,
     dashboardDateFilterToDateFilterByWidget,
 } from "../../../converters/filterConverters.js";
@@ -63,6 +56,13 @@ import {
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardState } from "../../store/types.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import {
+    type IConversionResult,
+    convertIntersectionToAttributeFilters,
+    removeIgnoredValuesFromDrillIntersection,
+} from "./common/intersectionUtils.js";
+import { mergeDashboardAndSourceFilters } from "./common/mergeFilters.js";
+import { getIncludedSourceFiltersForDashboard } from "./common/sourceDrillFilters.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,

@@ -6,10 +6,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import cx from "classnames";
 import { describe, expect, it, vi } from "vitest";
-
 // oxlint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";
-
 import { type ISyntaxHighlightingInputProps, SyntaxHighlightingInput } from "../SyntaxHighlightingInput.js";
 
 const multiLineValue = "01234\n01234\n01234";

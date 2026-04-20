@@ -4,12 +4,12 @@ import { type KeyboardEvent, type KeyboardEventHandler, memo, useCallback } from
 
 import cx from "classnames";
 
-import { DialogCloseButton } from "./DialogCloseButton.js";
-import { type IDialogBaseProps } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { defaultFocusCheckFn } from "../@ui/UiFocusManager/utils.js";
 import { ScreenReaderToast } from "../Messages/toasts/ToastsCenter.js";
 import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
+import { DialogCloseButton } from "./DialogCloseButton.js";
+import { type IDialogBaseProps } from "./typings.js";
 
 const checkKeyHandler = (event: KeyboardEvent, key: string, handler?: () => void): void => {
     if (event.key !== key || !handler) {

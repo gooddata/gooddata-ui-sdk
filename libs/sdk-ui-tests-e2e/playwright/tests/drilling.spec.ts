@@ -15,7 +15,6 @@ import {
     closeWidgetConfiguration,
     enterEditMode,
     focusWidget,
-    mockFeatureHub,
     openCustomUrlEditor,
     openInteractions,
     removeDrillConfigItem,
@@ -30,7 +29,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Interaction", "drilling", () => {

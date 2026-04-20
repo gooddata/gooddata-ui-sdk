@@ -32,6 +32,7 @@ import {
     type IUserGroup,
 } from "@gooddata/sdk-model";
 
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import {
     convertEntityUserToOrganizationUser,
     convertIncludedUser,
@@ -41,7 +42,6 @@ import {
     convertUser,
     convertUserGroup,
 } from "./fromBackend/userConvertor.js";
-import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 /**
  * Quote a string value for use in RSQL filters using double quotes.

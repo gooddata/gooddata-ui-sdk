@@ -6,9 +6,9 @@ import { useIntl } from "react-intl";
 
 import { type IUiTab, UiTabs } from "@gooddata/sdk-ui-kit";
 
-import { CatalogTabPanel } from "./CatalogTabPanel.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
+import { CatalogTabPanel } from "./CatalogTabPanel.js";
 
 const DEFAULT_TAB_ID = "recommended";
 

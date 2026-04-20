@@ -1,13 +1,5 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { useCrossFiltering } from "./useCrossFiltering.js";
-import { useDrill } from "./useDrill.js";
-import { useDrillDown } from "./useDrillDown.js";
-import { useDrillToAttributeUrl } from "./useDrillToAttributeUrl.js";
-import { useDrillToCustomUrl } from "./useDrillToCustomUrl.js";
-import { useDrillToDashboard } from "./useDrillToDashboard.js";
-import { useDrillToInsight } from "./useDrillToInsight.js";
-import { useDrillToLegacyDashboard } from "./useDrillToLegacyDashboard.js";
 import {
     type OnCrossFiltering,
     type OnCrossFilteringError,
@@ -31,6 +23,14 @@ import {
     type OnKeyDriverAnalysisError,
     type OnKeyDriverAnalysisSuccess,
 } from "../types.js";
+import { useCrossFiltering } from "./useCrossFiltering.js";
+import { useDrill } from "./useDrill.js";
+import { useDrillDown } from "./useDrillDown.js";
+import { useDrillToAttributeUrl } from "./useDrillToAttributeUrl.js";
+import { useDrillToCustomUrl } from "./useDrillToCustomUrl.js";
+import { useDrillToDashboard } from "./useDrillToDashboard.js";
+import { useDrillToInsight } from "./useDrillToInsight.js";
+import { useDrillToLegacyDashboard } from "./useDrillToLegacyDashboard.js";
 import { useKeyDriverAnalysis } from "./useKeyDriverAnalysis.js";
 
 /**

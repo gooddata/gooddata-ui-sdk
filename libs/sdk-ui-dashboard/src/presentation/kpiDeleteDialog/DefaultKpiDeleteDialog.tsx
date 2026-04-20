@@ -6,7 +6,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 
-import { type IKpiDeleteDialogProps } from "./types.js";
 import { eagerRemoveNestedLayoutSectionItem } from "../../model/commands/layout.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { dispatchAndWaitFor } from "../../model/store/_infra/dispatchAndWaitFor.js";
@@ -15,6 +14,7 @@ import {
     selectIsKpiDeleteDialogOpen,
     selectKpiDeleteDialogWidgetLayoutPath,
 } from "../../model/store/ui/uiSelectors.js";
+import { type IKpiDeleteDialogProps } from "./types.js";
 
 /**
  * @internal

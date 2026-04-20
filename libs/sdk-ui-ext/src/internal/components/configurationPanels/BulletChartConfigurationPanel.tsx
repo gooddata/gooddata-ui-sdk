@@ -7,7 +7,6 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -21,6 +20,7 @@ import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { MinMaxControl } from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class BulletChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {

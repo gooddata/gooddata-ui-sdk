@@ -6,11 +6,11 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IAttributeFilter } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type TextFilterController } from "./types.js";
-import { type ITextFilterState, useTextFilterInnerController } from "./useTextFilterInnerController.js";
 import { type AsyncOperationStatus } from "../../AttributeFilterHandler/types/common.js";
 import { type AttributeFilterAvailableSelectionType } from "../selectionTypes.js";
 import { getAvailableTextSelectionTypes } from "../selectionTypeUtils.js";
+import { type TextFilterController } from "./types.js";
+import { type ITextFilterState, useTextFilterInnerController } from "./useTextFilterInnerController.js";
 
 /**
  * @internal

@@ -10,6 +10,7 @@ import {
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 
+import { isCancelError } from "../react/CancelablePromise.js";
 import {
     BadRequestSdkError,
     CancelledSdkError,
@@ -24,7 +25,6 @@ import {
     UnexpectedSdkError,
     isGoodDataSdkError,
 } from "./GoodDataSdkError.js";
-import { isCancelError } from "../react/CancelablePromise.js";
 
 /**
  * Mapping between error code and human readable description of the error.

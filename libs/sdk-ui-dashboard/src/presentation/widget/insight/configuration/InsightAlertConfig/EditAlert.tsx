@@ -21,9 +21,6 @@ import {
     type OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
-import { AlertTitle } from "./AlertTitle.js";
-import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
-import { useEditAlert } from "./hooks/useEditAlert.js";
 import { type IExecutionResultEnvelope } from "../../../../../model/store/executionResults/types.js";
 import { AlertAttributeSelectOld } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelectOld.js";
 import { AlertComparisonOperatorSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
@@ -59,6 +56,9 @@ import {
 import { type AlertAttribute, type AlertMetric } from "../../../../alerting/types.js";
 import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
+import { AlertTitle } from "./AlertTitle.js";
+import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
+import { useEditAlert } from "./hooks/useEditAlert.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 

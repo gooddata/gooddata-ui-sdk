@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent, useCallback } from "react";
 
@@ -15,9 +15,9 @@ import {
     UiLink,
 } from "@gooddata/sdk-ui-kit";
 
+import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
 import { type IAttributeFilterElementsSelectItemProps } from "./types.js";
-import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }];
 

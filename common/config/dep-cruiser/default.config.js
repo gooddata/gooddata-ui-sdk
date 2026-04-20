@@ -1,9 +1,9 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 /**
  * Rules suggested by Dependency Cruiser - keeping all of them as defaults for everyone to use
  */
-const DefaultRules = [
+export const DefaultRules = [
     {
         name: "no-circular",
         severity: "error",
@@ -194,7 +194,7 @@ const DefaultRules = [
     },
 ];
 
-const DefaultOptions = {
+export const DefaultOptions = {
     /*
      * Explicitly do not follow & exclude dependencies to:
      *
@@ -294,15 +294,15 @@ const AvoidNonStandardImports = {
     },
 };
 
-const DefaultSdkRules = [DontImportRootIndex];
-const PublicLibraryRules = [AvoidNonStandardImports];
+export const DefaultSdkRules = [DontImportRootIndex];
+export const PublicLibraryRules = [AvoidNonStandardImports];
 
 /**
  * Creates dep cruiser rule which will ensure that code in particular directory does not import code from anywhere
  * else apart from its own directory tree.
  *
  */
-function isolatedSubmodule(module, dir) {
+export function isolatedSubmodule(module, dir) {
     return {
         name: `${module}-isolated`,
         comment: `${module} in ${dir} should be isolated - it must only import code from its own directory subtree, external packages or from "locales.ts" file.`,
@@ -330,7 +330,7 @@ function isolatedSubmodule(module, dir) {
  *  from anywhere in that directory (including subdirs)
  * @returns {{severity: string, name: string, comment: string, from: {path: *}, to: {pathNot: string}}}
  */
-function moduleWithDependencies(module, dir, deps) {
+export function moduleWithDependencies(module, dir, deps) {
     const allowedDeps = [dir].concat(
         deps.map((dep) => {
             if (dep.endsWith("/*")) {
@@ -366,7 +366,7 @@ function moduleWithDependencies(module, dir, deps) {
  * @param {RegExp|String|RegExp[]|String[]} exceptions exceptions where importing the lodash/get will be allowed
  * @returns
  */
-function noLodashGet(exceptions) {
+export function noLodashGet(exceptions) {
     const from = exceptions ? { pathNot: exceptions } : {};
     return {
         name: "not-to-lodash-get",
@@ -378,13 +378,3 @@ function noLodashGet(exceptions) {
         to: { path: "lodash/get.js", dependencyTypes: ["npm"] },
     };
 }
-
-module.exports = {
-    DefaultRules,
-    DefaultOptions,
-    DefaultSdkRules,
-    PublicLibraryRules,
-    isolatedSubmodule,
-    moduleWithDependencies,
-    noLodashGet,
-};

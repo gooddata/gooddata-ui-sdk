@@ -1,13 +1,13 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type DataValue, type ISeparators, assertNever } from "@gooddata/sdk-model";
 import { type DataViewFacade, type ITableDataValue } from "@gooddata/sdk-ui";
 
-import { getTableData } from "./valueFormatter.js";
 import { type GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
 import { type AgGridRowData } from "../../types/internal.js";
 import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
+import { getTableData } from "./valueFormatter.js";
 
 /**
  * Creates ag-grid row data {@link AgGridRowData} from {@link DataViewFacade}.

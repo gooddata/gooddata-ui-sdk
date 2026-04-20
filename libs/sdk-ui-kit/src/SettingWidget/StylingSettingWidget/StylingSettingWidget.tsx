@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 
@@ -8,7 +8,6 @@ import { useIntl } from "react-intl";
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { StylingSettingBody } from "./StylingSettingBody.js";
 import { Button } from "../../Button/Button.js";
 import {
     type IStylingPickerItem,
@@ -24,6 +23,7 @@ import { Header } from "../Header.js";
 import { Separator } from "../Separator.js";
 import { SettingWidget } from "../SettingWidget.js";
 import { Title } from "../Title.js";
+import { StylingSettingBody } from "./StylingSettingBody.js";
 
 /**
  * @internal

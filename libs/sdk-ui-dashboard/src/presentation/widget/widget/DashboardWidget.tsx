@@ -4,8 +4,6 @@ import { type ReactElement, useMemo } from "react";
 
 import { isDashboardWidget } from "@gooddata/sdk-model";
 
-import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
-import { type CustomDashboardWidgetComponent, type IDashboardWidgetProps } from "./types.js";
 import { extendedWidgetDebugStr } from "../../../model/types/layoutTypes.js";
 import {
     isInitialPlaceholderWidget,
@@ -15,6 +13,8 @@ import {
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/draggableWidget/LoadingDashboardWidget.js";
 import { EmptyDashboardDropZone as FlexibleEmptyDashboardDropZone } from "../../flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
+import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
+import { type CustomDashboardWidgetComponent, type IDashboardWidgetProps } from "./types.js";
 
 function BadWidgetType() {
     return <div>Missing renderer</div>;

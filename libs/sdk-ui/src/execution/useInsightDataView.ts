@@ -11,9 +11,6 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 
-import { useExecutionDataView } from "./useExecutionDataView.js";
-import { useInsight } from "./useInsight.js";
-import { type DataViewWindow } from "./withExecutionLoading.js";
 import { type GoodDataSdkError } from "../base/errors/GoodDataSdkError.js";
 import { useBackendStrict } from "../base/react/BackendContext.js";
 import {
@@ -26,6 +23,9 @@ import {
 } from "../base/react/useCancelablePromiseUtils.js";
 import { useWorkspaceStrict } from "../base/react/WorkspaceContext.js";
 import { type DataViewFacade } from "../base/results/facade.js";
+import { useExecutionDataView } from "./useExecutionDataView.js";
+import { useInsight } from "./useInsight.js";
+import { type DataViewWindow } from "./withExecutionLoading.js";
 
 /**
  * Configuration for {@link useInsightDataView} hook.

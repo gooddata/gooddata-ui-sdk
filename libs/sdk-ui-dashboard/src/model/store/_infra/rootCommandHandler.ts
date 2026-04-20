@@ -3,8 +3,6 @@
 import { type SagaIterator } from "redux-saga";
 import { actionChannel, call, take } from "redux-saga/effects";
 
-import { getDashboardContext } from "./contexts.js";
-import { dispatchDashboardEvent } from "./eventDispatcher.js";
 import { DefaultCommandHandlers } from "../../commandHandlers/index.js";
 import { type IDashboardCommand } from "../../commands/base.js";
 import { type DashboardCommands } from "../../commands/index.js";
@@ -16,6 +14,8 @@ import {
     isDashboardCommandFailed,
 } from "../../events/general.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { getDashboardContext } from "./contexts.js";
+import { dispatchDashboardEvent } from "./eventDispatcher.js";
 
 function* unhandledCommand(ctx: DashboardContext, cmd: IDashboardCommand) {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));

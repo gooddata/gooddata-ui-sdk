@@ -4,12 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import { isAttributeDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 
-import {
-    attributeDescriptor,
-    attributeHeaderItem,
-    attributeHeaderItemWithFormattedName,
-    measureDescriptors,
-} from "./HeaderPredicateFactory.fixtures.js";
 import { isHeaderPredicate } from "../HeaderPredicate.js";
 import { uriMatch } from "../HeaderPredicateFactory.js";
 import {
@@ -21,6 +15,12 @@ import {
     getMappingHeaderUri,
     hasMappingHeaderFormattedName,
 } from "../MappingHeader.js";
+import {
+    attributeDescriptor,
+    attributeHeaderItem,
+    attributeHeaderItemWithFormattedName,
+    measureDescriptors,
+} from "./HeaderPredicateFactory.fixtures.js";
 
 describe("getMappingHeaderLocalIdentifier", () => {
     it("should return localIdentifier from attributeHeader", () => {

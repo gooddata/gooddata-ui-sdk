@@ -7,8 +7,6 @@ import { sync as spawnSync } from "cross-spawn";
 import fse from "fs-extra";
 import tar from "tar";
 
-import { type InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
-import { type IFileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions, type TargetAppLanguage } from "../_base/types.js";
 import {
@@ -18,6 +16,8 @@ import {
     writeAsJsonSync,
 } from "../_base/utils.js";
 import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template.js";
+import { type InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
+import { type IFileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 
 //
 //

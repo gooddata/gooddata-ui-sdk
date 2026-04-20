@@ -7,13 +7,13 @@ import { action } from "storybook/actions";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { EmbedInsightDialogBase, type IReactOptions, type IWebComponentsOptions } from "@gooddata/sdk-ui-kit";
 
-import { code } from "./CodeMock.js";
 import {
     type INeobackstopScenarioConfig,
     type IStoryParameters,
     State,
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+import { code } from "./CodeMock.js";
 
 function EmbedInsightDialogBaseExamples() {
     const [reactOptions, setReactOptions] = useState<IReactOptions>({

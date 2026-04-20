@@ -1,9 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IDashboardMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
-import { MetadataObjectBuilder } from "./factory.js";
 import { type BuilderModifications, builderFactory } from "../builder.js";
+import { MetadataObjectBuilder } from "./factory.js";
 
 /**
  * Dashboard metadata object builder

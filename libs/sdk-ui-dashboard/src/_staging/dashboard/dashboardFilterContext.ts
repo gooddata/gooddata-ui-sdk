@@ -30,8 +30,8 @@ import {
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { createDefaultFilterContext } from "./defaultFilterContext.js";
 import { type IDashboardFilter } from "../../types.js";
+import { createDefaultFilterContext } from "./defaultFilterContext.js";
 
 /**
  * Given a dashboard, this function will inspect its filter context and always return a valid instance of IFilterContextDefinition to use.

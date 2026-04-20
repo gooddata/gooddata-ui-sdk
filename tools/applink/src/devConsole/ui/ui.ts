@@ -3,11 +3,6 @@
 import blessed from "blessed";
 import { difference, isEmpty } from "lodash-es";
 
-import { AppLog } from "./appLog.js";
-import { AppMenu, type AppMenuItem } from "./appMenu.js";
-import { BuildOutput } from "./buildOutput.js";
-import { PackageList } from "./packageList.js";
-import { appLogInfo, appLogWarn, getTerminalSize } from "./utils.js";
 import { type PackageJson, type TargetDependency } from "../../base/types.js";
 import {
     type DcEvent,
@@ -18,6 +13,11 @@ import {
     autobuildToggled,
     packagesChanged,
 } from "../events.js";
+import { AppLog } from "./appLog.js";
+import { AppMenu, type AppMenuItem } from "./appMenu.js";
+import { BuildOutput } from "./buildOutput.js";
+import { PackageList } from "./packageList.js";
+import { appLogInfo, appLogWarn, getTerminalSize } from "./utils.js";
 
 export class TerminalUi implements IEventListener {
     private readonly screen: blessed.Widgets.Screen;

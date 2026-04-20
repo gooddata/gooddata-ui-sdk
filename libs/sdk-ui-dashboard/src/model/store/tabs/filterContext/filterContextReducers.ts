@@ -40,11 +40,11 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { filterContextInitialState } from "./filterContextState.js";
-import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
 import { type IAddDateFilterPayload } from "../../../commands/filters.js";
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
 import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
+import { filterContextInitialState } from "./filterContextState.js";
+import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<ITabsState, A>;
 

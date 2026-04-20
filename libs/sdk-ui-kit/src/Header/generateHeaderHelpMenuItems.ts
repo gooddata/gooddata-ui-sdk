@@ -4,8 +4,8 @@ import { defineMessage } from "react-intl";
 
 import { type ISettings } from "@gooddata/sdk-model";
 
-import { type IHeaderMenuItem, type TUTMContent } from "./typings.js";
 import { generateSupportUrl } from "../utils/featureFlags.js";
+import { type IHeaderMenuItem, type TUTMContent } from "./typings.js";
 
 const HEADER_HELP_MENU_ITEM_ID_DOCUMENTATION = defineMessage({ id: "gs.header.documentation" }).id;
 const HEADER_HELP_MENU_ITEM_ID_UNIVERSITY = defineMessage({ id: "gs.header.university" }).id;

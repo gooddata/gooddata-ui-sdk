@@ -11,7 +11,6 @@ import {
     enterEditMode,
     filterDropdown,
     getTestClassByTitle,
-    mockFeatureHub,
     openAttributeFilter,
     removeAttributeFilter,
     selectFilterConfiguration,
@@ -21,7 +20,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Hide Filters", "hideFilters", () => {

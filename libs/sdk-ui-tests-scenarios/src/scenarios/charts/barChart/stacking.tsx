@@ -4,13 +4,13 @@ import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import {
     BarChartWithArithmeticMeasuresAndViewBy,
     BarChartWithSingleMeasureAndViewBy,
     BarChartWithTwoMeasuresAndTwoViewBy,
 } from "./base.js";
-import { scenariosFor } from "../../../scenarioGroup.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const stacking = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.Stacking)

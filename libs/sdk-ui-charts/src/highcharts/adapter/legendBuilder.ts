@@ -13,12 +13,6 @@ import {
     type LegendOptionsItemType,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import {
-    createDualAxesSeriesMapper,
-    createWaterfallLegendItems,
-    getComboChartSeries,
-    isStackedChart,
-} from "./legendHelpers.js";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
 import {
     isAreaChart,
@@ -34,6 +28,12 @@ import {
 } from "../chartTypes/_util/common.js";
 import { type ChartType } from "../typings/chartType.js";
 import { type IChartOptions, type ISeriesItem, type ISeriesNodeItem } from "../typings/unsafe.js";
+import {
+    createDualAxesSeriesMapper,
+    createWaterfallLegendItems,
+    getComboChartSeries,
+    isStackedChart,
+} from "./legendHelpers.js";
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;

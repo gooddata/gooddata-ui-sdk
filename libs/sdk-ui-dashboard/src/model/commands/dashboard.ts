@@ -12,8 +12,8 @@ import {
 } from "@gooddata/sdk-model";
 import { type ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 
-import { type IDashboardCommand } from "./base.js";
 import { type DashboardConfig } from "../types/commonTypes.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * The initial load of the dashboard will use this correlation id.

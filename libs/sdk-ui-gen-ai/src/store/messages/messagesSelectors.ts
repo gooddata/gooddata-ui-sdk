@@ -4,9 +4,9 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 
-import { messagesSliceName } from "./messagesSlice.js";
 import { type IChatConversationLocalItem, type Message } from "../../model.js";
 import { type RootState } from "../types.js";
+import { messagesSliceName } from "./messagesSlice.js";
 
 const messagesSliceSelector = (state: RootState) => state[messagesSliceName];
 

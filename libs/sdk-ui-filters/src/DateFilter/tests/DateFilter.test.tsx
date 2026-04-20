@@ -4,6 +4,9 @@ import { describe, expect, it, vi } from "vitest";
 
 import { suppressConsole } from "@gooddata/util";
 
+import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
+import { verifyDateFormat } from "../DateFilterCore.js";
+import type { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
 import { AbsoluteForm } from "./AbsoluteForm.js";
 import {
     clickAbsoluteFilter,
@@ -44,9 +47,6 @@ import {
     queryExcludeCurrentPeriodCheckbox,
     setRelativeFormInputs,
 } from "./extendedDateFilters.test.helpers.js";
-import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
-import { verifyDateFormat } from "../DateFilterCore.js";
-import type { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
 
 describe("DateFilter", () => {
     it("should render without crash", () => {

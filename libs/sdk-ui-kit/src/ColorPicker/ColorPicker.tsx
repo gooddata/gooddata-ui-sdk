@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -6,13 +6,13 @@ import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 import { type ColorFormats } from "tinycolor2";
 
+import { Button } from "../Button/Button.js";
 import { ColorPickerMatrix } from "./components/ColorPickerMatrix.js";
 import { ColorsPreview } from "./components/ColorsPreview.js";
 import { HexColorInput } from "./components/HexColorInput.js";
 import { HueColorPicker } from "./components/HueColorPicker.js";
 import { type IColorPickerProps } from "./typings.js";
 import { getHslFromRgbColor, getRgbFromHslColor, isHslColorBlackOrWhite } from "./utils.js";
-import { Button } from "../Button/Button.js";
 
 /**
  * @internal

@@ -2,7 +2,6 @@
 
 import { type ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
 
-import { TreemapWithMeasureViewByAndSegmentBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
@@ -12,6 +11,7 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { TreemapWithMeasureViewByAndSegmentBy } from "./base.js";
 
 const legendScenarios = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

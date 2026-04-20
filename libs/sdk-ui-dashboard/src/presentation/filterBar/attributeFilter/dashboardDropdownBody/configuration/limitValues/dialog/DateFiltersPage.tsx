@@ -9,8 +9,6 @@ import { type ICatalogDateDataset, type IDashboardDateFilter, serializeObjRef } 
 import { DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { PopupHeader } from "./PopupHeader.js";
-import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 import { messages } from "../../../../../../../locales.js";
 import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
 import {
@@ -24,6 +22,8 @@ import {
     useCommonDateItems,
     useDependentDateFilterTitle,
 } from "../shared/limitingItemsHook.js";
+import { PopupHeader } from "./PopupHeader.js";
+import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 
 export interface IDateFiltersPageProps {
     availableDatasets: ICatalogDateDataset[];

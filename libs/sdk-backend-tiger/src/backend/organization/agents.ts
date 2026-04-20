@@ -18,7 +18,6 @@ import {
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
-import { AgentsQuery } from "./agentsQuery.js";
 import { convertAgent } from "../../convertors/fromBackend/AgentConverter.js";
 import { convertAgentSkill } from "../../convertors/fromBackend/agentSkillConvertor.js";
 import {
@@ -26,6 +25,7 @@ import {
     convertAgentToBackend,
 } from "../../convertors/toBackend/AgentConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { AgentsQuery } from "./agentsQuery.js";
 
 const AGENT_INCLUDE: Array<"createdBy" | "modifiedBy" | "userGroups"> = [
     "createdBy",

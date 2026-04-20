@@ -5,7 +5,6 @@ import { type ComponentType } from "react";
 import { type INotification } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, type UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 
-import { type INotificationsPanelHeaderComponentProps } from "./DefaultNotificationsPanelHeader.js";
 import { bem } from "../bem.js";
 import { type INotificationComponentProps } from "../Notification/DefaultNotification.js";
 import { type INotificationsListComponentProps } from "../NotificationsList/DefaultNotificationsList.js";
@@ -13,6 +12,7 @@ import { type INotificationsListEmptyStateComponentProps } from "../Notification
 import { type INotificationsListErrorStateComponentProps } from "../NotificationsList/DefaultNotificationsListErrorState.js";
 import { type INotificationSkeletonItemComponentProps } from "../NotificationsList/DefaultSkeletonItem.js";
 import { type INotificationsPanelView } from "../types.js";
+import { type INotificationsPanelHeaderComponentProps } from "./DefaultNotificationsPanelHeader.js";
 
 const { b } = bem("gd-ui-ext-notifications-panel");
 

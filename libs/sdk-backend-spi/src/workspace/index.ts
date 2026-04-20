@@ -1,5 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { type IPagedResource } from "../common/paging.js";
 import { type IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { type IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { type IWorkspaceAttributesService } from "./attributes/index.js";
@@ -12,19 +13,18 @@ import { type IWorkspaceExportDefinitionsService } from "./exportDefinitions/ind
 import { type IWorkspaceFactsService } from "./facts/index.js";
 import { type IGenAIService } from "./genAI/index.js";
 import { type IWorkspaceInsightsService } from "./insights/index.js";
+import { type IWorkspaceKeyDriverAnalysisService } from "./keyDriverAnalysis/index.js";
 import { type IWorkspaceCatalogFactory } from "./ldm/catalog.js";
 import { type IWorkspaceDatasetsService } from "./ldm/datasets.js";
 import { type IWorkspaceLogicalModelService } from "./ldm/model.js";
 import { type IWorkspaceMeasuresService } from "./measures/index.js";
 import { type IWorkspaceParametersService } from "./parameters/index.js";
 import { type IWorkspacePermissionsService } from "./permissions/index.js";
+import { type IReferencesService } from "./references/index.js";
 import { type IWorkspaceSettingsService } from "./settings/index.js";
 import { type IWorkspaceStylingService } from "./styling/index.js";
 import { type IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { type IWorkspaceUsersQuery } from "./users/index.js";
-import { type IPagedResource } from "../common/paging.js";
-import { type IWorkspaceKeyDriverAnalysisService } from "./keyDriverAnalysis/index.js";
-import { type IReferencesService } from "./references/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.

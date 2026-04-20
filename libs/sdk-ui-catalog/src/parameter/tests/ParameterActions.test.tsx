@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import type { PropsWithChildren } from "react";
-
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import type { PropsWithChildren } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IAnalyticalBackend, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";

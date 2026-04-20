@@ -4,12 +4,6 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
-import {
-    ComboChartViewByDate,
-    ComboChartWithManyDataPoints,
-    ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
-    ComboChartWithTwoMeasuresAndViewBy,
-} from "./base.js";
 import { type UnboundVisProps } from "../../../scenario.js";
 import { type CustomizedScenario, scenariosFor } from "../../../scenarioGroup.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
@@ -21,6 +15,12 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    ComboChartViewByDate,
+    ComboChartWithManyDataPoints,
+    ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
+    ComboChartWithTwoMeasuresAndViewBy,
+} from "./base.js";
 
 export function dataPointCustomizerForComboCharts<T extends IComboChartProps>(
     baseName: string,

@@ -6,7 +6,6 @@ import { call, delay, put, select, takeEvery } from "redux-saga/effects";
 import { type IWorkspaceDashboardsService } from "@gooddata/sdk-backend-spi";
 import { type IDashboardLayout } from "@gooddata/sdk-model";
 
-import { hasMacroInLayout, isDashboardSummaryWorkflowStatus } from "./dashboardSummaryWorkflowUtils.js";
 import { type DashboardSaved } from "../../events/dashboard.js";
 import { newDashboardEventPredicate } from "../../events/index.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
@@ -17,6 +16,7 @@ import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { hasMacroInLayout, isDashboardSummaryWorkflowStatus } from "./dashboardSummaryWorkflowUtils.js";
 
 export function newDashboardSummaryWorkflowWorker() {
     return function* dashboardSummaryWorkflowWorker(ctx: DashboardContext): SagaIterator<void> {

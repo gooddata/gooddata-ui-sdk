@@ -1,10 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { sortBy } from "lodash-es";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels.js";
 import {
     areLabelsStacked,
     getDataLabelAttributes,
@@ -29,6 +28,7 @@ import {
     toNeighbors,
 } from "../../../chartTypes/_chartCreators/helpers.js";
 import { type Axis } from "../../../lib/index.js";
+import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels.js";
 
 const toggleStackedChartLabels = (
     visiblePoints: any[],

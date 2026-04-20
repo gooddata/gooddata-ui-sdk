@@ -7,8 +7,6 @@ import { type IMeasureDescriptor } from "@gooddata/sdk-model";
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
-import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import {
@@ -23,6 +21,8 @@ import {
     isTreemap,
     unwrap,
 } from "../_util/common.js";
+import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
+import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip.js";
 
 const TOOLTIP_PADDING = 10;
 

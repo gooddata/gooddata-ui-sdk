@@ -7,7 +7,6 @@ import { type IntlShape } from "react-intl/src/types.js";
 import { type DashboardDateFilterConfigMode, type ObjRef } from "@gooddata/sdk-model";
 import { type IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
 
-import { DateFilterConfigurationActions } from "./DateFilterConfigurationActions.js";
 import { messages } from "../../../../locales.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectBackendCapabilities } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -16,6 +15,7 @@ import { ConfigModeSelect } from "../../configuration/ConfigurationModeSelect.js
 import { ConfigurationPanelHeader } from "../../configuration/ConfigurationPanelHeader.js";
 import { AttributeTitleRenaming } from "../../configuration/title/AttributeTitleRenaming.js";
 import { useDateFilterConfig } from "../useDateFilterConfig.js";
+import { DateFilterConfigurationActions } from "./DateFilterConfigurationActions.js";
 
 interface IDateFilterConfigurationProps extends IFilterConfigurationProps {
     intl: IntlShape;

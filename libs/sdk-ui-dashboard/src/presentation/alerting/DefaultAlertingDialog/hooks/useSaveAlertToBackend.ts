@@ -12,10 +12,10 @@ import {
     isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { useCreateAlert } from "./useCreateAlert.js";
-import { useUpdateAlert } from "./useUpdateAlert.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectEnableAutomationFilterContext } from "../../../../model/store/config/configSelectors.js";
+import { useCreateAlert } from "./useCreateAlert.js";
+import { useUpdateAlert } from "./useUpdateAlert.js";
 
 /**
  * @internal

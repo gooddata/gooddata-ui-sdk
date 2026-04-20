@@ -40,7 +40,6 @@ import {
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 
-import { convertFilterContextFilters } from "./FilterContextFiltersConverter.js";
 import { convertLayout } from "../../../shared/layoutConverter.js";
 import { convertTigerToSdkFilters } from "../../../shared/storedFilterConverter.js";
 import { convertCertificationFromBackend } from "../../CertificationConverter.js";
@@ -52,6 +51,7 @@ import { convertUserIdentifier } from "../../UsersConverter.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { getFilterContextsFromIncluded } from "../common/filterContextUtils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
+import { convertFilterContextFilters } from "./FilterContextFiltersConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {

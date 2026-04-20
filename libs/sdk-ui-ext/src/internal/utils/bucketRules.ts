@@ -1,21 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty, reduce } from "lodash-es";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import {
-    getAllAttributeItems,
-    getAllItemsByType,
-    getAttributeItemsWithoutStacks,
-    getBucketItems,
-    getItemsCount,
-    getMeasureItems,
-    getStackItems,
-    isDateBucketItem,
-    isMeasureValueFilter,
-    isRankingFilter,
-} from "./bucketHelper.js";
 import { ALL_TIME, ATTRIBUTE, DATE, METRIC } from "../constants/bucket.js";
 import {
     INCREASE_MAX_TABLE_ATTRIBUTES_ITEMS_LIMIT,
@@ -31,6 +19,18 @@ import {
     type IFiltersBucketItem,
     type IReferencePoint,
 } from "../interfaces/Visualization.js";
+import {
+    getAllAttributeItems,
+    getAllItemsByType,
+    getAttributeItemsWithoutStacks,
+    getBucketItems,
+    getItemsCount,
+    getMeasureItems,
+    getStackItems,
+    isDateBucketItem,
+    isMeasureValueFilter,
+    isRankingFilter,
+} from "./bucketHelper.js";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;

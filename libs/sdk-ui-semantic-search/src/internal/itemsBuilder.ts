@@ -4,10 +4,10 @@ import type { IntlShape } from "react-intl";
 
 import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
-import { type SearchTreeViewItem } from "./LeveledSearchTreeView.js";
 import { thresholdFilter } from "../filters/items.filters.js";
 import { getUIPath } from "../utils/getUIPath.js";
 import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
+import { type SearchTreeViewItem } from "./LeveledSearchTreeView.js";
 
 type BuildSearchOverlayItemsProps = {
     intl: IntlShape;

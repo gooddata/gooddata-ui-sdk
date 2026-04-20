@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { computeAreaLegend } from "./computeAreaLegend.js";
-import { computePushpinLegend } from "./computePushpinLegend.js";
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
 import type { EnabledItemsByLayer } from "../../context/GeoLegendContext.js";
 import { getAreaColorStrategy } from "../../layers/area/coloring/colorStrategy.js";
@@ -13,6 +11,8 @@ import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import { type ILegendModel, type ILegendSection } from "../../types/legend/model.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { resolveLayerColorConfig } from "../color/resolveLayerColorConfig.js";
+import { computeAreaLegend } from "./computeAreaLegend.js";
+import { computePushpinLegend } from "./computePushpinLegend.js";
 
 /**
  * Options for aggregating legend sections.

@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
+import { type IColumnTextWrappingItem } from "../../types/textWrapping.js";
 import { createColumnTextWrappingItemForColumnDefinition } from "./createColumnTextWrappingItemForColumnDefinition.js";
 import { isColumnTextWrappingItemMatch } from "./isColumnTextWrappingItemMatch.js";
-import { type IColumnTextWrappingItem } from "../../types/textWrapping.js";
 
 /**
  * Returns {@link IColumnTextWrappingItem} for the provided {@link ITableColumnDefinition} if match is found, undefined otherwise.

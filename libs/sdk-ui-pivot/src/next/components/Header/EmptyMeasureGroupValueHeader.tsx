@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
-import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
+import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
 
 /**
  * Renderer for empty measure group value header.

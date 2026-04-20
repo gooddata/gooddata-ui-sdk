@@ -1,10 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { cloneDeep, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -12,6 +12,7 @@ import { type IExtendedReferencePoint } from "../../interfaces/Visualization.js"
 import { getViewItems, setBucketTitles } from "../bucketHelper.js";
 import { hasMoreThanOneMasterMeasure, hasNoMeasures, hasOneCategory } from "../bucketRules.js";
 import { getTranslation } from "../translations.js";
+import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

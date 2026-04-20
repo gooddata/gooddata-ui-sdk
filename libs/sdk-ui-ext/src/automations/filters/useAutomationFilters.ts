@@ -7,7 +7,6 @@ import { useIntl } from "react-intl";
 import { type AutomationFilterType } from "@gooddata/sdk-backend-spi";
 import { type IUiAsyncTableFilter, type IUiAsyncTableFilterOption } from "@gooddata/sdk-ui-kit";
 
-import { useFilterOptions } from "./FilterOptionsContext.js";
 import { AUTOMATION_FILTER_EXCLUDE_THRESHOLD } from "../constants.js";
 import { formatWorkspaceUserFilterOptions } from "../format.js";
 import { messages } from "../messages.js";
@@ -20,6 +19,7 @@ import {
     type IAutomationFilterQuery,
 } from "../types.js";
 import { useUser } from "../UserContext.js";
+import { useFilterOptions } from "./FilterOptionsContext.js";
 
 //generic filter hook
 

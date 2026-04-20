@@ -30,9 +30,6 @@ import {
     getLegendDetails,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { Chart, type IChartProps } from "./Chart.js";
-import { coalesceNulls, skipLeadingZeros } from "./dataSanitizers.js";
-import { mergePropertiesWithOverride } from "./propertyMerger.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type OnLegendReady } from "../../interfaces/chartProps.js";
 import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
@@ -47,6 +44,9 @@ import {
 import { type HChart, type HighchartsOptions, type XAxisOptions, type YAxisOptions } from "../lib/index.js";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess.js";
 import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../typings/unsafe.js";
+import { Chart, type IChartProps } from "./Chart.js";
+import { coalesceNulls, skipLeadingZeros } from "./dataSanitizers.js";
+import { mergePropertiesWithOverride } from "./propertyMerger.js";
 
 /**
  * @internal

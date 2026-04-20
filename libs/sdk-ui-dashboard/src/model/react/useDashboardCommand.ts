@@ -4,12 +4,12 @@ import { useCallback } from "react";
 
 import { v4 as uuid } from "uuid";
 
-import { useDashboardEventsContext } from "./DashboardEventsContext.js";
-import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 import { type DashboardCommands } from "../commands/index.js";
 import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { type DashboardEventType } from "../events/base.js";
 import { type DashboardEvents } from "../events/index.js";
+import { useDashboardEventsContext } from "./DashboardEventsContext.js";
+import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 
 /**
  * Hook that takes command creator and event handlers and returns function

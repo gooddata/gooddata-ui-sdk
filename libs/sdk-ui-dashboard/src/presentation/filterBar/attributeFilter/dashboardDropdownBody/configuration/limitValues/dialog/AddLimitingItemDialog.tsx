@@ -5,14 +5,14 @@ import { useState } from "react";
 import { type ICatalogDateDataset, type IDashboardDateFilter, type ObjRef } from "@gooddata/sdk-model";
 import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { ActionSelectionPage } from "./ActionSelectionPage.js";
-import { DateFiltersPage } from "./DateFiltersPage.js";
-import { LimitingItemsPage } from "./LimitingItemsPage.js";
-import { ParentFiltersPage } from "./ParentFiltersPage.js";
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../../model/types/attributeFilterTypes.js";
 import { type IDashboardDependentDateFilter } from "../../../../../../../model/types/dateFilterTypes.js";
 import { ConfigurationBubble } from "../../../../../../widget/common/configuration/ConfigurationBubble.js";
 import { type ValuesLimitingItem } from "../../../../types.js";
+import { ActionSelectionPage } from "./ActionSelectionPage.js";
+import { DateFiltersPage } from "./DateFiltersPage.js";
+import { LimitingItemsPage } from "./LimitingItemsPage.js";
+import { ParentFiltersPage } from "./ParentFiltersPage.js";
 
 const ALIGN_POINTS: IAlignPoint[] = [
     {

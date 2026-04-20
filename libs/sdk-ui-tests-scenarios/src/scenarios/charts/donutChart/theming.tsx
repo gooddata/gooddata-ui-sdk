@@ -2,9 +2,9 @@
 
 import { DonutChart, type IDonutChartProps } from "@gooddata/sdk-ui-charts";
 
-import { DonutChartWithSingleMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { DonutChartWithSingleMeasureAndViewBy } from "./base.js";
 
 export const theming = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

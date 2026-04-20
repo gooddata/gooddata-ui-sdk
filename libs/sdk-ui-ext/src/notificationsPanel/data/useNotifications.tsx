@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -6,8 +6,8 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type INotification, isAlertNotification } from "@gooddata/sdk-model";
 import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
 
-import { useFetchNotifications } from "./useFetchNotifications.js";
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
+import { useFetchNotifications } from "./useFetchNotifications.js";
 
 type OrganizationStatus = "pending" | "loading" | "success" | "error";
 type NotificationsStatus = "pending" | "loading" | "success" | "error";

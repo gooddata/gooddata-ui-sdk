@@ -10,6 +10,13 @@ import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { Button, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
 
+import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "../store/chatWindow/allowedRelationshipTypes.js";
+import { settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import { setAllowedRelationshipTypesAction } from "../store/chatWindow/chatWindowSlice.js";
+import { asyncProcessSelector } from "../store/messages/messagesSelectors.js";
+import { cancelAsyncAction, clearThreadAction, loadThreadAction } from "../store/messages/messagesSlice.js";
+import { type RootState } from "../store/types.js";
+import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
 import { useConfig } from "./ConfigContext.js";
 import { useCustomization } from "./CustomizationProvider.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
@@ -17,15 +24,8 @@ import { GlobalError } from "./GlobalError.js";
 import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
 import { useThreadLoading } from "./hooks/useThreadLoading.js";
 import { Input } from "./Input.js";
-import { Messages } from "./Messages.js";
-import { settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
-import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
 import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
-import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "../store/chatWindow/allowedRelationshipTypes.js";
-import { setAllowedRelationshipTypesAction } from "../store/chatWindow/chatWindowSlice.js";
-import { asyncProcessSelector } from "../store/messages/messagesSelectors.js";
-import { cancelAsyncAction, clearThreadAction, loadThreadAction } from "../store/messages/messagesSlice.js";
-import { type RootState } from "../store/types.js";
+import { Messages } from "./Messages.js";
 
 export type GenAIChatOwnProps = {
     autofocus?: boolean;

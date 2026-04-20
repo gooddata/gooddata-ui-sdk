@@ -17,16 +17,6 @@ import {
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import {
-    areFiltersMatchedByIdentifier,
-    getCatalogAttributesByFilters,
-    getCatalogDateDatasetsByFilters,
-    getFilterByCatalogItemRef,
-    getFilterLocalIdentifier,
-    getFilterTitle,
-    getNonHiddenFilters,
-    getNonSelectedFilters,
-} from "./utils.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
     selectCatalogAttributes,
@@ -48,6 +38,16 @@ import {
     selectDateFilterConfigsOverrides,
     selectDateFilterConfigsOverridesByTab,
 } from "../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    areFiltersMatchedByIdentifier,
+    getCatalogAttributesByFilters,
+    getCatalogDateDatasetsByFilters,
+    getFilterByCatalogItemRef,
+    getFilterLocalIdentifier,
+    getFilterTitle,
+    getNonHiddenFilters,
+    getNonSelectedFilters,
+} from "./utils.js";
 
 //
 // Helper functions for computing filter data

@@ -6,8 +6,8 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult.js";
 import { ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS } from "../../../constants.js";
+import { AttributeFilterEmptySearchResult } from "./AttributeFilterEmptySearchResult.js";
 
 const ALIGN_POINTS = [{ align: "cr cl" }];
 const ARROW_OFFSETS = { "cr cl": [10, 0] };

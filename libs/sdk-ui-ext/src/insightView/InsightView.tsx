@@ -30,14 +30,14 @@ import {
 import { withMapboxToken } from "@gooddata/sdk-ui-geo";
 import { withAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 
-import { InsightError } from "./InsightError.js";
-import { InsightRenderer } from "./InsightRenderer.js";
-import { InsightTitle } from "./InsightTitle.js";
 import { colorPaletteDataLoaderFactory } from "../dataLoaders/ColorPaletteDataLoader.js";
 import { insightDataLoaderFactory } from "../dataLoaders/InsightDataLoader.js";
 import { userWorkspaceSettingsDataLoaderFactory } from "../dataLoaders/UserWorkspaceSettingsDataLoader.js";
 import { workspacePermissionsDataLoaderFactory } from "../dataLoaders/WorkspacePermissionsDataLoader.js";
 import { type IInsightViewProps } from "../internal/index.js";
+import { InsightError } from "./InsightError.js";
+import { InsightRenderer } from "./InsightRenderer.js";
+import { InsightTitle } from "./InsightTitle.js";
 
 interface IInsightViewCoreState {
     isVisualizationLoading: boolean;

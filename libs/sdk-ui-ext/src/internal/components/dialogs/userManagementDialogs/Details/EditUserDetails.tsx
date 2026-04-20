@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useEffect } from "react";
 
@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 import { type IUser } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
-import { useUserDetails } from "./detailsHooks.js";
-import { UserDetailsView } from "./UserDetailsView.js";
 import { messages } from "../locales.js";
 import { extractUserName } from "../utils.js";
+import { useUserDetails } from "./detailsHooks.js";
+import { UserDetailsView } from "./UserDetailsView.js";
 
 export interface IEditUserDetailsProps {
     isAdmin: boolean;

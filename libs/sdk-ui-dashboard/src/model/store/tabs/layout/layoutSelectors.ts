@@ -25,7 +25,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { type ILayoutState, type LayoutStash, layoutInitialState } from "./layoutState.js";
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/filterConverters.js";
 import { type IDashboardFilter, type ILayoutCoordinates, type ILayoutItemPath } from "../../../../types.js";
@@ -53,6 +52,7 @@ import { type DashboardSelector } from "../../types.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../tabsState.js";
+import { type ILayoutState, type LayoutStash, layoutInitialState } from "./layoutState.js";
 
 const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {
     if (!tabs || !activeTabId) {

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ComponentType, useCallback, useMemo, useRef, useState } from "react";
 
@@ -9,15 +9,6 @@ import { type INotification, assertNever } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
 import { Overlay, UiFocusManager, alignConfigToAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import {
-    DefaultNotificationsPanel,
-    type INotificationsPanelComponentProps,
-} from "./DefaultNotificationsPanel.js";
-import { type INotificationsPanelButtonComponentProps } from "./DefaultNotificationsPanelButton.js";
-import {
-    DefaultNotificationsPanelHeader,
-    type INotificationsPanelHeaderComponentProps,
-} from "./DefaultNotificationsPanelHeader.js";
 import { OrganizationProvider } from "../@staging/OrganizationContext/OrganizationContext.js";
 import { NotificationsProvider, useNotificationsContext } from "../data/NotificationsContext.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -42,6 +33,15 @@ import {
     type INotificationSkeletonItemComponentProps,
 } from "../NotificationsList/DefaultSkeletonItem.js";
 import { type INotificationsPanelView } from "../types.js";
+import {
+    DefaultNotificationsPanel,
+    type INotificationsPanelComponentProps,
+} from "./DefaultNotificationsPanel.js";
+import { type INotificationsPanelButtonComponentProps } from "./DefaultNotificationsPanelButton.js";
+import {
+    DefaultNotificationsPanelHeader,
+    type INotificationsPanelHeaderComponentProps,
+} from "./DefaultNotificationsPanelHeader.js";
 
 const ALIGN_POINTS = [
     alignConfigToAlignPoint({ triggerAlignPoint: "bottom-right", overlayAlignPoint: "top-right" }),

@@ -3,9 +3,9 @@
 import { type ObjRef } from "@gooddata/sdk-model";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
+import { type DashboardContext } from "../types/commonTypes.js";
 import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
-import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
  * Payload of the {@link IDrillTargetsAdded} event.

@@ -10,7 +10,6 @@ import {
     enterEditMode,
     expectChartDataLabels,
     focusWidget,
-    mockFeatureHub,
     saveDashboard,
     visit,
     waitChartLoaded,
@@ -20,7 +19,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Insights on dashboard", "insightOnDashboard", () => {

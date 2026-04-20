@@ -5,11 +5,11 @@ import { isEmpty } from "lodash-es";
 import { type IBucket, type IMeasure, bucketMeasure, bucketMeasures, bucketsFind } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
+import { type IChartConfig } from "../../interfaces/chartConfig.js";
+import { type IComparison } from "../../interfaces/comparison.js";
 import { type IHeadlineProvider } from "./HeadlineProvider.js";
 import { ComparisonProvider } from "./internal/providers/ComparisonProvider.js";
 import { MultiMeasuresProvider } from "./internal/providers/MultiMeasuresProvider.js";
-import { type IChartConfig } from "../../interfaces/chartConfig.js";
-import { type IComparison } from "../../interfaces/comparison.js";
 
 enum HeadlineType {
     MULTI_MEASURES,

@@ -1,13 +1,13 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
 import cx from "classnames";
 
-import { type ActionType, type ISettingItem } from "./typings.js";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Button } from "../Button/Button.js";
+import { type ActionType, type ISettingItem } from "./typings.js";
 
 const DEFAULT_ALIGN_POINT_TITLE_TOOLTIP = [{ align: "cr cl" }, { align: "bl tl" }, { align: "bc tc" }];
 

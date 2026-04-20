@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useEffect, useRef } from "react";
 
 import { FlexDimensions } from "@gooddata/sdk-ui-kit";
 
-import { DraggableInsightListCore } from "./DraggableInsightListCore.js";
 import { type IWrapInsightListItemWithDragComponent } from "../../../dragAndDrop/types.js";
+import { DraggableInsightListCore } from "./DraggableInsightListCore.js";
 
 interface IDraggableInsightListProps {
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;

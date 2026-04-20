@@ -7,7 +7,6 @@ import cx from "classnames";
 import { type IInsight, type IInsightWidget, widgetRef } from "@gooddata/sdk-model";
 import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 import {
     type IChangeInsightWidgetFilterSettings,
     enableInsightWidgetDateFilter,
@@ -32,6 +31,7 @@ import { useIsDraggingWidget } from "../../../dragAndDrop/draggableWidget/useIsD
 import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
+import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 
 /**
  * @internal

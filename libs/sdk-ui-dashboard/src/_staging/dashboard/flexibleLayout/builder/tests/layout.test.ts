@@ -1,9 +1,13 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { newInsightWidget, newKpiWidget } from "@gooddata/sdk-backend-base";
 import { type IDashboardLayout, type IDashboardLayoutSection, idRef } from "@gooddata/sdk-model";
 
+import { serializeLayoutSectionPath } from "../../../../layout/coordinates.js";
+import { type IDashboardLayoutItemBuilder, type IDashboardLayoutSectionBuilder } from "../interfaces.js";
+import { DashboardLayoutBuilder } from "../layout.js";
 import {
     createEmptyDashboardLayoutBuilder,
     createEmptyDashboardLayoutSectionBuilder,
@@ -11,9 +15,6 @@ import {
     defaultItemXlSize,
     widgetWithNestedLayout,
 } from "./utils.js";
-import { serializeLayoutSectionPath } from "../../../../layout/coordinates.js";
-import { type IDashboardLayoutItemBuilder, type IDashboardLayoutSectionBuilder } from "../interfaces.js";
-import { DashboardLayoutBuilder } from "../layout.js";
 
 describe("DashboardLayoutBuilder", () => {
     const testSection = (title: string): IDashboardLayoutSection<any> => {

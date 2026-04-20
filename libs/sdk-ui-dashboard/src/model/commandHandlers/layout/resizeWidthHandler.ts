@@ -11,9 +11,6 @@ import {
     isDashboardLayout,
 } from "@gooddata/sdk-model";
 
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { getUpdatedSizesOnly } from "./containerWidthSanitization.js";
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/flexibleLayout/config.js";
 import {
     getContainerDirectionAtPath,
@@ -41,6 +38,9 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget, type IItemWithWidth } from "../../types/layoutTypes.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { getUpdatedSizesOnly } from "./containerWidthSanitization.js";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,

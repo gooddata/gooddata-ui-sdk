@@ -8,8 +8,6 @@ import { FormattedMessage } from "react-intl";
 import { insightHasAttributes, insightHasMeasures, insightMeasures } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
-import { type SectionName } from "./sectionName.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -25,6 +23,8 @@ import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { GrandTotalsControl } from "../configurationControls/GrandTotalsControl.js";
 import { MetricsPositionControl } from "../configurationControls/MetricsPositionControl.js";
 import { PagingSection } from "../configurationControls/PagingSection.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
+import { type SectionName } from "./sectionName.js";
 
 export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected override isControlDisabled(sectionName?: SectionName): boolean {

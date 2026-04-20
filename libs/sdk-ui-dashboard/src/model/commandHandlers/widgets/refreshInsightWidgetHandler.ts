@@ -5,8 +5,6 @@ import { call, put, select } from "redux-saga/effects";
 
 import { objRefToString } from "@gooddata/sdk-model";
 
-import { loadInsight } from "./common/loadInsight.js";
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { type IRefreshInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight.js";
@@ -14,6 +12,8 @@ import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { loadInsight } from "./common/loadInsight.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 
 export function* refreshInsightWidgetHandler(
     ctx: DashboardContext,

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo } from "react";
 
@@ -6,6 +6,8 @@ import cx from "classnames";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
+import { Button } from "../../../Button/Button.js";
+import { useIdPrefixed } from "../../../utils/useId.js";
 import {
     GranteeGroupIcon,
     GranteeOwnerRemoveIcon,
@@ -31,8 +33,6 @@ import {
     isGranularGranteeUser,
 } from "./types.js";
 import { getGranteeItemTestId, getGranteeLabel } from "./utils.js";
-import { Button } from "../../../Button/Button.js";
-import { useIdPrefixed } from "../../../utils/useId.js";
 
 interface IGranteeUserItemProps {
     grantee: IGranteeUser;

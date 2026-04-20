@@ -8,7 +8,6 @@ import { isEmpty } from "lodash-es";
 import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { EllipsisText } from "./EllipsisText.js";
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
@@ -16,6 +15,7 @@ import { type ArrowOffsets } from "../Bubble/typings.js";
 import { useMediaQuery } from "../responsive/useMediaQuery.js";
 import { RichText } from "../RichText/RichText.js";
 import { ZOOM_THRESHOLD, useIsZoomed } from "../ZoomContext/ZoomContext.js";
+import { EllipsisText } from "./EllipsisText.js";
 
 /**
  * @internal

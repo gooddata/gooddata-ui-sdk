@@ -34,13 +34,13 @@ import {
     defWithSorting,
 } from "@gooddata/sdk-model";
 
+import { AbstractExecutionFactory } from "../toolkit/execution.js";
 import {
     type CustomBackendConfig,
     type CustomBackendState,
     type DataProviderContext,
     type ResultProviderContext,
 } from "./config.js";
-import { AbstractExecutionFactory } from "../toolkit/execution.js";
 
 /**
  * @internal

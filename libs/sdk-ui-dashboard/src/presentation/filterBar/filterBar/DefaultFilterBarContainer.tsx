@@ -16,12 +16,6 @@ import {
     makeHorizontalKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 
-import { FilterViews } from "./filterViews/FilterViews.js";
-import { useFilterBarState } from "./hooks/useFilterBarState.js";
-import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
-import { type CalculatedRows, useRowsCalculator } from "./hooks/useRowsCalculator.js";
-import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
-import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 import { applyFilterContextWorkingSelection } from "../../../model/commands/filters.js";
 import { isDashboardFilterContextSelectionReset } from "../../../model/events/filters.js";
 import { useDashboardEventsContext } from "../../../model/react/DashboardEventsContext.js";
@@ -38,6 +32,12 @@ import {
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
+import { FilterViews } from "./filterViews/FilterViews.js";
+import { useFilterBarState } from "./hooks/useFilterBarState.js";
+import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
+import { type CalculatedRows, useRowsCalculator } from "./hooks/useRowsCalculator.js";
+import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
+import { useExecutionTimestampMessage } from "./useExecutionTimestampMessage.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

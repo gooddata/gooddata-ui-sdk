@@ -30,9 +30,6 @@ import {
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
-import { DrillDialog } from "./DrillDialog.js";
-import { DrillDialogInsight } from "./DrillDialogInsight.js";
-import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
@@ -50,6 +47,9 @@ import { ThemedLoadingEqualizer } from "../../../../presentationComponents/Theme
 import { useInsightExport } from "../../../common/useInsightExport.js";
 import { useShowAsTable } from "../../../showAsTableButton/useShowAsTable.js";
 import { supportsShowAsTable } from "../../insightToTable.js";
+import { DrillDialog } from "./DrillDialog.js";
+import { DrillDialogInsight } from "./DrillDialogInsight.js";
+import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 
 // Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

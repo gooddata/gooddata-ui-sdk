@@ -8,15 +8,15 @@ import { type VisType } from "@gooddata/sdk-ui";
 import { IconVisualizationSwitcher, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
-import { type IDashboardVisualizationSwitcherProps } from "./types.js";
-import { useExecutionProgress } from "./useExecutionProgress.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
 import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
 import { getVisTypeCssClass } from "../../presentationComponents/DashboardItems/utils.js";
 import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
+import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
+import { type IDashboardVisualizationSwitcherProps } from "./types.js";
+import { useExecutionProgress } from "./useExecutionProgress.js";
 
 /**
  * @internal

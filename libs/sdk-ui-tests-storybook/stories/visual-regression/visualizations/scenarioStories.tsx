@@ -8,11 +8,9 @@ import { withCustomWorkspaceSettings } from "@gooddata/sdk-backend-base";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type ISettings } from "@gooddata/sdk-model";
 import { type ScenarioGroup, allScenarios } from "@gooddata/sdk-ui-tests-scenarios";
-
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
-
 import { StorybookBackend } from "../../_infra/backend.js";
 import { ScreenshotReadyWrapper, createElementCountResolver } from "../../_infra/ScreenshotReadyWrapper.js";
 import { wrapWithTheme } from "../themeWrapper.js";

@@ -1,11 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import {
-    type IPackage,
-    importXRules,
-    importXRulesNativeNotSupported,
-    scopeRules,
-} from "@gooddata/lint-config";
+import { type IPackage, importXRules, scopeRules } from "@gooddata/lint-config";
 
 import type { IDualConfiguration } from "../types.js";
 
@@ -60,9 +55,5 @@ export const importX: IDualConfiguration<"import-x"> = {
         rules: scopeRules(importXRules, "import-x"),
         plugins: { "import-x": importXPlugin },
     },
-    ox: {
-        ...v9Common,
-        rules: scopeRules(importXRulesNativeNotSupported, "import-x"),
-        plugins: { "import-x": importXPlugin },
-    },
+    ox: {},
 };

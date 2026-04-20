@@ -8,6 +8,10 @@ import {
     isTotalDescriptor,
 } from "@gooddata/sdk-model";
 
+import { type IHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
+import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory.js";
+import { type IMappingHeader } from "../headerMatching/MappingHeader.js";
+import { type DataViewFacade } from "../results/facade.js";
 import {
     type ExplicitDrill,
     type IDrillEvent,
@@ -17,10 +21,6 @@ import {
     isDrillableItemIdentifier,
     isDrillableItemUri,
 } from "./DrillEvents.js";
-import { type IHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
-import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory.js";
-import { type IMappingHeader } from "../headerMatching/MappingHeader.js";
-import { type DataViewFacade } from "../results/facade.js";
 
 /**
  * @internal

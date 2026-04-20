@@ -1,9 +1,13 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type ColDef, type ColGroupDef } from "ag-grid-community";
 import cx from "classnames";
 
 import { isResultTotalHeader } from "@gooddata/sdk-model";
 
+import { type ICorePivotTableProps } from "../../publicTypes.js";
+import { COLUMN_ATTRIBUTE_COLUMN, COLUMN_SUBTOTAL, COLUMN_TOTAL } from "../base/constants.js";
+import { type TableFacade } from "../tableFacade.js";
 import { type TableDescriptor } from "./tableDescriptor.js";
 import {
     type AnyCol,
@@ -15,9 +19,6 @@ import {
     isSliceCol,
     isSliceMeasureCol,
 } from "./tableDescriptorTypes.js";
-import { type ICorePivotTableProps } from "../../publicTypes.js";
-import { COLUMN_ATTRIBUTE_COLUMN, COLUMN_SUBTOTAL, COLUMN_TOTAL } from "../base/constants.js";
-import { type TableFacade } from "../tableFacade.js";
 
 export type HeaderClassProvider = (headerClassParams: any) => string;
 

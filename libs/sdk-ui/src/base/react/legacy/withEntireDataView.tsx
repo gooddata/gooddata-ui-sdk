@@ -17,7 +17,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { defFingerprint } from "@gooddata/sdk-model";
 
-import { getAvailableDrillTargets } from "./availableDrillTargets.js";
 import { convertError } from "../../errors/errorHandling.js";
 import {
     ClusteringNotReceivedSdkError,
@@ -33,6 +32,7 @@ import { DataViewFacade } from "../../results/facade.js";
 import { type IExportFunction, type ILoadingState } from "../../vis/Events.js";
 import { createExportErrorFunction, createExportFunction } from "../../vis/export.js";
 import { type IDataVisualizationProps } from "../../vis/VisualizationProps.js";
+import { getAvailableDrillTargets } from "./availableDrillTargets.js";
 
 interface IDataViewLoadState {
     isLoading: boolean;

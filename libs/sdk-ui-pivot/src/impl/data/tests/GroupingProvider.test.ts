@@ -1,6 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
+import { GroupingProviderFactory, type IGroupingProvider } from "../rowGroupingProvider.js";
 import {
     noAttributesTwoMeasures,
     oneAttributeTwoMeasures,
@@ -11,7 +13,6 @@ import {
     twoAttributesTwoMeasuresEvenGroupsSecondPage,
     twoAttributesTwoMeasuresUnEvenGroups,
 } from "./GroupingProvider.fixtures.js";
-import { GroupingProviderFactory, type IGroupingProvider } from "../rowGroupingProvider.js";
 
 function expectBoundaries(groupingProvider: IGroupingProvider, expectedBoundaries: boolean[]) {
     const boundaries = new Array(expectedBoundaries.length)

@@ -14,6 +14,7 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 
+import { withContexts } from "../base/react/withContexts.js";
 import { type IExecuteErrorComponent, type IExecuteLoadingComponent } from "./interfaces.js";
 import { withExecution } from "./withExecution.js";
 import {
@@ -21,7 +22,6 @@ import {
     type IWithLoadingEvents,
     type WithLoadingResult,
 } from "./withExecutionLoading.js";
-import { withContexts } from "../base/react/withContexts.js";
 
 /**
  * Props of the {@link ExecuteInsight} component.

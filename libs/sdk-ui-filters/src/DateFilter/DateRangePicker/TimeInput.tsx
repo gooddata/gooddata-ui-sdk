@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ChangeEvent, type KeyboardEvent, useCallback, useState } from "react";
 
@@ -7,9 +7,9 @@ import moment, { type Moment } from "moment/moment.js";
 
 import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
 
+import { TIME_FORMAT } from "../constants/Platform.js";
 import { InputErrorMessage } from "./InputErrorMessage.js";
 import { type IInputAccessibilityConfig, type ITime } from "./types.js";
-import { TIME_FORMAT } from "../constants/Platform.js";
 
 export interface ITimeInputProps {
     value?: ITime;

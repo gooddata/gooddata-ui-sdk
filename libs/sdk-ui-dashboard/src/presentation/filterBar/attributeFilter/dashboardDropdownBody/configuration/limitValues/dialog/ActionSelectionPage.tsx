@@ -8,11 +8,11 @@ import { useIntl } from "react-intl";
 import { Separator, Typography } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { PopupHeader } from "./PopupHeader.js";
 import { messages } from "../../../../../../../locales.js";
 import { useDashboardSelector } from "../../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
 import { selectIsWhiteLabeled } from "../../../../../../../model/store/config/configSelectors.js";
+import { PopupHeader } from "./PopupHeader.js";
 
 interface IActionProps {
     title: string;

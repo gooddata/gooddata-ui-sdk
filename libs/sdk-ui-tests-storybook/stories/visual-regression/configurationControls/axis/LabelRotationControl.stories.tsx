@@ -58,14 +58,14 @@ YAxis.parameters = {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".gd-button-primary" }],
             delay: {
-                postOperation: 200,
+                postOperation: 500,
             },
         },
         "select-option": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-30_" }],
             delay: {
-                postOperation: 200,
+                postOperation: 500,
             },
         },
     },
@@ -94,14 +94,14 @@ XAxisLocalized.parameters = {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".gd-button-primary" }],
             delay: {
-                postOperation: 200,
+                postOperation: 500,
             },
         },
         "select-option": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-30_" }],
             delay: {
-                postOperation: 200,
+                postOperation: 500,
             },
         },
     },

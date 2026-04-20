@@ -3,6 +3,13 @@
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import {
+    getDataLabelsGdcTotalsVisible,
+    getDataLabelsGdcVisible,
+    hideDataLabel,
+    minimizeDataLabel,
+} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
+import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
+import {
     autohideBarLabels,
     autohideBarTotalLabels,
     handleBarLabelsOutsideChart,
@@ -14,13 +21,6 @@ import {
 } from "./autohideColumnLabels.js";
 import { autohideLabelsOverlappingItsShape } from "./autohideLabelsOverlappingItsShape.js";
 import { autohidePieLabels } from "./autohidePieLabels.js";
-import {
-    getDataLabelsGdcTotalsVisible,
-    getDataLabelsGdcVisible,
-    hideDataLabel,
-    minimizeDataLabel,
-} from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
-import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
 
 export const autohideLabels = (Highcharts: any): void => {
     Highcharts.wrap(

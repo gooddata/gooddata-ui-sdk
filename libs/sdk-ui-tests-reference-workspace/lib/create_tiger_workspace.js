@@ -2,8 +2,8 @@
 // (C) 2021-2026 GoodData Corporation
 
 import fs from "fs";
-import "../scripts/env.js";
 
+import "../scripts/env.js";
 import {
     createTigerWorkspaceWithPrefix,
     log,
@@ -11,7 +11,6 @@ import {
     setTigerWorkspaceLayoutFromFixtures,
 } from "@gooddata/fixtures";
 
-import { retryOperation } from "./utils.js";
 import {
     E2E_SDK_CHILD_WORKSPACE_PREFIX,
     E2E_SDK_WORKSPACE_PREFIX,
@@ -19,6 +18,7 @@ import {
     TIGER_FIXTURE_METADATA_EXTENSIONS,
 } from "../constant.js";
 import { exportCatalogTiger } from "../export_catalog.js";
+import { retryOperation } from "./utils.js";
 
 const childWSOutputFile = TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG["goodsales"];
 

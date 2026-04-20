@@ -2,7 +2,6 @@
 
 import { type IInsight, type IInsightDefinition, insightId, insightTitle } from "@gooddata/sdk-model";
 
-import { configForInsightView, localeForInsightView } from "./insightViewConfig.js";
 import { type IInsightViewProps } from "../../interfaces/InsightView.js";
 import { type IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
 import { getReactEmbeddingCodeGenerator } from "../embeddingCodeGenerator/getReactEmbeddingCodeGenerator.js";
@@ -11,6 +10,7 @@ import {
     type PropsWithMeta,
 } from "../embeddingCodeGenerator/types.js";
 import { removeUseless } from "../removeUseless.js";
+import { configForInsightView, localeForInsightView } from "./insightViewConfig.js";
 
 const getInsightViewSpecification = (
     includeConfiguration = true,

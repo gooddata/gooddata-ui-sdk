@@ -1,12 +1,12 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type CalculationType } from "@gooddata/sdk-ui-charts";
 import { Bubble, BubbleHoverTrigger, type ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
 
-import { CalculationListItemInfo } from "./CalculationListItemInfo.js";
 import { HIDE_DELAY_DEFAULT, SHOW_DELAY_DEFAULT } from "../../../../constants/bubble.js";
+import { CalculationListItemInfo } from "./CalculationListItemInfo.js";
 
 const BUBBLE_INFO_ALIGN_POINTS = [{ align: "cr cl" }];
 const BUBBLE_INFO_ARROW_OFFSETS = { "cr cl": [15, 0] };

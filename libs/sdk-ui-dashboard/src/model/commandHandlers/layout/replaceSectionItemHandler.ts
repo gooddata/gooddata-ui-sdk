@@ -5,13 +5,6 @@ import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import {
-    validateAndNormalizeWidgetItems,
-    validateAndResolveItemFilterSettings,
-} from "./validation/itemValidation.js";
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
-import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
 import {
     findItem,
     findSection,
@@ -31,6 +24,13 @@ import { selectLayout, selectScreen, selectStash } from "../../store/tabs/layout
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import {
+    validateAndNormalizeWidgetItems,
+    validateAndResolveItemFilterSettings,
+} from "./validation/itemValidation.js";
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;

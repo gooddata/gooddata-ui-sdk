@@ -7,11 +7,11 @@ import { useIntl } from "react-intl";
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
 
-import { InsightPicker } from "./InsightPicker.js";
-import { VisualizationsList } from "./VisualizationsList/VisualizationsList.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
+import { InsightPicker } from "./InsightPicker.js";
+import { VisualizationsList } from "./VisualizationsList/VisualizationsList.js";
 
 interface IVisualizationsPageProps {
     visualizations: IInsightWidget[];

@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { type ListCmdActionConfig } from "./actionConfig.js";
 import { type ActionOptions } from "../_base/types.js";
+import { type ListCmdActionConfig } from "./actionConfig.js";
 
 export type ListEntry = {
     identifier: string;

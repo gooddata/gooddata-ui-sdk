@@ -6,7 +6,6 @@ import { FormattedMessage, defineMessages } from "react-intl";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import { Parameter } from "./Parameter.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../../../../model/types/drillTypes.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { ClientIdParameterDetail } from "../ParameterDetails/ClientIdParameterDetail.js";
@@ -16,6 +15,7 @@ import { InsightIdParameterDetail } from "../ParameterDetails/InsightIdParameter
 import { ProjectIdParameterDetail } from "../ParameterDetails/ProjectIdParameterDetail.js";
 import { WidgetIdParameterDetail } from "../ParameterDetails/WidgetIdParameterDetail.js";
 import { type IIdentifierParametersSectionProps } from "../types.js";
+import { Parameter } from "./Parameter.js";
 
 interface IIdentifierParameter {
     titleIntlKey: string;

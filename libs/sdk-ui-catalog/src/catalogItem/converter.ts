@@ -23,6 +23,8 @@ import {
     isParameterMetadataObject,
 } from "@gooddata/sdk-model";
 
+import { mapObjectType } from "../objectType/mapping.js";
+import { parseBackendDate } from "../utils/date.js";
 import type {
     ICatalogItem,
     ICatalogItemAttribute,
@@ -34,8 +36,6 @@ import type {
     ICatalogItemParameter,
     VisualizationType,
 } from "./types.js";
-import { mapObjectType } from "../objectType/mapping.js";
-import { parseBackendDate } from "../utils/date.js";
 
 export function convertEntityToCatalogItem(
     entity:

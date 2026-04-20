@@ -1,11 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
 import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
-import { executionResultsAdapter } from "./executionResultsEntityAdapter.js";
-import { type IExecutionResultEnvelope } from "./types.js";
 import {
     isNonExportableError,
     isNonExportableErrorExceptTooLarge,
@@ -19,6 +17,8 @@ import { selectSettings } from "../config/configSelectors.js";
 import { selectCanExecuteRaw, selectCanExportTabular } from "../permissions/permissionsSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { executionResultsAdapter } from "./executionResultsEntityAdapter.js";
+import { type IExecutionResultEnvelope } from "./types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

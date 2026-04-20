@@ -2,9 +2,9 @@
 
 import { type ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 
-import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 
 export const theming = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

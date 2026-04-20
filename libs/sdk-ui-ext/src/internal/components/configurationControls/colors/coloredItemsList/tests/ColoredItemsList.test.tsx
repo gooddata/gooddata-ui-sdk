@@ -1,14 +1,14 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
-import { inputItemsMock } from "./mock.js";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { ColoredItemsList, type IColoredItemsListProps } from "../ColoredItemsList.js";
+import { inputItemsMock } from "./mock.js";
 
 const defaultProps: IColoredItemsListProps = {
     colorPalette,

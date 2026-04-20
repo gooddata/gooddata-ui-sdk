@@ -8,7 +8,6 @@ import cx from "classnames";
 import { type SortDirection } from "@gooddata/sdk-model";
 import { isEnterKey, isSpaceKey } from "@gooddata/sdk-ui-kit";
 
-import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, type ICommonHeaderParams } from "./HeaderCell.js";
 import { type IMenu } from "../../../publicTypes.js";
 import {
     isEmptyScopeCol,
@@ -17,6 +16,7 @@ import {
     isSliceCol,
     isSliceMeasureCol,
 } from "../tableDescriptorTypes.js";
+import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, type ICommonHeaderParams } from "./HeaderCell.js";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
     className?: string;

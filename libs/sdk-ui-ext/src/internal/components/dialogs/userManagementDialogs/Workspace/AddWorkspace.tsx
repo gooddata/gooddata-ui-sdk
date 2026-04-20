@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -6,10 +6,10 @@ import { useIntl } from "react-intl";
 
 import { BackButton, ConfirmDialogBase, Hyperlink } from "@gooddata/sdk-ui-kit";
 
-import { AddSingleWorkspaceSelect } from "./AddSingleWorkspaceSelect.js";
-import { useAddWorkspace } from "./useAddWorkspace.js";
 import { messages } from "../locales.js";
 import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../types.js";
+import { AddSingleWorkspaceSelect } from "./AddSingleWorkspaceSelect.js";
+import { useAddWorkspace } from "./useAddWorkspace.js";
 import { GranularPermissions } from "./WorkspaceItem/GranularPermissions.js";
 import {
     areRedundantPermissionsPresent,

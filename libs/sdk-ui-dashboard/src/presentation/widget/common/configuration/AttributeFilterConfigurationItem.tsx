@@ -16,9 +16,9 @@ import {
 import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
+import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling.js";
 import { useIsFilterNotApplied } from "./useIsFilterNotApplied.js";
-import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 

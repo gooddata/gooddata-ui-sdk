@@ -4,8 +4,6 @@ import { merge, partial, set } from "lodash-es";
 
 import { type IDrillConfig } from "@gooddata/sdk-ui";
 
-import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers.js";
-import { isPrimaryYAxis } from "./isPrimaryYAxis.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type StackingType } from "../../constants/stacking.js";
 import { type HighchartsOptions, type XAxisOptions, type YAxisOptions } from "../../lib/index.js";
@@ -26,6 +24,8 @@ import {
     isLineChart,
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
+import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers.js";
+import { isPrimaryYAxis } from "./isPrimaryYAxis.js";
 
 /**
  * Set 'normal' stacking config to single series which will overwrite config in 'plotOptions.series'

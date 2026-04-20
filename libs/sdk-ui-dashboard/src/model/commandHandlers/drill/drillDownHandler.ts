@@ -6,7 +6,6 @@ import { put, select } from "redux-saga/effects";
 import { isInsightWidget } from "@gooddata/sdk-model";
 import { getInsightWithAppliedDrillDown } from "@gooddata/sdk-ui-ext";
 
-import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 import { isDrillDownIntersectionIgnoredAttributesForHierarchy } from "../../../_staging/drills/drillingUtils.js";
 import { type IDrillDown } from "../../commands/drill.js";
 import {
@@ -17,6 +16,7 @@ import {
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 
 export function* drillDownHandler(
     ctx: DashboardContext,

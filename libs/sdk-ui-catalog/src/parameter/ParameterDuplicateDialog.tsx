@@ -8,10 +8,10 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { createCopiedParameter, createCopiedParameterCatalogItem } from "./parameterCopy.js";
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
 import { convertParameterToCatalogItem } from "../catalogItem/converter.js";
 import { type ICatalogItemParameter } from "../catalogItem/types.js";
+import { createCopiedParameter, createCopiedParameterCatalogItem } from "./parameterCopy.js";
 
 const ParameterDialog = lazy(() =>
     import("./ParameterDialog.js").then((m) => ({ default: m.ParameterDialog })),

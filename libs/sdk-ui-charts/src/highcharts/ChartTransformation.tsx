@@ -22,6 +22,8 @@ import {
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { type ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IChartConfig } from "../interfaces/chartConfig.js";
+import { type OnLegendReady } from "../interfaces/chartProps.js";
 import { initChartPlugins } from "./adapter/chartPlugins.js";
 import { HighChartsMeasuredRenderer } from "./adapter/HighChartsMeasuredRenderer.js";
 import {
@@ -40,8 +42,6 @@ import {
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
 import { type IChartOptions } from "./typings/unsafe.js";
-import { type IChartConfig } from "../interfaces/chartConfig.js";
-import { type OnLegendReady } from "../interfaces/chartProps.js";
 
 export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
     const childrenRenderer = (contentRect: ContentRect) => (

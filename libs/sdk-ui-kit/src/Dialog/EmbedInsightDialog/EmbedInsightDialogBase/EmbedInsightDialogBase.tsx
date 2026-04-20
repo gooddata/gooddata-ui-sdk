@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -6,6 +6,9 @@ import cx from "classnames";
 import copy from "copy-to-clipboard";
 import { useIntl } from "react-intl";
 
+import { dialogEmbedTabLabels, dialogHeadlineLabels } from "../../../locales.js";
+import { type ITab, Tabs } from "../../../Tabs/Tabs.js";
+import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage.js";
 import { EmbedInsightContent } from "./components/EmbedInsightContent.js";
 import {
@@ -14,9 +17,6 @@ import {
     type IReactOptions,
     type IWebComponentsOptions,
 } from "./types.js";
-import { dialogEmbedTabLabels, dialogHeadlineLabels } from "../../../locales.js";
-import { type ITab, Tabs } from "../../../Tabs/Tabs.js";
-import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 
 /**
  * @internal

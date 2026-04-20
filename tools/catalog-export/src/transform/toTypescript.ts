@@ -11,7 +11,6 @@ import {
 
 import { type MeasureAggregation } from "@gooddata/sdk-model";
 
-import { type TakenNamesSet, createUniqueVariableName, stringToVariableName } from "./titles.js";
 import {
     type Attribute,
     type DateDataSet,
@@ -20,6 +19,7 @@ import {
     type Metric,
     type WorkspaceMetadata,
 } from "../base/types.js";
+import { type TakenNamesSet, createUniqueVariableName, stringToVariableName } from "./titles.js";
 
 export type TypescriptOutput = {
     project: Project;

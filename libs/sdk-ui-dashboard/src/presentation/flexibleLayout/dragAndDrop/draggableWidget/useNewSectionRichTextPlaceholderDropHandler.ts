@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { idRef } from "@gooddata/sdk-model";
 
-import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import { type IChangeInsightWidgetFilterSettings } from "../../../../model/commands/insight.js";
 import { addNestedLayoutSection } from "../../../../model/commands/layout.js";
@@ -17,6 +16,7 @@ import { useDashboardCommandProcessing } from "../../../../model/react/useDashbo
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { type ILayoutSectionPath } from "../../../../types.js";
 import { type BaseDraggableLayoutItemSize } from "../../../dragAndDrop/types.js";
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useNewSectionRichTextPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

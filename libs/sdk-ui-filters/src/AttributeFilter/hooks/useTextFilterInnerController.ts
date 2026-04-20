@@ -6,7 +6,6 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IAttributeFilter, type ObjRef, isMatchAttributeFilter } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, useDebounce } from "@gooddata/sdk-ui";
 
-import { MAX_SELECTION_SIZE } from "./constants.js";
 import { type AsyncOperationStatus } from "../../AttributeFilterHandler/types/common.js";
 import { type AttributeFilterTextSelectionType } from "../selectionTypes.js";
 import {
@@ -17,6 +16,7 @@ import {
     isArbitraryOperator,
     resolveValuesOnTextOperatorChange,
 } from "../textFilterOperatorUtils.js";
+import { MAX_SELECTION_SIZE } from "./constants.js";
 
 /**
  * Snapshot of the text filter working state (operator, values, literal, caseSensitive).

@@ -4,11 +4,8 @@ import { type CSSProperties, useCallback, useEffect, useMemo, useRef } from "rea
 
 import { useDragLayer } from "@evil-internetmann/react-dnd";
 
-import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview.js";
-import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview.js";
-import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPreview.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/zIndex.js";
 import { emptyDOMRect } from "../../constants.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/zIndex.js";
 import { useResizeHandlers } from "../../dragAndDrop/LayoutResizeContext.js";
 import { useScrollCorrection } from "../../dragAndDrop/Resize/useScrollCorrection.js";
 import {
@@ -16,6 +13,9 @@ import {
     type DraggableItemType,
     isDraggableInternalItemType,
 } from "../../dragAndDrop/types.js";
+import { ContentDragPreview } from "./DragLayerPreview/ContentDragPreview.js";
+import { HeightResizerDragPreview } from "./DragLayerPreview/HeightResizerDragPreview.js";
+import { WidthResizerDragPreview } from "./DragLayerPreview/WidthResizerDragPreview.js";
 
 const previewComponentsMap: Record<DraggableInternalItemType, any> = {
     "internal-height-resizer": HeightResizerDragPreview,

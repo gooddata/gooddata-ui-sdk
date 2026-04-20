@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -7,8 +7,8 @@ import { useIntl } from "react-intl";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { type IDialogCloseButtonProps } from "./typings.js";
 import { Button } from "../Button/Button.js";
+import { type IDialogCloseButtonProps } from "./typings.js";
 
 /**
  * @internal

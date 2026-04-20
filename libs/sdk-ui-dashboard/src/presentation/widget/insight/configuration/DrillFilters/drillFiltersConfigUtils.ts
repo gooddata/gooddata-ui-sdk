@@ -29,8 +29,6 @@ import {
 import { type ILocale } from "@gooddata/sdk-ui";
 import { buildMeasureTitles } from "@gooddata/sdk-ui/internal";
 
-import { messages } from "./messages.js";
-import { type IDrillFiltersConfigOption } from "./types.js";
 import { sourceInsightFilterObjRefValue } from "../../../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
 import { canApplyFilterTypeToTarget } from "../../../../../model/commandHandlers/dashboard/common/attributeFilterSelectionTypeCompatibility.js";
@@ -40,6 +38,8 @@ import {
     findDashboardAttributeFilterByIncomingDisplayAsLabel,
     findDashboardAttributeFilterByTargetDisplayAsLabel,
 } from "../../../../../model/utils/filterContextUtils.js";
+import { messages } from "./messages.js";
+import { type IDrillFiltersConfigOption } from "./types.js";
 
 /**
  * Strip filter description suffix baked in by AD

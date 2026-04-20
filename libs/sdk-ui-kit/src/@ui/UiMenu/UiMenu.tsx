@@ -4,12 +4,12 @@ import { type KeyboardEvent, type ReactNode, type RefObject, useEffect, useMemo,
 
 import cx from "classnames";
 
+import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 import { typedUiMenuContextStore } from "./context.js";
 import { useCustomContentKeyNavigation, useKeyNavigation, useUiMenuContextValue } from "./hooks.js";
 import { getContentItem, getSiblingItems } from "./itemUtils.js";
 import { b, e } from "./menuBem.js";
 import { type IUiMenuItemData, type IUiMenuProps } from "./types.js";
-import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 
 function ContentWrapper(props: {
     keyboardNavigationHandler: (event: KeyboardEvent) => void;

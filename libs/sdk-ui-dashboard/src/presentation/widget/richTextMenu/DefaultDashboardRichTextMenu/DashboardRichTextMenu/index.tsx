@@ -4,7 +4,6 @@ import { type Dispatch, type SetStateAction, useState } from "react";
 
 import { Separator } from "@gooddata/sdk-ui-kit";
 
-import { DashboardRichTextMenuContainer } from "./DashboardRichTextMenuContainer.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectRenderMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { type RenderMode } from "../../../../../types.js";
@@ -17,6 +16,7 @@ import {
     type IRichTextMenuItem,
     type IRichTextMenuSubmenu,
 } from "../../types.js";
+import { DashboardRichTextMenuContainer } from "./DashboardRichTextMenuContainer.js";
 
 export function DashboardRichTextMenuBody({
     items,

@@ -1,16 +1,16 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback, useRef, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type IHeaderAccountProps, type IHeaderMenuItem } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { Button } from "../Button/Button.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { isActionKey } from "../utils/events.js";
 import { useIdPrefixed } from "../utils/useId.js";
+import { type IHeaderAccountProps, type IHeaderMenuItem } from "./typings.js";
 
 export function HeaderAccount({
     className = "",

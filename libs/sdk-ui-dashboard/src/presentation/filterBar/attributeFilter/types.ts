@@ -11,10 +11,10 @@ import {
 import type { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
 import { type IDropdownListNoDataRenderProps, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
-import { type IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
 import { type IDashboardAttributeFilterParentItem } from "../../../model/types/attributeFilterTypes.js";
 import { type IDashboardDependentDateFilter } from "../../../model/types/dateFilterTypes.js";
 import type { IFilterBarFilterGroupItem } from "../filterBar/useFiltersWithAddedPlaceholder.js";
+import { type IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
 
 /**
  * @public

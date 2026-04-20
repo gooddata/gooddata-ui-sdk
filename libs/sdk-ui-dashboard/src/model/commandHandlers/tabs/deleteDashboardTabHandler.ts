@@ -3,7 +3,6 @@
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 import { type IDeleteDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
@@ -17,6 +16,7 @@ import { selectAllAnalyticalWidgets } from "../../store/tabs/layout/layoutSelect
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { validateDrills } from "../common/validateDrills.js";
+import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 
 /**
  * @internal

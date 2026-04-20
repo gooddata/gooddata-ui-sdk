@@ -1,7 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { AttributeFilterLoader } from "./loader.js";
-import { type AttributeFilterHandlerConfig } from "./types.js";
 import {
     type IMultiSelectAttributeFilterHandler,
     type InvertableAttributeElementSelection,
@@ -11,6 +9,8 @@ import {
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
 } from "../types/selectionHandler.js";
+import { AttributeFilterLoader } from "./loader.js";
+import { type AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

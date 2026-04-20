@@ -29,8 +29,6 @@ import {
 import { type IDrillEvent, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { type IAlignPoint, Overlay, UiFocusManager, UiMenu } from "@gooddata/sdk-ui-kit";
 
-import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
-import { DrillType, type IDrillSelectContext, type IDrillSelectItem } from "./types.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
@@ -51,6 +49,8 @@ import {
 } from "../utils/drillDownUtils.js";
 import { getDrillToCustomUrlMissingAttributes } from "../utils/drillToCustomUrlUtils.js";
 import { getKdaKeyDriverCombinations, getKeyDriverCombinationItemTitle } from "../utils/kdaUtils.js";
+import { DrillSelectDropdownMenuItem } from "./DrillSelectDropdownMenuItem.js";
+import { DrillType, type IDrillSelectContext, type IDrillSelectItem } from "./types.js";
 
 export interface IDrillSelectDropdownProps extends IDrillSelectContext {
     dropDownAnchorClass: string;

@@ -19,11 +19,11 @@ import {
 } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
+import { getElementCacheKey } from "../AttributeFilterHandler/internal/redux/common/selectors.js";
 import { getSelectionTypeFromFilter } from "./selectionTypeUtils.js";
 import { getOperatorFromFilter, getValuesFromFilter } from "./textFilterOperatorUtils.js";
 import { getTextFilterStateText } from "./textFilterStateSummaryUtils.js";
 import { type IAttributeFilterBaseProps } from "./types.js";
-import { getElementCacheKey } from "../AttributeFilterHandler/internal/redux/common/selectors.js";
 
 /**
  * @internal

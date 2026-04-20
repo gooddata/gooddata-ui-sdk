@@ -6,9 +6,6 @@ import { invoke, isEmpty, set } from "lodash-es";
 import { type ITheme } from "@gooddata/sdk-model";
 import { type ChartType, type IDrillConfig } from "@gooddata/sdk-ui";
 
-import { chartClick } from "./drilldownEventing.js";
-import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
-import { styleVariables } from "./styles/variables.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
     getBackplateLabelColor,
@@ -23,6 +20,9 @@ import { type IChartOptions } from "../../typings/unsafe.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
 import { isOneOfTypes } from "../_util/common.js";
+import { chartClick } from "./drilldownEventing.js";
+import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
+import { styleVariables } from "./styles/variables.js";
 
 const isTouchDevice =
     typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);

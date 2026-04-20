@@ -2,10 +2,6 @@
 
 import { type RefObject, useId, useMemo, useRef, useState } from "react";
 
-import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
-import { useTagsInteractions } from "./interactions.js";
-import { type IUiTagDef, type IUiTagsProps } from "./types.js";
-import { UiTag } from "./UiTag.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
@@ -20,6 +16,10 @@ import {
 } from "../UiCombobox/UiComboboxListItem.js";
 import { UiComboboxPopup } from "../UiCombobox/UiComboboxPopup.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
+import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
+import { useTagsInteractions } from "./interactions.js";
+import { type IUiTagDef, type IUiTagsProps } from "./types.js";
+import { UiTag } from "./UiTag.js";
 
 const { b, e } = bem("gd-ui-kit-tags");
 

@@ -14,9 +14,9 @@ import {
     withEntireDataView,
 } from "@gooddata/sdk-ui";
 
-import { type IRawChartProps, RawChart } from "./RawChart.js";
 import { type ICoreChartProps, type OnLegendReady } from "../../interfaces/chartProps.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
+import { type IRawChartProps, RawChart } from "./RawChart.js";
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disappear.

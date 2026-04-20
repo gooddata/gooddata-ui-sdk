@@ -6,9 +6,9 @@ import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { type IconType, UiButtonSegmentedControl, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { objectType } from "../automation/testIds.js";
 import { OBJECT_TYPE_ORDER, ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
-import { objectType } from "../automation/testIds.js";
 
 const icons: Record<ObjectType, IconType> = {
     [ObjectTypes.DASHBOARD]: "dashboard",

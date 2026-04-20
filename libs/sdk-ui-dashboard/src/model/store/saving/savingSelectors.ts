@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { type SavingState } from "./savingState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { type SavingState } from "./savingState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

@@ -2,7 +2,6 @@
 
 import { BulletChart, type IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
-import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
@@ -12,6 +11,7 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 
 const legendScenarios = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

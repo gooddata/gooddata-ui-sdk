@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type KeyboardEvent, useCallback, useEffect, useRef } from "react";
 
@@ -7,7 +7,6 @@ import { FormattedMessage } from "react-intl";
 
 import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
-import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem.js";
 import { makeMenuKeyboardNavigation } from "../../../../@ui/@utils/keyboardNavigation.js";
 import { withBubble } from "../../../../Bubble/withBubble.js";
 import { ItemsWrapper, Separator } from "../../../../List/MenuList.js";
@@ -21,6 +20,7 @@ import {
     type IGranteePermissionsPossibilities,
     type IGranularGrantee,
 } from "../types.js";
+import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem.js";
 
 interface IGranularPermissionsDropdownBodyProps {
     alignTo: string;

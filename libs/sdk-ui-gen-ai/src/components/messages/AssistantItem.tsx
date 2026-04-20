@@ -3,12 +3,12 @@
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
+import { type IChatConversationLocalItem } from "../../model.js";
+import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 import { AssistantItemFeedback } from "./AssistantItemFeedback.js";
+import { ReasoningIcon } from "./contents/ReasoningIcon.js";
 import { ConversationItemContents } from "./ConversationItemContents.js";
 import { getItemState } from "./itemState.js";
-import { type IChatConversationLocalItem } from "../../model.js";
-import { ReasoningIcon } from "./contents/ReasoningIcon.js";
-import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 
 type AssistantItemProps = {
     group: IChatMessagesGroup;

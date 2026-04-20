@@ -38,8 +38,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { AttributesQuery } from "./attributesQuery.js";
-import { TigerWorkspaceElements } from "./elements/index.js";
 import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import {
     convertAttributeLabels,
@@ -53,6 +51,8 @@ import { getIdOrigin, isInheritedObject } from "../../../convertors/fromBackend/
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { toLabelQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { AttributesQuery } from "./attributesQuery.js";
+import { TigerWorkspaceElements } from "./elements/index.js";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(

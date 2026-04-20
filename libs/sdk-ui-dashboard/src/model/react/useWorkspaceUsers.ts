@@ -1,9 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useEffect } from "react";
 
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import { loadAllWorkspaceUsers } from "../commands/users.js";
 import { selectErrorUsers, selectUsers, selectUsersLoadingStatus } from "../store/users/usersSelectors.js";
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**
  * @internal

@@ -14,7 +14,6 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 
-import { Alerts } from "./components/AlertsList.js";
 import { messages } from "../../../locales.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
@@ -22,6 +21,7 @@ import { selectIsAlertingDialogOpen } from "../../../model/store/ui/uiSelectors.
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";
+import { Alerts } from "./components/AlertsList.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

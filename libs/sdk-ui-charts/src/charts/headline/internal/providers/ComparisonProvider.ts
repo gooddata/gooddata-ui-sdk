@@ -16,11 +16,11 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { AbstractProvider } from "./AbstractProvider.js";
 import { CalculateAs, type IComparison } from "../../../../interfaces/comparison.js";
 import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 import { ComparisonTransformation } from "../transformations/ComparisonTransformation.js";
+import { AbstractProvider } from "./AbstractProvider.js";
 
 const ARITHMETIC_BUCKET_IDENTIFIER = "comparison_virtual_arithmetic_bucket";
 

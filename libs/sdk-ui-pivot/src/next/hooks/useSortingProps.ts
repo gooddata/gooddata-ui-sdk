@@ -7,12 +7,12 @@ import { isEqual } from "lodash-es";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { useSyncSort } from "./sorting/useSyncSort.js";
 import { useColumnDefs } from "../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { getSortModel } from "../features/sorting/agGridSortingApi.js";
 import { sortModelToSortItems } from "../features/sorting/sortModelToSortItems.js";
 import { type AgGridProps } from "../types/agGrid.js";
+import { useSyncSort } from "./sorting/useSyncSort.js";
 
 /**
  * Returns ag-grid props with sorting applied.

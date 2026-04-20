@@ -26,16 +26,6 @@ import {
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
 
-import {
-    createAreaConfiguredBuckets,
-    createAreaSortForSegment,
-    getAreaItems,
-    getColorMeasures,
-    getSegmentItems,
-    hasAreaMinimumData,
-    sanitizeAreaMeasures,
-} from "./geoAreaBucketHelper.js";
-import { buildAreaVisualizationConfig } from "./geoAreaConfigBuilder.js";
 import { BUCKETS } from "../../../constants/bucket.js";
 import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
 import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
@@ -71,6 +61,16 @@ import {
     getGeoVisualizationPropertiesWithFallback,
 } from "../geoCommon/geoVisualizationPropertiesWithFallback.js";
 import { LiveMapViewTracker, createSyncedViewportHandlers } from "../geoCommon/liveMapViewTracking.js";
+import {
+    createAreaConfiguredBuckets,
+    createAreaSortForSegment,
+    getAreaItems,
+    getColorMeasures,
+    getSegmentItems,
+    hasAreaMinimumData,
+    sanitizeAreaMeasures,
+} from "./geoAreaBucketHelper.js";
+import { buildAreaVisualizationConfig } from "./geoAreaConfigBuilder.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 

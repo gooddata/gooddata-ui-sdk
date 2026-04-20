@@ -7,8 +7,8 @@ import {
 } from "@gooddata/api-client-tiger/endpoints/automation";
 import { type INotificationsQuery, type IOrganizationNotificationService } from "@gooddata/sdk-backend-spi";
 
-import { NotificationsQuery } from "./notificationsQuery.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { NotificationsQuery } from "./notificationsQuery.js";
 
 export class OrganizationNotificationService implements IOrganizationNotificationService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

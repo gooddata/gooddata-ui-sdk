@@ -5,7 +5,6 @@ import { action } from "storybook/actions";
 import { SemanticSearch } from "@gooddata/sdk-ui-semantic-search";
 import { SearchOverlay } from "@gooddata/sdk-ui-semantic-search/internal";
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
-
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend.js";
 import {
     type INeobackstopScenarioConfig,

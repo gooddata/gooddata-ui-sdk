@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type WeekStart } from "@gooddata/sdk-model";
 
-import { simpleRecurrenceTypeMappingFn } from "./simpleRecurrenceTypeMappingFn.js";
 import { RECURRENCE_TYPES } from "../constants.js";
+import { simpleRecurrenceTypeMappingFn } from "./simpleRecurrenceTypeMappingFn.js";
 
 describe("simpleRecurrenceTypeMappingFn", () => {
     it.each([

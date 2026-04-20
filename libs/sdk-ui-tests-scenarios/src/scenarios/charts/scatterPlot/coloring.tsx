@@ -3,13 +3,13 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { type IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 
-import { ScatterPlotWithMeasuresAndAttribute, ScatterPlotWithMeasuresAttributeAndSegmentBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette } from "../../_infra/colors.js";
 import { AmountMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { ScatterPlotWithMeasuresAndAttribute, ScatterPlotWithMeasuresAttributeAndSegmentBy } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(...ScenarioGroupNames.Coloring)

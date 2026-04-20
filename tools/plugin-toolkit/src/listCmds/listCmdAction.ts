@@ -1,12 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import columnify from "columnify";
 
-import { type ListCmdActionConfig, getListCmdActionConfig } from "./actionConfig.js";
-import { type ListObjectsFn } from "./types.js";
 import { logInfo, logSuccess } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
+import { type ListCmdActionConfig, getListCmdActionConfig } from "./actionConfig.js";
+import { type ListObjectsFn } from "./types.js";
 
 function printListConfigSummary({ hostname, workspace }: ListCmdActionConfig) {
     logInfo("Everything looks valid. Going to list objects.");

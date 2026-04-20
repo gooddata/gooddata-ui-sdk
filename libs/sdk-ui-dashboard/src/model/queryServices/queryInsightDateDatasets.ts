@@ -20,7 +20,6 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
 import { type CatalogDateAttributeWithDataset } from "../../_staging/catalog/dateAttributeWithDatasetMap.js";
 import {
     sanitizeDateDatasetTitle,
@@ -44,6 +43,7 @@ import {
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
 import { type DashboardState } from "../store/types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
+import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
 
 export const QueryDateDatasetsForInsightService = createCachedQueryService(
     "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS",

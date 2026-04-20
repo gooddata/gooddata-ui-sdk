@@ -2,9 +2,9 @@
 
 import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
-import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 
 export const theming = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

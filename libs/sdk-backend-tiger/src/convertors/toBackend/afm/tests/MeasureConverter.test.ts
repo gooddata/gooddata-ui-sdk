@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -13,8 +13,8 @@ import {
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { invalidMeasureDefinition, invalidObjQualifier } from "./InvalidInputs.fixture.js";
 import { convertMeasure } from "../MeasureConverter.js";
+import { invalidMeasureDefinition, invalidObjQualifier } from "./InvalidInputs.fixture.js";
 
 describe("measure converter", () => {
     const Scenarios: Array<[string, any]> = [

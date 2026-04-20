@@ -2,8 +2,8 @@
 
 import { type ReactElement, useMemo } from "react";
 
-import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 
 /**
  * @internal

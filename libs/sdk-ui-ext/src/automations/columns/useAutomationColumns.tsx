@@ -8,8 +8,6 @@ import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useWorkspace } from "@gooddata/sdk-ui";
 import { type IUiAsyncTableColumn, useAsyncTableResponsiveColumns } from "@gooddata/sdk-ui-kit";
 
-import { AutomationIcon } from "./AutomationIcon.js";
-import { AutomationMenu } from "./AutomationMenu.js";
 import { DEFAULT_COLUMN_WIDTHS } from "../constants.js";
 import {
     formatAttachments,
@@ -21,6 +19,8 @@ import { messages } from "../messages.js";
 import { type AutomationsColumnName, type IUseAutomationColumnsProps } from "../types.js";
 import { useUser } from "../UserContext.js";
 import { getNextRunFromCron, getWidgetId, getWidgetName, getWorkspaceId } from "../utils.js";
+import { AutomationIcon } from "./AutomationIcon.js";
+import { AutomationMenu } from "./AutomationMenu.js";
 export const useAutomationColumns = ({
     type,
     timezone,

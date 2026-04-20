@@ -3,7 +3,6 @@
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableScatterPlot } from "./PluggableScatterPlot.js";
 import {
     type IVisualizationMeta,
     type PluggableVisualizationFactory,
@@ -20,6 +19,7 @@ import {
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import { PluggableScatterPlot } from "./PluggableScatterPlot.js";
 
 export class ScatterPlotDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

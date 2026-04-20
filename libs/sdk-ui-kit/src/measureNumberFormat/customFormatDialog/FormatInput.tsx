@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo, useCallback } from "react";
 
@@ -7,9 +7,9 @@ import { useIntl } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
 
-import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown.js";
 import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
 import { type IFormatTemplate } from "../typings.js";
+import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown.js";
 
 type LanguageState = {
     isInColor: boolean;

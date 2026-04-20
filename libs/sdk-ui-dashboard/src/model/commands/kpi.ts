@@ -8,13 +8,13 @@ import {
     isObjRef,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardCommand } from "./base.js";
 import {
     type IFilterOpReplaceAll,
     type IWidgetDescription,
     type IWidgetFilterOperation,
     type IWidgetHeader,
 } from "../types/widgetTypes.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link IChangeKpiWidgetHeader} command.

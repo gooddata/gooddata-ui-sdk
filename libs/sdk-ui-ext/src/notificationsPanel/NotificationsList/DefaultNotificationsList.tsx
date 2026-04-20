@@ -8,12 +8,12 @@ import { type INotification } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, type UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import { UiPagedVirtualList, useElementSize } from "@gooddata/sdk-ui-kit";
 
-import { type INotificationsListEmptyStateComponentProps } from "./DefaultNotificationsListEmptyState.js";
-import { type INotificationsListErrorStateComponentProps } from "./DefaultNotificationsListErrorState.js";
-import { type INotificationSkeletonItemComponentProps } from "./DefaultSkeletonItem.js";
 import { bem } from "../bem.js";
 import { type INotificationComponentProps } from "../Notification/DefaultNotification.js";
 import { type INotificationsPanelView } from "../types.js";
+import { type INotificationsListEmptyStateComponentProps } from "./DefaultNotificationsListEmptyState.js";
+import { type INotificationsListErrorStateComponentProps } from "./DefaultNotificationsListErrorState.js";
+import { type INotificationSkeletonItemComponentProps } from "./DefaultSkeletonItem.js";
 
 const { b } = bem("gd-ui-ext-notifications-list");
 

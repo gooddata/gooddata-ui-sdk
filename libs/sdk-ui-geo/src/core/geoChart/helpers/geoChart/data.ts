@@ -20,12 +20,6 @@ import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 import { type IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
 
 import {
-    dataValueAsFloat,
-    getFormatFromExecutionResponse,
-    getGeoAttributeHeaderItems,
-    getMinMax,
-} from "./common.js";
-import {
     type IAvailableLegends,
     type IGeoAttributeItem,
     type IGeoData,
@@ -34,6 +28,12 @@ import {
     type IGeoSegmentItem,
 } from "../../../../GeoChart.js";
 import type { IGeoLngLat } from "../../../../publicTypes/geoCommon.js";
+import {
+    dataValueAsFloat,
+    getFormatFromExecutionResponse,
+    getGeoAttributeHeaderItems,
+    getMinMax,
+} from "./common.js";
 
 interface IBucketItemInfo {
     uri?: Identifier;

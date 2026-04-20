@@ -3,8 +3,8 @@
 import { type IExportTemplate } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector } from "./DashboardStoreProvider.js";
 import { selectEnableExportTemplateSelection } from "../store/config/configSelectors.js";
+import { useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**
  * Fetches export templates when the feature flag is enabled.

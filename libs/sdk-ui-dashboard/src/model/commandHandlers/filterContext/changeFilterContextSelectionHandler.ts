@@ -38,8 +38,6 @@ import {
     updateAttributeElementsItems,
 } from "@gooddata/sdk-model";
 
-import { resolveAndRegisterDisplayFormMetadata } from "./attributeFilter/resolveDisplayFormMetadata.js";
-import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -82,6 +80,8 @@ import {
     resolveDisplayFormMetadata,
 } from "../../utils/displayFormResolver.js";
 import { canApplyFilterTypeToTarget } from "../dashboard/common/attributeFilterSelectionTypeCompatibility.js";
+import { resolveAndRegisterDisplayFormMetadata } from "./attributeFilter/resolveDisplayFormMetadata.js";
+import { canApplyDateFilter, dispatchFilterContextChanged } from "./common.js";
 
 // Tab-aware select helpers — encapsulate the "if tab select ForTab else select" pattern.
 // Named after the base selector they wrap.

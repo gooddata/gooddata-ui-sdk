@@ -6,8 +6,6 @@ import { type ColGroupDef } from "ag-grid-enterprise";
 
 import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
 
-import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
-import { getColumnScope, getPivotAttributeDescriptors, isValueColumnDef } from "./utils/common.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderGroupDrilling } from "../../hooks/header/useHeaderGroupDrilling.js";
@@ -21,6 +19,8 @@ import {
     getPivotHeaderTextTestIdProps,
 } from "../../testing/dataTestIdGenerators.js";
 import { type AgGridColumnGroupDef, type AgGridHeaderGroupParams } from "../../types/agGrid.js";
+import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
+import { getColumnScope, getPivotAttributeDescriptors, isValueColumnDef } from "./utils/common.js";
 
 interface IHeaderGroupCellProps extends AgGridHeaderGroupParams {
     measureIdentifiers: string[];

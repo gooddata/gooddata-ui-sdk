@@ -4,8 +4,6 @@ import { useMemo, useRef } from "react";
 
 import { Portal } from "react-portal";
 
-import { useToggleDrawer } from "./hooks/useToggleDrawer.js";
-import { type IUiDrawerProps } from "./types.js";
 import { bem } from "../@utils/bem.js";
 import { makeDialogKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { OverlayContent, OverlayProvider } from "../@utils/OverlayStack.js";
@@ -13,6 +11,8 @@ import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 import { UiFocusTrap } from "../UiFocusManager/UiFocusTrap.js";
 import { UiReturnFocusOnUnmount } from "../UiFocusManager/UiReturnFocusOnUnmount.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
+import { useToggleDrawer } from "./hooks/useToggleDrawer.js";
+import { type IUiDrawerProps } from "./types.js";
 
 const { b, e } = bem("gd-ui-kit-drawer");
 

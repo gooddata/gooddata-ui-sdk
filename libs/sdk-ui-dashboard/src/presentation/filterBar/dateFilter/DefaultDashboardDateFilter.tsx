@@ -16,8 +16,6 @@ import {
     getLocalizedIcuDateFormatPattern,
 } from "@gooddata/sdk-ui-filters";
 
-import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
-import { type IDashboardDateFilterProps } from "./types.js";
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
@@ -34,6 +32,8 @@ import {
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { useCurrentDateFilterConfig } from "../../dragAndDrop/useCurrentDateFilterConfig.js";
 import { getVisibilityIcon } from "../utils.js";
+import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
+import { type IDashboardDateFilterProps } from "./types.js";
 
 /**
  * Default implementation of the date filter to use on the dashboard's filter bar.

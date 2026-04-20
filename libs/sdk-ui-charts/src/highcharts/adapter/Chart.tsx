@@ -11,9 +11,8 @@ import {
     type IFocusHighchartsDatapointEventDetail,
 } from "@gooddata/sdk-ui";
 
-import { initChartPlugins } from "./chartPlugins.js";
 import { type HChart, type HighchartsOptions } from "../lib/index.js";
-
+import { initChartPlugins } from "./chartPlugins.js";
 import "highcharts/esm/highcharts-more.js";
 import "highcharts/esm/modules/drilldown.js";
 import "highcharts/esm/modules/treemap.js";

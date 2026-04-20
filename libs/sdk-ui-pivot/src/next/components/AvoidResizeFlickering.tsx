@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type CSSProperties, type ReactNode, useMemo } from "react";
 
-import { LoadingComponent } from "./LoadingComponent.js";
 import { useTableReady } from "../context/TableReadyContext.js";
 import { useInitialAutoResizeVisibility } from "../hooks/resizing/useInitialAutoResizeVisibility.js";
+import { LoadingComponent } from "./LoadingComponent.js";
 
 /**
  * @internal

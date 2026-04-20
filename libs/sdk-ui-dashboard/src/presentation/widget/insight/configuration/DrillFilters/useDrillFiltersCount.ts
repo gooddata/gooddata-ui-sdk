@@ -4,13 +4,13 @@ import { useMemo } from "react";
 
 import { type InsightDrillDefinition } from "@gooddata/sdk-model";
 
-import { isDrillFiltersConfigOptionSelected } from "./types.js";
-import { useDrillFiltersConfig } from "./useDrillFiltersConfig.js";
-import { useDrillFiltersConfigInner } from "./useDrillFiltersConfigInner.js";
 import {
     type IDrillConfigItem,
     type IDrillDownAttributeHierarchyDefinition,
 } from "../../../../drill/types.js";
+import { isDrillFiltersConfigOptionSelected } from "./types.js";
+import { useDrillFiltersConfig } from "./useDrillFiltersConfig.js";
+import { useDrillFiltersConfigInner } from "./useDrillFiltersConfigInner.js";
 
 type OnUpdateDrillItem = (
     drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,

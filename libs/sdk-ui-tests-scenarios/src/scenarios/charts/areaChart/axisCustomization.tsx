@@ -2,9 +2,9 @@
 
 import { AreaChart, type IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
-import { AreaChartWithTwoMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { AreaChartWithTwoMeasuresAndViewBy } from "./base.js";
 
 export const axisCustomization = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(...ScenarioGroupNames.Axes)

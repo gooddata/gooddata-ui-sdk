@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode, memo, useMemo } from "react";
 
@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { Overlay } from "./Overlay.js";
 import { Button } from "../Button/Button.js";
 import { Icon } from "../Icon/Icon.js";
 import { Typography } from "../Typography/Typography.js";
+import { Overlay } from "./Overlay.js";
 
 /**
  * @internal

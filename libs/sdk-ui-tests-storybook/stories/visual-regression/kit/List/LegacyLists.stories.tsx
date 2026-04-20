@@ -9,7 +9,6 @@ import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-k
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "./styles.scss";
 
 interface IItem {

@@ -1,10 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
+import { Typography } from "../../../Typography/Typography.js";
 import { AddUserOrGroupButton } from "./AddGranteeButton.js";
 import { GranteeList } from "./GranteeList.js";
 import { GranteeListLoading } from "./GranteeListLoading.js";
 import { type IShareGranteeContentProps } from "./types.js";
-import { Typography } from "../../../Typography/Typography.js";
 
 /**
  * @internal

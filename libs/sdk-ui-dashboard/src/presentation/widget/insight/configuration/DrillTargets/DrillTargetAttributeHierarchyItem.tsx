@@ -11,13 +11,13 @@ import {
 } from "@gooddata/sdk-model";
 import { AttributeHierarchyDialog } from "@gooddata/sdk-ui-ext";
 
-import { AttributeHierarchyDropdown } from "./AttributeHierarchyDropdown.js";
-import { EmptyAttributeHierarchyInfo } from "./EmptyAttributeHierarchyInfo.js";
-import { useAttributeHierarchy } from "./useAttributeHierarchy.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
 import { selectAllCatalogAttributeHierarchies } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { type IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
+import { AttributeHierarchyDropdown } from "./AttributeHierarchyDropdown.js";
+import { EmptyAttributeHierarchyInfo } from "./EmptyAttributeHierarchyInfo.js";
+import { useAttributeHierarchy } from "./useAttributeHierarchy.js";
 
 interface IDrillTargetDashboardItemProps {
     config: IDrillDownAttributeHierarchyConfig;

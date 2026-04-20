@@ -14,34 +14,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { type IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
-import {
-    multiMeasuresAlternatingTypes,
-    showingNameInLegendWhenViewByPresent,
-    unsupportedStackingTypes,
-} from "./chartCapabilities.js";
-import { setupDistinctPointShapesToSeries } from "./chartDistinctPointShapes.js";
-import { getDrillableSeries } from "./chartDrilling.js";
-import { assignForecastAxes } from "./chartForecast.js";
-import { assignOutliersAxes } from "./chartOutliers.js";
-import { getSeries } from "./chartSeries.js";
-import {
-    filterThresholdZonesCategories,
-    setupComboThresholdZones,
-    setupThresholdZones,
-} from "./chartThresholds.js";
-import {
-    buildTooltipFactory,
-    generateTooltipHeatmapFn,
-    generateTooltipSankeyChartFn,
-    generateTooltipScatterPlotFn,
-    generateTooltipXYFn,
-    getTooltipFactory,
-    getTooltipWaterfallChart,
-} from "./chartTooltips.js";
-import { ColorFactory } from "./colorFactory.js";
-import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
-import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { ViewByAttributesLimit } from "../../../interfaces/limits.js";
 import {
@@ -81,6 +53,34 @@ import {
     getColorAssignment,
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
+import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
+import {
+    multiMeasuresAlternatingTypes,
+    showingNameInLegendWhenViewByPresent,
+    unsupportedStackingTypes,
+} from "./chartCapabilities.js";
+import { setupDistinctPointShapesToSeries } from "./chartDistinctPointShapes.js";
+import { getDrillableSeries } from "./chartDrilling.js";
+import { assignForecastAxes } from "./chartForecast.js";
+import { assignOutliersAxes } from "./chartOutliers.js";
+import { getSeries } from "./chartSeries.js";
+import {
+    filterThresholdZonesCategories,
+    setupComboThresholdZones,
+    setupThresholdZones,
+} from "./chartThresholds.js";
+import {
+    buildTooltipFactory,
+    generateTooltipHeatmapFn,
+    generateTooltipSankeyChartFn,
+    generateTooltipScatterPlotFn,
+    generateTooltipXYFn,
+    getTooltipFactory,
+    getTooltipWaterfallChart,
+} from "./chartTooltips.js";
+import { ColorFactory } from "./colorFactory.js";
+import { setMeasuresToSecondaryAxis } from "./dualAxis.js";
+import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;

@@ -2,6 +2,11 @@
 
 import { type SagaIterator } from "redux-saga";
 
+import { type IDashboardCommand } from "../commands/base.js";
+import { type DashboardCommands } from "../commands/index.js";
+import { commandRejected } from "../events/general.js";
+import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher.js";
+import { type DashboardContext } from "../types/commonTypes.js";
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
 import { saveAlertHandler } from "./alerts/saveAlertHandler.js";
 import { changeAttributeFilterDisplayAsLabelHandler } from "./dashboard/changeAttributeFilterDisplayAsLabelHandler.js";
@@ -18,7 +23,6 @@ import { exportDashboardToPdfHandler } from "./dashboard/exportDashboardToPdfHan
 import { exportDashboardToPdfPresentationHandler } from "./dashboard/exportDashboardToPdfPresentationHandler.js";
 import { exportDashboardToPptPresentationHandler } from "./dashboard/exportDashboardToPptPresentationHandler.js";
 import { exportToTabularHandler } from "./dashboard/exportToTabularHandler.js";
-import { type IDashboardCommand } from "../commands/base.js";
 import { initializeDashboardHandler } from "./dashboard/initializeDashboardHandler/index.js";
 import { renameDashboardHandler } from "./dashboard/renameDashboardHandler.js";
 import { resetDashboardHandler } from "./dashboard/resetDashboardHandler.js";
@@ -35,6 +39,7 @@ import { drillToCustomUrlHandler } from "./drill/drillToCustomUrlHandler.js";
 import { drillToDashboardHandler } from "./drill/drillToDashboardHandler.js";
 import { drillToInsightHandler } from "./drill/drillToInsightHandler.js";
 import { drillToLegacyDashboardHandler } from "./drill/drillToLegacyDashboardHandler.js";
+import { keyDriverAnalysisHandler } from "./drill/keyDriverAnalysisHandler.js";
 import { addDrillTargetsHandler } from "./drillTargets/addDrillTargetsHandler.js";
 import { triggerEventHandler } from "./events/triggerEventHandler.js";
 import { upsertExecutionResultHandler } from "./executionResults/upsertExecutionResultHandler.js";
@@ -89,7 +94,11 @@ import { handleSetWidgetToShowAsTable } from "./showWidgetAsTable/showWidgetAsTa
 import { cancelRenamingDashboardTabHandler } from "./tabs/cancelRenamingDashboardTabHandler.js";
 import { convertDashboardTabFromDefaultHandler } from "./tabs/convertDashboardTabFromDefaultHandler.js";
 import { createDashboardTabHandler } from "./tabs/createDashboardTabHandler.js";
+import { deleteDashboardTabHandler } from "./tabs/deleteDashboardTabHandler.js";
 import { renameDashboardTabHandler } from "./tabs/renameDashboardTabHandler.js";
+import { repositionDashboardTabHandler } from "./tabs/repositionDashboardTabHandler.js";
+import { startRenamingDashboardTabHandler } from "./tabs/startRenamingDashboardTabHandler.js";
+import { switchDashboardTabHandler } from "./tabs/switchDashboardTabHandler.js";
 import { loadAllWorkspaceUsersHandler } from "./users/loadAllUsersHandler.js";
 import { addDrillDownForInsightWidgetHandler } from "./widgets/addDrillDownForInsightWidgetHandler.js";
 import { addVisualizationToSwticherWidgetContentHandler } from "./widgets/addVisualizationToSwitcherWidgetHandler.js";
@@ -119,18 +128,9 @@ import { refreshInsightWidgetHandler } from "./widgets/refreshInsightWidgetHandl
 import { removeDrillDownForInsightWidgetHandler } from "./widgets/removeDrillDownForInsightWidgetHandler.js";
 import { removeDrillForKpiWidgetHandler } from "./widgets/removeDrillForKpiWidgetHandler.js";
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler.js";
+import { removeDrillToUrlForInsightWidgetHandler } from "./widgets/removeDrillToUrlForInsightWidgetHandler.js";
 import { setDrillForKpiWidgetHandler } from "./widgets/setDrillForKpiWidgetHandler.js";
 import { updateVisualizationsFromSwticherWidgetContentHandler } from "./widgets/updateVisualizationsFromSwitcherWidgetHandler.js";
-import { type DashboardCommands } from "../commands/index.js";
-import { commandRejected } from "../events/general.js";
-import { dispatchDashboardEvent } from "../store/_infra/eventDispatcher.js";
-import { type DashboardContext } from "../types/commonTypes.js";
-import { keyDriverAnalysisHandler } from "./drill/keyDriverAnalysisHandler.js";
-import { deleteDashboardTabHandler } from "./tabs/deleteDashboardTabHandler.js";
-import { repositionDashboardTabHandler } from "./tabs/repositionDashboardTabHandler.js";
-import { startRenamingDashboardTabHandler } from "./tabs/startRenamingDashboardTabHandler.js";
-import { switchDashboardTabHandler } from "./tabs/switchDashboardTabHandler.js";
-import { removeDrillToUrlForInsightWidgetHandler } from "./widgets/removeDrillToUrlForInsightWidgetHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));

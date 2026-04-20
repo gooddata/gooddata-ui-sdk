@@ -1,9 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IInsight } from "@gooddata/sdk-model";
 
-import { DrillingInsightDropdown } from "./DrillingInsightDropdown.js";
 import { type IDrillConfigItem } from "../../../../drill/types.js";
+import { DrillingInsightDropdown } from "./DrillingInsightDropdown.js";
 
 export interface IDrillMeasureItemProps {
     insight: IDrillConfigItem;

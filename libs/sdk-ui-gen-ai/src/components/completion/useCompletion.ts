@@ -12,8 +12,8 @@ import { useSelector } from "react-redux";
 
 import { type CatalogItem, type ICatalogDateAttribute } from "@gooddata/sdk-model";
 
-import { type ICompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
 import { catalogItemsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
+import { type ICompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
 
 const WORD_REGEX = /\p{L}[\p{L}\p{N}_]*/u;
 

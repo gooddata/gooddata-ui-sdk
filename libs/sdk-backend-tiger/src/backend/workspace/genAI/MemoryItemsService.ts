@@ -17,12 +17,12 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type IMemoryItemDefinition, type IMemoryItemMetadataObject } from "@gooddata/sdk-model";
 
-import { MemoryItemsQuery } from "./MemoryItemsQuery.js";
 import {
     convertMemoryItem,
     convertMemoryItemCreatedByUsers,
 } from "../../../convertors/fromBackend/MemoryItemConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { MemoryItemsQuery } from "./MemoryItemsQuery.js";
 
 export class MemoryItemsService implements IMemoryItemsService {
     constructor(

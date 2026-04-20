@@ -34,7 +34,6 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import { type DashboardDescriptor } from "./metaState.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectDateFilterConfigOverrides,
@@ -54,6 +53,7 @@ import {
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../tabs/tabsState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { type DashboardDescriptor } from "./metaState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

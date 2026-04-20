@@ -21,12 +21,12 @@ import {
 } from "@gooddata/sdk-model";
 import { shortenText } from "@gooddata/util";
 
-import { ArithmeticMeasureTitleFactory } from "./ArithmeticMeasureTitleFactory.js";
-import { DerivedMeasureTitleSuffixFactory } from "./DerivedMeasureTitleSuffixFactory.js";
-import { type IMeasureTitleProps } from "./MeasureTitle.js";
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "../interfaces/OverTimeComparison.js";
 import { type ILocale } from "../localization/Locale.js";
 import { type ITranslations, resolveMessages } from "../localization/messagesMap.js";
+import { ArithmeticMeasureTitleFactory } from "./ArithmeticMeasureTitleFactory.js";
+import { DerivedMeasureTitleSuffixFactory } from "./DerivedMeasureTitleSuffixFactory.js";
+import { type IMeasureTitleProps } from "./MeasureTitle.js";
 
 const DEFAULT_MAX_ARITHMETIC_MEASURE_TITLE_LENGTH = 50;
 

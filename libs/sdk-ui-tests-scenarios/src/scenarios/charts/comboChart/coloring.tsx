@@ -3,13 +3,13 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
-import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor } from "../../_infra/colors.js";
 import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

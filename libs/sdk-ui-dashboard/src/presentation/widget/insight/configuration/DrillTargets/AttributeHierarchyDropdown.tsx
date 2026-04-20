@@ -17,13 +17,13 @@ import {
 import { messages } from "@gooddata/sdk-ui";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
-import { AttributeHierarchyList, type IAttributeHierarchyItem } from "./AttributeHierarchyList.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
 import { selectAllCatalogAttributeHierarchies } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 import { existBlacklistHierarchyPredicate } from "../../../../../model/utils/attributeHierarchyUtils.js";
 import { type IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
+import { AttributeHierarchyList, type IAttributeHierarchyItem } from "./AttributeHierarchyList.js";
 
 interface IAttributeHierarchyDropdownProps {
     config: IDrillDownAttributeHierarchyConfig;

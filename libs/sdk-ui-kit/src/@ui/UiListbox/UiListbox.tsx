@@ -4,6 +4,7 @@ import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } fro
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
+import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { DefaultUiListboxInteractiveItemComponent } from "./defaults/DefaultUiListboxInteractiveItemComponent.js";
 import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListboxStaticItemComponent.js";
 import { firstCharacterSearch } from "./defaults/firstCharacterSearch.js";
@@ -14,7 +15,6 @@ import {
     type IUiListboxItem,
     type IUiListboxProps,
 } from "./types.js";
-import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 /**
  * An accessible listbox component that can be navigated by keyboard.

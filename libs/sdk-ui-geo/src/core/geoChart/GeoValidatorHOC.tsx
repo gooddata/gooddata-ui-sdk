@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type ComponentClass,
@@ -27,8 +27,8 @@ import {
 } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IGeoChartInnerProps } from "./GeoChartInner.js";
 import { type IGeoConfig } from "../../GeoChart.js";
+import { type IGeoChartInnerProps } from "./GeoChartInner.js";
 import { isLocationSet } from "./helpers/geoChart/common.js";
 
 type IGeoValidatorProps = IGeoChartInnerProps;

@@ -7,8 +7,6 @@ import { useIntl } from "react-intl";
 
 import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { HiddenShareButton } from "./HiddenShareButton.js";
-import { type IShareButtonProps } from "./types.js";
 import {
     useDashboardDispatch,
     useDashboardSelector,
@@ -16,6 +14,8 @@ import {
 import { selectIsShareButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
 import { selectDashboardDensity } from "../../../../../model/store/ui/uiSelectors.js";
+import { HiddenShareButton } from "./HiddenShareButton.js";
+import { type IShareButtonProps } from "./types.js";
 
 /**
  * @internal

@@ -7,8 +7,6 @@ import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { type IClientWorkspaceIdentifiers, type IClientWorkspaceStatus } from "./interfaces.js";
-import { resolveLCMWorkspaceIdentifiers } from "./resolveLCMWorkspaceIdentifiers.js";
 import { type GoodDataSdkError } from "../../errors/GoodDataSdkError.js";
 import { useBackendStrict } from "../BackendContext.js";
 import {
@@ -17,6 +15,8 @@ import {
     useCancelablePromise,
 } from "../useCancelablePromise.js";
 import { WorkspaceProvider, useWorkspace } from "../WorkspaceContext.js";
+import { type IClientWorkspaceIdentifiers, type IClientWorkspaceStatus } from "./interfaces.js";
+import { resolveLCMWorkspaceIdentifiers } from "./resolveLCMWorkspaceIdentifiers.js";
 
 /**
  * @alpha

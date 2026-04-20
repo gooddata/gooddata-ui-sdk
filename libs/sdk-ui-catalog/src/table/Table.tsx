@@ -14,13 +14,13 @@ import {
     useElementSize,
 } from "@gooddata/sdk-ui-kit";
 
+import { type AsyncStatus } from "../async/types.js";
+import type { ICatalogItem } from "../catalogItem/types.js";
+import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
 import { createdByColumn } from "./columns/CreatedByColumn.js";
 import { updatedAtColumn } from "./columns/ModifiedColumn.js";
 import { tagsColumn } from "./columns/TagsColumn.js";
 import { titleColumn } from "./columns/TitleColumn.js";
-import { type AsyncStatus } from "../async/types.js";
-import type { ICatalogItem } from "../catalogItem/types.js";
-import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
 
 const tableWidth = 1100;
 

@@ -28,9 +28,6 @@ import {
 } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
-import { useAlertValidation } from "./useAlertValidation.js";
-import { useAttributeValuesFromExecResults } from "./useAttributeValuesFromExecResults.js";
-import { useThresholdValue } from "./useThresholdValue.js";
 import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
@@ -98,6 +95,9 @@ import {
     transformAlertBySensitivity,
     transformAlertByValue,
 } from "../utils/transformation.js";
+import { useAlertValidation } from "./useAlertValidation.js";
+import { useAttributeValuesFromExecResults } from "./useAttributeValuesFromExecResults.js";
+import { useThresholdValue } from "./useThresholdValue.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 

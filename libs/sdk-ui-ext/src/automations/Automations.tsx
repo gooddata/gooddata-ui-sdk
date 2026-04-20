@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     BackendProvider,
@@ -9,6 +9,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
+import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
 import { AutomationsCore } from "./AutomationsCore.js";
 import {
     DEFAULT_MAX_HEIGHT,
@@ -20,7 +21,6 @@ import { FilterOptionsProvider } from "./filters/FilterOptionsContext.js";
 import { type IAutomationsProps } from "./types.js";
 import { UserProvider } from "./UserContext.js";
 import { defaultEditAutomation } from "./utils.js";
-import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
 
 /**
  * Internal component for displaying automations.

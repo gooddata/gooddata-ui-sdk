@@ -5,12 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForBuckets } from "@gooddata/sdk-model";
 
-import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures.js";
 import { DataViewFacade } from "../../results/facade.js";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../vis/drilling.js";
 import { type IHeaderPredicate } from "../HeaderPredicate.js";
 import { identifierMatch, uriMatch } from "../HeaderPredicateFactory.js";
 import { type IMappingHeader } from "../MappingHeader.js";
+import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures.js";
 
 const emptyFacade = DataViewFacade.for(dummyDataView(newDefForBuckets("testWorkspace", [])));
 

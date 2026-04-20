@@ -6,7 +6,6 @@ import { Tabs } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
 const tabs = [{ id: "01" }, { id: "02" }, { id: "03" }];

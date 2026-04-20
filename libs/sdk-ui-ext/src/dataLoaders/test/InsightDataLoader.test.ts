@@ -1,12 +1,13 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type ObjRef, idRef } from "@gooddata/sdk-model";
 
-import { noopWorkspaceInsightsService } from "./dataLoaders.mock.js";
 import { insightDataLoaderFactory } from "../InsightDataLoader.js";
+import { noopWorkspaceInsightsService } from "./dataLoaders.mock.js";
 
 describe("InsightDataLoader", () => {
     const workspace = "foo";

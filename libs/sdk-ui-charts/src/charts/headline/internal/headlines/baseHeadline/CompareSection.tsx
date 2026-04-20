@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type RefObject } from "react";
 
@@ -6,9 +6,9 @@ import { useIntl } from "react-intl";
 
 import { HeadlinePagination } from "@gooddata/sdk-ui-vis-commons";
 
+import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 import { usePagination } from "./baseHeadlineDataItems/useOutOfBoundsDetection.js";
 import { CompareSectionItem } from "./CompareSectionItem.js";
-import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
 
 interface ICompareSectionProps {
     secondaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;

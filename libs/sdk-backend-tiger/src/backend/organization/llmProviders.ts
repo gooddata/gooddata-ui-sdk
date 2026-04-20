@@ -23,13 +23,13 @@ import {
     type LlmProviderTestResults,
 } from "@gooddata/sdk-model";
 
-import { LlmProvidersQuery } from "./llmProvidersQuery.js";
 import {
     convertLlmProviderFromBackend,
     convertLlmProviderPatchToBackend,
     convertLlmProviderToBackend,
 } from "../../convertors/fromBackend/llmProviderConvertor.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { LlmProvidersQuery } from "./llmProvidersQuery.js";
 
 export class OrganizationLlmProvidersService implements IOrganizationLlmProvidersService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

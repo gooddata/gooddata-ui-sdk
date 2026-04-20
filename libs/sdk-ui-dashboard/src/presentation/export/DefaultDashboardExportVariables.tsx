@@ -5,14 +5,14 @@ import { useCallback, useMemo, useState } from "react";
 import { type IThemeComplementaryPalette } from "@gooddata/sdk-model";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { useDashboardRelatedFilters } from "./hooks/useDashboardRelatedFilters.js";
-import { type MetaExportDataAttributes } from "./types.js";
-import { useMetaExportData, useMetaExportImageData, useMetaPaletteData } from "./useExportData.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { selectConfig } from "../../model/store/config/configSelectors.js";
 import { selectDashboardDescriptor, selectDashboardId } from "../../model/store/meta/metaSelectors.js";
 import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
 import { type RenderMode } from "../../types.js";
+import { useDashboardRelatedFilters } from "./hooks/useDashboardRelatedFilters.js";
+import { type MetaExportDataAttributes } from "./types.js";
+import { useMetaExportData, useMetaExportImageData, useMetaPaletteData } from "./useExportData.js";
 
 /**
  * @alpha

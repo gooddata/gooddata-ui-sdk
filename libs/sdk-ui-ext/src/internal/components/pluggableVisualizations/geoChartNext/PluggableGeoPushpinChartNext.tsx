@@ -32,20 +32,6 @@ import {
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
 
-import {
-    extractControls,
-    getLatitudeAttribute,
-    getLocationProperties,
-    getPrimaryLayerControls,
-    hasGeoIconDisplayForm,
-} from "./geoAttributeHelper.js";
-import { buildGeoVisualizationConfig } from "./geoConfigBuilder.js";
-import {
-    createConfiguredBuckets,
-    distributeMeasures,
-    getLocationItems,
-    sanitizeMeasures,
-} from "./geoPushpinBucketHelper.js";
 import { BUCKETS } from "../../../constants/bucket.js";
 import {
     isGeoChartsViewportConfigEnabled,
@@ -89,6 +75,20 @@ import {
     getGeoVisualizationPropertiesWithFallback,
 } from "../geoCommon/geoVisualizationPropertiesWithFallback.js";
 import { LiveMapViewTracker, createSyncedViewportHandlers } from "../geoCommon/liveMapViewTracking.js";
+import {
+    extractControls,
+    getLatitudeAttribute,
+    getLocationProperties,
+    getPrimaryLayerControls,
+    hasGeoIconDisplayForm,
+} from "./geoAttributeHelper.js";
+import { buildGeoVisualizationConfig } from "./geoConfigBuilder.js";
+import {
+    createConfiguredBuckets,
+    distributeMeasures,
+    getLocationItems,
+    sanitizeMeasures,
+} from "./geoPushpinBucketHelper.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 

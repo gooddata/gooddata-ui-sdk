@@ -3,10 +3,10 @@
 import fs from "fs";
 import path from "path";
 
-import { CollectionItemsRecording } from "./collectionItems.js";
-import { type IRecording, isNonNullRecording } from "./common.js";
 import { findFiles } from "../base/utils.js";
 import { logWarn } from "../cli/loggers.js";
+import { CollectionItemsRecording } from "./collectionItems.js";
+import { type IRecording, isNonNullRecording } from "./common.js";
 
 const CollectionItemsDirName = "collectionItems";
 const CollectionItemsResultFile = "result.json";

@@ -1,14 +1,14 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
+import { createSortItemForCol } from "../colSortItemFactory.js";
+import { TableDescriptor } from "../tableDescriptor.js";
 import {
     SingleMeasureWithColumnAttribute,
     SingleMeasureWithRowAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
 } from "./table.fixture.js";
-import { createSortItemForCol } from "../colSortItemFactory.js";
-import { TableDescriptor } from "../tableDescriptor.js";
 
 describe("createSortItem", () => {
     it("creates valid attribute sort", () => {

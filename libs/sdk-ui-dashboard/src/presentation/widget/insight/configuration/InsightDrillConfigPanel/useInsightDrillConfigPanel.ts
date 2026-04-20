@@ -22,12 +22,6 @@ import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import {
-    getDrillToUrlMappedConfigForWidget,
-    getGlobalDrillDownMappedConfigForWidget,
-    getMappedConfigForWidget,
-} from "./drillConfigMapper.js";
-import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
-import {
     addDrillDownForInsightWidget,
     modifyDrillDownForInsightWidget,
     modifyDrillsForInsightWidget,
@@ -64,6 +58,12 @@ import {
     isDrillToUrlConfig,
 } from "../../../../drill/types.js";
 import { useDrillFiltersSubview } from "../DrillFilters/useDrillFiltersSubview.js";
+import {
+    getDrillToUrlMappedConfigForWidget,
+    getGlobalDrillDownMappedConfigForWidget,
+    getMappedConfigForWidget,
+} from "./drillConfigMapper.js";
+import { useIncompleteItems } from "./useDrillConfigIncompleteItems.js";
 
 const messages = defineMessages({
     added: { id: "messages.drill.InteractionConfiguredSuccess" },

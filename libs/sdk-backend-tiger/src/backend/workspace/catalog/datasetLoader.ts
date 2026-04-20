@@ -19,13 +19,13 @@ import {
     type ICatalogDateDataset,
 } from "@gooddata/sdk-model";
 
-import { addRsqlFilterToParams } from "./rsqlFilter.js";
 import {
     convertAttribute,
     convertDateAttribute,
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 import { convertAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
+import { addRsqlFilterToParams } from "./rsqlFilter.js";
 
 function lookupRelatedObject(included: JsonApiAttributeOutIncludes[] | undefined, id: string, type: string) {
     if (!included) {

@@ -1,5 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
+import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
+import type { IAreaGeoData } from "../../types/geoData/area.js";
+import { type ILegendGroup, type ILegendSection } from "../../types/legend/model.js";
 import { computeColorScale } from "./computeColorScale.js";
 import {
     ATTRIBUTE_ONLY_URI_PREFIX,
@@ -9,9 +12,6 @@ import {
     convertToColorCategories,
     isAttributeOnlyAreaData,
 } from "./legendUtils.js";
-import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
-import type { IAreaGeoData } from "../../types/geoData/area.js";
-import { type ILegendGroup, type ILegendSection } from "../../types/legend/model.js";
 
 /**
  * Input parameters for computing area legend section.

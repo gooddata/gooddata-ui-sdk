@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 
-import { type IInsightBodyProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { type IInsightBodyProps } from "./types.js";
 
 /**
  * @internal

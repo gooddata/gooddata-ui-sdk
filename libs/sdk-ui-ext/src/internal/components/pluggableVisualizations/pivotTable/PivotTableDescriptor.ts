@@ -4,9 +4,6 @@ import { type IInsight, type IInsightDefinition, type ISettings, insightSanitize
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 
-import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.js";
-import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight.js";
-import { PluggablePivotTable } from "./PluggablePivotTable.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import { type IDrillDownContext } from "../../../interfaces/Visualization.js";
 import {
@@ -36,6 +33,9 @@ import {
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
 } from "../drillDownUtil.js";
+import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.js";
+import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight.js";
+import { PluggablePivotTable } from "./PluggablePivotTable.js";
 
 export class PivotTableDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

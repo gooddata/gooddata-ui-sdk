@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ITableGrandTotalColumnDefinition,
@@ -7,11 +7,11 @@ import {
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
-import { extractFormattedValue } from "./shared.js";
 import { MetricCell } from "../../components/Cell/MetricCell.js";
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
+import { extractFormattedValue } from "./shared.js";
 
 /**
  * Creates {@link AgGridColumnDef} for specified column definition {@link ITableValueColumnDefinition},

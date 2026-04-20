@@ -9,8 +9,6 @@ import { type IAttributeDescriptor, type ObjRef } from "@gooddata/sdk-model";
 import { useClientWorkspaceIdentifiers } from "@gooddata/sdk-ui";
 import { Button, Dropdown, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
-import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms.js";
-import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectBackendCapabilities } from "../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
@@ -26,6 +24,8 @@ import {
     isDrillToAttributeUrlConfig,
     isDrillToCustomUrlConfig,
 } from "../../../../drill/types.js";
+import { useAttributesWithDisplayForms } from "./useAttributesWithDisplayForms.js";
+import { useInvalidAttributeDisplayFormIdentifiers } from "./useInvalidAttributeDisplayFormIdentifier.js";
 
 function useButtonValue(urlDrillTarget: UrlDrillTarget | undefined): string {
     const intl = useIntl();

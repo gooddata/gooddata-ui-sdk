@@ -3,11 +3,10 @@
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
-import { expectTableCellValue, mockFeatureHub, scrollTableTo, visit, waitTableLoaded } from "../helpers.js";
+import { expectTableCellValue, scrollTableTo, visit, waitTableLoaded } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 const WIDGET = ".s-dash-item-1_0";

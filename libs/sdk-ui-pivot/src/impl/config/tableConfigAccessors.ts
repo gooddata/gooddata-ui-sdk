@@ -2,6 +2,15 @@
 
 import { type IExecutionDefinition, type ITotal } from "@gooddata/sdk-model";
 
+import { type ColumnWidthItem } from "../../columnWidths.js";
+import {
+    type ColumnHeadersPosition,
+    type DefaultColumnWidth,
+    type ICorePivotTableProps,
+    type IMenu,
+    type MeasureGroupDimension,
+} from "../../publicTypes.js";
+import { type ICorePivotTableState } from "../../tableState.js";
 import {
     checkIsColumnAutoresizeEnabled,
     checkIsGrowToFitEnabled,
@@ -18,15 +27,6 @@ import {
     hasColumnWidths,
     shouldAutoResizeColumns,
 } from "./tableConfigUtils.js";
-import { type ColumnWidthItem } from "../../columnWidths.js";
-import {
-    type ColumnHeadersPosition,
-    type DefaultColumnWidth,
-    type ICorePivotTableProps,
-    type IMenu,
-    type MeasureGroupDimension,
-} from "../../publicTypes.js";
-import { type ICorePivotTableState } from "../../tableState.js";
 
 export interface ITableConfigAccessorsContext {
     props: ICorePivotTableProps;

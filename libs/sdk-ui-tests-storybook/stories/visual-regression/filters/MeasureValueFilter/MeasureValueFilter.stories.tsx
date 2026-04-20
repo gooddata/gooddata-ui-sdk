@@ -4,7 +4,6 @@ import { action } from "storybook/actions";
 
 import { type IMeasureValueFilter, localIdRef, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
-
 import "@gooddata/sdk-ui-filters/styles/css/measureValueFilter.css";
 import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 

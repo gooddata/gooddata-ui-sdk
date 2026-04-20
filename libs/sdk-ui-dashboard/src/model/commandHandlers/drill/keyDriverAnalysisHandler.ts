@@ -12,7 +12,6 @@ import {
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 
-import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 import { type IDashboardDrillEvent } from "../../../types.js";
 import { type IKeyDriverAnalysis } from "../../commands/drill.js";
 import {
@@ -26,6 +25,7 @@ import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelector
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { removeDateFilters, removeIgnoredWidgetFilters } from "../../utils/widgetFilters.js";
+import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 
 export function* keyDriverAnalysisHandler(
     ctx: DashboardContext,

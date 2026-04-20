@@ -4,11 +4,11 @@ import { Fragment, type ReactNode, useRef } from "react";
 
 import { type ScreenSize } from "@gooddata/sdk-model";
 
-import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutSectionFacade,
 } from "../../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 export interface IDashboardEditLayoutRowRendererOwnProps {
     layoutItems: IDashboardLayoutItemFacade<IDashboardEditLayoutContent>[];

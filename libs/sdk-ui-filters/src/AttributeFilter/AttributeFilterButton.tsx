@@ -1,9 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
+import { type VisibilityMode } from "../shared/interfaces/index.js";
 import { AttributeFilterBase } from "./AttributeFilterBase.js";
 import { AttributeFilterDropdownButton } from "./Components/DropdownButton/AttributeFilterDropdownButton.js";
 import { type IAttributeFilterBaseProps } from "./types.js";
-import { type VisibilityMode } from "../shared/interfaces/index.js";
 
 /**
  * @public

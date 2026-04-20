@@ -14,6 +14,8 @@ import { v4 as uuid } from "uuid";
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
+import { isElementTextInput } from "../../utils/domUtilities.js";
+import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { DefaultUiMenuContent } from "./components/defaults/DefaultUiMenuContent.js";
 import {
     DefaultUiMenuContentItem,
@@ -44,8 +46,6 @@ import {
     type IUiMenuProps,
     type IUiMenuSubview,
 } from "./types.js";
-import { isElementTextInput } from "../../utils/domUtilities.js";
-import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 /**
  * @internal

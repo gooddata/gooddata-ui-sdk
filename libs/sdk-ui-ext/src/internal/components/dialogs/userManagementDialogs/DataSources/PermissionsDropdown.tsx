@@ -8,8 +8,6 @@ import { useIntl } from "react-intl";
 import { withBubble } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { dataSourcePermissionMessages } from "./locales.js";
-import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
 import { type TrackEventCallback, useTelemetry } from "../TelemetryContext.js";
 import {
     type DataSourcePermission,
@@ -17,6 +15,8 @@ import {
     type IDataSourcePermissionsItem,
     type IGrantedDataSource,
 } from "../types.js";
+import { dataSourcePermissionMessages } from "./locales.js";
+import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
 
 const items: IDataSourcePermissionsItem[] = [
     {

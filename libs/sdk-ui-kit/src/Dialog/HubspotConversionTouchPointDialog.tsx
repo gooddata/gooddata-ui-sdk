@@ -1,13 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { HubspotProvider } from "@aaronhayes/react-use-hubspot-form";
 
+import { useId } from "../utils/useId.js";
 import { Dialog } from "./Dialog.js";
 import {
     HubspotConversionTouchPointDialogBase,
     type IHubspotConversionTouchPointDialogBaseProps,
 } from "./HubspotConversionTouchPointDialogBase.js";
-import { useId } from "../utils/useId.js";
 
 /**
  * @public

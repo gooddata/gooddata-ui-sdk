@@ -4,7 +4,6 @@ import { Header, Item, ItemsWrapper, Separator } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "./styles.scss";
 
 function ListExamples() {

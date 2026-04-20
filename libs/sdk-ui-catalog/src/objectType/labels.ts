@@ -2,9 +2,9 @@
 
 import { type IntlShape, type MessageDescriptor, defineMessages } from "react-intl";
 
+import type { VisualizationType } from "../catalogItem/types.js";
 import { ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
-import type { VisualizationType } from "../catalogItem/types.js";
 
 const objectTypeMessages: Record<ObjectType, MessageDescriptor> = defineMessages({
     [ObjectTypes.DASHBOARD]: { id: "analyticsCatalog.objectType.dashboard.name" },

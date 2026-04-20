@@ -22,9 +22,6 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
-import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
-import { useDrillDialogSyncInsightProperties } from "./useDrillDialogSyncInsightProperties.js";
-import { useExcludedDrillDefinitionFilters } from "./useExcludedDrillDefinitionFilters.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
 import { selectCatalogAttributes } from "../../../../../model/store/catalog/catalogSelectors.js";
@@ -49,6 +46,9 @@ import { type IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
+import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
+import { useDrillDialogSyncInsightProperties } from "./useDrillDialogSyncInsightProperties.js";
+import { useExcludedDrillDefinitionFilters } from "./useExcludedDrillDefinitionFilters.js";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
 

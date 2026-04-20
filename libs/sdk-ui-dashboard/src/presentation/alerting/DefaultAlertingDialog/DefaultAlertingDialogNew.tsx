@@ -32,25 +32,6 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 
-import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
-import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
-import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
-//
-//
-import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
-import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
-import { AlertGranularitySelect } from "./components/AlertGranularitySelect.js";
-import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
-import { AlertSensitivitySelect } from "./components/AlertSensitivitySelect.js";
-import { AlertThresholdInput } from "./components/AlertThresholdInput.js";
-import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
-import { ALERTING_DIALOG_ID } from "./constants.js";
-import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
-import { useEditAlert } from "./hooks/useEditAlert.js";
-import { useSaveAlertToBackend } from "./hooks/useSaveAlertToBackend.js";
-import { getDescription, getValueSuffix } from "./utils/getters.js";
-import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
-import { isMobileView } from "./utils/responsive.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useEnableAlertingAutomationFilterContext } from "../../../model/react/useDashboardAlerting/useEnableAutomationFilterContext.js";
 import {
@@ -75,7 +56,26 @@ import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { type IAlertingDialogProps } from "../types.js";
+import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
+import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
+import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";
+//
+//
+import { AlertComparisonPeriodSelect } from "./components/AlertComparisonPeriodSelect.js";
+import { AlertDestinationSelect } from "./components/AlertDestinationSelect.js";
+import { AlertGranularitySelect } from "./components/AlertGranularitySelect.js";
+import { AlertMeasureSelect } from "./components/AlertMeasureSelect.js";
+import { AlertSensitivitySelect } from "./components/AlertSensitivitySelect.js";
+import { AlertThresholdInput } from "./components/AlertThresholdInput.js";
 import { AlertTriggerIntervalSelect } from "./components/AlertTriggerIntervalSelect.js";
+import { AlertTriggerModeSelect } from "./components/AlertTriggerModeSelect.js";
+import { ALERTING_DIALOG_ID } from "./constants.js";
+import { DefaultLoadingAlertingDialog } from "./DefaultLoadingAlertingDialog.js";
+import { useEditAlert } from "./hooks/useEditAlert.js";
+import { useSaveAlertToBackend } from "./hooks/useSaveAlertToBackend.js";
+import { getDescription, getValueSuffix } from "./utils/getters.js";
+import { isAnomalyDetection, isChangeOrDifferenceOperator } from "./utils/guards.js";
+import { isMobileView } from "./utils/responsive.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;

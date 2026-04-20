@@ -6,18 +6,18 @@ import { useIntl } from "react-intl";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import { ASYNC_TABLE_FILTER_LABEL_ID, ASYNC_TABLE_SELECTED_COUNT_ID } from "./constants.js";
-import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
-import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
-import { UiAsyncTableFilter } from "./UiAsyncTableFilter.js";
 import { Input } from "../../../Form/Input.js";
 import { UiSearchResultsAnnouncement } from "../../UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { type IUiAsyncTableToolbarProps } from "../types.js";
-import { getItemKey } from "./utils.js";
 import { useAsyncTableSearch } from "../useAsyncTableSearch.js";
+import { ASYNC_TABLE_FILTER_LABEL_ID, ASYNC_TABLE_SELECTED_COUNT_ID } from "./constants.js";
+import { UiAsyncTableBulkActions } from "./UiAsyncTableBulkActions.js";
+import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
+import { UiAsyncTableFilter } from "./UiAsyncTableFilter.js";
+import { getItemKey } from "./utils.js";
 
 export function UiAsyncTableToolbar<T extends { id: string } | { ref: ObjRef }>(
     props: IUiAsyncTableToolbarProps<T>,

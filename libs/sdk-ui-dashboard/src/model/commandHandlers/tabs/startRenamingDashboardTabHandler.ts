@@ -3,7 +3,6 @@
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 import { type IStartRenamingDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardTabRenamingStarted, dashboardTabRenamingStarted } from "../../events/tabs.js";
@@ -11,6 +10,7 @@ import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 
 /**
  * @internal

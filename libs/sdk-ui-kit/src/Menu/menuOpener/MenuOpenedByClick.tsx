@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode, useCallback, useRef } from "react";
 
-import { type IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 import { MenuPosition } from "../positioning/MenuPosition.js";
 import { OutsideClickHandler } from "../utils/OutsideClickHandler.js";
+import { type IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 
 export function MenuOpenedByClick(props: IMenuOpenedBySharedProps): ReactElement {
     const { onOpenedChange, opened } = props;

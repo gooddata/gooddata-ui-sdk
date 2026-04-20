@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -12,8 +12,8 @@ import {
     isInsightWidgetDefinition,
 } from "@gooddata/sdk-model";
 
-import { type IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
 import { type ValueOrUpdateCallback } from "../builder.js";
+import { type IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
 
 /**
  * Insight widget builder

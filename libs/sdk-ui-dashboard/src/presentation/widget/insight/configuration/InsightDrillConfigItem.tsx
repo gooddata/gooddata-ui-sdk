@@ -19,14 +19,6 @@ import {
 import { messages } from "@gooddata/sdk-ui";
 import { simplifyText } from "@gooddata/util";
 
-import { DrillFiltersTrigger } from "./DrillFilters/DrillFiltersTrigger.js";
-import { useDrillFiltersCount } from "./DrillFilters/useDrillFiltersCount.js";
-import { useDrillFiltersSubview } from "./DrillFilters/useDrillFiltersSubview.js";
-import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
-import { DrillOriginItem } from "./DrillOriginItem.js";
-import { DrillTargets } from "./DrillTargets/DrillTargets.js";
-import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
-import { type IDrillTargetType } from "./useDrillTargetTypeItems.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectEnableFilterControlInDrillingConfiguration } from "../../../../model/store/config/configSelectors.js";
@@ -41,6 +33,14 @@ import {
     isDrillToDashboardConfig,
     isDrillToInsightConfig,
 } from "../../../drill/types.js";
+import { DrillFiltersTrigger } from "./DrillFilters/DrillFiltersTrigger.js";
+import { useDrillFiltersCount } from "./DrillFilters/useDrillFiltersCount.js";
+import { useDrillFiltersSubview } from "./DrillFilters/useDrillFiltersSubview.js";
+import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
+import { DrillOriginItem } from "./DrillOriginItem.js";
+import { DrillTargets } from "./DrillTargets/DrillTargets.js";
+import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
+import { type IDrillTargetType } from "./useDrillTargetTypeItems.js";
 
 export interface IDrillConfigItemProps {
     item: IDrillConfigItem;

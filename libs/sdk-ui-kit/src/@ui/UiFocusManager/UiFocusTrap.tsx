@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode, cloneElement, useCallback, useMemo, useState } from "react";
 
-import { type IUiFocusHelperConnectors } from "./types.js";
-import { focusAndEnsureReachableElement, getNextFocusableElement } from "./utils.js";
 import { type NavigationDirection } from "../../typings/navigation.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { type IUiFocusHelperConnectors } from "./types.js";
+import { focusAndEnsureReachableElement, getNextFocusableElement } from "./utils.js";
 
 /**
  * @internal

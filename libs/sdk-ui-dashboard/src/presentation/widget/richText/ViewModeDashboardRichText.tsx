@@ -4,7 +4,6 @@ import { useIntl } from "react-intl";
 
 import { RichText } from "@gooddata/sdk-ui-kit";
 
-import { type IDashboardRichTextProps } from "./types.js";
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
@@ -16,6 +15,7 @@ import { selectCurrentDashboardSummaryWorkflowStatus } from "../../../model/stor
 import { selectCurrentDashboardSummary } from "../../../model/store/listedDashboards/listedDashboardsSummarySelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { type IDashboardRichTextProps } from "./types.js";
 
 /**
  * @internal

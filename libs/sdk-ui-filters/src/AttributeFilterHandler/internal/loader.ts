@@ -16,8 +16,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { AttributeFilterReduxBridge } from "./bridge.js";
-import { type AttributeFilterHandlerConfig } from "./types.js";
 import {
     type IAttributeFilterLoader,
     type OnInitCancelCallbackPayload,
@@ -55,6 +53,8 @@ import {
     type OnLoadNextElementsPageStartCallbackPayload,
     type OnLoadNextElementsPageSuccessCallbackPayload,
 } from "../types/elementsLoader.js";
+import { AttributeFilterReduxBridge } from "./bridge.js";
+import { type AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

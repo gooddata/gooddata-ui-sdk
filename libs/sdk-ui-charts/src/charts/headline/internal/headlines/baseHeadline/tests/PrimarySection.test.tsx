@@ -3,11 +3,11 @@
 import { render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { PrimarySection } from "../PrimarySection.js";
 import { PrimarySectionCompactContent } from "../PrimarySectionCompactContent.js";
 import { PrimarySectionContent } from "../PrimarySectionContent.js";
+import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 
 const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
 

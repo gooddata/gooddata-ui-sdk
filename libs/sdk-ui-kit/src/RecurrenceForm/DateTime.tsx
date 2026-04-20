@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type KeyboardEvent, useCallback } from "react";
 
@@ -13,11 +13,11 @@ import {
     useValidationContextValue,
 } from "@gooddata/sdk-ui";
 
-import { DEFAULT_DROPDOWN_ZINDEX, TIME_ANCHOR } from "./constants.js";
 import { Datepicker, parseDate } from "../Datepicker/Datepicker.js";
 import { Timepicker } from "../Timepicker/Timepicker.js";
 import { normalizeTime } from "../Timepicker/utils/timeUtilities.js";
 import { useIdPrefixed } from "../utils/useId.js";
+import { DEFAULT_DROPDOWN_ZINDEX, TIME_ANCHOR } from "./constants.js";
 
 interface IDateTimeProps {
     label: string;

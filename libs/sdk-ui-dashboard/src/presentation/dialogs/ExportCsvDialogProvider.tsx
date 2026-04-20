@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { ExportCsvDialog } from "./ExportCsvDialog.js";
 import { useExportCsvDialogContext } from "../dashboardContexts/ExportCsvDialogContext.js";
+import { ExportCsvDialog } from "./ExportCsvDialog.js";
 
 /**
  * @internal

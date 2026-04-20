@@ -1,8 +1,7 @@
-// (C) 2025 GoodData Corporation
-
-import type { HTMLAttributes } from "react";
+// (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
+import type { HTMLAttributes } from "react";
 
 import { e } from "./comboboxBem.js";
 import { useComboboxState } from "./UiComboboxContext.js";

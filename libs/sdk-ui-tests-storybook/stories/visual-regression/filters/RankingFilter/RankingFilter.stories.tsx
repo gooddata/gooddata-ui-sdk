@@ -10,7 +10,6 @@ import {
     RankingFilter,
     RankingFilterDropdown,
 } from "@gooddata/sdk-ui-filters";
-
 import "@gooddata/sdk-ui-filters/styles/css/rankingFilter.css";
 import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 

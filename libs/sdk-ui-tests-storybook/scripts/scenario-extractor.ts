@@ -6,7 +6,6 @@ import { resolve } from "path";
 import { createServer } from "vite";
 
 import { storiesToScenarios } from "./scenarios.config.js";
-
 import "./mockWindow.js";
 
 // Parse optional --filter arg (comma-delimited story file paths from goodchanges detections)

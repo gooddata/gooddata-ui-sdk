@@ -13,11 +13,6 @@ import {
     widgetUri,
 } from "@gooddata/sdk-model";
 
-import {
-    type FilterViewDialogMode,
-    type IInvalidCustomUrlDrillParameterInfo,
-    type IUiState,
-} from "./uiState.js";
 import { getDashboardInsightMenuButtonId } from "../../../_staging/accessibility/elementId.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
@@ -31,6 +26,11 @@ import {
     type IScheduleEmailContext,
 } from "../../../types.js";
 import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
+import {
+    type FilterViewDialogMode,
+    type IInvalidCustomUrlDrillParameterInfo,
+    type IUiState,
+} from "./uiState.js";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<IUiState, A>;
 

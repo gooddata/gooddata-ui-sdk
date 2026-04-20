@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { partial } from "lodash-es";
 import { InvariantError, invariant } from "ts-invariant";
@@ -16,9 +16,6 @@ import {
     resultHeaderName,
 } from "@gooddata/sdk-model";
 
-import { type DataAccessDigest, createDataAccessDigest } from "./dataAccessDigest.js";
-import { LazyInitArray } from "./lazyInitArray.js";
-import { getTotalInfo, measureFormat, measureName } from "./utils.js";
 import {
     type DataPoint,
     type DataSeriesDescriptor,
@@ -27,6 +24,9 @@ import {
     type IDataSlice,
 } from "../dataAccess.js";
 import { type DataAccessConfig } from "../dataAccessConfig.js";
+import { type DataAccessDigest, createDataAccessDigest } from "./dataAccessDigest.js";
+import { LazyInitArray } from "./lazyInitArray.js";
+import { getTotalInfo, measureFormat, measureName } from "./utils.js";
 
 type DataWithCoordinates = { rawValue: DataValue; coordinates: number[] };
 

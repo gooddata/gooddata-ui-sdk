@@ -9,9 +9,9 @@ import {
     type RelativeDateFilterOption,
 } from "@gooddata/sdk-ui-filters";
 
-import { Filter } from "./DateFilter.js";
 import { DateDatasets, GrossProfit, NrOfOrders } from "../catalog.js";
 import { Hint } from "../Hint.js";
+import { Filter } from "./DateFilter.js";
 
 export interface IDateFilterComponentExampleState {
     selectedFilterOption: DateFilterOption;

@@ -1,10 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type IDashboardEvent } from "./base.js";
-import { eventGuard } from "./util.js";
 import { type IDashboardCommand } from "../commands/base.js";
 import { type IDashboardQuery } from "../queries/base.js";
 import { type DashboardContext } from "../types/commonTypes.js";
+import { type IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link IDashboardCommandStarted} event.

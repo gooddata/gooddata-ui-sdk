@@ -10,8 +10,8 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
 } from "@gooddata/sdk-model";
 
-import { filterBarAttributeFilterIndexes } from "./filterBar.fixture.js";
 import { areAllFiltersHidden, getVisibilityIcon } from "../utils.js";
+import { filterBarAttributeFilterIndexes } from "./filterBar.fixture.js";
 
 describe("utils", () => {
     describe("getVisibilityIcon", () => {

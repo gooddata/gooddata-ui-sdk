@@ -3,7 +3,6 @@
 import { memo, useState } from "react";
 
 import { Input } from "@gooddata/sdk-ui-kit";
-
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 import { type IStoryParameters } from "../../../_infra/backstopScenario.js";

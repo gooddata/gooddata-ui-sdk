@@ -18,6 +18,8 @@ import {
 } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IGeoConfig, type IGeoData } from "../../GeoChart.js";
+import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
 import {
     DEFAULT_CLUSTER_LABELS_CONFIG,
     DEFAULT_CLUSTER_LAYER_NAME,
@@ -38,8 +40,6 @@ import {
 } from "./geoChartDataLayers.js";
 import { type IGeoDataSourceProps, createPushpinDataSource } from "./geoChartDataSource.js";
 import { handlePushpinMouseEnter, handlePushpinMouseLeave } from "./geoChartTooltip.js";
-import { type IGeoConfig, type IGeoData } from "../../GeoChart.js";
-import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
 import {
     isClusteringAllowed,
     isColorAssignmentItemChanged,

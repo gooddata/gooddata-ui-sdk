@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -7,7 +7,6 @@ import { FormattedMessage } from "react-intl";
 
 import { type WeekStart, isAbsoluteDateFilterForm } from "@gooddata/sdk-model";
 
-import { AbsoluteDateFilterForm } from "./AbsoluteDateFilterForm.js";
 import { type DateFilterRoute } from "../DateFilterBody/types.js";
 import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
 import {
@@ -16,6 +15,7 @@ import {
     type IUiAbsoluteDateFilterForm,
 } from "../interfaces/index.js";
 import { ListItem } from "../ListItem/ListItem.js";
+import { AbsoluteDateFilterForm } from "./AbsoluteDateFilterForm.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

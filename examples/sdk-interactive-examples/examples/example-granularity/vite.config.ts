@@ -1,8 +1,9 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
+
 import packageJson from "./package.json" with { type: "json" };
 
 const backendUrl = packageJson.gooddata.hostname;

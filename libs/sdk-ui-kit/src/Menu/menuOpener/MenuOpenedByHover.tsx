@@ -1,9 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef } from "react";
 
-import { type IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 import { MenuPosition } from "../positioning/MenuPosition.js";
+import { type IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 
 export function MenuOpenedByHover({
     onOpenedChange,

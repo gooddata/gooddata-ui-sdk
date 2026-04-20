@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import fs from "fs";
 import path from "path";
@@ -8,6 +8,7 @@ import { isEqual } from "lodash-es";
 import { type IAnalyticalBackend, type IElementsQuery } from "@gooddata/sdk-backend-spi";
 import { type IAttributeDisplayFormMetadataObject, type IAttributeElement, idRef } from "@gooddata/sdk-model";
 
+import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 import {
     type IRecording,
     type RecordingIndexEntry,
@@ -15,7 +16,6 @@ import {
     readJsonSync,
     writeAsJsonSync,
 } from "./common.js";
-import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 
 //
 // internal constants & types

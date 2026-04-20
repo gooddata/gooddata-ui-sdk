@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import { type IDashboardLayout } from "@gooddata/sdk-model";
 
-import { NESTED_LAYOUT } from "./coordinates.mock.js";
 import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../types.js";
 import {
@@ -28,6 +27,7 @@ import {
     updateItemIndex,
     updateSectionIndex,
 } from "../coordinates.js";
+import { NESTED_LAYOUT } from "./coordinates.mock.js";
 
 describe("coordinates", () => {
     describe("areSameCoordinates", () => {

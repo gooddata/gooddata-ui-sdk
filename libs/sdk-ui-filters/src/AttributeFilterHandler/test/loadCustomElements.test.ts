@@ -1,15 +1,16 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
+import { loadElements as mockLoadElements } from "../internal/redux/elements/loadElements.js";
 import {
     newTestAttributeFilterHandlerWithAttributeFilter,
     positiveAttributeFilterDefaultDF,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
-import { loadElements as mockLoadElements } from "../internal/redux/elements/loadElements.js";
 
 vi.mock("../internal/redux/elements/loadElements.js", async () => {
     const original = await vi.importActual("../internal/redux/elements/loadElements.js");

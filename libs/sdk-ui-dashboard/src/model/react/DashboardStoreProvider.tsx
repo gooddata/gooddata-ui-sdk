@@ -11,10 +11,10 @@ import {
     createSelectorHook,
 } from "react-redux";
 
+import { type DashboardState } from "../store/types.js";
 import { DashboardEventsProvider } from "./DashboardEventsContext.js";
 import { type IDashboardStoreProviderProps } from "./types.js";
 import { useInitializeDashboardStore } from "./useInitializeDashboardStore.js";
-import { type DashboardState } from "../store/types.js";
 
 /**
  * @alpha

@@ -6,9 +6,9 @@ import { useIntl } from "react-intl";
 
 import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
-import { useTrendDrivers } from "./useTrendDrivers.js";
 import { type IKdaItem, type IKdaTrend } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
+import { useTrendDrivers } from "./useTrendDrivers.js";
 
 export function useSignificantDrives() {
     const intl = useIntl();

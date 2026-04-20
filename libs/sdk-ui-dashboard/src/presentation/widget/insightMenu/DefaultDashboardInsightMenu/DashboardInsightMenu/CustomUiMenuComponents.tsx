@@ -16,10 +16,10 @@ import {
     typedUiMenuContextStore,
 } from "@gooddata/sdk-ui-kit";
 
-import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
-import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
 import { type IDashboardInsightMenuTitleProps } from "../../types.js";
+import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
+import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 
 export type FocusableItemData = {
     icon?: ReactElement | string;

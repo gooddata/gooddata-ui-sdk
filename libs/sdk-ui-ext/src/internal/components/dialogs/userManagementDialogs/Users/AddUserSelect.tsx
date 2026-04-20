@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type KeyboardEventHandler, useCallback, useMemo } from "react";
 
@@ -8,15 +8,6 @@ import { AsyncPaginate } from "react-select-async-paginate";
 
 import { useBackendStrict } from "@gooddata/sdk-ui";
 
-import {
-    EmptyRenderer,
-    GroupHeadingRenderer,
-    InputRendered,
-    LoadingMessageRenderer,
-    MenuListRenderer,
-    NoOptionsMessageRenderer,
-    OptionRenderer,
-} from "./AsyncSelectComponents.js";
 import { messages } from "../locales.js";
 import { useOrganizationId } from "../OrganizationIdContext.js";
 import {
@@ -26,6 +17,15 @@ import {
     isSelectErrorOption,
     isUserItem,
 } from "../types.js";
+import {
+    EmptyRenderer,
+    GroupHeadingRenderer,
+    InputRendered,
+    LoadingMessageRenderer,
+    MenuListRenderer,
+    NoOptionsMessageRenderer,
+    OptionRenderer,
+} from "./AsyncSelectComponents.js";
 import { loadUsersOptionsPromise } from "./backend/loadUsersOptionsPromise.js";
 
 const SEARCH_INTERVAL = 400;

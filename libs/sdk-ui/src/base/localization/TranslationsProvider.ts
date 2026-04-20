@@ -1,10 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { memo } from "react";
 
 import { type IntlShape, type WrappedComponentProps, injectIntl } from "react-intl";
 
-import { emptyHeaderTitleFromIntl } from "./intlUtils.js";
 import { messages } from "../../locales.js";
+import { emptyHeaderTitleFromIntl } from "./intlUtils.js";
 
 /**
  * @internal

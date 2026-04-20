@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
+import { type ObjRef } from "../objRef/index.js";
 import { type DrillDefinition, type IDrillDownReference } from "./drill.js";
 import { type IDashboardFilterReference } from "./filterContext.js";
-import { type ObjRef } from "../objRef/index.js";
 
 /**
  * Defines properties that are used for filterable widgets. Filterable widgets allow users to specify:

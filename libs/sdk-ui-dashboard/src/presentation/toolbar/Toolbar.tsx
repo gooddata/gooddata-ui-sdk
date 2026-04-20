@@ -2,8 +2,8 @@
 
 import { type ReactElement } from "react";
 
-import { type IToolbarProps } from "./types.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
+import { type IToolbarProps } from "./types.js";
 
 /**
  * @internal

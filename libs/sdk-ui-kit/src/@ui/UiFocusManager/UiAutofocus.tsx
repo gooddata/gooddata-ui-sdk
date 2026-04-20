@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ReactElement,
@@ -11,9 +11,9 @@ import {
     useState,
 } from "react";
 
+import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
 import { type IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
-import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
 
 /**
  * @internal

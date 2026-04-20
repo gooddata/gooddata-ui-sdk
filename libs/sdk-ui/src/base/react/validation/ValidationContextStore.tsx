@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
+import { createContextStore } from "../contextStore.js";
+import { useAutoupdateRef } from "../useAutoupdateRef.js";
 import {
     type IChildRegistration,
     type IInvalidDatapoint,
@@ -18,8 +20,6 @@ import {
     getUpdatedInvalidTree,
     validationSeverityNum,
 } from "./utils.js";
-import { createContextStore } from "../contextStore.js";
-import { useAutoupdateRef } from "../useAutoupdateRef.js";
 
 /**
  * @internal

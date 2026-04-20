@@ -13,7 +13,6 @@ import {
 import { type VisType } from "@gooddata/sdk-ui";
 import { InsightListItem } from "@gooddata/sdk-ui-kit";
 
-import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
 import { type DescriptionTooltipOpenedData } from "../../../../model/events/userInteraction.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
@@ -25,6 +24,7 @@ import {
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { InsightList } from "../../../insightList/InsightList.js";
 import { type IInsightListProps } from "../../../insightList/types.js";
+import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
 
 export function DraggableInsightListCore({
     enableDescriptions,

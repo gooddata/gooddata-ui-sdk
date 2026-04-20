@@ -5,8 +5,8 @@ import { compact } from "lodash-es";
 
 import { type IUiMenuInteractiveItemProps, type IconType, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { DrillType } from "./types.js";
 import { type IDrillSelectDropdownMenuItemData } from "../hooks/useDrillSelectDropdownMenuItems.js";
+import { DrillType } from "./types.js";
 
 const DRILL_ICON_NAME: Record<DrillType, IconType> = {
     [DrillType.DRILL_TO_DASHBOARD]: "drillTo",

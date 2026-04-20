@@ -3,10 +3,10 @@
 import { type IExportResult } from "@gooddata/sdk-backend-spi";
 import { type IDashboard, type IInsight, type IWorkspacePermissions, type ObjRef } from "@gooddata/sdk-model";
 
-import { type IDashboardEvent } from "./base.js";
-import { eventGuard } from "./util.js";
 import { type DateFilterValidationResult, type ISharingProperties } from "../../types.js";
 import { type DashboardConfig, type DashboardContext } from "../types/commonTypes.js";
+import { type IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 //
 //

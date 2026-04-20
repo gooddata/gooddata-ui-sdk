@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode, type Ref, useEffect } from "react";
 
@@ -7,10 +7,10 @@ import { FormattedMessage, defineMessages } from "react-intl";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
-import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { type DraggableItemType } from "../../../dragAndDrop/types.js";
+import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
+import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",

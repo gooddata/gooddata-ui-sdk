@@ -1,7 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, memo, useRef } from "react";
 
+import { type ChartFillType } from "../coloring/types.js";
 import { LegendSeriesContextStore } from "./context.js";
 import { groupSeries } from "./helpers.js";
 import { LegendGroup } from "./LegendGroup.js";
@@ -13,7 +14,6 @@ import {
     isSeriesItemMetric,
     isSeriesItemSeparator,
 } from "./types.js";
-import { type ChartFillType } from "../coloring/types.js";
 
 export interface ILegendListProps {
     series: ISeriesItem[];

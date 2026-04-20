@@ -10,9 +10,9 @@ import {
 import { ScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import { indigoDarkTheme, redLightTheme } from "@gooddata/sdk-ui-theme-provider/internal";
 
+import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 import tooltipImage from "./assets/tooltip-image.png";
-import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 
 const propCombination = propCombinationsFor({} as IUiTooltipProps);
 

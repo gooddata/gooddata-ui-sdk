@@ -5,7 +5,6 @@ import { union } from "lodash-es";
 
 import { type ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 
-import { type FilterViewDialogMode, type IInvalidCustomUrlDrillParameterInfo } from "./uiState.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
@@ -24,6 +23,7 @@ import { selectConfig, selectEnableDashboardDensitySetting } from "../config/con
 import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
 import { selectWidgetsMap } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { type FilterViewDialogMode, type IInvalidCustomUrlDrillParameterInfo } from "./uiState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

@@ -6,8 +6,6 @@ import { sync as spawnSync } from "cross-spawn";
 import fse from "fs-extra";
 import tar from "tar";
 
-import { type InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
-import { type IFileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions, type AppTemplate, type TargetAppLanguage } from "../_base/types.js";
 import {
@@ -17,6 +15,8 @@ import {
     writeAsJsonSync,
 } from "../_base/utils.js";
 import { getReactAppTemplateArchive } from "../react-app-template.js";
+import { type InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
+import { type IFileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 
 const archiveNameFunctionByTemplate: { [template in AppTemplate]: (language: TargetAppLanguage) => string } =
     {

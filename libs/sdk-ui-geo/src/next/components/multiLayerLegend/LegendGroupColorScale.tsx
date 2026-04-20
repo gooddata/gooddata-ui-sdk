@@ -2,14 +2,14 @@
 
 import { type ReactElement, memo } from "react";
 
-import { resolveLegendGroupTitle } from "./groupTitle.js";
-import { LegendGroupContainer } from "./LegendGroupContainer.js";
-import { type LegendMessageFormatter } from "./legendMessages.js";
 import {
     type ILegendColorScaleItem,
     type ILegendGroup,
     isLegendColorScaleItem,
 } from "../../types/legend/model.js";
+import { resolveLegendGroupTitle } from "./groupTitle.js";
+import { LegendGroupContainer } from "./LegendGroupContainer.js";
+import { type LegendMessageFormatter } from "./legendMessages.js";
 
 /**
  * Props for LegendGroupColorScale component.

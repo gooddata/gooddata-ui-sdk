@@ -2,11 +2,11 @@
 
 import { type ReactNode } from "react";
 
-import { UploadItemStatus } from "../types.js";
-import { b, e } from "./uploadStatusDialogBem.js";
 import { UiIcon } from "../../@ui/UiIcon/UiIcon.js";
 import { Dialog } from "../../Dialog/Dialog.js";
 import { useIdPrefixed } from "../../utils/useId.js";
+import { UploadItemStatus } from "../types.js";
+import { b, e } from "./uploadStatusDialogBem.js";
 
 /**
  * @internal

@@ -9,11 +9,11 @@ import { type ITheme } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { LegendSeriesContextStore, useItemVisibility } from "./context.js";
-import { type ISeriesItemMetric } from "./types.js";
 import { getDarkerColor, isPatternObject } from "../coloring/color.js";
 import { PatternFill } from "../coloring/PatternFill.js";
 import { type ChartFillType, type IPatternObject } from "../coloring/types.js";
+import { LegendSeriesContextStore, useItemVisibility } from "./context.js";
+import { type ISeriesItemMetric } from "./types.js";
 
 const DEFAULT_DISABLED_COLOR = "#CCCCCC";
 

@@ -36,6 +36,14 @@ import {
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 
+import {
+    type DateFormatter,
+    type DateNormalizer,
+    type DateStringifier,
+} from "../../convertors/fromBackend/dateFormatting/types.js";
+import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
+import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { TigerWorkspaceAttributes } from "./attributes/index.js";
@@ -60,14 +68,6 @@ import { TigerReferencesService } from "./references/index.js";
 import { TigerWorkspaceSettings } from "./settings/index.js";
 import { TigerWorkspaceStyling } from "./styling/index.js";
 import { TigerWorkspaceUsersQuery } from "./users/index.js";
-import {
-    type DateFormatter,
-    type DateNormalizer,
-    type DateStringifier,
-} from "../../convertors/fromBackend/dateFormatting/types.js";
-import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
-import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
-import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(

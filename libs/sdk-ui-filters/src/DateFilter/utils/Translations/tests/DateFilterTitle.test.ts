@@ -5,6 +5,10 @@ import { describe, expect, it } from "vitest";
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
+import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform.js";
+import { type IUiRelativeDateFilterForm } from "../../../interfaces/index.js";
+import { getDateFilterRepresentation, getDateFilterTitleUsingTranslator } from "../DateFilterTitle.js";
+import { type IDateAndMessageTranslator } from "../Translators.js";
 import {
     absoluteFormFilter,
     absoluteFormFilterOneDay,
@@ -15,10 +19,6 @@ import {
     allTimeFilter,
     relativePresetFilter,
 } from "./fixtures.js";
-import { DEFAULT_DATE_FORMAT, DEFAULT_DATE_FORMAT_WITH_TIME } from "../../../constants/Platform.js";
-import { type IUiRelativeDateFilterForm } from "../../../interfaces/index.js";
-import { getDateFilterRepresentation, getDateFilterTitleUsingTranslator } from "../DateFilterTitle.js";
-import { type IDateAndMessageTranslator } from "../Translators.js";
 
 const serializingTranslator: IDateAndMessageTranslator = {
     formatDate: (id, options) => `${id}__${JSON.stringify(options)}`,

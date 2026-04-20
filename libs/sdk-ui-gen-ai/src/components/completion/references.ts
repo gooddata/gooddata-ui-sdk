@@ -2,12 +2,12 @@
 
 import { type CatalogItem, type ICatalogDateAttribute, isCatalogDateDataset } from "@gooddata/sdk-model";
 
-import { getCatalogItemId, getCatalogItemTitle, getCatalogItemType } from "./utils.js";
 import {
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
     type TextContentObject,
 } from "../../model.js";
+import { getCatalogItemId, getCatalogItemTitle, getCatalogItemType } from "./utils.js";
 
 export function collectReferences(
     text: string,

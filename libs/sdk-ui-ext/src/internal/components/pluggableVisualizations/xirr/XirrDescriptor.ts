@@ -4,7 +4,6 @@ import { type IInsight, type IInsightDefinition, type ISettings } from "@gooddat
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IXirrProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableXirr } from "./PluggableXirr.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     type IVisualizationDescriptor,
@@ -22,6 +21,7 @@ import {
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { MAX_VISUALIZATION_HEIGHT } from "../constants.js";
+import { PluggableXirr } from "./PluggableXirr.js";
 
 export class XirrDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

@@ -4,8 +4,8 @@ import { type ReactElement, useMemo } from "react";
 
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
-import { type IDrillDialogExportDropdownProps } from "./drillDialogExportDropdownTypes.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
+import { type IDrillDialogExportDropdownProps } from "./drillDialogExportDropdownTypes.js";
 
 /**
  * @internal

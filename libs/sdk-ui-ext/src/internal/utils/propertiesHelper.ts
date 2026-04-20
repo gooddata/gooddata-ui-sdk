@@ -13,13 +13,6 @@ import {
 } from "@gooddata/sdk-ui-pivot";
 import { type IPagination, type ITextWrapping } from "@gooddata/sdk-ui-pivot/next";
 
-import {
-    getAllMeasuresShowOnSecondaryAxis,
-    getItemsCount,
-    getItemsLocalIdentifiers,
-    getMeasureItems,
-    getStackItems,
-} from "./bucketHelper.js";
 import { AXIS } from "../constants/axis.js";
 import { PROPERTY_CONTROLS } from "../constants/properties.js";
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties.js";
@@ -31,6 +24,13 @@ import {
     type IVisProps,
     type IVisualizationProperties,
 } from "../interfaces/Visualization.js";
+import {
+    getAllMeasuresShowOnSecondaryAxis,
+    getItemsCount,
+    getItemsLocalIdentifiers,
+    getMeasureItems,
+    getStackItems,
+} from "./bucketHelper.js";
 
 export function getSupportedPropertiesControls(
     visualizationControlsProperties: IVisualizationProperties["controls"],

@@ -6,8 +6,8 @@ import { useIntl } from "react-intl";
 
 import { type IInsight } from "@gooddata/sdk-model";
 
-import { type IDashboardInsightProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { type IDashboardInsightProps } from "./types.js";
 
 /**
  * @internal

@@ -17,16 +17,6 @@ import {
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { ConfigurationCategory } from "./ConfigurationCategory.js";
-import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader.js";
-import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";
-import { useAvailableDatasetsForItems } from "./hooks/useAvailableDatasetsForItems.js";
-import { useConnectingAttributes } from "./hooks/useConnectingAttributes.js";
-import { useValidNeighbourAttributes } from "./hooks/useValidNeighbourAttributes.js";
-import { LocalizedLimitValuesConfiguration } from "./limitValues/LimitValuesConfiguration.js";
-import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
-import { SelectionMode } from "./selectionMode/SelectionMode.js";
-import { SelectionType } from "./selectionType/SelectionType.js";
 import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes.js";
 import { useMetricsAndFacts } from "../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -41,6 +31,16 @@ import {
 import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
 import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";
+import { ConfigurationCategory } from "./ConfigurationCategory.js";
+import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader.js";
+import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";
+import { useAvailableDatasetsForItems } from "./hooks/useAvailableDatasetsForItems.js";
+import { useConnectingAttributes } from "./hooks/useConnectingAttributes.js";
+import { useValidNeighbourAttributes } from "./hooks/useValidNeighbourAttributes.js";
+import { LocalizedLimitValuesConfiguration } from "./limitValues/LimitValuesConfiguration.js";
+import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
+import { SelectionMode } from "./selectionMode/SelectionMode.js";
+import { SelectionType } from "./selectionType/SelectionType.js";
 
 interface IAttributeFilterConfigurationProps {
     closeHandler: () => void;

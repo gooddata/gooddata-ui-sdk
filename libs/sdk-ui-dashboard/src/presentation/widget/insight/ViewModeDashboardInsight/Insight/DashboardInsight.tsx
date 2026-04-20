@@ -33,8 +33,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { IconInsight } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
-import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardAsyncRender } from "../../../../../model/react/useDashboardAsyncRender.js";
 import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
@@ -70,6 +68,8 @@ import { type IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
+import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
+import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],

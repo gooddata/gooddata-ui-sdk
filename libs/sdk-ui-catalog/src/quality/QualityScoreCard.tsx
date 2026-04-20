@@ -4,6 +4,7 @@ import { useId } from "react";
 
 import { useIntl } from "react-intl";
 
+import { useFilterActions } from "../filter/FilterContext.js";
 import { useQualityActions, useQualityState } from "./QualityContext.js";
 import { QualityScoreCardAction } from "./QualityScoreCardAction.js";
 import { QualityScoreCardAnnouncements } from "./QualityScoreCardAnnouncements.js";
@@ -11,7 +12,6 @@ import { QualityScoreCardButton } from "./QualityScoreCardButton.js";
 import { QualityScoreCardDate } from "./QualityScoreCardDate.js";
 import { QualityScoreCardScore } from "./QualityScoreCardScore.js";
 import { getQualityIssueCodes } from "./utils.js";
-import { useFilterActions } from "../filter/FilterContext.js";
 
 export function QualityScoreCard() {
     const intl = useIntl();

@@ -4,11 +4,11 @@ import { type PropsWithChildren, createContext, useContext, useMemo } from "reac
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import type { ICatalogItem, ICatalogItemRef } from "./types.js";
-import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
 import { type AsyncStatus } from "../async/types.js";
 import { useObjectTypeCounterSync } from "../objectType/ObjectTypeContext.js";
 import type { ObjectType } from "../objectType/types.js";
+import type { ICatalogItem, ICatalogItemRef } from "./types.js";
+import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
 
 export interface ICatalogFeedState {
     items: ICatalogItem[];

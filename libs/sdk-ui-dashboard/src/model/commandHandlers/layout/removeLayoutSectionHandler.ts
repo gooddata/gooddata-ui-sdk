@@ -4,8 +4,6 @@ import { isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { validateSectionExists } from "./validation/layoutValidation.js";
 import {
     findSections,
     getParentPath,
@@ -19,6 +17,8 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveRelativeIndex } from "../../utils/arrayOps.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { validateSectionExists } from "./validation/layoutValidation.js";
 
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,

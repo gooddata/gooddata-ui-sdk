@@ -4,12 +4,6 @@ import { useCallback, useState } from "react";
 
 import { type ICatalogDateDataset, type IWidget } from "@gooddata/sdk-model";
 
-import { DateDatasetDuplicityWarning } from "./DateDatasetDuplicityWarning.js";
-import { DateDatasetPicker } from "./DateDatasetPicker.js";
-import { DateFilterCheckbox } from "./DateFilterCheckbox.js";
-import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
-import { useIsSelectedDatasetHidden } from "./useIsSelectedDatasetHidden.js";
-import { getUnrelatedDateDataset, getUnrelatedDateDatasets } from "./utils.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
     selectAllCatalogDateDatasetsMap,
@@ -17,6 +11,12 @@ import {
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectEnableUnavailableItemsVisibility } from "../../../../model/store/config/configSelectors.js";
 import { selectFilterContextDateFilterByDataSet } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { DateDatasetDuplicityWarning } from "./DateDatasetDuplicityWarning.js";
+import { DateDatasetPicker } from "./DateDatasetPicker.js";
+import { DateFilterCheckbox } from "./DateFilterCheckbox.js";
+import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
+import { useIsSelectedDatasetHidden } from "./useIsSelectedDatasetHidden.js";
+import { getUnrelatedDateDataset, getUnrelatedDateDatasets } from "./utils.js";
 
 interface IDateDatasetFilterProps {
     widget: IWidget;

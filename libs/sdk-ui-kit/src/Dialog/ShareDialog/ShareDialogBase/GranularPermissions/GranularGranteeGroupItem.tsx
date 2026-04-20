@@ -1,13 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown.js";
-import { getGranteePossibilities } from "./permissionsLogic.js";
-import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { type CurrentUserPermissions } from "../../types.js";
 import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 import { GranteeGroupIcon } from "../GranteeIcons.js";
@@ -18,6 +15,9 @@ import {
     type IGranularGranteeGroup,
 } from "../types.js";
 import { getGranteeItemTestId, getGranteeLabel } from "../utils.js";
+import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown.js";
+import { getGranteePossibilities } from "./permissionsLogic.js";
+import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 
 interface IGranularGranteeGroupItemProps {
     grantee: IGranularGranteeGroup | IGranteeRules;

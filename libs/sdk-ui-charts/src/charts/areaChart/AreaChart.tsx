@@ -18,7 +18,6 @@ import {
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { CoreAreaChart } from "./CoreAreaChart.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type IBucketChartProps } from "../../interfaces/chartProps.js";
 import { ViewByAttributesLimit } from "../../interfaces/limits.js";
@@ -27,6 +26,7 @@ import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { stackedChartDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 import { truncate } from "../_commons/truncate.js";
+import { CoreAreaChart } from "./CoreAreaChart.js";
 
 //
 // Internals

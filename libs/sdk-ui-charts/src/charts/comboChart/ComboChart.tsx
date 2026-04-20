@@ -19,13 +19,13 @@ import {
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { CoreComboChart } from "./CoreComboChart.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type IBucketChartProps } from "../../interfaces/chartProps.js";
 import { withChart } from "../_base/withChart.js";
 import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { defaultDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
+import { CoreComboChart } from "./CoreComboChart.js";
 
 //
 // Internals

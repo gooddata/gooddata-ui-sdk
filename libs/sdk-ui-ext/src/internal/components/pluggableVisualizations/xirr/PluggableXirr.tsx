@@ -15,7 +15,6 @@ import {
 import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
 import { CoreXirr, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 
-import { getXirrBuckets } from "./xirrBucketHelper.js";
 import {
     type IExtendedReferencePoint,
     type IReferencePoint,
@@ -42,6 +41,7 @@ import {
 } from "../../../utils/uiConfigHelpers/xirrUiConfigHelper.js";
 import { UnsupportedConfigurationPanel } from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+import { getXirrBuckets } from "./xirrBucketHelper.js";
 
 /**
  * PluggableXirr

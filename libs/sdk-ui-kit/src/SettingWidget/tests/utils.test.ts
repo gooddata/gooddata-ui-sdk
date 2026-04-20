@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { customItemsMock, fullyDefinedThemeMock } from "./mocks.js";
 import { getColorsPreviewFromTheme } from "../StylingSettingWidget/utils.js";
+import { customItemsMock, fullyDefinedThemeMock } from "./mocks.js";
 
 describe("getColorsPreviewFromTheme", () => {
     it("should return default array of colors when theme is empty", () => {

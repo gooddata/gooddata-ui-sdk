@@ -1,12 +1,12 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
+import { GridLayoutElement } from "../../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
 import { DashboardLayoutSectionBorderMarker } from "./DashboardLayoutSectionBorderMarker.js";
 import { type DashboardLayoutSectionBorderStatus } from "./types.js";
-import { GridLayoutElement } from "../../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
 
 interface IDashboardLayoutSectionBorderLineProps {
     position: "top" | "bottom";

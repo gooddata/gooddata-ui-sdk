@@ -13,7 +13,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 import { newCatalogDateDatasetMap } from "../../../_staging/metadata/objRefMap.js";
 import { type IChangeKpiWidgetMeasure } from "../../commands/kpi.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -25,6 +24,7 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type IWidgetHeader, isWidgetHeader } from "../../types/widgetTypes.js";
+import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 
 function* validateMeasure(
     ctx: DashboardContext,

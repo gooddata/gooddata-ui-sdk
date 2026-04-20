@@ -2,8 +2,6 @@
 
 import { useState } from "react";
 
-import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
-import { SortIndicator } from "./SortIndicator.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
 import { useHeaderMenu } from "../../hooks/header/useHeaderMenu.js";
@@ -15,6 +13,8 @@ import {
     getPivotHeaderTextTestIdProps,
 } from "../../testing/dataTestIdGenerators.js";
 import { type AgGridColumnDef, type AgGridHeaderParams } from "../../types/agGrid.js";
+import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
+import { SortIndicator } from "./SortIndicator.js";
 
 /**
  * Renderer for attribute header.

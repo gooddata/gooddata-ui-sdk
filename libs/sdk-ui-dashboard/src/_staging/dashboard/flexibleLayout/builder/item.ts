@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -22,14 +22,14 @@ import {
     isKpiWidgetDefinition,
 } from "@gooddata/sdk-model";
 
+import { type ILayoutItemPath } from "../../../../types.js";
+import { type IDashboardLayoutItemFacade } from "../facade/interfaces.js";
 import {
     type DashboardLayoutItemModifications,
     type IDashboardLayoutBuilder,
     type IDashboardLayoutItemBuilder,
     type IDashboardLayoutSectionBuilder,
 } from "./interfaces.js";
-import { type ILayoutItemPath } from "../../../../types.js";
-import { type IDashboardLayoutItemFacade } from "../facade/interfaces.js";
 
 /**
  * @alpha

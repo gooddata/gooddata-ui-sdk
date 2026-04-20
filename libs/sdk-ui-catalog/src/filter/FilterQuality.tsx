@@ -7,11 +7,11 @@ import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } fro
 import { type SemanticQualityIssueCode, SemanticQualityIssueCodeValues } from "@gooddata/sdk-model";
 import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 
-import { useFilterActions, useFilterState } from "./FilterContext.js";
-import { StaticFilter } from "./StaticFilter.js";
 import { filterQuality } from "../automation/testIds.js";
 import { useQualityReportState } from "../quality/QualityContext.js";
 import { getQualityIssueCodes } from "../quality/utils.js";
+import { useFilterActions, useFilterState } from "./FilterContext.js";
+import { StaticFilter } from "./StaticFilter.js";
 
 const titleMessages: { [key in SemanticQualityIssueCode]?: MessageDescriptor } = defineMessages({
     [SemanticQualityIssueCodeValues.IDENTICAL_TITLE]: {

@@ -15,14 +15,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { newAttributeFilterCallbacks } from "./callbacks.js";
-import {
-    selectAttributeFilter,
-    selectAttributeFilterDisplayAsLabel,
-    selectAttributeFilterToDisplay,
-    selectOriginalFilter,
-} from "./redux/filter/filterSelectors.js";
-import { type AttributeFilterHandlerConfig } from "./types.js";
 import { type InvertableAttributeElementSelection } from "../types/attributeFilterHandler.js";
 import {
     type OnInitCancelCallbackPayload,
@@ -69,6 +61,7 @@ import {
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
 } from "../types/selectionHandler.js";
+import { newAttributeFilterCallbacks } from "./callbacks.js";
 import {
     getElementsByKeys,
     selectElements,
@@ -87,6 +80,12 @@ import {
     selectOrder,
     selectSearch,
 } from "./redux/elements/elementsSelectors.js";
+import {
+    selectAttributeFilter,
+    selectAttributeFilterDisplayAsLabel,
+    selectAttributeFilterToDisplay,
+    selectOriginalFilter,
+} from "./redux/filter/filterSelectors.js";
 import { selectInitError, selectInitStatus } from "./redux/init/initSelectors.js";
 import {
     selectAttribute,
@@ -113,6 +112,7 @@ import {
 import { createAttributeFilterHandlerStore } from "./redux/store/createStore.js";
 import { actions } from "./redux/store/slice.js";
 import { type IAttributeFilterHandlerStore } from "./redux/store/types.js";
+import { type AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

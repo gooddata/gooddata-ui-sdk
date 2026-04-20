@@ -26,11 +26,11 @@ import {
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
 
+import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { TigerWorkspaceCatalog } from "./catalog.js";
 import { loadAttributesAndDateDatasetsAndHierarchies } from "./datasetLoader.js";
 import { addRsqlFilterToParams, rsqlAnd, searchToRsqlFilter, tagsToRsqlFilter } from "./rsqlFilter.js";
-import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter.js";
-import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(

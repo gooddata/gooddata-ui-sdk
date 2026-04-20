@@ -25,13 +25,6 @@ import {
 } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { DateFilterBodyButton } from "./DateFilterBodyButton.js";
-import { DateFilterBodyContentFiltered } from "./DateFilterBodyContentFiltered.js";
-import { DateFilterConfigurationButton } from "./DateFilterConfigurationButton.js";
-import { DateFilterCustomPeriodButtons } from "./DateFilterCustomPeriodButtons.js";
-import { DateFilterFormContent } from "./DateFilterFormContent.js";
-import { EditModeMessage } from "./EditModeMessage.js";
-import { type DateFilterRoute } from "./types.js";
 import { CheckboxSection } from "../CheckboxSection/CheckboxSection.js";
 import {
     type DateFilterOption,
@@ -49,6 +42,13 @@ import {
     getFiscalTabsConfig,
 } from "../utils/presetFilterUtils.js";
 import { VisibleScrollbar } from "../VisibleScrollbar/VisibleScrollbar.js";
+import { DateFilterBodyButton } from "./DateFilterBodyButton.js";
+import { DateFilterBodyContentFiltered } from "./DateFilterBodyContentFiltered.js";
+import { DateFilterConfigurationButton } from "./DateFilterConfigurationButton.js";
+import { DateFilterCustomPeriodButtons } from "./DateFilterCustomPeriodButtons.js";
+import { DateFilterFormContent } from "./DateFilterFormContent.js";
+import { EditModeMessage } from "./EditModeMessage.js";
+import { type DateFilterRoute } from "./types.js";
 
 const ACTIONS_BUTTONS_HEIGHT = 53;
 const EXCLUDE_OPEN_PERIOD_HEIGHT = 30; // height of 'Exclude open period' checkbox component

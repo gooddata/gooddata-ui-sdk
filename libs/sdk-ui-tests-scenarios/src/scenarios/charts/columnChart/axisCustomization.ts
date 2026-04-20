@@ -4,14 +4,14 @@ import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import {
     ColumnChartWithArithmeticMeasuresAndViewBy,
     ColumnChartWithTwoMeasuresAndTwoViewBy,
     ColumnChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
-import { scenariosFor } from "../../../scenarioGroup.js";
-import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const singleAxisNameConfig = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(...ScenarioGroupNames.Axes)

@@ -7,9 +7,9 @@ import {
 import { type IUserService, type IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { type IUser } from "@gooddata/sdk-model";
 
-import { TigerUserSettingsService } from "./settings.js";
 import { convertUser } from "../../convertors/fromBackend/UsersConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { TigerUserSettingsService } from "./settings.js";
 
 export class TigerUserService implements IUserService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}

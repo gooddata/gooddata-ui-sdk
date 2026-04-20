@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -6,8 +6,8 @@ import { useIntl } from "react-intl";
 
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { type ILegendGroup } from "./types.js";
 import { messages } from "../locales.js";
+import { type ILegendGroup } from "./types.js";
 
 export function LegendGroup({
     item,

@@ -13,6 +13,8 @@ import {
 } from "@gooddata/sdk-model";
 import { type DataViewFacade, getTotalInfo } from "@gooddata/sdk-ui";
 
+import { type IPivotTableConfig } from "../../publicTypes.js";
+import { getDataViewSeriesDescriptors } from "../utils.js";
 import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 import {
     type AnyCol,
@@ -29,8 +31,6 @@ import {
     type TableCols,
     isSeriesCol,
 } from "./tableDescriptorTypes.js";
-import { type IPivotTableConfig } from "../../publicTypes.js";
-import { getDataViewSeriesDescriptors } from "../utils.js";
 
 type ColumnGroupLevel = {
     pkToGroup: Record<string, IScopeCol>;

@@ -1,6 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
-import { type IMappingHeader } from "./MappingHeader.js";
+// (C) 2007-2026 GoodData Corporation
+
 import { type DataViewFacade } from "../results/facade.js";
+import { type IMappingHeader } from "./MappingHeader.js";
 
 /**
  * Additional data that describes the context in which the {@link IHeaderPredicate} match is being tested.

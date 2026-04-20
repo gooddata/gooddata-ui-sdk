@@ -20,14 +20,14 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 
-import { DrillDialogExportDropdownResolver } from "./DrillDialogExportDropdownResolver.js";
-import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableExportToPdfTabular,
     selectSettings,
 } from "../../../../../model/store/config/configSelectors.js";
 import { selectCanExportTabular } from "../../../../../model/store/permissions/permissionsSelectors.js";
+import { DrillDialogExportDropdownResolver } from "./DrillDialogExportDropdownResolver.js";
+import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 
 export interface IDrillDialogProps extends Pick<
     IDialogBaseProps,

@@ -16,14 +16,6 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { DefaultDashboardFilterGroup } from "./DefaultDashboardFilterGroup.js";
-import { type IFilterBarProps } from "./types.js";
-import {
-    type FilterBarItem,
-    isFilterBarAttributeFilter,
-    isFilterBarFilterGroupItem,
-    isFilterBarFilterPlaceholder,
-} from "./useFiltersWithAddedPlaceholder.js";
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsElementUris } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -53,6 +45,14 @@ import { useDashboardComponentsContext } from "../../dashboardContexts/Dashboard
 import { DraggableAttributeFilter } from "../../dragAndDrop/draggableAttributeFilter/DraggableAttributeFilter.js";
 import { DraggableDateFilter } from "../../dragAndDrop/draggableDateFilter/DraggableDateFilter.js";
 import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
+import { DefaultDashboardFilterGroup } from "./DefaultDashboardFilterGroup.js";
+import { type IFilterBarProps } from "./types.js";
+import {
+    type FilterBarItem,
+    isFilterBarAttributeFilter,
+    isFilterBarFilterGroupItem,
+    isFilterBarFilterPlaceholder,
+} from "./useFiltersWithAddedPlaceholder.js";
 
 /**
  * @alpha

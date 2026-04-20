@@ -224,11 +224,11 @@ import {
     isUriRef,
 } from "@gooddata/sdk-model";
 
+import { AbstractExecutionFactory } from "../toolkit/execution.js";
 import { DummyAnalyticsCatalogService } from "./DummyAnalyticsCatalogService.js";
 import { DummyChatConversations, DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
 import { DummySemanticQualityService } from "./DummySemanticQualityService.js";
 import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
-import { AbstractExecutionFactory } from "../toolkit/execution.js";
 
 /**
  * @internal

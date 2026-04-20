@@ -4,8 +4,6 @@ import { type ReactElement, useCallback, useMemo } from "react";
 
 import { type ContentRect } from "react-measure";
 
-import { type LegendMessageFormatter } from "./legendMessages.js";
-import { MultiLayerLegendPanel } from "./MultiLayerLegendPanel.js";
 import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
 import { useLegendConfig } from "../../hooks/legend/useLegendConfig.js";
@@ -13,6 +11,8 @@ import { useLegendDetails } from "../../hooks/legend/useLegendDetails.js";
 import { useMultiLayerLegend } from "../../hooks/legend/useMultiLayerLegend.js";
 import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
+import { type LegendMessageFormatter } from "./legendMessages.js";
+import { MultiLayerLegendPanel } from "./MultiLayerLegendPanel.js";
 
 /**
  * Internal container for GeoChart legend overlay.

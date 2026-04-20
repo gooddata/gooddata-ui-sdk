@@ -3,8 +3,6 @@
 import blessed from "blessed";
 import { intersection, max } from "lodash-es";
 
-import { AppPanel, type AppPanelOptions } from "./appPanel.js";
-import { ColorCodes } from "./colors.js";
 import {
     determinePackageBuildOrder,
     findDependingPackages,
@@ -27,6 +25,8 @@ import {
     buildOutputRequested,
     packagesSelected,
 } from "../events.js";
+import { AppPanel, type AppPanelOptions } from "./appPanel.js";
+import { ColorCodes } from "./colors.js";
 
 type PackageListItem = {
     selected: boolean;

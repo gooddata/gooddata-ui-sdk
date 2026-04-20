@@ -1,9 +1,6 @@
 name: 'Send Slack Notification'
 description: 'Sends a notification to Slack'
 inputs:
-  message:
-    description: 'The message to send to Slack (supports Slack markdown)'
-    required: true
   channel:
     description: 'The Slack channel to send the message to'
     required: false
@@ -11,14 +8,91 @@ inputs:
   slack-bot-token:
     description: 'Slack bot token for authentication'
     required: true
+  message:
+    description: 'The message to send to Slack (supports Slack markdown)'
+    required: false
+    default: ''
+  blocks:
+    description: 'Block Kit blocks JSON array for rich message formatting'
+    required: false
+    default: ''
+  attachments:
+    description: 'Slack attachments JSON array for colour-coded or legacy-style messages'
+    required: false
+    default: ''
+  payload-file-path:
+    description: 'Path to a pre-built JSON payload file (overrides message/channel/blocks/attachments)'
+    required: false
+    default: ''
+  return-permalink:
+    description: 'Whether to fetch a permalink for the posted message'
+    required: false
+    default: 'false'
+
+outputs:
+  permalink:
+    description: 'Permalink to the posted message (only set when return-permalink is true)'
+    value: ${{ steps.get-permalink.outputs.permalink }}
 
 runs:
   using: 'composite'
   steps:
-    - name: Send Slack message
-      uses: slackapi/slack-github-action@v1.27.1
-      with:
-        channel-id: ${{ inputs.channel }}
-        slack-message: ${{ inputs.message }}
+    - name: Build payload
+      id: build-payload
+      shell: bash
       env:
-        SLACK_BOT_TOKEN: ${{ inputs.slack-bot-token }}
+        SLACK_CHANNEL: ${{ inputs.channel }}
+        SLACK_MESSAGE: ${{ inputs.message }}
+        SLACK_BLOCKS: ${{ inputs.blocks }}
+        SLACK_ATTACHMENTS: ${{ inputs.attachments }}
+        SLACK_PAYLOAD_FILE: ${{ inputs.payload-file-path }}
+      run: |
+        if [ -n "$SLACK_PAYLOAD_FILE" ]; then
+          echo "payload-file=$SLACK_PAYLOAD_FILE" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        PAYLOAD=$(jq -n \
+          --arg channel "$SLACK_CHANNEL" \
+          --arg text "$SLACK_MESSAGE" \
+          '{channel: $channel, text: $text}')
+
+        if [ -n "$SLACK_BLOCKS" ]; then
+          PAYLOAD=$(echo "$PAYLOAD" | jq --argjson blocks "$SLACK_BLOCKS" '. + {blocks: $blocks}')
+        fi
+
+        if [ -n "$SLACK_ATTACHMENTS" ]; then
+          PAYLOAD=$(echo "$PAYLOAD" | jq --argjson attachments "$SLACK_ATTACHMENTS" '. + {attachments: $attachments}')
+        fi
+
+        PAYLOAD_FILE=$(mktemp "${RUNNER_TEMP}/slack-payload-XXXXXX.json")
+        echo "$PAYLOAD" > "$PAYLOAD_FILE"
+        echo "payload-file=$PAYLOAD_FILE" >> "$GITHUB_OUTPUT"
+
+    - name: Send Slack message
+      id: post-message
+      uses: slackapi/slack-github-action@v3.0.1
+      with:
+        method: chat.postMessage
+        token: ${{ inputs.slack-bot-token }}
+        payload-file-path: ${{ steps.build-payload.outputs.payload-file }}
+
+    - name: Get message permalink
+      id: get-permalink-api
+      if: ${{ inputs.return-permalink == 'true' }}
+      uses: slackapi/slack-github-action@v3.0.1
+      with:
+        method: chat.getPermalink
+        token: ${{ inputs.slack-bot-token }}
+        payload: |
+          {
+            "channel": "${{ fromJSON(steps.post-message.outputs.response).channel }}",
+            "message_ts": "${{ fromJSON(steps.post-message.outputs.response).message.ts }}"
+          }
+
+    - name: Extract permalink
+      id: get-permalink
+      if: ${{ inputs.return-permalink == 'true' }}
+      shell: bash
+      run: |
+        echo "permalink=${{ fromJSON(steps.get-permalink-api.outputs.response).permalink }}" >> "$GITHUB_OUTPUT"

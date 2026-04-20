@@ -2,10 +2,10 @@
 
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
-import { VisualizationListItem } from "./VisualizationListItem.js";
 import { type ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectInsightsMap } from "../../../../../model/store/insights/insightsSelectors.js";
+import { VisualizationListItem } from "./VisualizationListItem.js";
 
 interface IVisulizationsListProps {
     visualizations: IInsightWidget[];

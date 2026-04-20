@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -11,9 +11,9 @@ import {
 } from "@gooddata/sdk-model";
 import { Message, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
+import { type OldWidgetAttachmentType } from "../../types.js";
 import { AttachmentWidgets } from "./AttachmentItems.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
-import { type OldWidgetAttachmentType } from "../../types.js";
 
 export interface IWidgetAttachmentsProps {
     widgetFilters?: IFilter[];

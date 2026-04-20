@@ -8,11 +8,11 @@ import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
 import { type IMappingHeader, getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { type IChartFillConfig, type PatternFillName } from "@gooddata/sdk-ui-vis-commons";
 
-import { ColoredItemContent } from "./ColoredItemContent.js";
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getTranslation } from "../../../../utils/translations.js";
 import { isWaterfallColorHeaderItemKey } from "../../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
 import { ColorDropdown } from "../colorDropdown/ColorDropdown.js";
+import { ColoredItemContent } from "./ColoredItemContent.js";
 
 export interface IColoredItemProps {
     colorPalette: IColorPalette;

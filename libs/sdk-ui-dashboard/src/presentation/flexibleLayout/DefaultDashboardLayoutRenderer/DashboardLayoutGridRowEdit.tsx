@@ -2,9 +2,6 @@
 
 import { type ReactElement, useMemo } from "react";
 
-import { type IDashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
-import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
-import { type IDashboardLayoutItemKeyGetter } from "./interfaces.js";
 import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutSectionFacade,
@@ -14,6 +11,9 @@ import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.j
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
+import { type IDashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
+import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
+import { type IDashboardLayoutItemKeyGetter } from "./interfaces.js";
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
     serializeLayoutItemPath(item.index());

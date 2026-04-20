@@ -20,8 +20,8 @@ import {
 } from "@gooddata/sdk-ui-geo";
 
 import { scenariosFor } from "../../scenarioGroup.js";
-import { OfflineMapStyle } from "./_infra/offlineMapStyle.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
+import { OfflineMapStyle } from "./_infra/offlineMapStyle.js";
 
 const GeoStateArea = modifyAttribute(ReferenceMd.State.Code, (m) => m.localId("geo.area"));
 const Population = modifyMeasure(ReferenceMd.Population.Sum, (m) => m.alias("Population"));

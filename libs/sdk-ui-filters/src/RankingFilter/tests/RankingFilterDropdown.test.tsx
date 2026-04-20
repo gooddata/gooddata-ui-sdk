@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { fireEvent, render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -6,6 +6,11 @@ import { describe, expect, it, vi } from "vitest";
 import { newRankingFilter } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
+import {
+    type IRankingFilterDropdownProps,
+    RankingFilterDropdown,
+    prepareRankingFilterState,
+} from "../RankingFilterDropdown.js";
 import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
 import {
     attribute1Ref as mockAttribute1Ref,
@@ -19,11 +24,6 @@ import {
     measure3Ref as mockMeasure3Ref,
     measureItems as mockMeasureItems,
 } from "./mocks.js";
-import {
-    type IRankingFilterDropdownProps,
-    RankingFilterDropdown,
-    prepareRankingFilterState,
-} from "../RankingFilterDropdown.js";
 
 const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
     const defaultProps: IRankingFilterDropdownProps = {

@@ -1,8 +1,7 @@
-// (C) 2025 GoodData Corporation
-
-import type { CSSProperties, KeyboardEvent } from "react";
+// (C) 2025-2026 GoodData Corporation
 
 import type { ReferenceType, UseInteractionsReturn } from "@floating-ui/react";
+import type { CSSProperties, KeyboardEvent } from "react";
 
 /** @internal */
 export interface IUiComboboxOption {

@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IFilterButtonCustomIcon, type VisibilityMode } from "@gooddata/sdk-ui-filters";
 
+import { messages } from "../../locales.js";
 import {
     type FilterBarDraggableItems,
     type FilterBarItem,
@@ -19,7 +20,6 @@ import {
     isFilterBarDateFilterWithDimension,
     isFilterBarFilterPlaceholder,
 } from "./filterBar/useFiltersWithAddedPlaceholder.js";
-import { messages } from "../../locales.js";
 
 const VISIBILITY_BUBBLE_SETTINGS = {
     bubbleClassNames: "gd-filter-button-custom-icon-bubble s-gd-filter-button-custom-icon-bubble",

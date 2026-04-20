@@ -10,17 +10,17 @@ import {
     fireDrillEvent,
 } from "@gooddata/sdk-ui";
 
-import {
-    applyDrillableItems,
-    buildDrillEventData,
-    getHeadlineData,
-} from "./utils/XirrTransformationUtils.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { LegacyHeadline } from "../../headline/internal/headlines/LegacyHeadline.js";
 import {
     type HeadlineFiredDrillEvent,
     type IHeadlineFiredDrillEventItemContext,
 } from "../../headline/internal/interfaces/DrillEvents.js";
+import {
+    applyDrillableItems,
+    buildDrillEventData,
+    getHeadlineData,
+} from "./utils/XirrTransformationUtils.js";
 
 export interface IXirrTransformationProps {
     dataView: IDataView;

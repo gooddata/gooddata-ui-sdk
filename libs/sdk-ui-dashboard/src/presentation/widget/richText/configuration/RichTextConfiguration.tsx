@@ -6,9 +6,9 @@ import { isRichTextWidget, objRefToString } from "@gooddata/sdk-model";
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { RichTextFilters } from "./RichTextFilters.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { type IRichTextMenuSubmenuComponentProps } from "../../richTextMenu/types.js";
+import { RichTextFilters } from "./RichTextFilters.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

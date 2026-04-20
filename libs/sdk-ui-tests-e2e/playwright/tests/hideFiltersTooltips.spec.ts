@@ -5,17 +5,10 @@ import { expect } from "@playwright/test";
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
-import {
-    assertSaveButtonEnabled,
-    enterEditMode,
-    mockFeatureHub,
-    visit,
-    waitFilterElementsLoaded,
-} from "../helpers.js";
+import { assertSaveButtonEnabled, enterEditMode, visit, waitFilterElementsLoaded } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Hide Filters Tooltips", "hideFiltersTooltips", () => {

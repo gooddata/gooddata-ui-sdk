@@ -2,8 +2,8 @@
 
 import { type DependencyList, useLayoutEffect, useState } from "react";
 
-import { useTagsElements } from "./useTagsElements.js";
 import { type IUiTagDef } from "../types.js";
+import { useTagsElements } from "./useTagsElements.js";
 
 const PADDING = 5;
 const MIN_WIDTH = 10;

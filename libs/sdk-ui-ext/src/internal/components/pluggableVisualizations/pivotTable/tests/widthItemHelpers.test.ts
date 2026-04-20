@@ -5,6 +5,9 @@ import { describe, expect, it } from "vitest";
 import { uriRef } from "@gooddata/sdk-model";
 import { type ColumnWidthItem, type MeasureGroupDimension } from "@gooddata/sdk-ui-pivot";
 
+import { type IBucketFilter, type IBucketItem } from "../../../../interfaces/Visualization.js";
+import { simpleStackedReferencePoint } from "../../../../tests/mocks/referencePointMocks.js";
+import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
 import {
     invalidAttributeColumnWidthItem,
     invalidMeasureColumnWidthItem,
@@ -20,9 +23,6 @@ import {
     validSliceMeasureColumnWidthItem,
     validWeakMeasureColumnWidthItem,
 } from "./widthItemsMock.js";
-import { type IBucketFilter, type IBucketItem } from "../../../../interfaces/Visualization.js";
-import { simpleStackedReferencePoint } from "../../../../tests/mocks/referencePointMocks.js";
-import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
 
 describe("adaptReferencePointWidthItemsToPivotTable", () => {
     const sourceReferencePoint = simpleStackedReferencePoint;

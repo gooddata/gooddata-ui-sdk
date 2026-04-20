@@ -4,13 +4,6 @@ import { useState } from "react";
 
 import { isEmpty } from "lodash-es";
 
-import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
-import {
-    getColumnMeasureIdentifier,
-    getPivotAttributeDescriptorsForMeasureGroup,
-    getRowScope,
-    isValueRowDef,
-} from "./utils/common.js";
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { e } from "../../features/styling/bem.js";
@@ -22,6 +15,13 @@ import {
     type AgGridColumnDef,
     type AgGridHeaderParams,
 } from "../../types/agGrid.js";
+import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
+import {
+    getColumnMeasureIdentifier,
+    getPivotAttributeDescriptorsForMeasureGroup,
+    getRowScope,
+    isValueRowDef,
+} from "./utils/common.js";
 
 /**
  * Renderer for measure group header.

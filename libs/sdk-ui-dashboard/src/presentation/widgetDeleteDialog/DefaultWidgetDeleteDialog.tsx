@@ -7,7 +7,6 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
-import { type IWidgetDeleteDialogProps } from "./types.js";
 import { eagerRemoveSectionItemByWidgetRef } from "../../model/commands/layout.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { dispatchAndWaitFor } from "../../model/store/_infra/dispatchAndWaitFor.js";
@@ -22,6 +21,7 @@ import {
     selectIsWidgetDeleteDialogOpen,
     selectWidgetDeleteDialogWidgetRef,
 } from "../../model/store/ui/uiSelectors.js";
+import { type IWidgetDeleteDialogProps } from "./types.js";
 
 const deleteMessages = defineMessages({
     headline: {

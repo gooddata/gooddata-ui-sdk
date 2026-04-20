@@ -16,10 +16,10 @@ import {
 import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectAllCatalogDateDatasetsMap } from "../../../../model/store/catalog/catalogSelectors.js";
 import { useCurrentDateFilterConfig } from "../../../dragAndDrop/useCurrentDateFilterConfig.js";
+import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 

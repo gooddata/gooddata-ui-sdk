@@ -18,9 +18,9 @@ import { useIntl } from "react-intl";
 import { ShortenedText, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
 import { FilterButtonCustomIcon } from "../../../shared/components/internal/FilterButtonCustomIcon.js";
 import { type IFilterButtonCustomIcon } from "../../../shared/interfaces/index.js";
+import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },

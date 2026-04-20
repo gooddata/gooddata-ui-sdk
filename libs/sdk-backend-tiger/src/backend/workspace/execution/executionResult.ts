@@ -63,7 +63,6 @@ import {
     type IResultHeader,
 } from "@gooddata/sdk-model";
 
-import { augmentCustomOverrideWithNormalizedKeys, resolveCustomOverride } from "./utils.js";
 import { TigerCancellationConverter } from "../../../cancelation/index.js";
 import {
     getAnomalyDetectionDateAttributes,
@@ -82,6 +81,7 @@ import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatti
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";
+import { augmentCustomOverrideWithNormalizedKeys, resolveCustomOverride } from "./utils.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const GEO_COLLECTION_ITEMS_MAX_VALUES_PER_REQUEST = 100;

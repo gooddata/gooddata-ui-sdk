@@ -5,20 +5,13 @@ import { expect } from "@playwright/test";
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
-import {
-    clickChartSeriesPoint,
-    mockFeatureHub,
-    visit,
-    waitStandaloneChartLoaded,
-    waitTableLoaded,
-} from "../helpers.js";
+import { clickChartSeriesPoint, visit, waitStandaloneChartLoaded, waitTableLoaded } from "../helpers.js";
 
 const LEGEND_NAME_CSS = ".series-name";
 const TOOLTIP_TITLE_CSS = ".gd-viz-tooltip-title";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Shorten Metric Name", "shortenMetricName", () => {

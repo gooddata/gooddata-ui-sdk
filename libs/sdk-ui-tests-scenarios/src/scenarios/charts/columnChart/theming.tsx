@@ -2,9 +2,9 @@
 
 import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
-import { ColumnChartWithTwoMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { ColumnChartWithTwoMeasuresAndViewBy } from "./base.js";
 
 export const theming = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

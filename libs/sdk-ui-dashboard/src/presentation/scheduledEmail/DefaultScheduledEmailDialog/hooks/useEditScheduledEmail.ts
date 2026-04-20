@@ -32,7 +32,6 @@ import {
     isWidget,
 } from "@gooddata/sdk-model";
 
-import { useScheduleValidation } from "./useScheduleValidation.js";
 import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
@@ -76,6 +75,7 @@ import {
 import { getUserTimezone } from "../../utils/timezone.js";
 import { isEmail } from "../../utils/validate.js";
 import { type OldWidgetAttachmentType } from "../types.js";
+import { useScheduleValidation } from "./useScheduleValidation.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;

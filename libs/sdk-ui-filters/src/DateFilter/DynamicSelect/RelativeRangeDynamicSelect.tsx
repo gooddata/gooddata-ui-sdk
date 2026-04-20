@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type CSSProperties, type ChangeEvent, useCallback, useMemo, useState } from "react";
 
@@ -6,8 +6,6 @@ import cx from "classnames";
 import { defaultImport } from "default-import";
 import DefaultDownshift, { type ControllerStateAndHelpers } from "downshift";
 
-import { type DynamicSelectItem, type DynamicSelectOption } from "./types.js";
-import { findRelativeDateFilterOptionByValue, findRelativeDateFilterOptionIndexByLabel } from "./utils.js";
 import {
     type ISelectMenuProps,
     ScrollableSelectMenu,
@@ -16,6 +14,8 @@ import {
 } from "../Select/ScrollableSelectMenu.js";
 import { type ISelectItemOption } from "../Select/types.js";
 import { getSelectableItems, itemToString } from "../Select/utils.js";
+import { type DynamicSelectItem, type DynamicSelectOption } from "./types.js";
+import { findRelativeDateFilterOptionByValue, findRelativeDateFilterOptionIndexByLabel } from "./utils.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

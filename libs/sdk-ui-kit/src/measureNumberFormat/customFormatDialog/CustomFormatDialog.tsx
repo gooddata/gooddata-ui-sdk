@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo, useCallback, useMemo, useState } from "react";
 
@@ -6,14 +6,14 @@ import { type WrappedComponentProps } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
 
-import { DocumentationLink } from "./DocumentationLink.js";
-import { FormatInputWithIntl } from "./FormatInput.js";
-import { Preview } from "./previewSection/Preview.js";
 import { Button } from "../../Button/Button.js";
 import { Overlay } from "../../Overlay/Overlay.js";
 import { type IPositioning, SnapPoint } from "../../typings/positioning.js";
 import { positioningToAlignPoints } from "../../utils/positioning.js";
 import { type IFormatTemplate } from "../typings.js";
+import { DocumentationLink } from "./DocumentationLink.js";
+import { FormatInputWithIntl } from "./FormatInput.js";
+import { Preview } from "./previewSection/Preview.js";
 
 interface ICustomFormatDialogOwnProps {
     onApply: (formatString: string) => void;

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IAttributeDisplayFormMetadataObject,
@@ -11,10 +11,10 @@ import {
     type ObjectOrigin,
 } from "@gooddata/sdk-model";
 
-import type { IElementsQueryFactory } from "./elements/index.js";
 import type { IFilterBaseOptions } from "../../common/filtering.js";
 import type { IPagedResource } from "../../common/paging.js";
 import type { QueryMethod } from "../../common/query.js";
+import type { IElementsQueryFactory } from "./elements/index.js";
 
 /**
  * @beta

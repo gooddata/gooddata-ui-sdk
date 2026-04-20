@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
+import { scenariosFor } from "../../scenarioGroup.js";
 import {
     PivotTableWighSingleMeasureAndSingleRowColAttr,
     PivotTableWighTwoMeasureAndSingleRowColAttr,
@@ -17,7 +18,6 @@ import {
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     getCommonPivotTableSizingConfig,
 } from "./base.js";
-import { scenariosFor } from "../../scenarioGroup.js";
 
 export const PivotTableWithTwoMeasuresAndTotals = {
     ...PivotTableWithTwoMeasuresAndTwoRowsAndCols,

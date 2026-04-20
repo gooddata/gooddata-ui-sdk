@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
+import { ZoomProvider } from "../ZoomContext/ZoomContext.js";
 import { Overlay } from "./Overlay.js";
 import { type IOverlayProps } from "./typings.js";
-import { ZoomProvider } from "../ZoomContext/ZoomContext.js";
 
 /**
  * @internal

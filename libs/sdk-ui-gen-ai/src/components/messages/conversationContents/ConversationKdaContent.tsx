@@ -9,12 +9,12 @@ import { connect, useSelector } from "react-redux";
 import { type IChatKdaDefinition } from "@gooddata/sdk-backend-spi";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
-import { useKdaDefinition, useKdaInfo } from "./useKdaDefinition.js";
 import { catalogItemsSelector, settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { setKeyDriverAnalysisAction } from "../../../store/chatWindow/chatWindowSlice.js";
 import { type RootState } from "../../../store/types.js";
 import { collectReferences } from "../../completion/references.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
+import { useKdaDefinition, useKdaInfo } from "./useKdaDefinition.js";
 
 export type ConversationKdaContentProps = {
     kda: IChatKdaDefinition;

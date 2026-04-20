@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -10,7 +10,6 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -25,6 +24,7 @@ import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 import { MinMaxControl } from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {

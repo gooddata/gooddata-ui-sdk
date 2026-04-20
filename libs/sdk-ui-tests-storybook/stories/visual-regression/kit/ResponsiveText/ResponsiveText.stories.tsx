@@ -6,7 +6,6 @@ import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./ResponsiveText.css";
 

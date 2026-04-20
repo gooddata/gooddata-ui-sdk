@@ -4,14 +4,6 @@ import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import { buildRowContainerSanitizationActions } from "./rowContainerSanitization.js";
-import {
-    validateItemExists,
-    validateItemPlacement,
-    validateSectionExists,
-    validateSectionPlacement,
-} from "./validation/layoutValidation.js";
 import {
     areItemsInSameSection,
     areLayoutPathsEqual,
@@ -37,6 +29,14 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { buildRowContainerSanitizationActions } from "./rowContainerSanitization.js";
+import {
+    validateItemExists,
+    validateItemPlacement,
+    validateSectionExists,
+    validateSectionPlacement,
+} from "./validation/layoutValidation.js";
 
 type MoveSectionItemContext = {
     readonly ctx: DashboardContext;

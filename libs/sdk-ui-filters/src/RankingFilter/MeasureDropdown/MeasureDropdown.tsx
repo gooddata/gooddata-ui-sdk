@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -7,8 +7,8 @@ import cx from "classnames";
 import { type ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { MeasureDropdownBody } from "./MeasureDropdownBody.js";
 import { type IMeasureDropdownItem } from "../types.js";
+import { MeasureDropdownBody } from "./MeasureDropdownBody.js";
 
 interface IMeasureDropdownProps {
     items: IMeasureDropdownItem[];

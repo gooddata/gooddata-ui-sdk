@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import fs from "fs";
 import path from "path";
@@ -8,9 +8,9 @@ import { isEmpty } from "lodash-es";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
-import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 import { type InsightRecordingSpec, RecordingFiles } from "../interface.js";
+import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 
 //
 // internal constants & types

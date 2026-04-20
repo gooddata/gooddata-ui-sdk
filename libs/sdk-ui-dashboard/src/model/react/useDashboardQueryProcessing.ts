@@ -6,7 +6,6 @@ import { v4 as uuid } from "uuid";
 
 import { type GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 import {
     type IDashboardQueryFailed,
     type IDashboardQueryRejected,
@@ -15,6 +14,7 @@ import {
 } from "../events/general.js";
 import { type DashboardQueries } from "../queries/index.js";
 import { queryAndWaitFor } from "../store/_infra/queryAndWaitFor.js";
+import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 
 /**
  * @public

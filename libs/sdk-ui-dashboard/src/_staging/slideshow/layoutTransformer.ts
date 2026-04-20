@@ -2,10 +2,10 @@
 
 import { type IDashboardLayout, type IDashboardLayoutSection } from "@gooddata/sdk-model";
 
+import { type IDashboardFocusObject } from "../../model/types/commonTypes.js";
 import { sectionLayoutSection } from "./sectionSlideTransformer.js";
 import { singleWidgetTransformer } from "./singleWidgetTransformer.js";
 import { findFocusedWidget } from "./utils/index.js";
-import { type IDashboardFocusObject } from "../../model/types/commonTypes.js";
 
 /**
  * Transforms layout to export format

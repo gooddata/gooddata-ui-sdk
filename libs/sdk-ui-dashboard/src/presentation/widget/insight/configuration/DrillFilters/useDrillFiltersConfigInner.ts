@@ -4,9 +4,9 @@ import { useCallback, useMemo } from "react";
 
 import { type SourceInsightFilterObjRef, type SourceMeasureFilterObjRef } from "@gooddata/sdk-model";
 
-import { type IDrillFiltersConfigOption } from "./types.js";
 import { isSourceInsightFilterObjRefEqual } from "../../../../../_staging/drills/drillingUtils.js";
 import { type IDrillFiltersConfigExtended } from "../../../../drill/types.js";
+import { type IDrillFiltersConfigOption } from "./types.js";
 
 export type IDrillFiltersConfigSelection = Partial<
     IDrillFiltersConfigExtended & {

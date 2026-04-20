@@ -6,13 +6,6 @@ import cx from "classnames";
 
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
-import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
-import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
-import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
-import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
-import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
-import { WidgetDropZone } from "./WidgetDropZone.js";
 import { areLayoutPathsEqual } from "../../../../_staging/layout/coordinates.js";
 import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
 import {
@@ -28,6 +21,13 @@ import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget
 import { type BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";
 import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
+import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
+import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
+import { WidgetDropZone } from "./WidgetDropZone.js";
 
 export type WidgetDropZoneColumnProps = {
     layoutPath: ILayoutItemPath;

@@ -1,8 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IExistingResources, IStyleReconciliationPlan } from "./types.js";
 import { removeLayerIfExists, removeSourceIfExists } from "../../layers/common/layerOps.js";
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
+import type { IExistingResources, IStyleReconciliationPlan } from "./types.js";
 
 /**
  * Removes all sources and layers specified in the plan from the map.

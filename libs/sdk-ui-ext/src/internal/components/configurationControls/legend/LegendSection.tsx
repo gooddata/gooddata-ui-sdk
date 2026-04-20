@@ -1,11 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { memo } from "react";
 
-import { LegendPositionControl } from "./LegendPositionControl.js";
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
+import { LegendPositionControl } from "./LegendPositionControl.js";
 
 export interface ILegendSection {
     controlsDisabled: boolean;

@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
+import { type ActionOptions } from "../_base/types.js";
 import { type ListCmdActionConfig } from "./actionConfig.js";
 import { type ListEntry } from "./types.js";
-import { type ActionOptions } from "../_base/types.js";
 
 export async function listDashboards(
     config: ListCmdActionConfig,

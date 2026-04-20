@@ -19,11 +19,11 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
+import { DefaultDashboardAttributeFilter } from "../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 import {
     AutomationAttributeFilterProvider,
     useAutomationAttributeFilterContext,
 } from "./AutomationAttributeFilterContext.js";
-import { DefaultDashboardAttributeFilter } from "../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 
 export function AutomationAttributeFilter({
     filter,

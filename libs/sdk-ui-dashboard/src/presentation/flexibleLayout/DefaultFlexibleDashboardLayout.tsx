@@ -15,17 +15,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
-import { DashboardLayout } from "./DefaultDashboardLayoutRenderer/DashboardLayout.js";
-import {
-    type IDashboardLayoutItemKeyGetter,
-    type IDashboardLayoutWidgetRenderer,
-} from "./DefaultDashboardLayoutRenderer/interfaces.js";
-import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
-import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
-import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
-import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
-import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
 import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/builder/layout.js";
 import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
@@ -39,6 +28,17 @@ import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContex
 import { useDashboardCustomizationsContext } from "../dashboardContexts/DashboardCustomizationsContext.js";
 import { DefaultDashboardExportVariables } from "../export/DefaultDashboardExportVariables.js";
 import { type IDashboardLayoutProps } from "../widget/dashboardLayout/types.js";
+import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
+import { DashboardLayout } from "./DefaultDashboardLayoutRenderer/DashboardLayout.js";
+import {
+    type IDashboardLayoutItemKeyGetter,
+    type IDashboardLayoutWidgetRenderer,
+} from "./DefaultDashboardLayoutRenderer/interfaces.js";
+import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
+import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
+import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
+import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
+import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
 
 /**
  * Get dashboard layout for exports.

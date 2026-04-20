@@ -7,7 +7,6 @@ import { useIntl } from "react-intl";
 
 import { Button, UiTooltip, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { type IEditButtonProps } from "./types.js";
 import { switchToEditRenderMode } from "../../../../../model/commands/renderMode.js";
 import {
     useDashboardDispatch,
@@ -21,6 +20,7 @@ import {
     selectDashboardDensity,
     selectExecutionTimestamp,
 } from "../../../../../model/store/ui/uiSelectors.js";
+import { type IEditButtonProps } from "./types.js";
 
 /**
  * @internal

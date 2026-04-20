@@ -5,11 +5,11 @@ import { call, select } from "redux-saga/effects";
 
 import { objRefToString } from "@gooddata/sdk-model";
 
-import { removeSectionItemSaga } from "./removeSectionItemHandler.js";
 import { type IRemoveSectionItemByWidgetRef } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectWidgetPathByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { removeSectionItemSaga } from "./removeSectionItemHandler.js";
 
 export function* removeSectionItemByWidgetRefHandler(
     ctx: DashboardContext,

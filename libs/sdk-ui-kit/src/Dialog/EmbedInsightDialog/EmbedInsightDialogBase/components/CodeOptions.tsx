@@ -1,12 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { type IReactOptions, type UnitsType } from "../types.js";
 import { HeightSetting } from "./HeightSetting.js";
 import { ToggleSwitch } from "./ToggleSwitch.js";
-import { type IReactOptions, type UnitsType } from "../types.js";
 
 /**
  * @internal

@@ -22,12 +22,12 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture.js";
 import {
     type IFilterWithApplyOnResult,
     convertFilter,
     newFilterWithApplyOnResult,
 } from "../FilterConverter.js";
+import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture.js";
 
 describe("tiger filter converter from model to AFM", () => {
     describe("convert measure value filter", () => {

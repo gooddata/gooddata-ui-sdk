@@ -2,9 +2,9 @@
 
 import { BubbleChart, type IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 
-import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 
 export const theming = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

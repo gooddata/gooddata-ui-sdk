@@ -22,17 +22,6 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { loadCatalog } from "./loadCatalog.js";
-import { loadDashboardList } from "./loadDashboardList.js";
-import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
-import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
-import { loadFilterViews } from "./loadFilterViews.js";
-import { loadUser } from "./loadUser.js";
-import { type IDateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
-import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
-import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
-import { resolveEntitlements } from "./resolveEntitlements.js";
-import { resolvePermissions } from "./resolvePermissions.js";
 import {
     createDisplayFormMap,
     createDisplayFormMapFromCatalog,
@@ -69,6 +58,17 @@ import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "../common/stateInitializers.js";
+import { loadCatalog } from "./loadCatalog.js";
+import { loadDashboardList } from "./loadDashboardList.js";
+import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
+import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
+import { loadFilterViews } from "./loadFilterViews.js";
+import { loadUser } from "./loadUser.js";
+import { type IDateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
+import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
+import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
+import { resolveEntitlements } from "./resolveEntitlements.js";
+import { resolvePermissions } from "./resolvePermissions.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,

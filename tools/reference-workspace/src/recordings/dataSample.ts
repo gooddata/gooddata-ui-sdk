@@ -1,19 +1,18 @@
 // (C) 2026 GoodData Corporation
 
-/* eslint-disable import-x/order */
 /* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2026-02-18T13:52:09.924Z; */
 
-import df_label_f_activity_subject from "./metadata/displayForms/label.f_activity.subject/elements.json" with { type: "json" };
-import df_label_f_product_product_name from "./metadata/displayForms/label.f_product.product.name/elements.json" with { type: "json" };
 import df_attr_f_product_product from "./metadata/displayForms/attr.f_product.product/elements.json" with { type: "json" };
+import df_attr_f_stage_stagename from "./metadata/displayForms/attr.f_stage.stagename/elements.json" with { type: "json" };
+import df_f_opportunitysnapshot_forecastcategory_id from "./metadata/displayForms/f_opportunitysnapshot.forecastcategory_id/elements.json" with { type: "json" };
 import df_f_owner_department_id from "./metadata/displayForms/f_owner.department_id/elements.json" with { type: "json" };
 import df_f_owner_region_id from "./metadata/displayForms/f_owner.region_id/elements.json" with { type: "json" };
 import df_f_stage_status_id from "./metadata/displayForms/f_stage.status_id/elements.json" with { type: "json" };
-import df_f_opportunitysnapshot_forecastcategory_id from "./metadata/displayForms/f_opportunitysnapshot.forecastcategory_id/elements.json" with { type: "json" };
-import df_attr_f_stage_stagename from "./metadata/displayForms/attr.f_stage.stagename/elements.json" with { type: "json" };
 import df_label_f_account_account_name from "./metadata/displayForms/label.f_account.account.name/elements.json" with { type: "json" };
-import df_user_id from "./metadata/displayForms/user_id/elements.json" with { type: "json" };
+import df_label_f_activity_subject from "./metadata/displayForms/label.f_activity.subject/elements.json" with { type: "json" };
+import df_label_f_product_product_name from "./metadata/displayForms/label.f_product.product.name/elements.json" with { type: "json" };
 import df_user_id_username from "./metadata/displayForms/user_id.username/elements.json" with { type: "json" };
+import df_user_id from "./metadata/displayForms/user_id/elements.json" with { type: "json" };
 
 export const DataSamples = {
     Department: { DirectSales: df_f_owner_department_id[0], InsideSales: df_f_owner_department_id[1] },

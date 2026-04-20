@@ -15,9 +15,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
-import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
-import { getAttributeByDisplayForm } from "./utils.js";
 import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
@@ -27,6 +24,9 @@ import {
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
+import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
+import { getAttributeByDisplayForm } from "./utils.js";
 
 interface IFilterConfigurationProps {
     widget: IWidget;

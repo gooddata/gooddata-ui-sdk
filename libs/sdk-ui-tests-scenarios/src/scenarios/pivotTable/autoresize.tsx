@@ -3,13 +3,13 @@
 import { requestPages } from "@gooddata/mock-handling";
 import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
+import { scenariosFor } from "../../scenarioGroup.js";
 import {
     PivotTableWithSingleColumn,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndSingleRowAttr,
 } from "./base.js";
 import { PivotTableWithTwoMeasuresGrandTotalsAndSubtotals } from "./totals.js";
-import { scenariosFor } from "../../scenarioGroup.js";
 
 export const autoresize = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("auto-resizing")

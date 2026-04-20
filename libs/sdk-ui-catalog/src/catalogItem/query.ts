@@ -6,6 +6,7 @@ import type {
 } from "@gooddata/sdk-backend-spi";
 import { type IParameterMetadataObjectDefinition, type ObjRef, idRef } from "@gooddata/sdk-model";
 
+import type { ObjectType } from "../objectType/types.js";
 import type {
     ICatalogItem,
     ICatalogItemAttribute,
@@ -18,7 +19,6 @@ import type {
     ICatalogItemQueryOptions,
     ICatalogItemRef,
 } from "./types.js";
-import type { ObjectType } from "../objectType/types.js";
 
 const PAGE_SIZE = 50;
 

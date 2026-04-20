@@ -18,13 +18,13 @@ import {
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
-import { RepeaterChart } from "./internal/RepeaterChart.js";
-import type { RepeaterColumnResizedCallback } from "./publicTypes.js";
 import { ColorFactory } from "../../highcharts/chartTypes/_chartOptions/colorFactory.js";
 import { getValidColorPalette } from "../../highcharts/chartTypes/_util/color.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type ICoreChartProps } from "../../interfaces/chartProps.js";
+import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
+import { RepeaterChart } from "./internal/RepeaterChart.js";
+import type { RepeaterColumnResizedCallback } from "./publicTypes.js";
 
 /**
  * @internal

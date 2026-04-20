@@ -4,7 +4,6 @@ import { useCallback } from "react";
 
 import { type IInsight, insightRef, insightTitle } from "@gooddata/sdk-model";
 
-import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import { serializeLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
@@ -26,6 +25,7 @@ import { selectSettings } from "../../../../model/store/config/configSelectors.j
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { type ILayoutItemPath } from "../../../../types.js";
 import { newLoadingPlaceholderWidget } from "../../../../widgets/placeholders/types.js";
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useInsightListItemDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();

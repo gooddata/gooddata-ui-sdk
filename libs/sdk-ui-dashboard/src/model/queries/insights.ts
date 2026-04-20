@@ -9,8 +9,8 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardQuery } from "./base.js";
 import { newInsight } from "../../_staging/insight/insightBuilder.js";
+import { type IDashboardQuery } from "./base.js";
 
 /**
  * Given a reference to an insight, this query will obtain list of all date datasets that may be used

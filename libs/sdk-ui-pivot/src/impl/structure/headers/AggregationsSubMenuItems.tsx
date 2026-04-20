@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -13,9 +13,9 @@ import {
 } from "@gooddata/sdk-model";
 import { Header, Item } from "@gooddata/sdk-ui-kit";
 
+import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { isTotalEnabledForSubMenuAttribute } from "./aggregationsMenuHelper.js";
 import { type IColumnTotal } from "./aggregationsMenuTypes.js";
-import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 
 interface IAggregationsSubMenuItemsProps {
     intl: IntlShape;

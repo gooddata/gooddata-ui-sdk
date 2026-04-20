@@ -3,9 +3,9 @@
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
+import { type IChatConversationLocalItem } from "../../model.js";
 import { ConversationItemContents } from "./ConversationItemContents.js";
 import { getItemState } from "./itemState.js";
-import { type IChatConversationLocalItem } from "../../model.js";
 
 type UserItemProps = {
     message: IChatConversationLocalItem;

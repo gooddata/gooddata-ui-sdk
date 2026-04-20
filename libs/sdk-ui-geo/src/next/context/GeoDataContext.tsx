@@ -2,9 +2,9 @@
 
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { useGeoLayers } from "./GeoLayersContext.js";
 import { type IAvailableLegends, type IGeoLegendItem } from "../types/common/legends.js";
 import type { IGeoCommonData } from "../types/geoData/common.js";
+import { useGeoLayers } from "./GeoLayersContext.js";
 
 export interface IGeoDataContext<TGeoData extends IGeoCommonData = IGeoCommonData> {
     geoData: TGeoData | null;

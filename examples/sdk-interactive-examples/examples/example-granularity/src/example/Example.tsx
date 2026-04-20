@@ -5,9 +5,9 @@ import { useState } from "react";
 import { DateGranularity, newRelativeDateFilter } from "@gooddata/sdk-model";
 import { ComboChart } from "@gooddata/sdk-ui-charts";
 
-import { GranularitySelector } from "./GranularitySelector.js";
 import { DateDatasets, GrossProfit, NrOfOrders } from "../catalog.js";
 import { Hint } from "../Hint.js";
+import { GranularitySelector } from "./GranularitySelector.js";
 
 // Try changing default granularity to DateDatasets.CustomerCreatedDate.CustomerCreatedDateMonthYear.Default 👇
 const defaultGranularity = DateDatasets.CustomerCreatedDate.CustomerCreatedDateQuarterYear.Default;

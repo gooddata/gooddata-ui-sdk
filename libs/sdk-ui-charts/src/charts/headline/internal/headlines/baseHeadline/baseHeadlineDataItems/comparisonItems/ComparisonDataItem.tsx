@@ -1,17 +1,17 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
-import { ComparisonValue } from "./ComparisonValue.js";
-import { useComparisonDataItem } from "./useComparisonDataItem.js";
 import {
     type IBaseHeadlineDataItemProps,
     type IComparisonDataItem,
 } from "../../../../interfaces/BaseHeadlines.js";
 import { useOutOfBoundsDetection } from "../useOutOfBoundsDetection.js";
 import { withTitle } from "../withTitle.js";
+import { ComparisonValue } from "./ComparisonValue.js";
+import { useComparisonDataItem } from "./useComparisonDataItem.js";
 
 function ComparisonDataItemComponent({
     dataItem,

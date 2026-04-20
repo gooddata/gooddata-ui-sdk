@@ -8,12 +8,12 @@ import { type IColorPalette, type ITheme } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { TwoColorPalette } from "./color.fixture.js";
-import { getColorsFromStrategy } from "./helper.js";
 import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { getMVS } from "../../_util/test/helper.js";
 import { MeasureColorStrategy } from "../measure.js";
+import { TwoColorPalette } from "./color.fixture.js";
+import { getColorsFromStrategy } from "./helper.js";
 
 describe("MeasureColorStrategy", () => {
     describe("derived measure color", () => {

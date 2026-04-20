@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { pick } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
@@ -6,14 +6,6 @@ import { describe, expect, it, vi } from "vitest";
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 
-import {
-    ColumnOnlyResultDescriptor,
-    SingleMeasureWithRowAttributeDescriptor,
-    TwoMeasuresWithRowAttributeDescriptor,
-    TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
-    getFakeColumn,
-    testStore,
-} from "./columnSizing.fixture.js";
 import {
     type ColumnWidthItem,
     type IMeasureColumnWidthItem,
@@ -35,6 +27,14 @@ import {
     getMaxWidthCached,
     getUpdatedColumnDefs,
 } from "../columnSizing.js";
+import {
+    ColumnOnlyResultDescriptor,
+    SingleMeasureWithRowAttributeDescriptor,
+    TwoMeasuresWithRowAttributeDescriptor,
+    TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
+    getFakeColumn,
+    testStore,
+} from "./columnSizing.fixture.js";
 
 // This cannot be created using factory functions & it's very awkward case for which
 export const ColumnOnlyWidth: IMeasureColumnWidthItem = {

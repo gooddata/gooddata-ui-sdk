@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo, useCallback, useState } from "react";
 
@@ -6,9 +6,9 @@ import { useIntl } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
 
-import { ExtendedPreview } from "./ExtendedPreview.js";
 import { InputWithNumberFormat } from "../../../Form/InputWithNumberFormat.js";
 import { FormattedPreview } from "../shared/FormattedPreview.js";
+import { ExtendedPreview } from "./ExtendedPreview.js";
 
 const DEFAULT_PREVIEW_VALUE = -1234.5678;
 

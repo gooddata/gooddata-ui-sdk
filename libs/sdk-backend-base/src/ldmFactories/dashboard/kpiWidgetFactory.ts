@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -13,8 +14,8 @@ import {
     isKpiWidgetDefinition,
 } from "@gooddata/sdk-model";
 
-import { type IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
 import { type ValueOrUpdateCallback, resolveValueOrUpdateCallback } from "../builder.js";
+import { type IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
 
 /**
  * Kpi widget builder

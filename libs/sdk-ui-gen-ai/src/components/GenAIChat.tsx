@@ -8,14 +8,14 @@ import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/
 import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
-import { CustomizationProvider } from "./CustomizationProvider.js";
-import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { PermissionsProvider } from "../permissions/PermissionsContext.js";
 import { usePermissions } from "../permissions/usePermissions.js";
 import { type ChatEventHandler } from "../store/events.js";
+import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
+import { CustomizationProvider } from "./CustomizationProvider.js";
+import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 
 /**
  * Properties for the GenAIAssistant component.

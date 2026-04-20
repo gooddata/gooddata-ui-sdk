@@ -2,9 +2,9 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { selectListedDashboards } from "./listedDashboardsSelectors.js";
 import { selectDashboardId } from "../meta/metaSelectors.js";
 import { type DashboardSelector } from "../types.js";
+import { selectListedDashboards } from "./listedDashboardsSelectors.js";
 
 /**
  * Selects AI-generated summary of the currently opened dashboard, if available.

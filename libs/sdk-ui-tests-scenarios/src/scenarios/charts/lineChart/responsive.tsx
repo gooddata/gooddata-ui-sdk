@@ -3,9 +3,9 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { LineChart } from "@gooddata/sdk-ui-charts";
 
-import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { type IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
     { label: "without y axis title", width: 140, height: 354 },

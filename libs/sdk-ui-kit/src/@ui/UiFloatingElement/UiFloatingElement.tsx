@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type CSSProperties, useCallback, useEffect, useState } from "react";
 
@@ -7,14 +7,14 @@ import cx from "classnames";
 
 import { ConditionalScopedThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
-import { type IUiFloatingElementProps } from "./types.js";
-import { useFloatingPosition } from "./useFloatingPosition.js";
-import { getDimensionsFromRef, resolveAnchor } from "./utils.js";
 import { bem } from "../@utils/bem.js";
 import { useCloseOnEscape } from "../hooks/useCloseOnEscape.js";
 import { useCloseOnMouseDrag } from "../hooks/useCloseOnMouseDrag.js";
 import { FLOATING_ELEMENT_DATA_ATTR, useCloseOnOutsideClick } from "../hooks/useCloseOnOutsideClick.js";
 import { useCloseOnParentScroll } from "../hooks/useCloseOnParentScroll.js";
+import { type IUiFloatingElementProps } from "./types.js";
+import { useFloatingPosition } from "./useFloatingPosition.js";
+import { getDimensionsFromRef, resolveAnchor } from "./utils.js";
 
 const { b, e } = bem("gd-ui-kit-floating-element");
 

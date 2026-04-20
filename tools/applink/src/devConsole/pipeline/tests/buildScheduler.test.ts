@@ -2,7 +2,6 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture.js";
 import {
     EventBus,
     type IPackagesRebuilt,
@@ -11,6 +10,7 @@ import {
     targetSelected,
 } from "../../events.js";
 import { BuildScheduler } from "../buildScheduler.js";
+import { EventCollector, MockBuilder, TestSourceDescriptor, TestTargetDescriptor } from "./fixture.js";
 
 describe("BuildScheduler", () => {
     let eventBus: EventBus | undefined;

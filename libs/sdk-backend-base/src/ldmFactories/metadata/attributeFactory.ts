@@ -7,8 +7,8 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 
-import { MetadataObjectBuilder } from "./factory.js";
 import { type BuilderModifications, builderFactory } from "../builder.js";
+import { MetadataObjectBuilder } from "./factory.js";
 
 /**
  * Attribute metadata object builder

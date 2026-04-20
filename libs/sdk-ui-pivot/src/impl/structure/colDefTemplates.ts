@@ -1,20 +1,21 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type ColDef, type ValueFormatterParams } from "ag-grid-community";
 import cx from "classnames";
 import { invariant } from "ts-invariant";
 
 import { type IMeasureDescriptor, type ISeparators } from "@gooddata/sdk-model";
 
-import { headerClassFactory } from "./colDefHeaderClass.js";
-import { ColumnTotalHeader } from "./headers/ColumnTotalHeader.js";
-import { MixedValuesColumnHeader } from "./headers/MixedValuesColumnHeader.js";
-import { isSeriesCol } from "./tableDescriptorTypes.js";
 import { type ICorePivotTableProps } from "../../publicTypes.js";
 import { AVAILABLE_TOTALS } from "../base/constants.js";
 import { cellClassFactory } from "../cell/cellClass.js";
 import { createCellRenderer } from "../cell/cellRenderer.js";
 import { getMeasureCellFormattedValue, getMeasureCellStyle } from "../cell/cellUtils.js";
 import { type TableFacade } from "../tableFacade.js";
+import { headerClassFactory } from "./colDefHeaderClass.js";
+import { ColumnTotalHeader } from "./headers/ColumnTotalHeader.js";
+import { MixedValuesColumnHeader } from "./headers/MixedValuesColumnHeader.js";
+import { isSeriesCol } from "./tableDescriptorTypes.js";
 
 export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer(table.tableDescriptor);

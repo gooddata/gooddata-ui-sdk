@@ -2,6 +2,7 @@
 
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
+import { loadColumnsWidth, saveColumnWidths } from "../utils/configUtils.js";
 import { type ColumnLocator, type ColumnWidthItem } from "./types.js";
 import {
     type ConfigDefaults,
@@ -10,7 +11,6 @@ import {
     loadConfig,
     saveConfigObject,
 } from "./utils.js";
-import { loadColumnsWidth, saveColumnWidths } from "../utils/configUtils.js";
 
 type DefaultProperties = {
     columnWidths: Array<ColumnWidthItem>;

@@ -6,10 +6,10 @@ import { type FirstDataRenderedEvent } from "ag-grid-enterprise";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { fixRowgroupRoles } from "./useAccessibilityProps.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { useTableReady } from "../context/TableReadyContext.js";
 import { type AgGridProps } from "../types/agGrid.js";
+import { fixRowgroupRoles } from "./useAccessibilityProps.js";
 
 /**
  * Hook that consolidates all onFirstDataRendered handlers.

@@ -4,7 +4,6 @@ import cx from "classnames";
 
 import { widgetRef } from "@gooddata/sdk-model";
 
-import { type IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetSelection } from "../../../../model/react/useWidgetSelection.js";
 import { selectIsDashboardSaving } from "../../../../model/store/saving/savingSelectors.js";
@@ -12,6 +11,7 @@ import { useIsDraggingWidget } from "../../../dragAndDrop/draggableWidget/useIsD
 import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { DashboardRichText } from "../../richText/DashboardRichText.js";
+import { type IDefaultDashboardRichTextWidgetProps } from "./types.js";
 /**
  * @internal
  */

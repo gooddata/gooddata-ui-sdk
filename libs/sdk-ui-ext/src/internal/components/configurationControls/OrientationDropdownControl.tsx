@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { memo, useCallback } from "react";
 
@@ -7,11 +7,11 @@ import { useIntl } from "react-intl";
 import { type IPushData } from "@gooddata/sdk-ui";
 import { type ChartOrientationType } from "@gooddata/sdk-ui-charts";
 
-import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { orientationDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { DropdownControl } from "./DropdownControl.js";
 
 export interface IOrientationDropdownControl {
     disabled: boolean;

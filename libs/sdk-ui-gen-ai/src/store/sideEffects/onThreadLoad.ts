@@ -13,7 +13,6 @@ import {
     type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 
-import { interactionsToMessages } from "./converters/interactionsToMessages.js";
 import {
     type AssistantMessage,
     type Contents,
@@ -31,6 +30,7 @@ import {
     loadThreadSuccessAction,
     restoreCachedMessagesAction,
 } from "../messages/messagesSlice.js";
+import { interactionsToMessages } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
 
 /**

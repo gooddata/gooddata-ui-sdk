@@ -7,15 +7,6 @@ import { useIntl } from "react-intl";
 
 import { type IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
 
-import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
-import {
-    DESCRIPTION_LENGTH_WARNING_LIMIT,
-    MAX_DESCRIPTION_LENGTH,
-    MAX_TITLE_LENGTH,
-    TITLE_LENGTH_WARNING_LIMIT,
-    getDescription,
-    getTitle,
-} from "./sectionHeaderHelper.js";
 import { type IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
 import { useSectionDescriptionFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
@@ -32,6 +23,15 @@ import {
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
+import { EditableLabelWithBubble } from "./EditableLabelWithBubble.js";
+import {
+    DESCRIPTION_LENGTH_WARNING_LIMIT,
+    MAX_DESCRIPTION_LENGTH,
+    MAX_TITLE_LENGTH,
+    TITLE_LENGTH_WARNING_LIMIT,
+    getDescription,
+    getTitle,
+} from "./sectionHeaderHelper.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 6, y: -4 } }];
 

@@ -101,7 +101,6 @@ import {
     IconWebsite,
     IconWidget,
 } from "@gooddata/sdk-ui-kit";
-
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";

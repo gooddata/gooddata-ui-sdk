@@ -1,14 +1,15 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.fixture.js";
 import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { generateTooltipSankeyChartFn } from "../../_chartOptions/chartTooltips.js";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
+import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.fixture.js";
 
 describe("SankeyChart tooltip", () => {
     it("should render tooltip for node correctly", () => {

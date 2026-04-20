@@ -13,14 +13,14 @@ import {
 
 import cx from "classnames";
 
+import { type ILegendGroup, type ILegendSection } from "../../types/legend/model.js";
+import { prefersReducedMotion } from "../../utils/prefersReducedMotion.js";
 import { ChevronIcon } from "./ChevronIcon.js";
 import { LayerToggleSwitch } from "./LayerToggleSwitch.js";
 import { LegendGroupColor } from "./LegendGroupColor.js";
 import { LegendGroupColorScale } from "./LegendGroupColorScale.js";
 import { LegendGroupSize } from "./LegendGroupSize.js";
 import { type LegendMessageFormatter } from "./legendMessages.js";
-import { type ILegendGroup, type ILegendSection } from "../../types/legend/model.js";
-import { prefersReducedMotion } from "../../utils/prefersReducedMotion.js";
 
 /**
  * Props for MultiLayerLegendSection component.

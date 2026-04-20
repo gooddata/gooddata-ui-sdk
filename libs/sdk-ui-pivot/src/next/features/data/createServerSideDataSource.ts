@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IServerSideDatasource,
@@ -18,9 +18,6 @@ import {
     convertDataWindowError,
 } from "@gooddata/sdk-ui";
 
-import { agGridSetLoading } from "./agGridLoadingApi.js";
-import { dataViewToRowData } from "./dataViewToRowData.js";
-import { loadDataView } from "./loadDataView.js";
 import { type AgGridApi } from "../../types/agGrid.js";
 import { type GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
 import {
@@ -32,6 +29,9 @@ import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { handleExportReady } from "../exports/exports.js";
 import { getSortModel } from "../sorting/agGridSortingApi.js";
 import { sortModelToSortItems } from "../sorting/sortModelToSortItems.js";
+import { agGridSetLoading } from "./agGridLoadingApi.js";
+import { dataViewToRowData } from "./dataViewToRowData.js";
+import { loadDataView } from "./loadDataView.js";
 
 /**
  * @internal

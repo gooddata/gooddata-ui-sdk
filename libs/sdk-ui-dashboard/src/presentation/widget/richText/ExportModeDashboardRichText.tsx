@@ -4,9 +4,9 @@ import { useCallback, useState } from "react";
 
 import { type GoodDataSdkError, type ILoadingState } from "@gooddata/sdk-ui";
 
+import { useRichTextExportData, useVisualizationExportData } from "../../export/useExportData.js";
 import { type IDashboardRichTextProps } from "./types.js";
 import { ViewModeDashboardRichText } from "./ViewModeDashboardRichText.js";
-import { useRichTextExportData, useVisualizationExportData } from "../../export/useExportData.js";
 
 export function ExportModeDashboardRichText(props: IDashboardRichTextProps) {
     const { onLoadingChanged, onError } = props;

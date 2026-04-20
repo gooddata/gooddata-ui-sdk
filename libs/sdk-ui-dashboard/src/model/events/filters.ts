@@ -11,9 +11,9 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 
+import { type DashboardContext } from "../types/commonTypes.js";
 import { type DashboardEventBody, type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
-import { type DashboardContext } from "../types/commonTypes.js";
 
 /**
  * Payload of the {@link DashboardDateFilterSelectionChanged} event.

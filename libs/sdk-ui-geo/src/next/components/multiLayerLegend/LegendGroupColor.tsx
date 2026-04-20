@@ -19,12 +19,12 @@ import cx from "classnames";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { makeLinearKeyboardNavigation, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { resolveLegendGroupTitle } from "./groupTitle.js";
 import {
     type ILegendColorCategoryItem,
     type ILegendGroup,
     isLegendColorCategoryItem,
 } from "../../types/legend/model.js";
+import { resolveLegendGroupTitle } from "./groupTitle.js";
 
 /**
  * Props for LegendGroupColor component.

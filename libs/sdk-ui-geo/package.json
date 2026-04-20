@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "11.31.0-alpha.1",
+    "version": "11.31.0-alpha.2",
     "description": "GoodData.UI SDK - Geo Charts",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -40,9 +40,11 @@
         "build-check": "tsgo",
         "build-ts": "tsgo -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm styles/css coverage *.log tsconfig.tsbuildinfo",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
         "scss": "sass --load-path=node_modules --load-path=node_modules/mapbox-gl/dist --load-path=node_modules/maplibre-gl/dist styles/scss/main.scss:styles/css/main.css",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-fix": "stylelint '**/*.scss' --fix",
@@ -51,9 +53,7 @@
         "validate": "npm run lint && npm run dep-cruiser && npm run stylelint && npm run validate-locales && npm run format-check && npm run validate-theming",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-geo\"'",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-theming": "npm run scss && node scripts/validateCss.js",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
+        "validate-theming": "npm run scss && node scripts/validateCss.js"
     },
     "dependencies": {
         "@gooddata/number-formatter": "^1.0.6",
@@ -108,7 +108,7 @@
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "raf": "3.4.1",

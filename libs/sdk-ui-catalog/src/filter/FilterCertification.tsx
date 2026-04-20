@@ -4,9 +4,9 @@ import { memo, useCallback, useMemo } from "react";
 
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
+import { filterCertification } from "../automation/testIds.js";
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
-import { filterCertification } from "../automation/testIds.js";
 
 type CertificationOption = "certified" | "notCertified";
 

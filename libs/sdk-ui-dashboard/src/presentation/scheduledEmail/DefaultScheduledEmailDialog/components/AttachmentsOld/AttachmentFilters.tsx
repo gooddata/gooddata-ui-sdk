@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -14,9 +14,9 @@ import {
     type OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
-import { AttachmentFiltersList } from "./AttachmentFiltersList.js";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
 import { type IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
+import { AttachmentFiltersList } from "./AttachmentFiltersList.js";
 
 const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
     {

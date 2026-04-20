@@ -7,7 +7,6 @@ import { InvariantError, invariant } from "ts-invariant";
 
 import { type IAttributeOrMeasure, type IMeasure, isAttribute, isMeasure } from "@gooddata/sdk-model";
 
-import { type ResizingState } from "./privateTypes.js";
 import {
     ColumnEventSourceType,
     type IRepeaterAttributeColumnLocator,
@@ -18,6 +17,7 @@ import {
     type RepeaterColumnWidth,
     type RepeaterColumnWidthItem,
 } from "../columnWidths.js";
+import { type ResizingState } from "./privateTypes.js";
 
 export function getColumnWidths(resizingState: ResizingState): RepeaterColumnWidthItem[] {
     const columnApi = resizingState.columnApi;

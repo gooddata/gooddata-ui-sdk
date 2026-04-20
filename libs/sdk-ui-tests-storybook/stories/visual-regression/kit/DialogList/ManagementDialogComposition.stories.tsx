@@ -6,14 +6,13 @@ import { action } from "storybook/actions";
 
 import { ConfirmDialogBase, ContentDivider, DialogList, DialogListHeader } from "@gooddata/sdk-ui-kit";
 
-import { itemsMock as items } from "./itemsMock.js";
 import {
     type INeobackstopScenarioConfig,
     type IStoryParameters,
     State,
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
+import { itemsMock as items } from "./itemsMock.js";
 import "./styles.scss";
 
 function Wrapper({ children }: { children?: ReactNode }) {

@@ -5,11 +5,11 @@ import { type CSSProperties, useEffect } from "react";
 import { type XYCoord } from "@evil-internetmann/react-dnd";
 import cx from "classnames";
 
-import { applySizeLimitation } from "./sizeLimiting.js";
 import { type DragResizeProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
 import { useResizeHandlers } from "../../../dragAndDrop/LayoutResizeContext.js";
 import { type IWidthResizerDragItem } from "../../../dragAndDrop/types.js";
 import { WidthResizer } from "../Resize/WidthResizer.js";
+import { applySizeLimitation } from "./sizeLimiting.js";
 
 export type WidthResizerDragPreviewProps = DragResizeProps<IWidthResizerDragItem>;
 

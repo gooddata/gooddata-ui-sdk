@@ -4,11 +4,11 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
 import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
+import { scenariosFor } from "../../scenarioGroup.js";
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndSingleRowAttr,
 } from "./base.js";
-import { scenariosFor } from "../../scenarioGroup.js";
 
 export const sorting = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("sorting")

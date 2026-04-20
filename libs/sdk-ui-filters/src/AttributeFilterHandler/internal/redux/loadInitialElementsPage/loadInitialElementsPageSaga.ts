@@ -1,15 +1,15 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
 import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
-import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectCacheId, selectLoadElementsOptions } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
+import { loadLimitingAttributeFiltersAttributes } from "./loadLimitingAttributeFiltersAttributes.js";
 
 /**
  * @internal

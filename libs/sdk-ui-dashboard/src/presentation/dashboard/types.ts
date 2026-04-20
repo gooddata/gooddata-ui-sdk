@@ -8,7 +8,6 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IDashboard, type ITheme, type IWorkspacePermissions, type ObjRef } from "@gooddata/sdk-model";
 import { type IErrorProps, type ILoadingProps } from "@gooddata/sdk-ui";
 
-import { type CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { type DashboardEventHandler } from "../../model/eventHandlers/eventHandler.js";
 import { type DashboardDispatch, type DashboardState } from "../../model/store/types.js";
 import {
@@ -60,6 +59,7 @@ import { type CustomMenuButtonComponent, type IMenuButtonConfiguration } from ".
 import { type CustomTitleComponent } from "../topBar/title/types.js";
 import { type CustomTopBarComponent } from "../topBar/topBar/types.js";
 import { type CustomDashboardLayoutComponent } from "../widget/dashboardLayout/types.js";
+import { type CustomSidebarComponent } from "./DashboardSidebar/types.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard

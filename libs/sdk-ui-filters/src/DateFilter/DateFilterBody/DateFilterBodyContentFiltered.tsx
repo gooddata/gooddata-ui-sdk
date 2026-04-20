@@ -4,9 +4,6 @@ import { useIntl } from "react-intl";
 
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
-import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
-import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
 import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";
 import {
     type DateFilterOption,
@@ -15,6 +12,9 @@ import {
 } from "../interfaces/index.js";
 import { OtherPresetsSection } from "../Other/OtherPresetsSection.js";
 import { type CalendarTabType } from "../utils/presetFilterUtils.js";
+import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
+import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
+import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

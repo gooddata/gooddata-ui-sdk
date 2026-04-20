@@ -7,6 +7,8 @@ import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { ChartSortingDialog, type IBucketItemDescriptors } from "@gooddata/sdk-ui-kit";
 
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import {
     multipleAttributesMultipleMetricsSortConfig,
     singleAttributeSortConfig,
@@ -15,9 +17,6 @@ import {
     singleChronologicalDateSortConfig,
     singleGenericDateAndMetricSortConfig,
 } from "./ChartSortingMock.js";
-import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
-import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "./styles.scss";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };

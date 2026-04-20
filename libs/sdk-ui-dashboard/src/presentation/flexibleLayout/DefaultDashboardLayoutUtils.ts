@@ -16,8 +16,8 @@ import {
     widgetUri,
 } from "@gooddata/sdk-model";
 
-import { validateDashboardLayoutWidgetSize } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
 import { type DashboardLayoutItemModifications } from "../../_staging/dashboard/flexibleLayout/builder/interfaces.js";
+import { validateDashboardLayoutWidgetSize } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
 
 /**
  * We need to aggressively memoize the widget sanitization results in order to prevent expensive re-renders

@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { isEqual } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
-import { workspaceGranularPermissionMessages } from "./locales.js";
 import { type IGrantedWorkspace, type WorkspacePermission, type WorkspacePermissions } from "../../types.js";
+import { workspaceGranularPermissionMessages } from "./locales.js";
 
 export const workspacePermissions: WorkspacePermissions = ["MANAGE", "ANALYZE", "VIEW"];
 const exportSubPermissions: WorkspacePermissions = ["EXPORT_PDF", "EXPORT_TABULAR"];

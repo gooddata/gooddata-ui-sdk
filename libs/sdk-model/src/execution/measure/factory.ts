@@ -4,6 +4,10 @@ import { cloneDeep, isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { InvariantError, invariant } from "ts-invariant";
 
+import { idRef } from "../../objRef/factory.js";
+import { type Identifier, type ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
+import { sanitizeLocalId } from "../../sanitizeLocalId.js";
+import { type IMeasureFilter } from "../filter/index.js";
 import {
     type ArithmeticMeasureOperator,
     type IArithmeticMeasureDefinition,
@@ -25,10 +29,6 @@ import {
     isSimpleMeasure,
     measureLocalId,
 } from "./index.js";
-import { idRef } from "../../objRef/factory.js";
-import { type Identifier, type ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
-import { sanitizeLocalId } from "../../sanitizeLocalId.js";
-import { type IMeasureFilter } from "../filter/index.js";
 
 /**
  * Simplified Previous Period Data DataSet specification

@@ -2,9 +2,9 @@
 
 import { type IBucketChartProps, type ILegendConfig } from "@gooddata/sdk-ui-charts";
 
-import { type IResponsiveSize } from "./responsiveScenarios.js";
 import { type UnboundVisProps } from "../../../scenario.js";
 import { type CustomizedScenario } from "../../../scenarioGroup.js";
+import { type IResponsiveSize } from "./responsiveScenarios.js";
 
 export const legendResponsiveSizeVariants: Array<IResponsiveSize> = [
     { label: "Force position TOP, max 1 row, Gradient legend minimized", width: 180, height: 154 },

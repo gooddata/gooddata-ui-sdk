@@ -2,6 +2,16 @@
 
 import { call, fork, takeEvery, takeLatest } from "redux-saga/effects";
 
+import {
+    clearThreadAction,
+    loadThreadAction,
+    newMessageAction,
+    saveVisualisationRenderStatusAction,
+    saveVisualizationAction,
+    saveVisualizationSuccessAction,
+    setUserFeedback,
+    setVerboseAction,
+} from "../messages/messagesSlice.js";
 import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
 import { loadSettings } from "./loadSettings.js";
@@ -14,16 +24,6 @@ import { onVerboseStore } from "./onVerboseStore.js";
 import { onVisualisationRender } from "./onVisualisationRender.js";
 import { onVisualizationSave } from "./onVisualizationSave.js";
 import { onVisualizationSuccessSave } from "./onVisualizationSuccessSave.js";
-import {
-    clearThreadAction,
-    loadThreadAction,
-    newMessageAction,
-    saveVisualisationRenderStatusAction,
-    saveVisualizationAction,
-    saveVisualizationSuccessAction,
-    setUserFeedback,
-    setVerboseAction,
-} from "../messages/messagesSlice.js";
 
 /**
  * One saga to rule them all.

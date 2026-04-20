@@ -4,8 +4,8 @@ import { format, isValid, parse } from "date-fns";
 import moment from "moment";
 import { type DayPickerProps, type Matcher } from "react-day-picker";
 
-import { type ITime } from "./types.js";
 import { platformDateFormat } from "../constants/Platform.js";
+import { type ITime } from "./types.js";
 
 const mergeModifiers = (
     defaultModifiers: Record<string, Matcher | Matcher[] | undefined> | undefined,

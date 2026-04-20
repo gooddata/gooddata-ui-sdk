@@ -1,9 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
+import { type AgGridColumnDef } from "../../types/agGrid.js";
+import { type ITextWrapping } from "../../types/textWrapping.js";
 import { allowCellWrappingByColumnDefinition } from "./allowCellWrappingByColumnDefinition.js";
 import { getColumnTextWrappingItemForColumnDefinition } from "./getColumnTextWrappingItemForColumnDefinition.js";
 import { getPivotGroupTextWrappingItemForColumnDefinition } from "./getPivotGroupTextWrappingItemForColumnDefinition.js";
-import { type AgGridColumnDef } from "../../types/agGrid.js";
-import { type ITextWrapping } from "../../types/textWrapping.js";
 
 /**
  * Applies text wrapping to col def.

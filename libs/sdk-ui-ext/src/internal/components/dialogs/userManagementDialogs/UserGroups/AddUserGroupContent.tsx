@@ -1,8 +1,8 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
+import { type IGrantedUserGroup } from "../types.js";
 import { AddUserGroupSelect } from "./AddUserGroupSelect.js";
 import { UserGroupsList } from "./UserGroupsList.js";
-import { type IGrantedUserGroup } from "../types.js";
 
 export interface IAddUserGroupContentProps {
     addedUserGroups: IGrantedUserGroup[];

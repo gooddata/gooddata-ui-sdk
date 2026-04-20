@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MutableRefObject, useCallback, useMemo, useRef } from "react";
 
@@ -15,9 +15,9 @@ import {
     useFloating,
 } from "@floating-ui/react";
 
+import { useOverlayZIndexWithRegister } from "../../Overlay/OverlayContext.js";
 import { type IUseFloatingPositionOptions, type IUseFloatingPositionResult } from "./types.js";
 import { alignPointsToFallbackPlacements, alignPointsToPlacement, getOffsetFromAlignPoint } from "./utils.js";
-import { useOverlayZIndexWithRegister } from "../../Overlay/OverlayContext.js";
 
 // Stable empty array to avoid re-creating on every render
 const EMPTY_MIDDLEWARE: Middleware[] = [];

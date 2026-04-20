@@ -4,14 +4,6 @@ import { useState } from "react";
 
 import { isGrandTotalColumnDefinition, isSubtotalColumnDefinition } from "@gooddata/sdk-ui";
 
-import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
-import { SortIndicator } from "./SortIndicator.js";
-import {
-    getColumnMeasureIdentifier,
-    getColumnScope,
-    getPivotAttributeDescriptors,
-    isValueColumnDef,
-} from "./utils/common.js";
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { e } from "../../features/styling/bem.js";
 import { useHeaderCellAriaLabel } from "../../hooks/header/useHeaderCellAriaLabel.js";
@@ -25,6 +17,14 @@ import {
     getPivotHeaderTextTestIdProps,
 } from "../../testing/dataTestIdGenerators.js";
 import { type AgGridColumnDef, type AgGridHeaderParams } from "../../types/agGrid.js";
+import { HeaderMenu } from "./HeaderCell/HeaderMenu.js";
+import { SortIndicator } from "./SortIndicator.js";
+import {
+    getColumnMeasureIdentifier,
+    getColumnScope,
+    getPivotAttributeDescriptors,
+    isValueColumnDef,
+} from "./utils/common.js";
 
 /**
  * Renderer for measure header.

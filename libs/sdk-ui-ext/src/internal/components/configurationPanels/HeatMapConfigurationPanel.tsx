@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -8,7 +8,6 @@ import { FormattedMessage } from "react-intl";
 import { type IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -22,6 +21,7 @@ import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.j
 import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class HeatMapConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {

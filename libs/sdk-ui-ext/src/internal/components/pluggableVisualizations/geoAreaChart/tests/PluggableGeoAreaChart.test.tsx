@@ -1,7 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
 import type { ReactElement } from "react";
-
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

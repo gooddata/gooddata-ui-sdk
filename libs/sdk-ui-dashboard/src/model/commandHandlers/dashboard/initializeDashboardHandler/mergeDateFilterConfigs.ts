@@ -5,11 +5,11 @@ import { call } from "redux-saga/effects";
 
 import { type IDashboardDateFilterConfig, type IDateFilterConfig } from "@gooddata/sdk-model";
 
-import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
 import { mergeDateFilterConfigs } from "../../../../_staging/dateFilterConfig/merge.js";
 import { validateDateFilterConfig } from "../../../../_staging/dateFilterConfig/validation.js";
 import { type InitializeDashboard } from "../../../commands/dashboard.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
+import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
 
 export interface IDateFilterMergeResult {
     config: IDateFilterConfig;

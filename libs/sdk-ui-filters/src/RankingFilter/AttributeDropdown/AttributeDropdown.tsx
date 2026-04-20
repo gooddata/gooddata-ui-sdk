@@ -8,8 +8,8 @@ import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import { type ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
-import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
 import { type IAttributeDropdownItem, type ICustomGranularitySelection } from "../types.js";
+import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
 
 const getItemTitle = (selectedItem: IAttributeDropdownItem | undefined, intl: IntlShape): string =>
     selectedItem ? selectedItem.title : intl.formatMessage({ id: "rankingFilter.allRecords" });

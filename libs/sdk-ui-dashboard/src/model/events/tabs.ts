@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IDashboardEvent } from "./base.js";
 import { type DashboardContext } from "../types/commonTypes.js";
+import { type IDashboardEvent } from "./base.js";
 
 /**
  * Payload of the {@link IDashboardTabSwitched} event.

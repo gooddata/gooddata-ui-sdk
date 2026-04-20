@@ -1,7 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
 import type { ComponentClass, ComponentType } from "react";
-
 import { type WrappedComponentProps } from "react-intl";
 
 import { withEntireDataView } from "@gooddata/sdk-ui";

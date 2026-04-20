@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -7,7 +7,6 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -20,6 +19,7 @@ import { ImageControl } from "../configurationControls/ImageControl.js";
 import { RowHeightControl } from "../configurationControls/RowHeightControl.js";
 import { TextWrappingControl } from "../configurationControls/TextWrappingControl.js";
 import { VerticalAlignControl } from "../configurationControls/VerticalAlignControl.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class RepeaterConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {

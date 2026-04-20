@@ -3,10 +3,10 @@
 import { cloneDeep, isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 
-import { type IAttribute, isAttribute } from "./index.js";
 import { idRef } from "../../objRef/factory.js";
 import { type Identifier, type ObjRef, isObjRef, objRefToString } from "../../objRef/index.js";
 import { sanitizeLocalId } from "../../sanitizeLocalId.js";
+import { type IAttribute, isAttribute } from "./index.js";
 
 /**
  * Input to the AttributeBuilder.

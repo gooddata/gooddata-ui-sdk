@@ -1,7 +1,5 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type CssVariableUsage } from "./types.js";
-import { groupByUnique } from "./utils.js";
 import { allThemeCssVariables } from "../allThemeCssVariables.js";
 import {
     type ThemeCssVariable,
@@ -11,6 +9,8 @@ import {
     type ThemeInconsistentCssVariable,
     type ThemeInternalCssVariable,
 } from "../types.js";
+import { type CssVariableUsage } from "./types.js";
+import { groupByUnique } from "./utils.js";
 
 /**
  * Validation that was skipped.

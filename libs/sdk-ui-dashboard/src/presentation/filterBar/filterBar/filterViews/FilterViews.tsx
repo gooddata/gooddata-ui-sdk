@@ -15,9 +15,6 @@ import {
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
-import { AddFilterView } from "./AddFilterView.js";
-import { FilterViewsList } from "./FilterViewsList.js";
-import { useFilterViewsToastMessages } from "./useFilterViewsToastMessages.js";
 import {
     useDashboardDispatch,
     useDashboardSelector,
@@ -41,6 +38,9 @@ import {
     selectIsFilterViewsDialogOpen,
 } from "../../../../model/store/ui/uiSelectors.js";
 import { ConfigurationBubble } from "../../../widget/common/configuration/ConfigurationBubble.js";
+import { AddFilterView } from "./AddFilterView.js";
+import { FilterViewsList } from "./FilterViewsList.js";
+import { useFilterViewsToastMessages } from "./useFilterViewsToastMessages.js";
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "br tr", offset: { x: -27, y: -10 } }];
 

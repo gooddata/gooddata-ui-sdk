@@ -7,8 +7,6 @@ import {
     type IGeoPushpinChartProps,
 } from "@gooddata/sdk-ui-geo";
 
-import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigCodeGenerator.js";
-import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     type IVisualizationDescriptor,
@@ -32,6 +30,8 @@ import {
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
 import { MAX_VISUALIZATION_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
+import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigCodeGenerator.js";
+import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart.js";
 
 export class GeoPushpinChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

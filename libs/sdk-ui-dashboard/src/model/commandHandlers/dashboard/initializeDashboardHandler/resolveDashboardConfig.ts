@@ -12,8 +12,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type ILocale, resolveLocale } from "@gooddata/sdk-ui";
 
-import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
-import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
 import {
     FallbackToDefault,
@@ -31,6 +29,8 @@ import {
 } from "../../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../../types/sagas.js";
 import { loadAutomationsData } from "../common/loadAutomationsData.js";
+import { onDateFilterConfigValidationError } from "./onDateFilterConfigValidationError.js";
+import { sanitizeUnfinishedFeatureSettings } from "./sanitizeUnfinishedFeatureSettings.js";
 
 function loadDateFilterConfig({
     backend,

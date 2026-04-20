@@ -1,13 +1,7 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { InvariantError } from "ts-invariant";
 
-import {
-    type IInsightDefinition,
-    insightAttributes,
-    insightBuckets,
-    insightSetBuckets,
-    insightSorts,
-} from "./index.js";
 import { attributeLocalId } from "../execution/attribute/index.js";
 import { type ISortItem, isAttributeSort, isMeasureSort, sortEntityIds } from "../execution/base/sort.js";
 import { type ITotal } from "../execution/base/totals.js";
@@ -17,6 +11,13 @@ import {
     bucketSetTotals,
     bucketTotals,
 } from "../execution/buckets/index.js";
+import {
+    type IInsightDefinition,
+    insightAttributes,
+    insightBuckets,
+    insightSetBuckets,
+    insightSorts,
+} from "./index.js";
 
 const COLUMNS_BUCKET_ID = "columns";
 /**

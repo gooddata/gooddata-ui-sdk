@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { IntlDecorator } from "./IntlDecorators.js";
 import { DateRangePicker, type IDateRangePickerProps } from "../DateRangePicker.js";
 import { type IDateRange } from "../types.js";
+import { IntlDecorator } from "./IntlDecorators.js";
 
 const defaultDateFormat = "MM/dd/yyyy";
 const getDefaultRange = (): IDateRange => ({

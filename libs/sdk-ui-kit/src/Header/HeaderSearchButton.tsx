@@ -1,14 +1,14 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type PropsWithChildren, useEffect, useRef } from "react";
 
 import cx from "classnames";
 
-import { useHeaderSearch } from "./headerSearchContext.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { Button } from "../Button/Button.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { useIdPrefixed } from "../utils/useId.js";
+import { useHeaderSearch } from "./headerSearchContext.js";
 
 export type HeaderSearchProps = PropsWithChildren<{
     /**

@@ -1,9 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type WeekStart } from "@gooddata/sdk-model";
 
+import { useIdPrefixed } from "../utils/useId.js";
 import { RECURRENCE_TYPES } from "./constants.js";
 import { CronExpression } from "./CronExpression.js";
 import { CronExpressionSuggestion } from "./CronExpressionSuggestion.js";
@@ -11,7 +12,6 @@ import { RepeatTypeDescription } from "./RepeatTypeDescription.js";
 import { RepeatTypeSelect } from "./RepeatTypeSelect.js";
 import { type RecurrenceType } from "./types.js";
 import { useCronValidation } from "./useCronValidation.js";
-import { useIdPrefixed } from "../utils/useId.js";
 
 /**
  * @internal

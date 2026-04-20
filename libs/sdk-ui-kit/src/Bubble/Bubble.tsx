@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type CSSProperties, type ReactNode, memo, useCallback, useMemo, useState } from "react";
 
@@ -6,10 +6,10 @@ import cx from "classnames";
 import { cloneDeep, result } from "lodash-es";
 import isReactEqual from "react-fast-compare";
 
-import { type ArrowDirections, type ArrowOffsets } from "./typings.js";
 import { ZoomAwareOverlay } from "../Overlay/ZoomAwareOverlay.js";
 import { type OverlayPositionType } from "../typings/overlay.js";
 import { type IAlignPoint } from "../typings/positioning.js";
+import { type ArrowDirections, type ArrowOffsets } from "./typings.js";
 
 const ARROW_DIRECTIONS: ArrowDirections = {
     ".. cc": "none",

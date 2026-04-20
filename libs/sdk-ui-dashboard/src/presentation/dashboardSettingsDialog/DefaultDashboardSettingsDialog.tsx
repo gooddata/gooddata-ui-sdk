@@ -19,8 +19,6 @@ import {
     simpleRecurrenceTypeMappingFn,
 } from "@gooddata/sdk-ui-kit";
 
-import { type IDashboardSettingsDialogProps } from "./types.js";
-import { useDialogData } from "./useDialogData.js";
 import {
     type IInsightDateDatasets,
     type IQueryInsightDateDatasets,
@@ -39,6 +37,8 @@ import {
     selectWeekStart,
 } from "../../model/store/config/configSelectors.js";
 import { selectCrossFilteringEnabledAndSupported } from "../../model/store/topBar/topBarSelectors.js";
+import { type IDashboardSettingsDialogProps } from "./types.js";
+import { useDialogData } from "./useDialogData.js";
 
 /**
  * @alpha

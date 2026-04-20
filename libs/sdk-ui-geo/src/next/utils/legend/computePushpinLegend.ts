@@ -2,6 +2,13 @@
 
 import { formatLegendLabel } from "@gooddata/sdk-ui-vis-commons";
 
+import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
+import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
+import {
+    type ILegendGroup,
+    type ILegendSection,
+    type ILegendSizeAnchorItem,
+} from "../../types/legend/model.js";
 import { computeColorScale } from "./computeColorScale.js";
 import {
     ATTRIBUTE_ONLY_URI_PREFIX,
@@ -11,13 +18,6 @@ import {
     convertToColorCategories,
     isAttributeOnlyPushpinData,
 } from "./legendUtils.js";
-import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
-import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
-import {
-    type ILegendGroup,
-    type ILegendSection,
-    type ILegendSizeAnchorItem,
-} from "../../types/legend/model.js";
 
 /**
  * Minimum size in pixels for smallest size anchor.

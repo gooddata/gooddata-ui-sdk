@@ -81,13 +81,13 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
+import { createMockGeoService } from "../geoService.js";
 import {
     type IExecutionResponse,
     type IExecutionResult as ILegacyExecutionResult,
     type IResultDimension,
     isAttributeHeader,
 } from "./legacyBackendTypes.js";
-import { createMockGeoService } from "../geoService.js";
 
 const defaultConfig = { hostname: "test" };
 

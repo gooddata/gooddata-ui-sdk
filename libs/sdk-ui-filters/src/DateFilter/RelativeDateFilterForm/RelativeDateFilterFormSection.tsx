@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, useCallback, useRef } from "react";
 
@@ -9,7 +9,6 @@ import { FormattedMessage } from "react-intl";
 import { type DateFilterGranularity, isRelativeDateFilterForm } from "@gooddata/sdk-model";
 import { useId } from "@gooddata/sdk-ui-kit";
 
-import { RelativeDateFilterForm } from "./RelativeDateFilterForm.js";
 import {
     createDateFilterRelativeFormKeyboardHandler,
     submitRelativeDateFilterForm,
@@ -23,6 +22,7 @@ import {
     type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { ListItem } from "../ListItem/ListItem.js";
+import { RelativeDateFilterForm } from "./RelativeDateFilterForm.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

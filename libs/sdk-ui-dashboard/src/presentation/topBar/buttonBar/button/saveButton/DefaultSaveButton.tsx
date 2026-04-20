@@ -6,7 +6,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
-import { type ISaveButtonProps } from "./types.js";
 import { messages } from "../../../../../locales.js";
 import { saveDashboard } from "../../../../../model/commands/dashboard.js";
 import {
@@ -22,6 +21,7 @@ import {
     selectCanSaveDashboard,
     selectIsPrivateDashboard,
 } from "../../../../../model/store/topBar/topBarSelectors.js";
+import { type ISaveButtonProps } from "./types.js";
 
 /**
  * @internal

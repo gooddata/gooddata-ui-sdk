@@ -11,7 +11,6 @@ import {
     enterEditMode,
     focusWidget,
     getTestClassByTitle,
-    mockFeatureHub,
     removeDateFilter,
     saveAsNew,
     toggleDashboardMenu,
@@ -22,7 +21,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Multitple date filters basic cases", "multipleDateFilters", () => {

@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget.js";
-import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { ExportModeInsightWidgetDescription } from "../../description/ExportModeInsightWidgetDescription.js";
 import { InsightWidgetDescriptionComponentProvider } from "../../description/InsightWidgetDescriptionComponentProvider.js";
+import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget.js";
+import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 
 /**
  * Insight widget that can be exported.

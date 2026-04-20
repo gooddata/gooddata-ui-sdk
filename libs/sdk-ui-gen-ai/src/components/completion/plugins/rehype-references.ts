@@ -1,12 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 import { type Root } from "mdast";
 import { type Node, type Parent } from "unist";
 
-import { type HtmlNode, type TextNode } from "./types.js";
 import { type TextContentObject } from "../../../model.js";
 import { getReferenceRegex } from "../utils.js";
+import { type HtmlNode, type TextNode } from "./types.js";
 
 export function rehypeReferences(references: TextContentObject[]) {
     return function () {

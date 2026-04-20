@@ -1,12 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
-import { ALIGN_POINTS, ARROW_OFFSETS } from "./constants.js";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { type ArrowOffset } from "../Bubble/typings.js";
 import { type IAlignPoint } from "../typings/positioning.js";
+import { ALIGN_POINTS, ARROW_OFFSETS } from "./constants.js";
 
 /**
  * @internal

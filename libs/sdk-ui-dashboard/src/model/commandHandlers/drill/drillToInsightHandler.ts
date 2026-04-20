@@ -3,7 +3,6 @@
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { addDrillFiltersToInsight } from "./drillToInsightUtils.js";
 import { type IDrillToInsight } from "../../commands/drill.js";
 import {
     type IDashboardDrillToInsightResolved,
@@ -12,6 +11,7 @@ import {
 } from "../../events/drill.js";
 import { selectInsightByRef, selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { addDrillFiltersToInsight } from "./drillToInsightUtils.js";
 
 export function* drillToInsightHandler(
     ctx: DashboardContext,

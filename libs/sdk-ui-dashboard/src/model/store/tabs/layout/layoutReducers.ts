@@ -34,8 +34,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { type ILayoutState, layoutInitialState } from "./layoutState.js";
-import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
 import { type IdentityMapping } from "../../../../_staging/dashboard/dashboardLayout.js";
 import {
     findItem,
@@ -59,6 +57,8 @@ import { type IWidgetDescription, type IWidgetHeader } from "../../../types/widg
 import { addArrayElements, removeArrayElement } from "../../../utils/arrayOps.js";
 import { resetUndoReducer, undoReducer, withUndo } from "../../_infra/undoEnhancer.js";
 import { type ITabsState } from "../tabsState.js";
+import { type ILayoutState, layoutInitialState } from "./layoutState.js";
+import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
 
 // Core layout reducer type (operates directly on LayoutState, which extends UndoEnhancedState)
 // Use this type for reducers that will be wrapped with withUndo

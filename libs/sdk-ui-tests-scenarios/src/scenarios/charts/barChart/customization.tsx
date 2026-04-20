@@ -2,11 +2,6 @@
 
 import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 
-import {
-    BarChartWithLargeLegend,
-    BarChartWithSingleMeasureAndViewByAndStackMultipleItems,
-    BarChartWithTwoMeasuresAndViewBy,
-} from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
@@ -16,6 +11,11 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    BarChartWithLargeLegend,
+    BarChartWithSingleMeasureAndViewByAndStackMultipleItems,
+    BarChartWithTwoMeasuresAndViewBy,
+} from "./base.js";
 
 const legendScenarios = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

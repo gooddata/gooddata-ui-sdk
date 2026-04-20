@@ -2,10 +2,10 @@
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { type DashboardEventHandler } from "./eventHandler.js";
 import { changeFilterContextSelectionByParams } from "../commands/filters.js";
 import { type IDashboardDrillToDashboardResolved } from "../events/drill.js";
 import { newDashboardEventPredicate } from "../events/index.js";
+import { type DashboardEventHandler } from "./eventHandler.js";
 
 /**
  * Event handler with the default implementation for drill to the same dashboard.

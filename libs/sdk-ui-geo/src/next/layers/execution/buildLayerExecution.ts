@@ -4,10 +4,10 @@ import type { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { assertNever } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
-import { createExecutionContextFromLayer } from "./layerContext.js";
 import type { IGeoLayer } from "../../types/layers/index.js";
 import { getLayerAdapter } from "../registry/adapterRegistry.js";
 import type { IGeoAdapterContext } from "../registry/adapterTypes.js";
+import { createExecutionContextFromLayer } from "./layerContext.js";
 
 /**
  * Builds execution for the provided geo layer using the registered adapter.

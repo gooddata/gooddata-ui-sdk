@@ -4,10 +4,10 @@ import { useIntl } from "react-intl";
 
 import { type ObjRef, isInsightWidget } from "@gooddata/sdk-model";
 
-import { ParameterDetail } from "./ParameterDetail.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectWidgetByRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 import { isTemporaryIdentity } from "../../../../../model/utils/dashboardItemUtils.js";
+import { ParameterDetail } from "./ParameterDetail.js";
 
 interface IIdentifierDetailProps {
     title: string;

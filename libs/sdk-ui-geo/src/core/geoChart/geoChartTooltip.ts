@@ -7,8 +7,8 @@ import { type IntlShape } from "react-intl";
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
-import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "./constants/geoChart.js";
 import { type IGeoConfig, type IGeoTooltipItem } from "../../GeoChart.js";
+import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "./constants/geoChart.js";
 import { parseGeoProperties } from "./helpers/geoChart/data.js";
 import { formatValueForTooltip, getTooltipContentWidth } from "./helpers/geoChart/format.js";
 

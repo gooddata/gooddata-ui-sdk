@@ -16,8 +16,8 @@ import {
 } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
 
-import { type ExtendedDashboardWidget } from "./layoutTypes.js";
 import { type IDashboardFilter, type IMenuButtonItemsVisibility, type RenderMode } from "../../types.js";
+import { type ExtendedDashboardWidget } from "./layoutTypes.js";
 
 /**
  * Dashboard component may offer users to pick objects to use on the dashboard.

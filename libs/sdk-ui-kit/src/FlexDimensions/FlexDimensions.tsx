@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     Children,
@@ -13,8 +13,8 @@ import {
 import cx from "classnames";
 import { pickBy, throttle } from "lodash-es";
 
-import { type IFlexDimensionsProps, type IFlexDimensionsState } from "./typings.js";
 import { elementRegion } from "../utils/domUtilities.js";
+import { type IFlexDimensionsProps, type IFlexDimensionsState } from "./typings.js";
 
 /**
  * @internal

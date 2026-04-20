@@ -20,10 +20,10 @@ import {
     getValidColorPalette,
 } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IGeoData, type IValidationResult } from "../../GeoChart.js";
 import { getColorStrategy } from "./colorStrategy/geoChart.js";
 import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
 import { GeoChartInner, type IGeoChartInnerOptions, type IGeoChartInnerProps } from "./GeoChartInner.js";
-import { type IGeoData, type IValidationResult } from "../../GeoChart.js";
 import { getGeoAttributeHeaderItems, isDataOfReasonableSize } from "./helpers/geoChart/common.js";
 import { getGeoData } from "./helpers/geoChart/data.js";
 

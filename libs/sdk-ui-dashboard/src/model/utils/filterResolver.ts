@@ -14,9 +14,9 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { resolveDisplayFormMetadata } from "./displayFormResolver.js";
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { type DashboardContext } from "../types/commonTypes.js";
+import { resolveDisplayFormMetadata } from "./displayFormResolver.js";
 
 /**
  * This generator function resolves display form metadata objects for all attribute filters in the provided `filters`

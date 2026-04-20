@@ -2,8 +2,6 @@
 
 import blessed from "blessed";
 
-import { AppPanel, type AppPanelOptions } from "./appPanel.js";
-import { getTerminalSize } from "./utils.js";
 import {
     type DcEvent,
     type EventBus,
@@ -11,6 +9,8 @@ import {
     type IEventListener,
     type Severity,
 } from "../events.js";
+import { AppPanel, type AppPanelOptions } from "./appPanel.js";
+import { getTerminalSize } from "./utils.js";
 
 const SeverityTags: Record<Severity, string> = {
     info: "{white-fg}",

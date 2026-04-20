@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -9,10 +9,6 @@ import { type IColorPalette } from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import {
-    ConfigurationPanelContent,
-    type IConfigurationPanelContentProps,
-} from "./ConfigurationPanelContent.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
@@ -25,6 +21,10 @@ import {
     isComparisonEnabled,
 } from "../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
 import { ComparisonSection } from "../configurationControls/comparison/ComparisonSection.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
 
 const BUBBLE_ARROW_OFFSETS = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const BUBBLE_ALIGN_POINTS = [{ align: "tc bc" }];

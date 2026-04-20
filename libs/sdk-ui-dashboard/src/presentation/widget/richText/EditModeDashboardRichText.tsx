@@ -17,8 +17,6 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { type IDashboardRichTextProps } from "./types.js";
-import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
 import { eagerRemoveSectionItemByWidgetRef } from "../../../model/commands/layout.js";
 import { changeRichTextWidgetContent } from "../../../model/commands/richText.js";
@@ -33,6 +31,8 @@ import { uiActions } from "../../../model/store/ui/index.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/zIndex.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { type IDashboardRichTextProps } from "./types.js";
+import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 

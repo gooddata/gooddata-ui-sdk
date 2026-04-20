@@ -11,9 +11,9 @@ import {
 } from "@gooddata/sdk-model";
 import { type ITableColumnDefinition, type ITableValueColumnDefinition } from "@gooddata/sdk-ui";
 
-import { getColumnWidthItemForColumnDefinition } from "./getColumnWidthItemForColumnDefinition.js";
 import { newAttributeColumnLocator } from "../../types/locators.js";
 import { newWidthForAllColumnsForMeasure, setNewWidthForSelectedColumns } from "../../types/resizing.js";
+import { getColumnWidthItemForColumnDefinition } from "./getColumnWidthItemForColumnDefinition.js";
 
 const ATTRIBUTE_IDENTIFIER = "region";
 const ATTRIBUTE_ELEMENT_URI = "/gdc/md/demo/obj/1/elements?id=1";

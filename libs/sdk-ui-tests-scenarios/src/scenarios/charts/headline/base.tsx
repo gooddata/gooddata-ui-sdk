@@ -3,10 +3,10 @@
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { Headline, type IHeadlineProps } from "@gooddata/sdk-ui-charts";
 
-import { HeadlinePositiveComparisonMeasures, comparisonDisabled, comparisonEnabled } from "./comparison.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { GermanNumberFormat } from "../../_infra/formatting.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { HeadlinePositiveComparisonMeasures, comparisonDisabled, comparisonEnabled } from "./comparison.js";
 
 export const HeadlineWithTwoMeasures = {
     primaryMeasure: ReferenceMd.Won,

@@ -16,7 +16,6 @@ import {
     dragInsightAboveRow,
     dragInsightAtWidget,
     enterEditMode,
-    mockFeatureHub,
     resizeWidgetWidthTo,
     saveAsNew,
     saveDashboard,
@@ -30,7 +29,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Drag Drop and Move Widget", "dragDropAndMoveWidget", () => {

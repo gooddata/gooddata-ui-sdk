@@ -12,11 +12,10 @@ import {
     ShareGranteeBase,
 } from "@gooddata/sdk-ui-kit";
 
-import { defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock.js";
-import { LabelsMock } from "./LabelsMock.js";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
+import { defaultUserPermissions, grantees, inactiveUser, owner } from "./GranteeMock.js";
+import { LabelsMock } from "./LabelsMock.js";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
 interface IBasicExampleProps {

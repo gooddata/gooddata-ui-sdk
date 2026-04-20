@@ -4,12 +4,12 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { BulletChart, type IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
-import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

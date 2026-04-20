@@ -8,9 +8,9 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { ObjectOrigin } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 
+import { filterOrigin } from "../automation/testIds.js";
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
-import { filterOrigin } from "../automation/testIds.js";
 
 type OriginOption = Exclude<ObjectOrigin, "ALL">;
 

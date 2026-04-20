@@ -1,12 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type IGeoLngLat } from "../common/coordinates.js";
 import {
     type IGeoAttributeItem,
     type IGeoCommonData,
     type IGeoDataItem,
     type IGeoMeasureItem,
 } from "./common.js";
-import { type IGeoLngLat } from "../common/coordinates.js";
 
 /**
  * Represents a location item with coordinate data

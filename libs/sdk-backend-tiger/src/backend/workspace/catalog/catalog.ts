@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import {
@@ -21,8 +22,8 @@ import {
     isCatalogMeasure,
 } from "@gooddata/sdk-model";
 
-import { TigerWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { TigerWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory.js";
 
 export class TigerWorkspaceCatalog implements IWorkspaceCatalog {
     constructor(

@@ -5,6 +5,10 @@ import { type KeyboardEvent, type RefObject } from "react";
 import { type IntlShape, type MessageDescriptor, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
+import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
+import { Dropdown } from "../Dropdown/Dropdown.js";
+import { DropdownButton } from "../Dropdown/DropdownButton.js";
+import { SingleSelectListItem } from "../List/ListItem.js";
 import {
     DEFAULT_DROPDOWN_ALIGN_POINTS,
     DEFAULT_DROPDOWN_WIDTH,
@@ -14,10 +18,6 @@ import {
 import { messages } from "./locales.js";
 import { type RecurrenceType } from "./types.js";
 import { getIntlDayName, getWeekNumber, isLastOccurrenceOfWeekdayInMonth } from "./utils/utils.js";
-import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
-import { Dropdown } from "../Dropdown/Dropdown.js";
-import { DropdownButton } from "../Dropdown/DropdownButton.js";
-import { SingleSelectListItem } from "../List/ListItem.js";
 
 interface IDropdownItem {
     id: RecurrenceType;

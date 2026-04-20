@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { createRoot } from "react-dom/client";
 
@@ -11,7 +11,6 @@ import "@gooddata/sdk-ui-ext/styles/scss/main.scss";
 import "@gooddata/sdk-ui-dashboard/styles/scss/main.scss";
 import "@gooddata/sdk-ui-semantic-search/styles/scss/internal.scss";
 import "@gooddata/sdk-ui-gen-ai/styles/scss/main.scss";
-
 import { App } from "./App.js";
 
 const rootDOMNode = document.createElement("div");

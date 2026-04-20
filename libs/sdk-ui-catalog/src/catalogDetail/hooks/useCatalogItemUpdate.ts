@@ -8,7 +8,6 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IUser, MetricType } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { useCatalogItemLoad } from "./useCatalogItemLoad.js";
 import { getDisplayName } from "../../catalogItem/converter.js";
 import { isCatalogItemHidable, isCatalogItemLoaded, isCatalogItemMeasure } from "../../catalogItem/guards.js";
 import { updateCatalogItem, updateCatalogItemCertification } from "../../catalogItem/query.js";
@@ -19,6 +18,7 @@ import {
 } from "../../catalogItem/types.js";
 import { useMounted } from "../../hooks/useMounted.js";
 import { type ObjectType } from "../../objectType/types.js";
+import { useCatalogItemLoad } from "./useCatalogItemLoad.js";
 
 export interface IUseCatalogItemUpdate {
     currentUser: IUser | null | undefined;

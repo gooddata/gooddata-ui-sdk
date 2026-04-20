@@ -6,12 +6,12 @@ import { connect } from "react-redux";
 
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { type AssistantMessage } from "../../model.js";
+import { setUserFeedback } from "../../store/messages/messagesSlice.js";
 import { FeedbackPopup } from "./FeedbackPopup.js";
 import { MessageContents } from "./MessageContents.js";
 import { getAssistantMessageState } from "./messageState.js";
 import { useUserFeedback } from "./useUserFeedback.js";
-import { type AssistantMessage } from "../../model.js";
-import { setUserFeedback } from "../../store/messages/messagesSlice.js";
 
 type AssistantMessageProps = {
     message: AssistantMessage;

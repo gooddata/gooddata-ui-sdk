@@ -4,11 +4,11 @@ import { defineMessage, useIntl } from "react-intl";
 
 import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
-import { TitleWrapper } from "./TitleWrapper.js";
-import { type ITitleProps } from "./types.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/dashboard.js";
+import { TitleWrapper } from "./TitleWrapper.js";
+import { type ITitleProps } from "./types.js";
 
 const placeholderMessage = defineMessage({ id: "untitled" });
 

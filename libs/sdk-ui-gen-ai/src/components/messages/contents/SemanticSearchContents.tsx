@@ -8,9 +8,9 @@ import { FormattedMessage } from "react-intl";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
+import { type SemanticSearchContents } from "../../../model.js";
 import { MarkdownComponent } from "./Markdown.js";
 import { replaceLinks } from "./replaceLinks.js";
-import { type SemanticSearchContents } from "../../../model.js";
 
 const SemanticSearchTreeView = lazy(() =>
     import("../components/SemanticSearchTreeView.js").then((module) => ({

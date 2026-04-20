@@ -7,8 +7,6 @@ import { invariant } from "ts-invariant";
 import { type IExecutionDefinition, type ITheme } from "@gooddata/sdk-model";
 import { type IDrillConfig, type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { getCommonConfiguration } from "./commonConfiguration.js";
-import { getCustomizedConfiguration } from "./customConfiguration.js";
 import { type IChartConfig, type IChartLimits } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
 import { type IChartOptions, type ISeriesItem } from "../../typings/unsafe.js";
@@ -30,6 +28,8 @@ import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration.js";
 import { getScatterConfiguration } from "../scatterPlot/scatterConfiguration.js";
 import { getTreemapConfiguration } from "../treemap/treemapConfiguration.js";
 import { getWaterfallConfiguration } from "../waterfallChart/waterfallConfiguration.js";
+import { getCommonConfiguration } from "./commonConfiguration.js";
+import { getCustomizedConfiguration } from "./customConfiguration.js";
 
 type ChartConfigurationValueType = (
     ...args: any

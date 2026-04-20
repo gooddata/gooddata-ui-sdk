@@ -9,15 +9,6 @@ import {
     isExportDefinitionDashboardRequestPayload,
 } from "@gooddata/sdk-model";
 
-import {
-    useAutomationVisibleFilters,
-    useAutomationVisibleFiltersByTab,
-} from "./hooks/useAutomationVisibleFilters.js";
-import {
-    getDefaultSelectedFiltersByTabForExistingAutomation,
-    useDefaultSelectedFiltersForExistingAutomation,
-} from "./hooks/useDefaultSelectedFiltersForExistingAutomation.js";
-import { useDefaultSelectedFiltersForNewAutomation } from "./hooks/useDefaultSelectedFiltersForNewAutomation.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
     type IAutomationFiltersTab,
@@ -27,6 +18,15 @@ import {
 } from "../../model/store/filtering/dashboardFilterSelectors.js";
 import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../model/utils/widgetFilters.js";
+import {
+    useAutomationVisibleFilters,
+    useAutomationVisibleFiltersByTab,
+} from "./hooks/useAutomationVisibleFilters.js";
+import {
+    getDefaultSelectedFiltersByTabForExistingAutomation,
+    useDefaultSelectedFiltersForExistingAutomation,
+} from "./hooks/useDefaultSelectedFiltersForExistingAutomation.js";
+import { useDefaultSelectedFiltersForNewAutomation } from "./hooks/useDefaultSelectedFiltersForNewAutomation.js";
 
 /**
  * Edited automation filters structured by tab ID.

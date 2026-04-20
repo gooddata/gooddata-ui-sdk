@@ -1,9 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { inRange, isEqual, range } from "lodash-es";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme } from "@gooddata/sdk-model";
 
+import { parseRGBString } from "../coloring/color.js";
 import { LEFT, RIGHT } from "./PositionTypes.js";
 import {
     type IColorLegendItem,
@@ -17,7 +19,6 @@ import {
     isSeriesItemAxisIndicator,
     isSeriesItemSeparator,
 } from "./types.js";
-import { parseRGBString } from "../coloring/color.js";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;

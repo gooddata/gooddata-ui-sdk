@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type RefObject } from "react";
 
@@ -7,7 +7,6 @@ import { type IntlShape } from "react-intl";
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type DataViewFacade, type ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { getTableData } from "./valueFormatter.js";
 import { type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
 import { type ITableColumnDefinitionByColId } from "../../types/internal.js";
 import { type ColumnWidthItem } from "../../types/resizing.js";
@@ -18,6 +17,7 @@ import { columnDefinitionToColId } from "../columns/colId.js";
 import { createColDef } from "../columns/createColDef.js";
 import { columnDefsToPivotGroups } from "../pivoting/columnDefsToPivotGroups.js";
 import { applyTextWrappingToGroupDef } from "../textWrapping/applyTextWrappingToGroupDef.js";
+import { getTableData } from "./valueFormatter.js";
 
 /**
  * Creates ag-grid col defs from the provided data view, applying all features to the col defs.

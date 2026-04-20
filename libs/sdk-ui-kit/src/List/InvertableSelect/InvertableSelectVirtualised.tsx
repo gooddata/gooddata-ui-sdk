@@ -18,19 +18,6 @@ import DefaultMeasure from "react-measure";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
-import {
-    type IInvertableSelectRenderErrorProps,
-    type IInvertableSelectRenderLoadingProps,
-    type IInvertableSelectRenderNoDataProps,
-    type IInvertableSelectRenderSearchBarProps,
-    type IInvertableSelectRenderStatusBarProps,
-} from "./InvertableSelect.js";
-import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
-import { InvertableSelectItem } from "./InvertableSelectItem.js";
-import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch.js";
-import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
-import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
-import { useInvertableSelect } from "./useInvertableSelect.js";
 import { useFocusWithinContainer } from "../../@ui/hooks/useFocusWithinContainer.js";
 import {
     SELECT_ITEM_ACTION,
@@ -44,6 +31,19 @@ import {
 } from "../../@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 import { LoadingMask } from "../../LoadingMask/LoadingMask.js";
 import { isEnterKey, isEscapeKey, isSpaceKey } from "../../utils/events.js";
+import {
+    type IInvertableSelectRenderErrorProps,
+    type IInvertableSelectRenderLoadingProps,
+    type IInvertableSelectRenderNoDataProps,
+    type IInvertableSelectRenderSearchBarProps,
+    type IInvertableSelectRenderStatusBarProps,
+} from "./InvertableSelect.js";
+import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
+import { InvertableSelectItem } from "./InvertableSelectItem.js";
+import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch.js";
+import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
+import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
+import { useInvertableSelect } from "./useInvertableSelect.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

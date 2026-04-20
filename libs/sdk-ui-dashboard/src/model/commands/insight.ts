@@ -13,7 +13,6 @@ import {
     isObjRef,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardCommand } from "./base.js";
 import { type IExportConfig } from "../types/exportTypes.js";
 import {
     type IFilterOpReplaceAll,
@@ -21,6 +20,7 @@ import {
     type IWidgetFilterOperation,
     type IWidgetHeader,
 } from "../types/widgetTypes.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * @alpha

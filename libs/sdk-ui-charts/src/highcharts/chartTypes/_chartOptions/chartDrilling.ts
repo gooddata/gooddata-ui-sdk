@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { omit, without } from "lodash-es";
 
@@ -12,11 +12,11 @@ import {
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
-import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IPointData, type ISeriesDataItem } from "../../typings/unsafe.js";
 import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
+import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 
 function getViewBy(
     viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,

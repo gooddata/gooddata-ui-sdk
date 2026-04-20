@@ -9,11 +9,11 @@ import {
 } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { Parameter } from "./Parameter.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectAllCatalogAttributesMap } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { selectFilterContextAttributeFilterItemByDisplayForm } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
+import { Parameter } from "./Parameter.js";
 
 interface IXProps {
     item: IAttributeDisplayFormMetadataObject;

@@ -11,7 +11,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
-import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm.js";
 import { type PromiseFnReturnType, getAttributeFilterContext } from "../common/sagas.js";
 import {
     selectAttributeFilterDisplayAsLabel,
@@ -19,6 +18,7 @@ import {
     selectOriginalFilter,
 } from "../filter/filterSelectors.js";
 import { actions } from "../store/slice.js";
+import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm.js";
 
 /**
  * @internal

@@ -23,6 +23,7 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 
+import { fixNumber } from "../../utils/fixNumber.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 import { convertAttribute } from "./afm/AttributeConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
@@ -37,7 +38,6 @@ import {
     convertVisualizationToDashboardTabularExportRequest,
 } from "./ExportDefinitionsConverter.js";
 import { toDateDataSetQualifier } from "./ObjRefConverter.js";
-import { fixNumber } from "../../utils/fixNumber.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,

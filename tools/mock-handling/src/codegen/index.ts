@@ -5,14 +5,6 @@ import { join } from "path";
 
 import { groupBy } from "lodash-es";
 
-import { generateConstantsForCatalog } from "./catalog.js";
-import { generateConstantsForCollectionItems } from "./collectionItems.js";
-import { generateConstantsForDashboards } from "./dashboard.js";
-import { generateDataSampleConst, generateImportsForDataSamples } from "./dataSample.js";
-import { generateConstantsForDisplayForms } from "./displayForm.js";
-import { generateConstantsForExecutions } from "./execution.js";
-import { generateConstantsForInsights } from "./insight.js";
-import { generateConstantsForVisClasses } from "./visClasses.js";
 import { type CatalogRecording } from "../recordings/catalog.js";
 import { type CollectionItemsRecording } from "../recordings/collectionItems.js";
 import { type IRecording, RecordingType } from "../recordings/common.js";
@@ -21,6 +13,14 @@ import { type DisplayFormRecording } from "../recordings/displayForms.js";
 import { type ExecutionRecording } from "../recordings/execution.js";
 import { type InsightRecording } from "../recordings/insights.js";
 import { type VisClassesRecording } from "../recordings/visClasses.js";
+import { generateConstantsForCatalog } from "./catalog.js";
+import { generateConstantsForCollectionItems } from "./collectionItems.js";
+import { generateConstantsForDashboards } from "./dashboard.js";
+import { generateDataSampleConst, generateImportsForDataSamples } from "./dataSample.js";
+import { generateConstantsForDisplayForms } from "./displayForm.js";
+import { generateConstantsForExecutions } from "./execution.js";
+import { generateConstantsForInsights } from "./insight.js";
+import { generateConstantsForVisClasses } from "./visClasses.js";
 
 const FILE_HEADER = `/* eslint-disable import-x/order */\n/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 

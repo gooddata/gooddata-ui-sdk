@@ -2,7 +2,13 @@
 
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IGeoLngLat } from "../../types/common/coordinates.js";
+import { type IGeoChartPointsConfig } from "../../types/config/points.js";
+import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
+import { type IPushpinColor, type IPushpinGeoData } from "../../types/geoData/pushpin.js";
+import { SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
+import { getSelectedIntersections, isFeatureSelected } from "../common/selectionUtils.js";
 import { getPushpinColors } from "./coloring/palette.js";
 import {
     DEFAULT_CLUSTER_MAX_ZOOM,
@@ -11,13 +17,7 @@ import {
     PUSHPIN_SIZE_OPTIONS_MAP,
     PUSHPIN_STYLE_FEATURE_PROPERTIES,
 } from "./constants.js";
-import { SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
-import { getSelectedIntersections, isFeatureSelected } from "../common/selectionUtils.js";
 import { getMinMax } from "./size/calculations.js";
-import { type IGeoLngLat } from "../../types/common/coordinates.js";
-import { type IGeoChartPointsConfig } from "../../types/config/points.js";
-import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
-import { type IPushpinColor, type IPushpinGeoData } from "../../types/geoData/pushpin.js";
 
 /**
  * Properties for creating a pushpin data source

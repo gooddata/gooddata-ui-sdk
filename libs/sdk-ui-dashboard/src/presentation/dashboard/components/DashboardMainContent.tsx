@@ -4,7 +4,6 @@ import { type Ref, type RefObject, forwardRef, useEffect } from "react";
 
 import cx from "classnames";
 
-import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings.js";
 import { changeFilterContextSelection } from "../../../model/commands/filters.js";
 import { useDispatchDashboardCommand } from "../../../model/react/useDispatchDashboardCommand.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
@@ -12,6 +11,7 @@ import { useDashboardDrop } from "../../dragAndDrop/useDashboardDrop.js";
 import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
 import { DashboardLayout } from "../../widget/dashboardLayout/DashboardLayout.js";
 import { type IDashboardProps } from "../types.js";
+import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings.js";
 
 export const DashboardMainContent = forwardRef(function DashboardMainContent(_: IDashboardProps, ref) {
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);

@@ -5,7 +5,6 @@ import { type IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
 import { messages } from "../../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
@@ -18,6 +17,7 @@ import {
 import { getItemsCount, getStackItems, getViewItems, setBucketTitles } from "../bucketHelper.js";
 import { getMasterMeasuresCount, hasNoStacksWithDate } from "../bucketRules.js";
 import { getTranslation } from "../translations.js";
+import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer

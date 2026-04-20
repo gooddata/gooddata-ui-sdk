@@ -9,7 +9,6 @@ import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 const wrapperStyle = { width: 400, height: 600, padding: "1em 1em" };

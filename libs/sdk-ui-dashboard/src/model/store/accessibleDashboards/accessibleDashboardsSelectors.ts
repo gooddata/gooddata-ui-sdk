@@ -1,11 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { createSelector } from "@reduxjs/toolkit";
 
 import { type IListedDashboard } from "@gooddata/sdk-model";
 
-import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter.js";
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

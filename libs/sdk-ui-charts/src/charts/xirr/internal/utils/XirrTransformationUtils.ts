@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -17,8 +17,8 @@ import {
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
-import { calculateXirr } from "./calculateXirr.js";
 import { type IHeadlineData } from "../../../headline/internal/interfaces/Headlines.js";
+import { calculateXirr } from "./calculateXirr.js";
 
 export interface IXirrExecutionData {
     date: string;

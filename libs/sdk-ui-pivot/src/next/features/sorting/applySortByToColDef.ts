@@ -2,8 +2,8 @@
 
 import { type ISortItem, sortDirection } from "@gooddata/sdk-model";
 
-import { getSortForColumnDefinition } from "./getSortForColumnDefinition.js";
 import { type AgGridColumnDef } from "../../types/agGrid.js";
+import { getSortForColumnDefinition } from "./getSortForColumnDefinition.js";
 
 /**
  * Applies provided sorts to col def.

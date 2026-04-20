@@ -10,7 +10,6 @@ import {
 import { type IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { shiftArrayRight } from "@gooddata/util";
 
-import { PluggableBarChart } from "./PluggableBarChart.js";
 import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     type IVisualizationDescriptor,
@@ -32,6 +31,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+import { PluggableBarChart } from "./PluggableBarChart.js";
 
 export class BarChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

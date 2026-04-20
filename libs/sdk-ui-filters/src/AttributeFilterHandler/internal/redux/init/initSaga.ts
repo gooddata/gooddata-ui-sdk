@@ -5,11 +5,6 @@ import { type SagaReturnType, all, call, cancelled, put, select, takeLatest } fr
 
 import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
-import { initAttributeSaga } from "./initAttributeSaga.js";
-import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";
-import { initIrrelevantSelectionSaga } from "./initIrrelevantSelectionSaga.js";
-import { initSelectionSaga } from "./initSelectionSaga.js";
-import { initTotalCountSaga } from "./initTotalCount.js";
 import { isLimitingAttributeFiltersEmpty } from "../../../utils.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
 import {
@@ -20,6 +15,11 @@ import {
 import { selectHiddenElements } from "../filter/filterSelectors.js";
 import { selectIsWorkingSelectionEmpty } from "../selection/selectionSelectors.js";
 import { actions } from "../store/slice.js";
+import { initAttributeSaga } from "./initAttributeSaga.js";
+import { initAttributeElementsPageSaga } from "./initElementsPageSaga.js";
+import { initIrrelevantSelectionSaga } from "./initIrrelevantSelectionSaga.js";
+import { initSelectionSaga } from "./initSelectionSaga.js";
+import { initTotalCountSaga } from "./initTotalCount.js";
 
 /**
  * @internal

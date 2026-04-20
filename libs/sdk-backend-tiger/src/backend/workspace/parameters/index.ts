@@ -17,7 +17,6 @@ import {
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
-import { ParametersQuery } from "./parametersQuery.js";
 import { convertParameter } from "../../../convertors/fromBackend/ParameterConverter.js";
 import {
     convertParameterToBackendCreate,
@@ -25,6 +24,7 @@ import {
 } from "../../../convertors/toBackend/ParameterConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
+import { ParametersQuery } from "./parametersQuery.js";
 
 export class TigerWorkspaceParameters implements IWorkspaceParametersService {
     constructor(

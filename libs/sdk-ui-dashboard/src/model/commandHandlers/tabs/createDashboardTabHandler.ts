@@ -13,7 +13,6 @@ import {
     type ScreenSize,
 } from "@gooddata/sdk-model";
 
-import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { DEFAULT_FISCAL_DATE_FILTER_PRESET } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import { configHasFiscalPresets } from "../../../_staging/dateFilterConfig/validation.js";
@@ -29,6 +28,7 @@ import { type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
+import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 
 const getTabState = ({
     title,

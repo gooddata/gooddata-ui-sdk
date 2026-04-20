@@ -11,7 +11,6 @@ import { type InsightRecording, recordedInsight } from "@gooddata/sdk-backend-mo
 import { type IInsight, type IInsightWidget, insightTags, insightTitle } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
-import { EMPTY_MUTATIONS } from "./utils.js";
 import {
     type InsightComponentProvider,
     type OptionalInsightComponentProvider,
@@ -20,6 +19,7 @@ import { type IDashboardInsightProps } from "../../../presentation/widget/insigh
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultInsightCustomizer } from "../insightCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

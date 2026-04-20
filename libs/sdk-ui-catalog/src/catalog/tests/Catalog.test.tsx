@@ -1,8 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { PropsWithChildren } from "react";
-
 import { render, screen } from "@testing-library/react";
+import type { PropsWithChildren } from "react";
 import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";

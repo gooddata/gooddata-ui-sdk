@@ -23,8 +23,6 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IColorMapping, getColorMappingPredicate } from "@gooddata/sdk-ui-vis-commons";
 
-import { isRecord } from "./guards.js";
-import { registerHeaderPredicateKey } from "./predicateFingerprint.js";
 import {
     type IGeoLayer,
     type IGeoLayerArea,
@@ -32,6 +30,8 @@ import {
     type IGeoLayerPushpin,
     isGeoLayerPushpin,
 } from "../types/layers/index.js";
+import { isRecord } from "./guards.js";
+import { registerHeaderPredicateKey } from "./predicateFingerprint.js";
 
 /**
  * Expected shape of geo layer controls in visualization properties.

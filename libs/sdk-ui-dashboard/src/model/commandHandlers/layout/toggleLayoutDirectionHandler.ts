@@ -12,11 +12,6 @@ import {
     isDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 
-import {
-    getChildWidgetLayoutPaths,
-    getChildWidgetLayoutPathsWithMinWidths,
-    getUpdatedSizesOnly,
-} from "./containerWidthSanitization.js";
 import { findItem } from "../../../_staging/layout/coordinates.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { type IToggleLayoutDirection } from "../../commands/layout.js";
@@ -27,6 +22,11 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget, type IItemWithWidth } from "../../types/layoutTypes.js";
+import {
+    getChildWidgetLayoutPaths,
+    getChildWidgetLayoutPathsWithMinWidths,
+    getUpdatedSizesOnly,
+} from "./containerWidthSanitization.js";
 
 function findChildItemsWithNewWidth(
     { payload: { layoutPath, direction } }: IToggleLayoutDirection,

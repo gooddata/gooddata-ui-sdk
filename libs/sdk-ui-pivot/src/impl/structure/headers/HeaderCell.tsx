@@ -8,11 +8,11 @@ import { type IntlShape } from "react-intl";
 import { type IExecutionDefinition, type ITotal, type SortDirection } from "@gooddata/sdk-model";
 import { type IOnOpenedChangeParams } from "@gooddata/sdk-ui-kit";
 
-import { AggregationsMenu } from "./AggregationsMenu.js";
 import { type IMenu } from "../../../publicTypes.js";
 import { AVAILABLE_TOTALS, HEADER_LABEL_CLASS } from "../../base/constants.js";
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { type TableDescriptor } from "../tableDescriptor.js";
+import { AggregationsMenu } from "./AggregationsMenu.js";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";

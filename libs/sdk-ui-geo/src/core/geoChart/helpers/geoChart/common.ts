@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEqual } from "lodash-es";
 
 import {
@@ -10,8 +11,8 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 
-import { getResponsiveInfo } from "./responsive.js";
 import { type IGeoData, type IGeoPointsConfig } from "../../../../GeoChart.js";
+import { getResponsiveInfo } from "./responsive.js";
 
 export function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: IGeoData): IResultHeader[][] {
     const { color, size } = geoData;

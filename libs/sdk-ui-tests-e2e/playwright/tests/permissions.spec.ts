@@ -16,7 +16,6 @@ import {
     deleteTestUser,
     generateRandomId,
     getWorkspaceId,
-    mockFeatureHub,
     setEarlyAccess,
     switchToUser,
     visit,
@@ -28,7 +27,6 @@ const USERGROUP_PREFIX = "SDK_test_usergroup";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Dashboard", "permissions", () => {

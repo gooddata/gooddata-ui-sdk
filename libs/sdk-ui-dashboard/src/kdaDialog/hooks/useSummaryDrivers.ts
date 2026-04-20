@@ -5,8 +5,8 @@ import { useMemo } from "react";
 import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 import { type IKdaItemGroup } from "../internalTypes.js";
-import { useAttribute } from "./useAttribute.js";
 import { useKdaState } from "../providers/KdaState.js";
+import { useAttribute } from "./useAttribute.js";
 
 export function useSummaryDrivers() {
     const { state } = useKdaState();

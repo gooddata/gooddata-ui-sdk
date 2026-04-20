@@ -2,11 +2,6 @@
 
 import { AreaChart, type IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
-import {
-    AreaChartWithLotArithmeticMeasuresAndViewBy,
-    AreaChartWithManyDataPoints,
-    AreaChartWithTwoMeasuresAndViewBy,
-} from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
@@ -17,6 +12,11 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    AreaChartWithLotArithmeticMeasuresAndViewBy,
+    AreaChartWithManyDataPoints,
+    AreaChartWithTwoMeasuresAndViewBy,
+} from "./base.js";
 
 const legendScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

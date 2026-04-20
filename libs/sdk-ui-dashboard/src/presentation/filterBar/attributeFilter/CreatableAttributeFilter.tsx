@@ -4,7 +4,6 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { AddAttributeFilterPlaceholder } from "./addAttributeFilter/AddAttributeFilterPlaceholder.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsMultipleDateFilters } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
@@ -15,6 +14,7 @@ import { selectIsWhiteLabeled } from "../../../model/store/config/configSelector
 import { selectCanAddMoreFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import type { ICreatePanelItemComponentProps } from "../../componentDefinition/types.js";
 import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/draggableAttributeFilter/DraggableAttributeFilterCreatePanelItem.js";
+import { AddAttributeFilterPlaceholder } from "./addAttributeFilter/AddAttributeFilterPlaceholder.js";
 
 /**
  * @internal

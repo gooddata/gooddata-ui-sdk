@@ -16,13 +16,6 @@ import { BucketNames, type IDrillEventIntersectionElement } from "@gooddata/sdk-
 import { type IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
 import {
-    expectedInsightDefDepartment,
-    expectedInsightDefRegion,
-    intersection,
-    sourceInsightDef,
-    targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
-import {
     type IBucketOfFun,
     type IExtendedReferencePoint,
     type IReferencePoint,
@@ -80,6 +73,13 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableAreaChart } from "../PluggableAreaChart.js";
+import {
+    expectedInsightDefDepartment,
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock.js";
 
 const { Department, Region } = ReferenceMd;
 

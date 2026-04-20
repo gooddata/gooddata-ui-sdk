@@ -25,8 +25,8 @@ import {
     withContexts,
 } from "@gooddata/sdk-ui";
 
-import { CoreXirr } from "./CoreXirr.js";
 import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
+import { CoreXirr } from "./CoreXirr.js";
 
 //
 // Public interface

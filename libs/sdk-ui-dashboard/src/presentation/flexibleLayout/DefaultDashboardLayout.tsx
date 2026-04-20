@@ -2,8 +2,8 @@
 
 import { type ReactElement } from "react";
 
-import { DefaultFlexibleDashboardLayout } from "./DefaultFlexibleDashboardLayout.js";
 import { type IDashboardLayoutProps } from "../widget/dashboardLayout/types.js";
+import { DefaultFlexibleDashboardLayout } from "./DefaultFlexibleDashboardLayout.js";
 
 /**
  * @alpha

@@ -6,7 +6,6 @@ import { type IAutomationMetadataObject, type IInsightWidget } from "@gooddata/s
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import { messages } from "../../locales.js";
 import { refreshAutomations } from "../commands/scheduledEmail.js";
 import {
@@ -26,6 +25,7 @@ import {
     selectIsAlertsManagementDialogOpen,
     selectMenuButtonItemsVisibility,
 } from "../store/ui/uiSelectors.js";
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**
  * Hook that handles alerts dialog

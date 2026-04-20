@@ -23,6 +23,8 @@ import {
 } from "@gooddata/sdk-ui";
 import { Dropdown, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
+import { MediaQueries } from "../constants/MediaQueries.js";
+import { type IFilterButtonCustomIcon } from "../shared/interfaces/index.js";
 import {
     DATE_FILTER_ACTIVE_CALENDAR_TAB_ID,
     DATE_FILTER_CUSTOM_RELATIVE_ID,
@@ -43,8 +45,6 @@ import {
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 import { getFiscalTabsConfig } from "./utils/presetFilterUtils.js";
-import { MediaQueries } from "../constants/MediaQueries.js";
-import { type IFilterButtonCustomIcon } from "../shared/interfaces/index.js";
 
 export interface IDateFilterCoreProps {
     dateFormat: string;

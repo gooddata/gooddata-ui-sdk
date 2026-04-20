@@ -2,8 +2,8 @@
 
 import { type ReactElement } from "react";
 
-import { type IDashboardSettingsDialogProps } from "./types.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
+import { type IDashboardSettingsDialogProps } from "./types.js";
 
 /**
  * @internal

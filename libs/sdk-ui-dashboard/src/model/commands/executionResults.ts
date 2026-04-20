@@ -4,8 +4,8 @@ import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { type IResultWarning, type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type IDashboardCommand } from "./base.js";
 import { type IExecutionResultEnvelope } from "../store/executionResults/types.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Triggers an event.

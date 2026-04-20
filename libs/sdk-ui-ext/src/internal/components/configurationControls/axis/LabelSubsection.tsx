@@ -1,13 +1,13 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { memo } from "react";
 
-import { LabelFormatControl } from "./LabelFormatControl.js";
-import { LabelRotationControl } from "./LabelRotationControl.js";
 import { messages } from "../../../../locales.js";
 import { type AxisType } from "../../../interfaces/AxisType.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSubsection } from "../../configurationControls/ConfigSubsection.js";
+import { LabelFormatControl } from "./LabelFormatControl.js";
+import { LabelRotationControl } from "./LabelRotationControl.js";
 
 export interface ILabelSubsection {
     disabled: boolean;

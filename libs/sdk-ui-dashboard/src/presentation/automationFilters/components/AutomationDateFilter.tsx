@@ -8,10 +8,6 @@ import { type FilterContextItem, type IDashboardDateFilter, areObjRefsEqual } fr
 import { type IDateFilterButtonProps } from "@gooddata/sdk-ui-filters";
 import { type OverlayPositionType, UiChip, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import {
-    AutomationDateFilterProvider,
-    useAutomationDateFilterContext,
-} from "./AutomationDateFilterContext.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogDateDatasets } from "../../../model/store/catalog/catalogSelectors.js";
 import {
@@ -22,6 +18,10 @@ import {
 } from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { DefaultDashboardDateFilter } from "../../filterBar/dateFilter/DefaultDashboardDateFilter.js";
 import type { IDashboardDateFilterConfig } from "../../filterBar/dateFilter/types.js";
+import {
+    AutomationDateFilterProvider,
+    useAutomationDateFilterContext,
+} from "./AutomationDateFilterContext.js";
 
 function AutomationDateFilterButton(props: IDateFilterButtonProps) {
     const {

@@ -30,8 +30,8 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { getCatalogAttribute, getFiltersAttribute } from "./getters.js";
 import { type AlertAttribute, type AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { getCatalogAttribute, getFiltersAttribute } from "./getters.js";
 
 type InsightType =
     | "headline"

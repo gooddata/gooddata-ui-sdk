@@ -2,7 +2,6 @@
 
 import { type DashboardDateFilterConfigMode, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { useDateFilterTitleConfiguration } from "./configuration/hooks/useDateFilterTitleConfiguration.js";
 import {
     setDashboardDateFilterConfigMode,
     setDashboardDateFilterWithDimensionConfigMode,
@@ -11,6 +10,7 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { useDispatchDashboardCommand } from "../../../model/react/useDispatchDashboardCommand.js";
 import { selectDateFilterConfigOverrides } from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { useDateFilterTitleConfiguration } from "./configuration/hooks/useDateFilterTitleConfiguration.js";
 
 export const useDateFilterConfig = (dateDataSet: ObjRef | undefined, defaultDateFilterTitle: string) => {
     const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);

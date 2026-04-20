@@ -11,7 +11,6 @@ import {
     clearAllFilterValues,
     expectExportedPDF,
     filterDropdown,
-    mockFeatureHub,
     openAttributeFilter,
     toggleDashboardMenu,
     visit,
@@ -21,7 +20,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Export dashboard to PDF", "exportDashboardToPDF", () => {

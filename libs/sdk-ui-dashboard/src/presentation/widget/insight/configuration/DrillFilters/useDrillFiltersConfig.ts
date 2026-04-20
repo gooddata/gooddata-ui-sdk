@@ -17,13 +17,6 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 
-import { mapDashboardFilterToOption } from "./optionMappings/mapDashboardFilterToOption.js";
-import { mapIntersectionAttributeToOption } from "./optionMappings/mapIntersectionAttributeToOption.js";
-import { mapSourceInsightFilterToOption } from "./optionMappings/mapSourceInsightFilterToOption.js";
-import { mapSourceMeasureFilterToOption } from "./optionMappings/mapSourceMeasureFilterToOption.js";
-import { type IDrillFiltersConfigOption } from "./types.js";
-import { type IDrillFiltersConfigSelection } from "./useDrillFiltersConfigInner.js";
-import { useFetchTargetDashboardFilters } from "./useFetchTargetDashboardFilters.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectAllCatalogDisplayFormsMap,
@@ -45,6 +38,13 @@ import {
     type IDrillToInsightConfig,
     isDrillToInsightConfig,
 } from "../../../../drill/types.js";
+import { mapDashboardFilterToOption } from "./optionMappings/mapDashboardFilterToOption.js";
+import { mapIntersectionAttributeToOption } from "./optionMappings/mapIntersectionAttributeToOption.js";
+import { mapSourceInsightFilterToOption } from "./optionMappings/mapSourceInsightFilterToOption.js";
+import { mapSourceMeasureFilterToOption } from "./optionMappings/mapSourceMeasureFilterToOption.js";
+import { type IDrillFiltersConfigOption } from "./types.js";
+import { type IDrillFiltersConfigSelection } from "./useDrillFiltersConfigInner.js";
+import { useFetchTargetDashboardFilters } from "./useFetchTargetDashboardFilters.js";
 
 interface IUseDrillFiltersConfigParams {
     item: IDrillConfigItem;

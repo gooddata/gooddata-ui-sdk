@@ -4,17 +4,17 @@ import { useMemo, useRef } from "react";
 
 import { type IHeaderPredicate, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
+import { useGeoLayers } from "../../context/GeoLayersContext.js";
+import { useGeoLegend } from "../../context/GeoLegendContext.js";
+import { useMapRuntime } from "../../context/MapRuntimeContext.js";
+import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
+import { resolveLayerColorConfig } from "../../utils/color/resolveLayerColorConfig.js";
 import { useApplyLayerSegmentFiltering } from "./useApplyLayerSegmentFiltering.js";
 import { useApplyLayerVisibility } from "./useApplyLayerVisibility.js";
 import { useInitLayersToMap } from "./useInitLayersToMap.js";
 import { useLayerClickEvent } from "./useLayerClickEvent.js";
 import { useLayerTooltips } from "./useLayerTooltips.js";
 import { useUpdateLayersOnMap } from "./useUpdateLayersOnMap.js";
-import { useGeoLayers } from "../../context/GeoLayersContext.js";
-import { useGeoLegend } from "../../context/GeoLegendContext.js";
-import { useMapRuntime } from "../../context/MapRuntimeContext.js";
-import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
-import { resolveLayerColorConfig } from "../../utils/color/resolveLayerColorConfig.js";
 
 interface IUseLayerSyncParams {
     /**

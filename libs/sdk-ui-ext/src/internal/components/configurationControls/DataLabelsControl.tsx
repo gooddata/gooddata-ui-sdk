@@ -1,13 +1,13 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
-import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { dataLabelStyleDropdownItems, dataLabelsDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
+import { DropdownControl } from "./DropdownControl.js";
 
 export interface IDataLabelsControlProps {
     pushData?: (data: any) => any;

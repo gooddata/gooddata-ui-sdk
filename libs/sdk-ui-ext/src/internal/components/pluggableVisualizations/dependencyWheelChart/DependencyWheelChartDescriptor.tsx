@@ -3,7 +3,6 @@
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type ISankeyChartProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableDependencyWheelChart } from "./PluggableDependencyWheelChart.js";
 import {
     type IVisualizationDescriptor,
     type IVisualizationMeta,
@@ -21,6 +20,7 @@ import {
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { SankeyChartDescriptor } from "../sankeyChart/SankeyChartDescriptor.js";
+import { PluggableDependencyWheelChart } from "./PluggableDependencyWheelChart.js";
 
 export class DependencyWheelChartDescriptor
     extends SankeyChartDescriptor

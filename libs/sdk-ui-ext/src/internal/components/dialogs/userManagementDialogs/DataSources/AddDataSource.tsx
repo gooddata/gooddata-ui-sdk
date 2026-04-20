@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
@@ -6,11 +6,11 @@ import { useIntl } from "react-intl";
 
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
+import { messages } from "../locales.js";
+import { type DataSourcePermissionSubject, type IGrantedDataSource } from "../types.js";
 import { AddDataSourceSelect } from "./AddDataSourceSelect.js";
 import { DataSourceList } from "./DataSourceList.js";
 import { useAddDataSource } from "./useAddDataSource.js";
-import { messages } from "../locales.js";
-import { type DataSourcePermissionSubject, type IGrantedDataSource } from "../types.js";
 
 export interface IAddDataSourceProps {
     ids: string[];

@@ -2,9 +2,9 @@
 
 import { type ColDef, type Column, type ColumnResizedEvent } from "ag-grid-community";
 
-import { COLUMN_SUBTOTAL, COLUMN_TOTAL, MEASURE_COLUMN } from "./constants.js";
 import { ColumnEventSourceType } from "../../columnWidths.js";
 import { agColId } from "../structure/tableDescriptorTypes.js";
+import { COLUMN_SUBTOTAL, COLUMN_TOTAL, MEASURE_COLUMN } from "./constants.js";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.

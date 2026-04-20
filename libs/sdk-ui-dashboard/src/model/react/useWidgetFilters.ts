@@ -22,18 +22,18 @@ import {
 } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector } from "./DashboardStoreProvider.js";
-import {
-    type QueryProcessingState,
-    type QueryProcessingStatus,
-    useDashboardQueryProcessing,
-} from "./useDashboardQueryProcessing.js";
 import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
 import { type IQueryWidgetFilters, queryWidgetFilters } from "../queries/widgets.js";
 import { selectCrossFilteringFiltersLocalIdentifiersByWidgetRef } from "../store/drill/drillSelectors.js";
 import { selectIsInEditMode } from "../store/renderMode/renderModeSelectors.js";
 import { selectFilterContextFilters } from "../store/tabs/filterContext/filterContextSelectors.js";
 import { type FilterableDashboardWidget } from "../types/layoutTypes.js";
+import { useDashboardSelector } from "./DashboardStoreProvider.js";
+import {
+    type QueryProcessingState,
+    type QueryProcessingStatus,
+    useDashboardQueryProcessing,
+} from "./useDashboardQueryProcessing.js";
 
 /**
  * Hook for obtaining the effective filters for a widget.

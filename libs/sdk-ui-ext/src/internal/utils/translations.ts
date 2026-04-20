@@ -8,9 +8,8 @@ import {
     type ITranslations,
     resolveMessages as sdkUiresolveMessages,
 } from "@gooddata/sdk-ui";
-// eslint-disable-next-line import-x/order
 import { removeMetadata } from "@gooddata/util";
-// eslint-disable-next-line import-x/order
+
 import type { IDropdownItem } from "../interfaces/Dropdown.js";
 
 export function getTranslation(

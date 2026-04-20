@@ -1,20 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import {
-    type DimensionGenerator,
-    type IExecutionConfig,
-    type IExecutionDefinition,
-    type IPostProcessing,
-    defSetBuckets,
-    defSetDimensions,
-    defSetExecConfig,
-    defSetPostProcessing,
-    defSetSorts,
-    defWithFilters,
-} from "./index.js";
-import { defValidate } from "./validation.js";
 import {
     type IInsightDefinition,
     insightBuckets,
@@ -39,6 +27,19 @@ import {
 } from "../buckets/index.js";
 import { type INullableFilter } from "../filter/index.js";
 import { isMeasure } from "../measure/index.js";
+import {
+    type DimensionGenerator,
+    type IExecutionConfig,
+    type IExecutionDefinition,
+    type IPostProcessing,
+    defSetBuckets,
+    defSetDimensions,
+    defSetExecConfig,
+    defSetPostProcessing,
+    defSetSorts,
+    defWithFilters,
+} from "./index.js";
+import { defValidate } from "./validation.js";
 
 /**
  * Creates new, empty execution definition for the provided workspace.

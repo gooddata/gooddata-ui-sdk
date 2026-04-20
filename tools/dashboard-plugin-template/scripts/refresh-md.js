@@ -1,9 +1,10 @@
 #!/usr/bin/env node
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+
+import dotenv from "dotenv";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

@@ -8,8 +8,6 @@ import { invariant } from "ts-invariant";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IMeasure, type INullableFilter, type ISeparators } from "@gooddata/sdk-model";
 
-import { FormattedNumber } from "./FormattedNumber.js";
-import { KpiError } from "./KpiError.js";
 import { IntlWrapper } from "../base/localization/IntlWrapper.js";
 import { type IErrorProps } from "../base/react/ErrorComponent.js";
 import { type ILoadingProps, LoadingComponent } from "../base/react/LoadingComponent.js";
@@ -17,6 +15,8 @@ import { withContexts } from "../base/react/withContexts.js";
 import { type DataViewFacade } from "../base/results/facade.js";
 import { type IRawExecuteProps, RawExecute } from "../execution/RawExecute.js";
 import { type IWithLoadingEvents } from "../execution/withExecutionLoading.js";
+import { FormattedNumber } from "./FormattedNumber.js";
+import { KpiError } from "./KpiError.js";
 
 //
 // Internals

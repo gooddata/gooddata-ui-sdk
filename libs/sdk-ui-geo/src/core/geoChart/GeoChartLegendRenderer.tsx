@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useState } from "react";
 
@@ -14,6 +14,7 @@ import {
     type PositionType,
 } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IAvailableLegends, type IGeoData } from "../../GeoChart.js";
 import { generateLegendColorData } from "./geoChartColor.js";
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import {
@@ -26,7 +27,6 @@ import {
 } from "./helpers/geoChart/responsive.js";
 import { HEIGHT_OF_SIZE_LEGEND, PushpinCategoryLegend } from "./legends/PushpinCategoryLegend.js";
 import { PushpinSizeLegend } from "./legends/PushpinSizeLegend.js";
-import { type IAvailableLegends, type IGeoData } from "../../GeoChart.js";
 
 const HEIGHT_OF_COLOR_LEGEND = 210;
 

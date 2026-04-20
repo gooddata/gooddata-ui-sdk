@@ -5,14 +5,14 @@ import { describe, expect, it } from "vitest";
 import { idRef, newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
+import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
+import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import { buildAreaVisualizationConfig } from "../geoAreaChart/geoAreaConfigBuilder.js";
 import {
     buildGeoVisualizationConfig,
     geoConfigFromInsight,
     geoInsightConversion,
 } from "./geoConfigBuilder.js";
-import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
-import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
-import { buildAreaVisualizationConfig } from "../geoAreaChart/geoAreaConfigBuilder.js";
 
 describe("geoConfigFromInsight", () => {
     it("keeps mapStyle configuration", () => {

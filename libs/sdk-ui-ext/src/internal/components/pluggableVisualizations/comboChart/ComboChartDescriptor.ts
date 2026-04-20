@@ -3,7 +3,6 @@
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableComboChart } from "./PluggableComboChart.js";
 import {
     type IVisualizationDescriptor,
     type IVisualizationMeta,
@@ -21,6 +20,7 @@ import {
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import { PluggableComboChart } from "./PluggableComboChart.js";
 
 export class ComboChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

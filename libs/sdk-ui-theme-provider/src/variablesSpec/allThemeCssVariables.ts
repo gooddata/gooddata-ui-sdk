@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 // Theme
 import { chartThemeDeprecatedVariables } from "./deprecated/chart.js";
@@ -13,6 +13,10 @@ import { internalSpacingThemeVariables } from "./internal/spacing.js";
 import { internalTableThemeVariables } from "./internal/table.js";
 import { internalTabsThemeVariables } from "./internal/tabs.js";
 import { internalTransitionThemeVariables } from "./internal/transition.js";
+// Derived
+import { derivedPaletteBaseThemeVariables } from "./theme-derived/palette-base-derived.js";
+import { derivedPaletteComplementaryThemeVariables } from "./theme-derived/palette-complementary-derived.js";
+import { derivedShadowThemeVariables } from "./theme-derived/shadow-derived.js";
 import { analyticalDesignerThemeVariables } from "./theme/analytical-designer.js";
 import { buttonThemeVariables } from "./theme/button.js";
 import { chartThemeVariables } from "./theme/chart.js";
@@ -26,10 +30,6 @@ import { tableThemeVariables } from "./theme/table.js";
 import { toastMessageThemeVariables } from "./theme/toast-message.js";
 import { tooltipThemeVariables } from "./theme/tooltip.js";
 import { typographyThemeVariables } from "./theme/typography.js";
-// Derived
-import { derivedPaletteBaseThemeVariables } from "./theme-derived/palette-base-derived.js";
-import { derivedPaletteComplementaryThemeVariables } from "./theme-derived/palette-complementary-derived.js";
-import { derivedShadowThemeVariables } from "./theme-derived/shadow-derived.js";
 // Internal
 // Deprecated
 // Inconsistent

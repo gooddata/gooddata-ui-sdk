@@ -19,8 +19,6 @@ import {
     isNotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 
-import { type CustomBackendConfig } from "./config.js";
-import { CustomWorkspace } from "./workspace.js";
 import {
     AnonymousAuthProvider,
     AuthProviderCallGuard,
@@ -29,6 +27,8 @@ import {
     type IAuthenticatedAsyncCallContext,
 } from "../toolkit/auth.js";
 import { type TelemetryData } from "../toolkit/backend.js";
+import { type CustomBackendConfig } from "./config.js";
+import { CustomWorkspace } from "./workspace.js";
 
 //
 //

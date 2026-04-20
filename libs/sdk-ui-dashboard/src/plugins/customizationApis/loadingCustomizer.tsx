@@ -7,13 +7,13 @@ import { InvariantError } from "ts-invariant";
 
 import { type ILoadingProps, LoadingComponent } from "@gooddata/sdk-ui";
 
-import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { type CustomizerMutationsContext } from "./types.js";
 import {
     type LoadingComponentProvider,
     type OptionalLoadingComponentProvider,
 } from "../../presentation/dashboardContexts/types.js";
 import { type ILoadingCustomizer } from "../customizer.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 
 const DefaultLoadingRendererProvider: LoadingComponentProvider = () => {
     return LoadingComponent;

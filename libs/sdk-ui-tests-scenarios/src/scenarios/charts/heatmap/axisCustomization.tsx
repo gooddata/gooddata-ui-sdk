@@ -2,10 +2,10 @@
 
 import { Heatmap, type IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
-import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
 
 export const axisCustomization = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

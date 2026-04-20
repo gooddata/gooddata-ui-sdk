@@ -1,16 +1,16 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty, range } from "lodash-es";
 
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { type IColorLegendItem, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IPushpinColor } from "../../GeoChart.js";
 import {
     DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
     DEFAULT_PUSHPIN_COLOR_OPACITY,
     DEFAULT_PUSHPIN_COLOR_SCALE,
 } from "./constants/geoChart.js";
-import { type IPushpinColor } from "../../GeoChart.js";
 import { getColorPalette, rgbToRgba } from "./helpers/geoChart/colors.js";
 import { getMinMax } from "./helpers/geoChart/common.js";
 

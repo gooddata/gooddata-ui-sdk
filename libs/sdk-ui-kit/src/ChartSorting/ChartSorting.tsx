@@ -8,10 +8,10 @@ import { FormattedMessage, type WrappedComponentProps, injectIntl } from "react-
 import { type ISortItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
+import { Button } from "../Button/Button.js";
 import { ChartSortingDropdown } from "./ChartSortingDropdown.js";
 import { ChartSortingDropdownBody } from "./ChartSortingDropdownBody.js";
 import { type IAvailableSortsGroup, type IBucketItemDescriptors } from "./types.js";
-import { Button } from "../Button/Button.js";
 
 /**
  * @internal

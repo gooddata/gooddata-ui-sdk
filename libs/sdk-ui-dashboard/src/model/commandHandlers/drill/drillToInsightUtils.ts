@@ -22,12 +22,12 @@ import {
 } from "@gooddata/sdk-model";
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
 
+import { type IDashboardDrillEvent } from "../../../types.js";
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 import {
     getIncludedSourceInsightFilters,
     getIncludedSourceMeasureFilters,
 } from "./common/sourceDrillFilters.js";
-import { type IDashboardDrillEvent } from "../../../types.js";
 
 /**
  * Applies drill intersection filters that are not excluded by `drillIntersectionIgnoredAttributes`,

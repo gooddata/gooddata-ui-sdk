@@ -4,9 +4,6 @@ import { type KeyboardEvent, type MouseEvent, type ReactNode, useMemo } from "re
 
 import cx from "classnames";
 
-import { type CatalogItemListboxItem, type ICatalogItemPickerListItemData } from "./listboxItemBuilders.js";
-import { testIds } from "./messages.js";
-import { type CatalogItemPickerType } from "./types.js";
 import type { IconType } from "../@ui/@types/icon.js";
 import { bem } from "../@ui/@utils/bem.js";
 import { UiButton } from "../@ui/UiButton/UiButton.js";
@@ -22,6 +19,9 @@ import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
 import { UiSubmenuHeader } from "../@ui/UiSubmenuHeader/UiSubmenuHeader.js";
 import { UiTooltip } from "../@ui/UiTooltip/UiTooltip.js";
 import { Input } from "../Form/Input.js";
+import { type CatalogItemListboxItem, type ICatalogItemPickerListItemData } from "./listboxItemBuilders.js";
+import { testIds } from "./messages.js";
+import { type CatalogItemPickerType } from "./types.js";
 
 const { e } = bem("gd-ui-kit-catalog-item-picker");
 

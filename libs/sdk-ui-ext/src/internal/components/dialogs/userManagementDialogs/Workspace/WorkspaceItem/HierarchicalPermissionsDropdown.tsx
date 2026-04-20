@@ -8,10 +8,10 @@ import { useIntl } from "react-intl";
 import { withBubble } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { PermissionsDropdownList } from "./HierarchicalPermissionsDropdownList.js";
-import { hierarchicalPermissionMessages } from "./locales.js";
 import { type TrackEventCallback, useTelemetry } from "../../TelemetryContext.js";
 import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../../types.js";
+import { PermissionsDropdownList } from "./HierarchicalPermissionsDropdownList.js";
+import { hierarchicalPermissionMessages } from "./locales.js";
 
 const trackPermissionChange = (
     trackEvent: TrackEventCallback,

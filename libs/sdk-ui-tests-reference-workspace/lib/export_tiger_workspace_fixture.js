@@ -4,9 +4,9 @@
 import "../scripts/env.js";
 import { exportTigerFixtureExtension, logLn } from "@gooddata/fixtures";
 
-import { runOxfmtOnFile } from "./prettierUtils.js";
 import { TIGER_FIXTURE_METADATA_EXTENSIONS } from "../constant.js";
 import { exportCatalogTiger } from "../export_catalog.js";
+import { runOxfmtOnFile } from "./prettierUtils.js";
 
 async function main() {
     try {

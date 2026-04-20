@@ -11,7 +11,6 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
 import {
     sanitizeDateDatasetTitle,
     sortByRelevanceAndTitle,
@@ -22,6 +21,7 @@ import { type QueryCacheEntryResult, createCachedQueryService } from "../store/_
 import { selectAllCatalogMeasuresMap } from "../store/catalog/catalogSelectors.js";
 import { type DashboardState } from "../store/types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
+import { loadDateDatasetsForInsight } from "./loadAvailableDateDatasets.js";
 
 export const QueryDateDatasetsForMeasureService = createCachedQueryService(
     "GDC.DASH/QUERY.MEASURE.DATE.DATASETS",

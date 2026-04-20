@@ -1,10 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { defaultImport } from "default-import";
 import * as Highcharts from "highcharts";
+import DefaultHighchartsReact from "highcharts-react-official";
 import DefaultHighchartsWheel from "highcharts/modules/dependency-wheel.js";
 import DefaultHighchartSankey from "highcharts/modules/sankey.js";
-import DefaultHighchartsReact from "highcharts-react-official";
 
 import { type IMeasure, type IMeasureDefinition, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { type WithLoadingResult } from "@gooddata/sdk-ui";

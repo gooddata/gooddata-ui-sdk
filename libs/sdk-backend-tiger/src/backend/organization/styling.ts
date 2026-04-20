@@ -29,7 +29,6 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import { OrganizationSettingsService } from "./settings.js";
 import {
     convertColorPalette as convertColorPaletteFromBackend,
     convertColorPaletteWithLinks,
@@ -46,6 +45,7 @@ import { convertTheme as convertThemeToBackend } from "../../convertors/toBacken
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { objRefToIdentifier } from "../../utils/api.js";
 import { DefaultTheme } from "../workspace/styling/mocks/theme.js";
+import { OrganizationSettingsService } from "./settings.js";
 
 export class OrganizationStylingService implements IOrganizationStylingService {
     private settingsService: OrganizationSettingsService;
