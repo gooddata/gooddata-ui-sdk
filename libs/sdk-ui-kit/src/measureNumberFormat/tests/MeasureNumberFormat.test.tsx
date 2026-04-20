@@ -12,7 +12,6 @@ import { type ISeparators, withIntl } from "@gooddata/sdk-ui";
 
 import { type IMeasureNumberFormatOwnProps, MeasureNumberFormat } from "../MeasureNumberFormat.js";
 import { type IFormatTemplate, type IToggleButtonProps } from "../typings.js";
-
 // oxlint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";
 

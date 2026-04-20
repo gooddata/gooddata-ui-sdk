@@ -12,10 +12,10 @@ import {
 } from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
 
+import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../constants/automations.js";
 import { AttachmentsList } from "./AttachmentsList.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
-import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../constants/automations.js";
 
 const SUPPORTED_DASHBOARD_ATTACHMENTS: DashboardAttachmentType[] = ["PDF", "PDF_SLIDES", "PPTX", "XLSX"];
 

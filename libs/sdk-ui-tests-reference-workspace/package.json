@@ -48,13 +48,13 @@
         "create-ref-workspace": "node ./create_ref_workspace.js && npm run format-write",
         "delete-ref-workspace": "node ./delete_ref_workspace.js",
         "export-fixture": "node ./export_workspace_fixture.js",
-        "prepare-recording-workspace-id": "node ./prepareRecordingWorkspaceId.js",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace",
-        "validate": "npm run lint && npm run format-check",
         "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "prepare-recording-workspace-id": "node ./prepareRecordingWorkspaceId.js",
+        "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace",
+        "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
@@ -74,7 +74,7 @@
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3"

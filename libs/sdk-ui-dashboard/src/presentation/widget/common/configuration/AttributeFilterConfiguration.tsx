@@ -12,13 +12,13 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
-import { getAttributeByDisplayForm } from "./utils.js";
 import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectAllCatalogAttributesMap } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectFilterContextAttributeFilterItems } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
+import { getAttributeByDisplayForm } from "./utils.js";
 
 interface IAttributeFilterConfigurationProps {
     widget: IWidget;

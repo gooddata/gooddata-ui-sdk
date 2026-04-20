@@ -11,8 +11,6 @@ import {
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
-import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
-import { type IHeadlineExecutionData, getExecutionData } from "./HeadlineTransformationUtils.js";
 import {
     CalculateAs,
     type CalculationType,
@@ -37,6 +35,8 @@ import {
     type ComparisonDataItem as IComparisonDataItemType,
     type IComparisonDataWithSubItem,
 } from "../interfaces/BaseHeadlines.js";
+import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
+import { type IHeadlineExecutionData, getExecutionData } from "./HeadlineTransformationUtils.js";
 
 export function getComparisonBaseHeadlineData(
     dataView: IDataView,

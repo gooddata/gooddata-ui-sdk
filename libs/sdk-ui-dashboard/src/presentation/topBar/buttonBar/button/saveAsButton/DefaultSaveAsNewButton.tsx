@@ -6,13 +6,13 @@ import { useIntl } from "react-intl";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { type ISaveAsNewButtonProps } from "./types.js";
 import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectIsSaveAsNewButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
+import { type ISaveAsNewButtonProps } from "./types.js";
 
 /**
  * @internal

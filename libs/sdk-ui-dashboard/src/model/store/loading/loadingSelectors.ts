@@ -2,8 +2,8 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { type ILoadingState } from "./loadingState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { type ILoadingState } from "./loadingState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

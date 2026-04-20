@@ -2,9 +2,9 @@
 
 import { FunnelChart, type IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 
-import { FunnelChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { FunnelChartWithMeasureAndViewBy } from "./base.js";
 
 export const theming = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

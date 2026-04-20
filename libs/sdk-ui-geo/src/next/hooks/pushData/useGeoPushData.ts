@@ -12,13 +12,13 @@ import {
 } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { hasGeoSegmentConflict } from "./geoSegmentConflict.js";
 import { useGeoLayers } from "../../context/GeoLayersContext.js";
 import { useInitialExecution } from "../../context/InitialExecutionContext.js";
 import { normalizeAttributeDescriptorLocalIdentifier } from "../../layers/common/drillUtils.js";
 import { type IAvailableLegends } from "../../types/common/legends.js";
 import { type GeoLayerType } from "../../types/layers/index.js";
 import { compareAlphabetically } from "../../utils/alphabeticalSorting.js";
+import { hasGeoSegmentConflict } from "./geoSegmentConflict.js";
 
 interface ILegendContext {
     availableLegends: IAvailableLegends;

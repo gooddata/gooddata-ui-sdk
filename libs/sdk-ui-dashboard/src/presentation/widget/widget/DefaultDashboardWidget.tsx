@@ -16,11 +16,6 @@ import {
 } from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 
-import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
-import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/RenderModeAwareDashboardInsightWidget.js";
-import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/RenderModeAwareDashboardRichTextWidget.js";
-import { type IDashboardWidgetProps } from "./types.js";
-import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
 import {
@@ -30,6 +25,11 @@ import {
 } from "../../../model/events/widget.js";
 import { useDashboardEventDispatch } from "../../../model/react/useDashboardEventDispatch.js";
 import { isExtendedDashboardLayoutWidget } from "../../../model/types/layoutTypes.js";
+import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
+import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/RenderModeAwareDashboardInsightWidget.js";
+import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/RenderModeAwareDashboardRichTextWidget.js";
+import { type IDashboardWidgetProps } from "./types.js";
+import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
 
 type WidgetComponentAdditionalProps = Pick<
     IDashboardWidgetProps,

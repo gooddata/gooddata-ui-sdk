@@ -2,6 +2,9 @@
 
 import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { comboVariants } from "./_variants.js";
 import {
     ComboChartWithArithmeticMeasuresAndViewBy,
@@ -9,9 +12,6 @@ import {
     ComboChartWithTwoMeasuresAndNoViewBy,
     ComboChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
-import { scenariosFor } from "../../../scenarioGroup.js";
-import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const twoMeasures = scenariosFor<IComboChartProps>("ComboChart", ComboChart)
     .withGroupNames(...ScenarioGroupNames.Axes)

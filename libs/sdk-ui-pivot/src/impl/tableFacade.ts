@@ -14,6 +14,9 @@ import {
     emptyHeaderTitleFromIntl,
 } from "@gooddata/sdk-ui";
 
+import { type IResizedColumns, UIClick } from "../columnWidths.js";
+import { type ICorePivotTableProps, type IPivotTableConfig } from "../publicTypes.js";
+import { getHeaderHeight } from "./base/agApiWrapper.js";
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper.js";
 import { agColIds, isMeasureColumn, isMeasureOrAnyColumnTotal } from "./base/agUtils.js";
 import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants.js";
@@ -51,9 +54,6 @@ import {
 import { TableDescriptor } from "./structure/tableDescriptor.js";
 import { agColId } from "./structure/tableDescriptorTypes.js";
 import { sleep } from "./utils.js";
-import { type IResizedColumns, UIClick } from "../columnWidths.js";
-import { type ICorePivotTableProps, type IPivotTableConfig } from "../publicTypes.js";
-import { getHeaderHeight } from "./base/agApiWrapper.js";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;

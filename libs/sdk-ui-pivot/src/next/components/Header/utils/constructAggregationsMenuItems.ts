@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { compact, isEqual } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -11,7 +11,6 @@ import {
     newTotal,
 } from "@gooddata/sdk-model";
 
-import { getPreviousAttributeHeaderName } from "./common.js";
 import { messages } from "../../../../locales.js";
 import { DEFAULT_TOTAL_FUNCTIONS } from "../../../constants/internal.js";
 import {
@@ -19,6 +18,7 @@ import {
     type IAggregationsSubMenuItem,
     type IMenu,
 } from "../../../types/menu.js";
+import { getPreviousAttributeHeaderName } from "./common.js";
 
 /**
  * Creates total item for the main attribute.

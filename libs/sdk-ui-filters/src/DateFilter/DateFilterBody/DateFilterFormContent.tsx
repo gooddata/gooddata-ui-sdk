@@ -15,8 +15,6 @@ import {
 } from "@gooddata/sdk-model";
 import { useId } from "@gooddata/sdk-ui-kit";
 
-import { DateFilterFormNavigationWrapper } from "./DateFilterFormNavigationWrapper.js";
-import { type DateFilterRoute } from "./types.js";
 import { AbsoluteDateFilterForm } from "../AbsoluteDateFilterForm/AbsoluteDateFilterForm.js";
 import {
     createDateFilterRelativeFormKeyboardHandler,
@@ -32,6 +30,8 @@ import {
     type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 import { RelativeDateFilterForm } from "../RelativeDateFilterForm/RelativeDateFilterForm.js";
+import { DateFilterFormNavigationWrapper } from "./DateFilterFormNavigationWrapper.js";
+import { type DateFilterRoute } from "./types.js";
 
 export interface IDateFilterFormContentProps {
     filterOptions: IDateFilterOptionsByType;

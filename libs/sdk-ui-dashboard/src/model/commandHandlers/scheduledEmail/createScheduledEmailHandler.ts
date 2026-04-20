@@ -24,7 +24,6 @@ import {
     resolveMessages,
 } from "@gooddata/sdk-ui";
 
-import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
 import { type ICreateScheduledEmail } from "../../commands/scheduledEmail.js";
 import { type IDashboardScheduledEmailCreated, scheduledEmailCreated } from "../../events/scheduledEmail.js";
 import { queryWithInsight } from "../../queryServices/queryWidgetFilters.js";
@@ -42,6 +41,7 @@ import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { prepareGeoRawExportDefinition } from "../common/prepareGeoRawExportDefinition.js";
+import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
 
 function createScheduledEmail(
     ctx: DashboardContext,

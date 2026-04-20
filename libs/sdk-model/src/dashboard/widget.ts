@@ -1,7 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
+import { type ObjRef, isObjRef } from "../objRef/index.js";
 import {
     type AnalyticalWidgetType,
     type IAnalyticalWidget,
@@ -14,7 +16,6 @@ import {
     type IVisualizationSwitcherWidget,
     type IVisualizationSwitcherWidgetDefinition,
 } from "./analyticalWidgets.js";
-import { type ObjRef, isObjRef } from "../objRef/index.js";
 
 /**
  * See {@link IWidget}]

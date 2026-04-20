@@ -2,13 +2,13 @@
 
 import { InvariantError } from "ts-invariant";
 
-import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import type {
     FilterGroupComponentProvider,
     OptionalFilterGroupComponentProvider,
 } from "../../presentation/dashboardContexts/types.js";
 import { DefaultDashboardFilterGroup } from "../../presentation/filterBar/filterBar/DefaultDashboardFilterGroup.js";
 import { type IFilterGroupsCustomizer } from "../customizer.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 
 const DefaultFilterGroupRendererProvider: FilterGroupComponentProvider = () => {
     return DefaultDashboardFilterGroup;

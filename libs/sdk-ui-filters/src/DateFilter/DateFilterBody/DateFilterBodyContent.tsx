@@ -8,10 +8,6 @@ import { useIntl } from "react-intl";
 import { type DateFilterGranularity, type IActiveCalendars, type WeekStart } from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
-import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
-import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
-import { type DateFilterRoute } from "./types.js";
 import { AbsoluteDateFilterFormSection } from "../AbsoluteDateFilterForm/AbsoluteDateFilterFormSection.js";
 import { AllTimeFilterSection } from "../AllTime/AllTimeFilterSection.js";
 import {
@@ -30,6 +26,10 @@ import {
     getFilteredPresets,
     getFiscalTabsConfig,
 } from "../utils/presetFilterUtils.js";
+import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
+import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
+import { RelativePresetFilterItems } from "./RelativePresetFilterItems.js";
+import { type DateFilterRoute } from "./types.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
 

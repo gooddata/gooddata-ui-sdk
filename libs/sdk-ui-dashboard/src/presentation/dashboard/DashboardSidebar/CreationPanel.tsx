@@ -8,7 +8,6 @@ import { FormattedMessage } from "react-intl";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { DraggableInsightList } from "./DraggableInsightList/DraggableInsightList.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
@@ -28,6 +27,7 @@ import {
     type IWrapCreatePanelItemWithDragComponent,
     type IWrapInsightListItemWithDragComponent,
 } from "../../dragAndDrop/types.js";
+import { DraggableInsightList } from "./DraggableInsightList/DraggableInsightList.js";
 
 interface ICreationPanelProps {
     className?: string;

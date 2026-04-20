@@ -28,6 +28,9 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
+import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectDashboardDensity } from "../../../model/store/ui/uiSelectors.js";
 import { DefaultSubmenuHeader } from "./DefaultSubmenuHeader.js";
 import {
     type IMenuButtonItem,
@@ -35,9 +38,6 @@ import {
     type IMenuButtonItemMenu,
     type IMenuButtonProps,
 } from "./types.js";
-import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectDashboardDensity } from "../../../model/store/ui/uiSelectors.js";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 

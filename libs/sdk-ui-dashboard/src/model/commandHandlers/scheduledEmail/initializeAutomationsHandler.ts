@@ -37,8 +37,6 @@ import {
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
-import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
-import { loadNotificationChannels } from "./loadNotificationChannels.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
 import {
@@ -88,6 +86,8 @@ import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../dashboard/common/attributeFilterSelectionTypeCompatibility.js";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
+import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
+import { loadNotificationChannels } from "./loadNotificationChannels.js";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,

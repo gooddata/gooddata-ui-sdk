@@ -6,9 +6,9 @@ import { type IColor, type IColorPalette, isMeasureDescriptor } from "@gooddata/
 import { type IChartFillConfig } from "@gooddata/sdk-ui-charts";
 import { DropdownList, GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
 
-import { ColoredItem } from "./ColoredItem.js";
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getSearchedItems } from "../../../../utils/colors.js";
+import { ColoredItem } from "./ColoredItem.js";
 
 const DROPDOWN_MAX_HEIGHT = 150;
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;

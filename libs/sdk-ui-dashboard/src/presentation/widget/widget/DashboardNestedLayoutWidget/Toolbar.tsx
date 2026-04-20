@@ -15,10 +15,10 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
-import { LayoutDirectionConfigurationDialog } from "./LayoutDirectionConfigurationDialog.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
+import { LayoutDirectionConfigurationDialog } from "./LayoutDirectionConfigurationDialog.js";
 
 const TOOLBAR_ALIGN_POINTS: IAlignPoint[] = [
     { align: "tr tl", offset: { x: 0, y: 11 } },

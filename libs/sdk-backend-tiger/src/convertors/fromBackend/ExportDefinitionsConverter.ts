@@ -30,9 +30,9 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { convertTigerToSdkFilters } from "../shared/storedFilterConverter.js";
 import { convertFilter } from "./afm/FilterConverter.js";
 import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
-import { convertTigerToSdkFilters } from "../shared/storedFilterConverter.js";
 
 type AutomationDashboardExportPageOrientation = NonNullable<
     AutomationDashboardExportSettings["pageOrientation"]

@@ -20,7 +20,6 @@ import {
     widgetRef,
 } from "@gooddata/sdk-model";
 
-import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
@@ -35,6 +34,7 @@ import {
     extractDisplayFormIdentifiers,
     extractInsightFilterDisplayFormIdentifiers,
 } from "../widgets/validation/insightDrillDefinitionUtils.js";
+import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill.js";
 
 interface IInvalidParamsInfo {
     widget: IInsightWidget;

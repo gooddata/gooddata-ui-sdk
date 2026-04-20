@@ -25,7 +25,6 @@ import {
     discardChanges,
     enterEditMode,
     hasFilterListSize,
-    mockFeatureHub,
     openAttributeFilter,
     removeAttributeFilter,
     resetAllFilters,
@@ -41,7 +40,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Dependent filter", "dependentFilters", () => {

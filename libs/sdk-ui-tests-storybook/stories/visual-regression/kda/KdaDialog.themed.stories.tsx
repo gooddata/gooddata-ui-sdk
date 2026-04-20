@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+import { type IStoryParameters } from "../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../themeWrapper.js";
 import {
     DialogComponent,
     dialogContentLoadingState,
@@ -9,8 +11,6 @@ import {
     dialogFullyLoadedSmallState,
     dialogFullyLoadedState,
 } from "./init.js";
-import { type IStoryParameters } from "../../_infra/backstopScenario.js";
-import { wrapWithTheme } from "../themeWrapper.js";
 
 export default {
     title: "18 Kda/Dialog/Themed",

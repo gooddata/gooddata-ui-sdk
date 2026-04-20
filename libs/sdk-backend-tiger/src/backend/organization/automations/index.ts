@@ -12,8 +12,8 @@ import {
     type IOrganizationAutomationsQuery,
 } from "@gooddata/sdk-backend-spi";
 
-import { OrganizationAutomationsQuery } from "./automationsQuery.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { OrganizationAutomationsQuery } from "./automationsQuery.js";
 
 /**
  * Tiger implementation of organization automations service for centralized automation management.

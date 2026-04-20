@@ -40,7 +40,6 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableNext, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { useExecution } from "./useExecution.js";
 import {
     mapVisualizationAnomalyDetectionToBackendConfig,
     mapVisualizationAnomalyDetectionToChartConfig,
@@ -59,6 +58,7 @@ import {
     visualizationErrorAction,
 } from "../../../store/messages/messagesSlice.js";
 import { getHeadlineComparison } from "../../../utils.js";
+import { useExecution } from "./useExecution.js";
 
 const VIS_HEIGHT = 250;
 

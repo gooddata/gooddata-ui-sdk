@@ -29,14 +29,14 @@
         "_phase:validate": "npm run validate",
         "build": "webpack --mode production",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
+        "lint": "oxlint . --type-aware --quiet && eslint src",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix",
         "refresh-md": "gdc-catalog-export",
         "start": "webpack-cli serve",
-        "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
-        "lint": "oxlint . --type-aware --quiet && eslint src",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix"
+        "validate": "npm run dep-cruiser && npm run lint && npm run format-check"
     },
     "dependencies": {
         "@codemirror/state": "6.5.3",
@@ -82,7 +82,7 @@
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "html-webpack-plugin": "5.6.4",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "process": "^0.11.10",

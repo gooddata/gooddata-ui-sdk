@@ -6,8 +6,6 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { BaseChartConfigurationPanel } from "./BaseChartConfigurationPanel.js";
-import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -25,6 +23,8 @@ import { LegendSection } from "../configurationControls/legend/LegendSection.js"
 import { OrientationDropdownControl } from "../configurationControls/OrientationDropdownControl.js";
 import { TotalSection } from "../configurationControls/total/TotalSection.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+import { BaseChartConfigurationPanel } from "./BaseChartConfigurationPanel.js";
+import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 
 const TOOLTIP_ARROW_OFFSET = { "tc bc": [BUBBLE_ARROW_OFFSET_X, BUBBLE_ARROW_OFFSET_Y] };
 const TOOLTIP_ALIGN_POINT = [{ align: "tc bc" }];

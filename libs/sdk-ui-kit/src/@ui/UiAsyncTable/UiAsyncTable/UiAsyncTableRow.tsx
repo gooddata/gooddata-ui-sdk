@@ -4,10 +4,6 @@ import { type MouseEvent, type ReactNode, type Ref, useCallback } from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
-import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
-import { getCellId, getColumnWidth, getItemKey, getRowId, getRowLabelId } from "./utils.js";
-import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
 import { e } from "../asyncTableBem.js";
@@ -17,6 +13,10 @@ import {
     type IUiAsyncTableRowProps,
     type UiAsyncTableMenuRenderer,
 } from "../types.js";
+import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
+import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
+import { getCellId, getColumnWidth, getItemKey, getRowId, getRowLabelId } from "./utils.js";
+import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 
 export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
     item,

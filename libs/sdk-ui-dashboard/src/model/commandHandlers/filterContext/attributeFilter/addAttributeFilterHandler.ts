@@ -16,7 +16,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 import { type IAddAttributeFilter } from "../../../commands/filters.js";
 import { attributeFilterAdded } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -37,6 +36,7 @@ import { type PromiseFnReturnType, type PromiseReturnType } from "../../../types
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";
+import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,

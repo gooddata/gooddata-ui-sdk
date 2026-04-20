@@ -15,6 +15,8 @@ import type {
     ISemanticSearchQuery,
 } from "@gooddata/sdk-backend-spi";
 
+import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
 import { ChatConversationsService } from "./ChatConversations.js";
 import { ChatThreadService } from "./ChatThread.js";
@@ -22,8 +24,6 @@ import { KnowledgeDocumentsService } from "./KnowledgeDocumentsService.js";
 import { MemoryItemsService } from "./MemoryItemsService.js";
 import { SemanticQualityService } from "./SemanticQualityService.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
-import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
-import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 export class GenAIService implements IGenAIService {
     constructor(

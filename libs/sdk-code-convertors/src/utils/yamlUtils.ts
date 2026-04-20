@@ -31,10 +31,10 @@ import {
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
+import { type Profile } from "../types.js";
 import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "./errors.js";
 import { parseGranularity } from "./granularityUtils.js";
 import { TABLE_PATH_DELIMITER, getTableRootId } from "./sharedUtils.js";
-import { type Profile } from "../types.js";
 
 // rely on structural typing..
 type MetaFieldHolder = {

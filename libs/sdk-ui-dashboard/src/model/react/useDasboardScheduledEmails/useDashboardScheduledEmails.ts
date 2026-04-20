@@ -1,10 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
+import { selectIsScheduleEmailDialogContext } from "../../../model/store/ui/uiSelectors.js";
+import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardScheduledEmailsData } from "./useDashboardScheduledEmailsData.js";
 import { useDashboardScheduledEmailsDialog } from "./useDashboardScheduledEmailsDialog.js";
 import { useDashboardScheduledEmailsManagementDialog } from "./useDashboardScheduledEmailsManagementDialog.js";
-import { selectIsScheduleEmailDialogContext } from "../../../model/store/ui/uiSelectors.js";
-import { useDashboardSelector } from "../DashboardStoreProvider.js";
 
 /**
  * Hook that handles schedule emailing dialogs.

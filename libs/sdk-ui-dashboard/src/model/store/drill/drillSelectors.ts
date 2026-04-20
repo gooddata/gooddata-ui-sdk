@@ -5,10 +5,10 @@ import { createSelector } from "@reduxjs/toolkit";
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { type ExplicitDrill, type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
-import { type ICrossFilteringItem } from "./types.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../tabs/tabsSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { type ICrossFilteringItem } from "./types.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,

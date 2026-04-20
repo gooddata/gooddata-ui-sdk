@@ -1,11 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { type ITotal, isTotal } from "./totals.js";
 import { type Identifier } from "../../objRef/index.js";
 import { type IAttribute, attributeLocalId, isAttribute } from "../attribute/index.js";
+import { type ITotal, isTotal } from "./totals.js";
 
 /**
  * Dimensions specify how to organize the results of an execution in a data view.

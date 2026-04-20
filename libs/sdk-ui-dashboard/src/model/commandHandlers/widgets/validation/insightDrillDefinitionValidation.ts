@@ -18,13 +18,6 @@ import {
     insightMeasures,
 } from "@gooddata/sdk-model";
 
-import {
-    type IInsightDrillDefinitionValidationData,
-    extractDisplayFormIdentifiers,
-    extractInsightRefs,
-    validateDrillDefinitionOrigin,
-    validateInsightDrillDefinition,
-} from "./insightDrillDefinitionUtils.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { type IDashboardCommand } from "../../../commands/base.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -43,6 +36,13 @@ import {
     resolveDisplayFormMetadata,
 } from "../../../utils/displayFormResolver.js";
 import { type IInsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
+import {
+    type IInsightDrillDefinitionValidationData,
+    extractDisplayFormIdentifiers,
+    extractInsightRefs,
+    validateDrillDefinitionOrigin,
+    validateInsightDrillDefinition,
+} from "./insightDrillDefinitionUtils.js";
 
 export function validateDrillDefinition(
     drillDefinition: InsightDrillDefinition,

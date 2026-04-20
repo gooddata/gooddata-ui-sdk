@@ -3,9 +3,9 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { GeoPushpinChart, type IGeoPushpinChartProps } from "@gooddata/sdk-ui-geo";
 
-import { OfflineMapStyle } from "./_infra/offlineMapStyle.js";
 import { scenariosFor } from "../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
+import { OfflineMapStyle } from "./_infra/offlineMapStyle.js";
 
 const geoVisualTestConfig = {
     screenshotSize: { width: 800, height: 800 },

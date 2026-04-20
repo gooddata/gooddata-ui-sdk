@@ -20,6 +20,15 @@ import {
     separatorStaticItem,
 } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectRenderMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
+import { type RenderMode } from "../../../../../types.js";
+import {
+    type IDashboardInsightMenuProps,
+    type IInsightMenuItem,
+    type IInsightMenuSubmenu,
+    isIInsightMenuSubmenu,
+} from "../../types.js";
 import {
     CustomUiMenuContentComponent,
     CustomUiMenuContentItemComponent,
@@ -31,15 +40,6 @@ import {
 import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
 import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
 import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer.js";
-import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
-import { selectRenderMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
-import { type RenderMode } from "../../../../../types.js";
-import {
-    type IDashboardInsightMenuProps,
-    type IInsightMenuItem,
-    type IInsightMenuSubmenu,
-    isIInsightMenuSubmenu,
-} from "../../types.js";
 
 type IWrappedSubmenuComponent = ({
     onBack,

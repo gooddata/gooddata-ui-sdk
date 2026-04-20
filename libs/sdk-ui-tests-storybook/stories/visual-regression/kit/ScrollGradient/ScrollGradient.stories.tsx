@@ -7,7 +7,6 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-kit/styles/css/scrollGradient.css";
 
 function GradientTextBase({ backgroundColor }: { backgroundColor?: string }) {

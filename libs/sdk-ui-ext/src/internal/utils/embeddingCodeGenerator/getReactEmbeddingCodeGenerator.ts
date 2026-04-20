@@ -1,9 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { compact, groupBy, isEmpty, partition, sortBy, uniqBy } from "lodash-es";
 
 import { type IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 
+import { type IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 import { normalizeInsight } from "./normalizeInsight.js";
 import {
     type IAdditionalFactoryDefinition,
@@ -12,7 +13,6 @@ import {
     type PropWithMeta,
     type PropsWithMeta,
 } from "./types.js";
-import { type IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
 
 // these are in line with what `factoryNotationFor` supports
 const defaultFactories: IImportInfo[] = [

@@ -18,8 +18,6 @@ import {
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
-import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
-import { type IDrillSelectContext } from "./types.js";
 import type { DashboardDrillCommand } from "../../../model/commands/drill.js";
 import type { IDashboardKeyDriverCombinationItem } from "../../../model/events/drill.js";
 import type { IDashboardCommandFailed } from "../../../model/events/general.js";
@@ -48,6 +46,8 @@ import {
     type OnWidgetDrill,
 } from "../types.js";
 import { filterDrillFromAttributeByPriority } from "../utils/drillDownUtils.js";
+import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
+import { type IDrillSelectContext } from "./types.js";
 
 /**
  * @internal

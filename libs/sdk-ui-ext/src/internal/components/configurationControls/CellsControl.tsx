@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { ConfigSubsection } from "./ConfigSubsection.js";
-import { CellTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { ConfigSubsection } from "./ConfigSubsection.js";
+import { CellTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 
 export interface ICellsControlProps {
     pushData?: (data: any) => any;

@@ -4,7 +4,6 @@ import { type IInsight } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent } from "@gooddata/sdk-ui";
 import { type ITreemapProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableTreemap } from "./PluggableTreemap.js";
 import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     type IVisualizationMeta,
@@ -26,6 +25,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil.js";
+import { PluggableTreemap } from "./PluggableTreemap.js";
 
 export class TreemapDescriptor extends BigChartDescriptor {
     public getFactory(): PluggableVisualizationFactory {

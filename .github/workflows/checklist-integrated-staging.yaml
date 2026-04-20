@@ -127,11 +127,16 @@ jobs:
               with:
                   allowed-skips: checklist-SDK, checklist-export, checklist-boiler-app
                   jobs: ${{ toJSON(needs) }}
-            - name: Send Slack notification
-              uses: slackapi/slack-github-action@v1.27.1
-              if: ${{ !cancelled() && needs.setup-stage.outputs.send_message_to_slack_channel == 'true' }}
+            - name: Checkout composite action
+              uses: actions/checkout@v6
               with:
-                  channel-id: team-qa
-                  slack-message: "${{ steps.alls-green.outcome == 'success' &&  ':unicorn_face:' || ':robot_panic:' }} `checklist-SDK-${{ github.ref_name }}-branch: ` *${{ steps.alls-green.outcome == 'success' &&  'success' || 'failed' }}* for the next SDK release; please check *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|the logs>*."
-              env:
-                  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+                  sparse-checkout: |
+                      .github/actions/slack/send-notification/action.yml
+                  sparse-checkout-cone-mode: false
+            - name: Send Slack notification
+              if: ${{ !cancelled() && needs.setup-stage.outputs.send_message_to_slack_channel == 'true' }}
+              uses: ./.github/actions/slack/send-notification
+              with:
+                  channel: team-qa
+                  message: "${{ steps.alls-green.outcome == 'success' &&  ':unicorn_face:' || ':robot_panic:' }} `checklist-SDK-${{ github.ref_name }}-branch: ` *${{ steps.alls-green.outcome == 'success' &&  'success' || 'failed' }}* for the next SDK release; please check *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|the logs>*."
+                  slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}

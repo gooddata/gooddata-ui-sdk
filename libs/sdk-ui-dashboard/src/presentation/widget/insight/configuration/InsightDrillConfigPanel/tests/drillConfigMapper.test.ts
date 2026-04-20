@@ -1,10 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IInsightWidget, idRef } from "@gooddata/sdk-model";
 
-import { availableDrillTargets, globalDrillDowns } from "./drillConfigMapper.fixture.js";
 import { getGlobalDrillDownMappedConfigForWidget } from "../drillConfigMapper.js";
+import { availableDrillTargets, globalDrillDowns } from "./drillConfigMapper.fixture.js";
 
 describe("drillConfigMapper", () => {
     describe("getGlobalDrillDownMappedConfigForWidget", () => {

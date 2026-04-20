@@ -13,12 +13,12 @@ import {
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
 
-import { runAutofocus } from "./focus.js";
 import { type IconType } from "../@ui/@types/icon.js";
 import { UiIconButton } from "../@ui/UiIconButton/UiIconButton.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { type IDomNative, type IDomNativeProps } from "../typings/domNative.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
+import { runAutofocus } from "./focus.js";
 
 /**
  * @internal

@@ -1,18 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
 import {
-    type ITigerAbsoluteDateFilter,
-    type ITigerDashboardArbitraryAttributeFilter,
-    type ITigerDashboardMatchAttributeFilter,
-    type ITigerFilter,
-    type ITigerFilterContextItem,
-    type ITigerMeasureValueFilter,
-    type ITigerNegativeAttributeFilter,
-    type ITigerPositiveAttributeFilter,
-    type ITigerRankingFilter,
-    type ITigerRelativeDateFilter,
-} from "./TigerTypes.js";
-import {
     type AfmLocalIdentifier,
     type AfmObjectIdentifier,
     type AttributeExecutionResultHeader,
@@ -34,6 +22,18 @@ import {
     type JsonApiMetricOutWithLinks,
     type JsonApiVisualizationObjectOutWithLinks,
 } from "../generated/metadata-json-api/index.js";
+import {
+    type ITigerAbsoluteDateFilter,
+    type ITigerDashboardArbitraryAttributeFilter,
+    type ITigerDashboardMatchAttributeFilter,
+    type ITigerFilter,
+    type ITigerFilterContextItem,
+    type ITigerMeasureValueFilter,
+    type ITigerNegativeAttributeFilter,
+    type ITigerPositiveAttributeFilter,
+    type ITigerRankingFilter,
+    type ITigerRelativeDateFilter,
+} from "./TigerTypes.js";
 
 /**
  * @public

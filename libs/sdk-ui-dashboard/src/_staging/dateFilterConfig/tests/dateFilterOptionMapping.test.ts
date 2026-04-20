@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IDashboardDateFilter, type IRelativeDateFilterPresetOfGranularity } from "@gooddata/sdk-model";
@@ -8,8 +9,8 @@ import {
     defaultDateFilterOptions,
 } from "@gooddata/sdk-ui-filters";
 
-import { allTime, last30days } from "./fixtures.js";
 import { matchDateFilterToDateFilterOption } from "../dateFilterOptionMapping.js";
+import { allTime, last30days } from "./fixtures.js";
 
 describe("matchDateFilterToDateFilterOption", () => {
     it.each<

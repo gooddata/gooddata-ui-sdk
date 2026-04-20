@@ -6,11 +6,11 @@ import { isEmpty } from "lodash-es";
 
 import { filterObjRef } from "@gooddata/sdk-model";
 
+import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
+import { isLimitingAttributeFiltersEmpty } from "../../AttributeFilterHandler/utils.js";
 import { MAX_SELECTION_SIZE, PARENT_FILTERS_CORRELATION } from "./constants.js";
 import { type AttributeFilterControllerData } from "./types.js";
 import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState.js";
-import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
-import { isLimitingAttributeFiltersEmpty } from "../../AttributeFilterHandler/utils.js";
 
 /**
  * @internal

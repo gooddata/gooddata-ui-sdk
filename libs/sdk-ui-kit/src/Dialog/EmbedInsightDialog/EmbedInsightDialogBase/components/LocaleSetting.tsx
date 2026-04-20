@@ -6,13 +6,13 @@ import { useIntl } from "react-intl";
 
 import { type ILocale, LOCALES } from "@gooddata/sdk-ui";
 
-import { ToggleSwitch } from "./ToggleSwitch.js";
 import { Dropdown } from "../../../../Dropdown/Dropdown.js";
 import { DropdownButton } from "../../../../Dropdown/DropdownButton.js";
 import { DropdownList } from "../../../../Dropdown/DropdownList.js";
 import { SingleSelectListItem } from "../../../../List/ListItem.js";
 import { dialogChangeMessageLabels } from "../../../../locales.js";
 import { DEFAULT_LOCALE } from "../types.js";
+import { ToggleSwitch } from "./ToggleSwitch.js";
 
 /**
  * @internal

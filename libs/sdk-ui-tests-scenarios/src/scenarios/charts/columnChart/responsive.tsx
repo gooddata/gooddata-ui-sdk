@@ -3,9 +3,9 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 
-import { ColumnChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { type IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { ColumnChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
     { label: "without y axis title", width: 120, height: 354 },

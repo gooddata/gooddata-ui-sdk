@@ -5,7 +5,6 @@ import { compact, isEmpty, range } from "lodash-es";
 import { type IMeasureDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
-import { supportedDualAxesChartTypes } from "./chartCapabilities.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IAxis, type ISeriesItem } from "../../typings/unsafe.js";
@@ -18,6 +17,7 @@ import {
     isSupportingJoinedAttributeAxisName,
     unwrap,
 } from "../_util/common.js";
+import { supportedDualAxesChartTypes } from "./chartCapabilities.js";
 
 function preprocessMeasureGroupItems(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],

@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
-import { useAccessibilityConfigOverrides } from "./useAccessibilityProps.js";
 import { agGridSetGrandTotalRows } from "../features/aggregations/agGridAggregationsApi.js";
 import { type AgGridApi } from "../types/agGrid.js";
 import { type AgGridRowData } from "../types/internal.js";
+import { useAccessibilityConfigOverrides } from "./useAccessibilityProps.js";
 
 /**
  * Hook to apply grand total rows to ag-grid.

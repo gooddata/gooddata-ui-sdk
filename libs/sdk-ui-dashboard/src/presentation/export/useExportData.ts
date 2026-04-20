@@ -17,6 +17,12 @@ import {
     measureTitle,
 } from "@gooddata/sdk-model";
 
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectCatalogAttributes } from "../../model/store/catalog/catalogSelectors.js";
+import { selectInsightByWidgetRef } from "../../model/store/insights/insightsSelectors.js";
+import { selectIsInExportMode } from "../../model/store/renderMode/renderModeSelectors.js";
+import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
+import { type RenderMode } from "../../types.js";
 import {
     type CommonExportDataAttributes,
     type MetaExportData,
@@ -27,12 +33,6 @@ import {
     type WidgetExportData,
     type WidgetExportDataAttributes,
 } from "./types.js";
-import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
-import { selectCatalogAttributes } from "../../model/store/catalog/catalogSelectors.js";
-import { selectInsightByWidgetRef } from "../../model/store/insights/insightsSelectors.js";
-import { selectIsInExportMode } from "../../model/store/renderMode/renderModeSelectors.js";
-import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
-import { type RenderMode } from "../../types.js";
 
 const getAttributeDisplayName = (attribute: IAttribute, catalogAttributes: ICatalogAttribute[]) => {
     const alias = attributeAlias(attribute);

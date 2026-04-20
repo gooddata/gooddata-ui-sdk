@@ -5,8 +5,6 @@ import { type ReactElement, useCallback, useMemo, useState } from "react";
 import { isIdentifierRef } from "@gooddata/sdk-model";
 import { type IDrillEventContext, createFocusHighchartsDatapointEvent } from "@gooddata/sdk-ui";
 
-import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
-import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
 import { KdaDialogController } from "../../../../kdaDialog/dialog/KdaDialogController.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogAttributeDisplayFormsById } from "../../../../model/store/catalog/catalogSelectors.js";
@@ -27,6 +25,8 @@ import {
 } from "../../../drill/types.js";
 import { getDrillDownTitle } from "../../../drill/utils/drillDownUtils.js";
 import { type IDashboardInsightProps } from "../types.js";
+import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
+import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
 
 type IReturnFocusInfo =
     | { type: "chart"; chartId: string; seriesIndex: number; pointIndex: number }

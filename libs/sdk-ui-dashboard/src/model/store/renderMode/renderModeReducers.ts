@@ -2,8 +2,8 @@
 
 import { type Action, type AnyAction, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { type IRenderModeState } from "./renderModeState.js";
 import { type RenderMode } from "../../../types.js";
+import { type IRenderModeState } from "./renderModeState.js";
 
 type RenderModeReducer<A extends Action = AnyAction> = CaseReducer<IRenderModeState, A>;
 

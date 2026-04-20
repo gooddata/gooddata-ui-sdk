@@ -31,13 +31,6 @@ import {
     type PivotTableNextConfig,
 } from "@gooddata/sdk-ui-pivot/next";
 
-import { getColumnAttributes, getRowAttributes, shouldAdjustColumnHeadersPositionToTop } from "./helpers.js";
-import { adaptReferencePointSortItemsToPivotTable, getSanitizedSortItems } from "./sortHelpers.js";
-import { removeInvalidTotals } from "./totalsHelpers.js";
-import {
-    adaptMdObjectWidthItemsToPivotTable,
-    adaptReferencePointWidthItemsToPivotTable,
-} from "./widthItemsHelpers.js";
 import { METRIC } from "../../../constants/bucket.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -87,6 +80,13 @@ import {
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
 } from "../drillDownUtil.js";
+import { getColumnAttributes, getRowAttributes, shouldAdjustColumnHeadersPositionToTop } from "./helpers.js";
+import { adaptReferencePointSortItemsToPivotTable, getSanitizedSortItems } from "./sortHelpers.js";
+import { removeInvalidTotals } from "./totalsHelpers.js";
+import {
+    adaptMdObjectWidthItemsToPivotTable,
+    adaptReferencePointWidthItemsToPivotTable,
+} from "./widthItemsHelpers.js";
 
 const PROPERTIES_AFFECTING_REFERENCE_POINT = ["measureGroupDimension"];
 

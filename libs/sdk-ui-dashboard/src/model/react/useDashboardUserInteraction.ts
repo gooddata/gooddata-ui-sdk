@@ -2,7 +2,6 @@
 
 import { useCallback } from "react";
 
-import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
 import {
     type AttributeFilterInteractionType,
     type AttributeHierarchiesInteractionType,
@@ -15,6 +14,7 @@ import {
     type VisualizationSwitcherInteractionType,
     userInteractionTriggered,
 } from "../events/userInteraction.js";
+import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
 
 /**
  * Hook for dispatching relevant user interaction commands.

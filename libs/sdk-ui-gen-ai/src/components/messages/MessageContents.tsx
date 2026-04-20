@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
+import { type Contents } from "../../model.js";
+import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { ChangeAnalysisContentsComponent } from "./contents/ChangeAnalysisContentsComponent.js";
 import { ErrorContentsComponent } from "./contents/ErrorContents.js";
 import { RoutingContentsComponent } from "./contents/RoutingContents.js";
@@ -14,8 +16,6 @@ import { TextContentsComponent } from "./contents/TextContents.js";
 import { VisualizationContentsComponent } from "./contents/VisualizationContents.js";
 import { type AssistantMessageState } from "./messageState.js";
 import { ReasoningMessage } from "./ReasoningMessage.js";
-import { type Contents } from "../../model.js";
-import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 
 type MessageContentsProps = {
     content: Contents[];

@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
-import { stopPropagationCallback } from "./utils.js";
 import { UiLink } from "../../UiLink/UiLink.js";
+import { stopPropagationCallback } from "./utils.js";
 
 export function WithConditionalAnchor({ href, children }: { href?: string; children: ReactNode }) {
     return href ? (

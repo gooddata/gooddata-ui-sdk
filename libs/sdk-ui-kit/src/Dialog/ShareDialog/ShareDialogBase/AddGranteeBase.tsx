@@ -1,14 +1,14 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
-import { AddGranteeContent } from "./AddGranteeContent.js";
-import { type IAddGranteeBaseProps } from "./types.js";
 import { BackButton } from "../../BackButton.js";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 import { ContentDivider } from "../../ContentDivider.js";
+import { AddGranteeContent } from "./AddGranteeContent.js";
+import { type IAddGranteeBaseProps } from "./types.js";
 
 /**
  * @internal

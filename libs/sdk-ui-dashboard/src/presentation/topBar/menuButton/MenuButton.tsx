@@ -2,8 +2,8 @@
 
 import { type ReactElement } from "react";
 
-import { type IMenuButtonProps } from "./types.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { type IMenuButtonProps } from "./types.js";
 
 /**
  * @internal

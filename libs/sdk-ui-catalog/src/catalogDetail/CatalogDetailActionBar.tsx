@@ -6,9 +6,9 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { Dropdown, type IUiMenuItem, UiButton, UiIconButton, UiMenu } from "@gooddata/sdk-ui-kit";
 
-import type { EditHandlerEvent, ICatalogDetailAction } from "./types.js";
 import { catalogDetailActionsTrigger } from "../automation/testIds.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
+import type { EditHandlerEvent, ICatalogDetailAction } from "./types.js";
 
 const messages = defineMessages({
     actionsMenuAriaLabel: { id: "analyticsCatalog.catalogItem.actionsMenu.ariaLabel" },

@@ -14,14 +14,14 @@ import {
 
 import cx from "classnames";
 
-import { type LegendMessageFormatter } from "./legendMessages.js";
-import { MultiLayerLegendSection } from "./MultiLayerLegendSection.js";
 import { type GeoLegendCornerPosition, type GeoLegendPosition } from "../../types/config/legend.js";
 import {
     type ILegendModel,
     type ILegendSection,
     isLegendColorCategoryItem,
 } from "../../types/legend/model.js";
+import { type LegendMessageFormatter } from "./legendMessages.js";
+import { MultiLayerLegendSection } from "./MultiLayerLegendSection.js";
 
 /**
  * State for tracking which sections are expanded.

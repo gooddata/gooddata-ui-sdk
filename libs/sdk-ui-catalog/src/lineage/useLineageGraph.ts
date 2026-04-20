@@ -7,6 +7,7 @@ import type * as joint from "@joint/core";
 import { type IReferencesResult } from "@gooddata/sdk-backend-spi";
 import { type ObjectType } from "@gooddata/sdk-model";
 
+import type { ICatalogItemRef } from "../catalogItem/types.js";
 import { applyLayout } from "./graph/applyLayout.js";
 import { createEdge } from "./graph/createEdge.js";
 import { createGraph } from "./graph/createGraph.js";
@@ -14,7 +15,6 @@ import { cleanupMeasurementElements, createNode } from "./graph/createNode.js";
 import { createPaper } from "./graph/createPaper.js";
 import { createScroller } from "./graph/createScroller.js";
 import { filterLeafNodes, filterNodes, objRefToId } from "./utils.js";
-import type { ICatalogItemRef } from "../catalogItem/types.js";
 
 export interface IPaperInteractionCallback {
     onItemClick?: (event: MouseEvent, ref: ICatalogItemRef) => void;

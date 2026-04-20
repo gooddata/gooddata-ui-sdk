@@ -2,8 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
-import { createDummyPromise } from "./toolkit.js";
 import { CancelError, makeCancelable } from "../CancelablePromise.js";
+import { createDummyPromise } from "./toolkit.js";
 
 describe("CancelablePromise", () => {
     it("should throw instanceof CancelError with correct message when cancel was invoked before promise resolution", async () => {

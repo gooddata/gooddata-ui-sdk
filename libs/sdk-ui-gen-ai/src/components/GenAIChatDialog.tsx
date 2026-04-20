@@ -10,15 +10,15 @@ import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@goo
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
 
-import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
-import { CustomizationProvider } from "./CustomizationProvider.js";
-import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { isOpenSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setOpenAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler } from "../store/events.js";
 import { getIsOpened } from "../store/localStorage.js";
+import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
+import { CustomizationProvider } from "./CustomizationProvider.js";
+import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 
 export type GenAIChatDialogProps = {
     backend?: IAnalyticalBackend;

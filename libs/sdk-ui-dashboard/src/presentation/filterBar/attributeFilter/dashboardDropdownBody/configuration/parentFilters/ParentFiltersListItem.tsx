@@ -8,7 +8,6 @@ import { FormattedMessage } from "react-intl";
 import { type ObjRef } from "@gooddata/sdk-model";
 import { simplifyText } from "@gooddata/util";
 
-import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import { selectIsCircularDependency } from "../../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import {
@@ -16,6 +15,7 @@ import {
     type IDashboardAttributeFilterParentItem,
 } from "../../../../../../model/types/attributeFilterTypes.js";
 import { ConnectingAttributeDropdown } from "../connectingAttribute/ConnectingAttributeDropdown.js";
+import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 
 export interface IConfigurationParentItemProps {
     currentFilterLocalId: string;

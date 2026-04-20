@@ -1,14 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
-import { useUpdateDefaultTextWrapping } from "./useUpdateDefaultTextWrapping.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { allowCellWrappingByColumnDefinition } from "../../features/textWrapping/allowCellWrappingByColumnDefinition.js";
 import { type AgGridApi, type AgGridColumnDef } from "../../types/agGrid.js";
 import { type ITextWrapping } from "../../types/textWrapping.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
+import { useUpdateDefaultTextWrapping } from "./useUpdateDefaultTextWrapping.js";
 
 /**
  * Manages text wrapping updates and communicates changes externally.

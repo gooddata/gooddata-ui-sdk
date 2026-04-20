@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useMemo, useState } from "react";
 
@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 
+import { dashboardMatch } from "../drill/utils/dashboardPredicate.js";
 import { DashboardListButton } from "./DashboardListButton.js";
 import { DashboardListItem } from "./DashboardListItem.js";
 import { type IDashboardListProps } from "./types.js";
-import { dashboardMatch } from "../drill/utils/dashboardPredicate.js";
 
 const alignPoints = [
     {

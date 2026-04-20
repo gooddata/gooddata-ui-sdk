@@ -4,8 +4,8 @@ import { type AfmObjectIdentifier } from "@gooddata/api-client-tiger";
 import type { AttributeField, Dataset } from "@gooddata/sdk-code-schemas/v1";
 import { type IAttribute } from "@gooddata/sdk-model";
 
-import { isAttribute, parseReferenceObject } from "./typeGuards.js";
 import { type ExportEntities, type FromEntities } from "../types.js";
+import { isAttribute, parseReferenceObject } from "./typeGuards.js";
 import { createIdentifier, getIdentifier } from "./yamlUtils.js";
 
 export function remapLocationAttribute(entities: FromEntities, def: IAttribute): IAttribute {

@@ -4,11 +4,11 @@ import { memo, useId } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { useFilterActions, useFilterState } from "./FilterContext.js";
-import { FilterGroupLayout } from "./FilterGroupLayout.js";
 import { useObjectTypeState } from "../objectType/ObjectTypeContext.js";
 import { ObjectTypeSelectMemo } from "../objectType/ObjectTypeSelect.js";
 import { useIsParametersEnabled } from "../parameter/gate.js";
+import { useFilterActions, useFilterState } from "./FilterContext.js";
+import { FilterGroupLayout } from "./FilterGroupLayout.js";
 
 export function FilterObjectType() {
     const { counter } = useObjectTypeState();

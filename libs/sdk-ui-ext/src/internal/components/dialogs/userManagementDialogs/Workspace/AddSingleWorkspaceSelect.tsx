@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type KeyboardEventHandler, useCallback, useMemo } from "react";
 
@@ -9,6 +9,14 @@ import { AsyncPaginate } from "react-select-async-paginate";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 
+import { messages } from "../locales.js";
+import {
+    type IAddSingleWorkspaceSelectProps,
+    type ISelectErrorOption,
+    type ISelectOption,
+    isSelectErrorOption,
+    isWorkspaceItem,
+} from "../types.js";
 import {
     EmptyRenderer,
     GroupHeadingRenderer,
@@ -19,14 +27,6 @@ import {
     SingleValueRenderer,
     WrappedMenuListRenderer,
 } from "./AsyncSelectComponents.js";
-import { messages } from "../locales.js";
-import {
-    type IAddSingleWorkspaceSelectProps,
-    type ISelectErrorOption,
-    type ISelectOption,
-    isSelectErrorOption,
-    isWorkspaceItem,
-} from "../types.js";
 import { loadPaginatedWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
 
 const SEARCH_INTERVAL = 400;

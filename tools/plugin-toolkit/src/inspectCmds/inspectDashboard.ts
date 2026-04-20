@@ -1,13 +1,14 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 /* eslint-disable no-console */
 import columnify from "columnify";
 import { isEmpty } from "lodash-es";
 
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
+import { type ActionOptions } from "../_base/types.js";
 import { type InspectCmdActionConfig } from "./actionConfig.js";
 import { printObjectSummary } from "./output.js";
-import { type ActionOptions } from "../_base/types.js";
 
 export async function inspectDashboard(
     config: InspectCmdActionConfig,

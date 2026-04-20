@@ -1,13 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { useInitialProp } from "@gooddata/sdk-ui/internal";
 
-import { useSetAgGridPivotResultColumns } from "./columns/useSetAgGridPivotResultColumns.js";
-import { useInitSizingForEmptyData } from "./resizing/useInitSizingForEmptyData.js";
-import { useGrandTotalRows } from "./useGrandTotalRows.js";
 import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../constants/agGridDefaultProps.js";
 import { useColumnDefs } from "../context/ColumnDefsContext.js";
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
@@ -17,6 +14,9 @@ import { useRuntimeError } from "../context/RuntimeErrorContext.js";
 import { createServerSideDataSource } from "../features/data/createServerSideDataSource.js";
 import { getEffectivePageSize, isPaginationEnabled } from "../features/pagination/utils.js";
 import { type AgGridProps } from "../types/agGrid.js";
+import { useSetAgGridPivotResultColumns } from "./columns/useSetAgGridPivotResultColumns.js";
+import { useInitSizingForEmptyData } from "./resizing/useInitSizingForEmptyData.js";
+import { useGrandTotalRows } from "./useGrandTotalRows.js";
 
 /**
  * Returns ag-grid props with data loading applied.

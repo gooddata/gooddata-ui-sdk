@@ -1,13 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
 import { type IDashboardPlugin } from "@gooddata/sdk-model";
 
-import { type AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
+import { type AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig.js";
 
 function printAddConfigSummary({
     hostname,

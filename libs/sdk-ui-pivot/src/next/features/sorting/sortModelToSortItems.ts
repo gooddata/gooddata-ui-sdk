@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { type SortModelItem } from "ag-grid-enterprise";
 
 import { type ISortItem } from "@gooddata/sdk-model";
 
-import { createSortForColumnDefinition } from "./createSortForColumnDefinition.js";
 import { type ITableColumnDefinitionByColId } from "../../types/internal.js";
+import { createSortForColumnDefinition } from "./createSortForColumnDefinition.js";
 
 /**
  * Converts ag-grid {@link SortModelItem}s to {@link ISortItem}s.

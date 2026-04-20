@@ -3,7 +3,6 @@
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { type IChangeInsightWidgetVisProperties } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetVisPropertiesChanged,
@@ -12,6 +11,7 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 
 export function* changeInsightWidgetVisPropertiesHandler(
     ctx: DashboardContext,

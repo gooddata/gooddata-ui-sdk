@@ -20,9 +20,6 @@ import {
     type IGenAIUserContext,
 } from "@gooddata/sdk-model";
 
-import { processContents } from "./converters/interactionsToMessages.js";
-import { convertToLocalContent } from "./converters/toLocalContent.js";
-import { convertMessageToChatConversation, extractError } from "./utils.js";
 import {
     type AssistantMessage,
     type IChatConversationLocalItem,
@@ -53,6 +50,9 @@ import {
     evaluateMessageUpdateAction,
     type newMessageAction,
 } from "../messages/messagesSlice.js";
+import { processContents } from "./converters/interactionsToMessages.js";
+import { convertToLocalContent } from "./converters/toLocalContent.js";
+import { convertMessageToChatConversation, extractError } from "./utils.js";
 
 /**
  * Load thread history and put it to the store.

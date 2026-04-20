@@ -1,8 +1,7 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { mapValues, merge } from "lodash-es";
 
-import { elementRegion } from "./domUtilities.js";
 import { type IRegion } from "../typings/domUtilities.js";
 import {
     type GetOptimalAlignment,
@@ -11,6 +10,7 @@ import {
     type IOptimalAlignment,
 } from "../typings/overlay.js";
 import { type IAlignPoint, type IOffset } from "../typings/positioning.js";
+import { elementRegion } from "./domUtilities.js";
 
 const ALIGN_RATIOS_X: Record<string, number> = {
     l: 0,

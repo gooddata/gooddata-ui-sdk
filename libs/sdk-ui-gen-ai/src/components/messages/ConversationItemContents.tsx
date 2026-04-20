@@ -6,6 +6,7 @@ import {
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
 } from "../../model.js";
+import { loadWhatIfScenarios } from "../../whatIf/whatIfMapping.js";
 import { ConversationErrorContent } from "./conversationContents/ConversationErrorContent.js";
 import { ConversationKdaContent } from "./conversationContents/ConversationKdaContent.js";
 import { ConversationReasoningContent } from "./conversationContents/ConversationReasoningContent.js";
@@ -15,7 +16,6 @@ import { ConversationToolCallContent } from "./conversationContents/Conversation
 import { ConversationToolResultContent } from "./conversationContents/ConversationToolResultContent.js";
 import { ConversationVisualizationContent } from "./conversationContents/ConversationVisualizationContent.js";
 import { ConversationWhatIfContent } from "./conversationContents/ConversationWhatIfContent.js";
-import { loadWhatIfScenarios } from "../../whatIf/whatIfMapping.js";
 
 type ConversationItemContentsProps = {
     message: IChatConversationLocalItem;

@@ -14,8 +14,6 @@ import {
 import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { PopupHeader } from "./PopupHeader.js";
-import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 import { messages } from "../../../../../../../locales.js";
 import { useDashboardSelector } from "../../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
@@ -28,6 +26,8 @@ import {
 import { type ValuesLimitingItem } from "../../../../types.js";
 import { LimitingItemTitle, UnknownItemTitle } from "../shared/LimitingItem.js";
 import { type IValuesLimitingItemWithTitle, useFilterItems } from "../shared/limitingItemsHook.js";
+import { PopupHeader } from "./PopupHeader.js";
+import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 
 export interface IParentFiltersPageProps {
     attributeTitle?: string;

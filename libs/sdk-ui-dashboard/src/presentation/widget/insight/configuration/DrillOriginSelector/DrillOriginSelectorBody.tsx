@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type UIEvent } from "react";
 
@@ -6,9 +6,9 @@ import { FormattedMessage } from "react-intl";
 
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
+import { type IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 import { DrillAttributeSelectorList } from "./DrillAttributeSelectorList.js";
 import { DrillMeasureSelectorList } from "./DrillMeasureSelectorList.js";
-import { type IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
 
 export interface IDrillOriginSelectorBodyProps {
     supportedItems: IAvailableDrillTargets;

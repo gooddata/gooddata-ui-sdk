@@ -5,6 +5,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { type Matcher, suppressConsole } from "@gooddata/util";
 
+import { selectDrillTargetsByWidgetRef } from "../../drillTargets/drillTargetsSelectors.js";
+import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../../tabs/layout/layoutSelectors.js";
+import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDrillSelectors.js";
 import {
     availableDrillTargets,
     catalogAttributeHierarchies,
@@ -12,9 +15,6 @@ import {
     widgetRef,
     widgetRefWithoutAvailableDrillTargets,
 } from "./widgetDrillSelectors.fixture.js";
-import { selectDrillTargetsByWidgetRef } from "../../drillTargets/drillTargetsSelectors.js";
-import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../../tabs/layout/layoutSelectors.js";
-import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDrillSelectors.js";
 
 vi.mock("../../drillTargets/drillTargetsSelectors.js", async (importOriginal) => {
     const original = await importOriginal();

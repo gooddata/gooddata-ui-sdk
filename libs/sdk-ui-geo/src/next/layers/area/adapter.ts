@@ -11,16 +11,6 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
-import { deriveCollectionBoundingBox } from "./boundingBox.js";
-import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
-import { transformAreaData } from "./data/transformation.js";
-import { getAreaLayerIds, removeAreaLayer, syncAreaLayerToMap } from "./operations.js";
-import {
-    applyCurrentColorsToAreaOutputSource,
-    applySelectionToAreaSource,
-    createAreaDataSource,
-} from "./source.js";
-import { createAreaTooltipConfig } from "./tooltip/tooltipManagement.js";
 import { bboxToViewport } from "../../map/viewport/viewportCalculation.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
 import { type IGeoLayerArea } from "../../types/layers/index.js";
@@ -38,6 +28,16 @@ import {
     type IGeoAdapterContext,
     type IGeoLayerAdapter,
 } from "../registry/adapterTypes.js";
+import { deriveCollectionBoundingBox } from "./boundingBox.js";
+import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
+import { transformAreaData } from "./data/transformation.js";
+import { getAreaLayerIds, removeAreaLayer, syncAreaLayerToMap } from "./operations.js";
+import {
+    applyCurrentColorsToAreaOutputSource,
+    applySelectionToAreaSource,
+    createAreaDataSource,
+} from "./source.js";
+import { createAreaTooltipConfig } from "./tooltip/tooltipManagement.js";
 
 const COLLECTION_OVERRIDES: Record<string, { collectionId?: string }> = {
     region: { collectionId: "regions" },

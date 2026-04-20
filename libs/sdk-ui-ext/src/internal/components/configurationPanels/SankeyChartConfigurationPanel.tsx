@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -8,7 +8,6 @@ import { FormattedMessage } from "react-intl";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -19,6 +18,7 @@ import {
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 import { LegendSection } from "../configurationControls/legend/LegendSection.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class SankeyChartConfigurationPanel extends ConfigurationPanelContent {
     protected renderConfigurationPanel(): ReactNode {

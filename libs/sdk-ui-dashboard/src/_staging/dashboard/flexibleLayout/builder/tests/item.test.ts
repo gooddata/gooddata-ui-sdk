@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
@@ -9,14 +10,14 @@ import {
     type IDashboardLayoutSizeByScreenSize,
 } from "@gooddata/sdk-model";
 
+import { DashboardLayoutItemBuilder } from "../item.js";
+import { DashboardLayoutBuilder } from "../layout.js";
+import { DashboardLayoutSectionBuilder } from "../section.js";
 import {
     createEmptyDashboardLayoutItemBuilder,
     createValueOrUpdateCallbackTestCases,
     defaultItemXlSize,
 } from "./utils.js";
-import { DashboardLayoutItemBuilder } from "../item.js";
-import { DashboardLayoutBuilder } from "../layout.js";
-import { DashboardLayoutSectionBuilder } from "../section.js";
 
 describe("DashboardLayoutItemBuilder", () => {
     describe("constructors", () => {

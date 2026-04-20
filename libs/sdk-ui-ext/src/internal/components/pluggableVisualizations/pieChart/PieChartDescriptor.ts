@@ -3,7 +3,6 @@
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IPieChartProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggablePieChart } from "./PluggablePieChart.js";
 import {
     type IVisualizationDescriptor,
     type IVisualizationMeta,
@@ -21,6 +20,7 @@ import {
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import { PluggablePieChart } from "./PluggablePieChart.js";
 
 export class PieChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

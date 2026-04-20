@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type IMeasure,
@@ -22,6 +22,7 @@ import {
     measureUri,
 } from "@gooddata/sdk-model";
 
+import { type DataViewFacade } from "../results/facade.js";
 import { type IHeaderPredicate, type IHeaderPredicateContext } from "./HeaderPredicate.js";
 import {
     type IMappingHeader,
@@ -30,7 +31,6 @@ import {
     getMappingHeaderUri,
     hasMappingHeaderLocalIdentifier,
 } from "./MappingHeader.js";
-import { type DataViewFacade } from "../results/facade.js";
 
 /**
  * This predicate is returned when predicate factory encounters invalid input. Having it to keep backward

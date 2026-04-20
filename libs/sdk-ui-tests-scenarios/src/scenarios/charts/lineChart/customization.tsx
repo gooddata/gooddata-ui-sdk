@@ -4,13 +4,6 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId, newAbsoluteDateFilter } from "@gooddata/sdk-model";
 import { type ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 
-import {
-    LineChartTwoMeasuresWithTrendyBy,
-    LineChartViewByDate,
-    LineChartWithArithmeticMeasuresAndViewBy,
-    LineChartWithLotArithmeticMeasuresAndViewBy,
-    LineChartWithManyDataPoints,
-} from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { dataPointCustomizer } from "../_infra/dataPointVariants.js";
@@ -21,6 +14,13 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    LineChartTwoMeasuresWithTrendyBy,
+    LineChartViewByDate,
+    LineChartWithArithmeticMeasuresAndViewBy,
+    LineChartWithLotArithmeticMeasuresAndViewBy,
+    LineChartWithManyDataPoints,
+} from "./base.js";
 
 const legendScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

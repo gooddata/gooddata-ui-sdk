@@ -8,13 +8,13 @@ import { connect } from "react-redux";
 
 import { Dialog } from "@gooddata/sdk-ui-kit";
 
-import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
-import { HeaderIcon } from "./HeaderIcon.js";
-import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { setFullscreenAction } from "../store/chatWindow/chatWindowSlice.js";
 import { hasMessagesSelector } from "../store/messages/messagesSelectors.js";
 import { clearThreadAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
+import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
+import { HeaderIcon } from "./HeaderIcon.js";
+import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
 type GenAIChatOverlayOwnProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;

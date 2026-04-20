@@ -31,7 +31,6 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import { applyFilterContext, getFilterIdentifier } from "./filterContextUtils.js";
 import { type ObjRefMap, newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import { selectSupportsCircularDependencyInFilters } from "../../backendCapabilities/backendCapabilitiesSelectors.js";
@@ -41,6 +40,7 @@ import { type DashboardSelector, type DashboardState } from "../../types.js";
 import { selectActiveTabLocalIdentifier, selectTabs, selectTabsState } from "../tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../tabsState.js";
 import { type FilterContextState, filterContextInitialState } from "./filterContextState.js";
+import { applyFilterContext, getFilterIdentifier } from "./filterContextUtils.js";
 
 const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {
     if (!tabs || !activeTabId) {

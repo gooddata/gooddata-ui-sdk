@@ -1,13 +1,13 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
-import Highcharts from "highcharts/esm/highcharts.js";
 import { HighchartsReact } from "highcharts-react-official";
+import Highcharts from "highcharts/esm/highcharts.js";
 
 import { type IResultAttributeHeaderItem } from "@gooddata/sdk-model";
 
+import { type HighchartsOptions } from "../../../highcharts/lib/index.js";
 import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import { getTooltipHtml } from "./highcharts.js";
-import { type HighchartsOptions } from "../../../highcharts/lib/index.js";
 
 export function InlineLineChart(props: IInlineLineChartOptions) {
     const options = createOptions(props);

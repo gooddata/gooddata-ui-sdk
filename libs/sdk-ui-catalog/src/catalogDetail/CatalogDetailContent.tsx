@@ -9,6 +9,14 @@ import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
 import { useLocalStorage, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IUiTab, UiButton, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
+import { canEditCatalogItem } from "../catalogItem/permission.js";
+import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
+import { useIsCertificationAllowed } from "../certification/gate.js";
+import { useIsLineageEnabled } from "../lineage/gate.js";
+import { type ObjectType } from "../objectType/types.js";
+import { usePermissionsState } from "../permission/PermissionsContext.js";
+import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityEnabled } from "../quality/gate.js";
+import { useQualityIssuesById, useQualityReportState } from "../quality/QualityContext.js";
 import { CatalogDetailActionBar } from "./CatalogDetailActionBar.js";
 import { CatalogDetailHeader, type ICatalogDetailHeaderRef } from "./CatalogDetailHeader.js";
 import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
@@ -18,14 +26,6 @@ import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
 import type { EditHandlerEvent, ICatalogDetailAction, OpenHandlerEvent } from "./types.js";
-import { canEditCatalogItem } from "../catalogItem/permission.js";
-import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
-import { useIsCertificationAllowed } from "../certification/gate.js";
-import { useIsLineageEnabled } from "../lineage/gate.js";
-import { type ObjectType } from "../objectType/types.js";
-import { usePermissionsState } from "../permission/PermissionsContext.js";
-import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityEnabled } from "../quality/gate.js";
-import { useQualityIssuesById, useQualityReportState } from "../quality/QualityContext.js";
 
 const Tabs = {
     METADATA: "metadata",

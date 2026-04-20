@@ -8,17 +8,8 @@ import { connect } from "react-redux";
 
 import { type CatalogItem } from "@gooddata/sdk-model";
 
-import { ChatSkeleton } from "./ChatSkeleton.js";
 import { isAssistantMessage, isUserMessage } from "../model.js";
-import { parseReferences } from "./completion/references.js";
-import { useCustomization } from "./CustomizationProvider.js";
-import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
-import { AssistantItemComponent } from "./messages/AssistantItem.js";
-import { ItemsGroup } from "./messages/ItemsGroup.js";
-import { useMessageScroller } from "./messages/MessageScroller.js";
-import { UserItemComponent } from "./messages/UserItem.js";
-import { UserMessageComponent } from "./messages/UserMessage.js";
-import { groupMessages } from "./utils/groupUtility.js";
+import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import {
     asyncProcessSelector,
     conversationMessagesSelector,
@@ -26,9 +17,18 @@ import {
     messagesSelector,
 } from "../store/messages/messagesSelectors.js";
 import { type RootState } from "../store/types.js";
+import { ChatSkeleton } from "./ChatSkeleton.js";
+import { parseReferences } from "./completion/references.js";
+import { useCustomization } from "./CustomizationProvider.js";
+import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
+import { AssistantItemComponent } from "./messages/AssistantItem.js";
 import { AssistantMessageComponent } from "./messages/AssistantMessage.js";
+import { ItemsGroup } from "./messages/ItemsGroup.js";
+import { useMessageScroller } from "./messages/MessageScroller.js";
 import { ToolItemComponent } from "./messages/ToolItem.js";
-import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import { UserItemComponent } from "./messages/UserItem.js";
+import { UserMessageComponent } from "./messages/UserMessage.js";
+import { groupMessages } from "./utils/groupUtility.js";
 
 type MessagesComponentProps = {
     messages: ReturnType<typeof messagesSelector>;

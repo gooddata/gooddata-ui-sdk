@@ -2,8 +2,8 @@
 
 import { type MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
 
-import { type IUiTagDef, type IUiTagsProps } from "./types.js";
 import { makeTabsKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { type IUiTagDef, type IUiTagsProps } from "./types.js";
 
 type InteractionState = {
     moreOpen: boolean;

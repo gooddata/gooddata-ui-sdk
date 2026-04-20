@@ -14,8 +14,8 @@ import {
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
-import { type AttributeInfo, findGeoAttributesInDimension, parseGeoProperties } from "./data.js";
 import { type IGeoData, type IGeoDrillEvent } from "../../../../GeoChart.js";
+import { type AttributeInfo, findGeoAttributesInDimension, parseGeoProperties } from "./data.js";
 
 function getDrillIntersectionForGeoChart(
     drillableItems: IHeaderPredicate[],

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 import { type IUserGroup } from "@gooddata/sdk-model";
 import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
-import { useUserGroupDetails } from "./detailsHooks.js";
-import { UserGroupDetailsView } from "./UserGroupDetailsView.js";
 import { messages } from "../locales.js";
 import { extractUserGroupName } from "../utils.js";
+import { useUserGroupDetails } from "./detailsHooks.js";
+import { UserGroupDetailsView } from "./UserGroupDetailsView.js";
 
 export interface IEditUserGroupDetailsProps {
     userGroup: IUserGroup | undefined;

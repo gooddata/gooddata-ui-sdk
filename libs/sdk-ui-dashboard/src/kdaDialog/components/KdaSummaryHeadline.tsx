@@ -4,12 +4,12 @@ import { useMemo } from "react";
 
 import cx from "classnames";
 
-import { DateHeadline } from "./headlines/DateHeadline.js";
-import { DiffHeadline } from "./headlines/DiffHeadline.js";
 import { useDateAttribute } from "../hooks/useDateAttribute.js";
 import { type IKdaDateOptions } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { formatKeyDriverAnalysisDateRange, formatValue } from "../utils.js";
+import { DateHeadline } from "./headlines/DateHeadline.js";
+import { DiffHeadline } from "./headlines/DiffHeadline.js";
 
 export function KdaSummaryHeadline() {
     const { state } = useKdaState();

@@ -14,10 +14,6 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import { DrillTargetAttributeHierarchyItem } from "./DrillTargetAttributeHierarchyItem.js";
-import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
-import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
-import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";
 import { type IDrillableDashboardListItem } from "../../../../dashboardList/types.js";
 import {
     DRILL_TARGET_TYPE,
@@ -30,6 +26,10 @@ import {
     isDrillToDashboardConfig,
     isDrillToUrlConfig,
 } from "../../../../drill/types.js";
+import { DrillTargetAttributeHierarchyItem } from "./DrillTargetAttributeHierarchyItem.js";
+import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
+import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
+import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";
 
 export interface IDrillTargetsProps {
     item: IDrillConfigItem;

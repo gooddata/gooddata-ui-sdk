@@ -5,7 +5,6 @@ import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
-
 import { type IStoryParameters, State } from "../../../../../../stories/_infra/backstopScenario.js";
 import {
     getScenariosGroupByIndexes,

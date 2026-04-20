@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-loaders",
-    "version": "11.31.0-alpha.1",
+    "version": "11.31.0-alpha.2",
     "description": "GoodData SDK Runtime Component Loaders",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -33,14 +33,14 @@
         "build-check": "tsgo",
         "build-ts": "tsgo -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "prepack": "cp -f ../../NOTICE ./NOTICE",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
-        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-loaders\"'",
         "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "prepack": "cp -f ../../NOTICE ./NOTICE",
+        "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-loaders\"'"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",
@@ -81,7 +81,7 @@
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "raf": "3.4.1",

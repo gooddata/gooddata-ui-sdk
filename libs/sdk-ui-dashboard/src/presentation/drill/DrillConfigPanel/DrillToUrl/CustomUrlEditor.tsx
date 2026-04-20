@@ -32,8 +32,6 @@ import {
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
-import { ParametersPanel } from "./CustomUrlEditorParameters.js";
-import { type IAttributeWithDisplayForm } from "./types.js";
 import { dashboardAttributeFilterItemToAttributeFilter } from "../../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetFilters } from "../../../../model/react/useWidgetFilters.js";
@@ -45,6 +43,8 @@ import { selectFilterableWidgetByRef } from "../../../../model/store/tabs/layout
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
 import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
+import { ParametersPanel } from "./CustomUrlEditorParameters.js";
+import { type IAttributeWithDisplayForm } from "./types.js";
 
 export interface IUrlInputProps {
     currentUrlValue: string;

@@ -21,7 +21,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type ITranslations, getIntl } from "@gooddata/sdk-ui";
 
-import { type IDateAndMessageTranslator, type IMessageTranslator } from "./Translators.js";
 import { messages } from "../../../locales.js";
 import {
     type DateFilterLabelMode,
@@ -41,6 +40,7 @@ import {
     type IUiRelativeDateFilterForm,
 } from "../../interfaces/index.js";
 import { convertPlatformDateStringToDate } from "../DateConversions.js";
+import { type IDateAndMessageTranslator, type IMessageTranslator } from "./Translators.js";
 
 export const getTimeRange = (dateFrom: Date, dateTo: Date, splitter = "\u2013"): string => {
     const fromTime = format(dateFrom, TIME_FORMAT);

@@ -1,12 +1,12 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import cx from "classnames";
 
+import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../../types.js";
 import { HierarchicalPermissionsDropdown } from "./HierarchicalPermissionsDropdown.js";
 import { PermissionsDropdown } from "./PermissionsDropdown.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 import { WorkspaceIcon } from "./WorkspaceIcon.js";
-import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../../types.js";
 
 interface IGranularGranteeUserGroupItemProps {
     workspace: IGrantedWorkspace;

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 import { InvariantError } from "ts-invariant";
@@ -32,13 +32,13 @@ import {
     isPreviousPeriodMeasureDefinition,
 } from "@gooddata/sdk-model";
 
-import { convertFilter } from "./FilterConverter.js";
 import {
     toAttributeQualifier,
     toDateDataSetQualifier,
     toFactQualifier,
     toLocalIdentifier,
 } from "../ObjRefConverter.js";
+import { convertFilter } from "./FilterConverter.js";
 
 export function convertMeasure(measure: IMeasure): MeasureItem {
     const {

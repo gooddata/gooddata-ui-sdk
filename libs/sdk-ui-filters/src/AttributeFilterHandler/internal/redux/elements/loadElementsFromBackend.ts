@@ -25,10 +25,10 @@ import {
 } from "@gooddata/sdk-model";
 import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
 
-import { InMemoryPaging } from "./InMemoryPaging.js";
-import { type IHiddenElementsInfo } from "./types.js";
 import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
 import { type IAttributeFilterHandlerStoreContext } from "../store/types.js";
+import { InMemoryPaging } from "./InMemoryPaging.js";
+import { type IHiddenElementsInfo } from "./types.js";
 
 async function loadElementsAsExecution(
     backend: IAnalyticalBackend,

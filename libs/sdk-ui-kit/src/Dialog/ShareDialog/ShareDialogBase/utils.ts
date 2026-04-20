@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { simplifyText } from "@gooddata/util";
 
+import { type CurrentUserPermissions } from "../types.js";
 import {
     type GranteeItem,
     type IGranteeGroupAll,
@@ -24,7 +25,6 @@ import {
     isGranteeRules,
     isGranularGranteeGroup,
 } from "./types.js";
-import { type CurrentUserPermissions } from "../types.js";
 
 /**
  * @internal

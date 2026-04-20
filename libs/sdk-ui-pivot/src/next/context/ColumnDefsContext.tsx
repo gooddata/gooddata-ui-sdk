@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext, useMemo } from "react";
 
@@ -6,10 +6,10 @@ import { useIntl } from "react-intl";
 
 import { useInitialProp } from "@gooddata/sdk-ui/internal";
 
+import { dataViewToColDefs } from "../features/data/dataViewToColDefs.js";
 import { useDrillableItemsRef } from "./DrillableItemsRefContext.js";
 import { useInitialExecution } from "./InitialExecutionContext.js";
 import { usePivotTableProps } from "./PivotTablePropsContext.js";
-import { dataViewToColDefs } from "../features/data/dataViewToColDefs.js";
 
 type IColumnDefsContext = ReturnType<typeof dataViewToColDefs>;
 

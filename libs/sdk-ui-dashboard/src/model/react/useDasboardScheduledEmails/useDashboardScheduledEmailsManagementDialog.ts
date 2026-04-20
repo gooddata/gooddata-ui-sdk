@@ -5,13 +5,13 @@ import { useCallback } from "react";
 import { type IAutomationMetadataObject, type IWidget } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 import { messages } from "../../../locales.js";
 import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectIsScheduleEmailManagementDialogContext } from "../../store/ui/uiSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
+import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 
 /**
  * @internal

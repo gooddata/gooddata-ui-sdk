@@ -27,7 +27,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { isBulletChart, isComboChart, isLineChart } from "@gooddata/sdk-ui-charts";
 
-import { getTranslation } from "./translations.js";
 import { subtitles, titles } from "../../locales.js";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket.js";
 import {
@@ -46,6 +45,7 @@ import {
     type IUiConfig,
     type IVisualizationProperties,
 } from "../interfaces/Visualization.js";
+import { getTranslation } from "./translations.js";
 
 export function isDateFilter(filter: IBucketFilter | undefined): filter is IDateFilter {
     return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;

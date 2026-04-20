@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
-import { DataSourceItem } from "./DataSourceItem.js";
-import { DataSourceListEmpty } from "./DataSourceListEmpty.js";
 import { type IGrantedDataSource, type ListMode, type WorkspacePermissionSubject } from "../types.js";
 import { sortByName } from "../utils.js";
+import { DataSourceItem } from "./DataSourceItem.js";
+import { DataSourceListEmpty } from "./DataSourceListEmpty.js";
 
 export interface IDataSourceListProps {
     dataSources: IGrantedDataSource[] | undefined;

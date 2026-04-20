@@ -13,10 +13,10 @@ import {
 } from "@gooddata/sdk-model";
 import { useBackend } from "@gooddata/sdk-ui";
 
-import { useOriginalConfigurationState } from "./useOriginalConfigurationState.js";
 import { setAttributeFilterParents } from "../../../../../../model/commands/filters.js";
 import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/types/attributeFilterTypes.js";
+import { useOriginalConfigurationState } from "./useOriginalConfigurationState.js";
 
 export function useParentsConfiguration(
     neighborFilters: DashboardAttributeFilterItem[],

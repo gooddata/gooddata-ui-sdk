@@ -2,8 +2,8 @@
 
 import cx from "classnames";
 
-import { MarkdownComponent } from "./Markdown.js";
 import { type RoutingContents } from "../../../model.js";
+import { MarkdownComponent } from "./Markdown.js";
 
 export type RoutingContentsProps = {
     content: RoutingContents;

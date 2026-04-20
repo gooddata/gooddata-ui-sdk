@@ -1,7 +1,6 @@
 // (C) 2026 GoodData Corporation
 
 import type { ReactElement } from "react";
-
 import { type Mock, expect } from "vitest";
 
 import { GeoChartInternal } from "@gooddata/sdk-ui-geo/internal";

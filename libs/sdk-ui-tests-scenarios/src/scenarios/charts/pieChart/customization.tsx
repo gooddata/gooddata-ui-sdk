@@ -2,7 +2,6 @@
 
 import { type IPieChartProps, PieChart } from "@gooddata/sdk-ui-charts";
 
-import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
@@ -13,6 +12,7 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base.js";
 
 const legendScenarios = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

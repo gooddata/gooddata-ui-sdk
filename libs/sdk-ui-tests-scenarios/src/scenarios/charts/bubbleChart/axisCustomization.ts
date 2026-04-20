@@ -2,10 +2,10 @@
 
 import { BubbleChart, type IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 
-import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 
 const singleAxisNameConfig = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withGroupNames(...ScenarioGroupNames.Axes)

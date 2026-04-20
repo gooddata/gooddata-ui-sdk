@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactElement, useEffect, useMemo } from "react";
 
@@ -8,7 +8,6 @@ import { type IExecutionFactory, type IPreparedExecution } from "@gooddata/sdk-b
 import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { ErrorCodes, ErrorComponent, IntlWrapper, newErrorMapping } from "@gooddata/sdk-ui";
 
-import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
 import {
     type IExtendedReferencePoint,
     type IReferencePoint,
@@ -17,6 +16,7 @@ import {
     type RenderFunction,
     type UnmountFunction,
 } from "../../interfaces/Visualization.js";
+import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
 
 export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };
 function LocalizedUnknownVisualizationClass({

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type ArithmeticMeasureDefinition,
@@ -16,8 +16,8 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { convertFilter } from "./FilterConverter.js";
 import { toObjRef } from "../ObjRefConverter.js";
+import { convertFilter } from "./FilterConverter.js";
 
 const isArithmeticMeasureDefinition = (definition: unknown): definition is ArithmeticMeasureDefinition => {
     return (definition as ArithmeticMeasureDefinition).arithmeticMeasure !== undefined;

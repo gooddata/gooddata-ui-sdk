@@ -14,13 +14,6 @@ import {
     isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
 
-import { type FilterValidators, processFilterOp } from "./common/filterOperations.js";
-import {
-    validateAttributeFiltersToIgnore,
-    validateDatasetForInsightWidgetDateFilter,
-    validateDateFiltersToIgnore,
-} from "./validation/filterValidation.js";
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { type IChangeInsightWidgetFilterSettings } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetFilterSettingsChanged,
@@ -29,6 +22,13 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { type FilterValidators, processFilterOp } from "./common/filterOperations.js";
+import {
+    validateAttributeFiltersToIgnore,
+    validateDatasetForInsightWidgetDateFilter,
+    validateDateFiltersToIgnore,
+} from "./validation/filterValidation.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 
 const InsightWidgetFilterValidations: FilterValidators<IInsightWidget> = {
     dateDatasetValidator: validateDatasetForInsightWidgetDateFilter,

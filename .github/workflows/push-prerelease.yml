@@ -124,7 +124,7 @@ jobs:
       labels: runners-small
     steps:
       - name: Trigger sdk-backport in gdc-ui
-        uses: peter-evans/repository-dispatch@v3
+        uses: peter-evans/repository-dispatch@v4
         with:
           token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
           repository: gooddata/gdc-ui

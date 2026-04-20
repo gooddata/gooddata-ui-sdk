@@ -5,11 +5,11 @@ import { FormattedMessage } from "react-intl";
 import { type ObjRef } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { useInsightDrillConfigPanel } from "./useInsightDrillConfigPanel.js";
 import { DrillFiltersConfig } from "../DrillFilters/DrillFiltersConfig.js";
 import { DrillOriginSelector } from "../DrillOriginSelector/DrillOriginSelector.js";
 import { InsightDrillConfigList } from "../InsightDrillConfigList.js";
 import { ZoomInsightConfiguration } from "../ZoomInsightConfiguration.js";
+import { useInsightDrillConfigPanel } from "./useInsightDrillConfigPanel.js";
 
 /**
  * @internal

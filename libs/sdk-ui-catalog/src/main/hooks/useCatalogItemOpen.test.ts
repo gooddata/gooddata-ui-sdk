@@ -3,8 +3,8 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import { useCatalogItemOpen } from "./useCatalogItemOpen.js";
 import type { ICatalogItemParameter, ICatalogItemRef } from "../../catalogItem/types.js";
+import { useCatalogItemOpen } from "./useCatalogItemOpen.js";
 
 const parameterRefA: ICatalogItemRef = {
     identifier: "param.a",

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/util",
-    "version": "11.31.0-alpha.1",
+    "version": "11.31.0-alpha.2",
     "description": "GoodData Utility Functions",
     "license": "MIT",
     "author": "GoodData",
@@ -29,15 +29,15 @@
         "build-check": "tsgo",
         "build-ts": "tsgo -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
         "test": "vitest watch",
         "test-once": "vitest run",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
-        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/util\"'",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/util\"'"
     },
     "dependencies": {
         "lodash-es": "^4.17.23",
@@ -63,7 +63,7 @@
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3",

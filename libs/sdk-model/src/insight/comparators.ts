@@ -1,5 +1,6 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
+import { stringComparatorFactory } from "../base/comparators.js";
 import {
     type IInsight,
     insightCreated,
@@ -8,7 +9,6 @@ import {
     insightUpdated,
     insightUpdatedBy,
 } from "./index.js";
-import { stringComparatorFactory } from "../base/comparators.js";
 
 /**
  * @beta

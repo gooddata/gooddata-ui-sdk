@@ -2,14 +2,6 @@
 
 import { describe, expect, it } from "vitest";
 
-import {
-    absoluteDateFilterForm,
-    absoluteDateFilterPreset,
-    allTimeDateFilter,
-    emptyValuesDateFilterOption,
-    relativeDateFilterForm,
-    relativeDateFilterPreset,
-} from "./typeGuards.fixtures.js";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import {
     isAbsoluteDateFilterForm,
@@ -19,6 +11,14 @@ import {
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "../index.js";
+import {
+    absoluteDateFilterForm,
+    absoluteDateFilterPreset,
+    allTimeDateFilter,
+    emptyValuesDateFilterOption,
+    relativeDateFilterForm,
+    relativeDateFilterPreset,
+} from "./typeGuards.fixtures.js";
 
 describe("dashboard extended date filters type guards", () => {
     describe("isAllTimeDateFilterOption", () => {

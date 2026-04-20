@@ -2,7 +2,6 @@
 
 import { isEmpty } from "lodash-es";
 
-import { type IDashboardObjectIdentity } from "./common.js";
 import { type DateFilterGranularity, type DateString } from "../dateFilterConfig/index.js";
 import {
     type EmptyValues,
@@ -13,6 +12,7 @@ import {
     isAttributeElementsByRef,
 } from "../execution/filter/index.js";
 import { type ObjRef, isObjRef } from "../objRef/index.js";
+import { type IDashboardObjectIdentity } from "./common.js";
 
 /**
  * Date filter type - relative

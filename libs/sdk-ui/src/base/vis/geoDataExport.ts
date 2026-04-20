@@ -29,9 +29,9 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
+import { BucketNames } from "../constants/bucketNames.js";
 import { isGeoVisualizationUsingNewEngine } from "./isGeoVisualizationUsingNewEngine.js";
 import { VisualizationTypes } from "./visualizationTypes.js";
-import { BucketNames } from "../constants/bucketNames.js";
 
 /**
  * @internal

@@ -17,13 +17,13 @@ import {
     isObjRef,
 } from "@gooddata/sdk-model";
 
-import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures.js";
 import {
     type IInsightPlaceholderWidget,
     type IKpiPlaceholderWidget,
     newInsightPlaceholderWidget,
     newKpiPlaceholderWidget,
 } from "../../../widgets/placeholders/types.js";
+import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures.js";
 
 export const TestSectionHeader: IDashboardLayoutSectionHeader = {
     title: "Test Section",

@@ -16,7 +16,6 @@ import cx from "classnames";
 
 import { usePropState } from "@gooddata/sdk-ui";
 
-import { DropdownButtonKeyboardWrapper } from "./DropdownButtonKeyboardWrapper.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { resolveRef } from "../@ui/UiFocusManager/utils.js";
 import { type IButtonAccessibilityConfig } from "../Button/typings.js";
@@ -26,6 +25,7 @@ import { useMediaQuery } from "../responsive/useMediaQuery.js";
 import { type OverlayPositionType } from "../typings/overlay.js";
 import { type IAlignPoint } from "../typings/positioning.js";
 import { useId } from "../utils/useId.js";
+import { DropdownButtonKeyboardWrapper } from "./DropdownButtonKeyboardWrapper.js";
 
 const SCROLLBAR_SELECTOR = ".fixedDataTableLayout_main .ScrollbarLayout_main";
 const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [

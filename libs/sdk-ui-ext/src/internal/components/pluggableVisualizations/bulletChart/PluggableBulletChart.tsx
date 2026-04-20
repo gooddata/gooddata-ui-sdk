@@ -16,7 +16,6 @@ import {
     getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
 
-import { transformBuckets } from "./bucketHelper.js";
 import { BUCKETS, METRIC } from "../../../constants/bucket.js";
 import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { BULLET_CHART_CONFIG_MULTIPLE_DATES } from "../../../constants/uiConfig.js";
@@ -51,6 +50,7 @@ import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletCha
 import { BulletChartConfigurationPanel } from "../../configurationPanels/BulletChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+import { transformBuckets } from "./bucketHelper.js";
 
 /**
  * PluggableBulletChart

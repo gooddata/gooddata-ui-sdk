@@ -2,10 +2,10 @@
 
 import { type ReactElement, memo, useCallback } from "react";
 
-import { DefaultUiMenuHeader } from "./DefaultUiMenuHeader.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
 import { type IUiMenuContentItem, type IUiMenuContentProps } from "../../types.js";
+import { DefaultUiMenuHeader } from "./DefaultUiMenuHeader.js";
 
 /**
  * Container for rendering custom content in menu.

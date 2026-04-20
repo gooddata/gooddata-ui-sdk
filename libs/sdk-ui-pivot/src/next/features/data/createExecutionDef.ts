@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -9,6 +9,10 @@ import {
     type ITotal,
 } from "@gooddata/sdk-model";
 
+import { type MeasureGroupDimension } from "../../types/transposition.js";
+import { applyTotalsToExecutionDef } from "../aggregations/applyTotalsToExecutionDef.js";
+import { applySortByToExecutionDef } from "../sorting/applySortByToExecutionDef.js";
+import { applyTranspositionToExecutionDef } from "../transposition/applyTranspositionToExecutionDef.js";
 import { applyAttributesToExecutionDef } from "./executionDefinition/attributes.js";
 import { DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION } from "./executionDefinition/constants.js";
 import { applyExecConfigToExecutionDef } from "./executionDefinition/execConfig.js";
@@ -16,10 +20,6 @@ import { applyFiltersToExecutionDef } from "./executionDefinition/filters.js";
 import { applyMeasuresToExecutionDef } from "./executionDefinition/measures.js";
 import { type IPivotTableExecutionDefinition } from "./executionDefinition/types.js";
 import { applyWorkspaceToExecutionDef } from "./executionDefinition/workspace.js";
-import { type MeasureGroupDimension } from "../../types/transposition.js";
-import { applyTotalsToExecutionDef } from "../aggregations/applyTotalsToExecutionDef.js";
-import { applySortByToExecutionDef } from "../sorting/applySortByToExecutionDef.js";
-import { applyTranspositionToExecutionDef } from "../transposition/applyTranspositionToExecutionDef.js";
 
 /**
  * @internal

@@ -6,8 +6,8 @@ import { omit } from "lodash-es";
 import { isNoDataError } from "@gooddata/sdk-backend-spi";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type ChartInteractions, backendWithCapturing } from "./backendWithCapturing.js";
 import { type IScenario, type VisProps } from "../../src/index.js";
+import { type ChartInteractions, backendWithCapturing } from "./backendWithCapturing.js";
 
 function errorHandler(error: GoodDataSdkError) {
     if (isNoDataError(error.cause)) {

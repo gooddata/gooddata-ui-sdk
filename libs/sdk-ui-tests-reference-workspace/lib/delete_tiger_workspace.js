@@ -5,10 +5,9 @@ import fs from "fs";
 
 import { deleteTigerWorkspace, log } from "@gooddata/fixtures";
 
+import { TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG } from "../constant.js";
 import { deleteVariableFromEnv } from "./delete_helper.js";
 import { retryOperation } from "./utils.js";
-import { TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG } from "../constant.js";
-
 import "../scripts/env.js";
 
 const envFilePath = ".env";

@@ -3,7 +3,6 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Headline, type IHeadlineProps } from "@gooddata/sdk-ui-charts";
 
-import { HeadlinePositiveComparisonMeasures, comparisonDisabled, comparisonEnabled } from "./comparison.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import {
     AmountMeasurePredicate,
@@ -11,6 +10,7 @@ import {
     WonMeasurePredicate,
 } from "../../_infra/predicates.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { HeadlinePositiveComparisonMeasures, comparisonDisabled, comparisonEnabled } from "./comparison.js";
 
 export const drilling = scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.Drilling)

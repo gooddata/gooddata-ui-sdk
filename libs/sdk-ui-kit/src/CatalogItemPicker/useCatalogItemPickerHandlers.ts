@@ -2,13 +2,13 @@
 
 import { type Dispatch, type SetStateAction, useCallback, useEffect, useMemo } from "react";
 
+import { type IUiListboxInteractiveItem } from "../@ui/UiListbox/types.js";
 import { type CatalogItemListboxItem, type ICatalogItemPickerListItemData } from "./listboxItemBuilders.js";
 import {
     type CatalogItemPickerSelectionMode,
     type CatalogItemPickerType,
     type ICatalogItemPickerItem,
 } from "./types.js";
-import { type IUiListboxInteractiveItem } from "../@ui/UiListbox/types.js";
 
 interface IUseCatalogItemPickerHandlersParams<TAttributePayload, TMetricPayload> {
     selectionMode: CatalogItemPickerSelectionMode;

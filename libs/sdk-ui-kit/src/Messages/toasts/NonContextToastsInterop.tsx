@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
 import { useAutoupdateRef, usePrevious } from "@gooddata/sdk-ui";
 
+import { type IMessage } from "../typings.js";
 import { ToastsCenterContext } from "./context.js";
 import { ToastsCenterContextProvider } from "./ToastsCenter.js";
-import { type IMessage } from "../typings.js";
 
 /**
  * Allows displaying messages coming from outside the toasts context system.

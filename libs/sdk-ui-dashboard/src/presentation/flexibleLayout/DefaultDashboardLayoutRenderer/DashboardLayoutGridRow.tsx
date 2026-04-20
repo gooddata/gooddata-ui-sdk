@@ -2,13 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
-import {
-    type IDashboardLayoutGridRowRenderer,
-    type IDashboardLayoutItemKeyGetter,
-    type IDashboardLayoutItemRenderer,
-    type IDashboardLayoutWidgetRenderer,
-} from "./interfaces.js";
 import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutSectionFacade,
@@ -16,6 +9,13 @@ import {
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
 import { type RenderMode } from "../../../types.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
+import {
+    type IDashboardLayoutGridRowRenderer,
+    type IDashboardLayoutItemKeyGetter,
+    type IDashboardLayoutItemRenderer,
+    type IDashboardLayoutWidgetRenderer,
+} from "./interfaces.js";
 
 /**
  * @alpha

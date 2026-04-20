@@ -14,9 +14,6 @@ import {
 } from "@gooddata/sdk-model";
 import { Button, NoData, Typography } from "@gooddata/sdk-ui-kit";
 
-import { AddLimitingItemDialog } from "./dialog/AddLimitingItemDialog.js";
-import { LimitingItem } from "./shared/LimitingItem.js";
-import { useLimitingItems } from "./shared/limitingItemsHook.js";
 import { useCommonDateFilterTitle } from "../../../../../../_staging/sharedHooks/useCommonDateFilterTitle.js";
 import { messages } from "../../../../../../locales.js";
 import { type IMetricsAndFacts } from "../../../../../../model/queries/metricsAndFacts.js";
@@ -31,6 +28,9 @@ import {
 } from "../../../../../../model/types/dateFilterTypes.js";
 import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
 import { type ValuesLimitingItem } from "../../../types.js";
+import { AddLimitingItemDialog } from "./dialog/AddLimitingItemDialog.js";
+import { LimitingItem } from "./shared/LimitingItem.js";
+import { useLimitingItems } from "./shared/limitingItemsHook.js";
 
 const extractKey = (item: ValuesLimitingItem) =>
     isObjRef(item) ? serializeObjRef(item) : item.localIdentifier;

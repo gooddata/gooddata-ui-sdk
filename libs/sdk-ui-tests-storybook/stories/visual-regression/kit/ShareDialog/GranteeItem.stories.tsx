@@ -12,7 +12,8 @@ import {
     getGranteeItemTestId,
 } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
-
+import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import {
     current,
     currentAndOwen,
@@ -27,8 +28,6 @@ import {
     userInactive,
 } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
-import { wrapWithTheme } from "../../themeWrapper.js";
 import "../styles/goodstrap.scss";
 
 const defaultGranteeItemComponentProps: Omit<IGranteeItemProps, "grantee"> = {

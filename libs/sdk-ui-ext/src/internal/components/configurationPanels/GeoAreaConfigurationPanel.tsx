@@ -5,11 +5,6 @@ import { type ReactElement, type ReactNode } from "react";
 import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import {
-    ConfigurationPanelContent,
-    type IConfigurationPanelContentProps,
-} from "./ConfigurationPanelContent.js";
-import { hasColorMeasure, hasSegmentAttribute } from "./geoInsightBucketUtils.js";
 import { messages } from "../../../locales.js";
 import { isGeoBasemapConfigEnabled, isGeoChartsViewportConfigEnabled } from "../../constants/featureFlags.js";
 import { sanitizeGeoMapStyleOptions } from "../../constants/geoMapStyle.js";
@@ -19,6 +14,11 @@ import { ColorsSection } from "../configurationControls/colors/ColorsSection.js"
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { GeoViewportControl, type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
 import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSection.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
+import { hasColorMeasure, hasSegmentAttribute } from "./geoInsightBucketUtils.js";
 
 interface IGeoAreaConfigurationPanelProps extends IConfigurationPanelContentProps {
     getCurrentMapView?: () => ICurrentMapView;

@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { cloneDeep } from "lodash-es";
 
 import {
@@ -8,9 +9,9 @@ import {
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 
+import { objRef } from "../../model/utils/objRef.js";
 import { containerSlideTransformer } from "./containerSlideTransformer.js";
 import { containsVisualizationSwitcher } from "./utils/index.js";
-import { objRef } from "../../model/utils/objRef.js";
 
 /**
  *

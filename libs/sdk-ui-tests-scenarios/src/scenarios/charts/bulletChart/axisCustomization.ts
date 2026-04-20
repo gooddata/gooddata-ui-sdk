@@ -2,10 +2,10 @@
 
 import { BulletChart, type IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
-import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 
 const singleAxisNameConfig = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(...ScenarioGroupNames.Axes)

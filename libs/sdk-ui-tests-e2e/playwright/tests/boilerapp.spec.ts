@@ -5,11 +5,9 @@ import { expect } from "@playwright/test";
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
-import { mockFeatureHub } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Boiler app Chart", "boilerapp", () => {

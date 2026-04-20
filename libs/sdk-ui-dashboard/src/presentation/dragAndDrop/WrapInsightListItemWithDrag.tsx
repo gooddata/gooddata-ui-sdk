@@ -6,13 +6,13 @@ import classNames from "classnames";
 
 import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 
-import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
-import { type IWrapInsightListItemWithDragProps } from "./types.js";
-import { useDashboardDrag } from "./useDashboardDrag.js";
 import { getSizeInfo } from "../../_staging/layout/sizing.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { selectSettings } from "../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../model/store/renderMode/renderModeSelectors.js";
+import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
+import { type IWrapInsightListItemWithDragProps } from "./types.js";
+import { useDashboardDrag } from "./useDashboardDrag.js";
 
 /**
  * @internal

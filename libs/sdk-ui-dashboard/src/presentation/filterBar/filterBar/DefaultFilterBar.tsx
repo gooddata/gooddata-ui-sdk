@@ -20,13 +20,6 @@ import {
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
-import { DefaultFilterBarItem } from "./DefaultFilterBarItem.js";
-import { groupFilterItems } from "./filterGroupUtils.js";
-import { HiddenFilterBar } from "./HiddenFilterBar.js";
-import { ResetFiltersButton } from "./ResetFiltersButton.js";
-import { type IFilterBarProps } from "./types.js";
-import { useFiltersWithAddedPlaceholder } from "./useFiltersWithAddedPlaceholder.js";
 import { convertDashboardAttributeFilterElementsValuesToUris } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { setDashboardAttributeFilterConfigDisplayAsLabel } from "../../../model/commands/dashboard.js";
 import {
@@ -67,6 +60,13 @@ import { DraggableFilterDropZoneHint } from "../../dragAndDrop/draggableFilterDr
 import { HiddenDashboardDateFilter } from "../dateFilter/HiddenDashboardDateFilter.js";
 import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
 import { areAllFiltersHidden } from "../utils.js";
+import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
+import { DefaultFilterBarItem } from "./DefaultFilterBarItem.js";
+import { groupFilterItems } from "./filterGroupUtils.js";
+import { HiddenFilterBar } from "./HiddenFilterBar.js";
+import { ResetFiltersButton } from "./ResetFiltersButton.js";
+import { type IFilterBarProps } from "./types.js";
+import { useFiltersWithAddedPlaceholder } from "./useFiltersWithAddedPlaceholder.js";
 
 /**
  * @alpha

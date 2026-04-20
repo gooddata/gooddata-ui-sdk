@@ -8,8 +8,6 @@ import {
     valueWithEmptyHandling,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
-import { getChartFillProperties, getColorOrPatternFillIndex, isSolidFill } from "./patternFillOptions.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IPointData, type ISeriesItemConfig } from "../../typings/unsafe.js";
@@ -33,6 +31,8 @@ import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions.js";
 import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries.js";
 import { getTreemapStackedSeries } from "../treemap/treemapChartSeries.js";
 import { getWaterfallChartSeries } from "../waterfallChart/waterfallChartsSeries.js";
+import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
+import { getChartFillProperties, getColorOrPatternFillIndex, isSolidFill } from "./patternFillOptions.js";
 
 export function getSeriesItemData(
     seriesItem: DataValue[],

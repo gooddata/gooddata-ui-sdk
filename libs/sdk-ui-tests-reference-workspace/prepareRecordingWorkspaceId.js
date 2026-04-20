@@ -7,7 +7,6 @@ import { log } from "@gooddata/fixtures";
 
 import { deleteVariableFromEnv } from "./lib/delete_helper.js";
 import { getRecordingsWorkspaceId } from "./scripts/lib/recordings.js";
-
 import "./scripts/env.js";
 
 const envFilePath = ".env";

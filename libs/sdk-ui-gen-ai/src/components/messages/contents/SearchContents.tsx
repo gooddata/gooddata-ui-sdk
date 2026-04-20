@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -6,9 +6,9 @@ import cx from "classnames";
 
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
+import { type SearchContents } from "../../../model.js";
 import { MarkdownComponent } from "./Markdown.js";
 import { replaceLinks } from "./replaceLinks.js";
-import { type SearchContents } from "../../../model.js";
 
 export type SearchContentsProps = {
     content: SearchContents;

@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import { type LegendMessageFormatter } from "./legendMessages.js";
 import { type ILegendGroup } from "../../types/legend/model.js";
+import { type LegendMessageFormatter } from "./legendMessages.js";
 
 /**
  * Resolves a localized legend group title when message metadata is present.

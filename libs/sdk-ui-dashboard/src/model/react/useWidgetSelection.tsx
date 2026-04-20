@@ -4,10 +4,10 @@ import { type MouseEvent, useCallback } from "react";
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import { selectIsInEditMode } from "../store/renderMode/renderModeSelectors.js";
 import { uiActions } from "../store/ui/index.js";
 import { selectConfigurationPanelOpened, selectSelectedWidgetRef } from "../store/ui/uiSelectors.js";
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**
  * @internal

@@ -18,9 +18,9 @@ import { defaultImport } from "default-import";
 import ReactTextareaAutosize from "react-textarea-autosize";
 import { v4 as uuid } from "uuid";
 
-import { type IEditableLabelProps } from "./typings.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
+import { type IEditableLabelProps } from "./typings.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

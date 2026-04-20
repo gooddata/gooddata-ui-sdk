@@ -4,12 +4,12 @@ import { type Ref, useCallback, useEffect, useMemo, useRef, useState } from "rea
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import { useSkeletonItem } from "./SkeletonItemFactory.js";
-import { getCellId, getItemKey, getRowId } from "./utils.js";
 import { isEnterKey } from "../../../utils/events.js";
 import { makeGridKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { type IUiAsyncTableBodyProps } from "../types.js";
+import { useSkeletonItem } from "./SkeletonItemFactory.js";
+import { getCellId, getItemKey, getRowId } from "./utils.js";
 
 export function UiAsyncTableBody<T extends { id: string } | { ref: ObjRef }>({
     items,

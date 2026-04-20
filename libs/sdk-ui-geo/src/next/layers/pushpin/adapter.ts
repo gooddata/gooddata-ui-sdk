@@ -10,13 +10,6 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { isClusteringAllowed } from "./clustering/clustering.js";
-import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
-import { transformPushpinData } from "./data/transformation.js";
-import { UNCLUSTER_FILTER } from "./layers.js";
-import { getPushpinLayerIds, removePushpinLayer, syncPushpinLayerToMap } from "./operations.js";
-import { createPushpinDataSource } from "./source.js";
-import { createPushpinTooltipConfig } from "./tooltip/tooltipManagement.js";
 import { calculateViewport } from "../../map/viewport/viewportCalculation.js";
 import type { IGeoLngLat } from "../../types/common/coordinates.js";
 import type { IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
@@ -33,6 +26,13 @@ import { prepareExecutionWithGeoIcon } from "../execution/prepareGeoIconExecutio
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import { resolveAttributeDisplayForms } from "../execution/resolveAttributeDisplayForms.js";
 import type { IGeoAdapterContext, IGeoLayerAdapter, IPushpinLayerOutput } from "../registry/adapterTypes.js";
+import { isClusteringAllowed } from "./clustering/clustering.js";
+import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
+import { transformPushpinData } from "./data/transformation.js";
+import { UNCLUSTER_FILTER } from "./layers.js";
+import { getPushpinLayerIds, removePushpinLayer, syncPushpinLayerToMap } from "./operations.js";
+import { createPushpinDataSource } from "./source.js";
+import { createPushpinTooltipConfig } from "./tooltip/tooltipManagement.js";
 
 function getValidLocations(locations: Array<IGeoLngLat | null | undefined>): IGeoLngLat[] {
     return locations.filter(

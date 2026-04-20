@@ -21,10 +21,10 @@
         "dist": "rm -rf dist && export NODE_OPTIONS=\"--max_old_space_size=4096\" && vite build",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "refresh-md": "./scripts/refresh-md.sh && npm run build",
-        "validate": "npm run lint && npm run format-check",
         "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "refresh-md": "./scripts/refresh-md.sh && npm run build",
+        "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {
         "@codemirror/state": "6.5.3",
@@ -68,7 +68,7 @@
         "eslint-plugin-sonarjs": "3.0.6",
         "lodash-es": "^4.17.23",
         "maplibre-gl": "^4.7.1",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "react": "19.1.1",

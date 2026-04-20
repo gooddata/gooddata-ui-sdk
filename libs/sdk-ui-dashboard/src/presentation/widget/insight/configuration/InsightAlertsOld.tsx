@@ -6,14 +6,14 @@ import { isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
+import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
+import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
 import { EditAlert } from "./InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightWidgetAlerting.js";
 import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
-import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
-import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

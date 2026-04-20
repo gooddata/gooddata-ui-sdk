@@ -4,7 +4,6 @@ import { useCallback, useMemo } from "react";
 
 import { idRef } from "@gooddata/sdk-model";
 
-import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import { getInsightPlaceholderSizeInfo } from "../../../../_staging/layout/sizing.js";
 import { addNestedLayoutSection } from "../../../../model/commands/layout.js";
@@ -20,6 +19,7 @@ import {
     INSIGHT_PLACEHOLDER_WIDGET_ID,
     newInsightPlaceholderWidget,
 } from "../../../../widgets/placeholders/types.js";
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useNewSectionInsightPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

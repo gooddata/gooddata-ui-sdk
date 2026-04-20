@@ -6,12 +6,12 @@ import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { type IResultWarning, type ObjRef } from "@gooddata/sdk-model";
 import { type IPushData, type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
-import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 import {
     setExecutionResultData,
     setExecutionResultError,
     setExecutionResultLoading,
 } from "../commands/executionResults.js";
+import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 
 /**
  * Provides callbacks to integrate with the executionResults slice.

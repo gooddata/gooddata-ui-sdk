@@ -4,6 +4,12 @@ import { isEmpty } from "lodash-es";
 
 import { isResultTotalHeader } from "@gooddata/sdk-model";
 
+import {
+    type ColumnLocator,
+    isAttributeColumnLocator,
+    isMeasureColumnLocator,
+    isTotalColumnLocator,
+} from "../../columnWidths.js";
 import { colMeasureLocalId } from "./colAccessors.js";
 import {
     type DataCol,
@@ -15,12 +21,6 @@ import {
     isScopeCol,
     isSeriesCol,
 } from "./tableDescriptorTypes.js";
-import {
-    type ColumnLocator,
-    isAttributeColumnLocator,
-    isMeasureColumnLocator,
-    isTotalColumnLocator,
-} from "../../columnWidths.js";
 
 /**
  * Given data sheet columns, this function will traverse them in order to attempt to match the provided

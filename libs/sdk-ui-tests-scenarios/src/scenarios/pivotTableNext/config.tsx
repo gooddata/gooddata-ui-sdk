@@ -8,12 +8,12 @@ import {
     newWidthForAttributeColumn,
 } from "@gooddata/sdk-ui-pivot/next";
 
+import { scenariosFor } from "../../scenarioGroup.js";
 import {
     PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     getCommonPivotTableSizingConfig,
 } from "./base.js";
-import { scenariosFor } from "../../scenarioGroup.js";
 
 // Attribute with long alias to demonstrate header wrapping
 const ProductNameWithLongAlias = modifyAttribute(ReferenceMd.Product.Name, (m) =>

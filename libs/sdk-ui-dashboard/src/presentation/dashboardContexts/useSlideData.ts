@@ -1,7 +1,7 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { useDashboardCustomizationsContext } from "./DashboardCustomizationsContext.js";
 import { type ILayoutItemPath, type RenderMode } from "../../types.js";
+import { useDashboardCustomizationsContext } from "./DashboardCustomizationsContext.js";
 
 type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 

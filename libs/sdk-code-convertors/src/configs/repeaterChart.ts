@@ -2,6 +2,13 @@
 
 import type { Bucket, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
+import {
+    loadColorMapping,
+    loadColumnsWidth,
+    saveColorMapping,
+    saveColumnWidths,
+} from "../utils/configUtils.js";
+import { getFullBucket } from "../utils/sharedUtils.js";
 import { type ColorMapping, type ColumnWidthItem } from "./types.js";
 import {
     type ConfigDefaults,
@@ -10,13 +17,6 @@ import {
     loadConfig,
     saveConfigObject,
 } from "./utils.js";
-import {
-    loadColorMapping,
-    loadColumnsWidth,
-    saveColorMapping,
-    saveColumnWidths,
-} from "../utils/configUtils.js";
-import { getFullBucket } from "../utils/sharedUtils.js";
 
 type DefaultProperties = {
     colorMapping: Array<ColorMapping>;

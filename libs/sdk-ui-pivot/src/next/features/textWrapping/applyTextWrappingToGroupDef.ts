@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { getPivotGroupTextWrappingItemForColumnDefinition } from "./getPivotGroupTextWrappingItemForColumnDefinition.js";
 import { type AgGridColumnGroupDef } from "../../types/agGrid.js";
 import { type ITextWrapping } from "../../types/textWrapping.js";
+import { getPivotGroupTextWrappingItemForColumnDefinition } from "./getPivotGroupTextWrappingItemForColumnDefinition.js";
 
 /**
  * Applies text wrapping to pivot group header definition.

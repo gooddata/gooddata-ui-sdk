@@ -12,9 +12,6 @@ import {
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
-import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
-import { DashboardLoading } from "./DashboardLoading.js";
-import { DensityInitializer } from "./DensityInitializer.js";
 import { DashboardStoreProvider } from "../../../model/react/DashboardStoreProvider.js";
 import { DefaultAlertingDialogNew } from "../../alerting/DefaultAlertingDialog/DefaultAlertingDialogNew.js";
 import { DefaultAlertingManagementDialogNew } from "../../alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
@@ -47,6 +44,9 @@ import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeA
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier.js";
 import { useDashboard } from "../hooks/useDashboard.js";
 import { type IDashboardProps } from "../types.js";
+import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
+import { DashboardLoading } from "./DashboardLoading.js";
+import { DensityInitializer } from "./DensityInitializer.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
 

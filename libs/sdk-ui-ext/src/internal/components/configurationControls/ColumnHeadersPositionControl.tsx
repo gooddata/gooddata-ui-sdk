@@ -1,17 +1,17 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { type IInsightDefinition } from "@gooddata/sdk-model";
 
-import { ConfigSubsection } from "./ConfigSubsection.js";
-import { DropdownControl } from "./DropdownControl.js";
-import { ColumnHeaderTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 import { messages } from "../../../locales.js";
 import { columnHeadersPositionDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { ConfigSubsection } from "./ConfigSubsection.js";
+import { DropdownControl } from "./DropdownControl.js";
+import { ColumnHeaderTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 
 export interface IColumnHeadersPositionControlProps {
     pushData?: (data: any) => any;

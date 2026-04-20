@@ -12,11 +12,6 @@ import {
     useOverlayZIndexWithRegister,
 } from "@gooddata/sdk-ui-kit";
 
-import {
-    type AggregationsMenuItemData,
-    HeaderInteractiveItem,
-    buildUiMenuItems,
-} from "./HeaderMenuComponents.js";
 import { messages } from "../../../../locales.js";
 import { useHeaderMenuContext } from "../../../context/HeaderMenuContext.js";
 import { e } from "../../../features/styling/bem.js";
@@ -27,6 +22,11 @@ import {
     type ISortingMenuItem,
     type ITextWrappingMenuItem,
 } from "../../../types/menu.js";
+import {
+    type AggregationsMenuItemData,
+    HeaderInteractiveItem,
+    buildUiMenuItems,
+} from "./HeaderMenuComponents.js";
 
 export interface IHeaderMenuProps {
     aggregationsItems: IAggregationsMenuItem[];

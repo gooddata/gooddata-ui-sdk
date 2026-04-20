@@ -4,13 +4,13 @@ import { type CSSProperties, type ReactElement, useMemo } from "react";
 
 import cx from "classnames";
 
-import { type IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableSnapshotExportAccessibility,
     selectIsExport,
 } from "../../../model/store/config/configSelectors.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { type IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
 
 export function DashboardLayoutWidgetRenderer({
     item,

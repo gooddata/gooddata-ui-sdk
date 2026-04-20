@@ -2,10 +2,10 @@
 
 import { type IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 
-import { ScatterPlotWithMeasuresAndAttribute } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { ScatterPlotWithMeasuresAndAttribute } from "./base.js";
 
 const dataLabelScenarios = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

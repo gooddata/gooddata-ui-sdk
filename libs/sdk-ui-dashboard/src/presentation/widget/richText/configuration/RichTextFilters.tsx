@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 
 import { type IRichTextWidget } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { RichTextDateDataSetFilter } from "./RichTextDateDataSetFilter.js";
 import { FilterConfiguration } from "../../common/configuration/FilterConfiguration.js";
+import { RichTextDateDataSetFilter } from "./RichTextDateDataSetFilter.js";
 
 interface IRichTextFiltersProps {
     widget: IRichTextWidget;

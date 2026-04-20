@@ -17,8 +17,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type ExplicitDrill, type ITableDataAttributeScope } from "@gooddata/sdk-ui";
 
-import { type IDashboardEvent } from "./base.js";
-import { eventGuard } from "./util.js";
 import { type IKdaDefinition } from "../../kdaDialog/types.js";
 import {
     type IDashboardDrillContext,
@@ -27,6 +25,8 @@ import {
     type IDrillDownDefinition,
 } from "../../types.js";
 import { type DashboardContext, type FiltersInfo } from "../types/commonTypes.js";
+import { type IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * @internal

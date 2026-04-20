@@ -6,8 +6,8 @@ import { type IntlShape, useIntl } from "react-intl";
 
 import { createInvalidDatapoint, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 
-import { type ITextFilterBodyProps } from "./types.js";
 import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
+import { type ITextFilterBodyProps } from "./types.js";
 
 type ITextFilterBodyValidationParams = Pick<
     ITextFilterBodyProps,

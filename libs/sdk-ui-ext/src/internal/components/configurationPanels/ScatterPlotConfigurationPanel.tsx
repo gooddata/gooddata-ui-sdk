@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -9,7 +9,6 @@ import { insightBucket, insightHasAttributes } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -27,6 +26,7 @@ import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 import { MinMaxControl } from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected override isControlDisabled(): boolean {

@@ -5,9 +5,6 @@ import { useCallback, useState } from "react";
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { buildAutomationUrl, navigate, useWorkspace } from "@gooddata/sdk-ui";
 
-import { DeleteScheduleConfirmDialog } from "./components/DeleteScheduleConfirmDialog.js";
-import { DefaultScheduledEmailManagementDialogContentBasic } from "./DefaultScheduledEmailManagementDialogContentBasic.js";
-import { DefaultScheduledEmailManagementDialogContentEnhanced } from "./DefaultScheduledEmailManagementDialogContentEnhanced.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableAutomationManagement,
@@ -16,6 +13,9 @@ import {
 } from "../../../model/store/config/configSelectors.js";
 import { selectDashboardId } from "../../../model/store/meta/metaSelectors.js";
 import { type IScheduledEmailManagementDialogProps } from "../types.js";
+import { DeleteScheduleConfirmDialog } from "./components/DeleteScheduleConfirmDialog.js";
+import { DefaultScheduledEmailManagementDialogContentBasic } from "./DefaultScheduledEmailManagementDialogContentBasic.js";
+import { DefaultScheduledEmailManagementDialogContentEnhanced } from "./DefaultScheduledEmailManagementDialogContentEnhanced.js";
 
 /**
  * @alpha

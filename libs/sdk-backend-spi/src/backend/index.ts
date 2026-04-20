@@ -2,7 +2,6 @@
 
 import { type IExecutionDefinition } from "@gooddata/sdk-model";
 
-import { type IBackendCapabilities } from "./capabilities.js";
 import { type IDataSourcesService } from "../dataSources/index.js";
 import { type IEntitlements } from "../entitlements/index.js";
 import { type NotAuthenticated } from "../errors/index.js";
@@ -11,6 +10,7 @@ import { type IOrganization, type IOrganizations } from "../organization/index.j
 import { type IUserService } from "../user/index.js";
 import { type IPreparedExecution, type IPreparedExecutionOptions } from "../workspace/execution/index.js";
 import { type IAnalyticalWorkspace, type IWorkspacesQueryFactory } from "../workspace/index.js";
+import { type IBackendCapabilities } from "./capabilities.js";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend.

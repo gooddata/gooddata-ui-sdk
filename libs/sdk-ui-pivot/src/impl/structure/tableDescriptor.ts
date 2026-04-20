@@ -13,6 +13,13 @@ import {
 } from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
 
+import {
+    type IAttributeColumnWidthItem,
+    type IMeasureColumnWidthItem,
+    type IMixedValuesColumnWidthItem,
+    type ISliceMeasureColumnWidthItem,
+} from "../../columnWidths.js";
+import { type IPivotTableConfig } from "../../publicTypes.js";
 import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
 import { createSortItemForCol } from "./colSortItemFactory.js";
 import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";
@@ -37,13 +44,6 @@ import {
     isSliceCol,
     isSliceMeasureCol,
 } from "./tableDescriptorTypes.js";
-import {
-    type IAttributeColumnWidthItem,
-    type IMeasureColumnWidthItem,
-    type IMixedValuesColumnWidthItem,
-    type ISliceMeasureColumnWidthItem,
-} from "../../columnWidths.js";
-import { type IPivotTableConfig } from "../../publicTypes.js";
 
 /**
  * Table Descriptor is the entry point to all table structure data and metadata. It contains exhaustive information

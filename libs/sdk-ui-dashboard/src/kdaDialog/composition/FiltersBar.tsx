@@ -2,12 +2,12 @@
 
 import { useIntl } from "react-intl";
 
-import { AddFilterButton } from "./AddFilterButton.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { selectAttributeFilterConfigsOverrides } from "../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { AttributeBar } from "../components/bars/AttributeBar.js";
 import { DateBar } from "../components/bars/DateBar.js";
 import { KdaBar } from "../components/KdaBar.js";
+import { AddFilterButton } from "./AddFilterButton.js";
 import { useAttributeFiltersChangeHandler } from "./hooks/useAttributeFiltersChangeHandler.js";
 import { usePeriodChangeHandler } from "./hooks/usePeriodChangeHandler.js";
 

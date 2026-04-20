@@ -4,7 +4,6 @@ import { type IInsight } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, getIntersectionPartAfter } from "@gooddata/sdk-ui";
 import { type IBulletChartProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableBulletChart } from "./PluggableBulletChart.js";
 import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     type IVisualizationDescriptor,
@@ -25,6 +24,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+import { PluggableBulletChart } from "./PluggableBulletChart.js";
 
 export class BulletChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

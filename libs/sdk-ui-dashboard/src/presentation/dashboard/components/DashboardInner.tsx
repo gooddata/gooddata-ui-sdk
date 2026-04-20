@@ -11,7 +11,6 @@ import {
     ToastsCenterContextProvider,
 } from "@gooddata/sdk-ui-kit";
 
-import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../../../model/react/useDashboardAutomations/useDashboardAutomations.js";
 import { selectAccessibleDashboardsLoaded } from "../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
@@ -35,6 +34,7 @@ import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { type IDashboardProps } from "../types.js";
+import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 const toastsOverlayController = OverlayController.getInstance(DASHBOARD_TOASTS_OVERLAY_Z_INDEX);

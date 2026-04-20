@@ -31,12 +31,12 @@ import {
     isValueRowDefinition,
 } from "@gooddata/sdk-ui";
 
-import { CELL_CLASSNAME, e } from "./bem.js";
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { type CellTypes } from "../../types/cellRendering.js";
 import { type AgGridRowData } from "../../types/internal.js";
 import { extractAttributeUri, getAttributeColIds, parentsMatch } from "../columns/shared.js";
 import { isCellDrillable } from "../drilling/isDrillable.js";
+import { CELL_CLASSNAME, e } from "./bem.js";
 
 /**
  * Common parameters shared between CellClassParams and ICellRendererParams

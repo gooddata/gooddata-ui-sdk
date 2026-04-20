@@ -2,8 +2,8 @@
 
 import { type IStaticFeatures } from "@gooddata/api-client-tiger";
 
-import { type FeatureDef, type FeaturesMap, mapFeatures } from "./feature.js";
 import { type ITigerFeatureFlags } from "../uiFeatures.js";
+import { type FeatureDef, type FeaturesMap, mapFeatures } from "./feature.js";
 
 export function getStaticFeatures({ items }: IStaticFeatures["static"]): Partial<ITigerFeatureFlags> {
     return mapFeatures(remapStaticFeatures(items));

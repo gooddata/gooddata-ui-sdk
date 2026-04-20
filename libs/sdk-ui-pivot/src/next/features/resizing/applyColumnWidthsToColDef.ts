@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { getColumnWidthItemForColumnDefinition } from "./getColumnWidthItemForColumnDefinition.js";
-import { getColumnWidthItemValue } from "./getColumnWidthItemValue.js";
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { type ColumnWidthItem } from "../../types/resizing.js";
+import { getColumnWidthItemForColumnDefinition } from "./getColumnWidthItemForColumnDefinition.js";
+import { getColumnWidthItemValue } from "./getColumnWidthItemValue.js";
 
 /**
  * Applies provided column widths to col def.

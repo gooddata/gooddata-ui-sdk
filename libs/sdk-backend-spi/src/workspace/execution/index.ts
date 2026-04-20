@@ -20,8 +20,8 @@ import {
     type ISortItem,
 } from "@gooddata/sdk-model";
 
-import { type IExportConfig, type IExportResult } from "./export.js";
 import { type ICancelable } from "../../cancelation/index.js";
+import { type IExportConfig, type IExportResult } from "./export.js";
 
 /**
  * @beta

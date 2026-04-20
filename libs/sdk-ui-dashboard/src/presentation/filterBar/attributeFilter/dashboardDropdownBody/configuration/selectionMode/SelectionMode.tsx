@@ -3,9 +3,9 @@
 import { type DashboardAttributeFilterSelectionMode } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
+import { ConfigurationCategory } from "../ConfigurationCategory.js";
 import { SelectionModeButton } from "./SelectionModeButton.js";
 import { SelectionModeItem } from "./SelectionModeItem.js";
-import { ConfigurationCategory } from "../ConfigurationCategory.js";
 
 const ITEM_HEIGHT = 28;
 const DROPDOWN_WIDTH = 225;

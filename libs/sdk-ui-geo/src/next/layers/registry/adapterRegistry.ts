@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import type { IGeoLayerAdapterByType } from "./adapterTypes.js";
 import type { GeoLayerType, IGeoLayer } from "../../types/layers/index.js";
 import { areaAdapter } from "../area/adapter.js";
 import { pushpinAdapter } from "../pushpin/adapter.js";
+import type { IGeoLayerAdapterByType } from "./adapterTypes.js";
 
 /**
  * Runtime adapter type that accepts any IGeoLayer.

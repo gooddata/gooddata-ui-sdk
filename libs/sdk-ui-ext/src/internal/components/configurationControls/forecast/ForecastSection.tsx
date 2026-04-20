@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -6,12 +6,12 @@ import { FormattedMessage } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
-import { ForecastConfidenceControl } from "./ForecastConfidenceControl.js";
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { CheckboxControl } from "../CheckboxControl.js";
 import { ConfigSection } from "../ConfigSection.js";
 import { InputControl } from "../InputControl.js";
+import { ForecastConfidenceControl } from "./ForecastConfidenceControl.js";
 
 export interface IForecastSection {
     controlsDisabled: boolean;

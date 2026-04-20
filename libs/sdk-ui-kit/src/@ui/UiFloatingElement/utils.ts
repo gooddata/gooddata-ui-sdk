@@ -2,9 +2,9 @@
 
 import { type OffsetOptions, type Placement, type VirtualElement } from "@floating-ui/react";
 
-import { type IFloatingAnchor, type ILegacyAlignPoint } from "./types.js";
 import { type IRegion } from "../../typings/domUtilities.js";
 import { elementRegion } from "../../utils/domUtilities.js";
+import { type IFloatingAnchor, type ILegacyAlignPoint } from "./types.js";
 
 const ALIGN_POINT_MAP: Record<string, Placement> = {
     "bl tl": "bottom-start",

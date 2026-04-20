@@ -7,8 +7,6 @@ import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { type CancelableOptions } from "@gooddata/sdk-backend-spi";
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import { selectStaticElements } from "./elementsSelectors.js";
-import { loadElements } from "./loadElements.js";
 import { type ILoadElementsOptions, type ILoadElementsResult } from "../../../types/elementsLoader.js";
 import { type PromiseFnReturnType, getAttributeFilterContext } from "../common/sagas.js";
 import {
@@ -17,6 +15,8 @@ import {
     selectHiddenElementsAsAttributeElements,
 } from "../filter/filterSelectors.js";
 import { selectAttribute } from "../loadAttribute/loadAttributeSelectors.js";
+import { selectStaticElements } from "./elementsSelectors.js";
+import { loadElements } from "./loadElements.js";
 
 /**
  * @internal

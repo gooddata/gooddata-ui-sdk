@@ -2,6 +2,8 @@
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 
+import { type AttributeElementKey } from "../../../types/common.js";
+import { type AttributeFilterReducer } from "../store/state.js";
 import {
     selectCommittedSelection,
     selectIrrelevantCommittedSelection,
@@ -10,8 +12,6 @@ import {
     selectIsWorkingSelectionInverted,
     selectWorkingSelection,
 } from "./selectionSelectors.js";
-import { type AttributeElementKey } from "../../../types/common.js";
-import { type AttributeFilterReducer } from "../store/state.js";
 
 const changeSelection: AttributeFilterReducer<
     PayloadAction<{

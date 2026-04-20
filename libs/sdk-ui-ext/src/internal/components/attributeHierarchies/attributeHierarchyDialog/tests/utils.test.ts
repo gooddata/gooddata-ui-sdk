@@ -1,7 +1,7 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
-import { attributesData, catalogAttributes, catalogDateDatasets } from "./utils.fixture.js";
 import {
     appendEmptyAttribute,
     convertToCatalogAttributeData,
@@ -9,6 +9,7 @@ import {
     findCatalogAttributeByRef,
     searchAttributes,
 } from "../utils.js";
+import { attributesData, catalogAttributes, catalogDateDatasets } from "./utils.fixture.js";
 
 describe("utils", () => {
     describe("convertToCatalogAttributeData", () => {

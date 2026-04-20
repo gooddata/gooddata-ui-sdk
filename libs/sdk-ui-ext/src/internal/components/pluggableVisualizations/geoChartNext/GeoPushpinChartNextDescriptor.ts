@@ -3,7 +3,6 @@
 import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 import { type IGeoChartProps } from "@gooddata/sdk-ui-geo";
 
-import { PluggableGeoPushpinChartNext } from "./PluggableGeoPushpinChartNext.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     type IVisualizationDescriptor,
@@ -25,6 +24,7 @@ import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
 import { MAX_VISUALIZATION_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
 import { geoConfigFromInsight } from "./geoConfigBuilder.js";
 import { buildGeoChartNextGlobalFilters, buildGeoChartNextLayers } from "./geoEmbeddingLayers.js";
+import { PluggableGeoPushpinChartNext } from "./PluggableGeoPushpinChartNext.js";
 
 /**
  * @alpha

@@ -2,7 +2,6 @@
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { DEFAULT_AREA_LAYER_NAME, DEFAULT_AREA_OUTLINE_LAYER_NAME } from "./constants.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
 import { CROSS_FILTER_UNSELECTED_OPACITY, SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
 import type {
@@ -12,6 +11,7 @@ import type {
     LineLayerSpecification,
 } from "../common/mapFacade.js";
 import { EMPTY_SEGMENT_VALUE } from "../pushpin/constants.js";
+import { DEFAULT_AREA_LAYER_NAME, DEFAULT_AREA_OUTLINE_LAYER_NAME } from "./constants.js";
 
 const SELECTION_OPACITY_EXPRESSION: ExpressionSpecification = [
     "case",

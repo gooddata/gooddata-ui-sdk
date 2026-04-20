@@ -29,7 +29,6 @@ import {
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IAxisConfig } from "@gooddata/sdk-ui-charts";
 
-import { getTranslation } from "./translations.js";
 import { messages } from "../../locales.js";
 import { SORT_DIR_DESC } from "../constants/sort.js";
 import { type IAvailableSortsGroup } from "../interfaces/SortConfig.js";
@@ -38,6 +37,7 @@ import {
     type IExtendedReferencePoint,
     type IVisualizationProperties,
 } from "../interfaces/Visualization.js";
+import { getTranslation } from "./translations.js";
 
 export function getAttributeSortItem(
     identifier: string,

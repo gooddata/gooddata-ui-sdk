@@ -4,7 +4,6 @@ import { action } from "storybook/actions";
 
 import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
-import { PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols } from "./base.js";
 import { scenariosFor } from "../../scenarioGroup.js";
 import {
     AmountMeasurePredicate,
@@ -13,6 +12,7 @@ import {
     SalesRepPredicate,
     WonMeasurePredicate,
 } from "../_infra/predicates.js";
+import { PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols } from "./base.js";
 
 export const drilling = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames("drilling")

@@ -1,12 +1,12 @@
 // (C) 2023-2026 GoodData Corporation
 
-import type { GenAIObjectType } from "./common.js";
-import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
 import type { DateAttributeGranularity } from "../base/dateGranularities.js";
 import type { IAttribute } from "../execution/attribute/index.js";
 import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
 import type { ObjRef } from "../objRef/index.js";
+import type { GenAIObjectType } from "./common.js";
+import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
 
 /**
  * Role of the chat interaction.

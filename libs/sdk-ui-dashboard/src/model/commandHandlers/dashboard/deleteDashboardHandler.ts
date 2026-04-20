@@ -7,7 +7,6 @@ import { invariant } from "ts-invariant";
 
 import { type ObjRef, areObjRefsEqual, idRef, uriRef } from "@gooddata/sdk-model";
 
-import { actionsToInitializeNewDashboard } from "./common/stateInitializers.js";
 import { type IDeleteDashboard } from "../../commands/dashboard.js";
 import { type IDashboardDeleted, dashboardDeleted } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -16,6 +15,7 @@ import { selectDateFilterConfig, selectSettings } from "../../store/config/confi
 import { executionResultsActions } from "../../store/executionResults/index.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { actionsToInitializeNewDashboard } from "./common/stateInitializers.js";
 
 function deleteDashboard(ctx: DashboardContext, dashboardRef: ObjRef): Promise<void> {
     const { backend, workspace } = ctx;

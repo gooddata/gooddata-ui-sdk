@@ -10,14 +10,14 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { AttributeFilterLoader } from "./loader.js";
-import { type AttributeFilterHandlerConfig } from "./types.js";
 import { type ISingleSelectAttributeFilterHandler } from "../types/attributeFilterHandler.js";
 import { type AttributeElementKey, type CallbackRegistration } from "../types/common.js";
 import {
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
 } from "../types/selectionHandler.js";
+import { AttributeFilterLoader } from "./loader.js";
+import { type AttributeFilterHandlerConfig } from "./types.js";
 
 /**
  * @internal

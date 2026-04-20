@@ -37,16 +37,16 @@ import {
 import { IconImage } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
-import { InlineColumnChart } from "./InlineColumnChart.js";
-import { InlineLineChart } from "./InlineLineChart.js";
-import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { useDrilling } from "../hooks/useDrilling.js";
 import { useFocusMng } from "../hooks/useFocusMng.js";
 import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
 import { MANUALLY_SIZED_MIN_WIDTH, useResizing } from "../hooks/useResizing.js";
 import { type IRepeaterChartProps } from "../publicTypes.js";
+import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
+import { InlineColumnChart } from "./InlineColumnChart.js";
+import { InlineLineChart } from "./InlineLineChart.js";
+import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);

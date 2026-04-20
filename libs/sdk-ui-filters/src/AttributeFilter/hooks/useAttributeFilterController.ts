@@ -17,14 +17,6 @@ import {
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { type AttributeFilterController } from "./types.js";
-import { useElementsFilterController } from "./useElementsFilterController.js";
-import { useFilterDetailRequestHandler } from "./useFilterDetailRequestHandler.js";
-import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
-import { useResolveFilterInput } from "./useResolveFilterInput.js";
-import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
-import { useTextFilterController } from "./useTextFilterController.js";
-import { type ITextFilterState, isTextStateInvalid } from "./useTextFilterInnerController.js";
 import {
     type AttributeFilterAvailableSelectionType,
     type AttributeFilterSelectionType,
@@ -42,6 +34,14 @@ import {
     type OnApplyCallbackType,
     type OnChangeCallbackType,
 } from "../types.js";
+import { type AttributeFilterController } from "./types.js";
+import { useElementsFilterController } from "./useElementsFilterController.js";
+import { useFilterDetailRequestHandler } from "./useFilterDetailRequestHandler.js";
+import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
+import { useResolveFilterInput } from "./useResolveFilterInput.js";
+import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
+import { useTextFilterController } from "./useTextFilterController.js";
+import { type ITextFilterState, isTextStateInvalid } from "./useTextFilterInnerController.js";
 
 /**
  * Properties of {@link useAttributeFilterController}

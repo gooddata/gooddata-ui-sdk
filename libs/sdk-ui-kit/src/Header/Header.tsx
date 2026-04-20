@@ -10,6 +10,10 @@ import { v4 as uuid } from "uuid";
 
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
+import { Icon } from "../Icon/Icon.js";
+import { Overlay } from "../Overlay/Overlay.js";
+import { Typography } from "../Typography/Typography.js";
+import { removeFromDom } from "../utils/domUtilities.js";
 import { addCssToStylesheet } from "./addCssToStylesheet.js";
 import {
     getItemActiveColor,
@@ -27,10 +31,6 @@ import { HeaderSearchButton } from "./HeaderSearchButton.js";
 import { HeaderSearchProvider } from "./headerSearchContext.js";
 import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
 import { type IAppHeaderProps, type IAppHeaderState, type IHeaderMenuItem } from "./typings.js";
-import { Icon } from "../Icon/Icon.js";
-import { Overlay } from "../Overlay/Overlay.js";
-import { Typography } from "../Typography/Typography.js";
-import { removeFromDom } from "../utils/domUtilities.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;

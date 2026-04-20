@@ -3,13 +3,13 @@
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { type ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 
-import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette } from "../../_infra/colors.js";
 import { AmountMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { LineChartTwoMeasuresWithTrendyBy } from "./base.js";
 
 const colorsAndPalette = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

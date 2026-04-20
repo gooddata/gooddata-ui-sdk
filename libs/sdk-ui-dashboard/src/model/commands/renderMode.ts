@@ -1,7 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type IDashboardCommand } from "./base.js";
 import { type RenderMode } from "../../types.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * @beta

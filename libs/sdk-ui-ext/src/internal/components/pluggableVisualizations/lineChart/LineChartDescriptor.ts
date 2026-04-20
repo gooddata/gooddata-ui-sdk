@@ -4,7 +4,6 @@ import { type IInsight } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent } from "@gooddata/sdk-ui";
 import { type ILineChartProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableLineChart } from "./PluggableLineChart.js";
 import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     type IVisualizationDescriptor,
@@ -32,6 +31,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil.js";
+import { PluggableLineChart } from "./PluggableLineChart.js";
 
 export class LineChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

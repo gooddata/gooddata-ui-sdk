@@ -1,4 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
+import { UnexpectedSdkError } from "../../../errors/GoodDataSdkError.js";
+import { type ITableDataValue } from "../interfaces/cells.js";
+import { type ITableColumnDefinition } from "../interfaces/columns.js";
+import { type IMappingOptions } from "../interfaces/mappingOptions.js";
+import { type ITableRowDefinition } from "../interfaces/rows.js";
 import { mapGrandTotalRowAttributeColumn } from "./grandTotalRow/attribute.js";
 import { mapGrandTotalRowGrandTotalColumn } from "./grandTotalRow/grandTotal.js";
 import { mapGrandTotalRowMeasureGroupHeaderColumn } from "./grandTotalRow/measureGroupHeader.js";
@@ -17,11 +23,6 @@ import { mapValueRowMeasureGroupHeaderColumn } from "./valueRow/measureGroupHead
 import { mapValueRowMeasureGroupValueColumn } from "./valueRow/measureGroupValue.js";
 import { mapValueRowSubtotalColumn } from "./valueRow/subtotal.js";
 import { mapValueRowValueColumn } from "./valueRow/value.js";
-import { UnexpectedSdkError } from "../../../errors/GoodDataSdkError.js";
-import { type ITableDataValue } from "../interfaces/cells.js";
-import { type ITableColumnDefinition } from "../interfaces/columns.js";
-import { type IMappingOptions } from "../interfaces/mappingOptions.js";
-import { type ITableRowDefinition } from "../interfaces/rows.js";
 
 /**
  * @internal

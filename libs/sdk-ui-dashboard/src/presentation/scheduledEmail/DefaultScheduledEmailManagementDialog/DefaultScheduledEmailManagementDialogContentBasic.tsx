@@ -20,7 +20,6 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 
-import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
 import { messages } from "../../../locales.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { DEFAULT_MAX_AUTOMATIONS } from "../../../model/react/useDashboardAutomations/constants.js";
@@ -35,6 +34,7 @@ import { selectCurrentUser } from "../../../model/store/user/userSelectors.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { isMobileView } from "../utils/responsive.js";
+import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

@@ -28,8 +28,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { exportDefinitionsListComparator } from "./comparator.js";
-import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 import { convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import {
     convertExportDefinitionMdObjectDefinition as convertExportDefinitionMdObjectDefinitionToBackend,
@@ -38,6 +36,8 @@ import {
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
+import { exportDefinitionsListComparator } from "./comparator.js";
+import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 
 export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefinitionsService {
     constructor(

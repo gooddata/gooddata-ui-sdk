@@ -12,13 +12,13 @@ import {
     useElementSize,
 } from "@gooddata/sdk-ui-kit";
 
+import { useSummaryDrivers } from "../hooks/useSummaryDrivers.js";
 import { type IKdaItem, type IKdaItemGroup } from "../internalTypes.js";
+import { useKdaState } from "../providers/KdaState.js";
+import { getSortedSignificantDriver } from "../tools/sortedKeyDrivers.js";
 import { driverColumn } from "./columns/driverColumn.js";
 import { driversCountColumn } from "./columns/driversCount.js";
 import { titleColumn } from "./columns/titleColumn.js";
-import { useSummaryDrivers } from "../hooks/useSummaryDrivers.js";
-import { useKdaState } from "../providers/KdaState.js";
-import { getSortedSignificantDriver } from "../tools/sortedKeyDrivers.js";
 
 export function KdaSummaryDrivers() {
     const { ref, width, height } = useElementSize();

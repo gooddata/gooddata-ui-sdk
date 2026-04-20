@@ -4,7 +4,6 @@ import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IRepeaterProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableRepeater } from "./PluggableRepeater.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     type IVisualizationDescriptor,
@@ -24,6 +23,7 @@ import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerato
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT } from "../constants.js";
+import { PluggableRepeater } from "./PluggableRepeater.js";
 
 export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

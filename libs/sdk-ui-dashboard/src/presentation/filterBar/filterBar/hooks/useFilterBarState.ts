@@ -2,13 +2,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-import { type CalculatedRows, CalculatedRowsDefault } from "./useRowsCalculator.js";
 import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/react/DashboardStoreProvider.js";
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { selectFilterBarExpanded } from "../../../../model/store/ui/uiSelectors.js";
+import { type CalculatedRows, CalculatedRowsDefault } from "./useRowsCalculator.js";
 
 //NOTE: This 1px is size of border bottom on filter bar
 const BorderWidth = 1;

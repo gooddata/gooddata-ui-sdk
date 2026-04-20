@@ -2,9 +2,9 @@
 
 import { type IPieChartProps, PieChart } from "@gooddata/sdk-ui-charts";
 
-import { PieChartWithSingleMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { PieChartWithSingleMeasureAndViewBy } from "./base.js";
 
 export const theming = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

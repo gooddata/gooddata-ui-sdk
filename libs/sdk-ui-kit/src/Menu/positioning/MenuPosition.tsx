@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { Fragment, type ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
-import { PositionedMenuContent } from "./PositionedMenuContent.js";
 import { type IMenuPositionConfig } from "../MenuSharedTypes.js";
 import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal.js";
+import { PositionedMenuContent } from "./PositionedMenuContent.js";
 
 export interface IMenuPositionProps extends IMenuPositionConfig {
     opened: boolean;

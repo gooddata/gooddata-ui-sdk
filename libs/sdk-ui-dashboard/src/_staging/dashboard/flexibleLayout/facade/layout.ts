@@ -1,15 +1,16 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import { type IDashboardLayout, type IDashboardLayoutSize, isDashboardLayout } from "@gooddata/sdk-model";
 
+import { type ILayoutItemPath } from "../../../../types.js";
 import {
     type IDashboardLayoutFacade,
     type IDashboardLayoutSectionFacade,
     type IDashboardLayoutSectionsFacade,
 } from "./interfaces.js";
 import { DashboardLayoutSectionsFacade } from "./sections.js";
-import { type ILayoutItemPath } from "../../../../types.js";
 
 /**
  * @alpha

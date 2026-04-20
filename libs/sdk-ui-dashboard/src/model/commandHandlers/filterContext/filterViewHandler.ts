@@ -14,7 +14,6 @@ import {
 } from "@gooddata/sdk-model";
 import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
-import { resetCrossFiltering } from "./common.js";
 import {
     type IApplyFilterView,
     type IDeleteFilterView,
@@ -47,6 +46,7 @@ import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.j
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
+import { resetCrossFiltering } from "./common.js";
 
 function createFilterView(
     ctx: DashboardContext,

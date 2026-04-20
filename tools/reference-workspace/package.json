@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.31.0-alpha.1",
+    "version": "11.31.0-alpha.2",
     "description": "GoodData SDK - Reference Workspace for tests",
     "license": "MIT",
     "author": "GoodData",
@@ -25,16 +25,16 @@
         "build": "tsgo -p tsconfig.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "clear-recordings": "rm -r src/recordings/uiTestScenarios",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "export-ref-workspace": "cd ../reference-workspace-mgmt && npm run export-ref-workspace",
-        "import-ref-workspace": "cd ../reference-workspace-mgmt && npm run import-ref-workspace",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
+        "import-ref-workspace": "cd ../reference-workspace-mgmt && npm run import-ref-workspace",
+        "lint": "oxlint . --type-aware --quiet && eslint src",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix",
         "refresh-md": "../reference-workspace-mgmt/bin/refresh-md.sh && npm run build",
         "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run format-write && npm run build",
-        "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
-        "lint": "oxlint . --type-aware --quiet && eslint src",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix"
+        "validate": "npm run dep-cruiser && npm run lint && npm run format-check"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",
@@ -59,7 +59,7 @@
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-sonarjs": "3.0.6",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3"

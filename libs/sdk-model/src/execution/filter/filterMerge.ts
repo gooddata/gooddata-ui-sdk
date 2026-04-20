@@ -3,6 +3,7 @@
 import { compact, groupBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
+import { objRefToString } from "../../objRef/index.js";
 import {
     type IAttributeFilter,
     type IDateFilter,
@@ -18,7 +19,6 @@ import {
     isNoopAllTimeDateFilter,
     isRankingFilter,
 } from "./index.js";
-import { objRefToString } from "../../objRef/index.js";
 
 type FilterByType = {
     attribute: IAttributeFilter[];

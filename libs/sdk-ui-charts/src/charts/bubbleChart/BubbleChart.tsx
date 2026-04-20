@@ -16,11 +16,11 @@ import {
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { CoreBubbleChart } from "./CoreBubbleChart.js";
 import { type IBucketChartProps } from "../../interfaces/chartProps.js";
 import { withChart } from "../_base/withChart.js";
 import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { pointyChartDimensions } from "../_commons/dimensions.js";
+import { CoreBubbleChart } from "./CoreBubbleChart.js";
 
 //
 // Internals

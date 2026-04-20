@@ -6,11 +6,11 @@ import { useIntl } from "react-intl";
 
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 
-import { type ICancelEditDialogProps } from "./types.js";
 import { cancelEditRenderMode } from "../../model/commands/renderMode.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { uiActions } from "../../model/store/ui/index.js";
 import { selectIsCancelEditModeDialogOpen } from "../../model/store/ui/uiSelectors.js";
+import { type ICancelEditDialogProps } from "./types.js";
 
 /**
  * @internal

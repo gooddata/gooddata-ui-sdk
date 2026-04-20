@@ -6,10 +6,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 
-import { useFilterActions, useFilterState } from "./FilterContext.js";
-import { StaticFilter } from "./StaticFilter.js";
 import { filterTags } from "../automation/testIds.js";
 import { useCatalogTags } from "../catalogResource/CatalogTagsContext.js";
+import { useFilterActions, useFilterState } from "./FilterContext.js";
+import { StaticFilter } from "./StaticFilter.js";
 
 export function FilterTags() {
     const intl = useIntl();

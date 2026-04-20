@@ -10,8 +10,6 @@ import type {
     Width,
 } from "@gooddata/sdk-code-schemas/v1";
 
-import { type FullFields, getFullField } from "./sharedUtils.js";
-import { isAttributeField, isMetricField } from "./typeGuards.js";
 import {
     type ColorMapping,
     type ColumnLocator,
@@ -20,6 +18,8 @@ import {
     type IChartFill,
 } from "../configs/types.js";
 import { getValueOrDefault } from "../configs/utils.js";
+import { type FullFields, getFullField } from "./sharedUtils.js";
+import { isAttributeField, isMetricField } from "./typeGuards.js";
 
 /** @public */
 export function loadColorMapping(mappings: Array<ColorMapping>): YAMLMap<keyof ListOfColors, Color> {

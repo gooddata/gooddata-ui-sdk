@@ -4,7 +4,6 @@ import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { validateExistingVisualizationSwitcherWidget } from "./validation/widgetValidations.js";
 import { getSizeInfo } from "../../../_staging/layout/sizing.js";
 import { type IAddVisualizationToVisualizationSwitcherWidgetContent } from "../../commands/visualizationSwitcher.js";
 import {
@@ -16,6 +15,7 @@ import { insightsActions } from "../../store/insights/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { validateExistingVisualizationSwitcherWidget } from "./validation/widgetValidations.js";
 
 export function* addVisualizationToSwticherWidgetContentHandler(
     ctx: DashboardContext,

@@ -9,16 +9,16 @@ import { useIntl } from "react-intl";
 import { type ICatalogAttribute, type ICatalogDateDataset, isCatalogAttribute } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, type ITab, isEscapeKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
-import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
-import { AttributeListItem, getAttributeListItemTitle } from "./AttributeListItem.js";
-import { DateAttributeListItem, getDateAttributeListItemTitle } from "./DateAttributeListItem.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsMultipleDateFilters } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableMultipleDateFilters } from "../../../../model/store/config/configSelectors.js";
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectAllInsightWidgets } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { type IDashboardAttributeFilterPlaceholderProps } from "../types.js";
+import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
+import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
+import { AttributeListItem, getAttributeListItemTitle } from "./AttributeListItem.js";
+import { DateAttributeListItem, getDateAttributeListItemTitle } from "./DateAttributeListItem.js";
 
 const dropdownAlignPoints = [
     {

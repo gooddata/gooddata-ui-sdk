@@ -9,16 +9,6 @@ import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import {
-    ConfigurationPanelContent,
-    type IConfigurationPanelContentProps,
-} from "./ConfigurationPanelContent.js";
-import {
-    hasColorMeasure,
-    hasSegmentAttribute,
-    hasSizeMeasure,
-    isPushpinClusteringEditable,
-} from "./geoInsightBucketUtils.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -42,6 +32,16 @@ import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSecti
 import { PushpinShapeControl } from "../configurationControls/PushpinShapeControl.js";
 import { PushpinSizeControl } from "../configurationControls/PushpinSizeControl.js";
 import { PushpinViewportControl } from "../configurationControls/PushpinViewportControl.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
+import {
+    hasColorMeasure,
+    hasSegmentAttribute,
+    hasSizeMeasure,
+    isPushpinClusteringEditable,
+} from "./geoInsightBucketUtils.js";
 
 interface IGeoPushpinConfigurationPanelProps extends IConfigurationPanelContentProps {
     getCurrentMapView?: () => ICurrentMapView;

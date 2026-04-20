@@ -4,9 +4,9 @@ import { type ReactNode, useMemo } from "react";
 
 import { type ISeparators, isAllValuesDashboardAttributeFilter } from "@gooddata/sdk-model";
 
-import { KdaStateProvider } from "./KdaState.js";
 import { type IKdaState } from "../internalTypes.js";
 import { type IKdaDefinition } from "../types.js";
+import { KdaStateProvider } from "./KdaState.js";
 
 export interface IKdaProps {
     children: ReactNode;

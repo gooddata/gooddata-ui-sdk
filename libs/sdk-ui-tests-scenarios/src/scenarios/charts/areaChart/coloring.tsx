@@ -2,10 +2,10 @@
 
 import { AreaChart, type IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
-import { AreaChartWithTwoMeasuresAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { AreaChartWithTwoMeasuresAndViewBy } from "./base.js";
 
 export const coloring = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

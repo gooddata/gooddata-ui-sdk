@@ -4,7 +4,6 @@ import { useCallback } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 import { triggerEvent } from "../commands/events.js";
 import {
     type DashboardEventBody,
@@ -12,6 +11,7 @@ import {
     isDashboardEventOrCustomDashboardEvent,
 } from "../events/base.js";
 import { type DashboardEvents } from "../events/index.js";
+import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 
 /**
  * Convenience hook for dispatching Dashboard events.

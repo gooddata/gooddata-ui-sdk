@@ -31,6 +31,12 @@ import {
 } from "@gooddata/sdk-model";
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "@gooddata/sdk-ui-ext";
 
+import {
+    type AlertAttribute,
+    type AlertMetric,
+    type AlertMetricComparator,
+    AlertMetricComparatorType,
+} from "../../types.js";
 import { createCronFromGranularity } from "./cron.js";
 import {
     type IMeasureFormatMap,
@@ -38,12 +44,6 @@ import {
     getMeasureFormat,
     getMeasureTitle,
 } from "./getters.js";
-import {
-    type AlertAttribute,
-    type AlertMetric,
-    type AlertMetricComparator,
-    AlertMetricComparatorType,
-} from "../../types.js";
 
 //alerts transformations
 

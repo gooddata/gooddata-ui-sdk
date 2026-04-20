@@ -1,7 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
+import { AG_GRID_DEFAULT_PROPS } from "../constants/agGridDefaultProps.js";
+import { type AgGridProps } from "../types/agGrid.js";
 import { useColumnSizingProps } from "./resizing/useColumnSizingProps.js";
 import { useVirtualColumnAutoResize } from "./resizing/useVirtualColumnAutoResize.js";
 import { useAccessibilityModeProps } from "./useAccessibilityProps.js";
@@ -21,8 +23,6 @@ import { usePivotingProps } from "./usePivotingProps.js";
 import { useSortingProps } from "./useSortingProps.js";
 import { useTextWrappingProps } from "./useTextWrappingProps.js";
 import { useThemeProps } from "./useThemeProps.js";
-import { AG_GRID_DEFAULT_PROPS } from "../constants/agGridDefaultProps.js";
-import { type AgGridProps } from "../types/agGrid.js";
 
 /**
  * Returns ag-grid props, applying all features to it.

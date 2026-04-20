@@ -1,8 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
-import { getWorkspacePermissionsMock } from "./mock.js";
 import { generateHeaderAccountMenuItems } from "../generateHeaderAccountMenuItems.js";
+import { getWorkspacePermissionsMock } from "./mock.js";
 
 describe("generateHeaderAccountMenuItems", () => {
     it("should return workspace link and logout item if feature flag is on and permission is available", () => {

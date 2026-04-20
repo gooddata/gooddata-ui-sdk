@@ -5,10 +5,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type ILoadingProps } from "@gooddata/sdk-ui";
 
-import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
-import { EMPTY_MUTATIONS } from "./utils.js";
 import { DefaultLoadingCustomizer } from "../loadingCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

@@ -1,15 +1,15 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
 import { type ChartCellImageSizing } from "@gooddata/sdk-ui-charts";
 
-import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { imageDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { DropdownControl } from "./DropdownControl.js";
 
 export interface IImageControlProps {
     pushData: (data: IPushData) => any;

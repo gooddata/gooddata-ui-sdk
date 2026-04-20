@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -23,10 +23,10 @@ import {
 } from "@gooddata/sdk-model";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 
-import { type IInsightToPropConversion, bucketConversion, insightConversion } from "./convertor.js";
 import { removeUseless } from "../../removeUseless.js";
 import { createSorts } from "../../sort.js";
 import { type PropMeta } from "../types.js";
+import { type IInsightToPropConversion, bucketConversion, insightConversion } from "./convertor.js";
 
 function namedSdkModelPropMetaFor(name: string, propType: PropMeta["cardinality"]): PropMeta {
     return {

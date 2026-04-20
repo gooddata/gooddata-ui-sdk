@@ -5,9 +5,6 @@ import { compact, keyBy } from "lodash-es";
 import { type Saga, type SagaIterator } from "redux-saga";
 import { actionChannel, call, spawn, take } from "redux-saga/effects";
 
-import { getDashboardContext } from "./contexts.js";
-import { dispatchDashboardEvent } from "./eventDispatcher.js";
-import { type IDashboardQueryService } from "./queryService.js";
 import {
     internalQueryErrorOccurred,
     isDashboardQueryFailed,
@@ -17,6 +14,9 @@ import {
 } from "../../events/general.js";
 import { type IDashboardQuery } from "../../queries/base.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { getDashboardContext } from "./contexts.js";
+import { dispatchDashboardEvent } from "./eventDispatcher.js";
+import { type IDashboardQueryService } from "./queryService.js";
 
 /**
  * Query processing component has multiple pieces that need to be integrated into the redux store.

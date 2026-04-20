@@ -85,6 +85,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { createMockGeoService } from "../geoService.js";
 import { RecordedAttributeHierarchiesService } from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
 import { RecordedCatalogFactory } from "./catalog.js";
@@ -100,7 +101,6 @@ import {
     recordedAccessControlFactory,
     recordedUserGroupsQuery,
 } from "./userManagement.js";
-import { createMockGeoService } from "../geoService.js";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",

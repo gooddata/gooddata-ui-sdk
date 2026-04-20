@@ -2,10 +2,6 @@
 
 import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
-import {
-    ColumnChartWithSingleMeasureAndViewByAndStackMultipleItems,
-    ColumnChartWithTwoMeasuresAndViewBy,
-} from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
@@ -15,6 +11,10 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import {
+    ColumnChartWithSingleMeasureAndViewByAndStackMultipleItems,
+    ColumnChartWithTwoMeasuresAndViewBy,
+} from "./base.js";
 
 const legendScenarios = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

@@ -1,10 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { compact } from "lodash-es";
 import { useIntl } from "react-intl";
 
+import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
+import { ContentDivider } from "../../ContentDivider.js";
 import { AdminInformationMessage } from "./AdminInformationMessage.js";
 import { SharedObjectLockControl } from "./SharedObjectLockControl.js";
 import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl.js";
@@ -12,8 +14,6 @@ import { ShareGranteeContent } from "./ShareGranteeContent.js";
 import { ShareLink } from "./ShareLink.js";
 import { type IShareGranteeBaseProps } from "./types.js";
 import { ADD_GRANTEE_ID } from "./utils.js";
-import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
-import { ContentDivider } from "../../ContentDivider.js";
 
 /**
  * @internal

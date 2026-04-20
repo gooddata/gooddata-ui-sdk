@@ -14,8 +14,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { resolveAndRegisterDisplayFormMetadata } from "./resolveDisplayFormMetadata.js";
-import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 import { type IAddTextAttributeFilter } from "../../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectBackendCapabilities } from "../../../store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -31,6 +29,8 @@ import { type DashboardContext } from "../../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../../types/sagas.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";
+import { resolveAndRegisterDisplayFormMetadata } from "./resolveDisplayFormMetadata.js";
+import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 
 export function* addTextAttributeFilterHandler(
     ctx: DashboardContext,

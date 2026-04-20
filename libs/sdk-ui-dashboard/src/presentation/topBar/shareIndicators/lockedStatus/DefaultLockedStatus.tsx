@@ -2,11 +2,11 @@
 
 import { type ReactElement } from "react";
 
-import { LockedStatusIndicator } from "./LockedStatusIndicator.js";
-import { type ILockedStatusProps } from "./types.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import { selectCanManageAnalyticalDashboard } from "../../../../model/store/permissions/permissionsSelectors.js";
+import { LockedStatusIndicator } from "./LockedStatusIndicator.js";
+import { type ILockedStatusProps } from "./types.js";
 
 /**
  * @alpha

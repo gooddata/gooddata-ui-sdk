@@ -1,13 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import ora from "ora";
 
 import { type IDashboard, type IDashboardDefinition, idRef } from "@gooddata/sdk-model";
 
-import { type LinkCmdActionConfig, getLinkCmdActionConfig } from "./actionConfig.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
+import { type LinkCmdActionConfig, getLinkCmdActionConfig } from "./actionConfig.js";
 
 function printUseConfigSummary({
     hostname,

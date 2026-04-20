@@ -34,21 +34,6 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { LOADING_HEIGHT, LoadingMask } from "@gooddata/sdk-ui-kit";
 
-import {
-    AttributeFilterParentFilteringProvider,
-    useAttributeFilterParentFiltering,
-} from "./AttributeFilterParentFilteringContext.js";
-import {
-    CustomAttributeFilterDropdownActions,
-    CustomConfigureAttributeFilterDropdownActions,
-} from "./CustomDropdownActions.js";
-import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
-import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
-import { mergeDashboardAttributeFilterMetadata } from "./mergeDashboardAttributeFilterMetadata.js";
-import { type IDashboardAttributeFilterProps } from "./types.js";
-import { useAttributeFilterConfigTexts } from "./useAttributeFilterConfigTexts.js";
-import { useDependentDateFilters } from "./useDependentDateFilters.js";
-import { useParentFilters } from "./useParentFilters.js";
 import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
@@ -75,6 +60,21 @@ import {
     selectPreloadedAttributesWithReferences,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { getVisibilityIcon } from "../utils.js";
+import {
+    AttributeFilterParentFilteringProvider,
+    useAttributeFilterParentFiltering,
+} from "./AttributeFilterParentFilteringContext.js";
+import {
+    CustomAttributeFilterDropdownActions,
+    CustomConfigureAttributeFilterDropdownActions,
+} from "./CustomDropdownActions.js";
+import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
+import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
+import { mergeDashboardAttributeFilterMetadata } from "./mergeDashboardAttributeFilterMetadata.js";
+import { type IDashboardAttributeFilterProps } from "./types.js";
+import { useAttributeFilterConfigTexts } from "./useAttributeFilterConfigTexts.js";
+import { useDependentDateFilters } from "./useDependentDateFilters.js";
+import { useParentFilters } from "./useParentFilters.js";
 
 /**
  * Default implementation of the attribute filter to use on the dashboard's filter bar.

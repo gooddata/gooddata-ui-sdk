@@ -9,8 +9,8 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { createAttributeRef, getAttributeMetadata, getLatitudeAttribute } from "./geoAttributeHelper.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
+import { createAttributeRef, getAttributeMetadata, getLatitudeAttribute } from "./geoAttributeHelper.js";
 
 /**
  * Creates virtual buckets (latitude, longitude) based on controls.

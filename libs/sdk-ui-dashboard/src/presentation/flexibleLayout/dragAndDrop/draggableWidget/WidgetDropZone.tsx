@@ -1,8 +1,8 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { WidgetDropZoneBox } from "./WidgetDropZoneBox.js";
 import { hasParent } from "../../../../_staging/layout/coordinates.js";
 import { type ILayoutItemPath } from "../../../../types.js";
+import { WidgetDropZoneBox } from "./WidgetDropZoneBox.js";
 
 export type WidgetDropZoneProps = {
     isLastInSection: boolean;

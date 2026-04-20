@@ -8,13 +8,6 @@ import { type IAttribute, type IInsight, type IInsightDefinition } from "@goodda
 import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 import {
-    expectedInsightDefDepartment,
-    expectedInsightDefRegion,
-    intersection,
-    sourceInsightDef,
-    targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
-import {
     type IBucketOfFun,
     type IReferencePoint,
     type IVisConstruct,
@@ -41,6 +34,13 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableHeatmap } from "../PluggableHeatmap.js";
+import {
+    expectedInsightDefDepartment,
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock.js";
 
 const { Department, Region } = ReferenceMd;
 

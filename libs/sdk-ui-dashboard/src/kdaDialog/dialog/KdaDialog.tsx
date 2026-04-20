@@ -6,10 +6,8 @@ import cx from "classnames";
 
 import { Dialog, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
-import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
-import { KdaDialogFloatingStatusBar, getFloatingStatus } from "./KdaDialogFloatingStatusBar.js";
-import { KdaDialogSections } from "./KdaDialogSections.js";
 import { KdaContent } from "../components/KdaContent.js";
+import { KdaErrorComponent, KdaErrorType } from "../components/KdaErrorComponent.js";
 import { KdaFooter } from "../components/KdaFooter.js";
 import { KdaHeader } from "../components/KdaHeader.js";
 import { FiltersBar } from "../composition/FiltersBar.js";
@@ -21,10 +19,12 @@ import { KDA_DIALOG_OVERS_Z_INDEX } from "../const.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { type IKdaDialogProps } from "../types.js";
 import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
+import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";
 import { useValidAttributes } from "./hooks/useValidAttributes.js";
 import { KdaDialogControls } from "./KdaDialogControls.js";
-import { KdaErrorComponent, KdaErrorType } from "../components/KdaErrorComponent.js";
+import { KdaDialogFloatingStatusBar, getFloatingStatus } from "./KdaDialogFloatingStatusBar.js";
+import { KdaDialogSections } from "./KdaDialogSections.js";
 
 const overlayController = OverlayController.getInstance(KDA_DIALOG_OVERS_Z_INDEX);
 

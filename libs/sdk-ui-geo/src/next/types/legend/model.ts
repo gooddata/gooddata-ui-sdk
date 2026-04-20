@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type LegendMessageId, type LegendMessageValues } from "./messages.js";
 import { type GeoLayerType } from "../layers/index.js";
+import { type LegendMessageId, type LegendMessageValues } from "./messages.js";
 
 /**
  * Legend group types supported by multi-layer legend.

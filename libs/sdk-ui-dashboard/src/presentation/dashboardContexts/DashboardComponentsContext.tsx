@@ -11,25 +11,6 @@ import {
 } from "@gooddata/sdk-ui";
 
 import {
-    type AttributeFilterComponentProvider,
-    type DashboardContentComponentProvider,
-    type DateFilterComponentProvider,
-    type DrillDialogExportDropdownComponentProvider,
-    type FilterGroupComponentProvider,
-    type InsightBodyComponentProvider,
-    type InsightComponentProvider,
-    type InsightMenuButtonComponentProvider,
-    type InsightMenuComponentProvider,
-    type InsightMenuTitleComponentProvider,
-    type RichTextComponentProvider,
-    type RichTextMenuComponentProvider,
-    type RichTextMenuTitleComponentProvider,
-    type ShowAsTableButtonComponentProvider,
-    type VisualizationSwitcherComponentProvider,
-    type VisualizationSwitcherToolbarComponentProvider,
-    type WidgetComponentProvider,
-} from "./types.js";
-import {
     type CustomAlertingDialogComponent,
     type CustomAlertingManagementDialogComponent,
 } from "../alerting/types.js";
@@ -59,6 +40,25 @@ import { type CustomMenuButtonComponent } from "../topBar/menuButton/types.js";
 import { type CustomTitleComponent } from "../topBar/title/types.js";
 import { type CustomTopBarComponent } from "../topBar/topBar/types.js";
 import { type CustomDashboardLayoutComponent } from "../widget/dashboardLayout/types.js";
+import {
+    type AttributeFilterComponentProvider,
+    type DashboardContentComponentProvider,
+    type DateFilterComponentProvider,
+    type DrillDialogExportDropdownComponentProvider,
+    type FilterGroupComponentProvider,
+    type InsightBodyComponentProvider,
+    type InsightComponentProvider,
+    type InsightMenuButtonComponentProvider,
+    type InsightMenuComponentProvider,
+    type InsightMenuTitleComponentProvider,
+    type RichTextComponentProvider,
+    type RichTextMenuComponentProvider,
+    type RichTextMenuTitleComponentProvider,
+    type ShowAsTableButtonComponentProvider,
+    type VisualizationSwitcherComponentProvider,
+    type VisualizationSwitcherToolbarComponentProvider,
+    type WidgetComponentProvider,
+} from "./types.js";
 
 /**
  * @internal

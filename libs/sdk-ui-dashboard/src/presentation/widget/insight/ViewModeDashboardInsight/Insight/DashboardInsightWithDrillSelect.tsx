@@ -2,9 +2,9 @@
 
 import { type ReactElement } from "react";
 
-import { DashboardInsight } from "./DashboardInsight.js";
 import { WithDrillSelect } from "../../../../drill/DrillSelect/WithDrillSelect.js";
 import { type IDashboardInsightProps } from "../../types.js";
+import { DashboardInsight } from "./DashboardInsight.js";
 
 /**
  * @internal

@@ -15,19 +15,19 @@ import {
     convertDrillableItemsToPredicates,
 } from "@gooddata/sdk-ui";
 
-import { GeoChartLegendOverlay } from "./multiLayerLegend/GeoChartLegendOverlay.js";
-import { type LegendMessageFormatter, legendMessagesById } from "./multiLayerLegend/legendMessages.js";
 import { useGeoChartProps } from "../context/GeoChartContext.js";
 import { useGeoLayers } from "../context/GeoLayersContext.js";
 import { MapController } from "../map/MapController.js";
-import { computeViewportFromConfig } from "../map/viewport/viewportResolution.js";
 import { computeCombinedViewport } from "../map/viewport.js";
+import { computeViewportFromConfig } from "../map/viewport/viewportResolution.js";
 import { PushDataSync } from "../pushData/PushDataSync.js";
 import {
     getMapCanvasInstructionMessageId,
     getMapCanvasRuntimeCapabilities,
     mapCanvasInstructionMessagesById,
 } from "../utils/mapCanvasAccessibility.js";
+import { GeoChartLegendOverlay } from "./multiLayerLegend/GeoChartLegendOverlay.js";
+import { type LegendMessageFormatter, legendMessagesById } from "./multiLayerLegend/legendMessages.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 const Measure = defaultImport(ReactMeasure);

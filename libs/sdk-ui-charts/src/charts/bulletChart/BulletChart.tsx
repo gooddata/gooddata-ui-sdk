@@ -18,7 +18,6 @@ import {
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { CoreBulletChart } from "./CoreBulletChart.js";
 import { type IBucketChartProps } from "../../interfaces/chartProps.js";
 import { ViewByAttributesLimit } from "../../interfaces/limits.js";
 import { withChart } from "../_base/withChart.js";
@@ -26,6 +25,7 @@ import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { stackedChartDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 import { truncate } from "../_commons/truncate.js";
+import { CoreBulletChart } from "./CoreBulletChart.js";
 
 //
 // Internals

@@ -20,9 +20,9 @@ import {
     type LlmEndpointTestResults,
 } from "@gooddata/sdk-model";
 
-import { LlmEndpointsQuery } from "./llmEndpointsQuery.js";
 import { convertLlmEndpoint } from "../../convertors/fromBackend/llmEndpointConvertor.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+import { LlmEndpointsQuery } from "./llmEndpointsQuery.js";
 
 export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpointsService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}

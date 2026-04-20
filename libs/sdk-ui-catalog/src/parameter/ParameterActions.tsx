@@ -7,14 +7,14 @@ import { defineMessages, useIntl } from "react-intl";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import { ParameterDeleteDialog } from "./ParameterDeleteDialog.js";
-import { ParameterDuplicateDialog } from "./ParameterDuplicateDialog.js";
-import { ParameterEditDialog } from "./ParameterEditDialog.js";
 import { catalogDetailActionDelete, catalogDetailActionDuplicate } from "../automation/testIds.js";
 import type { EditHandlerEvent, ICatalogDetailAction } from "../catalogDetail/types.js";
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
 import { isCatalogItemParameter } from "../catalogItem/guards.js";
 import type { ICatalogItem, ICatalogItemParameter, ICatalogItemRef } from "../catalogItem/types.js";
+import { ParameterDeleteDialog } from "./ParameterDeleteDialog.js";
+import { ParameterDuplicateDialog } from "./ParameterDuplicateDialog.js";
+import { ParameterEditDialog } from "./ParameterEditDialog.js";
 
 const messages = defineMessages({
     parameterDuplicate: { id: "analyticsCatalog.parameter.dialog.edit.duplicate" },

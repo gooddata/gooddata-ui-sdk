@@ -7,6 +7,8 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type RecordedBackendConfig, recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { idRef } from "@gooddata/sdk-model";
 
+import { type IGranularGranteeUser, type IShareDialogBaseProps } from "../types.js";
+import { useShareDialogBase } from "../useShareDialogBase.js";
 import {
     defaultUser,
     granularGranteeGroup,
@@ -15,8 +17,6 @@ import {
     granularGranteeUser2,
     granularGranteesAccess,
 } from "./GranteeMock.js";
-import { type IGranularGranteeUser, type IShareDialogBaseProps } from "../types.js";
-import { useShareDialogBase } from "../useShareDialogBase.js";
 
 const recordedBackendConfig: RecordedBackendConfig = {
     userManagement: {

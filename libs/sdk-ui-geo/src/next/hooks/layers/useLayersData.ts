@@ -14,11 +14,11 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
-import { processSettledLayerResults } from "./processSettledLayerResults.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import { type IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { createExecutionsFingerprint, createLayersStructureFingerprint } from "../../utils/fingerprint.js";
+import { processSettledLayerResults } from "./processSettledLayerResults.js";
 
 /**
  * Result of loading all layer execution data in parallel.

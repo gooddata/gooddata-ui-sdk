@@ -32,6 +32,11 @@ import {
     useHeaderSearch,
 } from "@gooddata/sdk-ui-kit";
 
+import { semanticSearchInput } from "../automation/testIds.js";
+import { useSearchIds } from "../hooks/useSearchIds.js";
+import { useSemanticSearch } from "../hooks/useSemanticSearch.js";
+import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
+import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "./allowedRelationshipTypes.js";
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
 import { buildSemanticSearchTreeViewItems } from "./itemsBuilder.js";
@@ -39,11 +44,6 @@ import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearc
 import { getItemTitle } from "./LeveledSearchTreeViewItem.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { SearchNoResults } from "./SearchNoResults.js";
-import { semanticSearchInput } from "../automation/testIds.js";
-import { useSearchIds } from "../hooks/useSearchIds.js";
-import { useSemanticSearch } from "../hooks/useSemanticSearch.js";
-import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
-import { IntlWrapper } from "../localization/IntlWrapper.js";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.

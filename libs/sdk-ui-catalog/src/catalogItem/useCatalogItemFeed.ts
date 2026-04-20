@@ -12,6 +12,13 @@ import type {
     IParametersQueryResult,
 } from "@gooddata/sdk-backend-spi";
 
+import { type AsyncStatus } from "../async/types.js";
+import { useFilterState, useQualityFilter } from "../filter/FilterContext.js";
+import { useMounted } from "../hooks/useMounted.js";
+import { ObjectTypes } from "../objectType/constants.js";
+import { type ObjectType } from "../objectType/types.js";
+import { useIsParametersEnabled } from "../parameter/gate.js";
+import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
 import { convertEntityToCatalogItem } from "./converter.js";
 import {
     getAttributesQuery,
@@ -24,13 +31,6 @@ import {
 } from "./query.js";
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
 import { useCatalogItemRemoveCallback, useCatalogItemUpdateCallback } from "./useCatalogItemMutations.js";
-import { type AsyncStatus } from "../async/types.js";
-import { useFilterState, useQualityFilter } from "../filter/FilterContext.js";
-import { useMounted } from "../hooks/useMounted.js";
-import { ObjectTypes } from "../objectType/constants.js";
-import { type ObjectType } from "../objectType/types.js";
-import { useIsParametersEnabled } from "../parameter/gate.js";
-import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
 
 type FeedEndpoint = {
     type: ObjectType;

@@ -9,13 +9,13 @@ import { describe, expect, it } from "vitest";
 import { type DataViewRequests, RecordingFiles, type ScenarioDescriptor } from "@gooddata/mock-handling";
 import { type IInsight, type IInsightDefinition, defFingerprint, insightTitle } from "@gooddata/sdk-model";
 
-import { storeDirectoryFor } from "./store.js";
-import { readJsonSync, writeAsJsonSync } from "./utils.js";
 import { type IScenario, allScenarios } from "../../src/index.js";
 import { type ChartInteractions } from "../_infra/backendWithCapturing.js";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory.js";
 import { mountChartAndCaptureNormalized } from "../_infra/render.js";
 import { mountInsight } from "../_infra/renderPlugVis.js";
+import { storeDirectoryFor } from "./store.js";
+import { readJsonSync, writeAsJsonSync } from "./utils.js";
 
 type AllScenariosType = [string, IScenario<any>];
 

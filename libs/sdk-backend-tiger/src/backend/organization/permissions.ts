@@ -17,11 +17,11 @@ import {
     type OrganizationPermissionAssignment,
 } from "@gooddata/sdk-model";
 
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import {
     convertDataSourcePermissionsAssignment,
     convertWorkspacePermissionsAssignment,
 } from "./fromBackend/userConvertor.js";
-import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 const fetchOrganizationPermissions = async (client: ITigerClientBase, userId: string) => {
     return LayoutApi_GetOrganizationPermissions(client.axios, client.basePath)

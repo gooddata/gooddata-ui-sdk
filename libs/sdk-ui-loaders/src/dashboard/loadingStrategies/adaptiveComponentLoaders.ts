@@ -1,9 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { type DashboardContext, type IDashboardEngine } from "@gooddata/sdk-ui-dashboard";
 
+import {
+    type IDashboardPluginsLoaderOptions,
+    type LoadedPlugin,
+    type ModuleFederationIntegration,
+} from "../types.js";
 import {
     dynamicDashboardBeforeLoad,
     dynamicDashboardEngineLoader,
@@ -14,11 +20,6 @@ import {
     noopDashboardPluginLoader,
     staticDashboardEngineLoader,
 } from "./staticComponentLoaders.js";
-import {
-    type IDashboardPluginsLoaderOptions,
-    type LoadedPlugin,
-    type ModuleFederationIntegration,
-} from "../types.js";
 
 /**
  * Adaptive loader will check if there are any plugins linked with the dashboard. If so, it will use the

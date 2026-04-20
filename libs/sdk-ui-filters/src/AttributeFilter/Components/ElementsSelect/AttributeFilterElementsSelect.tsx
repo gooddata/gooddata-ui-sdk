@@ -8,13 +8,13 @@ import { type IAttributeElement } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 import { InvertableSelectVirtualised, UiAutofocus, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { type IAttributeFilterElementsSelectProps } from "./types.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { BACKEND_PAGE_SIZE, MAX_SELECTION_SIZE } from "../../hooks/constants.js";
 import { useAttributeFilterDropdownHeader } from "../../hooks/useAttributeFilterDropdownHeader.js";
 import { getElementKey, getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 import { AttributeFilterDropdownHeader } from "../Dropdown/AttributeFilterDropdownHeader.js";
+import { type IAttributeFilterElementsSelectProps } from "./types.js";
 
 const ITEM_HEIGHT = 28;
 const MOBILE_LIST_ITEM_HEIGHT = 40;

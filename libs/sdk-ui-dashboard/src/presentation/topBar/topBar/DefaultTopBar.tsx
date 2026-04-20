@@ -2,8 +2,6 @@
 
 import { type ReactElement, useCallback } from "react";
 
-import { HiddenTopBar } from "./HiddenTopBar.js";
-import { type ITopBarProps } from "./types.js";
 import { renameDashboard } from "../../../model/commands/dashboard.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
@@ -30,6 +28,8 @@ import { useDefaultMenuItems } from "../menuButton/useDefaultMenuItems.js";
 import { DefaultLockedStatus } from "../shareIndicators/lockedStatus/DefaultLockedStatus.js";
 import { DefaultShareStatus } from "../shareIndicators/shareStatus/DefaultShareStatus.js";
 import { Title } from "../title/Title.js";
+import { HiddenTopBar } from "./HiddenTopBar.js";
+import { type ITopBarProps } from "./types.js";
 
 /**
  * @alpha

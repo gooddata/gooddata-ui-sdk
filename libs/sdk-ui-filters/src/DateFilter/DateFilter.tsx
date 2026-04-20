@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
+import { type IFilterButtonCustomIcon, type VisibilityMode } from "../shared/interfaces/index.js";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { type IFilterConfigurationProps } from "./DateFilterBody/types.js";
 import { type IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
@@ -26,7 +27,6 @@ import {
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
 import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 import { validateFilterOption } from "./validation/OptionValidation.js";
-import { type IFilterButtonCustomIcon, type VisibilityMode } from "../shared/interfaces/index.js";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.

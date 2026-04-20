@@ -7,12 +7,12 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { type ITheme } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { customItemsMock, defaultItemMock } from "./mocks.js";
 import { useMediaQuery } from "../../responsive/useMediaQuery.js";
 import {
     type IStylingSettingWidgetProps,
     StylingSettingWidget,
 } from "../StylingSettingWidget/StylingSettingWidget.js";
+import { customItemsMock, defaultItemMock } from "./mocks.js";
 
 vi.mock("../../responsive/useMediaQuery.js", () => ({
     useMediaQuery: vi.fn(() => false),

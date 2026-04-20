@@ -6,6 +6,7 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
+import { loadElements as mockLoadElements } from "../internal/redux/elements/loadElements.js";
 import {
     limitingAttributeFilters,
     limitingDateFilters,
@@ -15,7 +16,6 @@ import {
     positiveAttributeFilterDefaultDF,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
-import { loadElements as mockLoadElements } from "../internal/redux/elements/loadElements.js";
 
 vi.mock("../internal/redux/elements/loadElements.js", async () => {
     const original = await vi.importActual("../internal/redux/elements/loadElements.js");

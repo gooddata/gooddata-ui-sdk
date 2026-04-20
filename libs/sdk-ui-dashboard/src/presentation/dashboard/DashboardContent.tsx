@@ -2,8 +2,8 @@
 
 import { type ReactElement, useMemo } from "react";
 
-import { type IDashboardProps } from "./types.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
+import { type IDashboardProps } from "./types.js";
 
 /**
  * @internal

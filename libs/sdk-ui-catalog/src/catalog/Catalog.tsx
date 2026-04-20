@@ -8,7 +8,6 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { LoadingMask } from "@gooddata/sdk-ui-kit";
 
-import { Layout } from "./Layout.js";
 import type { OpenHandlerEvent } from "../catalogDetail/types.js";
 import { CatalogFeedProvider } from "../catalogItem/CatalogFeedContext.js";
 import { type ICatalogItemRef } from "../catalogItem/types.js";
@@ -24,6 +23,7 @@ import { QualityScoreCard } from "../quality/QualityScoreCard.js";
 import { FullTextSearchInput } from "../search/FullTextSearchInput.js";
 import { CatalogTabs } from "../tabs/CatalogTabs.js";
 import { useIsCatalogTrendingObjectsEnabled } from "../tabs/gate.js";
+import { Layout } from "./Layout.js";
 
 type Props = {
     backend: IAnalyticalBackend;

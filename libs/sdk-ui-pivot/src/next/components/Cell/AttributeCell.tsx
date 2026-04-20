@@ -12,7 +12,6 @@ import {
     isTableTotalHeaderValue,
 } from "@gooddata/sdk-ui";
 
-import { ImageCell } from "./ImageCell.js";
 import { getAttributeColIds, shouldGroupAttribute } from "../../features/columns/shared.js";
 import { e } from "../../features/styling/bem.js";
 import {
@@ -20,6 +19,7 @@ import {
     getPivotCellTestIdPropsFromCellTypes,
 } from "../../testing/dataTestIdGenerators.js";
 import { type CellTypes } from "../../types/cellRendering.js";
+import { ImageCell } from "./ImageCell.js";
 
 const IMAGE_LABEL_TYPE: AttributeDisplayFormType = "GDC.image";
 

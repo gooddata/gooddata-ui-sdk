@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createContext, useContext } from "react";
 
-import { type IComponentLabelsProviderProps } from "./types.js";
 import { type IShareDialogLabels } from "../types.js";
+import { type IComponentLabelsProviderProps } from "./types.js";
 
 const defaultLabels: IShareDialogLabels = {
     accessTypeLabel: "access-type-label",

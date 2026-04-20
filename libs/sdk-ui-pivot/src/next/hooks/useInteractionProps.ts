@@ -25,7 +25,6 @@ import {
 
 import { useCurrentDataView } from "../context/CurrentDataViewContext.js";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
-import { useSyncDrillableItems } from "./drilling/useSyncDrillableItems.js";
 import { createCustomDrillEvent } from "../features/drilling/events.js";
 import { createDrillIntersection } from "../features/drilling/intersection.js";
 import { isCellDrillable } from "../features/drilling/isDrillable.js";
@@ -36,6 +35,7 @@ import {
     type AgGridProps,
 } from "../types/agGrid.js";
 import { type AgGridRowData } from "../types/internal.js";
+import { useSyncDrillableItems } from "./drilling/useSyncDrillableItems.js";
 
 /**
  * Keyboard navigation action map for pivot table

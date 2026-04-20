@@ -23,15 +23,6 @@ import {
     isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { useDependentDateFiltersConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDependentDateFiltersConfiguration.js";
-import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration.js";
-import { useLimitingItemsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useLimitingItemsConfiguration.js";
-import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useModeConfiguration.js";
-import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration.js";
-import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
-import { useSelectionTypeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionTypeConfiguration.js";
-import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
-import { mergeDashboardAttributeFilterMetadata } from "./mergeDashboardAttributeFilterMetadata.js";
 import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { replaceAttributeFilterItemSelection } from "../../../model/commands/filters.js";
@@ -43,6 +34,15 @@ import {
     selectFilterContextDateFiltersWithDimension,
     selectOtherContextAttributeFilterItems,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { useDependentDateFiltersConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDependentDateFiltersConfiguration.js";
+import { useDisplayFormConfiguration } from "./dashboardDropdownBody/configuration/hooks/useDisplayFormConfiguration.js";
+import { useLimitingItemsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useLimitingItemsConfiguration.js";
+import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useModeConfiguration.js";
+import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration.js";
+import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
+import { useSelectionTypeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionTypeConfiguration.js";
+import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
+import { mergeDashboardAttributeFilterMetadata } from "./mergeDashboardAttributeFilterMetadata.js";
 
 /**
  * @internal

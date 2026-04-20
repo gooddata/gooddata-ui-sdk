@@ -13,6 +13,9 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/internal";
 import { AddGranteeBase, ComponentLabelsProvider, type IAffectedSharedObject } from "@gooddata/sdk-ui-kit";
 
+import { BrowserAlias, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
+import { useResetFocus } from "../../../utils/useResetFocus.js";
+import { wrapWithTheme } from "../../themeWrapper.js";
 import {
     current,
     defaultUser,
@@ -23,9 +26,6 @@ import {
     user,
 } from "./GranteeMock.js";
 import { LabelsMock } from "./LabelsMock.js";
-import { BrowserAlias, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
-import { useResetFocus } from "../../../utils/useResetFocus.js";
-import { wrapWithTheme } from "../../themeWrapper.js";
 
 const sharedObject: IAffectedSharedObject = {
     ref: idRef("object"),

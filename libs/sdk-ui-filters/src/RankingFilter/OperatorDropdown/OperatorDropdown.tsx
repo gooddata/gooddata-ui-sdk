@@ -8,9 +8,9 @@ import { useIntl } from "react-intl";
 import { type RankingFilterOperator } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 import { messages } from "../../locales.js";
 import { type IOperatorDropdownItem } from "../types.js";
+import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 
 const operatorItems = [
     { value: "TOP", translationId: messages["top"].id },

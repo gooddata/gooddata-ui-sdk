@@ -4,11 +4,11 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { modifyMeasure } from "@gooddata/sdk-model";
 import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
-import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
-import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals.js";
 import { scenariosFor } from "../../scenarioGroup.js";
 import { GermanNumberFormat } from "../_infra/formatting.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
+import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
+import { PivotTableWithSingleMeasureAndGrandTotal, PivotTableWithTwoMeasuresAndTotals } from "./totals.js";
 
 const MeasureWithCustomFormat = modifyMeasure(ReferenceMd.Amount, (m) =>
     m.format("[backgroundColor=ffff00][green]#,##0.00 €").defaultLocalId(),

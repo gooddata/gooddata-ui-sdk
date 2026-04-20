@@ -4,16 +4,16 @@ import { type IGeoJsonFeature, geoFeatureId } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
-import { getSelectedIntersections, isFeatureSelected } from "../common/selectionUtils.js";
-import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
-import { SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
-import { getAreaAreaColors } from "./coloring/palette.js";
-import { DEFAULT_AREA_FILL_COLOR } from "./constants.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
 import { type IAreaGeoData } from "../../types/geoData/area.js";
+import { SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
+import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
+import { getSelectedIntersections, isFeatureSelected } from "../common/selectionUtils.js";
 import { EMPTY_SEGMENT_VALUE } from "../pushpin/constants.js";
 import type { IAreaLayerOutput, IGeoAdapterContext } from "../registry/adapterTypes.js";
+import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
+import { getAreaAreaColors } from "./coloring/palette.js";
+import { DEFAULT_AREA_FILL_COLOR } from "./constants.js";
 
 /**
  * Properties for creating a area data source

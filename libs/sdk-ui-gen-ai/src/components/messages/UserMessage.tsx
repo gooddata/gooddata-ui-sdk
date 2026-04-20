@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { MessageContents } from "./MessageContents.js";
 import { type UserMessage } from "../../model.js";
+import { MessageContents } from "./MessageContents.js";
 
 type UserMessageProps = {
     message: UserMessage;

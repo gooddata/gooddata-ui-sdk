@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import { isEqual } from "lodash-es";
 
-import { type IDashboardSettingsApplyPayload } from "./types.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
     selectDisableDashboardCrossFiltering,
@@ -14,6 +13,7 @@ import {
     selectEvaluationFrequency,
     selectSectionHeadersDateDataSet,
 } from "../../model/store/meta/metaSelectors.js";
+import { type IDashboardSettingsApplyPayload } from "./types.js";
 
 export function useDialogData() {
     const disableCrossFiltering = useDashboardSelector(selectDisableDashboardCrossFiltering) ?? false;

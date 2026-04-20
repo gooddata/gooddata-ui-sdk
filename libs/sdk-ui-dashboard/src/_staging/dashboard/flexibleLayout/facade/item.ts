@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEqual } from "lodash-es";
 
 import {
@@ -27,10 +28,10 @@ import {
     isWidgetDefinition,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardLayoutItemFacade, type IDashboardLayoutSectionFacade } from "./interfaces.js";
 import { type ILayoutItemPath } from "../../../../types.js";
 import { areLayoutPathsEqual, updateItemIndex } from "../../../layout/coordinates.js";
 import { determineWidthForScreen } from "../../../layout/sizing.js";
+import { type IDashboardLayoutItemFacade, type IDashboardLayoutSectionFacade } from "./interfaces.js";
 
 /**
  * @alpha

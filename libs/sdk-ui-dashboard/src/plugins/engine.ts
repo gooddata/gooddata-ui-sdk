@@ -2,14 +2,14 @@
 
 import { type ComponentType } from "react";
 
-import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder.js";
-import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling.js";
-import { pluginDebugStr } from "./customizationApis/pluginUtils.js";
-import { type IDashboardPluginContract_V1 } from "./plugin.js";
 import { LIB_VERSION } from "../__version.js";
 import type { DashboardContext } from "../model/types/commonTypes.js";
 import { Dashboard } from "../presentation/dashboard/Dashboard.js";
 import type { IDashboardExtensionProps, IDashboardProps } from "../presentation/dashboard/types.js";
+import { DashboardCustomizationBuilder } from "./customizationApis/customizationBuilder.js";
+import { DefaultDashboardEventHandling } from "./customizationApis/dashboardEventHandling.js";
+import { pluginDebugStr } from "./customizationApis/pluginUtils.js";
+import { type IDashboardPluginContract_V1 } from "./plugin.js";
 
 /**
  * Dashboard Engine encapsulates a particular build of the {@link Dashboard} component and provides

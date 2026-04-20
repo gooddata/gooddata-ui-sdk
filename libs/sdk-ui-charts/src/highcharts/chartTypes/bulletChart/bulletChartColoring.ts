@@ -24,14 +24,14 @@ import {
     parseRGBString,
 } from "@gooddata/sdk-ui-vis-commons";
 
+import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 import {
     getOccupiedMeasureBucketsLocalIdentifiers,
     isComparativeSeries,
     isPrimarySeries,
     isTargetSeries,
 } from "./bulletChartSeries.js";
-import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
-import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 export class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

@@ -4,14 +4,14 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { AttributeElements } from "../../_infra/predicates.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import {
     ColumnChartWithSingleMeasureAndTwoViewByAndStack,
     ColumnChartWithSingleMeasureAndViewBy,
     ColumnChartWithTwoMeasuresAndTwoViewBy,
 } from "./base.js";
-import { scenariosFor } from "../../../scenarioGroup.js";
-import { AttributeElements } from "../../_infra/predicates.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const drilling = scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .withGroupNames(ScenarioGroupNames.Drilling)

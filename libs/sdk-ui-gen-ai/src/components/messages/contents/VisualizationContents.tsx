@@ -66,11 +66,6 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableNext, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { DrillSelectDropdownMenu } from "./drill/DrillSelectDropdownMenu.js";
-import { MarkdownComponent } from "./Markdown.js";
-import { useExecution } from "./useExecution.js";
-import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
-import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
 import {
     mapVisualizationAnomalyDetectionToBackendConfig,
     mapVisualizationAnomalyDetectionToChartConfig,
@@ -100,6 +95,11 @@ import { mapVisualizationWhatIfToScenarios } from "../../../whatIf/whatIfMapping
 import { useConfig } from "../../ConfigContext.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
+import { DrillSelectDropdownMenu } from "./drill/DrillSelectDropdownMenu.js";
+import { MarkdownComponent } from "./Markdown.js";
+import { useExecution } from "./useExecution.js";
+import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
+import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
 
 const VIS_HEIGHT = 250;
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__visualization__save__more-menu-button";

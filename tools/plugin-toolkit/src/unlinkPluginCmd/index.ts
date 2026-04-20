@@ -1,14 +1,14 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import ora from "ora";
 
 import { type IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { type IDashboardDefinition, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
-import { type UnlinkCmdActionConfig, getUnlinkCmdActionConfig } from "./actionConfig.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
+import { type UnlinkCmdActionConfig, getUnlinkCmdActionConfig } from "./actionConfig.js";
 
 function printUnlinkConfigSummary({ hostname, workspace, dashboard, identifier }: UnlinkCmdActionConfig) {
     logInfo("Everything looks valid. Going to unlink plugin from dashboard.");

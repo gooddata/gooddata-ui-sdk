@@ -1,9 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ISettings } from "@gooddata/sdk-model";
 
+import { type DashboardContext } from "../../../types/commonTypes.js";
 import { loadNotificationChannelsCount } from "./loadNotificationChannelsCount.js";
 import { loadWorkspaceAutomationsCount } from "./loadWorkspaceAutomationsCount.js";
-import { type DashboardContext } from "../../../types/commonTypes.js";
 
 export async function loadAutomationsData(
     ctx: DashboardContext,

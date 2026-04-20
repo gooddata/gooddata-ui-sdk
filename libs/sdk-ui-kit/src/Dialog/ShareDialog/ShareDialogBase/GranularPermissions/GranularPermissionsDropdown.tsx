@@ -7,7 +7,6 @@ import { useIntl } from "react-intl";
 
 import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
-import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody.js";
 import { withBubble } from "../../../../Bubble/withBubble.js";
 import { Dropdown } from "../../../../Dropdown/Dropdown.js";
 import { granularPermissionMessageLabels } from "../../../../locales.js";
@@ -19,6 +18,7 @@ import {
     type IGranularGrantee,
 } from "../types.js";
 import { getGranularGranteeClassNameId } from "../utils.js";
+import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody.js";
 
 interface IGranularPermissionsDropdownProps {
     grantee: IGranularGrantee;

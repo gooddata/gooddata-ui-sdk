@@ -15,7 +15,6 @@ import {
     ScreenshotReadyWrapper,
     createElementCountResolver,
 } from "../../../_infra/ScreenshotReadyWrapper.js";
-
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "./styles.css";
 

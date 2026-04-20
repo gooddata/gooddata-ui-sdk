@@ -2,13 +2,6 @@
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { normalizeBoundsForShortestPath } from "./bounds.js";
-import {
-    DEFAULT_MAPLIBRE_OPTIONS,
-    DEFAULT_TOOLTIP_OPTIONS,
-    type IMapInteractionOptions,
-    resolveMapInteractionOptions,
-} from "./mapConfig.js";
 import type {
     LngLatBoundsLike,
     LngLatLike,
@@ -20,6 +13,13 @@ import { type IGeoChartViewportNavigation } from "../../types/config/viewport.js
 import { type IMapOptions } from "../../types/map/provider.js";
 import { type IMapLibreLocale } from "../../utils/mapLocale.js";
 import { fetchMapStyle } from "../style/styleEndpoint.js";
+import { normalizeBoundsForShortestPath } from "./bounds.js";
+import {
+    DEFAULT_MAPLIBRE_OPTIONS,
+    DEFAULT_TOOLTIP_OPTIONS,
+    type IMapInteractionOptions,
+    resolveMapInteractionOptions,
+} from "./mapConfig.js";
 
 /**
  * Result of map initialization

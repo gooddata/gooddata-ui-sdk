@@ -3,13 +3,13 @@
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { FunnelChart, type IFunnelChartProps } from "@gooddata/sdk-ui-charts";
 
-import { FunnelChartWithArithmeticMeasures, FunnelChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
 import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { FunnelChartWithArithmeticMeasures, FunnelChartWithMeasureAndViewBy } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

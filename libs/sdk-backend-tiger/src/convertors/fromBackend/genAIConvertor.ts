@@ -36,12 +36,12 @@ import {
     assertNever,
 } from "@gooddata/sdk-model";
 
+import { getFormatByGranularity } from "../../utils/dateUtils.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";
 import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js";
 import { type DateNormalizer } from "./dateFormatting/types.js";
 import { visualizationObjectsItemToInsight } from "./InsightConverter.js";
-import { getFormatByGranularity } from "../../utils/dateUtils.js";
 
 export function convertChatConversationFromBackend(conversation: AiConversationResponse): IChatConversation {
     return {

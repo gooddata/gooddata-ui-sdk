@@ -14,8 +14,6 @@ import {
     widgetTitle,
 } from "@gooddata/sdk-model";
 
-import { loadInsight } from "./common/loadInsight.js";
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { getSizeInfo } from "../../../_staging/layout/sizing.js";
 import { type IChangeInsightWidgetInsight } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -36,6 +34,8 @@ import { uiActions } from "../../store/ui/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { shouldRevalidateDrillsAfterInsightChange } from "../common/drillRevalidationUtils.js";
 import { validateDrills } from "../common/validateDrills.js";
+import { loadInsight } from "./common/loadInsight.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 
 export function* changeInsightWidgetInsightHandler(
     ctx: DashboardContext,

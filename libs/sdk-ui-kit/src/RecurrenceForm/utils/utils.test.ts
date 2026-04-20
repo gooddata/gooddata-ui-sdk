@@ -1,17 +1,17 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import { type WeekStart } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
+import { RECURRENCE_TYPES } from "../constants.js";
 import {
     constructCronExpression,
     isLastOccurrenceOfWeekdayInMonth,
     transformCronExpressionToRecurrenceType,
     transformRecurrenceTypeToDescription,
 } from "./utils.js";
-import { RECURRENCE_TYPES } from "../constants.js";
 
 const sampleCronExp = "0 0 1 ? * 2";
 const sampleDate = new Date("2023-04-05T14:34:21");

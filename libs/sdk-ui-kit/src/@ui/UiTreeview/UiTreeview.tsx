@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type KeyboardEvent as ReactKeyboardEvent,
@@ -13,6 +13,7 @@ import {
 
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
+import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { DefaultUiTreeViewItemComponent } from "./defaults/DefaultUiTreeViewItemComponent.js";
 import {
     type IUiLeveledTreeViewProps,
@@ -36,7 +37,6 @@ import {
     itemsState,
     makeItemId,
 } from "./utils.js";
-import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 
 /**
  * An accessible treeview component with static data that can be navigated by keyboard.

@@ -2,8 +2,8 @@
 
 import { type ReactElement } from "react";
 
-import { type IScheduledEmailDialogProps } from "./types.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
+import { type IScheduledEmailDialogProps } from "./types.js";
 
 /**
  * @internal

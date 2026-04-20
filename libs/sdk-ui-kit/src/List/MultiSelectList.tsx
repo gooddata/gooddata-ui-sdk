@@ -1,13 +1,13 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { List } from "./List.js";
 import { Button } from "../Button/Button.js";
 import { FlexDimensions } from "../FlexDimensions/FlexDimensions.js";
+import { List } from "./List.js";
 
 /**
  * @internal

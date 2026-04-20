@@ -2,13 +2,13 @@
 
 import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
+import { type ColumnWidthItem } from "../../types/resizing.js";
 import {
     createColumnWidthItemForColumnDefinition,
     createWeakColumnWidthItemForColumnDefinition,
 } from "./createColumnWidthItemForColumnDefinition.js";
 import { getColumnWidthItemValue } from "./getColumnWidthItemValue.js";
 import { isColumnWidthItemMatch } from "./isColumnWidthItemMatch.js";
-import { type ColumnWidthItem } from "../../types/resizing.js";
 
 /**
  * Returns {@link ColumnWidthItem} for the provided {@link ITableColumnDefinition} if match is found, undefined otherwise.

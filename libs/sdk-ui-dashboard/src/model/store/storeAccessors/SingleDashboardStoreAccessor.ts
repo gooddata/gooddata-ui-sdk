@@ -1,9 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { idRef, serializeObjRef } from "@gooddata/sdk-model";
 
-import { DashboardStoreAccessorRepository } from "./DashboardStoreAccessorRepository.js";
 import { type DashboardDispatch, type DashboardSelectorEvaluator, type DashboardState } from "../types.js";
+import { DashboardStoreAccessorRepository } from "./DashboardStoreAccessorRepository.js";
 
 /**
  * This `mocked` ID is used as a key under which is the accessor object stored in the instance of the

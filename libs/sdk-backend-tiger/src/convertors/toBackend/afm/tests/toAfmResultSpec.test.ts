@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -14,8 +15,8 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture.js";
 import { toAfmExecution } from "../toAfmResultSpec.js";
+import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture.js";
 
 const workspace = "test workspace";
 

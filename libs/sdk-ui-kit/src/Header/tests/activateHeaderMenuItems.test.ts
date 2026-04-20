@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeAll, describe, expect, it } from "vitest";
 
-import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 import { activateHeaderMenuItems } from "../activateHeaderMenuItems.js";
 import { HEADER_ITEM_ID_KPIS_NEW, generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
 import { type IHeaderMenuItem } from "../typings.js";
+import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 
 describe("activateHeaderMenuItems", () => {
     let items: IHeaderMenuItem[][];

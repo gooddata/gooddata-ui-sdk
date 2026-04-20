@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useMemo, useState } from "react";
 
@@ -8,17 +8,17 @@ import { useIntl } from "react-intl";
 import { type IColorPalette, type ITheme, type ObjRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
+import { Button } from "../../Button/Button.js";
+import { Typography } from "../../Typography/Typography.js";
+import { useId } from "../../utils/useId.js";
+import { Dialog } from "../Dialog.js";
+import { type IDialogBaseProps } from "../typings.js";
 import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator.js";
 import {
     StylingEditorDialogFooter,
     type TStylingEditorDialogFooterProps,
 } from "./StylingEditorDialogFooter.js";
 import { StylingExample } from "./StylingExample.js";
-import { Button } from "../../Button/Button.js";
-import { Typography } from "../../Typography/Typography.js";
-import { useId } from "../../utils/useId.js";
-import { Dialog } from "../Dialog.js";
-import { type IDialogBaseProps } from "../typings.js";
 
 /**
  * @internal

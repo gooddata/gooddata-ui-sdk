@@ -5,11 +5,10 @@ import { expect } from "@playwright/test";
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
-import { enterEditMode, mockFeatureHub, saveDashboard, visit, waitForCatalogReload } from "../helpers.js";
+import { enterEditMode, saveDashboard, visit, waitForCatalogReload } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Header section", "headerSection", () => {

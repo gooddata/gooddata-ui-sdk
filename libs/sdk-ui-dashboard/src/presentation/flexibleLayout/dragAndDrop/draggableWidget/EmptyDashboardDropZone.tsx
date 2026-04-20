@@ -7,10 +7,10 @@ import { FormattedMessage } from "react-intl";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { type BaseDraggableLayoutItem, type DraggableItemType } from "../../../dragAndDrop/types.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
+import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",

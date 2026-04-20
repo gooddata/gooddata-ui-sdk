@@ -25,7 +25,6 @@ import {
     type OnLoadingChanged,
 } from "@gooddata/sdk-ui";
 
-import { type ILayerTableDefinition } from "./insightToTable.js";
 import {
     type IDrillStep,
     type OnDashboardDrill,
@@ -38,6 +37,7 @@ import {
     type OnWidgetDrill,
 } from "../../drill/types.js";
 import { type WidgetExportDataAttributes } from "../../export/types.js";
+import { type ILayerTableDefinition } from "./insightToTable.js";
 
 ///
 /// Component props

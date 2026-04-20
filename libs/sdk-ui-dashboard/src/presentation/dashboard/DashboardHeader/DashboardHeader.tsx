@@ -2,12 +2,6 @@
 
 import { type ReactElement } from "react";
 
-import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
-import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";
-import { DensityDialogProvider } from "./DensityDialogProvider.js";
-import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider.js";
-import { SettingsDialogProvider } from "./SettingsDialogProvider.js";
-import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
 import { CancelEditDialog } from "../../cancelEditDialog/CancelEditDialog.js";
 import { useCancelEditDialog } from "../../cancelEditDialog/DefaultCancelEditDialog.js";
 import { useDeleteDialogProps } from "../../deleteDialog/DefaultDeleteDialog.js";
@@ -27,6 +21,12 @@ import { TopBar } from "../../topBar/topBar/TopBar.js";
 import { useWidgetDeleteDialogProps } from "../../widgetDeleteDialog/DefaultWidgetDeleteDialog.js";
 import { WidgetDeleteDialog } from "../../widgetDeleteDialog/WidgetDeleteDialog.js";
 import { ToastMessages } from "../components/ToastMessages.js";
+import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
+import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";
+import { DensityDialogProvider } from "./DensityDialogProvider.js";
+import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider.js";
+import { SettingsDialogProvider } from "./SettingsDialogProvider.js";
+import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
 
 // these wrapper components are here to prevent the whole DashboardHeader from re-rendering whenever some
 // of the sub-components' props change. by isolating the hooks more, we make sure only the really changed component re-renders.

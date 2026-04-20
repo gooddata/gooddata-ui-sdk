@@ -5,12 +5,12 @@ import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import { type IFilter, type ObjRef } from "@gooddata/sdk-model";
 
-import { resolveFilterValues } from "./common/filterValuesResolver.js";
 import { isDashboardFilter } from "../../../types.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectEnableFilterValuesResolutionInDrillEvents } from "../../store/config/configSelectors.js";
 import { type DashboardContext, type FiltersInfo } from "../../types/commonTypes.js";
+import { resolveFilterValues } from "./common/filterValuesResolver.js";
 
 export function* getDrillToUrlFiltersWithResolvedValues(
     ctx: DashboardContext,

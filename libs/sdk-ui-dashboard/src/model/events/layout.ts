@@ -7,8 +7,6 @@ import {
     type ScreenSize,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardEvent } from "./base.js";
-import { eventGuard } from "./util.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 import {
@@ -17,6 +15,8 @@ import {
     type ExtendedDashboardWidget,
     type StashedDashboardItemsId,
 } from "../types/layoutTypes.js";
+import { type IDashboardEvent } from "./base.js";
+import { eventGuard } from "./util.js";
 
 /**
  * Payload of the {@link IDashboardLayoutSectionAdded} event.

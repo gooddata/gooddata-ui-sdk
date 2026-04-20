@@ -10,9 +10,6 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IPivotTableNextProps } from "@gooddata/sdk-ui-pivot/next";
 
-import { pivotTableNextAdditionalFactories } from "./pivotTableNextAdditionalFactories.js";
-import { pivotTableNextConfigFromInsight } from "./pivotTableNextConfigFromInsight.js";
-import { PluggablePivotTableNext } from "./PluggablePivotTableNext.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import { type IDrillDownContext } from "../../../interfaces/Visualization.js";
 import {
@@ -43,6 +40,9 @@ import {
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
 } from "../drillDownUtil.js";
+import { pivotTableNextAdditionalFactories } from "./pivotTableNextAdditionalFactories.js";
+import { pivotTableNextConfigFromInsight } from "./pivotTableNextConfigFromInsight.js";
+import { PluggablePivotTableNext } from "./PluggablePivotTableNext.js";
 
 export class PivotTableNextDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

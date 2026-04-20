@@ -23,8 +23,8 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import { VisualizationTypes } from "./visualizationTypes.js";
 import { BucketNames } from "../constants/bucketNames.js";
+import { VisualizationTypes } from "./visualizationTypes.js";
 
 const TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID = "tooltipText_df";
 

@@ -7,13 +7,13 @@ import {
     type ScreenSize,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardCommand } from "./base.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../types.js";
 import {
     type DashboardItemDefinition,
     type RelativeIndex,
     type StashedDashboardItemsId,
 } from "../types/layoutTypes.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link IAddLayoutSection} command.

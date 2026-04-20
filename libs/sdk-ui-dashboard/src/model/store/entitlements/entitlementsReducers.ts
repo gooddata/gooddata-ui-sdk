@@ -2,8 +2,8 @@
 
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
-import { type IEntitlementsState } from "./entitlementsState.js";
 import { type ResolvedEntitlements } from "../../types/commonTypes.js";
+import { type IEntitlementsState } from "./entitlementsState.js";
 
 type EntitlementsReducer<A extends Action> = CaseReducer<IEntitlementsState, A>;
 

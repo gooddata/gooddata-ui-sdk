@@ -1,9 +1,9 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { CreatableDashboardLayout } from "./CreatableDashboardLayout.js";
 import { type DashboardLayoutWidgetComponentSet } from "../../componentDefinition/types.js";
 import { type DashboardLayoutComponentProvider } from "../../dashboardContexts/types.js";
 import { DashboardLayoutDraggingComponent } from "../../dragAndDrop/draggableWidget/DashboardLayoutDraggingComponent.js";
+import { CreatableDashboardLayout } from "./CreatableDashboardLayout.js";
 
 /**
  * @internal

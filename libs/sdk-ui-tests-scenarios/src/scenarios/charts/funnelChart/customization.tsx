@@ -7,7 +7,6 @@ import {
     type IFunnelChartProps,
 } from "@gooddata/sdk-ui-charts";
 
-import { FunnelChartWithMeasureAndViewBy, FunnelChartWithTwoMeasures } from "./base.js";
 import { type UnboundVisProps } from "../../../scenario.js";
 import { type CustomizedScenario, scenariosFor } from "../../../scenarioGroup.js";
 import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants.js";
@@ -19,6 +18,7 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { FunnelChartWithMeasureAndViewBy, FunnelChartWithTwoMeasures } from "./base.js";
 
 const legendScenarios = scenariosFor<IFunnelChartProps>("FunnelChart", FunnelChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

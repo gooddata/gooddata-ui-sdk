@@ -1,13 +1,14 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
+import { type ObjRef, isObjRef } from "../objRef/index.js";
 import { type IDashboardObjectIdentity } from "./common.js";
 import {
     type IFilterContext,
     type IFilterContextDefinition,
     isFilterContextDefinition,
 } from "./filterContext.js";
-import { type ObjRef, isObjRef } from "../objRef/index.js";
 
 /**
  * Common widget alert properties

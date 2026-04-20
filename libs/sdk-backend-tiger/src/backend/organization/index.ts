@@ -24,6 +24,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
 
+import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { OrganizationAgentsService } from "./agents.js";
 import { TigerOrganizationAutomationService } from "./automations/index.js";
 import { OrganizationExportTemplatesService } from "./exportTemplates.js";
@@ -36,7 +37,6 @@ import { SecuritySettingsService } from "./securitySettings.js";
 import { OrganizationSettingsService } from "./settings.js";
 import { OrganizationStylingService } from "./styling.js";
 import { OrganizationUsersService } from "./users.js";
-import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
 export class TigerOrganization implements IOrganization {
     constructor(

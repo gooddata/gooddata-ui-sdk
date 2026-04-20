@@ -1,11 +1,12 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type ColDef, type GridApi } from "ag-grid-community";
 import { isEqual } from "lodash-es";
 
 import { type IDimension } from "@gooddata/sdk-model";
 
-import { type IGridTotalsRow } from "./resultTypes.js";
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL, ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
+import { type IGridTotalsRow } from "./resultTypes.js";
 
 export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridTotalsRow[] | null): boolean {
     const totals = newTotals ?? [];

@@ -14,7 +14,6 @@ import {
     isGranularAccessGrantee,
 } from "@gooddata/sdk-model";
 
-import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions.js";
 import { type IChangeSharing } from "../../commands/dashboard.js";
 import { type DashboardSharingChanged, dashboardSharingChanged } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -22,6 +21,7 @@ import { dashboardPermissionsActions } from "../../store/dashboardPermissions/in
 import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardRef, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { loadDashboardPermissions } from "./initializeDashboardHandler/loadDashboardPermissions.js";
 
 type DashboardSaveSharingContext = {
     cmd: IChangeSharing;

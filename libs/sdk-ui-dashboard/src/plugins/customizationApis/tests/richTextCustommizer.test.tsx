@@ -6,10 +6,10 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { type IRichTextWidget, idRef } from "@gooddata/sdk-model";
 
-import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
-import { EMPTY_MUTATIONS } from "./utils.js";
 import { DefaultRichTextCustomizer } from "../richTextCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

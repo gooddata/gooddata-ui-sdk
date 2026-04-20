@@ -1,7 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { PropsWithChildren } from "react";
-
 import { useIntl } from "react-intl";
 
 import { ErrorComponent, LoadingComponent, type UseCancelablePromiseStatus } from "@gooddata/sdk-ui";

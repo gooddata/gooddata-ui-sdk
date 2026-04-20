@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { FeedbackPopup } from "./FeedbackPopup.js";
-import { useUserFeedback } from "./useUserFeedback.js";
 import type { IChatConversationLocalItem } from "../../model.js";
 import { setUserFeedback } from "../../store/messages/messagesSlice.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
+import { FeedbackPopup } from "./FeedbackPopup.js";
+import { useUserFeedback } from "./useUserFeedback.js";
 
 export interface IAssistantItemFeedbackProps {
     group: IChatMessagesGroup;

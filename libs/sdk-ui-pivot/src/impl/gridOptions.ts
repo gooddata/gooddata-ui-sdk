@@ -2,6 +2,7 @@
 
 import { type FocusGridInnerElementParams } from "ag-grid-community";
 
+import { type ICorePivotTableProps } from "../publicTypes.js";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_SUBTOTAL,
@@ -38,7 +39,6 @@ import { ColumnGroupHeader } from "./structure/headers/ColumnGroupHeader.js";
 import { ColumnHeader } from "./structure/headers/ColumnHeader.js";
 import { type ICommonHeaderParams } from "./structure/headers/HeaderCell.js";
 import { type TableFacade } from "./tableFacade.js";
-import { type ICorePivotTableProps } from "../publicTypes.js";
 
 class NoTooltip {
     init() {}

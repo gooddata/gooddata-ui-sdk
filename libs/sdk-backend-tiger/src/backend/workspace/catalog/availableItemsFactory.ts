@@ -37,12 +37,12 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 
-import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems.js";
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter.js";
 import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter.js";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems.js";
 
 //ivec investigate
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {

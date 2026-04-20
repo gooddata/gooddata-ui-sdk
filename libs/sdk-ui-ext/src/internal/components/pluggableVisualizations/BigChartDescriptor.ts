@@ -1,14 +1,14 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 
-import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor.js";
-import { MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT } from "./constants.js";
 import { type IFluidLayoutDescriptor } from "../../interfaces/LayoutDescriptor.js";
 import {
     type IVisualizationSizeInfo,
     type PluggableVisualizationFactory,
 } from "../../interfaces/VisualizationDescriptor.js";
+import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor.js";
+import { MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT } from "./constants.js";
 
 export abstract class BigChartDescriptor extends BaseChartDescriptor {
     public abstract override getFactory(): PluggableVisualizationFactory;

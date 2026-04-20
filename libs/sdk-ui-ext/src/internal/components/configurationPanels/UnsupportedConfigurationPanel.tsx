@@ -1,11 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
 import { omit } from "lodash-es";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { UnsupportedProperties } from "../configurationControls/UnsupportedProperties.js";
+import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class UnsupportedConfigurationPanel extends ConfigurationPanelContent {
     public override componentDidMount(): void {

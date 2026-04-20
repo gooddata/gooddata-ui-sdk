@@ -3,13 +3,13 @@
 import { ReferenceData, ReferenceMd } from "@gooddata/reference-workspace";
 import { type IPieChartProps, PieChart } from "@gooddata/sdk-ui-charts";
 
-import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
 import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

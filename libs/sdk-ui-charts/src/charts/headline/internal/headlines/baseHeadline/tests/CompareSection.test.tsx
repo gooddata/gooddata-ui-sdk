@@ -5,7 +5,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import {
@@ -14,6 +13,7 @@ import {
 } from "../../../tests/TestData.fixtures.js";
 import { CompareSection } from "../CompareSection.js";
 import { CompareSectionItem } from "../CompareSectionItem.js";
+import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 
 const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
 

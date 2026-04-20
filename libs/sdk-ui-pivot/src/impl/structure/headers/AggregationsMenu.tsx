@@ -27,14 +27,6 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import {
-    getAttributeDescriptorsLocalId,
-    getTotalsForAttributeHeader,
-    getTotalsForMeasureHeader,
-    isTotalEnabledForAttribute,
-} from "./aggregationsMenuHelper.js";
-import { type IColumnTotal } from "./aggregationsMenuTypes.js";
-import { AggregationsSubMenu } from "./AggregationsSubMenu.js";
 import { messages } from "../../../locales.js";
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { type TableDescriptor } from "../tableDescriptor.js";
@@ -45,6 +37,14 @@ import {
     isSliceCol,
     isSliceMeasureCol,
 } from "../tableDescriptorTypes.js";
+import {
+    getAttributeDescriptorsLocalId,
+    getTotalsForAttributeHeader,
+    getTotalsForMeasureHeader,
+    isTotalEnabledForAttribute,
+} from "./aggregationsMenuHelper.js";
+import { type IColumnTotal } from "./aggregationsMenuTypes.js";
+import { AggregationsSubMenu } from "./AggregationsSubMenu.js";
 /*
  * TODO: same thing is in sdk-ui-ext .. but pivot must not depend on it. we may be in need of some lower-level
  *  project on which both of filters and ext can depend. perhaps the purpose of the new project would be to provide

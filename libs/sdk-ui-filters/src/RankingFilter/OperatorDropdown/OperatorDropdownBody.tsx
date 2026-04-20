@@ -5,8 +5,8 @@ import { useIntl } from "react-intl";
 import { type RankingFilterOperator } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
-import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
 import { type IOperatorDropdownItem } from "../types.js";
+import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
 
 interface IOperatorDropdownBodyComponentProps {
     items: IOperatorDropdownItem[];

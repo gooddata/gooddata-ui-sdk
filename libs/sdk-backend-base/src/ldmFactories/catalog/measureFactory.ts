@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type ICatalogMeasure,
@@ -11,9 +11,9 @@ import {
     newMeasure,
 } from "@gooddata/sdk-model";
 
-import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 import { type BuilderModifications, builderFactory } from "../builder.js";
 import { type MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../metadata/measureFactory.js";
+import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 
 /**
  * Catalog measure builder

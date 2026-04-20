@@ -6,7 +6,6 @@ import { useIntl } from "react-intl";
 
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { type ICancelButtonProps } from "./types.js";
 import { cancelEditRenderMode } from "../../../../../model/commands/renderMode.js";
 import {
     useDashboardDispatch,
@@ -16,6 +15,7 @@ import { selectIsDashboardDirty } from "../../../../../model/store/meta/metaSele
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
+import { type ICancelButtonProps } from "./types.js";
 
 /**
  * @internal

@@ -1,12 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ChangeEvent, useCallback } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { ComponentTypeItem } from "./ComponentTypeItem.js";
 import { dialogChangeMessageLabels } from "../../../../locales.js";
 import { type InsightCodeType } from "../types.js";
+import { ComponentTypeItem } from "./ComponentTypeItem.js";
 
 /**
  * @internal

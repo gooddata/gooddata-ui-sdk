@@ -3,18 +3,18 @@
 import { isEmpty } from "lodash-es";
 
 import {
-    type ITigerBucket,
-    type ITigerFilter,
-    type ITigerSortItem,
-    type ITigerVisualizationProperties,
-} from "./TigerTypes.js";
-import {
     type AfmLocalIdentifier,
     type AfmObjectIdentifier,
     type MeasureDefinition,
     type SortKeyAttribute,
     type SortKeyValue,
 } from "../generated/afm-rest-api/index.js";
+import {
+    type ITigerBucket,
+    type ITigerFilter,
+    type ITigerSortItem,
+    type ITigerVisualizationProperties,
+} from "./TigerTypes.js";
 
 /**
  * Visualization object used to store its data as a metadata object

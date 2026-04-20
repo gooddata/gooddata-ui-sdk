@@ -1,13 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
 import { type ITableAttributeColumnDefinition } from "@gooddata/sdk-ui";
 
-import { extractIntlFormattedValue } from "./shared.js";
 import { AttributeCell } from "../../components/Cell/AttributeCell.js";
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { HEADER_CELL_CLASSNAME } from "../styling/bem.js";
+import { extractIntlFormattedValue } from "./shared.js";
 
 /**
  * Creates col def for row attribute.

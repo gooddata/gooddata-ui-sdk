@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { difference } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -11,6 +11,10 @@ import {
     isDashboardLayout,
 } from "@gooddata/sdk-model";
 
+import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../../types.js";
+import { getSectionIndex } from "../../../layout/coordinates.js";
+import { type IDashboardLayoutFacade } from "../facade/interfaces.js";
+import { DashboardLayoutFacade } from "../facade/layout.js";
 import {
     type DashboardLayoutModifications,
     type DashboardLayoutSectionModifications,
@@ -20,10 +24,6 @@ import {
 } from "./interfaces.js";
 import { DashboardLayoutItemBuilder } from "./item.js";
 import { DashboardLayoutSectionBuilder } from "./section.js";
-import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../../types.js";
-import { getSectionIndex } from "../../../layout/coordinates.js";
-import { type IDashboardLayoutFacade } from "../facade/interfaces.js";
-import { DashboardLayoutFacade } from "../facade/layout.js";
 
 /**
  * @alpha

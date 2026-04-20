@@ -12,8 +12,8 @@ import {
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
-import { chatWindowSliceName } from "./chatWindowSlice.js";
 import { type RootState } from "../types.js";
+import { chatWindowSliceName } from "./chatWindowSlice.js";
 
 const chatWindowSliceSelector = (state: RootState) => state[chatWindowSliceName];
 

@@ -6,11 +6,11 @@ import { isEqual } from "lodash-es";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import { COLUMN_PADDING, SKELETON_ITEM_HEIGHT } from "./constants.js";
-import { getColumnWidths } from "./utils.js";
 import { type IUiPagedVirtualListSkeletonItemProps } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { UiSkeleton } from "../../UiSkeleton/UiSkeleton.js";
 import { type IUiAsyncTableBulkAction, type IUiAsyncTableColumn } from "../types.js";
+import { COLUMN_PADDING, SKELETON_ITEM_HEIGHT } from "./constants.js";
+import { getColumnWidths } from "./utils.js";
 
 export function skeletonItemFactory(
     columnWidths: Array<number>,

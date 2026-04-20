@@ -10,7 +10,6 @@ import {
     isDashboardLayout,
 } from "@gooddata/sdk-model";
 
-import { WidthResizer } from "./WidthResizer.js";
 import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../../../_staging/dashboard/flexibleLayout/config.js";
 import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
@@ -28,6 +27,7 @@ import { useResizeHandlers, useResizeWidthItemStatus } from "../../../dragAndDro
 import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
 import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/utils/sizing.js";
 import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview.js";
+import { WidthResizer } from "./WidthResizer.js";
 
 export type WidthResizerHotspotProps = {
     item: IDashboardLayoutItemFacade<unknown>;

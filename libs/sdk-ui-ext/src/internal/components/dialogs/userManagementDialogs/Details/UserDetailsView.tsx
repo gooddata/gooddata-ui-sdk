@@ -1,14 +1,14 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { type IUser } from "@gooddata/sdk-model";
 
-import { DetailRow } from "./DetailRow.js";
-import { OrganizationMemberDropdown } from "./OrganizationMemberDropdown.js";
 import { messages } from "../locales.js";
 import { useTelemetry } from "../TelemetryContext.js";
 import { type ListMode } from "../types.js";
+import { DetailRow } from "./DetailRow.js";
+import { OrganizationMemberDropdown } from "./OrganizationMemberDropdown.js";
 
 export interface IDetailsViewProps {
     isAdmin: boolean;

@@ -11,7 +11,6 @@ import { enrichMapboxToken, useMapboxToken } from "@gooddata/sdk-ui-geo";
 import { enrichAgGridToken, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { shallowEqualObjects } from "@gooddata/util";
 
-import { type IDashboardStoreProviderProps } from "./types.js";
 import { newDashboardSummaryWorkflowWorker } from "../commandHandlers/dashboard/dashboardSummaryWorkflowWorker.js";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
 import {
@@ -23,6 +22,7 @@ import { dashboardDeinitialized } from "../events/dashboard.js";
 import { type IReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
 import { getWidgetsOfType } from "../store/tabs/layout/layoutUtils.js";
 import type { DashboardConfig } from "../types/commonTypes.js";
+import { type IDashboardStoreProviderProps } from "./types.js";
 
 type InitProps = {
     backend: IAnalyticalBackend;

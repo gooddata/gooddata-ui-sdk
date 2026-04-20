@@ -4,6 +4,16 @@ import { type ReactElement, useMemo } from "react";
 
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
+import {
+    type IDashboardLayoutItemFacade,
+    type IDashboardLayoutSectionFacade,
+} from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { getItemIndex, serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import { type ILayoutItemPath, type RenderMode } from "../../../types.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
+import { useSectionExportData } from "../../export/useExportData.js";
+import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
@@ -17,16 +27,6 @@ import {
     type IDashboardLayoutSectionRenderer,
     type IDashboardLayoutWidgetRenderer,
 } from "./interfaces.js";
-import {
-    type IDashboardLayoutItemFacade,
-    type IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
-import { getItemIndex, serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
-import { type ILayoutItemPath, type RenderMode } from "../../../types.js";
-import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
-import { useSectionExportData } from "../../export/useExportData.js";
-import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
 
 /**
  * @alpha

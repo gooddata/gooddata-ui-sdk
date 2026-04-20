@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
-import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 import { generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
+import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 
 describe("generateHeaderMenuItemsGroups", () => {
     it("should not return dashboards and report item", () => {

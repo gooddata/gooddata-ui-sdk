@@ -4,7 +4,6 @@ import { readFileSync } from "fs";
 
 import blessed from "blessed";
 
-import { AppPanel, type AppPanelOptions } from "./appPanel.js";
 import {
     type DcEvent,
     type EventBus,
@@ -14,6 +13,7 @@ import {
     type IEventListener,
     buildOutputExited,
 } from "../events.js";
+import { AppPanel, type AppPanelOptions } from "./appPanel.js";
 
 export class BuildOutput extends AppPanel implements IEventListener {
     private readonly log: blessed.Widgets.Log;

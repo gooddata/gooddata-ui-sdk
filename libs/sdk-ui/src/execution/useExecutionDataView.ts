@@ -6,8 +6,6 @@ import { isEmpty } from "lodash-es";
 
 import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
-import { createExecution } from "./createExecution.js";
-import { type DataViewWindow } from "./withExecutionLoading.js";
 import { convertError } from "../base/errors/errorHandling.js";
 import { type GoodDataSdkError } from "../base/errors/GoodDataSdkError.js";
 import { useBackendStrict } from "../base/react/BackendContext.js";
@@ -26,6 +24,8 @@ import {
 } from "../base/react/useCancelablePromise.js";
 import { useWorkspaceStrict } from "../base/react/WorkspaceContext.js";
 import { DataViewFacade } from "../base/results/facade.js";
+import { createExecution } from "./createExecution.js";
+import { type DataViewWindow } from "./withExecutionLoading.js";
 
 /**
  * Convenient interface to define execution by series and slices.

@@ -6,9 +6,9 @@ import { action } from "storybook/actions";
 
 import { DialogList } from "@gooddata/sdk-ui-kit";
 
-import { itemsMock as items } from "./itemsMock.js";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+import { itemsMock as items } from "./itemsMock.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {
     return <div style={{ width: 350, maxHeight: 250, margin: "30 0", display: "flex" }}>{children}</div>;

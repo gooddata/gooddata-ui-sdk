@@ -4,7 +4,6 @@ import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { type IRemoveDrillDownForInsightWidget } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetDrillDownRemoved,
@@ -13,6 +12,7 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 
 export function* removeDrillDownForInsightWidgetHandler(
     ctx: DashboardContext,

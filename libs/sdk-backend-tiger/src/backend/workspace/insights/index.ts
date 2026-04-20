@@ -62,8 +62,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { InsightsQuery } from "./insightsQuery.js";
-import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses.js";
 import {
     convertAttribute,
     convertFact,
@@ -81,6 +79,8 @@ import { convertVisualizationObject } from "../../../convertors/fromBackend/visu
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier, objRefToUri } from "../../../utils/api.js";
+import { InsightsQuery } from "./insightsQuery.js";
+import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses.js";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(

@@ -2,6 +2,8 @@
 
 import type { Bucket, Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
+import { loadChartFill, loadColorMapping, saveChartFill, saveColorMapping } from "../utils/configUtils.js";
+import { getFullBucket } from "../utils/sharedUtils.js";
 import {
     type ChartFillType,
     type ColorMapping,
@@ -15,8 +17,6 @@ import {
     loadConfig,
     saveConfigObject,
 } from "./utils.js";
-import { loadChartFill, loadColorMapping, saveChartFill, saveColorMapping } from "../utils/configUtils.js";
-import { getFullBucket } from "../utils/sharedUtils.js";
 
 type DefaultProperties = {
     colorMapping: Array<ColorMapping>;

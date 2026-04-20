@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactNode, memo, useCallback } from "react";
 
@@ -9,6 +9,7 @@ import ReactMeasure, { type Rect } from "react-measure";
 
 import { type ITranslationsComponentProps, IntlTranslationsProvider, IntlWrapper } from "@gooddata/sdk-ui";
 
+import { type ChartFillType } from "../coloring/types.js";
 import { FluidLegend } from "./FluidLegend.js";
 import { HeatmapLegend } from "./HeatmapLegend.js";
 import { type ButtonsOrientationType } from "./Paging.js";
@@ -16,7 +17,6 @@ import { PopUpLegend } from "./PopUpLegend/PopUpLegend.js";
 import { BOTTOM, TOP } from "./PositionTypes.js";
 import { type IStaticLegendProps, StaticLegend } from "./StaticLegend.js";
 import { type IColorLegendSize, type ISeriesItem, type ItemBorderRadiusPredicate } from "./types.js";
-import { type ChartFillType } from "../coloring/types.js";
 
 const HEATMAP_LEGEND_WIDTH_BREAKPOINT = 460;
 

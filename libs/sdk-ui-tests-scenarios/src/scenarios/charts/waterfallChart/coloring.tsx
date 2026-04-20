@@ -4,11 +4,11 @@ import { isColorDescriptor } from "@gooddata/sdk-model";
 import { type IMappingHeader } from "@gooddata/sdk-ui";
 import { type IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
 
-import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 
 const TotalPredicate = (header: IMappingHeader) => {
     return isColorDescriptor(header) && header.colorHeaderItem.id.includes("total");

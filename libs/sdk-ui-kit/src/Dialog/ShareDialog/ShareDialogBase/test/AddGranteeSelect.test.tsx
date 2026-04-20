@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -13,15 +13,15 @@ import { type IBackendCapabilities } from "@gooddata/sdk-backend-spi";
 import { type IAvailableAccessGrantee, uriRef } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, withIntl } from "@gooddata/sdk-ui";
 
+import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
+import { AddGranteeSelect } from "../AddGranteeSelect.js";
+import { type IAddGranteeSelectProps } from "../types.js";
 import {
     availableUserAccessGrantee,
     availableUserGroupAccessGrantee,
     defaultUser,
     groupAll,
 } from "./GranteeMock.js";
-import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
-import { AddGranteeSelect } from "../AddGranteeSelect.js";
-import { type IAddGranteeSelectProps } from "../types.js";
 
 const defaultProps: IAddGranteeSelectProps = {
     onSelectGrantee: () => {},

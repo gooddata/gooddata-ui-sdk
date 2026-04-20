@@ -2,9 +2,9 @@
 
 import { type IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
 
-import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 
 export const theming = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

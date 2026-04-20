@@ -1,8 +1,7 @@
 // (C) 2026 GoodData Corporation
 
-import type { ReactNode } from "react";
-
 import cx from "classnames";
+import type { ReactNode } from "react";
 
 /**
  * @beta

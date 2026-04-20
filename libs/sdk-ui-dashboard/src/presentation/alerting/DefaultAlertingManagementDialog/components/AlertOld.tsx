@@ -9,7 +9,6 @@ import { type IAutomationMetadataObject, type IInsightWidget, isInsightWidget } 
 import { IconAlert, IconAlertPaused, IconWarning, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { AlertDropdown } from "./AlertDropdown.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectSeparators } from "../../../../model/store/config/configSelectors.js";
 import { selectCanManageWorkspace } from "../../../../model/store/permissions/permissionsSelectors.js";
@@ -18,6 +17,7 @@ import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";
+import { AlertDropdown } from "./AlertDropdown.js";
 
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;

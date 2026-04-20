@@ -1,7 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
 import type { PropsWithChildren } from "react";
-
 import type { IntlShape } from "react-intl";
 
 import { UiButton } from "@gooddata/sdk-ui-kit";

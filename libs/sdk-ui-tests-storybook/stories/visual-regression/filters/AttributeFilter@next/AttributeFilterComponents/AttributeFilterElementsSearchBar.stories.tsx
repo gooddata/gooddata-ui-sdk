@@ -7,7 +7,6 @@ import { action } from "storybook/actions";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterElementsSearchBar } from "@gooddata/sdk-ui-filters";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
-
 import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 

@@ -23,13 +23,6 @@ import {
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
 
-import {
-    type IRecording,
-    type RecordingIndexEntry,
-    RecordingType,
-    readJsonSync,
-    writeAsJsonSync,
-} from "./common.js";
 import { logWarn } from "../cli/loggers.js";
 import {
     type DataViewRequests,
@@ -37,6 +30,13 @@ import {
     type RequestedWindow,
     type ScenarioDescriptor,
 } from "../interface.js";
+import {
+    type IRecording,
+    type RecordingIndexEntry,
+    RecordingType,
+    readJsonSync,
+    writeAsJsonSync,
+} from "./common.js";
 
 //
 // internal constants & types

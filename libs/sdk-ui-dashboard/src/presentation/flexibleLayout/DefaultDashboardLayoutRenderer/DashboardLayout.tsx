@@ -5,15 +5,6 @@ import { type ReactElement, useCallback, useMemo, useRef } from "react";
 import cx from "classnames";
 import { isEqual } from "lodash-es";
 
-import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
-import { GridLayoutElement } from "./GridLayoutElement.js";
-import {
-    type IDashboardLayoutRenderProps,
-    type IDashboardLayoutSectionKeyGetter,
-    type IDashboardLayoutSectionRenderer,
-    type IDashboardLayoutWidgetRenderer,
-} from "./interfaces.js";
-import { getResizedItemPositions, unifyDashboardLayoutItemHeights } from "./utils/sizing.js";
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 import { getItemIndex, serializeLayoutSectionPath } from "../../../_staging/layout/coordinates.js";
 import { layoutTransformer } from "../../../_staging/slideshow/layoutTransformer.js";
@@ -25,6 +16,15 @@ import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeCon
 import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
 import { useDashboardExportData } from "../../export/useExportData.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
+import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
+import { GridLayoutElement } from "./GridLayoutElement.js";
+import {
+    type IDashboardLayoutRenderProps,
+    type IDashboardLayoutSectionKeyGetter,
+    type IDashboardLayoutSectionRenderer,
+    type IDashboardLayoutWidgetRenderer,
+} from "./interfaces.js";
+import { getResizedItemPositions, unifyDashboardLayoutItemHeights } from "./utils/sizing.js";
 
 const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ section }) =>
     serializeLayoutSectionPath(section.index());

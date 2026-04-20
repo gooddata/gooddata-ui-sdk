@@ -2,7 +2,6 @@
 
 import { type IWaterfallChartProps, WaterfallChart } from "@gooddata/sdk-ui-charts";
 
-import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { extendedDataLabelCustomizer } from "../_infra/extendedDataLabelVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
@@ -12,6 +11,7 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendForceEnabledCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 
 const legendScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

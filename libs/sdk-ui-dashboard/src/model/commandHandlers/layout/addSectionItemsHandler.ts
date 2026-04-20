@@ -5,13 +5,6 @@ import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { resizeParentContainers } from "./containerHeightSanitization.js";
-import {
-    validateAndNormalizeWidgetItems,
-    validateAndResolveItemFilterSettings,
-} from "./validation/itemValidation.js";
-import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation.js";
-import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
 import {
     findSection,
     getItemIndex,
@@ -36,6 +29,13 @@ import {
 } from "../../types/layoutTypes.js";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import {
+    validateAndNormalizeWidgetItems,
+    validateAndResolveItemFilterSettings,
+} from "./validation/itemValidation.js";
+import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation.js";
+import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;

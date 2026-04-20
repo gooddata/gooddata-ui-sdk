@@ -1,8 +1,8 @@
 // (C) 2007-2026 GoodData Corporation
 
+import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import { type IDashboardLayoutSectionRenderProps } from "./interfaces.js";
-import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};

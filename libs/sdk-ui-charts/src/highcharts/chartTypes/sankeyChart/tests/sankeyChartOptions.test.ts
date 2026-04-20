@@ -1,14 +1,15 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { CHART_TYPE, COLOR_MAPPINGS, EMPTY_HEADER_TITLE_VALUE, RECORDS } from "./sankeyChart.fixture.js";
 import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import { buildSankeyChartSeries } from "../sankeyChartOptions.js";
+import { CHART_TYPE, COLOR_MAPPINGS, EMPTY_HEADER_TITLE_VALUE, RECORDS } from "./sankeyChart.fixture.js";
 
 describe("SankeyChart buildSankeyChartSeries", () => {
     it.each(RECORDS)("should return series correctly in cases %s", (_title, record) => {

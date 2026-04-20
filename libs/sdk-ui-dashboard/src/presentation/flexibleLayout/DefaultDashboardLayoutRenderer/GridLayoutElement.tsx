@@ -6,8 +6,8 @@ import cx from "classnames";
 
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { useWidthValidation } from "./useItemWidthValidation.js";
 import { type CommonExportDataAttributes } from "../../export/types.js";
+import { useWidthValidation } from "./useItemWidthValidation.js";
 
 export type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 

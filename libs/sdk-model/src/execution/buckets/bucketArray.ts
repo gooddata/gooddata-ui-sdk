@@ -1,7 +1,22 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
+import {
+    type AttributePredicate,
+    type IAttribute,
+    anyAttribute,
+    idMatchAttribute,
+    isAttribute,
+} from "../attribute/index.js";
+import { type ITotal } from "../base/totals.js";
+import {
+    type IMeasure,
+    type MeasurePredicate,
+    anyMeasure,
+    idMatchMeasure,
+    isMeasure,
+} from "../measure/index.js";
 import {
     type AttributeInBucket,
     type BucketItemModifications,
@@ -20,21 +35,6 @@ import {
     bucketTotals,
     idMatchBucket,
 } from "./index.js";
-import {
-    type AttributePredicate,
-    type IAttribute,
-    anyAttribute,
-    idMatchAttribute,
-    isAttribute,
-} from "../attribute/index.js";
-import { type ITotal } from "../base/totals.js";
-import {
-    type IMeasure,
-    type MeasurePredicate,
-    anyMeasure,
-    idMatchMeasure,
-    isMeasure,
-} from "../measure/index.js";
 
 /**
  * Gets all attributes matching the provided predicate from a list of buckets.

@@ -3,11 +3,6 @@
 import { type IDataView } from "@gooddata/sdk-backend-spi";
 import { type IAttributeDescriptor } from "@gooddata/sdk-model";
 
-import { type IBucketsInfo } from "./collectBucketsInfo.js";
-import { type IDescriptorsInfo } from "./collectDescriptorsInfo.js";
-import { type IHeadersInfo } from "./collectHeadersInfo.js";
-import { type IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
-import { type ITranspositionInfo } from "./collectTranspositionInfo.js";
 import { type ITableColumnDefinition } from "../../interfaces/columns.js";
 import {
     type ITableDataAttributeScope,
@@ -15,6 +10,11 @@ import {
     type ITableDataMeasureScope,
     type ITableDataMeasureTotalScope,
 } from "../../interfaces/scope.js";
+import { type IBucketsInfo } from "./collectBucketsInfo.js";
+import { type IDescriptorsInfo } from "./collectDescriptorsInfo.js";
+import { type IHeadersInfo } from "./collectHeadersInfo.js";
+import { type IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";
+import { type ITranspositionInfo } from "./collectTranspositionInfo.js";
 
 export function collectColumnDefinitions(
     dataView: IDataView,

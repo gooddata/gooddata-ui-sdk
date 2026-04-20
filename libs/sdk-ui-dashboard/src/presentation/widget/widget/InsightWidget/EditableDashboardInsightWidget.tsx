@@ -7,10 +7,6 @@ import cx from "classnames";
 import { type IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
 
-import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
-import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
-import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
-import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetSelection } from "../../../../model/react/useWidgetSelection.js";
 import { selectIsDashboardSaving } from "../../../../model/store/saving/savingSelectors.js";
@@ -20,6 +16,10 @@ import { DashboardItem } from "../../../presentationComponents/DashboardItems/Da
 import { DashboardItemVisualization } from "../../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
 import { getVisTypeCssClass } from "../../../presentationComponents/DashboardItems/utils.js";
 import { DashboardInsight } from "../../insight/DashboardInsight.js";
+import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
+import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
+import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
+import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 
 export function EditableDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
     return <DashboardWidgetInsightGuard {...props} Component={EditableDashboardInsightWidgetCore} />;

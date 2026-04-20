@@ -2,6 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
+import { CalculateAs, type CalculationType, type IComparison } from "../../../../../interfaces/comparison.js";
+import { ComparisonProvider } from "../ComparisonProvider.js";
 import {
     TEST_BUCKETS,
     TEST_DATE_FORMAT,
@@ -10,8 +12,6 @@ import {
     TEST_FILTERS,
     TEST_SORT_ITEMS,
 } from "./TestData.fixtures.js";
-import { CalculateAs, type CalculationType, type IComparison } from "../../../../../interfaces/comparison.js";
-import { ComparisonProvider } from "../ComparisonProvider.js";
 
 describe("ComparisonProvider", () => {
     const newProvider = (comparison: IComparison) => {

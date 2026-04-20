@@ -6,7 +6,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { idRef } from "@gooddata/sdk-model";
 
-import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import { type IChangeInsightWidgetFilterSettings } from "../../../../model/commands/insight.js";
 import { addNestedLayoutSectionItem } from "../../../../model/commands/layout.js";
 import { enableRichTextWidgetDateFilter } from "../../../../model/commands/richText.js";
@@ -16,6 +15,7 @@ import { useDashboardCommandProcessing } from "../../../../model/react/useDashbo
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { type ILayoutItemPath } from "../../../../types.js";
 import { type BaseDraggableLayoutItemSize } from "../../../dragAndDrop/types.js";
+import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useRichTextPlaceholderDropHandler(layoutPath: ILayoutItemPath) {
     const dispatch = useDashboardDispatch();

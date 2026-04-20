@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
 
-import { ConfigSection } from "./ConfigSection.js";
-import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
+import { ConfigSection } from "./ConfigSection.js";
+import { DropdownControl } from "./DropdownControl.js";
 
 export interface IPagingSectionProps {
     properties?: IVisualizationProperties;

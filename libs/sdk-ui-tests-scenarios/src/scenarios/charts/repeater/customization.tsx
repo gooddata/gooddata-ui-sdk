@@ -2,10 +2,10 @@
 
 import { type IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
 
-import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { canvasCustomizer } from "../_infra/canvasVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 
 const canvasScenarios = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)

@@ -22,7 +22,6 @@ import {
     measureTitle,
 } from "@gooddata/sdk-model";
 
-import { insightsAdapter } from "./insightsEntityAdapter.js";
 import { type ObjRefMap, newInsightMap } from "../../../_staging/metadata/objRefMap.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
@@ -35,6 +34,7 @@ import {
 import { selectLocale } from "../config/configSelectors.js";
 import { selectWidgetByRef } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { insightsAdapter } from "./insightsEntityAdapter.js";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);
 

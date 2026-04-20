@@ -6,6 +6,14 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newTotal } from "@gooddata/sdk-model";
 import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
+import { scenariosFor } from "../../scenarioGroup.js";
+import {
+    AmountMeasurePredicate,
+    DepartmentPredicate,
+    ProductPredicate,
+    RegionPredicate,
+    WonMeasurePredicate,
+} from "../_infra/predicates.js";
 import {
     PivotTableWithMeasuresAndColumnOnly,
     PivotTableWithMeasuresAndColumnsOnly,
@@ -15,14 +23,6 @@ import {
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,
     getCommonPivotTableSizingConfig,
 } from "./base.js";
-import { scenariosFor } from "../../scenarioGroup.js";
-import {
-    AmountMeasurePredicate,
-    DepartmentPredicate,
-    ProductPredicate,
-    RegionPredicate,
-    WonMeasurePredicate,
-} from "../_infra/predicates.js";
 
 export const transposition = scenariosFor<IPivotTableNextProps>("PivotTableNext", PivotTableNext)
     .withGroupNames("transposition")

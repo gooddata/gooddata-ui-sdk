@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type ComponentType,
@@ -15,10 +15,10 @@ import { useIntl } from "react-intl";
 
 import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 
+import { type IPositioning } from "../typings/positioning.js";
 import { CustomFormatDialog } from "./customFormatDialog/CustomFormatDialog.js";
 import { PresetsDropdown } from "./presetsDropdown/PresetsDropdown.js";
 import { type IFormatPreset, type IFormatTemplate, type IToggleButtonProps, PresetType } from "./typings.js";
-import { type IPositioning } from "../typings/positioning.js";
 
 export const CUSTOM_FORMAT_PRESET_LOCAL_IDENTIFIER = "customFormat";
 

@@ -1,13 +1,14 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { produce } from "immer";
 import { describe, expect, it } from "vitest";
 
 import { type ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
 
-import { catalogAttributeHierarchies } from "./catalog.fixture.js";
 import { catalogReducers } from "../catalogReducers.js";
 import { type CatalogState } from "../catalogState.js";
 import { catalogActions } from "../index.js";
+import { catalogAttributeHierarchies } from "./catalog.fixture.js";
 
 describe("catalogReducers", () => {
     const prepareState = (attributeHierarchies?: ICatalogAttributeHierarchy[]): CatalogState => ({

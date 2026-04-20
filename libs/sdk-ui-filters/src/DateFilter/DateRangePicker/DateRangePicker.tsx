@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type KeyboardEvent, useCallback, useEffect, useRef, useState } from "react";
 
@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 
 import { type WeekStart } from "@gooddata/sdk-model";
 
+import { type DateRangePosition } from "../interfaces/index.js";
 import { DayPicker } from "./DatePicker.js";
 import { DateRangeHint } from "./DateRangeHint.js";
 import { EndDateInputField } from "./EndDateInputField.js";
@@ -19,7 +20,6 @@ import {
     TIME_INPUT_HINT_ID,
 } from "./types.js";
 import { getTimeFromDate, isValidDate, setTimeToDate } from "./utils.js";
-import { type DateRangePosition } from "../interfaces/index.js";
 
 const isClickOutsideOfCalendar = (
     event: MouseEvent,

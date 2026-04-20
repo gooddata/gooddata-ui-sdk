@@ -4,13 +4,13 @@ import { type ComponentType } from "react";
 
 import { type IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
 
+import { DataViewFacade } from "../base/results/facade.js";
 import {
     type DataViewWindow,
     type IWithLoadingEvents,
     type WithLoadingResult,
     withExecutionLoading,
 } from "./withExecutionLoading.js";
-import { DataViewFacade } from "../base/results/facade.js";
 
 /**
  * Configuration for the withExecution HOC. All configuration parameters can be either actual parameter values

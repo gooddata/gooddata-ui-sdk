@@ -37,13 +37,6 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import {
-    ConversationVisualisation,
-    type ConversationVisualisationProps,
-} from "./ConversationVisualisation.js";
-import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
-import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
-import { useSaveCheck } from "./useSaveCheck.js";
-import {
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
     makeUserItem,
@@ -66,6 +59,13 @@ import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 import { DrillSelectDropdownMenu } from "../contents/drill/DrillSelectDropdownMenu.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
+import {
+    ConversationVisualisation,
+    type ConversationVisualisationProps,
+} from "./ConversationVisualisation.js";
+import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
+import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
+import { useSaveCheck } from "./useSaveCheck.js";
 
 const MORE_MENU_BUTTON_ID = "gd-gen-ai-chat__visualization__save__more-menu-button";
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];

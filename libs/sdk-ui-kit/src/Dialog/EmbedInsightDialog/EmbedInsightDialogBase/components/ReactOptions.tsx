@@ -1,11 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
+import { type CodeLanguageType, type IReactOptions, type InsightCodeType } from "../types.js";
 import { CodeLanguageSelect } from "./CodeLanguageSelect.js";
 import { CodeOptions } from "./CodeOptions.js";
 import { ComponentTypeSelect } from "./ComponentTypeSelect.js";
-import { type CodeLanguageType, type IReactOptions, type InsightCodeType } from "../types.js";
 
 interface IReactOptionsProps {
     option: IReactOptions;

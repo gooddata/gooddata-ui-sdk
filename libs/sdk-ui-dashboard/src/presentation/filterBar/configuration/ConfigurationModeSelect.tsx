@@ -1,11 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ChangeEvent, useCallback } from "react";
 
 import { type IntlShape } from "react-intl/src/types.js";
 
-import { ModeSelectItem } from "./ConfigurationModeSelectItem.js";
 import { messages } from "../../../locales.js";
+import { ModeSelectItem } from "./ConfigurationModeSelectItem.js";
 
 export interface IConfigModeSelectProps {
     selectedMode: string;

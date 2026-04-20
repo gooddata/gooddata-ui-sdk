@@ -4,12 +4,14 @@ import { type AnyAction, type Dispatch, type EntityId, type EntityState } from "
 
 import { type IInsight, type IListedDashboard } from "@gooddata/sdk-model";
 
+import { type IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
 import { type IAccessibleDashboardsState } from "./accessibleDashboards/index.js";
 import { type IAutomationsState } from "./automations/automationsState.js";
 import { type BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";
 import { type CatalogState } from "./catalog/catalogState.js";
 import { type ConfigState } from "./config/configState.js";
 import { type DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
+import { type DashboardSummaryWorkflowState } from "./dashboardSummaryWorkflow/dashboardSummaryWorkflowState.js";
 import { type IDrillState } from "./drill/drillState.js";
 import { type IDrillTargets } from "./drillTargets/drillTargetsTypes.js";
 import { type IEntitlementsState } from "./entitlements/entitlementsState.js";
@@ -27,8 +29,6 @@ import { type ITabsState } from "./tabs/tabsState.js";
 import { type IUiState } from "./ui/uiState.js";
 import { type UserState } from "./user/userState.js";
 import { type IUsersState } from "./users/usersState.js";
-import { type IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
-import { type DashboardSummaryWorkflowState } from "./dashboardSummaryWorkflow/dashboardSummaryWorkflowState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,

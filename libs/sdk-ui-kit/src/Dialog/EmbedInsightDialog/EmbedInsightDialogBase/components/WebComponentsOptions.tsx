@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -6,11 +6,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ILocale } from "@gooddata/sdk-ui";
 
+import { dialogChangeMessageLabels } from "../../../../locales.js";
+import { type IWebComponentsOptions, type UnitsType } from "../types.js";
 import { HeightSetting } from "./HeightSetting.js";
 import { LocaleSetting } from "./LocaleSetting.js";
 import { ToggleSwitch } from "./ToggleSwitch.js";
-import { dialogChangeMessageLabels } from "../../../../locales.js";
-import { type IWebComponentsOptions, type UnitsType } from "../types.js";
 
 /**
  * @internal

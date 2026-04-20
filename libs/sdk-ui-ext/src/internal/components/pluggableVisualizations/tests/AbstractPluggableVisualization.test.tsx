@@ -6,7 +6,6 @@ import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type IInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { DummyVisConstruct } from "./visConstruct.fixture.js";
 import {
     type IDrillDownContext,
     type IVisConstruct,
@@ -18,6 +17,7 @@ import {
     multipleMetricsNoCategoriesReferencePoint,
 } from "../../../tests/mocks/referencePointMocks.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+import { DummyVisConstruct } from "./visConstruct.fixture.js";
 
 describe("AbstractPluggableVisualization", () => {
     class DummyPluggableVisualization extends AbstractPluggableVisualization {

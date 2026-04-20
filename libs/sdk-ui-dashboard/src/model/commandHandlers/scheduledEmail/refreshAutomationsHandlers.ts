@@ -6,7 +6,6 @@ import { all, call, put, select } from "redux-saga/effects";
 
 import { convertError } from "@gooddata/sdk-ui";
 
-import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
 import { type IRefreshAutomations } from "../../commands/scheduledEmail.js";
 import { automationsRefreshed } from "../../events/scheduledEmail.js";
 import { automationsActions } from "../../store/automations/index.js";
@@ -21,6 +20,7 @@ import { selectCanManageWorkspace } from "../../store/permissions/permissionsSel
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
 
 export function* refreshAutomationsHandlers(ctx: DashboardContext, cmd: IRefreshAutomations): SagaIterator {
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);

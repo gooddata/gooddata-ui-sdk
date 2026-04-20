@@ -15,12 +15,12 @@ import {
 import { PRESET_VIEWPORT_BOUNDS, isConcreteViewportPreset } from "@gooddata/sdk-ui-geo/internal";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { CheckboxControl } from "./CheckboxControl.js";
-import { DropdownControl } from "./DropdownControl.js";
 import { messages } from "../../../locales.js";
 import { pushpinViewportDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+import { CheckboxControl } from "./CheckboxControl.js";
+import { DropdownControl } from "./DropdownControl.js";
 
 export interface ICurrentMapView {
     center?: IGeoLngLat;

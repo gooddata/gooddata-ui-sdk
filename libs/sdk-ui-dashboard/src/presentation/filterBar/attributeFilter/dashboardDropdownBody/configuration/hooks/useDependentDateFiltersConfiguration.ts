@@ -7,13 +7,13 @@ import { invariant } from "ts-invariant";
 
 import { type IDashboardAttributeFilter, type IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
 
+import { setAttributeFilterDependentDateFilters } from "../../../../../../model/commands/filters.js";
+import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
+import { type IDashboardDependentDateFilter } from "../../../../../../model/types/dateFilterTypes.js";
 import {
     useDependentCommonDateFilterConfigurationState,
     useDependentDateFilterConfigurationState,
 } from "./useDependentDateFilterConfigurationState.js";
-import { setAttributeFilterDependentDateFilters } from "../../../../../../model/commands/filters.js";
-import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
-import { type IDashboardDependentDateFilter } from "../../../../../../model/types/dateFilterTypes.js";
 
 export function useDependentDateFiltersConfiguration(
     neighborDateFilters: IDashboardDateFilter[],

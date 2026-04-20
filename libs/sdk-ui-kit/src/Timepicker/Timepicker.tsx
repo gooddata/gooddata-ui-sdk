@@ -17,13 +17,13 @@ import { type WrappedComponentProps, injectIntl } from "react-intl";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { sanitizeLocaleForMoment } from "@gooddata/util";
 
-import { type SelectedTime } from "./typings.js";
-import { HOURS_IN_DAY, TIME_ANCHOR, formatTime, normalizeTime, updateTime } from "./utils/timeUtilities.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
 import { Dropdown } from "../Dropdown/Dropdown.js";
 import { DropdownButton } from "../Dropdown/DropdownButton.js";
 import { SingleSelectListItem } from "../List/ListItem.js";
 import { type OverlayPositionType } from "../typings/overlay.js";
+import { type SelectedTime } from "./typings.js";
+import { HOURS_IN_DAY, TIME_ANCHOR, formatTime, normalizeTime, updateTime } from "./utils/timeUtilities.js";
 
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;

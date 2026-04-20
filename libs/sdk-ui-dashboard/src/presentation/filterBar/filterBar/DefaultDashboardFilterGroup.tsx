@@ -23,10 +23,6 @@ import {
     useDeepEqualRefStablizer,
 } from "@gooddata/sdk-ui-filters";
 
-import {
-    type FilterBarAttributeFilterIndexed,
-    isFilterBarAttributeFilter,
-} from "./useFiltersWithAddedPlaceholder.js";
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
@@ -44,6 +40,10 @@ import {
 } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { DefaultDashboardAttributeFilter } from "../attributeFilter/DefaultDashboardAttributeFilter.js";
 import type { IDashboardFilterGroupProps } from "../attributeFilter/types.js";
+import {
+    type FilterBarAttributeFilterIndexed,
+    isFilterBarAttributeFilter,
+} from "./useFiltersWithAddedPlaceholder.js";
 
 /**
  * @alpha

@@ -34,6 +34,7 @@ export interface IGoodmockOptions {
 
 export interface IE2eTestDetails extends TestDetails {
     workspaceSettings?: Record<string, unknown>;
+    additionalWindowProperties?: Record<string, unknown>;
 }
 
 export interface IFeatureHubFeature {
@@ -42,7 +43,7 @@ export interface IFeatureHubFeature {
     l: boolean;
     version?: number;
     type: string;
-    value: boolean | string | number;
+    value?: boolean | string | number;
     strategies?: unknown[];
     v?: string;
 }
@@ -109,16 +110,29 @@ function parseArgs(
 function toPlaywrightDetails(details: IE2eTestDetails | undefined): TestDetails | undefined {
     if (!details) return undefined;
     // oxlint-disable-next-line @typescript-eslint/no-unused-vars
-    const { workspaceSettings: _ws, ...rest } = details;
+    const { workspaceSettings: _ws, additionalWindowProperties: _awp, ...rest } = details;
     return Object.keys(rest).length > 0 ? rest : undefined;
 }
 
-/** Inject workspace settings via addInitScript. */
-function injectWorkspaceSettings(testInst: typeof test, settings: Record<string, unknown>): void {
+/** Inject workspace settings and additional window properties via a single addInitScript. */
+function injectWindowProperties(
+    testInst: typeof test,
+    settings: Record<string, unknown>,
+    awp: Record<string, unknown>,
+): void {
     testInst.beforeEach(async ({ page }) => {
-        await page.addInitScript((s: Record<string, unknown>) => {
-            (window as unknown as Record<string, unknown>)["customWorkspaceSettings"] = s;
-        }, settings);
+        await page.addInitScript(
+            (args: { s: Record<string, unknown>; a: Record<string, unknown> }) => {
+                const w = window as unknown as Record<string, unknown>;
+                if (Object.keys(args.s).length > 0) {
+                    w["customWorkspaceSettings"] = args.s;
+                }
+                for (const [key, value] of Object.entries(args.a)) {
+                    w[key] = value;
+                }
+            },
+            { s: settings, a: awp },
+        );
     });
 }
 
@@ -134,26 +148,42 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
     // Tracks whether we're inside a topLevelDescribe during synchronous registration.
     let insideTopLevelDescribe = false;
 
-    // Stack tracks workspace settings hierarchy during synchronous describe registration.
-    // Each level merges its settings on top of the parent's. The beforeEach at each level
-    // captures the fully-merged snapshot, so the innermost beforeEach (which runs last) wins.
+    // Stacks track workspace settings / additionalWindowProperties hierarchy during
+    // synchronous describe registration. Each level merges on top of the parent's.
+    // The beforeEach at each level captures the fully-merged snapshot, so the
+    // innermost beforeEach (which runs last) wins.
     const settingsStack: Record<string, unknown>[] = [];
+    const awpStack: Record<string, unknown>[] = [];
 
     function currentSettings(): Record<string, unknown> {
         return settingsStack.length > 0 ? settingsStack[settingsStack.length - 1] : {};
     }
 
-    /** Push merged workspace settings onto the stack, register a beforeEach, call fn, pop. */
-    function withWorkspaceSettings(ws: Record<string, unknown> | undefined, fn: () => void): void {
-        if (!ws) {
+    function currentAwp(): Record<string, unknown> {
+        return awpStack.length > 0 ? awpStack[awpStack.length - 1] : {};
+    }
+
+    /** Push merged settings/awp onto stacks, register a single beforeEach, call fn, pop. */
+    function withDescribeDetails(
+        ws: Record<string, unknown> | undefined,
+        awp: Record<string, unknown> | undefined,
+        fn: () => void,
+    ): void {
+        if (!ws && !awp) {
             fn();
             return;
         }
-        const merged = { ...currentSettings(), ...ws };
-        settingsStack.push(merged);
-        injectWorkspaceSettings(testInstance, merged);
+        const mergedSettings = ws ? { ...currentSettings(), ...ws } : currentSettings();
+        const mergedAwp = awp ? { ...currentAwp(), ...awp } : currentAwp();
+
+        if (ws) settingsStack.push(mergedSettings);
+        if (awp) awpStack.push(mergedAwp);
+
+        injectWindowProperties(testInstance, mergedSettings, mergedAwp);
         fn();
-        settingsStack.pop();
+
+        if (awp) awpStack.pop();
+        if (ws) settingsStack.pop();
     }
 
     function buildSuiteCallback(
@@ -210,10 +240,10 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
                 }
             }
 
-            // Workspace settings — merge with parent stack and inject beforeEach.
-            // Wraps fn() so nested describes see this level's settings on the stack.
+            // Workspace settings + additional window properties — merge with parent
+            // stack and inject beforeEach. Wraps fn() so nested describes inherit.
             insideTopLevelDescribe = true;
-            withWorkspaceSettings(details?.workspaceSettings, fn);
+            withDescribeDetails(details?.workspaceSettings, details?.additionalWindowProperties, fn);
             insideTopLevelDescribe = false;
         };
     }
@@ -240,7 +270,8 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
         const callback = hasDetails ? (cb as () => void) : (detailsOrCb as () => void);
         const pwDetails = toPlaywrightDetails(details);
 
-        const wrapped = () => withWorkspaceSettings(details?.workspaceSettings, callback);
+        const wrapped = () =>
+            withDescribeDetails(details?.workspaceSettings, details?.additionalWindowProperties, callback);
 
         if (pwDetails) {
             originalDescribe(title, pwDetails, wrapped);
@@ -258,7 +289,8 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
         const details = hasDetails ? (detailsOrCb as IE2eTestDetails) : undefined;
         const callback = hasDetails ? (cb as () => void) : (detailsOrCb as () => void);
 
-        const wrapped = () => withWorkspaceSettings(details?.workspaceSettings, callback);
+        const wrapped = () =>
+            withDescribeDetails(details?.workspaceSettings, details?.additionalWindowProperties, callback);
         originalSkip(title, wrapped);
     }
 

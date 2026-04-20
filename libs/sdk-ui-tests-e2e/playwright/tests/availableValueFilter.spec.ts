@@ -21,7 +21,6 @@ import {
     enterEditMode,
     expectChartDataLabels,
     hasFilterListSize,
-    mockFeatureHub,
     openAttributeFilter,
     openDateFilter,
     searchMetricDependency,
@@ -41,7 +40,6 @@ import {
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
-    await mockFeatureHub(page);
 });
 
 test.topLevelDescribe("Available value filter", "availableValueFilter", () => {

@@ -4,7 +4,6 @@ import { type IInsight } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
 import { type IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableHeatmap } from "./PluggableHeatmap.js";
 import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     type IVisualizationDescriptor,
@@ -25,6 +24,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+import { PluggableHeatmap } from "./PluggableHeatmap.js";
 
 export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

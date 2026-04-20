@@ -11,19 +11,6 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { DashboardCustomizationLogger } from "./customizationLogging.js";
-import { DefaultDashboardContentCustomizer } from "./dashboardContentCustomizer.js";
-import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";
-import { DefaultFiltersCustomizer } from "./filtersCustomizer.js";
-import { DefaultInsightCustomizer } from "./insightCustomizer.js";
-import { DefaultLayoutCustomizer } from "./layoutCustomizer.js";
-import { DefaultLoadingCustomizer } from "./loadingCustomizer.js";
-import { DefaultRichTextCustomizer } from "./richTextCustomizer.js";
-import { DefaultTitleCustomizer } from "./titleCustomizer.js";
-import { DefaultTopBarCustomizer } from "./topBarCustomizer.js";
-import { createCustomizerMutationsContext } from "./types.js";
-import { DefaultVisualizationSwitcherCustomizer } from "./visualizationSwitcherCustomizer.js";
-import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
 import { type IDashboardWidgetOverlay, type WidgetsOverlayFn } from "../../model/types/commonTypes.js";
 import { type IDashboardExtensionProps } from "../../presentation/dashboard/types.js";
 import {
@@ -41,6 +28,19 @@ import {
     type IVisualizationSwitcherCustomizer,
 } from "../customizer.js";
 import { type IDashboardPluginContract_V1 } from "../plugin.js";
+import { DashboardCustomizationLogger } from "./customizationLogging.js";
+import { DefaultDashboardContentCustomizer } from "./dashboardContentCustomizer.js";
+import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";
+import { DefaultFiltersCustomizer } from "./filtersCustomizer.js";
+import { DefaultInsightCustomizer } from "./insightCustomizer.js";
+import { DefaultLayoutCustomizer } from "./layoutCustomizer.js";
+import { DefaultLoadingCustomizer } from "./loadingCustomizer.js";
+import { DefaultRichTextCustomizer } from "./richTextCustomizer.js";
+import { DefaultTitleCustomizer } from "./titleCustomizer.js";
+import { DefaultTopBarCustomizer } from "./topBarCustomizer.js";
+import { createCustomizerMutationsContext } from "./types.js";
+import { DefaultVisualizationSwitcherCustomizer } from "./visualizationSwitcherCustomizer.js";
+import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
 
 /**
  * @internal

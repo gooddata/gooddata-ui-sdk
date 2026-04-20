@@ -5,11 +5,11 @@ import type { ReactNode } from "react";
 import type { UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 
+import type { ICatalogItem } from "../catalogItem/types.js";
+import { QualityScoreCard } from "../quality/QualityScoreCard.js";
 import { CatalogItemCardGrid } from "./CatalogItemCardGrid.js";
 import { useRecommendedItems } from "./useRecommendedItems.js";
 import { useTrendingItems } from "./useTrendingItems.js";
-import type { ICatalogItem } from "../catalogItem/types.js";
-import { QualityScoreCard } from "../quality/QualityScoreCard.js";
 
 type Props = {
     selectedTabId: string;

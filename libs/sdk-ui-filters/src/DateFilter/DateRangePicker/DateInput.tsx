@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ChangeEvent,
@@ -21,11 +21,11 @@ import {
 } from "@gooddata/sdk-ui";
 import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
 
+import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody.js";
 import { InputErrorMessage } from "./InputErrorMessage.js";
 import { type IDateInputErrorMessageTexts, type IInputAccessibilityConfig } from "./types.js";
 import { formatDate, getPlatformStringFromDate, isValidDate, parseDate } from "./utils.js";
-import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 
 export interface IDateInputProps {
     value?: Date;

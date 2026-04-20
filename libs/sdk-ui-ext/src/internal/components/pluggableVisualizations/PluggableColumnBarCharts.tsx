@@ -18,8 +18,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { shiftArrayRight } from "@gooddata/util";
 
-import { PluggableBaseChart } from "./baseChart/PluggableBaseChart.js";
-import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil.js";
 import { AXIS } from "../../constants/axis.js";
 import { ATTRIBUTE, BUCKETS, DATE } from "../../constants/bucket.js";
 import {
@@ -56,6 +54,8 @@ import {
     setSecondaryMeasures,
 } from "../../utils/propertiesHelper.js";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper.js";
+import { PluggableBaseChart } from "./baseChart/PluggableBaseChart.js";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil.js";
 
 export class PluggableColumnBarCharts extends PluggableBaseChart {
     constructor(props: IVisConstruct) {

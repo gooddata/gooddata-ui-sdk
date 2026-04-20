@@ -4,13 +4,13 @@ import cx from "classnames";
 
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
 import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsSectionInsertedByPlugin } from "../../../model/store/ui/uiSelectors.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
 import { getRefsForSection } from "../refs.js";
+import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
 
 /**
  * @alpha

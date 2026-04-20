@@ -3,13 +3,13 @@
 import { ReferenceData } from "@gooddata/reference-workspace";
 import { BubbleChart, type IBubbleChartProps } from "@gooddata/sdk-ui-charts";
 
-import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors.js";
 import { AttributeElements } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+import { BubbleChartWithAllMeasuresAndAttribute } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IBubbleChartProps>("BubbleChart", BubbleChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)

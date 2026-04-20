@@ -21,8 +21,8 @@ import {
     insightLayers,
 } from "@gooddata/sdk-model";
 
-import { cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
 import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
+import { cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
 
 function removeIdentifiers(insight: IInsight): IInsightDefinition {
     const insightData = omit(insight.insight, ["ref", "uri", "identifier"]);

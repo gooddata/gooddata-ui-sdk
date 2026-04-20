@@ -30,7 +30,6 @@ import {
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
-import { useFilterGroupStatus } from "./useFilterGroupStatus.js";
 import type { IAttributeFilterProps } from "../AttributeFilter/AttributeFilter.js";
 import { AttributeFilterButton } from "../AttributeFilter/AttributeFilterButton.js";
 import { AttributeFilterDropdownButton } from "../AttributeFilter/Components/DropdownButton/AttributeFilterDropdownButton.js";
@@ -41,6 +40,7 @@ import {
     ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS,
 } from "../AttributeFilter/constants.js";
 import { FilterButtonCustomIcon } from "../shared/components/internal/FilterButtonCustomIcon.js";
+import { useFilterGroupStatus } from "./useFilterGroupStatus.js";
 
 /**
  * @public

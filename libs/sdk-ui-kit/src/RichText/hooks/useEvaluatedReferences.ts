@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type IExecutionConfig, type IFilter } from "@gooddata/sdk-model";
 
-import { useEvaluatedMetricsAndAttributes } from "./useEvaluatedMetricsAndAttributes.js";
 import { collectReferences } from "../helpers/references.js";
+import { useEvaluatedMetricsAndAttributes } from "./useEvaluatedMetricsAndAttributes.js";
 
 export function useEvaluatedReferences(
     value: string,

@@ -56,6 +56,7 @@ import {
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
+import { fixNumber } from "../../utils/fixNumber.js";
 import { convertFilter } from "./afm/FilterConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";
@@ -71,7 +72,6 @@ import {
     wrapExportDefinition,
 } from "./ExportDefinitionsConverter.js";
 import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
-import { fixNumber } from "../../utils/fixNumber.js";
 
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,

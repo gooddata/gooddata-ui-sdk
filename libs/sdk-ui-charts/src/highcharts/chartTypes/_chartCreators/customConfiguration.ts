@@ -10,30 +10,6 @@ import { type ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { type ChartType, type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 import { getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
 
-import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
-import {
-    formatAsPercent,
-    getLabelsStyling,
-    getLabelsVisibilityConfig,
-    getTotalsVisibility,
-    getTotalsVisibilityConfig,
-} from "./dataLabelsHelpers.js";
-import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart.js";
-import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
-import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
-import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
-import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
-import { getOptionalStackingConfiguration } from "./getOptionalStackingConfiguration.js";
-import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
-import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration.js";
-import {
-    shouldEndOnTick,
-    shouldFollowPointer,
-    shouldStartOnTick,
-    shouldXAxisStartOnTickOnBubbleScatter,
-    shouldYAxisStartOnTickOnBubbleScatter,
-} from "./helpers.js";
-import { styleVariables } from "./styles/variables.js";
 import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
     type AxisLabelsFormatterCallbackFunction,
@@ -71,6 +47,30 @@ import {
     percentFormatter,
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
+import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
+import {
+    formatAsPercent,
+    getLabelsStyling,
+    getLabelsVisibilityConfig,
+    getTotalsVisibility,
+    getTotalsVisibilityConfig,
+} from "./dataLabelsHelpers.js";
+import { getAxisLabelConfigurationForDualBarChart } from "./getAxisLabelConfigurationForDualBarChart.js";
+import { getAxisNameConfiguration } from "./getAxisNameConfiguration.js";
+import { getChartHighlightingConfiguration } from "./getChartHighlightingConfiguration.js";
+import { getChartOrientationConfiguration } from "./getChartOrientationConfiguration.js";
+import { getContinuousLineConfiguration } from "./getContinuousLineConfiguration.js";
+import { getOptionalStackingConfiguration } from "./getOptionalStackingConfiguration.js";
+import { getWaterfallXAxisConfiguration } from "./getWaterfallXAxisConfiguration.js";
+import { getZeroAlignConfiguration } from "./getZeroAlignConfiguration.js";
+import {
+    shouldEndOnTick,
+    shouldFollowPointer,
+    shouldStartOnTick,
+    shouldXAxisStartOnTickOnBubbleScatter,
+    shouldYAxisStartOnTickOnBubbleScatter,
+} from "./helpers.js";
+import { styleVariables } from "./styles/variables.js";
 
 // Extended interfaces for Highcharts types with additional runtime properties
 interface IExtendedAxis extends Highcharts.Axis {

@@ -8,13 +8,13 @@ import {
 } from "@gooddata/api-client-tiger";
 import { type FilterContextItem, type IFilter } from "@gooddata/sdk-model";
 
+import { cloneWithSanitizedIdsTyped as cloneWithSanitizedIdsTypedFromBackend } from "../fromBackend/IdSanitization.js";
+import { cloneWithSanitizedIdsTyped as cloneWithSanitizedIdsTypedToBackend } from "../toBackend/IdSanitization.js";
 import {
     convertMeasureValueFilterSdkToTiger,
     convertMeasureValueFilterTigerToSdk,
 } from "./measureValueFilterConverter.js";
 import { isFilterContextItems, isFilters } from "./sdkFilterTypeGuards.js";
-import { cloneWithSanitizedIdsTyped as cloneWithSanitizedIdsTypedFromBackend } from "../fromBackend/IdSanitization.js";
-import { cloneWithSanitizedIdsTyped as cloneWithSanitizedIdsTypedToBackend } from "../toBackend/IdSanitization.js";
 
 // SINGULAR FILTER CONVERSIONS
 // SDK -> Tiger

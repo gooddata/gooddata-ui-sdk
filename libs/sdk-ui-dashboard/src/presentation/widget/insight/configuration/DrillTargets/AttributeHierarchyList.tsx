@@ -7,10 +7,10 @@ import { useIntl } from "react-intl";
 import { type ICatalogAttributeHierarchy, type ICatalogDateAttributeHierarchy } from "@gooddata/sdk-model";
 import { DropdownList, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { AttributeHierarchyListFooter } from "./AttributeHierarchyListFooter.js";
-import { AttributeHierarchyListItem } from "./AttributeHierarchyListItem.js";
 import { messages } from "../../../../../locales.js";
 import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
+import { AttributeHierarchyListFooter } from "./AttributeHierarchyListFooter.js";
+import { AttributeHierarchyListItem } from "./AttributeHierarchyListItem.js";
 
 /**
  * @internal

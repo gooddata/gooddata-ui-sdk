@@ -8,12 +8,12 @@ import { useIntl } from "react-intl";
 import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata/sdk-model";
 import { simplifyText } from "@gooddata/util";
 
-import { InsightListItemDate } from "./InsightListItemDate.js";
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Button } from "../Button/Button.js";
 import { DESCRIPTION_PANEL_ARROW_OFFSETS, DescriptionPanel } from "../DescriptionPanel/DescriptionPanel.js";
 import { ShortenedText } from "../ShortenedText/ShortenedText.js";
 import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
+import { InsightListItemDate } from "./InsightListItemDate.js";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";

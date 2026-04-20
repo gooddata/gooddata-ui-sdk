@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useMemo } from "react";
 
@@ -6,6 +6,12 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { DialogListHeader, Message } from "@gooddata/sdk-ui-kit";
 
+import {
+    type IGrantedWorkspace,
+    type IPermissionsItem,
+    type WorkspacePermission,
+    type WorkspacePermissions,
+} from "../../types.js";
 import { AdditionalAccessPermissionItem, WorkspaceAccessPermissionItem } from "./GranularPermissionsItems.js";
 import {
     getGranularPermissions,
@@ -19,12 +25,6 @@ import {
 } from "./granularPermissionUtils.js";
 import { getWorkspaceAccessPermissionDescription, workspaceGranularPermissionMessages } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
-import {
-    type IGrantedWorkspace,
-    type IPermissionsItem,
-    type WorkspacePermission,
-    type WorkspacePermissions,
-} from "../../types.js";
 
 const granularPermissions: IPermissionsItem[] = [
     { id: "CREATE_AUTOMATION", enabled: true },

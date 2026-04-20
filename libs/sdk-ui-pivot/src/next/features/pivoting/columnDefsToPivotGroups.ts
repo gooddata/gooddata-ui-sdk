@@ -9,13 +9,13 @@ import {
     isSubtotalColumnDefinition,
 } from "@gooddata/sdk-ui";
 
-import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
 import { AG_GRID_PIVOT_RESULT_FIELD_SEPARATOR } from "../../constants/agGridDefaultProps.js";
 import { type AgGridColumnDef, type AgGridColumnGroupDef } from "../../types/agGrid.js";
 import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColDefIdentifiers } from "../columns/colDefIdentifiers.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
+import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
 
 /**
  * Creates nested ag-grid column groups for pivoted column definitions,

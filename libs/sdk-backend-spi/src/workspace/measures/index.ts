@@ -13,10 +13,10 @@ import type {
     ObjectOrigin,
 } from "@gooddata/sdk-model";
 
-import type { IMeasureExpressionToken } from "./measure.js";
 import type { IFilterBaseOptions } from "../../common/filtering.js";
 import type { IPagedResource } from "../../common/paging.js";
 import type { QueryMethod } from "../../common/query.js";
+import type { IMeasureExpressionToken } from "./measure.js";
 
 /**
  * Contains information about objects that may be referencing an measure. {@link IWorkspaceMeasuresService.getMeasureReferencingObjects} function.

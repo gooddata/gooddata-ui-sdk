@@ -7,7 +7,6 @@ import { useState } from "react";
 import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, LabelSubsection } from "@gooddata/sdk-ui-ext/internal";
-
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "../controlStyles.css";
 import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";

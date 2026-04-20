@@ -8,7 +8,6 @@ import { isEmpty, isEqual } from "lodash-es";
 import { type IInsight, type ISettings, type IWidget, type ScreenSize } from "@gooddata/sdk-model";
 import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT, fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
-import { HeightResizer } from "./HeightResizer.js";
 import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutSectionFacade,
@@ -35,6 +34,7 @@ import { HoveredWidgetContext } from "../../../dragAndDrop/HoveredWidgetContext.
 import { useResizeContext } from "../../../dragAndDrop/LayoutResizeContext.js";
 import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
 import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../constants.js";
+import { HeightResizer } from "./HeightResizer.js";
 
 export type HeightResizerHotspotProps = {
     section: IDashboardLayoutSectionFacade<ExtendedDashboardWidget>;

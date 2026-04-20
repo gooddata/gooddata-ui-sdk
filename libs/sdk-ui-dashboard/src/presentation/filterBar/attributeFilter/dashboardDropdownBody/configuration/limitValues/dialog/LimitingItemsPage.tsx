@@ -9,8 +9,6 @@ import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-import { PopupHeader } from "./PopupHeader.js";
-import { getTelemetryEventForLimitingItem } from "./telemetryUtils.js";
 import { messages } from "../../../../../../../locales.js";
 import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
 import { type ValuesLimitingItem } from "../../../../types.js";
@@ -19,6 +17,8 @@ import {
     type IValuesLimitingItemWithTitle,
     useSearchableLimitingItems,
 } from "../shared/limitingItemsHook.js";
+import { PopupHeader } from "./PopupHeader.js";
+import { getTelemetryEventForLimitingItem } from "./telemetryUtils.js";
 
 function NoLimitingItemsFound({ hasNoMatchingData }: { hasNoMatchingData: boolean }) {
     const intl = useIntl();

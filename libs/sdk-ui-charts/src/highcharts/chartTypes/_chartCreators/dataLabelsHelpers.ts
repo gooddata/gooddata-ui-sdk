@@ -2,14 +2,6 @@
 
 import { type ITheme } from "@gooddata/sdk-model";
 
-import {
-    type IAxisRange,
-    type IAxisRangeForAxes,
-    type IRectBySize,
-    isIntersecting,
-    isStacked,
-    pointInRange,
-} from "./helpers.js";
 import { type IChartConfig, type IDataLabelsVisible } from "../../../interfaces/chartConfig.js";
 import {
     DATA_LABEL_C6,
@@ -22,6 +14,14 @@ import {
 import { type StackingType } from "../../constants/stacking.js";
 import { type DataLabelsOptions } from "../../lib/index.js";
 import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
+import {
+    type IAxisRange,
+    type IAxisRangeForAxes,
+    type IRectBySize,
+    isIntersecting,
+    isStacked,
+    pointInRange,
+} from "./helpers.js";
 
 export function isLabelOverlappingItsShape({ dataLabel, shapeArgs }: any): boolean {
     if (dataLabel && shapeArgs) {

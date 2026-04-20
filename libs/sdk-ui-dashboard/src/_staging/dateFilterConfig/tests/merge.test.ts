@@ -1,8 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IDashboardDateFilterConfig, type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
 
+import { mergeDateFilterConfigs } from "../merge.js";
 import {
     absoluteForm,
     allTime,
@@ -12,7 +14,6 @@ import {
     relativeForm,
     year2019,
 } from "./fixtures.js";
-import { mergeDateFilterConfigs } from "../merge.js";
 
 describe("mergeProjectConfigWithDashboardConfig", () => {
     it("should properly hide granularities", () => {

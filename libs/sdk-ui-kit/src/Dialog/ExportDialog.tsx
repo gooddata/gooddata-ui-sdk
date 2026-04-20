@@ -1,11 +1,11 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo } from "react";
 
-import { ExportDialogBase } from "./ExportDialogBase.js";
-import { type IExportDialogProps } from "./typings.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { type IAlignPoint } from "../typings/positioning.js";
+import { ExportDialogBase } from "./ExportDialogBase.js";
+import { type IExportDialogProps } from "./typings.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 

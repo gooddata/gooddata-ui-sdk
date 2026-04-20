@@ -9,11 +9,11 @@ import {
     setNewWidthForSelectedColumns,
 } from "@gooddata/sdk-ui-pivot/next";
 
+import { copyWithModifiedProps, scenariosFor } from "../../scenarioGroup.js";
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndSingleRowAttr,
 } from "./base.js";
-import { copyWithModifiedProps, scenariosFor } from "../../scenarioGroup.js";
 
 const ATTRIBUTE_WIDTH = 400;
 const MEASURE_WIDTH = 60;

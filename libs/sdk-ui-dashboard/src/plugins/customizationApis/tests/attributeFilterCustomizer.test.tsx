@@ -12,7 +12,6 @@ import {
     dashboardAttributeFilterItemTitle,
 } from "@gooddata/sdk-model";
 
-import { EMPTY_MUTATIONS } from "./utils.js";
 import {
     type AttributeFilterComponentProvider,
     type OptionalAttributeFilterComponentProvider,
@@ -21,6 +20,7 @@ import { type IDashboardAttributeFilterProps } from "../../../presentation/filte
 import { DefaultAttributeFiltersCustomizer } from "../attributeFiltersCustomizer.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 //
 //

@@ -2,10 +2,10 @@
 
 import { type IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
 
-import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IRepeaterProps>("Repeater", Repeater)
     .withGroupNames(...ScenarioGroupNames.Coloring)

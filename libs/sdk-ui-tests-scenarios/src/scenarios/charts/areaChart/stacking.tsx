@@ -2,14 +2,14 @@
 
 import { AreaChart, type IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import {
     AreaChartViewByDate,
     AreaChartWithTwoMeasuresAndViewBy,
     AreaChartWithViewAndStackBy,
     AreaChartWithViewBy,
 } from "./base.js";
-import { scenariosFor } from "../../../scenarioGroup.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const stacking = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.Stacking)

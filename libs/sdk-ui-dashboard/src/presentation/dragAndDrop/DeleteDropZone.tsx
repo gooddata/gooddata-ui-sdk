@@ -11,10 +11,10 @@ import {
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { getDropZoneDebugStyle } from "./debug.js";
-import { useDashboardDrop } from "./useDashboardDrop.js";
 import { removeAttributeFilter, removeDateFilter } from "../../model/commands/filters.js";
 import { useDashboardDispatch } from "../../model/react/DashboardStoreProvider.js";
+import { getDropZoneDebugStyle } from "./debug.js";
+import { useDashboardDrop } from "./useDashboardDrop.js";
 
 export function DeleteDropZone() {
     const dispatch = useDashboardDispatch();

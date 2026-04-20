@@ -8,13 +8,6 @@ import { type IAttribute, type IInsight, type IInsightDefinition } from "@goodda
 import { DefaultLocale, type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 import {
-    expectedInsightDefDepartment,
-    expectedInsightDefRegion,
-    intersection,
-    sourceInsightDef,
-    targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
-import {
     type IExtendedReferencePoint,
     type IReferencePoint,
     type IVisConstruct,
@@ -47,6 +40,13 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableTreemap } from "../PluggableTreemap.js";
+import {
+    expectedInsightDefDepartment,
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock.js";
 
 const { Department, Region } = ReferenceMd;
 

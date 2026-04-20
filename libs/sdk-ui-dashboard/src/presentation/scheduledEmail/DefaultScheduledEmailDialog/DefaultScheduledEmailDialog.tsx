@@ -31,22 +31,6 @@ import {
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
-import { type IScheduledEmailDialogProps } from "../types.js";
-import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
-import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
-import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";
-import { WidgetAttachments as WidgetAttachmentsOld } from "./components/AttachmentsOld/WidgetAttachments.js";
-import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
-import { EvaluationModeCheckbox } from "./components/EvaluationModeCheckbox/EvaluationModeCheckbox.js";
-import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
-import { MessageForm } from "./components/MessageForm/MessageForm.js";
-import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
-import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
-import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
-import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
-import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
-import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
-import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useExportTemplates } from "../../../model/react/useExportTemplates.js";
 import {
@@ -82,10 +66,26 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
+import { type IScheduledEmailDialogProps } from "../types.js";
 import { getDefaultCronExpression } from "../utils/cron.js";
 import { getDefaultPdfPageSize } from "../utils/pdfPageSize.js";
 import { isMobileView } from "../utils/responsive.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
+import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
+import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
+import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";
+import { WidgetAttachments as WidgetAttachmentsOld } from "./components/AttachmentsOld/WidgetAttachments.js";
+import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
+import { EvaluationModeCheckbox } from "./components/EvaluationModeCheckbox/EvaluationModeCheckbox.js";
+import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
+import { MessageForm } from "./components/MessageForm/MessageForm.js";
+import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
+import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
+import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
+import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
+import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
+import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
+import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 

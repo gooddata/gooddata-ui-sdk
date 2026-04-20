@@ -4,16 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import { type IMeasureSortItem, type ISortItem, type SortDirection, uriRef } from "@gooddata/sdk-model";
 
-import { getMockReferencePoint } from "./mockReferencePoint.js";
-import {
-    invalidAttributeSort,
-    invalidMeasureSortInvalidAttribute,
-    invalidMeasureSortInvalidMeasure,
-    invalidMeasureSortLocatorsTooShort,
-    invalidMeasureSortTooManyLocators,
-    validAttributeSort,
-    validMeasureSort,
-} from "./sortMocks.js";
 import {
     type IBucketFilter,
     type IBucketFilterElement,
@@ -26,6 +16,16 @@ import {
     addDefaultSort,
     isSortItemVisible,
 } from "../sortItemsHelpers.js";
+import { getMockReferencePoint } from "./mockReferencePoint.js";
+import {
+    invalidAttributeSort,
+    invalidMeasureSortInvalidAttribute,
+    invalidMeasureSortInvalidMeasure,
+    invalidMeasureSortLocatorsTooShort,
+    invalidMeasureSortTooManyLocators,
+    validAttributeSort,
+    validMeasureSort,
+} from "./sortMocks.js";
 
 const createAttributeBucketItem = (localIdentifier: string, attributeName: string): IBucketItem => ({
     aggregation: null as unknown as undefined,

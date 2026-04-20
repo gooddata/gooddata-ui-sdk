@@ -7,6 +7,19 @@ import { type ISortItem, isResultTotalHeader, sortDirection } from "@gooddata/sd
 import { getMappingHeaderFormattedName } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
+import { messages } from "../../locales.js";
+import { type IPivotTableConfig } from "../../publicTypes.js";
+import {
+    COLUMN_ATTRIBUTE_COLUMN,
+    COLUMN_GROUPING_DELIMITER,
+    COLUMN_SUBTOTAL,
+    COLUMN_TOTAL,
+    MEASURE_COLUMN,
+    MIXED_HEADERS_COLUMN,
+    MIXED_VALUES_COLUMN,
+    ROW_ATTRIBUTE_COLUMN,
+    ROW_MEASURE_COLUMN,
+} from "../base/constants.js";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
 import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader.js";
 import {
@@ -21,19 +34,6 @@ import {
     type TableCols,
     agColId,
 } from "./tableDescriptorTypes.js";
-import { messages } from "../../locales.js";
-import { type IPivotTableConfig } from "../../publicTypes.js";
-import {
-    COLUMN_ATTRIBUTE_COLUMN,
-    COLUMN_GROUPING_DELIMITER,
-    COLUMN_SUBTOTAL,
-    COLUMN_TOTAL,
-    MEASURE_COLUMN,
-    MIXED_HEADERS_COLUMN,
-    MIXED_VALUES_COLUMN,
-    ROW_ATTRIBUTE_COLUMN,
-    ROW_MEASURE_COLUMN,
-} from "../base/constants.js";
 
 type TransformState = {
     initialSorts: ISortItem[];

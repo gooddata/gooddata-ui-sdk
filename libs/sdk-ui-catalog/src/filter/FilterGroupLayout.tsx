@@ -1,8 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { ComponentProps, ReactNode } from "react";
-
 import cx from "classnames";
+import type { ComponentProps, ReactNode } from "react";
 
 type Props = Omit<ComponentProps<"div">, "title"> & {
     title: ReactNode;

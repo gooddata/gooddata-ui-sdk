@@ -16,8 +16,6 @@ import {
 import { type IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 import { type ArrowOffsets, Bubble } from "@gooddata/sdk-ui-kit";
 
-import { ToolbarBottom } from "./ToolbarBottom.js";
-import { ToolbarTop } from "./ToolbarTop.js";
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
@@ -26,6 +24,8 @@ import {
     defaultAlignPoints,
     defaultArrowDirections,
 } from "../../common/configuration/ConfigurationBubble.js";
+import { ToolbarBottom } from "./ToolbarBottom.js";
+import { ToolbarTop } from "./ToolbarTop.js";
 
 const defaultFlexibleArrowOffsets: ArrowOffsets = {
     "tr tl": [7, 8],

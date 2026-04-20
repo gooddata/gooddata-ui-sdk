@@ -4,7 +4,6 @@ import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 
-import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 import { type IConvertDashboardTabFromDefault, switchDashboardTab } from "../../commands/tabs.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardTabSwitched, dashboardTabConvertedFromDefault } from "../../events/tabs.js";
@@ -13,6 +12,7 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 
 export function* convertDashboardTabFromDefaultHandler(
     ctx: DashboardContext,

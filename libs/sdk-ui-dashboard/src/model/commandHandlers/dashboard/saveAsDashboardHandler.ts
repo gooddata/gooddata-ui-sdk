@@ -16,11 +16,6 @@ import {
     isTempFilterContext,
 } from "@gooddata/sdk-model";
 
-import {
-    getMigratedAttributeFilters,
-    mergedMigratedAttributeFilters,
-} from "./common/migratedAttributeFilters.js";
-import { processLayout } from "./saveDashboardHandler.js";
 import { dashboardFilterContextIdentity } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import {
     dashboardLayoutRemoveIdentity,
@@ -58,6 +53,11 @@ import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
+import {
+    getMigratedAttributeFilters,
+    mergedMigratedAttributeFilters,
+} from "./common/migratedAttributeFilters.js";
+import { processLayout } from "./saveDashboardHandler.js";
 
 type DashboardSaveAsContext = {
     cmd: SaveDashboardAs;

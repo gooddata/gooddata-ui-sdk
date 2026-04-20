@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -8,15 +9,15 @@ import {
     type IDashboardLayoutSectionHeader,
 } from "@gooddata/sdk-model";
 
+import { serializeLayoutItemPath } from "../../../../layout/coordinates.js";
+import { DashboardLayoutBuilder } from "../layout.js";
+import { DashboardLayoutSectionBuilder } from "../section.js";
 import {
     createEmptyDashboardLayoutBuilder,
     createEmptyDashboardLayoutSectionBuilder,
     createValueOrUpdateCallbackTestCases,
     defaultItemXlSize,
 } from "./utils.js";
-import { serializeLayoutItemPath } from "../../../../layout/coordinates.js";
-import { DashboardLayoutBuilder } from "../layout.js";
-import { DashboardLayoutSectionBuilder } from "../section.js";
 
 describe("DashboardLayoutSectionBuilder", () => {
     describe("constructors", () => {

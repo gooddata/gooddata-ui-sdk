@@ -8,8 +8,8 @@ import { connect } from "react-redux";
 import { type IGenAIVisualization } from "@gooddata/sdk-model";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 
-import { useVisualisationSaving } from "./hooks/useVisualisationSaving.js";
 import { saveVisualizationAction } from "../../../store/messages/messagesSlice.js";
+import { useVisualisationSaving } from "./hooks/useVisualisationSaving.js";
 
 export type VisualizationSaveDialogProps = {
     onClose: () => void;

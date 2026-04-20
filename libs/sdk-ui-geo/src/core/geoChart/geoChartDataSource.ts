@@ -2,14 +2,14 @@
 
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
+import { type IGeoConfig, type IGeoData, type IGeoPointsConfig, type IPushpinColor } from "../../GeoChart.js";
+import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
 import {
     DEFAULT_CLUSTER_MAX_ZOOM,
     DEFAULT_CLUSTER_RADIUS,
     PUSHPIN_SIZE_OPTIONS_MAP,
 } from "./constants/geoChart.js";
 import { getPushpinColors } from "./geoChartColor.js";
-import { type IGeoConfig, type IGeoData, type IGeoPointsConfig, type IPushpinColor } from "../../GeoChart.js";
-import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
 import { getMinMax } from "./helpers/geoChart/common.js";
 
 export interface IGeoDataSourceProps {

@@ -2,13 +2,13 @@
 
 import { type ReactElement, memo } from "react";
 
-import { resolveLegendGroupTitle } from "./groupTitle.js";
-import { LegendGroupContainer } from "./LegendGroupContainer.js";
 import {
     type ILegendGroup,
     type ILegendSizeAnchorItem,
     isLegendSizeAnchorItem,
 } from "../../types/legend/model.js";
+import { resolveLegendGroupTitle } from "./groupTitle.js";
+import { LegendGroupContainer } from "./LegendGroupContainer.js";
 
 /**
  * Props for LegendGroupSize component.

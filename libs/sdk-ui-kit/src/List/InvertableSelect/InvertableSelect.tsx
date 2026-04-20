@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type KeyboardEvent, type ReactElement, useCallback } from "react";
 
@@ -8,15 +8,15 @@ import DefaultMeasure from "react-measure";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
+import { LoadingMask } from "../../LoadingMask/LoadingMask.js";
+import { AsyncList } from "../AsyncList.js";
+import { type IRenderListItemProps } from "../List.js";
 import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
 import { InvertableSelectItem } from "./InvertableSelectItem.js";
 import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch.js";
 import { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
 import { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
 import { useInvertableSelect } from "./useInvertableSelect.js";
-import { LoadingMask } from "../../LoadingMask/LoadingMask.js";
-import { AsyncList } from "../AsyncList.js";
-import { type IRenderListItemProps } from "../List.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

@@ -14,13 +14,13 @@ import {
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
 
-import { processSettledLayerResults } from "./processSettledLayerResults.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoLayerOutput } from "../../layers/registry/adapterTypes.js";
 import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { resolveLayerColorConfig } from "../../utils/color/resolveLayerColorConfig.js";
 import { createDataViewsFingerprint, createLayersStructureFingerprint } from "../../utils/fingerprint.js";
+import { processSettledLayerResults } from "./processSettledLayerResults.js";
 
 /**
  * Prepared output for a single layer.

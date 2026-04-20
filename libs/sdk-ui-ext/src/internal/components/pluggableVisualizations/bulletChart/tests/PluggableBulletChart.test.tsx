@@ -9,13 +9,6 @@ import { type IAttribute, type IInsight, type IInsightDefinition } from "@goodda
 import { type IDrillEventIntersectionElement, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 import {
-    expectedInsightDefDepartment,
-    expectedInsightDefRegion,
-    intersection,
-    sourceInsightDef,
-    targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
-import {
     type IBucketOfFun,
     type IExtendedReferencePoint,
     type IReferencePoint,
@@ -56,6 +49,13 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableBulletChart } from "../PluggableBulletChart.js";
+import {
+    expectedInsightDefDepartment,
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock.js";
 
 const { Department, Region } = ReferenceMd;
 

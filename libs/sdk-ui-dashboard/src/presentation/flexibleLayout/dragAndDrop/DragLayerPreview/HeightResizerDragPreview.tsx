@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import { fluidLayoutDescriptor } from "@gooddata/sdk-ui-ext";
 
-import { getLimitedSize } from "./sizeLimiting.js";
 import {
     type DragResizeProps,
     type ReachedResizingLimit,
@@ -12,6 +11,7 @@ import {
 import { useResizeHandlers } from "../../../dragAndDrop/LayoutResizeContext.js";
 import { type IHeightResizerDragItem } from "../../../dragAndDrop/types.js";
 import { HeightResizer } from "../Resize/HeightResizer.js";
+import { getLimitedSize } from "./sizeLimiting.js";
 
 export type HeightResizerDragPreviewProps = DragResizeProps<IHeightResizerDragItem>;
 

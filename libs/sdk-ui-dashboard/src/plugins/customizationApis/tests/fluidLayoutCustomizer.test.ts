@@ -9,7 +9,6 @@ import {
 } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
-import { EMPTY_MUTATIONS } from "./utils.js";
 import {
     type ExtendedDashboardWidget,
     type ICustomWidget,
@@ -18,6 +17,7 @@ import {
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+import { EMPTY_MUTATIONS } from "./utils.js";
 
 const EmptyLayout: IDashboardLayout<ExtendedDashboardWidget> = {
     type: "IDashboardLayout",

@@ -18,12 +18,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { type IBaseChartProps } from "@gooddata/sdk-ui-charts";
 
-import {
-    expectedInsightDefRegion,
-    intersection,
-    sourceInsightDef,
-    targetUri,
-} from "./getInsightWithDrillDownAppliedMock.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../../constants/properties.js";
 import {
     type IBucketOfFun,
@@ -67,6 +61,12 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableBaseChart } from "../PluggableBaseChart.js";
+import {
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock.js";
 
 const { Region } = ReferenceMd;
 

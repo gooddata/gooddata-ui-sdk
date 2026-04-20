@@ -4,7 +4,6 @@ import { type IInsight } from "@gooddata/sdk-model";
 import { BucketNames, type IDrillEvent } from "@gooddata/sdk-ui";
 import { type IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
-import { PluggableAreaChart } from "./PluggableAreaChart.js";
 import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import {
     type IVisualizationDescriptor,
@@ -29,6 +28,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil.js";
+import { PluggableAreaChart } from "./PluggableAreaChart.js";
 
 export class AreaChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {

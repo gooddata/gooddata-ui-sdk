@@ -6,13 +6,13 @@ import { type IntlShape, useIntl } from "react-intl";
 
 import { type IListedDashboard, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { DrillTargetDashboardTabSelector } from "./DrillTargetDashboardTabSelector.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectAccessibleDashboards } from "../../../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectInaccessibleDashboards } from "../../../../../model/store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 import { type IInaccessibleDashboard } from "../../../../../model/types/inaccessibleDashboardTypes.js";
 import { DashboardList } from "../../../../dashboardList/DashboardList.js";
 import { type IDrillableDashboardListItem } from "../../../../dashboardList/types.js";
+import { DrillTargetDashboardTabSelector } from "./DrillTargetDashboardTabSelector.js";
 
 interface IDrillTargetDashboardItemProps {
     selected?: ObjRef;

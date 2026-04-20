@@ -2,9 +2,9 @@
 
 import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
-import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
 import { scenariosFor } from "../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
+import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "./base.js";
 
 export const theming = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withGroupNames(...ScenarioGroupNames.Theming)

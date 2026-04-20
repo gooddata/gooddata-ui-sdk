@@ -15,27 +15,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { type ColumnWidthItem, CorePivotTable, type ICorePivotTableProps } from "@gooddata/sdk-ui-pivot";
 
-import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
-import { getMockReferencePoint } from "./mockReferencePoint.js";
-import {
-    invalidAttributeSort,
-    invalidMeasureSortInvalidAttribute,
-    invalidMeasureSortInvalidMeasure,
-    invalidMeasureSortLocatorsTooShort,
-    invalidMeasureSortTooManyLocators,
-    validAttributeSort,
-    validMeasureSort,
-} from "./sortMocks.js";
-import {
-    invalidAttributeColumnWidthItem,
-    invalidMeasureColumnWidthItem,
-    invalidMeasureColumnWidthItemInvalidAttribute,
-    invalidMeasureColumnWidthItemLocatorsTooShort,
-    invalidMeasureColumnWidthItemTooManyLocators,
-    transformedWeakMeasureColumnWidth,
-    validAttributeColumnWidthItem,
-    validMeasureColumnWidthItem,
-} from "./widthItemsMock.js";
 import {
     type IBucketItem,
     type IBucketOfFun,
@@ -71,6 +50,27 @@ import {
     getColumnAttributes,
     getRowAttributes,
 } from "../PluggablePivotTable.js";
+import { getInsightWithDrillDownApplied } from "./getInsightWithDrillDownAppliedMock.js";
+import { getMockReferencePoint } from "./mockReferencePoint.js";
+import {
+    invalidAttributeSort,
+    invalidMeasureSortInvalidAttribute,
+    invalidMeasureSortInvalidMeasure,
+    invalidMeasureSortLocatorsTooShort,
+    invalidMeasureSortTooManyLocators,
+    validAttributeSort,
+    validMeasureSort,
+} from "./sortMocks.js";
+import {
+    invalidAttributeColumnWidthItem,
+    invalidMeasureColumnWidthItem,
+    invalidMeasureColumnWidthItemInvalidAttribute,
+    invalidMeasureColumnWidthItemLocatorsTooShort,
+    invalidMeasureColumnWidthItemTooManyLocators,
+    transformedWeakMeasureColumnWidth,
+    validAttributeColumnWidthItem,
+    validMeasureColumnWidthItem,
+} from "./widthItemsMock.js";
 
 describe("PluggablePivotTable", () => {
     const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];

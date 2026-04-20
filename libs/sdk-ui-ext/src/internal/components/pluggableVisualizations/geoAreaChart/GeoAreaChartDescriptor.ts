@@ -3,7 +3,6 @@
 import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 import { type IGeoChartProps } from "@gooddata/sdk-ui-geo";
 
-import { PluggableGeoAreaChart } from "./PluggableGeoAreaChart.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
 import {
     type IVisualizationDescriptor,
@@ -28,6 +27,7 @@ import {
     buildGeoChartNextGlobalFilters,
     buildGeoChartNextLayers,
 } from "../geoChartNext/geoEmbeddingLayers.js";
+import { PluggableGeoAreaChart } from "./PluggableGeoAreaChart.js";
 
 /**
  * @alpha

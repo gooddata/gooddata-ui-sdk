@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
@@ -6,10 +6,10 @@ import { useIntl } from "react-intl";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { type IRichTextProps, RichText } from "./RichText.js";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { type IAlignPoint } from "../typings/positioning.js";
+import { type IRichTextProps, RichText } from "./RichText.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "bc tc" }, { align: "tc bc" }];
 const descriptionMarkdown = (

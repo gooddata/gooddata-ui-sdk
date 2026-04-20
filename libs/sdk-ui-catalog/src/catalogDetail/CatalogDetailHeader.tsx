@@ -6,14 +6,14 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { EditableLabel, UiCard, UiCopyButton } from "@gooddata/sdk-ui-kit";
 
-import { CatalogDetailGenerateDescription } from "./CatalogDetailGenerateDescription.js";
-import { CatalogDetailGenerateTitle } from "./CatalogDetailGenerateTitle.js";
 import { CatalogItemLockMemo } from "../catalogItem/CatalogItemLock.js";
 import { getVisualizationType } from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
 import { CertificationIconMemo } from "../certification/CertificationIcon.js";
 import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
 import { ObjectTypeTooltip } from "../objectType/ObjectTypeTooltip.js";
+import { CatalogDetailGenerateDescription } from "./CatalogDetailGenerateDescription.js";
+import { CatalogDetailGenerateTitle } from "./CatalogDetailGenerateTitle.js";
 
 export interface ICatalogDetailHeaderRef {
     focusTitle: () => void;

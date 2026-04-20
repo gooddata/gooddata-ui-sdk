@@ -8,6 +8,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { ValidationContextStore } from "@gooddata/sdk-ui";
 import { Checkbox, Input, UiLink, isEnterKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
+import { useAttributeFilterDropdownHeader } from "../../hooks/useAttributeFilterDropdownHeader.js";
+import { isAllOperator, isMatchOperator } from "../../textFilterOperatorUtils.js";
+import { AttributeFilterDropdownHeader } from "../Dropdown/AttributeFilterDropdownHeader.js";
 import { ArbitraryValuesInput } from "./ArbitraryValuesInput.js";
 import { ArbitraryValuesTooltip } from "./ArbitraryValuesTooltip.js";
 import { TextFilterOperatorDropdown } from "./TextFilterOperatorDropdown.js";
@@ -16,9 +19,6 @@ import { TextFilterValidationMessages } from "./TextFilterValidationMessages.js"
 import { type ITextFilterBodyProps } from "./types.js";
 import { useTextFilterBodyTexts } from "./useTextFilterBodyTexts.js";
 import { useTextFilterBodyValidation } from "./useTextFilterBodyValidation.js";
-import { useAttributeFilterDropdownHeader } from "../../hooks/useAttributeFilterDropdownHeader.js";
-import { isAllOperator, isMatchOperator } from "../../textFilterOperatorUtils.js";
-import { AttributeFilterDropdownHeader } from "../Dropdown/AttributeFilterDropdownHeader.js";
 
 /**
  * Unified text filter body component.

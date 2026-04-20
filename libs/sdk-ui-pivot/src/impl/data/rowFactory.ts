@@ -27,8 +27,6 @@ import {
 } from "@gooddata/sdk-ui";
 import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
-import { getSubtotalStyles } from "./dataSourceUtils.js";
-import { type IAgGridPage, type IGridRow, type IGridTotalsRow } from "./resultTypes.js";
 import { messages } from "../../locales.js";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
 import { type TableDescriptor } from "../structure/tableDescriptor.js";
@@ -39,6 +37,8 @@ import {
     type ISliceMeasureCol,
     isSeriesCol,
 } from "../structure/tableDescriptorTypes.js";
+import { getSubtotalStyles } from "./dataSourceUtils.js";
+import { type IAgGridPage, type IGridRow, type IGridTotalsRow } from "./resultTypes.js";
 
 function getSubtotalLabelCellIndex(resultHeaderItems: IResultHeader[][], rowIndex: number): number {
     return resultHeaderItems.findIndex((headerItem) => isResultTotalHeader(headerItem[rowIndex]));

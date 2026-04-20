@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type AttributeModifications,
@@ -13,7 +13,6 @@ import {
     newAttribute,
 } from "@gooddata/sdk-model";
 
-import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 import { type BuilderModifications, builderFactory } from "../builder.js";
 import {
     type AttributeMetadataObjectBuilder,
@@ -23,6 +22,7 @@ import {
     type AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
 } from "../metadata/displayFormFactory.js";
+import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 
 /**
  * Catalog attribute builder

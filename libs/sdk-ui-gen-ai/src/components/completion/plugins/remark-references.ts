@@ -1,8 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type Node, type Parent, type Point } from "unist";
 
-import { type TextNode } from "./types.js";
 import { getReferenceRegex } from "../utils.js";
+import { type TextNode } from "./types.js";
 
 export function remarkReferences() {
     return function () {

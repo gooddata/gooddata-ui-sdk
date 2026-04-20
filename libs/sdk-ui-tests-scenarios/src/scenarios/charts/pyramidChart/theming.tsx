@@ -2,9 +2,9 @@
 
 import { type IPyramidChartProps, PyramidChart } from "@gooddata/sdk-ui-charts";
 
-import { PyramidChartWithMeasureAndViewBy } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { PyramidChartWithMeasureAndViewBy } from "./base.js";
 
 export const theming = scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

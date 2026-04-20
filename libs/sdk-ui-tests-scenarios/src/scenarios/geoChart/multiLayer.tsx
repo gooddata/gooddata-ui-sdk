@@ -5,9 +5,9 @@ import { modifyAttribute, modifyMeasure, newPositiveAttributeFilter } from "@goo
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { GeoChart, type IGeoChartProps, createAreaLayer, createPushpinLayer } from "@gooddata/sdk-ui-geo";
 
-import { OfflineMapStyle } from "./_infra/offlineMapStyle.js";
 import { scenariosFor } from "../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
+import { OfflineMapStyle } from "./_infra/offlineMapStyle.js";
 
 const GeoStateArea = modifyAttribute(ReferenceMd.State.Code, (m) => m.localId("geo.area"));
 const Population = modifyMeasure(ReferenceMd.Population.Sum, (m) => m.alias("Population"));

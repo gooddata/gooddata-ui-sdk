@@ -15,8 +15,8 @@ import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IInsightDefinition, type INullableFilter, type ISettings } from "@gooddata/sdk-model";
 import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 
-import { type IGeoChartProps } from "./public.js";
 import { type GeoLayerType, type IGeoLayer } from "../../layers/index.js";
+import { type IGeoChartProps } from "./public.js";
 
 /**
  * Internal props for GeoChart component.

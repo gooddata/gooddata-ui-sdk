@@ -18,8 +18,6 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type ITabsIds, useInsightPagedList } from "@gooddata/sdk-ui-ext";
 import { DropdownList, type ITab, InsightListItem, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
-import { InsightListNoData } from "./InsightListNoData.js";
-import { type IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
 import { createInsightRequested } from "../../model/events/lab.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
@@ -41,6 +39,8 @@ import {
 import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
 import { getAuthor } from "../../model/utils/author.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
+import { InsightListNoData } from "./InsightListNoData.js";
+import { type IInsightListProps } from "./types.js";
 
 const ITEM_HEIGHT = 40;
 const LIST_WIDTH = 229;

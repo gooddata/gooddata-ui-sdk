@@ -1,6 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import {
     cs,
     de,
@@ -26,7 +27,6 @@ import {
     vi,
     zhCN,
 } from "date-fns/locale";
-import { formatInTimeZone } from "date-fns-tz";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { type DateAttributeGranularity } from "@gooddata/sdk-model";

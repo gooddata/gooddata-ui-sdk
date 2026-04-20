@@ -2,11 +2,11 @@
 
 import * as path from "path";
 
-import { type IRecording, isNonNullRecording, readJsonSync } from "./common.js";
-import { InsightRecording } from "./insights.js";
 import { findFiles } from "../base/utils.js";
 import { logWarn } from "../cli/loggers.js";
 import { RecordingFiles } from "../interface.js";
+import { type IRecording, isNonNullRecording, readJsonSync } from "./common.js";
+import { InsightRecording } from "./insights.js";
 
 function createRecording(directory: string, insightId: string, insightRecordingSpec: any): IRecording | null {
     try {

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -8,11 +8,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { type ISeparators, type PushDataCallback } from "@gooddata/sdk-ui";
 import { MeasureNumberFormat } from "@gooddata/sdk-ui-kit";
 
-import { NumberFormatToggleButton } from "./NumberFormatToggleButton.js";
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
 import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
+import { NumberFormatToggleButton } from "./NumberFormatToggleButton.js";
 
 interface INumberFormatControlProps {
     disabled: boolean;

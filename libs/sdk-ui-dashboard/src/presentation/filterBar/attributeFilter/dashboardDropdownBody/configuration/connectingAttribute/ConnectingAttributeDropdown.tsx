@@ -5,8 +5,8 @@ import { invariant } from "ts-invariant";
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
 
-import { ConnectingAttributeItem } from "./ConnectingAttributeItem.js";
 import { type IConnectingAttribute } from "../../../../../../model/types/attributeFilterTypes.js";
+import { ConnectingAttributeItem } from "./ConnectingAttributeItem.js";
 
 interface IConnectingAttributeDropdownProps {
     itemLocalId: string;

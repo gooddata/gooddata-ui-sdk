@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { memo, useRef, useState } from "react";
 
@@ -9,11 +9,11 @@ import { useIntl } from "react-intl";
 import { type IPushData } from "@gooddata/sdk-ui";
 import { Button } from "@gooddata/sdk-ui-kit";
 
-import { ConfigEditor } from "./ConfigEditor.js";
-import { useOverflow } from "./useOverflow.js";
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
+import { ConfigEditor } from "./ConfigEditor.js";
+import { useOverflow } from "./useOverflow.js";
 
 export interface IAdvancedSectionProps {
     controlsDisabled: boolean;

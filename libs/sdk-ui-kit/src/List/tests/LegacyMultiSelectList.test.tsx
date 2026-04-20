@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -6,8 +6,8 @@ import { describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { customMessages } from "./customDictionary.js";
 import { type ILegacyMultiSelectListProps, LegacyMultiSelectListWithIntl } from "../LegacyMultiSelectList.js";
+import { customMessages } from "./customDictionary.js";
 
 describe("LegacyMultiSelectList", () => {
     const firstItem: any = {

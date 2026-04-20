@@ -1,14 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
 import { type IAttributeDescriptor } from "@gooddata/sdk-model";
 
+import { type AgGridHeaderGroupParams, type AgGridHeaderParams } from "../../types/agGrid.js";
 import { useHeaderDrilling } from "./useHeaderDrilling.js";
 import { useHeaderMenuAggregations } from "./useHeaderMenuAggregations.js";
 import { useHeaderMenuSorting } from "./useHeaderMenuSorting.js";
 import { useHeaderMenuTextWrapping } from "./useHeaderMenuTextWrapping.js";
-import { type AgGridHeaderGroupParams, type AgGridHeaderParams } from "../../types/agGrid.js";
 
 /**
  * Hook for header cell components that handles menu item filtering.

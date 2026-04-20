@@ -2,13 +2,13 @@
 
 import { ComboChart, type IComboChartProps } from "@gooddata/sdk-ui-charts";
 
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import {
     ComboChartWithArithmeticMeasuresAndViewBy,
     ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
     ComboChartWithTwoSecondaryMeasures,
 } from "./base.js";
-import { scenariosFor } from "../../../scenarioGroup.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 /*
  * TODO: there was "stack primary measures with same chart type and custom width style" story

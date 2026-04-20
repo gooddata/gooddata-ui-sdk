@@ -2,12 +2,12 @@
 
 import { type AriaAttributes } from "react";
 
-import { b } from "./iconBem.js";
-import { iconPaths } from "./icons.js";
-import { UiIconBackground } from "./UiIconBackground.js";
 import { type BackgroundShape, type BackgroundType } from "../@types/background.js";
 import { type IconType } from "../@types/icon.js";
 import { type ThemeColor } from "../@types/themeColors.js";
+import { b } from "./iconBem.js";
+import { iconPaths } from "./icons.js";
+import { UiIconBackground } from "./UiIconBackground.js";
 
 /**
  * @internal

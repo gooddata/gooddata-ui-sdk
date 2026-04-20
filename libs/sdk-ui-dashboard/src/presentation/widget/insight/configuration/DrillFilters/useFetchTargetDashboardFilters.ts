@@ -12,10 +12,6 @@ import {
     isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import {
-    getTargetDashboardFiltersCacheKey,
-    useTargetDashboardFiltersContext,
-} from "./TargetDashboardFiltersContext.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectDashboardRef } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -25,6 +21,10 @@ import {
     type IDrillConfigItem,
     type IDrillToDashboardConfig,
 } from "../../../../drill/types.js";
+import {
+    getTargetDashboardFiltersCacheKey,
+    useTargetDashboardFiltersContext,
+} from "./TargetDashboardFiltersContext.js";
 
 interface IUseFetchTargetDashboardFiltersResult {
     targetDashboardFilters: FilterContextItem[];

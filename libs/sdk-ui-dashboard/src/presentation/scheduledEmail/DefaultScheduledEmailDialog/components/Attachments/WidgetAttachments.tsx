@@ -9,10 +9,10 @@ import {
     type WidgetAttachmentType,
 } from "@gooddata/sdk-model";
 
+import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../constants/automations.js";
 import { AttachmentsList } from "./AttachmentsList.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
-import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../constants/automations.js";
 
 const SUPPORTED_WIDGET_ATTACHMENTS: WidgetAttachmentType[] = [
     "PNG",

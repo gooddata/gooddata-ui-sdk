@@ -21,8 +21,8 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import type { FilterContextState, IWorkingFilterContextDefinition } from "./filterContextState.js";
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
+import type { FilterContextState, IWorkingFilterContextDefinition } from "./filterContextState.js";
 
 /**
  * Deeply merges partial working filter context into filter context definition.

@@ -1,9 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
-import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.fixture.js";
 import { selectAdhocDateHierarchies } from "../catalogSelectors.js";
+import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.fixture.js";
 
 describe("catalogSelectors", () => {
     const createInitialState = (

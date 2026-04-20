@@ -4,12 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import { attributeDisplayFormRef, measureItem, newAttribute, newMeasure, uriRef } from "@gooddata/sdk-model";
 
-import {
-    attributeDescriptor,
-    attributeHeaderItem,
-    context,
-    measureDescriptors,
-} from "./HeaderPredicateFactory.fixtures.js";
 import { type IHeaderPredicate } from "../HeaderPredicate.js";
 import {
     attributeItemNameMatch,
@@ -21,6 +15,12 @@ import {
     objRefMatch,
     uriMatch,
 } from "../HeaderPredicateFactory.js";
+import {
+    attributeDescriptor,
+    attributeHeaderItem,
+    context,
+    measureDescriptors,
+} from "./HeaderPredicateFactory.fixtures.js";
 
 describe("uriMatch", () => {
     describe("measure headers", () => {

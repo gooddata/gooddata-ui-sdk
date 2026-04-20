@@ -6,7 +6,6 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { type ISettingButtonProps } from "./types.js";
 import { messages } from "../../../../../locales.js";
 import {
     useDashboardDispatch,
@@ -15,6 +14,7 @@ import {
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
+import { type ISettingButtonProps } from "./types.js";
 
 /**
  * @internal

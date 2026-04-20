@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -10,10 +10,6 @@ import { bucketsById, bucketsIsEmpty, insightBuckets } from "@gooddata/sdk-model
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import {
-    ConfigurationPanelContent,
-    type IConfigurationPanelContentProps,
-} from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import { AXIS, BASE_CHART_AXIS_CONFIG, DUAL_AXES_SUPPORTED_CHARTS } from "../../constants/axis.js";
 import {
@@ -30,6 +26,10 @@ import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 import { MinMaxControl } from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
 
 export class BaseChartConfigurationPanel<
     T extends IConfigurationPanelContentProps = IConfigurationPanelContentProps,

@@ -10,9 +10,9 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { testBackend, testWorkspace } from "./backend.js";
 import { Account, AccountId, Product } from "../../src/fixtures/full.js";
 import { productName } from "../../src/fixtures/referenceObjects.js";
+import { testBackend, testWorkspace } from "./backend.js";
 
 const backend = testBackend();
 

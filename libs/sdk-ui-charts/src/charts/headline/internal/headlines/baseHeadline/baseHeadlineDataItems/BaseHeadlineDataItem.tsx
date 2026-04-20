@@ -1,16 +1,16 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
+import { type IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js";
+import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
+import { useBaseHeadline } from "../BaseHeadlineContext.js";
 import { useBaseHeadlineDataItem } from "./useBaseHeadlineDataItem.js";
 import { useOutOfBoundsDetection } from "./useOutOfBoundsDetection.js";
 import { withDrillable } from "./withDrillable.js";
 import { withTitle } from "./withTitle.js";
-import { type IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js";
-import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
-import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
 function BaseHeadlineDataItemComponent({
     dataItem,

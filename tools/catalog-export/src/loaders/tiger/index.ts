@@ -7,8 +7,6 @@ import { type ITigerClient, type JsonApiWorkspaceOutList } from "@gooddata/api-c
 import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 
-import { createTigerClient } from "./tigerClient.js";
-import { tigerLoad } from "./tigerLoad.js";
 import { API_TOKEN_VAR_NAME } from "../../base/constants.js";
 import {
     type CatalogExportConfig,
@@ -18,6 +16,8 @@ import {
 } from "../../base/types.js";
 import { logError, logInfo } from "../../cli/loggers.js";
 import { type WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts.js";
+import { createTigerClient } from "./tigerClient.js";
+import { tigerLoad } from "./tigerLoad.js";
 
 /**
  * Tests if the provided tiger client can access the backend.

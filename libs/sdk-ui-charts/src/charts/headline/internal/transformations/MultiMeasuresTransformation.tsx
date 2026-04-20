@@ -2,10 +2,10 @@
 
 import { useMemo } from "react";
 
-import { useFireDrillEvent } from "./useFiredDrillEvent.js";
 import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
 import { getBaseHeadlineData } from "../utils/BaseHeadlineTransformationUtils.js";
+import { useFireDrillEvent } from "./useFiredDrillEvent.js";
 
 /**
  * The React component that handles the transformation of the execution objects into the data accepted by the {@link BaseHeadline}

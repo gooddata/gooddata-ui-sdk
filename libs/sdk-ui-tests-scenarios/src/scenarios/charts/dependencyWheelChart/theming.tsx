@@ -2,9 +2,9 @@
 
 import { DependencyWheelChart, type IDependencyWheelChartProps } from "@gooddata/sdk-ui-charts";
 
-import { DependencyWheelChartWithMeasureAttributeFromAndTo } from "./base.js";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { DependencyWheelChartWithMeasureAttributeFromAndTo } from "./base.js";
 
 export const theming = scenariosFor<IDependencyWheelChartProps>("DependencyWheelChart", DependencyWheelChart)
     .withGroupNames(...ScenarioGroupNames.Theming)

@@ -6,10 +6,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 import type { ISeparators, MetricType } from "@gooddata/sdk-model";
 import { type IUiTagDef, UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
-import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
-import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
-import { CatalogDetailTags } from "./CatalogDetailTags.js";
 import {
     isCatalogItemAttribute,
     isCatalogItemDataSet,
@@ -18,6 +14,10 @@ import {
     isCatalogItemMeasure,
 } from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
+import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
+import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
+import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
+import { CatalogDetailTags } from "./CatalogDetailTags.js";
 
 type Props = {
     item: ICatalogItem;

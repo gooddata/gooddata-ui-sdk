@@ -16,6 +16,12 @@ import { v4 as uuidv4 } from "uuid";
 
 import { objRefToString } from "@gooddata/sdk-model";
 
+import { type RenderMode } from "../../types.js";
+import { type DashboardCommandType } from "../commands/base.js";
+import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
+import { type DashboardEventType } from "../events/base.js";
+import { AllQueryServices } from "../queryServices/index.js";
+import { type DashboardContext, type PrivateDashboardContext } from "../types/commonTypes.js";
 import { getDashboardContext } from "./_infra/contexts.js";
 import { createQueryProcessingModule } from "./_infra/queryProcessing.js";
 import { type IDashboardQueryService } from "./_infra/queryService.js";
@@ -49,12 +55,6 @@ import { type DashboardDispatch, type DashboardState } from "./types.js";
 import { uiSliceReducer } from "./ui/index.js";
 import { userSliceReducer } from "./user/index.js";
 import { usersSliceReducer } from "./users/index.js";
-import { type RenderMode } from "../../types.js";
-import { type DashboardCommandType } from "../commands/base.js";
-import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
-import { type DashboardEventType } from "../events/base.js";
-import { AllQueryServices } from "../queryServices/index.js";
-import { type DashboardContext, type PrivateDashboardContext } from "../types/commonTypes.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

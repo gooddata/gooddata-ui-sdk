@@ -9,6 +9,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesAttributes } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 
+import { type Attribute, type DateDataSet } from "../../base/types.js";
 import {
     type DatasetMap,
     type LabelMap,
@@ -17,7 +18,6 @@ import {
     createLabelMap,
     getReferencedDataset,
 } from "./tigerCommon.js";
-import { type Attribute, type DateDataSet } from "../../base/types.js";
 
 type DatasetWithAttributes = {
     dataset: JsonApiDatasetOut;

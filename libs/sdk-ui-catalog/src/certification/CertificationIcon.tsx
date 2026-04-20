@@ -6,8 +6,8 @@ import type { IntlShape } from "react-intl";
 
 import { UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { useIsCatalogCertificationEnabled } from "./gate.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
+import { useIsCatalogCertificationEnabled } from "./gate.js";
 
 type CertificationIconProps = ComponentProps<"div"> & {
     intl: IntlShape;

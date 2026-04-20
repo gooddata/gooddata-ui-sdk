@@ -1,11 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { createAreaFillLayer, createAreaOutlineLayer } from "./layers.js";
 import { createStylePlan } from "../../map/styleReconciliation/planBuilder.js";
 import { applyStylePlan } from "../../map/styleReconciliation/reconcileStyle.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { removeLayerIfExists, removeSourceIfExists } from "../common/layerOps.js";
 import { type GeoJSONSourceSpecification, type IMapFacade } from "../common/mapFacade.js";
+import { createAreaFillLayer, createAreaOutlineLayer } from "./layers.js";
 
 /**
  * Generate unique layer IDs for an area layer

@@ -29,9 +29,6 @@ import {
     getTextFilterStateText,
 } from "@gooddata/sdk-ui-filters";
 
-import { useAttributeFilterDisplayFormFromMap } from "./useAttributeFilterDisplayFormFromMap.js";
-import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
-import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { selectAllCatalogAttributesMap } from "../../model/store/catalog/catalogSelectors.js";
 import { selectLocale, selectSettings } from "../../model/store/config/configSelectors.js";
@@ -39,6 +36,9 @@ import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/
 import { matchDateFilterToDateFilterOptionWithPreference } from "../dateFilterConfig/dateFilterOptionMapping.js";
 import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
 import { ensureAllTimeFilterForExport } from "../exportUtils/filterUtils.js";
+import { useAttributeFilterDisplayFormFromMap } from "./useAttributeFilterDisplayFormFromMap.js";
+import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
+import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
 
 export type FilterNaming = {
     type: "attributeFilter" | "dateFilter";

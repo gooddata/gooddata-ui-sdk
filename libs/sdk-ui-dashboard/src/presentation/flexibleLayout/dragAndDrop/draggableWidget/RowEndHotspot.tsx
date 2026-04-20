@@ -6,8 +6,6 @@ import cx from "classnames";
 
 import { type IDashboardWidget } from "@gooddata/sdk-model";
 
-import { Hotspot } from "./Hotspot.js";
-import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
 import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
@@ -22,6 +20,8 @@ import { useScreenSize } from "../../../dashboard/components/DashboardScreenSize
 import { useIsDraggingWidget } from "../../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
 import { getRemainingHeightInColumn, getRemainingWidthInRow } from "../../rowEndHotspotHelper.js";
+import { Hotspot } from "./Hotspot.js";
+import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 
 const MINIMUM_DROPZONE_WIDTH_TO_RENDER_TEXT = 2;
 const MINIMUM_DROPZONE_HEIGHT_TO_RENDER_TEXT = 7;

@@ -2,7 +2,6 @@
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
 import { type IChartLimits } from "../../../interfaces/chartConfig.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,
@@ -25,6 +24,7 @@ import { type ChartType } from "../../typings/chartType.js";
 import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
 import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
 import { isOneOfTypes, isTreemap } from "../_util/common.js";
+import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
 
 export interface IValidationResult {
     dataTooLarge: boolean;

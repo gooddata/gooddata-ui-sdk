@@ -6,14 +6,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { useDebouncedState } from "@gooddata/sdk-ui";
 
-import {
-    FILTER_CHIP_MAX_WIDTH,
-    FILTER_ITEMS_OFFSET,
-    FILTER_OPTION_ALL_VALUE,
-    SCROLLBAR_WIDTH,
-} from "./constants.js";
-import { UiAsyncTableDropdownItem } from "./UiAsyncTableDropdownItem.js";
-import { getFilterDropdownId, getFilterOptionsMap } from "./utils.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { DropdownList } from "../../../Dropdown/DropdownList.js";
@@ -24,6 +16,14 @@ import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { type IUiAsyncTableFilterOption, type IUiAsyncTableFilterProps } from "../types.js";
+import {
+    FILTER_CHIP_MAX_WIDTH,
+    FILTER_ITEMS_OFFSET,
+    FILTER_OPTION_ALL_VALUE,
+    SCROLLBAR_WIDTH,
+} from "./constants.js";
+import { UiAsyncTableDropdownItem } from "./UiAsyncTableDropdownItem.js";
+import { getFilterDropdownId, getFilterOptionsMap } from "./utils.js";
 
 /**
  * @internal

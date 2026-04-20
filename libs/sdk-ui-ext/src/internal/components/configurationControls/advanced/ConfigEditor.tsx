@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -8,10 +8,10 @@ import { useIntl } from "react-intl";
 
 import { Button, Hyperlink, type IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
+import { messages } from "../../../../locales.js";
 import { CodeMirrorEditor } from "./CodeMirrorEditor.js";
 import { SnippetHeader, SnippetItem } from "./SnippetItem.js";
 import { type IChartConfigurationItemSnippet, SNIPPETS } from "./snippets.js";
-import { messages } from "../../../../locales.js";
 
 const EDITOR_ALIGN_POINTS: IAlignPoint[] = [
     {

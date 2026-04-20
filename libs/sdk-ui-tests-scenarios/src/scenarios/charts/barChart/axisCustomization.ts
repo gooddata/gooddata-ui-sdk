@@ -4,15 +4,15 @@ import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
+import { axisRotationVariants } from "../_infra/axisRotationVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import {
     BarChartWithArithmeticMeasuresAndViewBy,
     BarChartWithTwoMeasuresAndTwoViewBy,
     BarChartWithTwoMeasuresAndViewBy,
 } from "./base.js";
-import { scenariosFor } from "../../../scenarioGroup.js";
-import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
-import { axisRotationVariants } from "../_infra/axisRotationVariants.js";
-import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 const singleAxisNameConfig = scenariosFor<IBarChartProps>("BarChart", BarChart)
     .withGroupNames(...ScenarioGroupNames.Axes)

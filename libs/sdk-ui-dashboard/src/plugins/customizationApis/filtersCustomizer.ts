@@ -1,11 +1,11 @@
 // (C) 2021-2026 GoodData Corporation
 
+import { type IFiltersCustomizer } from "../customizer.js";
 import { DefaultAttributeFiltersCustomizer } from "./attributeFiltersCustomizer.js";
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { DefaultDateFiltersCustomizer } from "./dateFiltersCustomizer.js";
-import { type CustomizerMutationsContext } from "./types.js";
-import { type IFiltersCustomizer } from "../customizer.js";
 import { DefaultFilterGroupsCustomizer } from "./filterGroupsCustomizer.js";
+import { type CustomizerMutationsContext } from "./types.js";
 
 export class DefaultFiltersCustomizer implements IFiltersCustomizer {
     private readonly attributeFiltersCustomizer: DefaultAttributeFiltersCustomizer;

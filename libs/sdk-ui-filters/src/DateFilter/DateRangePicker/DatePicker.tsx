@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { forwardRef, useState } from "react";
 
@@ -34,9 +34,9 @@ import { type IntlShape } from "react-intl";
 import { type WeekStart } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
+import { type DateRangePosition } from "../interfaces/index.js";
 import { type IDateRange } from "./types.js";
 import { mergeDayPickerProps } from "./utils.js";
-import { type DateRangePosition } from "../interfaces/index.js";
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,

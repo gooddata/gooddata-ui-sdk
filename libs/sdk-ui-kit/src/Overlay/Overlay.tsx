@@ -15,14 +15,14 @@ import isReactEqual from "react-fast-compare";
 import { Portal } from "react-portal";
 import { v4 as uuid } from "uuid";
 
-import { OverlayContext } from "./OverlayContext.js";
-import { type IOverlayProps, type IOverlayState } from "./typings.js";
 import { type Alignment, type OverlayPositionType, type SameAsTargetPosition } from "../typings/overlay.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
 import { GOODSTRAP_DRAG_EVENT } from "../utils/drag.js";
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";
 import { GOODSTRAP_SCROLLED_EVENT } from "../utils/scroll.js";
+import { OverlayContext } from "./OverlayContext.js";
+import { type IOverlayProps, type IOverlayState } from "./typings.js";
 
 const events = [
     {

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
 import {
@@ -10,7 +10,6 @@ import {
     measureLocalId,
 } from "@gooddata/sdk-model";
 
-import { DataAccessImpl } from "./dataAccessImpl.js";
 import {
     type IDataAccessMethods,
     type IDataSeries,
@@ -21,6 +20,7 @@ import {
 import { type DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig.js";
 import { dataViewToTableData } from "../tableData/dataViewToTableData.js";
 import { type ITableData } from "../tableData/interfaces/index.js";
+import { DataAccessImpl } from "./dataAccessImpl.js";
 
 class FilteredIterator<T> implements Iterator<T> {
     private idx = 0;

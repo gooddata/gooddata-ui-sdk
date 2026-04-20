@@ -18,10 +18,6 @@ import {
 import { type IExtendedExportConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 
-import { useExportHandler } from "./useExportHandler.js";
-import { useImageExportHandler } from "./useImageExportHandler.js";
-import { useRawExportHandler } from "./useRawExportHandler.js";
-import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 import {
     type IExportImageInsightWidget,
     type IExportInsightWidget,
@@ -60,6 +56,10 @@ import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDi
 import { getDefaultPdfPageSize } from "../../scheduledEmail/utils/pdfPageSize.js";
 import { useExportToTabular } from "../../topBar/menuButton/useExportToTabular.js";
 import { useExportWithTemplateSelection } from "../../topBar/menuButton/useExportWithTemplateSelection.js";
+import { useExportHandler } from "./useExportHandler.js";
+import { useImageExportHandler } from "./useImageExportHandler.js";
+import { useRawExportHandler } from "./useRawExportHandler.js";
+import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 
 export const useInsightExport = (config: {
     title: string;

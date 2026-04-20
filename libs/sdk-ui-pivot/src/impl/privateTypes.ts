@@ -25,7 +25,6 @@ import {
     type OnExportReady,
 } from "@gooddata/sdk-ui";
 
-import { type IScrollPosition } from "./stickyRowHandler.js";
 import { type ColumnWidthItem } from "../columnWidths.js";
 import {
     type ColumnHeadersPosition,
@@ -34,6 +33,7 @@ import {
     type IMenu,
     type MeasureGroupDimension,
 } from "../publicTypes.js";
+import { type IScrollPosition } from "./stickyRowHandler.js";
 
 export interface IMenuAggregationClickConfig {
     type: TotalType;

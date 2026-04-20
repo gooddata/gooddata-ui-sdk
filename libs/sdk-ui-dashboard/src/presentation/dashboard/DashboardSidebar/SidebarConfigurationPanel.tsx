@@ -2,9 +2,9 @@
 
 import { type ReactElement } from "react";
 
+import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 import { CreationPanel } from "./CreationPanel.js";
 import { type ISidebarProps } from "./types.js";
-import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 
 /**
  * @internal

@@ -1,5 +1,17 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { DEFAULT_CLUSTER_FILTER, DEFAULT_CLUSTER_LABELS_CONFIG } from "../../map/runtime/mapConfig.js";
+import { createSegmentFilter } from "../../map/style/sharedLayers.js";
+import { type GeoChartPushpinSizeOption, type IGeoChartPointsConfig } from "../../types/config/points.js";
+import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
+import { type IPushpinGeoData } from "../../types/geoData/pushpin.js";
+import { CROSS_FILTER_UNSELECTED_OPACITY, SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
+import type {
+    CircleLayerSpecification,
+    ExpressionSpecification,
+    FilterSpecification,
+    SymbolLayerSpecification,
+} from "../common/mapFacade.js";
 import {
     DEFAULT_CLUSTER_LAYER_NAME,
     DEFAULT_LAYER_NAME,
@@ -13,18 +25,6 @@ import {
     PUSHPIN_STYLE_FEATURE_PROPERTIES,
 } from "./constants.js";
 import { getMinMax } from "./size/calculations.js";
-import { DEFAULT_CLUSTER_FILTER, DEFAULT_CLUSTER_LABELS_CONFIG } from "../../map/runtime/mapConfig.js";
-import { createSegmentFilter } from "../../map/style/sharedLayers.js";
-import { type GeoChartPushpinSizeOption, type IGeoChartPointsConfig } from "../../types/config/points.js";
-import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
-import { type IPushpinGeoData } from "../../types/geoData/pushpin.js";
-import { CROSS_FILTER_UNSELECTED_OPACITY, SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
-import type {
-    CircleLayerSpecification,
-    ExpressionSpecification,
-    FilterSpecification,
-    SymbolLayerSpecification,
-} from "../common/mapFacade.js";
 
 /**
  * MapLibre expression that returns full opacity for selected features

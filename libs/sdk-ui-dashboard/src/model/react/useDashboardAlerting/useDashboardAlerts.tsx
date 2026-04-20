@@ -1,9 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
+import { selectAlertingDialogContext } from "../../../model/store/ui/uiSelectors.js";
+import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAlertsData } from "./useDashboardAlertsData.js";
 import { useDashboardAlertsDialog } from "./useDashboardAlertsDialog.js";
 import { useDashboardAlertsManagementDialog } from "./useDashboardAlertsManagementDialog.js";
-import { selectAlertingDialogContext } from "../../../model/store/ui/uiSelectors.js";
-import { useDashboardSelector } from "../DashboardStoreProvider.js";
 
 /**
  * Hook that handles alert dialogs.

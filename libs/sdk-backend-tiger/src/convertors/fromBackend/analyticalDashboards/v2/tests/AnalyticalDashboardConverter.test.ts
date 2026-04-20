@@ -1,9 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { v4 as uuidv4 } from "uuid";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { dashboardLayout } from "./AnalyticalDashboardConverter.fixture.js";
 import { prepareDrillLocalIdentifierIfMissing } from "../AnalyticalDashboardConverter.js";
+import { dashboardLayout } from "./AnalyticalDashboardConverter.fixture.js";
 
 vi.mock("uuid", () => ({
     v4: vi.fn(() => "mocked-uuid"),

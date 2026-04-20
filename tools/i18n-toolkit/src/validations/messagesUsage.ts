@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import * as path from "path";
 
@@ -6,9 +6,9 @@ import { extract } from "@formatjs/cli-lib";
 import fastGlob from "fast-glob";
 
 import { DefaultLocale, type ToolkitConfigFile, type UsageResult } from "../data.js";
-import { checkTranslations } from "./usage/checkTranslations.js";
 import { type LocalesStructure } from "../schema/localization.js";
 import { done, fail, message, resultsInfo, skipped } from "../utils/console.js";
+import { checkTranslations } from "./usage/checkTranslations.js";
 
 const { sync } = fastGlob;
 

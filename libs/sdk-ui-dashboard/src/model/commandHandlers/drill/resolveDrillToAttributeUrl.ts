@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { type SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 
@@ -9,9 +10,9 @@ import {
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
 
-import { getElementTitle } from "./getElementTitle.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import { getElementTitle } from "./getElementTitle.js";
 
 function getDrillToAttributeUrlIntersectionAttributeItemHeader(
     drillConfig: IDrillToAttributeUrl,

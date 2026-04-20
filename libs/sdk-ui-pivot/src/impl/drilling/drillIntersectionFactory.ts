@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type AgEventType, type CellEvent } from "ag-grid-community";
 import { invariant } from "ts-invariant";
 
@@ -8,12 +9,6 @@ import {
     getDrillIntersection,
 } from "@gooddata/sdk-ui";
 
-import {
-    createDataColLeafHeaders,
-    createMixedValuesColHeaders,
-    createScopeColWithMetricHeaders,
-    createSliceColHeaders,
-} from "./colDrillHeadersFactory.js";
 import { type IGridRow } from "../data/resultTypes.js";
 import { type TableDescriptor } from "../structure/tableDescriptor.js";
 import {
@@ -23,6 +18,12 @@ import {
     isSeriesCol,
     isSliceCol,
 } from "../structure/tableDescriptorTypes.js";
+import {
+    createDataColLeafHeaders,
+    createMixedValuesColHeaders,
+    createScopeColWithMetricHeaders,
+    createSliceColHeaders,
+} from "./colDrillHeadersFactory.js";
 
 /**
  * Given an ag-grid cell event and table descriptor, create a drill intersection that exactly describes

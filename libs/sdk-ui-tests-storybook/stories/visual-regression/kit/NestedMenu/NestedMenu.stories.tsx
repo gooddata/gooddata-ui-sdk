@@ -15,7 +15,6 @@ import {
 
 import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
-
 import "./NestedMenu.scss";
 
 function NestedMenuExamples() {

@@ -6,8 +6,6 @@ import { invariant } from "ts-invariant";
 
 import { objRefToString } from "@gooddata/sdk-model";
 
-// import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 import { selectAllCatalogDateDatasetsMap } from "../../../../model/store/catalog/catalogSelectors.js";
 import { type IAddDateFilter } from "../../../commands/filters.js";
 import { dateFilterAdded } from "../../../events/filters.js";
@@ -21,6 +19,8 @@ import {
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
+// import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 
 export function* addDateFilterHandler(ctx: DashboardContext, cmd: IAddDateFilter): SagaIterator<void> {
     const { index, dateDataset } = cmd.payload;

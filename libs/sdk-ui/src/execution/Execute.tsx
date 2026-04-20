@@ -13,14 +13,6 @@ import {
     type ITotal,
 } from "@gooddata/sdk-model";
 
-import { createExecution } from "./createExecution.js";
-import { type IExecuteErrorComponent, type IExecuteLoadingComponent } from "./interfaces.js";
-import { withExecution } from "./withExecution.js";
-import {
-    type DataViewWindow,
-    type IWithLoadingEvents,
-    type WithLoadingResult,
-} from "./withExecutionLoading.js";
 import { UnexpectedSdkError } from "../base/errors/GoodDataSdkError.js";
 import {
     type AttributesMeasuresOrPlaceholders,
@@ -31,6 +23,14 @@ import {
 } from "../base/react/placeholders/aliases.js";
 import { useResolveValuesWithPlaceholders } from "../base/react/placeholders/hooks.js";
 import { withContexts } from "../base/react/withContexts.js";
+import { createExecution } from "./createExecution.js";
+import { type IExecuteErrorComponent, type IExecuteLoadingComponent } from "./interfaces.js";
+import { withExecution } from "./withExecution.js";
+import {
+    type DataViewWindow,
+    type IWithLoadingEvents,
+    type WithLoadingResult,
+} from "./withExecutionLoading.js";
 
 /**
  * Props of the {@link Execute} component.

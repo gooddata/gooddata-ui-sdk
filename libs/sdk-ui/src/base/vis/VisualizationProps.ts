@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -9,6 +9,8 @@ import {
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 
+import { type IErrorProps } from "../react/ErrorComponent.js";
+import { type ILoadingProps } from "../react/LoadingComponent.js";
 import { type ExplicitDrill, type OnFiredDrillEvent } from "./DrillEvents.js";
 import {
     type IPushData,
@@ -17,8 +19,6 @@ import {
     type OnExportReady,
     type OnLoadingChanged,
 } from "./Events.js";
-import { type IErrorProps } from "../react/ErrorComponent.js";
-import { type ILoadingProps } from "../react/LoadingComponent.js";
 
 /**
  * Super-interface for all visualization props.

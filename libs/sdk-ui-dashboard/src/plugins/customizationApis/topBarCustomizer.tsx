@@ -3,8 +3,6 @@
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { type CustomizerMutationsContext } from "./types.js";
 import {
     type OptionalTopBarComponentProvider,
     type TopBarComponentProvider,
@@ -12,6 +10,8 @@ import {
 import { RenderModeAwareTopBar } from "../../presentation/topBar/topBar/RenderModeAwareTopBar.js";
 import { type CustomTopBarComponent } from "../../presentation/topBar/topBar/types.js";
 import { type ITopBarCustomizer } from "../customizer.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 
 const DefaultTopBarRendererProvider: TopBarComponentProvider = () => {
     return RenderModeAwareTopBar;

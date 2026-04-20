@@ -7,11 +7,11 @@ import { type IntlShape } from "react-intl";
 
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
-import { getExportTooltipId } from "./getExportTooltips.js";
-import { type IUseInsightMenuConfig } from "./types.js";
 import { type IExecutionResultEnvelope } from "../../../../model/store/executionResults/types.js";
 import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
 import { type IInsightMenuItem } from "../types.js";
+import { getExportTooltipId } from "./getExportTooltips.js";
+import { type IUseInsightMenuConfig } from "./types.js";
 
 const getPresentationExportItems = (
     intl: IntlShape,

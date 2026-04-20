@@ -2,6 +2,8 @@
 
 import { type KeyboardEvent, memo, useEffect, useId, useMemo, useRef } from "react";
 
+import { bem } from "../@ui/@utils/bem.js";
+import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
 import {
     CatalogItemPickerFooter,
     CatalogItemPickerHeader,
@@ -19,8 +21,6 @@ import { useCatalogItemPickerListboxItems } from "./useCatalogItemPickerListboxI
 import { useCatalogItemPickerState } from "./useCatalogItemPickerState.js";
 import { useDateDatasetSelection } from "./useDateDatasetSelection.js";
 import { groupMetricCatalogItems } from "./utils.js";
-import { bem } from "../@ui/@utils/bem.js";
-import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
 
 const { b, e } = bem("gd-ui-kit-catalog-item-picker");
 

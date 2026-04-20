@@ -2,15 +2,15 @@
 
 import { describe, expect, it } from "vitest";
 
+import { createColumnLocator, createTransposedColumnLocator } from "../colLocatorFactory.js";
+import { TableDescriptor } from "../tableDescriptor.js";
+import { type IScopeCol } from "../tableDescriptorTypes.js";
 import {
     MultipleMeasuresAndNoColumnsWithMetricsInRows,
     SingleMeasureWithRowAttribute,
     SingleMeasureWithTwoRowAndTwoColumnAttributes,
     TwoMeasuresWithSingleRowAttrWithMetricsInRows,
 } from "./table.fixture.js";
-import { createColumnLocator, createTransposedColumnLocator } from "../colLocatorFactory.js";
-import { TableDescriptor } from "../tableDescriptor.js";
-import { type IScopeCol } from "../tableDescriptorTypes.js";
 
 describe("createColumnLocator", () => {
     it("creates valid leaf column locator in table without column attributes", () => {

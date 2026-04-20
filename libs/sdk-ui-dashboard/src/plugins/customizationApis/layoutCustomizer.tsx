@@ -5,10 +5,6 @@ import { InvariantError } from "ts-invariant";
 
 import { type IDashboardLayout } from "@gooddata/sdk-model";
 
-import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { ExportLayoutCustomizer } from "./exportLayoutCustomizer.js";
-import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
-import { type CustomizerMutationsContext } from "./types.js";
 import {
     type DashboardLayoutExportTransformFn,
     type DashboardTransformFn,
@@ -26,6 +22,10 @@ import {
     type FluidLayoutCustomizationFn,
     type IDashboardLayoutCustomizer,
 } from "../customizer.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { ExportLayoutCustomizer } from "./exportLayoutCustomizer.js";
+import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
+import { type CustomizerMutationsContext } from "./types.js";
 
 interface ILayoutCustomizerState {
     addCustomProvider(provider: OptionalLayoutComponentProvider): void;

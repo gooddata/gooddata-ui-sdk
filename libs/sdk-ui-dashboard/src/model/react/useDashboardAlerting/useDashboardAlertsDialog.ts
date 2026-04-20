@@ -10,7 +10,6 @@ import {
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardAlertsCommands } from "./useDashboardAlertsCommands.js";
 import { messages } from "../../../locales.js";
 import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
@@ -20,6 +19,7 @@ import { selectWidgets } from "../../store/tabs/layout/layoutSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
+import { useDashboardAlertsCommands } from "./useDashboardAlertsCommands.js";
 
 /**
  * @internal

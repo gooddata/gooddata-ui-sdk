@@ -4,7 +4,6 @@ import { isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
-import { attributeFingerprint, dataSamplingFingerprint, sortFingerprint } from "./fingerprints.js";
 import { type IAttribute } from "../attribute/index.js";
 import { type IDimension, dimensionTotals } from "../base/dimension.js";
 import { dimensionFingerprint } from "../base/fingerprint.js";
@@ -16,6 +15,7 @@ import { filterFingerprint } from "../filter/fingerprint.js";
 import { type IFilter, type INullableFilter } from "../filter/index.js";
 import { measureFingerprint } from "../measure/fingerprint.js";
 import { type IMeasure } from "../measure/index.js";
+import { attributeFingerprint, dataSamplingFingerprint, sortFingerprint } from "./fingerprints.js";
 
 /**
  * Contains any configuration that should be done with the data after they are obtained from the server

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo, useCallback } from "react";
 
@@ -6,10 +6,10 @@ import cx from "classnames";
 
 import { usePropState } from "@gooddata/sdk-ui";
 
-import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
-import { type IExportDialogBaseProps } from "./typings.js";
 import { Checkbox } from "../Form/Checkbox.js";
 import { useIdPrefixed } from "../utils/useId.js";
+import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
+import { type IExportDialogBaseProps } from "./typings.js";
 
 /**
  * @internal

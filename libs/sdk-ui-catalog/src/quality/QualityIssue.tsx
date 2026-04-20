@@ -13,9 +13,9 @@ import {
 } from "@gooddata/sdk-model";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
+import { type ICatalogItemRef } from "../catalogItem/types.js";
 import { QualityIssueObjects } from "./QualityIssueObjects.js";
 import { QualitySeverityIcon } from "./QualitySeverityIcon.js";
-import { type ICatalogItemRef } from "../catalogItem/types.js";
 
 const titleMessages: { [key in SemanticQualityIssueCode]?: MessageDescriptor } = defineMessages({
     [SemanticQualityIssueCodeValues.IDENTICAL_TITLE]: {

@@ -6,6 +6,13 @@ import cx from "classnames";
 
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
+import { isItemInSection } from "../../../../_staging/layout/coordinates.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
+import { type ILayoutSectionPath } from "../../../../types.js";
+import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
+import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
+import { isBaseDraggableMovingItem } from "../../../dragAndDrop/types.js";
+import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 import { SectionDropZoneBox } from "./SectionDropZoneBox.js";
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
@@ -14,13 +21,6 @@ import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsig
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
-import { isItemInSection } from "../../../../_staging/layout/coordinates.js";
-import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
-import { type ILayoutSectionPath } from "../../../../types.js";
-import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
-import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
-import { isBaseDraggableMovingItem } from "../../../dragAndDrop/types.js";
-import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
 
 export type RowPosition = "above" | "below";
 

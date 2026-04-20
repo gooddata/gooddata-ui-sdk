@@ -4,12 +4,12 @@ import { type IColorPalette } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, type ISeparators } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IGeoAreasConfig } from "./areas.js";
-import { type IGeoChartLegendConfig } from "./legend.js";
-import { type IGeoChartViewport } from "./viewport.js";
 import type { IGeoLngLat, IGeoLngLatBounds } from "../../../publicTypes/geoCommon.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import type { GeoBasemap } from "../map/basemap.js";
+import { type IGeoAreasConfig } from "./areas.js";
+import { type IGeoChartLegendConfig } from "./legend.js";
+import { type IGeoChartViewport } from "./viewport.js";
 
 /**
  * Configuration for GeoAreaChart component

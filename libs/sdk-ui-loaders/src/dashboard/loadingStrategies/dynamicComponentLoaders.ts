@@ -12,8 +12,8 @@ import {
     type IDashboardPluginContract_V1,
 } from "@gooddata/sdk-ui-dashboard";
 
-import { determineDashboardEngine } from "./determineDashboardEngine.js";
 import { type LoadedPlugin, type ModuleFederationIntegration } from "../types.js";
+import { determineDashboardEngine } from "./determineDashboardEngine.js";
 
 interface IEntryPoint {
     pluginKey: string;

@@ -22,12 +22,10 @@ if (window && typeof w.__GD_ASSET_PATH__ === "string") {
 
 // oxlint-disable-next-line import/no-unassigned-import
 import "./autoAuth.js";
-
 import { type CustomElementContext, getContext, setContext } from "./context.js";
 import { GenAIAssistant } from "./gen-ai/GenAiAssistant.js";
 import { Dashboard } from "./visualizations/Dashboard.js";
 import { Insight } from "./visualizations/Insight.js";
-
 // Include styles async to use native link injection from MiniCssExtractPlugin
 // oxlint-disable-next-line import/no-unassigned-import
 import "./visualizations/components.css";

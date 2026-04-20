@@ -10,6 +10,7 @@ import {
     type ITotalDescriptor,
 } from "@gooddata/sdk-model";
 
+import { type IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
 import {
     type ChartElementType,
     type ChartType,
@@ -21,7 +22,6 @@ import {
     type VisType,
     type XirrType,
 } from "./visualizationTypes.js";
-import { type IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
 
 /**
  * Drillable item reference or predicate that enables insight / kpi drilling if it matches some attribute or measure of the insight / kpi.

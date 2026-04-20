@@ -9,11 +9,11 @@ import { type IAttributeElement } from "@gooddata/sdk-model";
 import { ValidationContextStore, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import { isEscapeKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { type IAttributeFilterDropdownBodyProps } from "./types.js";
 import { ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS, DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
+import { type IAttributeFilterDropdownBodyProps } from "./types.js";
 
 /**
  * Component showing a list of elements and controls for manipulating the selection.

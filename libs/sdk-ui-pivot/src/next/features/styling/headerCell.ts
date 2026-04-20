@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ColGroupDef, type HeaderClassParams } from "ag-grid-enterprise";
 
@@ -9,8 +9,8 @@ import {
     isValueColumnDefinition,
 } from "@gooddata/sdk-ui";
 
-import { e } from "./bem.js";
 import { type AgGridRowData } from "../../types/internal.js";
+import { e } from "./bem.js";
 
 /**
  * Returns a class name for a header cell.

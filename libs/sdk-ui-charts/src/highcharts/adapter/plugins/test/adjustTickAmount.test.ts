@@ -38,26 +38,25 @@ const mockAxis = ({
     userOptions,
     hasData,
     // oxlint-disable-next-line @typescript-eslint/no-redundant-type-constituents
-}: Partial<Highcharts.Axis | UnsafeInternals>): Highcharts.Axis | UnsafeInternals =>
-    ({
-        tickInterval,
-        tickAmount,
-        tickPositions,
-        opposite,
-        chart,
-        coll,
-        options,
-        userOptions,
-        hasData,
-        getExtremes: () => ({
-            min,
-            max,
-            dataMin,
-            dataMax,
-            userMin,
-            userMax,
-        }),
-    });
+}: Partial<Highcharts.Axis | UnsafeInternals>): Highcharts.Axis | UnsafeInternals => ({
+    tickInterval,
+    tickAmount,
+    tickPositions,
+    opposite,
+    chart,
+    coll,
+    options,
+    userOptions,
+    hasData,
+    getExtremes: () => ({
+        min,
+        max,
+        dataMin,
+        dataMax,
+        userMin,
+        userMax,
+    }),
+});
 
 describe("adjustTickAmount - general", () => {
     const Y_AXIS = {

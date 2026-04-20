@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.31.0-alpha.1",
+    "version": "11.31.0-alpha.2",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -37,10 +37,10 @@
         "_phase:validate": "npm run validate",
         "build": "rm -rf dist && mkdir dist && vite-node scripts/build.ts && tsgo",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
         "update-package": "vite-node scripts/updatePackage.ts",
         "validate": "npm run lint && npm run format-check"
     },
@@ -65,7 +65,7 @@
         "eslint-plugin-sonarjs": "3.0.6",
         "globals": "17.2.0",
         "jiti": "2.6.1",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3",

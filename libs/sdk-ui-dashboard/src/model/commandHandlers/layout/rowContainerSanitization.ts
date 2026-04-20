@@ -9,7 +9,6 @@ import {
     isDashboardLayout,
 } from "@gooddata/sdk-model";
 
-import { getChildWidgetLayoutPaths, getUpdatedSizesOnly } from "./containerWidthSanitization.js";
 import {
     getContainerDirectionAtPath,
     getLayoutConfiguration,
@@ -19,6 +18,7 @@ import { type ILayoutItemPath } from "../../../types.js";
 import { type IDashboardCommand } from "../../commands/base.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { getChildWidgetLayoutPaths, getUpdatedSizesOnly } from "./containerWidthSanitization.js";
 
 function findNestedRowContainers(
     container: ExtendedDashboardWidget,

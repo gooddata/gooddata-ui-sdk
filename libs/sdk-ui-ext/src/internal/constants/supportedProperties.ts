@@ -2,8 +2,8 @@
 
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
-import { AXIS } from "./axis.js";
 import { type HeadlineControlProperties } from "../interfaces/ControlProperties.js";
+import { AXIS } from "./axis.js";
 
 const BASE_PROPERTIES = [
     "dataLabels.visible",

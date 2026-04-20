@@ -11,7 +11,6 @@ import {
 } from "@gooddata/sdk-model";
 import { type ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
-import { type SectionName } from "./sectionName.js";
 import { type IColorConfiguration } from "../../interfaces/Colors.js";
 import {
     type IConfigurationPanelRenderers,
@@ -36,6 +35,7 @@ import {
     isInsightSupportedForScheduledExports,
 } from "../pluggableVisualizations/alerts.js";
 import { isInsightSupportedForImplicitDrillToUrl } from "../pluggableVisualizations/drillDownUtil.js";
+import { type SectionName } from "./sectionName.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;

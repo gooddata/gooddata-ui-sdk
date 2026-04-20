@@ -3,14 +3,14 @@
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
-import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { type CustomizerMutationsContext } from "./types.js";
 import {
     type AttributeFilterComponentProvider,
     type OptionalAttributeFilterComponentProvider,
 } from "../../presentation/dashboardContexts/types.js";
 import { DefaultDashboardAttributeFilter } from "../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 import { type IAttributeFiltersCustomizer } from "../customizer.js";
+import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
+import { type CustomizerMutationsContext } from "./types.js";
 
 const DefaultAttributeFilterRendererProvider: AttributeFilterComponentProvider = () => {
     return DefaultDashboardAttributeFilter;

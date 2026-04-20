@@ -13,13 +13,13 @@ import {
 } from "@gooddata/sdk-model";
 import { type ExplicitDrill } from "@gooddata/sdk-ui";
 
-import { type IDashboardCommand } from "./base.js";
 import {
     type IDashboardDrillContext,
     type IDashboardDrillEvent,
     type IDrillDownDefinition,
 } from "../../types.js";
 import { type IDashboardKeyDriverCombinationItem } from "../events/drill.js";
+import { type IDashboardCommand } from "./base.js";
 
 /**
  * Payload of the {@link IDrill} command.

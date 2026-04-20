@@ -1,4 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
+import { type VisualizationProperties } from "../insight/index.js";
+import { type ObjRef } from "../objRef/index.js";
 import {
     type IBaseWidget,
     type IDrillableWidget,
@@ -8,8 +11,6 @@ import {
 import { type IDashboardObjectIdentity } from "./common.js";
 import { type InsightDrillDefinition, type KpiDrillDefinition } from "./drill.js";
 import { type IKpi } from "./kpi.js";
-import { type VisualizationProperties } from "../insight/index.js";
-import { type ObjRef } from "../objRef/index.js";
 
 /**
  * Reserved type names used for dashboard's built-in analytical widgets.

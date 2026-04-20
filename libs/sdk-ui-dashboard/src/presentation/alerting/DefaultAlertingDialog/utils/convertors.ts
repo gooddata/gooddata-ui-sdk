@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IAlertComparisonOperator,
@@ -11,9 +11,9 @@ import {
     type IFilter,
 } from "@gooddata/sdk-model";
 
+import { type AlertMetric } from "../../types.js";
 import { type IMeasureFormatMap, getMeasureFormat, getMeasureTitle } from "./getters.js";
 import { transformAlertExecutionByMetric } from "./transformation.js";
-import { type AlertMetric } from "../../types.js";
 
 /**
  * @internal

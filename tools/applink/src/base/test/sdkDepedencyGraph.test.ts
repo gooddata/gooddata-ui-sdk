@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
-import { TestSdkDependencyGraph } from "./sdkDependencyGraph.fixture.js";
 import { determinePackageBuildOrder } from "../dependencyGraph.js";
+import { TestSdkDependencyGraph } from "./sdkDependencyGraph.fixture.js";
 
 describe("dependency graph", () => {
     it("should create build order including all packages", () => {

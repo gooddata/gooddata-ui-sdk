@@ -1,8 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
-import { useAutomationAvailableDashboardFilters } from "./useAutomationAvailableDashboardFilters.js";
 import { getAutomationDashboardFilters } from "../../../_staging/automation/index.js";
+import { useAutomationAvailableDashboardFilters } from "./useAutomationAvailableDashboardFilters.js";
 
 /**
  * @deprecated - can be removed, once `enableAutomationFilterContext` is removed

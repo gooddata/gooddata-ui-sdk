@@ -11,7 +11,6 @@ import {
     State,
 } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
-
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
 
 function AttributeFilterEmptyResultExamples(): ReactElement {

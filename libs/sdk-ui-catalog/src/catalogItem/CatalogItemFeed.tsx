@@ -6,9 +6,9 @@ import { useIntl } from "react-intl";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
 
+import { type AsyncStatus } from "../async/types.js";
 import { useCatalogFeedActions, useCatalogFeedState } from "./CatalogFeedContext.js";
 import type { ICatalogItem } from "./types.js";
-import { type AsyncStatus } from "../async/types.js";
 
 type Props = {
     children: (props: {

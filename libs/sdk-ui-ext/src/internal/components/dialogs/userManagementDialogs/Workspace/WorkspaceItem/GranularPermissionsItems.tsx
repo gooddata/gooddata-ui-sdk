@@ -1,11 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
+import { type IPermissionsItem, type WorkspacePermission } from "../../types.js";
 import { getGranularPermissionTitle, granularTooltipMessages } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
-import { type IPermissionsItem, type WorkspacePermission } from "../../types.js";
 
 interface IWorkspaceAccessPermissionItemProps {
     item: WorkspacePermission;
