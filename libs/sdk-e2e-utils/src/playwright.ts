@@ -24,6 +24,9 @@ import {
 
 // --- Public interfaces ---
 
+/**
+ * @internal
+ */
 export interface IGoodmockOptions {
     host: string;
     backendHost: string;
@@ -32,11 +35,17 @@ export interface IGoodmockOptions {
     baseUrl?: string;
 }
 
+/**
+ * @internal
+ */
 export interface IE2eTestDetails extends TestDetails {
     workspaceSettings?: Record<string, unknown>;
     additionalWindowProperties?: Record<string, unknown>;
 }
 
+/**
+ * @internal
+ */
 export interface IFeatureHubFeature {
     id: string;
     key: string;
@@ -48,14 +57,26 @@ export interface IFeatureHubFeature {
     v?: string;
 }
 
+/**
+ * @internal
+ */
 export interface IFeatureHubEnvironment {
     id: string;
     features: IFeatureHubFeature[];
 }
 
-type BaseTestArgs = PlaywrightTestArgs & PlaywrightTestOptions;
-type BaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOptions;
+/**
+ * @internal
+ */
+export type BaseTestArgs = PlaywrightTestArgs & PlaywrightTestOptions;
+/**
+ * @internal
+ */
+export type BaseWorkerArgs = PlaywrightWorkerArgs & PlaywrightWorkerOptions;
 
+/**
+ * @internal
+ */
 export interface ICreateTestOptions<
     T extends Record<string, unknown> = {},
     W extends Record<string, unknown> = {},
@@ -67,6 +88,9 @@ export interface ICreateTestOptions<
 
 // --- topLevelDescribe function type ---
 
+/**
+ * @internal
+ */
 export interface IDescribeFunction {
     (suiteName: string, specName: string, fn: () => void): void;
     (suiteName: string, specName: string, details: IE2eTestDetails, fn: () => void): void;
@@ -76,6 +100,9 @@ export interface IDescribeFunction {
     };
 }
 
+/**
+ * @internal
+ */
 export type IE2eTest = typeof test & {
     topLevelDescribe: IDescribeFunction;
     describe: {
@@ -137,7 +164,10 @@ function injectWindowProperties(
 }
 
 // --- Factory ---
-
+/**
+ * @internal
+ * @param options -
+ */
 export function createTest<T extends Record<string, unknown> = {}, W extends Record<string, unknown> = {}>(
     options: ICreateTestOptions<T, W> = {} as ICreateTestOptions<T, W>,
 ): IE2eTest {

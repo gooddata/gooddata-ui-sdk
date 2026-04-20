@@ -416,36 +416,36 @@ $min-content-height: 110px;
 }
 
 @property --fade-top {
-    syntax: "<percentage>";
+    syntax: "<length>";
     inherits: false;
-    initial-value: 0%;
+    initial-value: 0;
 }
 
 @property --fade-bottom {
-    syntax: "<percentage>";
+    syntax: "<length>";
     inherits: false;
-    initial-value: 6%;
+    initial-value: 0;
 }
 
 @keyframes scroll-fade {
     0% {
-        --fade-top: 0%;
-        --fade-bottom: 6%;
+        --fade-top: 0px;
+        --fade-bottom: 56px;
     }
 
     1% {
-        --fade-top: 6%;
-        --fade-bottom: 6%;
+        --fade-top: 56px;
+        --fade-bottom: 56px;
     }
 
     99% {
-        --fade-top: 6%;
-        --fade-bottom: 6%;
+        --fade-top: 56px;
+        --fade-bottom: 56px;
     }
 
     100% {
-        --fade-top: 6%;
-        --fade-bottom: 0%;
+        --fade-top: 56px;
+        --fade-bottom: 0px;
     }
 }
 
@@ -464,13 +464,23 @@ $min-content-height: 110px;
     animation: scroll-fade linear both;
     animation-timeline: scroll(self);
 
+    .gd-ui-kit-tooltip__anchor {
+        max-width: 100%;
+    }
+
     .input-radio-label {
         display: block;
-        height: auto;
-        min-height: 20px;
         margin-left: 0;
         margin-bottom: 8px;
-        line-height: 20px;
+
+        .input-label-text {
+            display: inline-block;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
     }
 }
 

@@ -2,7 +2,7 @@
 
 import { expect } from "@playwright/test";
 
-import { injectAuthHeader } from "@gooddata/e2e-utils";
+import { injectAuthHeader } from "@gooddata/sdk-e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
 import { enterEditMode, saveAsNew, toggleDashboardMenu, visit, widgetSelector } from "../helpers.js";
@@ -11,150 +11,163 @@ test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);
 });
 
-test.topLevelDescribe("RichText", "dashboardRichText", () => {
-    test.describe("Isolated", () => {
-        test.beforeEach(async ({ page }) => {
-            await visit(page, "dashboard/rich-text");
-        });
+test.topLevelDescribe(
+    "RichText",
+    "dashboardRichText",
+    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    () => {
+        test.describe("Isolated", () => {
+            test.beforeEach(async ({ page }) => {
+                await visit(page, "dashboard/rich-text");
+            });
 
-        test("should render rich text in view mode", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
-            const richText = page.locator(".s-dash-item-1_0 .s-rich-text");
-            await expect(richText).toBeVisible();
+            test(
+                "should render rich text in view mode",
+                { tag: ["@pre-merge-isolated"] },
+                async ({ page }) => {
+                    const richText = page.locator(".s-dash-item-1_0 .s-rich-text");
+                    await expect(richText).toBeVisible();
 
-            await expect(richText.locator("h1")).toHaveText("Title");
-            await expect(richText.locator("img")).toHaveAttribute("src", "/image.png");
-        });
+                    await expect(richText.locator("h1")).toHaveText("Title");
+                    await expect(richText.locator("img")).toHaveAttribute("src", "/image.png");
+                },
+            );
 
-        test(
-            "should change rich text widget content in edit mode",
-            { tag: ["@pre-merge-isolated"] },
-            async ({ page }) => {
-                await enterEditMode(page);
+            test(
+                "should change rich text widget content in edit mode",
+                { tag: ["@pre-merge-isolated"] },
+                async ({ page }) => {
+                    await enterEditMode(page);
 
-                const richText = page.locator(".s-dash-item-1_0 .s-rich-text");
-                await expect(richText).toBeVisible();
+                    const richText = page.locator(".s-dash-item-1_0 .s-rich-text");
+                    await expect(richText).toBeVisible();
 
-                // Click the rich text widget to enter edit mode if in view mode
-                if (await richText.evaluate((el) => el.classList.contains("s-rich-text-view"))) {
+                    // Click the rich text widget to enter edit mode if in view mode
+                    if (await richText.evaluate((el) => el.classList.contains("s-rich-text-view"))) {
+                        await richText.click();
+                    }
+                    await expect(richText).toHaveClass(/s-rich-text-edit/);
+
+                    // Append new content to the textarea (preserving existing content)
+                    const textarea = richText.locator("textarea");
+                    const currentValue = await textarea.inputValue();
+                    await textarea.fill(currentValue + "\n## Update");
+
+                    // Confirm changes by clicking outside the rich text widget
+                    await page
+                        .locator(".s-screen-size-container")
+                        .first()
+                        .click({ position: { x: 1, y: 1 } });
+                    await expect(richText).toHaveClass(/s-rich-text-view/);
+
+                    // Verify the updated content rendered
+                    await expect(richText.locator("h2")).toHaveText("Update");
+                },
+            );
+
+            test(
+                "should remove rich text widget in edit mode",
+                { tag: ["@pre-merge-isolated"] },
+                async ({ page }) => {
+                    await enterEditMode(page);
+
+                    const richText = page.locator(".s-dash-item-1_0 .s-rich-text");
+                    await expect(richText).toBeVisible();
+
+                    // Click the rich text widget to select it
                     await richText.click();
-                }
-                await expect(richText).toHaveClass(/s-rich-text-edit/);
 
-                // Append new content to the textarea (preserving existing content)
-                const textarea = richText.locator("textarea");
-                const currentValue = await textarea.inputValue();
-                await textarea.fill(currentValue + "\n## Update");
+                    // Click the delete button
+                    await page.locator(".s-delete-insight-item").click();
 
-                // Confirm changes by clicking outside the rich text widget
-                await page
-                    .locator(".s-screen-size-container")
-                    .first()
-                    .click({ position: { x: 1, y: 1 } });
-                await expect(richText).toHaveClass(/s-rich-text-view/);
+                    // Assert the rich text widget is removed
+                    await expect(richText).toBeHidden();
+                },
+            );
+        });
 
-                // Verify the updated content rendered
-                await expect(richText.locator("h2")).toHaveText("Update");
-            },
-        );
+        test.describe("integrated", () => {
+            test(
+                "should remove rich text widget and save it",
+                { tag: ["@pre-merge-integrated"] },
+                async ({ page }) => {
+                    await visit(page, "dashboard/rich-text");
+                    await enterEditMode(page);
 
-        test(
-            "should remove rich text widget in edit mode",
-            { tag: ["@pre-merge-isolated"] },
-            async ({ page }) => {
-                await enterEditMode(page);
+                    // Remove the rich text widget
+                    const richText = page.locator(`${widgetSelector(1, 0)} .s-rich-text`);
+                    await richText.scrollIntoViewIfNeeded();
+                    await richText.click();
+                    await page.locator(".s-delete-insight-item").click();
+                    await expect(richText).toBeHidden();
 
-                const richText = page.locator(".s-dash-item-1_0 .s-rich-text");
-                await expect(richText).toBeVisible();
+                    // Save as new dashboard
+                    await toggleDashboardMenu(page);
+                    await saveAsNew(page, "RichText With Removed Widget");
 
-                // Click the rich text widget to select it
-                await richText.click();
+                    // Assert rich text widget is gone after save
+                    await expect(richText).toBeHidden();
+                },
+            );
 
-                // Click the delete button
-                await page.locator(".s-delete-insight-item").click();
+            test(
+                "should add rich text widget and save it",
+                { tag: ["@pre-merge-integrated"] },
+                async ({ page }) => {
+                    await visit(page, "dashboard/rich-text");
+                    await enterEditMode(page);
 
-                // Assert the rich text widget is removed
-                await expect(richText).toBeHidden();
-            },
-        );
-    });
+                    // Drag the rich text widget from the catalog to row 0
+                    await page.evaluate(
+                        async ({ src, tgt }) => {
+                            const sourceChild = document.querySelector(src);
+                            const source = sourceChild?.parentElement;
+                            if (!source) throw new Error(`DnD source parent not found: ${src}`);
+                            const dt = new DataTransfer();
+                            source.dispatchEvent(
+                                new DragEvent("dragstart", { dataTransfer: dt, bubbles: true }),
+                            );
+                            await new Promise((resolve) => setTimeout(resolve, 300));
+                            const target = document.querySelector(tgt);
+                            if (!target) throw new Error(`DnD target not found: ${tgt}`);
+                            target.dispatchEvent(new DragEvent("drop", { dataTransfer: dt, bubbles: true }));
+                            source.dispatchEvent(
+                                new DragEvent("dragend", { dataTransfer: dt, bubbles: true }),
+                            );
+                        },
+                        {
+                            src: ".s-add-rich-text",
+                            tgt: ".gd-grid-layout__section:nth-child(1) .row-hotspot",
+                        },
+                    );
 
-    test.describe("integrated", () => {
-        test(
-            "should remove rich text widget and save it",
-            { tag: ["@pre-merge-integrated"] },
-            async ({ page }) => {
-                await visit(page, "dashboard/rich-text");
-                await enterEditMode(page);
+                    // Assert the newly added rich text widget is visible
+                    const addedRichText = page.locator(`${widgetSelector(0, 0)} .s-rich-text`);
+                    await expect(addedRichText).toBeVisible();
 
-                // Remove the rich text widget
-                const richText = page.locator(`${widgetSelector(1, 0)} .s-rich-text`);
-                await richText.scrollIntoViewIfNeeded();
-                await richText.click();
-                await page.locator(".s-delete-insight-item").click();
-                await expect(richText).toBeHidden();
+                    // Enter rich text edit mode if in view mode
+                    if (await addedRichText.evaluate((el) => el.classList.contains("s-rich-text-view"))) {
+                        await addedRichText.click();
+                    }
+                    await expect(addedRichText).toHaveClass(/s-rich-text-edit/);
 
-                // Save as new dashboard
-                await toggleDashboardMenu(page);
-                await saveAsNew(page, "RichText With Removed Widget");
+                    // Fill the textarea with markdown content
+                    const textarea = addedRichText.locator("textarea");
+                    await textarea.fill("# Title 2\n\n![Image2](/image2.png)");
 
-                // Assert rich text widget is gone after save
-                await expect(richText).toBeHidden();
-            },
-        );
+                    // Confirm changes by clicking outside the rich text widget
+                    await page.locator(".s-screen-size-container").first().click();
+                    await expect(addedRichText).toHaveClass(/s-rich-text-view/);
 
-        test(
-            "should add rich text widget and save it",
-            { tag: ["@pre-merge-integrated"] },
-            async ({ page }) => {
-                await visit(page, "dashboard/rich-text");
-                await enterEditMode(page);
+                    // Save as new dashboard
+                    await toggleDashboardMenu(page);
+                    await saveAsNew(page, "RichText With Added Widget");
 
-                // Drag the rich text widget from the catalog to row 0
-                await page.evaluate(
-                    async ({ src, tgt }) => {
-                        const sourceChild = document.querySelector(src);
-                        const source = sourceChild?.parentElement;
-                        if (!source) throw new Error(`DnD source parent not found: ${src}`);
-                        const dt = new DataTransfer();
-                        source.dispatchEvent(new DragEvent("dragstart", { dataTransfer: dt, bubbles: true }));
-                        await new Promise((resolve) => setTimeout(resolve, 300));
-                        const target = document.querySelector(tgt);
-                        if (!target) throw new Error(`DnD target not found: ${tgt}`);
-                        target.dispatchEvent(new DragEvent("drop", { dataTransfer: dt, bubbles: true }));
-                        source.dispatchEvent(new DragEvent("dragend", { dataTransfer: dt, bubbles: true }));
-                    },
-                    {
-                        src: ".s-add-rich-text",
-                        tgt: ".gd-grid-layout__section:nth-child(1) .row-hotspot",
-                    },
-                );
-
-                // Assert the newly added rich text widget is visible
-                const addedRichText = page.locator(`${widgetSelector(0, 0)} .s-rich-text`);
-                await expect(addedRichText).toBeVisible();
-
-                // Enter rich text edit mode if in view mode
-                if (await addedRichText.evaluate((el) => el.classList.contains("s-rich-text-view"))) {
-                    await addedRichText.click();
-                }
-                await expect(addedRichText).toHaveClass(/s-rich-text-edit/);
-
-                // Fill the textarea with markdown content
-                const textarea = addedRichText.locator("textarea");
-                await textarea.fill("# Title 2\n\n![Image2](/image2.png)");
-
-                // Confirm changes by clicking outside the rich text widget
-                await page.locator(".s-screen-size-container").first().click();
-                await expect(addedRichText).toHaveClass(/s-rich-text-view/);
-
-                // Save as new dashboard
-                await toggleDashboardMenu(page);
-                await saveAsNew(page, "RichText With Added Widget");
-
-                // Assert the rendered content
-                await expect(addedRichText.locator("img")).toHaveAttribute("src", "/image2.png");
-                await expect(addedRichText.locator("h1")).toHaveText("Title 2");
-            },
-        );
-    });
-});
+                    // Assert the rendered content
+                    await expect(addedRichText.locator("img")).toHaveAttribute("src", "/image2.png");
+                    await expect(addedRichText.locator("h1")).toHaveText("Title 2");
+                },
+            );
+        });
+    },
+);

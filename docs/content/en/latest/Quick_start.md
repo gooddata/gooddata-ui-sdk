@@ -5,7 +5,7 @@ weight: 12
 ---
 
 {{% alert color="warning" title="Version 9 vs Versions 10+" %}}
-GoodData Platform users must stay on GoodData.UI version 9, do not update to version 10 or higher!
+GoodData Legacy users must stay on GoodData.UI version 9, do not update to version 10 or higher!
 From version 10 onwards, the GoodData.UI SDK only supports GoodData Cloud and GoodData.CN.
 {{% /alert %}}
 
@@ -216,7 +216,7 @@ Read more about [integration with GoodData Cloud or GoodData.CN](../learn/integr
 
 Upgrade all the `@gooddata` dependencies to the latest stable version in `package.json`.
 
-> **Note:** Starting with version 10.0.0, the **gooddata-ui-sdk** no longer supports the GoodData Platform. It is necessary to remove `"@gooddata/sdk-backend-bear"` from the `package.json`.
+> **Note:** Starting with version 10.0.0, the **gooddata-ui-sdk** no longer supports the GoodData Legacy. It is necessary to remove `"@gooddata/sdk-backend-bear"` from the `package.json`.
 
 ### Update from v10 to v11
 

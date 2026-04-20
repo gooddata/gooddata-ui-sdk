@@ -377,6 +377,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
         const { authCall, requestParameters } = this;
 
         let lastLoaded = 0;
+        let responseTraceId: string | undefined;
         // Generate a stream of string from server, as XHR delivers data in chunks.
         const textStream = new ReadableStream<string>({
             start(controller) {
@@ -414,13 +415,26 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
                                 Accept: "text/event-stream",
                             },
                             onDownloadProgress: (evt) => {
-                                const data = evt.event.target.responseText.slice(lastLoaded);
+                                const request = evt.event?.target as XMLHttpRequest | undefined;
+                                if (!request) {
+                                    return;
+                                }
+
+                                responseTraceId =
+                                    responseTraceId ??
+                                    request.getResponseHeader("x-gdc-trace-id") ??
+                                    undefined;
+
+                                const data = request.responseText.slice(lastLoaded);
                                 lastLoaded += data.length;
                                 controller.enqueue(data);
                             },
                         },
                     );
                 })
+                    .then((response) => {
+                        responseTraceId = responseTraceId ?? response.headers?.["x-gdc-trace-id"];
+                    })
                     .catch((error) => {
                         controller.error(error);
                     })
@@ -435,7 +449,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
         return textStream
             .pipeThrough(new EventSourceParserStream())
             .pipeThrough(new ServerSentEventsDataParser())
-            .pipeThrough(new ServerSentEventsDataConverter(this.dateNormalizer));
+            .pipeThrough(new ServerSentEventsDataConverter(this.dateNormalizer, () => responseTraceId));
     }
 }
 
@@ -469,11 +483,18 @@ class ServerSentEventsDataConverter extends TransformStream<
     { type: "item" | "error" | "response_ended"; data: object },
     IChatConversationItem | IChatConversationError
 > {
-    constructor(dateNormalizer: DateNormalizer, locale?: FormattingLocale, timezone?: string) {
+    constructor(
+        dateNormalizer: DateNormalizer,
+        traceIdProvider: () => string | undefined,
+        locale?: FormattingLocale,
+        timezone?: string,
+    ) {
         super({
             transform(event, controller) {
                 if (event.type === "error") {
-                    controller.enqueue(convertChatConversationErrorFromBackend(event.data));
+                    controller.enqueue(
+                        convertChatConversationErrorFromBackend(event.data, traceIdProvider()),
+                    );
                 } else if (event.type === "item" && "item" in event.data) {
                     controller.enqueue(
                         convertChatConversationItemFromBackend(

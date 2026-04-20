@@ -8,7 +8,10 @@ import {
     type IChatConversationWhatIfContent,
 } from "@gooddata/sdk-backend-spi";
 
-import { convertChatConversationItemFromBackend } from "../genAIConvertor.js";
+import {
+    convertChatConversationErrorFromBackend,
+    convertChatConversationItemFromBackend,
+} from "../genAIConvertor.js";
 
 describe("genAIConvertor", () => {
     const dateNormalizer = vi.fn((val) => val);
@@ -80,6 +83,25 @@ describe("genAIConvertor", () => {
                         ],
                     },
                 ],
+            });
+        });
+    });
+
+    describe("convertChatConversationErrorFromBackend", () => {
+        it("should include trace id when provided", () => {
+            const converted = convertChatConversationErrorFromBackend(
+                {
+                    statusCode: 500,
+                    detail: "Request failed",
+                },
+                "trace-123",
+            );
+
+            expect(converted).toEqual({
+                type: "error",
+                code: 500,
+                message: "Request failed",
+                traceId: "trace-123",
             });
         });
     });

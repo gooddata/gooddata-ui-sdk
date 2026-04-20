@@ -335,6 +335,12 @@ export function declarativeDatasetToYaml(
         doc.add(entryWithSpace("precedence", dataset.precedence));
     }
 
+    if (dataset.type === "AUXILIARY") {
+        doc.add(entryWithSpace("dataset_type", "auxiliary"));
+    } else if (dataset.type === "NORMAL") {
+        doc.add(entryWithSpace("dataset_type", "standard"));
+    }
+
     if (dataset.grain?.length) {
         if (dataset.grain.length === 1) {
             doc.add(entryWithSpace("primary_key", dataset.grain[0].id));

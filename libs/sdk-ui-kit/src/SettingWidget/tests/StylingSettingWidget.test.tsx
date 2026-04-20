@@ -90,14 +90,17 @@ describe("StylingPicker", () => {
         const selectedItemRef = customItemsMock[0].ref;
         renderComponent({ selectedItemRef });
 
-        expectedButtonsState(screen.getAllByRole("button"));
+        //NOTE: First button is create button in dialog, that is always enabled
+        expectedButtonsState(screen.getAllByRole("button").slice(1));
     });
 
     it("should enable footer buttons after click on item that is not the same as provided selected item", async () => {
         const selectedItemRef = customItemsMock[0].ref;
         renderComponent({ selectedItemRef });
+
+        //NOTE: First button is create button in dialog, that is always enabled
         const buttons = screen.getAllByRole("button");
-        expectedButtonsState(buttons);
+        expectedButtonsState(buttons.slice(1));
 
         await userEvent.click(screen.getByText("Second theme"));
         expectedButtonsState(buttons, false);

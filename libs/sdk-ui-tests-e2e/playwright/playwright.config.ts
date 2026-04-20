@@ -4,7 +4,7 @@ process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 
 import { defineConfig } from "@playwright/test";
 
-import { GoodmockMode, goodmockMode } from "@gooddata/e2e-utils";
+import { GoodmockMode, goodmockMode } from "@gooddata/sdk-e2e-utils";
 
 const isRecording = goodmockMode() === GoodmockMode.Record;
 

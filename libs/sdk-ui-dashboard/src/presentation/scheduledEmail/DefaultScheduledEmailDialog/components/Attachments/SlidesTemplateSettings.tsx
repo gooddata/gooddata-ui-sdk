@@ -11,6 +11,7 @@ import {
     Dropdown,
     type IAlignPoint,
     UiIcon,
+    UiTooltip,
     isEscapeKey,
 } from "@gooddata/sdk-ui-kit";
 
@@ -98,17 +99,25 @@ export function SlidesTemplateSettings({
                             aria-label={settingsLabel}
                         >
                             {templates.map((template) => (
-                                <label key={template.id} className="input-radio-label s-slides-template-item">
-                                    <input
-                                        type="radio"
-                                        className="input-radio"
-                                        name="slidesTemplate"
-                                        value={template.id}
-                                        checked={effectiveSelection === template.id}
-                                        onChange={() => setPendingTemplateId(template.id)}
-                                    />
-                                    <span className="input-label-text">{template.name}</span>
-                                </label>
+                                <UiTooltip
+                                    key={template.id}
+                                    triggerBy={["hover", "focus"]}
+                                    arrowPlacement="bottom"
+                                    content={template.name}
+                                    anchor={
+                                        <label className="input-radio-label s-slides-template-item">
+                                            <input
+                                                type="radio"
+                                                className="input-radio"
+                                                name="slidesTemplate"
+                                                value={template.id}
+                                                checked={effectiveSelection === template.id}
+                                                onChange={() => setPendingTemplateId(template.id)}
+                                            />
+                                            <span className="input-label-text">{template.name}</span>
+                                        </label>
+                                    }
+                                />
                             ))}
                         </div>
                     </div>

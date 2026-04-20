@@ -1158,6 +1158,10 @@ export interface NormalDataset {
      * An optional precedence value for the dataset (whole positive number).
      */
     precedence?: number;
+    /**
+     * An optional dataset type. Standard datasets have direct data mapping. Auxiliary datasets are helper datasets without data mapping. Defaults to standard.
+     */
+    dataset_type?: "standard" | "auxiliary";
 }
 /**
  * A list of fields in this dataset.
@@ -1462,6 +1466,10 @@ export interface SQLDataset {
      * An optional precedence value for the dataset (whole positive number).
      */
     precedence?: number;
+    /**
+     * An optional dataset type. Standard datasets have direct data mapping. Auxiliary datasets are helper datasets without data mapping. Defaults to standard.
+     */
+    dataset_type?: "standard" | "auxiliary";
 }
 /**
  * A list of fields in this dataset.

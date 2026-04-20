@@ -1277,6 +1277,43 @@
             justify-content: flex-end;
         }
     }
+
+    &--error {
+        display: flex;
+        flex-direction: column;
+
+        .gd-gen-ai-chat__error-info {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: space-between;
+            gap: 5px;
+        }
+
+        .gd-gen-ai-chat__error-details {
+            border-top: 1px solid kit-variables.$gd-palette-error-base;
+            margin: 5px -12px 0 -12px;
+            padding: 0 12px;
+
+            pre {
+                font-size: 12px;
+            }
+        }
+
+        .gd-gen-ai-chat__show-more {
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .gd-gen-ai-chat__content {
+            display: flex;
+            align-items: center;
+        }
+
+        button {
+            color: kit-variables.$gd-palette-error-base;
+        }
+    }
 }
 
 .gd-gen-ai-chat__conversation__item__feedback {

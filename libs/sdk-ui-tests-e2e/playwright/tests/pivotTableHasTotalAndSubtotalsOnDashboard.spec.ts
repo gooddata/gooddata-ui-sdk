@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { injectAuthHeader } from "@gooddata/e2e-utils";
+import { injectAuthHeader } from "@gooddata/sdk-e2e-utils";
 
 import { API_TOKEN, test } from "../config.js";
 import { expectTableCellValue, scrollTableTo, visit, waitTableLoaded } from "../helpers.js";
@@ -14,6 +14,7 @@ const WIDGET = ".s-dash-item-1_0";
 test.topLevelDescribe(
     "Pivot Table with multi format metrics",
     "pivotTableHasTotalAndSubtotalsOnDashboard",
+    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
     () => {
         test(
             "should render insight with multi format metrics correctly",

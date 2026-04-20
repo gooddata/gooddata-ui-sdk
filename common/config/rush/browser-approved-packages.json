@@ -123,10 +123,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/e2e-utils",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@gooddata/emailjs-mime-codec-new",
       "allowedCategories": [ "production" ]
     },
@@ -188,6 +184,10 @@
     },
     {
       "name": "@gooddata/sdk-code-schemas",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/sdk-e2e-utils",
       "allowedCategories": [ "production" ]
     },
     {

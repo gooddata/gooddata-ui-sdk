@@ -6,24 +6,10 @@ import { type APIRequestContext, type Download, type Locator, type Page, expect 
 import { camelCase } from "lodash-es";
 
 /**
- * Navigate to a scenario page, optionally injecting workspace settings.
+ * Navigate to a scenario page
  */
-export async function visit(
-    page: Page,
-    scenarioName: string,
-    workspaceSettings?: Record<string, unknown>,
-): Promise<void> {
-    const url = `/gooddata-ui-sdk?scenario=${scenarioName}`;
-
-    await page.addInitScript((settings) => {
-        const win = window as unknown as Record<string, unknown>;
-        win["useSafeWidgetLocalIdentifiersForE2e"] = true;
-        if (settings) {
-            win["customWorkspaceSettings"] = settings;
-        }
-    }, workspaceSettings);
-
-    await page.goto(url);
+export async function visit(page: Page, scenarioName: string): Promise<void> {
+    await page.goto(`/gooddata-ui-sdk?scenario=${scenarioName}`);
 }
 
 /**

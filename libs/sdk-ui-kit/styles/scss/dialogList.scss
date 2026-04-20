@@ -53,6 +53,12 @@
 
     .gd-dialog-list-header-button {
         margin-top: -1px;
+
+        button {
+            height: 20px;
+            display: flex;
+            align-items: center;
+        }
     }
 }
 

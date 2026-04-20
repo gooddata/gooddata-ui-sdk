@@ -2122,6 +2122,11 @@ export const metadata_v1: {
                         type: string;
                         description: string;
                     };
+                    dataset_type: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
                 };
                 $semantic: ({
                     type: string;
@@ -7249,6 +7254,11 @@ export const metadata_v1: {
                     type: string;
                     description: string;
                 };
+                dataset_type: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
             };
             $semantic: ({
                 snippets?: undefined;
@@ -8953,6 +8963,7 @@ interface MultipleConditions1 {
 // @public (undocumented)
 interface NormalDataset {
     data_source?: string;
+    dataset_type?: "standard" | "auxiliary";
     description?: string;
     // (undocumented)
     fields?: Fields;
@@ -9632,6 +9643,7 @@ type SourceColumn = string;
 // @public (undocumented)
 interface SQLDataset {
     data_source?: string;
+    dataset_type?: "standard" | "auxiliary";
     description?: string;
     // (undocumented)
     fields?: Fields1;

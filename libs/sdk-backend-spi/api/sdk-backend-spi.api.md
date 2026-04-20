@@ -661,6 +661,7 @@ export type IChatConversationError = {
     type: "error";
     code: number;
     message: string;
+    traceId?: string;
 };
 
 // @internal
