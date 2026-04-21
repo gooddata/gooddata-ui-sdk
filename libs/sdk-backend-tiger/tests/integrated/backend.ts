@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { config } from "dotenv";
 import { invariant } from "ts-invariant";
@@ -21,7 +21,7 @@ let GlobalBackend: IAnalyticalBackend | undefined;
  * the authentication information is not saved anywhere and does not figure in the recordings.
  *
  * The recordings are matched against requests purely based on payload & no auth headers or cookies.
- * There is no state on the wiremock server.
+ * There is no state on the mock server.
  */
 class NoLoginAuthProvider extends TigerAuthProviderBase implements IAuthenticationProvider {
     public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
@@ -32,18 +32,8 @@ class NoLoginAuthProvider extends TigerAuthProviderBase implements IAuthenticati
 }
 
 function createBackend(): IAnalyticalBackend {
-    /*
-     * When running on CI, the whole ensemble shares a docker network where the mock backend is aliased as 'bear'.
-     *
-     * Does not work without the protocol within the `localhost` value.
-     */
-
-    let hostname = (process.env["CI"] && "https://tiger") ?? "https://localhost";
-    if (process.env["HOST"]) {
-        hostname = process.env["HOST"];
-    }
-    const port = process.env["HOST"] ? "" : ":8442";
-    const backend = tigerFactory({ hostname: `${hostname}${port}` });
+    const hostname = process.env["HOST"] ?? "http://localhost:8080";
+    const backend = tigerFactory({ hostname });
     let authProvider;
 
     if (process.env["GD_TIGER_REC"]) {

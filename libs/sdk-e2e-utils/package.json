@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-e2e-utils",
-    "version": "1.0.0",
+    "version": "11.31.0-alpha.4",
     "description": "GoodData utility functions for Playwright E2E tests",
     "license": "MIT",
     "author": "GoodData",

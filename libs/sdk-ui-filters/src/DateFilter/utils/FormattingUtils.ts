@@ -42,6 +42,9 @@ export const localizedIcuDateFormatPatterns: Record<string, string> = {
     "pl-PL": "dd.MM.y",
     "ko-KR": "y.MM.dd",
     "sl-SI": "d. M. y",
+    "id-ID": "dd/MM/y",
+    "th-TH": "d/M/y",
+    "vi-VN": "dd/MM/y",
 };
 
 /**

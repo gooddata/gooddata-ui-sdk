@@ -16,7 +16,12 @@ import { setAllowedRelationshipTypesAction } from "../store/chatWindow/chatWindo
 import { asyncProcessSelector } from "../store/messages/messagesSelectors.js";
 import { cancelAsyncAction, clearThreadAction, loadThreadAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
-import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
+import {
+    getAbsoluteSettingHref,
+    getAbsoluteWorkspaceSettingHref,
+    getSettingHref,
+    getWorkspaceSettingHref,
+} from "../utils.js";
 import { useConfig } from "./ConfigContext.js";
 import { useCustomization } from "./CustomizationProvider.js";
 import { ErrorBoundary } from "./ErrorBoundary.js";
@@ -33,7 +38,7 @@ export type GenAIChatOwnProps = {
     className?: string;
 };
 
-type GenAIChatWrapperProps = GenAIChatOwnProps & {
+export type GenAIChatWrapperProps = GenAIChatOwnProps & {
     loadThread: typeof loadThreadAction;
     cancelLoading: typeof cancelAsyncAction;
     clearThread: typeof clearThreadAction;
@@ -46,13 +51,14 @@ type GenAIChatWrapperProps = GenAIChatOwnProps & {
 
 const GEN_AI_SECTION = "ai";
 const CREATE_LLM_PROVIDER_ACTION = "create-llm-provider";
+const CHANGE_LLM_MODEL_ACTION = "change-llm-model";
 const GEN_AI_INPUT_ANCHOR_ID = "gd-gen-ai-input";
 
 /**
  * UI component that renders the Gen AI chat.
  * @internal
  */
-function GenAIChatWrapperComponent({
+export function GenAIChatWrapperComponent({
     loadThread,
     clearThread,
     cancelLoading,
@@ -67,7 +73,10 @@ function GenAIChatWrapperComponent({
     const workspaceId = useWorkspaceStrict();
     const { linkHandler, allowNativeLinks, canManage, canAnalyze, canFullControl } = useConfig();
     const { DisclaimerComponent } = useCustomization();
-    const { checking, evaluated, count, restart } = useEndpointCheck(settings, canFullControl);
+    const { checking, evaluated, count, hasUnsupportedOpenAiModel, restart } = useEndpointCheck(
+        settings,
+        canFullControl,
+    );
 
     const canEdit = canFullControl || canManage || canAnalyze;
     const allowedRelationshipTypes = canEdit ? undefined : ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER;
@@ -87,24 +96,82 @@ function GenAIChatWrapperComponent({
     });
 
     const onSettingClick = useCallback(
-        (e: MouseEvent) => {
-            if (allowNativeLinks) {
-                window.location.href = getAbsoluteSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION);
-            } else {
-                linkHandler?.({
-                    id: CREATE_LLM_PROVIDER_ACTION,
-                    workspaceId,
-                    type: "setting",
-                    newTab: e.metaKey,
-                    section: GEN_AI_SECTION,
-                    preventDefault: e.preventDefault.bind(e),
-                    itemUrl: getSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION),
-                });
-                e.stopPropagation();
+        (type: "change-model" | "create") => (e: MouseEvent) => {
+            switch (type) {
+                case "change-model":
+                    if (allowNativeLinks) {
+                        window.location.href = getAbsoluteWorkspaceSettingHref(
+                            workspaceId,
+                            GEN_AI_SECTION,
+                            CHANGE_LLM_MODEL_ACTION,
+                        );
+                    } else {
+                        linkHandler?.({
+                            id: CHANGE_LLM_MODEL_ACTION,
+                            workspaceId,
+                            type: "setting",
+                            newTab: e.metaKey,
+                            section: GEN_AI_SECTION,
+                            preventDefault: e.preventDefault.bind(e),
+                            itemUrl: getWorkspaceSettingHref(
+                                workspaceId,
+                                GEN_AI_SECTION,
+                                CHANGE_LLM_MODEL_ACTION,
+                            ),
+                        });
+                        e.stopPropagation();
+                    }
+                    break;
+                case "create":
+                    if (allowNativeLinks) {
+                        window.location.href = getAbsoluteSettingHref(
+                            GEN_AI_SECTION,
+                            CREATE_LLM_PROVIDER_ACTION,
+                        );
+                    } else {
+                        linkHandler?.({
+                            id: CREATE_LLM_PROVIDER_ACTION,
+                            workspaceId,
+                            type: "setting",
+                            newTab: e.metaKey,
+                            section: GEN_AI_SECTION,
+                            preventDefault: e.preventDefault.bind(e),
+                            itemUrl: getSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION),
+                        });
+                        e.stopPropagation();
+                    }
+                    break;
             }
         },
         [allowNativeLinks, linkHandler, workspaceId],
     );
+
+    if (evaluated && hasUnsupportedOpenAiModel) {
+        return (
+            <GlobalError
+                errorMessage={intl.formatMessage({ id: "gd.gen-ai.global-unsupported-model" })}
+                errorDescription={intl.formatMessage({
+                    id: "gd.gen-ai.global-unsupported-model.description",
+                })}
+                clearError={() => {
+                    clearThread();
+                    restart();
+                }}
+                clearing={isClearing}
+                buttonsBefore={
+                    <>
+                        <Button
+                            className="gd-button-link"
+                            value={intl.formatMessage({
+                                id: "gd.gen-ai.global-unsupported-model.button-change-model",
+                            })}
+                            onClick={onSettingClick("change-model")}
+                        />
+                    </>
+                }
+            />
+        );
+    }
 
     if (evaluated && count === 0) {
         return (
@@ -121,7 +188,7 @@ function GenAIChatWrapperComponent({
                         <Button
                             className="gd-button-link"
                             value={intl.formatMessage({ id: "gd.gen-ai.global-no-llm.button-create-llm" })}
-                            onClick={onSettingClick}
+                            onClick={onSettingClick("create")}
                         />
                     </>
                 }

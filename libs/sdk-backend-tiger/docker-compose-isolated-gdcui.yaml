@@ -2,21 +2,18 @@
 services:
     isolated-tests:
         image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/node:24.15.0-bullseye
-        entrypoint: npm run isolated-test-run
+        entrypoint: bash -c "./scripts/load-mappings.sh && npm run isolated-test-run"
         volumes:
             - ../../../:/workspace:rw
         working_dir: /workspace/sdk/libs/sdk-backend-tiger
         user: "$USER_UID:$USER_GID"
         environment:
-            - HOST=https://backend-mock:8442
+            - HOST=http://backend-mock:8080
+            - GOODMOCK_HOST=backend-mock:8080
             - GDC_UI
         depends_on:
             - backend-mock
 
     backend-mock:
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/wiremock/wiremock:3.13.2
-        command: "--https-port 8442 --enable-browser-proxying"
-        user: "$USER_UID:$USER_GID"
-        volumes:
-            - ./tests/wiremock/wiremock_extension/:/var/wiremock/extensions
-            - ./tests/wiremock/recordings:/home/wiremock
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-goodmock:0.11.0
+        command: replay

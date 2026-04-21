@@ -12,6 +12,7 @@ import {
     fi,
     fr,
     frCA,
+    id,
     it,
     ja,
     ko,
@@ -21,7 +22,9 @@ import {
     ptBR,
     ru,
     sl,
+    th,
     tr,
+    vi,
     zhCN,
 } from "date-fns/locale";
 import {
@@ -61,6 +64,9 @@ const convertedLocales: Record<string, Locale> = {
     "pl-PL": pl,
     "ko-KR": ko,
     "sl-SI": sl,
+    "id-ID": id,
+    "th-TH": th,
+    "vi-VN": vi,
 };
 
 const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];
