@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "Provare a riavviare il chatbot e ricominciare da capo.",
     "gd.gen-ai.global-error.button-details": "Vedere la risposta all'errore grezzo per i dettagli",
     "gd.gen-ai.global-error.traceId": "ID traccia dell'errore",
+    "gd.gen-ai.global-error.show-more": "mostra di più",
+    "gd.gen-ai.global-error.show-less": "mostra di meno",
     "gd.gen-ai.global-error.traceId.copy": "Copia negli appunti",
     "gd.gen-ai.global-error.details.title": "Risposta all'errore provvisoria",
     "gd.gen-ai.global-error.details.title.tooltip": "La risposta di errore provvisoria mostra le informazioni di back-end sull'errore che si è verificato. È visibile solo agli amministratori.",

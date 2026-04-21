@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "Try restarting the chatbot and starting over.",
     "gd.gen-ai.global-error.button-details": "See the raw error response for details",
     "gd.gen-ai.global-error.traceId": "Error trace ID",
+    "gd.gen-ai.global-error.show-more": "show more",
+    "gd.gen-ai.global-error.show-less": "show less",
     "gd.gen-ai.global-error.traceId.copy": "Copy to clipboard",
     "gd.gen-ai.global-error.details.title": "Raw error response",
     "gd.gen-ai.global-error.details.title.tooltip": "The raw error response shows back-end information about the error that has occurred. It is only visible to the administrators.",

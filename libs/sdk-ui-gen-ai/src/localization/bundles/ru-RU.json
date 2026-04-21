@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "Попробуйте перезапустить чат-бота и начать заново.",
     "gd.gen-ai.global-error.button-details": "Подробнее см. в исходном ответе об ошибке",
     "gd.gen-ai.global-error.traceId": "Идентификатор трассировки ошибки",
+    "gd.gen-ai.global-error.show-more": "показать больше",
+    "gd.gen-ai.global-error.show-less": "показать меньше",
     "gd.gen-ai.global-error.traceId.copy": "Копировать в буфер",
     "gd.gen-ai.global-error.details.title": "Необработанное сообщение об ошибке",
     "gd.gen-ai.global-error.details.title.tooltip": "Необработанное сообщение об ошибке показывает внутреннюю информацию о возникшей ошибке. Оно виде отолько администраторам.",

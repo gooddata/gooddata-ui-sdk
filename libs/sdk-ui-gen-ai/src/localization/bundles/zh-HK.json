@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機械人並重新開始。",
     "gd.gen-ai.global-error.button-details": "有關詳細信息，請參閱原始錯誤響應",
     "gd.gen-ai.global-error.traceId": "錯誤追蹤 ID",
+    "gd.gen-ai.global-error.show-more": "顯示更多",
+    "gd.gen-ai.global-error.show-less": "顯示較少",
     "gd.gen-ai.global-error.traceId.copy": "複製到剪貼板",
     "gd.gen-ai.global-error.details.title": "原始錯誤響應",
     "gd.gen-ai.global-error.details.title.tooltip": "原始錯誤響應顯示有關已發生錯誤嘅後端信息。 它僅對管理員可見。",
