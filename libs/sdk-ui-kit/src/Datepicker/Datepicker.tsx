@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type ChangeEvent,
@@ -22,6 +22,7 @@ import {
     fi,
     fr,
     frCA,
+    id,
     it,
     ja,
     ko,
@@ -31,7 +32,9 @@ import {
     ptBR,
     ru,
     sl,
+    th,
     tr,
+    vi,
     zhCN,
 } from "date-fns/locale";
 import { debounce } from "lodash-es";
@@ -106,6 +109,9 @@ const convertedLocales: Record<string, Locale> = {
     "pl-PL": pl,
     "ko-KR": ko,
     "sl-SI": sl,
+    "id-ID": id,
+    "th-TH": th,
+    "vi-VN": vi,
 };
 
 function formatDate(date: Date, dateFormat: string): string {

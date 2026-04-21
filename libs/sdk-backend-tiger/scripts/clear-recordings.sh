@@ -1,10 +1,9 @@
 #!/bin/bash
 
 CURRENT_DIR=$(echo $(cd $(dirname $0) && pwd -P))
-RECORDINGS_DIR="${CURRENT_DIR}/../tests/wiremock/recordings"
-MAPPINGS_DIR="${RECORDINGS_DIR}/mappings"
-FILES_DIR="${RECORDINGS_DIR}/__files"
+RECORDINGS_DIR="${CURRENT_DIR}/../tests/goodmock/recordings"
+MAPPINGS_FILE="${RECORDINGS_DIR}/mappings.json"
 
-rm -rf ${MAPPINGS_DIR}/* ${FILES_DIR}/*
+rm -f "${MAPPINGS_FILE}"
 
-echo "Cleared recordings in ${MAPPINGS_DIR} and ${FILES_DIR}"
+echo "Cleared recordings at ${MAPPINGS_FILE}"

@@ -51,6 +51,18 @@
         "text": "Configure provider",
         "crowdinContext": "Button label to configure a provider for the AI chatbot"
     },
+    "gd.gen-ai.global-unsupported-model": {
+        "text": "Model not supported",
+        "crowdinContext": "Error title when configured OpenAI model is below minimum supported version for the AI assistant"
+    },
+    "gd.gen-ai.global-unsupported-model.description": {
+        "text": "The AI Assistant requires GPT-5.2 or higher. Contact your administrator to update the model.",
+        "crowdinContext": "User instruction shown when configured OpenAI model is below GPT-5.2"
+    },
+    "gd.gen-ai.global-unsupported-model.button-change-model": {
+        "text": "Change LLM model",
+        "crowdinContext": "Button label to open AI settings when configured model is not supported"
+    },
     "gd.gen-ai.permission-error": {
         "text": "Insufficient permissions",
         "crowdinContext": "Error message when user does not have sufficient permissions to access the chatbot"
