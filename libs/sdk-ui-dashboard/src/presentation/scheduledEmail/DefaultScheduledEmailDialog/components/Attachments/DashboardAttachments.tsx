@@ -28,8 +28,11 @@ export interface IDashboardAttachmentsProps {
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     exportTemplates?: IExportTemplate[];
-    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string };
-    onSlidesTemplateIdChange?: (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES") => void;
+    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
+    onSlidesTemplateIdChange?: (
+        templateId: string | undefined,
+        format: "PPTX" | "PDF_SLIDES" | "PDF",
+    ) => void;
 }
 
 export function DashboardAttachments({

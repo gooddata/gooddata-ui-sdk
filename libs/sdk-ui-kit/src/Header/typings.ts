@@ -11,6 +11,7 @@ import { type HelpMenuDropdownAlignPoints } from "../typings/positioning.js";
  */
 export interface IHeaderMenuItem {
     key: string; // used both as React key as well as localization message ID
+    label?: string; // pre-translated display text; when present, takes precedence over key-based intl lookup
     href?: string;
     isActive?: boolean;
     className?: string;

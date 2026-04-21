@@ -14,6 +14,7 @@ import { useIdPrefixed } from "../utils/useId.js";
 
 interface IHelpItem {
     key: string;
+    label?: string;
     href?: string;
     isActive?: boolean;
     className?: string;
@@ -74,9 +75,7 @@ function CoreHeaderHelp({
             >
                 {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
                 {item.icon ? item.icon : null}
-                <span>
-                    <FormattedMessage id={item.key} />
-                </span>
+                <span>{item.label ?? <FormattedMessage id={item.key} />}</span>
             </a>
         );
     });

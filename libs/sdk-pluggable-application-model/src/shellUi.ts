@@ -2,6 +2,7 @@
 
 import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
 
+import { type IAppHeaderOptions } from "./mount.js";
 import { type IPlatformContext } from "./platformContext.js";
 
 /**
@@ -89,6 +90,17 @@ export interface IShellUiMountHandle {
      * The shell UI uses this to update the active state of navigation items.
      */
     updatePathname?(pathname: string): void;
+
+    /**
+     * Pushes updated header options into the shell UI.
+     *
+     * @remarks
+     * Called by the host whenever the active pluggable application declares new header
+     * options via its `onHeaderChange` callback. The shell UI uses this to update
+     * the header (e.g. help menu items) to match the active application's preferences.
+     * When called with `undefined`, the shell UI should revert to its default header configuration.
+     */
+    updateHeader?(header: IAppHeaderOptions | undefined): void;
 
     /**
      * Returns the DOM element where the active pluggable application should be rendered.

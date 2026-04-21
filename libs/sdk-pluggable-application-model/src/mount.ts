@@ -131,6 +131,39 @@ export interface IPluggableAppTelemetryCallbacks {
 }
 
 /**
+ * Header customization options that a pluggable application can push to the host shell.
+ *
+ * @remarks
+ * The host shell owns the application header. A pluggable application can declare its preferred
+ * header configuration by calling the {@link IPluggableApplicationMountOptions.onHeaderChange}
+ * callback at mount time or whenever the configuration needs to change (e.g. after locale switch).
+ *
+ * All fields are optional — only the fields provided are applied; the host uses its own defaults
+ * for anything not specified.
+ *
+ * @alpha
+ */
+export interface IAppHeaderOptions {
+    /**
+     * Help menu items to show in the host header when this application is active.
+     *
+     * @remarks
+     * Each item is a plain data object. Use `label` for a pre-translated display string;
+     * when omitted the host falls back to looking up `key` as an intl message ID.
+     *
+     * When not provided, the host falls back to its default static help items.
+     */
+    helpMenuItems?: Array<{
+        key: string;
+        label?: string;
+        href?: string;
+        target?: string;
+        className?: string;
+        iconName?: string;
+    }>;
+}
+
+/**
  * Options passed by the host into a pluggable application's mount function.
  *
  * @alpha
@@ -179,6 +212,19 @@ export interface IPluggableApplicationMountOptions {
      * telemetry providers registered in the shell application.
      */
     onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
+
+    /**
+     * Callback invoked by the pluggable application to push chrome customizations to the host shell.
+     *
+     * @remarks
+     * Call this at mount time to declare the application's preferred header configuration
+     * (e.g. help menu items). Can be called again at any time to update the configuration —
+     * for example after a locale change that affects translated item labels.
+     *
+     * The provided object replaces the current header options entirely.
+     * The host falls back to its own defaults for any fields not present.
+     */
+    onHeaderChange?: (header: IAppHeaderOptions) => void;
 }
 
 /**

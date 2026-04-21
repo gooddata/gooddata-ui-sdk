@@ -645,6 +645,9 @@ export function ScheduledMailDialogRenderer({
                                                     onCsvRawSettingsChange={onCsvRawSettingsChange}
                                                     isCsvSettingsEnabled={enableCustomizableCsvDelimiter}
                                                     defaultPdfPageSize={defaultPdfPageSize}
+                                                    exportTemplates={exportTemplates}
+                                                    slidesTemplateIds={slidesTemplateIds}
+                                                    onSlidesTemplateIdChange={onSlidesTemplateIdChange}
                                                 />
                                             ) : (
                                                 <WidgetAttachmentsOld

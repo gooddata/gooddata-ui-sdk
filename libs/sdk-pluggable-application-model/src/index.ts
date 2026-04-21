@@ -25,6 +25,7 @@ export {
 export { type ILocale } from "@gooddata/sdk-model";
 
 export {
+    type IAppHeaderOptions,
     type IAppInstance,
     type KnownPluggableAppEventTypeName,
     type IPluggableApp,
