@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "Hãy thử khởi động lại chatbot và bắt đầu lại.",
     "gd.gen-ai.global-error.button-details": "Xem phản hồi lỗi thô để biết chi tiết",
     "gd.gen-ai.global-error.traceId": "ID theo dõi lỗi",
+    "gd.gen-ai.global-error.show-more": "hiện thêm",
+    "gd.gen-ai.global-error.show-less": "hiện ít",
     "gd.gen-ai.global-error.traceId.copy": "Sao chép vào bảng tạm",
     "gd.gen-ai.global-error.details.title": "Phản hồi lỗi thô",
     "gd.gen-ai.global-error.details.title.tooltip": "Phản hồi lỗi thô hiển thị thông tin back-end về lỗi đã xảy ra. Chỉ quản trị viên mới có thể xem.",

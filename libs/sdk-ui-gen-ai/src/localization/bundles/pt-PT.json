@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "Tente reiniciar o chatbot e começar de novo.",
     "gd.gen-ai.global-error.button-details": "Consulte a resposta de erro bruta para obter detalhes",
     "gd.gen-ai.global-error.traceId": "ID de rastreio do erro",
+    "gd.gen-ai.global-error.show-more": "mostrar mais",
+    "gd.gen-ai.global-error.show-less": "mostrar menos",
     "gd.gen-ai.global-error.traceId.copy": "Copiar para a área de transferência",
     "gd.gen-ai.global-error.details.title": "Resposta de erro em bruto",
     "gd.gen-ai.global-error.details.title.tooltip": "A resposta de erro em bruto apresenta informações de back-end sobre o erro ocorrido. Só é visível para os administradores.",

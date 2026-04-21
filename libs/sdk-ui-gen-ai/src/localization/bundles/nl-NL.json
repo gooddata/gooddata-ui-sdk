@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "Probeer de chatbot opnieuw op te starten en opnieuw beginnen.",
     "gd.gen-ai.global-error.button-details": "Zie de onbewerkte foutreactie voor meer informatie",
     "gd.gen-ai.global-error.traceId": "Fout-trace-ID",
+    "gd.gen-ai.global-error.show-more": "meer tonen",
+    "gd.gen-ai.global-error.show-less": "minder tonen",
     "gd.gen-ai.global-error.traceId.copy": "Naar klembord kopiëren",
     "gd.gen-ai.global-error.details.title": "Foutrespons raw data",
     "gd.gen-ai.global-error.details.title.tooltip": "De foutrespons met raw data toont back-end-info over de fout die is opgetreden. De respons is alleen zichtbaar voor beheerders.",

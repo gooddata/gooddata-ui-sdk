@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "챗봇을 다시 시작하고 처음부터 시작해 보세요.",
     "gd.gen-ai.global-error.button-details": "자세한 내용은 원시 오류 응답을 참조하세요",
     "gd.gen-ai.global-error.traceId": "오류 추적 ID",
+    "gd.gen-ai.global-error.show-more": "더 보기",
+    "gd.gen-ai.global-error.show-less": "간단히 보기",
     "gd.gen-ai.global-error.traceId.copy": "클립보드에 복사",
     "gd.gen-ai.global-error.details.title": "원본 오류 응답",
     "gd.gen-ai.global-error.details.title.tooltip": "원본 오류 응답은 발생한 오류에 대한 백엔드 정보를 보여줍니다. 이는 관리자에게만 표시됩니다.",

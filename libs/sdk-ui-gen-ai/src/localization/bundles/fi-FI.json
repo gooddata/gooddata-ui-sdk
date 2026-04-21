@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "Yritä käynnistää chatbotti uudelleen ja aloittaa alusta.",
     "gd.gen-ai.global-error.button-details": "Katso lisätietoja RAW-virhevastauksesta",
     "gd.gen-ai.global-error.traceId": "Virheen jäljitys-ID",
+    "gd.gen-ai.global-error.show-more": "näytä lisää",
+    "gd.gen-ai.global-error.show-less": "näytä vähemmän",
     "gd.gen-ai.global-error.traceId.copy": "Kopioi leikepöydälle",
     "gd.gen-ai.global-error.details.title": "Raaka virhevastaus",
     "gd.gen-ai.global-error.details.title.tooltip": "Raaka virhevastaus näyttää taustajärjestelmän tiedot tapahtuneesta virheestä. Se on näkyvissä vain ylläpitäjille.",

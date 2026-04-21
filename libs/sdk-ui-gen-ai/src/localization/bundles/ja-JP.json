@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "チャットボットを再起動して、やり直してみてください。",
     "gd.gen-ai.global-error.button-details": "詳細は生のエラー応答を参照",
     "gd.gen-ai.global-error.traceId": "エラーのトレース ID",
+    "gd.gen-ai.global-error.show-more": "もっと表示",
+    "gd.gen-ai.global-error.show-less": "表示を減らす",
     "gd.gen-ai.global-error.traceId.copy": "クリップボードにコピー",
     "gd.gen-ai.global-error.details.title": "ローエラーのレスポンス",
     "gd.gen-ai.global-error.details.title.tooltip": "ローエラーレスポンスは、発生したエラーに関するバックエンド情報を表示します。管理者にのみ表示されます。",

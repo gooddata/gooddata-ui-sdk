@@ -3,6 +3,8 @@
     "gd.gen-ai.global-error.description": "ลองเริ่มต้นใหม่โดยรีสตาร์ทแชตบอตแล้วเริ่มใหม่อีกครั้ง",
     "gd.gen-ai.global-error.button-details": "ดูการตอบกลับข้อผิดพลาดดิบสำหรับรายละเอียด",
     "gd.gen-ai.global-error.traceId": "รหัสการติดตามข้อผิดพลาด",
+    "gd.gen-ai.global-error.show-more": "แสดงเพิ่มเติม",
+    "gd.gen-ai.global-error.show-less": "แสดงน้อยลง",
     "gd.gen-ai.global-error.traceId.copy": "คัดลอกไปยังคลิปบอร์ด",
     "gd.gen-ai.global-error.details.title": "การตอบกลับข้อผิดพลาดดิบ",
     "gd.gen-ai.global-error.details.title.tooltip": "การตอบกลับข้อผิดพลาดดิบแสดงข้อมูลฝั่งแบ็กเอนด์เกี่ยวกับข้อผิดพลาดที่เกิดขึ้น มองเห็นได้เฉพาะผู้ดูแลระบบเท่านั้น",
