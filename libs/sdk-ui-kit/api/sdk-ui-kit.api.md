@@ -3077,6 +3077,8 @@ export interface IHeaderMenuItem {
     // (undocumented)
     key: string;
     // (undocumented)
+    label?: string;
+    // (undocumented)
     onClick?: (obj: any) => void;
     // (undocumented)
     target?: string;

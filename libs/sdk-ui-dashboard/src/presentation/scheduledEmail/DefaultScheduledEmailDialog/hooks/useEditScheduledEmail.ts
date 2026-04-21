@@ -639,14 +639,16 @@ export function useEditScheduledEmail({
     );
 
     const onSlidesTemplateIdChange = useCallback(
-        (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES") => {
+        (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES" | "PDF") => {
             setEditedAutomation((s) => ({
                 ...s,
                 exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                    if (
-                        !isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload) ||
-                        exportDefinition.requestPayload.format !== format
-                    ) {
+                    const matchesFormat = exportDefinition.requestPayload.format === format;
+                    const matchesType = isWidget
+                        ? isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)
+                        : isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
+
+                    if (!matchesFormat || !matchesType) {
                         return exportDefinition;
                     }
 
@@ -660,7 +662,7 @@ export function useEditScheduledEmail({
                 }),
             }));
         },
-        [setEditedAutomation],
+        [setEditedAutomation, isWidget],
     );
 
     const onFiltersChange = useCallback(
@@ -975,20 +977,21 @@ export function useEditScheduledEmail({
         delimiter: csvRawExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
     };
 
-    // Extract templateId per slides format
-    const getTemplateIdForFormat = (format: "PPTX" | "PDF_SLIDES") => {
+    // Extract templateId per slides format, scoped to the current dialog mode
+    const getTemplateIdForFormat = (format: "PPTX" | "PDF_SLIDES" | "PDF") => {
         const def = editedAutomation.exportDefinitions?.find(
             (ed) =>
-                isExportDefinitionDashboardRequestPayload(ed.requestPayload) &&
-                ed.requestPayload.format === format,
+                ed.requestPayload.format === format &&
+                (isWidget
+                    ? isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload)
+                    : isExportDefinitionDashboardRequestPayload(ed.requestPayload)),
         );
-        return def && isExportDefinitionDashboardRequestPayload(def.requestPayload)
-            ? def.requestPayload.templateId
-            : undefined;
+        return def?.requestPayload.templateId;
     };
     const slidesTemplateIds = {
         PPTX: getTemplateIdForFormat("PPTX"),
         PDF_SLIDES: getTemplateIdForFormat("PDF_SLIDES"),
+        PDF: getTemplateIdForFormat("PDF"),
     };
 
     const startDate = toNormalizedStartDate(

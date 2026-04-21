@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 
 import {
     type IExportDefinitionVisualizationObjectSettings,
+    type IExportTemplate,
     type WidgetAttachmentType,
 } from "@gooddata/sdk-model";
 
@@ -37,6 +38,12 @@ export interface IWidgetAttachmentsProps {
     onCsvRawSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     isCsvSettingsEnabled: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
+    exportTemplates?: IExportTemplate[];
+    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
+    onSlidesTemplateIdChange?: (
+        templateId: string | undefined,
+        format: "PPTX" | "PDF_SLIDES" | "PDF",
+    ) => void;
 }
 
 export function WidgetAttachments({
@@ -52,6 +59,9 @@ export function WidgetAttachments({
     onCsvRawSettingsChange,
     isCsvSettingsEnabled,
     defaultPdfPageSize,
+    exportTemplates,
+    slidesTemplateIds,
+    onSlidesTemplateIdChange,
 }: IWidgetAttachmentsProps) {
     const intl = useIntl();
     const attachmentListRef = useRef<HTMLDivElement>(null);
@@ -146,6 +156,9 @@ export function WidgetAttachments({
                         isCsvSettingsEnabled={isCsvSettingsEnabled}
                         defaultPdfPageSize={defaultPdfPageSize}
                         mode="widget"
+                        exportTemplates={exportTemplates}
+                        slidesTemplateIds={slidesTemplateIds}
+                        onSlidesTemplateIdChange={onSlidesTemplateIdChange}
                     />
                     <AttachmentsSelect<WidgetAttachmentType>
                         attachments={SUPPORTED_WIDGET_ATTACHMENTS.map((format) => ({

@@ -27,6 +27,18 @@ export interface IApiTokenAuthCredentials {
 }
 
 // @alpha
+export interface IAppHeaderOptions {
+    helpMenuItems?: Array<{
+        key: string;
+        label?: string;
+        href?: string;
+        target?: string;
+        className?: string;
+        iconName?: string;
+    }>;
+}
+
+// @alpha
 export interface IAppInstance extends IPluggableApplicationMountHandle {
     // (undocumented)
     id: string;
@@ -141,6 +153,7 @@ export interface IPluggableApplicationMountOptions {
     ctx: IPlatformContext;
     id: string;
     onEvent?: (e: IPluggableAppEvent) => void;
+    onHeaderChange?: (header: IAppHeaderOptions) => void;
     onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
 }
 
@@ -177,6 +190,7 @@ export interface IShellUiMountHandle {
     unmount(): void;
     updateApplications?(apps: PluggableApplicationRegistryItem[]): void;
     updateContext?(ctx: IPlatformContext): void;
+    updateHeader?(header: IAppHeaderOptions | undefined): void;
     updatePathname?(pathname: string): void;
 }
 

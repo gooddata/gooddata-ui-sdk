@@ -45,8 +45,11 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     mode: "widget" | "dashboard";
     exportTemplates?: IExportTemplate[];
-    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string };
-    onSlidesTemplateIdChange?: (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES") => void;
+    slidesTemplateIds?: { PPTX?: string; PDF_SLIDES?: string; PDF?: string };
+    onSlidesTemplateIdChange?: (
+        templateId: string | undefined,
+        format: "PPTX" | "PDF_SLIDES" | "PDF",
+    ) => void;
 }) {
     const intl = useIntl();
 
@@ -103,6 +106,16 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                             templates={exportTemplates}
                             templateId={slidesTemplateIds?.PDF_SLIDES}
                             onTemplateIdChange={(id) => onSlidesTemplateIdChange(id, "PDF_SLIDES")}
+                        />
+                    ) : null}
+                    {attachment === "PDF" &&
+                    mode === "widget" &&
+                    exportTemplates &&
+                    onSlidesTemplateIdChange ? (
+                        <SlidesTemplateSettings
+                            templates={exportTemplates}
+                            templateId={slidesTemplateIds?.PDF}
+                            onTemplateIdChange={(id) => onSlidesTemplateIdChange(id, "PDF")}
                         />
                     ) : null}
                     <button
