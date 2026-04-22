@@ -1,0 +1,19 @@
+{
+    "semantic-search.error.title": "Наша служба пошуку тимчасово недоступна.",
+    "semantic-search.error.text": "Ми працюємо над вирішенням цієї проблеми.",
+    "semantic-search.no-results": "За запитом “{query}” нічого не знайдено.",
+    "semantic-search.results.count": "{count, plural, one {# результат} few {# результати} many {# результатів} other {# результату}}",
+    "semantic-search.label": "Пошук панелей інструментів або візуалізацій",
+    "semantic-search.placeholder": "Пошук панелей інструментів або візуалізацій…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Теги",
+    "semantic-search.match": "{score}% збіг",
+    "semantic-search.previous-search": "Попередній пошук: {query}",
+    "semantic-search.tree": "Дерево семантичного пошуку",
+    "semantic-search.tree.history": "Історія дерева семантичного пошуку",
+    "semantic-search.edit": "Редагувати",
+    "semantic-search.date.at": "о",
+    "semantic-search.ask.ai.assistant": "Запитати AI Assistant",
+    "gs.date.today": "Сьогодні",
+    "gs.date.yesterday": "Учора"
+}

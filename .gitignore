@@ -78,7 +78,6 @@ libs/**/src/**/*.jsx
 .gdmockrc
 
 # CI scripts create these
-libs/**/ci/
 tools/**/ci/
 skel/**/ci/
 examples/**/ci/
