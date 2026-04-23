@@ -61,13 +61,14 @@ function* resetConversation() {
     // Retrieve backend from context
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
+    const isPreview: boolean | undefined = yield getContext("isPreview");
 
     const conversationId: string = yield select(threadIdSelector);
 
     const chatThread = backend
         .workspace(workspace)
         .genAI()
-        .getChatConversations()
+        .getChatConversations({ isPreview })
         .getConversationThread(conversationId);
 
     const [results, cancelAction]: [results: IChatConversation, ReturnType<typeof cancelAsyncAction>] =

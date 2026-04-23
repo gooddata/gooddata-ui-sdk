@@ -6,6 +6,9 @@ import {
     type KeyboardEventHandler,
     type ReactElement,
     type ReactNode,
+    type Ref,
+    type RefCallback,
+    type RefObject,
     useCallback,
     useMemo,
     useRef,
@@ -32,7 +35,10 @@ import {
 
 import type { IAttributeFilterProps } from "../AttributeFilter/AttributeFilter.js";
 import { AttributeFilterButton } from "../AttributeFilter/AttributeFilterButton.js";
-import { AttributeFilterDropdownButton } from "../AttributeFilter/Components/DropdownButton/AttributeFilterDropdownButton.js";
+import {
+    AttributeFilterDropdownButton,
+    type IAttributeFilterDropdownButtonProps,
+} from "../AttributeFilter/Components/DropdownButton/AttributeFilterDropdownButton.js";
 import { AttributeFilterElementsSearchBar } from "../AttributeFilter/Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
 import {
     ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS,
@@ -91,6 +97,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         props;
     const intl = useIntl();
     const [isOpen, setIsOpen] = useState(false);
+    const filterItemRefs = useRef(new Map<string, HTMLElement | null>());
     const filtersIdentifiersUnstable = useMemo(
         () => filters.map(getFilterIdentifier),
         [filters, getFilterIdentifier],
@@ -157,6 +164,9 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
             }
 
             function AttributeFilterComponent(attributeFilterProps: IAttributeFilterProps) {
+                const setFilterItemRef = useCallback((element: HTMLElement | null) => {
+                    filterItemRefs.current.set(filterIdentifier, element);
+                }, []);
                 const onError = useCallback(
                     (error: GoodDataSdkError) => errorHandler(filterIdentifier)(error),
                     [],
@@ -166,10 +176,15 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                 }, []);
                 const DropdownButtonComponent: NonNullable<IAttributeFilterProps["DropdownButtonComponent"]> =
                     useCallback(
-                        (props) => {
+                        function DropdownButtonComponent({
+                            buttonRef,
+                            ...props
+                        }: IAttributeFilterDropdownButtonProps) {
                             const titleExtension = getTitleExtension?.(filterIdentifier, props.title);
-                            const CustomDropdownButtonComponent =
-                                attributeFilterProps.DropdownButtonComponent ?? FilterGroupItem;
+                            const CustomDropdownButtonComponent: ComponentType<IAttributeFilterDropdownButtonProps> =
+                                attributeFilterProps.DropdownButtonComponent ??
+                                (FilterGroupItem as ComponentType<IAttributeFilterDropdownButtonProps>);
+                            const handleButtonRef = useMergeRefs(buttonRef, setFilterItemRef);
                             return (
                                 <CustomDropdownButtonComponent
                                     {...props}
@@ -183,10 +198,11 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                                             />
                                         </>
                                     }
+                                    buttonRef={handleButtonRef}
                                 />
                             );
                         },
-                        [attributeFilterProps.DropdownButtonComponent],
+                        [attributeFilterProps.DropdownButtonComponent, setFilterItemRef],
                     );
                 const LoadingComponent: NonNullable<IAttributeFilterProps["LoadingComponent"]> = useCallback(
                     () => <FilterGroupItem isLoading />,
@@ -249,8 +265,22 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         }
     }, []);
 
+    const handleItemKeyboardAction = useCallback(
+        (item: P) => {
+            const filterIdentifier = getFilterIdentifier(item);
+            const filterItem = filterItemRefs.current.get(filterIdentifier);
+
+            if (!filterItem) {
+                return;
+            }
+
+            filterItem.click();
+        },
+        [getFilterIdentifier],
+    );
+
     const renderBody = useCallback(
-        ({ isMobile }: IDropdownBodyRenderProps) => (
+        ({ isMobile, closeDropdown }: IDropdownBodyRenderProps) => (
             <div onKeyDown={handleKeyDown}>
                 <DropdownList
                     className="gd-filter-group-body"
@@ -258,11 +288,13 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     maxHeight={450}
                     itemHeight={53}
                     renderItem={renderItem}
+                    onKeyDownSelect={handleItemKeyboardAction}
+                    closeDropdown={closeDropdown}
                     isMobile={isMobile}
                 />
             </div>
         ),
-        [filters, renderItem, handleKeyDown],
+        [filters, renderItem, handleKeyDown, handleItemKeyboardAction],
     );
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -320,4 +352,24 @@ export function useDeepEqualRefStablizer<T>(unstableState: T): T {
         stableRef.current = unstableState;
     }
     return stableRef.current;
+}
+
+function useMergeRefs<T>(
+    ref1: Ref<T> | undefined,
+    ref2: Ref<T> | undefined,
+    ref3?: Ref<T> | undefined,
+): RefCallback<T> {
+    return useCallback(
+        (value: T) => {
+            [ref1, ref2, ref3].forEach((ref) => {
+                if (!ref) return;
+                if (typeof ref === "function") {
+                    ref(value);
+                } else {
+                    (ref as RefObject<T | null>).current = value;
+                }
+            });
+        },
+        [ref1, ref2, ref3],
+    );
 }

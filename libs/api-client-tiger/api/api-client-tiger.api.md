@@ -2734,6 +2734,7 @@ export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool';
 export interface AiConversationResponse {
     'conversationId': string;
     'createdAt': string;
+    'isPreview'?: boolean;
     'lastActivityAt': string;
     'organizationId': string;
     'userId': string;
@@ -7593,10 +7594,10 @@ export function ConversationsAiAxiosParamCreator_DeleteConversationApiV1AiWorksp
 export function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
 
 // @public
-export function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(workspaceId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(workspaceId: string, isPreview?: boolean, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
 
 // @public
-export function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(workspaceId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(workspaceId: string, isPreview?: boolean, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
 
 // @public
 interface ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest {
@@ -7616,6 +7617,7 @@ export { ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversat
 
 // @public
 interface ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest {
+    readonly isPreview?: boolean;
     readonly workspaceId: string;
 }
 export { ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest }
@@ -7631,6 +7633,7 @@ export interface ConversationsAiInterface {
 
 // @public
 interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest {
+    readonly isPreview?: boolean;
     readonly workspaceId: string;
 }
 export { ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest }
@@ -19318,6 +19321,8 @@ export interface JsonApiAgentInAttributes {
     // (undocumented)
     'enabled'?: boolean;
     // (undocumented)
+    'isPreview'?: boolean;
+    // (undocumented)
     'name'?: string | null;
     // (undocumented)
     'personality'?: string | null;
@@ -19364,6 +19369,8 @@ export interface JsonApiAgentOutAttributes {
     'description'?: string | null;
     // (undocumented)
     'enabled'?: boolean;
+    // (undocumented)
+    'isPreview'?: boolean;
     // (undocumented)
     'modifiedAt'?: string;
     // (undocumented)

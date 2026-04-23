@@ -15,12 +15,20 @@ import {
 
 import cx from "classnames";
 import copy from "copy-to-clipboard";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { connect, useDispatch, useSelector } from "react-redux";
 
 import { type IChatConversationVisualisationContent, type IChatSuggestion } from "@gooddata/sdk-backend-spi";
 import { type IColorPalette, type IDashboardAttributeFilter, type IFilter } from "@gooddata/sdk-model";
-import { type IDrillEvent, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    type IDrillEvent,
+    isClusteringNotReceived,
+    isDataTooLargeToCompute,
+    isDataTooLargeToDisplay,
+    isForecastNotReceived,
+    isNoDataSdkError,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
 import { type IDashboardKeyDriverCombinationItem } from "@gooddata/sdk-ui-dashboard";
 import {
     Dropdown,
@@ -112,7 +120,9 @@ function ConversationVisualizationContentCore({
 }: ConversationVisualizationContentProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const [hasVisError, setVisError] = useState(false);
+    const [hasVisFatal, setVisFatal] = useState(false);
+    const [visError, setVisError] = useState<Error | null>(null);
+
     const [isTable, setIsTable] = useState(false);
     const moreButtonDescId = useId();
 
@@ -134,9 +144,26 @@ function ConversationVisualizationContentCore({
 
     const { onCopy, onOpen, onSave } = useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard });
 
-    const onVisualizationError = useCallback(() => {
-        setVisError(true);
-    }, []);
+    const onVisualizationError = useCallback(
+        (error: Error) => {
+            // Already have error
+            if (visError) {
+                return;
+            }
+
+            // Ignore some specific errors
+            const isFatal = !(
+                isNoDataSdkError(error) ||
+                isDataTooLargeToDisplay(error) ||
+                isDataTooLargeToCompute(error) ||
+                isForecastNotReceived(error) ||
+                isClusteringNotReceived(error)
+            );
+            setVisError(error);
+            setVisFatal(isFatal);
+        },
+        [visError],
+    );
 
     const classNames = cx(
         "gd-gen-ai-chat__conversation__item__content",
@@ -155,7 +182,7 @@ function ConversationVisualizationContentCore({
                         isVisualisationCheckLoading={visualisationCheckLoading}
                         isTable={isTable}
                         onTable={setIsTable}
-                        hasError={hasVisError}
+                        hasError={hasVisFatal}
                         moreButtonId={moreButtonDescId}
                         onSave={onSave}
                         onOpen={onOpen}
@@ -186,6 +213,7 @@ function ConversationVisualizationContentCore({
                     <DrillOverlay />
                 </Wrapper>
             </DrillChooser>
+            <VisualizationErrorReport error={visError} />
             <Suggestions showSuggestions={showSuggestions} suggestions={[]} />
         </div>
     );
@@ -488,6 +516,58 @@ function VisualisationWrapper(props: ConversationVisualisationProps) {
         </div>
     );
 }
+
+interface IVisualizationErrorReportProps {
+    error?: Error | null;
+}
+
+function VisualizationErrorReport({ error }: IVisualizationErrorReportProps) {
+    if (!error) {
+        return null;
+    }
+
+    const className = cx("gd-gen-ai-chat__messages__content--error");
+
+    return (
+        <>
+            {isForecastNotReceived(error) ? (
+                <div className={className}>
+                    <FormattedMessage
+                        id="gd.gen-ai.visualization.error.forecast"
+                        values={{
+                            b: (chunk) => <strong>{chunk}</strong>,
+                            error: error.message,
+                        }}
+                    />
+                </div>
+            ) : null}
+            {isClusteringNotReceived(error) ? (
+                <div className={className}>
+                    <FormattedMessage
+                        id="gd.gen-ai.visualization.error.clustering"
+                        values={{
+                            b: (chunk) => <strong>{chunk}</strong>,
+                            error: error.message,
+                        }}
+                    />
+                </div>
+            ) : null}
+            {isDataTooLargeToDisplay(error) || isDataTooLargeToCompute(error) ? (
+                <div className={className}>
+                    <FormattedMessage
+                        id="gd.gen-ai.visualization.error.data_too_large"
+                        values={{
+                            b: (chunk) => <strong>{chunk}</strong>,
+                            error: error.message,
+                        }}
+                    />
+                </div>
+            ) : null}
+        </>
+    );
+}
+
+// Suggestions
 
 interface ISuggestionsProps {
     showSuggestions?: boolean;

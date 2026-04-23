@@ -29,7 +29,6 @@ import {
     type OnError,
     type OnExportReady,
     type OnFiredDrillEvent,
-    isNoDataSdkError,
 } from "@gooddata/sdk-ui";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart, ScatterPlot } from "@gooddata/sdk-ui-charts";
 import {
@@ -145,10 +144,9 @@ export function ConversationVisualisation({
             if (!visualization) {
                 return;
             }
-            // Ignore NO_DATA error, we still want an option to save the visualization
-            if (!isNoDataSdkError(error)) {
-                onVisualisationError?.(error);
-            }
+
+            // Error callback
+            onVisualisationError?.(error);
 
             dispatch(
                 visualizationErrorAction({

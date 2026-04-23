@@ -3,9 +3,8 @@
 import {
     type ComponentType,
     type KeyboardEvent,
-    type MutableRefObject,
     type ReactNode,
-    type RefObject,
+    type Ref,
     useCallback,
     useEffect,
     useRef,
@@ -167,7 +166,7 @@ export interface IAttributeFilterDropdownButtonProps {
      *
      * @beta
      */
-    buttonRef?: MutableRefObject<HTMLElement | null>;
+    buttonRef?: Ref<HTMLElement>;
 
     /**
      * Id of the dropdown trigger button.
@@ -263,6 +262,21 @@ export function AttributeFilterDropdownButton({
         },
         [disabled],
     );
+    const handleButtonRef = useCallback(
+        (element: HTMLDivElement | null) => {
+            if (!buttonRef) {
+                return;
+            }
+
+            if (typeof buttonRef === "function") {
+                buttonRef(element);
+                return;
+            }
+
+            buttonRef.current = element;
+        },
+        [buttonRef],
+    );
 
     const tooltipId = useIdPrefixed("filter-locked-tooltip");
 
@@ -292,7 +306,7 @@ export function AttributeFilterDropdownButton({
             aria-controls={isOpen ? dropdownId : undefined}
             role="button"
             tabIndex={0}
-            ref={buttonRef as unknown as RefObject<HTMLDivElement>}
+            ref={handleButtonRef}
         >
             {filterIcon ? (
                 <div className="gd-attribute-filter-dropdown-button-icon__next">{filterIcon}</div>

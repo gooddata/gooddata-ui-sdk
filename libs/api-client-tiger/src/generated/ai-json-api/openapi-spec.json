@@ -22,6 +22,16 @@
                             "type": "string",
                             "title": "Workspace Id"
                         }
+                    },
+                    {
+                        "name": "isPreview",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Ispreview"
+                        }
                     }
                 ],
                 "responses": {
@@ -61,6 +71,16 @@
                         "schema": {
                             "type": "string",
                             "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "isPreview",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "Ispreview"
                         }
                     }
                 ],
@@ -1435,6 +1455,12 @@
                         "type": "string",
                         "title": "Userid",
                         "description": "Owner user identifier."
+                    },
+                    "isPreview": {
+                        "type": "boolean",
+                        "title": "Ispreview",
+                        "description": "Whether this is a preview conversation.",
+                        "default": false
                     },
                     "createdAt": {
                         "type": "string",

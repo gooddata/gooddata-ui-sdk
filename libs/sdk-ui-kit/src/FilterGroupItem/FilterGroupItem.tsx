@@ -1,13 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import {
-    type KeyboardEvent,
-    type KeyboardEventHandler,
-    type MutableRefObject,
-    type ReactNode,
-    type RefObject,
-    useCallback,
-} from "react";
+import { type KeyboardEvent, type KeyboardEventHandler, type ReactNode, type Ref, useCallback } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -112,7 +105,7 @@ export interface IFilterGroupItemProps {
      *
      * @beta
      */
-    buttonRef?: MutableRefObject<HTMLElement | null>;
+    buttonRef?: Ref<HTMLElement>;
 
     /**
      * Id to link the dropdown body. Mainly for accessibility purposes.
@@ -172,6 +165,21 @@ export function FilterGroupItem({
         },
         [disabled],
     );
+    const handleButtonRef = useCallback(
+        (element: HTMLDivElement | null) => {
+            if (!buttonRef) {
+                return;
+            }
+
+            if (typeof buttonRef === "function") {
+                buttonRef(element);
+                return;
+            }
+
+            buttonRef.current = element;
+        },
+        [buttonRef],
+    );
 
     let itemsCountString: string | undefined;
     if (selectedItemsCount !== undefined && totalItemsCount !== undefined) {
@@ -198,8 +206,8 @@ export function FilterGroupItem({
             onKeyDown={onKeyDown}
             aria-controls={isOpen ? dropdownId : undefined}
             role="button"
-            tabIndex={0}
-            ref={buttonRef as RefObject<HTMLDivElement>}
+            tabIndex={-1} // let dropdown list handle virtual focus with arrows
+            ref={handleButtonRef}
             data-testid={`s-filter-group-item-${simplifyText(title ?? null)}`}
         >
             {isError || icon ? (
@@ -215,6 +223,7 @@ export function FilterGroupItem({
                             <ShortenedText
                                 tooltipAlignPoints={ALIGN_POINT}
                                 data-testid="s-filter-group-item-title"
+                                ellipsisPosition="end"
                             >
                                 {`${buttonTitle}`}
                             </ShortenedText>

@@ -14,7 +14,7 @@
     ],
     "changeDirs": [
         {
-            "glob": "src/internal/translations/en-US.json"
+            "glob": "src/internal/translations/*.json"
         }
     ]
 }

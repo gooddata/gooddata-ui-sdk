@@ -51,16 +51,18 @@ export class ChatConversationsService implements IChatConversations {
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly workspaceId: string,
         private readonly dateNormalizer: DateNormalizer,
+        private readonly options: { isPreview?: boolean } = {},
     ) {}
 
     getConversationItemsQuery(): IChatConversationItemsQuery {
-        return new ConversationItemsQuery(this.authCall, this.workspaceId);
+        return new ConversationItemsQuery(this.authCall, this.workspaceId, this.options.isPreview);
     }
 
     async create(): Promise<IChatConversation> {
         return await this.authCall(async (client) => {
             const response = await GenAiApi_PostConversations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
+                ...(this.options.isPreview === undefined ? {} : { isPreview: this.options.isPreview }),
             });
             return convertChatConversationFromBackend(response.data);
         });
@@ -107,6 +109,7 @@ export class ConversationItemsQuery implements IChatConversationItemsQuery {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly workspaceId: string,
+        private readonly isPreview: boolean | undefined = undefined,
     ) {}
 
     withSize(size: number): IChatConversationItemsQuery {
@@ -125,6 +128,7 @@ export class ConversationItemsQuery implements IChatConversationItemsQuery {
                 const response = await this.authCall((client) => {
                     return GenAiApi_GetConversations(client.axios, client.basePath, {
                         workspaceId: this.workspaceId,
+                        ...(this.isPreview === undefined ? {} : { isPreview: this.isPreview }),
                     });
                 });
 

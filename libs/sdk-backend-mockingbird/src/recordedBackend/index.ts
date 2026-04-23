@@ -419,7 +419,7 @@ function recordedWorkspace(
                 getChatThread(): IChatThread {
                     return new DummyGenAIChatThread();
                 },
-                getChatConversations(): IChatConversations {
+                getChatConversations(_options?: { isPreview?: boolean }): IChatConversations {
                     return new DummyChatConversations();
                 },
                 getSemanticSearchQuery: () => {

@@ -851,6 +851,7 @@ export interface IAgent {
     customSkills?: AgentCustomSkill[] | null;
     description?: string;
     enabled?: boolean;
+    isPreview?: boolean;
     modifiedAt?: string;
     modifiedBy?: IUser;
     name?: string;

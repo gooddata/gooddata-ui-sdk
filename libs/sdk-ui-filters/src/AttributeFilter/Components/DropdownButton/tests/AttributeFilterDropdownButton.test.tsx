@@ -62,4 +62,11 @@ describe("Test AttributeFilterDropdownButton", () => {
         const { container } = renderComponent({ disabled: true });
         expect(container.querySelector(ATTRIBUTE_FILTER_BUTTON_SELECTOR)).toHaveClass("disabled");
     });
+
+    it("should support callback button refs", () => {
+        const buttonRef = vi.fn();
+        const { container } = renderComponent({ buttonRef });
+
+        expect(buttonRef).toHaveBeenLastCalledWith(container.querySelector(ATTRIBUTE_FILTER_BUTTON_SELECTOR));
+    });
 });

@@ -1297,6 +1297,8 @@
 
             pre {
                 font-size: 12px;
+                overflow: auto;
+                overscroll-behavior: auto;
             }
         }
 

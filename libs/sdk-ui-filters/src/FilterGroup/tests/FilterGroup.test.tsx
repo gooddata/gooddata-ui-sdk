@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactElement, type ReactNode, useState } from "react";
+import { type ReactElement, type ReactNode, useRef, useState } from "react";
 
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -17,30 +17,82 @@ type IMockedAttributeFilterButtonProps = IAttributeFilterProps & {
 type IMockedDropdownListProps<T> = {
     items: T[];
     renderItem: (props: { item: T }) => ReactNode;
+    onKeyDownSelect?: (item: T) => void;
+    closeDropdown?: () => void;
 };
 
-const mockAttributeFilterButton = vi.fn((props: IMockedAttributeFilterButtonProps) => {
+const mockAttributeFilterButton = vi.fn();
+
+function MockAttributeFilterButton(props: IMockedAttributeFilterButtonProps) {
     const ElementsSearchBarComponent = props.ElementsSearchBarComponent!;
+    const DropdownButtonComponent = props.DropdownButtonComponent!;
+    const buttonRef = useRef<HTMLElement | null>(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownId = `mock-attribute-filter-${props.title}`;
+
+    mockAttributeFilterButton(props);
 
     return (
         <div>
-            <ElementsSearchBarComponent onSearch={() => {}} searchString="" />
-            <button type="button" onClick={props.onToggleSelection}>
-                Toggle selection for {props.title}
-            </button>
+            <DropdownButtonComponent
+                title={props.title}
+                isOpen={isOpen}
+                onClick={() => {
+                    setIsOpen((prev) => !prev);
+                }}
+                buttonRef={buttonRef}
+                dropdownId={dropdownId}
+            />
+            {isOpen ? (
+                <div role="dialog" aria-label={`${props.title} dialog`} id={dropdownId}>
+                    <ElementsSearchBarComponent onSearch={() => {}} searchString="" />
+                    <button type="button" onClick={props.onToggleSelection}>
+                        Toggle selection for {props.title}
+                    </button>
+                </div>
+            ) : null}
         </div>
     );
-});
+}
 
 vi.mock("@gooddata/sdk-ui-kit", async () => {
     const actual = await vi.importActual("@gooddata/sdk-ui-kit");
 
     return {
         ...actual,
-        DropdownList: ({ items, renderItem }: IMockedDropdownListProps<unknown>) => (
+        DropdownList: ({
+            items,
+            renderItem,
+            onKeyDownSelect,
+            closeDropdown,
+        }: IMockedDropdownListProps<unknown>) => (
             <div>
+                <button
+                    type="button"
+                    data-testid="keyboard-close"
+                    onKeyDown={(event) => {
+                        if (event.code === "Escape") {
+                            event.preventDefault();
+                            event.stopPropagation();
+                            closeDropdown?.();
+                        }
+                    }}
+                >
+                    Keyboard close
+                </button>
                 {items.map((item: unknown, index: number) => (
-                    <div key={index}>{renderItem({ item })}</div>
+                    <div key={index}>
+                        <button
+                            type="button"
+                            data-testid={`keyboard-select-${index}`}
+                            onClick={() => {
+                                onKeyDownSelect?.(item);
+                            }}
+                        >
+                            Keyboard select {index}
+                        </button>
+                        {renderItem({ item })}
+                    </div>
                 ))}
             </div>
         ),
@@ -49,7 +101,9 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
 });
 
 vi.mock("../../AttributeFilter/AttributeFilterButton.js", () => ({
-    AttributeFilterButton: (props: IMockedAttributeFilterButtonProps) => mockAttributeFilterButton(props),
+    AttributeFilterButton: (props: IMockedAttributeFilterButtonProps) => (
+        <MockAttributeFilterButton {...props} />
+    ),
 }));
 
 describe("FilterGroup", () => {
@@ -89,6 +143,77 @@ describe("FilterGroup", () => {
         vi.clearAllMocks();
     });
 
+    it("should open the keyboard-selected filter item", async () => {
+        const filters = [
+            { id: "region", title: "Region" },
+            { id: "product", title: "Product" },
+        ];
+
+        render(
+            <IntlWrapper locale="en-US">
+                <FilterGroup<{ id: string; title: string }>
+                    title="Filter group"
+                    filters={filters}
+                    getFilterIdentifier={(filter) => filter.id}
+                    hasSelectedElements={() => false}
+                    renderFilter={(filter, AttributeFilterComponent) => {
+                        if (!AttributeFilterComponent) {
+                            throw new Error("AttributeFilterComponent is required.");
+                        }
+
+                        return (
+                            <AttributeFilterComponent
+                                {...({ title: filter.title } as IAttributeFilterProps)}
+                            />
+                        );
+                    }}
+                />
+            </IntlWrapper>,
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: /filter group/i }));
+        fireEvent.click(screen.getByTestId("keyboard-select-1"));
+
+        expect(await screen.findByRole("dialog", { name: "Product dialog" })).toBeInTheDocument();
+    });
+
+    it("should close the group when Escape is pressed inside the keyboard-navigated list", async () => {
+        const filters = [{ id: "region", title: "Region" }];
+
+        render(
+            <IntlWrapper locale="en-US">
+                <FilterGroup<{ id: string; title: string }>
+                    title="Filter group"
+                    filters={filters}
+                    getFilterIdentifier={(filter) => filter.id}
+                    hasSelectedElements={() => false}
+                    renderFilter={(filter, AttributeFilterComponent) => {
+                        if (!AttributeFilterComponent) {
+                            throw new Error("AttributeFilterComponent is required.");
+                        }
+
+                        return (
+                            <AttributeFilterComponent
+                                {...({ title: filter.title } as IAttributeFilterProps)}
+                            />
+                        );
+                    }}
+                />
+            </IntlWrapper>,
+        );
+
+        const filterGroupButton = screen.getByRole("button", { name: /filter group/i });
+        fireEvent.click(filterGroupButton);
+
+        const keyboardCloseButton = await screen.findByTestId("keyboard-close");
+        fireEvent.keyDown(keyboardCloseButton, { code: "Escape" });
+
+        await waitFor(() => {
+            expect(screen.queryByTestId("keyboard-close")).not.toBeInTheDocument();
+        });
+        expect(filterGroupButton).toHaveAttribute("aria-expanded", "false");
+    });
+
     it("should keep focus on the toggled item when the group rerenders", async () => {
         const filters = [{ id: "region", title: "Region" }];
 
@@ -126,6 +251,7 @@ describe("FilterGroup", () => {
         render(<Component />);
 
         fireEvent.click(screen.getByRole("button", { name: /Filter group/i }));
+        fireEvent.click(screen.getByTestId("s-filter-group-item-region"));
         mockVisibleInputLayout();
 
         const searchInputBeforeToggle = await screen.findByRole("searchbox", {

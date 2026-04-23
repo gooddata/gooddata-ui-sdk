@@ -32,6 +32,7 @@ export function convertAgent(agent: JsonApiAgentOutWithLinks, included?: JsonApi
         customSkills: agent.attributes?.customSkills,
         aiKnowledge: agent.attributes?.aiKnowledge,
         availableToAll: agent.attributes?.availableToAll,
+        isPreview: agent.attributes?.isPreview,
         createdAt: agent.attributes?.createdAt,
         modifiedAt: agent.attributes?.modifiedAt,
         createdBy: convertUserIdentifier(agent.relationships?.createdBy, includedAsUserIdentifiers),

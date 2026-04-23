@@ -2772,7 +2772,7 @@ export interface IFileValidationRules {
 // @internal (undocumented)
 export interface IFilterGroupItemProps {
     // @beta
-    buttonRef?: MutableRefObject<HTMLElement | null>;
+    buttonRef?: Ref<HTMLElement>;
     // @alpha
     disabled?: boolean;
     // @beta

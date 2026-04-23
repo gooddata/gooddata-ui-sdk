@@ -152,8 +152,9 @@ function* fetchConversations() {
     // Retrieve backend from context
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
+    const isPreview: boolean | undefined = yield getContext("isPreview");
 
-    const api = backend.workspace(workspace).genAI().getChatConversations();
+    const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
     const query = api.getConversationItemsQuery();
 
     const getConversations = query.query.bind(query);

@@ -23,6 +23,7 @@ export const getStore = (
     workspace: string,
     eventDispatcher: EventDispatcher,
     optionsDispatcher: OptionsDispatcher,
+    isPreview: boolean | undefined,
 ): EnhancedStore => {
     const sagaMiddleware = createSagaMiddleware({
         context: {
@@ -30,6 +31,7 @@ export const getStore = (
             workspace,
             eventDispatcher,
             optionsDispatcher,
+            isPreview,
         },
     });
     const store = configureStore({

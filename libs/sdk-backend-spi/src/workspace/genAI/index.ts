@@ -61,9 +61,15 @@ export interface IGenAIService {
 
     /**
      * Get a chatbot conversations builder.
+     *
+     * @param options - Optional scoping for the returned service.
+     *   When `isPreview` is `true`, list and create operations target the
+     *   caller's preview agent for the current workspace (backend agent id:
+     *   `{userId}-{workspaceId}-preview`). The preview agent must already
+     *   exist and be enabled — otherwise `create()` will fail.
      * @internal
      */
-    getChatConversations(): IChatConversations;
+    getChatConversations(options?: { isPreview?: boolean }): IChatConversations;
 
     /**
      * Get a memory service for listing and managing memory items.

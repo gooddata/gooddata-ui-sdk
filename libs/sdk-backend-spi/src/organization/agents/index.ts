@@ -40,10 +40,11 @@ export interface IAgentsQuery {
     /**
      * Sets filter for the query.
      *
-     * @param filter - filter object with optional name for name-based search
+     * @param filter - filter object with optional name for name-based search,
+     *   and optional `isPreview` to filter by the preview flag (omit to return both).
      * @returns agents query
      */
-    withFilter(filter: { name?: string }): IAgentsQuery;
+    withFilter(filter: { name?: string; isPreview?: boolean }): IAgentsQuery;
 
     /**
      * Starts the agents query.

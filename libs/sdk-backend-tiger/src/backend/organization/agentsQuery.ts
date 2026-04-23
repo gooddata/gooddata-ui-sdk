@@ -12,7 +12,7 @@ export class AgentsQuery implements IAgentsQuery {
     private size = 100;
     private page = 0;
     private sort = {};
-    private filter: { name?: string } = {};
+    private filter: { name?: string; isPreview?: boolean } = {};
     private totalCount: number | undefined = undefined;
 
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
@@ -36,7 +36,7 @@ export class AgentsQuery implements IAgentsQuery {
         return this;
     }
 
-    withFilter(filter: { name?: string }): IAgentsQuery {
+    withFilter(filter: { name?: string; isPreview?: boolean }): IAgentsQuery {
         this.filter = { ...filter };
         this.totalCount = undefined;
         return this;
@@ -48,7 +48,18 @@ export class AgentsQuery implements IAgentsQuery {
                 const metaIncludeObj =
                     this.totalCount === undefined ? { metaInclude: ["page" as const] } : {};
 
-                const filterObj = this.filter.name ? { filter: `name=containsic='${this.filter.name}'` } : {};
+                const filterClauses: string[] = [];
+                if (this.filter.name) {
+                    filterClauses.push(`name=containsic='${this.filter.name}'`);
+                }
+                if (this.filter.isPreview === true) {
+                    filterClauses.push("isPreview==true");
+                } else if (this.filter.isPreview === false) {
+                    // isPreview column is nullable in metadata-api; pre-existing rows are NULL.
+                    // Treat NULL as "not preview" so they show up alongside explicit `false`.
+                    filterClauses.push("(isPreview==false,isPreview=isnull=true)");
+                }
+                const filterObj = filterClauses.length ? { filter: filterClauses.join(";") } : {};
 
                 const items = await this.authCall((client) =>
                     EntitiesApi_GetAllEntitiesAgents(client.axios, client.basePath, {

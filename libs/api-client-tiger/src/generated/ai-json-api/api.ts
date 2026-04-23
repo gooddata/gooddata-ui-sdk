@@ -132,6 +132,10 @@ export interface AiConversationResponse {
      */
     'userId': string;
     /**
+     * Whether this is a preview conversation.
+     */
+    'isPreview'?: boolean;
+    /**
      * Conversation creation timestamp (ISO-8601 UTC).
      */
     'createdAt': string;
@@ -1222,12 +1226,13 @@ export async function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWor
  * 
  * @summary Get Conversations
  * @param {string} workspaceId 
+ * @param {boolean} [isPreview] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(
-    workspaceId: string, 
+    workspaceId: string, isPreview?: boolean, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -1244,6 +1249,10 @@ export async function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWo
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (isPreview !== undefined) {
+        localVarQueryParameter['isPreview'] = isPreview;
+    }
 
 
     
@@ -1267,12 +1276,13 @@ export async function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWo
  * 
  * @summary Post Conversations
  * @param {string} workspaceId 
+ * @param {boolean} [isPreview] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(
-    workspaceId: string, 
+    workspaceId: string, isPreview?: boolean, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -1289,6 +1299,10 @@ export async function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiW
     const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (isPreview !== undefined) {
+        localVarQueryParameter['isPreview'] = isPreview;
+    }
 
 
     
@@ -1378,7 +1392,7 @@ export async function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspace
     configuration?: Configuration,
 ): AxiosPromise<Array<AiConversationResponse>> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(
-        requestParameters.workspaceId, 
+        requestParameters.workspaceId, requestParameters.isPreview, 
         options || {},
         configuration,
     );
@@ -1404,7 +1418,7 @@ export async function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspac
     configuration?: Configuration,
 ): AxiosPromise<AiConversationResponse> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(
-        requestParameters.workspaceId, 
+        requestParameters.workspaceId, requestParameters.isPreview, 
         options || {},
         configuration,
     );
@@ -1514,6 +1528,13 @@ export interface ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChat
      * @memberof ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet
      */
     readonly workspaceId: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet
+     */
+    readonly isPreview?: boolean
 }
 
 /**
@@ -1528,6 +1549,13 @@ export interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdCha
      * @memberof ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost
      */
     readonly workspaceId: string
+
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost
+     */
+    readonly isPreview?: boolean
 }
 
 /**
