@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.31.0-alpha.8",
+    "version": "11.32.0-alpha.0",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",

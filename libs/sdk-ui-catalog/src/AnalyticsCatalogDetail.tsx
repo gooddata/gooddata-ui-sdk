@@ -4,6 +4,7 @@ import type { MouseEvent, PropsWithChildren } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetail, type ICatalogDetailProps } from "./catalogDetail/CatalogDetail.js";
 import {
@@ -15,6 +16,7 @@ import { CatalogResourceProvider } from "./catalogResource/CatalogResourceProvid
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { type ObjectType } from "./objectType/types.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
+import { ParameterMutationProvider } from "./parameter/ParameterMutationContext.js";
 import { PermissionsProvider } from "./permission/PermissionsContext.js";
 import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
 import { QualityProvider } from "./quality/QualityContext.js";
@@ -125,15 +127,19 @@ function Providers(props: ProvidersProps) {
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={workspace}>
                 <IntlWrapper locale={props.locale}>
-                    <OverlayProvider>
-                        <PermissionsProvider permissionsState={permissionsState}>
-                            <QualityProvider backend={backend} workspace={workspace}>
-                                <CatalogResourceProvider backend={backend} workspace={workspace}>
-                                    {props.children}
-                                </CatalogResourceProvider>
-                            </QualityProvider>
-                        </PermissionsProvider>
-                    </OverlayProvider>
+                    <ToastsCenterContextProvider>
+                        <OverlayProvider>
+                            <PermissionsProvider permissionsState={permissionsState}>
+                                <QualityProvider backend={backend} workspace={workspace}>
+                                    <CatalogResourceProvider backend={backend} workspace={workspace}>
+                                        <ParameterMutationProvider>
+                                            {props.children}
+                                        </ParameterMutationProvider>
+                                    </CatalogResourceProvider>
+                                </QualityProvider>
+                            </PermissionsProvider>
+                        </OverlayProvider>
+                    </ToastsCenterContextProvider>
                 </IntlWrapper>
             </WorkspaceProvider>
         </BackendProvider>

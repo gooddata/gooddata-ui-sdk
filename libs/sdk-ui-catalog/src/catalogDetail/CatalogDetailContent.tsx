@@ -6,8 +6,8 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
-import { useLocalStorage, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { type IUiTab, UiButton, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
+import { useLocalStorage } from "@gooddata/sdk-ui";
+import { type IUiTab, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
 import { canEditCatalogItem } from "../catalogItem/permission.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
@@ -17,7 +17,7 @@ import { type ObjectType } from "../objectType/types.js";
 import { usePermissionsState } from "../permission/PermissionsContext.js";
 import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { useQualityIssuesById, useQualityReportState } from "../quality/QualityContext.js";
-import { CatalogDetailActionBar } from "./CatalogDetailActionBar.js";
+import { CatalogDetailActions } from "./CatalogDetailActions.js";
 import { CatalogDetailHeader, type ICatalogDetailHeaderRef } from "./CatalogDetailHeader.js";
 import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
 import { CatalogDetailTabCertification } from "./CatalogDetailTabCertification.js";
@@ -25,7 +25,7 @@ import { CatalogDetailTabLineage } from "./CatalogDetailTabLineage.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
-import type { EditHandlerEvent, ICatalogDetailAction, OpenHandlerEvent } from "./types.js";
+import type { OpenHandlerEvent } from "./types.js";
 
 const Tabs = {
     METADATA: "metadata",
@@ -55,10 +55,6 @@ export interface ICatalogDetailContentProps {
      */
     onOpenClick?: (event: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
     /**
-     * Handler for editing catalog items.
-     */
-    onEditClick?: (event: MouseEvent, editClickEvent: EditHandlerEvent) => void;
-    /**
      * Handler for tag click.
      */
     onTagClick?: (tag: string) => void;
@@ -67,21 +63,21 @@ export interface ICatalogDetailContentProps {
      */
     onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;
     /**
+     * Handler for catalog item create (e.g. duplicate).
+     */
+    onCatalogItemCreate?: (item: ICatalogItem) => void;
+    /**
      * Handler for catalog item update.
      */
     onCatalogItemUpdate?: (item: ICatalogItem) => void;
     /**
+     * Handler for catalog item delete.
+     */
+    onCatalogItemDelete?: (ref: ICatalogItemRef) => void;
+    /**
      * Handler for catalog item update error.
      */
     onCatalogItemUpdateError?: (error: Error) => void;
-    /**
-     * Returns item-specific actions for the detail actions menu.
-     */
-    getItemActions?: (item: ICatalogItem) => ICatalogDetailAction[];
-    /**
-     * Handles selection of an item-specific detail action.
-     */
-    onItemAction?: (item: ICatalogItem, actionId: string) => void;
 }
 
 /**
@@ -92,16 +88,14 @@ export function CatalogDetailContent({
     objectType,
     objectDefinition,
     onOpenClick,
-    onEditClick,
     onTagClick,
+    onCatalogItemCreate,
     onCatalogItemUpdate,
+    onCatalogItemDelete,
     onCatalogItemUpdateError,
     onCatalogItemNavigation,
-    getItemActions,
-    onItemAction,
 }: ICatalogDetailContentProps) {
     const intl = useIntl();
-    const workspaceId = useWorkspaceStrict();
 
     const { result: { user: currentUser, permissions, settings } = {} } = usePermissionsState();
 
@@ -117,18 +111,19 @@ export function CatalogDetailContent({
         updateItemMetricType,
         updateItemFormat,
         updateItemCertification,
+        applyItemUpdate,
+        applyItemDelete,
     } = useCatalogItemUpdate({
         currentUser,
         objectId,
         objectType,
         objectDefinition,
         onUpdate: onCatalogItemUpdate,
+        onDelete: onCatalogItemDelete,
         onError: onCatalogItemUpdateError,
     });
 
     const canEdit = canEditCatalogItem(permissions, item);
-
-    const itemActions = useMemo(() => (item ? (getItemActions?.(item) ?? []) : []), [getItemActions, item]);
 
     const separators = settings?.separators;
     const enableMetricFormatOverrides = Boolean(settings?.["enableMetricFormatOverrides"]);
@@ -212,35 +207,14 @@ export function CatalogDetailContent({
                             isDescriptionGenerationEnabled={isDescriptionGenerationEnabled}
                             headerRef={headerRef}
                             actions={
-                                item.type === "parameter" ? (
-                                    canEdit ? (
-                                        <CatalogDetailActionBar
-                                            item={item}
-                                            workspaceId={workspaceId}
-                                            actions={itemActions}
-                                            onEditClick={onEditClick}
-                                            onActionsMenuSelect={(actionId) => {
-                                                onItemAction?.(item, actionId);
-                                            }}
-                                        />
-                                    ) : null
-                                ) : (
-                                    <UiButton
-                                        label={intl.formatMessage({
-                                            id: "analyticsCatalog.catalogItem.open",
-                                        })}
-                                        variant="primary"
-                                        accessibilityConfig={{ role: "link" }}
-                                        onClick={(event) => {
-                                            onOpenClick?.(event, {
-                                                item,
-                                                workspaceId,
-                                                newTab: event.metaKey || event.ctrlKey,
-                                                preventDefault: event.preventDefault.bind(event),
-                                            });
-                                        }}
-                                    />
-                                )
+                                <CatalogDetailActions
+                                    item={item}
+                                    canEdit={canEdit}
+                                    onOpen={onOpenClick}
+                                    onCatalogItemCreate={onCatalogItemCreate}
+                                    onCatalogItemUpdate={applyItemUpdate}
+                                    onCatalogItemDelete={applyItemDelete}
+                                />
                             }
                         />
                         <UiTabs

@@ -12,6 +12,7 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 import { CatalogFeedProvider } from "../../catalogItem/CatalogFeedContext.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import type { CatalogCreateObjectType } from "../../objectType/types.js";
+import { ParameterMutationProvider } from "../../parameter/ParameterMutationContext.js";
 import { CreateObjectButton } from "../CreateObjectButton.js";
 
 vi.mock("../../catalogItem/useCatalogItemFeed.js");
@@ -34,7 +35,9 @@ function wrapper({ children, createParameter }: PropsWithChildren<{ createParame
             <BackendProvider backend={backend}>
                 <WorkspaceProvider workspace="test-workspace">
                     <CatalogFeedProvider backend={backend} workspace="test-workspace">
-                        <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                        <ParameterMutationProvider>
+                            <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
+                        </ParameterMutationProvider>
                     </CatalogFeedProvider>
                 </WorkspaceProvider>
             </BackendProvider>

@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-kit: improve accessibility for dialog",
+            "comment": "sdk-ui-catalog: Decouple parameter mutations from the catalog feed and wire providers for standalone detail usage.",
             "type": "none"
         }
     ],

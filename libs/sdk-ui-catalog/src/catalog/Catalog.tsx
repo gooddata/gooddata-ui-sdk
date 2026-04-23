@@ -17,6 +17,7 @@ import { useCatalogItemOpen } from "../main/hooks/useCatalogItemOpen.js";
 import { Main } from "../main/Main.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
 import { useIsParametersEnabled } from "../parameter/gate.js";
+import { ParameterMutationProvider } from "../parameter/ParameterMutationContext.js";
 import { PermissionsGate } from "../permission/PermissionsGate.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { QualityScoreCard } from "../quality/QualityScoreCard.js";
@@ -80,33 +81,35 @@ export function Catalog({
                 }
             >
                 <CatalogFeedProvider backend={backend} workspace={workspace}>
-                    <Header
-                        searchNode={<FullTextSearchInput />}
-                        createNode={
-                            onCreateObject ? (
-                                <CreateObjectButton
-                                    onCreateObject={onCreateObject}
-                                    showParameter={isParametersEnabled}
-                                />
-                            ) : null
-                        }
-                    />
-                    {isTrendingEnabled ? (
-                        <CatalogTabs onItemClick={onOpenDetail} />
-                    ) : isQualityEnabled ? (
-                        <QualityScoreCard />
-                    ) : null}
-                    <Main
-                        workspace={workspace}
-                        backend={backend}
-                        open={open}
-                        openedItem={openedItem}
-                        setItemOpened={setItemOpened}
-                        onOpenDetail={onOpenDetail}
-                        onCloseDetail={onCloseDetail}
-                        onOpenClick={onOpenClick}
-                        onCatalogItemNavigation={onCatalogItemNavigation}
-                    />
+                    <ParameterMutationProvider>
+                        <Header
+                            searchNode={<FullTextSearchInput />}
+                            createNode={
+                                onCreateObject ? (
+                                    <CreateObjectButton
+                                        onCreateObject={onCreateObject}
+                                        showParameter={isParametersEnabled}
+                                    />
+                                ) : null
+                            }
+                        />
+                        {isTrendingEnabled ? (
+                            <CatalogTabs onItemClick={onOpenDetail} />
+                        ) : isQualityEnabled ? (
+                            <QualityScoreCard />
+                        ) : null}
+                        <Main
+                            workspace={workspace}
+                            backend={backend}
+                            open={open}
+                            openedItem={openedItem}
+                            setItemOpened={setItemOpened}
+                            onOpenDetail={onOpenDetail}
+                            onCloseDetail={onCloseDetail}
+                            onOpenClick={onOpenClick}
+                            onCatalogItemNavigation={onCatalogItemNavigation}
+                        />
+                    </ParameterMutationProvider>
                 </CatalogFeedProvider>
             </PermissionsGate>
         </Layout>

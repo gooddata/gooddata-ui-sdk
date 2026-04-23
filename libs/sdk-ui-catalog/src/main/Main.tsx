@@ -9,6 +9,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import type { OpenHandlerEvent } from "../catalogDetail/types.js";
+import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
 import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { FilterCertificationMemo } from "../filter/FilterCertification.js";
@@ -21,7 +22,7 @@ import { FilterQualityMemo } from "../filter/FilterQuality.js";
 import { FilterResetButtonMemo } from "../filter/FilterResetButton.js";
 import { FilterTagsMemo } from "../filter/FilterTags.js";
 import { FilterVisibilityMemo } from "../filter/FilterVisibility.js";
-import { ParameterActions } from "../parameter/ParameterActions.js";
+import { ObjectTypes } from "../objectType/constants.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { Table } from "../table/Table.js";
 
@@ -57,6 +58,7 @@ export function Main({
     const intl = useIntl();
     const { addError } = useToastMessage();
     const { toggleTag } = useFilterActions();
+    const { updateItem, removeItem, refetchObjectType } = useCatalogFeedActions();
     const isQualityEnabled = useIsCatalogQualityEnabled();
 
     return (
@@ -88,36 +90,36 @@ export function Main({
                     />
                 )}
             </CatalogItemFeed>
-            <ParameterActions
-                backend={backend}
-                workspace={workspace}
-                setItemOpened={setItemOpened}
-                onCloseDetail={onCloseDetail}
-            >
-                {({ getItemActions, onItemAction, onEditClick, onItemUpdate }) => (
-                    <CatalogDetail
-                        open={open}
-                        objectDefinition={openedItem}
-                        onClose={onCloseDetail}
-                        onOpenClick={onOpenClick}
-                        onCatalogItemNavigation={(event, ref) => {
-                            setItemOpened(ref);
-                            onCatalogItemNavigation?.(event, ref);
-                        }}
-                        onEditClick={onEditClick}
-                        getItemActions={getItemActions}
-                        onItemAction={onItemAction}
-                        onCatalogItemUpdate={onItemUpdate}
-                        onCatalogItemUpdateError={(err) => {
-                            addError(messages.updateFailed, {
-                                showLess: intl.formatMessage(messages.showLess),
-                                showMore: intl.formatMessage(messages.showMore),
-                                errorDetail: `${err.name} ${err.message}`,
-                            });
-                        }}
-                    />
-                )}
-            </ParameterActions>
+            <CatalogDetail
+                open={open}
+                objectDefinition={openedItem}
+                onClose={onCloseDetail}
+                onOpenClick={onOpenClick}
+                onCatalogItemNavigation={(event, ref) => {
+                    setItemOpened(ref);
+                    onCatalogItemNavigation?.(event, ref);
+                }}
+                onCatalogItemCreate={(item) => {
+                    setItemOpened(item);
+                    refetchObjectType(ObjectTypes.PARAMETER);
+                }}
+                onCatalogItemUpdate={(item) => {
+                    setItemOpened(item);
+                    updateItem(item);
+                }}
+                onCatalogItemDelete={(ref) => {
+                    removeItem(ref);
+                    refetchObjectType(ObjectTypes.PARAMETER);
+                    onCloseDetail();
+                }}
+                onCatalogItemUpdateError={(err) => {
+                    addError(messages.updateFailed, {
+                        showLess: intl.formatMessage(messages.showLess),
+                        showMore: intl.formatMessage(messages.showMore),
+                        errorDetail: `${err.name} ${err.message}`,
+                    });
+                }}
+            />
         </section>
     );
 }

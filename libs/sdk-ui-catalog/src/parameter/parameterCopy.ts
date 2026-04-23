@@ -1,29 +1,10 @@
 // (C) 2026 GoodData Corporation
 
-import { type IAnalyticalBackend, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
-
-import { createParameterCatalogItem } from "../catalogItem/query.js";
 
 const canonicalUuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const trailingCopySuffixRegex = /^(.*) \((\d+)\)$/;
-
-export async function createCopiedParameterCatalogItem(
-    backend: IAnalyticalBackend,
-    workspace: string,
-    parameter: IParameterMetadataObjectDefinition,
-    initialCopiedId: string | undefined,
-) {
-    try {
-        return await createParameterCatalogItem(backend, workspace, parameter);
-    } catch (error) {
-        if (!parameter.id || parameter.id !== initialCopiedId || !isDuplicateIdError(error)) {
-            throw error;
-        }
-        const { id: _id, ...parameterWithoutId } = parameter;
-        return createParameterCatalogItem(backend, workspace, parameterWithoutId);
-    }
-}
 
 export function createCopiedParameter(
     parameter: IParameterMetadataObjectDefinition,
@@ -73,6 +54,6 @@ function isCanonicalUuid(value: string): boolean {
     return canonicalUuidRegex.test(value);
 }
 
-function isDuplicateIdError(error: unknown): boolean {
-    return error instanceof Error && isUnexpectedResponseError(error) && error.httpStatus === 409;
+export function isDuplicateIdError(error: unknown): boolean {
+    return isUnexpectedResponseError(error) && error.httpStatus === 409;
 }
