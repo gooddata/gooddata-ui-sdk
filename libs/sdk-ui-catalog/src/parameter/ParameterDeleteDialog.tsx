@@ -4,13 +4,10 @@ import { useCallback, useState } from "react";
 
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { idRef } from "@gooddata/sdk-model";
 import { ConfirmDialog, useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
-import { deleteParameterCatalogItem } from "../catalogItem/query.js";
 import { type ICatalogItemParameter } from "../catalogItem/types.js";
+import { useParameterMutation } from "./ParameterMutationContext.js";
 
 const messages = defineMessages({
     title: { id: "analyticsCatalog.parameter.dialog.delete.title" },
@@ -22,17 +19,15 @@ const messages = defineMessages({
 });
 
 type Props = {
-    backend: IAnalyticalBackend;
-    workspace: string;
     item: ICatalogItemParameter;
     onClose: () => void;
     onDeleted: () => void;
 };
 
-export function ParameterDeleteDialog({ backend, workspace, item, onClose, onDeleted }: Props) {
+export function ParameterDeleteDialog({ item, onClose, onDeleted }: Props) {
     const intl = useIntl();
     const { addSuccess, addError } = useToastMessage();
-    const { refetchObjectType } = useCatalogFeedActions();
+    const mutation = useParameterMutation();
     const [isDeleting, setIsDeleting] = useState(false);
 
     const displayName = item.title || item.identifier;
@@ -40,16 +35,15 @@ export function ParameterDeleteDialog({ backend, workspace, item, onClose, onDel
     const handleDelete = useCallback(async () => {
         setIsDeleting(true);
         try {
-            await deleteParameterCatalogItem(backend, workspace, idRef(item.identifier, "parameter"));
+            await mutation.delete(item);
             onDeleted();
             onClose();
             addSuccess(messages.deleteSuccess);
-            await refetchObjectType("parameter");
         } catch {
             addError(messages.deleteError);
             setIsDeleting(false);
         }
-    }, [addError, addSuccess, backend, item.identifier, onClose, onDeleted, refetchObjectType, workspace]);
+    }, [addError, addSuccess, item, mutation, onClose, onDeleted]);
 
     return (
         <ConfirmDialog

@@ -2,6 +2,42 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.31.0",
+            "tag": "@gooddata/sdk-ui-all_v11.31.0",
+            "date": "Thu, 23 Apr 2026 06:53:35 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-kit: improve accessibility for dialog"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: enhance error handling with trace ID support in GenAI components"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: add support for OpenAI model version checks"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: enhance visualization error handling and reporting"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix handling of text filters in group."
+                    },
+                    {
+                        "comment": "chore: Migrate import sorting rules to oxfmt"
+                    },
+                    {
+                        "comment": "fix a11y issue, two levels of focus in filter groups"
+                    },
+                    {
+                        "comment": "Fix tooltip for long titles of filter inside filter group"
+                    },
+                    {
+                        "comment": "Fix dashboard reload crash (\"plugins is not iterable\") when references are not yet loaded in Redux state."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.30.0",
             "tag": "@gooddata/sdk-ui-all_v11.30.0",
             "date": "Thu, 16 Apr 2026 06:23:45 GMT",

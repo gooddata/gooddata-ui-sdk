@@ -2,10 +2,8 @@
 
 import { type KeyboardEvent, type MouseEvent, useCallback, useMemo, useState } from "react";
 
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
-import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import {
     Dropdown,
     type IUiMenuInteractiveItem,
@@ -15,11 +13,9 @@ import {
     UiButton,
     UiIcon,
     UiMenu,
-    useToastMessage,
 } from "@gooddata/sdk-ui-kit";
 
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
-import { createParameterCatalogItem } from "../catalogItem/query.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { getObjectTypeLabel } from "../objectType/labels.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
@@ -42,16 +38,9 @@ type Props = {
     showParameter?: boolean;
 };
 
-const messages = defineMessages({
-    parameterCreateSuccess: { id: "analyticsCatalog.parameter.create.success" },
-});
-
 export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
     const intl = useIntl();
-    const backend = useBackendStrict();
-    const workspace = useWorkspaceStrict();
     const { refetchObjectType } = useCatalogFeedActions();
-    const { addSuccess } = useToastMessage();
     const [isParameterDialogOpen, setIsParameterDialogOpen] = useState(false);
 
     const items = useMemo(() => {
@@ -112,15 +101,9 @@ export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
         setIsParameterDialogOpen(false);
     }, []);
 
-    const handleParameterCreate = useCallback(
-        async (parameter: IParameterMetadataObjectDefinition) => {
-            await createParameterCatalogItem(backend, workspace, parameter);
-            setIsParameterDialogOpen(false);
-            addSuccess(messages.parameterCreateSuccess);
-            await refetchObjectType(ObjectTypes.PARAMETER);
-        },
-        [addSuccess, backend, refetchObjectType, workspace],
-    );
+    const handleParameterCreated = useCallback(() => {
+        void refetchObjectType(ObjectTypes.PARAMETER);
+    }, [refetchObjectType]);
 
     return (
         <>
@@ -163,7 +146,7 @@ export function CreateObjectButton({ onCreateObject, showParameter }: Props) {
             {isParameterDialogOpen ? (
                 <ParameterCreateDialog
                     onClose={handleParameterDialogClose}
-                    onSubmit={handleParameterCreate}
+                    onCreated={handleParameterCreated}
                 />
             ) : null}
         </>

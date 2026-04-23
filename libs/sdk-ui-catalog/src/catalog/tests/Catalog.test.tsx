@@ -7,6 +7,7 @@ import { describe, expect, it } from "vitest";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { catalog } from "../../automation/testIds.js";
@@ -15,21 +16,27 @@ import { TestPermissionsProvider } from "../../permission/TestPermissionsProvide
 import type { PermissionsState } from "../../permission/types.js";
 import { Catalog } from "../Catalog.js";
 
+const backend = dummyBackend();
+
 function wrapper({
     children,
     permissions,
 }: PropsWithChildren<{ permissions?: Partial<PermissionsState["result"]> }>) {
     return (
         <TestIntlProvider>
-            <ToastsCenterContextProvider>
-                <TestPermissionsProvider result={permissions}>{children}</TestPermissionsProvider>
-            </ToastsCenterContextProvider>
+            <BackendProvider backend={backend}>
+                <WorkspaceProvider workspace="test-workspace">
+                    <ToastsCenterContextProvider>
+                        <TestPermissionsProvider result={permissions}>{children}</TestPermissionsProvider>
+                    </ToastsCenterContextProvider>
+                </WorkspaceProvider>
+            </BackendProvider>
         </TestIntlProvider>
     );
 }
 
 const props = {
-    backend: dummyBackend(),
+    backend,
     workspace: "test-workspace",
 };
 

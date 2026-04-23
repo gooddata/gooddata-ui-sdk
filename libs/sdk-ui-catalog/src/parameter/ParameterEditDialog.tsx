@@ -4,14 +4,11 @@ import { Suspense, lazy, useCallback } from "react";
 
 import { defineMessages } from "react-intl";
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
-import { convertParameterToCatalogItem } from "../catalogItem/converter.js";
-import { updateParameterCatalogItem } from "../catalogItem/query.js";
 import { type ICatalogItemParameter } from "../catalogItem/types.js";
+import { useParameterMutation } from "./ParameterMutationContext.js";
 
 const ParameterDialog = lazy(() =>
     import("./ParameterDialog.js").then((m) => ({ default: m.ParameterDialog })),
@@ -22,21 +19,19 @@ const messages = defineMessages({
 });
 
 type Props = {
-    backend: IAnalyticalBackend;
-    workspace: string;
     item: ICatalogItemParameter;
     onClose: () => void;
     onSaved: (item: ICatalogItemParameter) => void;
-    onDuplicate: (parameter: IParameterMetadataObjectDefinition) => void;
+    onDuplicate?: (parameter: IParameterMetadataObjectDefinition) => void;
 };
 
-export function ParameterEditDialog({ backend, workspace, item, onClose, onSaved, onDuplicate }: Props) {
+export function ParameterEditDialog({ item, onClose, onSaved, onDuplicate }: Props) {
     const { addSuccess } = useToastMessage();
-    const { refetchObjectType } = useCatalogFeedActions();
+    const mutation = useParameterMutation();
 
     const handleSubmit = useCallback(
         async (parameter: IParameterMetadataObjectDefinition) => {
-            const savedParameter = await updateParameterCatalogItem(backend, workspace, {
+            const savedParameter = await mutation.update({
                 ...item,
                 title: parameter.title ?? item.title,
                 description: parameter.description ?? item.description,
@@ -44,13 +39,11 @@ export function ParameterEditDialog({ backend, workspace, item, onClose, onSaved
                 definition: parameter.definition,
                 updatedAt: new Date(),
             });
-            const nextParameter = convertParameterToCatalogItem(savedParameter);
-            onSaved(nextParameter);
+            onSaved(savedParameter);
             onClose();
             addSuccess(messages.parameterUpdateSuccess);
-            await refetchObjectType("parameter");
         },
-        [addSuccess, backend, item, onClose, onSaved, refetchObjectType, workspace],
+        [addSuccess, item, mutation, onClose, onSaved],
     );
 
     return (

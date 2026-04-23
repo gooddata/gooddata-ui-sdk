@@ -26,6 +26,7 @@ export interface IUseCatalogItemUpdate {
     objectType?: ObjectType | null;
     objectDefinition?: ICatalogItemRef | ICatalogItem | null;
     onUpdate?: (item: ICatalogItem) => void;
+    onDelete?: (ref: ICatalogItemRef) => void;
     onError?: (error: Error) => void;
 }
 
@@ -37,6 +38,7 @@ export function useCatalogItemUpdate({
     objectType,
     objectDefinition,
     onUpdate,
+    onDelete,
     onError,
 }: IUseCatalogItemUpdate) {
     const backend = useBackendStrict();
@@ -76,6 +78,24 @@ export function useCatalogItemUpdate({
             onUpdate?.(currentItem);
         },
         [mounted, onError, onUpdate],
+    );
+
+    /** Sync local state with an item mutation persisted outside this hook; does not re-persist. */
+    const applyItemUpdate = useCallback(
+        (updated: ICatalogItem) => {
+            setItem(updated);
+            onUpdate?.(updated);
+        },
+        [onUpdate],
+    );
+
+    /** Sync local state with an item deletion persisted outside this hook; does not re-persist. */
+    const applyItemDelete = useCallback(
+        (ref: ICatalogItemRef) => {
+            setItem(null);
+            onDelete?.(ref);
+        },
+        [onDelete],
     );
 
     const updateItemTitle = useCallback(
@@ -313,6 +333,8 @@ export function useCatalogItemUpdate({
         updateItemMetricType,
         updateItemFormat,
         updateItemCertification,
+        applyItemUpdate,
+        applyItemDelete,
     };
 }
 

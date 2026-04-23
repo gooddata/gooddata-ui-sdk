@@ -1,6 +1,22 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 16 Apr 2026 06:23:45 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Apr 2026 06:53:35 GMT and should not be manually modified.
+
+## 11.31.0
+
+Thu, 23 Apr 2026 06:53:35 GMT
+
+### Updates
+
+- sdk-ui-kit: improve accessibility for dialog
+- sdk-ui-gen-ai: enhance error handling with trace ID support in GenAI components
+- sdk-ui-gen-ai: add support for OpenAI model version checks
+- sdk-ui-gen-ai: enhance visualization error handling and reporting
+- sdk-ui-dashboard: Fix handling of text filters in group.
+- chore: Migrate import sorting rules to oxfmt
+- fix a11y issue, two levels of focus in filter groups
+- Fix tooltip for long titles of filter inside filter group
+- Fix dashboard reload crash ("plugins is not iterable") when references are not yet loaded in Redux state.
 
 ## 11.30.0
 

@@ -94,15 +94,14 @@ export interface ICatalogDetailAction {
 
 // @internal (undocumented)
 export interface ICatalogDetailContentProps {
-    getItemActions?: (item: ICatalogItem) => ICatalogDetailAction[];
     objectDefinition?: ICatalogItemRef | ICatalogItem | null;
     objectId?: string | null;
     objectType?: ObjectType | null;
+    onCatalogItemCreate?: (item: ICatalogItem) => void;
+    onCatalogItemDelete?: (ref: ICatalogItemRef) => void;
     onCatalogItemNavigation?: (event: MouseEvent_2, ref: ICatalogItemRef) => void;
     onCatalogItemUpdate?: (item: ICatalogItem) => void;
     onCatalogItemUpdateError?: (error: Error) => void;
-    onEditClick?: (event: MouseEvent_2, editClickEvent: EditHandlerEvent) => void;
-    onItemAction?: (item: ICatalogItem, actionId: string) => void;
     onOpenClick?: (event: MouseEvent_2, linkClickEvent: OpenHandlerEvent) => void;
     onTagClick?: (tag: string) => void;
 }

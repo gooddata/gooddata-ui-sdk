@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-pivottable",
-    "version": "11.31.0-alpha.8",
+    "version": "11.32.0-alpha.0",
     "private": false,
     "description": "Basic PivotTable manipulation.",
     "license": "LicenseRef-LICENSE",

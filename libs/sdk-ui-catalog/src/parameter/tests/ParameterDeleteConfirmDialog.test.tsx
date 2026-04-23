@@ -4,17 +4,14 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
-import { CatalogFeedProvider } from "../../catalogItem/CatalogFeedContext.js";
 import type { ICatalogItemParameter } from "../../catalogItem/types.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
-import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import { ParameterDeleteDialog } from "../ParameterDeleteDialog.js";
-
-vi.mock("../../catalogItem/useCatalogItemFeed.js");
+import { ParameterMutationProvider } from "../ParameterMutationContext.js";
+import type { IParameterMutationPort } from "../parameterMutationPort.js";
+import { createTestParameterMutationPort } from "./parameterMutationPort.test.utils.js";
 
 const parameterItem: ICatalogItemParameter = {
     identifier: "param.id",
@@ -31,49 +28,30 @@ const parameterItem: ICatalogItemParameter = {
     definition: { type: "NUMBER", defaultValue: 10 },
 };
 
-const deleteParameterMock = vi.fn();
-
-const backend = {
-    workspace: () => ({
-        parameters: () => ({
-            deleteParameter: deleteParameterMock,
-        }),
-    }),
-} as unknown as IAnalyticalBackend;
-
-function Wrapper({ children }: PropsWithChildren) {
-    return (
-        <TestIntlProvider>
-            <BackendProvider backend={backend}>
-                <WorkspaceProvider workspace="test-workspace">
-                    <TestPermissionsProvider>
-                        <CatalogFeedProvider backend={backend} workspace="test-workspace">
-                            <ToastsCenterContextProvider>{children}</ToastsCenterContextProvider>
-                        </CatalogFeedProvider>
-                    </TestPermissionsProvider>
-                </WorkspaceProvider>
-            </BackendProvider>
-        </TestIntlProvider>
-    );
+function createWrapper(port: IParameterMutationPort) {
+    function Wrapper({ children }: PropsWithChildren) {
+        return (
+            <TestIntlProvider>
+                <ToastsCenterContextProvider>
+                    <ParameterMutationProvider port={port}>{children}</ParameterMutationProvider>
+                </ToastsCenterContextProvider>
+            </TestIntlProvider>
+        );
+    }
+    return Wrapper;
 }
 
 describe("ParameterDeleteConfirmDialog", () => {
+    let port: IParameterMutationPort;
+
     beforeEach(() => {
-        vi.clearAllMocks();
-        deleteParameterMock.mockResolvedValue(undefined);
+        port = createTestParameterMutationPort();
     });
 
     it("shows dialog with parameter title", () => {
-        render(
-            <ParameterDeleteDialog
-                backend={backend}
-                workspace="test-workspace"
-                item={parameterItem}
-                onClose={vi.fn()}
-                onDeleted={vi.fn()}
-            />,
-            { wrapper: Wrapper },
-        );
+        render(<ParameterDeleteDialog item={parameterItem} onClose={vi.fn()} onDeleted={vi.fn()} />, {
+            wrapper: createWrapper(port),
+        });
 
         expect(screen.getByText("Delete parameter?")).toBeInTheDocument();
         expect(screen.getByText("My Param")).toBeInTheDocument();
@@ -82,40 +60,26 @@ describe("ParameterDeleteConfirmDialog", () => {
     it("falls back to identifier when title is empty", () => {
         const itemNoTitle: ICatalogItemParameter = { ...parameterItem, title: "" };
 
-        render(
-            <ParameterDeleteDialog
-                backend={backend}
-                workspace="test-workspace"
-                item={itemNoTitle}
-                onClose={vi.fn()}
-                onDeleted={vi.fn()}
-            />,
-            { wrapper: Wrapper },
-        );
+        render(<ParameterDeleteDialog item={itemNoTitle} onClose={vi.fn()} onDeleted={vi.fn()} />, {
+            wrapper: createWrapper(port),
+        });
 
         expect(screen.getByText("param.id")).toBeInTheDocument();
     });
 
-    it("calls deleteParameter and onDeleted on success", async () => {
+    it("calls port.delete and onDeleted on success", async () => {
         const onDeleted = vi.fn();
         const onClose = vi.fn();
 
-        render(
-            <ParameterDeleteDialog
-                backend={backend}
-                workspace="test-workspace"
-                item={parameterItem}
-                onClose={onClose}
-                onDeleted={onDeleted}
-            />,
-            { wrapper: Wrapper },
-        );
+        render(<ParameterDeleteDialog item={parameterItem} onClose={onClose} onDeleted={onDeleted} />, {
+            wrapper: createWrapper(port),
+        });
 
         const deleteButton = screen.getByText("Delete", { selector: "button span, button" });
         fireEvent.click(deleteButton);
 
         await waitFor(() => {
-            expect(deleteParameterMock).toHaveBeenCalledWith(
+            expect(port.delete).toHaveBeenCalledWith(
                 expect.objectContaining({
                     identifier: "param.id",
                     type: "parameter",
@@ -127,22 +91,17 @@ describe("ParameterDeleteConfirmDialog", () => {
         expect(onClose).toHaveBeenCalled();
     });
 
-    it("keeps dialog open on delete failure and shows error toast", async () => {
-        deleteParameterMock.mockRejectedValue(new Error("Server error"));
+    it("keeps dialog open on delete failure", async () => {
+        port = createTestParameterMutationPort({
+            delete: vi.fn().mockRejectedValue(new Error("Server error")),
+        });
 
         const onDeleted = vi.fn();
         const onClose = vi.fn();
 
-        render(
-            <ParameterDeleteDialog
-                backend={backend}
-                workspace="test-workspace"
-                item={parameterItem}
-                onClose={onClose}
-                onDeleted={onDeleted}
-            />,
-            { wrapper: Wrapper },
-        );
+        render(<ParameterDeleteDialog item={parameterItem} onClose={onClose} onDeleted={onDeleted} />, {
+            wrapper: createWrapper(port),
+        });
 
         const deleteButton = screen.getByText("Delete", { selector: "button span, button" });
         fireEvent.click(deleteButton);

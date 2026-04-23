@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { renderHook } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 // Module mocks are hoisted before imports by vitest.
@@ -85,5 +85,40 @@ describe("useCatalogItemUpdate – objectDefinition resync", () => {
         rerender({ objectDefinition: ref });
 
         expect(result.current.item).toEqual(itemA);
+    });
+});
+
+describe("useCatalogItemUpdate – applyItemUpdate / applyItemDelete", () => {
+    it("applyItemUpdate syncs local item and forwards to onUpdate", () => {
+        mockedLoad.mockReturnValue({ status: "success", item: itemA });
+        const onUpdate = vi.fn();
+
+        const { result } = renderHook(() => useCatalogItemUpdate({ currentUser: null, onUpdate }));
+
+        expect(result.current.item).toEqual(itemA);
+
+        act(() => {
+            result.current.applyItemUpdate(itemB);
+        });
+
+        expect(result.current.item).toEqual(itemB);
+        expect(onUpdate).toHaveBeenCalledWith(itemB);
+    });
+
+    it("applyItemDelete clears local item and forwards to onDelete", () => {
+        mockedLoad.mockReturnValue({ status: "success", item: itemA });
+        const onDelete = vi.fn();
+
+        const { result } = renderHook(() => useCatalogItemUpdate({ currentUser: null, onDelete }));
+
+        expect(result.current.item).toEqual(itemA);
+
+        const ref: ICatalogItemRef = { identifier: itemA.identifier, type: itemA.type };
+        act(() => {
+            result.current.applyItemDelete(ref);
+        });
+
+        expect(result.current.item).toBeNull();
+        expect(onDelete).toHaveBeenCalledWith(ref);
     });
 });
