@@ -80,6 +80,12 @@ export interface IAgent {
     availableToAll?: boolean;
 
     /**
+     * Whether this agent is a preview agent, scoped to a single (user, workspace) pair.
+     * The agent id must match the pattern `{userId}-{workspaceId}-preview`.
+     */
+    isPreview?: boolean;
+
+    /**
      * Creation timestamp.
      */
     createdAt?: string;

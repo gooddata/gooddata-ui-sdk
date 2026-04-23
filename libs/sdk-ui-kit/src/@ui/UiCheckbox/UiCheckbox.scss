@@ -36,9 +36,8 @@
             position: absolute;
             height: 5px;
             top: 3px;
-            transform: scale(0) rotate(315deg) skew(-2deg);
+            transform: rotate(315deg) skew(-2deg);
             transform-origin: center top;
-            transition: transform 0.2s ease-out;
             width: 9px;
             border-bottom: 2px solid var(--gd-palette-complementary-0);
             border-left: 2px solid var(--gd-palette-complementary-0);
@@ -48,10 +47,6 @@
             background-color: var(--gd-palette-primary-base);
             box-shadow: none;
             border-color: var(--gd-palette-primary-base);
-
-            &::after {
-                transform: scale(1) rotate(315deg) skew(-2deg);
-            }
         }
 
         &--checked#{&}--indeterminate {
@@ -64,7 +59,7 @@
                 height: 2px;
                 background: var(--gd-palette-complementary-0);
                 border: none;
-                transform: scale(1) rotate(0deg);
+                transform: rotate(0deg);
             }
         }
 

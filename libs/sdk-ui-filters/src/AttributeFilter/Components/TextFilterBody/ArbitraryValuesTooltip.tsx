@@ -17,7 +17,7 @@ export function ArbitraryValuesTooltip() {
     return (
         <UiTooltip
             content={
-                <span style={{ whiteSpace: "pre-line" }}>
+                <span style={{ whiteSpace: "pre-line", maxWidth: 200, display: "block" }}>
                     {intl.formatMessage(
                         {
                             id: "attributeFilter.text.values.tooltip",
@@ -31,6 +31,7 @@ export function ArbitraryValuesTooltip() {
             }
             triggerBy={["hover", "focus"]}
             arrowPlacement="left"
+            anchorWrapperStyles={{ display: "contents" }}
             anchor={
                 <span className="gd-text-filter-body__values-help-icon">
                     <UiIconButton

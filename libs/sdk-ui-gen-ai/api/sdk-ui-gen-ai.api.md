@@ -187,6 +187,7 @@ export type GenAIAssistantProps = {
     LandingScreenComponentProvider?: () => ComponentType;
     DisclaimerComponentProvider?: () => ComponentType | null;
     className?: string;
+    isPreview?: boolean;
 };
 
 // @public @deprecated

@@ -14,7 +14,7 @@
     ],
     "changeDirs": [
         {
-            "glob": "src/presentation/localization/bundles/en-US.json"
+            "glob": "src/presentation/localization/bundles/*.json"
         }
     ]
 }

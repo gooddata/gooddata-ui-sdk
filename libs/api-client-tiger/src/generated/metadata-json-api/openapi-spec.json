@@ -25355,6 +25355,9 @@
                             "availableToAll": {
                                 "type": "boolean"
                             },
+                            "isPreview": {
+                                "type": "boolean"
+                            },
                             "createdAt": {
                                 "type": "string",
                                 "format": "date-time"
@@ -25519,6 +25522,9 @@
                             },
                             "availableToAll": {
                                 "type": "boolean"
+                            },
+                            "isPreview": {
+                                "type": "boolean"
                             }
                         }
                     },
@@ -25647,6 +25653,9 @@
                                 "type": "boolean"
                             },
                             "availableToAll": {
+                                "type": "boolean"
+                            },
+                            "isPreview": {
                                 "type": "boolean"
                             }
                         }

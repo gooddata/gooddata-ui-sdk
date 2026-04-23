@@ -56,6 +56,7 @@ import { PureComponent } from 'react';
 import { RangeConditionOperator } from '@gooddata/sdk-model';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
+import { Ref } from 'react';
 import { RefObject } from 'react';
 import { RelativeDateFilterGranularityOffset } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
@@ -661,7 +662,7 @@ export interface IAttributeFilterDropdownBodyProps {
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
     buttonId?: string;
-    buttonRef?: MutableRefObject<HTMLElement | null>;
+    buttonRef?: Ref<HTMLElement>;
     className?: string;
     // @alpha
     customIcon?: IFilterButtonCustomIcon;

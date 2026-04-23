@@ -29,10 +29,19 @@ export const useGenAIStore = (
         includeTags?: string[];
         excludeTags?: string[];
         catalogItems?: CatalogItem[];
+        isPreview?: boolean;
     },
 ): EnhancedStore => {
-    const { eventHandlers, colorPalette, settings, objectTypes, includeTags, excludeTags, catalogItems } =
-        opts;
+    const {
+        eventHandlers,
+        colorPalette,
+        settings,
+        objectTypes,
+        includeTags,
+        excludeTags,
+        catalogItems,
+        isPreview,
+    } = opts;
 
     // Instantiate EventDispatcher. It's a designed to hold a reference to the handlers, so that
     // we don't update the context every time a new array of handlers is passed.
@@ -44,8 +53,8 @@ export const useGenAIStore = (
     // Initialize new Redux Store for each instance of GenAI Chat
     // It OK to discard the store when backend or workspace changes
     const store = useMemo(() => {
-        return getStore(backend, workspace, eventDispatcher, optionsDispatcher);
-    }, [backend, workspace, eventDispatcher, optionsDispatcher]);
+        return getStore(backend, workspace, eventDispatcher, optionsDispatcher, isPreview);
+    }, [backend, workspace, eventDispatcher, optionsDispatcher, isPreview]);
 
     useEffect(() => {
         if (colorPalette) {

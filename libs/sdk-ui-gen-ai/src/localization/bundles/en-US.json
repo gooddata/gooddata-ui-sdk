@@ -63,6 +63,18 @@
         "text": "Change LLM model",
         "crowdinContext": "Button label to open AI settings when configured model is not supported"
     },
+    "gd.gen-ai.visualization.error.forecast": {
+        "text": "<b>Forecast not received:</b> {error}",
+        "crowdinContext": "Error message when forecast is not received"
+    },
+    "gd.gen-ai.visualization.error.clustering": {
+        "text": "<b>Clustering not received:</b> {error}",
+        "crowdinContext": "Error message when clustering is not received"
+    },
+    "gd.gen-ai.visualization.error.data_too_large": {
+        "text": "<b>Data too large.</b> Ask for reduce a data by applying filters.",
+        "crowdinContext": "Error message when data is too large"
+    },
     "gd.gen-ai.permission-error": {
         "text": "Insufficient permissions",
         "crowdinContext": "Error message when user does not have sufficient permissions to access the chatbot"

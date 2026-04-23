@@ -103,9 +103,19 @@
     font-size: 12px;
     color: variables.$gd-color-label;
     line-height: 16px;
-    text-overflow: ellipsis;
     overflow: hidden;
     gap: 5px;
+}
+
+.gd-filter-group-item-title {
+    .gd-bubble-trigger,
+    .shortened {
+        display: inline-flex;
+    }
+
+    .shortened {
+        max-width: 100%;
+    }
 }
 
 .gd-filter-group-item-subtitle {

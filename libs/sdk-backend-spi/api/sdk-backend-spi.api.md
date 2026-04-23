@@ -282,6 +282,7 @@ export interface IAgentsQuery {
     queryAll(): Promise<IAgent[]>;
     withFilter(filter: {
         name?: string;
+        isPreview?: boolean;
     }): IAgentsQuery;
     withPage(page: number): IAgentsQuery;
     withSize(size: number): IAgentsQuery;
@@ -1446,7 +1447,9 @@ export interface IGenAIService {
     // @internal
     getAnalyticsCatalog(): IAnalyticsCatalogService;
     // @internal
-    getChatConversations(): IChatConversations;
+    getChatConversations(options?: {
+        isPreview?: boolean;
+    }): IChatConversations;
     getChatThread(): IChatThread;
     // @internal
     getKnowledgeDocuments(): IKnowledgeDocumentsService;

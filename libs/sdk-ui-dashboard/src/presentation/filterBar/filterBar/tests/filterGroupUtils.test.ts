@@ -2,7 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { IDashboardAttributeFilter, IDashboardFilterGroup } from "@gooddata/sdk-model";
+import type {
+    IDashboardArbitraryAttributeFilter,
+    IDashboardAttributeFilter,
+    IDashboardFilterGroup,
+    IDashboardMatchAttributeFilter,
+} from "@gooddata/sdk-model";
 
 import { groupFilterItems } from "../filterGroupUtils.js";
 import type { FilterBarAttributeFilterIndexed } from "../useFiltersWithAddedPlaceholder.js";
@@ -64,6 +69,71 @@ describe("groupFilterItems", () => {
                 filters: [
                     { filter: FILTER_2, filterIndex: 0 },
                     { filter: FILTER_4, filterIndex: 1 },
+                ],
+            },
+            {
+                groupConfig: GROUP_CONFIG_2,
+                filterIndex: 2,
+                filters: [
+                    { filter: FILTER_3, filterIndex: 0 },
+                    { filter: FILTER_5, filterIndex: 1 },
+                ],
+            },
+        ]);
+    });
+    it("Arbitrary text filter stays in its group", () => {
+        const items: FilterBarAttributeFilterIndexed[] = [
+            { filter: FILTER_1, filterIndex: 0 },
+            { filter: ARBITRARY_FILTER_2, filterIndex: 1 },
+            { filter: FILTER_3, filterIndex: 2 },
+        ];
+        const actualResult = groupFilterItems(items, { groups: [GROUP_CONFIG_1] });
+        expect(actualResult).toEqual([
+            { filter: FILTER_1, filterIndex: 0 },
+            {
+                groupConfig: GROUP_CONFIG_1,
+                filterIndex: 1,
+                filters: [{ filter: ARBITRARY_FILTER_2, filterIndex: 0 }],
+            },
+            { filter: FILTER_3, filterIndex: 2 },
+        ]);
+    });
+    it("Match text filter stays in its group", () => {
+        const items: FilterBarAttributeFilterIndexed[] = [
+            { filter: FILTER_1, filterIndex: 0 },
+            { filter: MATCH_FILTER_4, filterIndex: 1 },
+            { filter: FILTER_5, filterIndex: 2 },
+        ];
+        const actualResult = groupFilterItems(items, { groups: [GROUP_CONFIG_1] });
+        expect(actualResult).toEqual([
+            { filter: FILTER_1, filterIndex: 0 },
+            {
+                groupConfig: GROUP_CONFIG_1,
+                filterIndex: 1,
+                filters: [{ filter: MATCH_FILTER_4, filterIndex: 0 }],
+            },
+            { filter: FILTER_5, filterIndex: 2 },
+        ]);
+    });
+    it("Mixed list and text filters in same group are grouped correctly", () => {
+        const items: FilterBarAttributeFilterIndexed[] = [
+            { filter: FILTER_1, filterIndex: 0 },
+            { filter: ARBITRARY_FILTER_2, filterIndex: 1 },
+            { filter: FILTER_3, filterIndex: 2 },
+            { filter: MATCH_FILTER_4, filterIndex: 3 },
+            { filter: FILTER_5, filterIndex: 4 },
+        ];
+        const actualResult = groupFilterItems(items, {
+            groups: [GROUP_CONFIG_1, GROUP_CONFIG_2],
+        });
+        expect(actualResult).toEqual([
+            { filter: FILTER_1, filterIndex: 0 },
+            {
+                groupConfig: GROUP_CONFIG_1,
+                filterIndex: 1,
+                filters: [
+                    { filter: ARBITRARY_FILTER_2, filterIndex: 0 },
+                    { filter: MATCH_FILTER_4, filterIndex: 1 },
                 ],
             },
             {
@@ -165,6 +235,32 @@ const FILTER_5: IDashboardAttributeFilter = {
         localIdentifier: "555",
         title: "Five",
         selectionMode: "multi",
+    },
+};
+
+const ARBITRARY_FILTER_2: IDashboardArbitraryAttributeFilter = {
+    arbitraryAttributeFilter: {
+        displayForm: {
+            identifier: "attribute.two",
+            type: "displayForm",
+        },
+        negativeSelection: false,
+        values: ["value2"],
+        localIdentifier: "222",
+        title: "Two",
+    },
+};
+
+const MATCH_FILTER_4: IDashboardMatchAttributeFilter = {
+    matchAttributeFilter: {
+        displayForm: {
+            identifier: "attribute.four",
+            type: "displayForm",
+        },
+        operator: "contains",
+        literal: "value4",
+        localIdentifier: "444",
+        title: "Four",
     },
 };
 

@@ -36,8 +36,8 @@ export class GenAIService implements IGenAIService {
         return new ChatThreadService(this.authCall, this.workspaceId, this.dateNormalizer);
     }
 
-    getChatConversations(): IChatConversations {
-        return new ChatConversationsService(this.authCall, this.workspaceId, this.dateNormalizer);
+    getChatConversations(options?: { isPreview?: boolean }): IChatConversations {
+        return new ChatConversationsService(this.authCall, this.workspaceId, this.dateNormalizer, options);
     }
 
     getSemanticSearchQuery(): ISemanticSearchQuery {

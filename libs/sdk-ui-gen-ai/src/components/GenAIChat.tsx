@@ -111,6 +111,21 @@ export type GenAIAssistantProps = {
      * Additional class name applied to the root element.
      */
     className?: string;
+
+    /**
+     * When `true`, the assistant operates against the caller's preview agent
+     * for this workspace (backend agent id: `{userId}-{workspaceId}-preview`).
+     * New conversations are created as preview conversations and the
+     * conversation list is filtered to preview conversations only.
+     *
+     * The preview agent must already exist and be enabled; otherwise
+     * conversation creation will fail.
+     *
+     * Note: toggling this prop rebuilds the chat state from scratch.
+     *
+     * @internal
+     */
+    isPreview?: boolean;
 };
 
 /**
@@ -137,6 +152,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         includeTags,
         excludeTags,
         onDispatcher,
+        isPreview,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -148,6 +164,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         includeTags,
         excludeTags,
         catalogItems,
+        isPreview,
     });
 
     useEffect(() => {
