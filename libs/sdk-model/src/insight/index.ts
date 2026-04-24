@@ -40,6 +40,7 @@ import {
     measureFilters,
     measureLocalId,
 } from "../execution/measure/index.js";
+import { type IInsightParameterValue } from "../execution/parameter/index.js";
 import { type ObjRef, serializeObjRef } from "../objRef/index.js";
 import { type IUser } from "../user/index.js";
 
@@ -166,6 +167,13 @@ export type IInsightDefinition = {
         filters: IFilter[];
 
         attributeFilterConfigs?: IAttributeFilterConfigs;
+
+        /**
+         * Per-insight parameter values.
+         *
+         * @alpha
+         */
+        parameters?: IInsightParameterValue[];
 
         /**
          * Sorting to apply on the data.
@@ -919,6 +927,44 @@ export function insightSetFilters<T extends IInsightDefinition>(insight: T, filt
         insight: {
             ...insight.insight,
             filters,
+        },
+    } as T;
+}
+
+/**
+ * Gets parameter values defined on an insight.
+ *
+ * @param insight - insight to work with
+ * @returns empty array when insight has no parameter values
+ * @alpha
+ */
+export function insightParameters(insight: IInsightDefinition): IInsightParameterValue[] {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.parameters ?? [];
+}
+
+/**
+ * Gets a new insight that 'inherits' all data from the provided insight but has different parameter values.
+ *
+ * @remarks
+ * New parameter values will be used in the new insight as-is, no merging with existing values.
+ *
+ * @param insight - insight to work with
+ * @param parameters - parameter values to apply to the insight (defaults to empty array)
+ * @returns always a new instance
+ * @alpha
+ */
+export function insightSetParameters<T extends IInsightDefinition>(
+    insight: T,
+    parameters: IInsightParameterValue[] = [],
+): T {
+    invariant(insight, "insight must be specified");
+
+    return {
+        insight: {
+            ...insight.insight,
+            parameters,
         },
     } as T;
 }

@@ -12,6 +12,7 @@ import {
     newBucket,
 } from "../../execution/buckets/index.js";
 import { type IMeasure, type MeasurePredicate, isMeasure } from "../../execution/measure/index.js";
+import { type IInsightParameterValue } from "../../execution/parameter/index.js";
 import {
     type IAttributeOrMeasure,
     type IFilter,
@@ -27,6 +28,7 @@ import {
     newPositiveAttributeFilter,
     newTotal,
 } from "../../index.js";
+import { idRef } from "../../objRef/factory.js";
 import {
     type IInsight,
     type VisualizationProperties,
@@ -43,10 +45,12 @@ import {
     insightItems,
     insightMeasures,
     insightModifyItems,
+    insightParameters,
     insightProperties,
     insightReduceItems,
     insightSetBuckets,
     insightSetFilters,
+    insightSetParameters,
     insightSetProperties,
     insightSetSorts,
     insightSorts,
@@ -461,6 +465,46 @@ describe("insightSetSorts", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => insightSetSorts(input)).toThrow();
+    });
+});
+
+describe("insightParameters", () => {
+    const ParamA: IInsightParameterValue = { ref: idRef("param_a", "parameter"), value: 5 };
+
+    it("should return empty array for insight without parameters", () => {
+        expect(insightParameters(EmptyInsight)).toEqual([]);
+    });
+
+    it("should return parameters when insight has them", () => {
+        const InsightWithParams = insightSetParameters(EmptyInsight, [ParamA]);
+        expect(insightParameters(InsightWithParams)).toEqual([ParamA]);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightParameters(input)).toThrow();
+    });
+});
+
+describe("insightSetParameters", () => {
+    const ParamA: IInsightParameterValue = { ref: idRef("param_a", "parameter"), value: 5 };
+    const ParamB: IInsightParameterValue = { ref: idRef("param_b", "parameter"), value: 10 };
+
+    it("should set new parameters in insight without them", () => {
+        expect(insightSetParameters(EmptyInsight, [ParamA]).insight.parameters).toEqual([ParamA]);
+    });
+
+    it("should overwrite parameters in insight that has them", () => {
+        const InsightWithParams = insightSetParameters(EmptyInsight, [ParamA]);
+        expect(insightSetParameters(InsightWithParams, [ParamB]).insight.parameters).toEqual([ParamB]);
+    });
+
+    it("should clear parameters if called without parameter", () => {
+        const InsightWithParams = insightSetParameters(EmptyInsight, [ParamA]);
+        expect(insightSetParameters(InsightWithParams).insight.parameters).toEqual([]);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => insightSetParameters(input)).toThrow();
     });
 });
 

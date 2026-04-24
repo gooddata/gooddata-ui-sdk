@@ -819,6 +819,7 @@ export {
     type IDashboardFilterViewDefaultStatusChangeFailed,
     type IDashboardFilterViewDefaultStatusChangeFailedPayload,
     type IDashboardFilterContextSelectionReset,
+    type IDashboardFilterContextWorkingSelectionApplied,
     isDashboardAttributeFilterAdded,
     isDashboardAttributeFilterMoved,
     isDashboardAttributeFilterParentChanged,
@@ -840,7 +841,9 @@ export {
     isDashboardFilterViewDefaultStatusChangeSucceeded,
     isDashboardFilterViewDefaultStatusChangeFailed,
     isDashboardFilterContextSelectionReset,
+    isDashboardFilterContextWorkingSelectionApplied,
     filterContextSelectionReset,
+    filterContextWorkingSelectionApplied,
 } from "./model/events/filters.js";
 export {
     type IDashboardLayoutSectionAdded,

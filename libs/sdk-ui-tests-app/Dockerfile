@@ -1,5 +1,7 @@
 # (C) 2025 GoodData Corporation
 
+# test
+
 # SDK UI Tests App
 #
 # Expects that `sdk.tgz` is already created (using `npm run pack-build`).

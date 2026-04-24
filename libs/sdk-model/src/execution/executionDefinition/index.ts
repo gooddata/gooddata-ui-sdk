@@ -15,6 +15,7 @@ import { filterFingerprint } from "../filter/fingerprint.js";
 import { type IFilter, type INullableFilter } from "../filter/index.js";
 import { measureFingerprint } from "../measure/fingerprint.js";
 import { type IMeasure } from "../measure/index.js";
+import { type IInsightParameterValue } from "../parameter/index.js";
 import { attributeFingerprint, dataSamplingFingerprint, sortFingerprint } from "./fingerprints.js";
 
 /**
@@ -88,6 +89,17 @@ export interface IExecutionConfig {
      * @alpha
      */
     measureDefinitionOverrides?: IMeasureDefinitionOverride[];
+
+    /**
+     * (EXPERIMENTAL) Values of workspace parameters for this execution request.
+     *
+     * @remarks
+     * Each entry substitutes the default value of the referenced parameter without
+     * modifying the stored parameter definition.
+     *
+     * @alpha
+     */
+    parameterValues?: IInsightParameterValue[];
 }
 
 /**
@@ -353,6 +365,9 @@ export function defFingerprint(def: IExecutionDefinition): string {
     }
     if (def.executionConfig?.measureDefinitionOverrides?.length) {
         hashFun(JSON.stringify(def.executionConfig.measureDefinitionOverrides));
+    }
+    if (def.executionConfig?.parameterValues?.length) {
+        hashFun(JSON.stringify(def.executionConfig.parameterValues));
     }
 
     return hasher.end();

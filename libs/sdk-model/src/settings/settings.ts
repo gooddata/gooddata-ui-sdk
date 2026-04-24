@@ -1145,4 +1145,9 @@ export interface IFeatureFlags {
      * Enable parameters feature.
      */
     enableParameters?: boolean;
+
+    /**
+     * Indicates whether the user can set dateTimeSemantics for data sources that support it.
+     */
+    enableDateTimeSemanticsSetting?: boolean;
 }

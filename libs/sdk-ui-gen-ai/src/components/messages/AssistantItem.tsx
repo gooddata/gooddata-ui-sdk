@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 import { type IChatConversationLocalItem } from "../../model.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
 import { AssistantItemFeedback } from "./AssistantItemFeedback.js";
+import { AssistantItemSuggestions } from "./AssistantItemSuggestions.js";
 import { ReasoningIcon } from "./contents/ReasoningIcon.js";
 import { ConversationItemContents } from "./ConversationItemContents.js";
 import { getItemState } from "./itemState.js";
@@ -45,7 +46,17 @@ export function AssistantItemComponent({ message, group, isLast }: AssistantItem
                 isLoading={messageState === "loading"}
                 isLast={isLast}
             />
+            <AssistantItemSuggestions
+                type="followUp"
+                suggestions={message.suggestions}
+                showSuggestions={isLast}
+            />
             <AssistantItemFeedback group={group} message={message} isLast={isLast} />
+            <AssistantItemSuggestions
+                type="actions"
+                suggestions={message.suggestions}
+                showSuggestions={isLast}
+            />
         </div>
     );
 }

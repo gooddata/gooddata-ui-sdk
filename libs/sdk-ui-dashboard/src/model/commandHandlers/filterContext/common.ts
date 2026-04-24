@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
@@ -9,7 +9,7 @@ import { type IDashboardDateFilter } from "@gooddata/sdk-model";
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import { type IDashboardCommand } from "../../commands/base.js";
 import { removeAttributeFilters } from "../../commands/filters.js";
-import { filterContextChanged } from "../../events/filters.js";
+import { filterContextChanged, filterContextWorkingSelectionApplied } from "../../events/filters.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
 import {
@@ -117,6 +117,7 @@ export function* applyWorkingSelectionHandler(ctx: DashboardContext, cmd: IDashb
     if (isCrossFiltering) {
         yield call(resetCrossFiltering, cmd);
     }
+    yield dispatchDashboardEvent(filterContextWorkingSelectionApplied(ctx, cmd.correlationId));
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }
 

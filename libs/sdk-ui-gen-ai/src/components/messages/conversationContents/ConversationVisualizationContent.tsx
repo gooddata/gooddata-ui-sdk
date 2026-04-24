@@ -16,9 +16,9 @@ import {
 import cx from "classnames";
 import copy from "copy-to-clipboard";
 import { FormattedMessage, useIntl } from "react-intl";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
-import { type IChatConversationVisualisationContent, type IChatSuggestion } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
 import { type IColorPalette, type IDashboardAttributeFilter, type IFilter } from "@gooddata/sdk-model";
 import {
     type IDrillEvent,
@@ -37,18 +37,13 @@ import {
     IconExternalLink,
     IconSave,
     Overlay,
-    UiButton,
     UiFocusManager,
     UiIconButton,
     UiMenu,
     UiTooltip,
 } from "@gooddata/sdk-ui-kit";
 
-import {
-    type IChatConversationLocalItem,
-    type IChatConversationMultipartLocalPart,
-    makeUserItem,
-} from "../../../model.js";
+import { type IChatConversationLocalItem, type IChatConversationMultipartLocalPart } from "../../../model.js";
 import {
     catalogItemsSelector,
     colorPaletteSelector,
@@ -58,7 +53,6 @@ import {
     copyToClipboardAction,
     setKeyDriverAnalysisAction,
 } from "../../../store/chatWindow/chatWindowSlice.js";
-import { newMessageAction } from "../../../store/messages/messagesSlice.js";
 import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getVisualizationHref } from "../../../utils.js";
 import { type IWhatIfRenderableScenario } from "../../../whatIf/whatIfMapping.js";
@@ -90,7 +84,6 @@ export type ConversationVisualizationContentProps = {
     part: IChatConversationMultipartLocalPart;
     scenario?: IWhatIfRenderableScenario;
     visualization: IChatConversationVisualisationContent["visualization"];
-    showSuggestions?: boolean;
     colorPalette?: IColorPalette;
     className?: string;
     agGridToken?: string;
@@ -103,7 +96,6 @@ export type ConversationVisualizationContentProps = {
 };
 
 function ConversationVisualizationContentCore({
-    showSuggestions,
     message,
     part,
     scenario,
@@ -214,7 +206,6 @@ function ConversationVisualizationContentCore({
                 </Wrapper>
             </DrillChooser>
             <VisualizationErrorReport error={visError} />
-            <Suggestions showSuggestions={showSuggestions} suggestions={[]} />
         </div>
     );
 }
@@ -561,40 +552,6 @@ function VisualizationErrorReport({ error }: IVisualizationErrorReportProps) {
                             error: error.message,
                         }}
                     />
-                </div>
-            ) : null}
-        </>
-    );
-}
-
-// Suggestions
-
-interface ISuggestionsProps {
-    showSuggestions?: boolean;
-    suggestions: IChatSuggestion[];
-}
-
-function Suggestions({ suggestions, showSuggestions }: ISuggestionsProps) {
-    const dispatch = useDispatch();
-
-    return (
-        <>
-            {showSuggestions && suggestions.length ? (
-                <div className="gd-gen-ai-chat__conversation__visualization__suggestions">
-                    {suggestions.map((suggestion) => (
-                        <UiButton
-                            key={suggestion.label}
-                            label={suggestion.label}
-                            variant="secondary"
-                            size="small"
-                            onClick={() => {
-                                dispatch(
-                                    newMessageAction(makeUserItem({ type: "text", text: suggestion.query })),
-                                );
-                            }}
-                            tooltip={suggestion.query}
-                        />
-                    ))}
                 </div>
             ) : null}
         </>

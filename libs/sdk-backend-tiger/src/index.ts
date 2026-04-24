@@ -116,6 +116,7 @@ export type {
     IScanRequest,
     ScanResult,
     IDataSourceCacheStrategy,
+    IDataSourceDateTimeSemantics,
     INotificationChannel,
 } from "./backend/tigerSpecificFunctions.js";
 

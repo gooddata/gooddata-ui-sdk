@@ -27,6 +27,7 @@ $delete-hover-status-bg: var(--gd-palette-error-lightest, #fff2f1);
             font-weight: bold;
             margin-right: 15px;
             color: $widget-title-color;
+            min-width: 0;
         }
 
         .insight-title {

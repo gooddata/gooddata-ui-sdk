@@ -1147,6 +1147,7 @@
 
     display: flex;
     flex-direction: column;
+    line-height: normal;
 
     &--user {
         justify-content: flex-end;
@@ -1184,12 +1185,12 @@
 
     &--assistant {
         justify-content: flex-start;
-        color: kit-variables.$gd-color-dark;
+        color: kit-variables.$gd-color-text;
 
         .gd-gen-ai-chat__conversation__item__content--text {
             align-items: flex-start;
 
-            @include content-markdown(kit-variables.$gd-color-dark, "assistant");
+            @include content-markdown(kit-variables.$gd-color-text, "assistant");
         }
 
         @include object-types("assistant");
@@ -1292,8 +1293,8 @@
 
         .gd-gen-ai-chat__error-details {
             border-top: 1px solid kit-variables.$gd-palette-error-base;
-            margin: 5px -12px 0 -12px;
-            padding: 0 12px;
+            margin: 0 -12px;
+            padding: 5px 12px 0 12px;
 
             pre {
                 font-size: 12px;
@@ -1397,11 +1398,17 @@
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
+        margin-top: 15px;
         gap: 10px;
 
         .gd-ui-kit-button + .gd-ui-kit-button {
             margin-left: 0;
         }
+    }
+
+    &__followUp {
+        display: flex;
+        margin-bottom: 5px;
     }
 
     &__drill_overlay {

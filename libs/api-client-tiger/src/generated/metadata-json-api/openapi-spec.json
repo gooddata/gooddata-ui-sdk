@@ -24346,18 +24346,18 @@
                 },
                 "description": "Request body for entity search operations"
             },
-            "JsonApiCookieSecurityConfigurationInDocument": {
+            "JsonApiCookieSecurityConfigurationPatchDocument": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiCookieSecurityConfigurationIn"
+                        "$ref": "#/components/schemas/JsonApiCookieSecurityConfigurationPatch"
                     }
                 }
             },
-            "JsonApiCookieSecurityConfigurationIn": {
+            "JsonApiCookieSecurityConfigurationPatch": {
                 "required": [
                     "id",
                     "type"
@@ -24393,7 +24393,7 @@
                         }
                     }
                 },
-                "description": "JSON:API representation of cookieSecurityConfiguration entity."
+                "description": "JSON:API representation of patching cookieSecurityConfiguration entity."
             },
             "JsonApiCookieSecurityConfigurationOutDocument": {
                 "required": [
@@ -24447,18 +24447,18 @@
                 },
                 "description": "JSON:API representation of cookieSecurityConfiguration entity."
             },
-            "JsonApiCookieSecurityConfigurationPatchDocument": {
+            "JsonApiCookieSecurityConfigurationInDocument": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiCookieSecurityConfigurationPatch"
+                        "$ref": "#/components/schemas/JsonApiCookieSecurityConfigurationIn"
                     }
                 }
             },
-            "JsonApiCookieSecurityConfigurationPatch": {
+            "JsonApiCookieSecurityConfigurationIn": {
                 "required": [
                     "id",
                     "type"
@@ -24494,7 +24494,122 @@
                         }
                     }
                 },
-                "description": "JSON:API representation of patching cookieSecurityConfiguration entity."
+                "description": "JSON:API representation of cookieSecurityConfiguration entity."
+            },
+            "JsonApiOrganizationPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiOrganizationPatch"
+                    }
+                }
+            },
+            "JsonApiOrganizationPatch": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "organization",
+                        "enum": [
+                            "organization"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "hostname": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "allowedOrigins": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "earlyAccess": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "The early access feature identifier. It is used to enable experimental features. Deprecated in favor of earlyAccessValues.",
+                                "nullable": true,
+                                "deprecated": true
+                            },
+                            "earlyAccessValues": {
+                                "type": "array",
+                                "description": "The early access feature identifiers. They are used to enable experimental features.",
+                                "nullable": true,
+                                "items": {
+                                    "maxLength": 255,
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "identityProvider": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiIdentityProviderToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of patching organization entity."
+            },
+            "JsonApiIdentityProviderLinkage": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "identityProvider"
+                        ]
+                    }
+                },
+                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
+            },
+            "JsonApiIdentityProviderToOneLinkage": {
+                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
+                "nullable": true,
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiIdentityProviderLinkage"
+                    }
+                ]
             },
             "JsonApiIdentityProviderOut": {
                 "required": [
@@ -24935,34 +25050,6 @@
                 },
                 "description": "JSON:API representation of organization entity."
             },
-            "JsonApiIdentityProviderLinkage": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "identityProvider"
-                        ]
-                    }
-                },
-                "description": "The \\\"type\\\" and \\\"id\\\" to non-empty members."
-            },
-            "JsonApiIdentityProviderToOneLinkage": {
-                "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
-                "nullable": true,
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiIdentityProviderLinkage"
-                    }
-                ]
-            },
             "JsonApiUserGroupToOneLinkage": {
                 "description": "References to other resource objects in a to-one (\\\"relationship\\\"). Relationships can be specified by including a member in a resource's links object.",
                 "nullable": true,
@@ -24999,93 +25086,6 @@
                         "$ref": "#/components/schemas/JsonApiUserLinkage"
                     }
                 ]
-            },
-            "JsonApiOrganizationPatchDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiOrganizationPatch"
-                    }
-                }
-            },
-            "JsonApiOrganizationPatch": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "organization",
-                        "enum": [
-                            "organization"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "nullable": true
-                            },
-                            "hostname": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "allowedOrigins": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "earlyAccess": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "The early access feature identifier. It is used to enable experimental features. Deprecated in favor of earlyAccessValues.",
-                                "nullable": true,
-                                "deprecated": true
-                            },
-                            "earlyAccessValues": {
-                                "type": "array",
-                                "description": "The early access feature identifiers. They are used to enable experimental features.",
-                                "nullable": true,
-                                "items": {
-                                    "maxLength": 255,
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "identityProvider": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiIdentityProviderToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of patching organization entity."
             },
             "JsonApiOrganizationInDocument": {
                 "required": [
@@ -26064,82 +26064,6 @@
                 },
                 "description": "JSON:API representation of patching cspDirective entity."
             },
-            "JsonApiCustomGeoCollectionOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiCustomGeoCollectionOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiCustomGeoCollectionOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiCustomGeoCollectionOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiCustomGeoCollectionOut": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "customGeoCollection",
-                        "enum": [
-                            "customGeoCollection"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "nullable": true
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string",
-                                "nullable": true
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of customGeoCollection entity."
-            },
             "JsonApiCustomGeoCollectionInDocument": {
                 "required": [
                     "data"
@@ -26203,6 +26127,82 @@
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
+            },
+            "JsonApiCustomGeoCollectionOut": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "customGeoCollection",
+                        "enum": [
+                            "customGeoCollection"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string",
+                                "nullable": true
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of customGeoCollection entity."
+            },
+            "JsonApiCustomGeoCollectionOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiCustomGeoCollectionOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiCustomGeoCollectionOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiCustomGeoCollectionOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiCustomGeoCollectionPatchDocument": {
                 "required": [
@@ -26565,6 +26565,15 @@
                                 "description": "Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.",
                                 "nullable": true,
                                 "example": "pg_local_docker-demo2"
+                            },
+                            "dateTimeSemantics": {
+                                "type": "string",
+                                "description": "Determines how datetime values are interpreted in data sources without native support for specifying this.",
+                                "nullable": true,
+                                "enum": [
+                                    "LOCAL",
+                                    "UTC"
+                                ]
                             }
                         }
                     }
@@ -26760,6 +26769,15 @@
                                 "description": "Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.",
                                 "nullable": true,
                                 "example": "pg_local_docker-demo2"
+                            },
+                            "dateTimeSemantics": {
+                                "type": "string",
+                                "description": "Determines how datetime values are interpreted in data sources without native support for specifying this.",
+                                "nullable": true,
+                                "enum": [
+                                    "LOCAL",
+                                    "UTC"
+                                ]
                             }
                         }
                     }
@@ -26966,6 +26984,15 @@
                                 "description": "Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.",
                                 "nullable": true,
                                 "example": "pg_local_docker-demo2"
+                            },
+                            "dateTimeSemantics": {
+                                "type": "string",
+                                "description": "Determines how datetime values are interpreted in data sources without native support for specifying this.",
+                                "nullable": true,
+                                "enum": [
+                                    "LOCAL",
+                                    "UTC"
+                                ]
                             }
                         }
                     }
@@ -27060,47 +27087,20 @@
                     }
                 }
             },
-            "JsonApiExportTemplateOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiExportTemplateOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiExportTemplateOutList": {
+            "JsonApiExportTemplatePostOptionalIdDocument": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiExportTemplateOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
+                        "$ref": "#/components/schemas/JsonApiExportTemplatePostOptionalId"
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
-            "JsonApiExportTemplateOut": {
+            "JsonApiExportTemplatePostOptionalId": {
                 "required": [
                     "attributes",
-                    "id",
                     "type"
                 ],
                 "type": "object",
@@ -27306,20 +27306,24 @@
                 "description": "Settings for section slide.",
                 "nullable": true
             },
-            "JsonApiExportTemplatePostOptionalIdDocument": {
+            "JsonApiExportTemplateOutDocument": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiExportTemplatePostOptionalId"
+                        "$ref": "#/components/schemas/JsonApiExportTemplateOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
             },
-            "JsonApiExportTemplatePostOptionalId": {
+            "JsonApiExportTemplateOut": {
                 "required": [
                     "attributes",
+                    "id",
                     "type"
                 ],
                 "type": "object",
@@ -27421,19 +27425,42 @@
                 },
                 "description": "JSON:API representation of exportTemplate entity."
             },
-            "JsonApiExportTemplateOutDocument": {
+            "JsonApiExportTemplateOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiExportTemplateOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiExportTemplateOutList": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiExportTemplateOut"
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiExportTemplateOutWithLinks"
+                        }
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
                     }
-                }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiExportTemplateInDocument": {
                 "required": [
@@ -27664,33 +27691,6 @@
                 },
                 "description": "JSON:API representation of patching exportTemplate entity."
             },
-            "JsonApiIdentityProviderOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiIdentityProviderOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
             "JsonApiIdentityProviderInDocument": {
                 "required": [
                     "data"
@@ -27821,6 +27821,33 @@
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
+            },
+            "JsonApiIdentityProviderOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiIdentityProviderOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiIdentityProviderPatchDocument": {
                 "required": [
@@ -28470,44 +28497,18 @@
                 "description": "Will be soon removed and replaced by LlmProvider.",
                 "deprecated": true
             },
-            "JsonApiLlmProviderOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiLlmProviderOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiLlmProviderOutList": {
+            "JsonApiLlmProviderInDocument": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiLlmProviderOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
+                        "$ref": "#/components/schemas/JsonApiLlmProviderIn"
                     }
-                },
-                "description": "A JSON:API document with a list of resources"
+                }
             },
-            "JsonApiLlmProviderOut": {
+            "JsonApiLlmProviderIn": {
                 "required": [
                     "id",
                     "type"
@@ -28821,18 +28822,21 @@
                     }
                 ]
             },
-            "JsonApiLlmProviderInDocument": {
+            "JsonApiLlmProviderOutDocument": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiLlmProviderIn"
+                        "$ref": "#/components/schemas/JsonApiLlmProviderOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
             },
-            "JsonApiLlmProviderIn": {
+            "JsonApiLlmProviderOut": {
                 "required": [
                     "id",
                     "type"
@@ -28927,19 +28931,42 @@
                 },
                 "description": "LLM Provider configuration for connecting to LLM services."
             },
-            "JsonApiLlmProviderOutDocument": {
+            "JsonApiLlmProviderOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiLlmProviderOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiLlmProviderOutList": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiLlmProviderOut"
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiLlmProviderOutWithLinks"
+                        }
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
                     }
-                }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiLlmProviderPatchDocument": {
                 "required": [
@@ -34022,6 +34049,132 @@
                     }
                 }
             },
+            "JsonApiOrganizationSettingOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiOrganizationSettingOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiOrganizationSettingOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiOrganizationSettingOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiOrganizationSettingOut": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "organizationSetting",
+                        "enum": [
+                            "organizationSetting"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {}
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "TIMEZONE",
+                                    "ACTIVE_THEME",
+                                    "ACTIVE_COLOR_PALETTE",
+                                    "ACTIVE_LLM_ENDPOINT",
+                                    "ACTIVE_LLM_PROVIDER",
+                                    "ACTIVE_CALENDARS",
+                                    "WHITE_LABELING",
+                                    "LOCALE",
+                                    "METADATA_LOCALE",
+                                    "FORMAT_LOCALE",
+                                    "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
+                                    "AG_GRID_TOKEN",
+                                    "WEEK_START",
+                                    "FISCAL_YEAR",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS",
+                                    "OPERATOR_OVERRIDES",
+                                    "TIMEZONE_VALIDATION_ENABLED",
+                                    "OPENAI_CONFIG",
+                                    "ENABLE_FILE_ANALYTICS",
+                                    "ALERT",
+                                    "SEPARATORS",
+                                    "DATE_FILTER_CONFIG",
+                                    "JIT_PROVISIONING",
+                                    "JWT_JIT_PROVISIONING",
+                                    "DASHBOARD_FILTERS_APPLY_MODE",
+                                    "ENABLE_SLIDES_EXPORT",
+                                    "ENABLE_SNAPSHOT_EXPORT",
+                                    "AI_RATE_LIMIT",
+                                    "ATTACHMENT_SIZE_LIMIT",
+                                    "ATTACHMENT_LINK_TTL",
+                                    "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE",
+                                    "ENABLE_DRILL_TO_URL_BY_DEFAULT",
+                                    "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS",
+                                    "ENABLE_AUTOMATION_EVALUATION_MODE",
+                                    "ENABLE_ACCESSIBILITY_MODE",
+                                    "REGISTERED_PLUGGABLE_APPLICATIONS",
+                                    "DATA_LOCALE",
+                                    "LDM_DEFAULT_LOCALE",
+                                    "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS",
+                                    "MAX_ZOOM_LEVEL",
+                                    "SORT_CASE_SENSITIVE",
+                                    "SORT_COLLATION",
+                                    "METRIC_FORMAT_OVERRIDE",
+                                    "ENABLE_AI_ON_DATA",
+                                    "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
+                                    "EXPORT_CSV_CUSTOM_DELIMITER",
+                                    "ENABLE_QUERY_TAGS",
+                                    "RESTRICT_BASE_UI",
+                                    "CERTIFY_PARENT_OBJECTS"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of organizationSetting entity."
+            },
             "JsonApiOrganizationSettingInDocument": {
                 "required": [
                     "data"
@@ -34136,132 +34289,6 @@
                     }
                 }
             },
-            "JsonApiOrganizationSettingOut": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "organizationSetting",
-                        "enum": [
-                            "organizationSetting"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
-                                "example": {}
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": [
-                                    "TIMEZONE",
-                                    "ACTIVE_THEME",
-                                    "ACTIVE_COLOR_PALETTE",
-                                    "ACTIVE_LLM_ENDPOINT",
-                                    "ACTIVE_LLM_PROVIDER",
-                                    "ACTIVE_CALENDARS",
-                                    "WHITE_LABELING",
-                                    "LOCALE",
-                                    "METADATA_LOCALE",
-                                    "FORMAT_LOCALE",
-                                    "MAPBOX_TOKEN",
-                                    "GEO_ICON_SHEET",
-                                    "AG_GRID_TOKEN",
-                                    "WEEK_START",
-                                    "FISCAL_YEAR",
-                                    "SHOW_HIDDEN_CATALOG_ITEMS",
-                                    "OPERATOR_OVERRIDES",
-                                    "TIMEZONE_VALIDATION_ENABLED",
-                                    "OPENAI_CONFIG",
-                                    "ENABLE_FILE_ANALYTICS",
-                                    "ALERT",
-                                    "SEPARATORS",
-                                    "DATE_FILTER_CONFIG",
-                                    "JIT_PROVISIONING",
-                                    "JWT_JIT_PROVISIONING",
-                                    "DASHBOARD_FILTERS_APPLY_MODE",
-                                    "ENABLE_SLIDES_EXPORT",
-                                    "ENABLE_SNAPSHOT_EXPORT",
-                                    "AI_RATE_LIMIT",
-                                    "ATTACHMENT_SIZE_LIMIT",
-                                    "ATTACHMENT_LINK_TTL",
-                                    "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE",
-                                    "ENABLE_DRILL_TO_URL_BY_DEFAULT",
-                                    "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS",
-                                    "ENABLE_AUTOMATION_EVALUATION_MODE",
-                                    "ENABLE_ACCESSIBILITY_MODE",
-                                    "REGISTERED_PLUGGABLE_APPLICATIONS",
-                                    "DATA_LOCALE",
-                                    "LDM_DEFAULT_LOCALE",
-                                    "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS",
-                                    "MAX_ZOOM_LEVEL",
-                                    "SORT_CASE_SENSITIVE",
-                                    "SORT_COLLATION",
-                                    "METRIC_FORMAT_OVERRIDE",
-                                    "ENABLE_AI_ON_DATA",
-                                    "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
-                                    "EXPORT_CSV_CUSTOM_DELIMITER",
-                                    "ENABLE_QUERY_TAGS",
-                                    "RESTRICT_BASE_UI",
-                                    "CERTIFY_PARENT_OBJECTS"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of organizationSetting entity."
-            },
-            "JsonApiOrganizationSettingOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiOrganizationSettingOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiOrganizationSettingOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiOrganizationSettingOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
             "JsonApiOrganizationSettingPatchDocument": {
                 "required": [
                     "data"
@@ -34362,86 +34389,6 @@
                 },
                 "description": "JSON:API representation of patching organizationSetting entity."
             },
-            "JsonApiThemeOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiThemeOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiThemeOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiThemeOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiThemeOut": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "theme",
-                        "enum": [
-                            "theme"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "required": [
-                            "content",
-                            "name"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
-                                "example": {}
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of theme entity."
-            },
             "JsonApiThemeInDocument": {
                 "required": [
                     "data"
@@ -34509,6 +34456,86 @@
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
+            },
+            "JsonApiThemeOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "theme",
+                        "enum": [
+                            "theme"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "required": [
+                            "content",
+                            "name"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {}
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of theme entity."
+            },
+            "JsonApiThemeOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiThemeOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiThemeOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiThemeOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiThemePatchDocument": {
                 "required": [
@@ -34979,76 +35006,6 @@
                 },
                 "description": "JSON:API representation of patching user entity."
             },
-            "JsonApiApiTokenOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiApiTokenOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiApiTokenOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiApiTokenOut": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "apiToken",
-                        "enum": [
-                            "apiToken"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "bearerToken": {
-                                "type": "string",
-                                "description": "The value of the Bearer token. It is only returned when the API token is created."
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of apiToken entity."
-            },
             "JsonApiApiTokenInDocument": {
                 "required": [
                     "data"
@@ -35098,17 +35055,50 @@
                     }
                 }
             },
-            "JsonApiUserSettingOutWithLinks": {
+            "JsonApiApiTokenOut": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "apiToken",
+                        "enum": [
+                            "apiToken"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "bearerToken": {
+                                "type": "string",
+                                "description": "The value of the Bearer token. It is only returned when the API token is created."
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of apiToken entity."
+            },
+            "JsonApiApiTokenOutWithLinks": {
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/JsonApiUserSettingOut"
+                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
                     },
                     {
                         "$ref": "#/components/schemas/ObjectLinksContainer"
                     }
                 ]
             },
-            "JsonApiUserSettingOutList": {
+            "JsonApiApiTokenOutList": {
                 "required": [
                     "data"
                 ],
@@ -35118,7 +35108,7 @@
                         "uniqueItems": true,
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserSettingOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiApiTokenOutWithLinks"
                         }
                     },
                     "links": {
@@ -35134,95 +35124,6 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiUserSettingOut": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "userSetting",
-                        "enum": [
-                            "userSetting"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
-                                "example": {}
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": [
-                                    "TIMEZONE",
-                                    "ACTIVE_THEME",
-                                    "ACTIVE_COLOR_PALETTE",
-                                    "ACTIVE_LLM_ENDPOINT",
-                                    "ACTIVE_LLM_PROVIDER",
-                                    "ACTIVE_CALENDARS",
-                                    "WHITE_LABELING",
-                                    "LOCALE",
-                                    "METADATA_LOCALE",
-                                    "FORMAT_LOCALE",
-                                    "MAPBOX_TOKEN",
-                                    "GEO_ICON_SHEET",
-                                    "AG_GRID_TOKEN",
-                                    "WEEK_START",
-                                    "FISCAL_YEAR",
-                                    "SHOW_HIDDEN_CATALOG_ITEMS",
-                                    "OPERATOR_OVERRIDES",
-                                    "TIMEZONE_VALIDATION_ENABLED",
-                                    "OPENAI_CONFIG",
-                                    "ENABLE_FILE_ANALYTICS",
-                                    "ALERT",
-                                    "SEPARATORS",
-                                    "DATE_FILTER_CONFIG",
-                                    "JIT_PROVISIONING",
-                                    "JWT_JIT_PROVISIONING",
-                                    "DASHBOARD_FILTERS_APPLY_MODE",
-                                    "ENABLE_SLIDES_EXPORT",
-                                    "ENABLE_SNAPSHOT_EXPORT",
-                                    "AI_RATE_LIMIT",
-                                    "ATTACHMENT_SIZE_LIMIT",
-                                    "ATTACHMENT_LINK_TTL",
-                                    "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE",
-                                    "ENABLE_DRILL_TO_URL_BY_DEFAULT",
-                                    "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS",
-                                    "ENABLE_AUTOMATION_EVALUATION_MODE",
-                                    "ENABLE_ACCESSIBILITY_MODE",
-                                    "REGISTERED_PLUGGABLE_APPLICATIONS",
-                                    "DATA_LOCALE",
-                                    "LDM_DEFAULT_LOCALE",
-                                    "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS",
-                                    "MAX_ZOOM_LEVEL",
-                                    "SORT_CASE_SENSITIVE",
-                                    "SORT_COLLATION",
-                                    "METRIC_FORMAT_OVERRIDE",
-                                    "ENABLE_AI_ON_DATA",
-                                    "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
-                                    "EXPORT_CSV_CUSTOM_DELIMITER",
-                                    "ENABLE_QUERY_TAGS",
-                                    "RESTRICT_BASE_UI",
-                                    "CERTIFY_PARENT_OBJECTS"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of userSetting entity."
             },
             "JsonApiUserSettingInDocument": {
                 "required": [
@@ -35337,6 +35238,167 @@
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
+            },
+            "JsonApiUserSettingOut": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "userSetting",
+                        "enum": [
+                            "userSetting"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {}
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "TIMEZONE",
+                                    "ACTIVE_THEME",
+                                    "ACTIVE_COLOR_PALETTE",
+                                    "ACTIVE_LLM_ENDPOINT",
+                                    "ACTIVE_LLM_PROVIDER",
+                                    "ACTIVE_CALENDARS",
+                                    "WHITE_LABELING",
+                                    "LOCALE",
+                                    "METADATA_LOCALE",
+                                    "FORMAT_LOCALE",
+                                    "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
+                                    "AG_GRID_TOKEN",
+                                    "WEEK_START",
+                                    "FISCAL_YEAR",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS",
+                                    "OPERATOR_OVERRIDES",
+                                    "TIMEZONE_VALIDATION_ENABLED",
+                                    "OPENAI_CONFIG",
+                                    "ENABLE_FILE_ANALYTICS",
+                                    "ALERT",
+                                    "SEPARATORS",
+                                    "DATE_FILTER_CONFIG",
+                                    "JIT_PROVISIONING",
+                                    "JWT_JIT_PROVISIONING",
+                                    "DASHBOARD_FILTERS_APPLY_MODE",
+                                    "ENABLE_SLIDES_EXPORT",
+                                    "ENABLE_SNAPSHOT_EXPORT",
+                                    "AI_RATE_LIMIT",
+                                    "ATTACHMENT_SIZE_LIMIT",
+                                    "ATTACHMENT_LINK_TTL",
+                                    "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE",
+                                    "ENABLE_DRILL_TO_URL_BY_DEFAULT",
+                                    "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS",
+                                    "ENABLE_AUTOMATION_EVALUATION_MODE",
+                                    "ENABLE_ACCESSIBILITY_MODE",
+                                    "REGISTERED_PLUGGABLE_APPLICATIONS",
+                                    "DATA_LOCALE",
+                                    "LDM_DEFAULT_LOCALE",
+                                    "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS",
+                                    "MAX_ZOOM_LEVEL",
+                                    "SORT_CASE_SENSITIVE",
+                                    "SORT_COLLATION",
+                                    "METRIC_FORMAT_OVERRIDE",
+                                    "ENABLE_AI_ON_DATA",
+                                    "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
+                                    "EXPORT_CSV_CUSTOM_DELIMITER",
+                                    "ENABLE_QUERY_TAGS",
+                                    "RESTRICT_BASE_UI",
+                                    "CERTIFY_PARENT_OBJECTS"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of userSetting entity."
+            },
+            "JsonApiUserSettingOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserSettingOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiUserSettingOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiUserSettingOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiWorkspaceOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiWorkspaceInDocument": {
                 "required": [
@@ -35475,41 +35537,6 @@
                         }
                     }
                 }
-            },
-            "JsonApiWorkspaceOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceOutWithLinks"
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiWorkspacePatchDocument": {
                 "required": [
@@ -38974,63 +39001,6 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiAutomationOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiAutomationResultOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiExportDefinitionOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiNotificationChannelOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
-                    }
-                ]
-            },
-            "JsonApiAutomationOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAutomationOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAutomationOutIncludes"
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
             "JsonApiAutomationInDocument": {
                 "required": [
                     "data"
@@ -39345,6 +39315,28 @@
                 },
                 "description": "JSON:API representation of automation entity."
             },
+            "JsonApiAutomationOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiAutomationResultOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiExportDefinitionOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiNotificationChannelOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                    }
+                ]
+            },
             "JsonApiAutomationOutDocument": {
                 "required": [
                     "data"
@@ -39366,6 +39358,41 @@
                         }
                     }
                 }
+            },
+            "JsonApiAutomationOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAutomationOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAutomationOutIncludes"
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiAutomationPatchDocument": {
                 "required": [
@@ -39681,42 +39708,72 @@
                 },
                 "description": "JSON:API representation of patching automation entity."
             },
-            "JsonApiCustomApplicationSettingOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiCustomApplicationSettingOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiCustomApplicationSettingOutList": {
+            "JsonApiCustomApplicationSettingPostOptionalIdDocument": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiCustomApplicationSettingOutWithLinks"
-                        }
+                        "$ref": "#/components/schemas/JsonApiCustomApplicationSettingPostOptionalId"
+                    }
+                }
+            },
+            "JsonApiCustomApplicationSettingPostOptionalId": {
+                "required": [
+                    "attributes",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "customApplicationSetting",
+                        "enum": [
+                            "customApplicationSetting"
+                        ]
                     },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
                     },
-                    "meta": {
+                    "attributes": {
+                        "required": [
+                            "applicationName",
+                            "content"
+                        ],
                         "type": "object",
                         "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
+                            "applicationName": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content. Maximum supported length is 250000 characters.",
+                                "example": {}
                             }
                         }
                     }
                 },
-                "description": "A JSON:API document with a list of resources"
+                "description": "JSON:API representation of customApplicationSetting entity."
+            },
+            "JsonApiCustomApplicationSettingOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiCustomApplicationSettingOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
             },
             "JsonApiCustomApplicationSettingOut": {
                 "required": [
@@ -39787,72 +39844,42 @@
                 },
                 "description": "JSON:API representation of customApplicationSetting entity."
             },
-            "JsonApiCustomApplicationSettingPostOptionalIdDocument": {
+            "JsonApiCustomApplicationSettingOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiCustomApplicationSettingOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiCustomApplicationSettingOutList": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiCustomApplicationSettingPostOptionalId"
-                    }
-                }
-            },
-            "JsonApiCustomApplicationSettingPostOptionalId": {
-                "required": [
-                    "attributes",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "customApplicationSetting",
-                        "enum": [
-                            "customApplicationSetting"
-                        ]
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiCustomApplicationSettingOutWithLinks"
+                        }
                     },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
                     },
-                    "attributes": {
-                        "required": [
-                            "applicationName",
-                            "content"
-                        ],
+                    "meta": {
                         "type": "object",
                         "properties": {
-                            "applicationName": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content. Maximum supported length is 250000 characters.",
-                                "example": {}
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
                             }
                         }
                     }
                 },
-                "description": "JSON:API representation of customApplicationSetting entity."
-            },
-            "JsonApiCustomApplicationSettingOutDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiCustomApplicationSettingOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    }
-                }
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiCustomApplicationSettingPatchDocument": {
                 "required": [
@@ -40078,70 +40105,6 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiDashboardPluginInDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiDashboardPluginIn"
-                    }
-                }
-            },
-            "JsonApiDashboardPluginIn": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dashboardPlugin",
-                        "enum": [
-                            "dashboardPlugin"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content. Maximum supported length is 250000 characters.",
-                                "example": {
-                                    "url": "<plugin-url>"
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dashboardPlugin entity."
-            },
             "JsonApiDashboardPluginPatchDocument": {
                 "required": [
                     "data"
@@ -40205,6 +40168,70 @@
                     }
                 },
                 "description": "JSON:API representation of patching dashboardPlugin entity."
+            },
+            "JsonApiDashboardPluginInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDashboardPluginIn"
+                    }
+                }
+            },
+            "JsonApiDashboardPluginIn": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dashboardPlugin",
+                        "enum": [
+                            "dashboardPlugin"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "url": "<plugin-url>"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dashboardPlugin entity."
             },
             "JsonApiWorkspaceDataFilterOut": {
                 "required": [
@@ -40379,6 +40406,28 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
+            "JsonApiDatasetOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDatasetOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutIncludes"
+                        }
+                    }
+                }
+            },
             "JsonApiDatasetPatchDocument": {
                 "required": [
                     "data"
@@ -40433,27 +40482,56 @@
                 },
                 "description": "JSON:API representation of patching dataset entity."
             },
-            "JsonApiDatasetOutDocument": {
+            "JsonApiExportDefinitionOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiAutomationOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
+                    }
+                ]
+            },
+            "JsonApiExportDefinitionOutList": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiDatasetOut"
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiExportDefinitionOutWithLinks"
+                        }
                     },
                     "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
                     },
                     "included": {
                         "uniqueItems": true,
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutIncludes"
+                            "$ref": "#/components/schemas/JsonApiExportDefinitionOutIncludes"
                         }
                     }
-                }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiExportDefinitionPostOptionalIdDocument": {
                 "required": [
@@ -40550,22 +40628,6 @@
                 },
                 "description": "JSON:API representation of exportDefinition entity."
             },
-            "JsonApiExportDefinitionOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiAutomationOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
-                    }
-                ]
-            },
             "JsonApiExportDefinitionOutDocument": {
                 "required": [
                     "data"
@@ -40587,137 +40649,6 @@
                         }
                     }
                 }
-            },
-            "JsonApiExportDefinitionOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiExportDefinitionOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiExportDefinitionOutIncludes"
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiExportDefinitionInDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiExportDefinitionIn"
-                    }
-                }
-            },
-            "JsonApiExportDefinitionIn": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "exportDefinition",
-                        "enum": [
-                            "exportDefinition"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "requestPayload": {
-                                "type": "object",
-                                "description": "JSON content to be used as export request payload for /export/tabular and /export/visual endpoints. ",
-                                "oneOf": [
-                                    {
-                                        "$ref": "#/components/schemas/VisualExportRequest"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/TabularExportRequest"
-                                    }
-                                ]
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "visualizationObject": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiVisualizationObjectToOneLinkage"
-                                    }
-                                }
-                            },
-                            "analyticalDashboard": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of exportDefinition entity."
             },
             "JsonApiExportDefinitionPatchDocument": {
                 "required": [
@@ -40815,6 +40746,102 @@
                 },
                 "description": "JSON:API representation of patching exportDefinition entity."
             },
+            "JsonApiExportDefinitionInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiExportDefinitionIn"
+                    }
+                }
+            },
+            "JsonApiExportDefinitionIn": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "exportDefinition",
+                        "enum": [
+                            "exportDefinition"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "requestPayload": {
+                                "type": "object",
+                                "description": "JSON content to be used as export request payload for /export/tabular and /export/visual endpoints. ",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/VisualExportRequest"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/TabularExportRequest"
+                                    }
+                                ]
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "visualizationObject": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiVisualizationObjectToOneLinkage"
+                                    }
+                                }
+                            },
+                            "analyticalDashboard": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of exportDefinition entity."
+            },
             "JsonApiFactOutList": {
                 "required": [
                     "data"
@@ -40849,6 +40876,28 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiFactOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiFactOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                        }
+                    }
+                }
             },
             "JsonApiFactPatchDocument": {
                 "required": [
@@ -40903,28 +40952,6 @@
                     }
                 },
                 "description": "JSON:API representation of patching fact entity."
-            },
-            "JsonApiFactOutDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiFactOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                        }
-                    }
-                }
             },
             "JsonApiFilterContextOutIncludes": {
                 "oneOf": [
@@ -41067,6 +41094,75 @@
                     }
                 }
             },
+            "JsonApiFilterContextPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiFilterContextPatch"
+                    }
+                }
+            },
+            "JsonApiFilterContextPatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "filterContext",
+                        "enum": [
+                            "filterContext"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content. Maximum supported length is 250000 characters.",
+                                "example": {
+                                    "identifier": {
+                                        "id": "label.leaf",
+                                        "type": "label"
+                                    },
+                                    "someBoolProp": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of patching filterContext entity."
+            },
             "JsonApiFilterContextInDocument": {
                 "required": [
                     "data"
@@ -41138,75 +41234,6 @@
                     }
                 },
                 "description": "JSON:API representation of filterContext entity."
-            },
-            "JsonApiFilterContextPatchDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiFilterContextPatch"
-                    }
-                }
-            },
-            "JsonApiFilterContextPatch": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "filterContext",
-                        "enum": [
-                            "filterContext"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content. Maximum supported length is 250000 characters.",
-                                "example": {
-                                    "identifier": {
-                                        "id": "label.leaf",
-                                        "type": "label"
-                                    },
-                                    "someBoolProp": false
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of patching filterContext entity."
             },
             "JsonApiFilterViewInDocument": {
                 "required": [
@@ -42009,6 +42036,172 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
+            "JsonApiKnowledgeRecommendationPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiKnowledgeRecommendationPatch"
+                    }
+                }
+            },
+            "JsonApiKnowledgeRecommendationPatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "relationships",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "knowledgeRecommendation",
+                        "enum": [
+                            "knowledgeRecommendation"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Human-readable title for the recommendation, e.g. 'Revenue decreased vs last month'"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string",
+                                "description": "Description of the recommendation"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "metricTitle": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Human-readable title of the metric (denormalized for display)",
+                                "example": "Revenue"
+                            },
+                            "direction": {
+                                "type": "string",
+                                "description": "Direction of the metric change",
+                                "example": "DECREASED",
+                                "enum": [
+                                    "INCREASED",
+                                    "DECREASED"
+                                ]
+                            },
+                            "comparisonType": {
+                                "type": "string",
+                                "description": "Time period for comparison",
+                                "example": "MONTH",
+                                "enum": [
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR"
+                                ]
+                            },
+                            "widgetId": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "ID of the widget where the anomaly was detected",
+                                "example": "widget-123"
+                            },
+                            "widgetName": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Name of the widget where the anomaly was detected",
+                                "example": "Revenue Trend"
+                            },
+                            "confidence": {
+                                "description": "Confidence score (0.0 to 1.0)",
+                                "example": 0.62
+                            },
+                            "recommendations": {
+                                "type": "object",
+                                "description": "Structured recommendations data as JSON",
+                                "example": "{\"summary\": \"...\", \"recommendations\": [...], \"key_metrics\": [...]}"
+                            },
+                            "sourceCount": {
+                                "type": "integer",
+                                "description": "Number of source documents used for generation",
+                                "format": "int32",
+                                "example": 2
+                            },
+                            "referencePeriod": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Reference time period for comparison (e.g., '2023-06' or 'Jun 2023')",
+                                "example": "2023-06"
+                            },
+                            "analyzedPeriod": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Analyzed time period (e.g., '2023-07' or 'July 2023')",
+                                "example": "2023-07"
+                            },
+                            "referenceValue": {
+                                "description": "Metric value in the reference period",
+                                "example": 2400000000
+                            },
+                            "analyzedValue": {
+                                "description": "Metric value in the analyzed period (the observed value that triggered the anomaly)",
+                                "example": 2600000000
+                            },
+                            "analyticalDashboardTitle": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Human-readable title of the analytical dashboard (denormalized for display)",
+                                "example": "Portfolio Health Insights"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "metric": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiMetricToOneLinkage"
+                                    }
+                                }
+                            },
+                            "analyticalDashboard": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of patching knowledgeRecommendation entity."
+            },
             "JsonApiKnowledgeRecommendationInDocument": {
                 "required": [
                     "data"
@@ -42182,172 +42375,6 @@
                     }
                 },
                 "description": "JSON:API representation of knowledgeRecommendation entity."
-            },
-            "JsonApiKnowledgeRecommendationPatchDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiKnowledgeRecommendationPatch"
-                    }
-                }
-            },
-            "JsonApiKnowledgeRecommendationPatch": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "relationships",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "knowledgeRecommendation",
-                        "enum": [
-                            "knowledgeRecommendation"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Human-readable title for the recommendation, e.g. 'Revenue decreased vs last month'"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string",
-                                "description": "Description of the recommendation"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "metricTitle": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Human-readable title of the metric (denormalized for display)",
-                                "example": "Revenue"
-                            },
-                            "direction": {
-                                "type": "string",
-                                "description": "Direction of the metric change",
-                                "example": "DECREASED",
-                                "enum": [
-                                    "INCREASED",
-                                    "DECREASED"
-                                ]
-                            },
-                            "comparisonType": {
-                                "type": "string",
-                                "description": "Time period for comparison",
-                                "example": "MONTH",
-                                "enum": [
-                                    "MONTH",
-                                    "QUARTER",
-                                    "YEAR"
-                                ]
-                            },
-                            "widgetId": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "ID of the widget where the anomaly was detected",
-                                "example": "widget-123"
-                            },
-                            "widgetName": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Name of the widget where the anomaly was detected",
-                                "example": "Revenue Trend"
-                            },
-                            "confidence": {
-                                "description": "Confidence score (0.0 to 1.0)",
-                                "example": 0.62
-                            },
-                            "recommendations": {
-                                "type": "object",
-                                "description": "Structured recommendations data as JSON",
-                                "example": "{\"summary\": \"...\", \"recommendations\": [...], \"key_metrics\": [...]}"
-                            },
-                            "sourceCount": {
-                                "type": "integer",
-                                "description": "Number of source documents used for generation",
-                                "format": "int32",
-                                "example": 2
-                            },
-                            "referencePeriod": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Reference time period for comparison (e.g., '2023-06' or 'Jun 2023')",
-                                "example": "2023-06"
-                            },
-                            "analyzedPeriod": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Analyzed time period (e.g., '2023-07' or 'July 2023')",
-                                "example": "2023-07"
-                            },
-                            "referenceValue": {
-                                "description": "Metric value in the reference period",
-                                "example": 2400000000
-                            },
-                            "analyzedValue": {
-                                "description": "Metric value in the analyzed period (the observed value that triggered the anomaly)",
-                                "example": 2600000000
-                            },
-                            "analyticalDashboardTitle": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Human-readable title of the analytical dashboard (denormalized for display)",
-                                "example": "Portfolio Health Insights"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "metric": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiMetricToOneLinkage"
-                                    }
-                                }
-                            },
-                            "analyticalDashboard": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of patching knowledgeRecommendation entity."
             },
             "JsonApiLabelOutList": {
                 "required": [
@@ -43595,6 +43622,80 @@
                     }
                 }
             },
+            "JsonApiParameterPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiParameterPatch"
+                    }
+                }
+            },
+            "JsonApiParameterPatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "parameter",
+                        "enum": [
+                            "parameter"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "definition": {
+                                "required": [
+                                    "type"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string"
+                                    }
+                                },
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/NumberParameterDefinition"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of patching parameter entity."
+            },
             "JsonApiParameterInDocument": {
                 "required": [
                     "data"
@@ -43671,80 +43772,6 @@
                     }
                 },
                 "description": "JSON:API representation of parameter entity."
-            },
-            "JsonApiParameterPatchDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiParameterPatch"
-                    }
-                }
-            },
-            "JsonApiParameterPatch": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "parameter",
-                        "enum": [
-                            "parameter"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "definition": {
-                                "required": [
-                                    "type"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "type": {
-                                        "type": "string"
-                                    }
-                                },
-                                "oneOf": [
-                                    {
-                                        "$ref": "#/components/schemas/NumberParameterDefinition"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of patching parameter entity."
             },
             "JsonApiUserDataFilterOutWithLinks": {
                 "allOf": [
@@ -45345,106 +45372,6 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiWorkspaceSettingInDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceSettingIn"
-                    }
-                }
-            },
-            "JsonApiWorkspaceSettingIn": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "workspaceSetting",
-                        "enum": [
-                            "workspaceSetting"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
-                                "example": {}
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": [
-                                    "TIMEZONE",
-                                    "ACTIVE_THEME",
-                                    "ACTIVE_COLOR_PALETTE",
-                                    "ACTIVE_LLM_ENDPOINT",
-                                    "ACTIVE_LLM_PROVIDER",
-                                    "ACTIVE_CALENDARS",
-                                    "WHITE_LABELING",
-                                    "LOCALE",
-                                    "METADATA_LOCALE",
-                                    "FORMAT_LOCALE",
-                                    "MAPBOX_TOKEN",
-                                    "GEO_ICON_SHEET",
-                                    "AG_GRID_TOKEN",
-                                    "WEEK_START",
-                                    "FISCAL_YEAR",
-                                    "SHOW_HIDDEN_CATALOG_ITEMS",
-                                    "OPERATOR_OVERRIDES",
-                                    "TIMEZONE_VALIDATION_ENABLED",
-                                    "OPENAI_CONFIG",
-                                    "ENABLE_FILE_ANALYTICS",
-                                    "ALERT",
-                                    "SEPARATORS",
-                                    "DATE_FILTER_CONFIG",
-                                    "JIT_PROVISIONING",
-                                    "JWT_JIT_PROVISIONING",
-                                    "DASHBOARD_FILTERS_APPLY_MODE",
-                                    "ENABLE_SLIDES_EXPORT",
-                                    "ENABLE_SNAPSHOT_EXPORT",
-                                    "AI_RATE_LIMIT",
-                                    "ATTACHMENT_SIZE_LIMIT",
-                                    "ATTACHMENT_LINK_TTL",
-                                    "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE",
-                                    "ENABLE_DRILL_TO_URL_BY_DEFAULT",
-                                    "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS",
-                                    "ENABLE_AUTOMATION_EVALUATION_MODE",
-                                    "ENABLE_ACCESSIBILITY_MODE",
-                                    "REGISTERED_PLUGGABLE_APPLICATIONS",
-                                    "DATA_LOCALE",
-                                    "LDM_DEFAULT_LOCALE",
-                                    "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS",
-                                    "MAX_ZOOM_LEVEL",
-                                    "SORT_CASE_SENSITIVE",
-                                    "SORT_COLLATION",
-                                    "METRIC_FORMAT_OVERRIDE",
-                                    "ENABLE_AI_ON_DATA",
-                                    "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
-                                    "EXPORT_CSV_CUSTOM_DELIMITER",
-                                    "ENABLE_QUERY_TAGS",
-                                    "RESTRICT_BASE_UI",
-                                    "CERTIFY_PARENT_OBJECTS"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of workspaceSetting entity."
-            },
             "JsonApiWorkspaceSettingPatchDocument": {
                 "required": [
                     "data"
@@ -45544,6 +45471,106 @@
                     }
                 },
                 "description": "JSON:API representation of patching workspaceSetting entity."
+            },
+            "JsonApiWorkspaceSettingInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceSettingIn"
+                    }
+                }
+            },
+            "JsonApiWorkspaceSettingIn": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "workspaceSetting",
+                        "enum": [
+                            "workspaceSetting"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {}
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "TIMEZONE",
+                                    "ACTIVE_THEME",
+                                    "ACTIVE_COLOR_PALETTE",
+                                    "ACTIVE_LLM_ENDPOINT",
+                                    "ACTIVE_LLM_PROVIDER",
+                                    "ACTIVE_CALENDARS",
+                                    "WHITE_LABELING",
+                                    "LOCALE",
+                                    "METADATA_LOCALE",
+                                    "FORMAT_LOCALE",
+                                    "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
+                                    "AG_GRID_TOKEN",
+                                    "WEEK_START",
+                                    "FISCAL_YEAR",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS",
+                                    "OPERATOR_OVERRIDES",
+                                    "TIMEZONE_VALIDATION_ENABLED",
+                                    "OPENAI_CONFIG",
+                                    "ENABLE_FILE_ANALYTICS",
+                                    "ALERT",
+                                    "SEPARATORS",
+                                    "DATE_FILTER_CONFIG",
+                                    "JIT_PROVISIONING",
+                                    "JWT_JIT_PROVISIONING",
+                                    "DASHBOARD_FILTERS_APPLY_MODE",
+                                    "ENABLE_SLIDES_EXPORT",
+                                    "ENABLE_SNAPSHOT_EXPORT",
+                                    "AI_RATE_LIMIT",
+                                    "ATTACHMENT_SIZE_LIMIT",
+                                    "ATTACHMENT_LINK_TTL",
+                                    "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE",
+                                    "ENABLE_DRILL_TO_URL_BY_DEFAULT",
+                                    "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS",
+                                    "ENABLE_AUTOMATION_EVALUATION_MODE",
+                                    "ENABLE_ACCESSIBILITY_MODE",
+                                    "REGISTERED_PLUGGABLE_APPLICATIONS",
+                                    "DATA_LOCALE",
+                                    "LDM_DEFAULT_LOCALE",
+                                    "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS",
+                                    "MAX_ZOOM_LEVEL",
+                                    "SORT_CASE_SENSITIVE",
+                                    "SORT_COLLATION",
+                                    "METRIC_FORMAT_OVERRIDE",
+                                    "ENABLE_AI_ON_DATA",
+                                    "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
+                                    "EXPORT_CSV_CUSTOM_DELIMITER",
+                                    "ENABLE_QUERY_TAGS",
+                                    "RESTRICT_BASE_UI",
+                                    "CERTIFY_PARENT_OBJECTS"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of workspaceSetting entity."
             },
             "DeclarativeUserDataFilter": {
                 "required": [
@@ -49134,6 +49161,15 @@
                         "description": "Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.",
                         "nullable": true,
                         "example": "pg_local_docker-demo2"
+                    },
+                    "dateTimeSemantics": {
+                        "type": "string",
+                        "description": "Determines how datetime values are interpreted in data sources without native support for specifying this.\n- LOCAL: The values are assumed to be in local timezone and they are not converted to the user's timezone.\n- UTC: The values are assumed to be in UTC and they are converted to the user's timezone.",
+                        "nullable": true,
+                        "enum": [
+                            "LOCAL",
+                            "UTC"
+                        ]
                     }
                 },
                 "description": "A data source and its properties."

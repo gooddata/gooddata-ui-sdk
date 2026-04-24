@@ -493,6 +493,15 @@ export type ITigerAttributeFilterConfigs = {
 };
 
 /**
+ * Tiger-specific insight parameter value (stored form).
+ * @alpha
+ */
+export interface ITigerInsightParameterValue {
+    ref: ObjRef;
+    value: number;
+}
+
+/**
  * Tiger-specific insight layer definition
  * @public
  */

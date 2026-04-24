@@ -4,6 +4,7 @@ import {
     type ITigerAttributeFilterConfigs,
     type ITigerBucket,
     type ITigerInsightLayerDefinition,
+    type ITigerInsightParameterValue,
     type ITigerSortItem,
     type ITigerVisualizationProperties,
     type VisualizationObjectModelV2,
@@ -13,6 +14,7 @@ import {
     type IBucket,
     type IInsightDefinition,
     type IInsightLayerDefinition,
+    type IInsightParameterValue,
     type ISortItem,
     type VisualizationProperties,
 } from "@gooddata/sdk-model";
@@ -55,6 +57,16 @@ export function convertVisualizationObject(
               }
             : {};
 
+    const parametersProp =
+        visualizationObject.parameters && visualizationObject.parameters.length > 0
+            ? {
+                  parameters: cloneWithSanitizedIdsTyped<
+                      ITigerInsightParameterValue[],
+                      IInsightParameterValue[]
+                  >(visualizationObject.parameters),
+              }
+            : {};
+
     const convertedInsight: IInsightDefinition = {
         insight: {
             visualizationUrl: visualizationObject.visualizationUrl,
@@ -76,6 +88,7 @@ export function convertVisualizationObject(
             ),
             tags,
             ...layersProp,
+            ...parametersProp,
         },
     };
 

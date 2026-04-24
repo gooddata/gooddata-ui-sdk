@@ -32,6 +32,6 @@ if [ -n "$E2E_IMAGE_URL" ]; then
     NO_BUILD="--no-build"
 fi
 
-NO_COLOR=1 docker compose -f docker-compose-isolated-gdcui.yaml -p "$PROJECT_NAME" up $NO_BUILD \
+NO_COLOR=1 docker compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up $NO_BUILD \
   --abort-on-container-exit --exit-code-from isolated-tests \
   --force-recreate --always-recreate-deps --renew-anon-volumes --no-color

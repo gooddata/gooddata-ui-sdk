@@ -107,6 +107,10 @@
         "text": "To apply changes, select valid values for these filters: {names}",
         "crowdinContext": "Message shown on disabled Apply button."
     },
+    "filterBar.applyFilters": {
+        "text": "Apply all filters",
+        "crowdinContext": "Tooltip description for the Apply button when there are unapplied filters"
+    },
     "geochart.alternateView.tablist.label": {
         "text": "Layer tables",
         "crowdinContext": "Accessible label for the tablist in the geo chart alternate table view. Describes the set of tabs, each representing a map layer converted to a table."

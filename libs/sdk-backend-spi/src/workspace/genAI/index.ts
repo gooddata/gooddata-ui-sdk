@@ -817,7 +817,7 @@ export type IChatConversationError = {
  * @internal
  */
 export function isChatConversationError(
-    item: Partial<IChatConversationItem | IChatConversationError>,
+    item: Partial<IChatConversationItem | IChatConversationError | IChatSuggestionsItem>,
 ): item is IChatConversationError {
     return typeof item === "object" && item !== null && "type" in item && item.type === "error";
 }
@@ -843,6 +843,34 @@ export type IChatConversationItem = {
  */
 export function isChatConversationItem(item: unknown): item is IChatConversationItem {
     return typeof item === "object" && item !== null && "type" in item && item.type === "item";
+}
+
+/**
+ * GenAI Chat Suggestion Item
+ * @internal
+ */
+export type IChatSuggestionsItem = {
+    type: "suggestions";
+    followUp?: string;
+    actions?: IChatSuggestionsAction[];
+};
+
+/**
+ * Represents an action for chat suggestions, typically used within a chat interface
+ * or a search-based system to provide users with actionable suggestions.
+ * @internal
+ */
+export type IChatSuggestionsAction = {
+    label: string;
+    query: string;
+};
+
+/**
+ * Is chat conversation item
+ * @internal
+ */
+export function isChatSuggestionsItem(item: unknown): item is IChatSuggestionsItem {
+    return typeof item === "object" && item !== null && "type" in item && item.type === "suggestions";
 }
 
 /**
@@ -1190,5 +1218,5 @@ export interface IChatConversationThreadQuery {
     /**
      * Execute the chat thread and stream the results.
      */
-    stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
+    stream(): ReadableStream<IChatConversationItem | IChatConversationError | IChatSuggestionsItem>;
 }

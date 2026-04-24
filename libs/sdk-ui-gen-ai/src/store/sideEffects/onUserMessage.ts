@@ -8,11 +8,13 @@ import {
     type IChatConversationError,
     type IChatConversationItem,
     type IChatConversationThreadQuery,
+    type IChatSuggestionsItem,
     type IChatThreadQuery,
     type IGenAIChatEvaluation,
     type IUserWorkspaceSettings,
     isChatConversationError,
     isChatConversationItem,
+    isChatSuggestionsItem,
 } from "@gooddata/sdk-backend-spi";
 import {
     type GenAIObjectType,
@@ -47,6 +49,7 @@ import {
     evaluateMessageCompleteAction,
     evaluateMessageErrorAction,
     evaluateMessageStreamingAction,
+    evaluateMessageSuggestionsAction,
     evaluateMessageUpdateAction,
     type newMessageAction,
 } from "../messages/messagesSlice.js";
@@ -372,7 +375,9 @@ function* evaluateUserConversationMessage(
     assistantMessage: IChatConversationLocalItem,
     preparedChatThread: IChatConversationThreadQuery,
 ) {
-    let reader: ReadableStreamReader<IChatConversationItem | IChatConversationError> | undefined = undefined;
+    let reader:
+        | ReadableStreamReader<IChatConversationItem | IChatConversationError | IChatSuggestionsItem>
+        | undefined = undefined;
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
     const objectTypes: GenAIObjectType[] | undefined = yield select(objectTypesSelector);
     const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
@@ -400,15 +405,18 @@ function* evaluateUserConversationMessage(
     }
 
     try {
-        const results: ReadableStream<IChatConversationItem | IChatConversationError> = yield call([
-            queryBuilder,
-            queryBuilder.stream,
-        ]);
+        const results: ReadableStream<IChatConversationItem | IChatConversationError | IChatSuggestionsItem> =
+            yield call([queryBuilder, queryBuilder.stream]);
 
         reader = results.getReader();
         while (true) {
-            const { value, done }: { value?: IChatConversationItem | IChatConversationError; done: boolean } =
-                yield call([reader, reader.read]);
+            const {
+                value,
+                done,
+            }: {
+                value?: IChatConversationItem | IChatConversationError | IChatSuggestionsItem;
+                done: boolean;
+            } = yield call([reader, reader.read]);
 
             if (done) {
                 break;
@@ -475,6 +483,15 @@ function* evaluateUserConversationMessage(
                             interactionId: chunkInteractionId,
                             item: value,
                             content: convertToLocalContent(value.content),
+                        }),
+                    );
+                }
+                if (isChatSuggestionsItem(value)) {
+                    // Dispatch suggestions content to current message
+                    yield put(
+                        evaluateMessageSuggestionsAction({
+                            assistantMessageId: currentAssistantMessage.localId,
+                            item: value,
                         }),
                     );
                 }
