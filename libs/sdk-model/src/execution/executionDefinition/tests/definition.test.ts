@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { Account, Activity, Won } from "../../../../__mocks__/model.js";
@@ -24,8 +25,9 @@ import {
     newTotal,
     newTwoDimensional,
 } from "../../../index.js";
+import { idRef } from "../../../objRef/factory.js";
 import { type IFilter } from "../../filter/index.js";
-import { type IPostProcessing, defSetPostProcessing, defWithFilters } from "../index.js";
+import { type IPostProcessing, defSetExecConfig, defSetPostProcessing, defWithFilters } from "../index.js";
 
 const Workspace = "testWorkspace";
 
@@ -165,6 +167,27 @@ describe("defFingerprint", () => {
         const rightFingerprint = defFingerprint(rhs);
 
         expect(leftFingerprint === rightFingerprint).toBe(expectedResult);
+    });
+});
+
+describe("defFingerprint with parameterValues", () => {
+    it("should produce different fingerprints for defs with different parameter values", () => {
+        const base = emptyDef("ws");
+        const defWithParamA = defSetExecConfig(base, {
+            parameterValues: [{ ref: idRef("param_a", "parameter"), value: 5 }],
+        });
+        const defWithParamB = defSetExecConfig(base, {
+            parameterValues: [{ ref: idRef("param_a", "parameter"), value: 10 }],
+        });
+
+        expect(defFingerprint(defWithParamA)).not.toBe(defFingerprint(defWithParamB));
+    });
+
+    it("should produce same fingerprint for def without parameter values as empty def", () => {
+        const base = emptyDef("ws");
+        const defWithEmptyConfig = defSetExecConfig(base, {});
+
+        expect(defFingerprint(base)).toBe(defFingerprint(defWithEmptyConfig));
     });
 });
 

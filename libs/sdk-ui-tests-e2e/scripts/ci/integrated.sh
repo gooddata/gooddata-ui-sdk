@@ -79,6 +79,6 @@ fi
 pushd $E2E_TEST_DIR
 
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER:-default}
-docker compose -f docker-compose-integrated-gdcui.yaml -p "$PROJECT_NAME" up \
+docker compose -f docker-compose-integrated.yaml -p "$PROJECT_NAME" up \
   --abort-on-container-exit --exit-code-from integrated-tests \
   --force-recreate --always-recreate-deps --renew-anon-volumes

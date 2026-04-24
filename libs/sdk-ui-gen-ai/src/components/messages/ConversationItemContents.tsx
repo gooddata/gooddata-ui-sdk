@@ -24,7 +24,7 @@ type ConversationItemContentsProps = {
     isLast?: boolean;
 };
 
-export function ConversationItemContents({ message, isLoading, isLast }: ConversationItemContentsProps) {
+export function ConversationItemContents({ message, isLoading }: ConversationItemContentsProps) {
     const content = message.content as IChatConversationLocalContent | IChatConversationErrorContent;
 
     if (content.type === "error") {
@@ -85,7 +85,6 @@ export function ConversationItemContents({ message, isLoading, isLast }: Convers
                                 message={message}
                                 part={part}
                                 visualization={part.visualization}
-                                showSuggestions={isLast}
                             />
                         );
                     }

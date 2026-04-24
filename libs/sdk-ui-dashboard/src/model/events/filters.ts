@@ -1448,3 +1448,38 @@ export function filterContextSelectionReset(
 export const isDashboardFilterContextSelectionReset = eventGuard<IDashboardFilterContextSelectionReset>(
     "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET",
 );
+
+/**
+ * This event is emitted after dashboard working selection filters have been applied.
+ *
+ * @alpha
+ */
+export interface IDashboardFilterContextWorkingSelectionApplied extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED";
+}
+
+/**
+ * @alpha
+ */
+export function filterContextWorkingSelectionApplied(
+    ctx: DashboardContext,
+    correlationId?: string,
+): IDashboardFilterContextWorkingSelectionApplied {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardFilterContextWorkingSelectionApplied}.
+ *
+ * @param obj - object to test
+ *
+ * @alpha
+ */
+export const isDashboardFilterContextWorkingSelectionApplied =
+    eventGuard<IDashboardFilterContextWorkingSelectionApplied>(
+        "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED",
+    );

@@ -143,6 +143,7 @@ export type {
     ITigerFilter,
     ITigerFilterContextItem,
     ITigerInsightLayerDefinition,
+    ITigerInsightParameterValue,
     ITigerMeasure,
     ITigerMeasureValueFilter,
     ITigerMeasureValueFilterCondition,

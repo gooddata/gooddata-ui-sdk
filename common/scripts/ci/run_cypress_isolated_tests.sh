@@ -26,11 +26,7 @@ docker build --no-cache -t $IMAGE_ID $APP_DIR || exit 1
 
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER}
 
-if [ -n "$GDC_UI" ]; then
-  COMPOSE_FILE="docker-compose-isolated-gdcui.yaml"
-else
-  COMPOSE_FILE="docker-compose-isolated.yaml"
-fi
+COMPOSE_FILE="docker-compose-isolated-sdk.yaml"
 
 NO_COLOR=1 docker compose -f $COMPOSE_FILE -p "$PROJECT_NAME" up \
   --abort-on-container-exit --exit-code-from isolated-tests \

@@ -169,6 +169,7 @@ export enum TigerFeaturesNames {
     EnableAiHub = "enableAiHub",
     EnableAutomationTrigger = "enableAutomationTrigger",
     EnableUserDataFiltersUi = "enableUserDataFiltersUi",
+    EnableDateTimeSemanticsSetting = "enableDateTimeSemanticsSetting",
 }
 
 export type ITigerFeatureFlags = {
@@ -331,6 +332,7 @@ export type ITigerFeatureFlags = {
     enableGenAiVisualizationSummarySkill: (typeof FeatureFlagsValues)["enableGenAiVisualizationSummarySkill"][number];
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
+    enableDateTimeSemanticsSetting: (typeof FeatureFlagsValues)["enableDateTimeSemanticsSetting"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -493,6 +495,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAiVisualizationSummarySkill: false,
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
+    enableDateTimeSemanticsSetting: false,
 };
 
 export const FeatureFlagsValues = {
@@ -656,4 +659,5 @@ export const FeatureFlagsValues = {
     enableGenAiVisualizationSummarySkill: [false, true] as const,
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,
+    enableDateTimeSemanticsSetting: [true, false] as const,
 };

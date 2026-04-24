@@ -447,6 +447,8 @@ export {
     defSetPostProcessing,
 } from "./execution/executionDefinition/index.js";
 
+export { type IInsightParameterValue } from "./execution/parameter/index.js";
+
 export {
     newDefForItems,
     newDefForBuckets,
@@ -528,6 +530,8 @@ export {
     insightSetBuckets,
     insightSetProperties,
     insightSetSorts,
+    insightParameters,
+    insightSetParameters,
     insightModifyItems,
     insightReduceItems,
     insightDisplayFormUsage,
@@ -818,6 +822,7 @@ export {
     type IParameterDefinition,
     type IParameterMetadataObject,
     type IParameterMetadataObjectDefinition,
+    isNumberParameterDefinition,
     isParameterMetadataObject,
     isParameterMetadataObjectDefinition,
 } from "./ldm/metadata/parameter/index.js";

@@ -39,6 +39,7 @@ import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceInAttributesDateTimeSemanticsEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceOutAttributesAuthenticationTypeEnum } from '@gooddata/api-client-tiger';
@@ -171,6 +172,8 @@ export interface IDataSourceConnectionInfo {
     // (undocumented)
     clientId?: string;
     // (undocumented)
+    dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
+    // (undocumented)
     decodedParameters?: Array<DataSourceParameter> | null;
     // (undocumented)
     id: string;
@@ -191,6 +194,9 @@ export interface IDataSourceConnectionInfo {
 }
 
 // @internal (undocumented)
+export type IDataSourceDateTimeSemantics = JsonApiDataSourceInAttributesDateTimeSemanticsEnum;
+
+// @internal (undocumented)
 export interface IDataSourceDeletedResponse {
     // (undocumented)
     errorMessage?: string;
@@ -206,6 +212,8 @@ export interface IDataSourcePatchRequest {
     clientId?: string | null;
     // (undocumented)
     clientSecret?: string | null;
+    // (undocumented)
+    dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
     // (undocumented)
     id: string;
     // (undocumented)
@@ -278,6 +286,8 @@ export interface IDataSourceUpsertRequest {
     clientId?: string;
     // (undocumented)
     clientSecret?: string;
+    // (undocumented)
+    dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
     // (undocumented)
     id: string;
     // (undocumented)

@@ -29,6 +29,7 @@ import {
     type JsonApiDataSourceIdentifierOutDocument,
     type JsonApiDataSourceIdentifierOutWithLinks,
     type JsonApiDataSourceInAttributesCacheStrategyEnum,
+    type JsonApiDataSourceInAttributesDateTimeSemanticsEnum,
     type JsonApiDataSourceInAttributesTypeEnum,
     type JsonApiDataSourceInDocument,
     type JsonApiDataSourceOutAttributesAuthenticationTypeEnum,
@@ -191,6 +192,11 @@ export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrateg
 /**
  * @internal
  */
+export type IDataSourceDateTimeSemantics = JsonApiDataSourceInAttributesDateTimeSemanticsEnum;
+
+/**
+ * @internal
+ */
 export type IDataSourcePermission = "MANAGE" | "USE";
 
 /**
@@ -209,6 +215,7 @@ export interface IDataSourceConnectionInfo {
     decodedParameters?: Array<DataSourceParameter> | null;
     cacheStrategy?: IDataSourceCacheStrategy | null;
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
+    dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
 }
 
 /**
@@ -237,6 +244,7 @@ export interface IDataSourceUpsertRequest {
     privateKeyPassphrase?: string;
     clientId?: string;
     clientSecret?: string;
+    dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
 }
 
 /**
@@ -257,6 +265,7 @@ export interface IDataSourcePatchRequest {
     privateKeyPassphrase?: string | null;
     clientId?: string | null;
     clientSecret?: string | null;
+    dateTimeSemantics?: IDataSourceDateTimeSemantics | null;
 }
 
 /**
@@ -663,6 +672,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         cacheStrategy,
         authenticationType,
         clientId,
+        dateTimeSemantics,
     } = attributes;
     return {
         id,
@@ -677,6 +687,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         decodedParameters,
         cacheStrategy,
         authenticationType,
+        dateTimeSemantics,
     };
 };
 
@@ -1179,6 +1190,7 @@ export const buildTigerSpecificFunctions = (
             privateKeyPassphrase,
             clientId,
             clientSecret,
+            dateTimeSemantics,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1199,16 +1211,17 @@ export const buildTigerSpecificFunctions = (
                                 privateKeyPassphrase,
                                 clientId,
                                 clientSecret,
+                                dateTimeSemantics,
                             },
                             id,
                             type: "dataSource",
                         },
                     },
-                }).then((axiosResponse: any) => ({
+                }).then((axiosResponse) => ({
                     data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
                 }));
             });
-        } catch (error: any) {
+        } catch (error: unknown) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
@@ -1228,6 +1241,7 @@ export const buildTigerSpecificFunctions = (
             privateKeyPassphrase,
             clientId,
             clientSecret,
+            dateTimeSemantics,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1249,16 +1263,17 @@ export const buildTigerSpecificFunctions = (
                                 privateKeyPassphrase,
                                 clientId,
                                 clientSecret,
+                                dateTimeSemantics,
                             },
                             id: requestDataId,
                             type: "dataSource",
                         },
                     },
-                }).then((axiosResponse: any) => ({
+                }).then((axiosResponse) => ({
                     data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
                 }));
             });
-        } catch (error: any) {
+        } catch (error: unknown) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
@@ -1278,6 +1293,7 @@ export const buildTigerSpecificFunctions = (
             privateKeyPassphrase,
             clientId,
             clientSecret,
+            dateTimeSemantics,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1299,16 +1315,17 @@ export const buildTigerSpecificFunctions = (
                                 privateKeyPassphrase,
                                 clientId,
                                 clientSecret,
+                                dateTimeSemantics,
                             },
                             id: requestDataId,
                             type: "dataSource",
                         },
                     },
-                }).then((axiosResponse: any) => ({
+                }).then((axiosResponse) => ({
                     data: dataSourceResponseAsDataSourceConnectionInfo(axiosResponse.data),
                 }));
             });
-        } catch (error: any) {
+        } catch (error: unknown) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },
@@ -1320,7 +1337,7 @@ export const buildTigerSpecificFunctions = (
                 });
                 return { successful: true };
             });
-        } catch (error: any) {
+        } catch (error: unknown) {
             return { errorMessage: getDataSourceErrorMessage(error) };
         }
     },

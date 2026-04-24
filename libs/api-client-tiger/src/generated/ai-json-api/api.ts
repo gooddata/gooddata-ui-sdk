@@ -143,6 +143,7 @@ export interface AiConversationResponse {
      * Last activity timestamp (ISO-8601 UTC).
      */
     'lastActivityAt': string;
+    'agentId'?: string | null;
 }
 
 export interface AiConversationResponseList {
@@ -1819,6 +1820,68 @@ export async function KnowledgeAiAxiosParamCreator_CreateDocument(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
+ * Upload a new org-scoped knowledge document.
+ * @summary Upload Document Org
+ * @param {File} file 
+ * @param {string} [title] 
+ * @param {Array<string>} [scopes] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_CreateOrgDocument(
+    file: File, title?: string, scopes?: Array<string>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'file' is not null or undefined
+    assertParamExists('createOrgDocument', 'file', file)
+    const localVarPath = `/api/v1/ai/organization/knowledge/documents`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+    const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+
+    if (file !== undefined) { 
+        localVarFormParams.append('file', file as any);
+    }
+    
+    if (title !== undefined) { 
+        localVarFormParams.append('title', title as any);
+    }
+        if (scopes) {
+        
+        localVarFormParams.append('scopes', scopes.join(COLLECTION_FORMATS.csv));
+    }
+    
+    
+    localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    localVarRequestOptions.data = localVarFormParams;
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
  * Delete a knowledge document and all its chunks.
  * @summary Delete Document
  * @param {string} workspaceId 
@@ -1838,6 +1901,51 @@ export async function KnowledgeAiAxiosParamCreator_DeleteDocument(
     assertParamExists('deleteDocument', 'documentId', documentId)
     const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{document_id}`
         .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * Delete an org-scoped knowledge document and all its chunks.
+ * @summary Delete Document Org
+ * @param {string} documentId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_DeleteOrgDocument(
+    documentId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'documentId' is not null or undefined
+    assertParamExists('deleteOrgDocument', 'documentId', documentId)
+    const localVarPath = `/api/v1/ai/organization/knowledge/documents/{document_id}`
         .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1917,6 +2025,51 @@ export async function KnowledgeAiAxiosParamCreator_DownloadDocument(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
+ * Download an org-scoped knowledge document\'s raw file.
+ * @summary Download Document Org
+ * @param {string} documentId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_DownloadOrgDocument(
+    documentId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'documentId' is not null or undefined
+    assertParamExists('downloadOrgDocument', 'documentId', documentId)
+    const localVarPath = `/api/v1/ai/organization/knowledge/documents/{document_id}/download`
+        .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
  * Get a single knowledge document\'s metadata.
  * @summary Get Document
  * @param {string} workspaceId 
@@ -1936,6 +2089,51 @@ export async function KnowledgeAiAxiosParamCreator_GetDocument(
     assertParamExists('getDocument', 'documentId', documentId)
     const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{document_id}`
         .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * Get a single org-scoped knowledge document\'s metadata.
+ * @summary Get Document Org
+ * @param {string} documentId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_GetOrgDocument(
+    documentId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'documentId' is not null or undefined
+    assertParamExists('getOrgDocument', 'documentId', documentId)
+    const localVarPath = `/api/v1/ai/organization/knowledge/documents/{document_id}`
         .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1988,6 +2186,77 @@ export async function KnowledgeAiAxiosParamCreator_ListDocuments(
     assertParamExists('listDocuments', 'workspaceId', workspaceId)
     const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/documents`
         .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (scopes) {
+        localVarQueryParameter['scopes'] = scopes;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (pageToken !== undefined) {
+        localVarQueryParameter['pageToken'] = pageToken;
+    }
+
+    if (metaInclude !== undefined) {
+        localVarQueryParameter['metaInclude'] = metaInclude;
+    }
+
+    if (state !== undefined) {
+        localVarQueryParameter['state'] = state;
+    }
+
+    if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * List org-scoped knowledge documents.
+ * @summary List Documents Org
+ * @param {Array<string>} [scopes] 
+ * @param {number} [size] 
+ * @param {string} [pageToken] 
+ * @param {string} [metaInclude] 
+ * @param {'enabled' | 'disabled'} [state] 
+ * @param {string} [query] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_ListOrgDocuments(
+    scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string, state?: 'enabled' | 'disabled', query?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ai/organization/knowledge/documents`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -2107,6 +2376,68 @@ export async function KnowledgeAiAxiosParamCreator_PatchDocument(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
+ * Patch an org-scoped knowledge document\'s metadata.
+ * @summary Patch Document Org
+ * @param {string} documentId 
+ * @param {AiPatchDocumentRequest} aiPatchDocumentRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_PatchOrgDocument(
+    documentId: string, aiPatchDocumentRequest: AiPatchDocumentRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'documentId' is not null or undefined
+    assertParamExists('patchOrgDocument', 'documentId', documentId)
+    // verify required parameter 'aiPatchDocumentRequest' is not null or undefined
+    assertParamExists('patchOrgDocument', 'aiPatchDocumentRequest', aiPatchDocumentRequest)
+    const localVarPath = `/api/v1/ai/organization/knowledge/documents/{document_id}`
+        .replace(`{${"document_id"}}`, encodeURIComponent(String(documentId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiPatchDocumentRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiPatchDocumentRequest !== undefined ? aiPatchDocumentRequest : {})
+        : aiPatchDocumentRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
  * Search the knowledge base using semantic similarity.
  * @summary Search Documents
  * @param {string} workspaceId 
@@ -2129,6 +2460,69 @@ export async function KnowledgeAiAxiosParamCreator_SearchKnowledge(
     assertParamExists('searchKnowledge', 'query', query)
     const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/knowledge/search`
         .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter['limit'] = limit;
+    }
+
+    if (minScore !== undefined) {
+        localVarQueryParameter['minScore'] = minScore;
+    }
+
+    if (scopes) {
+        localVarQueryParameter['scopes'] = scopes;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * Search org-scoped knowledge documents using semantic similarity.
+ * @summary Search Documents Org
+ * @param {string} query 
+ * @param {number} [limit] 
+ * @param {number} [minScore] 
+ * @param {Array<string>} [scopes] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_SearchOrgKnowledge(
+    query: string, limit?: number, minScore?: number, scopes?: Array<string>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'query' is not null or undefined
+    assertParamExists('searchOrgKnowledge', 'query', query)
+    const localVarPath = `/api/v1/ai/organization/knowledge/search`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -2238,6 +2632,68 @@ export async function KnowledgeAiAxiosParamCreator_UpsertDocument(
 }
 
 
+// KnowledgeAi FP - KnowledgeAiAxiosParamCreator
+/**
+ * Upload or replace an org-scoped knowledge document.
+ * @summary Upsert Document Org
+ * @param {File} file 
+ * @param {string} [title] 
+ * @param {Array<string>} [scopes] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAiAxiosParamCreator_UpsertOrgDocument(
+    file: File, title?: string, scopes?: Array<string>, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'file' is not null or undefined
+    assertParamExists('upsertOrgDocument', 'file', file)
+    const localVarPath = `/api/v1/ai/organization/knowledge/documents`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+    const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+
+    if (file !== undefined) { 
+        localVarFormParams.append('file', file as any);
+    }
+    
+    if (title !== undefined) { 
+        localVarFormParams.append('title', title as any);
+    }
+        if (scopes) {
+        
+        localVarFormParams.append('scopes', scopes.join(COLLECTION_FORMATS.csv));
+    }
+    
+    
+    localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    localVarRequestOptions.data = localVarFormParams;
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // KnowledgeAi Api FP
 /**
@@ -2258,6 +2714,32 @@ export async function KnowledgeAi_CreateDocument(
 ): AxiosPromise<AiUploadDocumentResponse> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_CreateDocument(
         requestParameters.workspaceId, requestParameters.file, requestParameters.title, requestParameters.scopes, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * Upload a new org-scoped knowledge document.
+ * @summary Upload Document Org
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiCreateOrgDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_CreateOrgDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiCreateOrgDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiUploadDocumentResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_CreateOrgDocument(
+        requestParameters.file, requestParameters.title, requestParameters.scopes, 
         options || {},
         configuration,
     );
@@ -2293,6 +2775,32 @@ export async function KnowledgeAi_DeleteDocument(
 
 // KnowledgeAi Api FP
 /**
+ * Delete an org-scoped knowledge document and all its chunks.
+ * @summary Delete Document Org
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiDeleteOrgDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_DeleteOrgDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiDeleteOrgDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiDeleteDocumentResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_DeleteOrgDocument(
+        requestParameters.documentId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
  * Download a knowledge document\'s raw file.
  * @summary Download Document
  * @param {AxiosInstance} axios Axios instance.
@@ -2310,6 +2818,32 @@ export async function KnowledgeAi_DownloadDocument(
 ): AxiosPromise<any> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_DownloadDocument(
         requestParameters.workspaceId, requestParameters.documentId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * Download an org-scoped knowledge document\'s raw file.
+ * @summary Download Document Org
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiDownloadOrgDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_DownloadOrgDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiDownloadOrgDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<any> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_DownloadOrgDocument(
+        requestParameters.documentId, 
         options || {},
         configuration,
     );
@@ -2345,6 +2879,32 @@ export async function KnowledgeAi_GetDocument(
 
 // KnowledgeAi Api FP
 /**
+ * Get a single org-scoped knowledge document\'s metadata.
+ * @summary Get Document Org
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiGetOrgDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_GetOrgDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiGetOrgDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiDocumentMetadataResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_GetOrgDocument(
+        requestParameters.documentId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
  * List knowledge documents accessible from the workspace.
  * @summary List Documents
  * @param {AxiosInstance} axios Axios instance.
@@ -2362,6 +2922,32 @@ export async function KnowledgeAi_ListDocuments(
 ): AxiosPromise<AiListDocumentsResponse> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_ListDocuments(
         requestParameters.workspaceId, requestParameters.scopes, requestParameters.size, requestParameters.pageToken, requestParameters.metaInclude, requestParameters.state, requestParameters.query, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * List org-scoped knowledge documents.
+ * @summary List Documents Org
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiListOrgDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_ListOrgDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiListOrgDocumentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiListDocumentsResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_ListOrgDocuments(
+        requestParameters.scopes, requestParameters.size, requestParameters.pageToken, requestParameters.metaInclude, requestParameters.state, requestParameters.query, 
         options || {},
         configuration,
     );
@@ -2397,6 +2983,32 @@ export async function KnowledgeAi_PatchDocument(
 
 // KnowledgeAi Api FP
 /**
+ * Patch an org-scoped knowledge document\'s metadata.
+ * @summary Patch Document Org
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiPatchOrgDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_PatchOrgDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiPatchOrgDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiDocumentMetadataResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_PatchOrgDocument(
+        requestParameters.documentId, requestParameters.aiPatchDocumentRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
  * Search the knowledge base using semantic similarity.
  * @summary Search Documents
  * @param {AxiosInstance} axios Axios instance.
@@ -2414,6 +3026,32 @@ export async function KnowledgeAi_SearchKnowledge(
 ): AxiosPromise<AiSearchDocumentsResponse> {
     const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_SearchKnowledge(
         requestParameters.workspaceId, requestParameters.query, requestParameters.limit, requestParameters.minScore, requestParameters.scopes, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// KnowledgeAi Api FP
+/**
+ * Search org-scoped knowledge documents using semantic similarity.
+ * @summary Search Documents Org
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiSearchOrgKnowledgeRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_SearchOrgKnowledge(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiSearchOrgKnowledgeRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiSearchDocumentsResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_SearchOrgKnowledge(
+        requestParameters.query, requestParameters.limit, requestParameters.minScore, requestParameters.scopes, 
         options || {},
         configuration,
     );
@@ -2447,6 +3085,32 @@ export async function KnowledgeAi_UpsertDocument(
 }
 
 
+// KnowledgeAi Api FP
+/**
+ * Upload or replace an org-scoped knowledge document.
+ * @summary Upsert Document Org
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {KnowledgeAiUpsertOrgDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function KnowledgeAi_UpsertOrgDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: KnowledgeAiUpsertOrgDocumentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiUploadDocumentResponse> {
+    const localVarAxiosArgs = await KnowledgeAiAxiosParamCreator_UpsertOrgDocument(
+        requestParameters.file, requestParameters.title, requestParameters.scopes, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * KnowledgeAi - interface
  * @export
@@ -2464,6 +3128,16 @@ export interface KnowledgeAiInterface {
     createDocument(requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
 
     /**
+     * Upload a new org-scoped knowledge document.
+     * @summary Upload Document Org
+     * @param {KnowledgeAiCreateOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    createOrgDocument(requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
+
+    /**
      * Delete a knowledge document and all its chunks.
      * @summary Delete Document
      * @param {KnowledgeAiDeleteDocumentRequest} requestParameters Request parameters.
@@ -2472,6 +3146,16 @@ export interface KnowledgeAiInterface {
      * @memberof KnowledgeAiInterface
      */
     deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
+
+    /**
+     * Delete an org-scoped knowledge document and all its chunks.
+     * @summary Delete Document Org
+     * @param {KnowledgeAiDeleteOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    deleteOrgDocument(requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
 
     /**
      * Download a knowledge document\'s raw file.
@@ -2484,6 +3168,16 @@ export interface KnowledgeAiInterface {
     downloadDocument(requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
 
     /**
+     * Download an org-scoped knowledge document\'s raw file.
+     * @summary Download Document Org
+     * @param {KnowledgeAiDownloadOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
+
+    /**
      * Get a single knowledge document\'s metadata.
      * @summary Get Document
      * @param {KnowledgeAiGetDocumentRequest} requestParameters Request parameters.
@@ -2492,6 +3186,16 @@ export interface KnowledgeAiInterface {
      * @memberof KnowledgeAiInterface
      */
     getDocument(requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
+
+    /**
+     * Get a single org-scoped knowledge document\'s metadata.
+     * @summary Get Document Org
+     * @param {KnowledgeAiGetOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    getOrgDocument(requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
 
     /**
      * List knowledge documents accessible from the workspace.
@@ -2504,6 +3208,16 @@ export interface KnowledgeAiInterface {
     listDocuments(requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiListDocumentsResponse>;
 
     /**
+     * List org-scoped knowledge documents.
+     * @summary List Documents Org
+     * @param {KnowledgeAiListOrgDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    listOrgDocuments(requestParameters: KnowledgeAiListOrgDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiListDocumentsResponse>;
+
+    /**
      * Patch a knowledge document\'s metadata without re-uploading content.
      * @summary Patch Document
      * @param {KnowledgeAiPatchDocumentRequest} requestParameters Request parameters.
@@ -2512,6 +3226,16 @@ export interface KnowledgeAiInterface {
      * @memberof KnowledgeAiInterface
      */
     patchDocument(requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
+
+    /**
+     * Patch an org-scoped knowledge document\'s metadata.
+     * @summary Patch Document Org
+     * @param {KnowledgeAiPatchOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    patchOrgDocument(requestParameters: KnowledgeAiPatchOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
 
     /**
      * Search the knowledge base using semantic similarity.
@@ -2524,6 +3248,16 @@ export interface KnowledgeAiInterface {
     searchKnowledge(requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchDocumentsResponse>;
 
     /**
+     * Search org-scoped knowledge documents using semantic similarity.
+     * @summary Search Documents Org
+     * @param {KnowledgeAiSearchOrgKnowledgeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    searchOrgKnowledge(requestParameters: KnowledgeAiSearchOrgKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<AiSearchDocumentsResponse>;
+
+    /**
      * Upload or replace a knowledge document.
      * @summary Upsert Document
      * @param {KnowledgeAiUpsertDocumentRequest} requestParameters Request parameters.
@@ -2532,6 +3266,16 @@ export interface KnowledgeAiInterface {
      * @memberof KnowledgeAiInterface
      */
     upsertDocument(requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
+
+    /**
+     * Upload or replace an org-scoped knowledge document.
+     * @summary Upsert Document Org
+     * @param {KnowledgeAiUpsertOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAiInterface
+     */
+    upsertOrgDocument(requestParameters: KnowledgeAiUpsertOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
 
 }
 
@@ -2571,6 +3315,34 @@ export interface KnowledgeAiCreateDocumentRequest {
 }
 
 /**
+ * Request parameters for createOrgDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiCreateOrgDocumentRequest
+ */
+export interface KnowledgeAiCreateOrgDocumentRequest {
+    /**
+     * 
+     * @type {File}
+     * @memberof KnowledgeAiCreateOrgDocument
+     */
+    readonly file: File
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiCreateOrgDocument
+     */
+    readonly title?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KnowledgeAiCreateOrgDocument
+     */
+    readonly scopes?: Array<string>
+}
+
+/**
  * Request parameters for deleteDocument operation in KnowledgeAi.
  * @export
  * @interface KnowledgeAiDeleteDocumentRequest
@@ -2587,6 +3359,20 @@ export interface KnowledgeAiDeleteDocumentRequest {
      * 
      * @type {string}
      * @memberof KnowledgeAiDeleteDocument
+     */
+    readonly documentId: string
+}
+
+/**
+ * Request parameters for deleteOrgDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiDeleteOrgDocumentRequest
+ */
+export interface KnowledgeAiDeleteOrgDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiDeleteOrgDocument
      */
     readonly documentId: string
 }
@@ -2613,6 +3399,20 @@ export interface KnowledgeAiDownloadDocumentRequest {
 }
 
 /**
+ * Request parameters for downloadOrgDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiDownloadOrgDocumentRequest
+ */
+export interface KnowledgeAiDownloadOrgDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiDownloadOrgDocument
+     */
+    readonly documentId: string
+}
+
+/**
  * Request parameters for getDocument operation in KnowledgeAi.
  * @export
  * @interface KnowledgeAiGetDocumentRequest
@@ -2629,6 +3429,20 @@ export interface KnowledgeAiGetDocumentRequest {
      * 
      * @type {string}
      * @memberof KnowledgeAiGetDocument
+     */
+    readonly documentId: string
+}
+
+/**
+ * Request parameters for getOrgDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiGetOrgDocumentRequest
+ */
+export interface KnowledgeAiGetOrgDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiGetOrgDocument
      */
     readonly documentId: string
 }
@@ -2690,6 +3504,55 @@ export interface KnowledgeAiListDocumentsRequest {
 }
 
 /**
+ * Request parameters for listOrgDocuments operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiListOrgDocumentsRequest
+ */
+export interface KnowledgeAiListOrgDocumentsRequest {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KnowledgeAiListOrgDocuments
+     */
+    readonly scopes?: Array<string>
+
+    /**
+     * 
+     * @type {number}
+     * @memberof KnowledgeAiListOrgDocuments
+     */
+    readonly size?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiListOrgDocuments
+     */
+    readonly pageToken?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiListOrgDocuments
+     */
+    readonly metaInclude?: string
+
+    /**
+     * 
+     * @type {'enabled' | 'disabled'}
+     * @memberof KnowledgeAiListOrgDocuments
+     */
+    readonly state?: 'enabled' | 'disabled'
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiListOrgDocuments
+     */
+    readonly query?: string
+}
+
+/**
  * Request parameters for patchDocument operation in KnowledgeAi.
  * @export
  * @interface KnowledgeAiPatchDocumentRequest
@@ -2713,6 +3576,27 @@ export interface KnowledgeAiPatchDocumentRequest {
      * 
      * @type {AiPatchDocumentRequest}
      * @memberof KnowledgeAiPatchDocument
+     */
+    readonly aiPatchDocumentRequest: AiPatchDocumentRequest
+}
+
+/**
+ * Request parameters for patchOrgDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiPatchOrgDocumentRequest
+ */
+export interface KnowledgeAiPatchOrgDocumentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiPatchOrgDocument
+     */
+    readonly documentId: string
+
+    /**
+     * 
+     * @type {AiPatchDocumentRequest}
+     * @memberof KnowledgeAiPatchOrgDocument
      */
     readonly aiPatchDocumentRequest: AiPatchDocumentRequest
 }
@@ -2760,6 +3644,41 @@ export interface KnowledgeAiSearchKnowledgeRequest {
 }
 
 /**
+ * Request parameters for searchOrgKnowledge operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiSearchOrgKnowledgeRequest
+ */
+export interface KnowledgeAiSearchOrgKnowledgeRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiSearchOrgKnowledge
+     */
+    readonly query: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof KnowledgeAiSearchOrgKnowledge
+     */
+    readonly limit?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof KnowledgeAiSearchOrgKnowledge
+     */
+    readonly minScore?: number
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KnowledgeAiSearchOrgKnowledge
+     */
+    readonly scopes?: Array<string>
+}
+
+/**
  * Request parameters for upsertDocument operation in KnowledgeAi.
  * @export
  * @interface KnowledgeAiUpsertDocumentRequest
@@ -2795,6 +3714,34 @@ export interface KnowledgeAiUpsertDocumentRequest {
 }
 
 /**
+ * Request parameters for upsertOrgDocument operation in KnowledgeAi.
+ * @export
+ * @interface KnowledgeAiUpsertOrgDocumentRequest
+ */
+export interface KnowledgeAiUpsertOrgDocumentRequest {
+    /**
+     * 
+     * @type {File}
+     * @memberof KnowledgeAiUpsertOrgDocument
+     */
+    readonly file: File
+
+    /**
+     * 
+     * @type {string}
+     * @memberof KnowledgeAiUpsertOrgDocument
+     */
+    readonly title?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof KnowledgeAiUpsertOrgDocument
+     */
+    readonly scopes?: Array<string>
+}
+
+/**
  * KnowledgeAi - object-oriented interface
  * @export
  * @class KnowledgeAi
@@ -2814,6 +3761,18 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
+     * Upload a new org-scoped knowledge document.
+     * @summary Upload Document Org
+     * @param {KnowledgeAiCreateOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public createOrgDocument(requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_CreateOrgDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Delete a knowledge document and all its chunks.
      * @summary Delete Document
      * @param {KnowledgeAiDeleteDocumentRequest} requestParameters Request parameters.
@@ -2823,6 +3782,18 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
      */
     public deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig) {
         return KnowledgeAi_DeleteDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Delete an org-scoped knowledge document and all its chunks.
+     * @summary Delete Document Org
+     * @param {KnowledgeAiDeleteOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public deleteOrgDocument(requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_DeleteOrgDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -2838,6 +3809,18 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
+     * Download an org-scoped knowledge document\'s raw file.
+     * @summary Download Document Org
+     * @param {KnowledgeAiDownloadOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_DownloadOrgDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Get a single knowledge document\'s metadata.
      * @summary Get Document
      * @param {KnowledgeAiGetDocumentRequest} requestParameters Request parameters.
@@ -2847,6 +3830,18 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
      */
     public getDocument(requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig) {
         return KnowledgeAi_GetDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Get a single org-scoped knowledge document\'s metadata.
+     * @summary Get Document Org
+     * @param {KnowledgeAiGetOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public getOrgDocument(requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_GetOrgDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -2862,6 +3857,18 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
+     * List org-scoped knowledge documents.
+     * @summary List Documents Org
+     * @param {KnowledgeAiListOrgDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public listOrgDocuments(requestParameters: KnowledgeAiListOrgDocumentsRequest = {}, options?: AxiosRequestConfig) {
+        return KnowledgeAi_ListOrgDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Patch a knowledge document\'s metadata without re-uploading content.
      * @summary Patch Document
      * @param {KnowledgeAiPatchDocumentRequest} requestParameters Request parameters.
@@ -2871,6 +3878,18 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
      */
     public patchDocument(requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig) {
         return KnowledgeAi_PatchDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Patch an org-scoped knowledge document\'s metadata.
+     * @summary Patch Document Org
+     * @param {KnowledgeAiPatchOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public patchOrgDocument(requestParameters: KnowledgeAiPatchOrgDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_PatchOrgDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -2886,6 +3905,18 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
+     * Search org-scoped knowledge documents using semantic similarity.
+     * @summary Search Documents Org
+     * @param {KnowledgeAiSearchOrgKnowledgeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public searchOrgKnowledge(requestParameters: KnowledgeAiSearchOrgKnowledgeRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_SearchOrgKnowledge(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Upload or replace a knowledge document.
      * @summary Upsert Document
      * @param {KnowledgeAiUpsertDocumentRequest} requestParameters Request parameters.
@@ -2895,6 +3926,18 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
      */
     public upsertDocument(requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig) {
         return KnowledgeAi_UpsertDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Upload or replace an org-scoped knowledge document.
+     * @summary Upsert Document Org
+     * @param {KnowledgeAiUpsertOrgDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KnowledgeAi
+     */
+    public upsertOrgDocument(requestParameters: KnowledgeAiUpsertOrgDocumentRequest, options?: AxiosRequestConfig) {
+        return KnowledgeAi_UpsertOrgDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

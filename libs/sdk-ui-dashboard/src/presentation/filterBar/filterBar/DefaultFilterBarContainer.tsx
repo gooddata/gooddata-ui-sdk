@@ -13,11 +13,15 @@ import {
     BubbleHoverTrigger,
     Message,
     UiButton,
+    UiTooltip,
     makeHorizontalKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 
 import { applyFilterContextWorkingSelection } from "../../../model/commands/filters.js";
-import { isDashboardFilterContextSelectionReset } from "../../../model/events/filters.js";
+import {
+    isDashboardFilterContextSelectionReset,
+    isDashboardFilterContextWorkingSelectionApplied,
+} from "../../../model/events/filters.js";
 import { useDashboardEventsContext } from "../../../model/react/DashboardEventsContext.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
@@ -101,7 +105,7 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
               { id: "filterBar.invalidFilterSelection" },
               { names: filtersWithInvalidSelection.join(", ") },
           )
-        : null;
+        : intl.formatMessage({ id: "filterBar.applyFilters" });
 
     return (
         <>
@@ -128,15 +132,23 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                     <FiltersRows rows={rows} />
                     <div className="filter-bar-configuration" style={configurationStyle}>
                         {isApplyAllAtOnceEnabledAndSet && isWorkingFilterContextChanged ? (
-                            <BubbleHoverTrigger showDelay={100} hideDelay={0}>
-                                <UiButton
-                                    label={intl.formatMessage({ id: "apply" })}
-                                    variant="primary"
-                                    onClick={applyAllDashboardFilters}
-                                    isDisabled={hasInvalidFilterSelections}
-                                />
-                                {bubbleText ? <Bubble>{bubbleText}</Bubble> : null}
-                            </BubbleHoverTrigger>
+                            <UiTooltip
+                                content={bubbleText}
+                                triggerBy={["hover", "focus"]}
+                                disabled={!bubbleText}
+                                anchor={
+                                    <UiButton
+                                        accessibilityConfig={{
+                                            ariaHaspopup: "dialog",
+                                            ariaLabel: bubbleText,
+                                        }}
+                                        label={intl.formatMessage({ id: "apply" })}
+                                        variant="primary"
+                                        onClick={applyAllDashboardFilters}
+                                        isDisabled={hasInvalidFilterSelections}
+                                    />
+                                }
+                            />
                         ) : null}
                         {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
                     </div>
@@ -149,7 +161,11 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                 {isInEditMode ? <FlexibleBulletsBar /> : null}
             </div>
             {isWorkingFilterContextChanged && isApplyAllAtOnceEnabledAndSet ? (
-                <div className="filters-message" style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}>
+                <div
+                    aria-hidden="true"
+                    className="filters-message"
+                    style={{ marginTop: rows.length > 1 ? "35px" : "10px" }}
+                >
                     <Message type="progress">
                         <FormattedMessage
                             id="filterBar.unappliedFiltersNotification"
@@ -266,7 +282,7 @@ function MeasuredDiv({
 
     const { registerHandler, unregisterHandler } = useDashboardEventsContext();
 
-    // Focus management: Move focus to filter region when reset event occurs
+    // Focus management: Move focus to filter region when reset/apply event occurs
     const moveToFilterRegion = useCallback(() => {
         const filterRegion = containerRef.current;
         if (filterRegion) {
@@ -274,10 +290,12 @@ function MeasuredDiv({
         }
     }, []);
 
-    // Listen for filter context working selection reset events
+    // Listen for filter context working selection reset/apply events
     useEffect(() => {
         const handler = {
-            eval: isDashboardFilterContextSelectionReset,
+            eval: (event: any) =>
+                isDashboardFilterContextSelectionReset(event) ||
+                isDashboardFilterContextWorkingSelectionApplied(event),
             handler: () => {
                 moveToFilterRegion();
             },

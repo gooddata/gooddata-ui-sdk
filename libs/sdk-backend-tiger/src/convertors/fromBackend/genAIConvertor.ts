@@ -20,6 +20,7 @@ import {
     type IChatConversationFeedback,
     type IChatConversationItem,
     type IChatKdaDefinition,
+    type IChatSuggestionsItem,
     type IChatWhatIfDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -267,4 +268,29 @@ function convertSearchRelationships(
             targetObjectTitle: result.targetTitle,
         })) ?? []
     );
+}
+
+/**
+ * Represents AI-generated suggestions, which may include a follow-up question
+ * and a list of actions with associated labels and queries.
+ *
+ * TODO: This is mock types, must be loaded from openapi when will be ready
+ */
+export type AiSuggestions = {
+    followUpQuestion?: string;
+    actions?: {
+        label: string;
+        query: string;
+    }[];
+};
+
+export function convertChatSuggestionItemFromBackend(item: AiSuggestions | undefined): IChatSuggestionsItem {
+    return {
+        type: "suggestions",
+        followUp: item?.followUpQuestion,
+        actions: item?.actions?.map((action) => ({
+            label: action.label,
+            query: action.query,
+        })),
+    };
 }

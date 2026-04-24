@@ -7,6 +7,7 @@ import {
     type ITigerBucket,
     type ITigerFilter,
     type ITigerInsightLayerDefinition,
+    type ITigerInsightParameterValue,
     type ITigerSortItem,
     type ITigerVisualizationProperties,
 } from "./TigerTypes.js";
@@ -24,6 +25,10 @@ export interface IVisualizationObject {
     sorts: ITigerSortItem[];
     properties: ITigerVisualizationProperties;
     layers?: ITigerInsightLayerDefinition[];
+    /**
+     * @alpha
+     */
+    parameters?: ITigerInsightParameterValue[];
 }
 
 /**

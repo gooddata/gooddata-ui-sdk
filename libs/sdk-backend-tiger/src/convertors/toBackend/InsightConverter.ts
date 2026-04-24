@@ -6,6 +6,7 @@ import {
     type ITigerAttributeFilterConfigs,
     type ITigerBucket,
     type ITigerInsightLayerDefinition,
+    type ITigerInsightParameterValue,
     type ITigerSortItem,
     type ITigerVisualizationProperties,
     type VisualizationObjectModelV2,
@@ -16,9 +17,11 @@ import {
     type IInsight,
     type IInsightDefinition,
     type IInsightLayerDefinition,
+    type IInsightParameterValue,
     type ISortItem,
     type VisualizationProperties,
     insightLayers,
+    insightParameters,
 } from "@gooddata/sdk-model";
 
 import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
@@ -76,6 +79,17 @@ export const convertInsight = (
               }
             : {};
 
+    const parameters = insightParameters(insight);
+    const parametersProp =
+        parameters.length > 0
+            ? {
+                  parameters: cloneWithSanitizedIdsTyped<
+                      IInsightParameterValue[],
+                      ITigerInsightParameterValue[]
+                  >(parameters),
+              }
+            : {};
+
     return {
         buckets: cloneWithSanitizedIdsTyped<IBucket[], ITigerBucket[]>(sanitizedInsight.insight.buckets),
         filters: convertSdkFiltersToTiger(sanitizedInsight.insight.filters),
@@ -94,5 +108,6 @@ export const convertInsight = (
         visualizationUrl: sanitizedInsight.insight.visualizationUrl,
         version: "2",
         ...layersProp,
+        ...parametersProp,
     };
 };

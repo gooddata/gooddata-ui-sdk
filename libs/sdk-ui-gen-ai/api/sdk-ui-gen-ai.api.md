@@ -16,6 +16,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
 import { IChatConversationItem } from '@gooddata/sdk-backend-spi';
 import { IChatConversationMultipartPart } from '@gooddata/sdk-backend-spi';
+import { IChatSuggestionsItem } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIVisualization } from '@gooddata/sdk-model';
@@ -217,6 +218,7 @@ export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> 
     streaming?: boolean;
     localId: string;
     content: IChatConversationLocalContent | IChatConversationErrorContent;
+    suggestions?: IChatSuggestionsItem;
 };
 
 // @public

@@ -2,7 +2,11 @@
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
-import { type IChatConversation, type IChatConversationItem } from "@gooddata/sdk-backend-spi";
+import {
+    type IChatConversation,
+    type IChatConversationItem,
+    type IChatSuggestionsItem,
+} from "@gooddata/sdk-backend-spi";
 import { type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
@@ -466,6 +470,21 @@ const messagesSlice = createSlice({
             assistantMessage.complete = true;
             delete state.asyncProcess;
         },
+        evaluateMessageSuggestionsAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                item?: IChatSuggestionsItem;
+                assistantMessageId: string;
+            }>,
+        ) => {
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+
+            if (isChatConversationLocalItem(assistantMessage)) {
+                assistantMessage.suggestions = payload.item;
+            }
+        },
         setMessagesAction: (
             state,
             {
@@ -797,6 +816,7 @@ export const {
     evaluateMessageErrorAction,
     evaluateMessageStreamingAction,
     evaluateMessageUpdateAction,
+    evaluateMessageSuggestionsAction,
     evaluateMessageCompleteAction,
     setMessagesAction,
     setVerboseAction,

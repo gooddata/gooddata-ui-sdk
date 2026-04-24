@@ -1,14 +1,21 @@
 // (C) 2007-2026 GoodData Corporation
 
+import { invariant } from "ts-invariant";
+
 import {
     type AFM,
     type AfmExecution,
     type AttributeItem,
     type MeasureItem,
     type MetricDefinitionOverride,
+    type ParameterItem,
     type ResultSpec,
 } from "@gooddata/api-client-tiger";
-import { type IExecutionDefinition, type IMeasureDefinitionOverride } from "@gooddata/sdk-model";
+import {
+    type IExecutionDefinition,
+    type IInsightParameterValue,
+    type IMeasureDefinitionOverride,
+} from "@gooddata/sdk-model";
 
 import { convertAfmFilters } from "./AfmFiltersConverter.js";
 import { convertAttribute } from "./AttributeConverter.js";
@@ -51,7 +58,7 @@ function convertResultSpec(def: IExecutionDefinition): ResultSpec {
  * @public
  */
 export function toAfmExecution(def: IExecutionDefinition): AfmExecution {
-    const { measureDefinitionOverrides, ...settings } = def.executionConfig ?? {};
+    const { measureDefinitionOverrides, parameterValues, ...settings } = def.executionConfig ?? {};
 
     return {
         resultSpec: convertResultSpec(def),
@@ -59,6 +66,9 @@ export function toAfmExecution(def: IExecutionDefinition): AfmExecution {
             ...convertAFM(def),
             ...(measureDefinitionOverrides?.length && {
                 measureDefinitionOverrides: convertMeasureDefinitionOverrides(measureDefinitionOverrides),
+            }),
+            ...(parameterValues?.length && {
+                parameters: convertParameterValues(parameterValues),
             }),
         },
         settings,
@@ -81,4 +91,20 @@ function convertMeasureDefinitionOverrides(
             },
         },
     }));
+}
+
+function convertParameterValues(values: IInsightParameterValue[]): ParameterItem[] {
+    return values.map((value) => {
+        invariant(Number.isFinite(value.value), "Parameter value must be a finite number");
+
+        return {
+            parameter: {
+                identifier: {
+                    id: value.ref.identifier,
+                    type: "parameter",
+                },
+            },
+            value: String(value.value),
+        };
+    });
 }

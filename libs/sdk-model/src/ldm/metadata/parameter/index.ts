@@ -73,6 +73,16 @@ export function isParameterMetadataObjectDefinition(obj: unknown): obj is IParam
     return isObjectRecord(obj) && obj["type"] === "parameter" && !("ref" in obj);
 }
 
+/**
+ * Tests whether the provided parameter definition is a {@link INumberParameterDefinition}.
+ *
+ * @param def - parameter definition to test
+ * @alpha
+ */
+export function isNumberParameterDefinition(def: IParameterDefinition): def is INumberParameterDefinition {
+    return def.type === "NUMBER";
+}
+
 function isObjectRecord(value: unknown): value is Record<string, unknown> {
     return value !== null && typeof value === "object";
 }

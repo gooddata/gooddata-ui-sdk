@@ -2302,6 +2302,8 @@ export interface IExecutionConfig {
     dataSamplingPercentage?: number;
     // @alpha
     measureDefinitionOverrides?: IMeasureDefinitionOverride[];
+    // @alpha
+    parameterValues?: IInsightParameterValue[];
     timestamp?: string;
 }
 
@@ -2509,6 +2511,7 @@ export interface IFeatureFlags {
     // (undocumented)
     enableDataSection?: boolean;
     enableDateFilterIdentifiersRollout?: boolean;
+    enableDateTimeSemanticsSetting?: boolean;
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
@@ -2960,6 +2963,7 @@ export type IInsightDefinition = {
         buckets: IBucket[];
         filters: IFilter[];
         attributeFilterConfigs?: IAttributeFilterConfigs;
+        parameters?: IInsightParameterValue[];
         sorts: ISortItem[];
         properties: VisualizationProperties;
         layers?: IInsightLayerDefinition[];
@@ -2976,6 +2980,12 @@ export interface IInsightLayerDefinition {
     properties?: VisualizationProperties;
     sorts?: ISortItem[];
     type: string;
+}
+
+// @alpha
+export interface IInsightParameterValue {
+    ref: IdentifierRef;
+    value: number;
 }
 
 // @public (undocumented)
@@ -3649,6 +3659,9 @@ export type InsightModifications = (builder: InsightDefinitionBuilder) => Insigh
 // @public
 export function insightModifyItems<T extends IInsightDefinition>(insight: T, modifications?: BucketItemModifications): T;
 
+// @alpha
+export function insightParameters(insight: IInsightDefinition): IInsightParameterValue[];
+
 // @public
 export function insightProperties(insight: IInsightDefinition): VisualizationProperties;
 
@@ -3669,6 +3682,9 @@ export function insightSetFilters<T extends IInsightDefinition>(insight: T, filt
 
 // @alpha
 export function insightSetLayers<T extends IInsightDefinition>(insight: T, layers?: IInsightLayerDefinition[]): T;
+
+// @alpha
+export function insightSetParameters<T extends IInsightDefinition>(insight: T, parameters?: IInsightParameterValue[]): T;
 
 // @public
 export function insightSetProperties<T extends IInsightDefinition>(insight: T, properties?: VisualizationProperties): T;
@@ -4875,6 +4891,9 @@ export function isNotificationChannelMetadataObject(obj: unknown): obj is INotif
 
 // @beta
 export function isNotificationChannelMetadataObjectDefinition(obj: unknown): obj is INotificationChannelMetadataObjectDefinition;
+
+// @alpha
+export function isNumberParameterDefinition(def: IParameterDefinition): def is INumberParameterDefinition;
 
 // @public
 export function isObjRef(obj: unknown): obj is ObjRef;

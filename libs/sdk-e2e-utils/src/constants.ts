@@ -26,3 +26,8 @@ export const getBaseUrl = (defaultValue = "") => getEnvWithFallback("BASE_URL", 
  * @internal
  */
 export const getWorkspaceId = (defaultValue = "") => getEnvWithFallback("TEST_WORKSPACE_ID", defaultValue);
+/**
+ * @internal
+ */
+export const getDangerWorkspaceId = (defaultValue = "") =>
+    getEnvWithFallback("TEST_DANGER_WORKSPACE_ID", defaultValue);

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Add insight parameter values",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

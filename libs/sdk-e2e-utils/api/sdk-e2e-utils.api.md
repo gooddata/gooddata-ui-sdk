@@ -45,6 +45,9 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
 export const getBaseUrl: (defaultValue?: string) => string;
 
 // @internal (undocumented)
+export const getDangerWorkspaceId: (defaultValue?: string) => string;
+
+// @internal (undocumented)
 export const getEnvWithFallback: (env: string, fallback?: string) => string;
 
 // @internal (undocumented)

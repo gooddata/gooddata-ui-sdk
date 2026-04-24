@@ -1129,6 +1129,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableUserDataFiltersUi,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDateTimeSemanticsSetting,
+            "enableDateTimeSemanticsSetting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDateTimeSemanticsSetting,
+        ),
     };
 }
 
