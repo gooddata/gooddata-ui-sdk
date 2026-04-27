@@ -86,6 +86,14 @@ $editable-label-border: #b1c1d1;
     min-width: 5em;
 }
 
+.gd-editable-label-measure {
+    position: absolute;
+    visibility: hidden;
+    white-space: pre;
+    font: inherit;
+    pointer-events: none;
+}
+
 .gd-editable-label-overlay {
     textarea {
         @extend %textarea-base;

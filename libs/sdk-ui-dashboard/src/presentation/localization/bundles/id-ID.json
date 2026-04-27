@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "Daftar filter telah diperluas secara otomatis",
     "filterBar.unappliedFiltersNotification": "<link>Terapkan filter</link> untuk melihat data yang diperbarui.",
     "filterBar.invalidFilterSelection": "Untuk menerapkan perubahan, pilih nilai yang valid untuk filter ini: {names}",
+    "filterBar.applyFilters": "Terapkan semua filter",
     "geochart.alternateView.tablist.label": "Tabel lapisan",
     "filterBar.executionTimestampNotificationMessage": "<bold>Catatan.</bold> Anda sedang melihat data terbaru, tetapi untuk filter tanggal relatif apa pun dasbor memperlakukan {date} sebagai “hari ini.”",
     "filterBar.executionTimestampNotificationAction": "<link>Reset ke hari ini</link>",

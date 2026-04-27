@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "Suodatinluettelo on laajennettu automaattisesti",
     "filterBar.unappliedFiltersNotification": "<link>Käytä suodattimia</link> nähdäksesi päivitetyt tiedot.",
     "filterBar.invalidFilterSelection": "Ota muutokset käyttöön valitsemalla kelvolliset arvot näille suodattimille: {names}",
+    "filterBar.applyFilters": "Käytä kaikkia suodattimia",
     "geochart.alternateView.tablist.label": "Kerros­taulukot",
     "filterBar.executionTimestampNotificationMessage": "<bold>Huomaa.</bold> Tarkastelet ajantasaisia tietoja, mutta minkä tahansa suhteellisen päivämäärän osalta ohjauspaneeli käsittelee tietoja {date} \"tänään\".",
     "filterBar.executionTimestampNotificationAction": "<link>Palauta tähän päivään</link>",

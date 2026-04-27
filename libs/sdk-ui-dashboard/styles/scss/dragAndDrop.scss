@@ -875,3 +875,10 @@
         }
     }
 }
+
+// Overlay that covers the dashboard canvas when a filter is being dragged
+// in enhanced insight picker mode (floating toolbar).
+// Reuses .gd-dropzone-delete styles, only adds z-index for proper layering.
+.gd-filter-delete-overlay {
+    z-index: zIndexes.$drag-and-drop-drop-zone;
+}

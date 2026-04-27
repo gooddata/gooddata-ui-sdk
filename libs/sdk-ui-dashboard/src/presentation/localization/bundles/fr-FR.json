@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "La liste de filtres a été automatiquement développée",
     "filterBar.unappliedFiltersNotification": "<link>Appliquez les filtres</link> pour voir les données mises à jour.",
     "filterBar.invalidFilterSelection": "Pour appliquer les modifications, sélectionnez des valeurs valides pour ces filtres: {names}",
+    "filterBar.applyFilters": "Appliquer tous les filtres",
     "geochart.alternateView.tablist.label": "Tableaux de couches",
     "filterBar.executionTimestampNotificationMessage": "<bold>Remarque.</bold> Vous visualisez des données actualisées, mais pour tout filtre de date relative, le tableau de bord considère {date} comme étant \"aujourd'hui\".",
     "filterBar.executionTimestampNotificationAction": "<link>Remise à zéro aujourd'hui</link>",

@@ -4167,6 +4167,9 @@ importers:
       '@gooddata/sdk-ui-pivot':
         specifier: workspace:*
         version: link:../sdk-ui-pivot
+      '@gooddata/sdk-ui-semantic-search':
+        specifier: workspace:*
+        version: link:../sdk-ui-semantic-search
       '@gooddata/sdk-ui-theme-provider':
         specifier: workspace:*
         version: link:../sdk-ui-theme-provider

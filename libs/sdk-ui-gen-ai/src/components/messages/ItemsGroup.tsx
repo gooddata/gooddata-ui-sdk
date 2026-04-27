@@ -188,14 +188,14 @@ function formatDuration(intl: IntlShape, ms: number): string {
         minutes: { id: "gd.gen-ai.state.minutes" },
     });
 
-    const seconds = ms / 1000;
+    const seconds = Math.round((ms / 1000) * 100) / 100;
 
     if (seconds < 60) {
         return `${seconds}${intl.formatMessage(messages.seconds)}`;
     }
 
     const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+    const remainingSeconds = Math.round((seconds % 60) * 100) / 100;
 
     return `${minutes}${intl.formatMessage(messages.minutes)} ${remainingSeconds}${intl.formatMessage(messages.seconds)}`;
 }

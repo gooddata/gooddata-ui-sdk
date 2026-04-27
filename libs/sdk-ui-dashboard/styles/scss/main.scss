@@ -24,6 +24,7 @@
 @use "visualization";
 @use "shareIndicators";
 @use "sidebar";
+@use "floatingToolbar";
 @use "icons";
 @use "dateFilterConfigWarnings";
 @use "attributeFilterConfig"; // order is important here, must come after "icons"

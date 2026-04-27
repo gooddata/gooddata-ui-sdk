@@ -32,6 +32,10 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     flex-basis: 100%;
 }
 
+.gd-dashboards-root--floating-toolbar .dash-section {
+    position: relative;
+}
+
 .gd-dash-tabs {
     $root: &;
 

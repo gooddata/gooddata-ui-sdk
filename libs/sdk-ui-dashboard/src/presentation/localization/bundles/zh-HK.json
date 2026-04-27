@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "篩選器清單已自動展開",
     "filterBar.unappliedFiltersNotification": "<link>應用篩選器</link>以查看更新嘅數據。",
     "filterBar.invalidFilterSelection": "要應用更改，請為以下過濾器選擇有效值： {names}",
+    "filterBar.applyFilters": "套用所有篩選器",
     "geochart.alternateView.tablist.label": "圖層表格",
     "filterBar.executionTimestampNotificationMessage": "<bold>注意。</bold> 你正在查看最新數據，但對於任何相對日期篩選器，儀錶板都將其視為{date}“今天”。",
     "filterBar.executionTimestampNotificationAction": "<link>重置至今日</link>",

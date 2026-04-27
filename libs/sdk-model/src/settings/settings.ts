@@ -1150,4 +1150,9 @@ export interface IFeatureFlags {
      * Indicates whether the user can set dateTimeSemantics for data sources that support it.
      */
     enableDateTimeSemanticsSetting?: boolean;
+
+    /**
+     * Enable enhanced insight picker.
+     */
+    enableEnhancedInsightPicker?: boolean;
 }

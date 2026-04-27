@@ -11465,7 +11465,7 @@ export type ShowAsTableButtonComponentProvider = (widget: IInsightWidget) => Cus
 export function showWidgetAsTableSet(ctx: DashboardContext, ref: ObjRef, showAsTable: boolean, correlationId?: string): IShowWidgetAsTableSet;
 
 // @internal (undocumented)
-export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSidebar">): ReactElement;
+export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSidebar">): ReactElement | null;
 
 // @public
 export class SingleDashboardStoreAccessor {

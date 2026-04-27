@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "Danh sách bộ lọc đã được tự động mở rộng",
     "filterBar.unappliedFiltersNotification": "<link>Áp dụng bộ lọc</link> để xem dữ liệu đã được cập nhật.",
     "filterBar.invalidFilterSelection": "Để áp dụng các thay đổi, hãy chọn các giá trị hợp lệ cho các bộ lọc này: {names}",
+    "filterBar.applyFilters": "Áp dụng tất cả bộ lọc",
     "geochart.alternateView.tablist.label": "Bảng lớp",
     "filterBar.executionTimestampNotificationMessage": "<bold>Lưu ý.</bold> Bạn đang xem dữ liệu cập nhật, nhưng với mọi bộ lọc ngày tương đối thì bảng điều khiển coi {date} là “hôm nay”.",
     "filterBar.executionTimestampNotificationAction": "<link>Đặt lại về hôm nay</link>",

@@ -2519,6 +2519,7 @@ export interface IFeatureFlags {
     enableDrillToUrlByDefault?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableEnhancedInsightPicker?: boolean;
     enableExecutionCancelling?: boolean;
     enableExecutionTimestamp?: boolean;
     enableExportTemplateSelection?: boolean;

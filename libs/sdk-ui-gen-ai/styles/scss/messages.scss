@@ -952,6 +952,7 @@
     &__textarea {
         resize: vertical;
         min-height: 92px;
+        width: calc(100% - 4px);
         font-family: "Avenir", sans-serif;
         font-size: 14px;
         line-height: 22px;
@@ -966,13 +967,14 @@
 
         .gd-editable-label-inner {
             padding: 3px 4px;
+            width: calc(100% - 6px);
         }
 
         textarea {
-            margin: -3px -4px;
-            min-height: 90px;
+            margin: -3px -5px;
+            min-height: 86px;
             padding: 3px 4px;
-            width: calc(100% + 8px);
+            width: 100%;
         }
     }
 }

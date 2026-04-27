@@ -7596,7 +7596,7 @@ export function ConversationsAiAxiosParamCreator_DeleteConversationApiV1AiWorksp
 export function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
 
 // @public
-export function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(workspaceId: string, isPreview?: boolean, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(workspaceId: string, isPreview?: boolean, page?: number, size?: number, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
 
 // @public
 export function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(workspaceId: string, isPreview?: boolean, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
@@ -7620,6 +7620,8 @@ export { ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversat
 // @public
 interface ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest {
     readonly isPreview?: boolean;
+    readonly page?: number;
+    readonly size?: number;
     readonly workspaceId: string;
 }
 export { ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest }

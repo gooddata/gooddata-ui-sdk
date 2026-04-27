@@ -64,6 +64,7 @@ export default {
                 "src/presentation/widget/*",
                 "src/presentation/componentDefinition/*",
                 "src/types.ts",
+                "src/widgets/*",
             ],
         ),
         moduleWithDependencies("dashboardContexts", "src/presentation/dashboardContexts", [

@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "Seznam filtrov je bil samodejno razširjen",
     "filterBar.unappliedFiltersNotification": "<link>Uporabi filtre</link> za ogled posodobljenih podatkov.",
     "filterBar.invalidFilterSelection": "Za uveljavitev sprememb izberite veljavne vrednosti za te filtre: {names}",
+    "filterBar.applyFilters": "Uporabi vse filtre",
     "geochart.alternateView.tablist.label": "Tabele plasti",
     "filterBar.executionTimestampNotificationMessage": "<bold>Opomba.</bold> Ogledate si posodobljene podatke, vendar nadzorna plošča za relativne datume obravnava {date} kot »danes.«",
     "filterBar.executionTimestampNotificationAction": "<link>Ponastavi na danes</link>",

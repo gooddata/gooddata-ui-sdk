@@ -63,6 +63,17 @@ export { InsightError, type IInsightErrorProps } from "./insightView/InsightErro
 export { InsightRenderer, type IInsightRendererProps } from "./insightView/InsightRenderer.js";
 export { type IInsightViewProps, type IInsightTitleProps };
 export { Automations } from "./automations/Automations.js";
+export { InsightPicker } from "./insightPicker/InsightPicker.js";
+export { useInsightPickerState } from "./insightPicker/useInsightPickerState.js";
+export type {
+    IInsightPickerProps,
+    IInsightPickerItem,
+    IInsightPickerMenuAction,
+    IInsightPickerMenuProps,
+    IInsightPickerRenderItemProps,
+    InsightPickerSortBy,
+    InsightPickerSortDirection,
+} from "./insightPicker/types.js";
 export type {
     IAutomationsProps,
     AutomationsType,
@@ -311,4 +322,6 @@ export {
     type IUsePagedDropdownConfig,
     type IUsePagedDropdownResult,
     type ITabsIds,
+    type InsightListSortBy,
+    type InsightListSortDirection,
 } from "./internal/components/insightList/useInsightPagedList.js";

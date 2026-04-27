@@ -1726,6 +1726,9 @@ export function IconImage({ color, className, width, height }: IIconProps): JSX.
 export function IconInsight({ color, className, width, height }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
+export function IconInsightPicker({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
 export function IconInteraction({ color, className, width, height }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
@@ -2555,6 +2558,8 @@ export interface IEditableLabelProps {
     id?: string;
     // (undocumented)
     isEditableLabelWidthBasedOnText?: boolean;
+    // (undocumented)
+    isEditableLabelWidthDynamic?: boolean;
     // (undocumented)
     maxLength?: number;
     // (undocumented)
@@ -5796,6 +5801,19 @@ export interface IUiAsyncTableFilterOption {
 }
 
 // @internal (undocumented)
+export interface IUiAsyncTableFilterProps extends IUiAsyncTableFilter {
+    // (undocumented)
+    isFiltersTooLarge?: boolean;
+    // (undocumented)
+    isMobileView?: boolean;
+    onChipReset?: () => void;
+    // (undocumented)
+    variant?: UiAsyncTableVariant;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
 export interface IUiAsyncTableProps<T extends {
     id: string;
 } | {
@@ -8205,6 +8223,9 @@ export const UiAsyncTableCheckboxColumnWidth = 34;
 
 // @internal (undocumented)
 export function UiAsyncTableEmptyState({ title, description, icon }: IUiAsyncTableEmptyStateProps): JSX.Element;
+
+// @internal (undocumented)
+export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiAsyncTableMenuColumnWidth = 55;

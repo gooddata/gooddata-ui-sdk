@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "Filterliste wurde automatisch eingeblendet",
     "filterBar.unappliedFiltersNotification": "<link>Wenden Sie Filter</link> an, um aktualisierte Daten anzuzeigen.",
     "filterBar.invalidFilterSelection": "Um Änderungen anzuwenden, wählen Sie gültige Werte für diese Filter aus: {names}",
+    "filterBar.applyFilters": "Alle Filter anwenden",
     "geochart.alternateView.tablist.label": "Ebenen-Tabellen",
     "filterBar.executionTimestampNotificationMessage": "<bold>Hinweis:</bold> Sie sehen aktuelle Daten, aber für alle relativen Datumsfilter wird das Dashboard {date} als „heute“ behandelt.",
     "filterBar.executionTimestampNotificationAction": "Auf heute <link>zurücksetzen</link>",

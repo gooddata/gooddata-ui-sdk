@@ -188,11 +188,19 @@ export interface IUiAsyncTableHeaderProps<T> {
     largeRow?: boolean;
 }
 
+/**
+ * @internal
+ */
 export interface IUiAsyncTableFilterProps extends IUiAsyncTableFilter {
     isFiltersTooLarge?: boolean;
     variant?: UiAsyncTableVariant;
     isMobileView?: boolean;
     width?: number;
+    /**
+     * When provided, the chip shows a delete button. Clicking it calls this callback
+     * (typically used to reset the filter to "All" state).
+     */
+    onChipReset?: () => void;
 }
 
 export interface IUiAsyncTableRowProps<T extends { id: string } | { ref: ObjRef }> {

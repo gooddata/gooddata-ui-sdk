@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -21,6 +21,7 @@ export interface IEditableLabelProps {
     value: string;
     autofocus?: boolean;
     isEditableLabelWidthBasedOnText?: boolean;
+    isEditableLabelWidthDynamic?: boolean;
     ariaLabel?: string;
     autocomplete?: string;
 }
