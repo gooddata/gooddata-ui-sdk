@@ -8,11 +8,11 @@ services:
               EXTRA_ARGS='';
               if [ \"$$PLAYWRIGHT_UPDATE_SNAPSHOTS\" = '1' ]; then EXTRA_ARGS='--update-snapshots'; fi;
               if [ -n \"$$FILTER\" ]; then
-                npx playwright test --config ./playwright/playwright.config.mjs $$EXTRA_ARGS --grep '@pre-merge-isolated' $$(echo \"$$FILTER\" | tr ',' ' ');
+                npx playwright test --config ./playwright/playwright.config.mjs $$EXTRA_ARGS --grep \"$$PLAYWRIGHT_GREP\" $$(echo \"$$FILTER\" | tr ',' ' ');
               else
                 SHARD_ARGS='';
                 if [ -n \"$$SHARD_INDEX\" ] && [ -n \"$$SHARD_TOTAL\" ]; then SHARD_ARGS=\"--shard=$$SHARD_INDEX/$$SHARD_TOTAL\"; fi;
-                npx playwright test --config ./playwright/playwright.config.mjs --grep '@pre-merge-isolated' $$EXTRA_ARGS $$SHARD_ARGS;
+                npx playwright test --config ./playwright/playwright.config.mjs --grep \"$$PLAYWRIGHT_GREP\" $$EXTRA_ARGS $$SHARD_ARGS;
               fi
             "
         volumes:
@@ -34,6 +34,7 @@ services:
             - TIGER_API_TOKEN
             - BACKEND_ENVIRONMENT
             - PLAYWRIGHT_UPDATE_SNAPSHOTS
+            - PLAYWRIGHT_GREP
             - SHARD_INDEX
             - SHARD_TOTAL
             - FILTER

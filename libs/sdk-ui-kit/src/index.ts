@@ -627,6 +627,7 @@ export { Home as IconHome } from "./Icon/icons/Home.js";
 export { Hyperlink as IconHyperlink } from "./Icon/icons/Hyperlink.js";
 export { Image as IconImage } from "./Icon/icons/Image.js";
 export { Insight as IconInsight } from "./Icon/icons/Insight.js";
+export { InsightPicker as IconInsightPicker } from "./Icon/icons/InsightPicker.js";
 export { Bar as IconBar } from "./Icon/icons/InsightIcons/Bar.js";
 export { Bubble as IconBubble } from "./Icon/icons/InsightIcons/Bubble.js";
 export { Bullet as IconBullet } from "./Icon/icons/InsightIcons/Bullet.js";
@@ -1058,6 +1059,7 @@ export type {
     IUiAsyncTableColumnAccessibilityConfig,
     IUiAsyncTableColumnDefinitionResponsive,
     UiAsyncTableVariant,
+    IUiAsyncTableFilterProps,
 } from "./@ui/UiAsyncTable/types.js";
 
 export {
@@ -1069,6 +1071,7 @@ export {
     MENU_COLUMN_WIDTH_LARGE as UiAsyncTableMenuColumnWidthLarge,
 } from "./@ui/UiAsyncTable/UiAsyncTable/constants.js";
 export { UiAsyncTable } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable.js";
+export { UiAsyncTableFilter } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTableFilter.js";
 export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";
 export { UiAsyncTableEmptyState } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTableEmptyState.js";
 export { useAsyncTableResponsiveColumns } from "./@ui/UiAsyncTable/UiAsyncTable/useAsyncTableResponsiveColumns.js";

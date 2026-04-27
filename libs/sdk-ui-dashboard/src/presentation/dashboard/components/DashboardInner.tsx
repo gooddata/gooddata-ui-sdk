@@ -15,7 +15,7 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { useDashboardAutomations } from "../../../model/react/useDashboardAutomations/useDashboardAutomations.js";
 import { selectAccessibleDashboardsLoaded } from "../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectCatalogIsLoaded } from "../../../model/store/catalog/catalogSelectors.js";
-import { selectLocale } from "../../../model/store/config/configSelectors.js";
+import { selectLocale, selectSettings } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectDashboardDensity } from "../../../model/store/ui/uiSelectors.js";
 import {
@@ -23,6 +23,7 @@ import {
     DASHBOARD_TOASTS_OVERLAY_Z_INDEX,
 } from "../../constants/zIndex.js";
 import { DeleteDropZone } from "../../dragAndDrop/DeleteDropZone.js";
+import { FilterDeleteOverlay } from "../../dragAndDrop/FilterDeleteOverlay.js";
 import { useDashboardDragScroll } from "../../dragAndDrop/useDashboardDragScroll.js";
 import { WrapCreatePanelItemWithDrag } from "../../dragAndDrop/WrapCreatePanelItemWithDrag.js";
 import { WrapInsightListItemWithDrag } from "../../dragAndDrop/WrapInsightListItemWithDrag.js";
@@ -45,6 +46,8 @@ export function DashboardInner(props: IDashboardProps) {
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
     const density = useDashboardSelector(selectDashboardDensity);
+    const settings = useDashboardSelector(selectSettings);
+    const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
 
     const headerRef = useRef<HTMLDivElement | null>(null);
     const layoutRef = useRef<HTMLDivElement | null>(null);
@@ -91,7 +94,11 @@ export function DashboardInner(props: IDashboardProps) {
                     })}
                 >
                     <DragLayerComponent />
-                    <div className="gd-dashboards-root gd-flex-container">
+                    <div
+                        className={cx("gd-dashboards-root gd-flex-container", {
+                            "gd-dashboards-root--floating-toolbar": enableEnhancedInsightPicker,
+                        })}
+                    >
                         <DashboardSidebar
                             DefaultSidebar={RenderModeAwareDashboardSidebar}
                             DeleteDropZoneComponent={DeleteDropZone}
@@ -116,6 +123,7 @@ export function DashboardInner(props: IDashboardProps) {
                                 <DashboardScreenSizeProvider>
                                     <DashboardContent {...props} />
                                 </DashboardScreenSizeProvider>
+                                {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
                             </div>
                             <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
                         </main>

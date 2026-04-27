@@ -155,7 +155,7 @@ function* fetchConversations() {
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
     const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-    const query = api.getConversationItemsQuery();
+    const query = api.getConversationItemsQuery().withSize(1);
 
     const getConversations = query.query.bind(query);
     const [resultsConversations, cancelledConversations]: [
@@ -170,7 +170,29 @@ function* fetchConversations() {
     }
 
     let conversation = conversationItems[0];
-    if (!conversation) {
+    if (isPreview) {
+        // Preview always starts fresh: delete any existing preview conversation, then create new.
+        if (conversation) {
+            const [, cancelledDeleteConversation]: [unknown, ReturnType<typeof cancelAsyncAction>] =
+                yield race([call(api.delete.bind(api), conversation.id), take(cancelAsyncAction.type)]);
+
+            if (cancelledDeleteConversation) {
+                return;
+            }
+        }
+        const [resultCreateConversation, cancelledCreateConversation]: [
+            results: IChatConversation,
+            ReturnType<typeof cancelAsyncAction>,
+        ] = yield race([call(api.create.bind(api)), take(cancelAsyncAction.type)]);
+
+        if (cancelledCreateConversation) {
+            return;
+        }
+
+        conversationItems.length = 0;
+        conversationItems.push(resultCreateConversation);
+        conversation = resultCreateConversation;
+    } else if (!conversation) {
         const [resultCreateConversation, cancelledCreateConversation]: [
             results: IChatConversation,
             ReturnType<typeof cancelAsyncAction>,

@@ -13,6 +13,7 @@ import {
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogIsLoaded } from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectSettings } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsDashboardLoading } from "../../../../../model/store/loading/loadingSelectors.js";
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectCanEnterEditMode } from "../../../../../model/store/topBar/topBarSelectors.js";
@@ -26,7 +27,9 @@ import { type IEditButtonProps } from "./types.js";
  * @internal
  */
 export function useEditButtonProps(): IEditButtonProps {
-    const minWidthForEditing = useMediaQuery(">=xl");
+    const settings = useDashboardSelector(selectSettings);
+    const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
+    const minWidthForEditing = useMediaQuery(enableEnhancedInsightPicker ? ">=lg" : ">=xl");
     const intl = useIntl();
 
     const canEnterEdit = useDashboardSelector(selectCanEnterEditMode);

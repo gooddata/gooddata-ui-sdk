@@ -8,6 +8,7 @@ import {
     forwardRef,
     useCallback,
     useEffect,
+    useLayoutEffect,
     useMemo,
     useRef,
     useState,
@@ -46,6 +47,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         textareaInOverlay = false,
         autofocus = false,
         isEditableLabelWidthBasedOnText = false,
+        isEditableLabelWidthDynamic = false,
         ariaLabel,
         autocomplete,
     } = props;
@@ -53,6 +55,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     const wrapperRef = useRef<HTMLDivElement>(null);
     const rootRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const measureSpanRef = useRef<HTMLSpanElement>(null);
     const focusTimeoutRef = useRef<number | null>(null);
     const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
@@ -61,6 +64,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     const [doFocus, setDoFocus] = useState(false);
     const [shouldRestoreFocus, setShouldRestoreFocus] = useState(false);
     const [rootWidth, setRootWidth] = useState(0);
+    const [dynamicWidth, setDynamicWidth] = useState<number | undefined>(undefined);
     const [textareaWidth, setTextareaWidth] = useState(100);
     const [textareaFontSize, setTextareaFontSize] = useState<number | undefined>(undefined);
 
@@ -212,6 +216,21 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         }
     }, [shouldRestoreFocus, isEditing]);
 
+    // Measure the hidden span to compute dynamic textarea width before paint
+    useLayoutEffect(() => {
+        if (isEditableLabelWidthDynamic && isEditing && measureSpanRef.current) {
+            const width = Math.ceil(measureSpanRef.current.getBoundingClientRect().width) + 2;
+            setDynamicWidth(width);
+        }
+    }, [isEditableLabelWidthDynamic, isEditing, value]);
+
+    // Reset dynamic width when editing ends
+    useEffect(() => {
+        if (!isEditing) {
+            setDynamicWidth(undefined);
+        }
+    }, [isEditing]);
+
     const onKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>): void => {
         const isSubmit = e.keyCode === (ENUM_KEY_CODE.KEY_CODE_ENTER as number);
         const isCancel = e.keyCode === (ENUM_KEY_CODE.KEY_CODE_ESCAPE as number);
@@ -288,9 +307,27 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
     };
 
     const renderEditableLabelEdit = (): ReactNode => {
-        return textareaInOverlay
-            ? renderTextAreaInOverlay()
-            : renderTextarea(rootRef.current && isEditableLabelWidthBasedOnText ? { width: rootWidth } : {});
+        if (textareaInOverlay) {
+            return renderTextAreaInOverlay();
+        }
+
+        let style = {};
+        if (isEditableLabelWidthDynamic && dynamicWidth !== undefined) {
+            style = { width: dynamicWidth };
+        } else if (rootRef.current && isEditableLabelWidthBasedOnText) {
+            style = { width: rootWidth };
+        }
+
+        return (
+            <>
+                {isEditableLabelWidthDynamic ? (
+                    <span ref={measureSpanRef} className="gd-editable-label-measure" aria-hidden="true">
+                        {value || placeholder}
+                    </span>
+                ) : null}
+                {renderTextarea(style)}
+            </>
+        );
     };
 
     const renderTextAreaInOverlay = (): ReactNode => {

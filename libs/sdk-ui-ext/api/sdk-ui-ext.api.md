@@ -8,6 +8,7 @@ import { AutomationType } from '@gooddata/sdk-backend-spi';
 import { ChartInlineVisualizationType } from '@gooddata/sdk-ui-charts';
 import { ComponentType } from 'react';
 import { CopyCodeOriginType } from '@gooddata/sdk-ui-kit';
+import { Dispatch } from 'react';
 import { EmbedType } from '@gooddata/sdk-ui-kit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
@@ -49,6 +50,7 @@ import { PivotTableNextConfig } from '@gooddata/sdk-ui-pivot/next';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { RefObject } from 'react';
+import { SetStateAction } from 'react';
 import { UiAsyncTableVariant } from '@gooddata/sdk-ui-kit';
 import { UiSkeleton } from '@gooddata/sdk-ui-kit';
 import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
@@ -557,6 +559,119 @@ export interface IInsightErrorProps {
     height?: number | string | null;
 }
 
+// @internal
+export interface IInsightPickerItem {
+    // (undocumented)
+    created?: string;
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    identifier: string;
+    // (undocumented)
+    isLocked: boolean;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    updated?: string;
+    // (undocumented)
+    uri?: string;
+    // (undocumented)
+    visualizationUrl: string;
+}
+
+// @internal
+export interface IInsightPickerMenuAction {
+    // (undocumented)
+    hasSeparator?: boolean;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDestructive?: boolean;
+    // (undocumented)
+    onClick: (item: IInsightPickerItem) => void;
+    // (undocumented)
+    title: string;
+}
+
+// @internal
+export interface IInsightPickerMenuProps {
+    // (undocumented)
+    closeMenu: () => void;
+    // (undocumented)
+    item: IInsightPickerItem;
+}
+
+// @internal
+export interface IInsightPickerProps {
+    author?: string;
+    authorFilter: string[];
+    // (undocumented)
+    backend?: IAnalyticalBackend;
+    // (undocumented)
+    enableDescriptions?: boolean;
+    // (undocumented)
+    enabledVisualizationClassesUrls?: string[];
+    // (undocumented)
+    enableSemanticSearch?: boolean;
+    excludeTags?: string[];
+    includeTags?: string[];
+    // (undocumented)
+    locale?: ILocale;
+    // (undocumented)
+    maxHeight?: number;
+    // (undocumented)
+    menuActions?: IInsightPickerMenuAction[];
+    // (undocumented)
+    metadataTimeZone?: string;
+    // (undocumented)
+    onAuthorFilterChange: (authorIds: string[]) => void;
+    // (undocumented)
+    onDescriptionPanelOpen?: (description: string) => void;
+    // (undocumented)
+    onItemActivate?: (item: IInsightPickerItem, sourceInsight?: IInsight) => void;
+    // (undocumented)
+    onSearchChange: (query: string) => void;
+    // (undocumented)
+    onSelect: (insightRef: ObjRef, item: IInsightPickerItem) => void;
+    // (undocumented)
+    onSortChange: (sortBy: InsightPickerSortBy, sortDirection: InsightPickerSortDirection) => void;
+    // (undocumented)
+    onTagFilterChange: (tagIds: string[]) => void;
+    // (undocumented)
+    renderItem?: (props: IInsightPickerRenderItemProps) => ReactElement;
+    // (undocumented)
+    renderMenu?: (props: IInsightPickerMenuProps) => ReactNode;
+    // (undocumented)
+    searchQuery: string;
+    // (undocumented)
+    selectedInsightId?: string;
+    // (undocumented)
+    sortBy: InsightPickerSortBy;
+    // (undocumented)
+    sortDirection: InsightPickerSortDirection;
+    tagFilter: string[];
+    // (undocumented)
+    width?: number;
+    // (undocumented)
+    workspace?: string;
+}
+
+// @internal
+export interface IInsightPickerRenderItemProps {
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    item: IInsightPickerItem;
+    // (undocumented)
+    sourceInsight?: IInsight;
+    // (undocumented)
+    type: string;
+    // (undocumented)
+    width: number;
+}
+
 // @internal (undocumented)
 export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle"> {
     // (undocumented)
@@ -746,6 +861,21 @@ export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo
 export function InsightError({ error, ErrorComponent, height, clientHeight }: IInsightErrorProps): JSX.Element;
 
 // @internal
+export type InsightListSortBy = "lastModified" | "name";
+
+// @internal
+export type InsightListSortDirection = "asc" | "desc";
+
+// @internal
+export function InsightPicker(props: IInsightPickerProps): JSX.Element;
+
+// @internal
+export type InsightPickerSortBy = "lastModified" | "name";
+
+// @internal
+export type InsightPickerSortDirection = "asc" | "desc";
+
+// @internal
 export function InsightRenderer(props: IInsightRendererProps): JSX.Element | null;
 
 // @public
@@ -810,8 +940,12 @@ export interface IUsePagedDropdownConfig {
     author: string | undefined;
     // (undocumented)
     backend: IAnalyticalBackend;
+    createdByFilter?: string[];
     // (undocumented)
     excludeTags?: string[];
+    includeAuthorInfo?: boolean;
+    sortBy?: InsightListSortBy;
+    sortDirection?: InsightListSortDirection;
     // (undocumented)
     tabsIds: ITabsIds;
     // (undocumented)
@@ -986,7 +1120,20 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 export type TrackEventCallback = (event: TelemetryEvent) => void;
 
 // @internal
-export function useInsightPagedList({ backend, workspaceId, author, tabsIds, tags, excludeTags }: IUsePagedDropdownConfig): IUsePagedDropdownResult;
+export function useInsightPagedList({ backend, workspaceId, author, tabsIds, tags, excludeTags, sortBy, sortDirection, createdByFilter, includeAuthorInfo }: IUsePagedDropdownConfig): IUsePagedDropdownResult;
+
+// @internal
+export function useInsightPickerState(author?: string): {
+    searchQuery: string;
+    onSearchChange: Dispatch<SetStateAction<string>>;
+    sortBy: InsightPickerSortBy;
+    sortDirection: InsightPickerSortDirection;
+    onSortChange: (newSortBy: InsightPickerSortBy, newDirection: InsightPickerSortDirection) => void;
+    authorFilter: string[];
+    onAuthorFilterChange: (nextAuthorFilter: string[]) => void;
+    tagFilter: string[];
+    onTagFilterChange: Dispatch<SetStateAction<string[]>>;
+};
 
 // @internal (undocumented)
 export const UserEditDialog: {

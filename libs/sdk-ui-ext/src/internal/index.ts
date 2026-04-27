@@ -118,5 +118,7 @@ export {
     type ITabsIds,
     type IUsePagedDropdownConfig,
     type IUsePagedDropdownResult,
+    type InsightListSortBy,
+    type InsightListSortDirection,
     useInsightPagedList,
 } from "./components/insightList/useInsightPagedList.js";

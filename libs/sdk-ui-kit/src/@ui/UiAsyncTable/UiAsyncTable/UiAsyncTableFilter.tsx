@@ -42,7 +42,7 @@ export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
         onCancelFactory,
     } = useAsyncTableFilterState(props);
 
-    const { isMultiSelect, isFiltersTooLarge, variant, isMobileView, width, label } = props;
+    const { isMultiSelect, isFiltersTooLarge, variant, isMobileView, width, label, onChipReset } = props;
     const isSmall = variant === "small";
 
     const chipMaxWidth = useMemo(() => {
@@ -62,6 +62,8 @@ export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
                     <UiChip
                         label={labelWithSelected}
                         maxWidth={chipMaxWidth}
+                        isDeletable={!!onChipReset}
+                        onDelete={onChipReset}
                         onClick={() => toggleDropdown()}
                         isActive={isOpen}
                         accessibilityConfig={{
@@ -71,7 +73,7 @@ export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
                         }}
                     />
                 )}
-                alignPoints={[{ align: "bl tl" }]}
+                alignPoints={[{ align: "bl tl" }, { align: "tl bl" }]}
                 renderBody={({ closeDropdown }) => (
                     <UiAutofocus>
                         <div role="dialog" id={dropdownId} aria-label={labelWithSelected}>

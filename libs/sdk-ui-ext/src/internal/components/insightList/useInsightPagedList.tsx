@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 
 import { debounce, isEmpty } from "lodash-es";
 
@@ -9,6 +9,18 @@ import { type IInsight } from "@gooddata/sdk-model";
 import { type ITab } from "@gooddata/sdk-ui-kit";
 
 const ITEMS_PER_PAGE = 50;
+
+/**
+ * Sort field for the insights paged list. Mirrors `InsightPickerSortBy` in the public API.
+ * @internal
+ */
+export type InsightListSortBy = "lastModified" | "name";
+
+/**
+ * Sort direction for the insights paged list.
+ * @internal
+ */
+export type InsightListSortDirection = "asc" | "desc";
 
 /**
  * Tabs ids for insights paged list hook
@@ -30,6 +42,26 @@ export interface IUsePagedDropdownConfig {
     tabsIds: ITabsIds;
     tags?: string[];
     excludeTags?: string[];
+    /**
+     * Sort field. When omitted, defaults to the backend's default ordering
+     * (modifiedAt, createdAt, title — descending).
+     */
+    sortBy?: InsightListSortBy;
+    /**
+     * Sort direction. Defaults to "desc".
+     */
+    sortDirection?: InsightListSortDirection;
+    /**
+     * When provided, filters insights by these author IDs (createdBy).
+     * Replaces the tab-based author filtering.
+     */
+    createdByFilter?: string[];
+    /**
+     * When true, always includes createdBy/modifiedBy in the query response
+     * so author metadata is available on loaded insights.
+     * Only used by the enhanced insight picker — other consumers should leave this off.
+     */
+    includeAuthorInfo?: boolean;
 }
 
 /**
@@ -62,7 +94,14 @@ export interface IUsePagedDropdownResult {
     resetItems: () => void;
 }
 
-const DEFAULT_INSIGHT_SORT = ["modifiedAt,createdAt,title,desc"];
+const DEFAULT_SORT_DIRECTION: InsightListSortDirection = "desc";
+
+function buildSorting(sortBy: InsightListSortBy | undefined, direction: InsightListSortDirection) {
+    if (sortBy === "name") {
+        return [`title,${direction}`];
+    }
+    return [`modifiedAt,createdAt,title,${direction}`];
+}
 
 /**
  * Hook to fetch insights paged list
@@ -72,6 +111,8 @@ const DEFAULT_INSIGHT_SORT = ["modifiedAt,createdAt,title,desc"];
  * @param tabsIds - tabs ids
  * @param tags - fetch only the insights with these tags
  * @param excludeTags - omit insights with these tags during fetch
+ * @param sortBy - sort field
+ * @param sortDirection - sort direction
  * @returns useInsightPagedList result
  *
  * @internal
@@ -83,6 +124,10 @@ export function useInsightPagedList({
     tabsIds,
     tags,
     excludeTags,
+    sortBy,
+    sortDirection = DEFAULT_SORT_DIRECTION,
+    createdByFilter,
+    includeAuthorInfo = false,
 }: IUsePagedDropdownConfig): IUsePagedDropdownResult {
     const [items, setItems] = useState<IInsight[]>([]);
     const [totalItemsCount, setTotalItemsCount] = useState<number | undefined>(undefined);
@@ -95,6 +140,8 @@ export function useInsightPagedList({
 
     const abortControllerRef = useRef<AbortController | null>(null);
     const initialLoadCompletedRef = useRef(false);
+
+    const sorting = useMemo(() => buildSorting(sortBy, sortDirection), [sortBy, sortDirection]);
 
     const totalItems = totalItemsCount ?? items.length;
     const hasNextPage = totalItems > items.length;
@@ -132,12 +179,20 @@ export function useInsightPagedList({
                     .getInsightsQuery()
                     .withSize(ITEMS_PER_PAGE)
                     .withPage(page)
-                    .withSorting(DEFAULT_INSIGHT_SORT);
+                    .withSorting(sorting);
 
                 const searchedTitle = searchValue || undefined;
-                const searchedAuthor = tabId === tabsIds.my && isEmpty(searchValue) ? author : undefined;
+                // When includeAuthorInfo is true (picker mode), only use the explicit createdByFilter.
+                // Otherwise fall back to the legacy tab-based author filtering.
+                const searchedAuthor =
+                    !includeAuthorInfo && tabId === tabsIds.my && isEmpty(searchValue) ? author : undefined;
+                const effectiveCreatedBy = createdByFilter?.length
+                    ? createdByFilter
+                    : searchedAuthor
+                      ? [searchedAuthor]
+                      : undefined;
 
-                if (searchedAuthor) {
+                if (includeAuthorInfo || effectiveCreatedBy) {
                     query.withInclude(["createdBy", "modifiedBy"]);
                 }
 
@@ -145,7 +200,7 @@ export function useInsightPagedList({
                     ...((tags?.length ?? 0) > 0 ? { tags } : {}),
                     ...((excludeTags?.length ?? 0) > 0 ? { excludeTags } : {}),
                     ...(searchedTitle ? { title: searchedTitle } : {}),
-                    ...(searchedAuthor ? { createdBy: [searchedAuthor] } : {}),
+                    ...(effectiveCreatedBy ? { createdBy: effectiveCreatedBy } : {}),
                 };
 
                 if (Object.keys(filter).length > 0) {
@@ -181,7 +236,7 @@ export function useInsightPagedList({
                             .getInsightsQuery()
                             .withSize(ITEMS_PER_PAGE)
                             .withPage(0)
-                            .withSorting(DEFAULT_INSIGHT_SORT);
+                            .withSorting(sorting);
 
                         const allFilter: IFilterBaseOptions = {
                             ...((tags?.length ?? 0) > 0 ? { tags } : {}),
@@ -214,7 +269,17 @@ export function useInsightPagedList({
                 }
             }
         },
-        [backend, workspaceId, author, tabsIds, tags, excludeTags],
+        [
+            backend,
+            workspaceId,
+            author,
+            tabsIds,
+            tags,
+            excludeTags,
+            sorting,
+            createdByFilter,
+            includeAuthorInfo,
+        ],
     );
 
     const loadNextPage = useCallback(() => {
@@ -264,10 +329,12 @@ export function useInsightPagedList({
     );
 
     const loadInitialItems = useCallback(() => {
+        setCurrentPage(0);
         void fetchItems({ page: 0, search: "", tabId: undefined, resetItems: true });
     }, [fetchItems]);
 
     const resetItems = useCallback(() => {
+        setCurrentPage(0);
         void fetchItems({ page: 0, search: search, tabId: selectedTabId, resetItems: true });
     }, [fetchItems, search, selectedTabId]);
 

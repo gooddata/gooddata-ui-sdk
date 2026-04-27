@@ -1651,13 +1651,25 @@
         "text": "Learn more",
         "crowdinContext": "Link text for documentation about attribute filters"
     },
-    "addPanel.kpi": {
-        "text": "Key Performance Indicator",
-        "crowdinContext": "Label for KPI component in add panel"
+    "addPanel.savedVisualizations": {
+        "text": "Saved Visualizations",
+        "crowdinContext": "Label for the saved visualizations button in the floating toolbar"
+    },
+    "addPanel.newVisualization": {
+        "text": "New visualization",
+        "crowdinContext": "Tooltip for the new visualization button in the floating toolbar"
     },
     "addPanel.richText": {
         "text": "Rich Text",
         "crowdinContext": "Label for rich text editor component in add panel"
+    },
+    "addPanel.richTextWidget": {
+        "text": "Rich Text Widget",
+        "crowdinContext": "Label for the rich text widget button in the floating toolbar"
+    },
+    "addPanel.dashboardFilter": {
+        "text": "Dashboard Filter",
+        "crowdinContext": "Label for the dashboard filter button in the floating toolbar"
     },
     "addPanel.visualizationSwitcher": {
         "text": "Visualization switcher",

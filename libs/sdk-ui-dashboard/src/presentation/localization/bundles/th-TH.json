@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "รายการตัวกรองถูกขยายโดยอัตโนมัติ",
     "filterBar.unappliedFiltersNotification": "<link>นำตัวกรองไปใช้</link> เพื่อดูข้อมูลที่อัปเดตแล้ว",
     "filterBar.invalidFilterSelection": "หากต้องการนำการเปลี่ยนแปลงไปใช้ ให้เลือกค่าที่ถูกต้องสำหรับตัวกรองเหล่านี้: {names}",
+    "filterBar.applyFilters": "ใช้ตัวกรองทั้งหมด",
     "geochart.alternateView.tablist.label": "ตารางเลเยอร์",
     "filterBar.executionTimestampNotificationMessage": "<bold>หมายเหตุ.</bold> คุณกำลังดูข้อมูลที่เป็นปัจจุบัน แต่สำหรับตัวกรองวันที่แบบสัมพันธ์ แดชบอร์ดจะถือว่า {date} เป็น “วันนี้”",
     "filterBar.executionTimestampNotificationAction": "<link>รีเซ็ตเป็นวันนี้</link>",

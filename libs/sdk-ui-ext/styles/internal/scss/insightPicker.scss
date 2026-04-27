@@ -1,0 +1,189 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-ext-insight-picker .gd-ui-kit-chip {
+    font-size: 12px;
+}
+
+.gd-ui-ext-insight-picker-search {
+    padding: 0 10px 10px;
+}
+
+.gd-ui-ext-insight-picker-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    cursor: pointer;
+    padding-right: 10px;
+
+    &--with-menu {
+        grid-template-columns: 1fr auto;
+    }
+
+    &:hover {
+        background-color: var(--gd-palette-complementary-2, #ebeff4);
+
+        // Override the item's own hover so the whole row is uniform
+        .gd-visualizations-list-item:hover {
+            background-color: transparent;
+        }
+    }
+
+    // When the row contains the selected item, use the selected hover color
+    // for the entire row so there's no gray gap around the blue item
+    &:hover:has(.gd-visualizations-list-item.is-selected) {
+        background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
+
+        .gd-visualizations-list-item.is-selected:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+.gd-ui-ext-insight-picker-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px 10px;
+
+    &-label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        flex-shrink: 0;
+        font-size: 12px;
+        line-height: 20px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        white-space: nowrap;
+    }
+
+    &-filters {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+}
+
+// Sort dropdown trigger
+.gd-ui-ext-insight-picker-sort {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.gd-ui-ext-insight-picker-sort-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border: none;
+    border-radius: 3px;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+
+    &:hover {
+        background-color: var(--gd-palette-complementary-2, #ebeff4);
+    }
+}
+
+.gd-ui-ext-insight-picker-sort-label {
+    font-size: 12px;
+    line-height: normal;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+
+.gd-ui-ext-insight-picker-sort-popup {
+    .gd-list-item {
+        width: 100%;
+    }
+}
+
+.gd-ui-ext-insight-picker-sort-header {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 10px;
+    background-color: var(--gd-palette-complementary-2, #ebeff4);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--gd-palette-complementary-6, #94a1ad);
+}
+
+// Author filter dropdown
+.gd-ui-ext-insight-picker-author-filter {
+    width: 220px;
+    background: var(--gd-palette-complementary-0, #fff);
+    border-radius: 3px;
+    box-shadow:
+        0 1px 3px 0 rgba(20, 56, 93, 0.1),
+        0 2px 9px 0 rgba(20, 56, 93, 0.15);
+
+    &__header {
+        display: flex;
+        align-items: center;
+        height: 36px;
+        padding: 0 10px;
+        background-color: var(--gd-palette-complementary-2, #ebeff4);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+    }
+
+    &__search {
+        padding: 10px;
+
+        .gd-input-field {
+            width: 100%;
+        }
+    }
+
+    &__list {
+        max-height: 200px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 0 5px;
+    }
+
+    &__option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 5px;
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 20px;
+        color: var(--gd-palette-complementary-8, #464e56);
+        border-radius: 3px;
+
+        &:hover {
+            background-color: var(--gd-palette-complementary-1, #f5f8fa);
+        }
+
+        &--all {
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+            margin-bottom: 2px;
+            padding-bottom: 8px;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 10px;
+        border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    }
+}
+
+.gd-list-item.gd-ui-ext-insight-picker-menu-destructive {
+    &:hover,
+    &.is-focused {
+        color: var(--gd-palette-error-base, #e54d42);
+        background-color: var(--gd-palette-error-dimmed, #fcedec);
+    }
+}

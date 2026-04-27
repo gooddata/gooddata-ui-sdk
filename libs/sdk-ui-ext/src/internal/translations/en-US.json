@@ -2214,5 +2214,81 @@
     "filters.emptyValues.title": {
         "text": "Empty values",
         "crowdinContext": "Notifications filters detail: Label for a date filter that matches only records with empty (missing) date values."
+    },
+    "insightPicker.searchPlaceholder": {
+        "text": "Search all visualizations\u2026",
+        "crowdinContext": "Placeholder text in the insight picker search field."
+    },
+    "insightPicker.tabs.all": {
+        "text": "All",
+        "crowdinContext": "Tab label to show all visualizations in the insight picker."
+    },
+    "insightPicker.tabs.my": {
+        "text": "Created by me",
+        "crowdinContext": "Tab label to show only the current user's visualizations in the insight picker."
+    },
+    "insightPicker.noInsightsFound": {
+        "text": "No visualizations found",
+        "crowdinContext": "Message shown in the insight picker when a search returns no results."
+    },
+    "insightPicker.noInsights": {
+        "text": "No visualizations",
+        "crowdinContext": "Message shown in the insight picker when the workspace has no visualizations."
+    },
+    "insightPicker.sortBy.header": {
+        "text": "Sort by",
+        "crowdinContext": "Header for the sort options popup in the insight picker."
+    },
+    "insightPicker.sortBy.lastModified": {
+        "text": "Last modified",
+        "crowdinContext": "Sort option: sort insights by last modification date."
+    },
+    "insightPicker.sortBy.name": {
+        "text": "Name",
+        "crowdinContext": "Sort option: sort insights alphabetically by name."
+    },
+    "insightPicker.filters": {
+        "text": "Filters",
+        "crowdinContext": "Label for the filter section in the insight picker."
+    },
+    "insightPicker.filter.createdBy": {
+        "text": "Created by",
+        "crowdinContext": "Header for the author/creator filter dropdown in the insight picker."
+    },
+    "insightPicker.filter.createdByMe": {
+        "text": "Me",
+        "crowdinContext": "Label for the current user option in the author filter."
+    },
+    "insightPicker.filter.all": {
+        "text": "All",
+        "crowdinContext": "Label for the 'select all' option in a filter dropdown."
+    },
+    "insightPicker.filter.apply": {
+        "text": "Apply",
+        "crowdinContext": "Apply button in filter dropdown."
+    },
+    "insightPicker.filter.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button in filter dropdown."
+    },
+    "insightPicker.filter.tag": {
+        "text": "Tag",
+        "crowdinContext": "Label for the tag filter chip in the insight picker."
+    },
+    "insightPicker.sortDirection.ascending": {
+        "text": "Ascending",
+        "crowdinContext": "Accessible label for the sort direction button when sorting ascending."
+    },
+    "insightPicker.sortDirection.descending": {
+        "text": "Descending",
+        "crowdinContext": "Accessible label for the sort direction button when sorting descending."
+    },
+    "insightPicker.menu.actions": {
+        "text": "Actions",
+        "crowdinContext": "Accessible label for the per-row three-dots actions menu button."
+    },
+    "insightPicker.resetFilters": {
+        "text": "Reset filters",
+        "crowdinContext": "Button/tooltip to reset all filters in the insight picker to their defaults."
     }
 }

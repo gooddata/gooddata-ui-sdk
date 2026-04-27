@@ -17,6 +17,8 @@ export TIGER_DATASOURCES_NAME=vertica_staging-goodsales
 export HOST=$TEST_BACKEND
 export FIXTURE_TYPE=goodsales
 export FILTER=${FILTER:-}
+export PLAYWRIGHT_GREP="${PLAYWRIGHT_GREP:-@pre-merge-isolated}"
+echo "Filtering by tag: $PLAYWRIGHT_GREP"
 
 if [ -n "$TEST_WORKSPACE_ID" ] && [ -n "$TEST_CHILD_WORKSPACE_ID" ]; then
     echo "⭐️ Using pre-created workspaces TEST_WORKSPACE_ID=$TEST_WORKSPACE_ID TEST_CHILD_WORKSPACE_ID=$TEST_CHILD_WORKSPACE_ID"

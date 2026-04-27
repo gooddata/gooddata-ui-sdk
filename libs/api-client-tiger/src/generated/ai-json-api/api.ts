@@ -1228,12 +1228,14 @@ export async function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWor
  * @summary Get Conversations
  * @param {string} workspaceId 
  * @param {boolean} [isPreview] 
+ * @param {number} [page] 
+ * @param {number} [size] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(
-    workspaceId: string, isPreview?: boolean, 
+    workspaceId: string, isPreview?: boolean, page?: number, size?: number, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -1253,6 +1255,14 @@ export async function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWo
 
     if (isPreview !== undefined) {
         localVarQueryParameter['isPreview'] = isPreview;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
     }
 
 
@@ -1393,7 +1403,7 @@ export async function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspace
     configuration?: Configuration,
 ): AxiosPromise<Array<AiConversationResponse>> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(
-        requestParameters.workspaceId, requestParameters.isPreview, 
+        requestParameters.workspaceId, requestParameters.isPreview, requestParameters.page, requestParameters.size, 
         options || {},
         configuration,
     );
@@ -1536,6 +1546,20 @@ export interface ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChat
      * @memberof ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet
      */
     readonly isPreview?: boolean
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet
+     */
+    readonly page?: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet
+     */
+    readonly size?: number
 }
 
 /**

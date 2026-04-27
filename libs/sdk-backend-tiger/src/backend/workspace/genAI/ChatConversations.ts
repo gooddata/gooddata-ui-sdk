@@ -2,7 +2,11 @@
 
 import { type EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
-import { type AiConversationItemResponse, type AiSendMessageRequest } from "@gooddata/api-client-tiger";
+import {
+    type AiConversationItemResponse,
+    type AiConversationResponse,
+    type AiSendMessageRequest,
+} from "@gooddata/api-client-tiger";
 import {
     GenAiApi_DeleteConversation,
     GenAiApi_GetConversation,
@@ -127,16 +131,33 @@ export class ConversationItemsQuery implements IChatConversationItemsQuery {
 
     query(): Promise<IChatConversationItemsQueryResult> {
         return ServerPaging.for(
-            async () => {
+            async ({ offset, limit }) => {
                 const response = await this.authCall((client) => {
                     return GenAiApi_GetConversations(client.axios, client.basePath, {
                         workspaceId: this.workspaceId,
                         ...(this.isPreview === undefined ? {} : { isPreview: this.isPreview }),
+                        size: limit,
+                        page: offset / limit,
                     });
                 });
 
-                const items = response.data.map(convertChatConversationFromBackend);
-                return { items, totalCount: items.length };
+                //NOTE: This is a workaround for the fact that the backend returns an array of conversations in old version of API
+                // and in new version of API it returns a envelope object with data and meta properties.
+                //TODO: s.hacker: Remove old API handler after all clients are updated to use new API
+
+                // OLD API handler
+                if (Array.isArray(response.data)) {
+                    const items = response.data.map(convertChatConversationFromBackend);
+                    return { items, totalCount: items.length };
+                }
+
+                // NEW API handler, type will then come from definitions after update
+                const data = response.data as unknown as {
+                    data: AiConversationResponse[];
+                    meta: { page: number; size: number; total: number };
+                };
+                const items = data.data.map(convertChatConversationFromBackend);
+                return { items, totalCount: data.meta.total };
             },
             this.size,
             this.page * this.size,

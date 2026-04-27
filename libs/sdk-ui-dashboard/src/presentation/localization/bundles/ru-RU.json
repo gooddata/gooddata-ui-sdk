@@ -26,6 +26,7 @@
     "filterBar.filterListAutoExpanded": "Список фильтров был автоматически развернут",
     "filterBar.unappliedFiltersNotification": "<link>Примените фильтры</link>, чтобы увидеть обновлённые данные.",
     "filterBar.invalidFilterSelection": "Чтобы применить изменения, выберите допустимые значения для этих фильтров{names}: ",
+    "filterBar.applyFilters": "Применить все фильтры",
     "geochart.alternateView.tablist.label": "Таблицы слоев",
     "filterBar.executionTimestampNotificationMessage": "<bold>Примечание.</bold> Вы просматриваете актуальные данные, но для любых относительных фильтров по дате дашборд рассматривает {date} как «сегодня».",
     "filterBar.executionTimestampNotificationAction": "<link>Сбросить на сегодня</link>",

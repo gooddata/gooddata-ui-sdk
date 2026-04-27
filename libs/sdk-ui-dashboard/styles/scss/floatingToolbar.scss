@@ -1,0 +1,174 @@
+// (C) 2026 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "zIndexes";
+
+.gd-floating-toolbar {
+    position: fixed;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    z-index: zIndexes.$toolbar-basic;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+
+    background: var(--gd-palette-complementary-0, kit-variables.$default-gd-color-white);
+    border-radius: 3px;
+    border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+
+    &__button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 5px;
+        width: 75px;
+        padding: 3px;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        background: transparent;
+        cursor: pointer;
+        transition:
+            background-color 0.15s ease,
+            border-color 0.15s ease;
+
+        &:hover {
+            background: var(--gd-palette-complementary-1, #f5f8fa);
+
+            .gd-floating-toolbar__button-label {
+                color: var(--gd-palette-complementary-8, #464e56);
+            }
+        }
+
+        &.is-dragging {
+            background: var(--gd-palette-complementary-1, #f5f8fa);
+            border-color: var(--gd-palette-complementary-3, #dde4eb);
+            box-shadow:
+                0 1px 3px 0 rgba(20, 57, 93, 0.1),
+                0 2px 9px 0 rgba(20, 57, 93, 0.15);
+
+            .gd-floating-toolbar__button-label {
+                color: var(--gd-palette-complementary-8, #464e56);
+            }
+        }
+
+        &--primary {
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                right: -5px;
+                top: 6px;
+                bottom: 6px;
+                width: 0;
+                border-right: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+            }
+
+            &.is-selected {
+                background: transparent;
+            }
+        }
+    }
+
+    &__button-label {
+        font-size: 11px;
+        line-height: 16px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+    }
+}
+
+// Insight picker panel — floating above the toolbar, rendered inside a Dialog overlay.
+// Bottom edge is anchored; the panel grows upward as content loads.
+.gd-insight-picker-panel-overlay {
+    z-index: zIndexes.$toolbar-basic;
+
+    // Override Overlay's inline positioning on the wrapper — anchor bottom, grow upward
+    // stylelint-disable-next-line declaration-no-important
+    > .overlay-wrapper {
+        position: fixed !important; // stylelint-disable-line declaration-no-important
+        bottom: 120px !important; // stylelint-disable-line declaration-no-important
+        top: auto !important; // stylelint-disable-line declaration-no-important
+        left: 50% !important; // stylelint-disable-line declaration-no-important
+        transform: translateX(-50%);
+    }
+
+    // Override default .gd-dialog max-width/padding via container specificity
+    .gd-insight-picker-panel.gd-dialog {
+        max-width: none;
+        max-height: 430px;
+        padding: 10px 0;
+        background: var(--gd-palette-complementary-0, kit-variables.$default-gd-color-white);
+        border-radius: 3px;
+        border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+}
+
+// Individual insight picker list item
+.gd-insight-picker-list-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 10px;
+    cursor: grab;
+    background: var(--gd-palette-complementary-0, kit-variables.$default-gd-color-white);
+    overflow: hidden;
+
+    &:hover {
+        background: var(--gd-palette-complementary-1, #f5f8fa);
+    }
+
+    &.is-dragging {
+        opacity: 0.5;
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 30px;
+
+        // Override sdk-ui-kit's %visualisation-icon margin — spacing handled by parent gap
+        .gd-vis-type,
+        [class*="gd-vis-type-"] {
+            margin-right: 0;
+        }
+    }
+
+    &__content {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 20px;
+        font-size: 14px;
+    }
+
+    &__title {
+        color: var(--gd-palette-complementary-8, #464e56);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__date {
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
