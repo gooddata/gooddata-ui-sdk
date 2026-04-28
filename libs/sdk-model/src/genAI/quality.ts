@@ -31,6 +31,11 @@ export interface ISemanticQualityReport {
  */
 export interface ISemanticQualityIssue {
     /**
+     * Unique identifier for the quality issue.
+     */
+    id: string;
+
+    /**
      * Unique code identifying the type of quality issue.
      *
      * @remarks

@@ -47,6 +47,7 @@
         "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
         "pack-build": "tar -czf sdk-ui-web-components.tgz -C esm .",
         "proxy": "node ./scripts/proxy.js",
+        "publish-docker-images": "bash ../../../common/scripts/docker/publish-docker-image.sh",
         "test": "vitest watch",
         "test-once": "vitest run",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check"

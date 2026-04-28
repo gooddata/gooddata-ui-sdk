@@ -5,7 +5,6 @@ import { type PropsWithChildren, createContext, useContext, useMemo } from "reac
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { type AsyncStatus } from "../async/types.js";
-import { useObjectTypeCounterSync } from "../objectType/ObjectTypeContext.js";
 import type { ObjectType } from "../objectType/types.js";
 import type { ICatalogItem, ICatalogItemRef } from "./types.js";
 import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
@@ -28,6 +27,7 @@ export interface ICatalogFeedActions {
 
 const CatalogFeedStateContext = createContext<ICatalogFeedState | null>(null);
 const CatalogFeedActionsContext = createContext<ICatalogFeedActions | null>(null);
+const CatalogFeedCounterContext = createContext<Readonly<Record<ObjectType, number>> | null>(null);
 
 export type CatalogFeedProviderProps = PropsWithChildren<{
     backend: IAnalyticalBackend;
@@ -48,8 +48,6 @@ export function CatalogFeedProvider({ children, ...props }: CatalogFeedProviderP
         removeItem,
         refetchObjectType,
     } = feed;
-
-    useObjectTypeCounterSync(totalCountByType);
 
     const state = useMemo<ICatalogFeedState>(
         () => ({
@@ -75,9 +73,11 @@ export function CatalogFeedProvider({ children, ...props }: CatalogFeedProviderP
 
     return (
         <CatalogFeedStateContext.Provider value={state}>
-            <CatalogFeedActionsContext.Provider value={actions}>
-                {children}
-            </CatalogFeedActionsContext.Provider>
+            <CatalogFeedCounterContext.Provider value={totalCountByType}>
+                <CatalogFeedActionsContext.Provider value={actions}>
+                    {children}
+                </CatalogFeedActionsContext.Provider>
+            </CatalogFeedCounterContext.Provider>
         </CatalogFeedStateContext.Provider>
     );
 }
@@ -90,6 +90,11 @@ export function useCatalogFeedState(): ICatalogFeedState {
 export function useCatalogFeedActions(): ICatalogFeedActions {
     const actions = useContext(CatalogFeedActionsContext);
     return getCatalogFeedContext(actions, "useCatalogFeedActions");
+}
+
+export function useCatalogFeedCounter(): Readonly<Record<ObjectType, number>> {
+    const counter = useContext(CatalogFeedCounterContext);
+    return getCatalogFeedContext(counter, "useCatalogFeedCounter");
 }
 
 function getCatalogFeedContext<T>(value: T | null, hookName: string): T {

@@ -157,7 +157,7 @@ export type IconType =
     | "fileImage"
     | "fileCsvFormatted"
     | "fileCsvRaw"
-    | "fileAi"
+    | "aiDocument"
     | "recommendation"
     | "streamUp"
     | "streamDown"

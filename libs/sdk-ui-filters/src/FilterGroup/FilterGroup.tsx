@@ -27,6 +27,7 @@ import {
     type IAlignPoint,
     type IDropdownBodyRenderProps,
     type IDropdownButtonRenderProps,
+    type IRenderDropdownListItemProps,
     UiIcon,
     isArrowKey,
     isSpaceKey,
@@ -62,6 +63,11 @@ export interface IFilterGroupProps<P> {
         AttributeFilterComponent?: ComponentType<IAttributeFilterProps>,
     ) => ReactElement;
 }
+
+/**
+ * @internal
+ */
+export type IFilterGroupDropdownListItemProps<P> = Pick<IRenderDropdownListItemProps<P>, "item" | "rowIndex">;
 
 const GROUP_ALIGN_POINTS: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 0, y: 0 } },
@@ -250,10 +256,14 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
     }, [availableFilterIdentifiers, getTitleExtension, errorHandler, initLoadingChangedHandler]);
 
     const renderItem = useCallback(
-        ({ item }: { item: P }) => {
+        ({ item, rowIndex }: IFilterGroupDropdownListItemProps<P>) => {
             const identifier = getFilterIdentifier(item);
             const AttributeFilterComponent = attributeFilterComponentsByIdentifier.get(identifier);
-            return renderFilter(item, AttributeFilterComponent);
+            return (
+                <div role="row" aria-rowindex={rowIndex + 1}>
+                    <div role="gridcell">{renderFilter(item, AttributeFilterComponent)}</div>
+                </div>
+            );
         },
         [attributeFilterComponentsByIdentifier, getFilterIdentifier, renderFilter],
     );
@@ -287,6 +297,10 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     items={filters}
                     maxHeight={450}
                     itemHeight={53}
+                    accessibilityConfig={{
+                        role: "grid",
+                        ariaLabel: title,
+                    }}
                     renderItem={renderItem}
                     onKeyDownSelect={handleItemKeyboardAction}
                     closeDropdown={closeDropdown}
@@ -294,7 +308,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                 />
             </div>
         ),
-        [filters, renderItem, handleKeyDown, handleItemKeyboardAction],
+        [filters, renderItem, handleKeyDown, handleItemKeyboardAction, title],
     );
 
     const isMobile = useMediaQuery("mobileDevice");

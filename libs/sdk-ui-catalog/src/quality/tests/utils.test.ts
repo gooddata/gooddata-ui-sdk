@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -21,6 +21,7 @@ describe("getQualityIssueCodes", () => {
     it("returns single code for single issue", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
@@ -34,18 +35,21 @@ describe("getQualityIssueCodes", () => {
     it("returns unique codes for multiple issues with same code", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
@@ -59,18 +63,21 @@ describe("getQualityIssueCodes", () => {
     it("returns all unique codes for multiple issues with different codes", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
@@ -87,30 +94,35 @@ describe("getQualityIssueCodes", () => {
     it("deduplicates codes in mixed scenarios", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr4", title: "Attr 4" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr5", title: "Attr 5" }],
@@ -127,6 +139,7 @@ describe("getQualityIssueCodes", () => {
     it("handles issues with multiple objects", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [
@@ -150,6 +163,7 @@ describe("getQualityIssueIdsByCodes", () => {
     it("returns empty array for empty codes", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [
@@ -166,6 +180,7 @@ describe("getQualityIssueIdsByCodes", () => {
     it("collects identifiers for matching codes", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [
@@ -175,12 +190,14 @@ describe("getQualityIssueIdsByCodes", () => {
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "metric", identifier: "metric1", title: "Metric 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attrX", title: "Attr X" }],
@@ -194,6 +211,7 @@ describe("getQualityIssueIdsByCodes", () => {
     it("ignores non-matching codes", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
@@ -207,6 +225,7 @@ describe("getQualityIssueIdsByCodes", () => {
     it("deduplicates identifiers across issues and objects", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [
@@ -217,6 +236,7 @@ describe("getQualityIssueIdsByCodes", () => {
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [
@@ -233,12 +253,14 @@ describe("getQualityIssueIdsByCodes", () => {
     it("deduplicates identifiers across different object types", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "obj1", title: "Obj 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "metric", identifier: "obj1", title: "Obj 1" }],
@@ -253,6 +275,7 @@ describe("getQualityIssueIdsByCodes", () => {
         it("returns identifiers for codes NOT in the selection", () => {
             const issues: ISemanticQualityIssue[] = [
                 {
+                    id: "test-issue",
                     code: "IDENTICAL_TITLE",
                     severity: "INFO",
                     objects: [
@@ -262,12 +285,14 @@ describe("getQualityIssueIdsByCodes", () => {
                     detail: {},
                 },
                 {
+                    id: "test-issue",
                     code: "SIMILAR_TITLE",
                     severity: "WARNING",
                     objects: [{ type: "metric", identifier: "metric1", title: "Metric 1" }],
                     detail: {},
                 },
                 {
+                    id: "test-issue",
                     code: "UNKNOWN_ABBREVIATION",
                     severity: "INFO",
                     objects: [{ type: "attribute", identifier: "attrX", title: "Attr X" }],
@@ -281,6 +306,7 @@ describe("getQualityIssueIdsByCodes", () => {
         it("returns all identifiers when codes array is empty", () => {
             const issues: ISemanticQualityIssue[] = [
                 {
+                    id: "test-issue",
                     code: "IDENTICAL_TITLE",
                     severity: "INFO",
                     objects: [
@@ -290,6 +316,7 @@ describe("getQualityIssueIdsByCodes", () => {
                     detail: {},
                 },
                 {
+                    id: "test-issue",
                     code: "SIMILAR_TITLE",
                     severity: "WARNING",
                     objects: [{ type: "metric", identifier: "metric1", title: "Metric 1" }],
@@ -303,6 +330,7 @@ describe("getQualityIssueIdsByCodes", () => {
         it("returns empty array when all codes are excluded", () => {
             const issues: ISemanticQualityIssue[] = [
                 {
+                    id: "test-issue",
                     code: "IDENTICAL_TITLE",
                     severity: "INFO",
                     objects: [
@@ -312,6 +340,7 @@ describe("getQualityIssueIdsByCodes", () => {
                     detail: {},
                 },
                 {
+                    id: "test-issue",
                     code: "SIMILAR_TITLE",
                     severity: "WARNING",
                     objects: [{ type: "metric", identifier: "metric1", title: "Metric 1" }],
@@ -333,12 +362,14 @@ describe("getQualityIssuesHighestSeverity", () => {
     it("returns INFO when all issues have INFO severity", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
@@ -352,12 +383,14 @@ describe("getQualityIssuesHighestSeverity", () => {
     it("returns WARNING when all issues have WARNING severity", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
@@ -371,18 +404,21 @@ describe("getQualityIssuesHighestSeverity", () => {
     it("returns WARNING when issues have mixed severities", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
@@ -396,12 +432,14 @@ describe("getQualityIssuesHighestSeverity", () => {
     it("returns WARNING when WARNING appears first", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
@@ -415,18 +453,21 @@ describe("getQualityIssuesHighestSeverity", () => {
     it("returns WARNING when WARNING appears last", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
@@ -440,6 +481,7 @@ describe("getQualityIssuesHighestSeverity", () => {
     it("returns WARNING with single WARNING issue", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
@@ -453,6 +495,7 @@ describe("getQualityIssuesHighestSeverity", () => {
     it("returns INFO with single INFO issue", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
@@ -473,6 +516,7 @@ describe("groupQualityIssuesByCode", () => {
     it("groups single issue", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
@@ -489,18 +533,21 @@ describe("groupQualityIssuesByCode", () => {
     it("groups multiple issues with same code", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
@@ -517,30 +564,35 @@ describe("groupQualityIssuesByCode", () => {
     it("groups mixed issues correctly", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr4", title: "Attr 4" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr5", title: "Attr 5" }],
@@ -558,18 +610,21 @@ describe("groupQualityIssuesByCode", () => {
     it("preserves order of issues within each group", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
@@ -586,12 +641,14 @@ describe("groupQualityIssuesByCode", () => {
     it("handles issues with different object types", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "metric", identifier: "metric1", title: "Metric 1" }],
@@ -607,6 +664,7 @@ describe("groupQualityIssuesByCode", () => {
     it("handles issues with multiple objects", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [
@@ -633,6 +691,7 @@ describe("groupQualityIssuesBySeverity", () => {
     it("groups single issue", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
@@ -649,18 +708,21 @@ describe("groupQualityIssuesBySeverity", () => {
     it("groups multiple issues with same severity", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
@@ -677,30 +739,35 @@ describe("groupQualityIssuesBySeverity", () => {
     it("groups mixed issues correctly", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr4", title: "Attr 4" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr5", title: "Attr 5" }],
@@ -717,24 +784,28 @@ describe("groupQualityIssuesBySeverity", () => {
     it("preserves order of issues within each group", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr3", title: "Attr 3" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr4", title: "Attr 4" }],
@@ -753,18 +824,21 @@ describe("groupQualityIssuesBySeverity", () => {
     it("handles issues with different codes but same severity", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "metric", identifier: "metric1", title: "Metric 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "UNKNOWN_ABBREVIATION",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],
@@ -781,6 +855,7 @@ describe("groupQualityIssuesBySeverity", () => {
     it("handles issues with multiple objects", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "WARNING",
                 objects: [
@@ -800,12 +875,14 @@ describe("groupQualityIssuesBySeverity", () => {
     it("groups all severity levels correctly", () => {
         const issues: ISemanticQualityIssue[] = [
             {
+                id: "test-issue",
                 code: "IDENTICAL_TITLE",
                 severity: "INFO",
                 objects: [{ type: "attribute", identifier: "attr1", title: "Attr 1" }],
                 detail: {},
             },
             {
+                id: "test-issue",
                 code: "SIMILAR_TITLE",
                 severity: "WARNING",
                 objects: [{ type: "attribute", identifier: "attr2", title: "Attr 2" }],

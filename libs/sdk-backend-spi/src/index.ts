@@ -191,6 +191,8 @@ export {
     isChatSuggestionsItem,
 } from "./workspace/genAI/index.js";
 
+export type { IOrganizationGenAIService } from "./organization/genAI/index.js";
+
 export type {
     IReferencesResult,
     IReferencesOption,

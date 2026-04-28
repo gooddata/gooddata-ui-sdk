@@ -942,6 +942,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableImprovedAiHub,
+            "enableImprovedAiHub",
+            "BOOLEAN",
+            FeatureFlagsValues.enableImprovedAiHub,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAIReasoningVisibility,
             "enableGenAIReasoningVisibility",
             "BOOLEAN",

@@ -9,8 +9,7 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import type { OpenHandlerEvent } from "../catalogDetail/types.js";
-import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
-import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
+import { useCatalogFeedActions, useCatalogFeedState } from "../catalogItem/CatalogFeedContext.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { FilterCertificationMemo } from "../filter/FilterCertification.js";
 import { useFilterActions } from "../filter/FilterContext.js";
@@ -58,7 +57,8 @@ export function Main({
     const intl = useIntl();
     const { addError } = useToastMessage();
     const { toggleTag } = useFilterActions();
-    const { updateItem, removeItem, refetchObjectType } = useCatalogFeedActions();
+    const { items, status, hasNext, totalCount } = useCatalogFeedState();
+    const { next, updateItem, removeItem, refetchObjectType } = useCatalogFeedActions();
     const isQualityEnabled = useIsCatalogQualityEnabled();
 
     return (
@@ -77,19 +77,15 @@ export function Main({
                     <FilterResetButtonMemo />
                 </FilterGroupLayout>
             </div>
-            <CatalogItemFeed>
-                {({ items, next, hasNext, totalCount, status }) => (
-                    <Table
-                        status={status}
-                        items={items}
-                        next={next}
-                        hasNext={hasNext}
-                        totalCount={totalCount}
-                        onItemClick={onOpenDetail}
-                        onTagClick={toggleTag}
-                    />
-                )}
-            </CatalogItemFeed>
+            <Table
+                status={status}
+                items={items}
+                next={next}
+                hasNext={hasNext}
+                totalCount={totalCount}
+                onItemClick={onOpenDetail}
+                onTagClick={toggleTag}
+            />
             <CatalogDetail
                 open={open}
                 objectDefinition={openedItem}

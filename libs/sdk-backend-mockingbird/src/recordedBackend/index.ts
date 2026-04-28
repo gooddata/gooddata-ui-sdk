@@ -796,6 +796,13 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 deleteAgent: () => Promise.resolve(),
             };
         },
+        genAI() {
+            return {
+                getKnowledgeDocuments: () => {
+                    throw new NotSupported("not supported");
+                },
+            };
+        },
         exportTemplates() {
             return {
                 getExportTemplates: () => Promise.resolve([]),

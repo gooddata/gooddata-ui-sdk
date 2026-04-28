@@ -139,5 +139,11 @@ export function useDebounce<T extends (...args: Parameters<T>) => void>(
         return debounce((...args: Parameters<T>) => ref.current?.(...args), delay);
     }, [delay]);
 
+    useEffect(() => {
+        return () => {
+            debouncedCallback.cancel();
+        };
+    }, [debouncedCallback]);
+
     return debouncedCallback;
 }

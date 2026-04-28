@@ -1850,6 +1850,8 @@ export interface IOrganization {
     automations(): IOrganizationAutomationService;
     // @beta
     exportTemplates(): IOrganizationExportTemplatesService;
+    // @alpha
+    genAI(): IOrganizationGenAIService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
     llmEndpoints(): IOrganizationLlmEndpointsService;
     llmProviders(): IOrganizationLlmProvidersService;
@@ -1926,6 +1928,11 @@ export type IOrganizationAutomationsQueryResult = IPagedResource<IAutomationMeta
 // @beta
 export interface IOrganizationExportTemplatesService {
     getExportTemplates(): Promise<IExportTemplate[]>;
+}
+
+// @alpha
+export interface IOrganizationGenAIService {
+    getKnowledgeDocuments(): IKnowledgeDocumentsService;
 }
 
 // @alpha

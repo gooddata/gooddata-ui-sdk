@@ -328,6 +328,11 @@ export function DropdownList<T>({
                                         ? undefined
                                         : accessibilityConfig?.role
                                 }
+                                aria-label={
+                                    accessibilityConfig?.role === "listbox"
+                                        ? undefined
+                                        : accessibilityConfig?.ariaLabel
+                                }
                                 aria-labelledby={
                                     accessibilityConfig?.role === "listbox"
                                         ? undefined

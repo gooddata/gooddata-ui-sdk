@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Expose `id` on `ISemanticQualityIssue`",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        },
+        {
+            "comment": "sdk-ui: Fix `useDebounce` to cancel pending callbacks when the component unmounts or delay changes, preventing potential side effects after unmount.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -25860,7 +25860,9 @@ export { KnowledgeAi_CreateDocument as GenAiApi_CreateKnowledgeDocument }
 export { KnowledgeAi_CreateDocument }
 
 // @public
-export function KnowledgeAi_CreateOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+function KnowledgeAi_CreateOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+export { KnowledgeAi_CreateOrgDocument as GenAiApi_CreateOrgKnowledgeDocument }
+export { KnowledgeAi_CreateOrgDocument }
 
 // @public
 function KnowledgeAi_DeleteDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDeleteDocumentResponse>;
@@ -25868,7 +25870,9 @@ export { KnowledgeAi_DeleteDocument as GenAiApi_DeleteKnowledgeDocument }
 export { KnowledgeAi_DeleteDocument }
 
 // @public
-export function KnowledgeAi_DeleteOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDeleteDocumentResponse>;
+function KnowledgeAi_DeleteOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDeleteDocumentResponse>;
+export { KnowledgeAi_DeleteOrgDocument as GenAiApi_DeleteOrgKnowledgeDocument }
+export { KnowledgeAi_DeleteOrgDocument }
 
 // @public
 export function KnowledgeAi_DownloadDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<any>;
@@ -25882,7 +25886,9 @@ export { KnowledgeAi_GetDocument as GenAiApi_GetKnowledgeDocument }
 export { KnowledgeAi_GetDocument }
 
 // @public
-export function KnowledgeAi_GetOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+function KnowledgeAi_GetOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+export { KnowledgeAi_GetOrgDocument as GenAiApi_GetOrgKnowledgeDocument }
+export { KnowledgeAi_GetOrgDocument }
 
 // @public
 function KnowledgeAi_ListDocuments(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiListDocumentsResponse>;
@@ -25890,7 +25896,9 @@ export { KnowledgeAi_ListDocuments as GenAiApi_ListKnowledgeDocuments }
 export { KnowledgeAi_ListDocuments }
 
 // @public
-export function KnowledgeAi_ListOrgDocuments(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiListOrgDocumentsRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiListDocumentsResponse>;
+function KnowledgeAi_ListOrgDocuments(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiListOrgDocumentsRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiListDocumentsResponse>;
+export { KnowledgeAi_ListOrgDocuments as GenAiApi_ListOrgKnowledgeDocuments }
+export { KnowledgeAi_ListOrgDocuments }
 
 // @public
 function KnowledgeAi_PatchDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
@@ -25898,7 +25906,9 @@ export { KnowledgeAi_PatchDocument as GenAiApi_PatchKnowledgeDocument }
 export { KnowledgeAi_PatchDocument }
 
 // @public
-export function KnowledgeAi_PatchOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiPatchOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+function KnowledgeAi_PatchOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiPatchOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+export { KnowledgeAi_PatchOrgDocument as GenAiApi_PatchOrgKnowledgeDocument }
+export { KnowledgeAi_PatchOrgDocument }
 
 // @public
 function KnowledgeAi_SearchKnowledge(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiSearchDocumentsResponse>;
@@ -25906,7 +25916,9 @@ export { KnowledgeAi_SearchKnowledge as GenAiApi_SearchKnowledge }
 export { KnowledgeAi_SearchKnowledge }
 
 // @public
-export function KnowledgeAi_SearchOrgKnowledge(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiSearchOrgKnowledgeRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiSearchDocumentsResponse>;
+function KnowledgeAi_SearchOrgKnowledge(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiSearchOrgKnowledgeRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiSearchDocumentsResponse>;
+export { KnowledgeAi_SearchOrgKnowledge as GenAiApi_SearchOrgKnowledge }
+export { KnowledgeAi_SearchOrgKnowledge }
 
 // @public
 function KnowledgeAi_UpsertDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
@@ -25914,7 +25926,9 @@ export { KnowledgeAi_UpsertDocument as GenAiApi_UpsertKnowledgeDocument }
 export { KnowledgeAi_UpsertDocument }
 
 // @public
-export function KnowledgeAi_UpsertOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+function KnowledgeAi_UpsertOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+export { KnowledgeAi_UpsertOrgDocument as GenAiApi_UpsertOrgKnowledgeDocument }
+export { KnowledgeAi_UpsertOrgDocument }
 
 // @public
 export function KnowledgeAiAxiosParamCreator_CreateDocument(workspaceId: string, file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
@@ -25975,11 +25989,13 @@ export { KnowledgeAiCreateDocumentRequest as GenAiApiCreateKnowledgeDocumentRequ
 export { KnowledgeAiCreateDocumentRequest }
 
 // @public
-export interface KnowledgeAiCreateOrgDocumentRequest {
+interface KnowledgeAiCreateOrgDocumentRequest {
     readonly file: File;
     readonly scopes?: Array<string>;
     readonly title?: string;
 }
+export { KnowledgeAiCreateOrgDocumentRequest as GenAiApiCreateOrgKnowledgeDocumentRequest }
+export { KnowledgeAiCreateOrgDocumentRequest }
 
 // @public
 interface KnowledgeAiDeleteDocumentRequest {
@@ -25990,9 +26006,11 @@ export { KnowledgeAiDeleteDocumentRequest as GenAiApiDeleteKnowledgeDocumentRequ
 export { KnowledgeAiDeleteDocumentRequest }
 
 // @public
-export interface KnowledgeAiDeleteOrgDocumentRequest {
+interface KnowledgeAiDeleteOrgDocumentRequest {
     readonly documentId: string;
 }
+export { KnowledgeAiDeleteOrgDocumentRequest as GenAiApiDeleteOrgKnowledgeDocumentRequest }
+export { KnowledgeAiDeleteOrgDocumentRequest }
 
 // @public
 export interface KnowledgeAiDownloadDocumentRequest {
@@ -26014,9 +26032,11 @@ export { KnowledgeAiGetDocumentRequest as GenAiApiGetKnowledgeDocumentRequest }
 export { KnowledgeAiGetDocumentRequest }
 
 // @public
-export interface KnowledgeAiGetOrgDocumentRequest {
+interface KnowledgeAiGetOrgDocumentRequest {
     readonly documentId: string;
 }
+export { KnowledgeAiGetOrgDocumentRequest as GenAiApiGetOrgKnowledgeDocumentRequest }
+export { KnowledgeAiGetOrgDocumentRequest }
 
 // @public
 export interface KnowledgeAiInterface {
@@ -26052,7 +26072,7 @@ export { KnowledgeAiListDocumentsRequest as GenAiApiListKnowledgeDocumentsReques
 export { KnowledgeAiListDocumentsRequest }
 
 // @public
-export interface KnowledgeAiListOrgDocumentsRequest {
+interface KnowledgeAiListOrgDocumentsRequest {
     readonly metaInclude?: string;
     readonly pageToken?: string;
     readonly query?: string;
@@ -26060,6 +26080,8 @@ export interface KnowledgeAiListOrgDocumentsRequest {
     readonly size?: number;
     readonly state?: 'enabled' | 'disabled';
 }
+export { KnowledgeAiListOrgDocumentsRequest as GenAiApiListOrgKnowledgeDocumentsRequest }
+export { KnowledgeAiListOrgDocumentsRequest }
 
 // @public
 interface KnowledgeAiPatchDocumentRequest {
@@ -26071,10 +26093,12 @@ export { KnowledgeAiPatchDocumentRequest as GenAiApiPatchKnowledgeDocumentReques
 export { KnowledgeAiPatchDocumentRequest }
 
 // @public
-export interface KnowledgeAiPatchOrgDocumentRequest {
+interface KnowledgeAiPatchOrgDocumentRequest {
     readonly aiPatchDocumentRequest: AiPatchDocumentRequest;
     readonly documentId: string;
 }
+export { KnowledgeAiPatchOrgDocumentRequest as GenAiApiPatchOrgKnowledgeDocumentRequest }
+export { KnowledgeAiPatchOrgDocumentRequest }
 
 // @public
 interface KnowledgeAiSearchKnowledgeRequest {
@@ -26088,12 +26112,14 @@ export { KnowledgeAiSearchKnowledgeRequest as GenAiApiSearchKnowledgeRequest }
 export { KnowledgeAiSearchKnowledgeRequest }
 
 // @public
-export interface KnowledgeAiSearchOrgKnowledgeRequest {
+interface KnowledgeAiSearchOrgKnowledgeRequest {
     readonly limit?: number;
     readonly minScore?: number;
     readonly query: string;
     readonly scopes?: Array<string>;
 }
+export { KnowledgeAiSearchOrgKnowledgeRequest as GenAiApiSearchOrgKnowledgeRequest }
+export { KnowledgeAiSearchOrgKnowledgeRequest }
 
 // @public
 interface KnowledgeAiUpsertDocumentRequest {
@@ -26106,11 +26132,13 @@ export { KnowledgeAiUpsertDocumentRequest as GenAiApiUpsertKnowledgeDocumentRequ
 export { KnowledgeAiUpsertDocumentRequest }
 
 // @public
-export interface KnowledgeAiUpsertOrgDocumentRequest {
+interface KnowledgeAiUpsertOrgDocumentRequest {
     readonly file: File;
     readonly scopes?: Array<string>;
     readonly title?: string;
 }
+export { KnowledgeAiUpsertOrgDocumentRequest as GenAiApiUpsertOrgKnowledgeDocumentRequest }
+export { KnowledgeAiUpsertOrgDocumentRequest }
 
 // @public
 export class KnowledgeRecommendationControllerApi extends MetadataBaseApi implements KnowledgeRecommendationControllerApiInterface {

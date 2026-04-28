@@ -1,4 +1,5 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 export type ExpressionTokenType =
     | "text"
     | "quoted_text"
@@ -9,6 +10,7 @@ export type ExpressionTokenType =
     | "attribute"
     | "label"
     | "dataset"
+    | "parameter"
     | "comment";
 
 export interface IExpressionToken {
@@ -27,6 +29,7 @@ const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
     ["label", /^\{label\/[^}]*\}/],
     ["attribute", /^\{attribute\/[^}]*\}/],
     ["dataset", /^\{dataset\/[^}]*\}/],
+    ["parameter", /^\{parameter\/[^}]*\}/],
     ["comment", /#[^\n]*/],
 ];
 

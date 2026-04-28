@@ -70,7 +70,7 @@ export interface IAgent {
     customSkills?: AgentCustomSkill[] | null;
 
     /**
-     * Whether AI knowledge base is enabled.
+     * Whether AI Knowledge base is enabled.
      */
     aiKnowledge?: boolean;
 

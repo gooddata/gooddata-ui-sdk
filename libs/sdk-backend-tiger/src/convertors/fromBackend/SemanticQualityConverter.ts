@@ -41,6 +41,7 @@ export function convertQualityReportResponse(response: AfmGetQualityIssuesRespon
 export function convertQualityIssue(issue: AfmQualityIssue): ISemanticQualityIssue {
     const detail = issue.detail as Record<string, unknown>;
     return {
+        id: `${issue.id}-${issue.code}-${issue.severity}`,
         code: issue.code as SemanticQualityIssueCode,
         severity: convertQualityIssueSeverity(issue.severity),
         objects: issue.objects.map((obj) => ({

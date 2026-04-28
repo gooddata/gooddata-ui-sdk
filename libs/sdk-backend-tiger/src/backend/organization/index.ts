@@ -11,6 +11,7 @@ import {
     type IOrganizationAgentsService,
     type IOrganizationAutomationService,
     type IOrganizationExportTemplatesService,
+    type IOrganizationGenAIService,
     type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
@@ -28,6 +29,7 @@ import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { OrganizationAgentsService } from "./agents.js";
 import { TigerOrganizationAutomationService } from "./automations/index.js";
 import { OrganizationExportTemplatesService } from "./exportTemplates.js";
+import { TigerOrganizationGenAIService } from "./genAI/index.js";
 import { OrganizationLlmEndpointsService } from "./llmEndpoints.js";
 import { OrganizationLlmProvidersService } from "./llmProviders.js";
 import { OrganizationNotificationChannelService } from "./notificationChannels.js";
@@ -189,6 +191,10 @@ export class TigerOrganization implements IOrganization {
 
     public agents(): IOrganizationAgentsService {
         return new OrganizationAgentsService(this.authCall);
+    }
+
+    public genAI(): IOrganizationGenAIService {
+        return new TigerOrganizationGenAIService(this.authCall);
     }
 
     public exportTemplates(): IOrganizationExportTemplatesService {

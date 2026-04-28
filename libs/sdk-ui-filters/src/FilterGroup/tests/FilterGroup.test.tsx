@@ -8,7 +8,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { type IAttributeFilterProps } from "../../AttributeFilter/AttributeFilter.js";
-import { FilterGroup } from "../FilterGroup.js";
+import { FilterGroup, type IFilterGroupDropdownListItemProps } from "../FilterGroup.js";
 
 type IMockedAttributeFilterButtonProps = IAttributeFilterProps & {
     onToggleSelection?: () => void;
@@ -16,9 +16,13 @@ type IMockedAttributeFilterButtonProps = IAttributeFilterProps & {
 
 type IMockedDropdownListProps<T> = {
     items: T[];
-    renderItem: (props: { item: T }) => ReactNode;
+    renderItem: (props: IFilterGroupDropdownListItemProps<T>) => ReactNode;
     onKeyDownSelect?: (item: T) => void;
     closeDropdown?: () => void;
+    accessibilityConfig?: {
+        role?: string;
+        ariaLabel?: string;
+    };
 };
 
 const mockAttributeFilterButton = vi.fn();
@@ -65,8 +69,13 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
             renderItem,
             onKeyDownSelect,
             closeDropdown,
+            accessibilityConfig,
         }: IMockedDropdownListProps<unknown>) => (
-            <div>
+            <div
+                role={accessibilityConfig?.role}
+                aria-label={accessibilityConfig?.ariaLabel}
+                data-testid="mock-dropdown-list"
+            >
                 <button
                     type="button"
                     data-testid="keyboard-close"
@@ -91,7 +100,7 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
                         >
                             Keyboard select {index}
                         </button>
-                        {renderItem({ item })}
+                        {renderItem({ item, rowIndex: index })}
                     </div>
                 ))}
             </div>
@@ -280,5 +289,46 @@ describe("FilterGroup", () => {
             searchInputAfterToggle,
             "Search input remounted. DOM element should be the same as the one before the toggle.",
         ).toBe(searchInputBeforeToggle);
+    });
+
+    it("should render grouped filter items inside grid rows and cells", async () => {
+        const filters = [
+            { id: "region", title: "Region" },
+            { id: "product", title: "Product" },
+        ];
+
+        render(
+            <IntlWrapper locale="en-US">
+                <FilterGroup<{ id: string; title: string }>
+                    title="Filter group"
+                    filters={filters}
+                    getFilterIdentifier={(filter) => filter.id}
+                    hasSelectedElements={() => false}
+                    renderFilter={(filter, AttributeFilterComponent) => {
+                        if (!AttributeFilterComponent) {
+                            throw new Error("AttributeFilterComponent is required.");
+                        }
+
+                        return (
+                            <AttributeFilterComponent
+                                {...({ title: filter.title } as IAttributeFilterProps)}
+                            />
+                        );
+                    }}
+                />
+            </IntlWrapper>,
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: /filter group/i }));
+
+        const grid = await screen.findByRole("grid", { name: "Filter group" });
+        const rows = screen.getAllByRole("row");
+
+        expect(grid).toBeInTheDocument();
+        expect(rows).toHaveLength(filters.length);
+        expect(rows[0]).toHaveAttribute("aria-rowindex", "1");
+        expect(rows[1]).toHaveAttribute("aria-rowindex", "2");
+        expect(rows[0]).toContainElement(screen.getByRole("gridcell", { name: /region/i }));
+        expect(rows[1]).toContainElement(screen.getByRole("gridcell", { name: /product/i }));
     });
 });
