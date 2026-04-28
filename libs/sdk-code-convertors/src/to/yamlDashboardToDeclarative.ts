@@ -14,6 +14,7 @@ import type {
     DashboardAbsoluteDateFilter,
     DashboardAttributeFilter,
     DashboardFilters,
+    DashboardMetricValueFilter,
     DashboardRelativeDateFilter,
     DashboardTextFilter,
     IgnoredDrillDown,
@@ -42,6 +43,7 @@ import {
     type IDashboardFilterGroup,
     type IDashboardFilterGroupsConfig,
     type IDashboardFilterReference,
+    type IDashboardMeasureValueFilterConfig,
     type IDashboardPluginLink,
     type IDrillDownIntersectionIgnoredAttributes,
     type IDrillDownReference,
@@ -53,6 +55,7 @@ import {
     type IInsightWidget,
     type IInsightWidgetDefinition,
     type InsightDrillDefinition,
+    type MeasureValueFilterCondition,
 } from "@gooddata/sdk-model";
 
 import { VisualisationsTypes } from "../conts.js";
@@ -73,6 +76,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardEmptyDateFilter,
     isDashboardMatchTextFilter,
+    isDashboardMetricValueFilter,
     isDashboardNoopDateFilter,
     isDashboardRelativeDateFilter,
     isDashboardTextFilter,
@@ -97,6 +101,7 @@ type DashboardDefinition = Pick<
     | "disableUserFilterReset"
     | "disableFilterViews"
     | "attributeFilterConfigs"
+    | "measureValueFilterConfigs"
     | "filterContextRef"
     | "tabs"
     | "activeTabLocalIdentifier"
@@ -153,6 +158,7 @@ function yamlTabsToDeclarative(
             dateFilterConfig,
             dateFilterConfigs,
             attributeFilterConfigs,
+            measureValueFilterConfigs,
             filterGroupsConfig,
         } = yamlFilterContextToDeclarative(tab.id, tab.filters);
 
@@ -168,6 +174,7 @@ function yamlTabsToDeclarative(
             dateFilterConfig,
             dateFilterConfigs,
             attributeFilterConfigs,
+            measureValueFilterConfigs,
             ...(filterGroupsConfig ? { filterGroupsConfig } : {}),
         });
     });
@@ -194,6 +201,7 @@ function processDashboardWithTabs(entities: ExportEntities, input: Dashboard) {
         dateFilterConfig: defaultTab.dateFilterConfig,
         dateFilterConfigs: defaultTab.dateFilterConfigs,
         attributeFilterConfigs: defaultTab.attributeFilterConfigs,
+        measureValueFilterConfigs: defaultTab.measureValueFilterConfigs,
         tabs: tabsResult.tabs,
         tabFilterContexts: tabsResult.filterContexts,
     };
@@ -252,6 +260,7 @@ export function yamlDashboardToDeclarative(
         dateFilterConfig,
         dateFilterConfigs,
         attributeFilterConfigs,
+        measureValueFilterConfigs,
         tabs,
         tabFilterContexts,
     } = input.tabs ? processDashboardWithTabs(entities, input) : processDashboardWithoutTabs(entities, input);
@@ -270,6 +279,7 @@ export function yamlDashboardToDeclarative(
         layout,
         plugins,
         attributeFilterConfigs,
+        measureValueFilterConfigs,
         dateFilterConfig,
         dateFilterConfigs,
         ...(tabs ? { tabs } : {}),
@@ -817,7 +827,11 @@ function flattenFilters(
     yamlFilters: DashboardFilters | undefined,
 ): Record<
     string,
-    DashboardAttributeFilter | DashboardTextFilter | DashboardAbsoluteDateFilter | DashboardRelativeDateFilter
+    | DashboardAttributeFilter
+    | DashboardTextFilter
+    | DashboardAbsoluteDateFilter
+    | DashboardRelativeDateFilter
+    | DashboardMetricValueFilter
 > {
     if (!yamlFilters) {
         return {};
@@ -828,6 +842,7 @@ function flattenFilters(
         | DashboardTextFilter
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardMetricValueFilter
     > = {};
 
     for (const [key, filter] of Object.entries(yamlFilters)) {
@@ -840,7 +855,8 @@ function flattenFilters(
                 | DashboardAttributeFilter
                 | DashboardTextFilter
                 | DashboardAbsoluteDateFilter
-                | DashboardRelativeDateFilter;
+                | DashboardRelativeDateFilter
+                | DashboardMetricValueFilter;
         }
     }
 
@@ -855,11 +871,13 @@ export function yamlFilterContextToDeclarative(
     dateFilterConfig: IDashboardDateFilterConfig | undefined;
     dateFilterConfigs: IDashboardDateFilterConfigItem[] | undefined;
     attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined;
+    measureValueFilterConfigs: IDashboardMeasureValueFilterConfig[] | undefined;
     filterGroupsConfig: IDashboardFilterGroupsConfig | undefined;
 } {
     const dateFilterConfig: Partial<IDashboardDateFilterConfig> = {};
     const dateFilterConfigs: IDashboardDateFilterConfigItem[] = [];
     const attributeFilterConfigs: IDashboardAttributeFilterConfig[] = [];
+    const measureValueFilterConfigs: IDashboardMeasureValueFilterConfig[] = [];
 
     // Extract filter groups configuration
     const filterGroupsConfig = extractFilterGroupsConfig(yamlFilters);
@@ -1034,6 +1052,74 @@ export function yamlFilterContextToDeclarative(
                     },
                 };
             }
+            if (isDashboardMetricValueFilter(filter)) {
+                // The schema-generated DashboardMetricValueFilter only types the discriminator;
+                // the runtime payload (validated against the JSON schema) carries the rich shape.
+                const mvf = filter as unknown as {
+                    using: string;
+                    title?: string;
+                    mode?: DashboardDateFilterConfigMode;
+                    null_values_as_zero?: boolean;
+                    conditions?: Array<{
+                        condition?: string;
+                        value?: number;
+                        from?: number;
+                        to?: number;
+                    }>;
+                };
+
+                const measureValueFilterConfig: Partial<IDashboardMeasureValueFilterConfig> = {};
+                if (mvf.mode && mvf.mode !== "active") {
+                    measureValueFilterConfig.mode = mvf.mode;
+                    measureValueFilterConfig.localIdentifier = key;
+                    measureValueFilterConfigs.push(
+                        measureValueFilterConfig as IDashboardMeasureValueFilterConfig,
+                    );
+                }
+
+                // The single top-level YAML flag is fanned out to each condition, mirroring
+                // the insight MVF model where treatNullValuesAs lives per-condition.
+                const treatNullValuesAs = mvf.null_values_as_zero ? 0 : undefined;
+                const conditions: MeasureValueFilterCondition[] | undefined = mvf.conditions?.map((c) => {
+                    if (c.condition === "BETWEEN" || c.condition === "NOT_BETWEEN") {
+                        return {
+                            range: {
+                                operator: c.condition,
+                                from: c.from ?? 0,
+                                to: c.to ?? 0,
+                                ...(treatNullValuesAs === undefined ? {} : { treatNullValuesAs }),
+                            },
+                        };
+                    }
+                    return {
+                        comparison: {
+                            operator: c.condition as
+                                | "GREATER_THAN"
+                                | "GREATER_THAN_OR_EQUAL_TO"
+                                | "LESS_THAN"
+                                | "LESS_THAN_OR_EQUAL_TO"
+                                | "EQUAL_TO"
+                                | "NOT_EQUAL_TO",
+                            value: c.value ?? 0,
+                            ...(treatNullValuesAs === undefined ? {} : { treatNullValuesAs }),
+                        },
+                    };
+                });
+
+                const measureRef =
+                    createIdentifier<any>(mvf.using ?? "", { forceMetric: true }) ??
+                    createLocalIdentifier(mvf.using ?? "");
+
+                return {
+                    dashboardMeasureValueFilter: {
+                        measure: measureRef,
+                        localIdentifier: key,
+                        ...(conditions && conditions.length > 0 ? { conditions } : {}),
+                        ...(mvf.title ? { title: mvf.title } : {}),
+                    },
+                };
+            }
+
             if (isDashboardAttributeFilter(filter)) {
                 const state = filter.state as State;
 
@@ -1112,6 +1198,8 @@ export function yamlFilterContextToDeclarative(
                 ? ({ filterName: "", ...dateFilterConfig } as IDashboardDateFilterConfig)
                 : undefined,
         attributeFilterConfigs: attributeFilterConfigs.length > 0 ? attributeFilterConfigs : undefined,
+        measureValueFilterConfigs:
+            measureValueFilterConfigs.length > 0 ? measureValueFilterConfigs : undefined,
         dateFilterConfigs: dateFilterConfigs.length > 0 ? dateFilterConfigs : undefined,
         filterGroupsConfig,
         filterContext: {

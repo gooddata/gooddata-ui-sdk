@@ -1971,20 +1971,21 @@ export interface DashboardFilters {
         | DashboardRelativeDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
+        | DashboardMetricValueFilter
         | DashboardFilterGroup;
 }
 /**
  * A dashboard absolute date filter
  */
 export interface DashboardAbsoluteDateFilter {
-    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
     [k: string]: unknown;
 }
 /**
  * A dashboard relative date filter
  */
 export interface DashboardRelativeDateFilter {
-    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
     [k: string]: unknown;
 }
 export interface LocalDateFilter {
@@ -2089,10 +2090,16 @@ export interface DashboardTextFilter2 {
     [k: string]: unknown;
 }
 /**
+ * A dashboard-level filter that filters data by metric value across visualizations. Conditions are OR-ed together; omitting them means "All" (no filtering). Granularity is inherited from each affected visualization.
+ */
+export interface DashboardMetricValueFilter {
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
+}
+/**
  * A group of dashboard filters displayed together in the filter bar
  */
 export interface DashboardFilterGroup {
-    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
 export interface Tab {
     id: Id14;
@@ -2121,6 +2128,7 @@ export interface DashboardFilters1 {
         | DashboardRelativeDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
+        | DashboardMetricValueFilter
         | DashboardFilterGroup;
 }
 /**

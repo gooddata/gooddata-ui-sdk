@@ -22,6 +22,8 @@ import {
     type IDashboardLayoutItem,
     type IDashboardLayoutWidget,
     type IDashboardMatchAttributeFilter,
+    type IDashboardMeasureValueFilter,
+    type IDashboardMeasureValueFilterConfig,
     type IDashboardWidget,
     type IDrillDownIntersectionIgnoredAttributes,
     type IDrillDownReference,
@@ -30,19 +32,23 @@ import {
     type IRichTextWidget,
     type IVisualizationSwitcherWidget,
     type InsightDrillDefinition,
+    type MeasureValueFilterCondition,
     dashboardFilterReferenceObjRef,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isAttributeHierarchyReference,
+    isComparisonCondition,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
     isNoopAllTimeDashboardDateFilter,
+    isRangeCondition,
     isRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -165,6 +171,7 @@ export function declarativeDashboardToYaml(
             tab.dateFilterConfig,
             tab.dateFilterConfigs,
             tab.attributeFilterConfigs,
+            tab.measureValueFilterConfigs,
             errorContext,
         );
         const groupedFilters = declarativeFilterGroupsToYaml(filters, tab.filterGroupsConfig);
@@ -199,6 +206,7 @@ export function declarativeDashboardToYaml(
             content.dateFilterConfig,
             content.dateFilterConfigs,
             content.attributeFilterConfigs,
+            content.measureValueFilterConfigs,
             errorContext,
         );
         if (filters.items.length > 0) {
@@ -268,6 +276,7 @@ export function declarativeTabsToYaml(
                 tab.dateFilterConfig,
                 tab.dateFilterConfigs,
                 tab.attributeFilterConfigs,
+                tab.measureValueFilterConfigs,
                 tabErrorContext,
             );
             const groupedFilters = declarativeFilterGroupsToYaml(filters, tab.filterGroupsConfig);
@@ -1049,6 +1058,14 @@ export function declarativeFilterContextToYaml(
                 filter: filter as IFilterContextDefinition["filters"][number],
             };
         }
+        if (isDashboardMeasureValueFilter(filter)) {
+            const def = declarativeMeasureValueFilterToYaml(filter, errorContext);
+            filters.push(new Pair(key, def));
+            filtersMap[key] = {
+                yaml: def,
+                filter: filter as IFilterContextDefinition["filters"][number],
+            };
+        }
     });
 
     // create default date if config is specified but no common date
@@ -1289,11 +1306,73 @@ function declarativeMatchTextFilterToYaml(
     return textFilter;
 }
 
+function measureValueConditionToYaml(condition: MeasureValueFilterCondition): YAMLMap {
+    const yamlCondition = new YAMLMap();
+    if (isComparisonCondition(condition)) {
+        yamlCondition.add(new Pair("condition", condition.comparison.operator));
+        yamlCondition.add(new Pair("value", condition.comparison.value));
+    } else if (isRangeCondition(condition)) {
+        yamlCondition.add(new Pair("condition", condition.range.operator));
+        yamlCondition.add(new Pair("from", condition.range.from));
+        yamlCondition.add(new Pair("to", condition.range.to));
+    }
+    return yamlCondition;
+}
+
+function conditionHasTreatNullValuesAs(condition: MeasureValueFilterCondition): boolean {
+    if (isComparisonCondition(condition)) {
+        return condition.comparison.treatNullValuesAs !== undefined;
+    }
+    if (isRangeCondition(condition)) {
+        return condition.range.treatNullValuesAs !== undefined;
+    }
+    return false;
+}
+
+function declarativeMeasureValueFilterToYaml(
+    filter: IDashboardMeasureValueFilter,
+    errorContext?: IErrorContext,
+) {
+    const measureValueFilter = new YAMLMap();
+
+    measureValueFilter.add(new Pair("type", "metric_value_filter"));
+    if (filter.dashboardMeasureValueFilter.title) {
+        measureValueFilter.add(new Pair("title", filter.dashboardMeasureValueFilter.title));
+    }
+    measureValueFilter.add(
+        new Pair(
+            "using",
+            getIdentifier(
+                filter.dashboardMeasureValueFilter.measure,
+                undefined,
+                updateErrorContext(errorContext, { path: ["dashboardMeasureValueFilter", "measure"] }),
+            ),
+        ),
+    );
+
+    const conditions = filter.dashboardMeasureValueFilter.conditions ?? [];
+    if (conditions.length > 0) {
+        const conditionsSeq = new YAMLSeq();
+        conditions.forEach((c) => conditionsSeq.add(measureValueConditionToYaml(c)));
+        measureValueFilter.add(new Pair("conditions", conditionsSeq));
+    }
+
+    // Aggregate per-condition `treatNullValuesAs` into a single top-level YAML flag
+    // (mirrors the insight MVF YAML representation).
+    const treatNullValuesAsZero = conditions.some(conditionHasTreatNullValuesAs);
+    if (treatNullValuesAsZero) {
+        measureValueFilter.add(new Pair("null_values_as_zero", true));
+    }
+
+    return measureValueFilter;
+}
+
 export function declarativeFiltersConfigToYaml(
     filtersMap: Record<string, FilterContextItem>,
     dateFilterConfig?: IDashboardDateFilterConfig,
     dateFilterConfigs?: IDashboardDateFilterConfigItem[],
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
+    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[],
     errorContext?: IErrorContext,
 ) {
     attributeFilterConfigs?.forEach((filterSettings, i) => {
@@ -1342,6 +1421,12 @@ export function declarativeFiltersConfigToYaml(
 
         fillDateFilterConfig(dateFilterConfig, filter);
     }
+    measureValueFilterConfigs?.forEach((filterSettings) => {
+        const filter = filtersMap[filterSettings.localIdentifier];
+        if (filter && filterSettings.mode && filterSettings.mode !== "active") {
+            filter.yaml.add(new Pair("mode", filterSettings.mode));
+        }
+    });
 }
 
 function fillDateFilterConfig(

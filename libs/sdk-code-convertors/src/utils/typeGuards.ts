@@ -12,6 +12,7 @@ import type {
     ContainerWidget,
     DashboardAbsoluteDateFilter,
     DashboardAttributeFilter,
+    DashboardMetricValueFilter,
     DashboardRelativeDateFilter,
     DashboardTextFilter,
     Dataset,
@@ -454,6 +455,16 @@ export function isDashboardMatchTextFilter(obj: unknown): obj is Extract<
         "condition" in obj &&
         typeof obj["condition"] === "string" &&
         matchTextFilterConditions.has(obj["condition"])
+    );
+}
+
+export function isDashboardMetricValueFilter(obj: unknown): obj is DashboardMetricValueFilter {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "type" in obj &&
+        obj.type === "metric_value_filter" &&
+        "using" in obj
     );
 }
 

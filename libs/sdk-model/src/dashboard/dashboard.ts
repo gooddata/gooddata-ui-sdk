@@ -163,6 +163,22 @@ export interface IDashboardAttributeFilterConfig {
 }
 
 /**
+ * Extended measure value filter config
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterConfig {
+    /**
+     * Local identifier of the measure value filter to configure
+     */
+    localIdentifier: string;
+
+    /**
+     * Control visibility mode of the measure value filter
+     */
+    mode?: DashboardAttributeFilterConfigMode;
+}
+
+/**
  * Dashboard filter groups config.
  * There can be multiple groups defined.
  * Group is displayed in a filter bar beside other filters.
@@ -254,6 +270,11 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
      * Dashboard extended attribute filter configs
      */
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+
+    /**
+     * Dashboard extended measure value filter configs
+     */
+    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
 
     /**
      * Dashboard filter groups config.
@@ -458,6 +479,11 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 
     /**
+     * Dashboard extended measure value filter configs
+     */
+    readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
+
+    /**
      * Date dataset to use for filtering metrics in section header rich text.
      * @alpha
      */
@@ -540,6 +566,11 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Dashboard extended attribute filter configs
      */
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+
+    /**
+     * Dashboard extended measure value filter configs
+     */
+    readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
 
     /**
      * Date dataset to use for filtering metrics in section header rich text.

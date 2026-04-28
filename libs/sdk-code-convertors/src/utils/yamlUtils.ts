@@ -21,6 +21,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
     isIdentifierRef,
     isLocalIdRef,
     isMatchAttributeFilter,
@@ -159,6 +160,10 @@ export function createFilterContextItemKeyName(
             item.matchAttributeFilter.localIdentifier ??
             `${getIdentifier(item.matchAttributeFilter.displayForm, true, updateErrorContext(errorContext, { path: ["matchAttributeFilter", "displayForm"] }))}_text_filter`
         );
+    }
+    if (isDashboardMeasureValueFilter(item)) {
+        // Dashboard MVF has a mandatory localIdentifier
+        return item.dashboardMeasureValueFilter.localIdentifier;
     }
     throw newError(CoreErrorCode.ItemNotSupported, [JSON.stringify(item)], errorContext);
 }

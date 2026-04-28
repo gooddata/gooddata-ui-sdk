@@ -163,6 +163,7 @@ export enum TigerFeaturesNames {
     EnableArbitraryFilterAD = "enableArbitraryFilterAD",
     EnableMatchFilterKD = "enableMatchFilterKD",
     EnableArbitraryFilterKD = "enableArbitraryFilterKD",
+    EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
     EnableFilterControlInDrillingConfiguration = "enableFilterControlInDrillingConfiguration",
     EnableShellApplication = "enableShellApplication",
     EnableNullJoins = "enableNullJoins",
@@ -325,6 +326,7 @@ export type ITigerFeatureFlags = {
     enableArbitraryFilterAD: (typeof FeatureFlagsValues)["enableArbitraryFilterAD"][number];
     enableMatchFilterKD: (typeof FeatureFlagsValues)["enableMatchFilterKD"][number];
     enableArbitraryFilterKD: (typeof FeatureFlagsValues)["enableArbitraryFilterKD"][number];
+    enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
     enableFilterControlInDrillingConfiguration: (typeof FeatureFlagsValues)["enableFilterControlInDrillingConfiguration"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
@@ -490,6 +492,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableArbitraryFilterAD: true,
     enableMatchFilterKD: true,
     enableArbitraryFilterKD: true,
+    enableMeasureValueFilterKD: false,
     enableFilterControlInDrillingConfiguration: true,
     enableShellApplication: false,
     enableNullJoins: false,
@@ -656,6 +659,7 @@ export const FeatureFlagsValues = {
     enableArbitraryFilterAD: [true, false] as const,
     enableMatchFilterKD: [true, false] as const,
     enableArbitraryFilterKD: [true, false] as const,
+    enableMeasureValueFilterKD: [false, true] as const,
     enableFilterControlInDrillingConfiguration: [true, false] as const,
     enableShellApplication: [true, false] as const,
     enableNullJoins: [true, false] as const,

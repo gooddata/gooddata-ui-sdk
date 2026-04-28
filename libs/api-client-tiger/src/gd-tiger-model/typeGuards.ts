@@ -166,6 +166,10 @@ export function isTigerFilterContextItem(obj: unknown): obj is ITigerFilterConte
         return true;
     }
 
+    if ("dashboardMeasureValueFilter" in obj) {
+        return true;
+    }
+
     return false;
 }
 

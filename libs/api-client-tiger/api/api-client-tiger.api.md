@@ -2730,6 +2730,27 @@ export interface AiConversationItemResponse {
 // @public (undocumented)
 export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool';
 
+// @public (undocumented)
+export interface AiConversationListMeta {
+    // (undocumented)
+    'page': AiConversationListPageMeta;
+}
+
+// @public (undocumented)
+export interface AiConversationListPageMeta {
+    'page': number;
+    'size': number;
+    'total': number;
+}
+
+// @public (undocumented)
+export interface AiConversationListResponse {
+    // (undocumented)
+    'data': Array<AiConversationResponse>;
+    // (undocumented)
+    'meta': AiConversationListMeta;
+}
+
 // @public
 export interface AiConversationResponse {
     // (undocumented)
@@ -7565,7 +7586,7 @@ export interface ContentSlideTemplate {
 export class ConversationsAi extends BaseAPI implements ConversationsAiInterface {
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
-    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse[]>;
+    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 }
 
@@ -7580,7 +7601,7 @@ export { ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversa
 export { ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet as GenAiApi_GetConversation }
 
 // @public
-function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<Array<AiConversationResponse>>;
+function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationListResponse>;
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet }
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet as GenAiApi_GetConversations }
 
@@ -7631,7 +7652,7 @@ export { ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversa
 export interface ConversationsAiInterface {
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
-    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AiConversationResponse>>;
+    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 }
 
@@ -18182,6 +18203,8 @@ interface IAnalyticalDashboard_2 {
     // (undocumented)
     layout?: ITigerDashboardLayout;
     // (undocumented)
+    measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
+    // (undocumented)
     plugins?: IDashboardPluginLink[];
     // (undocumented)
     sectionHeadersDateDataSet?: ObjRef;
@@ -19123,6 +19146,26 @@ export interface ITigerDashboardMatchAttributeFilter {
 }
 
 // @public
+export interface ITigerDashboardMeasureValueFilter {
+    // (undocumented)
+    dashboardMeasureValueFilter: {
+        measure: ObjRef;
+        localIdentifier: string;
+        conditions?: Array<ITigerComparisonCondition | ITigerRangeCondition>;
+        treatNullValuesAs?: number;
+        title?: string;
+    };
+}
+
+// @public
+export interface ITigerDashboardMeasureValueFilterConfig {
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    mode?: "active" | "readonly" | "hidden";
+}
+
+// @public
 export interface ITigerDashboardTab {
     // (undocumented)
     attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
@@ -19142,6 +19185,8 @@ export interface ITigerDashboardTab {
     // (undocumented)
     localIdentifier: string;
     // (undocumented)
+    measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
+    // (undocumented)
     title: string;
 }
 
@@ -19155,7 +19200,7 @@ export interface ITigerDashboardTab {
 export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
 
 // @public
-export type ITigerFilterContextItem = DashboardFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
+export type ITigerFilterContextItem = DashboardFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter | ITigerDashboardMeasureValueFilter;
 
 // @public
 export interface ITigerInsightLayerDefinition {
@@ -34121,8 +34166,8 @@ export interface Xliff {
 
 // Warnings were encountered during analysis:
 //
-// src/gd-tiger-model/TigerTypes.ts:796:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
-// src/gd-tiger-model/TigerTypes.ts:797:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
+// src/gd-tiger-model/TigerTypes.ts:806:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
+// src/gd-tiger-model/TigerTypes.ts:807:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
 // src/locationStyle.ts:53:5 - (ae-forgotten-export) The symbol "ILocationStyleListItem" needs to be exported by the entry point index.d.ts
 
 ```

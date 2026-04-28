@@ -17,6 +17,7 @@ import {
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
     isDashboardDateFilterReference,
+    isDashboardMeasureValueFilterReference,
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
@@ -61,6 +62,9 @@ function toRefs(references: IDashboardFilterReference[]) {
     return references.map((reference) => {
         if (isDashboardDateFilterReference(reference)) {
             return reference.dataSet;
+        }
+        if (isDashboardMeasureValueFilterReference(reference)) {
+            return reference.measure;
         }
         return reference.displayForm;
     });

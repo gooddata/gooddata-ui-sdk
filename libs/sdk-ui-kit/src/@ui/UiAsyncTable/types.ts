@@ -6,6 +6,7 @@ import { type ObjRef, type SortDirection } from "@gooddata/sdk-model";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { type IconType } from "../@types/icon.js";
+import { type ThemeColor } from "../@types/themeColors.js";
 
 /**
  * Variant for UiAsyncTable component.
@@ -115,6 +116,8 @@ export interface IUiAsyncTableColumn<T> {
     getTextContent?: (item: T) => string | ReactNode;
     getTextTitle?: (item: T) => string;
     getTextHref?: (item: T) => string | undefined;
+    //only affects getTextContent
+    textColor?: ThemeColor;
     bold?: boolean;
     sortable?: boolean;
     align?: "left" | "center" | "right";

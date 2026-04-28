@@ -1,5 +1,6 @@
 // (C) 2025 GoodData Corporation
 @use "../../../styles/scss/mixins";
+@use "../themeColorsMap";
 
 .gd-ui-kit-async-table {
     $root: &;
@@ -130,6 +131,14 @@
             flex-direction: column;
             font-size: var(--gd-table-multi-line-font-size);
             line-height: var(--gd-table-multi-line-line-height);
+        }
+
+        &--color {
+            @each $key, $value in themeColorsMap.$theme-colors-map {
+                &-#{$key} {
+                    color: var(--gd-palette-#{$value});
+                }
+            }
         }
     }
 

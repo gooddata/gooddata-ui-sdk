@@ -622,7 +622,7 @@ export function filterAttributeElements(filter: IAttributeFilterWithSelection): 
 export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined;
 
 // @alpha
-export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter;
+export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter;
 
 // @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
@@ -1622,6 +1622,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly evaluationFrequency?: string;
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
+    readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
     readonly plugins?: IDashboardPluginLink[];
     readonly sectionHeadersDateDataSet?: ObjRef;
     readonly tabs?: IDashboardTab<TWidget>[];
@@ -1761,6 +1762,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly evaluationFrequency?: string;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
+    readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
     readonly plugins?: IDashboardPluginLink[];
     readonly sectionHeadersDateDataSet?: ObjRef;
     readonly tabs?: IDashboardTab<TWidget>[];
@@ -1791,7 +1793,7 @@ export interface IDashboardFilterGroupsConfig {
 }
 
 // @public
-export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
+export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference | IDashboardMeasureValueFilterReference;
 
 // @alpha
 export interface IDashboardFilterView {
@@ -1906,6 +1908,29 @@ export interface IDashboardMatchAttributeFilter {
     };
 }
 
+// @alpha
+export interface IDashboardMeasureValueFilter {
+    // (undocumented)
+    dashboardMeasureValueFilter: {
+        measure: ObjRef;
+        localIdentifier: string;
+        conditions?: MeasureValueFilterCondition[];
+        title?: string;
+    };
+}
+
+// @alpha
+export interface IDashboardMeasureValueFilterConfig {
+    localIdentifier: string;
+    mode?: DashboardAttributeFilterConfigMode;
+}
+
+// @public
+export interface IDashboardMeasureValueFilterReference {
+    measure: ObjRef;
+    type: "measureValueFilterReference";
+}
+
 // @public
 export interface IDashboardMetadataObject extends IMetadataObject {
     // (undocumented)
@@ -1959,6 +1984,7 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
     layout?: IDashboardLayout<TWidget>;
     localIdentifier: string;
+    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
     title: string;
 }
 
@@ -2562,6 +2588,7 @@ export interface IFeatureFlags {
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
     enableMatchFilterKD?: boolean;
+    enableMeasureValueFilterKD?: boolean;
     enableMetricFormatOverrides?: boolean;
     // (undocumented)
     enableMongoDbDataSource?: boolean;
@@ -4550,6 +4577,12 @@ export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboa
 
 // @alpha
 export function isDashboardMatchAttributeFilter(obj: unknown): obj is IDashboardMatchAttributeFilter;
+
+// @alpha
+export function isDashboardMeasureValueFilter(obj: unknown): obj is IDashboardMeasureValueFilter;
+
+// @public
+export function isDashboardMeasureValueFilterReference(obj: unknown): obj is IDashboardMeasureValueFilterReference;
 
 // @public
 export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;

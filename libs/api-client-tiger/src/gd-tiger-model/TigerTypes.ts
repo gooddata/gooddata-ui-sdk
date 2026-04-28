@@ -704,6 +704,16 @@ export interface ITigerDashboardAttributeFilterConfig {
 }
 
 /**
+ * Tiger-specific dashboard measure value filter config.
+ * The title is stored on the filter itself, this config only controls visibility/interactivity mode.
+ * @public
+ */
+export interface ITigerDashboardMeasureValueFilterConfig {
+    localIdentifier: string;
+    mode?: "active" | "readonly" | "hidden";
+}
+
+/**
  * Tiger-specific dashboard filter group
  * @public
  */
@@ -817,13 +827,29 @@ export interface ITigerDashboardMatchAttributeFilter {
 }
 
 /**
+ * Tiger-specific dashboard measure value filter (dashboard filter context level).
+ * Conditions are OR-ed together; empty/undefined conditions mean "All" (no filtering).
+ * @public
+ */
+export interface ITigerDashboardMeasureValueFilter {
+    dashboardMeasureValueFilter: {
+        measure: ObjRef;
+        localIdentifier: string;
+        conditions?: Array<ITigerComparisonCondition | ITigerRangeCondition>;
+        treatNullValuesAs?: number;
+        title?: string;
+    };
+}
+
+/**
  * Tiger-specific filter context item
  * @public
  */
 export type ITigerFilterContextItem =
     | DashboardFilter
     | ITigerDashboardArbitraryAttributeFilter
-    | ITigerDashboardMatchAttributeFilter;
+    | ITigerDashboardMatchAttributeFilter
+    | ITigerDashboardMeasureValueFilter;
 
 //
 // =====================================================================================================================
@@ -846,5 +872,6 @@ export interface ITigerDashboardTab {
         config: ITigerDashboardDateFilterConfig;
     }>;
     attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
+    measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
     filterGroupsConfig?: ITigerDashboardFilterGroupsConfig;
 }

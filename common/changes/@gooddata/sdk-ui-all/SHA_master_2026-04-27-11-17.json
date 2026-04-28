@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-tiger: update GetConversations endpoint to support new AiConversationListResponse structure",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: refactor client logic for new response format and simplify conversation reset flow.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
