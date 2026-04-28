@@ -994,6 +994,18 @@ export interface IFeatureFlags {
     enableAIKnowledge?: boolean;
 
     /**
+     * Enable the redesigned AI Hub landing page with Agents / AI Knowledge / MCP cards
+     * and an embedded settings section. When disabled, the legacy single-card AI Hub
+     * page is shown and AI-related settings remain in the main Settings page.
+     */
+    enableImprovedAiHub?: boolean;
+
+    /**
+     * Enable the admin toggle that controls whether organization/workspace data can be sent to LLMs.
+     */
+    enableAIDataSetting?: boolean;
+
+    /**
      * Enable GenAI reasoning visibility.
      */
     enableGenAIReasoningVisibility?: boolean;

@@ -6,8 +6,8 @@
     align-items: center;
 }
 
-.dropdown-body .gd-list.gd-filter-group-body,
-.gd-mobile-dropdown-content .gd-list.gd-filter-group-body {
+.dropdown-body .gd-infinite-list.gd-filter-group-body,
+.gd-mobile-dropdown-content .gd-infinite-list.gd-filter-group-body {
     display: flex;
     flex-direction: column;
     border: 1px solid variables.$gd-border-color;
@@ -36,8 +36,12 @@
     & .fixedDataTableLayout_main {
         height: auto;
     }
+
+    & .gd-ui-kit-paged-virtual-list--hasScroll {
+        padding-right: 0;
+    }
 }
 
-.dropdown-body .gd-list.gd-filter-group-body {
+.dropdown-body .gd-infinite-list.gd-filter-group-body {
     max-width: 300px;
 }

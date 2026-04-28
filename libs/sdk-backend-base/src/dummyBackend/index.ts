@@ -81,6 +81,7 @@ import {
     type IOrganizationAgentsService,
     type IOrganizationAutomationService,
     type IOrganizationExportTemplatesService,
+    type IOrganizationGenAIService,
     type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
@@ -1277,6 +1278,14 @@ class DummyOrganization implements IOrganization {
                 throw new NotSupported("not supported");
             },
             deleteAgent: () => Promise.resolve(),
+        };
+    }
+
+    public genAI(): IOrganizationGenAIService {
+        return {
+            getKnowledgeDocuments: () => {
+                throw new NotSupported("not supported");
+            },
         };
     }
 

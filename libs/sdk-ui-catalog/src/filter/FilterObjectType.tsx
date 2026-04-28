@@ -4,14 +4,14 @@ import { memo, useId } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { useObjectTypeState } from "../objectType/ObjectTypeContext.js";
+import { useCatalogFeedCounter } from "../catalogItem/CatalogFeedContext.js";
 import { ObjectTypeSelectMemo } from "../objectType/ObjectTypeSelect.js";
 import { useIsParametersEnabled } from "../parameter/gate.js";
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { FilterGroupLayout } from "./FilterGroupLayout.js";
 
 export function FilterObjectType() {
-    const { counter } = useObjectTypeState();
+    const counter = useCatalogFeedCounter();
     const { types } = useFilterState();
     const { setTypes } = useFilterActions();
     const isParametersEnabled = useIsParametersEnabled();

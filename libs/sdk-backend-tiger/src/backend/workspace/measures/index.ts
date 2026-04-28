@@ -7,6 +7,7 @@ import {
     type JsonApiLabelOut,
     type JsonApiMetricOut,
     type JsonApiMetricOutDocument,
+    type JsonApiParameterOut,
     type KeyDriversDimension,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
@@ -121,7 +122,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             EntitiesApi_GetEntityMetrics(client.axios, client.basePath, {
                 objectId: ref.identifier,
                 workspaceId: this.workspace,
-                include: ["facts", "metrics", "attributes", "labels", "datasets"],
+                include: ["facts", "metrics", "attributes", "labels", "datasets", "parameters"],
             }),
         );
         const metric = metricMetadata.data;
@@ -150,7 +151,8 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             type === "fact" ||
             type === "attribute" ||
             type === "label" ||
-            type === "dataset"
+            type === "dataset" ||
+            type === "parameter"
         ) {
             return this.resolveObjectToken(id, type, metric.included || [], metric.data.id);
         }
@@ -159,13 +161,13 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
 
     private resolveObjectToken(
         objectId: string,
-        objectType: "metric" | "fact" | "attribute" | "label" | "dataset",
+        objectType: "metric" | "fact" | "attribute" | "label" | "dataset" | "parameter",
         includedObjects: ReadonlyArray<any>,
         identifier: string,
     ): IMeasureExpressionToken {
         const includedObject = includedObjects.find((includedObject) => {
             return includedObject.id === objectId && includedObject.type === objectType;
-        }) as JsonApiMetricOut | JsonApiLabelOut | JsonApiAttributeOut | JsonApiFactOut;
+        }) as JsonApiMetricOut | JsonApiLabelOut | JsonApiAttributeOut | JsonApiFactOut | JsonApiParameterOut;
 
         interface ITypeMapping {
             [tokenObjectType: string]: ObjectType;
@@ -176,6 +178,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             attribute: "attribute",
             label: "attribute",
             dataset: "dataSet",
+            parameter: "parameter",
         };
 
         const value = includedObject?.attributes?.title || `${objectType}/${objectId}`;

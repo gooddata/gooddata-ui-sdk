@@ -2464,6 +2464,7 @@ export interface IFeatureFlags {
     enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
     enableAiAgenticConversations?: boolean;
+    enableAIDataSetting?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
     enableAiHub?: boolean;
@@ -2547,6 +2548,7 @@ export interface IFeatureFlags {
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImplicitDrillToUrl?: boolean;
     enableImprovedAdFilters?: boolean;
+    enableImprovedAiHub?: boolean;
     enableInPlatformNotifications?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
@@ -4612,6 +4614,7 @@ export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDas
 export interface ISemanticQualityIssue {
     code: SemanticQualityIssueCode;
     detail: ISemanticQualityIssueDetail;
+    id: string;
     objects: ISemanticQualityIssueObject[];
     severity: SemanticQualityIssueSeverity;
 }

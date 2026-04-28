@@ -163,6 +163,42 @@ describe("useDebounce", () => {
         expect(callback).not.toHaveBeenCalled();
     });
 
+    it("should cancel pending callback on unmount", () => {
+        const callback = vi.fn();
+        const { result, unmount } = renderHook(() => useDebounce(callback, 300));
+
+        act(() => {
+            result.current();
+        });
+
+        unmount();
+
+        act(() => {
+            vi.advanceTimersByTime(300);
+        });
+
+        expect(callback).not.toHaveBeenCalled();
+    });
+
+    it("should cancel pending callback when delay changes", () => {
+        const callback = vi.fn();
+        const { result, rerender } = renderHook(({ delay }) => useDebounce(callback, delay), {
+            initialProps: { delay: 300 },
+        });
+
+        act(() => {
+            result.current();
+        });
+
+        rerender({ delay: 500 });
+
+        act(() => {
+            vi.advanceTimersByTime(300);
+        });
+
+        expect(callback).not.toHaveBeenCalled();
+    });
+
     it("should have flush method that executes callback immediately", () => {
         const callback = vi.fn();
         const { result } = renderHook(() => useDebounce(callback, 300));

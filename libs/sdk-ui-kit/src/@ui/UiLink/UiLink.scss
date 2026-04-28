@@ -60,4 +60,15 @@
     &--fullWidth {
         width: 100%;
     }
+
+    &--isDisabled {
+        &,
+        &:hover,
+        &:focus,
+        &:active {
+            color: variables.$gd-color-disabled;
+            cursor: default;
+            text-decoration: none;
+        }
+    }
 }

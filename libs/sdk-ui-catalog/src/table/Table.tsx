@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
+import { ErrorComponent } from "@gooddata/sdk-ui";
 import {
     type IUiAsyncTableColumn,
     UiAsyncTable,
@@ -55,6 +56,16 @@ export function Table({ items, status, next, hasNext, totalCount, onTagClick, on
     const effectiveItems = useMemo(() => items.map((item) => ({ ...item, id: item.identifier })), [items]);
     const skeletonItemsCount = isLoading ? 3 : totalCount - items.length;
     const announcedTotalResults = isSearching && status === "success" ? totalCount : undefined;
+
+    if (status === "error") {
+        return (
+            <ErrorComponent
+                message={intl.formatMessage({ id: "analyticsCatalog.error.unknown.message" })}
+                description={intl.formatMessage({ id: "analyticsCatalog.error.unknown.description" })}
+                width="100%"
+            />
+        );
+    }
 
     return (
         <div className="gd-analytics-catalog__table" ref={ref}>

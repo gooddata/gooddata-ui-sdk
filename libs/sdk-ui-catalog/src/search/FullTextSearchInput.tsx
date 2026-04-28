@@ -1,10 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
-import { useDebouncedState } from "@gooddata/sdk-ui";
+import { useDebounce } from "@gooddata/sdk-ui";
 import { Input } from "@gooddata/sdk-ui-kit";
 
 import { useFullTextSearchActions } from "./FullTextSearchContext.js";
@@ -15,18 +15,17 @@ const debounceDelay = 300;
 export function FullTextSearchInput() {
     const intl = useIntl();
     const { setSearchTerm } = useFullTextSearchActions();
-    const [value, setValue, searchTerm] = useDebouncedState<string>(initialSearchTerm, debounceDelay);
+    const [value, setValue] = useState(initialSearchTerm);
+    const debouncedSetSearchTerm = useDebounce(setSearchTerm, debounceDelay);
 
     const handleChange = useCallback(
         (value: string | number) => {
-            setValue(String(value));
+            const nextValue = String(value);
+            setValue(nextValue);
+            debouncedSetSearchTerm(nextValue);
         },
-        [setValue],
+        [debouncedSetSearchTerm],
     );
-
-    useEffect(() => {
-        setSearchTerm(searchTerm);
-    }, [searchTerm, setSearchTerm]);
 
     const label = intl.formatMessage({ id: "analyticsCatalog.search.label" });
     const accessibilityConfig = useMemo(() => ({ ariaLabel: label }), [label]);

@@ -71,7 +71,7 @@ runs:
 
     - name: Send Slack message
       id: post-message
-      uses: slackapi/slack-github-action@v3.0.1
+      uses: slackapi/slack-github-action@v3.0.2
       with:
         method: chat.postMessage
         token: ${{ inputs.slack-bot-token }}
@@ -80,7 +80,7 @@ runs:
     - name: Get message permalink
       id: get-permalink-api
       if: ${{ inputs.return-permalink == 'true' }}
-      uses: slackapi/slack-github-action@v3.0.1
+      uses: slackapi/slack-github-action@v3.0.2
       with:
         method: chat.getPermalink
         token: ${{ inputs.slack-bot-token }}

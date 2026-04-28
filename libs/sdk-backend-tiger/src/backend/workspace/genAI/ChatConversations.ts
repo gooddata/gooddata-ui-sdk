@@ -154,10 +154,10 @@ export class ConversationItemsQuery implements IChatConversationItemsQuery {
                 // NEW API handler, type will then come from definitions after update
                 const data = response.data as unknown as {
                     data: AiConversationResponse[];
-                    meta: { page: number; size: number; total: number };
+                    meta: { page: { page: number; size: number; total: number } };
                 };
                 const items = data.data.map(convertChatConversationFromBackend);
-                return { items, totalCount: data.meta.total };
+                return { items, totalCount: data.meta.page.total };
             },
             this.size,
             this.page * this.size,

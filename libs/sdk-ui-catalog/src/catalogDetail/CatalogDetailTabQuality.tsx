@@ -28,9 +28,9 @@ export function CatalogDetailTabQuality({
     return (
         <div className="gd-analytics-catalog-detail__tab-quality">
             {issues.length > 0 ? (
-                issues.map((issue, idx) => (
+                issues.map((issue) => (
                     <QualityIssue
-                        key={idx}
+                        key={issue.id}
                         objectId={item.identifier}
                         issue={issue}
                         canEdit={canEdit}

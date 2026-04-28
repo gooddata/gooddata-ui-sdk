@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Tokenize {parameter/...} in metric MAQL expressions",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

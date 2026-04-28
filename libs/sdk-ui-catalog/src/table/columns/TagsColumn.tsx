@@ -33,9 +33,9 @@ interface ITagsManagerProps {
 
 const TagsManagerMemo = memo(function TagsManager({ intl, item, width, onTagClick }: ITagsManagerProps) {
     const tags = useMemo(() => {
-        return item.tags.map((tag, i) => {
+        return item.tags.map((tag) => {
             return {
-                id: i.toString(),
+                id: tag,
                 label: tag,
             };
         });
