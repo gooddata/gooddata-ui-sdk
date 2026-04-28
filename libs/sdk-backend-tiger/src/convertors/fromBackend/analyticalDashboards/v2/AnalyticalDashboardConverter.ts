@@ -8,6 +8,7 @@ import {
     type ITigerDashboardAttributeFilterConfig,
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
+    type ITigerDashboardMeasureValueFilterConfig,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiAnalyticalDashboardOutIncludes,
     type JsonApiDashboardPluginOutDocument,
@@ -24,6 +25,7 @@ import {
     type IDashboardDateFilterConfigItem,
     type IDashboardLayout,
     type IDashboardLayoutWidget,
+    type IDashboardMeasureValueFilterConfig,
     type IDashboardPlugin,
     type IDashboardPluginLink,
     type IDashboardTab,
@@ -120,6 +122,7 @@ interface IAnalyticalDashboardContent {
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     plugins?: IDashboardPluginLink[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;
     disableUserFilterSave?: boolean;
@@ -179,6 +182,10 @@ function convertDashboardTabContent(
             ITigerDashboardAttributeFilterConfig[] | undefined,
             IDashboardAttributeFilterConfig[] | undefined
         >(tab.attributeFilterConfigs),
+        measureValueFilterConfigs: cloneWithSanitizedIdsTyped<
+            ITigerDashboardMeasureValueFilterConfig[] | undefined,
+            IDashboardMeasureValueFilterConfig[] | undefined
+        >(tab.measureValueFilterConfigs),
         filterGroupsConfig: cloneWithSanitizedIds(tab.filterGroupsConfig),
     };
 }
@@ -232,6 +239,12 @@ function getConvertedAnalyticalDashboardContent(
                   IDashboardAttributeFilterConfig[]
               >(analyticalDashboard.attributeFilterConfigs)
             : defaultTab?.attributeFilterConfigs,
+        measureValueFilterConfigs: analyticalDashboard.measureValueFilterConfigs
+            ? cloneWithSanitizedIdsTyped<
+                  ITigerDashboardMeasureValueFilterConfig[],
+                  IDashboardMeasureValueFilterConfig[]
+              >(analyticalDashboard.measureValueFilterConfigs)
+            : defaultTab?.measureValueFilterConfigs,
         layout: layout ?? defaultTab?.layout,
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
         disableCrossFiltering: analyticalDashboard.disableCrossFiltering,
@@ -285,6 +298,7 @@ export function convertDashboard(
         layout,
         plugins,
         attributeFilterConfigs,
+        measureValueFilterConfigs,
         dateFilterConfigs,
         disableCrossFiltering,
         disableUserFilterReset,
@@ -322,6 +336,7 @@ export function convertDashboard(
         dateFilterConfig,
         dateFilterConfigs,
         attributeFilterConfigs,
+        measureValueFilterConfigs,
         layout,
         plugins,
         disableCrossFiltering,

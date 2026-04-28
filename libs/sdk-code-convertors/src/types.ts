@@ -84,6 +84,7 @@ export type DashboardTab = {
     dateFilterConfig?: IDashboardDefinition["dateFilterConfig"];
     dateFilterConfigs?: IDashboardDefinition["dateFilterConfigs"];
     attributeFilterConfigs?: IDashboardDefinition["attributeFilterConfigs"];
+    measureValueFilterConfigs?: IDashboardDefinition["measureValueFilterConfigs"];
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
 };
 

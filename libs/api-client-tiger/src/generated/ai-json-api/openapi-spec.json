@@ -113,11 +113,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ConversationResponse"
-                                    },
-                                    "title": "Response Get Conversations Api V1 Ai Workspaces  Workspace Id  Chat Conversations Get"
+                                    "$ref": "#/components/schemas/ConversationListResponse"
                                 }
                             }
                         }
@@ -2008,6 +2004,67 @@
                 ],
                 "title": "ConversationItemResponse",
                 "description": "Conversation item returned by the agentic HTTP API."
+            },
+            "ConversationListMeta": {
+                "properties": {
+                    "page": {
+                        "$ref": "#/components/schemas/ConversationListPageMeta"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "page"
+                ],
+                "title": "ConversationListMeta"
+            },
+            "ConversationListPageMeta": {
+                "properties": {
+                    "page": {
+                        "type": "integer",
+                        "title": "Page",
+                        "description": "Zero-based page index."
+                    },
+                    "size": {
+                        "type": "integer",
+                        "title": "Size",
+                        "description": "Requested page size."
+                    },
+                    "total": {
+                        "type": "integer",
+                        "title": "Total",
+                        "description": "Total count of available conversations."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "page",
+                    "size",
+                    "total"
+                ],
+                "title": "ConversationListPageMeta"
+            },
+            "ConversationListResponse": {
+                "properties": {
+                    "data": {
+                        "items": {
+                            "$ref": "#/components/schemas/ConversationResponse"
+                        },
+                        "type": "array",
+                        "title": "Data"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/ConversationListMeta"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "data",
+                    "meta"
+                ],
+                "title": "ConversationListResponse"
             },
             "ConversationResponse": {
                 "properties": {

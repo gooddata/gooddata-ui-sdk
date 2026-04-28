@@ -27,6 +27,7 @@ import {
     isDashboardDateFilterReference,
     isDashboardLayout,
     isDashboardLayoutItem,
+    isDashboardMeasureValueFilterReference,
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
@@ -933,7 +934,10 @@ const removeIgnoredAttributeFilterFromLayout = (
 
             if (isInsightWidget(widget) || isKpiWidget(widget)) {
                 widget.ignoreDashboardFilters = widget.ignoreDashboardFilters.filter((filter) => {
-                    if (isDashboardDateFilterReference(filter)) {
+                    if (
+                        isDashboardDateFilterReference(filter) ||
+                        isDashboardMeasureValueFilterReference(filter)
+                    ) {
                         return true;
                     }
 
@@ -996,7 +1000,10 @@ const removeIgnoredDateFilterFromLayout = (
 
             if (isInsightWidget(widget) || isKpiWidget(widget)) {
                 widget.ignoreDashboardFilters = widget.ignoreDashboardFilters.filter((filter) => {
-                    if (isDashboardAttributeFilterReference(filter)) {
+                    if (
+                        isDashboardAttributeFilterReference(filter) ||
+                        isDashboardMeasureValueFilterReference(filter)
+                    ) {
                         return true;
                     }
 

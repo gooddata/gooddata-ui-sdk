@@ -2,11 +2,7 @@
 
 import { type EventSourceMessage, EventSourceParserStream } from "eventsource-parser/stream";
 
-import {
-    type AiConversationItemResponse,
-    type AiConversationResponse,
-    type AiSendMessageRequest,
-} from "@gooddata/api-client-tiger";
+import { type AiConversationItemResponse, type AiSendMessageRequest } from "@gooddata/api-client-tiger";
 import {
     GenAiApi_DeleteConversation,
     GenAiApi_GetConversation,
@@ -141,21 +137,7 @@ export class ConversationItemsQuery implements IChatConversationItemsQuery {
                     });
                 });
 
-                //NOTE: This is a workaround for the fact that the backend returns an array of conversations in old version of API
-                // and in new version of API it returns a envelope object with data and meta properties.
-                //TODO: s.hacker: Remove old API handler after all clients are updated to use new API
-
-                // OLD API handler
-                if (Array.isArray(response.data)) {
-                    const items = response.data.map(convertChatConversationFromBackend);
-                    return { items, totalCount: items.length };
-                }
-
-                // NEW API handler, type will then come from definitions after update
-                const data = response.data as unknown as {
-                    data: AiConversationResponse[];
-                    meta: { page: { page: number; size: number; total: number } };
-                };
+                const data = response.data;
                 const items = data.data.map(convertChatConversationFromBackend);
                 return { items, totalCount: data.meta.page.total };
             },
@@ -220,10 +202,6 @@ export class ConversationThread implements IChatConversationThread {
      * Resets the conversation. This creates a new conversation.
      */
     async reset(): Promise<IChatConversation> {
-        if (this.conversationId) {
-            await this.service.delete(this.conversationId);
-        }
-
         const conv = await this.service.create();
         this.conversationId = conv.id;
         return conv;

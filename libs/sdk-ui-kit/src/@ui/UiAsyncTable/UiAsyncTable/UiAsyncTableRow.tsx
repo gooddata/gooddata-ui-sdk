@@ -230,6 +230,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
             getTextTitle: ((item: T) => string) | undefined,
             getTextHref: ((item: T) => string | undefined) | undefined,
             renderSuffixIcon: ((item: T) => ReactNode) | undefined,
+            textColor: IUiAsyncTableColumn<T>["textColor"],
             focusedElementRef: Ref<HTMLElement>,
             isCellFocused: boolean,
         ) => {
@@ -255,7 +256,10 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                         ref={
                             isActive && isCellFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined
                         }
-                        className={e("text", { "multi-line": !!getMultiLineTextContent })}
+                        className={e("text", {
+                            "multi-line": !!getMultiLineTextContent,
+                            color: !getMultiLineTextContent && textColor ? textColor : false,
+                        })}
                     >
                         {textContent}
                     </div>
@@ -279,6 +283,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                 getTextTitle,
                 getTextHref,
                 getAccessibilityConfig,
+                textColor,
                 key,
             }: IUiAsyncTableColumn<T>,
             labelId: string | undefined,
@@ -315,6 +320,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                         getTextTitle,
                         getTextHref,
                         renderSuffixIcon,
+                        textColor,
                         focusedElementRef,
                         isCellFocused,
                     )}

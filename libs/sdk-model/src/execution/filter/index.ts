@@ -1156,10 +1156,6 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined;
 export function filterLocalIdentifier(filter: IFilter): string | undefined {
     invariant(filter, "filter must be specified");
 
-    if (!isAttributeFilter(filter) && !isDateFilter(filter)) {
-        return undefined;
-    }
-
     if (isPositiveAttributeFilter(filter)) {
         return filter.positiveAttributeFilter.localIdentifier;
     }
@@ -1177,6 +1173,12 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined {
     }
     if (isMatchAttributeFilter(filter)) {
         return filter.matchAttributeFilter.localIdentifier;
+    }
+    if (isMeasureValueFilter(filter)) {
+        return filter.measureValueFilter.localIdentifier;
+    }
+    if (isRankingFilter(filter)) {
+        return filter.rankingFilter.localIdentifier;
     }
     return undefined;
 }

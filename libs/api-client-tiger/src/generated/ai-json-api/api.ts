@@ -111,6 +111,30 @@ export interface AiConversationItemResponse {
 
 export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool';
 
+export interface AiConversationListMeta {
+    'page': AiConversationListPageMeta;
+}
+
+export interface AiConversationListPageMeta {
+    /**
+     * Zero-based page index.
+     */
+    'page': number;
+    /**
+     * Requested page size.
+     */
+    'size': number;
+    /**
+     * Total count of available conversations.
+     */
+    'total': number;
+}
+
+export interface AiConversationListResponse {
+    'data': Array<AiConversationResponse>;
+    'meta': AiConversationListMeta;
+}
+
 /**
  * Conversation returned by the agentic HTTP API.
  */
@@ -1401,7 +1425,7 @@ export async function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspace
     requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<Array<AiConversationResponse>> {
+): AxiosPromise<AiConversationListResponse> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(
         requestParameters.workspaceId, requestParameters.isPreview, requestParameters.page, requestParameters.size, 
         options || {},
@@ -1471,7 +1495,7 @@ export interface ConversationsAiInterface {
      * @throws {RequiredError}
      * @memberof ConversationsAiInterface
      */
-    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AiConversationResponse>>;
+    getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
 
     /**
      * 

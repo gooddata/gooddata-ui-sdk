@@ -5751,6 +5751,8 @@ export interface IUiAsyncTableColumn<T> {
     // (undocumented)
     sortable?: boolean;
     // (undocumented)
+    textColor?: ThemeColor;
+    // (undocumented)
     width?: number;
 }
 

@@ -1,9 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
+import cx from "classnames";
 import type { PropsWithChildren } from "react";
 import type { IntlShape } from "react-intl";
 
-import { UiButton } from "@gooddata/sdk-ui-kit";
+import { UiButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 type Props = {
     intl: IntlShape;
@@ -27,7 +28,22 @@ export function QualityScoreCardAction({
     }
     if (isSyncing) {
         return (
-            <Layout>{intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.action.syncing" })}</Layout>
+            <Layout fullWidth>
+                <UiTooltip
+                    anchorWrapperStyles={{
+                        display: "inline",
+                    }}
+                    optimalPlacement
+                    arrowPlacement="top"
+                    triggerBy={["hover", "focus"]}
+                    anchor={
+                        <span tabIndex={0}>
+                            {intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.action.syncing" })}
+                        </span>
+                    }
+                    content={intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.action.syncing" })}
+                />
+            </Layout>
         );
     }
     if (isLoading) {
@@ -52,6 +68,14 @@ export function QualityScoreCardAction({
     );
 }
 
-function Layout({ children }: PropsWithChildren) {
-    return <div className="gd-analytics-catalog__quality-score-card__action">{children}</div>;
+function Layout({ children, fullWidth }: PropsWithChildren<{ fullWidth?: boolean }>) {
+    return (
+        <div
+            className={cx("gd-analytics-catalog__quality-score-card__action", {
+                "quality-score-card__fullWidth": fullWidth,
+            })}
+        >
+            {children}
+        </div>
+    );
 }

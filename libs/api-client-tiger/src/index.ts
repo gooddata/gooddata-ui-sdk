@@ -137,6 +137,8 @@ export type {
     ITigerDashboardAttributeFilterConfig,
     ITigerDashboardDateFilterConfig,
     ITigerDashboardMatchAttributeFilter,
+    ITigerDashboardMeasureValueFilter,
+    ITigerDashboardMeasureValueFilterConfig,
     ITigerDashboardFilterGroupsConfig,
     ITigerDashboardLayout,
     ITigerDashboardTab,

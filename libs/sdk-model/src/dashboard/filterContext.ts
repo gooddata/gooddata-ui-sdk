@@ -9,6 +9,7 @@ import {
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
     type MatchFilterOperator,
+    type MeasureValueFilterCondition,
     isAttributeElementsByRef,
 } from "../execution/filter/index.js";
 import { type ObjRef, isObjRef } from "../objRef/index.js";
@@ -577,6 +578,49 @@ export function isNoopAllTimeDashboardDateFilter(obj: unknown): boolean {
 }
 
 /**
+ * Measure value filter of the filter context.
+ *
+ * @remarks
+ * Allows filtering data points across dashboard visualizations based on the value of a metric.
+ * Conditions are OR-ed together (e.g. `value > 100 OR value < 10`).
+ * When `conditions` is empty or undefined, the filter is treated as "All" (no filtering).
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilter {
+    dashboardMeasureValueFilter: {
+        /**
+         * Reference to the metric being filtered. Always uses ObjRef (not LocalIdRef)
+         * because dashboard MVF references a catalog metric, not a local measure in an insight.
+         */
+        measure: ObjRef;
+
+        /**
+         * Identifier of the filter which is valid in the scope of the filter context.
+         * Mandatory for dashboard measure value filters.
+         */
+        localIdentifier: string;
+
+        /**
+         * OR-ed conditions (comparison or range). Empty or undefined means "All" (no filtering).
+         */
+        conditions?: MeasureValueFilterCondition[];
+        /**
+         * Custom title of the filter. If specified has priority over the default metric title.
+         */
+        title?: string;
+    };
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardMeasureValueFilter}.
+ * @alpha
+ */
+export function isDashboardMeasureValueFilter(obj: unknown): obj is IDashboardMeasureValueFilter {
+    return !isEmpty(obj) && !!(obj as IDashboardMeasureValueFilter).dashboardMeasureValueFilter;
+}
+
+/**
  * Type-guard testing whether the provider object is an All values attribute filter
  * @alpha
  */
@@ -706,6 +750,7 @@ export function dashboardAttributeFilterItemValidateElementsBy(
  *
  * For attribute filters (including text mode filters), this will be reference to the display form.
  * For date filters, it's reference to the data set, or undefined if it's the default date filter.
+ * For measure value filters, it's reference to the metric.
  *
  * @alpha
  */
@@ -715,6 +760,9 @@ export function dashboardFilterObjRef(filter: FilterContextItem): ObjRef | undef
     }
     if (isDashboardDateFilter(filter)) {
         return filter.dateFilter.dataSet;
+    }
+    if (isDashboardMeasureValueFilter(filter)) {
+        return filter.dashboardMeasureValueFilter.measure;
     }
     return undefined;
 }
@@ -731,6 +779,9 @@ export function dashboardFilterLocalIdentifier(filter: FilterContextItem): strin
     if (isDashboardDateFilter(filter)) {
         return filter.dateFilter.localIdentifier;
     }
+    if (isDashboardMeasureValueFilter(filter)) {
+        return filter.dashboardMeasureValueFilter.localIdentifier;
+    }
 
     return undefined;
 }
@@ -739,14 +790,21 @@ export function dashboardFilterLocalIdentifier(filter: FilterContextItem): strin
  * Supported filter context items
  * @alpha
  */
-export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter;
+export type FilterContextItem =
+    | DashboardAttributeFilterItem
+    | IDashboardDateFilter
+    | IDashboardMeasureValueFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link FilterContextItem}.
  * @alpha
  */
 export function isFilterContextItem(obj: unknown): obj is FilterContextItem {
-    return isDashboardDateFilter(obj) || isDashboardAttributeFilterItem(obj);
+    return (
+        isDashboardDateFilter(obj) ||
+        isDashboardAttributeFilterItem(obj) ||
+        isDashboardMeasureValueFilter(obj)
+    );
 }
 
 /**
@@ -901,22 +959,63 @@ export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashb
 }
 
 /**
+ * Reference to a particular dashboard measure value filter
+ * This is commonly used to define filters to ignore
+ * for the particular dashboard widget
+ *
+ * @public
+ */
+export interface IDashboardMeasureValueFilterReference {
+    /**
+     * Dashboard filter reference type
+     */
+    type: "measureValueFilterReference";
+
+    /**
+     * Metric reference of the target measure value filter
+     */
+    measure: ObjRef;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardMeasureValueFilterReference}.
+ * @public
+ */
+export function isDashboardMeasureValueFilterReference(
+    obj: unknown,
+): obj is IDashboardMeasureValueFilterReference {
+    return (
+        !isEmpty(obj) && (obj as IDashboardMeasureValueFilterReference).type === "measureValueFilterReference"
+    );
+}
+
+/**
  * Reference to a particular dashboard filter
  * This is commonly used to define filters to ignore
  * for the particular dashboard widget
  *
  * @public
  */
-export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
+export type IDashboardFilterReference =
+    | IDashboardDateFilterReference
+    | IDashboardAttributeFilterReference
+    | IDashboardMeasureValueFilterReference;
 
 /**
  * Gets reference to object being used for filtering. For attribute filters, this will be reference to the display
- * form. For date filters this will be reference to the data set.
+ * form. For date filters this will be reference to the data set. For measure value filters this will be reference
+ * to the metric.
  *
  * @alpha
  */
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef {
-    return isDashboardAttributeFilterReference(ref) ? ref.displayForm : ref.dataSet;
+    if (isDashboardAttributeFilterReference(ref)) {
+        return ref.displayForm;
+    }
+    if (isDashboardMeasureValueFilterReference(ref)) {
+        return ref.measure;
+    }
+    return ref.dataSet;
 }
 
 /**

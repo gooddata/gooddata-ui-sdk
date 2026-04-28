@@ -563,6 +563,18 @@ export const selectEnableMatchFilterKD: DashboardSelector<boolean> = createSelec
 });
 
 /**
+ * Returns whether measure value (numeric) filter is enabled in dashboards.
+ *
+ * @alpha
+ */
+export const selectEnableMeasureValueFilterKD: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableMeasureValueFilterKD ?? false;
+    },
+);
+
+/**
  * Returns available attribute filter modes based on feature flags.
  *
  * @remarks

@@ -1088,6 +1088,11 @@ export interface IFeatureFlags {
      * Enable arbitrary filter in Dashboard app.
      */
     enableArbitraryFilterKD?: boolean;
+
+    /**
+     * Enable measure value (numeric) filter in Dashboard app.
+     */
+    enableMeasureValueFilterKD?: boolean;
     /**
      * Enable filtering of visualizations by tags provided via URL.
      */

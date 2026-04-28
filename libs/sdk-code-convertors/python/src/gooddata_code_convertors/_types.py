@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 24a3d52fb8c21b03a3dfb8d2499b2b0b55827c4983e937581bc9b8fa0686fd84
+# schema-hash: 00a1bebf445678cbd409faa95eb48f2ad098aecff382de485ad64d446eee3dff
 
 from __future__ import annotations
 
@@ -39,6 +39,8 @@ __all__ = [
     "DashboardFilters12",
     "DashboardFilters13",
     "DashboardFilters14",
+    "DashboardFilters15",
+    "DashboardFilters16",
     "DashboardFilters2",
     "DashboardFilters3",
     "DashboardFilters4",
@@ -52,6 +54,8 @@ __all__ = [
     "DashboardFiltersNoGroups1",
     "DashboardFiltersNoGroups2",
     "DashboardFiltersNoGroups3",
+    "DashboardFiltersNoGroups5",
+    "DashboardMetricValueFilter",
     "DashboardRelativeDateFilter",
     "DashboardTextFilter",
     "DashboardTextFilter1",
@@ -254,7 +258,7 @@ class Parents(TypedDict):
 
 
 class DashboardFilters2(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: NotRequired[str]
     using: AttributeIdentifier | LabelIdentifier
     multiselect: NotRequired[bool]
@@ -271,7 +275,7 @@ class DashboardFilters2(TypedDict):
 
 
 class DashboardFilters3(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: NotRequired[str]
     using: AttributeIdentifier | LabelIdentifier
     multiselect: NotRequired[bool]
@@ -288,7 +292,7 @@ class DashboardFilters3(TypedDict):
 
 
 class DashboardFilters4(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: NotRequired[str]
     using: AttributeIdentifier | LabelIdentifier
     case_sensitive: NotRequired[bool]
@@ -306,7 +310,7 @@ class DashboardFilters4(TypedDict):
 
 
 class DashboardFilters5(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: NotRequired[str]
     using: AttributeIdentifier | LabelIdentifier
     case_sensitive: NotRequired[bool]
@@ -402,10 +406,34 @@ DashboardTextFilter: TypeAlias = DashboardTextFilter1 | DashboardTextFilter2
 
 
 class DashboardFiltersNoGroups3(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter']
 
 
 DateFilterGranularity: TypeAlias = Literal['MINUTE', 'HOUR', 'DAY', 'WEEK', 'WEEK_US', 'MONTH', 'QUARTER', 'YEAR', 'FISCAL_YEAR', 'FISCAL_QUARTER', 'FISCAL_MONTH']
+
+
+class MvfCondition1(TypedDict):
+    condition: NotRequired[
+        Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
+    ]
+
+
+class MvfCondition2(TypedDict):
+    condition: Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
+    value: float
+
+
+MvfCondition3 = TypedDict(
+    'MvfCondition3',
+    {
+        'condition': Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN'],
+        'from': float,
+        'to': float,
+    },
+)
+
+
+MvfCondition: TypeAlias = MvfCondition1 | MvfCondition2 | MvfCondition3
 
 
 class QueryFilter6(TypedDict):
@@ -445,6 +473,60 @@ class QueryTextFilter2(TypedDict):
 QueryTextFilter: TypeAlias = QueryTextFilter1 | QueryTextFilter2
 
 
+class QueryMetricValueFilter1(TypedDict):
+    type: Literal['metric_value_filter']
+    conditions: list[MvfCondition]
+    condition: NotRequired[
+        Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
+    ]
+    using: MetricIdentifier | str
+    null_values_as_zero: NotRequired[bool]
+    dimensionality: NotRequired[list[LabelIdentifier | str]]
+
+
+class QueryMetricValueFilter2(TypedDict):
+    type: Literal['metric_value_filter']
+    conditions: NotRequired[list[MvfCondition]]
+    condition: Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
+    using: MetricIdentifier | str
+    value: float
+    null_values_as_zero: NotRequired[bool]
+    dimensionality: NotRequired[list[LabelIdentifier | str]]
+
+
+QueryMetricValueFilter3 = TypedDict(
+    'QueryMetricValueFilter3',
+    {
+        'type': Literal['metric_value_filter'],
+        'conditions': NotRequired[list[MvfCondition]],
+        'condition': Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN'],
+        'using': MetricIdentifier | str,
+        'from': float,
+        'to': float,
+        'null_values_as_zero': NotRequired[bool],
+        'dimensionality': NotRequired[list[LabelIdentifier | str]],
+    },
+)
+
+
+class QueryMetricValueFilter4(TypedDict):
+    type: Literal['metric_value_filter']
+    conditions: NotRequired[list[MvfCondition]]
+    condition: NotRequired[
+        Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
+    ]
+    using: MetricIdentifier | str
+    dimensionality: NotRequired[list[LabelIdentifier | str]]
+
+
+QueryMetricValueFilter: TypeAlias = (
+    QueryMetricValueFilter1
+    | QueryMetricValueFilter2
+    | QueryMetricValueFilter3
+    | QueryMetricValueFilter4
+)
+
+
 class QueryRankingFilter1(TypedDict):
     type: Literal['ranking_filter']
     using: MetricIdentifier | str
@@ -462,30 +544,6 @@ class QueryRankingFilter2(TypedDict):
 
 
 QueryRankingFilter: TypeAlias = QueryRankingFilter1 | QueryRankingFilter2
-
-
-class MvfCondition1(TypedDict):
-    condition: NotRequired[
-        Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
-    ]
-
-
-class MvfCondition2(TypedDict):
-    condition: Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
-    value: float
-
-
-MvfCondition3 = TypedDict(
-    'MvfCondition3',
-    {
-        'condition': Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN'],
-        'from': float,
-        'to': float,
-    },
-)
-
-
-MvfCondition: TypeAlias = MvfCondition1 | MvfCondition2 | MvfCondition3
 
 
 class Using(TypedDict):
@@ -669,10 +727,10 @@ class TextWrapping(TypedDict):
     column_overrides: NotRequired[list[ColumnOverride]]
 
 
-DashboardFilters8 = TypedDict(
-    'DashboardFilters8',
+DashboardFilters9 = TypedDict(
+    'DashboardFilters9',
     {
-        'type': Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group'],
+        'type': Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group'],
         'title': NotRequired[str],
         'granularity': NotRequired[DateFilterGranularity],
         'from': NotRequired[str],
@@ -684,10 +742,10 @@ DashboardFilters8 = TypedDict(
 )
 
 
-DashboardFilters9 = TypedDict(
-    'DashboardFilters9',
+DashboardFilters10 = TypedDict(
+    'DashboardFilters10',
     {
-        'type': Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group'],
+        'type': Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group'],
         'title': NotRequired[str],
         'granularity': NotRequired[DateFilterGranularity],
         'from': float,
@@ -699,25 +757,8 @@ DashboardFilters9 = TypedDict(
 )
 
 
-class DashboardFilters10(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
-    title: NotRequired[str]
-    using: AttributeIdentifier | LabelIdentifier
-    multiselect: NotRequired[bool]
-    mode: NotRequired[
-        Literal['readonly', 'hidden', 'active']
-    ]
-    display_as: NotRequired[str]
-    selection_type: NotRequired[
-        Literal['list', 'text', 'listOrText']
-    ]
-    parents: NotRequired[list[str | Parents]]
-    metric_filters: NotRequired[list[str]]
-    state: NotRequired[Any]
-
-
 class DashboardFilters11(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: NotRequired[str]
     using: AttributeIdentifier | LabelIdentifier
     multiselect: NotRequired[bool]
@@ -734,7 +775,24 @@ class DashboardFilters11(TypedDict):
 
 
 class DashboardFilters12(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
+    title: NotRequired[str]
+    using: AttributeIdentifier | LabelIdentifier
+    multiselect: NotRequired[bool]
+    mode: NotRequired[
+        Literal['readonly', 'hidden', 'active']
+    ]
+    display_as: NotRequired[str]
+    selection_type: NotRequired[
+        Literal['list', 'text', 'listOrText']
+    ]
+    parents: NotRequired[list[str | Parents]]
+    metric_filters: NotRequired[list[str]]
+    state: NotRequired[Any]
+
+
+class DashboardFilters13(TypedDict):
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: NotRequired[str]
     using: AttributeIdentifier | LabelIdentifier
     case_sensitive: NotRequired[bool]
@@ -751,8 +809,8 @@ class DashboardFilters12(TypedDict):
     values: list[str | None]
 
 
-class DashboardFilters13(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+class DashboardFilters14(TypedDict):
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: NotRequired[str]
     using: AttributeIdentifier | LabelIdentifier
     case_sensitive: NotRequired[bool]
@@ -769,6 +827,15 @@ class DashboardFilters13(TypedDict):
     value: str
 
 
+class DashboardFilters15(TypedDict):
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
+    title: NotRequired[str]
+    using: MetricIdentifier
+    conditions: NotRequired[list[MvfCondition]]
+    null_values_as_zero: NotRequired[bool]
+    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
+
+
 class AttributeHierarchy(TypedDict):
     id: Identifier
     type: Literal['attribute_hierarchy']
@@ -781,7 +848,7 @@ class AttributeHierarchy(TypedDict):
 DashboardFilters = TypedDict(
     'DashboardFilters',
     {
-        'type': Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group'],
+        'type': Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group'],
         'title': NotRequired[str],
         'granularity': NotRequired[DateFilterGranularity],
         'from': NotRequired[str],
@@ -796,7 +863,7 @@ DashboardFilters = TypedDict(
 DashboardFilters1 = TypedDict(
     'DashboardFilters1',
     {
-        'type': Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group'],
+        'type': Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group'],
         'title': NotRequired[str],
         'granularity': NotRequired[DateFilterGranularity],
         'from': float,
@@ -806,6 +873,15 @@ DashboardFilters1 = TypedDict(
         'date': NotRequired[Identifier],
     },
 )
+
+
+class DashboardFilters6(TypedDict):
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
+    title: NotRequired[str]
+    using: MetricIdentifier
+    conditions: NotRequired[list[MvfCondition]]
+    null_values_as_zero: NotRequired[bool]
+    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
 
 
 DashboardAbsoluteDateFilter = TypedDict(
@@ -838,17 +914,33 @@ DashboardRelativeDateFilter = TypedDict(
 )
 
 
+class DashboardMetricValueFilter(TypedDict):
+    type: Literal['metric_value_filter']
+    title: NotRequired[str]
+    using: MetricIdentifier
+    conditions: NotRequired[list[MvfCondition]]
+    null_values_as_zero: NotRequired[bool]
+    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
+
+
 class DashboardFiltersNoGroups1(DashboardAbsoluteDateFilter):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter']
 
 
 class DashboardFiltersNoGroups2(DashboardRelativeDateFilter):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter']
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter']
+
+
+class DashboardFiltersNoGroups5(DashboardMetricValueFilter):
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter']
 
 
 DashboardFiltersNoGroups: TypeAlias = dict[
     str,
-    DashboardFiltersNoGroups1 | DashboardFiltersNoGroups2 | DashboardFiltersNoGroups3,
+    DashboardFiltersNoGroups1
+    | DashboardFiltersNoGroups2
+    | DashboardFiltersNoGroups3
+    | DashboardFiltersNoGroups5,
 ]
 
 
@@ -895,60 +987,6 @@ QueryDateFilter2 = TypedDict(
 
 
 QueryDateFilter: TypeAlias = QueryDateFilter1 | QueryDateFilter2
-
-
-class QueryMetricValueFilter1(TypedDict):
-    type: Literal['metric_value_filter']
-    conditions: list[MvfCondition]
-    condition: NotRequired[
-        Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
-    ]
-    using: MetricIdentifier | str
-    null_values_as_zero: NotRequired[bool]
-    dimensionality: NotRequired[list[LabelIdentifier | str]]
-
-
-class QueryMetricValueFilter2(TypedDict):
-    type: Literal['metric_value_filter']
-    conditions: NotRequired[list[MvfCondition]]
-    condition: Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
-    using: MetricIdentifier | str
-    value: float
-    null_values_as_zero: NotRequired[bool]
-    dimensionality: NotRequired[list[LabelIdentifier | str]]
-
-
-QueryMetricValueFilter3 = TypedDict(
-    'QueryMetricValueFilter3',
-    {
-        'type': Literal['metric_value_filter'],
-        'conditions': NotRequired[list[MvfCondition]],
-        'condition': Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN'],
-        'using': MetricIdentifier | str,
-        'from': float,
-        'to': float,
-        'null_values_as_zero': NotRequired[bool],
-        'dimensionality': NotRequired[list[LabelIdentifier | str]],
-    },
-)
-
-
-class QueryMetricValueFilter4(TypedDict):
-    type: Literal['metric_value_filter']
-    conditions: NotRequired[list[MvfCondition]]
-    condition: NotRequired[
-        Literal['GREATER_THAN', 'GREATER_THAN_OR_EQUAL_TO', 'LESS_THAN', 'LESS_THAN_OR_EQUAL_TO', 'EQUAL_TO', 'NOT_EQUAL_TO', 'BETWEEN', 'NOT_BETWEEN']
-    ]
-    using: MetricIdentifier | str
-    dimensionality: NotRequired[list[LabelIdentifier | str]]
-
-
-QueryMetricValueFilter: TypeAlias = (
-    QueryMetricValueFilter1
-    | QueryMetricValueFilter2
-    | QueryMetricValueFilter3
-    | QueryMetricValueFilter4
-)
 
 
 ColorItems: TypeAlias = dict[str, ComplexColorItem]
@@ -1332,21 +1370,22 @@ class Config(TypedDict):
     line_style_excluded_metrics: NotRequired[list[str]]
 
 
-class DashboardFilters14(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+class DashboardFilters16(TypedDict):
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: str
     filters: DashboardFiltersNoGroups
 
 
 DashboardFiltersModel: TypeAlias = dict[
     str,
-    DashboardFilters8
-    | DashboardFilters9
+    DashboardFilters9
     | DashboardFilters10
     | DashboardFilters11
     | DashboardFilters12
     | DashboardFilters13
-    | DashboardFilters14,
+    | DashboardFilters14
+    | DashboardFilters15
+    | DashboardFilters16,
 ]
 
 
@@ -1366,13 +1405,13 @@ class Metadata6(AttributeHierarchy):
     type: Literal['dataset', 'date', 'metric', 'dashboard', 'plugin', 'table', 'bar_chart', 'column_chart', 'line_chart', 'area_chart', 'scatter_chart', 'bubble_chart', 'pie_chart', 'donut_chart', 'treemap_chart', 'pyramid_chart', 'funnel_chart', 'heatmap_chart', 'bullet_chart', 'waterfall_chart', 'dependency_wheel_chart', 'sankey_chart', 'headline_chart', 'combo_chart', 'geo_chart', 'geo_area_chart', 'repeater_chart', 'attribute_hierarchy']
 
 
-class DashboardFilters6(TypedDict):
-    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'filter_group']
+class DashboardFilters7(TypedDict):
+    type: Literal['date_filter', 'attribute_filter', 'text_filter', 'metric_value_filter', 'filter_group']
     title: str
     filters: DashboardFiltersNoGroups
 
 
-DashboardFilters7: TypeAlias = dict[
+DashboardFilters8: TypeAlias = dict[
     str,
     DashboardFilters
     | DashboardFilters1
@@ -1380,7 +1419,8 @@ DashboardFilters7: TypeAlias = dict[
     | DashboardFilters3
     | DashboardFilters4
     | DashboardFilters5
-    | DashboardFilters6,
+    | DashboardFilters6
+    | DashboardFilters7,
 ]
 
 

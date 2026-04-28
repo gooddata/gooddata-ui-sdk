@@ -402,6 +402,14 @@ $content-font-size: 14px;
             .gd-ui-kit-button {
                 height: fit-content;
             }
+
+            &.quality-score-card__fullWidth {
+                grid-column-start: 1;
+                grid-column-end: 3;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
         }
 
         &__date {

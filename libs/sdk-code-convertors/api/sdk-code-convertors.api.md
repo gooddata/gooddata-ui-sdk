@@ -46,6 +46,7 @@ import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
+import { IDashboardMeasureValueFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardPluginLink } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
@@ -361,6 +362,7 @@ export type DashboardTab = {
     dateFilterConfig?: IDashboardDefinition["dateFilterConfig"];
     dateFilterConfigs?: IDashboardDefinition["dateFilterConfigs"];
     attributeFilterConfigs?: IDashboardDefinition["attributeFilterConfigs"];
+    measureValueFilterConfigs?: IDashboardDefinition["measureValueFilterConfigs"];
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
 };
 
@@ -447,7 +449,7 @@ export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDate
 // Warning: (ae-missing-release-tag) "declarativeFiltersConfigToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-export function declarativeFiltersConfigToYaml(filtersMap: Record<string, FilterContextItem>, dateFilterConfig?: IDashboardDateFilterConfig, dateFilterConfigs?: IDashboardDateFilterConfigItem[], attributeFilterConfigs?: IDashboardAttributeFilterConfig[], errorContext?: IErrorContext): void;
+export function declarativeFiltersConfigToYaml(filtersMap: Record<string, FilterContextItem>, dateFilterConfig?: IDashboardDateFilterConfig, dateFilterConfigs?: IDashboardDateFilterConfigItem[], attributeFilterConfigs?: IDashboardAttributeFilterConfig[], measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[], errorContext?: IErrorContext): void;
 
 // Warning: (ae-forgotten-export) The symbol "Filters" needs to be exported by the entry point index.d.ts
 // Warning: (ae-missing-release-tag) "declarativeFiltersToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1106,6 +1108,7 @@ export function yamlFilterContextToDeclarative(baseId: string, yamlFilters: Dash
     dateFilterConfig: IDashboardDateFilterConfig | undefined;
     dateFilterConfigs: IDashboardDateFilterConfigItem[] | undefined;
     attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined;
+    measureValueFilterConfigs: IDashboardMeasureValueFilterConfig[] | undefined;
     filterGroupsConfig: IDashboardFilterGroupsConfig | undefined;
 };
 

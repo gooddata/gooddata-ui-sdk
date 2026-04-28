@@ -30,6 +30,7 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isSingleSelectionFilter,
     isUriRef,
@@ -194,7 +195,11 @@ export function* changeFilterContextSelectionHandler(
     // (removed the check that prevented cross-filtering without tabs)
 
     const normalizedFilters: FilterContextItem[] = filters.map((filter) => {
-        if (isDashboardAttributeFilterItem(filter) || isDashboardDateFilter(filter)) {
+        if (
+            isDashboardAttributeFilterItem(filter) ||
+            isDashboardDateFilter(filter) ||
+            isDashboardMeasureValueFilter(filter)
+        ) {
             return filter;
         } else {
             return dashboardFilterToFilterContextItem(

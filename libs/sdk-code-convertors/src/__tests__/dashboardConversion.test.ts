@@ -281,4 +281,252 @@ describe("dashboard conversion", () => {
             });
         });
     });
+
+    describe("dashboard measure value filter", () => {
+        it("should convert measure value filter with single comparison condition", () => {
+            const filters = {
+                mvf_orders: {
+                    type: "metric_value_filter",
+                    using: "metric/order_amount",
+                    conditions: [{ condition: "GREATER_THAN", value: 10000 }],
+                },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+            const convertedFilters = (result.filterContext.content as any).filters;
+
+            expect(convertedFilters).toEqual([
+                {
+                    dashboardMeasureValueFilter: {
+                        measure: { identifier: { id: "order_amount", type: "metric" } },
+                        localIdentifier: "mvf_orders",
+                        conditions: [{ comparison: { operator: "GREATER_THAN", value: 10000 } }],
+                    },
+                },
+            ]);
+            expect(result.measureValueFilterConfigs).toBeUndefined();
+        });
+
+        it("should convert measure value filter with range condition (null flag fanned out per condition)", () => {
+            const filters = {
+                mvf_revenue: {
+                    type: "metric_value_filter",
+                    using: "metric/revenue",
+                    conditions: [{ condition: "BETWEEN", from: 100, to: 1000 }],
+                    null_values_as_zero: true,
+                },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+            const convertedFilters = (result.filterContext.content as any).filters;
+
+            // The top-level YAML flag is applied to each condition (matches insight MVF model).
+            expect(convertedFilters[0].dashboardMeasureValueFilter.conditions).toEqual([
+                { range: { operator: "BETWEEN", from: 100, to: 1000, treatNullValuesAs: 0 } },
+            ]);
+            // Top-level treatNullValuesAs does not exist on the dashboard MVF type.
+            expect(convertedFilters[0].dashboardMeasureValueFilter.treatNullValuesAs).toBeUndefined();
+        });
+
+        it("should fan out null_values_as_zero to all conditions in a multi-condition MVF", () => {
+            const filters = {
+                mvf_orders: {
+                    type: "metric_value_filter",
+                    using: "metric/orders",
+                    conditions: [
+                        { condition: "GREATER_THAN", value: 1000 },
+                        { condition: "LESS_THAN", value: 10 },
+                    ],
+                    null_values_as_zero: true,
+                },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+            const convertedFilters = (result.filterContext.content as any).filters;
+
+            expect(convertedFilters[0].dashboardMeasureValueFilter.conditions).toEqual([
+                { comparison: { operator: "GREATER_THAN", value: 1000, treatNullValuesAs: 0 } },
+                { comparison: { operator: "LESS_THAN", value: 10, treatNullValuesAs: 0 } },
+            ]);
+        });
+
+        it("should convert measure value filter with multiple OR-ed conditions", () => {
+            const filters = {
+                mvf_orders: {
+                    type: "metric_value_filter",
+                    using: "metric/orders",
+                    conditions: [
+                        { condition: "GREATER_THAN", value: 1000 },
+                        { condition: "LESS_THAN", value: 10 },
+                    ],
+                },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+            const convertedFilters = (result.filterContext.content as any).filters;
+
+            expect(convertedFilters[0].dashboardMeasureValueFilter.conditions).toEqual([
+                { comparison: { operator: "GREATER_THAN", value: 1000 } },
+                { comparison: { operator: "LESS_THAN", value: 10 } },
+            ]);
+        });
+
+        it("should convert measure value filter with no conditions (All)", () => {
+            const filters = {
+                mvf_orders: {
+                    type: "metric_value_filter",
+                    using: "metric/orders",
+                },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+            const convertedFilters = (result.filterContext.content as any).filters;
+
+            expect(convertedFilters[0].dashboardMeasureValueFilter).toEqual({
+                measure: { identifier: { id: "orders", type: "metric" } },
+                localIdentifier: "mvf_orders",
+            });
+        });
+
+        it("should extract measure value filter config (mode only) and keep title on filter", () => {
+            const filters = {
+                mvf_orders: {
+                    type: "metric_value_filter",
+                    using: "metric/orders",
+                    title: "# of Orders",
+                    mode: "hidden",
+                    conditions: [{ condition: "GREATER_THAN", value: 100 }],
+                },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+
+            // Mode is extracted to config (matches attribute filter pattern)
+            expect(result.measureValueFilterConfigs).toEqual([
+                {
+                    localIdentifier: "mvf_orders",
+                    mode: "hidden",
+                },
+            ]);
+            // Title stays on the filter itself
+            expect((result.filterContext.content as any).filters[0].dashboardMeasureValueFilter.title).toBe(
+                "# of Orders",
+            );
+        });
+
+        it("should round-trip measure value filter (single comparison)", () => {
+            const input = makeDashboard({
+                filters: {
+                    mvf_orders: {
+                        type: "metric_value_filter",
+                        using: "metric/order_amount",
+                        conditions: [{ condition: "GREATER_THAN", value: 10000 }],
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+
+            expect(json.filters?.["mvf_orders"]).toEqual({
+                type: "metric_value_filter",
+                using: "metric/order_amount",
+                conditions: [{ condition: "GREATER_THAN", value: 10000 }],
+            });
+        });
+
+        it("should round-trip measure value filter (range)", () => {
+            const input = makeDashboard({
+                filters: {
+                    mvf_revenue: {
+                        type: "metric_value_filter",
+                        using: "metric/revenue",
+                        conditions: [{ condition: "BETWEEN", from: 100, to: 1000 }],
+                        null_values_as_zero: true,
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+
+            expect(json.filters?.["mvf_revenue"]).toEqual({
+                type: "metric_value_filter",
+                using: "metric/revenue",
+                conditions: [{ condition: "BETWEEN", from: 100, to: 1000 }],
+                null_values_as_zero: true,
+            });
+        });
+
+        it("should round-trip measure value filter (multiple conditions)", () => {
+            const input = makeDashboard({
+                filters: {
+                    mvf_orders: {
+                        type: "metric_value_filter",
+                        using: "metric/orders",
+                        conditions: [
+                            { condition: "GREATER_THAN", value: 1000 },
+                            { condition: "LESS_THAN", value: 10 },
+                        ],
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+
+            expect(json.filters?.["mvf_orders"]).toEqual({
+                type: "metric_value_filter",
+                using: "metric/orders",
+                conditions: [
+                    { condition: "GREATER_THAN", value: 1000 },
+                    { condition: "LESS_THAN", value: 10 },
+                ],
+            });
+        });
+
+        it("should round-trip measure value filter (no conditions = All)", () => {
+            const input = makeDashboard({
+                filters: {
+                    mvf_orders: {
+                        type: "metric_value_filter",
+                        using: "metric/orders",
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+
+            expect(json.filters?.["mvf_orders"]).toEqual({
+                type: "metric_value_filter",
+                using: "metric/orders",
+            });
+        });
+
+        it("should round-trip measure value filter with mode and title config", () => {
+            const input = makeDashboard({
+                filters: {
+                    mvf_orders: {
+                        type: "metric_value_filter",
+                        using: "metric/orders",
+                        title: "# of Orders",
+                        mode: "hidden",
+                        conditions: [{ condition: "GREATER_THAN", value: 100 }],
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+
+            expect(json.filters?.["mvf_orders"]).toEqual({
+                type: "metric_value_filter",
+                using: "metric/orders",
+                title: "# of Orders",
+                mode: "hidden",
+                conditions: [{ condition: "GREATER_THAN", value: 100 }],
+            });
+        });
+    });
 });

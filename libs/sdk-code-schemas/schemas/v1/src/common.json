@@ -155,7 +155,13 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "enum": ["date_filter", "attribute_filter", "text_filter", "filter_group"]
+                            "enum": [
+                                "date_filter",
+                                "attribute_filter",
+                                "text_filter",
+                                "metric_value_filter",
+                                "filter_group"
+                            ]
                         }
                     },
                     "required": ["type"],
@@ -224,6 +230,18 @@
                             },
                             "then": {
                                 "$ref": "#/$defs/dashboardTextFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "metric_value_filter"
+                                    }
+                                }
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardMetricValueFilter"
                             }
                         },
                         {
@@ -270,7 +288,7 @@
         },
         "dashboardFiltersNoGroups": {
             "title": "Dashboard Filters (no groups)",
-            "description": "Dashboard filters that cannot contain filter groups - only attribute and date filters",
+            "description": "Dashboard filters that cannot contain filter groups - only attribute, date, text, and metric value filters",
             "type": "object",
             "additionalProperties": false,
             "patternProperties": {
@@ -278,7 +296,7 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "enum": ["date_filter", "attribute_filter", "text_filter"]
+                            "enum": ["date_filter", "attribute_filter", "text_filter", "metric_value_filter"]
                         }
                     },
                     "required": ["type"],
@@ -347,6 +365,18 @@
                             },
                             "then": {
                                 "$ref": "#/$defs/dashboardTextFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "metric_value_filter"
+                                    }
+                                }
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardMetricValueFilter"
                             }
                         }
                     ]
@@ -1023,6 +1053,52 @@
             "$semantic": {
                 "type": "definition",
                 "source": "current.dashboard.text_filter.localId",
+                "mode": "property"
+            }
+        },
+        "dashboardMetricValueFilter": {
+            "type": "object",
+            "title": "Dashboard metric value filter",
+            "description": "A dashboard-level filter that filters data by metric value across visualizations. Conditions are OR-ed together; omitting them means \"All\" (no filtering). Granularity is inherited from each affected visualization.",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["metric_value_filter"]
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Optional custom title of the filter to display in the filter bar."
+                },
+                "using": {
+                    "$ref": "#/$defs/metricIdentifier",
+                    "description": "Reference to the metric being filtered.",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "metric.id"
+                    }
+                },
+                "conditions": {
+                    "type": "array",
+                    "description": "OR-ed list of conditions. Empty or omitted means \"All\" (no filtering).",
+                    "items": {
+                        "$ref": "#/$defs/mvfCondition"
+                    }
+                },
+                "null_values_as_zero": {
+                    "type": "boolean",
+                    "description": "Null values will be treated as zero during comparisons."
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["readonly", "hidden", "active"],
+                    "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                }
+            },
+            "additionalProperties": false,
+            "required": ["type", "using"],
+            "$semantic": {
+                "type": "definition",
+                "source": "current.dashboard.metric_value_filter.localId",
                 "mode": "property"
             }
         },

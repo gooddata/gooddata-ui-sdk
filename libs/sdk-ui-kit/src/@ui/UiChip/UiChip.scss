@@ -43,11 +43,11 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
             pointer-events: none;
         }
 
-        #{$root}__trigger {
+        #{$root}__trigger:not(:disabled) {
             background-color: $active-background-color;
         }
 
-        #{$root}__trigger--isDeletable {
+        #{$root}__trigger--isDeletable:not(:disabled) {
             border-right: 1px solid $border-color;
         }
 
@@ -56,7 +56,7 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
                 content: none;
             }
 
-            #{$root}__trigger--isLocked {
+            #{$root}__trigger--isLocked:not(:disabled) {
                 border: none;
                 background-color: $background-color;
             }
@@ -79,7 +79,7 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
             pointer-events: none;
         }
 
-        #{$root}__trigger {
+        #{$root}__trigger:not(#{$root}__trigger--isLocked:disabled) {
             border-color: $action-border-color;
             border-right: 1px solid $action-border-color;
         }
@@ -137,7 +137,7 @@ $action-box-shadow: var(--gd-button-dropShadow, 0 -1px 0 0) var(--gd-palette-err
             border-radius: $border-radius;
 
             &:disabled {
-                background-color: $background-color;
+                background-color: transparent;
                 color: var(--gd-palette-complementary-7);
                 border: none;
             }

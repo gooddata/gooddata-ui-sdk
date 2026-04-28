@@ -7,6 +7,7 @@ import {
     type ITigerDashboardAttributeFilterConfig,
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
+    type ITigerDashboardMeasureValueFilterConfig,
 } from "@gooddata/api-client-tiger";
 import { type LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -14,6 +15,7 @@ import {
     type IDashboardDateFilterConfig,
     type IDashboardDefinition,
     type IDashboardLayout,
+    type IDashboardMeasureValueFilterConfig,
     type IDashboardPluginDefinition,
     type IDashboardPluginLink,
     type IDashboardTab,
@@ -116,6 +118,10 @@ function convertDashboardTabToBackend(
             IDashboardAttributeFilterConfig[] | undefined,
             ITigerDashboardAttributeFilterConfig[] | undefined
         >(tab.attributeFilterConfigs),
+        measureValueFilterConfigs: cloneWithSanitizedIdsTyped<
+            IDashboardMeasureValueFilterConfig[] | undefined,
+            ITigerDashboardMeasureValueFilterConfig[] | undefined
+        >(tab.measureValueFilterConfigs),
         filterGroupsConfig: cloneWithSanitizedIds(tab.filterGroupsConfig),
     };
 }
@@ -141,6 +147,7 @@ export function convertAnalyticalDashboard(
     let effectiveDateFilterConfig = dashboard.dateFilterConfig;
     let effectiveDateFilterConfigs = dashboard.dateFilterConfigs;
     let effectiveAttributeFilterConfigs = dashboard.attributeFilterConfigs;
+    let effectiveMeasureValueFilterConfigs = dashboard.measureValueFilterConfigs;
 
     if (dashboard.tabs && dashboard.tabs.length > 0) {
         const effectiveTab = dashboard.tabs[0];
@@ -150,6 +157,7 @@ export function convertAnalyticalDashboard(
         effectiveDateFilterConfig = effectiveTab.dateFilterConfig;
         effectiveDateFilterConfigs = effectiveTab.dateFilterConfigs;
         effectiveAttributeFilterConfigs = effectiveTab.attributeFilterConfigs;
+        effectiveMeasureValueFilterConfigs = effectiveTab.measureValueFilterConfigs;
     }
 
     const layout = convertLayout(
@@ -167,6 +175,10 @@ export function convertAnalyticalDashboard(
             IDashboardAttributeFilterConfig[] | undefined,
             ITigerDashboardAttributeFilterConfig[] | undefined
         >(effectiveAttributeFilterConfigs),
+        measureValueFilterConfigs: cloneWithSanitizedIdsTyped<
+            IDashboardMeasureValueFilterConfig[] | undefined,
+            ITigerDashboardMeasureValueFilterConfig[] | undefined
+        >(effectiveMeasureValueFilterConfigs),
         filterContextRef: cloneWithSanitizedIds(filterContextRef),
         layout: cloneWithSanitizedIdsTyped<IDashboardLayout | undefined, ITigerDashboardLayout | undefined>(
             layout,

@@ -651,7 +651,7 @@ interface DashboardAbsoluteDateFilter {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
 
 // Warning: (ae-missing-release-tag) "DashboardAttributeFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -697,21 +697,29 @@ type DashboardAttributeFilter1 = {
 // @public
 interface DashboardFilterGroup {
     // (undocumented)
-    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
 interface DashboardFilters {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters1 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+}
+
+// Warning: (ae-missing-release-tag) "DashboardMetricValueFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardMetricValueFilter {
+    // (undocumented)
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
 
 // Warning: (ae-missing-release-tag) "DashboardRelativeDateFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -721,7 +729,7 @@ interface DashboardRelativeDateFilter {
     // (undocumented)
     [k: string]: unknown;
     // (undocumented)
-    type: "date_filter" | "attribute_filter" | "text_filter" | "filter_group";
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
 
 // Warning: (ae-missing-release-tag) "DashboardTextFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -5198,6 +5206,52 @@ export const metadata_v1: {
                 mode: string;
             };
         };
+        dashboardMetricValueFilter: {
+            type: string;
+            title: string;
+            description: string;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    type: string;
+                    description: string;
+                };
+                using: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                conditions: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                null_values_as_zero: {
+                    type: string;
+                    description: string;
+                };
+                mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+            };
+            additionalProperties: boolean;
+            required: string[];
+            $semantic: {
+                type: string;
+                source: string;
+                mode: string;
+            };
+        };
         dashboardFilterGroup: {
             type: string;
             title: string;
@@ -5299,6 +5353,94 @@ export const metadata_v1: {
         dateFilterGranularity: {
             type: string;
             enum: string[];
+        };
+        mvfCondition: {
+            title: string;
+            type: string;
+            properties: {
+                condition: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+            };
+            allOf: ({
+                title: string;
+                if: {
+                    properties?: undefined;
+                    required?: undefined;
+                    not: {
+                        required: string[];
+                    };
+                };
+                then: {
+                    required?: undefined;
+                    additionalProperties: boolean;
+                    properties: {
+                        from?: undefined;
+                        to?: undefined;
+                        value?: undefined;
+                        condition?: undefined;
+                    };
+                };
+            } | {
+                title: string;
+                if: {
+                    not?: undefined;
+                    properties: {
+                        condition: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    additionalProperties: boolean;
+                    properties: {
+                        from?: undefined;
+                        to?: undefined;
+                        condition: {
+                            type: string;
+                            enum: string[];
+                        };
+                        value: {
+                            type: string;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            } | {
+                title: string;
+                if: {
+                    not?: undefined;
+                    properties: {
+                        condition: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    additionalProperties: boolean;
+                    properties: {
+                        value?: undefined;
+                        condition: {
+                            type: string;
+                            enum: string[];
+                        };
+                        from: {
+                            type: string;
+                            description: string;
+                        };
+                        to: {
+                            type: string;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            })[];
         };
         queryFilter: {
             title: string;
@@ -5690,10 +5832,10 @@ export const metadata_v1: {
                 if: {
                     not?: undefined;
                     properties: {
+                        condition?: undefined;
                         conditions: {
                             type: string;
                         };
-                        condition?: undefined;
                     };
                     required: string[];
                 };
@@ -5703,6 +5845,7 @@ export const metadata_v1: {
                         from?: undefined;
                         to?: undefined;
                         value?: undefined;
+                        condition?: undefined;
                         type: {
                             type: string;
                             enum: string[];
@@ -5752,7 +5895,6 @@ export const metadata_v1: {
                                 })[];
                             };
                         };
-                        condition?: undefined;
                     };
                     required: string[];
                 };
@@ -6037,94 +6179,6 @@ export const metadata_v1: {
                 source: string;
                 mode: string;
             };
-        };
-        mvfCondition: {
-            title: string;
-            type: string;
-            properties: {
-                condition: {
-                    type: string;
-                    enum: string[];
-                    description: string;
-                };
-            };
-            allOf: ({
-                title: string;
-                if: {
-                    properties?: undefined;
-                    required?: undefined;
-                    not: {
-                        required: string[];
-                    };
-                };
-                then: {
-                    required?: undefined;
-                    additionalProperties: boolean;
-                    properties: {
-                        from?: undefined;
-                        to?: undefined;
-                        value?: undefined;
-                        condition?: undefined;
-                    };
-                };
-            } | {
-                title: string;
-                if: {
-                    not?: undefined;
-                    properties: {
-                        condition: {
-                            enum: string[];
-                        };
-                    };
-                    required: string[];
-                };
-                then: {
-                    additionalProperties: boolean;
-                    properties: {
-                        from?: undefined;
-                        to?: undefined;
-                        condition: {
-                            type: string;
-                            enum: string[];
-                        };
-                        value: {
-                            type: string;
-                            description: string;
-                        };
-                    };
-                    required: string[];
-                };
-            } | {
-                title: string;
-                if: {
-                    not?: undefined;
-                    properties: {
-                        condition: {
-                            enum: string[];
-                        };
-                    };
-                    required: string[];
-                };
-                then: {
-                    additionalProperties: boolean;
-                    properties: {
-                        value?: undefined;
-                        condition: {
-                            type: string;
-                            enum: string[];
-                        };
-                        from: {
-                            type: string;
-                            description: string;
-                        };
-                        to: {
-                            type: string;
-                            description: string;
-                        };
-                    };
-                    required: string[];
-                };
-            })[];
         };
         widthItem: {
             title: string;
@@ -10282,6 +10336,7 @@ declare namespace v1 {
         DashboardTextFilter1,
         LocalDateFilter2,
         DashboardTextFilter2,
+        DashboardMetricValueFilter,
         DashboardFilterGroup,
         Tab,
         DashboardFilters1,

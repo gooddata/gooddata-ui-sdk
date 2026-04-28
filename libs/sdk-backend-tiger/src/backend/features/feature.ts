@@ -1089,6 +1089,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableMeasureValueFilterKD,
+            "enableMeasureValueFilterKD",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMeasureValueFilterKD,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableFilterControlInDrillingConfiguration,
             "enableFilterControlInDrillingConfiguration",
             "BOOLEAN",

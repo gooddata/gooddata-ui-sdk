@@ -580,7 +580,7 @@
         "crowdinContext": "Label for the loading state of the quality score card action."
     },
     "analyticsCatalog.quality.scoreCard.action.syncing": {
-        "text": "Model update in progress, please wait...",
+        "text": "Still setting up — try again shortly.",
         "crowdinContext": "Label for the syncing state of the quality score card action."
     },
     "analyticsCatalog.quality.scoreCard.action.success": {
