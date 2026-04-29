@@ -34,6 +34,7 @@ import {
     sl,
     th,
     tr,
+    uk,
     vi,
     zhCN,
 } from "date-fns/locale";
@@ -111,6 +112,7 @@ const convertedLocales: Record<string, Locale> = {
     "sl-SI": sl,
     "id-ID": id,
     "th-TH": th,
+    "uk-UA": uk,
     "vi-VN": vi,
 };
 

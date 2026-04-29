@@ -790,6 +790,13 @@ function yamlIgnoredFilterToDeclarative(input: string): IDashboardFilterReferenc
             dataSet: createIdentifier<any>(input),
         };
     }
+
+    if (ref?.type === "metric") {
+        return {
+            type: "measureValueFilterReference",
+            measure: createIdentifier<any>(input),
+        };
+    }
     return null;
 }
 

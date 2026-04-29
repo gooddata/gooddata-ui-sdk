@@ -52,6 +52,7 @@ $editable-label-border: #b1c1d1;
     line-height: inherit;
     vertical-align: inherit;
     min-width: 5em;
+    user-select: none;
 
     @include mixins.active-states {
         cursor: text;

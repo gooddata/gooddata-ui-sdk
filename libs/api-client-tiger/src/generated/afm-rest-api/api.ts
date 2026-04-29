@@ -1001,7 +1001,7 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
  */
 export interface CreatePipeTableRequest {
     /**
-     * Name of the OLAP table to create. Must match ^[a-z][a-z0-9_]{0,62}$
+     * Name of the OLAP table to create. Must match ^[a-z][a-z0-9_-]{0,62}$
      */
     'tableName': string;
     /**
@@ -1151,6 +1151,14 @@ export interface DatabaseInstance {
      * Set of ids of the storage instances this database instance should access.
      */
     'storageIds': Array<string>;
+    /**
+     * Identifier of the data source created in metadata-api.
+     */
+    'dataSourceId'?: string;
+    /**
+     * Display name of the data source created in metadata-api.
+     */
+    'dataSourceName'?: string;
 }
 
 export interface DateAbsoluteFilter {
@@ -1375,6 +1383,20 @@ export interface ElementsResponse {
 }
 
 export type ElementsResponseGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+
+/**
+ * Structured error, present when the search could not run (e.g. metadata sync in progress). Absent on success.
+ */
+export interface ErrorInfo {
+    /**
+     * HTTP-like semantic status (e.g. 503 when the workspace is still syncing).
+     */
+    'statusCode': number;
+    /**
+     * Stable machine-readable error code. Switch on this for localized client messages.
+     */
+    'reason': string;
+}
 
 /**
  * Links to the execution result.
@@ -2498,6 +2520,14 @@ export interface ProvisionDatabaseInstanceRequest {
      * Set of ids of the storage instances this database instance should access.
      */
     'storageIds': Array<string>;
+    /**
+     * Identifier for the data source created in metadata-api. Defaults to the database name.
+     */
+    'dataSourceId'?: string;
+    /**
+     * Display name for the data source created in metadata-api. Defaults to the database name.
+     */
+    'dataSourceName'?: string;
 }
 
 /**
@@ -2949,6 +2979,7 @@ export interface SearchResult {
      * DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation.
      */
     'reasoning': string;
+    'error'?: ErrorInfo;
 }
 
 export interface SearchResultObject {

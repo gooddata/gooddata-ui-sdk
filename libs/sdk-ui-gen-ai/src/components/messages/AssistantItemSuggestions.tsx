@@ -1,11 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { type IChatSuggestionsItem } from "@gooddata/sdk-backend-spi";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { makeUserItem } from "../../model.js";
+import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { newMessageAction } from "../../store/messages/messagesSlice.js";
 
 export interface IAssistantItemSuggestionsProps {
@@ -20,8 +21,9 @@ export function AssistantItemSuggestions({
     showSuggestions,
 }: IAssistantItemSuggestionsProps) {
     const dispatch = useDispatch();
+    const settings = useSelector(settingsSelector);
 
-    if (!suggestions || !showSuggestions) {
+    if (!suggestions || !showSuggestions || !settings?.enableAiAgenticSuggestions) {
         return null;
     }
 

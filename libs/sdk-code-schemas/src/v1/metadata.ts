@@ -2094,6 +2094,7 @@ export interface DashboardTextFilter2 {
  */
 export interface DashboardMetricValueFilter {
     type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
+    [k: string]: unknown;
 }
 /**
  * A group of dashboard filters displayed together in the filter bar

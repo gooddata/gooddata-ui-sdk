@@ -50,7 +50,7 @@
         }
 
         #{$root}__cell {
-            transition: var(--gd-transition-all);
+            transition: color 0.25s ease-in-out;
             border-bottom: 2px solid var(--gd-palette-complementary-3);
 
             &--sortable {

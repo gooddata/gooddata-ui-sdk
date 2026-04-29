@@ -13,7 +13,6 @@ import {
     resolveLocale,
     useResolveMessages,
 } from "@gooddata/sdk-ui";
-import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { createBackendForModule } from "./backend.js";
 import { type IClientPlatformContext, PlatformContextProvider } from "./context.js";
@@ -63,8 +62,7 @@ export interface IAppProvidersProps {
  * 1. **PlatformContextProvider** — exposes `IClientPlatformContext` (ctx + backend)
  * 2. **BackendProvider** — makes backend available to SDK UI components (`useBackendStrict`)
  * 3. **WorkspaceProvider** — conditionally mounted when a workspace ID is available
- * 4. **ThemeProvider** — applies theme CSS variables from `ctx.theme`
- * 5. **IntlProvider** — localization with async-loaded translation bundles
+ * 4. **IntlProvider** — localization with async-loaded translation bundles
  *
  * @example
  * ```tsx
@@ -99,13 +97,11 @@ export function AppProviders({
         <PlatformContextProvider value={clientCtx}>
             <BackendProvider backend={backend}>
                 <WorkspaceProviderIfAvailable workspaceId={ctx.currentWorkspaceId}>
-                    <ThemeProvider theme={ctx.theme}>
-                        {messages[locale] ? (
-                            <IntlProvider locale={locale} messages={messages[locale]}>
-                                {children}
-                            </IntlProvider>
-                        ) : null}
-                    </ThemeProvider>
+                    {messages[locale] ? (
+                        <IntlProvider locale={locale} messages={messages[locale]}>
+                            {children}
+                        </IntlProvider>
+                    ) : null}
                 </WorkspaceProviderIfAvailable>
             </BackendProvider>
         </PlatformContextProvider>

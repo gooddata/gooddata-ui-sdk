@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
     type IChatConversationContent,
+    type IChatConversationError,
     type IChatConversationItem,
     type IChatConversationMultipartPart,
     type IChatSuggestionsItem,
@@ -386,6 +387,7 @@ export type IChatConversationErrorContent = {
     type: "error";
     message: string;
     code?: number;
+    reason?: IChatConversationError["reason"];
     traceId?: string;
 };
 

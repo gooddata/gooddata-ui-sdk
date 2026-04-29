@@ -1172,4 +1172,9 @@ export interface IFeatureFlags {
      * Enable enhanced insight picker.
      */
     enableEnhancedInsightPicker?: boolean;
+
+    /**
+     * Enable ai agentic suggestions.
+     */
+    enableAiAgenticSuggestions?: boolean;
 }

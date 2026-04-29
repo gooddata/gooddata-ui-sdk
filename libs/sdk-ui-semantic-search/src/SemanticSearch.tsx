@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type GenAIObjectType,
+    type ISemanticSearchError,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
@@ -29,6 +30,7 @@ import { buildSemanticSearchItems } from "./itemsBuilder.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { PermissionsProvider } from "./permissions/PermissionsContext.js";
 import { usePermissions } from "./permissions/usePermissions.js";
+import { SemanticSearchError } from "./SemanticSearchError.js";
 import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
 
 /**
@@ -55,7 +57,7 @@ export type SemanticSearchProps = {
     /**
      * A function called when an error occurs during the search.
      */
-    onError?: (errorMessage: string) => void;
+    onError?: (errorMessage: string, detail?: ISemanticSearchError) => void;
     /**
      * Additional CSS class for the component.
      */
@@ -155,7 +157,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
     const searchTermForRequest = loading ? "" : searchTerm;
 
     // Search results
-    const { searchStatus, searchResults, relationships, searchMessage, searchError } = useSemanticSearch({
+    const { searchStatus, searchResults, relationships, searchError } = useSemanticSearch({
         backend,
         workspace: effectiveWorkspace,
         searchTerm: searchTermForRequest,
@@ -189,7 +191,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
     // Report errors
     useEffect(() => {
         if (onError && searchStatus === "error") {
-            onError(searchError);
+            onError(searchError?.message ?? "Unknown error", searchError?.detail);
         }
     }, [onError, searchError, searchStatus]);
 
@@ -250,8 +252,8 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
                                 });
 
                                 // API search message
-                                if (!items.length && searchMessage) {
-                                    return <div className="gd-semantic-search__message">{searchMessage}</div>;
+                                if (!items.length && searchError) {
+                                    return <SemanticSearchError searchError={searchError} />;
                                 }
                                 // No search results
                                 if (!items.length) {

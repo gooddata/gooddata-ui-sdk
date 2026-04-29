@@ -41,6 +41,25 @@ export interface ISemanticSearchResult {
      * Assistant reasoning describing the search outcome.
      */
     reasoning?: string;
+    /**
+     * Error details if the search operation failed.
+     */
+    error?: ISemanticSearchError;
+}
+
+/**
+ * Represents an error encountered during a semantic search operation.
+ * @beta
+ */
+export interface ISemanticSearchError {
+    /**
+     * HTTP status code of the error.
+     */
+    statusCode: number;
+    /**
+     * Stable code identifying the type of error.
+     */
+    reason: (string & {}) | "METADATA_SYNC_IN_PROGRESS" | "METADATA_SYNC_REQUEST_ERROR";
 }
 
 /**

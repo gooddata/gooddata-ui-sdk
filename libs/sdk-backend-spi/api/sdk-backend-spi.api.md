@@ -663,6 +663,7 @@ export type IChatConversationError = {
     code: number;
     message: string;
     traceId?: string;
+    reason?: (string & {}) | "METADATA_SYNC_IN_PROGRESS" | "METADATA_SYNC_REQUEST_ERROR";
 };
 
 // @internal

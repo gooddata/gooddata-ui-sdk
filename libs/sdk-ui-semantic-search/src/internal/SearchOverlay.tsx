@@ -201,7 +201,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
 
     // Search results
     const effectiveWorkspace = useWorkspaceStrict(workspace);
-    const { searchStatus, searchResults, searchError, searchMessage, relationships } = useSemanticSearch({
+    const { searchStatus, searchResults, searchError, relationships } = useSemanticSearch({
         backend,
         workspace: effectiveWorkspace,
         searchTerm,
@@ -306,7 +306,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         if (searchStatus === "error") {
             // Report error to the console
             // UI will display a generic error message
-            console.error(searchError);
+            console.error(searchError?.message);
         }
     }, [searchStatus, searchError]);
 
@@ -358,7 +358,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                         return (
                             <>
                                 <UiSearchResultsAnnouncement totalResults={searchTerm ? 0 : undefined} />
-                                <SearchNoResults searchMessage={searchMessage} searchTerm={searchTerm} />
+                                <SearchNoResults searchError={searchError} searchTerm={searchTerm} />
                             </>
                         );
                     }

@@ -174,13 +174,14 @@ function convertChatConversationContentFromBackend(
 }
 
 export function convertChatConversationErrorFromBackend(
-    item: Partial<{ statusCode: number; detail: string }>,
+    item: Partial<{ statusCode: number; detail: string; reason: string }>,
     traceId?: string,
 ): IChatConversationError {
     return {
         type: "error",
         code: item.statusCode ?? 500,
         message: item.detail ?? "Unknown error",
+        reason: item.reason,
         traceId,
     };
 }

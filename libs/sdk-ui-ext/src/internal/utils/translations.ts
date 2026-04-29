@@ -67,6 +67,7 @@ const asyncSdkUiExtTranslations: { [locale: string]: () => Promise<ITranslations
     "id-ID": () => import("../translations/id-ID.localization-bundle.js").then((module) => module.id_ID),
     "th-TH": () => import("../translations/th-TH.localization-bundle.js").then((module) => module.th_TH),
     "vi-VN": () => import("../translations/vi-VN.localization-bundle.js").then((module) => module.vi_VN),
+    "uk-UA": () => import("../translations/uk-UA.localization-bundle.js").then((module) => module.uk_UA),
 };
 
 /**

@@ -3270,7 +3270,7 @@
                 "properties": {
                     "tableName": {
                         "type": "string",
-                        "description": "Name of the OLAP table to create. Must match ^[a-z][a-z0-9_]{0,62}$"
+                        "description": "Name of the OLAP table to create. Must match ^[a-z][a-z0-9_-]{0,62}$"
                     },
                     "sourceStorageName": {
                         "type": "string",
@@ -3560,6 +3560,14 @@
                             "type": "string",
                             "description": "Set of ids of the storage instances this database instance should access."
                         }
+                    },
+                    "dataSourceId": {
+                        "type": "string",
+                        "description": "Identifier for the data source created in metadata-api. Defaults to the database name."
+                    },
+                    "dataSourceName": {
+                        "type": "string",
+                        "description": "Display name for the data source created in metadata-api. Defaults to the database name."
                     }
                 },
                 "description": "Request to provision a new AILake Database instance"
@@ -6482,6 +6490,27 @@
                     }
                 }
             },
+            "ErrorInfo": {
+                "required": [
+                    "reason",
+                    "statusCode"
+                ],
+                "type": "object",
+                "properties": {
+                    "statusCode": {
+                        "type": "integer",
+                        "description": "HTTP-like semantic status (e.g. 503 when the workspace is still syncing).",
+                        "format": "int32",
+                        "example": 503
+                    },
+                    "reason": {
+                        "type": "string",
+                        "description": "Stable machine-readable error code. Switch on this for localized client messages.",
+                        "example": "METADATA_SYNC_IN_PROGRESS"
+                    }
+                },
+                "description": "Structured error, present when the search could not run (e.g. metadata sync in progress). Absent on success."
+            },
             "SearchRelationshipObject": {
                 "required": [
                     "sourceObjectId",
@@ -6552,6 +6581,9 @@
                     "reasoning": {
                         "type": "string",
                         "description": "DEPRECATED: Use top-level reasoning.steps instead. If something is not working properly this field will contain explanation."
+                    },
+                    "error": {
+                        "$ref": "#/components/schemas/ErrorInfo"
                     }
                 }
             },
@@ -8815,6 +8847,14 @@
                             "type": "string",
                             "description": "Set of ids of the storage instances this database instance should access."
                         }
+                    },
+                    "dataSourceId": {
+                        "type": "string",
+                        "description": "Identifier of the data source created in metadata-api."
+                    },
+                    "dataSourceName": {
+                        "type": "string",
+                        "description": "Display name of the data source created in metadata-api."
                     }
                 },
                 "description": "A single AI Lake Database instance"

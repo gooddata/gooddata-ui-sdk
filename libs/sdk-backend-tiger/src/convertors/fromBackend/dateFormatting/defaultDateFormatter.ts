@@ -24,6 +24,7 @@ import {
     sl,
     th,
     tr,
+    uk,
     vi,
     zhCN,
 } from "date-fns/locale";
@@ -91,6 +92,7 @@ const localeConversions = {
     "pl-PL": pl,
     "ko-KR": ko,
     "sl-SI": sl,
+    "uk-UA": uk,
 };
 
 export type FormattingLocale = keyof typeof localeConversions;

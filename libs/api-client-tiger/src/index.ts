@@ -323,6 +323,7 @@ export type {
     ActionsApiAiSearchRequest,
     SearchResult,
     SearchResultObject,
+    ErrorInfo as SearchErrorInfo,
     SearchRelationshipObject,
     AllowedRelationshipType,
     AllowedRelationshipTypeSourceTypeEnum,

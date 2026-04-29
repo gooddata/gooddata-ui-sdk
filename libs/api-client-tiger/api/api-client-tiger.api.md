@@ -30642,6 +30642,12 @@ export interface ScanSqlResponse {
     'dataPreview'?: Array<Array<string | null>>;
 }
 
+// @public
+export interface SearchErrorInfo {
+    'reason': string;
+    'statusCode': number;
+}
+
 // @public (undocumented)
 export interface SearchRelationshipObject {
     'sourceObjectId': string;
@@ -30674,6 +30680,8 @@ export type SearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'la
 
 // @public (undocumented)
 export interface SearchResult {
+    // (undocumented)
+    'error'?: SearchErrorInfo;
     'reasoning': string;
     // (undocumented)
     'relationships': Array<SearchRelationshipObject>;

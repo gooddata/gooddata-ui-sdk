@@ -59,6 +59,14 @@
         "text": "Ask AI Assistant",
         "crowdinContext": "Button label for the ask ai assistant feature. This button is on search results list on bottom of drop down."
     },
+    "semantic-search.error.sync-in-progress": {
+        "text": "Still setting up — try again shortly.",
+        "crowdinContext": "Message shown when semantic search is still setting up. This message is shown when semantic search is still setting up. This message is shown when semantic search is still setting up."
+    },
+    "semantic-search.error.sync-failed": {
+        "text": "Syncing failed. Please try again later.",
+        "crowdinContext": "Message shown when semantic search failed to sync."
+    },
     "gs.date.today": {
         "text": "Today",
         "crowdinContext": "Label for the current day in date filters and selectors."
