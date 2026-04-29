@@ -2490,6 +2490,7 @@ export interface IFeatureFlags {
     enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
     enableAiAgenticConversations?: boolean;
+    enableAiAgenticSuggestions?: boolean;
     enableAIDataSetting?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
@@ -3195,7 +3196,7 @@ export interface ILlmProvider {
 }
 
 // @public
-export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI" | "id-ID" | "th-TH" | "vi-VN";
+export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI" | "id-ID" | "th-TH" | "vi-VN" | "uk-UA";
 
 // @alpha
 export interface ILocalPluggableApplicationModule {
@@ -4684,6 +4685,12 @@ export interface ISemanticQualityReport {
 }
 
 // @beta
+export interface ISemanticSearchError {
+    reason: (string & {}) | "METADATA_SYNC_IN_PROGRESS" | "METADATA_SYNC_REQUEST_ERROR";
+    statusCode: number;
+}
+
+// @beta
 export interface ISemanticSearchRelationship {
     sourceObjectId: string;
     sourceObjectTitle: string;
@@ -4697,6 +4704,7 @@ export interface ISemanticSearchRelationship {
 
 // @beta
 export interface ISemanticSearchResult {
+    error?: ISemanticSearchError;
     reasoning?: string;
     relationships: ISemanticSearchRelationship[];
     results: ISemanticSearchResultItem[];

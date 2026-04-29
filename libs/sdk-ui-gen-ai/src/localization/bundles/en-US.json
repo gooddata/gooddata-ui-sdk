@@ -11,6 +11,14 @@
         "text": "See the raw error response for details",
         "crowdinContext": "Button label to show more detailed error information"
     },
+    "gd.gen-ai.global-error.sync-in-progress": {
+        "text": "Still setting up — try again shortly.",
+        "crowdinContext": "Message shown when semantic search is still setting up. This message is shown when semantic search is still setting up. This message is shown when semantic search is still setting up."
+    },
+    "gd.gen-ai.global-error.sync-failed": {
+        "text": "Syncing failed. Please try again later.",
+        "crowdinContext": "Message shown when semantic search failed to sync."
+    },
     "gd.gen-ai.global-error.traceId": {
         "text": "Error trace ID",
         "crowdinContext": "Button label to show more detailed error information"

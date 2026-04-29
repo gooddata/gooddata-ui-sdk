@@ -3471,7 +3471,6 @@
                     "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
                 }
             },
-            "additionalProperties": false,
             "required": ["type", "using"],
             "$semantic": {
                 "type": "definition",

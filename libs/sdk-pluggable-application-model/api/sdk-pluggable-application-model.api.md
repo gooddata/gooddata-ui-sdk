@@ -16,7 +16,20 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { PluggableApplicationRegistryItem } from '@gooddata/sdk-model';
 
 // @alpha
+export const DefaultApplicationId: {
+    HOME_UI: string;
+    DASHBOARDS: string;
+    ANALYTICAL_DESIGNER: string;
+    METRIC_EDITOR: string;
+    LDM_MODELER: string;
+    WORKSPACE_CATALOG: string;
+};
+
+// @alpha
 export type EmbeddingMode = "none" | "iframe" | "export";
+
+// @alpha
+export type HostUiMount = (options: IHostUiMountOptions) => IHostUiMountHandle;
 
 // @alpha
 export interface IApiTokenAuthCredentials {
@@ -55,6 +68,36 @@ export interface IContextDeferredAuthCredentials {
 }
 
 // @alpha
+export interface IHostUiModule {
+    // (undocumented)
+    mount: HostUiMount;
+}
+
+// @alpha
+export interface IHostUiMountHandle {
+    getAppContainer(): HTMLElement;
+    notify?(notification: IHostUiNotification): void;
+    unmount(): void;
+    updateApplications?(apps: PluggableApplicationRegistryItem[]): void;
+    updateContext?(ctx: IPlatformContext): void;
+    updateHeader?(header: IAppHeaderOptions | undefined): void;
+    updatePathname?(pathname: string): void;
+}
+
+// @alpha
+export interface IHostUiMountOptions {
+    container: HTMLElement;
+    ctx: IPlatformContext;
+    navigate: (url: string) => void;
+    pathname: string;
+    replace: (url: string) => void;
+    resolvedApplications: PluggableApplicationRegistryItem[];
+}
+
+// @alpha
+export type IHostUiNotification = INewDeploymentAvailableHostUiNotification;
+
+// @alpha
 export interface IJwtAuthCredentials {
     // (undocumented)
     secondsBeforeTokenExpirationToCallReminder?: number;
@@ -65,6 +108,12 @@ export interface IJwtAuthCredentials {
 }
 
 export { ILocale }
+
+// @alpha
+export interface INewDeploymentAvailableHostUiNotification {
+    commitHash: string;
+    type: "newDeploymentAvailable";
+}
 
 // @alpha
 export interface IOrganization {
@@ -179,32 +228,6 @@ export interface IReloadPlatformContextRequestedEvent extends IPluggableAppEvent
 }
 
 // @alpha
-export interface IShellUiModule {
-    // (undocumented)
-    mount: ShellUiMount;
-}
-
-// @alpha
-export interface IShellUiMountHandle {
-    getAppContainer(): HTMLElement;
-    unmount(): void;
-    updateApplications?(apps: PluggableApplicationRegistryItem[]): void;
-    updateContext?(ctx: IPlatformContext): void;
-    updateHeader?(header: IAppHeaderOptions | undefined): void;
-    updatePathname?(pathname: string): void;
-}
-
-// @alpha
-export interface IShellUiMountOptions {
-    container: HTMLElement;
-    ctx: IPlatformContext;
-    navigate: (url: string) => void;
-    pathname: string;
-    replace: (url: string) => void;
-    resolvedApplications: PluggableApplicationRegistryItem[];
-}
-
-// @alpha
 export function isPlatformContextV1(context: unknown): context is IPlatformContextV1;
 
 // @alpha
@@ -245,9 +268,6 @@ export type PluggableApplicationMount = (options: IPluggableApplicationMountOpti
 
 // @alpha
 export function reloadPlatformContextRequested(): IReloadPlatformContextRequestedEvent;
-
-// @alpha
-export type ShellUiMount = (options: IShellUiMountOptions) => IShellUiMountHandle;
 
 // @alpha
 export type TelemetryChannel = "standard" | "ai";

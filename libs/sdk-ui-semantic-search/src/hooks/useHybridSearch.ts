@@ -3,6 +3,7 @@
 import { startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type ISemanticSearchError } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { doFilterRelatedItems } from "./search/related.js";
@@ -114,9 +115,9 @@ export interface ISemanticSearchState {
      */
     message: string;
     /**
-     * The error message if the semantic search failed.
+     * The error message detail if the semantic search failed.
      */
-    error?: string;
+    detail?: ISemanticSearchError;
 }
 
 /**
@@ -190,7 +191,7 @@ export function useHybridSearch<I extends SearchItem, G extends SearchItemGroup<
 
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
-    const { searchStatus, searchError, searchResults, searchMessage } = useSemanticSearch({
+    const { searchStatus, searchError, searchResults } = useSemanticSearch({
         searchTerm: allowSematicSearch ? debouncedSearchQuery : "",
         backend: effectiveBackend,
         workspace: effectiveWorkspace,
@@ -211,10 +212,10 @@ export function useHybridSearch<I extends SearchItem, G extends SearchItemGroup<
     const semanticSearchState = useMemo(
         () => ({
             state: searchStatus,
-            error: searchError,
-            message: searchMessage,
+            detail: searchError?.detail,
+            message: searchError?.message ?? "",
         }),
-        [searchStatus, searchError, searchMessage],
+        [searchStatus, searchError],
     );
 
     const search = useCallback(

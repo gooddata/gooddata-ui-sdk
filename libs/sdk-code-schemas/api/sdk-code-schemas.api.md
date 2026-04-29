@@ -719,6 +719,8 @@ interface DashboardFilters1 {
 // @public
 interface DashboardMetricValueFilter {
     // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
     type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
 }
 
@@ -5244,7 +5246,6 @@ export const metadata_v1: {
                     description: string;
                 };
             };
-            additionalProperties: boolean;
             required: string[];
             $semantic: {
                 type: string;

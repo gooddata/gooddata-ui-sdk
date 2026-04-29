@@ -6,6 +6,7 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type GenAIObjectType,
     type IAllowedRelationshipType,
+    type ISemanticSearchError,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
@@ -25,17 +26,25 @@ export type SemanticSearchInputResult = {
      */
     searchStatus: "idle" | "loading" | "error" | "success";
     /**
-     * Error message if the search failed.
+     * Error details if the search failed.
      */
-    searchError: string;
-    /**
-     * The message to show to the user that came from the backend.
-     */
-    searchMessage: string;
+    searchError?: {
+        /**
+         * Represents a textual message.
+         */
+        message: string;
+        /**
+         * Represents optional error details related to semantic search operations.
+         */
+        detail?: ISemanticSearchError;
+    };
     /**
      * The search results.
      */
     searchResults: ISemanticSearchResultItem[];
+    /**
+     * Represents an array of semantic search relationships.
+     */
     relationships: ISemanticSearchRelationship[];
 };
 
@@ -44,8 +53,7 @@ export type SemanticSearchInputResult = {
  */
 const DEFAULT_STATE: SemanticSearchInputResult = {
     searchStatus: "idle",
-    searchError: "",
-    searchMessage: "",
+    searchError: undefined,
     searchResults: [],
     relationships: [],
 };
@@ -168,8 +176,13 @@ export const useSemanticSearch = ({
                 }
                 setState({
                     searchStatus: "success",
-                    searchError: "",
-                    searchMessage: res.reasoning ?? "",
+                    searchError:
+                        res.reasoning || res.error
+                            ? {
+                                  message: res.reasoning ?? "",
+                                  detail: res.error ?? undefined,
+                              }
+                            : undefined,
                     searchResults: res.results,
                     relationships: res.relationships,
                 });
@@ -181,8 +194,9 @@ export const useSemanticSearch = ({
                 }
                 setState({
                     searchStatus: "error",
-                    searchError: errorMessage(e),
-                    searchMessage: "",
+                    searchError: {
+                        message: errorMessage(e),
+                    },
                     searchResults: [],
                     relationships: [],
                 });

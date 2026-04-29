@@ -479,6 +479,7 @@ function convertFoundObjects(data: Required<ChatHistoryInteraction>["foundObject
 function convertSemanticSearch(data: SearchResult): ISemanticSearchResult {
     return {
         reasoning: data.reasoning,
+        error: data.error,
         results: data.results?.map(convertSemanticSearchResultItem) ?? [],
         relationships: data.relationships?.map(convertSemanticSearchRelationship) ?? [],
     };

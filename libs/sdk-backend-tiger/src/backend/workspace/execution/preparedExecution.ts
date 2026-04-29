@@ -37,7 +37,7 @@ import { TigerCancellationConverter } from "../../../cancelation/index.js";
 import { type DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { downloadFile } from "../../../utils/downloadFile.js";
+import { downloadFile, parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { TigerExecutionResult } from "./executionResult.js";
 
 export class TigerPreparedExecution implements IPreparedExecution {
@@ -97,7 +97,11 @@ export class TigerPreparedExecution implements IPreparedExecution {
                 return explainCall<T>(this.definition, this.authCall, explainType, "blob")
                     .then(
                         (response) =>
-                            response && downloadFile(getExplainFileName(explainType), response.data),
+                            response &&
+                            downloadFile(
+                                parseNameFromContentDisposition(response) ?? getExplainFileName(explainType),
+                                response.data,
+                            ),
                     )
                     .catch((error) => {
                         console.warn(error);

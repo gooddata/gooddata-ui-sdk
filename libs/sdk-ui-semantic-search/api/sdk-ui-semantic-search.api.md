@@ -7,6 +7,7 @@
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { ISemanticSearchError } from '@gooddata/sdk-model';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
@@ -74,7 +75,7 @@ export interface ISearchState {
 
 // @alpha
 export interface ISemanticSearchState {
-    error?: string;
+    detail?: ISemanticSearchError;
     message: string;
     state: "idle" | "loading" | "error" | "success";
 }
@@ -137,8 +138,10 @@ export type SemanticSearchHookInput = {
 // @beta
 export type SemanticSearchInputResult = {
     searchStatus: "idle" | "loading" | "error" | "success";
-    searchError: string;
-    searchMessage: string;
+    searchError?: {
+        message: string;
+        detail?: ISemanticSearchError;
+    };
     searchResults: ISemanticSearchResultItem[];
     relationships: ISemanticSearchRelationship[];
 };
@@ -149,7 +152,7 @@ export type SemanticSearchProps = {
     workspace?: string;
     locale?: string;
     onSelect: (item: ISemanticSearchResultItem | ISemanticSearchRelationship) => void;
-    onError?: (errorMessage: string) => void;
+    onError?: (errorMessage: string, detail?: ISemanticSearchError) => void;
     className?: string;
     objectTypes?: GenAIObjectType[];
     deepSearch?: boolean;

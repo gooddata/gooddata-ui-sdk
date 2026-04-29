@@ -3,16 +3,18 @@
 import { useState } from "react";
 
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
+import { type IChatConversationErrorContent } from "../../../model.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
 
 export type ConversationErrorContentProps = {
     message: string;
     traceId?: string;
     code?: number;
+    reason?: IChatConversationErrorContent["reason"];
     useMarkdown?: boolean;
     className?: string;
     isLoading?: boolean;
@@ -24,6 +26,7 @@ export function ConversationErrorContent({
     message,
     useMarkdown = false,
     className,
+    reason,
 }: ConversationErrorContentProps) {
     const [showMore, setShowMore] = useState(false);
     const { formatMessage } = useIntl();
@@ -38,7 +41,13 @@ export function ConversationErrorContent({
         <div className={classNames}>
             <div className={cx("gd-gen-ai-chat__error-info")}>
                 <div className={cx("gd-gen-ai-chat__content")}>
-                    <MarkdownComponent allowMarkdown={useMarkdown}>{message}</MarkdownComponent>
+                    {reason === "METADATA_SYNC_IN_PROGRESS" ? (
+                        <FormattedMessage id="gd.gen-ai.global-error.sync-in-progress" />
+                    ) : reason === "METADATA_SYNC_REQUEST_ERROR" ? (
+                        <FormattedMessage id="gd.gen-ai.global-error.sync-failed" />
+                    ) : (
+                        <MarkdownComponent allowMarkdown={useMarkdown}>{message}</MarkdownComponent>
+                    )}
                 </div>
                 <div className={cx("gd-gen-ai-chat__show-more")}>
                     <UiButton

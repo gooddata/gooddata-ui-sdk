@@ -5671,9 +5671,6 @@ importers:
       '@gooddata/sdk-ui':
         specifier: workspace:*
         version: link:../sdk-ui
-      '@gooddata/sdk-ui-theme-provider':
-        specifier: workspace:*
-        version: link:../sdk-ui-theme-provider
       react-intl:
         specifier: 7.1.11
         version: 7.1.11(react@19.1.1)(typescript@5.9.3)

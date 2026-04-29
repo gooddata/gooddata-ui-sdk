@@ -40,6 +40,7 @@ const asyncMessagesMap: { [locale: string]: () => Promise<ITranslations> } = {
     "id-ID": () => import("./bundles/id-ID.localization-bundle.js").then((module) => module.id_ID),
     "th-TH": () => import("./bundles/th-TH.localization-bundle.js").then((module) => module.th_TH),
     "vi-VN": () => import("./bundles/vi-VN.localization-bundle.js").then((module) => module.vi_VN),
+    "uk-UA": () => import("./bundles/uk-UA.localization-bundle.js").then((module) => module.uk_UA),
 };
 
 export const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {

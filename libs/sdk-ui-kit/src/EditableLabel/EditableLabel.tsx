@@ -166,13 +166,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
         const rootNode = rootRef.current;
         const focusTimeoutId = focusTimeoutRef.current;
 
-        const onSelectStart = (e: DragEvent): void => {
-            e.stopPropagation();
-        };
-
         if (rootNode) {
-            rootNode.addEventListener("dragstart", onSelectStart as EventListener);
-            rootNode.addEventListener("selectstart", onSelectStart as EventListener);
             resizeObserverRef.current = new ResizeObserver(() => {
                 setRootWidth(rootNode.offsetWidth);
             });
@@ -188,8 +182,6 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
 
         return () => {
             if (rootNode) {
-                rootNode.removeEventListener("dragstart", onSelectStart as EventListener);
-                rootNode.removeEventListener("selectstart", onSelectStart as EventListener);
                 if (resizeObserverRef.current) {
                     resizeObserverRef.current.unobserve(rootNode);
                 }
@@ -378,6 +370,7 @@ export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((pr
             role={isEditing ? undefined : "button"}
             aria-label={isEditing ? undefined : ariaLabel}
             onKeyDown={isEditing ? undefined : onWrapperKeyDown}
+            onMouseDown={(e) => e.stopPropagation()}
         >
             <div className="gd-editable-label-inner" ref={rootRef}>
                 {isEditing ? renderEditableLabelEdit() : displayValue}

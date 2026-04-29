@@ -14,6 +14,7 @@ import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
+import { IChatConversationError } from '@gooddata/sdk-backend-spi';
 import { IChatConversationItem } from '@gooddata/sdk-backend-spi';
 import { IChatConversationMultipartPart } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestionsItem } from '@gooddata/sdk-backend-spi';
@@ -202,6 +203,7 @@ export type IChatConversationErrorContent = {
     type: "error";
     message: string;
     code?: number;
+    reason?: IChatConversationError["reason"];
     traceId?: string;
 };
 

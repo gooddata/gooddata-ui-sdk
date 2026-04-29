@@ -49,8 +49,6 @@ describe("useHybridSearch hook", () => {
         vi.useFakeTimers();
         vi.mocked(useSemanticSearch).mockReturnValue({
             searchStatus: "idle",
-            searchError: "",
-            searchMessage: "",
             searchResults: [],
             relationships: [],
         });
@@ -187,8 +185,13 @@ describe("useHybridSearch hook", () => {
         it("should update semanticSearchState from useSemanticSearch", () => {
             vi.mocked(useSemanticSearch).mockReturnValue({
                 searchStatus: "loading",
-                searchError: "some error",
-                searchMessage: "searching...",
+                searchError: {
+                    message: "searching...",
+                    detail: {
+                        reason: "SYNCING",
+                        statusCode: 503,
+                    },
+                },
                 searchResults: [],
                 relationships: [],
             });
@@ -203,7 +206,10 @@ describe("useHybridSearch hook", () => {
 
             expect(result.current.semanticSearchState).toEqual({
                 state: "loading",
-                error: "some error",
+                detail: {
+                    reason: "SYNCING",
+                    statusCode: 503,
+                },
                 message: "searching...",
             });
         });
@@ -216,8 +222,6 @@ describe("useHybridSearch hook", () => {
 
             vi.mocked(useSemanticSearch).mockReturnValue({
                 searchStatus: "success",
-                searchError: "",
-                searchMessage: "",
                 searchResults: semanticResults as ISemanticSearchResultItem[],
                 relationships: [],
             });
@@ -253,8 +257,6 @@ describe("useHybridSearch hook", () => {
 
             vi.mocked(useSemanticSearch).mockReturnValue({
                 searchStatus: "success",
-                searchError: "",
-                searchMessage: "",
                 searchResults: semanticResults as ISemanticSearchResultItem[],
                 relationships: [],
             });

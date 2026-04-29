@@ -8,6 +8,8 @@
  * @packageDocumentation
  */
 
+export { DefaultApplicationId } from "./defaultPlatformApplications.js";
+
 export {
     type EmbeddingMode,
     type IApiTokenAuthCredentials,
@@ -44,8 +46,10 @@ export {
 } from "./mount.js";
 
 export {
-    type IShellUiModule,
-    type IShellUiMountHandle,
-    type IShellUiMountOptions,
-    type ShellUiMount,
-} from "./shellUi.js";
+    type IHostUiModule,
+    type IHostUiMountHandle,
+    type IHostUiMountOptions,
+    type IHostUiNotification,
+    type INewDeploymentAvailableHostUiNotification,
+    type HostUiMount,
+} from "./hostUi.js";

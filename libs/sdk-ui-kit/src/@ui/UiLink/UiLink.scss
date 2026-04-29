@@ -68,7 +68,8 @@
         &:active {
             color: variables.$gd-color-disabled;
             cursor: default;
-            text-decoration: none;
+            text-decoration-color: currentColor;
+            pointer-events: none;
         }
     }
 }

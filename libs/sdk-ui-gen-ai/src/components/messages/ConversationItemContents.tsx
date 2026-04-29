@@ -34,6 +34,7 @@ export function ConversationItemContents({ message, isLoading }: ConversationIte
                 message={content.message}
                 traceId={content.traceId}
                 code={content.code}
+                reason={content.reason}
                 isLoading={isLoading}
             />
         );

@@ -155,7 +155,8 @@ export function DashboardLayoutSection<TWidget>({
             <>
                 {sectionHeaderRenderer({
                     section,
-                    DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
+                    DefaultSectionHeaderRenderer:
+                        DashboardLayoutSectionHeaderRenderer as IDashboardLayoutSectionHeaderRenderer<unknown>,
                     parentLayoutItemSize,
                     parentLayoutPath,
                     exportData,
