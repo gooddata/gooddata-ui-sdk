@@ -2,6 +2,72 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.32.0",
+            "tag": "@gooddata/sdk-ui-all_v11.32.0",
+            "date": "Thu, 30 Apr 2026 06:59:15 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-catalog: Decouple parameter mutations from the catalog feed and wire providers for standalone detail usage."
+                    },
+                    {
+                        "comment": "Tokenize {parameter/...} in metric MAQL expressions"
+                    },
+                    {
+                        "comment": "Add insight parameter values"
+                    },
+                    {
+                        "comment": "sdk-model: Expose `id` on `ISemanticQualityIssue`"
+                    },
+                    {
+                        "comment": "sdk-ui: Fix `useDebounce` to cancel pending callbacks when the component unmounts or delay changes, preventing potential side effects after unmount."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Edited `<EditableLabel />` to allow for proper renaming of analytical designer buckets."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: add suggestion handling and organization knowledge document APIs"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: adjust textarea and label dimensions for consistent styling"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: add pagination support for conversation queries in chatbot"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: update GetConversations endpoint to support new AiConversationListResponse structure"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: refactor client logic for new response format and simplify conversation reset flow."
+                    },
+                    {
+                        "comment": "sdk-ui-all: add structured error handling and localized messages for semantic search and GenAI metadata sync states"
+                    },
+                    {
+                        "comment": "feat(sdk-ui-all): Added `as` and `isDisabled` to UiLink"
+                    },
+                    {
+                        "comment": "fix(sdk-ui-kit): Improved styling of disabled UiLinks."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Use correct file name for debug output."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Introduce dashboard MVF in model and converters."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Improved insight picker and small UX improvements"
+                    },
+                    {
+                        "comment": "Fix filter group grid accessibility roles structure"
+                    },
+                    {
+                        "comment": "sdk-ui-all: enable enableShellApplication by default"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.31.0",
             "tag": "@gooddata/sdk-ui-all_v11.31.0",
             "date": "Thu, 23 Apr 2026 06:53:35 GMT",
