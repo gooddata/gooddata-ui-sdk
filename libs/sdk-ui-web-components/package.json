@@ -34,6 +34,8 @@
     "exports": "./esm/index.js",
     "scripts": {
         "_phase:build": "npm run build",
+        "_phase:pack-build": "tar -czf sdk-ui-web-components.tgz -C esm .",
+        "_phase:publish-docker-images": "bash ../../../common/scripts/docker/publish-docker-image.sh",
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
@@ -45,9 +47,7 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --type-aware --quiet && eslint .",
         "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
-        "pack-build": "tar -czf sdk-ui-web-components.tgz -C esm .",
         "proxy": "node ./scripts/proxy.js",
-        "publish-docker-images": "bash ../../../common/scripts/docker/publish-docker-image.sh",
         "test": "vitest watch",
         "test-once": "vitest run",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check"

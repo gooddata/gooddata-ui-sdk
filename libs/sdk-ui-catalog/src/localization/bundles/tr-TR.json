@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Anlamsal kalite denetimi tamamlandı.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Bulgu yok",
     "analyticsCatalog.quality.scoreCard.action.loading": "Çalışıyor...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Model güncellemesi devam ediyor, lütfen bekleyin...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Hâlâ ayarlanıyor — kısa süre sonra tekrar deneyin.",
     "analyticsCatalog.quality.scoreCard.action.success": "Nesneleri göster",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Son denetim: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Kontrol başarısız oldu!",

@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "セマンティック・クオリティチェックが完了しました。",
     "analyticsCatalog.quality.scoreCard.action.empty": "指摘事項なし",
     "analyticsCatalog.quality.scoreCard.action.loading": "実行中...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "モデルの更新を実行中です。お待ちください...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "現在も設定中です。しばらくしてから再試行してください。",
     "analyticsCatalog.quality.scoreCard.action.success": "オブジェクトを表示",
     "analyticsCatalog.quality.scoreCard.lastCheck": "最終チェック日時: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "チェックに失敗しました！",

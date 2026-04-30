@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Đã hoàn tất kiểm tra chất lượng ngữ nghĩa.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Không có phát hiện",
     "analyticsCatalog.quality.scoreCard.action.loading": "Đang chạy...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Đang cập nhật mô hình, vui lòng đợi...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Vẫn đang thiết lập — vui lòng thử lại sau ít phút.",
     "analyticsCatalog.quality.scoreCard.action.success": "Hiển thị đối tượng",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Lần kiểm tra gần nhất: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Kiểm tra thất bại!",

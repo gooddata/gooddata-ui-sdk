@@ -14,6 +14,7 @@
     "semantic-search.edit": "แก้ไข",
     "semantic-search.date.at": "เวลา",
     "semantic-search.ask.ai.assistant": "ถามผู้ช่วย AI",
+    "semantic-search.error.sync-in-progress": "ยังอยู่ระหว่างการตั้งค่า — โปรดลองอีกครั้งในอีกสักครู่",
     "gs.date.today": "วันนี้",
     "gs.date.yesterday": "เมื่อวาน"
 }

@@ -14,6 +14,9 @@
     "main": "index.html",
     "scripts": {
         "_phase:build": "npm run build",
+        "_phase:pack-build": "tar -czf sdk.tgz -C dist .",
+        "_phase:pack-build-test": "npm run _phase:pack-build",
+        "_phase:publish-test-docker-images": "bash ../../../common/scripts/docker/publish-test-docker-image.sh",
         "_phase:validate": "npm run validate",
         "build": "npm-run-all -p dist build-check",
         "build-check": "tsgo",
@@ -25,7 +28,6 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --type-aware --quiet && eslint .",
         "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
-        "pack-build": "tar -czf sdk.tgz -C dist .",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check"
     },
     "devDependencies": {

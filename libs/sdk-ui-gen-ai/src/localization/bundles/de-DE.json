@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "Ein unvorhergesehener Fehler ist aufgetreten.",
     "gd.gen-ai.global-error.description": "Versuchen Sie, den Chatbot neu zu starten und von vorne zu beginnen.",
     "gd.gen-ai.global-error.button-details": "Weitere Informationen finden Sie in der RAW-Fehlerreaktion",
+    "gd.gen-ai.global-error.sync-in-progress": "Wird noch eingerichtet — versuchen Sie es in Kürze erneut.",
     "gd.gen-ai.global-error.traceId": "Fehler-Trace-ID",
     "gd.gen-ai.global-error.show-more": "mehr anzeigen",
     "gd.gen-ai.global-error.show-less": "weniger anzeigen",

@@ -552,5 +552,17 @@
     "automations.accessibility.gridLabel.schedules": "Список запланованих експортів",
     "filters.allTime.exceptEmptyValues.title": "Увесь час, крім порожніх значень",
     "filters.emptyValues.label": "{title}, порожні значення",
-    "filters.emptyValues.title": "Порожні значення"
+    "filters.emptyValues.title": "Порожні значення",
+    "insightPicker.searchPlaceholder": "Шукати серед усіх візуалізацій…",
+    "insightPicker.tabs.all": "Усі",
+    "insightPicker.sortBy.name": "Ім’я",
+    "insightPicker.filters": "Фільтри",
+    "insightPicker.filter.createdBy": "Створено",
+    "insightPicker.filter.all": "Усі",
+    "insightPicker.filter.apply": "Застосувати",
+    "insightPicker.filter.cancel": "Скасувати",
+    "insightPicker.sortDirection.ascending": "За зростанням",
+    "insightPicker.sortDirection.descending": "За спаданням",
+    "insightPicker.menu.actions": "Дії",
+    "insightPicker.resetFilters": "Скинути фільтри"
 }

@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "เกิดข้อผิดพลาดบางอย่าง",
     "gd.gen-ai.global-error.description": "ลองเริ่มต้นใหม่โดยรีสตาร์ทแชตบอตแล้วเริ่มใหม่อีกครั้ง",
     "gd.gen-ai.global-error.button-details": "ดูการตอบกลับข้อผิดพลาดดิบสำหรับรายละเอียด",
+    "gd.gen-ai.global-error.sync-in-progress": "ยังอยู่ระหว่างการตั้งค่า — โปรดลองอีกครั้งในอีกสักครู่",
     "gd.gen-ai.global-error.traceId": "รหัสการติดตามข้อผิดพลาด",
     "gd.gen-ai.global-error.show-more": "แสดงเพิ่มเติม",
     "gd.gen-ai.global-error.show-less": "แสดงน้อยลง",

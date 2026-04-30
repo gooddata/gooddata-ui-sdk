@@ -24,9 +24,13 @@ export function usePermissionsState(): PermissionsState {
     return permissions;
 }
 
+export function useFeatureFlags(): ISettings | undefined {
+    return usePermissionsState().result?.settings;
+}
+
 export function useFeatureFlag(flag: keyof ISettings): boolean {
-    const { result } = usePermissionsState();
-    return Boolean(result?.settings?.[flag]);
+    const flags = useFeatureFlags();
+    return Boolean(flags?.[flag]);
 }
 
 export function useWorkspacePermission(permission: WorkspacePermission): boolean {

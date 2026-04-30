@@ -14,6 +14,7 @@
     "semantic-search.edit": "Uredi",
     "semantic-search.date.at": "ob",
     "semantic-search.ask.ai.assistant": "Vprašaj AI asistenta",
+    "semantic-search.error.sync-in-progress": "Nastavitev še poteka — poskusite znova čez trenutek.",
     "gs.date.today": "Danes",
     "gs.date.yesterday": "Včeraj"
 }

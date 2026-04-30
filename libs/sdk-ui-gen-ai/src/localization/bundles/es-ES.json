@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "Se ha producido un error imprevisto.",
     "gd.gen-ai.global-error.description": "Intente reiniciar el chatbot y empezar de nuevo.",
     "gd.gen-ai.global-error.button-details": "Consulte la respuesta de error sin procesar para obtener más detalles",
+    "gd.gen-ai.global-error.sync-in-progress": "Aún se está configurando — vuelva a intentarlo en breve.",
     "gd.gen-ai.global-error.traceId": "ID de rastreo de error",
     "gd.gen-ai.global-error.show-more": "mostrar más",
     "gd.gen-ai.global-error.show-less": "mostrar menos",

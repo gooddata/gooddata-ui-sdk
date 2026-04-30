@@ -71,7 +71,7 @@ if [ -n "$IMAGE_URL" ]; then
     _PREBUILT=true
 else
     # Pack the pre-built dist into a tarball for Docker (WORKSPACE_ID is injected at container runtime)
-    (cd $APP_DIR; npm run pack-build)
+    (cd $APP_DIR; npm run _phase:pack-build)
     export IMAGE_URL=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
     docker build --no-cache -t $IMAGE_URL $APP_DIR || exit 1
 fi

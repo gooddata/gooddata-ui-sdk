@@ -6153,9 +6153,6 @@ importers:
       lodash-es:
         specifier: ^4.17.23
         version: 4.17.23
-      node-xlsx:
-        specifier: 0.24.0
-        version: 0.24.0
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
@@ -19382,14 +19379,6 @@ packages:
   /node-releases@2.0.37:
     resolution: {integrity: sha512-1h5gKZCF+pO/o3Iqt5Jp7wc9rH3eJJ0+nh/CIoiRwjRxde/hAHyLPXYN4V3CqKAbiZPSeJFSWHmJsbkicta0Eg==}
 
-  /node-xlsx@0.24.0:
-    resolution: {integrity: sha512-1olwK48XK9nXZsyH/FCltvGrQYvXXZuxVitxXXv2GIuRm51aBi1+5KwR4rWM4KeO61sFU+00913WLZTD+AcXEg==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
-    dependencies:
-      xlsx: '@cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz'
-    dev: true
-
   /normalize-package-data@2.5.0:
     resolution: {integrity: sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA==}
     dependencies:
@@ -22566,6 +22555,7 @@ packages:
 
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   /validate-npm-package-license@3.0.4:
@@ -23617,11 +23607,3 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: false
-
-  '@cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz':
-    resolution: {tarball: https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz}
-    name: xlsx
-    version: 0.20.2
-    engines: {node: '>=0.8'}
-    hasBin: true
-    dev: true

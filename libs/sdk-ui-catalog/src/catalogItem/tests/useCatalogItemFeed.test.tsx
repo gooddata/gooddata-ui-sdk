@@ -9,7 +9,7 @@ import type { AsyncStatus } from "../../async/types.js";
 import * as filterCtx from "../../filter/FilterContext.js";
 import { ObjectTypes } from "../../objectType/constants.js";
 import type { ObjectType } from "../../objectType/types.js";
-import * as paramGate from "../../parameter/gate.js";
+import * as permissionCtx from "../../permission/PermissionsContext.js";
 import * as searchCtx from "../../search/FullTextSearchContext.js";
 import * as query from "../query.js";
 import type { ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "../types.js";
@@ -39,8 +39,8 @@ vi.mock("../../search/FullTextSearchContext.js", () => ({
     useFullTextSearchState: vi.fn(),
 }));
 
-vi.mock("../../parameter/gate.js", () => ({
-    useIsParametersEnabled: vi.fn(),
+vi.mock("../../permission/PermissionsContext.js", () => ({
+    useFeatureFlags: vi.fn(),
 }));
 
 type TestItem = {
@@ -88,7 +88,7 @@ type FilterState = ReturnType<typeof filterCtx.useFilterState>;
 let filterState: FilterState;
 let qualityFilter: ReturnType<typeof filterCtx.useQualityFilter>;
 let searchState: { searchTerm: string };
-let isParametersEnabled: boolean;
+let flags: ReturnType<typeof permissionCtx.useFeatureFlags>;
 let pageProviders: Partial<Record<ObjectType, () => TestPage>>;
 
 function defaultFilterState(): FilterState {
@@ -133,13 +133,13 @@ beforeEach(() => {
     filterState = defaultFilterState();
     qualityFilter = undefined;
     searchState = { searchTerm: "" };
-    isParametersEnabled = false;
+    flags = { enableParameters: false };
     pageProviders = {};
 
     vi.mocked(filterCtx.useFilterState).mockImplementation(() => filterState);
     vi.mocked(filterCtx.useQualityFilter).mockImplementation(() => qualityFilter);
     vi.mocked(searchCtx.useFullTextSearchState).mockImplementation(() => searchState);
-    vi.mocked(paramGate.useIsParametersEnabled).mockImplementation(() => isParametersEnabled);
+    vi.mocked(permissionCtx.useFeatureFlags).mockImplementation(() => flags);
 
     const mountProvider = (type: ObjectType) => ({
         query: () => Promise.resolve(pageProviders[type]?.() ?? emptyPage()),
@@ -206,7 +206,7 @@ describe("useCatalogItemFeed – endpoint selection", () => {
     });
 
     it("includes parameters endpoint when the parameters gate is enabled", async () => {
-        isParametersEnabled = true;
+        flags = { enableParameters: true };
 
         const { result } = renderFeed();
         await waitForStatus(result, "success");

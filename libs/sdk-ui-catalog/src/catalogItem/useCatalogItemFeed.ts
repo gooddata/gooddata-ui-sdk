@@ -7,7 +7,7 @@ import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { useFilterState, useQualityFilter } from "../filter/FilterContext.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
-import { useIsParametersEnabled } from "../parameter/gate.js";
+import { useFeatureFlags } from "../permission/PermissionsContext.js";
 import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
 import { convertEntityToCatalogItem } from "./converter.js";
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemRef } from "./types.js";
@@ -18,7 +18,7 @@ export function useCatalogItemFeed(feedOptions: ICatalogItemFeedOptions) {
     const { searchTerm: search } = useFullTextSearchState();
     const { types, origin, createdBy, tags, isHidden, certification } = useFilterState();
     const qualityIds = useQualityFilter();
-    const isParametersEnabled = useIsParametersEnabled();
+    const flags = useFeatureFlags();
 
     const queryOptions = useCatalogQueryOptions(feedOptions, {
         search,
@@ -29,7 +29,7 @@ export function useCatalogItemFeed(feedOptions: ICatalogItemFeedOptions) {
         isHidden,
         certification,
     });
-    const endpoints = useCatalogEndpoints(types, queryOptions, { isParametersEnabled });
+    const endpoints = useCatalogEndpoints(types, queryOptions, flags);
 
     const paginator = useEndpointPaginator(endpoints, convertEntityToCatalogItem);
     const {

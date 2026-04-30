@@ -13,6 +13,16 @@
         {
             "operationName": "_phase:test",
             "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:pack-build",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:publish-docker-images",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
         }
     ]
 }

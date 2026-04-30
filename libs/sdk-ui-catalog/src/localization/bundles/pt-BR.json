@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Verificação de qualidade semântica concluída.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Nenhuma constatação",
     "analyticsCatalog.quality.scoreCard.action.loading": "Em execução...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Atualização do modelo em andamento, aguarde...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Ainda configurando — tente novamente em instantes.",
     "analyticsCatalog.quality.scoreCard.action.success": "Mostrar objetos",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Última verificação: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Verificação falhou!",

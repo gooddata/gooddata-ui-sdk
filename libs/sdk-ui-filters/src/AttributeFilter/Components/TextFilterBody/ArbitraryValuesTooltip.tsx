@@ -31,7 +31,7 @@ export function ArbitraryValuesTooltip() {
             }
             triggerBy={["hover", "focus"]}
             arrowPlacement="left"
-            anchorWrapperStyles={{ display: "contents" }}
+            anchorWrapperStyles={{ display: "flex", alignItems: "center" }}
             anchor={
                 <span className="gd-text-filter-body__values-help-icon">
                     <UiIconButton

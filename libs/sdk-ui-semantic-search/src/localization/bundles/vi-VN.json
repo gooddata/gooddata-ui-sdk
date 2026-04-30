@@ -14,6 +14,7 @@
     "semantic-search.edit": "Chỉnh sửa",
     "semantic-search.date.at": "lúc",
     "semantic-search.ask.ai.assistant": "Hỏi Trợ lý AI",
+    "semantic-search.error.sync-in-progress": "Vẫn đang thiết lập — vui lòng thử lại sau ít phút.",
     "gs.date.today": "Hôm nay",
     "gs.date.yesterday": "Hôm qua"
 }

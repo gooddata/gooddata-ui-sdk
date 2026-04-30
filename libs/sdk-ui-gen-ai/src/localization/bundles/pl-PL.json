@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "Coś poszło nie tak",
     "gd.gen-ai.global-error.description": "Spróbuj ponownie uruchomić chatbota i zacząć od nowa.",
     "gd.gen-ai.global-error.button-details": "Zobacz surową odpowiedź błędu, aby uzyskać szczegóły",
+    "gd.gen-ai.global-error.sync-in-progress": "Nadal trwa konfiguracja — spróbuj ponownie za chwilę.",
     "gd.gen-ai.global-error.traceId": "Identyfikator śledzenia błędu",
     "gd.gen-ai.global-error.show-more": "pokaż więcej",
     "gd.gen-ai.global-error.show-less": "pokaż mniej",
