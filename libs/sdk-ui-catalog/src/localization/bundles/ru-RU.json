@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Проверка семантического качества завершена.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Нет замечаний",
     "analyticsCatalog.quality.scoreCard.action.loading": "Выполняется...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Выполняется обновление модели, подождите...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Настройка еще выполняется — повторите попытку чуть позже.",
     "analyticsCatalog.quality.scoreCard.action.success": "Показать объекты",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Последняя проверка: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Проверка не выполнена!",

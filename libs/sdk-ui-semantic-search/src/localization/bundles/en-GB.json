@@ -14,6 +14,7 @@
     "semantic-search.edit": "Edit",
     "semantic-search.date.at": "at",
     "semantic-search.ask.ai.assistant": "Consult AI Assistant",
+    "semantic-search.error.sync-in-progress": "Still setting up — try again shortly.",
     "gs.date.today": "Today",
     "gs.date.yesterday": "Yesterday"
 }

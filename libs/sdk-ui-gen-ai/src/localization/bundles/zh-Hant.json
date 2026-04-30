@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "發生了不可預見的錯誤。",
     "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機器人並重新開始。",
     "gd.gen-ai.global-error.button-details": "有關詳細信息，請參閱原始錯誤回應",
+    "gd.gen-ai.global-error.sync-in-progress": "仍在設定中 — 請稍後再試。",
     "gd.gen-ai.global-error.traceId": "錯誤追蹤 ID",
     "gd.gen-ai.global-error.show-more": "顯示更多",
     "gd.gen-ai.global-error.show-less": "顯示較少",

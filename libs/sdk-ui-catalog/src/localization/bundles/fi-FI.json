@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Semanttinen laatutarkistus valmis.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Ei havaintoja",
     "analyticsCatalog.quality.scoreCard.action.loading": "Käynnissä...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Mallipäivitys käynnissä, odota...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Asetuksia viimeistellään edelleen — yritä pian uudelleen.",
     "analyticsCatalog.quality.scoreCard.action.success": "Näytä objektit",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Viimeksi tarkistettu: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Tarkistus epäonnistui!",

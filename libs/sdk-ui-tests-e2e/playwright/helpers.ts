@@ -68,13 +68,6 @@ export async function assertTableColumnValues(
 }
 
 /**
- * Assert that the pivot table inside `parentSelector` does not exist (no data).
- */
-export async function assertTableEmpty(page: Page, parentSelector: string): Promise<void> {
-    await expect(page.locator(`${parentSelector} .gd-pivot-table-next`)).toHaveCount(0);
-}
-
-/**
  * Resize a column header in a pivot table using mouse drag.
  */
 export async function resizeColumn(
@@ -1363,15 +1356,6 @@ export function getAuthToken(): string {
     return process.env["TIGER_API_TOKEN"] || "";
 }
 
-export function generateUUID(length = 10): string {
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    const data: string[] = [];
-    for (let i = 0; i < length; i++) {
-        data.push(possible.charAt(Math.floor(Math.random() * possible.length)));
-    }
-    return data.join("");
-}
-
 // ── Backend API helpers ─────────────────────────────────────────────
 
 export async function setEarlyAccess(
@@ -1537,7 +1521,7 @@ export async function switchToUser(page: Page, request: APIRequestContext, userI
     const bearerToken = body.data.attributes.bearerToken;
 
     await page.route("/api/**", (route) => {
-        route.continue({
+        void route.continue({
             headers: {
                 ...route.request().headers(),
                 authorization: `Bearer ${bearerToken}`,

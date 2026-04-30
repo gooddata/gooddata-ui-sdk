@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "문제가 발생했습니다",
     "gd.gen-ai.global-error.description": "챗봇을 다시 시작하고 처음부터 시작해 보세요.",
     "gd.gen-ai.global-error.button-details": "자세한 내용은 원시 오류 응답을 참조하세요",
+    "gd.gen-ai.global-error.sync-in-progress": "아직 설정 중입니다 — 잠시 후 다시 시도하세요.",
     "gd.gen-ai.global-error.traceId": "오류 추적 ID",
     "gd.gen-ai.global-error.show-more": "더 보기",
     "gd.gen-ai.global-error.show-less": "간단히 보기",

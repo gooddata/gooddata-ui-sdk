@@ -72,7 +72,7 @@ if [ -n "$IMAGE_URL" ]; then
     _PREBUILT=true
 else
     echo "⭐️ Build gooddata-ui-sdk-scenarios"
-    (cd $APP_DIR; npm run pack-build)
+    (cd $APP_DIR; npm run _phase:pack-build)
     echo "⭐️ Build docker container from gooddata-ui-sdk-scenarios"
     export IMAGE_URL=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
     docker build --no-cache -t $IMAGE_URL $APP_DIR || exit 1

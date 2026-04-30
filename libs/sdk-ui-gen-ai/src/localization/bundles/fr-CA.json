@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "Une erreur imprévue s’est produite.",
     "gd.gen-ai.global-error.description": "Essayez de redémarrer le chatbot et de recommencer.",
     "gd.gen-ai.global-error.button-details": "Voir la réponse d'erreur brute pour plus de détails",
+    "gd.gen-ai.global-error.sync-in-progress": "Configuration toujours en cours — réessayez sous peu.",
     "gd.gen-ai.global-error.traceId": "ID de traçage de l’erreur",
     "gd.gen-ai.global-error.show-more": "afficher plus",
     "gd.gen-ai.global-error.show-less": "afficher moins",

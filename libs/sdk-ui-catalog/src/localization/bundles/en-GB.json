@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Semantic quality check finished.",
     "analyticsCatalog.quality.scoreCard.action.empty": "No findings",
     "analyticsCatalog.quality.scoreCard.action.loading": "Running...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Model update in progress, please wait...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Still setting up — try again shortly.",
     "analyticsCatalog.quality.scoreCard.action.success": "Show objects",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Last checked: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Check unsuccessful!",

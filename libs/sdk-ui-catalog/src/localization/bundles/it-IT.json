@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Verifica della qualità semantica completata.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Nessun riscontro",
     "analyticsCatalog.quality.scoreCard.action.loading": "In esecuzione...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Aggiornamento del modello in corso, attendere...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Configurazione ancora in corso — riprova tra poco.",
     "analyticsCatalog.quality.scoreCard.action.success": "Mostra oggetti",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Ultimo controllo: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Controllo non riuscito!",

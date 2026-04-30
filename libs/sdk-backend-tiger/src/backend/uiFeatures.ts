@@ -497,7 +497,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableArbitraryFilterKD: true,
     enableMeasureValueFilterKD: false,
     enableFilterControlInDrillingConfiguration: true,
-    enableShellApplication: false,
+    enableShellApplication: true,
     enableNullJoins: false,
     enableDashboardDensitySetting: false,
     enableAiHub: false,

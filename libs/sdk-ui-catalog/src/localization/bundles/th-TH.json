@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "การตรวจสอบคุณภาพเชิงความหมายเสร็จสิ้น",
     "analyticsCatalog.quality.scoreCard.action.empty": "ไม่พบรายการ",
     "analyticsCatalog.quality.scoreCard.action.loading": "กำลังทำงาน...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "กำลังอัปเดตโมเดล โปรดรอสักครู่...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "ยังอยู่ระหว่างการตั้งค่า — โปรดลองอีกครั้งในอีกสักครู่",
     "analyticsCatalog.quality.scoreCard.action.success": "แสดงอ็อบเจ็กต์",
     "analyticsCatalog.quality.scoreCard.lastCheck": "ตรวจสอบล่าสุด: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "การตรวจสอบล้มเหลว!",

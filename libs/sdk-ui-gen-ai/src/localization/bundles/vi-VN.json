@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "Đã xảy ra lỗi",
     "gd.gen-ai.global-error.description": "Hãy thử khởi động lại chatbot và bắt đầu lại.",
     "gd.gen-ai.global-error.button-details": "Xem phản hồi lỗi thô để biết chi tiết",
+    "gd.gen-ai.global-error.sync-in-progress": "Vẫn đang thiết lập — vui lòng thử lại sau ít phút.",
     "gd.gen-ai.global-error.traceId": "ID theo dõi lỗi",
     "gd.gen-ai.global-error.show-more": "hiện thêm",
     "gd.gen-ai.global-error.show-less": "hiện ít",

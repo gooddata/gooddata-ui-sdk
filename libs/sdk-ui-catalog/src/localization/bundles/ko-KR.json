@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "시맨틱 품질 검사가 완료되었습니다.",
     "analyticsCatalog.quality.scoreCard.action.empty": "결과 없음",
     "analyticsCatalog.quality.scoreCard.action.loading": "실행 중...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "모델 업데이트 진행 중입니다. 잠시 기다려 주세요...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "아직 설정 중입니다 — 잠시 후 다시 시도하세요.",
     "analyticsCatalog.quality.scoreCard.action.success": "오브젝트 표시",
     "analyticsCatalog.quality.scoreCard.lastCheck": "마지막 검사: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "검사 실패!",

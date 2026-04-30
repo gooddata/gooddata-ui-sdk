@@ -14,6 +14,7 @@
     "semantic-search.edit": "Edit",
     "semantic-search.date.at": "pada",
     "semantic-search.ask.ai.assistant": "Tanyakan kepada Asisten AI",
+    "semantic-search.error.sync-in-progress": "Masih menyiapkan — coba lagi sebentar lagi.",
     "gs.date.today": "Hari ini",
     "gs.date.yesterday": "Kemarin"
 }

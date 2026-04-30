@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Pemeriksaan kualitas semantik selesai.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Tidak ada temuan",
     "analyticsCatalog.quality.scoreCard.action.loading": "Menjalankan...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Pembaruan model sedang berlangsung, harap tunggu...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Masih menyiapkan — coba lagi sebentar lagi.",
     "analyticsCatalog.quality.scoreCard.action.success": "Tampilkan objek",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Terakhir diperiksa: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Pemeriksaan gagal!",

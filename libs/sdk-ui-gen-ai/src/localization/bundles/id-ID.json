@@ -2,6 +2,7 @@
     "gd.gen-ai.global-error": "Terjadi kesalahan",
     "gd.gen-ai.global-error.description": "Coba mulai ulang chatbot dan mulai dari awal.",
     "gd.gen-ai.global-error.button-details": "Lihat respons kesalahan mentah untuk detail",
+    "gd.gen-ai.global-error.sync-in-progress": "Masih menyiapkan — coba lagi sebentar lagi.",
     "gd.gen-ai.global-error.traceId": "ID pelacakan error",
     "gd.gen-ai.global-error.show-more": "tampilkan lebih banyak",
     "gd.gen-ai.global-error.show-less": "tampilkan lebih sedikit",

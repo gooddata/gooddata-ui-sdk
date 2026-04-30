@@ -11,7 +11,7 @@ import type {
     IMeasuresQueryResult,
     IParametersQueryResult,
 } from "@gooddata/sdk-backend-spi";
-import type { Identifier, ObjectOrigin } from "@gooddata/sdk-model";
+import type { IFeatureFlags, Identifier, ObjectOrigin } from "@gooddata/sdk-model";
 
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
@@ -39,10 +39,6 @@ export type FeedEndpoint = {
     type: ObjectType;
     query: () => Promise<EndpointResult>;
 };
-
-export interface ICatalogEndpointsGates {
-    isParametersEnabled: boolean;
-}
 
 interface IFilterParam<T> {
     values: T;
@@ -108,69 +104,88 @@ export function useCatalogQueryOptions(
     ]);
 }
 
+export interface ICatalogEndpoint {
+    type: ObjectType;
+    query: (opts: ICatalogItemQueryOptions) => Promise<EndpointResult>;
+    gatedBy?: readonly (keyof IFeatureFlags)[];
+    cannotFilterBy?: readonly FilterSlot[];
+}
+
+type FilterSlot = "createdBy" | "excludeCreatedBy" | "certification";
+
+const ENDPOINTS: readonly ICatalogEndpoint[] = [
+    {
+        type: ObjectTypes.DASHBOARD,
+        query: (opts) => getDashboardsQuery(opts).query(),
+    },
+    {
+        type: ObjectTypes.VISUALIZATION,
+        query: (opts) => getInsightsQuery(opts).query(),
+    },
+    {
+        type: ObjectTypes.METRIC,
+        query: (opts) => getMetricsQuery(opts).query(),
+    },
+    {
+        type: ObjectTypes.PARAMETER,
+        query: (opts) => getParametersQuery(opts).query(),
+        gatedBy: ["enableParameters"],
+    },
+    {
+        type: ObjectTypes.ATTRIBUTE,
+        query: (opts) => getAttributesQuery(opts).query(),
+        cannotFilterBy: ["createdBy", "excludeCreatedBy", "certification"],
+    },
+    {
+        type: ObjectTypes.FACT,
+        query: (opts) => getFactsQuery(opts).query(),
+        cannotFilterBy: ["createdBy", "excludeCreatedBy", "certification"],
+    },
+    {
+        type: ObjectTypes.DATASET,
+        query: (opts) => getDateDatasetsQuery(opts).query(),
+        cannotFilterBy: ["createdBy", "excludeCreatedBy", "certification"],
+    },
+];
+
 export function useCatalogEndpoints(
     types: ObjectType[],
     queryOptions: ICatalogItemQueryOptions,
-    gates: ICatalogEndpointsGates,
+    flags: IFeatureFlags | undefined,
 ): FeedEndpoint[] {
-    const { isParametersEnabled } = gates;
-
-    return useMemo(() => {
-        if (queryOptions.id?.length === 0) {
-            return [];
-        }
-
-        const endpoints: FeedEndpoint[] = [];
-
-        if (types.includes(ObjectTypes.DASHBOARD) || types.length === 0) {
-            endpoints.push({
-                query: () => getDashboardsQuery(queryOptions).query(),
-                type: ObjectTypes.DASHBOARD,
-            });
-        }
-        if (types.includes(ObjectTypes.VISUALIZATION) || types.length === 0) {
-            endpoints.push({
-                query: () => getInsightsQuery(queryOptions).query(),
-                type: ObjectTypes.VISUALIZATION,
-            });
-        }
-        if (types.includes(ObjectTypes.METRIC) || types.length === 0) {
-            endpoints.push({
-                query: () => getMetricsQuery(queryOptions).query(),
-                type: ObjectTypes.METRIC,
-            });
-        }
-        if (isParametersEnabled && (types.includes(ObjectTypes.PARAMETER) || types.length === 0)) {
-            endpoints.push({
-                query: () => getParametersQuery(queryOptions).query(),
-                type: ObjectTypes.PARAMETER,
-            });
-        }
-        if (
-            !queryOptions.createdBy?.length &&
-            !queryOptions.excludeCreatedBy?.length &&
-            !queryOptions.certification
-        ) {
-            if (types.includes(ObjectTypes.ATTRIBUTE) || types.length === 0) {
-                endpoints.push({
-                    query: () => getAttributesQuery(queryOptions).query(),
-                    type: ObjectTypes.ATTRIBUTE,
-                });
-            }
-            if (types.includes(ObjectTypes.FACT) || types.length === 0) {
-                endpoints.push({
-                    query: () => getFactsQuery(queryOptions).query(),
-                    type: ObjectTypes.FACT,
-                });
-            }
-            if (types.includes(ObjectTypes.DATASET) || types.length === 0) {
-                endpoints.push({
-                    query: () => getDateDatasetsQuery(queryOptions).query(),
-                    type: ObjectTypes.DATASET,
-                });
-            }
-        }
-
-        return endpoints;
-    }, [isParametersEnabled, queryOptions, types]);
+    return useMemo(() => selectCatalogEndpoints(types, queryOptions, flags), [flags, queryOptions, types]);
 }
+
+export function selectCatalogEndpoints(
+    types: readonly ObjectType[],
+    options: ICatalogItemQueryOptions,
+    flags: IFeatureFlags | undefined,
+    endpoints: readonly ICatalogEndpoint[] = ENDPOINTS,
+): FeedEndpoint[] {
+    if (options.id?.length === 0) {
+        return [];
+    }
+    const result: FeedEndpoint[] = [];
+    for (const endpoint of endpoints) {
+        // types rule: empty = all
+        if (types.length > 0 && !types.includes(endpoint.type)) {
+            continue;
+        }
+        // gates rule: every listed flag must be on
+        if (endpoint.gatedBy?.some((flag) => !flags?.[flag])) {
+            continue;
+        }
+        // compatibility rule: backend rejects these filters on this endpoint
+        if (endpoint.cannotFilterBy?.some((slot) => isSlotActive[slot](options))) {
+            continue;
+        }
+        result.push({ type: endpoint.type, query: () => endpoint.query(options) });
+    }
+    return result;
+}
+
+const isSlotActive: Record<FilterSlot, (opts: ICatalogItemQueryOptions) => boolean> = {
+    createdBy: (options) => (options.createdBy?.length ?? 0) > 0,
+    excludeCreatedBy: (options) => (options.excludeCreatedBy?.length ?? 0) > 0,
+    certification: (options) => Boolean(options.certification),
+};

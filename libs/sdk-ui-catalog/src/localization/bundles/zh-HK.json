@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "語意品質檢查已完成。",
     "analyticsCatalog.quality.scoreCard.action.empty": "沒有發現",
     "analyticsCatalog.quality.scoreCard.action.loading": "執行中...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "模型更新進行中，請稍候...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "仍在設定中 — 請稍後再試。",
     "analyticsCatalog.quality.scoreCard.action.success": "顯示對象",
     "analyticsCatalog.quality.scoreCard.lastCheck": "上次檢查：{date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "檢查失敗！",

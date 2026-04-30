@@ -411,7 +411,6 @@
     "addPanel.attributeFilter.tooltip.no_attributes": "Фільтр атрибута потребує атрибута.",
     "addPanel.attributeFilter.tooltip.no_items": "Фільтр потребує атрибута або набору даних дати.",
     "addPanel.attributeFilter.tooltip.no_attributes.link": "Докладніше",
-    "addPanel.kpi": "Ключовий показник ефективності",
     "addPanel.richText": "Форматований текст",
     "addPanel.visualizationSwitcher": "Перемикач візуалізацій",
     "addPanel.visualizationSwitcher.tooltip": "Об’єднайте кілька візуалізацій в один елемент із навігаційним розкривним списком для перемикання між ними.",

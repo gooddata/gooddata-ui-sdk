@@ -14,6 +14,7 @@
     "semantic-search.edit": "編集",
     "semantic-search.date.at": "の時刻",
     "semantic-search.ask.ai.assistant": "AIアシスタントに聞く",
+    "semantic-search.error.sync-in-progress": "現在も設定中です。しばらくしてから再試行してください。",
     "gs.date.today": "今日",
     "gs.date.yesterday": "昨日"
 }

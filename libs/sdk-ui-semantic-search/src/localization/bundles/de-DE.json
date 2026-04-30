@@ -14,6 +14,7 @@
     "semantic-search.edit": "Bearbeiten",
     "semantic-search.date.at": "um",
     "semantic-search.ask.ai.assistant": "Fragen Sie den AI-Assistenten",
+    "semantic-search.error.sync-in-progress": "Wird noch eingerichtet — versuchen Sie es in Kürze erneut.",
     "gs.date.today": "Heute",
     "gs.date.yesterday": "Gestern"
 }

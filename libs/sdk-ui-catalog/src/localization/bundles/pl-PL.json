@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Sprawdzanie jakości semantycznej zakończone.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Brak ustaleń",
     "analyticsCatalog.quality.scoreCard.action.loading": "Trwa uruchamianie...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Trwa aktualizacja modelu, proszę czekać...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Nadal trwa konfiguracja — spróbuj ponownie za chwilę.",
     "analyticsCatalog.quality.scoreCard.action.success": "Pokaż obiekty",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Ostatnie sprawdzenie: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Sprawdzenie nie powiodło się!",

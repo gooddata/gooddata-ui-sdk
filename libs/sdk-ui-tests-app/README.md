@@ -54,7 +54,7 @@ When you have a new change on dashboard, run `rushx export-fixture` in the `sdk-
 In production builds, the HTML includes a `<script src="./config.js"></script>` tag (injected by a Vite plugin). The Docker entrypoint (`scripts/docker-entrypoint.sh`) generates `config.js` from the `WORKSPACE_ID` environment variable at container startup. This allows the same Docker image to be reused across environments without rebuilding:
 
 ```bash
-npm run dist && npm run pack-build
+npm run dist && npm run _phase:pack-build
 docker build -t sdk-ui-tests-app .
 docker run -e WORKSPACE_ID=<your-workspace-id> -p 9500:9500 sdk-ui-tests-app
 ```

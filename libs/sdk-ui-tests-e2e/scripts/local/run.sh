@@ -220,7 +220,7 @@ else
         if [[ "$TEST_TYPE" == "isolated" && "$MODE" != "record" ]]; then
             INJECT_WS_ID=$(grep -o '"workspaceId":[[:space:]]*"[^"]*"' "$(dirname "${BASH_SOURCE[0]}")/../../node_modules/@gooddata/sdk-ui-tests-reference-workspace/recordings_workspace.json" | head -1 | cut -d'"' -f4)
         fi
-        (cd ../sdk-ui-tests-app && export TEST_WORKSPACE_ID="$INJECT_WS_ID" && npm run build && npm run dist && ./scripts/inject-runtime-config.sh "$INJECT_WS_ID" && npm run pack-build)
+        (cd ../sdk-ui-tests-app && export TEST_WORKSPACE_ID="$INJECT_WS_ID" && npm run build && npm run dist && ./scripts/inject-runtime-config.sh "$INJECT_WS_ID" && npm run _phase:pack-build)
         docker build -t sdk-ui-tests-app ../sdk-ui-tests-app
         export IMAGE_ID=sdk-ui-tests-app
     else

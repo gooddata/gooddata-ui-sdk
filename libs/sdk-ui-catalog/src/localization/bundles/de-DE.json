@@ -144,7 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Semantische Qualitätsprüfung abgeschlossen.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Keine Ergebnisse",
     "analyticsCatalog.quality.scoreCard.action.loading": "Wird ausgeführt...",
-    "analyticsCatalog.quality.scoreCard.action.syncing": "Modellaktualisierung wird durchgeführt, bitte warten...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Wird noch eingerichtet — versuchen Sie es in Kürze erneut.",
     "analyticsCatalog.quality.scoreCard.action.success": "Objekte anzeigen",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Zuletzt geprüft: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Prüfung fehlgeschlagen!",
