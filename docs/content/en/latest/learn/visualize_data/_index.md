@@ -23,11 +23,11 @@ Using the [InsightView component](./insightview/) is the simplest method to impl
 {{% alert %}} The term 'insight' is an obsolete expression for 'visualizations' but is still employed within the SDK's components and functions.
 {{% /alert %}}
 
-The InsightView component allows you to embed visualizations created in [Analytical Designer](https://www.gooddata.com/docs/cloud/create-visualizations/analytical-designer/) into your application as React components.
+The InsightView component allows you to embed visualizations created in [Analytical Designer](https://www.gooddata.ai/docs/cloud/create-visualizations/analytical-designer/) into your application as React components.
 It always reflects the current state of an visualization: if any changes are made to the visualization in Analytical Designer,
 the InsightView component in your application will pick them up and show the up-to-date version of the visualization without any actions needed from your side.
 
-You can [generate the code](https://www.gooddata.com/docs/cloud/embed-visualizations/react-sdk/) for a particular InsightView directly in Analytical Designer.
+You can [generate the code](https://www.gooddata.ai/docs/cloud/embed-visualizations/react-sdk/) for a particular InsightView directly in Analytical Designer.
 
 ### When to use
 
@@ -57,7 +57,7 @@ GoodData.UI comes with several types of visualizations that you can use out of t
 They require more coding than the [InsightView component](#insightview-component) but at the same time offer more flexibility.
 For more information, see [Charts and Plots](./charts_and_plots/) .
 
-You can [generate the code](https://www.gooddata.com/docs/cloud/embed-visualizations/react-sdk/#EmbedVisualizationsUsingReactSDK-EmbedVisualization) for a particular visual component directly in Analytical Designer.
+You can [generate the code](https://www.gooddata.ai/docs/cloud/embed-visualizations/react-sdk/#EmbedVisualizationsUsingReactSDK-EmbedVisualization) for a particular visual component directly in Analytical Designer.
 
 ### When to use
 

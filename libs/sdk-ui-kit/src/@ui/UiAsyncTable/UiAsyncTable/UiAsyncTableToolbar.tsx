@@ -52,6 +52,7 @@ const useAsyncTableToolbar = <T extends { id: string } | { ref: ObjRef }>({
     width,
     searchPlaceholder,
     onSearch,
+    allowSearch,
     renderToolbarCustomElement,
     accessibilityConfig,
 }: IUiAsyncTableToolbarProps<T>) => {
@@ -194,8 +195,8 @@ const useAsyncTableToolbar = <T extends { id: string } | { ref: ObjRef }>({
     ]);
 
     const hasContent = useMemo(() => {
-        return filters?.length || bulkActions;
-    }, [filters, bulkActions]);
+        return filters?.length || bulkActions || allowSearch;
+    }, [filters, bulkActions, allowSearch]);
 
     return {
         hasContent,

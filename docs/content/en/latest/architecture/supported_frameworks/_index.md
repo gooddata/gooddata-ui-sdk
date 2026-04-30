@@ -14,7 +14,7 @@ However GoodData.UI supports nearly all .js and .ts based applications, altough 
 
 We have written a Frontend Integration Series articles that should get you started using some of these other frameworks, if you do not use either React of Web Components:
 
-* [Angular](https://www.gooddata.com/blog/frontend-integration-series-angular/)
-* [Next.js](https://www.gooddata.com/blog/frontend-integration-series-nextjs/)
-* [Vue.js](https://www.gooddata.com/blog/frontend-integration-series-vue-js/)
-* [SvelteKit](https://www.gooddata.com/blog/frontend-integration-series-sveltekit/)
+* [Angular](https://www.gooddata.ai/blog/frontend-integration-series-angular/)
+* [Next.js](https://www.gooddata.ai/blog/frontend-integration-series-nextjs/)
+* [Vue.js](https://www.gooddata.ai/blog/frontend-integration-series-vue-js/)
+* [SvelteKit](https://www.gooddata.ai/blog/frontend-integration-series-sveltekit/)

@@ -73,7 +73,7 @@ All GoodData.UI dependencies are injected into the dashboard plugin at runtime w
 ### Recommendations
 
 - Use only the public dashboard plugins API and GoodData.UI interfaces. Anything marked as alpha, beta, or internal within the plugin code should be used at your own risk. If you are missing an API for your particular use case or need something not yet marked as stable, please [get in touch with us](../../../#Home-JoinLearn), and we may consider updating or extending it.
-- Do not manipulate the CSS or DOM structure of the dashboard. Instead, stick to the [theming guidelines](https://www.gooddata.com/docs/cloud/customize-appearance/create-custom-themes/).
+- Do not manipulate the CSS or DOM structure of the dashboard. Instead, stick to the [theming guidelines](https://www.gooddata.ai/docs/cloud/customize-appearance/create-custom-themes/).
 - Create smaller, focused plugins. Avoid large, complicated plugins that drastically change the dashboard's behavior and look.
 - For more complex changes, consider using better-suited approaches, such as [using the standalone dashboard component](../../../learn/embed_dashboards/#EmbedDashboards-Dashboardcomponent) or [building your custom dashboard](../../../learn/embed_dashboards/#EmbedDashboards-Customdashboards)
 

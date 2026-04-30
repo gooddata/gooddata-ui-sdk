@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             link.href = '/versions/';
         } else {
             // For production - link to the unversioned archive page
-            link.href = 'https://www.gooddata.com/docs/gooddata-ui/versions/';
+            link.href = 'https://www.gooddata.ai/docs/gooddata-ui/versions/';
         }
         
         // Safe DOM manipulation - XSS protected

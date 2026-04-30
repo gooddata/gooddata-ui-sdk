@@ -5824,6 +5824,8 @@ export interface IUiAsyncTableProps<T extends {
     // (undocumented)
     accessibilityConfig?: IUiAsyncTableAccessibilityConfig<T>;
     // (undocumented)
+    allowSearch?: boolean;
+    // (undocumented)
     bulkActions?: Array<IUiAsyncTableBulkAction>;
     // (undocumented)
     columns: Array<IUiAsyncTableColumn<T>>;

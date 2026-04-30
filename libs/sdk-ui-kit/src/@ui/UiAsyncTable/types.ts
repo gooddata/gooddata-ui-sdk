@@ -70,6 +70,7 @@ export interface IUiAsyncTableProps<T extends { id: string } | { ref: ObjRef }> 
     onSort?: (key: keyof T) => void;
 
     //search
+    allowSearch?: boolean;
     searchPlaceholder?: string;
     onSearch?: (search: string) => void;
 
@@ -235,6 +236,7 @@ export type UiAsyncTableCheckboxProps = {
 
 export interface IUiAsyncTableToolbarProps<T extends { id: string } | { ref: ObjRef }> {
     filters?: Array<IUiAsyncTableFilter>;
+    allowSearch?: boolean;
     isFiltersTooLarge?: boolean;
     bulkActions?: Array<IUiAsyncTableBulkAction>;
     selectedItemIds?: Array<string>;

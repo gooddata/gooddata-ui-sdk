@@ -1,6 +1,32 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 23 Apr 2026 06:53:35 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Apr 2026 06:59:15 GMT and should not be manually modified.
+
+## 11.32.0
+
+Thu, 30 Apr 2026 06:59:15 GMT
+
+### Updates
+
+- sdk-ui-catalog: Decouple parameter mutations from the catalog feed and wire providers for standalone detail usage.
+- Tokenize {parameter/...} in metric MAQL expressions
+- Add insight parameter values
+- sdk-model: Expose `id` on `ISemanticQualityIssue`
+- sdk-ui: Fix `useDebounce` to cancel pending callbacks when the component unmounts or delay changes, preventing potential side effects after unmount.
+- sdk-ui-kit: Edited `<EditableLabel />` to allow for proper renaming of analytical designer buckets.
+- sdk-ui-gen-ai: add suggestion handling and organization knowledge document APIs
+- sdk-ui-gen-ai: adjust textarea and label dimensions for consistent styling
+- sdk-ui-gen-ai: add pagination support for conversation queries in chatbot
+- sdk-backend-tiger: update GetConversations endpoint to support new AiConversationListResponse structure
+- sdk-ui-gen-ai: refactor client logic for new response format and simplify conversation reset flow.
+- sdk-ui-all: add structured error handling and localized messages for semantic search and GenAI metadata sync states
+- feat(sdk-ui-all): Added `as` and `isDisabled` to UiLink
+- fix(sdk-ui-kit): Improved styling of disabled UiLinks.
+- sdk-backend-tiger: Use correct file name for debug output.
+- sdk-ui-all: Introduce dashboard MVF in model and converters.
+- sdk-ui-all: Improved insight picker and small UX improvements
+- Fix filter group grid accessibility roles structure
+- sdk-ui-all: enable enableShellApplication by default
 
 ## 11.31.0
 
