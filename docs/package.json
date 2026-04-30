@@ -2,7 +2,7 @@
     "name": "gd-ui-docs",
     "version": "9.0.0",
     "description": "Documentation for GD.UI project",
-    "homepage": "https://www.gooddata.com/docs/gooddata-ui/",
+    "homepage": "https://www.gooddata.ai/docs/gooddata-ui/",
     "repository": {
         "type": "git",
         "url": "git+ssh://git@github.com/gooddata/gooddata-ui-sdk.git"

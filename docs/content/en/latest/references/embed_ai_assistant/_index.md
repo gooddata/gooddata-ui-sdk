@@ -13,9 +13,9 @@ GoodData.UI provides a React component for embedding of the chat interface for [
 
 ## Prerequisites
 
-Before you can use the AI Assistant, you need to make sure it is properly set up in GoodData Cloud. For detailed instructions, see [Configure AI Assistant](https://www.gooddata.com/docs/cloud/ai/use-ai_assistant/configure-ai-assistant/).
+Before you can use the AI Assistant, you need to make sure it is properly set up in GoodData Cloud. For detailed instructions, see [Configure AI Assistant](https://www.gooddata.ai/docs/cloud/ai/use-ai_assistant/configure-ai-assistant/).
 
-If you are using GoodData.CN, some additional configuration may be required. For details, see the [AI in GoodData.CN](https://www.gooddata.com/docs/cloud/ai/use-ai_assistant/configure-ai-assistant/#ai-in-gooddatacn) section of the article.
+If you are using GoodData.CN, some additional configuration may be required. For details, see the [AI in GoodData.CN](https://www.gooddata.ai/docs/cloud/ai/use-ai_assistant/configure-ai-assistant/#ai-in-gooddatacn) section of the article.
 
 ## AI Assistant Component Features
 
@@ -269,5 +269,5 @@ dispatcher(clearThreadAction());
 dispatcher(newMessageAction(makeUserMessage([makeTextContents("Hello", [])])));
 ```
 
-[ai assistant]: https://www.gooddata.com/platform/artificial-intelligence/
+[ai assistant]: https://www.gooddata.ai/platform/artificial-intelligence/
 [theme provider]: ../../learn/apply_theming/

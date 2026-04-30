@@ -69,7 +69,7 @@ auth_header = '-H "Authorization: Bearer YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz"'
 [menu]
 [[menu.main]]
 name = "Learn"
-url = "https://www.gooddata.com/learn/"
+url = "https://www.gooddata.ai/learn/"
 weight = 1
 [menu.main.params]
     isMobileTitle = true
@@ -94,7 +94,7 @@ url = "https://support.gooddata.com/hc/en-us"
 weight = 5
 [[menu.main]]
 name = "Go to GoodData.com"
-url = "https://www.gooddata.com/"
+url = "https://www.gooddata.ai/"
 weight = 6
 [menu.main.params]
     mobileOnly = true

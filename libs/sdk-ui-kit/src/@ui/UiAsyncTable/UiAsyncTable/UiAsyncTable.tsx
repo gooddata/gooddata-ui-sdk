@@ -42,11 +42,13 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
         searchPlaceholder,
         renderToolbarCustomElement,
         accessibilityConfig,
+        allowSearch,
     } = props;
 
     return (
         <div className={b()} style={{ width }}>
             <UiAsyncTableToolbar<T>
+                allowSearch={allowSearch}
                 filters={filters}
                 isFiltersTooLarge={isFiltersTooLarge}
                 bulkActions={bulkActions}

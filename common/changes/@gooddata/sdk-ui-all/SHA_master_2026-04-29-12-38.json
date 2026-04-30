@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-gen-ai: add pagination support for conversation queries in chatbot",
+            "comment": "sdk-ui-kit: add `allowSearch` support for `UiAsyncTable` for showing filtering",
             "type": "none"
         }
     ],
