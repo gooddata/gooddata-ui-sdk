@@ -8,6 +8,7 @@ import {
 import {
     type DashboardFiltersApplyMode,
     type IActiveCalendars,
+    type IAiRateLimit,
     type IAlertDefault,
     type IFiscalYear,
     type IMetricFormatOverrideSetting,
@@ -86,6 +87,18 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
 
     async setEnableAiOnData(enabled: boolean): Promise<void> {
         return this.decorated.setEnableAiOnData(enabled);
+    }
+
+    async setAiRateLimit(value: IAiRateLimit): Promise<void> {
+        return this.decorated.setAiRateLimit(value);
+    }
+
+    async deleteAiRateLimit(): Promise<void> {
+        return this.decorated.deleteAiRateLimit();
+    }
+
+    async getAiRateLimit(): Promise<IAiRateLimit | undefined> {
+        return this.decorated.getAiRateLimit();
     }
 
     async getEnableDrillToUrlByDefault(): Promise<boolean | undefined> {

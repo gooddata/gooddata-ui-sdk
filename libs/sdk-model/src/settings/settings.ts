@@ -85,6 +85,24 @@ export interface ILlmActiveProvider {
 }
 
 /**
+ * AI rate limit configuration. Caps how many AI chat messages a user can send
+ * within a rolling time window.
+ *
+ * @public
+ */
+export interface IAiRateLimit {
+    /**
+     * Maximum number of AI interactions allowed within the time window. Must be a positive integer.
+     */
+    maxInteractions: number;
+
+    /**
+     * Length of the rolling time window in hours. Must be a positive integer.
+     */
+    timeWindowHours: number;
+}
+
+/**
  * Configuration of WhiteLabeling.
  *
  * @public
@@ -345,9 +363,9 @@ export interface IPermanentSettings {
     timezone?: string;
 
     /**
-     * Ai rate limit in requests per minute.
+     * AI rate limit configuration: max interactions per rolling time window.
      */
-    aiRateLimit?: number;
+    aiRateLimit?: IAiRateLimit;
 
     /**
      * Metric format override configuration.
@@ -992,13 +1010,6 @@ export interface IFeatureFlags {
      * Enable AI Knowledge feature
      */
     enableAIKnowledge?: boolean;
-
-    /**
-     * Enable the redesigned AI Hub landing page with Agents / AI Knowledge / MCP cards
-     * and an embedded settings section. When disabled, the legacy single-card AI Hub
-     * page is shown and AI-related settings remain in the main Settings page.
-     */
-    enableImprovedAiHub?: boolean;
 
     /**
      * Enable the admin toggle that controls whether organization/workspace data can be sent to LLMs.

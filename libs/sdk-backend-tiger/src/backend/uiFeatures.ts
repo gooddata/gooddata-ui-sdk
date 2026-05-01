@@ -142,7 +142,6 @@ export enum TigerFeaturesNames {
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableGenAIMemory = "enableGenAIMemory",
     EnableAIKnowledge = "enableAIKnowledge",
-    EnableImprovedAiHub = "enableImprovedAiHub",
     EnableAiAgenticSuggestions = "enableAiAgenticSuggestions",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     EnableAiAgenticConversations = "enableAiAgenticConversations",
@@ -309,7 +308,6 @@ export type ITigerFeatureFlags = {
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
-    enableImprovedAiHub: (typeof FeatureFlagsValues)["enableImprovedAiHub"][number];
     enableAiAgenticSuggestions: (typeof FeatureFlagsValues)["enableAiAgenticSuggestions"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
@@ -476,7 +474,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewPdfTabularExport: true,
     enableGenAIMemory: false,
     enableAIKnowledge: false,
-    enableImprovedAiHub: false,
     enableAiAgenticSuggestions: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
@@ -644,7 +641,6 @@ export const FeatureFlagsValues = {
     enableNewPdfTabularExport: [true, false] as const,
     enableGenAIMemory: [false, true] as const,
     enableAIKnowledge: [false, true] as const,
-    enableImprovedAiHub: [false, true] as const,
     enableAiAgenticSuggestions: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,

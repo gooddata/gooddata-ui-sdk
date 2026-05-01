@@ -544,7 +544,11 @@ function convertUserContext(userContext: IGenAIUserContext | undefined) {
                               title: w.title,
                               widgetId: objRefToString(w.widgetRef),
                               widgetType: w.widgetType,
-                              ...(w.insightRef ? { visualizationId: objRefToString(w.insightRef) } : {}),
+                              ...(w.insightRef
+                                  ? w.widgetType === "visualizationSwitcher"
+                                      ? { activeVisualizationId: objRefToString(w.insightRef) }
+                                      : { visualizationId: objRefToString(w.insightRef) }
+                                  : {}),
                               ...(w.resultId ? { resultId: w.resultId } : {}),
                           })),
                       },

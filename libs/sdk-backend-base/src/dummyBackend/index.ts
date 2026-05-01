@@ -148,6 +148,7 @@ import {
     type FilterContextItem,
     type IAbsoluteDateFilter,
     type IActiveCalendars,
+    type IAiRateLimit,
     type IAlertDefault,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeElement,
@@ -1095,6 +1096,9 @@ class DummyOrganization implements IOrganization {
             setOpenAiConfig: () => Promise.resolve(),
             setDashboardFiltersApplyMode: () => Promise.resolve(),
             setEnableAiOnData: () => Promise.resolve(),
+            setAiRateLimit: () => Promise.resolve(),
+            deleteAiRateLimit: () => Promise.resolve(),
+            getAiRateLimit: () => Promise.resolve(undefined),
             setEnableDrillToUrlByDefault: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
@@ -1377,6 +1381,18 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
 
     setEnableAiOnData(_enabled: boolean): Promise<void> {
         return Promise.resolve();
+    }
+
+    setAiRateLimit(_value: IAiRateLimit): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteAiRateLimit(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    getAiRateLimit(): Promise<IAiRateLimit | undefined> {
+        return Promise.resolve(undefined);
     }
 
     getEnableDrillToUrlByDefault(): Promise<boolean | undefined> {

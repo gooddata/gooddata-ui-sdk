@@ -309,6 +309,15 @@ function recordedWorkspace(
                 async setEnableAiOnData(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setAiRateLimit(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteAiRateLimit(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async getAiRateLimit(): Promise<undefined> {
+                    return Promise.resolve(undefined);
+                },
                 async getEnableDrillToUrlByDefault(): Promise<boolean | undefined> {
                     return Promise.resolve(undefined);
                 },
@@ -617,6 +626,9 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setOpenAiConfig: () => Promise.resolve(),
                 setDashboardFiltersApplyMode: () => Promise.resolve(),
                 setEnableAiOnData: () => Promise.resolve(),
+                setAiRateLimit: () => Promise.resolve(),
+                deleteAiRateLimit: () => Promise.resolve(),
+                getAiRateLimit: () => Promise.resolve(undefined),
                 setEnableDrillToUrlByDefault: () => Promise.resolve(),
                 setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),

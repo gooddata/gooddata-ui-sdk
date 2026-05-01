@@ -96,6 +96,14 @@
             overscroll-behavior: contain;
             height: calc(100% - 20px);
         }
+
+        #{$root}__header {
+            display: flex;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
     }
 
     &__content--showCloseButton {

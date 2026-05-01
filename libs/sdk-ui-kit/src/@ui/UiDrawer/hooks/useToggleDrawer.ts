@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -6,7 +6,7 @@ import { type UiDrawerTransitionProps } from "../types.js";
 
 const MIN_DELAY = 20;
 
-export function useToggleDrawer(open: boolean, props: UiDrawerTransitionProps) {
+export function useToggleDrawer(open: boolean, props: UiDrawerTransitionProps, showBackdrop = true) {
     const { easing = "ease-out", delay = 0, duration = 300 } = props ?? {};
     const [isOpen, setIsOpen] = useState(false);
     const [isFullyOpen, setFullyOpen] = useState(false);
@@ -56,14 +56,24 @@ export function useToggleDrawer(open: boolean, props: UiDrawerTransitionProps) {
         toggleDrawer(open);
     }, [open, isOpen, toggleDrawer]);
 
-    const style = {
+    const contentStyle = {
         transition: `transform ${duration}ms ${easing}, opacity ${duration}ms ${easing}`,
+    };
+
+    const backdropStyle = {
+        ...(showBackdrop
+            ? {}
+            : {
+                  backgroundColor: "transparent",
+              }),
+        ...contentStyle,
     };
 
     return {
         isOpen,
         isFullyOpen,
         view,
-        style,
+        contentStyle,
+        backdropStyle,
     };
 }

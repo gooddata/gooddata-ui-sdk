@@ -11,6 +11,7 @@ import { type IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardFiltersApplyMode,
     type IActiveCalendars,
+    type IAiRateLimit,
     type IAlertDefault,
     type IFiscalYear,
     type IOpenAiConfig,
@@ -130,6 +131,23 @@ export class OrganizationSettingsService
 
     public async setEnableAiOnData(enabled: boolean): Promise<void> {
         return this.setSetting("ENABLE_AI_ON_DATA", { value: enabled });
+    }
+
+    public async setAiRateLimit(value: IAiRateLimit): Promise<void> {
+        return this.setSetting("AI_RATE_LIMIT", value);
+    }
+
+    public async deleteAiRateLimit(): Promise<void> {
+        return this.deleteSettingByType("AI_RATE_LIMIT");
+    }
+
+    public async getAiRateLimit(): Promise<IAiRateLimit | undefined> {
+        const settings = await this.getSettingByType("AI_RATE_LIMIT");
+        if (settings.data.data.length === 0) {
+            return undefined;
+        }
+        const content = settings.data.data[0].attributes?.content;
+        return unwrapSettingContent(content) as IAiRateLimit | undefined;
     }
 
     public async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {

@@ -93,6 +93,13 @@ const IGNORE_CLICKS_ON_BY_CLASS = [
     ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS,
 ];
 
+function isEditableElement(target: EventTarget | null): boolean {
+    return (
+        target instanceof HTMLElement &&
+        (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)
+    );
+}
+
 /**
  * FilterGroup is a component that renders a dropdown button with multiple attribute filters
  *
@@ -268,6 +275,12 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         [attributeFilterComponentsByIdentifier, getFilterIdentifier, renderFilter],
     );
 
+    const handleKeyDownCapture = useCallback<KeyboardEventHandler<HTMLDivElement>>((e: KeyboardEvent) => {
+        if (isSpaceKey(e) && isEditableElement(e.target)) {
+            e.stopPropagation();
+        }
+    }, []);
+
     const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>((e: KeyboardEvent) => {
         //stop arrow keys from leaking to filter bar
         if (isArrowKey(e)) {
@@ -291,7 +304,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
 
     const renderBody = useCallback(
         ({ isMobile, closeDropdown }: IDropdownBodyRenderProps) => (
-            <div onKeyDown={handleKeyDown}>
+            <div onKeyDownCapture={handleKeyDownCapture} onKeyDown={handleKeyDown}>
                 <DropdownList
                     className="gd-filter-group-body"
                     items={filters}
@@ -308,7 +321,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                 />
             </div>
         ),
-        [filters, renderItem, handleKeyDown, handleItemKeyboardAction, title],
+        [filters, renderItem, handleKeyDown, handleKeyDownCapture, handleItemKeyboardAction, title],
     );
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -368,11 +381,7 @@ export function useDeepEqualRefStablizer<T>(unstableState: T): T {
     return stableRef.current;
 }
 
-function useMergeRefs<T>(
-    ref1: Ref<T> | undefined,
-    ref2: Ref<T> | undefined,
-    ref3?: Ref<T> | undefined,
-): RefCallback<T> {
+function useMergeRefs<T>(ref1: Ref<T> | undefined, ref2: Ref<T> | undefined, ref3?: Ref<T>): RefCallback<T> {
     return useCallback(
         (value: T) => {
             [ref1, ref2, ref3].forEach((ref) => {

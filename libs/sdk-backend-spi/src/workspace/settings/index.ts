@@ -3,6 +3,7 @@
 import {
     type DashboardFiltersApplyMode,
     type IActiveCalendars,
+    type IAiRateLimit,
     type IAlertDefault,
     type IFiscalYear,
     type IMetricFormatOverrideSetting,
@@ -174,6 +175,33 @@ export interface IWorkspaceSettingsService {
      * @alpha
      */
     setEnableAiOnData(enabled: boolean): Promise<void>;
+
+    /**
+     * Sets AI rate limit override for the current workspace.
+     *
+     * @param value - max interactions and rolling time window for AI chat.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setAiRateLimit(value: IAiRateLimit): Promise<void>;
+
+    /**
+     * Deletes AI rate limit override for the current workspace, reverting to the organization/platform default.
+     *
+     * @returns promise
+     * @alpha
+     */
+    deleteAiRateLimit(): Promise<void>;
+
+    /**
+     * Returns the AI rate limit value owned by the workspace (without resolving inherited defaults).
+     * Returns `undefined` when the workspace has no override.
+     *
+     * @returns promise
+     * @alpha
+     */
+    getAiRateLimit(): Promise<IAiRateLimit | undefined>;
 
     /**
      * Gets enable drill to URL by default setting value for workspace.

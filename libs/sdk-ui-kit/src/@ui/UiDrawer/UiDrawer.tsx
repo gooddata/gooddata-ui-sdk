@@ -32,6 +32,8 @@ export function UiDrawer({
     onClickOutside,
     closeLabel = "Close",
     showCloseButton = true,
+    showBackdrop = true,
+    header,
     onClickClose,
     refocusKey,
     initialFocus,
@@ -39,7 +41,11 @@ export function UiDrawer({
     accessibilityConfig,
 }: IUiDrawerProps) {
     const ref = useRef(null);
-    const { isOpen, isFullyOpen, view, style } = useToggleDrawer(open ?? false, transition ?? {});
+    const { isOpen, isFullyOpen, view, backdropStyle, contentStyle } = useToggleDrawer(
+        open ?? false,
+        transition ?? {},
+        showBackdrop,
+    );
 
     const handleKeyDown = useMemo(
         () =>
@@ -70,34 +76,39 @@ export function UiDrawer({
                                     className={e("backdrop")}
                                     style={{
                                         position: mode,
-                                        ...style,
+                                        ...backdropStyle,
                                     }}
                                     onClick={onClickOutside}
                                 />
                                 <UiFocusTrap root={<div />}>
                                     <div
                                         tabIndex={-1}
-                                        style={{ position: mode, ...style }}
+                                        style={{ position: mode, ...contentStyle }}
                                         onKeyDown={handleKeyDown}
                                         role={accessibilityConfig?.role ?? "dialog"}
                                         aria-label={accessibilityConfig?.ariaLabel}
                                         aria-labelledby={accessibilityConfig?.ariaLabelledBy}
                                         aria-describedby={accessibilityConfig?.ariaDescribedBy}
                                         aria-modal="true"
-                                        className={e("content", { showCloseButton })}
+                                        className={e("content", {
+                                            showCloseButton: showCloseButton || Boolean(header),
+                                        })}
                                         ref={showCloseButton ? undefined : ref}
                                     >
-                                        {showCloseButton ? (
-                                            <div className={e("close-button")}>
-                                                <UiIconButton
-                                                    label={closeLabel}
-                                                    icon="close"
-                                                    variant="tertiary"
-                                                    onClick={onClickClose}
-                                                    ref={ref}
-                                                />
-                                            </div>
-                                        ) : null}
+                                        <div className={e("header")}>
+                                            {header}
+                                            {showCloseButton ? (
+                                                <div className={e("close-button")}>
+                                                    <UiIconButton
+                                                        label={closeLabel}
+                                                        icon="close"
+                                                        variant="tertiary"
+                                                        onClick={onClickClose}
+                                                        ref={ref}
+                                                    />
+                                                </div>
+                                            ) : null}
+                                        </div>
                                         <UiAutofocus
                                             root={<div className={e("scrollable")} />}
                                             active={isFullyOpen}

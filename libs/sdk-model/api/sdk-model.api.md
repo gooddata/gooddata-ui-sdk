@@ -873,6 +873,12 @@ export interface IAgentSkill {
     title: string;
 }
 
+// @public
+export interface IAiRateLimit {
+    maxInteractions: number;
+    timeWindowHours: number;
+}
+
 // @alpha (undocumented)
 export type IAlertAnomalyDetectionGranularity = "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";
 
@@ -2575,7 +2581,6 @@ export interface IFeatureFlags {
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImplicitDrillToUrl?: boolean;
     enableImprovedAdFilters?: boolean;
-    enableImprovedAiHub?: boolean;
     enableInPlatformNotifications?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
@@ -3953,7 +3958,7 @@ export interface IPermanentSettings {
     activeCalendars?: IActiveCalendars;
     activeLlmProvider?: ILlmActiveProvider;
     ADCatalogGroupsExpanded?: boolean;
-    aiRateLimit?: number;
+    aiRateLimit?: IAiRateLimit;
     alertDefault?: IAlertDefault;
     allowUnsafeFlexConnectEndpoints?: boolean;
     attachmentSizeLimit?: number | null;
