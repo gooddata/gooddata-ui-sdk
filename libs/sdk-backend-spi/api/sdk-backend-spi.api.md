@@ -22,6 +22,7 @@ import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAgent } from '@gooddata/sdk-model';
 import { IAgentPatch } from '@gooddata/sdk-model';
 import { IAgentSkill } from '@gooddata/sdk-model';
+import { IAiRateLimit } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
 import type { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -2019,16 +2020,22 @@ export interface IOrganizations {
 export interface IOrganizationSettingsService {
     deleteActiveLlmEndpoint(): Promise<void>;
     deleteActiveLlmProvider(): Promise<void>;
+    // @alpha
+    deleteAiRateLimit(): Promise<void>;
     deleteColorPalette(): Promise<void>;
     // @alpha
     deleteExportCsvCustomDelimiter(): Promise<void>;
     // @alpha
     deleteGeoIconSheet(): Promise<void>;
     deleteTheme(): Promise<void>;
+    // @alpha
+    getAiRateLimit(): Promise<IAiRateLimit | undefined>;
     getSettings(): Promise<ISettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void>;
+    // @alpha
+    setAiRateLimit(value: IAiRateLimit): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setAttachmentSizeLimit(size: number): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
@@ -2778,6 +2785,8 @@ export interface IWorkspaceSettings extends ISettings {
 
 // @public
 export interface IWorkspaceSettingsService {
+    // @alpha
+    deleteAiRateLimit(): Promise<void>;
     deleteColorPalette(): Promise<void>;
     // @alpha
     deleteDashboardFiltersApplyMode(): Promise<void>;
@@ -2788,6 +2797,8 @@ export interface IWorkspaceSettingsService {
     deleteMetricFormatOverride(): Promise<void>;
     deleteTheme(): Promise<void>;
     // @alpha
+    getAiRateLimit(): Promise<IAiRateLimit | undefined>;
+    // @alpha
     getEnableDrillToUrlByDefault(): Promise<boolean | undefined>;
     // @alpha
     getExportCsvCustomDelimiter(): Promise<string | undefined>;
@@ -2796,6 +2807,8 @@ export interface IWorkspaceSettingsService {
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void>;
+    // @alpha
+    setAiRateLimit(value: IAiRateLimit): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha

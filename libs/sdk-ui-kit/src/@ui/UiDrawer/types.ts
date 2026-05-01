@@ -24,12 +24,14 @@ export interface IUiDrawerProps extends IUiAutofocusOptions {
     dataTestId?: string;
     zIndex?: number;
     children?: ReactNode;
+    header?: ReactNode;
     anchor?: "left" | "right";
     transition?: UiDrawerTransitionProps;
     onEscapeKey?: (e: KeyboardEvent) => void;
     onClickOutside?: (e: MouseEvent) => void;
     closeLabel?: string;
     showCloseButton?: boolean;
+    showBackdrop?: boolean;
     onClickClose?: () => void;
     returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
     accessibilityConfig?: IAccessibilityConfigBase;

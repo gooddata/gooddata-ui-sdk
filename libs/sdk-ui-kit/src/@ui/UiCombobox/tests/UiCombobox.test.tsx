@@ -110,7 +110,7 @@ describe("UiCombobox", () => {
         expect(input.value).toBe("Apple");
     });
 
-    it("does not show creatable option when typing non-matching text", () => {
+    it("does show creatable option when typing non-matching text", () => {
         render(<TestCombobox options={options} creatable />);
 
         const input: HTMLInputElement = screen.getByRole("combobox");
@@ -120,8 +120,8 @@ describe("UiCombobox", () => {
 
         // No matching options, so no creatable option should appear
         expect(screen.queryByText("Apple")).not.toBeInTheDocument();
-        expect(screen.queryByText("Mango")).not.toBeInTheDocument();
-        expect(screen.queryAllByRole("option")).toHaveLength(0);
+        expect(screen.queryByText("Mango")).toBeInTheDocument();
+        expect(screen.queryAllByRole("option")).toHaveLength(1);
     });
 
     it("shows creatable option alongside matching options when multiple matches exist", () => {
@@ -157,16 +157,67 @@ describe("UiCombobox", () => {
         expect(screen.queryAllByText("Apple")).toHaveLength(1); // no duplicate
     });
 
-    it("does not show creatable option when exactly one match exists", () => {
+    it("shows creatable option when exactly one partial match exists", () => {
         render(<TestCombobox options={options} creatable />);
 
         const input: HTMLInputElement = screen.getByRole("combobox");
 
         fireEvent.focus(input);
-        fireEvent.change(input, { target: { value: "Banana" } });
+        fireEvent.change(input, { target: { value: "Bana" } });
 
         expect(screen.getByText("Banana")).toBeInTheDocument();
-        expect(screen.queryAllByText("Banana")).toHaveLength(1); // Only the option, no creatable
+        expect(screen.getByText("Bana")).toBeInTheDocument(); // creatable option
+        expect(screen.queryAllByRole("option")).toHaveLength(2);
+    });
+
+    it("shows creatable option when no match exists", () => {
+        render(<TestCombobox options={options} creatable />);
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+
+        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: "XXXXXXXXXX" } });
+
+        expect(screen.getByText("XXXXXXXXXX")).toBeInTheDocument(); // creatable option
+        expect(screen.queryAllByRole("option")).toHaveLength(1);
+    });
+
+    it("resets input value on blur when not creatable and something is selected and input was changed", () => {
+        render(<TestCombobox options={options} />);
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { key: "Enter" });
+
+        expect(input.value).toBe("Apple");
+
+        fireEvent.change(input, { target: { value: "ap" } });
+        expect(input.value).toBe("ap");
+
+        fireEvent.blur(input);
+
+        expect(input.value).toBe("Apple");
+    });
+
+    it("do not resets input value on blur when creatable and something is selected and input was changed", () => {
+        render(<TestCombobox options={options} creatable />);
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+
+        fireEvent.focus(input);
+        fireEvent.keyDown(input, { key: "ArrowDown" });
+        fireEvent.keyDown(input, { key: "Enter" });
+
+        expect(input.value).toBe("Apple");
+
+        fireEvent.change(input, { target: { value: "ap" } });
+        expect(input.value).toBe("ap");
+
+        fireEvent.blur(input);
+
+        expect(input.value).toBe("ap");
     });
 
     it("resets input value on Escape key when popup is closed", () => {

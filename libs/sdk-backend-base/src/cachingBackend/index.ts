@@ -54,6 +54,7 @@ import {
     type DashboardFiltersApplyMode,
     type IAbsoluteDateFilter,
     type IActiveCalendars,
+    type IAiRateLimit,
     type IAlertDefault,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeMetadataObject,
@@ -859,6 +860,16 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
 
     public override async setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void> {
         await super.setActiveLlmProvider(provider, defaultModelId);
+        this.invalidateCache();
+    }
+
+    public override async setAiRateLimit(value: IAiRateLimit): Promise<void> {
+        await super.setAiRateLimit(value);
+        this.invalidateCache();
+    }
+
+    public override async deleteAiRateLimit(): Promise<void> {
+        await super.deleteAiRateLimit();
         this.invalidateCache();
     }
 

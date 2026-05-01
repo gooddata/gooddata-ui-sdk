@@ -3,6 +3,7 @@
 import {
     type DashboardFiltersApplyMode,
     type IActiveCalendars,
+    type IAiRateLimit,
     type IAlertDefault,
     type IFiscalYear,
     type IMetricFormatOverrideSetting,
@@ -221,6 +222,33 @@ export interface IOrganizationSettingsService {
      * @alpha
      */
     setEnableAiOnData(enabled: boolean): Promise<void>;
+
+    /**
+     * Sets AI rate limit for the organization.
+     *
+     * @param value - max interactions and rolling time window for AI chat.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setAiRateLimit(value: IAiRateLimit): Promise<void>;
+
+    /**
+     * Deletes AI rate limit override for the organization, reverting to the platform default.
+     *
+     * @returns promise
+     * @alpha
+     */
+    deleteAiRateLimit(): Promise<void>;
+
+    /**
+     * Returns the AI rate limit value owned by the organization (without resolving inherited defaults).
+     * Returns `undefined` when the organization has no override.
+     *
+     * @returns promise
+     * @alpha
+     */
+    getAiRateLimit(): Promise<IAiRateLimit | undefined>;
 
     /**
      * Sets enable drill to URL by default configuration for organization.

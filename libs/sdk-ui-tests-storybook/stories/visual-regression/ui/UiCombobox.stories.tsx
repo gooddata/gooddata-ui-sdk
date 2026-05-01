@@ -61,6 +61,14 @@ function UiComboboxExamples() {
             <Example title="Controlled combobox">
                 <ControlledCombobox />
             </Example>
+            <Example title="Uncontrolled non creatable combobox">
+                <UiCombobox options={basicOptions}>
+                    <UiComboboxInput placeholder="Search options..." />
+                    <UiComboboxPopup>
+                        <UiComboboxList />
+                    </UiComboboxPopup>
+                </UiCombobox>
+            </Example>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, useCallback, useMemo, useRef, useState } from "react";
 
@@ -47,7 +47,7 @@ export function useCombobox(params: IUiComboboxParams): IUiComboboxState {
         const hasExactMatch = matchedOptions.some((option) => normalizeValue(option.label) === value);
 
         // Add a creatable option if there are multiple matches and none matches the input exactly
-        if (creatable && matchedOptions.length > 1 && !hasExactMatch) {
+        if (creatable && !hasExactMatch) {
             matchedOptions.push({
                 id: `creatable/${inputValue}`,
                 label: inputValue,
@@ -105,10 +105,10 @@ export function useCombobox(params: IUiComboboxParams): IUiComboboxState {
     );
 
     const handleInputBlur = useCallback(() => {
-        if (inputValue && selectedOption && inputValue !== selectedOption.label) {
+        if (inputValue && selectedOption && inputValue !== selectedOption.label && !creatable) {
             setInputValue(selectedOption.label);
         }
-    }, [inputValue, selectedOption, setInputValue]);
+    }, [inputValue, selectedOption, setInputValue, creatable]);
 
     return useMemo(
         () =>

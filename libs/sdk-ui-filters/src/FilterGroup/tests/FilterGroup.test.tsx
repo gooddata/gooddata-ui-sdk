@@ -26,6 +26,7 @@ type IMockedDropdownListProps<T> = {
 };
 
 const mockAttributeFilterButton = vi.fn();
+const mockKeyboardSelect = vi.fn();
 
 function MockAttributeFilterButton(props: IMockedAttributeFilterButtonProps) {
     const ElementsSearchBarComponent = props.ElementsSearchBarComponent!;
@@ -50,6 +51,10 @@ function MockAttributeFilterButton(props: IMockedAttributeFilterButtonProps) {
             {isOpen ? (
                 <div role="dialog" aria-label={`${props.title} dialog`} id={dropdownId}>
                     <ElementsSearchBarComponent onSearch={() => {}} searchString="" />
+                    <input
+                        aria-label={`${props.title} text input`}
+                        data-testid={`${props.title}-text-input`}
+                    />
                     <button type="button" onClick={props.onToggleSelection}>
                         Toggle selection for {props.title}
                     </button>
@@ -75,6 +80,12 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
                 role={accessibilityConfig?.role}
                 aria-label={accessibilityConfig?.ariaLabel}
                 data-testid="mock-dropdown-list"
+                onKeyDown={(event) => {
+                    if (event.code === "Space") {
+                        mockKeyboardSelect();
+                        onKeyDownSelect?.(items[0]);
+                    }
+                }}
             >
                 <button
                     type="button"
@@ -221,6 +232,37 @@ describe("FilterGroup", () => {
             expect(screen.queryByTestId("keyboard-close")).not.toBeInTheDocument();
         });
         expect(filterGroupButton).toHaveAttribute("aria-expanded", "false");
+    });
+
+    it("should not activate a group item when space is typed into an editable filter input", async () => {
+        const filters = [{ id: "region", title: "Region" }];
+        render(
+            <IntlWrapper locale="en-US">
+                <FilterGroup<{ id: string; title: string }>
+                    title="Filter group"
+                    filters={filters}
+                    getFilterIdentifier={(filter) => filter.id}
+                    hasSelectedElements={() => false}
+                    renderFilter={(filter, AttributeFilterComponent) => {
+                        if (!AttributeFilterComponent) {
+                            throw new Error("AttributeFilterComponent is required.");
+                        }
+                        return (
+                            <AttributeFilterComponent
+                                {...({ title: filter.title } as IAttributeFilterProps)}
+                            />
+                        );
+                    }}
+                />
+            </IntlWrapper>,
+        );
+        fireEvent.click(screen.getByRole("button", { name: /filter group/i }));
+        fireEvent.click(screen.getByTestId("s-filter-group-item-region"));
+
+        const textInput = await screen.findByTestId("Region-text-input");
+        fireEvent.keyDown(textInput, { key: " ", code: "Space" });
+
+        expect(mockKeyboardSelect).not.toHaveBeenCalled();
     });
 
     it("should keep focus on the toggled item when the group rerenders", async () => {

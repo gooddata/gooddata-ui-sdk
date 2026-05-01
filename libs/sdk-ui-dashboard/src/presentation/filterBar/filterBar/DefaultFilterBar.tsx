@@ -93,7 +93,9 @@ export const useFilterBarProps = (): IFilterBarProps => {
 
             // Detect cross-type migration: incoming filter type differs from stored filter type.
             // e.g. text filter in store being replaced by a list filter (or vice versa).
-            const existingFilter = filters.find(
+            const filtersForComparison =
+                isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet ? workingFilters : filters;
+            const existingFilter = filtersForComparison.find(
                 (f) =>
                     isDashboardAttributeFilterItem(f) &&
                     dashboardAttributeFilterItemLocalIdentifier(f) === localIdentifier,
@@ -204,7 +206,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 );
             }
         },
-        [dispatch, supportElementUris, filters, isApplyAllAtOnceEnabledAndSet],
+        [dispatch, supportElementUris, filters, workingFilters, isApplyAllAtOnceEnabledAndSet],
     );
 
     const onDateFilterChanged = useCallback(

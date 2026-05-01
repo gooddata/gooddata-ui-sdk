@@ -983,6 +983,7 @@ export {
     type IOpenAiConfig,
     type ILlmEndpoint,
     type ILlmActiveProvider,
+    type IAiRateLimit,
     type DashboardFiltersApplyMode,
     type EarlyAccessFeatureContext,
     type EarlyAccessFeatureStatus,

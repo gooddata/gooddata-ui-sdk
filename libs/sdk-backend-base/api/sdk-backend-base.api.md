@@ -19,6 +19,7 @@ import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
+import { IAiRateLimit } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
 import { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -715,6 +716,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     protected decorated: IWorkspaceSettingsService;
     // (undocumented)
+    deleteAiRateLimit(): Promise<void>;
+    // (undocumented)
     deleteColorPalette(): Promise<void>;
     // (undocumented)
     deleteDashboardFiltersApplyMode(): Promise<void>;
@@ -726,6 +729,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     deleteMetricFormatOverride(): Promise<void>;
     // (undocumented)
     deleteTheme(): Promise<void>;
+    // (undocumented)
+    getAiRateLimit(): Promise<IAiRateLimit | undefined>;
     // (undocumented)
     getEnableDrillToUrlByDefault(): Promise<boolean | undefined>;
     // (undocumented)
@@ -740,6 +745,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     // (undocumented)
     setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void>;
+    // (undocumented)
+    setAiRateLimit(value: IAiRateLimit): Promise<void>;
     // (undocumented)
     setAlertDefault(value: IAlertDefault): Promise<void>;
     // (undocumented)
