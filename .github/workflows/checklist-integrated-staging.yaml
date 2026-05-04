@@ -131,7 +131,7 @@ jobs:
               uses: actions/checkout@v6
               with:
                   sparse-checkout: |
-                      .github/actions/slack/send-notification/action.yml
+                      .github/actions/slack/send-notification
                   sparse-checkout-cone-mode: false
             - name: Send Slack notification
               if: ${{ !cancelled() && needs.setup-stage.outputs.send_message_to_slack_channel == 'true' }}

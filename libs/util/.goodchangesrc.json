@@ -1,7 +1,6 @@
 {
     "targets": [
         {
-            "type": "virtual-target",
             "targetName": "@gooddata/util-unit-tests",
             "changeDirs": [
                 {

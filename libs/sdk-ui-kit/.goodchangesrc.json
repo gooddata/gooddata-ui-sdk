@@ -1,7 +1,6 @@
 {
     "targets": [
         {
-            "type": "virtual-target",
             "targetName": "@gooddata/sdk-ui-kit-unit-tests",
             "changeDirs": [
                 {

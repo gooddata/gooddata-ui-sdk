@@ -22,7 +22,6 @@ export default defineConfig({
     external: [
         /^@playwright\/test$/,
         /^node:/,
-        /^pdf-parse/,
         "path",
         "url",
         "fs",

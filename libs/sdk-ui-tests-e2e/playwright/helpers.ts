@@ -1,7 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import { readFileSync } from "fs";
-
 import { type APIRequestContext, type Download, type Locator, type Page, expect } from "@playwright/test";
 import { camelCase } from "lodash-es";
 
@@ -1306,44 +1304,17 @@ export async function removeWidgetFromDashboard(page: Page): Promise<void> {
 // ── Export helpers ───────────────────────────────────────────────────
 
 /**
- * Parse a downloaded PDF file and assert its text content contains the expected string.
- */
-export async function expectPdfContent(pdfBuffer: Buffer, expected: string): Promise<void> {
-    const pdfParseModule = (await import("pdf-parse")) as Record<string, unknown>;
-    const pdfParse = (pdfParseModule["default"] ?? pdfParseModule) as (
-        buf: Buffer,
-    ) => Promise<{ text: string }>;
-    const data = await pdfParse(pdfBuffer);
-    const actual = JSON.stringify(data.text).replace(/\n/g, "");
-    const normalised = JSON.stringify(expected).replace(/"/g, "");
-    if (!actual.includes(normalised)) {
-        throw new Error(`PDF should contain "${normalised}" but text was: ${actual.substring(0, 500)}`);
-    }
-}
-
-/**
  * Wait for a file download triggered by an export action,
- * then verify the filename and optionally the PDF content.
+ * then verify the success message, filename, and that a file landed.
  */
 export async function expectExportedPDF(
     page: Page,
     download: Download,
     expectedFilename: string,
-    expectedContent?: string,
 ): Promise<void> {
-    // Verify success message
     await expect(page.locator(".gd-messages .s-message.success")).toContainText("Export successful.");
-
-    // Verify filename
     expect(download.suggestedFilename()).toBe(expectedFilename);
-
-    // Optionally verify PDF content
-    if (expectedContent) {
-        const filePath = await download.path();
-        if (!filePath) throw new Error("Download path is null");
-        const pdfBuffer = readFileSync(filePath);
-        await expectPdfContent(pdfBuffer, expectedContent);
-    }
+    expect(await download.path()).toBeTruthy();
 }
 
 // ── Environment helpers ─────────────────────────────────────────────

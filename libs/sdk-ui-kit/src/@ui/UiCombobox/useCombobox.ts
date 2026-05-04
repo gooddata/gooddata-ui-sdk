@@ -108,6 +108,7 @@ export function useCombobox(params: IUiComboboxParams): IUiComboboxState {
         if (inputValue && selectedOption && inputValue !== selectedOption.label && !creatable) {
             setInputValue(selectedOption.label);
         }
+        setIsOpen(false);
     }, [inputValue, selectedOption, setInputValue, creatable]);
 
     return useMemo(
