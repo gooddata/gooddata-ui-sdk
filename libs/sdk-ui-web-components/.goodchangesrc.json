@@ -1,16 +1,42 @@
 {
+    "type": "app",
     "targets": [
-        {},
         {
-            "type": "virtual-target",
+            "changeDirs": [
+                {
+                    "glob": "*"
+                },
+                {
+                    "glob": "scripts/*"
+                },
+                {
+                    "glob": "tiny_web_server/**/*"
+                }
+            ],
+            "ignores": ["vitest.config.ts", "vitest.setup.ts"]
+        },
+        {
             "targetName": "@gooddata/sdk-ui-web-components-unit-tests",
             "changeDirs": [
                 {
                     "glob": "**/*",
                     "type": "fine-grained",
                     "filter": "**/*.test.ts*"
+                },
+                {
+                    "glob": "vitest.*.ts"
                 }
             ]
         }
+    ],
+    "ignores": [
+        "README.md",
+        ".env.template",
+        ".dependency-cruiser.js",
+        "LICENSE",
+        "eslint.config.ts",
+        ".oxlintrc.json",
+        ".gitignore",
+        ".stylelintrc"
     ]
 }

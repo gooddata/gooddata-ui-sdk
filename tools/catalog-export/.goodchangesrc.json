@@ -1,7 +1,6 @@
 {
     "targets": [
         {
-            "type": "virtual-target",
             "targetName": "@gooddata/catalog-export-unit-tests",
             "changeDirs": [
                 {

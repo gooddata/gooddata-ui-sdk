@@ -36,14 +36,6 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --type-aware --quiet && eslint .",
         "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
-        "local-dev-test-visual": "node ./scripts/run_local_dev_isolated.js",
-        "local-dev-test-visual-recordings": "node ./scripts/run_local_dev_isolated.js --with-recordings",
-        "local-dev-wiremock": "node ./scripts/run_local_dev_wiremock.js",
-        "local-dev-wiremock-proxy": "node ./scripts/run_local_dev_wiremock.js --proxy",
-        "local-dev-wiremock-proxy-verbose": "node ./scripts/run_local_dev_wiremock.js --proxy --verbose",
-        "run-integrated": "node ./scripts/run_integrated.js",
-        "run-isolated": "./scripts/run_isolated.sh",
-        "run-isolated-record": "MODE=record ./scripts/run_isolated.sh",
         "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {
@@ -57,7 +49,6 @@
         "@playwright/test": "1.59.1",
         "@types/lodash-es": "^4.17.12",
         "@types/node": "24.12.0",
-        "@types/pdf-parse": "^1.1.1",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",
@@ -78,7 +69,6 @@
         "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
-        "pdf-parse": "1.1.4",
         "rolldown": "1.0.0-rc.9",
         "typescript": "5.9.3"
     },

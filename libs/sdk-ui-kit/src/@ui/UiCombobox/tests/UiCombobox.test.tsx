@@ -108,6 +108,43 @@ describe("UiCombobox", () => {
         fireEvent.blur(input);
 
         expect(input.value).toBe("Apple");
+        expect(screen.queryByText("Apricot")).not.toBeInTheDocument();
+    });
+
+    it("closes popup on blur when creatable and value is changed", () => {
+        render(<TestCombobox options={options} creatable />);
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+
+        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: "ap" } });
+
+        expect(screen.getByText("Apple")).toBeInTheDocument();
+        expect(screen.getByText("Apricot")).toBeInTheDocument();
+        expect(screen.getByText("ap")).toBeInTheDocument();
+
+        fireEvent.blur(input);
+
+        expect(screen.queryByText("Apple")).not.toBeInTheDocument();
+        expect(screen.queryByText("Apricot")).not.toBeInTheDocument();
+        expect(screen.queryByText("ap")).not.toBeInTheDocument();
+    });
+
+    it("closes popup on blur when value is changed", () => {
+        render(<TestCombobox options={options} />);
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+
+        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: "ap" } });
+
+        expect(screen.getByText("Apple")).toBeInTheDocument();
+        expect(screen.getByText("Apricot")).toBeInTheDocument();
+
+        fireEvent.blur(input);
+
+        expect(screen.queryByText("Apple")).not.toBeInTheDocument();
+        expect(screen.queryByText("Apricot")).not.toBeInTheDocument();
     });
 
     it("does show creatable option when typing non-matching text", () => {

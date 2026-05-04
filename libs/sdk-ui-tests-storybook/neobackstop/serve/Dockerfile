@@ -10,7 +10,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go application
-RUN GCO_ENABLED=0 GOOS=linux go build -o app .
+RUN CGO_ENABLED=0 GOOS=linux go build -o app .
 
 # Stage 2: Run the app
 FROM scratch

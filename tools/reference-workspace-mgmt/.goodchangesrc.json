@@ -1,7 +1,6 @@
 {
     "targets": [
         {
-            "type": "virtual-target",
             "targetName": "@gooddata/reference-workspace-mgmt-unit-tests",
             "changeDirs": [
                 {

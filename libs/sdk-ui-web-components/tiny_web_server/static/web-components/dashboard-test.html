@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Web Components Dashboard Test</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                padding: 20px;
+                margin: 0;
+            }
+            gd-dashboard {
+                display: block;
+                width: 100%;
+                height: 800px;
+            }
+            .test-info {
+                margin-bottom: 20px;
+                padding: 10px;
+                background-color: #f5f5f5;
+                border-radius: 4px;
+            }
+        </style>
+        <!-- Load config from .env via endpoint (for manual testing) -->
+        <!-- Only load config.js if config is not already injected by Playwright -->
+        <script>
+            // Store Playwright-injected config before config.js potentially overrides it
+            window.__WC_PLAYWRIGHT_CONFIG__ = window.__WC_TEST_CONFIG__;
+        </script>
+        <script src="/web-components/config.js"></script>
+        <script>
+            // Restore Playwright-injected config if it exists (has priority over config.js)
+            if (
+                window.__WC_PLAYWRIGHT_CONFIG__ &&
+                window.__WC_PLAYWRIGHT_CONFIG__.host &&
+                window.__WC_PLAYWRIGHT_CONFIG__.workspaceId
+            ) {
+                window.__WC_TEST_CONFIG__ = window.__WC_PLAYWRIGHT_CONFIG__;
+            }
+        </script>
+        <script>
+            // Show error message if config is missing (for manual testing)
+            // This runs immediately, before module script
+            (function () {
+                // Wait a bit for config.js to load
+                setTimeout(() => {
+                    const config = window.__WC_TEST_CONFIG__;
+                    if (!config || !config.host || !config.workspaceId) {
+                        // Create error message immediately
+                        const errorDiv = document.createElement("div");
+                        errorDiv.style.cssText =
+                            "padding: 20px; background: #fee; border: 2px solid #f00; margin: 20px; border-radius: 4px; font-family: Arial, sans-serif;";
+                        errorDiv.innerHTML = `
+                            <h3 style="color: #c00; margin-top: 0;">⚠️ Configuration Missing</h3>
+                            <p>This page requires configuration. Please ensure:</p>
+                            <ol>
+                                <li><code>.env</code> file exists in <code>e2e/gdc-dashboards-e2e/</code> directory</li>
+                                <li><code>HOST</code> and <code>TEST_WORKSPACE_ID</code> are set in .env file</li>
+                                <li>Or set config manually in browser console: <pre style="background: #fff; padding: 10px; border: 1px solid #ccc; overflow-x: auto; font-size: 12px;">window.__WC_TEST_CONFIG__ = {
+                                    host: "https://your-host.com",
+                                    workspaceId: "your-workspace-id",
+                                    dashboardId: "your-dashboard-id",
+                                    auth: "sso"
+                                }</pre></li>
+                            </ol>
+                            <p><strong>For automated tests:</strong> Use Playwright test which will inject config automatically.</p>
+                        `;
+                        // Wait for body to be ready
+                        if (document.body) {
+                            document.body.appendChild(errorDiv);
+                        } else {
+                            document.addEventListener("DOMContentLoaded", () => {
+                                document.body.appendChild(errorDiv);
+                            });
+                        }
+                        // Mark that config is missing so module script won't run
+                        window.__WC_CONFIG_MISSING__ = true;
+                    }
+                }, 100);
+            })();
+        </script>
+        <script type="module">
+            // Configuration will be injected by Playwright test
+            // host and workspaceId come from environment variables
+            // dashboardId is defined in test spec
+            const config = window.__WC_TEST_CONFIG__;
+
+            // Skip if config is missing (error message already shown)
+            if (window.__WC_CONFIG_MISSING__ || !config || !config.host || !config.workspaceId) {
+                console.error("Web Components test config is missing. Check page for instructions.");
+                // Don't throw error, just stop execution
+                // eslint-disable-next-line no-throw-literal
+                throw new Error("Config missing - check page for instructions");
+            }
+
+            // Use proxy path if running from tiny_web_server
+            // (docker container uses host sdk-ui-web-components in e2e test docker-compose)
+            // (same origin, avoids CORS)
+            // Otherwise use absolute URL from backend
+            const origin = window.location.origin;
+            const useProxy = origin.includes("sdk-ui-web-components") || origin.includes("localhost:3001");
+            // Local mode (useProxy): the .tgz ships index.js, not a workspace-specific
+            // bootstrap. dashboard-test.html does the setContext wiring itself, so any
+            // SDK entry that exports setContext works.
+            const componentUrl = useProxy
+                ? `/components/index.js?auth=${config.auth}`
+                : config.host + "/components/" + config.workspaceId + ".js?auth=" + config.auth;
+            const backendUrl = useProxy
+                ? "/components/tigerBackend.js"
+                : config.host + "/components/tigerBackend.js";
+
+            // Use dynamic import for ES modules
+            Promise.all([import(componentUrl), import(backendUrl)])
+                .then(([componentModule, backendModule]) => {
+                    const { setContext } = componentModule;
+                    const factory = backendModule.default;
+                    const { ContextDeferredAuthProvider, createRedirectToTigerAuthenticationWithParams } =
+                        backendModule;
+
+                    // Set up GoodData.CN backend and default workspace id
+                    setContext({
+                        backend: factory()
+                            .onHostname(config.host)
+                            .withAuthentication(
+                                new ContextDeferredAuthProvider(
+                                    createRedirectToTigerAuthenticationWithParams({
+                                        externalProviderId: "checklist", // Change to identityProviderId in your test_backend(host)
+                                    }),
+                                ),
+                            ),
+                        workspaceId: config.workspaceId,
+                    });
+                })
+                .catch((error) => {
+                    console.error("Failed to load web components:", error);
+                });
+        </script>
+    </head>
+    <body>
+        <div class="test-info">
+            <h2>Web Components Dashboard Test</h2>
+        </div>
+        <!-- Dashboard element will be created after config is loaded -->
+        <div id="dashboard-container"></div>
+        <script>
+            // Wait for config to be loaded, then create dashboard element
+            function createDashboardElement() {
+                const config = window.__WC_TEST_CONFIG__;
+                if (!config || !config.host || !config.workspaceId) {
+                    return; // Config not ready yet
+                }
+
+                const container = document.getElementById("dashboard-container");
+                if (!container) {
+                    return;
+                }
+
+                // Remove existing dashboard element if it exists (to allow re-creation with new config)
+                const existingDashboard = container.querySelector("gd-dashboard");
+                if (existingDashboard) {
+                    existingDashboard.remove();
+                }
+
+                // Create dashboard element with attributes
+                const dashboardEl = document.createElement("gd-dashboard");
+                dashboardEl.id = "test-dashboard";
+
+                // Use dashboardId from config (can be overridden by Playwright test)
+                // Priority: config.dashboardId > fallback hardcoded value
+                const dashboardId = config.dashboardId || "601c81ae-0582-42f0-9f35-a4ec2a6a8497";
+                dashboardEl.setAttribute("dashboard", dashboardId);
+
+                if (config.workspaceId) {
+                    dashboardEl.setAttribute("workspace", config.workspaceId);
+                }
+                if (config.readonly) {
+                    dashboardEl.setAttribute("readonly", "");
+                }
+                if (config.locale) {
+                    dashboardEl.setAttribute("locale", config.locale);
+                }
+
+                container.appendChild(dashboardEl);
+            }
+
+            // Try to create dashboard element after config loads
+            // Check multiple times in case config.js loads asynchronously
+            let attempts = 0;
+            const maxAttempts = 50; // 5 seconds max wait
+            const checkInterval = setInterval(() => {
+                attempts++;
+                createDashboardElement();
+
+                const config = window.__WC_TEST_CONFIG__;
+                if (config && config.host && config.workspaceId) {
+                    // Config is loaded, stop checking
+                    clearInterval(checkInterval);
+                } else if (attempts >= maxAttempts) {
+                    // Timeout - config not loaded
+                    clearInterval(checkInterval);
+                }
+            }, 100);
+
+            // Also try immediately in case config is already loaded
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", createDashboardElement);
+            } else {
+                createDashboardElement();
+            }
+        </script>
+    </body>
+</html>

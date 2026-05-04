@@ -6102,9 +6102,6 @@ importers:
       '@types/node':
         specifier: 24.12.0
         version: 24.12.0
-      '@types/pdf-parse':
-        specifier: ^1.1.1
-        version: 1.1.5
       '@typescript-eslint/eslint-plugin':
         specifier: 8.58.0
         version: 8.58.0(@typescript-eslint/parser@8.58.0)(eslint@9.39.2)(typescript@5.9.3)
@@ -6165,9 +6162,6 @@ importers:
       oxlint-tsgolint:
         specifier: 0.11.4
         version: 0.11.4
-      pdf-parse:
-        specifier: 1.1.4
-        version: 1.1.4
       rolldown:
         specifier: 1.0.0-rc.9
         version: 1.0.0-rc.9
@@ -13189,12 +13183,6 @@ packages:
   /@types/pbf@3.0.5:
     resolution: {integrity: sha512-j3pOPiEcWZ34R6a6mN07mUkM4o4Lwf6hPNt8eilOeZhTFbxFXmKhvXl9Y28jotFPaI1bpPDJsbCprUoNke6OrA==}
 
-  /@types/pdf-parse@1.1.5:
-    resolution: {integrity: sha512-kBfrSXsloMnUJOKi25s3+hRmkycHfLK6A09eRGqF/N8BkQoPUmaCr+q8Cli5FnfohEz/rsv82zAiPz/LXtOGhA==}
-    dependencies:
-      '@types/node': 24.12.0
-    dev: true
-
   /@types/prettier@2.7.3:
     resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
     dev: true
@@ -19349,10 +19337,6 @@ packages:
       skin-tone: 2.0.0
     dev: false
 
-  /node-ensure@0.0.0:
-    resolution: {integrity: sha512-DRI60hzo2oKN1ma0ckc6nQWlHU69RH6xN0sjQTjMpChPfTYvKZdcQFfdYK2RWbJcKyUizSIy/l8OTGxMAM1QDw==}
-    dev: true
-
   /node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
@@ -19862,13 +19846,6 @@ packages:
     dependencies:
       ieee754: 1.2.1
       resolve-protobuf-schema: 2.1.0
-
-  /pdf-parse@1.1.4:
-    resolution: {integrity: sha512-XRIRcLgk6ZnUbsHsYXExMw+krrPE81hJ6FQPLdBNhhBefqIQKXu/WeTgNBGSwPrfU0v+UCEwn7AoAUOsVKHFvQ==}
-    engines: {node: '>=6.8.1'}
-    dependencies:
-      node-ensure: 0.0.0
-    dev: true
 
   /pend@1.2.0:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}

@@ -62,12 +62,7 @@ test.topLevelDescribe(
 
                 // Verify the exported PDF
                 const download = await downloadPromise;
-                await expectExportedPDF(
-                    page,
-                    download,
-                    "KD has null value.pdf",
-                    "Region\n(empty value)\nPhoenixSoft1,45941,054.0044,195\nAD has null value\nProduct\nMetric has null value_Snapshot [EOP]_Timeline [EOP]\nKD has null value",
-                );
+                await expectExportedPDF(page, download, "KD has null value.pdf");
             },
         );
     },

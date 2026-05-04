@@ -35,7 +35,9 @@
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:pack-build": "tar -czf sdk-ui-web-components.tgz -C esm .",
+        "_phase:pack-build-test": "npm run _phase:pack-build",
         "_phase:publish-docker-images": "bash ../../../common/scripts/docker/publish-docker-image.sh",
+        "_phase:publish-test-docker-images": "bash ../../../common/scripts/docker/publish-test-docker-image.sh",
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
