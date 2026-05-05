@@ -33,6 +33,7 @@ import {
     renderLegend as legendRenderer,
 } from "./adapter/HighChartsRenderer.js";
 import { buildLegendOptions } from "./adapter/legendBuilder.js";
+import { buildIdentifierMapping } from "./chartTypes/_chartCreators/customTooltip/identifierMapping.js";
 import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators.js";
 import {
     getDataTooLargeErrorMessage,
@@ -107,6 +108,10 @@ function ChartTransformationImpl({
         clusterTitleFromIntl(intl),
         anomaliesTitleFromIntl(intl),
     );
+
+    if (config.customTooltip?.enabled) {
+        chartOptions.identifierMapping = buildIdentifierMapping(dataView.definition, config.type);
+    }
 
     const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, theme, intl);
     const validationResult = validateData(config.limits, chartOptions);

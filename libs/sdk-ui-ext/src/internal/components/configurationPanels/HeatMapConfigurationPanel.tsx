@@ -108,6 +108,7 @@ export class HeatMapConfigurationPanel extends ConfigurationPanelContent {
                             defaultValue="auto"
                         />
                     </ConfigSection>
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

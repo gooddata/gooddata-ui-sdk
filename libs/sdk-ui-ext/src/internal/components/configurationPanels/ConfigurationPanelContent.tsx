@@ -27,6 +27,7 @@ import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import { AdvancedSection } from "../configurationControls/advanced/AdvancedSection.js";
 import { AnomaliesSection } from "../configurationControls/anomalies/AnomaliesSection.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
+import { CustomTooltipSection } from "../configurationControls/customTooltip/CustomTooltipSection.js";
 import { ForecastSection } from "../configurationControls/forecast/ForecastSection.js";
 import { InteractionsSection } from "../configurationControls/interactions/InteractionsSection.js";
 import { LegendSection } from "../configurationControls/legend/LegendSection.js";
@@ -245,6 +246,23 @@ export abstract class ConfigurationPanelContent<
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 enabled={enabled}
+                pushData={pushData}
+            />
+        );
+    }
+
+    protected renderCustomTooltipSection(): ReactNode {
+        const { pushData, properties, propertiesMeta, featureFlags } = this.props;
+
+        if (!featureFlags?.enableCustomTooltip) {
+            return null;
+        }
+
+        return (
+            <CustomTooltipSection
+                controlsDisabled={this.isControlDisabled()}
+                properties={properties}
+                propertiesMeta={propertiesMeta}
                 pushData={pushData}
             />
         );

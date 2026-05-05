@@ -3,6 +3,7 @@
     "gd.gen-ai.global-error.description": "チャットボットを再起動して、やり直してみてください。",
     "gd.gen-ai.global-error.button-details": "詳細は生のエラー応答を参照",
     "gd.gen-ai.global-error.sync-in-progress": "現在も設定中です。しばらくしてから再試行してください。",
+    "gd.gen-ai.global-error.sync-failed": "同期に失敗しました。後でもう一度お試しください。",
     "gd.gen-ai.global-error.traceId": "エラーのトレース ID",
     "gd.gen-ai.global-error.show-more": "もっと表示",
     "gd.gen-ai.global-error.show-less": "表示を減らす",

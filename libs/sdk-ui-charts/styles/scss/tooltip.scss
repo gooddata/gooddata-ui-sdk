@@ -230,3 +230,78 @@
 .gd-viz-tooltip-drilling-point {
     cursor: pointer;
 }
+
+.gd-viz-tooltip-custom-section {
+    font-size: 13px;
+    line-height: 1.4;
+    text-align: left;
+    white-space: normal;
+    word-wrap: break-word;
+    min-width: 200px;
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        margin: 0 0 2px;
+        font-weight: 700;
+        color: var(--gd-chart-tooltip-valueColor);
+    }
+
+    h1 {
+        font-size: 15px;
+        line-height: 1.3;
+    }
+
+    h2 {
+        font-size: 14px;
+        line-height: 1.3;
+    }
+
+    h3,
+    h4 {
+        font-size: 13px;
+        line-height: 1.3;
+    }
+
+    p {
+        margin: 0 0 1px;
+    }
+
+    strong {
+        font-weight: 700;
+        color: var(--gd-chart-tooltip-valueColor);
+    }
+
+    ul,
+    ol {
+        margin: 2px 0;
+        padding-left: 18px;
+    }
+
+    li {
+        margin-bottom: 1px;
+    }
+
+    hr {
+        border: 0;
+        border-top: 1px solid var(--gd-palette-complementary-3);
+        margin: 4px 0;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+        margin: 4px 0;
+    }
+
+    .gd-viz-tooltip-custom-link {
+        text-decoration: underline;
+        color: var(--gd-chart-tooltip-labelColor-from-theme);
+    }
+}
+
+.gd-viz-tooltip-custom-separator {
+    border-top: 1px solid var(--gd-palette-complementary-3);
+    margin: 8px 0;
+}

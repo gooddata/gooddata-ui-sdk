@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Absolute root dir .. for the docker volumes
 ROOT_DIR=$(echo $(cd $(dirname $0)/.. && pwd -P))
@@ -10,7 +11,7 @@ cd $ROOT_DIR
 
 # copy storybook to serve app dir (skip when using pre-built images)
 if [ -z "$NEOBACKSTOP_IMAGE" ] && [ -z "$NEOBACKSTOP_SERVE_IMAGE" ]; then
-    cp -r ./storybook ./neobackstop/serve/storybook
+    cp -r ./dist ./neobackstop/serve/dist
 fi
 
 # let "test" be the default command

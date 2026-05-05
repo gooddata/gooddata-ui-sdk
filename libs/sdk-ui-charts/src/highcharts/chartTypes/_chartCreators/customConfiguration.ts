@@ -23,6 +23,7 @@ import {
     type IChartOptionsData,
     type ISeriesItem,
     type ITooltipFactory,
+    type IUnsafeHighchartsTooltipPoint,
     type IUnsafeTooltipPositionerPointObject,
 } from "../../typings/unsafe.js";
 import { isHighContrastMode } from "../../utils/highContrastMode.js";
@@ -48,6 +49,9 @@ import {
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
+import { type IIdentifierMapping } from "./customTooltip/identifierMapping.js";
+import { markdownToHtml } from "./customTooltip/markdownToHtml.js";
+import { resolveReferences, resolveReferencesFromPoint } from "./customTooltip/referenceResolver.js";
 import {
     formatAsPercent,
     getLabelsStyling,
@@ -453,10 +457,41 @@ function getColorFromHighchartsPointColor(color: Point["color"]): string {
     return defaultColor;
 }
 
+function getCustomTooltipSection(
+    point: IUnsafeHighchartsTooltipPoint,
+    fallbackText: string,
+    chartConfig?: IChartConfig,
+    identifierMapping?: IIdentifierMapping,
+): string {
+    const customTooltip = chartConfig?.customTooltip;
+    if (!customTooltip?.enabled || !customTooltip.content) {
+        return "";
+    }
+
+    const resolvedValues = resolveReferencesFromPoint(point, chartConfig?.separators, identifierMapping);
+    const resolvedContent = resolveReferences(customTooltip.content, resolvedValues, fallbackText);
+    const htmlContent = markdownToHtml(resolvedContent);
+    return `<div class="gd-viz-tooltip-custom-section">${htmlContent}</div>`;
+}
+
+function getCustomTooltipSeparator(chartConfig?: IChartConfig): string {
+    const customTooltip = chartConfig?.customTooltip;
+    if (!customTooltip?.enabled || !customTooltip.content) {
+        return "";
+    }
+
+    if (customTooltip.placement === "replace") {
+        return "";
+    }
+
+    return `<div class="gd-viz-tooltip-custom-separator"></div>`;
+}
+
 function formatTooltip(
     this: IExtendedPoint & { anomaly?: boolean },
     tooltipCallback: ITooltipFactory,
     chartConfig?: IChartConfig,
+    identifierMapping?: IIdentifierMapping,
     intl?: IntlShape,
 ) {
     const { chart } = this.series;
@@ -478,23 +513,44 @@ function formatTooltip(
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : "";
     const tooltipStyle = isFullScreenTooltip ? `width: ${maxTooltipContentWidth}px;` : "";
 
+    const tooltipPoint = this as unknown as IUnsafeHighchartsTooltipPoint;
+
     // null disables whole tooltip
     const tooltipContent: string | null = tooltipCallback(
-        this as any, // IUnsafeHighchartsTooltipPoint is expected by the callback
+        tooltipPoint,
         maxTooltipContentWidth!,
         this.percentage,
     );
     const interactionMessage = getInteractionMessage(isDrillable, chartConfig, intl);
     const anomalyMessage = getAnomalyMessage(this.anomaly, intl);
 
-    return tooltipContent === null
+    const fallbackText = intl ? `(${intl.formatMessage({ id: "richText.no_data" })})` : "(No data)";
+    const customSection = getCustomTooltipSection(tooltipPoint, fallbackText, chartConfig, identifierMapping);
+    const customSeparator = getCustomTooltipSeparator(chartConfig);
+    const placement = chartConfig?.customTooltip?.placement ?? "above";
+
+    const defaultContent = placement === "replace" ? "" : (tooltipContent ?? "");
+    const defaultSectionWithInteraction = defaultContent
+        ? `${defaultContent}${interactionMessage}`
+        : interactionMessage;
+
+    let bodyContent: string;
+    if (customSection) {
+        if (placement === "above" || placement === "replace") {
+            bodyContent = `${anomalyMessage}${customSection}${customSeparator}${defaultSectionWithInteraction}`;
+        } else {
+            bodyContent = `${anomalyMessage}${defaultSectionWithInteraction}${customSeparator}${customSection}`;
+        }
+    } else {
+        bodyContent = `${anomalyMessage}${tooltipContent ?? ""}${interactionMessage}`;
+    }
+
+    return tooltipContent === null && !customSection
         ? null
         : `<div class="hc-tooltip gd-viz-tooltip" style="${tooltipStyle}">
             <span class="gd-viz-tooltip-stroke" style="${strokeStyle}"></span>
             <div class="gd-viz-tooltip-content" style="max-width: ${maxTooltipContentWidth}px;">
-                ${anomalyMessage}
-                ${tooltipContent}
-                ${interactionMessage}
+                ${bodyContent}
             </div>
         </div>`;
 }
@@ -668,7 +724,13 @@ function getTooltipConfiguration(
                   useHTML: true,
                   outside: true,
                   positioner: partial(getTooltipPositionInViewPort, chartType, stacking as any),
-                  formatter: partial(formatTooltip, tooltipAction, chartConfig, intl),
+                  formatter: partial(
+                      formatTooltip,
+                      tooltipAction,
+                      chartConfig,
+                      chartOptions.identifierMapping,
+                      intl,
+                  ),
                   enabled: chartConfig?.tooltip?.enabled ?? true,
                   className: chartConfig?.tooltip?.className,
                   stickOnContact: chartConfig?.enableAccessibleTooltip ?? false,

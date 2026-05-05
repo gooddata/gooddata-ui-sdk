@@ -32,6 +32,8 @@ export type {
     IDistinctPointShapes,
     PointShapeSymbolType,
     ITooltipConfig,
+    ICustomTooltipConfig,
+    CustomTooltipPlacement,
     ITotalConfig,
     IOrientationConfig,
     ChartOrientationType,

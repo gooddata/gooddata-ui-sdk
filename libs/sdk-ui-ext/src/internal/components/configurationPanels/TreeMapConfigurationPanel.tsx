@@ -43,6 +43,7 @@ export class TreeMapConfigurationPanel extends ConfigurationPanelContent {
                             defaultValue="auto"
                         />
                     </ConfigSection>
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

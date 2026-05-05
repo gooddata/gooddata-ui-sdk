@@ -1195,6 +1195,38 @@
         "text": "Interactions",
         "crowdinContext": "The title for the interactions configuration section"
     },
+    "properties.customTooltip.title": {
+        "text": "Custom tooltip",
+        "crowdinContext": "The title for the custom tooltip configuration section"
+    },
+    "properties.customTooltip.placeholder": {
+        "text": "Add custom tooltip content...\n# Heading\n**Bold**\n'{metric/metric_id}'\n'{label/label_id}'",
+        "crowdinContext": "Placeholder text shown in the custom tooltip textarea. Keep `'{metric/metric_id}'` and `'{label/label_id}'` literal — they are ICU-escaped syntax tokens (not text to translate) that demonstrate the reference format users can type."
+    },
+    "properties.customTooltip.contentLabel": {
+        "text": "Content",
+        "crowdinContext": "Label for the custom tooltip content textarea"
+    },
+    "properties.customTooltip.formattingOptions": {
+        "text": "Formatting options",
+        "crowdinContext": "Link to documentation describing supported Markdown and reference syntax"
+    },
+    "properties.customTooltip.placement": {
+        "text": "Placement",
+        "crowdinContext": "Label for the custom tooltip placement dropdown"
+    },
+    "properties.customTooltip.placement.above": {
+        "text": "Before default content",
+        "crowdinContext": "Option to place custom tooltip before the default tooltip content"
+    },
+    "properties.customTooltip.placement.below": {
+        "text": "After default content",
+        "crowdinContext": "Option to place custom tooltip after the default tooltip content"
+    },
+    "properties.customTooltip.placement.replace": {
+        "text": "Replace default content",
+        "crowdinContext": "Option to replace the default tooltip content with custom content"
+    },
     "properties.advanced.title": {
         "text": "Advanced customizations",
         "crowdinContext": "The title for the advanced configuration section"

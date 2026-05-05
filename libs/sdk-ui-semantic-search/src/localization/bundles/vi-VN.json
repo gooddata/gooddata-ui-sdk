@@ -15,6 +15,7 @@
     "semantic-search.date.at": "lúc",
     "semantic-search.ask.ai.assistant": "Hỏi Trợ lý AI",
     "semantic-search.error.sync-in-progress": "Vẫn đang thiết lập — vui lòng thử lại sau ít phút.",
+    "semantic-search.error.sync-failed": "Đồng bộ hóa thất bại. Vui lòng thử lại sau.",
     "gs.date.today": "Hôm nay",
     "gs.date.yesterday": "Hôm qua"
 }

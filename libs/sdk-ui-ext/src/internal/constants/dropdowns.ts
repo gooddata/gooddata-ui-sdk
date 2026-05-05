@@ -79,6 +79,12 @@ export const confidenceDropdownItems: IDropdownItem[] = [
     { title: messages["forecastConfidence95"].id, value: 0.95 },
 ];
 
+export const customTooltipPlacementDropdownItems: IDropdownItem[] = [
+    { title: messages["customTooltipPlacementAbove"].id, value: "above" },
+    { title: messages["customTooltipPlacementBelow"].id, value: "below" },
+    { title: messages["customTooltipPlacementReplace"].id, value: "replace" },
+];
+
 export const sensitivityDropdownItems: IDropdownItem[] = [
     { title: messages["anomalySensitivityLow"].id, value: "low" },
     { title: messages["anomalySensitivityMedium"].id, value: "medium" },

@@ -86,6 +86,7 @@ export class BaseChartConfigurationPanel<
                     {this.renderLegendSection()}
                     {this.renderInteractionsSection()}
                     {this.renderCanvasSection()}
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

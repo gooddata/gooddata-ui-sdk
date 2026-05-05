@@ -51,6 +51,7 @@ export enum TigerFeaturesNames {
     EnableSmtp = "enableSmtp",
     EnableScheduling = "enableScheduling",
     EnableSmartFunctions = "enableSmartFunctions",
+    EnableCustomTooltip = "enableCustomTooltip",
     EnableMotherDuckDataSource = "enableMotherDuckDataSource",
     EnableMongoDbDataSource = "enableMongoDbDataSource",
     EnableStarrocksDataSource = "enableStarrocksDataSource",
@@ -215,6 +216,7 @@ export type ITigerFeatureFlags = {
     enableScheduling: (typeof FeatureFlagsValues)["enableScheduling"][number];
     enableLabsSmartFunctions: (typeof FeatureFlagsValues)["enableLabsSmartFunctions"][number];
     enableSmartFunctions: (typeof FeatureFlagsValues)["enableSmartFunctions"][number];
+    enableCustomTooltip: (typeof FeatureFlagsValues)["enableCustomTooltip"][number];
     enableMotherDuckDataSource: (typeof FeatureFlagsValues)["enableMotherDuckDataSource"][number];
     enableMongoDbDataSource: (typeof FeatureFlagsValues)["enableMongoDbDataSource"][number];
     enableStarrocksDataSource: (typeof FeatureFlagsValues)["enableStarrocksDataSource"][number];
@@ -384,6 +386,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableScheduling: true,
     enableLabsSmartFunctions: false,
     enableSmartFunctions: true,
+    enableCustomTooltip: false,
     enableKeyDriverAnalysis: false,
     enableDataProfiling: false,
     enableExperimentalFeaturesUI: false,
@@ -550,6 +553,7 @@ export const FeatureFlagsValues = {
     enableScheduling: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
     enableSmartFunctions: [true, false] as const,
+    enableCustomTooltip: [true, false] as const,
     enableKeyDriverAnalysis: [true, false] as const,
     enableDataProfiling: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,

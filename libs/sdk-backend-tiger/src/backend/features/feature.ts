@@ -305,6 +305,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCustomTooltip,
+            "enableCustomTooltip",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCustomTooltip,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableMotherDuckDataSource,
             "enableMotherDuckDataSource",
             "BOOLEAN",

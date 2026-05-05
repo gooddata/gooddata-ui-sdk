@@ -780,6 +780,7 @@ export { TextAreaWithSubmit } from "./TextAreaWithSubmit/TextAreaWithSubmit.js";
 export { SeparatorLine, type ISeparatorLineProps } from "./SeparatorLine/SeparatorLine.js";
 export { RichText, type IRichTextProps } from "./RichText/RichText.js";
 export { RichTextWithTooltip, type IRichTextWithTooltipProps } from "./RichText/RichTextWithTooltip.js";
+export { REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT } from "./RichText/plugins/types.js";
 export { RecurrenceForm, type IRecurrenceFormProps } from "./RecurrenceForm/RecurrenceForm.js";
 export { Recurrence, type IRecurrenceProps } from "./RecurrenceForm/Recurrence.js";
 export { transformCronExpressionToRecurrenceType } from "./RecurrenceForm/utils/utils.js";

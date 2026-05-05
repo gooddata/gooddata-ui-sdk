@@ -155,6 +155,9 @@ export const CoreXirr: ComponentType<ICoreChartProps>;
 // @internal
 export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig | undefined) => IHeadlineProvider;
 
+// @alpha
+export type CustomTooltipPlacement = "above" | "below" | "replace";
+
 // @internal (undocumented)
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
 
@@ -338,6 +341,8 @@ export interface IChartConfig {
     colors?: string[];
     comparison?: IComparison;
     continuousLine?: IContinuousLineConfig;
+    // @alpha
+    customTooltip?: ICustomTooltipConfig;
     dataLabels?: IDataLabelsConfig;
     dataPoints?: IDataPointsConfig;
     // @internal
@@ -524,6 +529,13 @@ export interface ICreateExecutionParams {
     filters: IFilter[];
     // (undocumented)
     sortItems?: ISortItem[];
+}
+
+// @alpha
+export interface ICustomTooltipConfig {
+    content?: string;
+    enabled?: boolean;
+    placement?: CustomTooltipPlacement;
 }
 
 // @public (undocumented)

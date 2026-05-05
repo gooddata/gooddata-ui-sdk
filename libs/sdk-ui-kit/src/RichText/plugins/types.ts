@@ -1,9 +1,16 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Parent } from "unist";
 
 export type HtmlNode = Parent & { type: string; tagName: string; properties: Record<string, string> };
 export type TextNode = HtmlNode & { value: string };
 
+/**
+ * @internal
+ */
 export const REFERENCE_REGEX_SPLIT = /(\{(?:label|metric)\/[a-z0-9._-]*\})/gi;
+
+/**
+ * @internal
+ */
 export const REFERENCE_REGEX_MATCH = /(\{((label|metric)\/([a-z0-9._-]*))\})/gi;

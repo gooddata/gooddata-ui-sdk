@@ -7914,6 +7914,12 @@ export type RecurrenceType = (typeof RECURRENCE_TYPES)[RecurrenceTypeKey];
 export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 
 // @internal (undocumented)
+export const REFERENCE_REGEX_MATCH: RegExp;
+
+// @internal (undocumented)
+export const REFERENCE_REGEX_SPLIT: RegExp;
+
+// @internal (undocumented)
 export const relatedHeader: IDateDatasetHeader;
 
 // @internal (undocumented)

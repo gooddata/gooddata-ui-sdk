@@ -127,6 +127,7 @@ export class BubbleChartConfigurationPanel extends ConfigurationPanelContent {
                             pushData={pushData}
                         />
                     </ConfigSection>
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

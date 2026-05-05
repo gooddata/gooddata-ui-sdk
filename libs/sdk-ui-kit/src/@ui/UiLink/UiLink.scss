@@ -49,6 +49,12 @@
         text-decoration-color: transparent;
     }
 
+    &:has(svg) {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
     &--flipUnderline {
         text-decoration-color: transparent;
 

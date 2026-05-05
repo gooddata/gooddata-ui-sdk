@@ -3,6 +3,7 @@
     "gd.gen-ai.global-error.description": "Yritä käynnistää chatbotti uudelleen ja aloittaa alusta.",
     "gd.gen-ai.global-error.button-details": "Katso lisätietoja RAW-virhevastauksesta",
     "gd.gen-ai.global-error.sync-in-progress": "Asetuksia viimeistellään edelleen — yritä pian uudelleen.",
+    "gd.gen-ai.global-error.sync-failed": "Synkronointi epäonnistui. Yritä myöhemmin uudelleen.",
     "gd.gen-ai.global-error.traceId": "Virheen jäljitys-ID",
     "gd.gen-ai.global-error.show-more": "näytä lisää",
     "gd.gen-ai.global-error.show-less": "näytä vähemmän",

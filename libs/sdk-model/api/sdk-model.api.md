@@ -2533,6 +2533,8 @@ export interface IFeatureFlags {
     enableCustomGeoCollection?: boolean;
     enableCustomizableCsvDelimiter?: boolean;
     enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
+    // @alpha
+    enableCustomTooltip?: boolean;
     enableDashboardDensitySetting?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFilterGroups?: boolean;

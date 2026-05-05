@@ -15,6 +15,7 @@
     "semantic-search.date.at": "at",
     "semantic-search.ask.ai.assistant": "Ask AI Assistant",
     "semantic-search.error.sync-in-progress": "Still setting up — try again shortly.",
+    "semantic-search.error.sync-failed": "Syncing failed. Please try again later.",
     "gs.date.today": "Today",
     "gs.date.yesterday": "Yesterday"
 }

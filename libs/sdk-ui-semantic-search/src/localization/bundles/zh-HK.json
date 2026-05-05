@@ -15,6 +15,7 @@
     "semantic-search.date.at": "在",
     "semantic-search.ask.ai.assistant": "詢問AI Assistant",
     "semantic-search.error.sync-in-progress": "仍在設定中 — 請稍後再試。",
+    "semantic-search.error.sync-failed": "同步失敗。請稍後再試。",
     "gs.date.today": "今日",
     "gs.date.yesterday": "昨日"
 }

@@ -5,6 +5,8 @@ import { CalculateAs } from "@gooddata/sdk-ui-charts";
 import { type HeadlineControlProperties } from "../interfaces/ControlProperties.js";
 import { AXIS } from "./axis.js";
 
+const CUSTOM_TOOLTIP_PROPERTIES = ["customTooltip"];
+
 const BASE_PROPERTIES = [
     "dataLabels.visible",
     "dataLabels.totalsVisible",
@@ -20,6 +22,7 @@ const BASE_PROPERTIES = [
     "disableKeyDriveAnalysis",
     "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 const FORECAST_PROPERTIES = ["forecast"];
@@ -263,6 +266,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "clustering.numberOfClusters",
     "clustering.threshold",
     "chartConfigOverride",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 export const PIECHART_SUPPORTED_PROPERTIES = [
@@ -278,6 +282,7 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "chartFill",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 export const FUNNELCHART_SUPPORTED_PROPERTIES = [
@@ -294,6 +299,7 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "chartFill",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 export const TREEMAP_SUPPORTED_PROPERTIES = [
@@ -309,6 +315,7 @@ export const TREEMAP_SUPPORTED_PROPERTIES = [
     "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "chartFill",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 export const HEATMAP_SUPPORTED_PROPERTIES = [
@@ -334,6 +341,7 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "disableKeyDriveAnalysis",
     "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 export const BULLET_CHART_SUPPORTED_PROPERTIES = [
@@ -363,6 +371,7 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "chartFill",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
@@ -462,6 +471,7 @@ export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
     "disableKeyDriveAnalysis",
     "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [

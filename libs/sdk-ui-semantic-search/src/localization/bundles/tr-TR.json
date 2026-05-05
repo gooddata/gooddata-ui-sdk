@@ -15,6 +15,7 @@
     "semantic-search.date.at": "saat",
     "semantic-search.ask.ai.assistant": "AI Asistanına Sor",
     "semantic-search.error.sync-in-progress": "Hâlâ ayarlanıyor — kısa süre sonra tekrar deneyin.",
+    "semantic-search.error.sync-failed": "Senkronizasyon başarısız oldu. Lütfen daha sonra tekrar deneyin.",
     "gs.date.today": "Bugün",
     "gs.date.yesterday": "Dün"
 }

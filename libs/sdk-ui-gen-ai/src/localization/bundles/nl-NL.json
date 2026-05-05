@@ -3,6 +3,7 @@
     "gd.gen-ai.global-error.description": "Probeer de chatbot opnieuw op te starten en opnieuw beginnen.",
     "gd.gen-ai.global-error.button-details": "Zie de onbewerkte foutreactie voor meer informatie",
     "gd.gen-ai.global-error.sync-in-progress": "Nog bezig met instellen — probeer het zo opnieuw.",
+    "gd.gen-ai.global-error.sync-failed": "Synchronisatie mislukt. Probeer het later opnieuw.",
     "gd.gen-ai.global-error.traceId": "Fout-trace-ID",
     "gd.gen-ai.global-error.show-more": "meer tonen",
     "gd.gen-ai.global-error.show-less": "minder tonen",

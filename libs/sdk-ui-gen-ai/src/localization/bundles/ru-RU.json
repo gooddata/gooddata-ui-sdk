@@ -3,6 +3,7 @@
     "gd.gen-ai.global-error.description": "Попробуйте перезапустить чат-бота и начать заново.",
     "gd.gen-ai.global-error.button-details": "Подробнее см. в исходном ответе об ошибке",
     "gd.gen-ai.global-error.sync-in-progress": "Настройка еще выполняется — повторите попытку чуть позже.",
+    "gd.gen-ai.global-error.sync-failed": "Синхронизация не удалась. Повторите попытку позже.",
     "gd.gen-ai.global-error.traceId": "Идентификатор трассировки ошибки",
     "gd.gen-ai.global-error.show-more": "показать больше",
     "gd.gen-ai.global-error.show-less": "показать меньше",

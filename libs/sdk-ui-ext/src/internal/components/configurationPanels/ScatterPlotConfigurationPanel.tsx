@@ -171,6 +171,7 @@ export class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
                             ) : null}
                         </ConfigSection>
                     ) : null}
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

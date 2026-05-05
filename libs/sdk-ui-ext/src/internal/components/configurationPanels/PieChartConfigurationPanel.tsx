@@ -43,6 +43,7 @@ export class PieChartConfigurationPanel extends ConfigurationPanelContent {
                             defaultValue={false}
                         />
                     </ConfigSection>
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble
