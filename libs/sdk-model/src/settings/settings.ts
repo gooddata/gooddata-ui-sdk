@@ -1058,6 +1058,12 @@ export interface IFeatureFlags {
     enableAnomalyDetectionVisualization?: boolean;
 
     /**
+     * Enable custom tooltip configuration.
+     * @alpha
+     */
+    enableCustomTooltip?: boolean;
+
+    /**
      * Enable alert once per interval
      */
     enableAlertOncePerInterval?: boolean;

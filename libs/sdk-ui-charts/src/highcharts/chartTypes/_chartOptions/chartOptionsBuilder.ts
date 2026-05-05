@@ -455,6 +455,7 @@ export function getChartOptions(
         [viewByAttribute, viewByParentAttribute],
         stackByAttribute,
         type,
+        config.customTooltip?.enabled ?? false,
     );
 
     let initialSeries = assignYAxes(drillableSeries, yAxes);

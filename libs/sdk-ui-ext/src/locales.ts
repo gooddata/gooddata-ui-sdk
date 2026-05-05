@@ -95,7 +95,7 @@ export const subtitles: Record<string, MessageDescriptor> = defineMessages({
     color_choropleth: { id: "dashboard.bucket.color_subtitle.pushpin" },
 });
 
-export const messages: Record<string, MessageDescriptor> = defineMessages({
+export const messages = defineMessages({
     axisMinWarning: { id: "properties.axis.min.warning" },
     axisMaxWarning: { id: "properties.axis.max.warning" },
     explanationMeasure: { id: "sorting.disabled.explanation.measure" },
@@ -313,6 +313,14 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     clusteringThreshold: { id: "properties.clustering.threshold" },
     clusteringThresholdPlaceholder: { id: "properties.clustering.threshold.placeholder" },
     clusteringThresholdTooltip: { id: "properties.clustering.threshold.tooltip" },
+    customTooltipTitle: { id: "properties.customTooltip.title" },
+    customTooltipPlaceholder: { id: "properties.customTooltip.placeholder" },
+    customTooltipContentLabel: { id: "properties.customTooltip.contentLabel" },
+    customTooltipFormattingOptions: { id: "properties.customTooltip.formattingOptions" },
+    customTooltipPlacement: { id: "properties.customTooltip.placement" },
+    customTooltipPlacementAbove: { id: "properties.customTooltip.placement.above" },
+    customTooltipPlacementBelow: { id: "properties.customTooltip.placement.below" },
+    customTooltipPlacementReplace: { id: "properties.customTooltip.placement.replace" },
     advancedSection: { id: "properties.advanced.title" },
     chartConfigOverrideNoValueLabel: { id: "properties.advanced.chartConfigOverride.noValueLabel" },
     chartConfigOverrideLink: { id: "properties.advanced.chartConfigOverride.link" },
@@ -321,7 +329,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     snippetsHeader: { id: "properties.advanced.chartConfigOverride.snippets.header" },
 });
 
-export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({
+export const comparisonMessages = defineMessages({
     title: { id: "properties.comparison.title" },
     calculationTypeTitle: { id: "properties.comparison.calculationType.title" },
     calculatedAsChange: { id: "properties.comparison.calculationType.as.change" },

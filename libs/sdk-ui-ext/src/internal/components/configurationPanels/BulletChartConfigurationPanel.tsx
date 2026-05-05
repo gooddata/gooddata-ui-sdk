@@ -114,6 +114,7 @@ export class BulletChartConfigurationPanel extends ConfigurationPanelContent {
                             pushData={pushData}
                         />
                     </ConfigSection>
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

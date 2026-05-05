@@ -14,6 +14,8 @@
     "semantic-search.edit": "Редагувати",
     "semantic-search.date.at": "о",
     "semantic-search.ask.ai.assistant": "Запитати AI Assistant",
+    "semantic-search.error.sync-in-progress": "Налаштування ще триває — спробуйте знову трохи пізніше.",
+    "semantic-search.error.sync-failed": "Не вдалося синхронізувати. Спробуйте ще раз пізніше.",
     "gs.date.today": "Сьогодні",
     "gs.date.yesterday": "Учора"
 }

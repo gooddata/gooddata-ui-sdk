@@ -44,6 +44,7 @@ export class FunnelChartConfigurationPanel extends ConfigurationPanelContent {
                             enablePercentLabels
                         />
                     </ConfigSection>
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

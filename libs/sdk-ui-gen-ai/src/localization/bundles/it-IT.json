@@ -3,6 +3,7 @@
     "gd.gen-ai.global-error.description": "Provare a riavviare il chatbot e ricominciare da capo.",
     "gd.gen-ai.global-error.button-details": "Vedere la risposta all'errore grezzo per i dettagli",
     "gd.gen-ai.global-error.sync-in-progress": "Configurazione ancora in corso — riprova tra poco.",
+    "gd.gen-ai.global-error.sync-failed": "Sincronizzazione non riuscita. Riprovare più tardi.",
     "gd.gen-ai.global-error.traceId": "ID traccia dell'errore",
     "gd.gen-ai.global-error.show-more": "mostra di più",
     "gd.gen-ai.global-error.show-less": "mostra di meno",

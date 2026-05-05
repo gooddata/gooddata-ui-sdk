@@ -262,6 +262,40 @@ $color-picker-spacing: 5px;
     }
 }
 
+.gd-custom-tooltip-section.adi-bucket-configuration {
+    .gd-bubble-trigger,
+    .adi-properties-dropdown-container {
+        display: block;
+    }
+
+    .adi-properties-dropdown-container {
+        .adi-bucket-inputfield,
+        .adi-bucket-dropdown {
+            padding-top: 0;
+        }
+    }
+
+    .input-label-text {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .gd-custom-tooltip-textarea {
+        min-height: 160px;
+        max-height: 300px;
+        padding: 8px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        line-height: 1.4;
+        resize: vertical;
+    }
+
+    .gd-custom-tooltip-formatting-link {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+}
+
 .gd-anomalies-section {
     .gd-anomalies-section-control {
         display: flex;

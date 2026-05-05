@@ -5,6 +5,7 @@ import { type IColorAssignment } from "@gooddata/sdk-ui";
 import { type IChartFillConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import { type ChartAlignTypes, type IAxisConfig, type IGridConfig } from "../../interfaces/chartConfig.js";
+import { type IIdentifierMapping } from "../chartTypes/_chartCreators/customTooltip/identifierMapping.js";
 import { type StackingType } from "../constants/stacking.js";
 import {
     type ColorAxisOptions,
@@ -196,6 +197,12 @@ export interface IChartOptions {
     verticalAlign?: ChartAlignTypes;
     legendLabel?: string;
     chartFill?: IChartFillConfig;
+    /**
+     * Mapping from execution localIdentifiers to LDM identifiers used by the
+     * custom tooltip reference resolver. Built from the dataView definition
+     * when customTooltip is enabled.
+     */
+    identifierMapping?: IIdentifierMapping;
 }
 
 export interface IPatternOptionsObject {

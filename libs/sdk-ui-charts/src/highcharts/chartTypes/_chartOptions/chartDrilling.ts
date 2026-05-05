@@ -74,6 +74,7 @@ export function getDrillableSeries(
     viewByAttributes: (IUnwrappedAttributeHeadersWithItems | undefined | null)[],
     stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     type: VisType | undefined,
+    forceDrillIntersection: boolean = false,
 ): any {
     const [viewByChildAttribute, viewByParentAttribute] = viewByAttributes;
 
@@ -151,11 +152,9 @@ export function getDrillableSeries(
                 isSomeHeaderPredicateMatched(drillableItems, drillableHook, dv),
             );
 
-            const drillableProps: any = {
-                drilldown,
-            };
+            const drillableProps: any = { drilldown };
 
-            if (drilldown) {
+            if (drilldown || forceDrillIntersection) {
                 const headers: (IMappingHeader | null)[] = [
                     ...measureHeaders,
                     viewByChildHeader,
@@ -167,6 +166,9 @@ export function getDrillableSeries(
                 ];
                 const sanitizedHeaders: IMappingHeader[] = without([...headers], null) as IMappingHeader[];
                 drillableProps.drillIntersection = getDrillIntersection(sanitizedHeaders);
+            }
+
+            if (drilldown) {
                 isSeriesDrillable = true;
             }
             return {

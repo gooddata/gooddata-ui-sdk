@@ -89,6 +89,7 @@ export class WaterfallChartConfigurationPanel extends BaseChartConfigurationPane
                             pushData={pushData}
                         />
                     </ConfigSection>
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

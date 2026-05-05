@@ -31,6 +31,7 @@ export class SankeyChartConfigurationPanel extends ConfigurationPanelContent {
                     {this.renderLegendSection()}
                     {this.renderInteractionsSection()}
                     {this.renderCanvasSection()}
+                    {this.renderCustomTooltipSection()}
                     {this.renderAdvancedSection()}
                 </div>
                 <Bubble

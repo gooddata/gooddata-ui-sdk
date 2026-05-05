@@ -144,6 +144,7 @@
     "analyticsCatalog.quality.scoreCard.status.finished": "Перевірку семантичної якості завершено.",
     "analyticsCatalog.quality.scoreCard.action.empty": "Нічого не знайдено",
     "analyticsCatalog.quality.scoreCard.action.loading": "Виконується...",
+    "analyticsCatalog.quality.scoreCard.action.syncing": "Налаштування ще триває — спробуйте знову трохи пізніше.",
     "analyticsCatalog.quality.scoreCard.action.success": "Показати об’єкти",
     "analyticsCatalog.quality.scoreCard.lastCheck": "Остання перевірка: {date}",
     "analyticsCatalog.quality.scoreCard.checkFailed": "Перевірка не вдалася!",

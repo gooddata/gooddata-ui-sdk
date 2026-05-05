@@ -85,7 +85,7 @@ LegendsectionEnabled.parameters = {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-bottom" }],
             delay: {
-                postOperation: 200,
+                postOperation: 400,
             },
         },
     },
@@ -130,7 +130,7 @@ LegendsectionEnabledLocalized.parameters = {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".gd-button-primary" }, { selector: ".s-unten" }],
             delay: {
-                postOperation: 200,
+                postOperation: 400,
             },
         },
     },

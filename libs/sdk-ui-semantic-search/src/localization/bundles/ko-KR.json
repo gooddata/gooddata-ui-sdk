@@ -15,6 +15,7 @@
     "semantic-search.date.at": "(시각/장소)",
     "semantic-search.ask.ai.assistant": "AI 어시스턴트에게 문의하기",
     "semantic-search.error.sync-in-progress": "아직 설정 중입니다 — 잠시 후 다시 시도하세요.",
+    "semantic-search.error.sync-failed": "동기화에 실패했습니다. 나중에 다시 시도해 주세요.",
     "gs.date.today": "오늘",
     "gs.date.yesterday": "어제"
 }
