@@ -75,12 +75,15 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     dimensionality,
     insightDimensionality,
     isDimensionalityEnabled,
+    isFilterSummaryEnabled,
     catalogDimensionality,
     loadCatalogDimensionality,
     onDimensionalityChange,
     isLoadingCatalogDimensionality,
     enableMultipleConditions = false,
     enableRankingWithMvf,
+    loadMetricDetails,
+    isHeaderEnabled,
 }: IMeasureValueFilterDropdownProps) {
     const applyOnResult = filter?.measureValueFilter.applyOnResult;
     const handleApply = useCallback(
@@ -197,6 +200,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             dimensionality={dimensionality}
             insightDimensionality={insightDimensionality}
             isDimensionalityEnabled={isDimensionalityEnabled}
+            isFilterSummaryEnabled={isFilterSummaryEnabled}
             catalogDimensionality={catalogDimensionality}
             loadCatalogDimensionality={loadCatalogDimensionality}
             onDimensionalityChange={onDimensionalityChange}
@@ -204,6 +208,8 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             enableMultipleConditions={enableMultipleConditions}
             enableRankingWithMvf={enableRankingWithMvf}
             applyOnResult={applyOnResult}
+            loadMetricDetails={loadMetricDetails}
+            isHeaderEnabled={isHeaderEnabled}
         />
     );
 });

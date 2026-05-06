@@ -22,7 +22,7 @@ export function UiComboboxList({ children, className, ...htmlProps }: IUiCombobo
     const { availableOptions } = useComboboxState();
 
     return (
-        <ul role="listbox" {...htmlProps} className={cx(e("list"), className)}>
+        <ul role="listbox" {...htmlProps} className={cx(e("list"), className)} tabIndex={-1}>
             {/* TODO: Implement virtual list */}
             {availableOptions.map((option, index) =>
                 children ? (

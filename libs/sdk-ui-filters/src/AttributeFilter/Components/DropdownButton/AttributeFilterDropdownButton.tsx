@@ -2,7 +2,6 @@
 
 import {
     type ComponentType,
-    type KeyboardEvent,
     type ReactNode,
     type Ref,
     useCallback,
@@ -14,18 +13,12 @@ import {
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { ShortenedText, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { UiControlButton } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
 import { FilterButtonCustomIcon } from "../../../shared/components/internal/FilterButtonCustomIcon.js";
 import { type IFilterButtonCustomIcon } from "../../../shared/interfaces/index.js";
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
-
-export const ALIGN_POINT = [
-    { align: "tc bc", offset: { x: 0, y: -2 } },
-    { align: "cc tc", offset: { x: 0, y: 10 } },
-    { align: "bl tr", offset: { x: -2, y: -8 } },
-];
 
 /**
  * The interface of the AttributeFilter dropdown button.
@@ -222,27 +215,17 @@ export function AttributeFilterDropdownButton({
     const subtitleSelectedItemsRef = useRef<HTMLSpanElement>(null);
     const [displayItemCount, setDisplayItemCount] = useState(false);
     const filterIcon = isError ? <i className="gd-icon gd-icon-circle-cross" /> : icon;
+
     useEffect(() => {
         const element = subtitleSelectedItemsRef.current;
-
         if (!element) {
             return;
         }
-
         const roundedWidth = Math.ceil(element.getBoundingClientRect().width);
-        const displayItemCount = roundedWidth < element.scrollWidth;
-
-        setDisplayItemCount(displayItemCount);
+        setDisplayItemCount(roundedWidth < element.scrollWidth);
     }, [subtitle]);
 
-    let itemsCountString: string | undefined;
-    if (selectedItemsCount !== undefined && totalItemsCount !== undefined) {
-        itemsCountString = `${selectedItemsCount}/${totalItemsCount}`;
-    } else if (selectedItemsCount !== undefined) {
-        itemsCountString = `${selectedItemsCount}`;
-    } else if (totalItemsCount !== undefined) {
-        itemsCountString = `${totalItemsCount}`;
-    }
+    const itemsCountString = formatItemsCount(selectedItemsCount, totalItemsCount);
 
     let buttonTitle = title;
     let buttonSubtitle = subtitle;
@@ -253,36 +236,66 @@ export function AttributeFilterDropdownButton({
         buttonSubtitle = intl.formatMessage({ id: "filtering" });
     }
 
-    const onKeyDown = useCallback(
-        (event: KeyboardEvent) => {
-            if (isActionKey(event) && disabled) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-        },
-        [disabled],
+    const titleSlotExtension = (
+        <>
+            {titleExtension}
+            <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
+            {TooltipContentComponent && isLoaded ? (
+                <AttributeFilterButtonTooltip>
+                    <TooltipContentComponent />
+                </AttributeFilterButtonTooltip>
+            ) : null}
+        </>
     );
+
+    const subtitleNode = (
+        <span
+            className="gd-attribute-filter-dropdown-button-selected-items__next s-attribute-filter-button-subtitle"
+            data-testid={isOpen ? "attribute-filter-button-subtitle" : undefined}
+            ref={subtitleSelectedItemsRef}
+        >
+            {buttonSubtitle}
+        </span>
+    );
+
+    const subtitleExtension =
+        showSelectionCount && displayItemCount && isLoaded && itemsCountString ? (
+            <span className="gd-attribute-filter-dropdown-button-selected-items-count__next">{`(${itemsCountString})`}</span>
+        ) : null;
+
     const handleButtonRef = useCallback(
         (element: HTMLDivElement | null) => {
             if (!buttonRef) {
                 return;
             }
-
             if (typeof buttonRef === "function") {
                 buttonRef(element);
                 return;
             }
-
             buttonRef.current = element;
         },
         [buttonRef],
     );
 
-    const tooltipId = useIdPrefixed("filter-locked-tooltip");
-
-    const buttonComponent = (
-        <div
-            id={buttonId}
+    return (
+        <UiControlButton
+            title={`${buttonTitle ?? ""}`}
+            titleClassName="s-attribute-filter-button-title"
+            subtitle={subtitleNode}
+            subtitleExtension={subtitleExtension}
+            icon={filterIcon}
+            titleExtension={titleSlotExtension}
+            isOpen={isOpen}
+            isDraggable={isDraggable}
+            isError={isError}
+            disabled={disabled}
+            disabledTooltip={
+                disabled ? intl.formatMessage({ id: "filters.locked.filter.tooltip" }) : undefined
+            }
+            onClick={onClick}
+            buttonRef={handleButtonRef}
+            buttonId={buttonId}
+            dropdownId={dropdownId}
             className={cx(
                 "gd-attribute-filter-dropdown-button__next",
                 "s-attribute-filter",
@@ -293,68 +306,23 @@ export function AttributeFilterDropdownButton({
                     "gd-is-active": isOpen,
                     "gd-is-loaded": isLoaded,
                     "gd-is-draggable": isDraggable,
-                    disabled: disabled,
+                    disabled,
                 },
                 className,
             )}
-            aria-haspopup="dialog"
-            aria-expanded={isOpen}
-            aria-disabled={disabled}
-            aria-describedby={disabled ? tooltipId : undefined}
-            onClick={onClick}
-            onKeyDown={onKeyDown}
-            aria-controls={isOpen ? dropdownId : undefined}
-            role="button"
-            tabIndex={0}
-            ref={handleButtonRef}
-        >
-            {filterIcon ? (
-                <div className="gd-attribute-filter-dropdown-button-icon__next">{filterIcon}</div>
-            ) : null}
-            <div className="gd-attribute-filter-dropdown-button-content__next">
-                <div className="gd-attribute-filter-dropdown_button-title-content__next">
-                    <div className="gd-attribute-filter-dropdown-button-title__next">
-                        <ShortenedText
-                            tooltipAlignPoints={ALIGN_POINT}
-                            className={"s-attribute-filter-button-title"}
-                        >
-                            {`${buttonTitle}`}
-                        </ShortenedText>
-                    </div>
-                    {titleExtension}
-                    <FilterButtonCustomIcon customIcon={customIcon} disabled={disabled} />
-                    {TooltipContentComponent && isLoaded ? (
-                        <AttributeFilterButtonTooltip>
-                            <TooltipContentComponent />
-                        </AttributeFilterButtonTooltip>
-                    ) : null}
-                </div>
-                <div className="gd-attribute-filter-dropdown-button-subtitle__next">
-                    <span
-                        className="gd-attribute-filter-dropdown-button-selected-items__next s-attribute-filter-button-subtitle"
-                        data-testid={isOpen ? "attribute-filter-button-subtitle" : undefined}
-                        ref={subtitleSelectedItemsRef}
-                    >
-                        {buttonSubtitle}
-                    </span>
-                    {showSelectionCount && displayItemCount && isLoaded ? (
-                        <span className="gd-attribute-filter-dropdown-button-selected-items-count__next">{`(${itemsCountString})`}</span>
-                    ) : null}
-                </div>
-            </div>
-        </div>
-    );
-
-    return disabled ? (
-        <UiTooltip
-            id={tooltipId}
-            anchor={buttonComponent}
-            content={intl.formatMessage({ id: "filters.locked.filter.tooltip" })}
-            triggerBy={["focus"]}
-            arrowPlacement="top"
-            showArrow
         />
-    ) : (
-        buttonComponent
     );
+}
+
+function formatItemsCount(selected?: number, total?: number): string | undefined {
+    if (selected !== undefined && total !== undefined) {
+        return `${selected}/${total}`;
+    }
+    if (selected !== undefined) {
+        return `${selected}`;
+    }
+    if (total !== undefined) {
+        return `${total}`;
+    }
+    return undefined;
 }

@@ -1,9 +1,18 @@
 // (C) 2020-2026 GoodData Corporation
 
+import { type ComponentType } from "react";
+
 import { isEmpty } from "lodash-es";
 
-import { type IMeasureValueFilter, type ObjRef, type ObjRefInScope } from "@gooddata/sdk-model";
+import {
+    type IMeasureMetadataObject,
+    type IMeasureValueFilter,
+    type ObjRef,
+    type ObjRefInScope,
+} from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
+
+import { type IMeasureValueFilterDropdownButtonProps } from "./MeasureValueFilterButton.js";
 
 /**
  * Type of dimensionality item for display purposes.
@@ -102,6 +111,13 @@ export interface IMeasureValueFilterCommonProps {
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
     /**
+     * Controls visibility of the textual filter summary shown above the dropdown footer.
+     * Defaults to `true`.
+     *
+     * @beta
+     */
+    isFilterSummaryEnabled?: boolean;
+    /**
      * Catalog items available for dimensionality
      */
     catalogDimensionality?: IDimensionalityItem[];
@@ -138,6 +154,49 @@ export interface IMeasureValueFilterCommonProps {
      * @beta
      */
     enableRankingWithMvf?: boolean;
+    /**
+     * Loader for the metric details shown in the dropdown header tooltip.
+     *
+     * @remarks
+     * Invoked the first time the user opens the tooltip — never on initial render.
+     * Pass this only when you want the dropdown header to expose a question-mark
+     * icon with lazily loaded metric metadata (description, format, identifier).
+     *
+     * @beta
+     */
+    loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
+    /**
+     * When true, renders a header at the top of the dropdown body with the metric
+     * title and a question-mark icon revealing metric details on hover/focus.
+     *
+     * Defaults to `false`.
+     *
+     * @beta
+     */
+    isHeaderEnabled?: boolean;
+}
+
+/**
+ * These customization properties allow you to specify custom components that the MeasureValueFilter
+ * component will use for rendering different parts.
+ *
+ * @remarks
+ * IMPORTANT: while this interface is marked as public, you also need to heed the maturity annotations
+ * on each customization property; they are at this moment beta level. The interface will be extended
+ * in the future to mirror the customization scope of the AttributeFilter.
+ *
+ * @public
+ */
+export interface IMeasureValueFilterCustomComponentsProps {
+    /**
+     * Customize MeasureValueFilter dropdown button (header) component.
+     *
+     * @remarks
+     * -  If not provided, the default implementation will be used.
+     *
+     * @beta
+     */
+    DropdownButtonComponent?: ComponentType<IMeasureValueFilterDropdownButtonProps>;
 }
 
 /**

@@ -282,6 +282,8 @@ export {
     type IRemoveDateFiltersPayload,
     type IMoveDateFilter,
     type MoveDateFilterPayload,
+    type IChangeMeasureValueFilterCondition,
+    type IChangeMeasureValueFilterConditionPayload,
     type ChangeAttributeFilterSelection,
     type AttributeFilterSelectionType,
     type ReplaceAttributeFilterItemSelection,
@@ -324,6 +326,7 @@ export {
     addDateFilter,
     removeDateFilter,
     moveDateFilter,
+    changeMeasureValueFilterCondition,
     resetAttributeFilterSelection,
     changeAttributeFilterSelection,
     changeMigratedAttributeFilterSelection,
@@ -820,6 +823,9 @@ export {
     type IDashboardFilterViewDefaultStatusChangeFailedPayload,
     type IDashboardFilterContextSelectionReset,
     type IDashboardFilterContextWorkingSelectionApplied,
+    type IDashboardMeasureValueFilterConditionChanged,
+    type IDashboardMeasureValueFilterConditionChangedPayload,
+    isDashboardMeasureValueFilterConditionChanged,
     isDashboardAttributeFilterAdded,
     isDashboardAttributeFilterMoved,
     isDashboardAttributeFilterParentChanged,
@@ -1503,6 +1509,11 @@ export {
 } from "./model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export type { IDateFilterConfigsState } from "./model/store/tabs/dateFilterConfigs/dateFilterConfigsState.js";
 export type { IAttributeFilterConfigsState } from "./model/store/tabs/attributeFilterConfigs/attrtibuteFilterConfigsState.js";
+export type { IMeasureValueFilterConfigsState } from "./model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsState.js";
+export type {
+    IChangeMeasureValueFilterConfigModePayload,
+    ISetMeasureValueFilterConfigsPayload,
+} from "./model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsReducers.js";
 export type { ILayoutState, LayoutStash } from "./model/store/tabs/layout/layoutState.js";
 export type { TabsReducer } from "./model/store/tabs/tabsReducers.js";
 export type { IdentityMapping } from "./_staging/dashboard/dashboardLayout.js";
@@ -1931,6 +1942,8 @@ export type {
     OptionalDateFilterComponentProvider,
     AttributeFilterComponentProvider,
     OptionalAttributeFilterComponentProvider,
+    MeasureValueFilterComponentProvider,
+    OptionalMeasureValueFilterComponentProvider,
     TopBarComponentProvider,
     OptionalTopBarComponentProvider,
     FilterBarComponentProvider,
@@ -1957,7 +1970,13 @@ export type {
     FilterBarFilterPlaceholder,
     FilterBarAttributeFilterIndexed,
     FilterBarDateFilterIndexed,
+    FilterBarMeasureValueFilterIndexed,
 } from "./presentation/filterBar/filterBar/useFiltersWithAddedPlaceholder.js";
+export { DefaultDashboardMeasureValueFilter } from "./presentation/filterBar/measureValueFilter/DefaultDashboardMeasureValueFilter.js";
+export type {
+    IDashboardMeasureValueFilterProps,
+    CustomDashboardMeasureValueFilterComponent,
+} from "./presentation/filterBar/measureValueFilter/types.js";
 export {
     type DraggableContentItemType,
     type DraggableInternalItemType,

@@ -10,6 +10,7 @@ import {
     type IAutomationMetadataObject,
     type IInsight,
     type IMatchAttributeFilter,
+    type IMeasureValueFilter,
     type INegativeAttributeFilter,
     type IPositiveAttributeFilter,
     type IRelativeDateFilter,
@@ -19,6 +20,7 @@ import {
     type ShareStatus,
     isAttributeFilter,
     isDateFilter,
+    isMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
@@ -35,7 +37,8 @@ export type IDashboardFilter =
     | IPositiveAttributeFilter
     | INegativeAttributeFilter
     | IArbitraryAttributeFilter
-    | IMatchAttributeFilter;
+    | IMatchAttributeFilter
+    | IMeasureValueFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardFilter}.
@@ -43,7 +46,7 @@ export type IDashboardFilter =
  * @alpha
  */
 export function isDashboardFilter(obj: unknown): obj is IDashboardFilter {
-    return isAttributeFilter(obj) || isDateFilter(obj);
+    return isAttributeFilter(obj) || isDateFilter(obj) || isMeasureValueFilter(obj);
 }
 
 /**

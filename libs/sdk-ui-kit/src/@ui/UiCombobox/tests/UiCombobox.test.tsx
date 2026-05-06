@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { createEvent, fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import type { IUiComboboxOption } from "../types.js";
@@ -145,6 +145,24 @@ describe("UiCombobox", () => {
 
         expect(screen.queryByText("Apple")).not.toBeInTheDocument();
         expect(screen.queryByText("Apricot")).not.toBeInTheDocument();
+    });
+
+    it("keeps popup open on blur when focus moves to popup content", () => {
+        render(<TestCombobox options={options} />);
+
+        const input: HTMLInputElement = screen.getByRole("combobox");
+
+        fireEvent.focus(input);
+        fireEvent.change(input, { target: { value: "ap" } });
+
+        const apricotOption = screen.getByText("Apricot");
+        const mouseDownEvent = createEvent.mouseDown(apricotOption);
+
+        fireEvent(apricotOption, mouseDownEvent);
+
+        expect(mouseDownEvent.defaultPrevented).toBe(true);
+        expect(screen.getByText("Apple")).toBeInTheDocument();
+        expect(screen.getByText("Apricot")).toBeInTheDocument();
     });
 
     it("does show creatable option when typing non-matching text", () => {

@@ -18,6 +18,7 @@ import {
     type IDateFilter,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
+    type MeasureValueFilterCondition,
     type ObjRef,
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -1823,5 +1824,65 @@ export function resetFilterContextWorkingSelection(
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION",
         correlationId,
+    };
+}
+
+//
+// Measure Value Filter commands
+//
+
+/**
+ * Payload of the {@link IChangeMeasureValueFilterCondition} command.
+ *
+ * @alpha
+ */
+export interface IChangeMeasureValueFilterConditionPayload {
+    /**
+     * Local identifier of the measure value filter to update.
+     */
+    readonly localIdentifier: string;
+
+    /**
+     * New conditions to apply on the filter. When empty or undefined, the filter is treated
+     * as "All" (no filtering).
+     */
+    readonly conditions?: MeasureValueFilterCondition[];
+}
+
+/**
+ * Command for changing the condition definition of an existing measure value filter.
+ *
+ * @alpha
+ */
+export interface IChangeMeasureValueFilterCondition extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CHANGE_CONDITION";
+    readonly payload: IChangeMeasureValueFilterConditionPayload;
+}
+
+/**
+ * Creates the ChangeMeasureValueFilterCondition command.
+ *
+ * @remarks
+ * Dispatching this command updates the conditions of an existing measure value filter. To clear
+ * the filter (set it back to "All"), pass undefined or an empty array.
+ *
+ * @param localIdentifier - local identifier of the measure value filter to update
+ * @param conditions - new conditions to apply, or undefined to clear
+ * @param correlationId - correlation id propagated through emitted events
+ *
+ * @alpha
+ */
+export function changeMeasureValueFilterCondition(
+    localIdentifier: string,
+    conditions?: MeasureValueFilterCondition[],
+    correlationId?: string,
+): IChangeMeasureValueFilterCondition {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CHANGE_CONDITION",
+        correlationId,
+        payload: {
+            localIdentifier,
+            conditions,
+        },
     };
 }

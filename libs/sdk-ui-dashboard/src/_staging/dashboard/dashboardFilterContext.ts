@@ -226,5 +226,7 @@ export function dashboardFilterToFilterContextItem(
         );
     }
 
-    throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
+    throw new NotSupported(
+        `Unsupported filter type! Please provide valid dashboard filter. Filter: ${JSON.stringify(filter)}`,
+    );
 }

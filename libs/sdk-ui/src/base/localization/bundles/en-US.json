@@ -2055,6 +2055,46 @@
         "text": "No items available.",
         "crowdinContext": "Empty state when there are no items in add filter picker"
     },
+    "filter_bar_add_filter.parameters.search_placeholder": {
+        "text": "Search…",
+        "crowdinContext": "Placeholder text in the search input of the parameter picker"
+    },
+    "filter_bar_add_filter.parameters.add": {
+        "text": "Add",
+        "crowdinContext": "Add button in the parameter picker dialog, adds all selected parameters as controls"
+    },
+    "filter_bar_add_filter.parameters.empty": {
+        "text": "No items available.",
+        "crowdinContext": "Empty state shown in the parameter picker when nothing can be selected (no parameters in workspace, or all already added)"
+    },
+    "filter_bar_add_filter.parameters.no_results": {
+        "text": "No item matches the search term.",
+        "crowdinContext": "Empty-state message shown when a search in the parameter picker has no matches"
+    },
+    "parameter_filter.button.value_label": {
+        "text": "is {value}",
+        "crowdinContext": "Second line of the parameter chip showing 'is {value}'"
+    },
+    "parameter_filter.dropdown.value_label": {
+        "text": "Value",
+        "crowdinContext": "Label for the numeric value input in the parameter control dropdown"
+    },
+    "parameter_filter.dropdown.reset": {
+        "text": "Reset",
+        "crowdinContext": "Reset link in the parameter control dropdown; reverts the value to the workspace default"
+    },
+    "parameter_filter.dropdown.preview_label": {
+        "text": "Preview:",
+        "crowdinContext": "Preview label in the parameter control dropdown"
+    },
+    "parameter_filter.dropdown.preview": {
+        "text": "{name} is <strong>{value}</strong>",
+        "crowdinContext": "Preview line in the parameter control dropdown showing the parameter name and the value that will be applied"
+    },
+    "parameter_filter.dropdown.apply": {
+        "text": "Apply",
+        "crowdinContext": "Apply button in the parameter control dropdown"
+    },
     "mvf.applyButton.tooltip.noChanges": {
         "text": "No changes to apply.",
         "crowdinContext": "Tooltip shown on the Apply button when it is disabled because there are no changes to apply in the Measure Value Filter."
@@ -4302,5 +4342,57 @@
     "csvDelimiterPicker.validation.unsupported": {
         "text": "Invalid delimiter — use a single special character, e.g. , ; | tab or space. Quotes not allowed.",
         "crowdinContext": "Validation error shown when the custom delimiter character is not allowed. Lists example valid characters."
+    },
+    "mvf.button.all": {
+        "text": "All",
+        "crowdinContext": "Filter button label shown when the measure value filter has no condition applied (matches all values)."
+    },
+    "mvf.button.equalTo": {
+        "text": "= {value}",
+        "crowdinContext": "Symbolic filter button label for 'equal to' condition. Example: '= 100'. Symbol = and {value} placeholder must be preserved."
+    },
+    "mvf.button.greaterThan": {
+        "text": "> {value}",
+        "crowdinContext": "Symbolic filter button label for 'greater than' condition. Example: '> 100'. Symbol > and {value} placeholder must be preserved."
+    },
+    "mvf.button.greaterThanOrEqualTo": {
+        "text": "≥ {value}",
+        "crowdinContext": "Symbolic filter button label for 'greater than or equal to' condition. Example: '≥ 100'. Symbol ≥ and {value} placeholder must be preserved."
+    },
+    "mvf.button.lessThan": {
+        "text": "< {value}",
+        "crowdinContext": "Symbolic filter button label for 'less than' condition. Example: '< 100'. Symbol < and {value} placeholder must be preserved."
+    },
+    "mvf.button.lessThanOrEqualTo": {
+        "text": "≤ {value}",
+        "crowdinContext": "Symbolic filter button label for 'less than or equal to' condition. Example: '≤ 100'. Symbol ≤ and {value} placeholder must be preserved."
+    },
+    "mvf.button.notEqualTo": {
+        "text": "≠ {value}",
+        "crowdinContext": "Symbolic filter button label for 'not equal to' condition. Example: '≠ 100'. Symbol ≠ and {value} placeholder must be preserved."
+    },
+    "mvf.button.range.values": {
+        "text": "{from} and {to}",
+        "crowdinContext": "Value-only label for repeated range conditions on the filter button. Used after the first 'between'/'not between' phrase has set the operator. Example: 'between 10 and 20 or 30 and 40' (the second '30 and 40' uses this key)."
+    },
+    "mvf.details.definedAs": {
+        "text": "Defined as",
+        "crowdinContext": "Section heading for the metric MAQL expression (definition) in the measure value filter details bubble."
+    },
+    "mvf.details.id": {
+        "text": "ID",
+        "crowdinContext": "Section heading for the metric identifier in the measure value filter details bubble."
+    },
+    "mvf.details.infoButtonLabel": {
+        "text": "Show metric details",
+        "crowdinContext": "Accessible label for the info button that opens the metric details bubble in the measure value filter header."
+    },
+    "mvf.details.type": {
+        "text": "Type",
+        "crowdinContext": "Section heading for the metric type in the measure value filter details bubble."
+    },
+    "mvf.details.typeValue": {
+        "text": "Metric",
+        "crowdinContext": "Value displayed for metric type in the measure value filter details bubble."
     }
 }

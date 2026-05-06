@@ -1,0 +1,98 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-parameter-picker {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background: var(--gd-palette-complementary-0);
+
+    &__search {
+        padding: 10px 10px 10px;
+
+        .gd-input-field {
+            width: 100%;
+        }
+    }
+
+    &__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 auto;
+        padding: 40px 12px;
+    }
+
+    &__empty {
+        padding: 10px 15px;
+        color: var(--gd-palette-complementary-6);
+        font-size: 12px;
+    }
+
+    &__list {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding-bottom: 5px;
+    }
+
+    &__group + &__group {
+        margin-top: 5px;
+    }
+
+    &__group-header {
+        padding: 5px 15px;
+        color: var(--gd-palette-complementary-6);
+        font-size: 10px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    &__items {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        padding: 4px 15px;
+        font-size: 12px;
+
+        &:hover {
+            background-color: var(--gd-palette-complementary-2);
+        }
+    }
+
+    &__item-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+        cursor: pointer;
+    }
+
+    &__item-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--gd-palette-complementary-6);
+    }
+
+    &__item-title {
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 10px;
+        border-top: 1px solid var(--gd-palette-complementary-3);
+    }
+}

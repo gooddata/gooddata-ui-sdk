@@ -11,6 +11,7 @@ import {
     type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
+    type IDashboardMeasureValueFilter,
     type IDashboardObjectIdentity,
     type IFilterContextDefinition,
     type ObjRef,
@@ -26,6 +27,7 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isObjRef,
     uriRef,
@@ -519,7 +521,8 @@ export const selectFilterContextDraggableFilters: DashboardSelector<
 
 /**
  * This selector returns all dashboard's filter context draggable filters,
- * including date filters and all attribute-based filters (element-based, arbitrary, and match).
+ * including date filters, all attribute-based filters (element-based, arbitrary, and match),
+ * and measure value filters.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -528,11 +531,47 @@ export const selectFilterContextDraggableFilters: DashboardSelector<
  * @public
  */
 export const selectFilterContextDraggableFilterItems: DashboardSelector<
-    Array<IDashboardDateFilter | DashboardAttributeFilterItem>
+    Array<IDashboardDateFilter | DashboardAttributeFilterItem | IDashboardMeasureValueFilter>
 > = createSelector(
     selectFilterContextFilters,
-    (filters): Array<IDashboardDateFilter | DashboardAttributeFilterItem> =>
-        filters.filter((f) => isDashboardDateFilterWithDimension(f) || isDashboardAttributeFilterItem(f)),
+    (filters): Array<IDashboardDateFilter | DashboardAttributeFilterItem | IDashboardMeasureValueFilter> =>
+        filters.filter(
+            (f) =>
+                isDashboardDateFilterWithDimension(f) ||
+                isDashboardAttributeFilterItem(f) ||
+                isDashboardMeasureValueFilter(f),
+        ),
+);
+
+/**
+ * This selector returns dashboard's applied filter context measure value filters.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectFilterContextMeasureValueFilters: DashboardSelector<IDashboardMeasureValueFilter[]> =
+    createSelector(selectFilterContextFilters, (filters): IDashboardMeasureValueFilter[] =>
+        filters.filter(isDashboardMeasureValueFilter),
+    );
+
+/**
+ * Creates a selector for finding a dashboard measure value filter by its local identifier.
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectFilterContextMeasureValueFilterByLocalId: (
+    localIdentifier: string,
+) => (state: DashboardState) => IDashboardMeasureValueFilter | undefined = createMemoizedSelector(
+    (localIdentifier: string) =>
+        createSelector(selectFilterContextMeasureValueFilters, (filters) =>
+            filters.find((f) => f.dashboardMeasureValueFilter.localIdentifier === localIdentifier),
+        ),
 );
 
 /**

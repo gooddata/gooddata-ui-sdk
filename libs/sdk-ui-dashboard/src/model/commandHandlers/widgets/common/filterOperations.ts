@@ -14,9 +14,11 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardAttributeFilterItem,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
     isDashboardDateFilterReference,
+    isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilterReference,
     isInsightWidget,
     isKpiWidget,
@@ -182,7 +184,17 @@ function* changeDateFilterIgnore(
     const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
         selectAttributeFilterConfigsDisplayAsLabelMap,
     );
-    const ignoredFilters = getIgnoredFilters(filters, displayAsLabelMap, widget.ignoreDashboardFilters);
+    // Measure value filters are not tracked in the attribute/date ignore set; the existing
+    // attribute/date ignore mechanism only knows about display forms and date data sets.
+    const attributeAndDateFilters = filters.filter(
+        (f): f is DashboardAttributeFilterItem | IDashboardDateFilter =>
+            isDashboardAttributeFilterItem(f) || isDashboardDateFilterWithDimension(f),
+    );
+    const ignoredFilters = getIgnoredFilters(
+        attributeAndDateFilters,
+        displayAsLabelMap,
+        widget.ignoreDashboardFilters,
+    );
 
     return {
         dateDataSet,

@@ -7,6 +7,8 @@ import {
     type FilterContextItem,
     type IDashboardDateFilter,
     type IDashboardFilterGroupsConfig,
+    type IDashboardMeasureValueFilter,
+    type MeasureValueFilterCondition,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -45,6 +47,18 @@ export interface IFilterBarProps {
      * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
      */
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
+
+    /**
+     * When the condition of a dashboard measure value filter changes, the filter bar MUST propagate the event
+     * using this callback.
+     *
+     * @param filter - the dashboard measure value filter being updated
+     * @param conditions - the new conditions; empty or undefined means the filter is set to "All"
+     */
+    onMeasureValueFilterChanged?: (
+        filter: IDashboardMeasureValueFilter,
+        conditions: MeasureValueFilterCondition[] | undefined,
+    ) => void;
 
     /**
      * Contains reference to default implementation of the filter bar. If you are implementing a custom

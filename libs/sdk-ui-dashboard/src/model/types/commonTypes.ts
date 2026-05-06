@@ -9,6 +9,7 @@ import {
     type IDateFilterConfig,
     type IEntitlementDescriptor,
     type IInsight,
+    type IMeasureValueFilter,
     type ISeparators,
     type ISettings,
     type Identifier,
@@ -730,9 +731,19 @@ export interface IResolvedFilterValues {
 /**
  * Supported dashboard filter types for values resolution.
  *
+ * @remarks
+ * Excludes {@link @gooddata/sdk-model#IMeasureValueFilter} — measure value filters carry static
+ * comparison values, not values that need to be resolved against the backend.
+ *
+ * TODO INE: drill payload coverage of MVF will be finalised in
+ * https://gooddata.atlassian.net/browse/CQ-2285 (drill-to-dashboard) and
+ * https://gooddata.atlassian.net/browse/CQ-2286 (drill-to-URL); audit callers of
+ * `resolveFilterValues` and any signatures previously typed as `IDashboardFilter[]`
+ * when those tickets land.
+ *
  * @alpha
  */
-export type ResolvableFilter = IDashboardFilter;
+export type ResolvableFilter = Exclude<IDashboardFilter, IMeasureValueFilter>;
 
 /**
  * Contains information about dashboard filters.

@@ -6,10 +6,12 @@ import {
     type IAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
+    type IDashboardMeasureValueFilter,
     type IDateFilter,
     type IFilterContext,
     type IFilterContextDefinition,
     type IFilterableWidget,
+    type IMeasureValueFilter,
     type ITempFilterContext,
     type IWidgetDefinition,
     type ObjRef,
@@ -18,6 +20,7 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
     newAbsoluteDateFilter,
     newAllTimeFilter,
     newArbitraryAttributeFilter,
@@ -220,6 +223,30 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
 }
 
 /**
+ * Converts {@link @gooddata/sdk-model#IDashboardMeasureValueFilter} to {@link @gooddata/sdk-model#IMeasureValueFilter} instance.
+ *
+ * @remarks
+ * Dashboard measure value filters always reference a catalog metric via `ObjRef`, which is a valid
+ * `ObjRefInScope`. No dimensionality is set on the resulting execution filter — the backend derives
+ * granularity from the widget automatically. Conditions are passed through unchanged.
+ *
+ * @param filter - dashboard measure value filter to convert
+ * @public
+ */
+export function dashboardMeasureValueFilterToMeasureValueFilter(
+    filter: IDashboardMeasureValueFilter,
+): IMeasureValueFilter {
+    const { measure, localIdentifier, conditions } = filter.dashboardMeasureValueFilter;
+    return {
+        measureValueFilter: {
+            measure,
+            localIdentifier,
+            ...(conditions && conditions.length > 0 ? { conditions } : {}),
+        },
+    };
+}
+
+/**
  * Gets {@link IDashboardFilter} items for filters specified as {@link @gooddata/sdk-backend-spi#FilterContextItem} instances.
  *
  * @param filterContextItems - filter context items to get filters for
@@ -232,15 +259,21 @@ export function filterContextItemsToDashboardFiltersByWidget(
 ): IDashboardFilter[] {
     return filterContextItems
         .filter(
-            (filter): filter is DashboardAttributeFilterItem | IDashboardDateFilter =>
-                isDashboardAttributeFilterItem(filter) || isDashboardDateFilter(filter),
+            (
+                filter,
+            ): filter is DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter =>
+                isDashboardAttributeFilterItem(filter) ||
+                isDashboardDateFilter(filter) ||
+                isDashboardMeasureValueFilter(filter),
         )
         .map((filter) => {
             if (isDashboardAttributeFilterItem(filter)) {
                 return dashboardAttributeFilterItemToAttributeFilter(filter);
-            } else {
-                return dashboardDateFilterToDateFilterByWidget(filter, widget);
             }
+            if (isDashboardMeasureValueFilter(filter)) {
+                return dashboardMeasureValueFilterToMeasureValueFilter(filter);
+            }
+            return dashboardDateFilterToDateFilterByWidget(filter, widget);
         });
 }
 
@@ -257,15 +290,21 @@ export function filterContextItemsToDashboardFiltersByRichTextWidget(
 ): IDashboardFilter[] {
     return filterContextItems
         .filter(
-            (filter): filter is DashboardAttributeFilterItem | IDashboardDateFilter =>
-                isDashboardAttributeFilterItem(filter) || isDashboardDateFilter(filter),
+            (
+                filter,
+            ): filter is DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter =>
+                isDashboardAttributeFilterItem(filter) ||
+                isDashboardDateFilter(filter) ||
+                isDashboardMeasureValueFilter(filter),
         )
         .map((filter) => {
             if (isDashboardAttributeFilterItem(filter)) {
                 return dashboardAttributeFilterItemToAttributeFilter(filter);
-            } else {
-                return dashboardDateFilterToDateFilterByWidget(filter, widget);
             }
+            if (isDashboardMeasureValueFilter(filter)) {
+                return dashboardMeasureValueFilterToMeasureValueFilter(filter);
+            }
+            return dashboardDateFilterToDateFilterByWidget(filter, widget);
         })
         .filter(Boolean) as IDashboardFilter[];
 }
@@ -283,15 +322,21 @@ export function filterContextItemsToDashboardFiltersByDateDataSet(
 ): IDashboardFilter[] {
     return filterContextItems
         .filter(
-            (filter): filter is DashboardAttributeFilterItem | IDashboardDateFilter =>
-                isDashboardAttributeFilterItem(filter) || isDashboardDateFilter(filter),
+            (
+                filter,
+            ): filter is DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter =>
+                isDashboardAttributeFilterItem(filter) ||
+                isDashboardDateFilter(filter) ||
+                isDashboardMeasureValueFilter(filter),
         )
         .map((filter) => {
             if (isDashboardAttributeFilterItem(filter)) {
                 return dashboardAttributeFilterItemToAttributeFilter(filter);
-            } else {
-                return dashboardDateFilterToDateFilterByDateDataSet(filter, dateDataSet);
             }
+            if (isDashboardMeasureValueFilter(filter)) {
+                return dashboardMeasureValueFilterToMeasureValueFilter(filter);
+            }
+            return dashboardDateFilterToDateFilterByDateDataSet(filter, dateDataSet);
         });
 }
 

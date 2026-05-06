@@ -9,6 +9,7 @@ import {
     type FilterContextItem,
     type IDashboardDateFilter,
     type IDashboardFilterGroup,
+    type IDashboardMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
@@ -16,6 +17,7 @@ import {
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardMeasureValueFilter,
     isIdentifierRef,
 } from "@gooddata/sdk-model";
 
@@ -89,11 +91,32 @@ export function isFilterBarDateFilterWithDimension(
     if (
         !isFilterBarFilterPlaceholder(object) &&
         !isFilterBarFilterGroupItem(object) &&
+        !isFilterBarMeasureValueFilter(object) &&
         isDashboardDateFilter(object.filter)
     ) {
         return !!object.filter.dateFilter.dataSet;
     }
     return false;
+}
+
+/**
+ * @internal
+ */
+export type FilterBarMeasureValueFilterIndexed = {
+    filter: IDashboardMeasureValueFilter;
+    filterIndex: number;
+};
+
+/**
+ * @internal
+ */
+export function isFilterBarMeasureValueFilter(
+    object: FilterBarItem,
+): object is FilterBarMeasureValueFilterIndexed {
+    if (isFilterBarFilterPlaceholder(object) || isFilterBarFilterGroupItem(object)) {
+        return false;
+    }
+    return isDashboardMeasureValueFilter(object.filter);
 }
 
 /**
@@ -119,6 +142,7 @@ export type FilterBarItem =
     | FilterBarFilterPlaceholder
     | FilterBarAttributeFilterIndexed
     | FilterBarDateFilterIndexed
+    | FilterBarMeasureValueFilterIndexed
     | IFilterBarFilterGroupItem;
 
 /**
@@ -128,8 +152,12 @@ export type FilterBarDraggableItems = FilterBarItem[];
 
 function isNotDashboardCommonDateFilter(
     obj: unknown,
-): obj is DashboardAttributeFilterItem | IDashboardDateFilter {
-    return isDashboardAttributeFilterItem(obj) || isDashboardDateFilterWithDimension(obj);
+): obj is DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter {
+    return (
+        isDashboardAttributeFilterItem(obj) ||
+        isDashboardDateFilterWithDimension(obj) ||
+        isDashboardMeasureValueFilter(obj)
+    );
 }
 
 /**
@@ -227,6 +255,17 @@ export function useFiltersWithAddedPlaceholder(
                 };
             }
 
+            if (isDashboardMeasureValueFilter(filter)) {
+                // No working-filter mapping for MVF — applyFilterContext does not stage MVF
+                // changes in working state in view mode. If/when "Apply together" support is
+                // added, the dashboard MVF component will resolve the staged condition itself
+                // via selectors rather than receiving it through props.
+                return {
+                    filter,
+                    filterIndex,
+                };
+            }
+
             const workingFilter =
                 workingFilters
                     ?.filter(isDashboardDateFilter)
@@ -246,6 +285,9 @@ export function useFiltersWithAddedPlaceholder(
                         dashboardAttributeFilterItemDisplayForm(draggableFilter),
                         selectedDisplayForm,
                     );
+                }
+                if (isDashboardMeasureValueFilter(draggableFilter)) {
+                    return false;
                 }
                 return areObjRefsEqual(draggableFilter.dateFilter.dataSet, selectedDisplayForm);
             });

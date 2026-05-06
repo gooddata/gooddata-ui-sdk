@@ -235,4 +235,9 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     attributeFilterDetailsDataset: { id: "attributeFilter.details.dataset" },
     attributeFilterDetailsId: { id: "attributeFilter.details.id" },
     attributeFilterDetailsTypeValue: { id: "attributeFilter.details.typeValue" },
+    measureValueFilterDetailsInfoButtonLabel: { id: "mvf.details.infoButtonLabel" },
+    measureValueFilterDetailsType: { id: "mvf.details.type" },
+    measureValueFilterDetailsTypeValue: { id: "mvf.details.typeValue" },
+    measureValueFilterDetailsDefinedAs: { id: "mvf.details.definedAs" },
+    measureValueFilterDetailsId: { id: "mvf.details.id" },
 });

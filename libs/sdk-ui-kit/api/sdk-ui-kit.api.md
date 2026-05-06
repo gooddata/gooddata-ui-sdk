@@ -50,6 +50,8 @@ import { IMeasureSortTarget } from '@gooddata/sdk-model';
 import { IMetadataObjectBase } from '@gooddata/sdk-model';
 import { InputHTMLAttributes } from 'react';
 import { IntlShape } from 'react-intl';
+import { INumberParameterConstraints } from '@gooddata/sdk-model';
+import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISeparators as ISeparators_2 } from '@gooddata/number-formatter';
 import { ISeparators as ISeparators_3 } from '@gooddata/sdk-model';
@@ -4633,6 +4635,52 @@ export interface IOverlayState {
 }
 
 // @internal (undocumented)
+export interface IParameterControlButtonProps {
+    // (undocumented)
+    "data-testid"?: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    isActive: boolean;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onClick: () => void;
+    // (undocumented)
+    value: number;
+}
+
+// @internal (undocumented)
+export interface IParameterControlDropdownProps {
+    // (undocumented)
+    constraints?: INumberParameterConstraints;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onApply: (value: number) => void;
+    // (undocumented)
+    onCancel: () => void;
+    resetValue?: number;
+    // (undocumented)
+    value: number;
+}
+
+// @internal (undocumented)
+export interface IParameterPickerProps {
+    excludedKeys: ReadonlySet<string>;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    maxListHeight: number;
+    // (undocumented)
+    onAdd: (parameters: ReadonlyArray<IParameterMetadataObject>) => void;
+    // (undocumented)
+    onCancel: () => void;
+    // (undocumented)
+    parameters: ReadonlyArray<IParameterMetadataObject>;
+}
+
+// @internal (undocumented)
 export interface IPositioning {
     // (undocumented)
     offset?: IOffset;
@@ -6169,6 +6217,43 @@ export interface IUiComboboxState {
     setIsOpen: (isOpen: boolean) => void;
     // (undocumented)
     setReferenceRef: (node: ReferenceType | null) => void;
+}
+
+// @internal (undocumented)
+export interface IUiControlButtonProps {
+    // (undocumented)
+    "data-testid"?: string;
+    // (undocumented)
+    buttonId?: string;
+    // (undocumented)
+    buttonRef?: Ref<HTMLDivElement>;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    disabledTooltip?: string;
+    // (undocumented)
+    dropdownId?: string;
+    // (undocumented)
+    icon?: ReactNode;
+    // (undocumented)
+    isDraggable?: boolean;
+    // (undocumented)
+    isError?: boolean;
+    // (undocumented)
+    isOpen?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    subtitle?: ReactNode;
+    // (undocumented)
+    subtitleExtension?: ReactNode;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    titleClassName?: string;
+    // (undocumented)
+    titleExtension?: ReactNode;
 }
 
 // @internal (undocumented)
@@ -7871,6 +7956,15 @@ export type PageOrientation = "PORTRAIT" | "LANDSCAPE";
 export type PageSize = "A3" | "A4" | "LETTER";
 
 // @internal (undocumented)
+export function ParameterControlButton({ name, value, isActive, onClick, className, "data-testid": dataTestId }: IParameterControlButtonProps): JSX.Element;
+
+// @internal
+export function ParameterControlDropdown({ name, value, resetValue, constraints, onApply, onCancel }: IParameterControlDropdownProps): JSX.Element;
+
+// @internal
+export function ParameterPicker({ parameters, excludedKeys, isLoading, maxListHeight, onAdd, onCancel }: IParameterPickerProps): JSX.Element;
+
+// @internal (undocumented)
 export type PositionPoint = `${VerticalPosition}-${HorizontalPosition}`;
 
 // @internal (undocumented)
@@ -8331,6 +8425,9 @@ export function UiComboboxPopup({ style, className, children, ...htmlProps }: Ui
 
 // @internal (undocumented)
 export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
+
+// @internal
+export function UiControlButton({ title, titleClassName, subtitle, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId }: IUiControlButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiCopyButton({ label, clipboardContent, successMessage, successMessageOptions, errorMessage, errorMessageOptions }: IUiCopyButtonProps): JSX.Element;

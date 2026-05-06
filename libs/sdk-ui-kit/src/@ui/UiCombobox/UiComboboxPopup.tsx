@@ -18,7 +18,7 @@ export function UiComboboxPopup({ style, className, children, ...htmlProps }: Ui
     }
     return (
         <div
-            {...getFloatingProps(htmlProps)}
+            {...getFloatingProps({ ...htmlProps, onMouseDown: (e) => e.preventDefault() })}
             ref={setFloatingRef}
             style={{ ...style, ...floatingStyles }}
             className={cx(e("popup"), className)}

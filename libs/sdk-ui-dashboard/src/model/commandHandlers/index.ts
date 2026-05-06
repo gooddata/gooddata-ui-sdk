@@ -67,6 +67,7 @@ import {
     saveFilterViewHandler,
     setFilterViewAsDefaultHandler,
 } from "./filterContext/filterViewHandler.js";
+import { changeMeasureValueFilterConditionHandler } from "./filterContext/measureValueFilter/changeMeasureValueFilterConditionHandler.js";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler.js";
 import { addSectionItemsHandler } from "./layout/addSectionItemsHandler.js";
 import { changeLayoutSectionHeaderHandler } from "./layout/changeLayoutSectionHeaderHandler.js";
@@ -174,6 +175,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD": addDateFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE": removeDateFiltersHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE": moveDateFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CHANGE_CONDITION":
+        changeMeasureValueFilterConditionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION": applyWorkingSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION": resetWorkingSelectionHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE": changeAttributeFilterModeHandler,

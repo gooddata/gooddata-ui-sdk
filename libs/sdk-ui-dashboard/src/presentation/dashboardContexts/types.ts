@@ -9,6 +9,7 @@ import {
     type IDashboardDateFilter,
     type IDashboardFilterGroup,
     type IDashboardLayout,
+    type IDashboardMeasureValueFilter,
     type IInsight,
     type IInsightWidget,
     type IRichTextWidget,
@@ -27,6 +28,7 @@ import {
 } from "../filterBar/attributeFilter/types.js";
 import { type CustomDashboardDateFilterComponent } from "../filterBar/dateFilter/types.js";
 import { type CustomFilterBarComponent, type IFilterBarProps } from "../filterBar/filterBar/types.js";
+import { type CustomDashboardMeasureValueFilterComponent } from "../filterBar/measureValueFilter/types.js";
 import { type CustomTitleComponent, type ITitleProps } from "../topBar/title/types.js";
 import { type CustomTopBarComponent, type ITopBarProps } from "../topBar/topBar/types.js";
 import {
@@ -276,6 +278,19 @@ export type AttributeFilterComponentProvider = (
  * @public
  */
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
+/**
+ * @alpha
+ */
+export type MeasureValueFilterComponentProvider = (
+    filter: IDashboardMeasureValueFilter,
+) => CustomDashboardMeasureValueFilterComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalMeasureValueFilterComponentProvider =
+    OptionalProvider<MeasureValueFilterComponentProvider>;
 
 /**
  * @public

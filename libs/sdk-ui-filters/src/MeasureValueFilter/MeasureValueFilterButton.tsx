@@ -1,16 +1,25 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
 import cx from "classnames";
 
-interface IMeasureValueButtonProps {
+/**
+ * Props passed to the MeasureValueFilter dropdown button (header) component.
+ *
+ * @beta
+ */
+export interface IMeasureValueFilterDropdownButtonProps {
     isActive: boolean;
     buttonTitle: string;
     onClick: () => void;
 }
 
-export function DropdownButton({ isActive, buttonTitle, onClick }: IMeasureValueButtonProps): ReactElement {
+export function DropdownButton({
+    isActive,
+    buttonTitle,
+    onClick,
+}: IMeasureValueFilterDropdownButtonProps): ReactElement {
     const className = cx(
         "gd-mvf-dropdown-button",
         "s-mvf-dropdown-button",

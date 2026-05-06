@@ -44,6 +44,7 @@ import {
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DraggableAttributeFilter } from "../../dragAndDrop/draggableAttributeFilter/DraggableAttributeFilter.js";
 import { DraggableDateFilter } from "../../dragAndDrop/draggableDateFilter/DraggableDateFilter.js";
+import { DraggableMeasureValueFilter } from "../../dragAndDrop/draggableMeasureValueFilter/DraggableMeasureValueFilter.js";
 import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
 import { DefaultDashboardFilterGroup } from "./DefaultDashboardFilterGroup.js";
 import { type IFilterBarProps } from "./types.js";
@@ -52,6 +53,7 @@ import {
     isFilterBarAttributeFilter,
     isFilterBarFilterGroupItem,
     isFilterBarFilterPlaceholder,
+    isFilterBarMeasureValueFilter,
 } from "./useFiltersWithAddedPlaceholder.js";
 
 /**
@@ -75,6 +77,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
         autoOpenFilter,
         onAttributeFilterChanged,
         onDateFilterChanged,
+        onMeasureValueFilterChanged,
         addDraggableFilterPlaceholder,
         closeAttributeSelection,
         selectDraggableFilter,
@@ -94,6 +97,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     const {
         AttributeFilterComponentSet,
         DashboardDateFilterComponentProvider,
+        DashboardMeasureValueFilterComponentProvider,
         DashboardFilterGroupComponentProvider,
     } = useDashboardComponentsContext();
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
@@ -191,6 +195,39 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
                 onAttributeFilterChanged={onAttributeFilterChanged}
                 onAttributeFilterAdded={addDraggableFilterPlaceholder}
                 onAttributeFilterClose={onCloseAttributeFilter}
+            />
+        );
+    }
+
+    if (isFilterBarMeasureValueFilter(item)) {
+        const { filter, filterIndex } = item;
+        const { localIdentifier: localId, measure } = filter.dashboardMeasureValueFilter;
+
+        if (!onMeasureValueFilterChanged) {
+            return null;
+        }
+
+        // MVF visibility / readonly config is not yet modeled (no per-MVF mode map exists).
+        // The hooks below are kept as no-ops so plugins/consumers can introduce a mode
+        // selector later without re-shaping the rendering branch.
+        const isHidden = false;
+        const isReadonly = false;
+        if (isHidden) {
+            return null;
+        }
+
+        const CustomMeasureValueFilterComponent = DashboardMeasureValueFilterComponentProvider(filter);
+
+        return (
+            <DraggableMeasureValueFilter
+                key={localId}
+                autoOpen={areObjRefsEqual(measure, autoOpenFilter)}
+                filter={filter}
+                filterIndex={filterIndex}
+                readonly={isReadonly}
+                FilterComponent={CustomMeasureValueFilterComponent}
+                onMeasureValueFilterChanged={onMeasureValueFilterChanged}
+                onMeasureValueFilterAdded={addDraggableFilterPlaceholder}
             />
         );
     }

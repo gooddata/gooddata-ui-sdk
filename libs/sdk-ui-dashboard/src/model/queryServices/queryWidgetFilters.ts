@@ -13,6 +13,7 @@ import {
     type IFilter,
     type IInsightDefinition,
     type IKpiWidget,
+    type IMeasureValueFilter,
     type IMetadataObject,
     type IRichTextWidget,
     type IVisualizationSwitcherWidget,
@@ -26,6 +27,7 @@ import {
     isAttributeFilter,
     isDashboardAttributeFilterReference,
     isDashboardDateFilterReference,
+    isDashboardMeasureValueFilterReference,
     isDateFilter,
     isInsightWidget,
     isMeasureValueFilter,
@@ -240,6 +242,20 @@ function selectResolvedDateFilters(
     return resolveDateFilters([], allDateFilterDateDatasetPairs, supportsMultipleDateFilters);
 }
 
+function resolveDashboardMeasureValueFilters(
+    widget: FilterableDashboardWidget,
+    dashboardMeasureValueFilters: IMeasureValueFilter[],
+): IMeasureValueFilter[] {
+    const ignored = widget.ignoreDashboardFilters?.filter(isDashboardMeasureValueFilterReference) ?? [];
+    if (ignored.length === 0) {
+        return dashboardMeasureValueFilters;
+    }
+    return dashboardMeasureValueFilters.filter((filter) => {
+        const measureRef = filter.measureValueFilter.measure;
+        return !ignored.some((ref) => areObjRefsEqual(ref.measure, measureRef));
+    });
+}
+
 function resolveDateFilters(
     insightDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
     dashboardDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
@@ -319,6 +335,11 @@ export function* queryWithInsight(
         ),
     ]);
 
+    const dashboardMeasureValueFilters = resolveDashboardMeasureValueFilters(
+        widget,
+        widgetAwareDashboardOtherFilters.filter(isMeasureValueFilter),
+    );
+
     return [
         ...dateFilters,
         ...attributeFilters,
@@ -330,7 +351,12 @@ export function* queryWithInsight(
          * We choose to not do it here as doing it would need extension of the SPI with some getMeasures method
          * (because the catalog API cannot be used here as we do not know which dataset the given measure might come from)
          * and we do not want that extension at the moment (catalog API should still be good enough for most use cases).
+         *
+         * Dashboard-level MVFs and insight-level MVFs are sent to execution together (logical AND). Incompatible
+         * dashboard MVFs (referencing metrics not in the widget) are silently ignored by the backend, so no
+         * compatibility check is performed at execution time.
          */
+        ...dashboardMeasureValueFilters,
         ...effectiveInsightFilters.filter(isMeasureValueFilter),
         // nothing to resolve for ranking filters
         ...effectiveInsightFilters.filter(isRankingFilter),
@@ -364,7 +390,12 @@ function* queryWithoutInsight(
         ),
     ]);
 
-    return [...dateFilters, ...attributeFilters];
+    const dashboardMeasureValueFilters = resolveDashboardMeasureValueFilters(
+        widget,
+        widgetAwareDashboardOtherFilters.filter(isMeasureValueFilter),
+    );
+
+    return [...dateFilters, ...attributeFilters, ...dashboardMeasureValueFilters];
 }
 
 function* queryService(ctx: DashboardContext, query: IQueryWidgetFilters): SagaIterator<IFilter[]> {

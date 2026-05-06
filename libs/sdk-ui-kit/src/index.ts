@@ -847,6 +847,7 @@ export {
 } from "./@ui/UiPaginationButton/UiPaginationButton.js";
 export { UiChip } from "./@ui/UiChip/UiChip.js";
 export type { IUiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/types.js";
+export { UiControlButton, type IUiControlButtonProps } from "./@ui/UiControlButton/UiControlButton.js";
 export { UiCheckbox, type IUiCheckboxProps } from "./@ui/UiCheckbox/UiCheckbox.js";
 export { UiIcon, type IUiIconProps } from "./@ui/UiIcon/UiIcon.js";
 export type { BackgroundType, BackgroundShape } from "./@ui/@types/background.js";
@@ -1171,3 +1172,14 @@ export type {
     ICatalogItemPickerProps,
     ICatalogGroup,
 } from "./CatalogItemPicker/types.js";
+
+export { ParameterPicker, type IParameterPickerProps } from "./ParameterPicker/ParameterPicker.js";
+
+export {
+    ParameterControlButton,
+    type IParameterControlButtonProps,
+} from "./ParameterControl/ParameterControlButton.js";
+export {
+    ParameterControlDropdown,
+    type IParameterControlDropdownProps,
+} from "./ParameterControl/ParameterControlDropdown.js";

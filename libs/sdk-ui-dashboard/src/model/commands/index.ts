@@ -47,6 +47,7 @@ import {
     type IAddTextAttributeFilter,
     type IApplyFilterContextWorkingSelection,
     type IApplyFilterView,
+    type IChangeMeasureValueFilterCondition,
     type IDeleteFilterView,
     type IMoveAttributeFilter,
     type IMoveDateFilter,
@@ -248,6 +249,7 @@ export type DashboardCommands =
     | IAddDateFilter
     | IRemoveDateFilters
     | IMoveDateFilter
+    | IChangeMeasureValueFilterCondition
     | ISetDashboardDateFilterWithDimensionConfigMode
     | ISetDateFilterConfigTitle
     | IInitializeAutomations

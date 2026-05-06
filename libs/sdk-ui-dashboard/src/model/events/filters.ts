@@ -7,7 +7,9 @@ import {
     type IDashboardDateFilter,
     type IDashboardDateFilterConfig,
     type IDashboardFilterView,
+    type IDashboardMeasureValueFilter,
     type IFilterContextDefinition,
+    type MeasureValueFilterCondition,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -1482,4 +1484,70 @@ export function filterContextWorkingSelectionApplied(
 export const isDashboardFilterContextWorkingSelectionApplied =
     eventGuard<IDashboardFilterContextWorkingSelectionApplied>(
         "GDC.DASH/EVT.FILTER_CONTEXT.WORKING_SELECTION.APPLIED",
+    );
+
+//
+// Measure Value Filter events
+//
+
+/**
+ * Payload of the {@link IDashboardMeasureValueFilterConditionChanged} event.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterConditionChangedPayload {
+    /**
+     * Local identifier of the measure value filter whose condition was changed.
+     */
+    readonly localIdentifier: string;
+
+    /**
+     * Updated definition of the filter.
+     */
+    readonly filter: IDashboardMeasureValueFilter;
+
+    /**
+     * The new conditions applied to the filter. Empty or undefined when filter is set to "All".
+     */
+    readonly conditions?: MeasureValueFilterCondition[];
+}
+
+/**
+ * This event is emitted after the conditions of a dashboard measure value filter have been changed.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterConditionChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CONDITION_CHANGED";
+    readonly payload: IDashboardMeasureValueFilterConditionChangedPayload;
+}
+
+export function measureValueFilterConditionChanged(
+    ctx: DashboardContext,
+    localIdentifier: string,
+    filter: IDashboardMeasureValueFilter,
+    conditions: MeasureValueFilterCondition[] | undefined,
+    correlationId?: string,
+): IDashboardMeasureValueFilterConditionChanged {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CONDITION_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            localIdentifier,
+            filter,
+            conditions,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardMeasureValueFilterConditionChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardMeasureValueFilterConditionChanged =
+    eventGuard<IDashboardMeasureValueFilterConditionChanged>(
+        "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CONDITION_CHANGED",
     );

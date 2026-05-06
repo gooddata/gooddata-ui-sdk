@@ -21,6 +21,7 @@ import {
     dashboardFilterLocalIdentifier,
     insightMeasures,
     isDashboardAttributeFilter,
+    isDashboardMeasureValueFilter,
     isDateFilter,
     isSimpleMeasure,
     measureFilters,
@@ -294,7 +295,14 @@ function* getWidgetAwareDashboardFilters(
         selectAttributeFilterConfigsOverrides,
     );
 
-    const filtersPairs = filterContextItems.map((filter) => ({
+    // Drill-to-dashboard does not transfer measure value filters between dashboards in this iteration.
+    // TODO INE: will be solved in https://gooddata.atlassian.net/browse/CQ-2285
+    const drillTransferableItems = filterContextItems.filter(
+        (item): item is DashboardAttributeFilterItem | IDashboardDateFilter =>
+            !isDashboardMeasureValueFilter(item),
+    );
+
+    const filtersPairs = drillTransferableItems.map((filter) => ({
         filter: convertFilterItemsToFilters(filter, widget),
         originalFilter: filter,
     }));

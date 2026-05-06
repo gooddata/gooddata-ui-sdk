@@ -34,6 +34,7 @@ import { IEmptyValuesDateFilterOption } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IPlaceholder } from '@gooddata/sdk-ui';
@@ -43,10 +44,12 @@ import { IRelativeDateFilterForm } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPreset } from '@gooddata/sdk-model';
 import { IRelativeDateFilterPresetOfGranularity } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-ui';
+import { ISeparators as ISeparators_2 } from '@gooddata/sdk-model';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { KeyboardEvent as KeyboardEvent_2 } from 'react';
+import { MeasureValueFilterCondition } from '@gooddata/sdk-model';
 import { MutableRefObject } from 'react';
 import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -329,6 +332,9 @@ export function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBar
 // @internal
 export function ensureCompatibleGranularity<T extends IUiRelativeDateFilterFormLike>(filterOption: T, availableGranularities: DateFilterGranularity[], fiscalFirst: boolean): T;
 
+// @alpha
+export function FilterButtonCustomIcon({ customIcon, disabled }: IFilterButtonCustomIconProps): JSX.Element | null;
+
 // @internal
 export function filterFiscalGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[];
 
@@ -382,6 +388,9 @@ export function getFiscalTabsConfig(presets: DateFilterRelativeOptionGroup | und
 
 // @internal
 export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
+
+// @internal
+export function getMeasureValueFilterConditionLabel(intl: IntlShape, conditions: MeasureValueFilterCondition[] | undefined, options?: IMeasureValueFilterConditionLabelOptions): string;
 
 // @alpha
 export function getOperatorFromFilter(filter: IAttributeFilter | undefined): TextFilterOperator;
@@ -1068,6 +1077,14 @@ export interface IFilterButtonCustomIcon {
     tooltip: string;
 }
 
+// @alpha (undocumented)
+export interface IFilterButtonCustomIconProps {
+    // (undocumented)
+    customIcon?: IFilterButtonCustomIcon;
+    // (undocumented)
+    disabled?: boolean;
+}
+
 // @alpha
 export interface IFilterConfigurationProps {
     onCancelButtonClick: () => void;
@@ -1209,8 +1226,11 @@ export interface IMeasureValueFilterCommonProps {
     insightDimensionality?: IDimensionalityItem[];
     // (undocumented)
     isDimensionalityEnabled?: boolean;
+    isFilterSummaryEnabled?: boolean;
+    isHeaderEnabled?: boolean;
     isLoadingCatalogDimensionality?: boolean;
     loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
+    loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
     // (undocumented)
     locale?: string;
     // (undocumented)
@@ -1230,6 +1250,40 @@ export interface IMeasureValueFilterCommonProps {
     warningMessage?: WarningMessage;
 }
 
+// @internal
+export interface IMeasureValueFilterConditionLabelOptions {
+    separators?: ISeparators_2;
+    usePercentage?: boolean;
+}
+
+// @public
+export interface IMeasureValueFilterCustomComponentsProps {
+    // @beta
+    DropdownButtonComponent?: ComponentType<IMeasureValueFilterDropdownButtonProps>;
+}
+
+// @internal
+export interface IMeasureValueFilterDetailsBubbleProps {
+    requestHandler?: () => Promise<IMeasureMetadataObject | undefined>;
+    title: string;
+}
+
+// @beta
+export interface IMeasureValueFilterDropdownButtonProps {
+    // (undocumented)
+    buttonTitle: string;
+    // (undocumented)
+    isActive: boolean;
+    // (undocumented)
+    onClick: () => void;
+}
+
+// @internal
+export interface IMeasureValueFilterDropdownHeaderProps {
+    loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
+    title: string;
+}
+
 // @beta (undocumented)
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     // (undocumented)
@@ -1239,7 +1293,8 @@ export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCom
 }
 
 // @beta (undocumented)
-export interface IMeasureValueFilterProps extends IMeasureValueFilterCommonProps {
+export interface IMeasureValueFilterProps extends IMeasureValueFilterCommonProps, IMeasureValueFilterCustomComponentsProps {
+    autoOpen?: boolean;
     // (undocumented)
     buttonTitle: string;
     // (undocumented)
@@ -1514,8 +1569,14 @@ export function mapAvailableSelectionTypesToInternal(selectionTypes: AttributeFi
 // @beta (undocumented)
 export const MeasureValueFilter: NamedExoticComponent<IMeasureValueFilterProps>;
 
+// @internal
+export function MeasureValueFilterDetailsBubble({ title, requestHandler }: IMeasureValueFilterDetailsBubbleProps): JSX.Element;
+
 // @beta (undocumented)
 export const MeasureValueFilterDropdown: NamedExoticComponent<IMeasureValueFilterDropdownProps>;
+
+// @internal
+export function MeasureValueFilterDropdownHeader({ title, loadMetricDetails }: IMeasureValueFilterDropdownHeaderProps): JSX.Element;
 
 // @beta (undocumented)
 export type MeasureValueFilterOperator = ComparisonConditionOperator | RangeConditionOperator | "ALL";
