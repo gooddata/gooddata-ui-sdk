@@ -2,9 +2,13 @@
 
 import { memo, useCallback } from "react";
 
-import { type MeasureValueFilterCondition, type ObjRefInScope } from "@gooddata/sdk-model";
+import {
+    type IMeasureMetadataObject,
+    type MeasureValueFilterCondition,
+    type ObjRefInScope,
+} from "@gooddata/sdk-model";
 import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
-import { Overlay } from "@gooddata/sdk-ui-kit";
+import { Overlay, UiFocusManager } from "@gooddata/sdk-ui-kit";
 
 import { DropdownBody } from "./DropdownBody.js";
 import { type MeasureValueFilterOperator } from "./types.js";
@@ -44,10 +48,13 @@ interface IDropdownProps {
     dimensionality?: IDimensionalityItem[];
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
+    isFilterSummaryEnabled?: boolean;
     catalogDimensionality?: IDimensionalityItem[];
     loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
     onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
     isLoadingCatalogDimensionality?: boolean;
+    loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
+    isHeaderEnabled?: boolean;
 }
 
 const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
@@ -69,6 +76,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         dimensionality,
         insightDimensionality,
         isDimensionalityEnabled,
+        isFilterSummaryEnabled,
         catalogDimensionality,
         loadCatalogDimensionality,
         onDimensionalityChange,
@@ -77,6 +85,8 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         enableMultipleConditions = false,
         enableRankingWithMvf,
         applyOnResult,
+        loadMetricDetails,
+        isHeaderEnabled,
     } = props;
 
     const onApply = useCallback(
@@ -101,32 +111,37 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
             closeOnMouseDrag
             onClose={onCancel}
         >
-            <DropdownBody
-                operator={selectedOperator}
-                conditions={conditions}
-                enableMultipleConditions={enableMultipleConditions}
-                usePercentage={usePercentage}
-                warningMessage={warningMessage}
-                locale={locale}
-                onCancel={onCancel}
-                onApply={onApply}
-                separators={separators}
-                format={format}
-                useShortFormat={useShortFormat}
-                measureTitle={measureTitle}
-                displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
-                treatNullAsZeroValue={treatNullAsZeroValue}
-                enableOperatorSelection={enableOperatorSelection}
-                dimensionality={dimensionality}
-                insightDimensionality={insightDimensionality}
-                isDimensionalityEnabled={isDimensionalityEnabled}
-                catalogDimensionality={catalogDimensionality}
-                loadCatalogDimensionality={loadCatalogDimensionality}
-                onDimensionalityChange={onDimensionalityChange}
-                isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
-                enableRankingWithMvf={enableRankingWithMvf}
-                applyOnResult={applyOnResult}
-            />
+            <UiFocusManager enableFocusTrap enableAutofocus enableReturnFocusOnUnmount>
+                <DropdownBody
+                    operator={selectedOperator}
+                    conditions={conditions}
+                    enableMultipleConditions={enableMultipleConditions}
+                    usePercentage={usePercentage}
+                    warningMessage={warningMessage}
+                    locale={locale}
+                    onCancel={onCancel}
+                    onApply={onApply}
+                    separators={separators}
+                    format={format}
+                    useShortFormat={useShortFormat}
+                    measureTitle={measureTitle}
+                    displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
+                    treatNullAsZeroValue={treatNullAsZeroValue}
+                    enableOperatorSelection={enableOperatorSelection}
+                    dimensionality={dimensionality}
+                    insightDimensionality={insightDimensionality}
+                    isDimensionalityEnabled={isDimensionalityEnabled}
+                    isFilterSummaryEnabled={isFilterSummaryEnabled}
+                    catalogDimensionality={catalogDimensionality}
+                    loadCatalogDimensionality={loadCatalogDimensionality}
+                    onDimensionalityChange={onDimensionalityChange}
+                    isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
+                    enableRankingWithMvf={enableRankingWithMvf}
+                    applyOnResult={applyOnResult}
+                    loadMetricDetails={loadMetricDetails}
+                    isHeaderEnabled={isHeaderEnabled}
+                />
+            </UiFocusManager>
         </Overlay>
     );
 });

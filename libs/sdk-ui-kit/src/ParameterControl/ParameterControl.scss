@@ -1,0 +1,78 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-parameter-control {
+    &--dropdown {
+        display: flex;
+        flex-direction: column;
+        width: 240px;
+        background: var(--gd-palette-complementary-0);
+        border-radius: 4px;
+        box-shadow:
+            0 8px 15px rgba(0, 0, 0, 0.08),
+            0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    &__dropdown-field {
+        padding: 10px 10px 0;
+    }
+
+    &__dropdown-field-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 5px;
+    }
+
+    &__dropdown-label {
+        color: var(--gd-palette-complementary-8);
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    &__dropdown-reset {
+        padding: 0;
+        background: none;
+        border: none;
+        color: var(--gd-palette-primary-base);
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__dropdown-divider {
+        height: 1px;
+        margin: 10px 0;
+        background-color: var(--gd-palette-complementary-3);
+    }
+
+    &__dropdown-preview {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 0 10px 10px;
+        font-size: 12px;
+    }
+
+    &__dropdown-preview-label {
+        color: var(--gd-palette-complementary-6);
+    }
+
+    &__dropdown-preview-text {
+        color: var(--gd-palette-complementary-8);
+
+        strong {
+            font-weight: 700;
+        }
+    }
+
+    &__dropdown-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 10px;
+        border-top: 1px solid var(--gd-palette-complementary-3);
+    }
+}

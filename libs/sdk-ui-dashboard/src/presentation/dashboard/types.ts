@@ -33,6 +33,7 @@ import {
     type OptionalInsightMenuButtonComponentProvider,
     type OptionalInsightMenuComponentProvider,
     type OptionalInsightMenuTitleComponentProvider,
+    type OptionalMeasureValueFilterComponentProvider,
     type OptionalRichTextComponentProvider,
     type OptionalRichTextMenuComponentProvider,
     type OptionalRichTextMenuTitleComponentProvider,
@@ -399,6 +400,13 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
+
+    /**
+     * Specify component to use for rendering the measure value filters.
+     *
+     * @alpha
+     */
+    DashboardMeasureValueFilterComponentProvider?: OptionalMeasureValueFilterComponentProvider;
 
     /**
      * Specify custom component to use for rendering all filter groups or a factory function to customize the component

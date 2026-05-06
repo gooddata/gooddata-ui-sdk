@@ -5,6 +5,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins" as typo-mixins;
 
 $attribute-filter-drag-handle-left: 10px;
 
@@ -167,20 +168,29 @@ $attribute-filter-drag-handle-left: 10px;
     }
 
     .dash-filters-attribute,
-    .dash-filters-date {
+    .dash-filters-date,
+    .dash-filters-mvf {
         position: relative;
 
         .gd-bubble-trigger {
-            .gd-attribute-filter-dropdown-button__next {
+            .gd-attribute-filter-dropdown-button__next,
+            .gd-mvf-dashboard-filter-button__next {
                 display: flex;
             }
 
-            .gd-attribute-filter-dropdown-button-content__next {
+            .gd-attribute-filter-dropdown-button__next .gd-ui-kit-control-button__content {
                 width: calc(100% - 17px);
             }
         }
 
+        .gd-mvf-dashboard-filter-button__next .gd-attribute-filter-dropdown-button-title__next .shortened {
+            display: inline-block;
+            width: 100%;
+            white-space: nowrap;
+        }
+
         .gd-attribute-filter-dropdown-button__next,
+        .gd-mvf-dashboard-filter-button__next,
         .gd-date-filter-button {
             margin: 7px 11px 7px $default_space;
         }
@@ -190,6 +200,7 @@ $attribute-filter-drag-handle-left: 10px;
             margin-left: -$default_padding;
 
             .gd-attribute-filter-dropdown-button__next,
+            .gd-mvf-dashboard-filter-button__next,
             .gd-date-filter-button {
                 margin-left: 0;
                 padding-left: $default_padding + $default_padding + $default_space;
@@ -826,5 +837,70 @@ $attribute-filter-drag-handle-left: 10px;
     .gd-filter-view__delete-dialog__item {
         word-break: break-word;
         overflow-wrap: break-word;
+    }
+}
+
+// Dashboard MVF chip. Visually mirrors the AF chip (same box, hover, active gradient) so the
+// filter bar stays consistent. Lives in the dashboard package because the chip is rendered only
+// by `DefaultDashboardMeasureValueFilter` — sdk-ui-filters has no consumer of this class.
+.gd-mvf-dashboard-filter-button__next {
+    @include typo-mixins.gd-font-base;
+
+    position: relative;
+    max-width: 230px;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 16px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 1px solid transparent;
+        background: var(--gd-dashboards-filterBar-filterButton-backgroundColor, transparent);
+        transform: translateZ(-1px);
+        border-radius: 3px;
+    }
+
+    &:hover::after {
+        border-color: button-variables.$button-normal-hover-border-color;
+    }
+
+    &:active,
+    &.gd-is-active {
+        &::after {
+            &,
+            .edit-mode-on & {
+                box-shadow: inset 0 1px 0 0 button-variables.$button-normal-active-shadow;
+                border-color: var(
+                    --gd-palette-complementary-5-from-theme,
+                    button-variables.$button-normal-hover-border-color
+                );
+
+                // refactor
+                // stylelint-disable-next-line max-line-length
+                @include mixins.gradient-linear(
+                    button-variables.$button-normal-active-gradient-top,
+                    button-variables.$button-normal-active-gradient-bottom
+                );
+            }
+        }
+    }
+
+    // Lift inner content above the full-bleed `::after` overlay so the active-state gradient
+    // sits behind the title/subtitle. AF gets this for free from `UiControlButton`; MVF renders
+    // its own DOM, so we need an explicit stacking context here.
+    .gd-attribute-filter-dropdown-button-content__next {
+        position: relative;
+        z-index: 1;
+    }
+
+    // Bold subtitle (condition label). AF gets this from `UiControlButton__subtitle-row`; MVF
+    // renders its own subtitle wrapper, so re-state it here.
+    .gd-attribute-filter-dropdown-button-subtitle__next {
+        font-weight: bold;
     }
 }

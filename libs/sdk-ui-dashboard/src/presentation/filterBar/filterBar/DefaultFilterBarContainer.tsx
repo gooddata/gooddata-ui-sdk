@@ -1,6 +1,15 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type ReactNode, type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+    type KeyboardEvent,
+    type ReactNode,
+    type Ref,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { isFocusVisible } from "@react-aria/interactions";
 import cx from "classnames";
@@ -318,7 +327,7 @@ function MeasuredDiv({
     };
 
     // Handle arrow/tab key logic
-    const keyboardNavigation = makeHorizontalKeyboardNavigation({
+    const horizontalKeyboardNavigation = makeHorizontalKeyboardNavigation({
         onFocusNext: () => {
             const { activeIndex, filterElements } = getActiveIndexAndFilterElements();
 
@@ -363,6 +372,25 @@ function MeasuredDiv({
             }
         },
     });
+    // Don't steal arrow keys from focused editable elements (e.g. inputs in filter
+    // dropdowns rendered via portals — events still bubble through the React tree).
+    // Use `closest` so we also skip composite controls (combobox/textbox roles, custom
+    // numeric inputs, etc.) that wrap a real input deeper in the subtree, and respect
+    // a downstream handler that has already dealt with the key.
+    const keyboardNavigation = (e: KeyboardEvent) => {
+        if (e.defaultPrevented) {
+            return;
+        }
+        const target = e.target as HTMLElement;
+        if (
+            target.closest(
+                'input, textarea, select, [contenteditable="true"], [role="textbox"], [role="combobox"], [role="searchbox"], [role="spinbutton"]',
+            )
+        ) {
+            return;
+        }
+        horizontalKeyboardNavigation(e);
+    };
     const setRefs = useCallback(
         (node: HTMLDivElement | null) => {
             measureRef(node);

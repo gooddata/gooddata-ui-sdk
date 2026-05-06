@@ -1,45 +1,21 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 @use "sass:list";
 @use "sass:map";
 @use "attributeFilterVariables" as attributeFilterVariables;
+@use "@gooddata/sdk-ui-kit/styles/css/UiControlButton";
 @use "@gooddata/sdk-ui-kit/styles/scss/button";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
-@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
+// Foundational properties duplicate the kit primitive `UiControlButton` because
+// `AttributeFilterError` renders a plain div without the kit class.
 .gd-attribute-filter-dropdown-button__next {
-    @include typo-mixins.gd-font-base;
-
     position: relative;
     max-width: 230px;
     padding: 5px 10px;
     font-size: 12px;
     line-height: 16px;
-    cursor: pointer;
-    user-select: none;
-    border-radius: 3px;
-
-    &.gd-is-draggable {
-        padding-left: 23px;
-    }
-
-    &::before,
-    &::after {
-        content: "";
-        position: absolute;
-        transition: all attributeFilterVariables.$transition-length;
-    }
-
-    &::before {
-        z-index: 1;
-        top: 8px;
-        left: 9px;
-        width: 7px;
-        height: 26px;
-        background: url("#{attributeFilterVariables.$separator-icon}") no-repeat;
-        opacity: 0;
-    }
 
     &::after {
         content: "";
@@ -55,16 +31,10 @@
     }
 
     &:hover {
-        &.gd-is-draggable {
-            &:not(.gd-is-active, .gd-is-filtering) {
-                box-shadow:
-                    0 1px 3px 0 button-variables.$button-shadow-lighter,
-                    0 2px 9px 0 button-variables.$button-shadow-darker;
-            }
-
-            &::before {
-                opacity: 1;
-            }
+        &.gd-is-draggable:not(.gd-is-active, .gd-is-filtering) {
+            box-shadow:
+                0 1px 3px 0 button-variables.$button-shadow-lighter,
+                0 2px 9px 0 button-variables.$button-shadow-darker;
         }
 
         &::after {
@@ -86,12 +56,6 @@
 
     &:active,
     &.gd-is-active {
-        &.gd-is-draggable {
-            &::before {
-                opacity: 1;
-            }
-        }
-
         &::after {
             &,
             .edit-mode-on & {
@@ -109,48 +73,14 @@
                 );
             }
         }
-
-        .gd-attribute-filter-dropdown-button-title__next,
-        .gd-attribute-filter-dropdown-button-subtitle__next {
-            &::after {
-                content: "\e613";
-            }
-        }
     }
 
-    &.gd-message {
-        font-size: 12px;
-    }
-}
-
-.gd-attribute-filter-dropdown-button-icon__next {
-    position: relative;
-    z-index: 1;
-    float: left;
-    padding-right: 5px;
-}
-
-.gd-is-mobile .gd-attribute-filter-dropdown-button-icon__next {
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.gd-attribute-filter-dropdown-button-content__next {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    flex-direction: column;
-}
-
-.gd-attribute-filter-dropdown_button-title-content__next {
-    display: flex;
-    justify-content: space-between;
-
-    .gd-list-item-tooltip {
+    .gd-ui-kit-control-button__title-row .gd-list-item-tooltip {
         line-height: 15px;
+    }
+
+    &.gd-is-draggable {
+        padding-left: 23px;
     }
 }
 
@@ -160,27 +90,33 @@
 }
 
 .gd-is-mobile {
-    .gd-attribute-filter-dropdown-button-content__next {
-        padding-right: 20px;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .gd-attribute-filter-dropdown-button__next.gd-is-active {
-        flex: 1;
-        min-width: 0;
-        height: 47px;
-        max-width: none;
-        margin: 0;
-        font-size: 14px;
-
-        &::after {
-            background-color: #fff;
-            background-image: none;
+    .gd-attribute-filter-dropdown-button__next {
+        .gd-ui-kit-control-button__icon {
+            display: flex;
+            height: 100%;
+            align-items: center;
         }
 
-        .gd-attribute-filter-dropdown-button-subtitle__next {
+        .gd-ui-kit-control-button__content {
+            padding-right: 20px;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &.gd-is-active {
+            flex: 1;
+            min-width: 0;
+            height: 47px;
+            max-width: none;
+            margin: 0;
+            font-size: 14px;
+
             &::after {
+                background-color: #fff;
+                background-image: none;
+            }
+
+            .gd-ui-kit-control-button__subtitle-row::after {
                 right: 0;
             }
         }
@@ -235,16 +171,18 @@
 }
 
 .gd-attribute-filter-button-mobile__next.gd-is-active {
-    .gd-attribute-filter-dropdown-button-title__next,
-    .gd-attribute-filter-dropdown-button-subtitle__next {
-        &::after {
-            content: "\e613";
-            position: absolute;
-            top: 50%;
-            right: -20px;
-            display: inline-block;
-            font-size: 18px;
-            transform: translateY(-50%);
+    .gd-attribute-filter-dropdown-button__next {
+        .gd-ui-kit-control-button__title,
+        .gd-ui-kit-control-button__subtitle-row {
+            &::after {
+                content: "\e613";
+                position: absolute;
+                top: 50%;
+                right: -20px;
+                display: inline-block;
+                font-size: 18px;
+                transform: translateY(-50%);
+            }
         }
     }
 }
@@ -263,21 +201,15 @@
     background: var(--gd-palette-complementary-0, #fff);
 }
 
-.gd-attribute-filter-dropdown-button-title__next {
-    overflow: hidden;
-    color: variables.$gd-color-link;
-    margin-right: auto;
+// Drag preview: hide the open/close chevron on the chip subtitle.
+.drag-preview .gd-attribute-filter-dropdown-button__next .gd-ui-kit-control-button__subtitle-row::after {
+    display: none;
+}
 
-    .gd-bubble-trigger,
-    .shortened {
-        display: inline-flex;
-    }
-
-    .shortened {
-        max-width: 100%;
-    }
-
-    .overlay & {
+// Overlay context (mobile filter overlay): title becomes a label with ":" separator;
+// subtitle expands and its chevron is absolutely positioned at the row's right edge.
+.overlay .gd-attribute-filter-dropdown-button__next {
+    .gd-ui-kit-control-button__title {
         flex: 0 0 auto;
         max-width: 100%;
         margin-right: 5px;
@@ -287,43 +219,8 @@
             content: ":";
         }
     }
-}
 
-.gd-attribute-filter-dropdown-button-title__next,
-.gd-attribute-filter-dropdown-button-subtitle__next {
-    max-width: 100%;
-    white-space: nowrap;
-
-    &::after {
-        content: "\e612";
-        display: none;
-        margin-left: 0.5em;
-        font-family: "Indigo", sans-serif;
-        font-weight: normal;
-        font-size: inherit;
-        vertical-align: top;
-        color: variables.$gd-color-state-blank;
-        transition: attributeFilterVariables.$transition-length;
-    }
-
-    .drag-preview &::after {
-        display: none;
-    }
-}
-
-.gd-attribute-filter-dropdown-button-subtitle__next {
-    display: inline-flex;
-    flex-wrap: nowrap;
-    overflow: hidden;
-    font-weight: bold;
-    text-overflow: ellipsis;
-    color: variables.$gd-color-dark;
-
-    &:only-child::after {
-        display: inline-block;
-    }
-
-    .overlay & {
+    .gd-ui-kit-control-button__subtitle-row {
         flex: 1 1 auto;
         max-width: none;
 
@@ -334,10 +231,6 @@
             font-size: 18px;
             transform: translateY(-50%);
         }
-    }
-
-    &::after {
-        display: inline-block;
     }
 }
 
@@ -435,7 +328,7 @@
             text-decoration: none;
         }
 
-        .gd-attribute-filter-dropdown-button-subtitle__next::after {
+        .gd-ui-kit-control-button__subtitle-row::after {
             content: none;
         }
     }

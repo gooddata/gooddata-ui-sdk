@@ -6,6 +6,8 @@
 @use "@gooddata/sdk-ui-filters/styles/css/attributeFilter";
 @use "@gooddata/sdk-ui-filters/styles/css/dateFilter";
 @use "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext";
+@use "@gooddata/sdk-ui-filters/styles/css/measureValueFilter";
+@use "@gooddata/sdk-ui-filters/styles/css/numericInput";
 @use "@gooddata/sdk-ui-ext/styles/internal/css/attribute_hierarchies";
 @use "remove";
 @use "dashboard";

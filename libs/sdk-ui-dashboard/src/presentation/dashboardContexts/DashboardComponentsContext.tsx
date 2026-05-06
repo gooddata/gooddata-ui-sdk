@@ -51,6 +51,7 @@ import {
     type InsightMenuButtonComponentProvider,
     type InsightMenuComponentProvider,
     type InsightMenuTitleComponentProvider,
+    type MeasureValueFilterComponentProvider,
     type RichTextComponentProvider,
     type RichTextMenuComponentProvider,
     type RichTextMenuTitleComponentProvider,
@@ -91,6 +92,7 @@ interface IDashboardComponentsContext {
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
     DashboardDateFilterComponentProvider: DateFilterComponentProvider;
+    DashboardMeasureValueFilterComponentProvider: MeasureValueFilterComponentProvider;
     DashboardFilterGroupComponentProvider: FilterGroupComponentProvider;
     FilterBarComponent: CustomFilterBarComponent;
     SidebarComponent: CustomSidebarComponent;
@@ -149,6 +151,9 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
         "DashboardAttributeFilterComponentProvider",
     ),
     DashboardDateFilterComponentProvider: ThrowMissingComponentError("DashboardDateFilterComponentProvider"),
+    DashboardMeasureValueFilterComponentProvider: ThrowMissingComponentError(
+        "DashboardMeasureValueFilterComponentProvider",
+    ),
     DashboardFilterGroupComponentProvider: ThrowMissingComponentError(
         "DashboardFilterGroupComponentProvider",
     ),

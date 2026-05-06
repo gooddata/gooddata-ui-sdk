@@ -6,6 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
+    type IMeasureMetadataObject,
     type ISeparators,
     type MeasureValueFilterCondition,
     type ObjRefInScope,
@@ -20,6 +21,7 @@ import { Bubble, BubbleHoverTrigger, Button, UiIconButton, UiTooltip } from "@go
 import { ConditionInputSection } from "./ConditionInputSection.js";
 import { DimensionalitySection, areDimensionalitySetsEqual } from "./DimensionalitySection.js";
 import { intervalIncludesZero } from "./helpers/intervalIncludesZero.js";
+import { MeasureValueFilterDropdownHeader } from "./MeasureValueFilterDropdownHeader.js";
 import { OperatorDropdown } from "./OperatorDropdown.js";
 import { PreviewSection } from "./PreviewSection.js";
 import { TreatNullValuesAsZeroCheckbox } from "./TreatNullValuesAsZeroCheckbox.js";
@@ -54,10 +56,13 @@ interface IDropdownBodyProps {
     dimensionality?: IDimensionalityItem[];
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
+    isFilterSummaryEnabled?: boolean;
     catalogDimensionality?: IDimensionalityItem[];
     loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
     onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
     isLoadingCatalogDimensionality?: boolean;
+    loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
+    isHeaderEnabled?: boolean;
 }
 
 interface IDropdownBodyState {
@@ -143,6 +148,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         treatNullAsZeroValue,
         valuePrecision = DefaultValuePrecision,
         isDimensionalityEnabled = true,
+        isFilterSummaryEnabled = true,
         insightDimensionality,
         separators,
         catalogDimensionality,
@@ -693,6 +699,12 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
             className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body"
             data-testid="mvf-dropdown-body"
         >
+            {props.isHeaderEnabled && props.measureTitle ? (
+                <MeasureValueFilterDropdownHeader
+                    title={props.measureTitle}
+                    loadMetricDetails={props.loadMetricDetails}
+                />
+            ) : null}
             <div className="gd-mvf-dropdown-content">
                 {warningMessage ? (
                     <div className="gd-mvf-dropdown-section">
@@ -825,7 +837,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                     ) : null}
                 </div>
 
-                {isDimensionalityEnabled ? (
+                {isFilterSummaryEnabled ? (
                     <PreviewSection
                         measureTitle={props.measureTitle}
                         usePercentage={props.usePercentage}

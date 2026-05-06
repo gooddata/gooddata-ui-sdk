@@ -18,6 +18,7 @@ import {
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -117,6 +118,11 @@ export function applyFilterContext(
             }
 
             return dateFilter;
+        } else if (isDashboardMeasureValueFilter(appliedFilter)) {
+            // Measure value filters are not staged via the working filter context in view mode.
+            // TODO INE: Will be solved in CQ-2281 — wire MVF through working selection so
+            // "Apply together" can stage MVF edits like attribute/date filters.
+            return appliedFilter;
         } else {
             throw new Error("Unknown filter type");
         }
@@ -258,6 +264,9 @@ export function getFilterIdentifier(filter: FilterContextItem): string {
         return (
             (filter.dateFilter.dataSet && objRefToString(filter.dateFilter.dataSet)) ?? "default_date_filter"
         );
+    }
+    if (isDashboardMeasureValueFilter(filter)) {
+        return filter.dashboardMeasureValueFilter.localIdentifier;
     }
     throw new Error("Unknown filter type");
 }

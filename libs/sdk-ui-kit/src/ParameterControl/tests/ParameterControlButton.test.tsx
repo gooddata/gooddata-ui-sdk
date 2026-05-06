@@ -1,0 +1,52 @@
+// (C) 2026 GoodData Corporation
+
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
+import { withIntl } from "@gooddata/sdk-ui";
+
+import { ParameterControlButton } from "../ParameterControlButton.js";
+
+const WrappedParameterControlButton = withIntl(ParameterControlButton);
+
+const renderButton = (props: Partial<React.ComponentProps<typeof ParameterControlButton>> = {}) => {
+    return render(
+        <WrappedParameterControlButton
+            name="Threshold"
+            value={25}
+            isActive={false}
+            onClick={() => {}}
+            {...props}
+        />,
+    );
+};
+
+describe("ParameterControlButton", () => {
+    it("renders the parameter name as the title", () => {
+        renderButton({ name: "Threshold" });
+        expect(screen.getByText("Threshold")).toBeInTheDocument();
+    });
+
+    it("renders the value-label subtitle with the formatted value", () => {
+        const { container } = renderButton({ value: 42 });
+        expect(container.textContent).toContain("is 42");
+    });
+
+    it("delegates rendering to UiControlButton (role=button, dialog popup)", () => {
+        renderButton();
+        const button = screen.getByRole("button");
+        expect(button).toHaveAttribute("aria-haspopup", "dialog");
+    });
+
+    it("reflects isActive as aria-expanded", () => {
+        renderButton({ isActive: true });
+        expect(screen.getByRole("button")).toHaveAttribute("aria-expanded", "true");
+    });
+
+    it("calls onClick when clicked", () => {
+        const onClick = vi.fn();
+        renderButton({ onClick });
+        fireEvent.click(screen.getByRole("button"));
+        expect(onClick).toHaveBeenCalledTimes(1);
+    });
+});

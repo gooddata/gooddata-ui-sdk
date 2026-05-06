@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -8,11 +8,20 @@ import { type IFilterButtonCustomIcon } from "../../interfaces/index.js";
 
 const DEFAULT_BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl", offset: { x: 0, y: 5 } }];
 
+/**
+ * @alpha
+ */
 export interface IFilterButtonCustomIconProps {
     customIcon?: IFilterButtonCustomIcon;
     disabled?: boolean;
 }
 
+/**
+ * Renders a small icon (with hover bubble) inside a filter button — used to surface
+ * filter mode hints such as HIDDEN or LOCKED. Shared between filter implementations.
+ *
+ * @alpha
+ */
 export function FilterButtonCustomIcon({ customIcon, disabled }: IFilterButtonCustomIconProps) {
     if (!customIcon) {
         return null;

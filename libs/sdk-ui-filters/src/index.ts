@@ -87,8 +87,18 @@ export {
     type IMeasureValueFilterDropdownProps,
     MeasureValueFilterDropdown,
 } from "./MeasureValueFilter/MeasureValueFilterDropdown.js";
+export type { IMeasureValueFilterDropdownButtonProps } from "./MeasureValueFilter/MeasureValueFilterButton.js";
+export {
+    MeasureValueFilterDropdownHeader,
+    type IMeasureValueFilterDropdownHeaderProps,
+} from "./MeasureValueFilter/MeasureValueFilterDropdownHeader.js";
+export {
+    MeasureValueFilterDetailsBubble,
+    type IMeasureValueFilterDetailsBubbleProps,
+} from "./MeasureValueFilter/MeasureValueFilterDetailsBubble.js";
 export {
     type IMeasureValueFilterCommonProps,
+    type IMeasureValueFilterCustomComponentsProps,
     type IDimensionalityItem,
     type DimensionalityItemType,
     type WarningMessage,
@@ -97,6 +107,10 @@ export {
 } from "./MeasureValueFilter/typings.js";
 export type { MeasureValueFilterOperator } from "./MeasureValueFilter/types.js";
 export { intervalIncludesZero } from "./MeasureValueFilter/helpers/intervalIncludesZero.js";
+export {
+    getMeasureValueFilterConditionLabel,
+    type IMeasureValueFilterConditionLabelOptions,
+} from "./MeasureValueFilter/helpers/measureValueFilterConditionLabel.js";
 export { type IRankingFilterProps, RankingFilter } from "./RankingFilter/RankingFilter.js";
 export {
     type IRankingFilterDropdownProps,
@@ -393,5 +407,9 @@ export {
 export { FilterGroup, type IFilterGroupProps, useDeepEqualRefStablizer } from "./FilterGroup/FilterGroup.js";
 
 export type { IFilterButtonCustomIcon, VisibilityMode } from "./shared/interfaces/index.js";
+export {
+    FilterButtonCustomIcon,
+    type IFilterButtonCustomIconProps,
+} from "./shared/components/internal/FilterButtonCustomIcon.js";
 
 export type { IDateFilterButtonProps } from "./DateFilter/DateFilterButton/DateFilterButton.js";

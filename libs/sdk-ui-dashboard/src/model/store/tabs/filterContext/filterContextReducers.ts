@@ -19,10 +19,12 @@ import {
     type IDashboardAttributeFilterByDate,
     type IDashboardAttributeFilterParent,
     type IDashboardDateFilter,
+    type IDashboardMeasureValueFilter,
     type IDashboardObjectIdentity,
     type IFilterContextDefinition,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
+    type MeasureValueFilterCondition,
     type ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
@@ -37,6 +39,7 @@ import {
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -1496,6 +1499,48 @@ const setDefaultFilterOverrides: FilterContextReducer<PayloadAction<FilterContex
 //
 //
 
+type IChangeMeasureValueFilterConditionReducerPayload = {
+    readonly localIdentifier: string;
+    readonly conditions?: MeasureValueFilterCondition[];
+};
+
+const changeMeasureValueFilterCondition: FilterContextReducer<
+    PayloadAction<IChangeMeasureValueFilterConditionReducerPayload>
+> = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    invariant(
+        activeTab.filterContext?.filterContextDefinition?.filters,
+        "Attempt to edit uninitialized filter context",
+    );
+
+    const filters = activeTab.filterContext.filterContextDefinition.filters;
+    const index = filters.findIndex(
+        (item) =>
+            isDashboardMeasureValueFilter(item) &&
+            item.dashboardMeasureValueFilter.localIdentifier === action.payload.localIdentifier,
+    );
+    invariant(
+        index >= 0,
+        `Attempt to change condition of measure value filter ${action.payload.localIdentifier} that does not exist`,
+    );
+
+    const filter = filters[index] as IDashboardMeasureValueFilter;
+    const hasConditions = !!action.payload.conditions && action.payload.conditions.length > 0;
+    filters[index] = {
+        dashboardMeasureValueFilter: {
+            ...filter.dashboardMeasureValueFilter,
+            conditions: hasConditions ? action.payload.conditions : undefined,
+        },
+    };
+};
+
+//
+//
+//
+
 export const filterContextReducers = {
     setFilterContext,
     updateFilterContextIdentity,
@@ -1524,4 +1569,5 @@ export const filterContextReducers = {
     applyWorkingSelection,
     resetWorkingSelection,
     setDefaultFilterOverrides,
+    changeMeasureValueFilterCondition,
 };

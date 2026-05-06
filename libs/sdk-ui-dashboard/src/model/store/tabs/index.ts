@@ -7,6 +7,7 @@ import { dateFilterConfigReducers } from "./dateFilterConfig/dateFilterConfigRed
 import { dateFilterConfigsReducers } from "./dateFilterConfigs/dateFilterConfigsReducers.js";
 import { filterContextReducers } from "./filterContext/filterContextReducers.js";
 import { layoutReducers } from "./layout/layoutReducers.js";
+import { measureValueFilterConfigsReducers } from "./measureValueFilterConfigs/measureValueFilterConfigsReducers.js";
 import { tabsReducers } from "./tabsReducers.js";
 import { tabsInitialState } from "./tabsState.js";
 
@@ -15,6 +16,7 @@ const allReducers = {
     ...attributeFilterConfigsReducers,
     ...dateFilterConfigsReducers,
     ...dateFilterConfigReducers,
+    ...measureValueFilterConfigsReducers,
     ...filterContextReducers,
     ...layoutReducers,
 } as const;

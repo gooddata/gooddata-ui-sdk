@@ -15,6 +15,7 @@ import {
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilter,
+    type IDashboardMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
@@ -71,6 +72,7 @@ import {
     selectFilterContextDateFilterByDataSetForTab,
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextDateFiltersWithDimensionForTab,
+    selectFilterContextMeasureValueFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
@@ -229,6 +231,13 @@ export function* changeFilterContextSelectionHandler(
             isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter),
     );
 
+    // Measure value filters use whole-condition replacement keyed by localIdentifier; deduplicate
+    // by localIdentifier (last occurrence wins, mirroring text attribute filter handling).
+    const measureValueFilters = uniqBy(
+        normalizedFilters.filter(isDashboardMeasureValueFilter).slice().reverse(),
+        (f) => f.dashboardMeasureValueFilter.localIdentifier,
+    ).reverse();
+
     const uniqueFilters = uniqBy(supportedFilters, (filter) => {
         const identification = isDashboardAttributeFilter(filter)
             ? dashboardAttributeFilterItemDisplayForm(filter)
@@ -258,24 +267,27 @@ export function* changeFilterContextSelectionHandler(
         tabLocalIdentifier,
     );
 
-    const [attributeFilterResult, commonDateFilterUpdateActions, dateFiltersUpdateActions]: [
-        { actions: AnyAction[]; displayFormsToResolve: ObjRef[] },
-        AnyAction[],
-        AnyAction[],
-    ] = yield all([
-        call(
-            getAttributeFiltersUpdateActions,
-            [...attributeFilters].reverse(),
-            textAttributeFilters,
-            attributeFilterConfigs,
-            resetOthers,
-            ctx,
-            tabLocalIdentifier,
-            selectionTypeMap,
-        ),
-        call(getDateFilterUpdateActions, commonDateFilter, resetOthers, tabLocalIdentifier),
-        call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
-    ]);
+    const [
+        attributeFilterResult,
+        commonDateFilterUpdateActions,
+        dateFiltersUpdateActions,
+        measureValueFilterUpdateActions,
+    ]: [{ actions: AnyAction[]; displayFormsToResolve: ObjRef[] }, AnyAction[], AnyAction[], AnyAction[]] =
+        yield all([
+            call(
+                getAttributeFiltersUpdateActions,
+                [...attributeFilters].reverse(),
+                textAttributeFilters,
+                attributeFilterConfigs,
+                resetOthers,
+                ctx,
+                tabLocalIdentifier,
+                selectionTypeMap,
+            ),
+            call(getDateFilterUpdateActions, commonDateFilter, resetOthers, tabLocalIdentifier),
+            call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
+            call(getMeasureValueFiltersUpdateActions, measureValueFilters, resetOthers),
+        ]);
 
     // Ensure display form metadata is loaded for filters that will actually be applied.
     // This handles the case where a default saved view changed filter types (e.g., list→text)
@@ -296,6 +308,7 @@ export function* changeFilterContextSelectionHandler(
             ...attributeFilterResult.actions,
             ...commonDateFilterUpdateActions,
             ...dateFiltersUpdateActions,
+            ...measureValueFilterUpdateActions,
         ]),
     );
 
@@ -791,6 +804,58 @@ function* getDateFilterUpdateActions(
     }
 
     return [];
+}
+
+function* getMeasureValueFiltersUpdateActions(
+    measureValueFilters: IDashboardMeasureValueFilter[],
+    resetOthers: boolean,
+): SagaIterator<AnyAction[]> {
+    const updateActions: AnyAction[] = [];
+    const handledLocalIds = new Set<string>();
+
+    const currentMeasureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> =
+        yield select(selectFilterContextMeasureValueFilters);
+    const currentByLocalId = new Map(
+        currentMeasureValueFilters.map((f) => [f.dashboardMeasureValueFilter.localIdentifier, f]),
+    );
+
+    for (const incoming of measureValueFilters) {
+        const localIdentifier = incoming.dashboardMeasureValueFilter.localIdentifier;
+        // Only update filters that already exist on the dashboard. Adding/removing MVFs is an
+        // edit-mode operation and is not part of changeFilterContextSelection in view mode.
+        if (!currentByLocalId.has(localIdentifier)) {
+            console.warn(
+                `changeFilterContextSelection: ignoring measure value filter with unknown localIdentifier "${localIdentifier}". The dashboard does not currently have a measure value filter with this id; adding new MVFs is not supported in view mode.`,
+            );
+            continue;
+        }
+        handledLocalIds.add(localIdentifier);
+        updateActions.push(
+            tabsActions.changeMeasureValueFilterCondition({
+                localIdentifier,
+                conditions: incoming.dashboardMeasureValueFilter.conditions,
+            }),
+        );
+    }
+
+    if (resetOthers) {
+        // Reset any current MVF that wasn't covered by the incoming payload back to the "All"
+        // state (no conditions). Mirrors the behavior of attribute and date filters.
+        for (const current of currentMeasureValueFilters) {
+            const localIdentifier = current.dashboardMeasureValueFilter.localIdentifier;
+            if (handledLocalIds.has(localIdentifier)) {
+                continue;
+            }
+            updateActions.push(
+                tabsActions.changeMeasureValueFilterCondition({
+                    localIdentifier,
+                    conditions: undefined,
+                }),
+            );
+        }
+    }
+
+    return updateActions;
 }
 
 function* getDateFiltersUpdateActions(

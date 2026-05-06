@@ -8,6 +8,7 @@ import type { IDateFilterConfigState } from "./dateFilterConfig/dateFilterConfig
 import { type IDateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 import type { FilterContextState } from "./filterContext/filterContextState.js";
 import type { ILayoutState } from "./layout/layoutState.js";
+import { type IMeasureValueFilterConfigsState } from "./measureValueFilterConfigs/measureValueFilterConfigsState.js";
 
 /**
  * Identifier used for dashboards without explicit tabs support and the first tab created automatically.
@@ -52,6 +53,7 @@ export interface ITabState {
     dateFilterConfig?: IDateFilterConfigState;
     dateFilterConfigs?: IDateFilterConfigsState;
     attributeFilterConfigs?: IAttributeFilterConfigsState;
+    measureValueFilterConfigs?: IMeasureValueFilterConfigsState;
     filterContext?: FilterContextState;
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
     layout?: ILayoutState;

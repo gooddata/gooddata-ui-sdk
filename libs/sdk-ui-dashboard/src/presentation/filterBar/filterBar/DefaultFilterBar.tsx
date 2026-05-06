@@ -10,6 +10,8 @@ import {
     DashboardDateFilterConfigModeValues,
     type FilterContextItem,
     type IDashboardDateFilter,
+    type IDashboardMeasureValueFilter,
+    type MeasureValueFilterCondition,
     type ObjRef,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
@@ -18,6 +20,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
 import { convertDashboardAttributeFilterElementsValuesToUris } from "../../../_staging/dashboard/legacyFilterConvertors.js";
@@ -25,6 +28,7 @@ import { setDashboardAttributeFilterConfigDisplayAsLabel } from "../../../model/
 import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
+    changeMeasureValueFilterCondition,
     changeMigratedAttributeFilterSelection,
     changeWorkingAttributeFilterSelection,
     clearDateFilterSelection,
@@ -37,6 +41,7 @@ import { selectSupportsElementUris } from "../../../model/store/backendCapabilit
 import {
     selectEnableDashboardFilterGroups,
     selectEnableDateFilterIdentifiers,
+    selectEnableMeasureValueFilterKD,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsExport,
 } from "../../../model/store/config/configSelectors.js";
@@ -72,10 +77,21 @@ import { useFiltersWithAddedPlaceholder } from "./useFiltersWithAddedPlaceholder
  * @alpha
  */
 export const useFilterBarProps = (): IFilterBarProps => {
-    const filters = useDashboardSelector(selectFilterContextFilters);
-    const workingFilters = useDashboardSelector(selectWorkingFilterContextFilters);
+    const allFilters = useDashboardSelector(selectFilterContextFilters);
+    const allWorkingFilters = useDashboardSelector(selectWorkingFilterContextFilters);
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const filterGroupsConfig = useDashboardSelector(selectFilterGroupsConfig);
+    const enableMeasureValueFilterKD = useDashboardSelector(selectEnableMeasureValueFilterKD);
+
+    // Hide measure value filters from the filter bar when the FF is off.
+    // The FF gates the entire MVF UI; without it, dashboards that already persist MVFs
+    // should render as if they had only attribute and date filters.
+    const filters = enableMeasureValueFilterKD
+        ? allFilters
+        : allFilters.filter((f) => !isDashboardMeasureValueFilter(f));
+    const workingFilters = enableMeasureValueFilterKD
+        ? allWorkingFilters
+        : allWorkingFilters.filter((f) => !isDashboardMeasureValueFilter(f));
 
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
@@ -276,12 +292,25 @@ export const useFilterBarProps = (): IFilterBarProps => {
         [dispatch, isApplyAllAtOnceEnabledAndSet, filters, enableDateFilterIdentifiers],
     );
 
+    const onMeasureValueFilterChanged = useCallback(
+        (filter: IDashboardMeasureValueFilter, conditions: MeasureValueFilterCondition[] | undefined) => {
+            dispatch(
+                changeMeasureValueFilterCondition(
+                    filter.dashboardMeasureValueFilter.localIdentifier,
+                    conditions,
+                ),
+            );
+        },
+        [dispatch],
+    );
+
     return {
         filters,
         workingFilters,
         filterGroupsConfig,
         onAttributeFilterChanged,
         onDateFilterChanged,
+        onMeasureValueFilterChanged,
         DefaultFilterBar,
     };
 };

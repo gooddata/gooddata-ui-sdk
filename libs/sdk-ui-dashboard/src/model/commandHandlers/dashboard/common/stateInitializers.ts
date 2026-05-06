@@ -285,6 +285,9 @@ export function* actionsToInitializeNewDashboard(
                       attributeFilterConfigs: {
                           attributeFilterConfigs: tab.attributeFilterConfigs ?? [],
                       },
+                      measureValueFilterConfigs: {
+                          measureValueFilterConfigs: tab.measureValueFilterConfigs ?? [],
+                      },
                       layout: {
                           ...layoutInitialState,
                           layout: tab.layout ?? dashboardLayout ?? EmptyDashboardLayout,
@@ -324,6 +327,9 @@ export function* actionsToInitializeNewDashboard(
                           },
                           attributeFilterConfigs: {
                               attributeFilterConfigs: dashboard?.attributeFilterConfigs ?? [],
+                          },
+                          measureValueFilterConfigs: {
+                              measureValueFilterConfigs: dashboard?.measureValueFilterConfigs ?? [],
                           },
                       },
                   ],
@@ -728,6 +734,9 @@ export function* actionsToInitializeExistingDashboard(
                     : undefined,
                 attributeFilterConfigs: {
                     attributeFilterConfigs: effectiveAttributeFilterConfigs,
+                },
+                measureValueFilterConfigs: {
+                    measureValueFilterConfigs: tab.measureValueFilterConfigs ?? [],
                 },
                 layout: {
                     ...layoutInitialState,
