@@ -728,6 +728,7 @@ export interface IChatConversations {
     getConversation(conversationId: string): Promise<IChatConversation>;
     getConversationItemsQuery(): IChatConversationItemsQuery;
     getConversationThread(conversationId: string): IChatConversationThread;
+    update(conversationId: string, update: Partial<Pick<IChatConversation, "title">>): Promise<IChatConversation>;
 }
 
 // @internal

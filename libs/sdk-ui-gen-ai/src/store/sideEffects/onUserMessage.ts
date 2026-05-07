@@ -32,6 +32,7 @@ import {
     makeAssistantItem,
     makeAssistantMessage,
 } from "../../model.js";
+import { generateTitleFromQuestion } from "../../utils.js";
 import {
     allowedRelationshipTypesSelector,
     objectTypesSelector,
@@ -316,11 +317,14 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         // If we are in the transient new-conversation state, create the conversation first
         if (conversationState === "new") {
             const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-            const created: IChatConversation = yield call([api, api.create]);
+            const created: IChatConversation = yield call(api.create.bind(api));
+            const updated: IChatConversation = yield call(api.update.bind(api), created.id, {
+                title: generateTitleFromQuestion(message.content.text),
+            });
             // Store it as current conversation and clear the transient flag
-            yield put(setCurrentConversationAction({ conversation: created }));
+            yield put(setCurrentConversationAction({ conversation: updated }));
             //save
-            conversation = created;
+            conversation = updated;
         } else {
             conversation = conversationState;
         }

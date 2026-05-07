@@ -1,9 +1,16 @@
 // (C) 2026 GoodData Corporation
 
+import { useMemo } from "react";
+
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
 import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
+
+import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import { generateTemporaryTitle } from "../utils.js";
+import { collectReferences, replaceReferences } from "./completion/references.js";
 
 const messages = defineMessages({
     title: { id: "gd.gen-ai.conversations.delete-dialog.title" },
@@ -20,6 +27,16 @@ type ConversationDeleteDialogProps = {
 
 export function ConversationDeleteDialog({ conversation, onDelete, onClose }: ConversationDeleteDialogProps) {
     const intl = useIntl();
+    const catalogItems = useSelector(catalogItemsSelector);
+
+    const title = useMemo(() => {
+        return (
+            replaceReferences(
+                conversation.title ?? "",
+                collectReferences(conversation.title ?? "", catalogItems),
+            ) || generateTemporaryTitle(intl, conversation)
+        );
+    }, [catalogItems, conversation, intl]);
 
     return (
         <ConfirmDialog
@@ -34,7 +51,7 @@ export function ConversationDeleteDialog({ conversation, onDelete, onClose }: Co
             <FormattedMessage
                 {...messages.body}
                 values={{
-                    name: conversation.title ?? conversation.id,
+                    name: title,
                     b: (chunks) => <b>{chunks}</b>,
                 }}
             />

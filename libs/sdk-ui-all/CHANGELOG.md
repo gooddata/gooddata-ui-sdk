@@ -1,6 +1,28 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 30 Apr 2026 06:59:15 GMT and should not be manually modified.
+This log was last generated on Thu, 07 May 2026 08:01:24 GMT and should not be manually modified.
+
+## 11.34.0
+
+Thu, 07 May 2026 08:01:24 GMT
+
+### Updates
+
+- sdk-ui-dashboard: End-to-end dashboard parameters (active mode)
+- sdk-ui-dashboard: Delete dashboard parameter via drag-to-delete zone
+- sdk-ui-kit: Add `UiControlButton`, `ParameterPicker`, `ParameterControlButton`, `ParameterControlDropdown` (all `@internal`)
+- sdk-ui-filters: Refactor `AttributeFilterDropdownButton` to wrap kit `UiControlButton` (public API unchanged)
+- sdk-ui-dashboard: Restore styles for the Add Filter menu
+- sdk-ui-kit: `UiCombobox` close popup on blur
+- sdk-ui-kit: repair combobox focus management
+- sdk-ui-kit: add `allowSearch` support for `UiAsyncTable` for showing filtering
+- sdk-ui-kit: `UiDrawer` supports header and disabling of backdrop, add new icons
+- sdk-ui-kit: `UiCombobox` repair and unify behaviour with creatable options
+- sdk-ui-gen-ai: support of multiple conversations hidden under FF
+- Added SDK Backend AI Usage Limits setting
+- sdk-ui-all: Introduce Measure Value Filter on dashboard
+- CQ-2320: round-trip aggregate-aware LDM shapes (AUXILIARY datasets, HLL data type, APPROXIMATE_COUNT aggregation) through WASM AAC convertors
+- sdk-ui-all: Update Measure Value filter on dashboard edit mode
 
 ## 11.32.0
 

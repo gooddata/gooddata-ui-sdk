@@ -9,6 +9,7 @@ import {
     GenAiApi_GetConversationItems,
     GenAiApi_GetConversationResponses,
     GenAiApi_GetConversations,
+    GenAiApi_PatchConversation,
     GenAiApi_PatchConversationResponse,
     GenAiApi_PatchVisualization,
     GenAiApi_PostConversations,
@@ -66,6 +67,20 @@ export class ChatConversationsService implements IChatConversations {
             const response = await GenAiApi_PostConversations(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 ...(this.options.isPreview === undefined ? {} : { isPreview: this.options.isPreview }),
+            });
+            return convertChatConversationFromBackend(response.data);
+        });
+    }
+
+    async update(
+        conversationId: string,
+        update: Partial<Pick<IChatConversation, "title">>,
+    ): Promise<IChatConversation> {
+        return await this.authCall(async (client) => {
+            const response = await GenAiApi_PatchConversation(client.axios, client.basePath, {
+                conversationId,
+                workspaceId: this.workspaceId,
+                aiConversationUpdateRequest: update,
             });
             return convertChatConversationFromBackend(response.data);
         });

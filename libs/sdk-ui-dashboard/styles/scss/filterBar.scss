@@ -851,3 +851,39 @@ $attribute-filter-drag-handle-left: 10px;
         overflow-wrap: break-word;
     }
 }
+
+.gd-add-filter-menu {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.gd-add-filter-menu-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 250px;
+
+    .gd-add-filter-menu-content {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+    }
+
+    .gd-add-filter-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        padding: 5px 10px;
+        font-size: 12px;
+        text-align: left;
+        color: var(--gd-palette-complementary-8);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+
+        &:hover {
+            background-color: var(--gd-palette-complementary-2);
+        }
+    }
+}
