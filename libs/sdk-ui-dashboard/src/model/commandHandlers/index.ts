@@ -16,6 +16,7 @@ import { changeAttributeFilterSelectionTypeHandler } from "./dashboard/changeAtt
 import { changeDateFilterTitleHandler } from "./dashboard/changeDateFilterTitleHandler.js";
 import { changeDateFilterWithDimensionModeHandler } from "./dashboard/changeDateFilterWithDimensionModeHandler.js";
 import { changeIgnoreExecutionTimestampHandler } from "./dashboard/changeIgnoreExecutionTimestampHandler.js";
+import { changeMeasureValueFilterModeHandler } from "./dashboard/changeMeasureValueFilterModeHandler.js";
 import { changeSharingHandler } from "./dashboard/changeSharingHandler.js";
 import { setDashboardDateFilterConfigModeHandler } from "./dashboard/dateFilterConfigHandler.js";
 import { deleteDashboardHandler } from "./dashboard/deleteDashboardHandler.js";
@@ -67,7 +68,11 @@ import {
     saveFilterViewHandler,
     setFilterViewAsDefaultHandler,
 } from "./filterContext/filterViewHandler.js";
+import { addMeasureValueFilterHandler } from "./filterContext/measureValueFilter/addMeasureValueFilterHandler.js";
 import { changeMeasureValueFilterConditionHandler } from "./filterContext/measureValueFilter/changeMeasureValueFilterConditionHandler.js";
+import { changeMeasureValueFilterTitleHandler } from "./filterContext/measureValueFilter/changeMeasureValueFilterTitleHandler.js";
+import { moveMeasureValueFilterHandler } from "./filterContext/measureValueFilter/moveMeasureValueFilterHandler.js";
+import { removeMeasureValueFilterHandler } from "./filterContext/measureValueFilter/removeMeasureValueFilterHandler.js";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler.js";
 import { addSectionItemsHandler } from "./layout/addSectionItemsHandler.js";
 import { changeLayoutSectionHeaderHandler } from "./layout/changeLayoutSectionHeaderHandler.js";
@@ -175,11 +180,16 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD": addDateFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE": removeDateFiltersHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE": moveDateFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADD": addMeasureValueFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVE": removeMeasureValueFilterHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.MOVE": moveMeasureValueFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CHANGE_CONDITION":
         changeMeasureValueFilterConditionHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.SET_TITLE": changeMeasureValueFilterTitleHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION": applyWorkingSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION": resetWorkingSelectionHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE": changeAttributeFilterModeHandler,
+    "GDC.DASH/CMD.MEASURE_VALUE_FILTER_CONFIG.SET_MODE": changeMeasureValueFilterModeHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_AVAILABLE_MODE": changeAttributeFilterSelectionTypeHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL": changeAttributeFilterDisplayAsLabelHandler,
     "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS": changeAttributeFilterLimitingItemsHandler,

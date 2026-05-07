@@ -21,6 +21,7 @@ import {
     dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
+    dashboardFilterLocalIdentifier,
     getAttributeElementsItems,
     idRef,
     isDashboardAttributeFilter,
@@ -570,7 +571,26 @@ export const selectFilterContextMeasureValueFilterByLocalId: (
 ) => (state: DashboardState) => IDashboardMeasureValueFilter | undefined = createMemoizedSelector(
     (localIdentifier: string) =>
         createSelector(selectFilterContextMeasureValueFilters, (filters) =>
-            filters.find((f) => f.dashboardMeasureValueFilter.localIdentifier === localIdentifier),
+            filters.find((f) => dashboardFilterLocalIdentifier(f) === localIdentifier),
+        ),
+);
+
+/**
+ * Creates a selector for finding a working dashboard measure value filter by its local identifier.
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectWorkingFilterContextMeasureValueFilterByLocalId: (
+    localIdentifier: string,
+) => (state: DashboardState) => IDashboardMeasureValueFilter | undefined = createMemoizedSelector(
+    (localIdentifier: string) =>
+        createSelector(selectWorkingFilterContextFilters, (filters) =>
+            filters
+                .filter(isDashboardMeasureValueFilter)
+                .find((f) => dashboardFilterLocalIdentifier(f) === localIdentifier),
         ),
 );
 
@@ -694,7 +714,7 @@ export const selectFilterContextDateFilterByDataSetForTab: (
 /**
  * Creates a selector for selecting draggable filter's index by its ref:
  * dataSet ref for date filters {@link @gooddata/sdk-model#ObjRef}
- * localIdentifier for attribute and text attribute filters
+ * localIdentifier for attribute, text attribute, and measure value filters
  *
  * @remarks
  * Invocations before initialization lead to invariant errors.
@@ -711,6 +731,9 @@ export const selectFilterContextDraggableFilterIndexByRef: (
             }
             if (isDashboardAttributeFilterItem(filter) && typeof ref === "string") {
                 return dashboardAttributeFilterItemLocalIdentifier(filter) === ref;
+            }
+            if (isDashboardMeasureValueFilter(filter) && typeof ref === "string") {
+                return dashboardFilterLocalIdentifier(filter) === ref;
             }
             return false;
         });
@@ -1158,11 +1181,15 @@ const MAX_DRAGGABLE_FILTERS_COUNT = 30;
  */
 export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
     selectFilterContextAttributeFilterItems,
+    selectFilterContextMeasureValueFilters,
     selectFilterContextDateFiltersWithDimension,
     selectCrossFilteringFiltersLocalIdentifiers,
-    (attributeFilterItems, dateFiltersWithDimension, crossFilters) => {
+    (attributeFilterItems, measureValueFilters, dateFiltersWithDimension, crossFilters) => {
         return (
-            attributeFilterItems.length + dateFiltersWithDimension.length - crossFilters.length <
+            attributeFilterItems.length +
+                measureValueFilters.length +
+                dateFiltersWithDimension.length -
+                crossFilters.length <
             MAX_DRAGGABLE_FILTERS_COUNT
         );
     },

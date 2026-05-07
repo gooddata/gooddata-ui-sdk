@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { isEmpty, negate } from "lodash-es";
@@ -13,6 +13,7 @@ import {
     type ICatalogFact,
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
+    type IParameterMetadataObject,
     type ObjRef,
     areObjRefsEqual,
     getHierarchyAttributes,
@@ -32,11 +33,13 @@ import {
     newCatalogDateDatasetMap,
     newCatalogMeasureMap,
 } from "../../../_staging/metadata/objRefMap.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
 import {
     selectBackendCapabilities,
     selectSupportsAttributeHierarchies,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+import { type CatalogParametersStatus } from "./catalogState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -51,6 +54,50 @@ export const selectCatalogAttributes: DashboardSelector<ICatalogAttribute[]> = c
     (state) => {
         return state.attributes ?? [];
     },
+);
+
+/**
+ * Returns the workspace parameters loaded into the dashboard catalog.
+ *
+ * @alpha
+ */
+export const selectCatalogParameters: DashboardSelector<IParameterMetadataObject[]> = createSelector(
+    selectSelf,
+    (state) => state.parameters.parameters,
+);
+
+/**
+ * Returns a selector that yields the workspace parameter for a given ref, or `undefined`
+ * if the catalog does not contain it.
+ *
+ * @alpha
+ */
+export const selectCatalogParameterByRef: (
+    ref: ObjRef,
+) => DashboardSelector<IParameterMetadataObject | undefined> = createMemoizedSelector((ref: ObjRef) =>
+    createSelector(selectCatalogParameters, (parameters) =>
+        parameters.find((parameter) => areObjRefsEqual(parameter.ref, ref)),
+    ),
+);
+
+/**
+ * Returns the load status of catalog parameters.
+ *
+ * @alpha
+ */
+export const selectCatalogParametersStatus: DashboardSelector<CatalogParametersStatus> = createSelector(
+    selectSelf,
+    (state) => state.parameters.status,
+);
+
+/**
+ * Returns true once the catalog parameters loader has succeeded.
+ *
+ * @alpha
+ */
+export const selectCatalogParametersIsLoaded: DashboardSelector<boolean> = createSelector(
+    selectCatalogParametersStatus,
+    (status) => status === "loaded",
 );
 
 /**

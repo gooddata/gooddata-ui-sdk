@@ -32,8 +32,6 @@ export type {
     IDistinctPointShapes,
     PointShapeSymbolType,
     ITooltipConfig,
-    ICustomTooltipConfig,
-    CustomTooltipPlacement,
     ITotalConfig,
     IOrientationConfig,
     ChartOrientationType,
@@ -214,4 +212,6 @@ export {
     type PatternFillName,
     type IChartFillConfig,
     type ChartFillType,
+    type ICustomTooltipConfig,
+    type CustomTooltipPlacement,
 } from "@gooddata/sdk-ui-vis-commons";

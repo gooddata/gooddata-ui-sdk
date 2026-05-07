@@ -8,7 +8,10 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import { changeMeasureValueFilterCondition } from "../../../../commands/filters.js";
+import {
+    changeMeasureValueFilterCondition,
+    changeWorkingMeasureValueFilterCondition,
+} from "../../../../commands/filters.js";
 import { tabsActions } from "../../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../../types/commonTypes.js";
 import { changeMeasureValueFilterConditionHandler } from "../changeMeasureValueFilterConditionHandler.js";
@@ -150,6 +153,31 @@ describe("changeMeasureValueFilterConditionHandler", () => {
             greaterThan100,
             lessThan10,
         ]);
+    });
+
+    it("forwards working condition changes through to the reducer and event payload", () => {
+        const ctx = makeContext();
+        const cmd = changeWorkingMeasureValueFilterCondition(LOCAL_ID, [greaterThan100], "corr-working");
+        const saga = changeMeasureValueFilterConditionHandler(ctx, cmd);
+
+        saga.next(); // select existing applied filter
+        const put1 = saga.next(makeExistingFilter());
+
+        expect((put1.value as SagaEffect).payload.action).toEqual(
+            tabsActions.changeMeasureValueFilterCondition({
+                localIdentifier: LOCAL_ID,
+                conditions: [greaterThan100],
+                isWorkingSelectionChange: true,
+            }),
+        );
+
+        saga.next(); // select updated working filter
+        const eventPut = saga.next(makeExistingFilter([greaterThan100]));
+        const eventAction = (eventPut.value as SagaEffect).payload.action;
+
+        expect(eventAction.type).toBe("GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CONDITION_CHANGED");
+        expect(eventAction.correlationId).toBe("corr-working");
+        expect(eventAction.payload.filter).toEqual(makeExistingFilter([greaterThan100]));
     });
 
     it("throws an invalidArgumentsProvided event when the localIdentifier does not exist", () => {

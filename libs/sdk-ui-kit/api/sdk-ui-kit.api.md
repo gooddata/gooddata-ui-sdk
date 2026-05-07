@@ -4643,9 +4643,13 @@ export interface IParameterControlButtonProps {
     // (undocumented)
     isActive: boolean;
     // (undocumented)
+    isDraggable?: boolean;
+    // (undocumented)
+    isDragging?: boolean;
+    // (undocumented)
     name: string;
     // (undocumented)
-    onClick: () => void;
+    onClick?: () => void;
     // (undocumented)
     value: number;
 }
@@ -6238,6 +6242,8 @@ export interface IUiControlButtonProps {
     icon?: ReactNode;
     // (undocumented)
     isDraggable?: boolean;
+    // (undocumented)
+    isDragging?: boolean;
     // (undocumented)
     isError?: boolean;
     // (undocumented)
@@ -7956,7 +7962,7 @@ export type PageOrientation = "PORTRAIT" | "LANDSCAPE";
 export type PageSize = "A3" | "A4" | "LETTER";
 
 // @internal (undocumented)
-export function ParameterControlButton({ name, value, isActive, onClick, className, "data-testid": dataTestId }: IParameterControlButtonProps): JSX.Element;
+export function ParameterControlButton({ name, value, isActive, isDraggable, isDragging, onClick, className, "data-testid": dataTestId }: IParameterControlButtonProps): JSX.Element;
 
 // @internal
 export function ParameterControlDropdown({ name, value, resetValue, constraints, onApply, onCancel }: IParameterControlDropdownProps): JSX.Element;
@@ -8427,7 +8433,7 @@ export function UiComboboxPopup({ style, className, children, ...htmlProps }: Ui
 export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
 
 // @internal
-export function UiControlButton({ title, titleClassName, subtitle, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId }: IUiControlButtonProps): JSX.Element;
+export function UiControlButton({ title, titleClassName, subtitle, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isDragging, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId }: IUiControlButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiCopyButton({ label, clipboardContent, successMessage, successMessageOptions, errorMessage, errorMessageOptions }: IUiCopyButtonProps): JSX.Element;

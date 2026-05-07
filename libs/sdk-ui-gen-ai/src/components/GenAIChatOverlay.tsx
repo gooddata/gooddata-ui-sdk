@@ -1,49 +1,25 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type FC, type RefObject } from "react";
+import { type RefObject } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { connect } from "react-redux";
 
 import { Dialog } from "@gooddata/sdk-ui-kit";
 
-import { setFullscreenAction } from "../store/chatWindow/chatWindowSlice.js";
-import { hasMessagesSelector } from "../store/messages/messagesSelectors.js";
-import { clearThreadAction } from "../store/messages/messagesSlice.js";
-import { type RootState } from "../store/types.js";
+import { GenAIChatConversations } from "./GenAIChatConversations.js";
+import { GenAIChatHeader } from "./GenAIChatHeader.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
-import { HeaderIcon } from "./HeaderIcon.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 
-type GenAIChatOverlayOwnProps = {
+export type GenAIChatOverlayProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     onClose: () => void;
 };
 
-type GenAIChatOverlayStateProps = {
-    hasMessages: boolean;
-};
-
-type GenAIChatOverlayDispatchProps = {
-    clearThread: typeof clearThreadAction;
-    setFullscreen: typeof setFullscreenAction;
-};
-
-export type GenAIChatOverlayProps = GenAIChatOverlayOwnProps &
-    GenAIChatOverlayStateProps &
-    GenAIChatOverlayDispatchProps;
-
-function GenAIChatOverlayComponent({
-    onClose,
-    returnFocusTo,
-    hasMessages,
-    clearThread,
-    setFullscreen,
-}: GenAIChatOverlayProps) {
+export function GenAIChatOverlay({ onClose, returnFocusTo }: GenAIChatOverlayProps) {
     const intl = useIntl();
-
-    const { isFullscreen, isSmallScreen } = useFullscreenCheck();
+    const { isFullscreen } = useFullscreenCheck();
 
     const classNames = cx("gd-gen-ai-chat__window", {
         "gd-gen-ai-chat__window--fullscreen": isFullscreen,
@@ -66,49 +42,9 @@ function GenAIChatOverlayComponent({
                 isModal: isFullscreen,
             }}
         >
-            <div className="gd-gen-ai-chat__window__header">
-                <HeaderIcon
-                    icon="ccw"
-                    tooltip={intl.formatMessage({ id: "gd.gen-ai.header.reset-tooltip" })}
-                    onClick={() => clearThread()}
-                    disabled={!hasMessages}
-                />
-                <div className="gd-gen-ai-chat__window__header__gap"></div>
-                {isSmallScreen ? null : (
-                    <>
-                        <HeaderIcon
-                            icon={isFullscreen ? "minimize" : "expand"}
-                            tooltip={
-                                isFullscreen
-                                    ? intl.formatMessage({ id: "gd.gen-ai.header.contract-tooltip" })
-                                    : intl.formatMessage({ id: "gd.gen-ai.header.expand-tooltip" })
-                            }
-                            onClick={() => setFullscreen({ isFullscreen: !isFullscreen })}
-                        />
-                        <div className="gd-gen-ai-chat__window__header__divider"></div>
-                    </>
-                )}
-                <HeaderIcon
-                    icon="cross"
-                    tooltip={intl.formatMessage({ id: "gd.gen-ai.header.close-tooltip" })}
-                    onClick={onClose}
-                />
-            </div>
+            <GenAIChatHeader onClose={onClose} />
+            <GenAIChatConversations />
             <GenAIChatWrapper autofocus />
         </Dialog>
     );
 }
-
-const mapStateToProps = (state: RootState): GenAIChatOverlayStateProps => ({
-    hasMessages: hasMessagesSelector(state),
-});
-
-const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
-    clearThread: clearThreadAction,
-    setFullscreen: setFullscreenAction,
-};
-
-export const GenAIChatOverlay: FC<GenAIChatOverlayOwnProps> = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(GenAIChatOverlayComponent);

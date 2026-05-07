@@ -23,8 +23,10 @@ import {
 } from "../../model.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import { loadMessages } from "../localStorage.js";
+import { conversationSelector, conversationsSelector } from "../messages/messagesSelectors.js";
 import {
     cancelAsyncAction,
+    loadConversationSuccessAction,
     loadConversationsSuccessAction,
     loadThreadErrorAction,
     loadThreadSuccessAction,
@@ -149,88 +151,102 @@ function* fetchChatHistory(preparedChatThread: IChatThread) {
 //CONVERSATIONS API
 
 function* fetchConversations() {
+    // Load all conversations
+    yield call(fetchAllConversations);
+    // Load current conversation
+    yield call(fetchCurrentConversation);
+}
+
+function* fetchAllConversations() {
     // Retrieve backend from context
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
+    const conversations: IChatConversation[] | undefined = yield select(conversationsSelector);
+
+    // Already loaded
+    if (conversations) {
+        return;
+    }
+
     const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-    const query = api.getConversationItemsQuery().withSize(1);
+    const query = api.getConversationItemsQuery().withSize(100).withPage(0);
 
     const getConversations = query.query.bind(query);
     const [resultsConversations, cancelledConversations]: [
         results: IChatConversationItemsQueryResult,
         ReturnType<typeof cancelAsyncAction>,
     ] = yield race([call(getConversations), take(cancelAsyncAction.type)]);
-    const conversationItems = resultsConversations.items;
 
     //Canceled during the loading
     if (cancelledConversations) {
         return;
     }
 
-    let conversation = conversationItems[0];
-    if (isPreview) {
-        // Preview always starts fresh: delete any existing preview conversation, then create new.
-        if (conversation) {
-            const [, cancelledDeleteConversation]: [unknown, ReturnType<typeof cancelAsyncAction>] =
-                yield race([call(api.delete.bind(api), conversation.id), take(cancelAsyncAction.type)]);
-
-            if (cancelledDeleteConversation) {
-                return;
-            }
-        }
-        const [resultCreateConversation, cancelledCreateConversation]: [
-            results: IChatConversation,
-            ReturnType<typeof cancelAsyncAction>,
-        ] = yield race([call(api.create.bind(api)), take(cancelAsyncAction.type)]);
-
-        if (cancelledCreateConversation) {
-            return;
-        }
-
-        conversationItems.length = 0;
-        conversationItems.push(resultCreateConversation);
-        conversation = resultCreateConversation;
-    } else if (!conversation) {
-        const [resultCreateConversation, cancelledCreateConversation]: [
-            results: IChatConversation,
-            ReturnType<typeof cancelAsyncAction>,
-        ] = yield race([call(api.create.bind(api)), take(cancelAsyncAction.type)]);
-
-        //Canceled during the creation of the conversation
-        if (cancelledCreateConversation) {
-            return;
-        }
-
-        conversationItems.unshift(resultCreateConversation);
-        conversation = resultCreateConversation;
-    }
-
-    const preparedThread = api.getConversationThread(conversation.id);
-    const [resultsItems, cancelledItems]: [
-        results: IChatConversationItem[],
-        ReturnType<typeof cancelAsyncAction>,
-    ] = yield race([call(fetchConversationHistory, preparedThread), take(cancelAsyncAction.type)]);
-
-    //Canceled during the loading
-    if (cancelledItems) {
-        return;
-    }
-
+    const conversationItems = resultsConversations.items;
     yield put(
         loadConversationsSuccessAction({
             conversations: conversationItems,
-            currentConversation: conversation,
-            conversationItems: resultsItems.map((item) => {
-                return makeConversationItem({
-                    ...item,
-                    content: convertToLocalContent(item.content),
-                });
-            }),
-            threadId: conversation.id,
         }),
     );
+}
+
+function* fetchCurrentConversation() {
+    const backend: IAnalyticalBackend = yield getContext("backend");
+    const workspace: string = yield getContext("workspace");
+    const isPreview: boolean | undefined = yield getContext("isPreview");
+
+    const conversations: IChatConversation[] | undefined = yield select(conversationsSelector);
+    const conversation: "new" | IChatConversation | undefined = yield select(conversationSelector);
+
+    // New conversation selected
+    if (conversation === "new") {
+        yield put(
+            loadConversationSuccessAction({
+                currentConversation: "new",
+                conversationItems: [],
+            }),
+        );
+        return;
+    }
+
+    const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
+
+    //Load the first conversation if there are any or create a new one
+    const selectedConversation = conversation ?? conversations?.[0] ?? undefined;
+    if (selectedConversation) {
+        const preparedThread = api.getConversationThread(selectedConversation.id);
+        const [resultsItems, cancelledItems]: [
+            results: IChatConversationItem[],
+            ReturnType<typeof cancelAsyncAction>,
+        ] = yield race([call(fetchConversationHistory, preparedThread), take(cancelAsyncAction.type)]);
+
+        //Canceled during the loading
+        if (cancelledItems) {
+            return;
+        }
+
+        yield put(
+            loadConversationSuccessAction({
+                currentConversation: selectedConversation,
+                conversationItems: resultsItems.map((item) => {
+                    return makeConversationItem({
+                        ...item,
+                        content: convertToLocalContent(item.content),
+                    });
+                }),
+                threadId: selectedConversation.id,
+            }),
+        );
+    } else {
+        yield put(
+            loadConversationSuccessAction({
+                currentConversation: "new",
+                conversationItems: [],
+            }),
+        );
+    }
 }
 
 function* fetchConversationHistory(preparedChatThread: IChatConversationThread) {

@@ -31,6 +31,7 @@ export interface IUiControlButtonProps {
     subtitleExtension?: ReactNode;
     isOpen?: boolean;
     isDraggable?: boolean;
+    isDragging?: boolean;
     isError?: boolean;
     disabled?: boolean;
     /**
@@ -65,6 +66,7 @@ export function UiControlButton({
     subtitleExtension,
     isOpen,
     isDraggable,
+    isDragging,
     isError,
     disabled,
     disabledTooltip,
@@ -98,6 +100,7 @@ export function UiControlButton({
                 b({
                     isOpen: !!isOpen,
                     isDraggable: !!isDraggable,
+                    isDragging: !!isDragging,
                     isError: !!isError,
                     disabled: !!disabled,
                 }),

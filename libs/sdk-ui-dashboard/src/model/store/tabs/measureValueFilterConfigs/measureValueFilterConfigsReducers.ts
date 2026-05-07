@@ -16,7 +16,7 @@ type MeasureValueFilterConfigReducer<A extends Action> = CaseReducer<ITabsState,
  */
 export interface IChangeMeasureValueFilterConfigModePayload {
     localIdentifier: string;
-    mode: DashboardAttributeFilterConfigMode;
+    mode?: DashboardAttributeFilterConfigMode;
 }
 
 /**

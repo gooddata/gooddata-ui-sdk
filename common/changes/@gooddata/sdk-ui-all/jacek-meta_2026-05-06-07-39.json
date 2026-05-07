@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "CQ-2320: round-trip aggregate-aware LDM shapes (AUXILIARY datasets, HLL data type, APPROXIMATE_COUNT aggregation) through WASM AAC convertors",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.soubusta@gooddata.com"
+}

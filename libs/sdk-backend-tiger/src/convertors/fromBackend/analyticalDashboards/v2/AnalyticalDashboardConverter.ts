@@ -9,6 +9,7 @@ import {
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
     type ITigerDashboardMeasureValueFilterConfig,
+    type ITigerDashboardParameter,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiAnalyticalDashboardOutIncludes,
     type JsonApiDashboardPluginOutDocument,
@@ -26,6 +27,7 @@ import {
     type IDashboardLayout,
     type IDashboardLayoutWidget,
     type IDashboardMeasureValueFilterConfig,
+    type IDashboardParameter,
     type IDashboardPlugin,
     type IDashboardPluginLink,
     type IDashboardTab,
@@ -123,6 +125,7 @@ interface IAnalyticalDashboardContent {
     plugins?: IDashboardPluginLink[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
+    parameters?: IDashboardParameter[];
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;
     disableUserFilterSave?: boolean;
@@ -130,6 +133,16 @@ interface IAnalyticalDashboardContent {
     evaluationFrequency?: string;
     sectionHeadersDateDataSet?: IdentifierRef;
     tabs?: IDashboardTab[];
+}
+
+function convertDashboardParameter(parameter: ITigerDashboardParameter): IDashboardParameter {
+    return {
+        ref: cloneWithSanitizedIds(parameter.ref),
+        parameterType: parameter.parameterType,
+        mode: parameter.mode ?? "active",
+        ...(parameter.value === undefined ? {} : { value: parameter.value }),
+        ...(parameter.label === undefined ? {} : { label: parameter.label }),
+    };
 }
 
 function convertDashboardPluginLink(
@@ -247,6 +260,7 @@ function getConvertedAnalyticalDashboardContent(
             : defaultTab?.measureValueFilterConfigs,
         layout: layout ?? defaultTab?.layout,
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
+        parameters: analyticalDashboard.parameters?.map(convertDashboardParameter),
         disableCrossFiltering: analyticalDashboard.disableCrossFiltering,
         disableUserFilterReset: analyticalDashboard.disableUserFilterReset,
         disableUserFilterSave: analyticalDashboard.disableUserFilterSave,
@@ -299,6 +313,7 @@ export function convertDashboard(
         plugins,
         attributeFilterConfigs,
         measureValueFilterConfigs,
+        parameters,
         dateFilterConfigs,
         disableCrossFiltering,
         disableUserFilterReset,
@@ -339,6 +354,7 @@ export function convertDashboard(
         measureValueFilterConfigs,
         layout,
         plugins,
+        parameters,
         disableCrossFiltering,
         disableUserFilterReset,
         disableUserFilterSave,

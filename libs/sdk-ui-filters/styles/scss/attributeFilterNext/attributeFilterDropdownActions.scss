@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-.gd-attribute-filter-dropdown-actions__next {
+@mixin gd-filter-dropdown-actions {
     border-top: 1px solid var(--gd-palette-complementary-3, #dde4eb);
     text-align: right;
     display: flex;
@@ -9,33 +9,56 @@
     padding: 10px 0;
 }
 
-.gd-attribute-filter-dropdown-actions-left-content__next,
-.gd-attribute-filter-dropdown-actions-right-content__next {
+@mixin gd-filter-dropdown-actions-content {
     display: flex;
     align-items: center;
 
     .gd-ui-kit-tooltip__anchor {
-        .gd-attribute-filter-apply-button__next {
+        .gd-attribute-filter-apply-button__next,
+        .gd-measure-value-filter-apply-button__next {
             margin-left: 10px;
         }
     }
 }
 
+@mixin gd-filter-dropdown-actions-mobile {
+    display: flex;
+    align-items: stretch;
+    height: 52px;
+    margin: 0 10px;
+    padding: 10px 0;
+}
+
+@mixin gd-filter-dropdown-actions-button-mobile {
+    text-align: center;
+    flex: 1;
+    height: 32px;
+    font-size: 14px;
+}
+
+.gd-attribute-filter-dropdown-actions__next,
+.gd-measure-value-filter-dropdown-actions__next {
+    @include gd-filter-dropdown-actions;
+}
+
+.gd-attribute-filter-dropdown-actions-left-content__next,
+.gd-attribute-filter-dropdown-actions-right-content__next,
+.gd-measure-value-filter-dropdown-actions-left-content__next,
+.gd-measure-value-filter-dropdown-actions-right-content__next {
+    @include gd-filter-dropdown-actions-content;
+}
+
 .gd-is-mobile {
-    .gd-attribute-filter-dropdown-actions__next {
-        display: flex;
-        align-items: stretch;
-        height: 52px;
-        margin: 0 10px;
-        padding: 10px 0;
+    .gd-attribute-filter-dropdown-actions__next,
+    .gd-measure-value-filter-dropdown-actions__next {
+        @include gd-filter-dropdown-actions-mobile;
     }
 
     .gd-attribute-filter-cancel-button__next,
     .gd-attribute-filter-apply-button__next,
-    .gd-attribute-filter-close-button__next {
-        text-align: center;
-        flex: 1;
-        height: 32px;
-        font-size: 14px;
+    .gd-attribute-filter-close-button__next,
+    .gd-measure-value-filter-cancel-button__next,
+    .gd-measure-value-filter-apply-button__next {
+        @include gd-filter-dropdown-actions-button-mobile;
     }
 }

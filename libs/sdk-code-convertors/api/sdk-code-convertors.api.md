@@ -216,12 +216,12 @@ export function buildAfmExecution(entities: ExportEntities, query: Query): ToExe
 // Warning: (ae-missing-release-tag) "buildAttributeLabels" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
-export function buildAttributeLabels(labels?: Attribute["labels"]): DeclarativeLabel[];
+export function buildAttributeLabels(labels?: Attribute["labels"], isAuxiliaryDataset?: boolean): DeclarativeLabel[];
 
 // Warning: (ae-missing-release-tag) "buildAttributes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
-export function buildAttributes(fields?: Fields): DeclarativeAttribute[];
+export function buildAttributes(fields?: Fields, isAuxiliaryDataset?: boolean): DeclarativeAttribute[];
 
 // Warning: (ae-missing-release-tag) "buildFacts" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //

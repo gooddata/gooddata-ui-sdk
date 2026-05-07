@@ -13,17 +13,18 @@ import {
     type ObjRef,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
+    dashboardFilterObjRef,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
-    isIdentifierRef,
 } from "@gooddata/sdk-model";
 
 import {
     addAttributeFilter as addAttributeFilterAction,
     addDateFilter as addDateFilterAction,
+    addMeasureValueFilter as addMeasureValueFilterAction,
 } from "../../../model/commands/filters.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { dispatchAndWaitFor } from "../../../model/store/_infra/dispatchAndWaitFor.js";
@@ -34,6 +35,7 @@ import {
 import { getFilterIdentifier } from "../../../model/store/tabs/filterContext/filterContextUtils.js";
 import { uiActions } from "../../../model/store/ui/index.js";
 import { selectSelectedFilterIndex } from "../../../model/store/ui/uiSelectors.js";
+import { type DashboardFilterSelectionType } from "../filterSelectionTypes.js";
 
 /**
  * @internal
@@ -176,7 +178,7 @@ export function useFiltersWithAddedPlaceholder(
     },
     {
         addDraggableFilterPlaceholder: (index: number) => void;
-        selectDraggableFilter: (displayForm: ObjRef) => void;
+        selectDraggableFilter: (ref: ObjRef, selectionType?: DashboardFilterSelectionType) => void;
         closeAttributeSelection: () => void;
         onCloseAttributeFilter: () => void;
     },
@@ -256,10 +258,6 @@ export function useFiltersWithAddedPlaceholder(
             }
 
             if (isDashboardMeasureValueFilter(filter)) {
-                // No working-filter mapping for MVF — applyFilterContext does not stage MVF
-                // changes in working state in view mode. If/when "Apply together" support is
-                // added, the dashboard MVF component will resolve the staged condition itself
-                // via selectors rather than receiving it through props.
                 return {
                     filter,
                     filterIndex,
@@ -287,7 +285,7 @@ export function useFiltersWithAddedPlaceholder(
                     );
                 }
                 if (isDashboardMeasureValueFilter(draggableFilter)) {
-                    return false;
+                    return areObjRefsEqual(dashboardFilterObjRef(draggableFilter), selectedDisplayForm);
                 }
                 return areObjRefsEqual(draggableFilter.dateFilter.dataSet, selectedDisplayForm);
             });
@@ -302,15 +300,35 @@ export function useFiltersWithAddedPlaceholder(
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [addedAttributeFilter, draggableFilters, selectedDisplayForm]);
 
-    // selects AF or DF with dimension
+    // selects AF, DF with dimension, or MVF
     const selectDraggableFilter = useCallback(
-        function (ref: ObjRef) {
+        function (ref: ObjRef, selectionType?: DashboardFilterSelectionType) {
             if (!addedAttributeFilter) {
                 return;
             }
 
+            if (selectionType === "measure") {
+                const usedMeasureValueFilter = draggableFilters
+                    .filter(isDashboardMeasureValueFilter)
+                    .find((filter) => areObjRefsEqual(dashboardFilterObjRef(filter), ref));
+
+                if (usedMeasureValueFilter) {
+                    setAutoOpenFilter(dashboardFilterObjRef(usedMeasureValueFilter));
+                    clearAddedFilter();
+                } else {
+                    setSelectedDisplayForm(ref);
+                    setAutoOpenFilter(ref);
+                    void dispatchAndWaitFor(
+                        dispatch,
+                        addMeasureValueFilterAction(ref, addedAttributeFilter.filterIndex),
+                    ).finally(clearAddedFilter);
+                }
+
+                return;
+            }
+
             // date filter added
-            if (isIdentifierRef(ref) && ref.type === "dataSet") {
+            if (selectionType === "dateDataset") {
                 const relatedDateDataset = dateDatasetsMap.get(ref);
 
                 const usedDateDataset = dateFiltersWithDimensions.find((df) =>
@@ -373,6 +391,7 @@ export function useFiltersWithAddedPlaceholder(
             addedAttributeFilter,
             dateFiltersWithDimensions,
             attributeFilters,
+            draggableFilters,
             dateDatasetsMap,
             allAttributes,
             clearAddedFilter,

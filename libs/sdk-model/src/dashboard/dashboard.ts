@@ -22,6 +22,7 @@ import {
     type ITempFilterContext,
 } from "./filterContext.js";
 import { type IDashboardLayout, type IDashboardWidget } from "./layout.js";
+import { type IDashboardParameter } from "./parameter.js";
 
 /**
  * Date filter configuration mode
@@ -484,6 +485,15 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
 
     /**
+     * Dashboard-level parameter overrides. Each entry references a workspace parameter and
+     * optionally pins a dashboard-scope value, label, and mode. See {@link IDashboardParameter}
+     * for smart-persistence rules.
+     *
+     * @alpha
+     */
+    readonly parameters?: IDashboardParameter[];
+
+    /**
      * Date dataset to use for filtering metrics in section header rich text.
      * @alpha
      */
@@ -571,6 +581,13 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Dashboard extended measure value filter configs
      */
     readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
+
+    /**
+     * Dashboard-level parameter overrides. See {@link IDashboardParameter}.
+     *
+     * @alpha
+     */
+    readonly parameters?: IDashboardParameter[];
 
     /**
      * Date dataset to use for filtering metrics in section header rich text.

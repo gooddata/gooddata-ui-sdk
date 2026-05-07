@@ -970,6 +970,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAiAgenticMultiConversations,
+            "enableAiAgenticMultiConversations",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAiAgenticMultiConversations,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAiVisualizationSummarySkill,
             "enableGenAiVisualizationSummarySkill",
             "BOOLEAN",

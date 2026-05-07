@@ -27,6 +27,7 @@ import type {
     OptionalInsightComponentProvider,
     OptionalLayoutComponentProvider,
     OptionalLoadingComponentProvider,
+    OptionalMeasureValueFilterComponentProvider,
     OptionalRichTextComponentProvider,
     OptionalTitleComponentProvider,
     OptionalTopBarComponentProvider,
@@ -1134,6 +1135,13 @@ export interface IFiltersCustomizer {
     attribute(): IAttributeFiltersCustomizer;
 
     /**
+     * Customize how rendering of measure value filters is done.
+     *
+     * @alpha
+     */
+    measureValue(): IMeasureValueFiltersCustomizer;
+
+    /**
      * Customize how rendering of filter groups is done.
      */
     filterGroup(): IFilterGroupsCustomizer;
@@ -1212,6 +1220,33 @@ export interface IAttributeFiltersCustomizer {
     withCustomDecorator(
         providerFactory: (next: AttributeFilterComponentProvider) => OptionalAttributeFilterComponentProvider,
     ): IAttributeFiltersCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize how measure value filters are rendered.
+ *
+ * @alpha
+ */
+export interface IMeasureValueFiltersCustomizer {
+    /**
+     * Register a provider for React components to render measure value filters.
+     *
+     * @remarks
+     * A provider takes the measure value filter as input and is expected to return
+     * a React component that should be used to render that filter.
+     *
+     * If the provider returns `undefined` then:
+     *
+     * -  if there are other providers registered, they will be called to see if they can provide
+     *    a component to render the measure value filter
+     * -  if there are no other providers registered, the default, built-in component will be used.
+     *
+     * You may register multiple providers. They will be evaluated in the order you register them.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     */
+    withCustomProvider(provider: OptionalMeasureValueFilterComponentProvider): IMeasureValueFiltersCustomizer;
 }
 
 /**

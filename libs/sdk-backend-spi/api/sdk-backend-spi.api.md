@@ -653,6 +653,7 @@ export type IChatConversation = {
     id: string;
     createdAt: string;
     updatedAt: string;
+    title?: string;
 };
 
 // @internal

@@ -36,7 +36,8 @@ export function DraggableFilterDropZone({ targetIndex, onDrop }: DraggableFilter
     );
 
     const isDraggingExistingFilter =
-        itemType !== undefined && (itemType === "attributeFilter" || itemType === "dateFilter");
+        itemType !== undefined &&
+        (itemType === "attributeFilter" || itemType === "dateFilter" || itemType === "measureValueFilter");
 
     if (!isEditMode || isDraggingExistingFilter) {
         return null;

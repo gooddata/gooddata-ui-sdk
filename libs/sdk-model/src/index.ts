@@ -967,6 +967,13 @@ export {
     isDashboardTab,
 } from "./dashboard/dashboard.js";
 
+export {
+    type IDashboardParameter,
+    type DashboardParameterMode,
+    DashboardParameterModeValues,
+    isDashboardParameter,
+} from "./dashboard/parameter.js";
+
 export { type ISettings } from "./settings/index.js";
 
 export {

@@ -16,7 +16,9 @@ export interface IParameterControlButtonProps {
     name: string;
     value: number;
     isActive: boolean;
-    onClick: () => void;
+    isDraggable?: boolean;
+    isDragging?: boolean;
+    onClick?: () => void;
     className?: string;
     "data-testid"?: string;
 }
@@ -28,6 +30,8 @@ export function ParameterControlButton({
     name,
     value,
     isActive,
+    isDraggable,
+    isDragging,
     onClick,
     className,
     "data-testid": dataTestId,
@@ -40,7 +44,8 @@ export function ParameterControlButton({
             title={name}
             subtitle={subtitle}
             isOpen={isActive}
-            isDraggable
+            isDraggable={isDraggable}
+            isDragging={isDragging}
             icon={<UiIcon type="parameter" size={16} color="currentColor" />}
             onClick={onClick}
             className={className}

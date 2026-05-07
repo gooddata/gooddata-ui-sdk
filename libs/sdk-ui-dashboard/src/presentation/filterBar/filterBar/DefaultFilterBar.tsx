@@ -8,6 +8,7 @@ import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
     type DashboardAttributeFilterItem,
     DashboardDateFilterConfigModeValues,
+    DashboardParameterModeValues,
     type FilterContextItem,
     type IDashboardDateFilter,
     type IDashboardMeasureValueFilter,
@@ -16,11 +17,13 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
     isDashboardMeasureValueFilter,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
 import { convertDashboardAttributeFilterElementsValuesToUris } from "../../../_staging/dashboard/legacyFilterConvertors.js";
@@ -31,6 +34,7 @@ import {
     changeMeasureValueFilterCondition,
     changeMigratedAttributeFilterSelection,
     changeWorkingAttributeFilterSelection,
+    changeWorkingMeasureValueFilterCondition,
     clearDateFilterSelection,
     replaceAttributeFilterItemSelection,
     replaceWorkingAttributeFilterItemSelection,
@@ -42,9 +46,11 @@ import {
     selectEnableDashboardFilterGroups,
     selectEnableDateFilterIdentifiers,
     selectEnableMeasureValueFilterKD,
+    selectEnableParameters,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsExport,
 } from "../../../model/store/config/configSelectors.js";
+import { selectDashboardParameters } from "../../../model/store/parameters/parametersSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectEffectiveAttributeFiltersModeMap } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
@@ -59,11 +65,14 @@ import {
     selectWorkingFilterContextFilters,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectFilterGroupsConfig } from "../../../model/store/tabs/filterGroups/filterGroupsSelectors.js";
+import { selectEffectiveMeasureValueFiltersModeMap } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DraggableFilterDropZone } from "../../dragAndDrop/draggableFilterDropZone/DraggableFilterDropZone.js";
 import { DraggableFilterDropZoneHint } from "../../dragAndDrop/draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { HiddenDashboardDateFilter } from "../dateFilter/HiddenDashboardDateFilter.js";
 import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
+import { AddFilterMenu } from "../parameterFilter/AddFilterMenu.js";
+import { DashboardParameterFilter } from "../parameterFilter/DashboardParameterFilter.js";
 import { areAllFiltersHidden } from "../utils.js";
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
 import { DefaultFilterBarItem } from "./DefaultFilterBarItem.js";
@@ -293,15 +302,21 @@ export const useFilterBarProps = (): IFilterBarProps => {
     );
 
     const onMeasureValueFilterChanged = useCallback(
-        (filter: IDashboardMeasureValueFilter, conditions: MeasureValueFilterCondition[] | undefined) => {
+        (
+            filter: IDashboardMeasureValueFilter,
+            conditions: MeasureValueFilterCondition[] | undefined,
+            isWorkingSelectionChange?: boolean,
+        ) => {
             dispatch(
-                changeMeasureValueFilterCondition(
-                    filter.dashboardMeasureValueFilter.localIdentifier,
-                    conditions,
-                ),
+                isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet
+                    ? changeWorkingMeasureValueFilterCondition(
+                          dashboardFilterLocalIdentifier(filter)!,
+                          conditions,
+                      )
+                    : changeMeasureValueFilterCondition(dashboardFilterLocalIdentifier(filter)!, conditions),
             );
         },
-        [dispatch],
+        [dispatch, isApplyAllAtOnceEnabledAndSet],
     );
 
     return {
@@ -320,7 +335,6 @@ export const useFilterBarProps = (): IFilterBarProps => {
  */
 export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     const { filters, workingFilters, filterGroupsConfig, onDateFilterChanged } = props;
-
     const [
         {
             commonDateFilter,
@@ -343,7 +357,10 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
+    const measureValueFiltersModeMap = useDashboardSelector(selectEffectiveMeasureValueFiltersModeMap);
     const enableDashboardFilterGroups = useDashboardSelector(selectEnableDashboardFilterGroups);
+    const enableParameters = useDashboardSelector(selectEnableParameters);
+    const dashboardParameters = useDashboardSelector(selectDashboardParameters);
 
     const isExport = useDashboardSelector(selectIsExport);
     const { DashboardDateFilterComponentProvider } = useDashboardComponentsContext();
@@ -353,11 +370,17 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
         commonDateFilterMode,
         attributeFiltersModeMap,
         dateFiltersModeMap,
+        measureValueFiltersModeMap,
     );
 
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
 
-    if (isExport || haveAllFiltersHidden) {
+    const hasVisibleParameterControls =
+        enableParameters &&
+        (isInEditMode ||
+            dashboardParameters.some((parameter) => parameter.mode !== DashboardParameterModeValues.HIDDEN));
+
+    if (isExport || (haveAllFiltersHidden && !hasVisibleParameterControls)) {
         return <HiddenFilterBar {...props} />;
     }
 
@@ -415,12 +438,18 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
                     onCloseAttributeFilter={onCloseAttributeFilter}
                 />
             ))}
+            {enableParameters
+                ? dashboardParameters.map((parameter) => (
+                      <DashboardParameterFilter key={objRefToString(parameter.ref)} parameter={parameter} />
+                  ))
+                : null}
             {canAddMoreFilters ? (
                 <DraggableFilterDropZone
                     targetIndex={draggableFiltersCount}
                     onDrop={addDraggableFilterPlaceholder}
                 />
             ) : null}
+            {enableParameters && isInEditMode ? <AddFilterMenu /> : null}
             <ResetFiltersButton />
             <div className="filter-bar-dropzone-container">
                 <DraggableFilterDropZoneHint

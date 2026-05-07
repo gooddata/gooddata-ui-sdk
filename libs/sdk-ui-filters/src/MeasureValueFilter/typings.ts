@@ -7,6 +7,7 @@ import { isEmpty } from "lodash-es";
 import {
     type IMeasureMetadataObject,
     type IMeasureValueFilter,
+    type MeasureValueFilterCondition,
     type ObjRef,
     type ObjRefInScope,
 } from "@gooddata/sdk-model";
@@ -73,9 +74,110 @@ export interface IDateDatasetOption {
 }
 
 /**
+ * Props passed to a custom body component supplied via
+ * {@link IMeasureValueFilterCustomComponentProps.BodyComponent}. The body is the area
+ * between the optional header and the actions footer — by default it renders the
+ * conditions, dimensionality and preview sections, and is replaced wholesale when
+ * a `BodyComponent` is provided.
+ *
  * @beta
  */
-export interface IMeasureValueFilterCommonProps {
+export interface IMeasureValueFilterBodyProps {
+    /**
+     * Callback invoked when the Apply control is activated.
+     */
+    onApplyButtonClick: () => void;
+    /**
+     * Closes the dropdown, mirroring a Cancel/Close click.
+     */
+    onCancelButtonClick: () => void;
+}
+
+/**
+ * Props passed to a custom dropdown actions component supplied via
+ * {@link IMeasureValueFilterCustomComponentProps.DropdownActionsComponent}.
+ *
+ * Mirrors {@link IAttributeFilterDropdownActionsProps} so that hosts can build
+ * consistent custom footers across attribute and measure-value filters.
+ *
+ * @beta
+ */
+export interface IMeasureValueFilterDropdownActionsProps {
+    /**
+     * Callback invoked when the Apply control is activated. Triggers the standard
+     * apply pipeline (same as clicking the default Apply button).
+     */
+    onApplyButtonClick: () => void;
+    /**
+     * Callback invoked when the Cancel/Close control is activated. Discards changes
+     * and closes the dropdown (same as clicking the default Cancel button).
+     */
+    onCancelButtonClick: () => void;
+    /**
+     * If true, the Apply action should be disabled (e.g., invalid or unchanged state).
+     */
+    isApplyDisabled?: boolean;
+    /**
+     * Indicates whether the filter form state has diverged from the original filter.
+     */
+    isFilterChanged?: boolean;
+    /**
+     * Tooltip shown when the Apply button is disabled.
+     */
+    applyDisabledTooltip?: string;
+    /**
+     * If true, the host runs in "Apply together" mode — Apply is suppressed and changes
+     * propagate through {@link IMeasureValueFilterCommonProps.onChange}. Custom action
+     * components can use this flag to render only a Close affordance.
+     */
+    withoutApply?: boolean;
+}
+
+/**
+ * Customizable component slots for the Measure Value Filter dropdown.
+ *
+ * Mirrors {@link IAttributeFilterCustomComponentProps} — every slot is a
+ * `ComponentType<...>`, never a `ReactNode`. Omitted slots fall back to the
+ * SDK defaults (the `HeaderComponent` slot has no default and renders nothing).
+ *
+ * @beta
+ */
+export interface IMeasureValueFilterCustomComponentProps {
+    /**
+     * Customize the dropdown body — the area between the header and the actions footer.
+     *
+     * @remarks
+     * - If not provided, the default body (conditions + dimensionality + preview) is rendered.
+     * - When provided, the host owns the entire body: typical uses include swapping in an
+     *   alternate view such as a configuration panel.
+     */
+    BodyComponent?: ComponentType<IMeasureValueFilterBodyProps>;
+    /**
+     * Customize the dropdown actions (footer) component.
+     *
+     * @remarks
+     * - If not provided, the default Cancel/Apply footer is rendered (or nothing when
+     *   `withoutApply` is `true`).
+     */
+    DropdownActionsComponent?: ComponentType<IMeasureValueFilterDropdownActionsProps>;
+}
+
+/**
+ * Callback payload used by the Measure Value Filter dropdown. `onChange` and `onApply`
+ * are called with the same arguments; they only differ in when they are emitted.
+ *
+ * @beta
+ */
+export type IMeasureValueFilterDropdownCallback = (
+    conditions: MeasureValueFilterCondition[] | null,
+    dimensionality?: ObjRefInScope[],
+    applyOnResult?: boolean,
+) => void;
+
+/**
+ * @beta
+ */
+export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCustomComponentProps {
     filter?: IMeasureValueFilter;
     /**
      * Human-readable measure title used in UI texts (e.g., preview).
@@ -84,6 +186,27 @@ export interface IMeasureValueFilterCommonProps {
     measureTitle?: string;
     measureIdentifier: string;
     onApply: (filter: IMeasureValueFilter | null) => void;
+    /**
+     * Optional change callback used in {@link IMeasureValueFilterCommonProps.withoutApply} mode.
+     *
+     * When `withoutApply` is `true`, every meaningful state change (operator switch, value
+     * commit, dimensionality update, treat-null-values toggle) is propagated through this
+     * callback instead of waiting for the user to click the Apply button.
+     *
+     * @beta
+     */
+    onChange?: (filter: IMeasureValueFilter | null) => void;
+    /**
+     * When `true`, the dropdown hides its default Apply/Cancel footer and propagates
+     * intermediate filter state through {@link IMeasureValueFilterCommonProps.onChange}
+     * instead of accumulating changes until the user clicks Apply.
+     *
+     * Intended for hosts (such as the Dashboard "Apply together" mode) that collect
+     * working filter changes and apply them via a global Apply action.
+     *
+     * @beta
+     */
+    withoutApply?: boolean;
     usePercentage?: boolean;
     warningMessage?: WarningMessage;
     locale?: string;
@@ -112,6 +235,7 @@ export interface IMeasureValueFilterCommonProps {
     isDimensionalityEnabled?: boolean;
     /**
      * Controls visibility of the textual filter summary shown above the dropdown footer.
+     *
      * Defaults to `true`.
      *
      * @beta

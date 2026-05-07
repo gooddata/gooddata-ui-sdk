@@ -110,7 +110,7 @@ export function yamlDatasetToDeclarative(
     }
 
     output.facts = buildFacts(input.fields);
-    output.attributes = buildAttributes(input.fields);
+    output.attributes = buildAttributes(input.fields, input.dataset_type === "auxiliary");
 
     const aggregatedFacts = buildAggregatedFacts(input.fields);
     if (aggregatedFacts.length > 0) {
@@ -324,7 +324,7 @@ export function buildAggregatedFacts(fields?: Fields): DeclarativeAggregatedFact
 /**
  * Build declarative attributes out of AaC fields
  */
-export function buildAttributes(fields?: Fields): DeclarativeAttribute[] {
+export function buildAttributes(fields?: Fields, isAuxiliaryDataset = false): DeclarativeAttribute[] {
     if (!fields) {
         return [];
     }
@@ -337,9 +337,9 @@ export function buildAttributes(fields?: Fields): DeclarativeAttribute[] {
             const output: DeclarativeAttribute = {
                 id,
                 title: field.title ?? convertIdToTitle(id),
-                sourceColumn: field.source_column ?? id,
+                ...(isAuxiliaryDataset ? {} : { sourceColumn: field.source_column ?? id }),
                 sourceColumnDataType: field.data_type,
-                labels: buildAttributeLabels(field.labels),
+                labels: buildAttributeLabels(field.labels, isAuxiliaryDataset),
             };
 
             if (field.description) {
@@ -392,7 +392,10 @@ export function buildAttributes(fields?: Fields): DeclarativeAttribute[] {
 /**
  * Build declarative attribute labels out of AaC labels
  */
-export function buildAttributeLabels(labels?: Attribute["labels"]): DeclarativeLabel[] {
+export function buildAttributeLabels(
+    labels?: Attribute["labels"],
+    isAuxiliaryDataset = false,
+): DeclarativeLabel[] {
     if (!labels) {
         return [];
     }
@@ -401,7 +404,7 @@ export function buildAttributeLabels(labels?: Attribute["labels"]): DeclarativeL
         const output: DeclarativeLabel = {
             id,
             title: label.title ?? convertIdToTitle(id),
-            sourceColumn: label.source_column ?? id,
+            ...(isAuxiliaryDataset ? {} : { sourceColumn: label.source_column ?? id }),
             sourceColumnDataType: label.data_type,
         };
 

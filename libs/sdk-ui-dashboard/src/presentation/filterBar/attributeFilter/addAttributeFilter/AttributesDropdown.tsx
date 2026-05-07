@@ -6,12 +6,27 @@ import cx from "classnames";
 import { debounce } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { type ICatalogAttribute, type ICatalogDateDataset, isCatalogAttribute } from "@gooddata/sdk-model";
-import { Dropdown, DropdownList, type ITab, isEscapeKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import {
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    isCatalogAttribute,
+    isCatalogMeasure,
+} from "@gooddata/sdk-model";
+import {
+    Dropdown,
+    DropdownList,
+    type ITab,
+    SingleSelectListItem,
+    isEscapeKey,
+    useIdPrefixed,
+} from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsMultipleDateFilters } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableMultipleDateFilters } from "../../../../model/store/config/configSelectors.js";
+import {
+    selectEnableMeasureValueFilterKD,
+    selectEnableMultipleDateFilters,
+} from "../../../../model/store/config/configSelectors.js";
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectAllInsightWidgets } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { type IDashboardAttributeFilterPlaceholderProps } from "../types.js";
@@ -19,6 +34,13 @@ import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
 import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
 import { AttributeListItem, getAttributeListItemTitle } from "./AttributeListItem.js";
 import { DateAttributeListItem, getDateAttributeListItemTitle } from "./DateAttributeListItem.js";
+import { MetricListItem, getMetricListItemTitle } from "./MetricListItem.js";
+import {
+    type IMetricDropdownListItem,
+    isMetricHeaderListItem,
+    isMetricSeparatorListItem,
+    useMetricDropdownItems,
+} from "./useMetricDropdownItems.js";
 
 const dropdownAlignPoints = [
     {
@@ -65,6 +87,31 @@ const dropdownAlignPoints = [
 ];
 
 const WIDTH = 253;
+
+type AttributesDropdownTabId = "attributes" | "dateDatasets" | "metrics";
+
+function createDefaultSelectedTabId({
+    hasAttributes,
+    hasDateFilters,
+    hasMeasures,
+}: {
+    hasAttributes: boolean;
+    hasDateFilters: boolean;
+    hasMeasures: boolean;
+}): AttributesDropdownTabId {
+    if (hasAttributes) {
+        return "attributes";
+    }
+    if (hasDateFilters) {
+        return "dateDatasets";
+    }
+    if (hasMeasures) {
+        return "metrics";
+    }
+
+    return "attributes";
+}
+
 /**
  * @internal
  */
@@ -77,6 +124,7 @@ export function AttributesDropdown({
     onSelect,
     attributes,
     dateDatasets,
+    measures = [],
     openOnInit = true,
     DropdownButtonComponent = AddAttributeFilterButton,
     DropdownTitleComponent,
@@ -112,6 +160,7 @@ export function AttributesDropdown({
 
     const enableMultipleDateFilters = useDashboardSelector(selectEnableMultipleDateFilters);
     const supportsMultipleDateFilters = useDashboardSelector(selectSupportsMultipleDateFilters);
+    const enableMeasureValueFilterKD = useDashboardSelector(selectEnableMeasureValueFilterKD);
 
     const insightsMap = useDashboardSelector(selectInsightsMap);
     const insightWidgets = useDashboardSelector(selectAllInsightWidgets);
@@ -161,19 +210,32 @@ export function AttributesDropdown({
             : dateDatasets;
     }, [dateDatasets, searchQuery]);
 
+    const { metricMeasures, metricDropdownItems } = useMetricDropdownItems({
+        measures,
+        searchQuery,
+        enableMeasureValueFilterKD,
+        insightWidgets,
+        insightsMap,
+    });
+
     const hasAttributes = useMemo(() => attributes.length > 0, [attributes]);
     const hasDateFilters = useMemo(
         () => offerDateFilters && dateDatasets.length > 0,
         [dateDatasets, offerDateFilters],
     );
+    const hasMeasures = useMemo(() => metricMeasures.length > 0, [metricMeasures]);
 
-    const [selectedTabId, setSelectedTabId] = useState(
-        !hasAttributes && hasDateFilters ? "dateDatasets" : "attributes",
-    );
+    const defaultSelectedTabId = createDefaultSelectedTabId({
+        hasAttributes,
+        hasDateFilters,
+        hasMeasures,
+    });
+
+    const [selectedTabId, setSelectedTabId] = useState<string>(defaultSelectedTabId);
 
     useEffect(() => {
-        setSelectedTabId(!hasAttributes && hasDateFilters ? "dateDatasets" : "attributes");
-    }, [hasAttributes, hasDateFilters]);
+        setSelectedTabId(defaultSelectedTabId);
+    }, [defaultSelectedTabId]);
 
     const onTabSelect = useCallback((selectedTab: ITab) => {
         setSelectedTabId(selectedTab.id);
@@ -184,21 +246,36 @@ export function AttributesDropdown({
         if (attributes.length) {
             newTabs.push({ id: "attributes", iconOnly: true, icon: "gd-icon-attribute" });
         }
+        if (enableMeasureValueFilterKD && metricMeasures.length) {
+            newTabs.push({ id: "metrics", iconOnly: true, icon: "gd-icon-metric" });
+        }
         if (offerDateFilters && dateDatasets.length) {
             newTabs.push({ id: "dateDatasets", iconOnly: true, icon: "gd-icon-date" });
         }
+
         return newTabs;
-    }, [attributes, dateDatasets, offerDateFilters]);
+    }, [attributes, dateDatasets, enableMeasureValueFilterKD, metricMeasures, offerDateFilters]);
 
     const buttonTitle = intl.formatMessage({ id: "addPanel.filter" });
 
-    const items: (ICatalogAttribute | ICatalogDateDataset)[] = useMemo(() => {
-        return selectedTabId === "attributes" ? filteredAttributes : filteredDateDatasets;
-    }, [selectedTabId, filteredAttributes, filteredDateDatasets]);
+    const items: (ICatalogAttribute | ICatalogDateDataset | IMetricDropdownListItem)[] = useMemo(() => {
+        if (selectedTabId === "attributes") {
+            return filteredAttributes;
+        }
+        if (selectedTabId === "dateDatasets") {
+            return filteredDateDatasets;
+        }
+
+        if (selectedTabId === "metrics") {
+            return metricDropdownItems;
+        }
+
+        return [];
+    }, [selectedTabId, filteredAttributes, filteredDateDatasets, metricDropdownItems]);
 
     const showTabs = useMemo(() => {
-        return offerDateFilters && tabs.length > 1;
-    }, [offerDateFilters, tabs.length]);
+        return tabs.length > 1;
+    }, [tabs.length]);
 
     return (
         <Dropdown
@@ -225,7 +302,10 @@ export function AttributesDropdown({
                 <div id={id} role="dialog" aria-labelledby={accessibilityConfig?.ariaLabelledBy}>
                     {DropdownTitleComponent ? <DropdownTitleComponent /> : null}
                     <div
-                        className={cx(bodyClassName, "attributes-list")}
+                        className={cx(bodyClassName, "attributes-list", {
+                            "attributes-list-mvf": enableMeasureValueFilterKD,
+                        })}
+                        style={enableMeasureValueFilterKD ? { width: WIDTH } : undefined}
                         onKeyDown={(e) => {
                             if (isEscapeKey(e)) {
                                 e.stopPropagation();
@@ -250,40 +330,76 @@ export function AttributesDropdown({
                             })}
                             searchLabel={accessibilityConfig?.searchAriaLabel}
                             onKeyDownSelect={(item) => {
+                                if (isMetricHeaderListItem(item) || isMetricSeparatorListItem(item)) {
+                                    return;
+                                }
                                 if (isCatalogAttribute(item)) {
                                     onSelect(item.defaultDisplayForm.ref);
+                                } else if (isCatalogMeasure(item)) {
+                                    onSelect(item.measure.ref, "measure");
                                 } else {
-                                    onSelect(item.dataSet.ref);
+                                    onSelect(item.dataSet.ref, "dateDataset");
                                 }
                             }}
                             closeDropdown={closeDropdown}
-                            itemTitleGetter={(item) =>
-                                isCatalogAttribute(item)
-                                    ? getAttributeListItemTitle(item, getCustomItemTitle?.(item))
-                                    : getDateAttributeListItemTitle(item, getCustomItemTitle?.(item))
-                            }
+                            itemTitleGetter={(item) => {
+                                if (isMetricHeaderListItem(item)) {
+                                    return item.title;
+                                }
+                                if (isMetricSeparatorListItem(item)) {
+                                    return "";
+                                }
+                                if (isCatalogAttribute(item)) {
+                                    return getAttributeListItemTitle(item, getCustomItemTitle?.(item));
+                                }
+                                if (isCatalogMeasure(item)) {
+                                    return getMetricListItemTitle(item, getCustomItemTitle?.(item));
+                                }
+                                return getDateAttributeListItemTitle(item, getCustomItemTitle?.(item));
+                            }}
                             renderNoData={renderNoData}
                             renderItem={({ item }) => {
-                                const title = getCustomItemTitle?.(item);
+                                if (isMetricHeaderListItem(item)) {
+                                    return <SingleSelectListItem type={item.type} title={item.title} />;
+                                }
+                                if (isMetricSeparatorListItem(item)) {
+                                    return <SingleSelectListItem type={item.type} />;
+                                }
                                 if (isCatalogAttribute(item)) {
+                                    const title = getCustomItemTitle?.(item);
                                     return (
                                         <AttributeListItem
                                             item={item}
                                             title={title}
                                             isLocationIconEnabled={shouldDisplayLocationIcon}
                                             onClick={() => {
-                                                onSelect(item.defaultDisplayForm.ref);
+                                                onSelect(item.defaultDisplayForm.ref, "attribute");
                                                 closeDropdown();
                                             }}
                                         />
                                     );
                                 }
+                                if (isCatalogMeasure(item)) {
+                                    const title = getCustomItemTitle?.(item);
+
+                                    return (
+                                        <MetricListItem
+                                            title={title}
+                                            item={item}
+                                            onClick={() => {
+                                                onSelect(item.measure.ref, "measure");
+                                                closeDropdown();
+                                            }}
+                                        />
+                                    );
+                                }
+                                const title = getCustomItemTitle?.(item);
                                 return (
                                     <DateAttributeListItem
                                         title={title}
                                         item={item}
                                         onClick={() => {
-                                            onSelect(item.dataSet.ref);
+                                            onSelect(item.dataSet.ref, "dateDataset");
                                             closeDropdown();
                                         }}
                                     />

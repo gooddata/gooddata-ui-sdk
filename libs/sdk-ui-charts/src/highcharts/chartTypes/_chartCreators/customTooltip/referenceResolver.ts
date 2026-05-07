@@ -1,23 +1,20 @@
 // (C) 2026 GoodData Corporation
 
 /**
- * Reference resolution for custom tooltip content.
+ * Highcharts-specific reference resolution for custom tooltip content.
  *
- * Parses {metric/id} and {label/id} references in markdown content and
- * substitutes them with resolved values from a lookup table.
+ * The pure substitution function (`resolveReferences`) and the value lookup
+ * shape (`IResolvedReferenceValues`) live in @gooddata/sdk-ui-vis-commons; this
+ * file builds the lookup from a hovered Highcharts point's drill intersection.
  */
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ISeparators, isMeasureDescriptor } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-import { REFERENCE_REGEX_MATCH } from "@gooddata/sdk-ui-kit";
+import { type IResolvedReferenceValues } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
 import { type IIdentifierMapping } from "./identifierMapping.js";
-
-export interface IResolvedValues {
-    [referenceKey: string]: string | undefined;
-}
 
 /**
  * Builds resolved values from the hovered point's drill intersection.
@@ -35,9 +32,9 @@ export function resolveReferencesFromPoint(
     point: IUnsafeHighchartsTooltipPoint,
     separators?: ISeparators,
     identifierMapping?: IIdentifierMapping,
-): IResolvedValues {
+): IResolvedReferenceValues {
     const intersection: IDrillEventIntersectionElement[] = point.drillIntersection ?? [];
-    const values: IResolvedValues = {};
+    const values: IResolvedReferenceValues = {};
     const measureMap = identifierMapping?.measures ?? {};
 
     for (const element of intersection) {
@@ -81,42 +78,4 @@ export function resolveReferencesFromPoint(
     }
 
     return values;
-}
-
-// Markdown metacharacters that, if present in a substituted value, would be
-// reinterpreted as formatting by `markdownToHtml`. Backslash-escape them so the
-// parser treats them as literal text. The set covers every char that can start
-// or end a markdown construct supported by our parser: emphasis, link/image
-// brackets, parens, headings, lists, and horizontal rules.
-const MARKDOWN_METACHARS = /[\\*_`\[\]()!#~+\-]/g;
-
-function escapeMarkdownMetachars(value: string): string {
-    return value.replace(MARKDOWN_METACHARS, "\\$&");
-}
-
-/**
- * Substitutes `{metric/id}` and `{label/id}` references in markdown content
- * with resolved values from the lookup table.
- *
- * Substituted values come from data and may contain markdown metacharacters
- * (e.g., `*`, `_`, `[`). They are backslash-escaped so the downstream
- * markdown-to-HTML conversion renders them as literal text rather than as
- * unintended formatting. `markdownToHtml` understands the backslash escapes.
- *
- * @param content - Markdown content with reference placeholders
- * @param values - Lookup of `metric/id` and `label/id` keys to formatted values
- * @param fallbackText - Localized text shown when a reference is recognized but
- *   no value is available (unknown identifier, point with no value, etc.).
- */
-export function resolveReferences(content: string, values: IResolvedValues, fallbackText: string): string {
-    if (!content) {
-        return "";
-    }
-
-    return content.replace(REFERENCE_REGEX_MATCH, (_fullMatch, _wrapped, _key, prefix, identifier) => {
-        // Regex matches the prefix case-insensitively; storage uses lowercase
-        // prefixes. LDM identifiers stay as-is — they are case-sensitive.
-        const value = values[`${prefix.toLowerCase()}/${identifier}`];
-        return escapeMarkdownMetachars(value === undefined ? fallbackText : value);
-    });
 }

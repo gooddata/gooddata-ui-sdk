@@ -15,6 +15,7 @@ import {
     type IDashboardDateFilterConfigItem,
     type IDashboardDefinition,
     type IDashboardLayout,
+    type IDashboardMeasureValueFilterConfig,
     type IDashboardObjectIdentity,
     type IDashboardTab,
     type IDashboardWidget,
@@ -29,11 +30,16 @@ import {
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isTempFilterContext,
     uriRef,
 } from "@gooddata/sdk-model";
 
+import {
+    selectIsParametersChanged,
+    selectSmartPersistedDashboardParameters,
+} from "../parameters/parametersSelectors.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectDateFilterConfigOverrides,
@@ -50,6 +56,7 @@ import {
     selectBasicLayout,
     selectBasicLayoutByTab,
 } from "../tabs/layout/layoutSelectors.js";
+import { selectMeasureValueFilterConfigsOverridesByTab } from "../tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../tabs/tabsState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
@@ -130,6 +137,7 @@ export const selectPersistedDashboardTabs = createSelector(selectSelf, (state): 
             title: "",
             filterContext: persistedDashboard.filterContext,
             attributeFilterConfigs: persistedDashboard.attributeFilterConfigs,
+            measureValueFilterConfigs: persistedDashboard.measureValueFilterConfigs,
             dateFilterConfig: persistedDashboard.dateFilterConfig,
             dateFilterConfigs: persistedDashboard.dateFilterConfigs,
             layout: persistedDashboard.layout,
@@ -229,6 +237,20 @@ export const selectPersistedDashboardDateFilterConfigsByTab: DashboardSelector<
     }, {});
 });
 
+/**
+ * Returns persisted measure value filter configs keyed by tab identifier.
+ *
+ * @internal
+ */
+export const selectPersistedDashboardMeasureValueFilterConfigsByTab: DashboardSelector<
+    Record<string, IDashboardMeasureValueFilterConfig[]>
+> = createSelector(selectPersistedDashboardTabs, (tabSnapshots) => {
+    return tabSnapshots.reduce<Record<string, IDashboardMeasureValueFilterConfig[]>>((acc, snapshot) => {
+        acc[snapshot.localIdentifier] = snapshot.measureValueFilterConfigs ?? [];
+        return acc;
+    }, {});
+});
+
 const selectPersistedDashboardFilterContextFiltersByTab: DashboardSelector<
     Record<string, FilterContextItem[]>
 > = createSelector(selectPersistedDashboardFilterContextDefinitionsByTab, (definitionsByTab) => {
@@ -292,7 +314,8 @@ const selectPersistedDashboardDraggableFiltersByTab: DashboardSelector<Record<st
                     (filter) =>
                         isDashboardDateFilterWithDimension(filter) ||
                         isDashboardAttributeFilter(filter) ||
-                        isDashboardTextAttributeFilter(filter),
+                        isDashboardTextAttributeFilter(filter) ||
+                        isDashboardMeasureValueFilter(filter),
                 );
                 return acc;
             },
@@ -308,7 +331,8 @@ const selectWorkingDraggableFiltersByTab: DashboardSelector<Record<string, Filte
                     (filter) =>
                         isDashboardDateFilterWithDimension(filter) ||
                         isDashboardAttributeFilter(filter) ||
-                        isDashboardTextAttributeFilter(filter),
+                        isDashboardTextAttributeFilter(filter) ||
+                        isDashboardMeasureValueFilter(filter),
                 );
                 return acc;
             },
@@ -797,6 +821,28 @@ export const selectIsDateFilterConfigsChanged: DashboardSelector<boolean> = crea
 );
 
 /**
+ * Selects a boolean indication if the dashboard has any changes to the measure value filter configs compared to the persisted version (if any)
+ *
+ */
+export const selectIsMeasureValueFilterConfigsChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardMeasureValueFilterConfigsByTab,
+    selectMeasureValueFilterConfigsOverridesByTab,
+    (persistedMeasureValueFilterConfigsByTab, currentMeasureValueFilterConfigsByTab) => {
+        const tabIdentifiers = collectTabIdentifiers(
+            persistedMeasureValueFilterConfigsByTab,
+            currentMeasureValueFilterConfigsByTab,
+        );
+
+        return tabIdentifiers.some((tabId) => {
+            const persistedConfigs = persistedMeasureValueFilterConfigsByTab[tabId] ?? [];
+            const currentConfigs = currentMeasureValueFilterConfigsByTab[tabId] ?? [];
+
+            return !isEqual(persistedConfigs, currentConfigs);
+        });
+    },
+);
+
+/**
  * Selects a boolean indication if the dashboard has any changes to the dashboard filter compared to the persisted version (if any)
  *
  * @internal
@@ -892,17 +938,20 @@ export const selectIsFiltersChanged: DashboardSelector<boolean> = createSelector
     selectIsOtherFiltersChanged,
     selectIsAttributeFilterConfigsChanged,
     selectIsDateFilterConfigsChanged,
+    selectIsMeasureValueFilterConfigsChanged,
     (
         isCommonDateFilterChanged,
         isOtherFiltersChanged,
         isAttributeFilterConfigsChanged,
         isDateFilterConfigsChanged,
+        isMeasureValueFilterConfigsChanged,
     ) => {
         return (
             isCommonDateFilterChanged ||
             isOtherFiltersChanged ||
             isAttributeFilterConfigsChanged ||
-            isDateFilterConfigsChanged
+            isDateFilterConfigsChanged ||
+            isMeasureValueFilterConfigsChanged
         );
     },
 );
@@ -1075,6 +1124,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectEvaluationFrequencyChanged,
     selectIsSectionHeadersDateDataSetChanged,
     selectIsTabsChanged,
+    selectIsParametersChanged,
     (
         isNew,
         layout,
@@ -1089,6 +1139,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
         isEvaluationFrequencyChanged,
         isSectionHeadersDateDataSetChanged,
         isTabsChanged,
+        isParametersChanged,
     ) => {
         if (isNew) {
             return !isDashboardLayoutEmpty(layout);
@@ -1106,6 +1157,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
             isEvaluationFrequencyChanged,
             isSectionHeadersDateDataSetChanged,
             isTabsChanged,
+            isParametersChanged,
         ].some(Boolean);
     },
 );
@@ -1122,6 +1174,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
         selectBasicLayout,
         selectDateFilterConfigOverrides,
         selectTabs,
+        selectSmartPersistedDashboardParameters,
         (
             persistedDashboard,
             dashboardDescriptor,
@@ -1130,6 +1183,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
             layout,
             dateFilterConfig,
             tabs,
+            parameters,
         ): IDashboardDefinition => {
             const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
                 ref: persistedDashboard?.ref,
@@ -1149,6 +1203,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                 },
                 layout,
                 dateFilterConfig,
+                ...(parameters.length > 0 ? { parameters } : {}),
                 ...(tabs
                     ? {
                           tabs: tabs.map(
@@ -1167,6 +1222,8 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                                   dateFilterConfig: tab.dateFilterConfig?.dateFilterConfig,
                                   dateFilterConfigs: tab.dateFilterConfigs?.dateFilterConfigs,
                                   attributeFilterConfigs: tab.attributeFilterConfigs?.attributeFilterConfigs,
+                                  measureValueFilterConfigs:
+                                      tab.measureValueFilterConfigs?.measureValueFilterConfigs,
                                   filterGroupsConfig: tab.filterGroupsConfig,
                               }),
                           ),

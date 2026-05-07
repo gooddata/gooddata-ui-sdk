@@ -37,6 +37,7 @@ import { selectLocale } from "../../store/config/configSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
+import { selectSmartPersistedDashboardParameters } from "../../store/parameters/parametersSelectors.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { savingActions } from "../../store/saving/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -48,6 +49,7 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
+import { selectMeasureValueFilterConfigsOverrides } from "../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -145,6 +147,11 @@ function processExistingTabs(tabs: ITabState[]): IDashboardTab[] {
         const attributeFilterConfigs: IDashboardTab["attributeFilterConfigs"] =
             tab.attributeFilterConfigs?.attributeFilterConfigs;
         const attributeFilterConfigsProp = attributeFilterConfigs?.length ? { attributeFilterConfigs } : {};
+        const measureValueFilterConfigs: IDashboardTab["measureValueFilterConfigs"] =
+            tab.measureValueFilterConfigs?.measureValueFilterConfigs;
+        const measureValueFilterConfigsProp = measureValueFilterConfigs?.length
+            ? { measureValueFilterConfigs }
+            : {};
         const filterGroupsConfigProp = tab.filterGroupsConfig
             ? {
                   filterGroupsConfig: tab.filterGroupsConfig,
@@ -171,6 +178,7 @@ function processExistingTabs(tabs: ITabState[]): IDashboardTab[] {
             ...dateFilterConfigProp,
             ...dateFilterConfigsProp,
             ...attributeFilterConfigsProp,
+            ...measureValueFilterConfigsProp,
             ...filterGroupsConfigProp,
         };
         return result;
@@ -184,10 +192,14 @@ export function processLayout(layout: IDashboardLayout<ExtendedDashboardWidget>)
 function buildOptionalFilterConfigsProps(
     attributeFilterConfigs: IDashboardDefinition["attributeFilterConfigs"],
     dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
-): Partial<Pick<IDashboardDefinition, "attributeFilterConfigs" | "dateFilterConfigs">> {
+    measureValueFilterConfigs: IDashboardDefinition["measureValueFilterConfigs"],
+): Partial<
+    Pick<IDashboardDefinition, "attributeFilterConfigs" | "dateFilterConfigs" | "measureValueFilterConfigs">
+> {
     return {
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
+        ...(measureValueFilterConfigs?.length ? { measureValueFilterConfigs } : {}),
     };
 }
 
@@ -197,6 +209,7 @@ function createDefaultTab(
     dateFilterConfig: IDashboardDefinition["dateFilterConfig"],
     attributeFilterConfigs: IDashboardDefinition["attributeFilterConfigs"],
     dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
+    measureValueFilterConfigs: IDashboardDefinition["measureValueFilterConfigs"],
 ): IDashboardTab[] {
     return [
         {
@@ -205,7 +218,11 @@ function createDefaultTab(
             layout: layout ? processLayout(layout) : undefined,
             filterContext: rootFilterContext,
             dateFilterConfig,
-            ...buildOptionalFilterConfigsProps(attributeFilterConfigs, dateFilterConfigs),
+            ...buildOptionalFilterConfigsProps(
+                attributeFilterConfigs,
+                dateFilterConfigs,
+                measureValueFilterConfigs,
+            ),
         },
     ];
 }
@@ -217,6 +234,7 @@ function resolveProcessedTabs(
     dateFilterConfig: IDashboardDefinition["dateFilterConfig"],
     attributeFilterConfigs: IDashboardDefinition["attributeFilterConfigs"],
     dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
+    measureValueFilterConfigs: IDashboardDefinition["measureValueFilterConfigs"],
 ): IDashboardTab[] | undefined {
     // If no tabs exist, create a default tab with root-level properties
     const shouldCreateDefaultTab = !tabs || tabs.length === 0;
@@ -228,6 +246,7 @@ function resolveProcessedTabs(
             dateFilterConfig,
             attributeFilterConfigs,
             dateFilterConfigs,
+            measureValueFilterConfigs,
         );
     }
 
@@ -267,7 +286,12 @@ function* createDashboardSaveContext(
     const dateFilterConfigs: ReturnType<typeof selectDateFilterConfigsOverrides> = yield select(
         selectDateFilterConfigsOverrides,
     );
+    const measureValueFilterConfigs: ReturnType<typeof selectMeasureValueFilterConfigsOverrides> =
+        yield select(selectMeasureValueFilterConfigsOverrides);
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+    const parameters: ReturnType<typeof selectSmartPersistedDashboardParameters> = yield select(
+        selectSmartPersistedDashboardParameters,
+    );
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
 
@@ -299,6 +323,7 @@ function* createDashboardSaveContext(
         dateFilterConfig,
         attributeFilterConfigs,
         dateFilterConfigs,
+        measureValueFilterConfigs,
     );
 
     const locale: ReturnType<typeof selectLocale> = yield select(selectLocale);
@@ -318,8 +343,13 @@ function* createDashboardSaveContext(
         },
         layout,
         dateFilterConfig,
-        ...buildOptionalFilterConfigsProps(attributeFilterConfigs, dateFilterConfigs),
+        ...buildOptionalFilterConfigsProps(
+            attributeFilterConfigs,
+            dateFilterConfigs,
+            measureValueFilterConfigs,
+        ),
         ...(processedTabs ? { tabs: processedTabs } : {}),
+        ...(parameters.length > 0 ? { parameters } : {}),
         ...pluginsProp,
     };
 

@@ -6,11 +6,15 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/button";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 // Foundational properties duplicate the kit primitive `UiControlButton` because
 // `AttributeFilterError` renders a plain div without the kit class.
-.gd-attribute-filter-dropdown-button__next {
+// MVF intentionally shares the AF chip's visual styling so all filter chips on the dashboard filter bar
+// remain visually consistent.
+.gd-attribute-filter-dropdown-button__next,
+.gd-mvf-dashboard-filter-button__next {
     position: relative;
     max-width: 230px;
     padding: 5px 10px;
@@ -82,6 +86,10 @@
     &.gd-is-draggable {
         padding-left: 23px;
     }
+}
+
+.gd-mvf-dashboard-filter-button__next {
+    @include typo-mixins.gd-font-base;
 }
 
 .gd-attribute-filter-mobile-button-wrapper {
@@ -234,7 +242,8 @@
     }
 }
 
-.gd-attribute-filter-dropdown-button-selected-items__next {
+.gd-attribute-filter-dropdown-button-selected-items__next,
+.gd-measure-value-filter-dropdown-button-selected-items__next {
     display: inline-block;
     flex: 0 1 auto;
     min-width: 0;
@@ -344,5 +353,25 @@
         &:active::after {
             background: variables.$gd-palette-primary-dimmed;
         }
+    }
+}
+
+.gd-mvf-dashboard-filter-button__next.disabled {
+    &:hover,
+    &:focus,
+    &:active,
+    &:hover::after,
+    &:focus::after,
+    &:active::after {
+        cursor: default;
+        user-select: auto;
+        box-shadow: none;
+        background: transparent;
+        border-color: transparent;
+        text-decoration: none;
+    }
+
+    .gd-attribute-filter-dropdown-button-subtitle__next::after {
+        content: none;
     }
 }

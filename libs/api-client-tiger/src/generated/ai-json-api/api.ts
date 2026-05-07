@@ -155,6 +155,7 @@ export interface AiConversationResponse {
      * Owner user identifier.
      */
     'userId': string;
+    'title'?: string | null;
     /**
      * Whether this is a preview conversation.
      */
@@ -193,6 +194,13 @@ export interface AiConversationTurnResponse {
     'updatedAt': string;
 }
 
+/**
+ * PATCH /conversations/{conversationId} body.
+ */
+export interface AiConversationUpdateRequest {
+    'title'?: string | null;
+}
+
 export interface AiDateFilterAbsolute {
     'type': AiDateFilterAbsoluteTypeEnum;
     'using': string;
@@ -207,7 +215,7 @@ export const AiDateFilterGranularity = {
     MINUTE: 'MINUTE',
     HOUR: 'HOUR',
     DAY: 'DAY',
-    WEEK: 'WEEK',
+    WEEK_US: 'WEEK_US',
     MONTH: 'MONTH',
     QUARTER: 'QUARTER',
     YEAR: 'YEAR',
@@ -240,7 +248,7 @@ export type AiDateFilterRelativeTypeEnum = 'date_filter';
 
 export const AiDateGranularity = {
     DAY: 'DAY',
-    WEEK: 'WEEK',
+    WEEK_US: 'WEEK_US',
     MONTH: 'MONTH',
     QUARTER: 'QUARTER',
     YEAR: 'YEAR'
@@ -303,9 +311,15 @@ export interface AiFilterByValue {
     'attribute'?: string;
     'top'?: number;
     'bottom'?: number;
+    'condition': AiFilterByValueConditionEnum;
+    'values': Array<string>;
+    'case_sensitive'?: boolean;
+    'display_as'?: string;
+    'value': string;
 }
 
-export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter';
+export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter' | 'text_filter';
+export type AiFilterByValueConditionEnum = 'contains' | 'doesNotContain' | 'startsWith' | 'doesNotStartWith' | 'endsWith' | 'doesNotEndWith';
 
 export interface AiForecastPeriod {
 }
@@ -737,6 +751,30 @@ export interface AiSkillResponse {
     'tags': Array<string>;
     'examples': Array<string>;
 }
+
+export interface AiTextFilterValue {
+    'type': AiTextFilterValueTypeEnum;
+    'using': string;
+    'condition': AiTextFilterValueConditionEnum;
+    'value': string;
+    'case_sensitive'?: boolean;
+    'display_as'?: string;
+}
+
+export type AiTextFilterValueTypeEnum = 'text_filter';
+export type AiTextFilterValueConditionEnum = 'contains' | 'doesNotContain' | 'startsWith' | 'doesNotStartWith' | 'endsWith' | 'doesNotEndWith';
+
+export interface AiTextFilterValues {
+    'type': AiTextFilterValuesTypeEnum;
+    'using': string;
+    'condition': AiTextFilterValuesConditionEnum;
+    'values': Array<string | null>;
+    'case_sensitive'?: boolean;
+    'display_as'?: string;
+}
+
+export type AiTextFilterValuesTypeEnum = 'text_filter';
+export type AiTextFilterValuesConditionEnum = 'is' | 'isNot';
 
 export interface AiTextMessageContent {
     /**
@@ -1309,6 +1347,72 @@ export async function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWo
 // ConversationsAi FP - ConversationsAiAxiosParamCreator
 /**
  * 
+ * @summary Patch Conversation
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {AiConversationUpdateRequest} aiConversationUpdateRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(
+    workspaceId: string, conversationId: string, aiConversationUpdateRequest: AiConversationUpdateRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch', 'conversationId', conversationId)
+    // verify required parameter 'aiConversationUpdateRequest' is not null or undefined
+    assertParamExists('patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch', 'aiConversationUpdateRequest', aiConversationUpdateRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiConversationUpdateRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiConversationUpdateRequest !== undefined ? aiConversationUpdateRequest : {})
+        : aiConversationUpdateRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * 
  * @summary Post Conversations
  * @param {string} workspaceId 
  * @param {boolean} [isPreview] 
@@ -1438,6 +1542,32 @@ export async function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspace
 // ConversationsAi Api FP
 /**
  * 
+ * @summary Patch Conversation
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiConversationResponse> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.aiConversationUpdateRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * 
  * @summary Post Conversations
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -1496,6 +1626,16 @@ export interface ConversationsAiInterface {
      * @memberof ConversationsAiInterface
      */
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
+
+    /**
+     * 
+     * @summary Patch Conversation
+     * @param {ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 
     /**
      * 
@@ -1587,6 +1727,34 @@ export interface ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChat
 }
 
 /**
+ * Request parameters for patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest
+ */
+export interface ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {AiConversationUpdateRequest}
+     * @memberof ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch
+     */
+    readonly aiConversationUpdateRequest: AiConversationUpdateRequest
+}
+
+/**
  * Request parameters for postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost operation in ConversationsAi.
  * @export
  * @interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest
@@ -1648,6 +1816,18 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
      */
     public getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig) {
         return ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Patch Conversation
+     * @param {ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -1930,7 +2110,7 @@ export async function KnowledgeAiAxiosParamCreator_CreateOrgDocument(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
- * Delete a knowledge document and all its chunks.
+ * Delete a knowledge document and all its chunks (local docs only).
  * @summary Delete Document
  * @param {string} workspaceId 
  * @param {string} documentId 
@@ -2024,7 +2204,7 @@ export async function KnowledgeAiAxiosParamCreator_DeleteOrgDocument(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
- * Download a knowledge document\'s raw file.
+ * Download a knowledge document\'s raw file. Inherited and org-level docs are visible.
  * @summary Download Document
  * @param {string} workspaceId 
  * @param {string} documentId 
@@ -2118,7 +2298,7 @@ export async function KnowledgeAiAxiosParamCreator_DownloadOrgDocument(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
- * Get a single knowledge document\'s metadata.
+ * Get a single knowledge document\'s metadata. Inherited and org-level docs are visible.
  * @summary Get Document
  * @param {string} workspaceId 
  * @param {string} documentId 
@@ -2212,7 +2392,7 @@ export async function KnowledgeAiAxiosParamCreator_GetOrgDocument(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
- * List knowledge documents accessible from the workspace.
+ * List knowledge documents accessible from the workspace (local + inherited + org-level).
  * @summary List Documents
  * @param {string} workspaceId 
  * @param {Array<string>} [scopes] 
@@ -2358,7 +2538,7 @@ export async function KnowledgeAiAxiosParamCreator_ListOrgDocuments(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
- * Patch a knowledge document\'s metadata without re-uploading content.
+ * Patch a knowledge document\'s metadata (local docs only).
  * @summary Patch Document
  * @param {string} workspaceId 
  * @param {string} documentId 
@@ -2486,7 +2666,7 @@ export async function KnowledgeAiAxiosParamCreator_PatchOrgDocument(
 
 // KnowledgeAi FP - KnowledgeAiAxiosParamCreator
 /**
- * Search the knowledge base using semantic similarity.
+ * Search the knowledge base using semantic similarity across the workspace ancestor chain.
  * @summary Search Documents
  * @param {string} workspaceId 
  * @param {string} query 
@@ -2797,7 +2977,7 @@ export async function KnowledgeAi_CreateOrgDocument(
 
 // KnowledgeAi Api FP
 /**
- * Delete a knowledge document and all its chunks.
+ * Delete a knowledge document and all its chunks (local docs only).
  * @summary Delete Document
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -2849,7 +3029,7 @@ export async function KnowledgeAi_DeleteOrgDocument(
 
 // KnowledgeAi Api FP
 /**
- * Download a knowledge document\'s raw file.
+ * Download a knowledge document\'s raw file. Inherited and org-level docs are visible.
  * @summary Download Document
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -2901,7 +3081,7 @@ export async function KnowledgeAi_DownloadOrgDocument(
 
 // KnowledgeAi Api FP
 /**
- * Get a single knowledge document\'s metadata.
+ * Get a single knowledge document\'s metadata. Inherited and org-level docs are visible.
  * @summary Get Document
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -2953,7 +3133,7 @@ export async function KnowledgeAi_GetOrgDocument(
 
 // KnowledgeAi Api FP
 /**
- * List knowledge documents accessible from the workspace.
+ * List knowledge documents accessible from the workspace (local + inherited + org-level).
  * @summary List Documents
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -3005,7 +3185,7 @@ export async function KnowledgeAi_ListOrgDocuments(
 
 // KnowledgeAi Api FP
 /**
- * Patch a knowledge document\'s metadata without re-uploading content.
+ * Patch a knowledge document\'s metadata (local docs only).
  * @summary Patch Document
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -3057,7 +3237,7 @@ export async function KnowledgeAi_PatchOrgDocument(
 
 // KnowledgeAi Api FP
 /**
- * Search the knowledge base using semantic similarity.
+ * Search the knowledge base using semantic similarity across the workspace ancestor chain.
  * @summary Search Documents
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -3186,7 +3366,7 @@ export interface KnowledgeAiInterface {
     createOrgDocument(requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
 
     /**
-     * Delete a knowledge document and all its chunks.
+     * Delete a knowledge document and all its chunks (local docs only).
      * @summary Delete Document
      * @param {KnowledgeAiDeleteDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3206,7 +3386,7 @@ export interface KnowledgeAiInterface {
     deleteOrgDocument(requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
 
     /**
-     * Download a knowledge document\'s raw file.
+     * Download a knowledge document\'s raw file. Inherited and org-level docs are visible.
      * @summary Download Document
      * @param {KnowledgeAiDownloadDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3226,7 +3406,7 @@ export interface KnowledgeAiInterface {
     downloadOrgDocument(requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
 
     /**
-     * Get a single knowledge document\'s metadata.
+     * Get a single knowledge document\'s metadata. Inherited and org-level docs are visible.
      * @summary Get Document
      * @param {KnowledgeAiGetDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3246,7 +3426,7 @@ export interface KnowledgeAiInterface {
     getOrgDocument(requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
 
     /**
-     * List knowledge documents accessible from the workspace.
+     * List knowledge documents accessible from the workspace (local + inherited + org-level).
      * @summary List Documents
      * @param {KnowledgeAiListDocumentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3266,7 +3446,7 @@ export interface KnowledgeAiInterface {
     listOrgDocuments(requestParameters: KnowledgeAiListOrgDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiListDocumentsResponse>;
 
     /**
-     * Patch a knowledge document\'s metadata without re-uploading content.
+     * Patch a knowledge document\'s metadata (local docs only).
      * @summary Patch Document
      * @param {KnowledgeAiPatchDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3286,7 +3466,7 @@ export interface KnowledgeAiInterface {
     patchOrgDocument(requestParameters: KnowledgeAiPatchOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDocumentMetadataResponse>;
 
     /**
-     * Search the knowledge base using semantic similarity.
+     * Search the knowledge base using semantic similarity across the workspace ancestor chain.
      * @summary Search Documents
      * @param {KnowledgeAiSearchKnowledgeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3821,7 +4001,7 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
-     * Delete a knowledge document and all its chunks.
+     * Delete a knowledge document and all its chunks (local docs only).
      * @summary Delete Document
      * @param {KnowledgeAiDeleteDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3845,7 +4025,7 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
-     * Download a knowledge document\'s raw file.
+     * Download a knowledge document\'s raw file. Inherited and org-level docs are visible.
      * @summary Download Document
      * @param {KnowledgeAiDownloadDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3869,7 +4049,7 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
-     * Get a single knowledge document\'s metadata.
+     * Get a single knowledge document\'s metadata. Inherited and org-level docs are visible.
      * @summary Get Document
      * @param {KnowledgeAiGetDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3893,7 +4073,7 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
-     * List knowledge documents accessible from the workspace.
+     * List knowledge documents accessible from the workspace (local + inherited + org-level).
      * @summary List Documents
      * @param {KnowledgeAiListDocumentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3917,7 +4097,7 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
-     * Patch a knowledge document\'s metadata without re-uploading content.
+     * Patch a knowledge document\'s metadata (local docs only).
      * @summary Patch Document
      * @param {KnowledgeAiPatchDocumentRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3941,7 +4121,7 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
     }
 
     /**
-     * Search the knowledge base using semantic similarity.
+     * Search the knowledge base using semantic similarity across the workspace ancestor chain.
      * @summary Search Documents
      * @param {KnowledgeAiSearchKnowledgeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

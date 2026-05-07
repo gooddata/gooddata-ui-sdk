@@ -6,6 +6,8 @@ import { type XYCoord } from "@evil-internetmann/react-dnd";
 
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { DEBUG_SHOW_DROP_ZONES } from "../../../dragAndDrop/debug.js";
+import { DefaultMeasureValueFilterDraggingComponent } from "../../../dragAndDrop/draggableMeasureValueFilter/DefaultMeasureValueFilterDraggingComponent.js";
+import { DefaultParameterDraggingComponent } from "../../../dragAndDrop/draggableParameterFilter/DefaultParameterDraggingComponent.js";
 import { type DragPreviewProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
 import { type DraggableContentItem, type DraggableContentItemType } from "../../../dragAndDrop/types.js";
 
@@ -43,6 +45,8 @@ export function ContentDragPreview({
         () => ({
             attributeFilter: AttributeFilterComponentSet.dragging.DraggingComponent,
             dateFilter: DateFilterComponentSet.dragging.DraggingComponent,
+            parameter: DefaultParameterDraggingComponent,
+            measureValueFilter: DefaultMeasureValueFilterDraggingComponent,
             insight: InsightWidgetComponentSet.dragging.DraggingComponent,
             richText: RichTextWidgetComponentSet.dragging.DraggingComponent,
             visualizationSwitcher: VisualizationSwitcherWidgetComponentSet.dragging.DraggingComponent,

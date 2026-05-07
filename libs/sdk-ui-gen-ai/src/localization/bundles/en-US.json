@@ -163,6 +163,14 @@
         "text": "Reset",
         "crowdinContext": "Tooltip for button that resets the AI chatbot conversation"
     },
+    "gd.gen-ai.header.conversations-tooltip": {
+        "text": "Conversations",
+        "crowdinContext": "Tooltip for button that opens the conversation history list"
+    },
+    "gd.gen-ai.header.new-conversation-tooltip": {
+        "text": "New conversation",
+        "crowdinContext": "Tooltip for button that starts a brand new conversation"
+    },
     "gd.gen-ai.header.contract-tooltip": {
         "text": "Contract",
         "crowdinContext": "Tooltip for button that contracts the AI chatbot interface"
@@ -210,6 +218,54 @@
     "gd.gen-ai.semantic-search.title": {
         "text": "Search",
         "crowdinContext": "Title shown above semantic search results."
+    },
+    "gd.gen-ai.conversations.close-label": {
+        "text": "Close conversations",
+        "crowdinContext": "Tooltip for button that closes the conversation history list"
+    },
+    "gd.gen-ai.conversations.title": {
+        "text": "Recent Conversations",
+        "crowdinContext": "Title shown above the conversation history list"
+    },
+    "gd.gen-ai.conversations.empty": {
+        "text": "No conversations yet.{br}Start a new one now.",
+        "crowdinContext": "Message shown when the conversation history list is empty"
+    },
+    "gd.gen-ai.conversations.group.today": {
+        "text": "Today",
+        "crowdinContext": "Header for conversations updated today"
+    },
+    "gd.gen-ai.conversations.group.last-7-days": {
+        "text": "Last 7 days",
+        "crowdinContext": "Header for conversations updated in the last 7 days"
+    },
+    "gd.gen-ai.conversations.group.older": {
+        "text": "Older",
+        "crowdinContext": "Header for conversations older than 7 days"
+    },
+    "gd.gen-ai.conversations.delete-button.aria-label": {
+        "text": "Delete conversation",
+        "crowdinContext": "Aria label for button that opens delete confirmation for a conversation in history list"
+    },
+    "gd.gen-ai.conversations.delete-dialog.title": {
+        "text": "Delete conversation?",
+        "crowdinContext": "Title of the confirmation dialog for deleting a conversation"
+    },
+    "gd.gen-ai.conversations.delete-dialog.body": {
+        "text": "This conversation <b>{name}</b> will be permanently deleted.",
+        "crowdinContext": "Body text of the confirmation dialog for deleting a conversation"
+    },
+    "gd.gen-ai.conversations.delete-dialog.submit": {
+        "text": "Delete",
+        "crowdinContext": "Submit button label in conversation delete confirmation dialog"
+    },
+    "gd.gen-ai.conversations.delete-dialog.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button label in conversation delete confirmation dialog"
+    },
+    "gd.chat.conversation.generating-title": {
+        "text": "Conversation {date}",
+        "crowdinContext": "Title shown for a conversation that has not title generated yet"
     },
     "gd.gen-ai.state.cancelled": {
         "text": "Evaluation cancelled…",

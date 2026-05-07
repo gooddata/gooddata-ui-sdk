@@ -751,20 +751,7 @@
     }
 
     &--loading .gd-ui-kit-button__text {
-        background: linear-gradient(
-            90deg,
-            kit-variables.$gd-color-link 0%,
-            kit-variables.$gd-color-link 40%,
-            kit-variables.$gd-color-white 50%,
-            kit-variables.$gd-color-link 60%,
-            kit-variables.$gd-color-link 100%
-        );
-        background-size: 200% 100%;
-        background-clip: text;
-
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: gd-gen-ai-shimmer 20s infinite linear;
+        @include variables.gd-reasoning();
     }
 
     &__content {
@@ -899,16 +886,6 @@
     100% {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-@keyframes gd-gen-ai-shimmer {
-    0% {
-        background-position: 1000% 0;
-    }
-
-    100% {
-        background-position: -1000% 0;
     }
 }
 
@@ -1059,20 +1036,7 @@
         }
 
         .gd-ui-kit-button__text {
-            background: linear-gradient(
-                90deg,
-                kit-variables.$gd-color-link 0%,
-                kit-variables.$gd-color-link 40%,
-                kit-variables.$gd-color-white 50%,
-                kit-variables.$gd-color-link 60%,
-                kit-variables.$gd-color-link 100%
-            );
-            background-size: 200% 100%;
-            background-clip: text;
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gd-gen-ai-shimmer 20s infinite linear;
+            @include variables.gd-reasoning();
         }
 
         &--completed .gd-ui-kit-button__text {

@@ -12,7 +12,12 @@ import { Overlay, UiFocusManager } from "@gooddata/sdk-ui-kit";
 
 import { DropdownBody } from "./DropdownBody.js";
 import { type MeasureValueFilterOperator } from "./types.js";
-import { type IDimensionalityItem, type WarningMessage } from "./typings.js";
+import {
+    type IDimensionalityItem,
+    type IMeasureValueFilterCustomComponentProps,
+    type IMeasureValueFilterDropdownCallback,
+    type WarningMessage,
+} from "./typings.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 /*
@@ -22,12 +27,10 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
  */
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
-interface IDropdownProps {
-    onApply: (
-        conditions: MeasureValueFilterCondition[] | null,
-        dimensionality?: ObjRefInScope[],
-        applyOnResult?: boolean,
-    ) => void;
+interface IDropdownProps extends IMeasureValueFilterCustomComponentProps {
+    onApply: IMeasureValueFilterDropdownCallback;
+    onChange?: IMeasureValueFilterDropdownCallback;
+    withoutApply?: boolean;
     onCancel: () => void;
     operator?: MeasureValueFilterOperator | null;
     conditions?: MeasureValueFilterCondition[];
@@ -73,10 +76,14 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         treatNullAsZeroValue = false,
         enableOperatorSelection,
         onApply: onApplyProp,
+        onChange: onChangeProp,
+        withoutApply,
+        BodyComponent,
+        DropdownActionsComponent,
         dimensionality,
         insightDimensionality,
         isDimensionalityEnabled,
-        isFilterSummaryEnabled,
+        isFilterSummaryEnabled = true,
         catalogDimensionality,
         loadCatalogDimensionality,
         onDimensionalityChange,
@@ -89,12 +96,8 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         isHeaderEnabled,
     } = props;
 
-    const onApply = useCallback(
-        (
-            conditions: MeasureValueFilterCondition[] | null,
-            newDimensionality?: ObjRefInScope[],
-            applyOnResult?: boolean,
-        ) => {
+    const onApply: IMeasureValueFilterDropdownCallback = useCallback(
+        (conditions, newDimensionality, applyOnResult) => {
             onApplyProp(conditions, newDimensionality, applyOnResult);
         },
         [onApplyProp],
@@ -119,6 +122,10 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                     usePercentage={usePercentage}
                     warningMessage={warningMessage}
                     locale={locale}
+                    onChange={onChangeProp}
+                    withoutApply={withoutApply}
+                    BodyComponent={BodyComponent}
+                    DropdownActionsComponent={DropdownActionsComponent}
                     onCancel={onCancel}
                     onApply={onApply}
                     separators={separators}

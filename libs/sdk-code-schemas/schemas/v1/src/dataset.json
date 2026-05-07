@@ -180,6 +180,19 @@
                 {
                     "title": "SQL dataset",
                     "required": ["sql"]
+                },
+                {
+                    "title": "Auxiliary dataset",
+                    "description": "Synthetic reference target for pre-aggregation datasets. Per gdc-nas, AUX datasets must not carry table_path, sql, precedence, or workspace_data_filters; data lives in the referencing pre-aggregation datasets.",
+                    "x-mergeProperties": true,
+                    "properties": {
+                        "dataset_type": { "const": "auxiliary" },
+                        "table_path": false,
+                        "sql": false,
+                        "precedence": false,
+                        "workspace_data_filters": false
+                    },
+                    "required": ["dataset_type"]
                 }
             ]
         },
@@ -569,7 +582,7 @@
                 },
                 "aggregated_as": {
                     "type": "string",
-                    "enum": ["MIN", "MAX", "SUM"],
+                    "enum": ["MIN", "MAX", "SUM", "APPROXIMATE_COUNT"],
                     "description": "Aggregation method for the fact. Mapped to sourceFactReference in the API."
                 },
                 "assigned_to": {
@@ -710,7 +723,7 @@
         },
         "dataType": {
             "type": "string",
-            "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"],
+            "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN", "HLL"],
             "$semantic": {
                 "type": "reference",
                 "source": "table/column.dataType",

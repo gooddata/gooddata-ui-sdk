@@ -20,9 +20,8 @@
  * Does NOT support: tables, code blocks, blockquotes, nested lists, HTML passthrough.
  * For full Markdown fidelity, a library like `marked` should be used instead.
  *
- * IMPORTANT: When changing the supported syntax here, also update the @public TSDoc
- * on `ICustomTooltipConfig.content` in sdk-ui-charts/src/interfaces/chartConfig.ts
- * so the SDK documentation matches reality.
+ * IMPORTANT: When changing the supported syntax here, also update the @alpha TSDoc
+ * on `ICustomTooltipConfig.content` in ./types.ts so the SDK documentation matches reality.
  */
 
 function escapeHtml(text: string): string {
@@ -47,7 +46,7 @@ const ITALIC_UNDERSCORE_REGEX = /(?<!\w)_([^\s_][^_]*[^\s_]|[^\s_])_(?!\w)/g;
 function processInlineMarkdown(text: string): string {
     let result = escapeHtml(text);
 
-    // Images: ![alt](url) — inline style as fallback since tooltip renders outside normal DOM
+    // Inline style as fallback since the tooltip renders outside the normal DOM tree.
     result = result.replace(IMAGE_REGEX, (_match, alt, url) => {
         if (!isSafeUrl(url)) {
             return `${alt}`;
@@ -55,7 +54,7 @@ function processInlineMarkdown(text: string): string {
         return `<img src="${url}" alt="${alt}" style="max-width: 100%; display: block; margin: 4px 0;" />`;
     });
 
-    // Links: [text](url) — render as styled text, not clickable in tooltips
+    // Render as styled text — links are intentionally not clickable inside tooltips.
     result = result.replace(LINK_REGEX, (_match, linkText) => {
         return `<span class="gd-viz-tooltip-custom-link">${linkText}</span>`;
     });
@@ -64,11 +63,9 @@ function processInlineMarkdown(text: string): string {
     // asterisks are consumed as a unit instead of being split across patterns.
     result = result.replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>");
 
-    // Bold: **text** or __text__
     result = result.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
     result = result.replace(/__(.+?)__/g, "<strong>$1</strong>");
 
-    // Italic: *text* or _text_
     result = result.replace(ITALIC_ASTERISK_REGEX, "<em>$1</em>");
     result = result.replace(ITALIC_UNDERSCORE_REGEX, "<em>$1</em>");
 
@@ -119,6 +116,9 @@ function protectEscapes(markdown: string): { markdown: string; restore: (html: s
 const CACHE_LIMIT = 200;
 const cache = new Map<string, string>();
 
+/**
+ * @internal
+ */
 export function markdownToHtml(markdown: string): string {
     if (!markdown) {
         return "";
@@ -164,13 +164,12 @@ function parseMarkdown(markdown: string): string {
     for (const line of lines) {
         const trimmed = line.trim();
 
-        // Empty line
         if (!trimmed) {
             closeList();
             continue;
         }
 
-        // Horizontal rule: --- or ***  or ___
+        // Horizontal rule: --- or *** or ___
         if (/^(-{3,}|\*{3,}|_{3,})$/.test(trimmed)) {
             closeList();
             htmlParts.push("<hr/>");

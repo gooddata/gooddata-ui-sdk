@@ -58,6 +58,7 @@ export interface IFilterBarProps {
     onMeasureValueFilterChanged?: (
         filter: IDashboardMeasureValueFilter,
         conditions: MeasureValueFilterCondition[] | undefined,
+        isWorkingSelectionChange?: boolean,
     ) => void;
 
     /**

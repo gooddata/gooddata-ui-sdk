@@ -118,3 +118,12 @@ export {
     type IChartFillConfig,
 } from "./coloring/patternFills.js";
 export { PatternFill, type IPatternFillProps } from "./coloring/PatternFill.js";
+
+export {
+    type ICustomTooltipConfig,
+    type CustomTooltipPlacement,
+    type IResolvedReferenceValues,
+} from "./customTooltip/types.js";
+export { markdownToHtml } from "./customTooltip/markdownToHtml.js";
+export { resolveReferences } from "./customTooltip/referenceResolver.js";
+export { resolveMeasureLdmIdentifier } from "./customTooltip/measureLdmIdentifier.js";

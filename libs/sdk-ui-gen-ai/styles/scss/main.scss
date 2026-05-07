@@ -9,6 +9,7 @@
 @use "variables" as variables;
 @use "messages";
 @use "window";
+@use "conversations";
 
 .gd-gen-ai-chat {
     display: flex;

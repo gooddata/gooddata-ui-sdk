@@ -22,6 +22,10 @@ type ChatWindowSliceState = {
      */
     isFullscreen: boolean;
     /**
+     * Indicates whether history panel is open.
+     */
+    isHistory: boolean;
+    /**
      * Color palette to use for the chat UI.
      */
     colorPalette?: IColorPalette;
@@ -64,6 +68,7 @@ export const chatWindowSliceName = "chatWindow";
 
 const initialState: ChatWindowSliceState = {
     isOpen: false,
+    isHistory: false,
     isFullscreen: false,
     colorPalette: undefined,
     settings: undefined,
@@ -86,6 +91,9 @@ const chatWindowSlice = createSlice({
             { payload: { isFullscreen } }: PayloadAction<{ isFullscreen: boolean }>,
         ) => {
             state.isFullscreen = isFullscreen;
+        },
+        setHistoryAction: (state, { payload: { isHistory } }: PayloadAction<{ isHistory: boolean }>) => {
+            state.isHistory = isHistory;
         },
         setColorPaletteAction: (
             state,
@@ -148,6 +156,7 @@ export const chatWindowSliceReducer: Reducer<ChatWindowSliceState> = chatWindowS
 export const {
     setOpenAction,
     setFullscreenAction,
+    setHistoryAction,
     setColorPaletteAction,
     setSettingsAction,
     copyToClipboardAction,

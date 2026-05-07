@@ -312,6 +312,15 @@ export const selectEnableScheduling: DashboardSelector<boolean> = createSelector
 });
 
 /**
+ * Returns whether dashboard-level parameter controls are enabled.
+ *
+ * @alpha
+ */
+export const selectEnableParameters: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableParameters ?? false;
+});
+
+/**
  * @alpha
  */
 export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {

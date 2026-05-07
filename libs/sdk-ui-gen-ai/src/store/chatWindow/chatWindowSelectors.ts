@@ -27,6 +27,11 @@ export const isFullscreenSelector: (state: RootState) => boolean = createSelecto
     (state) => state.isFullscreen,
 );
 
+export const isHistorySelector: (state: RootState) => boolean = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.isHistory,
+);
+
 export const colorPaletteSelector: (state: RootState) => IColorPalette | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.colorPalette,

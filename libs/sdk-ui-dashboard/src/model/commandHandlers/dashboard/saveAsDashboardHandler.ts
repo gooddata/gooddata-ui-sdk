@@ -36,6 +36,7 @@ import {
     selectPersistedDashboard,
     selectPersistedDashboardFilterContextAsFilterContextDefinition,
 } from "../../store/meta/metaSelectors.js";
+import { selectSmartPersistedDashboardParameters } from "../../store/parameters/parametersSelectors.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { savingActions } from "../../store/saving/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -47,6 +48,7 @@ import {
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
+import { selectMeasureValueFilterConfigsOverrides } from "../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type ITabState } from "../../store/tabs/tabsState.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
@@ -109,6 +111,11 @@ function processExistingTabsForSaveAs(
         const attributeFilterConfigs: IDashboardTab["attributeFilterConfigs"] =
             tab.attributeFilterConfigs?.attributeFilterConfigs;
         const attributeFilterConfigsProp = attributeFilterConfigs?.length ? { attributeFilterConfigs } : {};
+        const measureValueFilterConfigs: IDashboardTab["measureValueFilterConfigs"] =
+            tab.measureValueFilterConfigs?.measureValueFilterConfigs;
+        const measureValueFilterConfigsProp = measureValueFilterConfigs?.length
+            ? { measureValueFilterConfigs }
+            : {};
         // Get this tab's specific layout, filter out custom widgets, then process
         const tabLayout = tab.layout?.layout
             ? processLayout(filterOutCustomWidgets(tab.layout.layout))
@@ -132,6 +139,7 @@ function processExistingTabsForSaveAs(
             ...(dateFilterConfig ? { dateFilterConfig } : {}),
             ...dateFilterConfigsProp,
             ...attributeFilterConfigsProp,
+            ...measureValueFilterConfigsProp,
         };
 
         return result;
@@ -195,8 +203,13 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
     const dateFilterConfigs: ReturnType<typeof selectDateFilterConfigsOverrides> = yield select(
         selectDateFilterConfigsOverrides,
     );
+    const measureValueFilterConfigs: ReturnType<typeof selectMeasureValueFilterConfigsOverrides> =
+        yield select(selectMeasureValueFilterConfigsOverrides);
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+    const parameters: ReturnType<typeof selectSmartPersistedDashboardParameters> = yield select(
+        selectSmartPersistedDashboardParameters,
+    );
 
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
@@ -217,7 +230,9 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         dateFilterConfig,
         ...(attributeFilterConfigs?.length ? { attributeFilterConfigs } : {}),
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
+        ...(measureValueFilterConfigs?.length ? { measureValueFilterConfigs } : {}),
         ...(processedTabs ? { tabs: processedTabs } : {}),
+        ...(parameters.length ? { parameters } : {}),
     };
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};

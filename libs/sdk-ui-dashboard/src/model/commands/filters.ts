@@ -1832,6 +1832,155 @@ export function resetFilterContextWorkingSelection(
 //
 
 /**
+ * Payload of the {@link IAddMeasureValueFilter} command.
+ *
+ * @alpha
+ */
+export interface IAddMeasureValueFilterPayload {
+    readonly index: number;
+    readonly measure: ObjRef;
+    readonly localIdentifier?: string;
+    readonly title?: string;
+    readonly mode?: DashboardAttributeFilterConfigMode;
+}
+
+/**
+ * Command for adding a new dashboard measure value filter.
+ *
+ * @alpha
+ */
+export interface IAddMeasureValueFilter extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADD";
+    readonly payload: IAddMeasureValueFilterPayload;
+}
+
+/**
+ * Creates the AddMeasureValueFilter command.
+ *
+ * @param measure - catalog measure whose value should be filtered
+ * @param index - position among draggable filters where the new filter should be placed
+ * @param correlationId - correlation id propagated through emitted events
+ * @param localIdentifier - optional local identifier for the new filter
+ * @param title - optional custom title for the new filter
+ * @param mode - optional visibility mode for the new filter
+ *
+ * @alpha
+ */
+export function addMeasureValueFilter(
+    measure: ObjRef,
+    index: number,
+    correlationId?: string,
+    localIdentifier?: string,
+    title?: string,
+    mode?: DashboardAttributeFilterConfigMode,
+): IAddMeasureValueFilter {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADD",
+        correlationId,
+        payload: {
+            measure,
+            index,
+            localIdentifier,
+            title,
+            mode,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link IRemoveMeasureValueFilter} command.
+ *
+ * @alpha
+ */
+export interface IRemoveMeasureValueFilterPayload {
+    /**
+     * Local identifier of the measure value filter to remove.
+     */
+    readonly localIdentifier: string;
+}
+
+/**
+ * Command for removing a measure value filter.
+ *
+ * @alpha
+ */
+export interface IRemoveMeasureValueFilter extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVE";
+    readonly payload: IRemoveMeasureValueFilterPayload;
+}
+
+/**
+ * Creates the RemoveMeasureValueFilter command.
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the measure value filter
+ * @param correlationId - correlation id propagated through emitted events
+ * @returns remove measure value filter command
+ */
+export function removeMeasureValueFilter(
+    localIdentifier: string,
+    correlationId?: string,
+): IRemoveMeasureValueFilter {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVE",
+        correlationId,
+        payload: {
+            localIdentifier,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link IMoveMeasureValueFilter} command.
+ *
+ * @alpha
+ */
+export type MoveMeasureValueFilterPayload = {
+    /**
+     * Local identifier of the measure value filter to move.
+     */
+    readonly localIdentifier: string;
+    /**
+     * Index among draggable filters to move the filter to.
+     */
+    readonly index: number;
+};
+
+/**
+ * Command for moving a measure value filter.
+ *
+ * @alpha
+ */
+export interface IMoveMeasureValueFilter extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.MOVE";
+    readonly payload: MoveMeasureValueFilterPayload;
+}
+
+/**
+ * Creates the MoveMeasureValueFilter command.
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the measure value filter
+ * @param index - target index among draggable filters
+ * @param correlationId - correlation id propagated through emitted events
+ * @returns move measure value filter command
+ */
+export function moveMeasureValueFilter(
+    localIdentifier: string,
+    index: number,
+    correlationId?: string,
+): IMoveMeasureValueFilter {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.MOVE",
+        correlationId,
+        payload: {
+            localIdentifier,
+            index,
+        },
+    };
+}
+
+/**
  * Payload of the {@link IChangeMeasureValueFilterCondition} command.
  *
  * @alpha
@@ -1847,6 +1996,11 @@ export interface IChangeMeasureValueFilterConditionPayload {
      * as "All" (no filtering).
      */
     readonly conditions?: MeasureValueFilterCondition[];
+
+    /**
+     * Indicates that the change should be staged in the working filter context.
+     */
+    readonly isWorkingSelectionChange?: boolean;
 }
 
 /**
@@ -1883,6 +2037,82 @@ export function changeMeasureValueFilterCondition(
         payload: {
             localIdentifier,
             conditions,
+        },
+    };
+}
+
+/**
+ * Creates the ChangeMeasureValueFilterCondition command for working filter context changes.
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the measure value filter to update
+ * @param conditions - new conditions to apply, or undefined to clear
+ * @param correlationId - correlation id propagated through emitted events
+ * @returns change measure value filter condition command
+ */
+export function changeWorkingMeasureValueFilterCondition(
+    localIdentifier: string,
+    conditions?: MeasureValueFilterCondition[],
+    correlationId?: string,
+): IChangeMeasureValueFilterCondition {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CHANGE_CONDITION",
+        correlationId,
+        payload: {
+            localIdentifier,
+            conditions,
+            isWorkingSelectionChange: true,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ISetMeasureValueFilterTitle} command.
+ *
+ * @alpha
+ */
+export interface ISetMeasureValueFilterTitlePayload {
+    /**
+     * Local identifier of the measure value filter to update.
+     */
+    filterLocalId: string;
+
+    /**
+     * Custom title to set. Pass undefined to reset to the default metric title.
+     */
+    title?: string;
+}
+
+/**
+ * Command for changing measure value filter title.
+ *
+ * @alpha
+ */
+export interface ISetMeasureValueFilterTitle extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.SET_TITLE";
+    readonly payload: ISetMeasureValueFilterTitlePayload;
+}
+
+/**
+ * Creates the {@link ISetMeasureValueFilterTitle} command.
+ *
+ * @alpha
+ * @param filterLocalId - local identifier of the measure value filter
+ * @param title - custom title, or undefined to reset to the default metric title
+ * @param correlationId - correlation id propagated through emitted events
+ * @returns change measure value filter title command
+ */
+export function setMeasureValueFilterTitle(
+    filterLocalId: string,
+    title?: string,
+    correlationId?: string,
+): ISetMeasureValueFilterTitle {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.SET_TITLE",
+        correlationId,
+        payload: {
+            filterLocalId,
+            title,
         },
     };
 }

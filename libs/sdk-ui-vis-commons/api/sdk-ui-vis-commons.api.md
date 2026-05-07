@@ -14,6 +14,7 @@ import { IColorPaletteItem } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
+import { IMeasure } from '@gooddata/sdk-model';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
@@ -73,6 +74,9 @@ export const ColorUtils: {
     getColorByGuid: typeof getColorByGuid;
     getColorMappingPredicate: typeof getColorMappingPredicate;
 };
+
+// @alpha
+export type CustomTooltipPlacement = "above" | "below" | "replace";
 
 // @internal (undocumented)
 export const DEFAULT_LEGEND_CONFIG: {
@@ -207,6 +211,13 @@ export interface ICreateColorAssignmentReturnValue {
     fullColorAssignment: IColorAssignment[];
     // (undocumented)
     outputColorAssignment?: IColorAssignment[];
+}
+
+// @alpha
+export interface ICustomTooltipConfig {
+    content?: string;
+    enabled?: boolean;
+    placement?: CustomTooltipPlacement;
 }
 
 // @internal (undocumented)
@@ -467,6 +478,12 @@ export interface IRange {
     to: number;
 }
 
+// @internal
+export interface IResolvedReferenceValues {
+    // (undocumented)
+    [referenceKey: string]: string | undefined;
+}
+
 // @internal (undocumented)
 export function isCustomPalette(palette: IColorPalette): boolean;
 
@@ -569,6 +586,9 @@ export const LegendPosition: {
 };
 
 // @internal (undocumented)
+export function markdownToHtml(markdown: string): string;
+
+// @internal (undocumented)
 export function normalizeColorToRGB(color: string): string;
 
 // @internal (undocumented)
@@ -601,6 +621,12 @@ export function PopUpLegend({ name, maxRows, enableBorderRadius, series, onLegen
 
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
+
+// @internal
+export function resolveMeasureLdmIdentifier(measure: IMeasure, allMeasures: IMeasure[]): string | undefined;
+
+// @internal
+export function resolveReferences(content: string, values: IResolvedReferenceValues, fallbackText: string): string;
 
 // @internal
 export const shouldRenderPagination: (enableCompactSize: boolean, width: number, height: number) => boolean;

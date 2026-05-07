@@ -8,18 +8,23 @@ import {
     type FilterContextItem,
     type ICatalogAttribute,
     type ICatalogDateDataset,
+    type ICatalogMeasure,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfigItem,
+    type IDashboardMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     isCatalogAttribute,
     isCatalogDateDataset,
+    isCatalogMeasure,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -810,7 +815,7 @@ function ButtonDisabledFocusableWrapper({
  * so we can show it in the catalog items dropdown.
  */
 function getCatalogItemCustomTitle(
-    item: ICatalogAttribute | ICatalogDateDataset,
+    item: ICatalogAttribute | ICatalogDateDataset | ICatalogMeasure,
     availableFilters: FilterContextItem[],
     dateConfigs: IDashboardDateFilterConfigItem[],
 ) {
@@ -826,6 +831,13 @@ function getCatalogItemCustomTitle(
             areObjRefsEqual(config.dateDataSet, item.dataSet.ref),
         );
         return selectedConfig?.config.filterName;
+    } else if (isCatalogMeasure(item)) {
+        const availableFilter = availableFilters?.find(
+            (filter): filter is IDashboardMeasureValueFilter =>
+                isDashboardMeasureValueFilter(filter) &&
+                areObjRefsEqual(dashboardFilterObjRef(filter), item.measure.ref),
+        );
+        return availableFilter?.dashboardMeasureValueFilter.title;
     }
 
     return undefined;

@@ -8,9 +8,9 @@
 //
 // @public (undocumented)
 interface AggregatedFact {
-    aggregated_as: "MIN" | "MAX" | "SUM";
+    aggregated_as: "MIN" | "MAX" | "SUM" | "APPROXIMATE_COUNT";
     assigned_to: string;
-    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN";
+    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
     description?: string;
     is_nullable?: boolean;
     null_value_join_replacement?: string;
@@ -61,7 +61,7 @@ interface AreaChart {
     config?: VisualisationConfig4;
     description?: string;
     // (undocumented)
-    id: Id21;
+    id: Id23;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -71,7 +71,7 @@ interface AreaChart {
     show_in_ai_results?: boolean;
     stack_by?: Bucket[];
     // (undocumented)
-    tags?: Tags15;
+    tags?: Tags16;
     title?: string;
     type: "area_chart";
     view_by?: Bucket[];
@@ -111,7 +111,7 @@ interface ArithmeticMetricFieldGuard1 {
 //
 // @public (undocumented)
 interface Attribute {
-    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN";
+    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
     default_view?: string;
     description?: string;
     // @deprecated (undocumented)
@@ -197,9 +197,9 @@ interface AttributeHierarchy {
     attributes: [AttributeIdentifier6, ...AttributeIdentifier6[]];
     description?: string;
     // (undocumented)
-    id: Id16;
+    id: Id18;
     // (undocumented)
-    tags?: Tags10;
+    tags?: Tags11;
     title?: string;
     // (undocumented)
     type: "attribute_hierarchy";
@@ -309,6 +309,36 @@ interface AttributeWithElementValue {
     [k: string]: string;
 }
 
+// Warning: (ae-missing-release-tag) "AuxiliaryDataset" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface AuxiliaryDataset {
+    data_source?: string;
+    // (undocumented)
+    dataset_type: "auxiliary";
+    description?: string;
+    // (undocumented)
+    fields?: Fields2;
+    // (undocumented)
+    id: Id4;
+    // (undocumented)
+    precedence?: never;
+    // (undocumented)
+    primary_key?: PrimaryKey2 | CompositePrimaryKey2;
+    references?: Reference[];
+    // (undocumented)
+    sql?: never;
+    // (undocumented)
+    table_path?: never;
+    // (undocumented)
+    tags?: Tags6;
+    title?: string;
+    // (undocumented)
+    type: "dataset";
+    // (undocumented)
+    workspace_data_filters?: never;
+}
+
 // Warning: (ae-missing-release-tag) "BarChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -317,7 +347,7 @@ interface BarChart {
     config?: VisualisationConfig1;
     description?: string;
     // (undocumented)
-    id: Id18;
+    id: Id20;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -327,7 +357,7 @@ interface BarChart {
     show_in_ai_results?: boolean;
     stack_by?: Bucket[];
     // (undocumented)
-    tags?: Tags12;
+    tags?: Tags13;
     title?: string;
     type: "bar_chart";
     view_by?: Bucket[];
@@ -353,7 +383,7 @@ interface BubbleChart {
     config?: VisualisationConfig6;
     description?: string;
     // (undocumented)
-    id: Id23;
+    id: Id25;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -363,7 +393,7 @@ interface BubbleChart {
     show_in_ai_results?: boolean;
     size_by?: Bucket[];
     // (undocumented)
-    tags?: Tags17;
+    tags?: Tags18;
     title?: string;
     type: "bubble_chart";
     view_by?: Bucket[];
@@ -402,7 +432,7 @@ interface BulletChart {
     config?: VisualisationConfig13;
     description?: string;
     // (undocumented)
-    id: Id30;
+    id: Id32;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -411,7 +441,7 @@ interface BulletChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags24;
+    tags?: Tags25;
     title?: string;
     type: "bullet_chart";
     view_by?: Bucket[];
@@ -501,7 +531,7 @@ interface ColumnChart {
     config?: VisualisationConfig2;
     description?: string;
     // (undocumented)
-    id: Id19;
+    id: Id21;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -511,7 +541,7 @@ interface ColumnChart {
     show_in_ai_results?: boolean;
     stack_by?: Bucket[];
     // (undocumented)
-    tags?: Tags13;
+    tags?: Tags14;
     title?: string;
     type: "column_chart";
     view_by?: Bucket[];
@@ -525,7 +555,7 @@ interface ComboChart {
     config?: VisualisationConfig18;
     description?: string;
     // (undocumented)
-    id: Id35;
+    id: Id37;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -534,7 +564,7 @@ interface ComboChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags29;
+    tags?: Tags30;
     title?: string;
     type: "combo_chart";
     view_by?: Bucket[];
@@ -593,13 +623,18 @@ type CompositePrimaryKey = Id1[];
 // @public
 type CompositePrimaryKey1 = Id3[];
 
+// Warning: (ae-missing-release-tag) "CompositePrimaryKey2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type CompositePrimaryKey2 = Id5[];
+
 // Warning: (ae-missing-release-tag) "ContainerWidget" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
 interface ContainerWidget {
     columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
     // (undocumented)
-    container: Id11;
+    container: Id13;
     enable_section_headers?: boolean;
     layout_direction?: "row" | "column";
     rows?: number;
@@ -621,22 +656,22 @@ interface Dashboard {
     // (undocumented)
     filters?: DashboardFilters;
     // (undocumented)
-    id: Id6;
+    id: Id8;
     permissions?: {
         VIEW?: Permission;
         EDIT?: Permission;
         SHARE?: Permission;
     };
     plugins?: ({
-        id: Id12;
+        id: Id14;
         parameters?: {
             [k: string]: unknown;
         };
-    } | Id13)[];
+    } | Id15)[];
     sections?: Section[];
     tabs?: Tab[];
     // (undocumented)
-    tags?: Tags8;
+    tags?: Tags9;
     title?: string;
     // (undocumented)
     type: "dashboard";
@@ -788,7 +823,7 @@ interface DashboardTextFilter2 {
 // Warning: (ae-missing-release-tag) "Dataset" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type Dataset = NormalDataset | SQLDataset;
+type Dataset = NormalDataset | SQLDataset | AuxiliaryDataset;
 
 // Warning: (ae-missing-release-tag) "DateDataset" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -798,9 +833,9 @@ interface DateDataset {
     // (undocumented)
     granularities?: ("MINUTE" | "HOUR" | "DAY" | "WEEK" | "WEEK_US" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_WEEK_EU" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "DAY_OF_QUARTER" | "WEEK_OF_YEAR" | "WEEK_OF_YEAR_EU" | "WEEK_OF_QUARTER_EU" | "WEEK_OF_QUARTER" | "MONTH_OF_YEAR" | "MONTH_OF_QUARTER" | "QUARTER_OF_YEAR" | "FISCAL_YEAR" | "FISCAL_QUARTER" | "FISCAL_MONTH")[];
     // (undocumented)
-    id: Id4;
+    id: Id6;
     // (undocumented)
-    tags?: Tags6;
+    tags?: Tags7;
     title?: string;
     title_base?: string;
     title_pattern?: string;
@@ -854,7 +889,7 @@ interface DependencyWheelChart {
     // (undocumented)
     from?: Bucket1;
     // (undocumented)
-    id: Id32;
+    id: Id34;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -863,7 +898,7 @@ interface DependencyWheelChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags26;
+    tags?: Tags27;
     title?: string;
     // (undocumented)
     to?: Bucket2;
@@ -915,7 +950,7 @@ type EmptyBucket = null;
 //
 // @public (undocumented)
 interface Fact {
-    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN";
+    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
     description?: string;
     // @deprecated (undocumented)
     is_hidden?: boolean;
@@ -982,6 +1017,15 @@ interface Fields1 {
 //
 // @public
 interface Fields2 {
+    [k: string]: Attribute | Fact | AggregatedFact | {
+        [k: string]: unknown;
+    };
+}
+
+// Warning: (ae-missing-release-tag) "Fields3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface Fields3 {
     // (undocumented)
     [k: string]: Field;
 }
@@ -1031,7 +1075,7 @@ interface FunnelChart {
     config?: VisualisationConfig11;
     description?: string;
     // (undocumented)
-    id: Id28;
+    id: Id30;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1040,7 +1084,7 @@ interface FunnelChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags22;
+    tags?: Tags23;
     title?: string;
     type: "funnel_chart";
     view_by?: Bucket[];
@@ -1059,7 +1103,7 @@ interface GeoAreaChart {
     config?: VisualisationConfig21;
     description?: string;
     // (undocumented)
-    id: Id38;
+    id: Id40;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     layers?: LayerItem[];
@@ -1069,7 +1113,7 @@ interface GeoAreaChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags31;
+    tags?: Tags32;
     title?: string;
     type: "geo_area_chart";
     view_by?: GeoAreaBucket[];
@@ -1093,7 +1137,7 @@ interface GeoChart {
     config?: VisualisationConfig19;
     description?: string;
     // (undocumented)
-    id: Id36;
+    id: Id38;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     layers?: LayerItem[];
@@ -1103,7 +1147,7 @@ interface GeoChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags30;
+    tags?: Tags31;
     title?: string;
     type: "geo_chart";
     view_by?: PushpinLocationBucket[];
@@ -1117,7 +1161,7 @@ interface HeadlineChart {
     config?: VisualisationConfig17;
     description?: string;
     // (undocumented)
-    id: Id34;
+    id: Id36;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1126,7 +1170,7 @@ interface HeadlineChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags28;
+    tags?: Tags29;
     title?: string;
     type: "headline_chart";
     view_by?: unknown[];
@@ -1141,7 +1185,7 @@ interface HeatmapChart {
     config?: VisualisationConfig12;
     description?: string;
     // (undocumented)
-    id: Id29;
+    id: Id31;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1151,7 +1195,7 @@ interface HeatmapChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags23;
+    tags?: Tags24;
     title?: string;
     type: "heatmap_chart";
     view_by?: Bucket[];
@@ -1332,9 +1376,19 @@ type Id39 = string;
 // @public
 type Id4 = string;
 
-// Warning: (ae-missing-release-tag) "Id5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+// Warning: (ae-missing-release-tag) "Id40" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
+type Id40 = string;
+
+// Warning: (ae-missing-release-tag) "Id41" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Id41 = string;
+
+// Warning: (ae-missing-release-tag) "Id5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
 type Id5 = string;
 
 // Warning: (ae-missing-release-tag) "Id6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -1580,7 +1634,7 @@ interface InteractionOpenVisualization {
 //
 // @public
 interface Label {
-    data_type?: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN";
+    data_type?: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
     description?: string;
     // (undocumented)
     geo_area_config?: GeoAreaConfig;
@@ -1698,7 +1752,7 @@ interface LineChart {
     config?: VisualisationConfig3;
     description?: string;
     // (undocumented)
-    id: Id20;
+    id: Id22;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -1707,7 +1761,7 @@ interface LineChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags14;
+    tags?: Tags15;
     title?: string;
     trend_by?: Bucket[];
     type: "line_chart";
@@ -2146,10 +2200,25 @@ export const metadata_v1: {
                     snippets: string[];
                 })[];
                 required: string[];
-                oneOf: {
+                oneOf: ({
+                    properties?: undefined;
                     title: string;
                     required: string[];
-                }[];
+                    description?: undefined;
+                } | {
+                    title: string;
+                    description: string;
+                    properties: {
+                        dataset_type: {
+                            const: string;
+                        };
+                        table_path: boolean;
+                        sql: boolean;
+                        precedence: boolean;
+                        workspace_data_filters: boolean;
+                    };
+                    required: string[];
+                })[];
             };
             dateDataset: {
                 title: string;
@@ -2354,6 +2423,7 @@ export const metadata_v1: {
                             oneOf: ({
                                 $ref?: undefined;
                                 $semantic?: undefined;
+                                description?: undefined;
                                 type: string;
                                 properties: {
                                     id: {
@@ -2370,7 +2440,6 @@ export const metadata_v1: {
                                 };
                                 required: string[];
                                 additionalProperties: boolean;
-                                description?: undefined;
                             } | {
                                 properties?: undefined;
                                 required?: undefined;
@@ -7323,10 +7392,25 @@ export const metadata_v1: {
                 snippets: string[];
             })[];
             required: string[];
-            oneOf: {
+            oneOf: ({
+                properties?: undefined;
+                description?: undefined;
                 title: string;
                 required: string[];
-            }[];
+            } | {
+                title: string;
+                description: string;
+                properties: {
+                    dataset_type: {
+                        const: string;
+                    };
+                    table_path: boolean;
+                    sql: boolean;
+                    precedence: boolean;
+                    workspace_data_filters: boolean;
+                };
+                required: string[];
+            })[];
         };
         dateDataset: {
             title: string;
@@ -8884,13 +8968,13 @@ interface Metric {
     description?: string;
     format?: string;
     // (undocumented)
-    id: Id5;
+    id: Id7;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     maql: string;
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags7;
+    tags?: Tags8;
     title?: string;
     // (undocumented)
     type: "metric";
@@ -9060,7 +9144,7 @@ interface PieChart {
     config?: VisualisationConfig7;
     description?: string;
     // (undocumented)
-    id: Id24;
+    id: Id26;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9069,7 +9153,7 @@ interface PieChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags18;
+    tags?: Tags19;
     title?: string;
     type: "pie_chart";
     view_by?: Bucket[];
@@ -9083,7 +9167,7 @@ interface PieChart1 {
     config?: VisualisationConfig8;
     description?: string;
     // (undocumented)
-    id: Id25;
+    id: Id27;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9092,7 +9176,7 @@ interface PieChart1 {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags19;
+    tags?: Tags20;
     title?: string;
     type: "donut_chart";
     view_by?: Bucket[];
@@ -9104,9 +9188,9 @@ interface PieChart1 {
 interface Plugin_2 {
     description?: string;
     // (undocumented)
-    id: Id15;
+    id: Id17;
     // (undocumented)
-    tags?: Tags9;
+    tags?: Tags10;
     title?: string;
     // (undocumented)
     type: "plugin";
@@ -9184,6 +9268,11 @@ type PrimaryKey = string;
 // @public
 type PrimaryKey1 = string;
 
+// Warning: (ae-missing-release-tag) "PrimaryKey2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type PrimaryKey2 = string;
+
 // Warning: (ae-missing-release-tag) "PushpinLocationBucket" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -9197,7 +9286,7 @@ interface PyramidChart {
     config?: VisualisationConfig10;
     description?: string;
     // (undocumented)
-    id: Id27;
+    id: Id29;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9206,7 +9295,7 @@ interface PyramidChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags21;
+    tags?: Tags22;
     title?: string;
     type: "pyramid_chart";
     view_by?: Bucket[];
@@ -9217,7 +9306,7 @@ interface PyramidChart {
 // @public
 interface Query {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9229,7 +9318,7 @@ interface Query {
 // @public
 interface Query1 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9241,7 +9330,7 @@ interface Query1 {
 // @public
 interface Query10 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9253,7 +9342,7 @@ interface Query10 {
 // @public
 interface Query11 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9265,7 +9354,7 @@ interface Query11 {
 // @public
 interface Query12 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9277,7 +9366,7 @@ interface Query12 {
 // @public
 interface Query13 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9289,7 +9378,7 @@ interface Query13 {
 // @public
 interface Query14 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9301,7 +9390,7 @@ interface Query14 {
 // @public
 interface Query15 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9313,7 +9402,7 @@ interface Query15 {
 // @public
 interface Query16 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9325,7 +9414,7 @@ interface Query16 {
 // @public
 interface Query17 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9337,7 +9426,7 @@ interface Query17 {
 // @public
 interface Query18 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9349,7 +9438,7 @@ interface Query18 {
 // @public
 interface Query19 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9361,7 +9450,7 @@ interface Query19 {
 // @public
 interface Query2 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9373,7 +9462,7 @@ interface Query2 {
 // @public
 interface Query20 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9385,7 +9474,7 @@ interface Query20 {
 // @public
 interface Query21 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9397,7 +9486,7 @@ interface Query21 {
 // @public
 interface Query3 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9409,7 +9498,7 @@ interface Query3 {
 // @public
 interface Query4 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9421,7 +9510,7 @@ interface Query4 {
 // @public
 interface Query5 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9433,7 +9522,7 @@ interface Query5 {
 // @public
 interface Query6 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9445,7 +9534,7 @@ interface Query6 {
 // @public
 interface Query7 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9457,7 +9546,7 @@ interface Query7 {
 // @public
 interface Query8 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9469,7 +9558,7 @@ interface Query8 {
 // @public
 interface Query9 {
     // (undocumented)
-    fields: Fields2;
+    fields: Fields3;
     // (undocumented)
     filter_by?: QueryFilters2;
     // (undocumented)
@@ -9557,7 +9646,7 @@ interface RepeaterChart {
     config?: VisualisationConfig22;
     description?: string;
     // (undocumented)
-    id: Id39;
+    id: Id41;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9567,7 +9656,7 @@ interface RepeaterChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags32;
+    tags?: Tags33;
     title?: string;
     type: "repeater_chart";
     view_by?: Bucket[];
@@ -9580,7 +9669,7 @@ interface RichTextWidget {
     columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
     content: string;
     // (undocumented)
-    id?: Id9;
+    id?: Id11;
     rows?: number;
 }
 
@@ -9594,7 +9683,7 @@ interface SankeyChart {
     // (undocumented)
     from?: Bucket3;
     // (undocumented)
-    id: Id33;
+    id: Id35;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9603,7 +9692,7 @@ interface SankeyChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags27;
+    tags?: Tags28;
     title?: string;
     // (undocumented)
     to?: Bucket4;
@@ -9620,7 +9709,7 @@ interface ScatterChart {
     config?: VisualisationConfig5;
     description?: string;
     // (undocumented)
-    id: Id22;
+    id: Id24;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: (Bucket | EmptyBucket)[];
@@ -9629,7 +9718,7 @@ interface ScatterChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags16;
+    tags?: Tags17;
     title?: string;
     type: "scatter_chart";
     view_by?: Bucket[];
@@ -9680,7 +9769,7 @@ type Sorts = Sort[];
 //
 // @public (undocumented)
 interface Source {
-    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN";
+    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
     is_nullable?: boolean;
     null_value_join_replacement?: string;
     // (undocumented)
@@ -9740,7 +9829,7 @@ interface Tab {
     // (undocumented)
     filters?: DashboardFilters1;
     // (undocumented)
-    id: Id14;
+    id: Id16;
     sections: Section[];
     title: string;
 }
@@ -9754,7 +9843,7 @@ interface Table {
     config?: VisualisationConfig;
     description?: string;
     // (undocumented)
-    id: Id17;
+    id: Id19;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -9764,7 +9853,7 @@ interface Table {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags11;
+    tags?: Tags12;
     title?: string;
     type: "table";
     view_by?: Bucket[];
@@ -9905,6 +9994,11 @@ type Tags31 = string[];
 // @public
 type Tags32 = string[];
 
+// Warning: (ae-missing-release-tag) "Tags33" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type Tags33 = string[];
+
 // Warning: (ae-missing-release-tag) "Tags4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -10026,7 +10120,7 @@ interface TreemapChart {
     config?: VisualisationConfig9;
     description?: string;
     // (undocumented)
-    id: Id26;
+    id: Id28;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -10035,7 +10129,7 @@ interface TreemapChart {
     segment_by?: Bucket[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags20;
+    tags?: Tags21;
     title?: string;
     type: "treemap_chart";
     view_by?: Bucket[];
@@ -10063,22 +10157,27 @@ declare namespace v1 {
         PrimaryKey1,
         Id3,
         CompositePrimaryKey1,
-        Metadata6,
-        Metadata8,
         Id4,
         Tags6,
+        PrimaryKey2,
+        Id5,
+        CompositePrimaryKey2,
+        Metadata6,
+        Metadata8,
+        Id6,
+        Tags7,
         Metadata9,
         Metadata11,
-        Id5,
-        Tags7,
+        Id7,
+        Tags8,
         Metadata12,
         Metadata14,
-        Id6,
-        Tags8,
+        Id8,
+        Tags9,
         Widget,
         Widget1,
-        Id7,
-        Id8,
+        Id9,
+        Id10,
         Interaction,
         Interaction1,
         InteractionClickOn,
@@ -10098,11 +10197,11 @@ declare namespace v1 {
         IgnoredDrillDown2,
         IgnoredDrillDown3,
         Widget2,
-        Id9,
-        Widget3,
-        Id10,
-        Widget4,
         Id11,
+        Widget3,
+        Id12,
+        Widget4,
+        Id13,
         DashboardAttributeFilter,
         DashboardAttributeFilter1,
         AttributeIdentifier2,
@@ -10121,24 +10220,24 @@ declare namespace v1 {
         AttributeIdentifier5,
         LabelIdentifier5,
         DisplayAsLabelIdentifier3,
-        Id12,
-        Id13,
         Id14,
+        Id15,
+        Id16,
         Metadata15,
         Metadata17,
-        Id15,
-        Tags9,
+        Id17,
+        Tags10,
         Metadata18,
         Metadata20,
-        Id16,
-        Tags10,
+        Id18,
+        Tags11,
         AttributeIdentifier6,
         Metadata21,
         Metadata23,
         Visualisation,
         Visualisation1,
-        Id17,
-        Tags11,
+        Id19,
+        Tags12,
         Field,
         AttributeIdentifier7,
         Field1,
@@ -10220,78 +10319,78 @@ declare namespace v1 {
         Bucket,
         SimpleBucket,
         Visualisation2,
-        Id18,
-        Tags12,
-        Visualisation3,
-        Id19,
-        Tags13,
-        Visualisation4,
         Id20,
-        Tags14,
-        Visualisation5,
+        Tags13,
+        Visualisation3,
         Id21,
-        Tags15,
-        Visualisation6,
+        Tags14,
+        Visualisation4,
         Id22,
+        Tags15,
+        Visualisation5,
+        Id23,
         Tags16,
+        Visualisation6,
+        Id24,
+        Tags17,
         EmptyBucket,
         Visualisation7,
-        Id23,
-        Tags17,
-        Visualisation8,
-        Id24,
-        Tags18,
-        Visualisation9,
         Id25,
-        Tags19,
-        Visualisation10,
+        Tags18,
+        Visualisation8,
         Id26,
-        Tags20,
-        Visualisation11,
+        Tags19,
+        Visualisation9,
         Id27,
-        Tags21,
-        Visualisation12,
+        Tags20,
+        Visualisation10,
         Id28,
-        Tags22,
-        Visualisation13,
+        Tags21,
+        Visualisation11,
         Id29,
-        Tags23,
-        Visualisation14,
+        Tags22,
+        Visualisation12,
         Id30,
-        Tags24,
-        Visualisation15,
+        Tags23,
+        Visualisation13,
         Id31,
-        Tags25,
-        Visualisation16,
+        Tags24,
+        Visualisation14,
         Id32,
+        Tags25,
+        Visualisation15,
+        Id33,
         Tags26,
+        Visualisation16,
+        Id34,
+        Tags27,
         Bucket1,
         Bucket2,
         Visualisation17,
-        Id33,
-        Tags27,
+        Id35,
+        Tags28,
         Bucket3,
         Bucket4,
         Visualisation18,
-        Id34,
-        Tags28,
-        Visualisation19,
-        Id35,
-        Tags29,
-        Visualisation20,
         Id36,
+        Tags29,
+        Visualisation19,
+        Id37,
         Tags30,
+        Visualisation20,
+        Id38,
+        Tags31,
         PushpinLocationBucket,
         LayerItem,
-        Id37,
+        Id39,
         LocationBucket,
         GeoAreaBucket,
         Visualisation21,
-        Id38,
-        Tags31,
-        Visualisation22,
-        Id39,
+        Id40,
         Tags32,
+        Visualisation22,
+        Id41,
+        Tags33,
         Metadata24,
         Metadata26,
         Metadata1,
@@ -10309,6 +10408,8 @@ declare namespace v1 {
         WorkspaceDataFilter,
         SQLDataset,
         Fields1,
+        AuxiliaryDataset,
+        Fields2,
         Metadata7,
         DateDataset,
         Metadata10,
@@ -10349,7 +10450,7 @@ declare namespace v1 {
         Metadata22,
         Table,
         Query,
-        Fields2,
+        Fields3,
         AttributeField,
         AttributeFieldGuard1,
         MetricField,
@@ -16354,11 +16455,11 @@ interface VisualisationConfig9 {
 interface VisualisationWidget {
     columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
     // (undocumented)
-    date?: Id8;
+    date?: Id10;
     // (undocumented)
     description?: string | false | "inherit";
     // (undocumented)
-    id?: Id7;
+    id?: Id9;
     ignored_cross_filtering?: boolean;
     ignored_drill_downs?: IgnoredDrillDown[];
     ignored_drill_downs_intersections?: IgnoredDrillDownIntersection[];
@@ -16378,11 +16479,11 @@ interface VisualisationWidget {
 interface VisualisationWidget1 {
     columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
     // (undocumented)
-    date?: Id8;
+    date?: Id10;
     // (undocumented)
     description?: string | false | "inherit";
     // (undocumented)
-    id?: Id7;
+    id?: Id9;
     ignored_cross_filtering?: boolean;
     ignored_drill_downs?: IgnoredDrillDown[];
     ignored_drill_downs_intersections?: IgnoredDrillDownIntersection[];
@@ -16403,7 +16504,7 @@ interface VisualizationDataLayer {
     // (undocumented)
     config?: VisualisationConfig20;
     // (undocumented)
-    id: Id37;
+    id: Id39;
     metrics?: (Bucket | EmptyBucket)[];
     segment_by?: Bucket[];
     title?: string;
@@ -16417,7 +16518,7 @@ interface VisualizationDataLayer {
 interface VisualizationSwitcherWidget {
     columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
     // (undocumented)
-    id?: Id10;
+    id?: Id12;
     rows?: number;
     visualizations: VisualisationWidget1[];
 }
@@ -16430,7 +16531,7 @@ interface WaterfallChart {
     config?: VisualisationConfig14;
     description?: string;
     // (undocumented)
-    id: Id31;
+    id: Id33;
     // @deprecated (undocumented)
     is_hidden?: boolean;
     metrics?: Bucket[];
@@ -16439,7 +16540,7 @@ interface WaterfallChart {
     segment_by?: unknown[];
     show_in_ai_results?: boolean;
     // (undocumented)
-    tags?: Tags25;
+    tags?: Tags26;
     title?: string;
     type: "waterfall_chart";
     view_by?: Bucket[];
@@ -16501,7 +16602,7 @@ type WidthValueOrAuto2 = "auto";
 //
 // @public (undocumented)
 interface WorkspaceDataFilter {
-    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN";
+    data_type: "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN" | "HLL";
     filter_id: string;
     // (undocumented)
     source_column: SourceColumn;

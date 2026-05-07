@@ -9,6 +9,7 @@ import {
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
     type ITigerDashboardMeasureValueFilterConfig,
+    type ITigerDashboardParameter,
     type ITigerDashboardTab,
     type ITigerFilterContextItem,
 } from "./TigerTypes.js";
@@ -42,6 +43,12 @@ export interface IAnalyticalDashboard {
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
     measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
+    /**
+     * Optional dashboard parameter overrides.
+     *
+     * @alpha
+     */
+    parameters?: ITigerDashboardParameter[];
     plugins?: IDashboardPluginLink[];
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;

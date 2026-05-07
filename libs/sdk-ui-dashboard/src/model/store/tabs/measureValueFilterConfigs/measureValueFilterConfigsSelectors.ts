@@ -16,8 +16,6 @@ import { DEFAULT_TAB_ID } from "../tabsState.js";
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 
 /**
- * Returns measure value filter config overrides keyed by tab identifier.
- *
  * @internal
  */
 export const selectMeasureValueFilterConfigsOverridesByTab: DashboardSelector<
@@ -35,8 +33,6 @@ export const selectMeasureValueFilterConfigsOverridesByTab: DashboardSelector<
 });
 
 /**
- * Returns measure value filter configs for the active tab (or first available tab if no active set).
- *
  * @alpha
  */
 export const selectMeasureValueFilterConfigsOverrides: DashboardSelector<
@@ -50,44 +46,41 @@ export const selectMeasureValueFilterConfigsOverrides: DashboardSelector<
         }
 
         const resolvedActiveTabId = activeTabId ?? Object.keys(overridesByTab)[0];
-
         return overridesByTab[resolvedActiveTabId] ?? [];
     },
 );
 
 /**
- * Map of measure value filter modes (active tab) keyed by filter local identifier.
- *
  * @alpha
  */
 export const selectMeasureValueFilterConfigsModeMap: DashboardSelector<
     Map<string, DashboardAttributeFilterConfigMode>
-> = createSelector(selectMeasureValueFilterConfigsOverrides, (configs) => {
-    return configs.reduce((map, config) => {
+> = createSelector(selectMeasureValueFilterConfigsOverrides, (measureValueFilterConfigs) => {
+    return measureValueFilterConfigs.reduce((map, config) => {
         map.set(config.localIdentifier, config.mode ?? DashboardAttributeFilterConfigModeValues.ACTIVE);
         return map;
-    }, new Map());
+    }, new Map<string, DashboardAttributeFilterConfigMode>());
 });
 
 /**
- * Map of effective measure value filter modes — always ACTIVE in edit mode; otherwise the configured mode.
- *
  * @alpha
  */
 export const selectEffectiveMeasureValueFiltersModeMap: DashboardSelector<
     Map<string, DashboardAttributeFilterConfigMode>
-> = createSelector(selectIsInEditMode, selectMeasureValueFilterConfigsOverrides, (isInEditMode, configs) => {
-    return configs.reduce((map, config) => {
-        const mode =
-            isInEditMode || !config.mode ? DashboardAttributeFilterConfigModeValues.ACTIVE : config.mode;
-        map.set(config.localIdentifier, mode);
-        return map;
-    }, new Map());
-});
+> = createSelector(
+    selectIsInEditMode,
+    selectMeasureValueFilterConfigsOverrides,
+    (isInEditMode, measureValueFilterConfigs) => {
+        return measureValueFilterConfigs.reduce((map, config) => {
+            const mode =
+                isInEditMode || !config.mode ? DashboardAttributeFilterConfigModeValues.ACTIVE : config.mode;
+            map.set(config.localIdentifier, mode);
+            return map;
+        }, new Map<string, DashboardAttributeFilterConfigMode>());
+    },
+);
 
 /**
- * Map of measure value filter modes keyed by tab identifier (each value is a per-filter mode map).
- *
  * @internal
  */
 export const selectMeasureValueFilterConfigsModeMapByTab: DashboardSelector<

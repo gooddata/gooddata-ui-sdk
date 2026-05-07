@@ -32,6 +32,7 @@ import {
     dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemValidateElementsBy,
+    dashboardFilterLocalIdentifier,
     isAttributeElementsByRef,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
@@ -43,10 +44,10 @@ import {
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { type IAddDateFilterPayload } from "../../../commands/filters.js";
+import { type IAddDateFilterPayload, type IAddMeasureValueFilterPayload } from "../../../commands/filters.js";
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
 import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
-import { filterContextInitialState } from "./filterContextState.js";
+import { type WorkingDashboardMeasureValueFilter, filterContextInitialState } from "./filterContextState.js";
 import { applyFilterContext, initializeFilterContext } from "./filterContextUtils.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<ITabsState, A>;
@@ -1287,6 +1288,130 @@ const addDateFilter: FilterContextReducer<PayloadAction<IAddDateFilterPayload>> 
 //
 //
 
+const addMeasureValueFilter: FilterContextReducer<PayloadAction<IAddMeasureValueFilterPayload>> = (
+    state,
+    action,
+) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
+
+    const { index, measure, localIdentifier, title } = action.payload;
+
+    const filter: IDashboardMeasureValueFilter = {
+        dashboardMeasureValueFilter: {
+            measure,
+            localIdentifier: localIdentifier ?? generateFilterLocalIdentifier(measure, Math.max(0, index)),
+            title,
+        },
+    };
+
+    const isCommonDateFilterPresent =
+        activeTab.filterContext.filterContextDefinition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
+
+    if (index === -1) {
+        activeTab.filterContext.filterContextDefinition.filters.push(filter);
+    } else {
+        const newFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
+        activeTab.filterContext.filterContextDefinition.filters.splice(newFilterIndex, 0, filter);
+    }
+};
+
+/**
+ * @internal
+ */
+export interface IRemoveMeasureValueFilterReducerPayload {
+    readonly localIdentifier: string;
+}
+
+const removeMeasureValueFilter: FilterContextReducer<
+    PayloadAction<IRemoveMeasureValueFilterReducerPayload>
+> = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
+
+    activeTab.filterContext.filterContextDefinition = {
+        ...activeTab.filterContext.filterContextDefinition,
+        filters: activeTab.filterContext.filterContextDefinition.filters.filter(
+            (item) =>
+                !(
+                    isDashboardMeasureValueFilter(item) &&
+                    dashboardFilterLocalIdentifier(item) === action.payload.localIdentifier
+                ),
+        ),
+    };
+};
+
+/**
+ * @internal
+ */
+export interface IMoveMeasureValueFilterPayload {
+    readonly localIdentifier: string;
+    readonly index: number;
+}
+
+const moveMeasureValueFilter: FilterContextReducer<PayloadAction<IMoveMeasureValueFilterPayload>> = (
+    state,
+    action,
+) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+
+    invariant(
+        activeTab.filterContext.filterContextDefinition,
+        "Attempt to edit uninitialized filter context",
+    );
+
+    const { localIdentifier, index } = action.payload;
+    const filters = activeTab.filterContext.filterContextDefinition.filters;
+    const currentFilterIndex = filters.findIndex(
+        (item) =>
+            isDashboardMeasureValueFilter(item) && dashboardFilterLocalIdentifier(item) === localIdentifier,
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to move non-existing measure value filter");
+
+    const filter = filters[currentFilterIndex];
+    filters.splice(currentFilterIndex, 1);
+
+    const isCommonDateFilterPresent = filters.findIndex(isDashboardCommonDateFilter) >= 0;
+
+    if (index === -1) {
+        filters.push(filter);
+    } else {
+        const newFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
+        filters.splice(newFilterIndex, 0, filter);
+    }
+};
+
+//
+//
+//
+
 /**
  * @internal
  */
@@ -1499,13 +1624,70 @@ const setDefaultFilterOverrides: FilterContextReducer<PayloadAction<FilterContex
 //
 //
 
-type IChangeMeasureValueFilterConditionReducerPayload = {
+/**
+ * @internal
+ */
+export type IChangeMeasureValueFilterConditionReducerPayload = {
     readonly localIdentifier: string;
     readonly conditions?: MeasureValueFilterCondition[];
+    readonly isWorkingSelectionChange?: boolean;
 };
 
 const changeMeasureValueFilterCondition: FilterContextReducer<
     PayloadAction<IChangeMeasureValueFilterConditionReducerPayload>
+> = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    if (!activeTab.filterContext) {
+        activeTab.filterContext = { ...filterContextInitialState };
+    }
+    const { localIdentifier, conditions, isWorkingSelectionChange } = action.payload;
+    const filterContextDefinition = isWorkingSelectionChange
+        ? activeTab.filterContext?.workingFilterContextDefinition
+        : activeTab.filterContext?.filterContextDefinition;
+    invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
+
+    const filters = filterContextDefinition.filters;
+    const index = filters.findIndex(
+        (item) =>
+            isDashboardMeasureValueFilter(item) && dashboardFilterLocalIdentifier(item) === localIdentifier,
+    );
+
+    const hasConditions = !!conditions && conditions.length > 0;
+    invariant(
+        index >= 0 || isWorkingSelectionChange,
+        `Attempt to change condition of measure value filter ${localIdentifier} that does not exist`,
+    );
+
+    if (isWorkingSelectionChange && index < 0) {
+        const workingFilter: WorkingDashboardMeasureValueFilter = {
+            dashboardMeasureValueFilter: {
+                localIdentifier,
+                conditions: hasConditions ? conditions : undefined,
+            },
+        };
+        activeTab.filterContext.workingFilterContextDefinition!.filters.push(workingFilter);
+        return;
+    }
+
+    const filter = filters[index] as IDashboardMeasureValueFilter;
+    filters[index] = {
+        dashboardMeasureValueFilter: {
+            ...filter.dashboardMeasureValueFilter,
+            conditions: hasConditions ? conditions : undefined,
+        },
+    };
+};
+
+type IChangeMeasureValueFilterTitleReducerPayload = {
+    readonly filterLocalId: string;
+    readonly title?: string;
+};
+
+const changeMeasureValueFilterTitle: FilterContextReducer<
+    PayloadAction<IChangeMeasureValueFilterTitleReducerPayload>
 > = (state, action) => {
     const activeTab = getActiveTab(state);
     if (!activeTab) {
@@ -1520,19 +1702,18 @@ const changeMeasureValueFilterCondition: FilterContextReducer<
     const index = filters.findIndex(
         (item) =>
             isDashboardMeasureValueFilter(item) &&
-            item.dashboardMeasureValueFilter.localIdentifier === action.payload.localIdentifier,
+            dashboardFilterLocalIdentifier(item) === action.payload.filterLocalId,
     );
     invariant(
         index >= 0,
-        `Attempt to change condition of measure value filter ${action.payload.localIdentifier} that does not exist`,
+        `Attempt to change title of measure value filter ${action.payload.filterLocalId} that does not exist`,
     );
 
     const filter = filters[index] as IDashboardMeasureValueFilter;
-    const hasConditions = !!action.payload.conditions && action.payload.conditions.length > 0;
     filters[index] = {
         dashboardMeasureValueFilter: {
             ...filter.dashboardMeasureValueFilter,
-            conditions: hasConditions ? action.payload.conditions : undefined,
+            title: action.payload.title,
         },
     };
 };
@@ -1549,6 +1730,9 @@ export const filterContextReducers = {
     addAttributeFilterDisplayForm,
     addAttributeFilter,
     addTextAttributeFilter,
+    addMeasureValueFilter,
+    removeMeasureValueFilter,
+    moveMeasureValueFilter,
     removeAttributeFilter,
     moveAttributeFilter,
     addDateFilter,
@@ -1570,4 +1754,5 @@ export const filterContextReducers = {
     resetWorkingSelection,
     setDefaultFilterOverrides,
     changeMeasureValueFilterCondition,
+    changeMeasureValueFilterTitle,
 };
