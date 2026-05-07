@@ -4,7 +4,7 @@ import { type FC, type RefObject, useCallback, useMemo, useRef, useState } from 
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 
 import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 import {
@@ -16,11 +16,13 @@ import {
     UiMenu,
 } from "@gooddata/sdk-ui-kit";
 
+import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setHistoryAction } from "../store/chatWindow/chatWindowSlice.js";
 import { conversationSelector, conversationsSelector } from "../store/messages/messagesSelectors.js";
 import { deleteConversationAction, setCurrentConversationAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
 import { generateTemporaryTitle } from "../utils.js";
+import { collectReferences, replaceReferences } from "./completion/references.js";
 import { ConversationDeleteDialog } from "./ConversationDeleteDialog.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { useHistoryCheck } from "./hooks/useHistoryCheck.js";
@@ -54,6 +56,8 @@ function GenAIChatConversationsComponent({
     const { isHistory } = useHistoryCheck();
     const [conversationToDelete, setConversationToDelete] = useState<IChatConversation | undefined>();
 
+    const catalogItems = useSelector(catalogItemsSelector);
+
     const groupedConversations = useMemo(() => groupConversationsByDate(conversations), [conversations]);
 
     const menuItems = useMemo<IUiMenuItem[]>(
@@ -66,7 +70,10 @@ function GenAIChatConversationsComponent({
                 subItems: group.conversations.map((conversation) => ({
                     type: "interactive" as const,
                     id: conversation.id,
-                    stringTitle: conversation.title ?? "",
+                    stringTitle: replaceReferences(
+                        conversation.title ?? "",
+                        collectReferences(conversation.title ?? "", catalogItems),
+                    ),
                     data: conversation,
                     iconRight: (
                         <div className="gd-gen-ai-chat__window__conversations__list__delete-button">
@@ -91,7 +98,7 @@ function GenAIChatConversationsComponent({
                         currentConversation === "new" ? false : conversation.id === currentConversation?.id,
                 })),
             })),
-        [groupedConversations, intl, currentConversation],
+        [groupedConversations, intl, catalogItems, currentConversation],
     );
 
     const handleDeleteCancel = useCallback(() => {
@@ -167,7 +174,7 @@ function GenAIChatConversationsComponent({
                                             className={cx(
                                                 "gd-gen-ai-chat__window__conversations__list__item",
                                                 {
-                                                    generatingTitle: !data.title,
+                                                    generatingTitle: !props.item.stringTitle,
                                                 },
                                             )}
                                         >
@@ -176,7 +183,8 @@ function GenAIChatConversationsComponent({
                                                 item={{
                                                     ...props.item,
                                                     stringTitle:
-                                                        data.title ?? generateTemporaryTitle(intl, data),
+                                                        props.item.stringTitle ||
+                                                        generateTemporaryTitle(intl, data),
                                                 }}
                                             />
                                         </div>

@@ -82,8 +82,9 @@
                 opacity: 0;
             }
             .gd-ui-kit-menu__item-title {
-                display: flex;
                 width: calc(100% - 20px);
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
 
             .gd-ui-kit-menu__item-wrapper:hover #{$list-root}__delete-button button,

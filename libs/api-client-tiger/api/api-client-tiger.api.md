@@ -7672,7 +7672,9 @@ export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConvers
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet as GenAiApi_GetConversations }
 
 // @public
-export function ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
+function ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
+export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch }
+export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch as GenAiApi_PatchConversation }
 
 // @public
 function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
@@ -7730,11 +7732,13 @@ export interface ConversationsAiInterface {
 }
 
 // @public
-export interface ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest {
+interface ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest {
     readonly aiConversationUpdateRequest: AiConversationUpdateRequest;
     readonly conversationId: string;
     readonly workspaceId: string;
 }
+export { ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest }
+export { ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest as GenAiApiPatchConversationRequest }
 
 // @public
 interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest {

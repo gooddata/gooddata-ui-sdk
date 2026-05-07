@@ -728,6 +728,14 @@ export interface IChatConversations {
     create(): Promise<IChatConversation>;
 
     /**
+     * Updates the specified chat conversation with the provided updates.
+     */
+    update(
+        conversationId: string,
+        update: Partial<Pick<IChatConversation, "title">>,
+    ): Promise<IChatConversation>;
+
+    /**
      * Delete a conversation.
      */
     delete(conversationId: string): Promise<void>;
