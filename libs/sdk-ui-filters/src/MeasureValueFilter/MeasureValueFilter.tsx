@@ -72,9 +72,9 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     isHeaderEnabled,
     onChange,
 }: IMeasureValueFilterProps) {
-    const [displayDropdown, setDisplayDropdown] = useState(!!autoOpen);
+    const [displayDropdown, setDisplayDropdown] = useState(false);
     const buttonRef = useRef<HTMLDivElement>(null);
-    const autoOpenedRef = useRef<boolean>(!!autoOpen);
+    const autoOpenedRef = useRef<boolean>(false);
 
     useEffect(() => {
         if (autoOpen && !autoOpenedRef.current) {

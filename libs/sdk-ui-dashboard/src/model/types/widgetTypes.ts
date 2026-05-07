@@ -42,6 +42,8 @@ export type FilterOperations =
     | "unignoreAttributeFilter"
     | "ignoreDateFilter"
     | "unignoreDateFilter"
+    | "ignoreMeasureValueFilter"
+    | "unignoreMeasureValueFilter"
     | "replace";
 
 /**
@@ -157,6 +159,13 @@ export interface IFilterOpReplaceAll extends IFilterOp {
     readonly ignoreDateFilters?: ObjRef[];
 
     /**
+     * Dashboard measure value filters to ignore for particular widget.
+     *
+     * Specify ObjRefs of measures that are used by dashboard's measure value filters which you wish to disable.
+     */
+    readonly ignoreMeasureValueFilters?: ObjRef[];
+
+    /**
      * Date data set that will be used when constructing date filter for a widget.
      *
      * If the widget does not specify any dateDataSet, then no date filtering is applied to it.
@@ -201,6 +210,36 @@ export interface IFilterOpUnignoreDateFilter extends IFilterOp {
 }
 
 /**
+ * This filter operation appends one or more measure value filters into the widget's filter ignore-list.
+ *
+ * @alpha
+ */
+export interface IFilterOpIgnoreMeasureValueFilter extends IFilterOp {
+    type: "ignoreMeasureValueFilter";
+
+    /**
+     * The measure value filters to add to ignore-list; specified using the refs of measures that are used during
+     * the filtering.
+     */
+    measureRefs: ObjRef[];
+}
+
+/**
+ * This filter operation removes one or more measure value filters from the widget's filter ignore-list.
+ *
+ * @alpha
+ */
+export interface IFilterOpUnignoreMeasureValueFilter extends IFilterOp {
+    type: "unignoreMeasureValueFilter";
+
+    /**
+     * The measure value filters to remove from the ignore-list; specified using the refs of measures that are used
+     * during the filtering.
+     */
+    measureRefs: ObjRef[];
+}
+
+/**
  * Widget's filter settings can be manipulated using multiple different granular operations. This is the union
  * type containing all the available operations.
  *
@@ -214,4 +253,6 @@ export type IWidgetFilterOperation =
     | IFilterOpUnignoreAttributeFilter
     | IFilterOpIgnoreDateFilter
     | IFilterOpUnignoreDateFilter
+    | IFilterOpIgnoreMeasureValueFilter
+    | IFilterOpUnignoreMeasureValueFilter
     | IFilterOpReplaceAll;

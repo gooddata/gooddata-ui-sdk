@@ -7,13 +7,17 @@ import {
     type IDashboardDateFilter,
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
+    type IDashboardMeasureValueFilter,
+    type IDashboardMeasureValueFilterConfig,
     type ObjRef,
     areObjRefsEqual,
     attributeElementsCount,
     dashboardFilterLocalIdentifier,
     dashboardFilterObjRef,
+    dashboardMeasureValueFilterLocalIdentifier,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
@@ -52,6 +56,7 @@ export interface IDashboardFilterMergeConfig {
     dateFilterConfig?: IDashboardDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
 }
 
 /**
@@ -517,6 +522,88 @@ function mergeDateFilter(
 }
 
 /**
+ * Creates a mapping of measure value filter configs by their local identifiers.
+ *
+ * @param measureValueFilterConfigs - Measure value filter configurations
+ * @returns Map with local identifiers as keys and measure value filter configs as values
+ * @internal
+ */
+function createMeasureValueFilterConfigsMap(
+    measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[],
+): Map<string, IDashboardMeasureValueFilterConfig> {
+    return (
+        measureValueFilterConfigs?.reduce((acc, config) => {
+            acc.set(config.localIdentifier, config);
+            return acc;
+        }, new Map<string, IDashboardMeasureValueFilterConfig>()) ??
+        new Map<string, IDashboardMeasureValueFilterConfig>()
+    );
+}
+
+/**
+ * Merges a measure value filter from the original filter list with a corresponding filter to merge.
+ * Matching is performed by metric reference via {@link dashboardFilterObjRef}; only the conditions
+ * are taken from the override. Hidden/readonly MVFs keep the dashboard default.
+ *
+ * @param originalFilter - Original measure value filter
+ * @param filterToMerge - Measure value filter to merge, if found
+ * @param measureValueFilterConfigs - Measure value filter configurations
+ * @returns Object containing the merged filter and validation results
+ */
+function mergeMeasureValueFilter(
+    originalFilter: IDashboardMeasureValueFilter,
+    filterToMerge: FilterContextItem | undefined,
+    measureValueFilterConfigs: IDashboardMeasureValueFilterConfig[] | undefined,
+): { mergedFilter: FilterContextItem; validationResults: ValidationResult[] } {
+    if (!filterToMerge || !isDashboardMeasureValueFilter(filterToMerge)) {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [],
+        };
+    }
+
+    // The override is matched by metric ref (via dashboardFilterObjRef in findMatchingFilterToMerge);
+    // additionally require localIdentifier equality, since the metric ref is set in edit mode and
+    // is the only stable non-view-editable identity we can verify before importing stored conditions.
+    if (
+        dashboardMeasureValueFilterLocalIdentifier(originalFilter) !==
+        dashboardMeasureValueFilterLocalIdentifier(filterToMerge)
+    ) {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [],
+        };
+    }
+
+    const filterLocalIdentifier = dashboardMeasureValueFilterLocalIdentifier(originalFilter);
+    const filterConfigsMap = createMeasureValueFilterConfigsMap(measureValueFilterConfigs);
+    const filterConfig = filterConfigsMap.get(filterLocalIdentifier);
+
+    if (filterConfig?.mode === "hidden") {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [{ filter: filterToMerge, error: "cannot-apply-hidden" }],
+        };
+    }
+    if (filterConfig?.mode === "readonly") {
+        return {
+            mergedFilter: originalFilter,
+            validationResults: [{ filter: filterToMerge, error: "cannot-apply-readonly" }],
+        };
+    }
+
+    return {
+        mergedFilter: {
+            dashboardMeasureValueFilter: {
+                ...originalFilter.dashboardMeasureValueFilter,
+                conditions: filterToMerge.dashboardMeasureValueFilter.conditions,
+            },
+        },
+        validationResults: [],
+    };
+}
+
+/**
  * Merges dashboard filters according to configuration rules.
  *
  * This function validates and merges dashboard filters from one context into another,
@@ -564,6 +651,8 @@ export function mergeFilterContextFilters(
             );
         } else if (isDashboardTextAttributeFilter(originalFilter)) {
             return mergeTextAttributeFilter(originalFilter, filterToMerge, config.attributeFilterConfigs);
+        } else if (isDashboardMeasureValueFilter(originalFilter)) {
+            return mergeMeasureValueFilter(originalFilter, filterToMerge, config.measureValueFilterConfigs);
         } else {
             // For unknown filter types, just keep the original with no validation
             return {

@@ -123,6 +123,7 @@ function* processExistingTabFilterContext(
             dateFilterConfig: tab.dateFilterConfig,
             dateFilterConfigs: tab.dateFilterConfigs,
             attributeFilterConfigs: tab.attributeFilterConfigs,
+            measureValueFilterConfigs: tab.measureValueFilterConfigs,
         },
     );
 

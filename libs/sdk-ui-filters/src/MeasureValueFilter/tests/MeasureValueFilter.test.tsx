@@ -55,14 +55,10 @@ describe("Measure value filter", () => {
         expect(document.querySelector(DROPDOWN_BODY)).not.toBeInTheDocument();
     });
 
-    it("should call onCancel when Cancel button clicked", () => {
-        const onCancel = vi.fn();
-        renderComponent({ onCancel });
+    it("should open the dropdown when autoOpen is enabled", async () => {
+        renderComponent({ autoOpen: true });
 
-        fireEvent.click(screen.getByText("My measure"));
-        fireEvent.click(screen.getByText("Cancel"));
-
-        expect(onCancel).toHaveBeenCalled();
+        await waitFor(() => expect(document.querySelector(DROPDOWN_BODY)).toBeInTheDocument());
     });
 
     it("should call onApply when Apply button clicked", () => {

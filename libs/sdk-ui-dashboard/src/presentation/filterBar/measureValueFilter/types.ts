@@ -43,6 +43,11 @@ export interface IDashboardMeasureValueFilterProps {
     ) => void;
 
     /**
+     * Callback fired when the filter dropdown is closed.
+     */
+    onMeasureValueFilterClose?: () => void;
+
+    /**
      * Optional tab identifier to read filter config from. When provided, the visibility
      * icon and any other tab-scoped state will be sourced from this specific tab. When
      * undefined, the active tab's state is used.

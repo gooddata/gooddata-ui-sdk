@@ -12,6 +12,7 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardMeasureValueFilterLocalIdentifier,
     isAllTimeDashboardDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
@@ -281,7 +282,7 @@ export function getFilterIdentifier(filter: FilterContextItem): string {
         );
     }
     if (isDashboardMeasureValueFilter(filter)) {
-        return dashboardFilterLocalIdentifier(filter)!;
+        return dashboardMeasureValueFilterLocalIdentifier(filter);
     }
     throw new Error("Unknown filter type");
 }

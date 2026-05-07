@@ -12,6 +12,7 @@ import {
     isAttributeMetadataObject,
     isDashboardAttributeFilterItem,
     isDashboardDateFilterWithDimension,
+    isDashboardMeasureValueFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -21,11 +22,14 @@ import { useDashboardSelector } from "../../../../model/react/DashboardStoreProv
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDateDatasetsMap,
+    selectAllCatalogMeasuresMap,
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
 import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
+import { MeasureValueFilterConfigurationItem } from "./MeasureValueFilterConfigurationItem.js";
+import { useMeasureValueFilterCompatibility } from "./useMeasureValueFilterCompatibility.js";
 import { getAttributeByDisplayForm } from "./utils.js";
 
 interface IFilterConfigurationProps {
@@ -37,11 +41,15 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
     const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const ddsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const measureMap = useDashboardSelector(selectAllCatalogMeasuresMap);
     const displayAsLabelMap = useDashboardSelector(selectAttributeFilterConfigsDisplayAsLabelMap);
 
     const draggableFilters = useMemo(() => {
         return allFilters.filter(
-            (f) => isDashboardAttributeFilterItem(f) || isDashboardDateFilterWithDimension(f),
+            (f) =>
+                isDashboardAttributeFilterItem(f) ||
+                isDashboardDateFilterWithDimension(f) ||
+                isDashboardMeasureValueFilter(f),
         );
     }, [allFilters]);
 
@@ -54,6 +62,11 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
     }, [attributeFilters]);
 
     const { attributes, attributesLoading } = useAttributes(displayForms);
+    const measureValueFilters = useMemo(
+        () => draggableFilters.filter(isDashboardMeasureValueFilter),
+        [draggableFilters],
+    );
+    const { isCompatible } = useMeasureValueFilterCompatibility(widget, measureValueFilters);
 
     if (attributesLoading) {
         return <span className={"gd-spinner small s-attribute-filter-configuration-loading"} />;
@@ -100,7 +113,7 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
                             widget={widget}
                         />
                     );
-                } else {
+                } else if (isDashboardDateFilterWithDimension(filter)) {
                     return (
                         <DateFilterConfigurationItem
                             key={objRefToString(filter.dateFilter.dataSet!)}
@@ -108,6 +121,22 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
                             widget={widget}
                         />
                     );
+                } else if (isDashboardMeasureValueFilter(filter)) {
+                    const { measure, localIdentifier, title } = filter.dashboardMeasureValueFilter;
+                    const measureTitle = title ?? measureMap.get(measure)?.measure.title ?? "";
+
+                    return (
+                        <MeasureValueFilterConfigurationItem
+                            key={localIdentifier}
+                            measureRef={measure}
+                            title={measureTitle}
+                            widget={widget}
+                            isCompatible={isCompatible(measure)}
+                        />
+                    );
+                } else {
+                    console.warn("Unsupported filter type in FilterConfiguration.", filter);
+                    return null;
                 }
             })}
         </div>

@@ -300,6 +300,56 @@ export function unignoreFilterOnInsightWidget(
     };
 }
 
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpIgnoreMeasureValueFilter} operation.
+ *
+ * @alpha
+ */
+export function ignoreMeasureValueFilterOnInsightWidget(
+    ref: ObjRef,
+    oneOrMoreMeasures: ObjRef | ObjRef[],
+    correlationId?: string,
+): IChangeInsightWidgetFilterSettings {
+    const measureRefs = isObjRef(oneOrMoreMeasures) ? [oneOrMoreMeasures] : oneOrMoreMeasures;
+
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "ignoreMeasureValueFilter",
+                measureRefs,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeInsightWidgetFilterSettings command for {@link IFilterOpUnignoreMeasureValueFilter} operation.
+ *
+ * @alpha
+ */
+export function unignoreMeasureValueFilterOnInsightWidget(
+    ref: ObjRef,
+    oneOrMoreMeasures: ObjRef | ObjRef[],
+    correlationId?: string,
+): IChangeInsightWidgetFilterSettings {
+    const measureRefs = isObjRef(oneOrMoreMeasures) ? [oneOrMoreMeasures] : oneOrMoreMeasures;
+
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "unignoreMeasureValueFilter",
+                measureRefs,
+            },
+        },
+    };
+}
+
 //
 //
 //

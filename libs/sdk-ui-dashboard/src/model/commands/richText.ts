@@ -288,3 +288,53 @@ export function unignoreFilterOnRichTextWidget(
         },
     };
 }
+
+/**
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link IFilterOpIgnoreMeasureValueFilter} operation.
+ *
+ * @alpha
+ */
+export function ignoreMeasureValueFilterOnRichTextWidget(
+    ref: ObjRef,
+    oneOrMoreMeasures: ObjRef | ObjRef[],
+    correlationId?: string,
+): IChangeRichTextWidgetFilterSettings {
+    const measureRefs = Array.isArray(oneOrMoreMeasures) ? oneOrMoreMeasures : [oneOrMoreMeasures];
+
+    return {
+        type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "ignoreMeasureValueFilter",
+                measureRefs,
+            },
+        },
+    };
+}
+
+/**
+ * Creates the ChangeRichTextWidgetFilterSettings command for {@link IFilterOpUnignoreMeasureValueFilter} operation.
+ *
+ * @alpha
+ */
+export function unignoreMeasureValueFilterOnRichTextWidget(
+    ref: ObjRef,
+    oneOrMoreMeasures: ObjRef | ObjRef[],
+    correlationId?: string,
+): IChangeRichTextWidgetFilterSettings {
+    const measureRefs = Array.isArray(oneOrMoreMeasures) ? oneOrMoreMeasures : [oneOrMoreMeasures];
+
+    return {
+        type: "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_FILTER_SETTINGS",
+        correlationId,
+        payload: {
+            ref,
+            operation: {
+                type: "unignoreMeasureValueFilter",
+                measureRefs,
+            },
+        },
+    };
+}

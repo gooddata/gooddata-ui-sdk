@@ -12,6 +12,8 @@ import {
     type IDashboardArbitraryAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
+    type IDashboardMeasureValueFilter,
+    type MeasureValueFilterCondition,
     type ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
@@ -73,6 +75,25 @@ const createTextAttributeFilter = (
         localIdentifier,
         values,
     },
+});
+
+const measureRef = idRef("measureId");
+const measureRef2 = idRef("measureId2");
+
+const createMeasureValueFilter = (
+    measure: ObjRef,
+    localIdentifier: string,
+    conditions: MeasureValueFilterCondition[] | undefined = undefined,
+): IDashboardMeasureValueFilter => ({
+    dashboardMeasureValueFilter: {
+        measure,
+        localIdentifier,
+        ...(conditions === undefined ? {} : { conditions }),
+    },
+});
+
+const conditionGreaterThan = (value: number): MeasureValueFilterCondition => ({
+    comparison: { operator: "GREATER_THAN", value },
 });
 
 const hasValidationError = (
@@ -695,6 +716,134 @@ describe("dashboardFilterContextValidation", () => {
                         "cannot-apply-missing-filter",
                     ),
                 ).toBe(true);
+            });
+        });
+
+        describe("Measure value filter merging", () => {
+            it("should replace dashboard MVF conditions with the override conditions when matched by metric ref", () => {
+                const originalFilter = createMeasureValueFilter(measureRef, "mvf1");
+                const filterToMerge = createMeasureValueFilter(measureRef, "mvf1", [
+                    conditionGreaterThan(100),
+                ]);
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
+
+                expect(result.mergedFilters.length).toBe(1);
+                expect(result.validationResults.length).toBe(0);
+                expect(result.mergedFilters[0]).toEqual({
+                    dashboardMeasureValueFilter: {
+                        measure: measureRef,
+                        localIdentifier: "mvf1",
+                        conditions: [conditionGreaterThan(100)],
+                    },
+                });
+            });
+
+            it("should keep original MVF when measure refs match but localIdentifiers differ", () => {
+                const originalFilter = createMeasureValueFilter(measureRef, "mvf1", [
+                    conditionGreaterThan(50),
+                ]);
+                const filterToMerge = createMeasureValueFilter(measureRef, "mvf-different", [
+                    conditionGreaterThan(100),
+                ]);
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+                expect(result.validationResults.length).toBe(0);
+            });
+
+            it("should keep original MVF when no override matches", () => {
+                const originalFilter = createMeasureValueFilter(measureRef, "mvf1", [
+                    conditionGreaterThan(50),
+                ]);
+                const unrelatedOverride = createMeasureValueFilter(measureRef2, "mvf2", [
+                    conditionGreaterThan(100),
+                ]);
+
+                const result = mergeFilterContextFilters([originalFilter], [unrelatedOverride], {});
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+            });
+
+            it("should keep original MVF and report validation error when MVF is hidden", () => {
+                const originalFilter = createMeasureValueFilter(measureRef, "mvf1");
+                const filterToMerge = createMeasureValueFilter(measureRef, "mvf1", [
+                    conditionGreaterThan(100),
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    measureValueFilterConfigs: [{ localIdentifier: "mvf1", mode: "hidden" }],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+                expect(
+                    hasValidationError(result.validationResults, filterToMerge, "cannot-apply-hidden"),
+                ).toBe(true);
+            });
+
+            it("should keep original MVF and report validation error when MVF is readonly", () => {
+                const originalFilter = createMeasureValueFilter(measureRef, "mvf1");
+                const filterToMerge = createMeasureValueFilter(measureRef, "mvf1", [
+                    conditionGreaterThan(100),
+                ]);
+                const config: IDashboardFilterMergeConfig = {
+                    measureValueFilterConfigs: [{ localIdentifier: "mvf1", mode: "readonly" }],
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], config);
+
+                expect(result.mergedFilters[0]).toBe(originalFilter);
+                expect(
+                    hasValidationError(result.validationResults, filterToMerge, "cannot-apply-readonly"),
+                ).toBe(true);
+            });
+
+            it("should clear MVF conditions when override has empty conditions (All)", () => {
+                const originalFilter = createMeasureValueFilter(measureRef, "mvf1", [
+                    conditionGreaterThan(50),
+                ]);
+                const filterToMerge = createMeasureValueFilter(measureRef, "mvf1", []);
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
+
+                expect(result.mergedFilters[0]).toEqual({
+                    dashboardMeasureValueFilter: {
+                        measure: measureRef,
+                        localIdentifier: "mvf1",
+                        conditions: [],
+                    },
+                });
+            });
+
+            it("should preserve dashboard MVF identity (measure, localIdentifier, title)", () => {
+                const originalFilter: IDashboardMeasureValueFilter = {
+                    dashboardMeasureValueFilter: {
+                        measure: measureRef,
+                        localIdentifier: "mvf1",
+                        title: "Dashboard Title",
+                    },
+                };
+                const filterToMerge: IDashboardMeasureValueFilter = {
+                    dashboardMeasureValueFilter: {
+                        measure: measureRef,
+                        localIdentifier: "mvf1",
+                        title: "Override Title",
+                        conditions: [conditionGreaterThan(100)],
+                    },
+                };
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
+
+                expect(result.mergedFilters[0]).toEqual({
+                    dashboardMeasureValueFilter: {
+                        measure: measureRef,
+                        localIdentifier: "mvf1",
+                        title: "Dashboard Title",
+                        conditions: [conditionGreaterThan(100)],
+                    },
+                });
             });
         });
     });

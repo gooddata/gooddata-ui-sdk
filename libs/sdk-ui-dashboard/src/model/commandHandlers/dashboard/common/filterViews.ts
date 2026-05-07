@@ -12,6 +12,7 @@ import {
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilter,
     type IDashboardFilterView,
+    type IDashboardMeasureValueFilter,
     type IFilterContext,
     type ISettings,
     type ObjRef,
@@ -22,11 +23,13 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     dashboardAttributeFilterItemValidateElementsBy,
+    dashboardMeasureValueFilterLocalIdentifier,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isFilterContext,
     isSingleSelectionFilter,
@@ -78,6 +81,24 @@ const findMatchingDateFilterByDataSet = (
             isDashboardDateFilter(item) &&
             ((item.dateFilter.dataSet === undefined && filter.dateFilter.dataSet === undefined) ||
                 areObjRefsEqual(item.dateFilter.dataSet, filter.dateFilter.dataSet)),
+    );
+
+// MVF: match only when both localIdentifier and the referenced metric agree.
+// The metric ref is set in edit mode and not changeable in view mode, so a localId
+// collision with a different metric must not import stale conditions.
+const findMatchingMeasureValueFilter = (
+    filter: IDashboardMeasureValueFilter,
+    viewFilters: FilterContextItem[],
+): IDashboardMeasureValueFilter | undefined =>
+    viewFilters.find(
+        (item): item is IDashboardMeasureValueFilter =>
+            isDashboardMeasureValueFilter(item) &&
+            dashboardMeasureValueFilterLocalIdentifier(item) ===
+                dashboardMeasureValueFilterLocalIdentifier(filter) &&
+            areObjRefsEqual(
+                item.dashboardMeasureValueFilter.measure,
+                filter.dashboardMeasureValueFilter.measure,
+            ),
     );
 
 const OMITTED_ATTRIBUTE_FILTER_PATHS = [
@@ -406,6 +427,23 @@ export const changeFilterContextSelection = (
 
             // No compatible match found, reset
             return createResetTextFilter(filter);
+        } else if (isDashboardMeasureValueFilter(filter)) {
+            const viewFilter = findMatchingMeasureValueFilter(filter, filterViewFilters);
+            if (viewFilter) {
+                return {
+                    dashboardMeasureValueFilter: {
+                        ...filter.dashboardMeasureValueFilter,
+                        conditions: viewFilter.dashboardMeasureValueFilter.conditions,
+                    },
+                };
+            }
+            // reset MVF that has not been found in the view to "All" (empty conditions)
+            return {
+                dashboardMeasureValueFilter: {
+                    ...filter.dashboardMeasureValueFilter,
+                    conditions: [],
+                },
+            };
         } else {
             return filter;
         }

@@ -434,6 +434,9 @@ export type DashboardFiltersApplyMode = {
 };
 
 // @alpha
+export function dashboardMeasureValueFilterLocalIdentifier(filter: IDashboardMeasureValueFilter): string;
+
+// @alpha
 export type DashboardParameterMode = "active" | "readonly" | "hidden";
 
 // @internal

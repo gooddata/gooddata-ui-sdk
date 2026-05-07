@@ -5,12 +5,8 @@ import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
 import {
     type IAnalyticalWidget,
-    type IDashboardAttributeFilterReference,
-    type IDashboardDateFilterReference,
     type IInsightWidget,
-    dashboardAttributeFilterItemDisplayForm,
     isDashboardAttributeFilter,
-    isDashboardAttributeFilterItem,
     isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
 
@@ -23,6 +19,7 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type FilterValidators, processFilterOp } from "./common/filterOperations.js";
+import { toDashboardFilterReferences } from "./common/filterReferences.js";
 import {
     validateAttributeFiltersToIgnore,
     validateDatasetForInsightWidgetDateFilter,
@@ -63,22 +60,7 @@ export function* changeInsightWidgetFilterSettingsHandler(
     );
     const { dateDataSet, ignoredFilters } = result;
 
-    const ignoreDashboardFilters = ignoredFilters?.map((filter) => {
-        if (isDashboardAttributeFilterItem(filter)) {
-            const filterReference: IDashboardAttributeFilterReference = {
-                type: "attributeFilterReference",
-                displayForm: dashboardAttributeFilterItemDisplayForm(filter),
-            };
-
-            return filterReference;
-        }
-        const filterReference: IDashboardDateFilterReference = {
-            type: "dateFilterReference",
-            dataSet: filter.dateFilter.dataSet!,
-        };
-
-        return filterReference;
-    });
+    const ignoreDashboardFilters = toDashboardFilterReferences(ignoredFilters);
 
     yield put(
         tabsActions.replaceWidgetFilterSettings({

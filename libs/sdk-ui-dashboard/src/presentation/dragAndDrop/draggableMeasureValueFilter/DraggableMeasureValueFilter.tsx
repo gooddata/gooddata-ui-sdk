@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type Ref } from "react";
+import { type Ref, useCallback } from "react";
 
 import classNames from "classnames";
 
@@ -25,6 +25,7 @@ type DraggableMeasureValueFilterProps = {
         isWorkingSelectionChange?: boolean,
     ) => void;
     onMeasureValueFilterAdded: (index: number) => void;
+    onMeasureValueFilterClose: () => void;
 };
 
 /**
@@ -41,6 +42,7 @@ export function DraggableMeasureValueFilter({
     readonly,
     onMeasureValueFilterChanged,
     onMeasureValueFilterAdded,
+    onMeasureValueFilterClose,
 }: DraggableMeasureValueFilterProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const [{ isDragging }, dragRef] = useDashboardDrag(
@@ -54,6 +56,11 @@ export function DraggableMeasureValueFilter({
         },
         [filter, filterIndex, isInEditMode],
     );
+
+    const onClose = useCallback(() => {
+        onMeasureValueFilterClose();
+    }, [onMeasureValueFilterClose]);
+
     const canAddMoreFilters = useDashboardSelector(selectCanAddMoreFilters);
 
     const showDropZones = isInEditMode && !isDragging;
@@ -82,6 +89,7 @@ export function DraggableMeasureValueFilter({
                     filterIndex={filterIndex}
                     readonly={readonly}
                     onMeasureValueFilterChanged={onMeasureValueFilterChanged}
+                    onMeasureValueFilterClose={onClose}
                 />
             </div>
 
