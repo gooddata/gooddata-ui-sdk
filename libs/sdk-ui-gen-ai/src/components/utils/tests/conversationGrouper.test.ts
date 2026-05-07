@@ -2,15 +2,14 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IChatConversation } from "@gooddata/sdk-backend-spi";
-
+import { type IChatConversationLocal } from "../../../model.js";
 import {
     ConversationDateGroup,
     type ConversationDateGroupConfig,
     groupConversationsByDate,
 } from "../conversationGrouper.js";
 
-function createConversation(id: string, updatedAt: string): IChatConversation {
+function createConversation(id: string, updatedAt: string): IChatConversationLocal {
     return {
         id,
         createdAt: updatedAt,
@@ -29,7 +28,7 @@ describe("groupConversationsByDate", () => {
     const now = new Date("2026-05-04T09:24:00.000Z");
 
     it("should group conversations to default date buckets", () => {
-        const conversations: IChatConversation[] = [
+        const conversations: IChatConversationLocal[] = [
             createConversation("today", daysAgoIso(0, now)),
             createConversation("last-7-days", daysAgoIso(3, now)),
             createConversation("older", daysAgoIso(14, now)),
@@ -52,7 +51,7 @@ describe("groupConversationsByDate", () => {
     });
 
     it("should use custom configuration and preserve configured order", () => {
-        const conversations: IChatConversation[] = [
+        const conversations: IChatConversationLocal[] = [
             createConversation("older", daysAgoIso(5, now)),
             createConversation("newer", daysAgoIso(0, now)),
         ];

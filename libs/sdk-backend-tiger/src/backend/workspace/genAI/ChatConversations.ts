@@ -13,6 +13,7 @@ import {
     GenAiApi_PatchConversationResponse,
     GenAiApi_PatchVisualization,
     GenAiApi_PostConversations,
+    GenAiApi_PostGenerateConversationTitle,
     GenAiApi_PostMessages,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
@@ -92,6 +93,16 @@ export class ChatConversationsService implements IChatConversations {
                 workspaceId: this.workspaceId,
                 conversationId,
             });
+        });
+    }
+
+    async generateTitle(conversationId: string): Promise<IChatConversation> {
+        return await this.authCall(async (client) => {
+            const response = await GenAiApi_PostGenerateConversationTitle(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+                conversationId,
+            });
+            return convertChatConversationFromBackend(response.data);
         });
     }
 

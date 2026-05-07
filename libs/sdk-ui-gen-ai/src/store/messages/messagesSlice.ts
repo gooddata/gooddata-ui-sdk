@@ -2,11 +2,7 @@
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
-import {
-    type IChatConversation,
-    type IChatConversationItem,
-    type IChatSuggestionsItem,
-} from "@gooddata/sdk-backend-spi";
+import { type IChatConversationItem, type IChatSuggestionsItem } from "@gooddata/sdk-backend-spi";
 import { type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
@@ -14,6 +10,7 @@ import {
     type AssistantMessage,
     type Contents,
     type IChatConversationErrorContent,
+    type IChatConversationLocal,
     type IChatConversationLocalContent,
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
@@ -49,13 +46,13 @@ type MessagesSliceState = {
     /**
      * A list of conversations.
      */
-    conversations: IChatConversation[] | undefined;
+    conversations: IChatConversationLocal[] | undefined;
     /**
      * The current conversation.
      *  - "new": indicates UI is in a transient state to start a brand new conversation.
      *  - undefined: no conversation is selected
      */
-    currentConversation: IChatConversation | "new" | undefined;
+    currentConversation: IChatConversationLocal | "new" | undefined;
     /**
      * Conversation items.
      */
@@ -129,13 +126,13 @@ const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) =
     state.loaded = true;
 };
 
-const setNormalizedConversations = (state: MessagesSliceState, conversations: IChatConversation[]) => {
+const setNormalizedConversations = (state: MessagesSliceState, conversations: IChatConversationLocal[]) => {
     state.conversations = conversations;
 };
 
 const setNormalizedConversation = (
     state: MessagesSliceState,
-    conversation: IChatConversation | "new",
+    conversation: IChatConversationLocal | "new",
     items: IChatConversationLocalItem[] = [],
 ) => {
     state.currentConversation = conversation;
@@ -272,7 +269,7 @@ const messagesSlice = createSlice({
             {
                 payload: { conversations },
             }: PayloadAction<{
-                conversations: IChatConversation[];
+                conversations: IChatConversationLocal[];
             }>,
         ) => {
             setNormalizedConversations(state, conversations);
@@ -282,7 +279,7 @@ const messagesSlice = createSlice({
             {
                 payload: { currentConversation, conversationItems, threadId },
             }: PayloadAction<{
-                currentConversation: IChatConversation | "new";
+                currentConversation: IChatConversationLocal | "new";
                 conversationItems: IChatConversationLocalItem[];
                 threadId?: string;
             }>,
@@ -309,7 +306,7 @@ const messagesSlice = createSlice({
             state,
             {
                 payload: { conversation, threadId },
-            }: PayloadAction<{ conversation: IChatConversation; threadId: string }>,
+            }: PayloadAction<{ conversation: IChatConversationLocal; threadId: string }>,
         ) => {
             state.conversations = [conversation, ...(state.conversations ?? [])];
             state.currentConversation = conversation;
@@ -454,13 +451,41 @@ const messagesSlice = createSlice({
                 userMessage.id = payload.interactionId ?? userMessage.id;
             }
         },
+        evaluateConversationTitleAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                conversation: IChatConversationLocal;
+                generatingTitle: boolean;
+                title?: string;
+            }>,
+        ) => {
+            const conversation = state.conversations?.find((c) => c.id === payload.conversation.id);
+            if (!conversation) {
+                return;
+            }
+
+            conversation.generatingTitle = payload.generatingTitle;
+            if (payload.title) {
+                conversation.title = payload.title;
+                if (
+                    state.currentConversation !== "new" &&
+                    state.currentConversation?.id === conversation.id
+                ) {
+                    state.currentConversation.title = payload.title;
+                }
+            }
+        },
         evaluateMessageUpdateAction: (
             state,
             {
                 payload,
             }: PayloadAction<{
                 userMessageId: string;
+                conversation: IChatConversationLocal;
                 message: IChatConversationItem | UserMessage;
+                isStartMessage: boolean;
                 interactionId?: string;
             }>,
         ) => {
@@ -539,7 +564,7 @@ const messagesSlice = createSlice({
         },
         setCurrentConversationAction: (
             state,
-            { payload }: PayloadAction<{ conversation: IChatConversation }>,
+            { payload }: PayloadAction<{ conversation: IChatConversationLocal }>,
         ) => {
             const existing = state.conversations?.find((c) => c.id === payload.conversation.id);
 
@@ -875,7 +900,7 @@ const messagesSlice = createSlice({
         deleteConversationSuccessAction: (state, _action: PayloadAction<{ conversationId: string }>) => state,
         deleteConversationFailureAction: (
             state,
-            { payload }: PayloadAction<{ conversation: IChatConversation; error: Error }>,
+            { payload }: PayloadAction<{ conversation: IChatConversationLocal; error: Error }>,
         ) => {
             state.conversations = [...(state.conversations ?? []), payload.conversation];
         },
@@ -896,6 +921,7 @@ export const {
     clearThreadErrorAction,
     clearThreadSuccessAction,
     clearConversationSuccessAction,
+    evaluateConversationTitleAction,
     evaluateMessageAction,
     evaluateMessageErrorAction,
     evaluateMessageStreamingAction,

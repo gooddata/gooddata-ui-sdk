@@ -741,6 +741,11 @@ export interface IChatConversations {
     delete(conversationId: string): Promise<void>;
 
     /**
+     * Generate title for a conversation.
+     */
+    generateTitle(conversationId: string): Promise<IChatConversation>;
+
+    /**
      * Get conversation by id.
      */
     getConversation(conversationId: string): Promise<IChatConversation>;

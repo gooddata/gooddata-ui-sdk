@@ -20,6 +20,7 @@ import { CSSProperties } from 'react';
 import { CsvDelimiterPreset } from '@gooddata/sdk-model';
 import { CsvDelimiterValidationError } from '@gooddata/sdk-model';
 import { DebouncedFunc } from 'lodash-es';
+import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { EditorView } from '@codemirror/view';
 import { ElementType } from 'react';
@@ -8685,7 +8686,7 @@ export type UseCurrencyFormatDefaultsConfig = {
 };
 
 // @internal (undocumented)
-export function useElementSize<T extends HTMLElement>(): {
+export function useElementSize<T extends HTMLElement>(deps?: DependencyList): {
     ref: RefObject<T | null>;
     height: number;
     width: number;

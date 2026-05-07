@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Fix yamlDatasetToDeclarative emitting reference.type='fact' for APPROXIMATE_COUNT aggregated facts against attribute targets (CQ-2147)",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.soubusta@gooddata.com"
+}

@@ -1071,11 +1071,7 @@
                 },
                 "using": {
                     "$ref": "#/$defs/metricIdentifier",
-                    "description": "Reference to the metric being filtered.",
-                    "$semantic": {
-                        "type": "reference",
-                        "source": "metric.id"
-                    }
+                    "description": "Reference to the metric being filtered."
                 },
                 "conditions": {
                     "type": "array",

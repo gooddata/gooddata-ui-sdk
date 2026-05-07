@@ -2,9 +2,7 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { type IChatConversation } from "@gooddata/sdk-backend-spi";
-
-import { type IChatConversationLocalItem, type Message } from "../../model.js";
+import { type IChatConversationLocal, type IChatConversationLocalItem, type Message } from "../../model.js";
 import { type RootState } from "../types.js";
 import { messagesSliceName } from "./messagesSlice.js";
 
@@ -53,19 +51,17 @@ export const conversationMessagesSelector: (state: RootState) => IChatConversati
         state.conversationItemsOrder.map((id) => state.conversationItems[id]),
     );
 
-export const conversationSelector: (state: RootState) => IChatConversation | "new" | undefined =
+export const conversationSelector: (state: RootState) => IChatConversationLocal | "new" | undefined =
     createSelector(messagesSliceSelector, (state) => state.currentConversation);
 
 export const conversationByIdSelector: (
     state: RootState,
     conversationId: string,
-) => IChatConversation | undefined = createSelector(
+) => IChatConversationLocal | undefined = createSelector(
     [messagesSliceSelector, (_state: RootState, conversationId: string) => conversationId],
     (state, conversationId) =>
         state.conversations?.find((conversation) => conversation.id === conversationId),
 );
 
-export const conversationsSelector: (state: RootState) => IChatConversation[] | undefined = createSelector(
-    messagesSliceSelector,
-    (state) => state.conversations,
-);
+export const conversationsSelector: (state: RootState) => IChatConversationLocal[] | undefined =
+    createSelector(messagesSliceSelector, (state) => state.conversations);

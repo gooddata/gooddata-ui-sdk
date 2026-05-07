@@ -2,12 +2,9 @@
 
 import { call, getContext, put, race, select, take } from "redux-saga/effects";
 
-import {
-    type IAnalyticalBackend,
-    type IChatConversation,
-    type IUserWorkspaceSettings,
-} from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 
+import { type IChatConversationLocal } from "../../model.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import { threadIdSelector } from "../messages/messagesSelectors.js";
 import {
@@ -71,7 +68,7 @@ function* resetConversation() {
         .getChatConversations({ isPreview })
         .getConversationThread(conversationId);
 
-    const [results, cancelAction]: [results: IChatConversation, ReturnType<typeof cancelAsyncAction>] =
+    const [results, cancelAction]: [results: IChatConversationLocal, ReturnType<typeof cancelAsyncAction>] =
         yield race([call(chatThread.reset.bind(chatThread)), take(cancelAsyncAction.type)]);
 
     if (cancelAction) {

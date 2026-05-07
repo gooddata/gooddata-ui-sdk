@@ -4,7 +4,6 @@ import { call, cancel, cancelled, getContext, put, select } from "redux-saga/eff
 
 import {
     type IAnalyticalBackend,
-    type IChatConversation,
     type IChatConversationError,
     type IChatConversationItem,
     type IChatConversationThreadQuery,
@@ -24,6 +23,7 @@ import {
 
 import {
     type AssistantMessage,
+    type IChatConversationLocal,
     type IChatConversationLocalItem,
     type Message,
     isChatConversationLocalItem,
@@ -64,7 +64,7 @@ import { convertMessageToChatConversation, extractError } from "./utils.js";
  * @internal
  */
 export function* onUserMessage({ payload }: ReturnType<typeof newMessageAction>) {
-    const conversation: IChatConversation | "new" | undefined = yield select(conversationSelector);
+    const conversation: IChatConversationLocal | "new" | undefined = yield select(conversationSelector);
     let message = payload;
 
     if (conversation && !isChatConversationLocalItem(message)) {
@@ -300,7 +300,8 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         const isPreview: boolean | undefined = yield getContext("isPreview");
 
         // Check current conversation
-        const conversationState: IChatConversation | "new" | undefined = yield select(conversationSelector);
+        const conversationState: IChatConversationLocal | "new" | undefined =
+            yield select(conversationSelector);
 
         // Check state
         if (conversationState !== "new" && !conversationState?.id) {
@@ -313,12 +314,12 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         // Set evaluation state in store
         yield put(evaluateMessageAction({ message: initialAssistantMessage }));
 
-        let conversation: IChatConversation;
+        let conversation: IChatConversationLocal;
         // If we are in the transient new-conversation state, create the conversation first
         if (conversationState === "new") {
             const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-            const created: IChatConversation = yield call(api.create.bind(api));
-            const updated: IChatConversation = yield call(api.update.bind(api), created.id, {
+            const created: IChatConversationLocal = yield call(api.create.bind(api));
+            const updated: IChatConversationLocal = yield call(api.update.bind(api), created.id, {
                 title: generateTitleFromQuestion(message.content.text),
             });
             // Store it as current conversation and clear the transient flag
@@ -341,9 +342,11 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         // multiple interaction IDs. It returns the last message that needs to be completed.
         const result: EvaluateUserConversationMessageResult = yield call(
             evaluateUserConversationMessage,
+            conversation,
             message,
             initialAssistantMessage,
             chatThreadQuery,
+            conversationState === "new",
         );
         lastAssistantMessage = result.lastAssistantMessage;
     } catch (e) {
@@ -393,9 +396,11 @@ type EvaluateUserConversationMessageResult = {
 };
 
 function* evaluateUserConversationMessage(
+    conversation: IChatConversationLocal,
     userMessage: IChatConversationLocalItem,
     assistantMessage: IChatConversationLocalItem,
     preparedChatThread: IChatConversationThreadQuery,
+    isStartMessage: boolean,
 ) {
     let reader:
         | ReadableStreamReader<IChatConversationItem | IChatConversationError | IChatSuggestionsItem>
@@ -450,9 +455,11 @@ function* evaluateUserConversationMessage(
                     if (value.role === "user" && currentUserMessage) {
                         yield put(
                             evaluateMessageUpdateAction({
+                                conversation,
                                 userMessageId: currentUserMessage.localId,
                                 interactionId: value.id,
                                 message: value,
+                                isStartMessage,
                             }),
                         );
                         //reset

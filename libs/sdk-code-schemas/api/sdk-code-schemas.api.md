@@ -5293,10 +5293,6 @@ export const metadata_v1: {
                 using: {
                     $ref: string;
                     description: string;
-                    $semantic: {
-                        type: string;
-                        source: string;
-                    };
                 };
                 conditions: {
                     type: string;

@@ -7,6 +7,7 @@ import { Portal } from "react-portal";
 import { bem } from "../@utils/bem.js";
 import { makeDialogKeyboardNavigation } from "../@utils/keyboardNavigation.js";
 import { OverlayContent, OverlayProvider } from "../@utils/OverlayStack.js";
+import { useElementSize } from "../hooks/useElementSize.js";
 import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 import { UiFocusTrap } from "../UiFocusManager/UiFocusTrap.js";
 import { UiReturnFocusOnUnmount } from "../UiFocusManager/UiReturnFocusOnUnmount.js";
@@ -41,6 +42,7 @@ export function UiDrawer({
     accessibilityConfig,
 }: IUiDrawerProps) {
     const ref = useRef(null);
+
     const { isOpen, isFullyOpen, view, backdropStyle, contentStyle } = useToggleDrawer(
         open ?? false,
         transition ?? {},
@@ -60,6 +62,8 @@ export function UiDrawer({
             ),
         [onEscapeKey],
     );
+
+    const { ref: headerRef, height } = useElementSize<HTMLDivElement>([isOpen, ref.current]);
 
     if (!isOpen) {
         return null;
@@ -83,7 +87,11 @@ export function UiDrawer({
                                 <UiFocusTrap root={<div />}>
                                     <div
                                         tabIndex={-1}
-                                        style={{ position: mode, ...contentStyle }}
+                                        style={{
+                                            position: mode,
+                                            ...contentStyle,
+                                            ...(height ? { paddingTop: height } : {}),
+                                        }}
                                         onKeyDown={handleKeyDown}
                                         role={accessibilityConfig?.role ?? "dialog"}
                                         aria-label={accessibilityConfig?.ariaLabel}
@@ -95,7 +103,7 @@ export function UiDrawer({
                                         })}
                                         ref={showCloseButton ? undefined : ref}
                                     >
-                                        <div className={e("header")}>
+                                        <div className={e("header")} ref={headerRef}>
                                             {header}
                                             {showCloseButton ? (
                                                 <div className={e("close-button")}>

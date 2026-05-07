@@ -212,7 +212,13 @@ function processDeclarativeAggregatedFact(
     );
 
     map.add(new Pair("aggregated_as", fact.sourceFactReference.operation));
-    map.add(new Pair("assigned_to", fact.sourceFactReference.reference.id));
+    // Re-emit the `attribute/` prefix so YAML→declarative does not need entities scope to
+    // recover the type for HLL synopses (gdc-nas CQ-2147). Fact targets stay bare for
+    // backward compatibility with existing AAC YAML.
+    const reference = fact.sourceFactReference.reference;
+    map.add(
+        new Pair("assigned_to", reference.type === "attribute" ? `attribute/${reference.id}` : reference.id),
+    );
 
     if (fact.description) {
         map.add(new Pair("description", fact.description ?? ""));

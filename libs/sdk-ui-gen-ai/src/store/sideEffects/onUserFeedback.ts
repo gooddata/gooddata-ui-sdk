@@ -3,14 +3,10 @@
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { getContext, put, select } from "redux-saga/effects";
 
-import {
-    type IAnalyticalBackend,
-    type IChatConversation,
-    type IUserWorkspaceSettings,
-} from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 
-import { type IChatConversationLocalItem, type Message } from "../../model.js";
+import { type IChatConversationLocal, type IChatConversationLocalItem, type Message } from "../../model.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import {
     conversationMessagesSelector,
@@ -39,7 +35,7 @@ export function* onUserFeedback({
 
     if (settings?.enableAiAgenticConversations) {
         try {
-            const conversation: IChatConversation = yield select(conversationSelector);
+            const conversation: IChatConversationLocal = yield select(conversationSelector);
             const messages: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
             const message = messages.find((message) => message.localId === payload.assistantMessageId);
 

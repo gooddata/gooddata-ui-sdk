@@ -6,7 +6,6 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect, useSelector } from "react-redux";
 
-import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 import {
     DefaultUiMenuInteractiveItemWrapper,
     type IUiMenuItem,
@@ -16,6 +15,7 @@ import {
     UiMenu,
 } from "@gooddata/sdk-ui-kit";
 
+import { type IChatConversationLocal } from "../model.js";
 import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setHistoryAction } from "../store/chatWindow/chatWindowSlice.js";
 import { conversationSelector, conversationsSelector } from "../store/messages/messagesSelectors.js";
@@ -54,7 +54,7 @@ function GenAIChatConversationsComponent({
 
     const { isFullscreen, isSmallScreen } = useFullscreenCheck();
     const { isHistory } = useHistoryCheck();
-    const [conversationToDelete, setConversationToDelete] = useState<IChatConversation | undefined>();
+    const [conversationToDelete, setConversationToDelete] = useState<IChatConversationLocal | undefined>();
 
     const catalogItems = useSelector(catalogItemsSelector);
 
@@ -106,7 +106,7 @@ function GenAIChatConversationsComponent({
     }, []);
 
     const handleSelect = useCallback(
-        (conversation: IChatConversation) => {
+        (conversation: IChatConversationLocal) => {
             loadConversation({ conversation });
             setHistory({ isHistory: false });
         },
@@ -130,8 +130,11 @@ function GenAIChatConversationsComponent({
                 node={ref.current}
                 showBackdrop={false}
                 header={
-                    <div className="gd-gen-ai-chat__window__conversations__header">
-                        {intl.formatMessage({ id: "gd.gen-ai.conversations.title" })}
+                    <div style={{ width: "100%" }}>
+                        <div className="gd-gen-ai-chat__window__conversations__header">
+                            {intl.formatMessage({ id: "gd.gen-ai.conversations.title" })}
+                        </div>
+                        <div className="gd-gen-ai-chat__window__conversations__divider" />
                     </div>
                 }
                 closeLabel={intl.formatMessage({ id: "gd.gen-ai.conversations.close-label" })}
@@ -144,7 +147,6 @@ function GenAIChatConversationsComponent({
                         "gd-gen-ai-chat__window__conversations--isSmallScreen": isSmallScreen,
                     })}
                 >
-                    <div className="gd-gen-ai-chat__window__conversations__divider" />
                     {(conversations ?? []).length === 0 ? (
                         <div className="gd-gen-ai-chat__window__conversations__empty">
                             <UiIcon type="history2" size={20} color="complementary-6" />
@@ -164,17 +166,17 @@ function GenAIChatConversationsComponent({
                                     if (event.key === "Delete" && focusedItem) {
                                         event.preventDefault();
                                         event.stopPropagation();
-                                        setConversationToDelete(focusedItem.data as IChatConversation);
+                                        setConversationToDelete(focusedItem.data as IChatConversationLocal);
                                     }
                                 }}
                                 InteractiveItemWrapper={(props) => {
-                                    const data = props.item.data as IChatConversation;
+                                    const data = props.item.data as IChatConversationLocal;
                                     return (
                                         <div
                                             className={cx(
                                                 "gd-gen-ai-chat__window__conversations__list__item",
                                                 {
-                                                    generatingTitle: !props.item.stringTitle,
+                                                    generatingTitle: data.generatingTitle,
                                                 },
                                             )}
                                         >
@@ -192,7 +194,7 @@ function GenAIChatConversationsComponent({
                                 }}
                                 items={menuItems}
                                 onSelect={(item, event) => {
-                                    handleSelect(item.data as IChatConversation);
+                                    handleSelect(item.data as IChatConversationLocal);
                                     event.stopPropagation();
                                     event.preventDefault();
                                 }}

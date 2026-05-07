@@ -3,9 +3,9 @@
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
 
-import { type IAnalyticalBackend, type IChatConversation } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { type Message, isVisualizationContents } from "../../model.js";
+import { type IChatConversationLocal, type Message, isVisualizationContents } from "../../model.js";
 import { conversationSelector, messagesSelector } from "../messages/messagesSelectors.js";
 import { saveVisualisationRenderStatusSuccessAction } from "../messages/messagesSlice.js";
 import { extractError } from "./utils.js";
@@ -25,7 +25,7 @@ export function* onVisualisationRender({
     // Retrieve backend from context
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
-    const conversation: IChatConversation = yield select(conversationSelector);
+    const conversation: IChatConversationLocal = yield select(conversationSelector);
 
     try {
         if (conversation) {
