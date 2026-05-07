@@ -29,9 +29,12 @@ const noEntities: ExportEntities = [];
  *  - one base NORMAL dataset with plain `dataSourceTableId`
  */
 describe("dataset agg-aware round-trip (CQ-2302)", () => {
-    function roundTrip(declarative: DeclarativeDataset): DeclarativeDataset {
+    function roundTrip(
+        declarative: DeclarativeDataset,
+        entities: ExportEntities = noEntities,
+    ): DeclarativeDataset {
         const { json: yamlAsJson } = declarativeDatasetToYaml(declarative, profile, {});
-        return yamlDatasetToDeclarative(noEntities, yamlAsJson as Dataset, profile.data_source);
+        return yamlDatasetToDeclarative(entities, yamlAsJson as Dataset, profile.data_source);
     }
 
     describe("AUXILIARY dataset", () => {
@@ -161,7 +164,7 @@ describe("dataset agg-aware round-trip (CQ-2302)", () => {
                     sourceColumnDataType: "HLL",
                     sourceFactReference: {
                         operation: "APPROXIMATE_COUNT",
-                        reference: { id: "users_hll", type: "fact" },
+                        reference: { id: "country_id", type: "attribute" },
                     },
                 },
                 {
@@ -187,18 +190,21 @@ describe("dataset agg-aware round-trip (CQ-2302)", () => {
             expect(hllFact?.sourceColumnDataType).toBe("HLL");
         });
 
-        it("preserves aggregatedFacts[] including APPROXIMATE_COUNT operation", () => {
+        it("preserves aggregatedFacts[] including APPROXIMATE_COUNT operation against an attribute target", () => {
             const out = roundTrip(preAgg);
             const agg = out.aggregatedFacts ?? [];
             expect(agg).toHaveLength(2);
 
+            // APPROXIMATE_COUNT must reference an attribute (gdc-nas CQ-2147 / CommonModel.SourceReferenceOperation.isAllowedForAttribute).
             const approx = agg.find((f) => f.id === "users_approx");
             expect(approx?.sourceFactReference.operation).toBe("APPROXIMATE_COUNT");
-            expect(approx?.sourceFactReference.reference.id).toBe("users_hll");
+            expect(approx?.sourceFactReference.reference.id).toBe("country_id");
+            expect(approx?.sourceFactReference.reference.type).toBe("attribute");
             expect(approx?.sourceColumnDataType).toBe("HLL");
 
             const sum = agg.find((f) => f.id === "amount_sum");
             expect(sum?.sourceFactReference.operation).toBe("SUM");
+            expect(sum?.sourceFactReference.reference.type).toBe("fact");
         });
 
         it("preserves the reference to the AUX dataset", () => {
@@ -275,6 +281,82 @@ describe("dataset agg-aware round-trip (CQ-2302)", () => {
         it("does not emit sql for table-backed dataset", () => {
             const out = roundTrip(base);
             expect(out.sql).toBeUndefined();
+        });
+    });
+
+    /**
+     * Direct YAML→declarative coverage for an APPROXIMATE_COUNT aggregated fact whose
+     * `assigned_to` points at an attribute on an AUXILIARY dataset.
+     *
+     * Mirrors the canonical xfail repro in gooddata-python-sdk
+     * (`tests/catalog/unit_tests/test_aac_agg_aware.py
+     * ::test_pre_aggregation_approximate_count_attribute_target_round_trips`).
+     *
+     * Platform contract: gdc-nas CQ-2147 / SourceReferenceOperation.isAllowedForFact() === false
+     * for APPROXIMATE_COUNT — the only valid `reference.type` is `"attribute"`.
+     */
+    describe("APPROXIMATE_COUNT against attribute target (CQ-2147)", () => {
+        const aux: Dataset = {
+            type: "dataset",
+            id: "orders",
+            title: "Orders",
+            dataset_type: "auxiliary",
+            fields: {
+                unique_customer: { type: "attribute", title: "Unique Customer", data_type: "STRING" },
+            },
+        } as Dataset;
+
+        const aac: Dataset = {
+            type: "dataset",
+            id: "agg_orders_country_daily",
+            title: "Agg",
+            table_path: "agg_orders_country_daily",
+            data_source: "demo-ds",
+            dataset_type: "standard",
+            precedence: 1,
+            fields: {
+                "agg_orders_country_daily.unique_customers_hll": {
+                    type: "aggregated_fact",
+                    source_column: "unique_customers_hll",
+                    data_type: "HLL",
+                    aggregated_as: "APPROXIMATE_COUNT",
+                    assigned_to: "attribute/unique_customer",
+                },
+            },
+        } as Dataset;
+
+        const entities: ExportEntities = [
+            { id: "orders", type: "dataset", path: "orders.yaml", data: aux },
+            { id: aac.id, type: "dataset", path: `${aac.id}.yaml`, data: aac },
+        ];
+
+        it("resolves prefixed assigned_to as attribute", () => {
+            const out = yamlDatasetToDeclarative(entities, aac, "demo-ds");
+            const af = out.aggregatedFacts?.[0];
+            expect(af?.sourceFactReference.operation).toBe("APPROXIMATE_COUNT");
+            expect(af?.sourceColumnDataType).toBe("HLL");
+            expect(af?.sourceFactReference.reference.id).toBe("unique_customer");
+            expect(af?.sourceFactReference.reference.type).toBe("attribute");
+        });
+
+        it("resolves bare assigned_to as attribute via entities lookup", () => {
+            const aacBare: Dataset = {
+                ...aac,
+                fields: {
+                    "agg_orders_country_daily.unique_customers_hll": {
+                        type: "aggregated_fact",
+                        source_column: "unique_customers_hll",
+                        data_type: "HLL",
+                        aggregated_as: "APPROXIMATE_COUNT",
+                        assigned_to: "unique_customer",
+                    },
+                },
+            } as Dataset;
+
+            const out = yamlDatasetToDeclarative(entities, aacBare, "demo-ds");
+            const af = out.aggregatedFacts?.[0];
+            expect(af?.sourceFactReference.reference.id).toBe("unique_customer");
+            expect(af?.sourceFactReference.reference.type).toBe("attribute");
         });
     });
 });

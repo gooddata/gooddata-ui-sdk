@@ -3465,8 +3465,7 @@
                 },
                 "using": {
                     "$ref": "#/$defs/metricIdentifier",
-                    "description": "Reference to the metric being filtered.",
-                    "$semantic": { "type": "reference", "source": "metric.id" }
+                    "description": "Reference to the metric being filtered."
                 },
                 "conditions": {
                     "type": "array",
@@ -4974,10 +4973,10 @@
                     "description": "A list of dashboard filters to be ignored for this widget",
                     "items": {
                         "type": "string",
-                        "description": "An id of the dashboard label, attribute or date to be ignored",
+                        "description": "An id of the dashboard label, attribute, metric or date to be ignored",
                         "$semantic": {
                             "type": "reference",
-                            "sources": ["dateDataset.id", "attribute.id", "label.id"],
+                            "sources": ["dateDataset.id", "attribute.id", "label.id", "metric.id"],
                             "typePrefix": true
                         }
                     }

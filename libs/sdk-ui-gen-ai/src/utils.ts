@@ -2,10 +2,10 @@
 
 import { type IntlShape } from "react-intl";
 
-import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
 import { REFERENCE_REGEX } from "./components/completion/references.js";
+import { type IChatConversationLocal } from "./model.js";
 
 export function getVisualizationHref(wsId: string, visId: string) {
     return `/analyze/#/${wsId}/${visId}/edit`;
@@ -45,7 +45,7 @@ export function getHeadlineComparison(metrics: IAttributeOrMeasure[]) {
     };
 }
 
-export function generateTemporaryTitle(intl: IntlShape, data: IChatConversation): string {
+export function generateTemporaryTitle(intl: IntlShape, data: IChatConversationLocal): string {
     return intl.formatMessage(
         { id: "gd.chat.conversation.generating-title" },
         {
@@ -58,30 +58,34 @@ export function generateTemporaryTitle(intl: IntlShape, data: IChatConversation)
 
 export function generateTitleFromQuestion(text: string): string {
     const maxTitleLength = 50;
+    const sanitizedText = text
+        .replace(/[\u007F-\u009F\u200B-\u200D\u2060\uFEFF]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
 
-    if (text.length <= maxTitleLength) {
-        return text.trim();
+    if (sanitizedText.length <= maxTitleLength) {
+        return sanitizedText;
     }
 
     let sliceEnd = maxTitleLength;
-    const slicedText = text.slice(0, sliceEnd);
+    const slicedText = sanitizedText.slice(0, sliceEnd);
     const lastOpeningBrace = slicedText.lastIndexOf("{");
     const lastClosingBrace = slicedText.lastIndexOf("}");
 
     if (lastOpeningBrace > lastClosingBrace) {
-        const referenceStart = text.slice(lastOpeningBrace);
+        const referenceStart = sanitizedText.slice(lastOpeningBrace);
         REFERENCE_REGEX.lastIndex = 0;
         const referenceMatch = REFERENCE_REGEX.exec(referenceStart);
 
         if (referenceMatch?.index === 0) {
             sliceEnd = lastOpeningBrace + referenceMatch[0].length;
         } else {
-            const closingBrace = text.indexOf("}", sliceEnd);
+            const closingBrace = sanitizedText.indexOf("}", sliceEnd);
             if (closingBrace !== -1) {
                 sliceEnd = closingBrace + 1;
             }
         }
     }
 
-    return `${text.slice(0, sliceEnd).trim()}...`;
+    return `${sanitizedText.slice(0, sliceEnd).trim()}...`;
 }

@@ -289,6 +289,53 @@
                 }
             }
         },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/generateTitle": {
+            "post": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Post Generate Conversation Title",
+                "operationId": "post_generate_conversation_title_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__generateTitle_post",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConversationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Conversation not found."
+                    },
+                    "422": {
+                        "description": "Title cannot be generated yet or LLM is not configured."
+                    }
+                }
+            }
+        },
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/items": {
             "get": {
                 "tags": [

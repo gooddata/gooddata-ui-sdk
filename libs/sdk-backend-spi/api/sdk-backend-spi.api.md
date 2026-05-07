@@ -725,6 +725,7 @@ export type IChatConversationReasoningContent = {
 export interface IChatConversations {
     create(): Promise<IChatConversation>;
     delete(conversationId: string): Promise<void>;
+    generateTitle(conversationId: string): Promise<IChatConversation>;
     getConversation(conversationId: string): Promise<IChatConversation>;
     getConversationItemsQuery(): IChatConversationItemsQuery;
     getConversationThread(conversationId: string): IChatConversationThread;

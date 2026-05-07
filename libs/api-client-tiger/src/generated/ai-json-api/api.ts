@@ -1460,6 +1460,55 @@ export async function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiW
 }
 
 
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * 
+ * @summary Post Generate Conversation Title
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(
+    workspaceId: string, conversationId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost', 'conversationId', conversationId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/generateTitle`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // ConversationsAi Api FP
 /**
@@ -1591,6 +1640,32 @@ export async function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspac
 }
 
 
+// ConversationsAi Api FP
+/**
+ * 
+ * @summary Post Generate Conversation Title
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiConversationResponse> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(
+        requestParameters.workspaceId, requestParameters.conversationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * ConversationsAi - interface
  * @export
@@ -1646,6 +1721,16 @@ export interface ConversationsAiInterface {
      * @memberof ConversationsAiInterface
      */
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+
+    /**
+     * 
+     * @summary Post Generate Conversation Title
+     * @param {ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 
 }
 
@@ -1776,6 +1861,27 @@ export interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdCha
 }
 
 /**
+ * Request parameters for postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest
+ */
+export interface ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost
+     */
+    readonly conversationId: string
+}
+
+/**
  * ConversationsAi - object-oriented interface
  * @export
  * @class ConversationsAi
@@ -1840,6 +1946,18 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
      */
     public postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig) {
         return ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Post Generate Conversation Title
+     * @param {ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

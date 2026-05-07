@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IChatConversation } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationLocal } from "../../model.js";
 
 export enum ConversationDateGroup {
     TODAY = "TODAY",
@@ -15,7 +15,7 @@ export type ConversationDateGroupConfig = {
 
 export type ConversationDateBucket = {
     group: ConversationDateGroup;
-    conversations: IChatConversation[];
+    conversations: IChatConversationLocal[];
 };
 
 export const DEFAULT_CONVERSATION_DATE_GROUPS: ConversationDateGroupConfig[] = [
@@ -25,11 +25,11 @@ export const DEFAULT_CONVERSATION_DATE_GROUPS: ConversationDateGroupConfig[] = [
 ];
 
 export function groupConversationsByDate(
-    conversations: IChatConversation[] | undefined = [],
+    conversations: IChatConversationLocal[] | undefined = [],
     groups: ConversationDateGroupConfig[] = DEFAULT_CONVERSATION_DATE_GROUPS,
     now: Date = new Date(),
 ): ConversationDateBucket[] {
-    const conversationGroups = new Map<ConversationDateGroup, IChatConversation[]>();
+    const conversationGroups = new Map<ConversationDateGroup, IChatConversationLocal[]>();
 
     groups.forEach((group) => {
         conversationGroups.set(group.group, []);

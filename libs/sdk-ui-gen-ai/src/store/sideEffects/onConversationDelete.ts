@@ -3,8 +3,9 @@
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
 
-import { type IAnalyticalBackend, type IChatConversation } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
+import { type IChatConversationLocal } from "../../model.js";
 import { conversationByIdSelector } from "../messages/messagesSelectors.js";
 import {
     deleteConversationFailureAction,
@@ -21,7 +22,7 @@ export function* onConversationDelete({
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
 
-    const conversation: IChatConversation | undefined = yield select(
+    const conversation: IChatConversationLocal | undefined = yield select(
         conversationByIdSelector,
         payload.conversationId,
     );

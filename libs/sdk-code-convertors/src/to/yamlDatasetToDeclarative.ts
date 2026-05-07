@@ -112,12 +112,50 @@ export function yamlDatasetToDeclarative(
     output.facts = buildFacts(input.fields);
     output.attributes = buildAttributes(input.fields, input.dataset_type === "auxiliary");
 
-    const aggregatedFacts = buildAggregatedFacts(input.fields);
+    const aggregatedFacts = buildAggregatedFacts(input.fields, entities);
     if (aggregatedFacts.length > 0) {
         output.aggregatedFacts = aggregatedFacts;
     }
 
     return output;
+}
+
+/**
+ * Resolve `assigned_to` on an aggregated fact to a (id, type) pair.
+ *
+ * `assigned_to` is a free-form string in AAC YAML. It can be either:
+ *  - prefixed (`attribute/<id>` or `fact/<id>`) — type is taken from the prefix and `<id>` is returned bare,
+ *  - bare (`<id>`) — type is inferred by searching `entities` for an `attribute` field with a matching id;
+ *    falls back to `"fact"` if no such attribute is found.
+ *
+ * Platform contract (gdc-nas CQ-2147 / SourceReferenceOperation): `APPROXIMATE_COUNT` requires
+ * `type === "attribute"`, `SUM` requires `type === "fact"`. We do not enforce that here — the
+ * server validates and rejects mismatches — but correct type resolution is what makes the
+ * payload acceptable in the first place.
+ */
+function resolveAggregatedFactReference(
+    assignedTo: string,
+    entities: ExportEntities,
+): { id: string; type: "attribute" | "fact" } {
+    const slashIndex = assignedTo.indexOf("/");
+    if (slashIndex > 0) {
+        const prefix = assignedTo.slice(0, slashIndex);
+        const id = assignedTo.slice(slashIndex + 1);
+        if (prefix === "attribute" || prefix === "fact") {
+            return { id, type: prefix };
+        }
+    }
+
+    const isAttribute = entities.some((entity) => {
+        if (entity.type !== "dataset") {
+            return false;
+        }
+        const fields = (entity.data as Dataset).fields;
+        const field = fields?.[assignedTo];
+        return field !== undefined && (field as Attribute).type === "attribute";
+    });
+
+    return { id: assignedTo, type: isAttribute ? "attribute" : "fact" };
 }
 
 /**
@@ -275,7 +313,10 @@ export function buildFacts(fields?: Fields): DeclarativeFact[] {
 /**
  * Build declarative aggregated facts out of AaC fields
  */
-export function buildAggregatedFacts(fields?: Fields): DeclarativeAggregatedFact[] {
+export function buildAggregatedFacts(
+    fields?: Fields,
+    entities: ExportEntities = [],
+): DeclarativeAggregatedFact[] {
     if (!fields) {
         return [];
     }
@@ -286,16 +327,15 @@ export function buildAggregatedFacts(fields?: Fields): DeclarativeAggregatedFact
                 return null;
             }
 
+            const reference = resolveAggregatedFactReference(field.assigned_to, entities);
+
             const output: DeclarativeAggregatedFact = {
                 id,
                 sourceColumn: field.source_column ?? id,
                 sourceColumnDataType: field.data_type,
                 sourceFactReference: {
                     operation: field.aggregated_as,
-                    reference: {
-                        id: field.assigned_to,
-                        type: "fact",
-                    },
+                    reference,
                 },
             };
 

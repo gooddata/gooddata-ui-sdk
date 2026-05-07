@@ -9,6 +9,10 @@ describe("generateTitleFromQuestion", () => {
         expect(generateTitleFromQuestion("   short question   ")).toBe("short question");
     });
 
+    it("should normalize whitespace and remove invisible characters", () => {
+        expect(generateTitleFromQuestion("  first\n\t\u200Bsecond   third  ")).toBe("first second third");
+    });
+
     it("should truncate to 50 characters and append ellipsis when text is longer", () => {
         const input = `${"a".repeat(50)}extra`;
 
@@ -27,5 +31,11 @@ describe("generateTitleFromQuestion", () => {
         const input = `${prefix}{metric/} trailing text`;
 
         expect(generateTitleFromQuestion(input)).toBe(`${prefix}{metric/}...`);
+    });
+
+    it("should sanitize text before truncation and still append ellipsis when truncated", () => {
+        const input = `  ${"a".repeat(30)}\n\t${"b".repeat(30)}  `;
+
+        expect(generateTitleFromQuestion(input)).toBe(`${"a".repeat(30)} ${"b".repeat(19)}...`);
     });
 });

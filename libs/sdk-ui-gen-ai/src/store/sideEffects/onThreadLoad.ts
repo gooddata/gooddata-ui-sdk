@@ -4,7 +4,6 @@ import { call, cancelled, getContext, put, race, select, take } from "redux-saga
 
 import {
     type IAnalyticalBackend,
-    type IChatConversation,
     type IChatConversationItem,
     type IChatConversationItemsQueryResult,
     type IChatConversationThread,
@@ -16,6 +15,7 @@ import {
 import {
     type AssistantMessage,
     type Contents,
+    type IChatConversationLocal,
     type Message,
     isAssistantMessage,
     isSemanticSearchContents,
@@ -163,7 +163,7 @@ function* fetchAllConversations() {
     const workspace: string = yield getContext("workspace");
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
-    const conversations: IChatConversation[] | undefined = yield select(conversationsSelector);
+    const conversations: IChatConversationLocal[] | undefined = yield select(conversationsSelector);
 
     // Already loaded
     if (conversations) {
@@ -197,8 +197,8 @@ function* fetchCurrentConversation() {
     const workspace: string = yield getContext("workspace");
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
-    const conversations: IChatConversation[] | undefined = yield select(conversationsSelector);
-    const conversation: "new" | IChatConversation | undefined = yield select(conversationSelector);
+    const conversations: IChatConversationLocal[] | undefined = yield select(conversationsSelector);
+    const conversation: "new" | IChatConversationLocal | undefined = yield select(conversationSelector);
 
     // New conversation selected
     if (conversation === "new") {

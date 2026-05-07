@@ -822,6 +822,8 @@ export class DummyChatConversations implements IChatConversations {
     // (undocumented)
     delete(_conversationId: string): Promise<void>;
     // (undocumented)
+    generateTitle(_conversationId: string): Promise<IChatConversation>;
+    // (undocumented)
     getConversation(_conversationId: string): Promise<IChatConversation>;
     // (undocumented)
     getConversationItemsQuery(): IChatConversationItemsQuery;

@@ -3,6 +3,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 import {
+    type IChatConversation,
     type IChatConversationContent,
     type IChatConversationError,
     type IChatConversationItem,
@@ -346,6 +347,14 @@ export const makeAssistantMessage = (
  * @public
  */
 export type Message = UserMessage | AssistantMessage;
+
+/**
+ * Represents a local chat conversation that extends the base `IChatConversation` type.
+ * Includes additional optional properties specific to the local context.
+ */
+export type IChatConversationLocal = IChatConversation & {
+    generatingTitle?: boolean;
+};
 
 /**
  * Chat conversation item with local ID.
