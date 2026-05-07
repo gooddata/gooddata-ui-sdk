@@ -13,6 +13,7 @@ import {
     type IDateFilterConfig,
     type IDateHierarchyTemplate,
     type IInsight,
+    type IParameterMetadataObject,
     type IWidget,
     type ObjRef,
     areObjRefsEqual,
@@ -60,6 +61,7 @@ import {
 } from "../common/stateInitializers.js";
 import { loadCatalog } from "./loadCatalog.js";
 import { loadDashboardList } from "./loadDashboardList.js";
+import { loadDashboardParameters } from "./loadDashboardParameters.js";
 import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
 import { loadFilterViews } from "./loadFilterViews.js";
@@ -307,6 +309,13 @@ function* loadExistingDashboard(
         cmd,
     );
 
+    const workspaceParameters: SagaReturnType<typeof loadWorkspaceParametersWithStatus> = yield call(
+        loadWorkspaceParametersWithStatus,
+        ctx,
+        config.settings?.enableParameters ?? false,
+    );
+    const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
+
     const initActions: SagaReturnType<typeof actionsToInitializeExistingDashboard> = yield call(
         actionsToInitializeExistingDashboard,
         ctx,
@@ -322,6 +331,7 @@ function* loadExistingDashboard(
         createDisplayFormMap([], []),
         cmd.payload.persistedDashboard,
         resolvedActiveTabId,
+        workspaceParametersList,
     );
 
     const catalogPayload = {
@@ -336,6 +346,7 @@ function* loadExistingDashboard(
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems(catalogPayload),
+            catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
             ...initActions,
             // NOTE: Tab configs (dateFilterConfig, dateFilterConfigs, attributeFilterConfigs, filterContext)
             // are now initialized as part of the tabs state in initActions via setTabs action
@@ -395,6 +406,13 @@ function* initializeNewDashboard(
         call(loadFilterViews, ctx),
     ]);
 
+    const workspaceParameters: SagaReturnType<typeof loadWorkspaceParametersWithStatus> = yield call(
+        loadWorkspaceParametersWithStatus,
+        ctx,
+        config.settings?.enableParameters ?? false,
+    );
+    const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
+
     const { initActions, dashboard, insights }: SagaReturnType<typeof actionsToInitializeNewDashboard> =
         yield call(
             actionsToInitializeNewDashboard,
@@ -403,6 +421,7 @@ function* initializeNewDashboard(
             config.dateFilterConfig,
             catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
             cmd.payload.initialTabId,
+            workspaceParametersList,
         );
 
     const batch: BatchAction = batchActions(
@@ -420,6 +439,7 @@ function* initializeNewDashboard(
                 attributeHierarchies: catalog.attributeHierarchies(),
                 dateHierarchyTemplates: dateHierarchyTemplates,
             }),
+            catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),
@@ -469,6 +489,37 @@ export function* requestCatalog(ctx: DashboardContext, cmd: InitializeDashboard)
     );
 }
 
+function* loadWorkspaceParametersWithStatus(
+    ctx: DashboardContext,
+    enableParameters: boolean,
+): SagaIterator<IParameterMetadataObject[] | "gated-off" | "failed"> {
+    if (!enableParameters) {
+        return "gated-off";
+    }
+    try {
+        const result: PromiseFnReturnType<typeof loadDashboardParameters> = yield call(
+            loadDashboardParameters,
+            ctx,
+        );
+        return result;
+    } catch {
+        return "failed";
+    }
+}
+
+function makeCatalogParametersPayload(result: IParameterMetadataObject[] | "gated-off" | "failed"): {
+    status: "loaded" | "gated-off" | "failed";
+    parameters: IParameterMetadataObject[];
+} {
+    if (result === "gated-off") {
+        return { status: "gated-off", parameters: [] };
+    }
+    if (result === "failed") {
+        return { status: "failed", parameters: [] };
+    }
+    return { status: "loaded", parameters: result };
+}
+
 export function* preloadAttributeFiltersData(ctx: DashboardContext, dashboard: IDashboard) {
     const attributesWithReferences: PromiseFnReturnType<typeof preloadAttributeFiltersDataFromBackend> =
         yield call(preloadAttributeFiltersDataFromBackend, ctx, dashboard);
@@ -492,11 +543,11 @@ export function* requestDashboardsList(ctx: DashboardContext) {
 function* advancedLoader(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
-    dashboard?: IDashboard,
+    dashboard: IDashboard,
 ): SagaIterator {
     yield all([
         call(requestCatalog, ctx, cmd),
-        call(preloadAttributeFiltersData, ctx, dashboard!),
+        call(preloadAttributeFiltersData, ctx, dashboard),
         call(requestDashboardsList, ctx),
     ]);
 }

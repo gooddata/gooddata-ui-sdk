@@ -7,7 +7,25 @@ import {
     type ICatalogFact,
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
+    type IParameterMetadataObject,
 } from "@gooddata/sdk-model";
+
+/**
+ * Status of catalog parameters loading.
+ *
+ * @alpha
+ */
+export type CatalogParametersStatus = "uninitialized" | "loading" | "loaded" | "failed" | "gated-off";
+
+/**
+ * Catalog parameters slice.
+ *
+ * @alpha
+ */
+export interface ICatalogParametersState {
+    status: CatalogParametersStatus;
+    parameters: IParameterMetadataObject[];
+}
 
 /**
  * @public
@@ -25,6 +43,8 @@ export type CatalogState = {
     attributeHierarchies?: ICatalogAttributeHierarchy[];
     /** @beta */
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
+    /** @alpha */
+    parameters: ICatalogParametersState;
 };
 
 export const catalogInitialState: CatalogState = {
@@ -34,4 +54,5 @@ export const catalogInitialState: CatalogState = {
     facts: undefined,
     attributeHierarchies: undefined,
     dateHierarchyTemplates: undefined,
+    parameters: { status: "uninitialized", parameters: [] },
 };

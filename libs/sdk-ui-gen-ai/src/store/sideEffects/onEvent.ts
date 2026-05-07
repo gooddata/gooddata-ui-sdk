@@ -28,7 +28,7 @@ import {
 import {
     clearThreadAction,
     evaluateMessageCompleteAction,
-    loadConversationsSuccessAction,
+    loadConversationSuccessAction,
     loadThreadSuccessAction,
     newMessageAction,
     saveVisualizationErrorAction,
@@ -41,7 +41,7 @@ import {
 export function* onEvent() {
     yield takeEvery(setOpenAction.type, onSetOpen);
     yield takeEvery(loadThreadSuccessAction.type, onThreadLoaded);
-    yield takeEvery(loadConversationsSuccessAction.type, onThreadLoaded);
+    yield takeEvery(loadConversationSuccessAction.type, onThreadLoaded);
     yield takeEvery(clearThreadAction.type, onClearThread);
     yield takeEvery(newMessageAction.type, onNewMessage);
     yield takeEvery(evaluateMessageCompleteAction.type, onEvaluateMessageComplete);
@@ -78,7 +78,7 @@ function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
 
 function* onThreadLoaded({
     payload: { threadId },
-}: ReturnType<typeof loadThreadSuccessAction | typeof loadConversationsSuccessAction>) {
+}: ReturnType<typeof loadThreadSuccessAction | typeof loadConversationSuccessAction>) {
     yield* persistMessages();
 
     // Only emit the chatOpened event when we have a real server-side threadId.

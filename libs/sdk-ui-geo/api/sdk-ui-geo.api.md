@@ -9,6 +9,7 @@ import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { ChartFillType } from '@gooddata/sdk-ui-vis-commons';
 import { ComponentType } from 'react';
 import { ContentRect } from 'react-measure';
+import { CustomTooltipPlacement } from '@gooddata/sdk-ui-vis-commons';
 import { GeoLayerType as GeoLayerType_2 } from '@gooddata/sdk-model';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -17,6 +18,7 @@ import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorStrategy } from '@gooddata/sdk-ui-vis-commons';
+import { ICustomTooltipConfig } from '@gooddata/sdk-ui-vis-commons';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDataVisualizationProps } from '@gooddata/sdk-ui';
 import { IDimension } from '@gooddata/sdk-model';
@@ -57,6 +59,8 @@ export function createAreaLayer(layer: Omit<IGeoLayerArea, "type" | "id">, id?: 
 
 // @public
 export function createPushpinLayer(layer: Omit<IGeoLayerPushpin, "type" | "id">, id?: string): IGeoLayerPushpin;
+
+export { CustomTooltipPlacement }
 
 // @public @deprecated (undocumented)
 export function enrichMapboxToken<T>(config?: T & {
@@ -119,6 +123,8 @@ export interface ICoreGeoChartProps extends IDataVisualizationProps {
     theme?: ITheme;
 }
 
+export { ICustomTooltipConfig }
+
 // @public
 export interface IGeoAreaChartBaseProps extends IGeoSingleLayerWrapperProps {
     color?: AttributeMeasureOrPlaceholder;
@@ -147,6 +153,8 @@ export interface IGeoAreaChartConfig {
     colors?: string[];
     // (undocumented)
     cooperativeGestures?: boolean;
+    // @alpha
+    customTooltip?: ICustomTooltipConfig;
     // (undocumented)
     enableExecutionCancelling?: boolean;
     // @internal
@@ -212,6 +220,8 @@ export interface IGeoChartConfig {
     colorPalette?: IColorPalette;
     colors?: string[];
     cooperativeGestures?: boolean;
+    // @alpha
+    customTooltip?: ICustomTooltipConfig;
     enableExecutionCancelling?: boolean;
     // @internal
     enableGeoBasemapConfig?: boolean;
@@ -552,6 +562,8 @@ export interface IGeoPushpinChartConfig {
     colors?: string[];
     // (undocumented)
     cooperativeGestures?: boolean;
+    // @alpha
+    customTooltip?: ICustomTooltipConfig;
     // (undocumented)
     enableExecutionCancelling?: boolean;
     // @internal

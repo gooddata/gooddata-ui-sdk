@@ -8,7 +8,10 @@ import { type IChangeMeasureValueFilterCondition } from "../../../commands/filte
 import { measureValueFilterConditionChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { selectFilterContextMeasureValueFilterByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextMeasureValueFilterByLocalId,
+    selectWorkingFilterContextMeasureValueFilterByLocalId,
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
@@ -17,7 +20,7 @@ export function* changeMeasureValueFilterConditionHandler(
     ctx: DashboardContext,
     cmd: IChangeMeasureValueFilterCondition,
 ): SagaIterator<void> {
-    const { localIdentifier, conditions } = cmd.payload;
+    const { localIdentifier, conditions, isWorkingSelectionChange } = cmd.payload;
 
     const existingFilter: ReturnType<ReturnType<typeof selectFilterContextMeasureValueFilterByLocalId>> =
         yield select(selectFilterContextMeasureValueFilterByLocalId(localIdentifier));
@@ -34,11 +37,15 @@ export function* changeMeasureValueFilterConditionHandler(
         tabsActions.changeMeasureValueFilterCondition({
             localIdentifier,
             conditions,
+            ...(isWorkingSelectionChange === undefined ? {} : { isWorkingSelectionChange }),
         }),
     );
 
+    const updatedFilterSelector = isWorkingSelectionChange
+        ? selectWorkingFilterContextMeasureValueFilterByLocalId(localIdentifier)
+        : selectFilterContextMeasureValueFilterByLocalId(localIdentifier);
     const updatedFilter: ReturnType<ReturnType<typeof selectFilterContextMeasureValueFilterByLocalId>> =
-        yield select(selectFilterContextMeasureValueFilterByLocalId(localIdentifier));
+        yield select(updatedFilterSelector);
 
     invariant(updatedFilter, "Inconsistent state in changeMeasureValueFilterConditionHandler");
 

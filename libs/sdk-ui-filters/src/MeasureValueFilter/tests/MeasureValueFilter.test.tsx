@@ -1,12 +1,18 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IMeasureValueFilter, localIdRef, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
+import {
+    type IMeasureValueFilter,
+    localIdRef,
+    newMeasureValueFilter,
+    newMeasureValueFilterWithOptions,
+} from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { type IMeasureValueFilterProps, MeasureValueFilter } from "../MeasureValueFilter.js";
+import { MeasureValueFilterFragment as MVFDropdownFragment } from "./fragments/MeasureValueFilterDropdown.js";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {
@@ -28,6 +34,7 @@ const renderComponent = (props?: Partial<IMeasureValueFilterProps>) => {
 };
 
 const DROPDOWN_BODY = ".s-mvf-dropdown-body";
+const component = new MVFDropdownFragment();
 
 describe("Measure value filter", () => {
     it("should render a button with provided title", () => {
@@ -93,5 +100,62 @@ describe("Measure value filter", () => {
         fireEvent.click(screen.getByText("Apply"));
 
         expect(onApply).toHaveBeenCalledWith(expectedFilter);
+    });
+
+    it("should pass custom dropdown components to the dropdown", () => {
+        function BodyComponent({
+            onApplyButtonClick,
+            onCancelButtonClick,
+        }: {
+            onApplyButtonClick: () => void;
+            onCancelButtonClick: () => void;
+        }) {
+            return (
+                <div data-testid="custom-body">
+                    <button onClick={onApplyButtonClick}>Body apply</button>
+                    <button onClick={onCancelButtonClick}>Body cancel</button>
+                </div>
+            );
+        }
+        function DropdownActionsComponent({ withoutApply }: { withoutApply?: boolean }) {
+            return <div data-testid="custom-actions">{withoutApply ? "without apply" : "with apply"}</div>;
+        }
+
+        renderComponent({
+            measureTitle: "My custom measure",
+            BodyComponent,
+            DropdownActionsComponent,
+            withoutApply: true,
+        });
+
+        fireEvent.click(screen.getByText("My measure"));
+
+        expect(screen.getByTestId("custom-body")).toBeInTheDocument();
+        expect(screen.getByTestId("custom-actions")).toHaveTextContent("without apply");
+    });
+
+    it("should propagate changes without applying in withoutApply mode", async () => {
+        const onChange = vi.fn();
+
+        renderComponent({
+            onChange,
+            withoutApply: true,
+            isDimensionalityEnabled: false,
+        });
+
+        fireEvent.click(screen.getByText("My measure"));
+
+        expect(screen.queryByText("Apply")).not.toBeInTheDocument();
+        expect(screen.getByText("Close")).toBeInTheDocument();
+
+        component.openOperatorDropdown().selectOperator("GREATER_THAN");
+        component.setComparisonValue("123");
+        fireEvent.blur(component.getComparisonValueInput());
+
+        await waitFor(() =>
+            expect(onChange).toHaveBeenCalledWith(
+                newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 123),
+            ),
+        );
     });
 });

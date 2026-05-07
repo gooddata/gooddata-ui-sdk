@@ -13,6 +13,7 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
     isNoopAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -54,6 +55,10 @@ const isNoopAllTimeCommonDateFilter = (filter: FilterContextItem): boolean => {
     return isDashboardCommonDateFilter(filter) && isNoopAllTimeDashboardDateFilter(filter);
 };
 
+const isNoopMeasureValueFilter = (filter: FilterContextItem): boolean => {
+    return isDashboardMeasureValueFilter(filter) && !filter.dashboardMeasureValueFilter.conditions?.length;
+};
+
 const normalizeDateFilterForComparison = (filter: IDashboardDateFilter): IDashboardDateFilter => {
     /**
      * Filter objects can be created in different shapes:
@@ -83,9 +88,9 @@ const normalizeFilterForComparison = (filter: FilterContextItem): FilterContextI
 const normalizeFiltersForComparison = (filters: FilterContextItem[]): FilterContextItem[] => {
     const normalized = filters.map(normalizeFilterForComparison);
 
-    // Remove any "all time" common date filters to normalize the comparison
+    // Remove no-op filters to normalize the reset comparison.
     return normalized.filter((filter) => {
-        return !isNoopAllTimeCommonDateFilter(filter);
+        return !isNoopAllTimeCommonDateFilter(filter) && !isNoopMeasureValueFilter(filter);
     });
 };
 

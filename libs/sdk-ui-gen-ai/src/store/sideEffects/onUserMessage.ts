@@ -52,6 +52,7 @@ import {
     evaluateMessageSuggestionsAction,
     evaluateMessageUpdateAction,
     type newMessageAction,
+    setCurrentConversationAction,
 } from "../messages/messagesSlice.js";
 import { processContents } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
@@ -62,9 +63,9 @@ import { convertMessageToChatConversation, extractError } from "./utils.js";
  * @internal
  */
 export function* onUserMessage({ payload }: ReturnType<typeof newMessageAction>) {
-    const conversation: IChatConversation = yield select(conversationSelector);
-
+    const conversation: IChatConversation | "new" | undefined = yield select(conversationSelector);
     let message = payload;
+
     if (conversation && !isChatConversationLocalItem(message)) {
         message = convertMessageToChatConversation(message);
     }
@@ -292,20 +293,37 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             return;
         }
 
+        // Retrieve backend from context
+        const backend: IAnalyticalBackend = yield getContext("backend");
+        const workspace: string = yield getContext("workspace");
+        const isPreview: boolean | undefined = yield getContext("isPreview");
+
         // Check current conversation
-        const conversation: IChatConversation | undefined = yield select(conversationSelector);
-        if (!conversation?.id) {
+        const conversationState: IChatConversation | "new" | undefined = yield select(conversationSelector);
+
+        // Check state
+        if (conversationState !== "new" && !conversationState?.id) {
             throw new Error("Conversation ID is not available.");
         }
 
+        // Create assistant message
         initialAssistantMessage = makeAssistantItem();
 
         // Set evaluation state in store
         yield put(evaluateMessageAction({ message: initialAssistantMessage }));
 
-        // Retrieve backend from context
-        const backend: IAnalyticalBackend = yield getContext("backend");
-        const workspace: string = yield getContext("workspace");
+        let conversation: IChatConversation;
+        // If we are in the transient new-conversation state, create the conversation first
+        if (conversationState === "new") {
+            const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
+            const created: IChatConversation = yield call([api, api.create]);
+            // Store it as current conversation and clear the transient flag
+            yield put(setCurrentConversationAction({ conversation: created }));
+            //save
+            conversation = created;
+        } else {
+            conversation = conversationState;
+        }
 
         // Make the request to start the evaluation
         const chatThreadQuery = backend

@@ -11,6 +11,7 @@ import {
     type IFilterContextDefinition,
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
     isAllTimeDashboardDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
@@ -119,10 +120,24 @@ export function applyFilterContext(
 
             return dateFilter;
         } else if (isDashboardMeasureValueFilter(appliedFilter)) {
-            // Measure value filters are not staged via the working filter context in view mode.
-            // TODO INE: Will be solved in CQ-2281 — wire MVF through working selection so
-            // "Apply together" can stage MVF edits like attribute/date filters.
-            return appliedFilter;
+            const workingFilter = workingFilterContext?.filters
+                ?.filter(isDashboardMeasureValueFilter)
+                .find(
+                    (item) =>
+                        dashboardFilterLocalIdentifier(item) ===
+                        appliedFilter.dashboardMeasureValueFilter.localIdentifier,
+                );
+
+            if (!workingFilter) {
+                return appliedFilter;
+            }
+
+            return {
+                dashboardMeasureValueFilter: {
+                    ...appliedFilter.dashboardMeasureValueFilter,
+                    conditions: workingFilter.dashboardMeasureValueFilter.conditions,
+                },
+            };
         } else {
             throw new Error("Unknown filter type");
         }
@@ -266,7 +281,7 @@ export function getFilterIdentifier(filter: FilterContextItem): string {
         );
     }
     if (isDashboardMeasureValueFilter(filter)) {
-        return filter.dashboardMeasureValueFilter.localIdentifier;
+        return dashboardFilterLocalIdentifier(filter)!;
     }
     throw new Error("Unknown filter type");
 }

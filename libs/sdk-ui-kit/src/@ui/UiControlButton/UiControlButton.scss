@@ -82,6 +82,19 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
         }
     }
 
+    &--isDragging {
+        display: inline-block;
+
+        &::after {
+            border-color: var(--gd-palette-complementary-4-from-theme, rgba(31, 52, 73, 0.2));
+            background: var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95));
+        }
+
+        &#{$root}--isDraggable::before {
+            opacity: 1;
+        }
+    }
+
     &--isError {
         font-size: 12px;
         color: var(--gd-palette-error-base, #e54d42);

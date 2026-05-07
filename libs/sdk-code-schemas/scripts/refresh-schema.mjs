@@ -108,8 +108,10 @@ async function processSchema(basedir, saveDir, rootSchema, name) {
         .code;
     // Write the un-narrowed schema to metadata.json — it's used for runtime validation
     // (e.g. Ajv). The narrowed schema (with oneOf explosion) is only for type generation
-    // and would cause combinatorial blowup in schema compilers.
-    const schemaContent = (await oxfmt(schemaFilename, JSON.stringify(mergedSchema), OXFMT_OPTIONS)).code;
+    // and would cause combinatorial blowup in schema compilers. Strip the
+    // `x-mergeProperties` narrow-time extension key — it's only a hint for type generation.
+    const runtimeSchema = stripExtensionKeys(structuredClone(mergedSchema));
+    const schemaContent = (await oxfmt(schemaFilename, JSON.stringify(runtimeSchema), OXFMT_OPTIONS)).code;
 
     if (checkMode) {
         const existingType = readFileSync(typeFilename, "utf-8");
@@ -325,9 +327,20 @@ function narrowOneOf(schema) {
     delete schema.oneOf;
 
     schema.oneOf = originalOneOf.map((a) => {
-        return mergeWith(cloneDeep(schema), cloneDeep(a), function customizer(objValue, srcValue, key) {
+        // Branches can opt into deep-merging their `properties` block with the parent's,
+        // by setting `x-mergeProperties: true`. Default behavior is the historical
+        // wholesale-replace (some schemas rely on that to express variant-narrower types).
+        const branch = cloneDeep(a);
+        const mergeProperties = branch["x-mergeProperties"] === true;
+        delete branch["x-mergeProperties"];
+
+        return mergeWith(cloneDeep(schema), branch, function customizer(objValue, srcValue, key) {
             if (Array.isArray(objValue) && mergable.includes(key)) {
                 return [...new Set([...objValue, ...srcValue])];
+            }
+            if (mergeProperties && key === "properties") {
+                // Let lodash deep-merge: branch.properties extends/overrides parent.properties.
+                return undefined;
             }
             return srcValue;
         });
@@ -340,6 +353,21 @@ function narrowThen(schema) {
         delete schema.else;
         delete schema.then;
     }
+}
+
+function stripExtensionKeys(node) {
+    if (Array.isArray(node)) {
+        return node.map(stripExtensionKeys);
+    }
+    if (node && typeof node === "object") {
+        const out = {};
+        for (const [k, v] of Object.entries(node)) {
+            if (k === "x-mergeProperties") continue;
+            out[k] = stripExtensionKeys(v);
+        }
+        return out;
+    }
+    return node;
 }
 
 main().then(

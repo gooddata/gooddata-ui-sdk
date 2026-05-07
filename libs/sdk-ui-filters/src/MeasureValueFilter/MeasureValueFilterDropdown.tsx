@@ -60,6 +60,10 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     filter,
     onCancel,
     onApply,
+    onChange,
+    withoutApply,
+    BodyComponent,
+    DropdownActionsComponent,
     measureIdentifier,
     measureTitle,
     usePercentage,
@@ -86,26 +90,24 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     isHeaderEnabled,
 }: IMeasureValueFilterDropdownProps) {
     const applyOnResult = filter?.measureValueFilter.applyOnResult;
-    const handleApply = useCallback(
+
+    const buildFilter = useCallback(
         (
             conditions: MeasureValueFilterCondition[] | null,
             newDimensionality?: ObjRefInScope[],
             applyOnResult?: boolean,
-        ) => {
+        ): IMeasureValueFilter => {
             const effectiveConditions = enableMultipleConditions ? conditions : conditions?.slice(0, 1);
 
             if (!effectiveConditions?.length) {
-                onApply(
-                    newMeasureValueFilterWithOptions(
-                        { localIdentifier: measureIdentifier },
-                        {
-                            operator: "ALL",
-                            ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
-                            ...(applyOnResult === undefined ? {} : { applyOnResult }),
-                        },
-                    ),
+                return newMeasureValueFilterWithOptions(
+                    { localIdentifier: measureIdentifier },
+                    {
+                        operator: "ALL",
+                        ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
+                        ...(applyOnResult === undefined ? {} : { applyOnResult }),
+                    },
                 );
-                return;
             }
 
             const treatNullValuesAs = effectiveConditions.some((condition) =>
@@ -124,32 +126,27 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             if (effectiveConditions.length === 1) {
                 const condition = effectiveConditions[0];
                 if (isRangeCondition(condition)) {
-                    onApply(
-                        newMeasureValueFilterWithOptions(
-                            { localIdentifier: measureIdentifier },
-                            {
-                                operator: condition.range.operator,
-                                from: condition.range.from,
-                                to: condition.range.to,
-                                ...commonOptions,
-                            },
-                        ),
-                    );
-                    return;
-                }
-
-                onApply(
-                    newMeasureValueFilterWithOptions(
+                    return newMeasureValueFilterWithOptions(
                         { localIdentifier: measureIdentifier },
                         {
-                            operator: condition.comparison.operator,
-                            value: condition.comparison.value,
+                            operator: condition.range.operator,
+                            from: condition.range.from,
+                            to: condition.range.to,
                             ...commonOptions,
                         },
-                    ),
+                    );
+                }
+
+                return newMeasureValueFilterWithOptions(
+                    { localIdentifier: measureIdentifier },
+                    {
+                        operator: condition.comparison.operator,
+                        value: condition.comparison.value,
+                        ...commonOptions,
+                    },
                 );
-                return;
             }
+
             const optionsConditions: OptionsCondition[] = effectiveConditions.map((condition) =>
                 isComparisonCondition(condition)
                     ? {
@@ -163,22 +160,46 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
                       },
             );
 
-            onApply(
-                newMeasureValueFilterWithOptions(
-                    { localIdentifier: measureIdentifier },
-                    {
-                        conditions: optionsConditions,
-                        ...commonOptions,
-                    },
-                ),
+            return newMeasureValueFilterWithOptions(
+                { localIdentifier: measureIdentifier },
+                {
+                    conditions: optionsConditions,
+                    ...commonOptions,
+                },
             );
         },
-        [measureIdentifier, onApply, isDimensionalityEnabled, enableMultipleConditions],
+        [measureIdentifier, isDimensionalityEnabled, enableMultipleConditions],
+    );
+
+    const handleApply = useCallback(
+        (
+            conditions: MeasureValueFilterCondition[] | null,
+            newDimensionality?: ObjRefInScope[],
+            applyOnResult?: boolean,
+        ) => {
+            onApply(buildFilter(conditions, newDimensionality, applyOnResult));
+        },
+        [onApply, buildFilter],
+    );
+
+    const handleChange = useCallback(
+        (
+            conditions: MeasureValueFilterCondition[] | null,
+            newDimensionality?: ObjRefInScope[],
+            applyOnResult?: boolean,
+        ) => {
+            onChange?.(buildFilter(conditions, newDimensionality, applyOnResult));
+        },
+        [onChange, buildFilter],
     );
 
     return (
         <Dropdown
             onApply={handleApply}
+            onChange={onChange ? handleChange : undefined}
+            withoutApply={withoutApply}
+            BodyComponent={BodyComponent}
+            DropdownActionsComponent={DropdownActionsComponent}
             onCancel={onCancel}
             operator={(filter && measureValueFilterOperator(filter)) || null}
             conditions={getConditionsFromFilter(filter, enableMultipleConditions)}

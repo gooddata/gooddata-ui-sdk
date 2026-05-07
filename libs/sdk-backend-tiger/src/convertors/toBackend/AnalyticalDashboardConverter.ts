@@ -8,6 +8,7 @@ import {
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
     type ITigerDashboardMeasureValueFilterConfig,
+    type ITigerDashboardParameter,
 } from "@gooddata/api-client-tiger";
 import { type LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -16,6 +17,7 @@ import {
     type IDashboardDefinition,
     type IDashboardLayout,
     type IDashboardMeasureValueFilterConfig,
+    type IDashboardParameter,
     type IDashboardPluginDefinition,
     type IDashboardPluginLink,
     type IDashboardTab,
@@ -92,6 +94,16 @@ function removeWidgetIdentifiersInLayout(
         update(layoutCopy, widgetPath, (widget) => removeIdentifiers(widget, useWidgetLocalIdentifiers));
         return layoutCopy;
     }, layout);
+}
+
+function convertDashboardParameterToBackend(parameter: IDashboardParameter): ITigerDashboardParameter {
+    return {
+        ref: cloneWithSanitizedIds(parameter.ref),
+        parameterType: parameter.parameterType,
+        ...(parameter.value === undefined ? {} : { value: parameter.value }),
+        ...(parameter.label === undefined ? {} : { label: parameter.label }),
+        ...(parameter.mode === "active" ? {} : { mode: parameter.mode }),
+    };
 }
 
 function convertDashboardTabToBackend(
@@ -184,6 +196,7 @@ export function convertAnalyticalDashboard(
             layout,
         ),
         plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
+        parameters: dashboard.parameters?.map(convertDashboardParameterToBackend),
         disableCrossFiltering: dashboard.disableCrossFiltering,
         disableUserFilterReset: dashboard.disableUserFilterReset,
         disableUserFilterSave: dashboard.disableUserFilterSave,

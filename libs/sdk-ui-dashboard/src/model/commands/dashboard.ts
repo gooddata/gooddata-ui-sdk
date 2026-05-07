@@ -715,6 +715,55 @@ export function setDashboardAttributeFilterConfigMode(
 //
 
 /**
+ * Payload of the {@link ISetDashboardMeasureValueFilterConfigMode} command.
+ * @alpha
+ */
+export interface ISetDashboardMeasureValueFilterConfigModePayload {
+    /**
+     * Local identifier of the measure value filter to change mode.
+     */
+    localIdentifier: string;
+    /**
+     * Mode of the measure value filter.
+     */
+    mode?: DashboardAttributeFilterConfigMode;
+}
+
+/**
+ * Command for changing measure value filter mode.
+ * @alpha
+ */
+export interface ISetDashboardMeasureValueFilterConfigMode extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.MEASURE_VALUE_FILTER_CONFIG.SET_MODE";
+    readonly payload: ISetDashboardMeasureValueFilterConfigModePayload;
+}
+
+/**
+ * Creates the {@link ISetDashboardMeasureValueFilterConfigMode} command.
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the measure value filter
+ * @param mode - newly selected mode
+ * @returns change measure value filter mode command
+ */
+export function setDashboardMeasureValueFilterConfigMode(
+    localIdentifier: string,
+    mode?: DashboardAttributeFilterConfigMode,
+): ISetDashboardMeasureValueFilterConfigMode {
+    return {
+        type: "GDC.DASH/CMD.MEASURE_VALUE_FILTER_CONFIG.SET_MODE",
+        payload: {
+            localIdentifier,
+            mode,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
  * Payload of the {@link ISetDashboardAttributeFilterSelectionType} command.
  * @alpha
  */

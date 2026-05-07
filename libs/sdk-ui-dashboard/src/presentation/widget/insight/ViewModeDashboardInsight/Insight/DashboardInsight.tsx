@@ -53,6 +53,7 @@ import {
     selectCrossFilteringSelectedPointsByWidgetRef,
     selectDrillableItems,
 } from "../../../../../model/store/drill/drillSelectors.js";
+import { selectEffectiveParameterValuesForWidget } from "../../../../../model/store/parameters/parametersSelectors.js";
 import { selectPermissions } from "../../../../../model/store/permissions/permissionsSelectors.js";
 import {
     selectIsInEditMode,
@@ -308,9 +309,13 @@ export function DashboardInsight({
     );
 
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const parameterValues = useDashboardSelector(selectEffectiveParameterValuesForWidget(ref));
     const execConfig: IExecutionConfig = useMemo(
-        () => ({ timestamp: executionTimestamp }),
-        [executionTimestamp],
+        () => ({
+            timestamp: executionTimestamp,
+            ...(parameterValues.length > 0 ? { parameterValues } : {}),
+        }),
+        [executionTimestamp, parameterValues],
     );
 
     const { setContent, isTooSmall, fontSize } = useMinimalSizeValidation(

@@ -58,6 +58,11 @@ import {
     type IDashboardAttributeFilterRemoved,
     type IDashboardAttributeSelectionModeChanged,
     type IDashboardAttributeTitleChanged,
+    type IDashboardMeasureValueFilterAdded,
+    type IDashboardMeasureValueFilterConfigModeChanged,
+    type IDashboardMeasureValueFilterMoved,
+    type IDashboardMeasureValueFilterRemoved,
+    type IDashboardMeasureValueFilterTitleChanged,
 } from "./filters.js";
 import {
     type IDashboardCommandFailed,
@@ -196,6 +201,11 @@ export type DashboardEvents =
     | IDashboardAttributeTitleChanged
     | IDashboardAttributeSelectionModeChanged
     | IDashboardAttributeFilterParentChanged
+    | IDashboardMeasureValueFilterAdded
+    | IDashboardMeasureValueFilterMoved
+    | IDashboardMeasureValueFilterRemoved
+    | IDashboardMeasureValueFilterTitleChanged
+    | IDashboardMeasureValueFilterConfigModeChanged
     | DashboardFilterContextChanged
     | IDashboardLayoutSectionAdded
     | IDashboardLayoutSectionMoved

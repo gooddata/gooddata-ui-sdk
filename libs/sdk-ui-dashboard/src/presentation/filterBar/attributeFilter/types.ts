@@ -6,6 +6,7 @@ import {
     type DashboardAttributeFilterItem,
     type ICatalogAttribute,
     type ICatalogDateDataset,
+    type ICatalogMeasure,
     type ObjRef,
 } from "@gooddata/sdk-model";
 import type { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
@@ -14,6 +15,7 @@ import { type IDropdownListNoDataRenderProps, type OverlayPositionType } from "@
 import { type IDashboardAttributeFilterParentItem } from "../../../model/types/attributeFilterTypes.js";
 import { type IDashboardDependentDateFilter } from "../../../model/types/dateFilterTypes.js";
 import type { IFilterBarFilterGroupItem } from "../filterBar/useFiltersWithAddedPlaceholder.js";
+import { type DashboardFilterSelectionType } from "../filterSelectionTypes.js";
 import { type IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
 
 /**
@@ -164,18 +166,25 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     id?: string;
     className?: string;
     bodyClassName?: string;
-    onSelect: (displayForm: ObjRef) => void;
+    /**
+     * Called when the user selects a filter source. When `selectionType` is omitted,
+     * the selection is treated as an attribute.
+     */
+    onSelect: (ref: ObjRef, selectionType?: DashboardFilterSelectionType) => void;
     onOpen?: () => void;
     onClose?: () => void;
     returnFocusTo?: RefObject<HTMLElement> | string;
     attributes: ICatalogAttribute[];
     dateDatasets: ICatalogDateDataset[];
+    measures?: ICatalogMeasure[];
     openOnInit?: boolean;
     DropdownButtonComponent?: ComponentType<IAddAttributeFilterButtonProps>;
     DropdownTitleComponent?: ComponentType;
     renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
     overlayPositionType?: OverlayPositionType;
-    getCustomItemTitle?: (item: ICatalogAttribute | ICatalogDateDataset) => string | undefined;
+    getCustomItemTitle?: (
+        item: ICatalogAttribute | ICatalogDateDataset | ICatalogMeasure,
+    ) => string | undefined;
     accessibilityConfig?: IDashboardAttributeFilterAccessibilityConfig;
 }
 

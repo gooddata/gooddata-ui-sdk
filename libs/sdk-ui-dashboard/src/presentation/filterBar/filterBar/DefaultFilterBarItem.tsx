@@ -22,6 +22,7 @@ import { selectSupportsElementUris } from "../../../model/store/backendCapabilit
 import {
     selectCatalogAttributes,
     selectCatalogDateDatasets,
+    selectCatalogMeasures,
 } from "../../../model/store/catalog/catalogSelectors.js";
 import {
     selectEnableDashboardFilterGroups,
@@ -41,11 +42,13 @@ import {
     selectAttributeFilterDisplayFormsMap,
     selectIsWorkingFilterContextChanged,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectEffectiveMeasureValueFiltersModeMap } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DraggableAttributeFilter } from "../../dragAndDrop/draggableAttributeFilter/DraggableAttributeFilter.js";
 import { DraggableDateFilter } from "../../dragAndDrop/draggableDateFilter/DraggableDateFilter.js";
 import { DraggableMeasureValueFilter } from "../../dragAndDrop/draggableMeasureValueFilter/DraggableMeasureValueFilter.js";
 import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
+import { type DashboardFilterSelectionType } from "../filterSelectionTypes.js";
 import { DefaultDashboardFilterGroup } from "./DefaultDashboardFilterGroup.js";
 import { type IFilterBarProps } from "./types.js";
 import {
@@ -63,7 +66,7 @@ export interface IFilterBarItemProps extends IFilterBarProps {
     item: FilterBarItem;
     autoOpenFilter: ObjRef | undefined;
     addDraggableFilterPlaceholder: (index: number) => void;
-    selectDraggableFilter: (displayForm: ObjRef) => void;
+    selectDraggableFilter: (ref: ObjRef, selectionType?: DashboardFilterSelectionType) => void;
     closeAttributeSelection: () => void;
     onCloseAttributeFilter: () => void;
 }
@@ -90,9 +93,11 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     const attributeFiltersDisplayAsLabelMap = useDashboardSelector(
         selectAttributeFilterConfigsDisplayAsLabelMap,
     );
+    const measureValueFiltersModeMap = useDashboardSelector(selectEffectiveMeasureValueFiltersModeMap);
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const attributes = useDashboardSelector(selectCatalogAttributes);
+    const measures = useDashboardSelector(selectCatalogMeasures);
 
     const {
         AttributeFilterComponentSet,
@@ -123,6 +128,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
                 onSelect={selectDraggableFilter}
                 attributes={attributes}
                 dateDatasets={allDateDatasets}
+                measures={measures}
             />
         );
     }
@@ -207,11 +213,10 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
             return null;
         }
 
-        // MVF visibility / readonly config is not yet modeled (no per-MVF mode map exists).
-        // The hooks below are kept as no-ops so plugins/consumers can introduce a mode
-        // selector later without re-shaping the rendering branch.
-        const isHidden = false;
-        const isReadonly = false;
+        const measureValueFilterMode =
+            measureValueFiltersModeMap.get(localId) ?? DashboardAttributeFilterConfigModeValues.ACTIVE;
+        const isHidden = measureValueFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN;
+        const isReadonly = measureValueFilterMode === DashboardAttributeFilterConfigModeValues.READONLY;
         if (isHidden) {
             return null;
         }

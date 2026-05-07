@@ -3,7 +3,7 @@
 import { produce } from "immer";
 import { describe, expect, it } from "vitest";
 
-import { type ICatalogAttributeHierarchy } from "@gooddata/sdk-model";
+import { type ICatalogAttributeHierarchy, type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
 
 import { catalogReducers } from "../catalogReducers.js";
 import { type CatalogState } from "../catalogState.js";
@@ -13,6 +13,46 @@ import { catalogAttributeHierarchies } from "./catalog.fixture.js";
 describe("catalogReducers", () => {
     const prepareState = (attributeHierarchies?: ICatalogAttributeHierarchy[]): CatalogState => ({
         attributeHierarchies,
+        parameters: { status: "uninitialized", parameters: [] },
+    });
+
+    describe("setCatalogParameters", () => {
+        const topN: IParameterMetadataObject = {
+            type: "parameter",
+            id: "topN",
+            uri: "/topN",
+            ref: idRef("topN", "parameter"),
+            title: "Top N",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition: { type: "NUMBER", defaultValue: 10 },
+        };
+
+        it("transitions status and stores parameters", () => {
+            const state = prepareState();
+            const newState = produce(state, (draft) => {
+                const action = catalogActions.setCatalogParameters({
+                    status: "loaded",
+                    parameters: [topN],
+                });
+                catalogReducers.setCatalogParameters(draft, action);
+            });
+            expect(newState.parameters).toEqual({ status: "loaded", parameters: [topN] });
+        });
+
+        it("records failed status with empty parameters", () => {
+            const state = prepareState();
+            const newState = produce(state, (draft) => {
+                const action = catalogActions.setCatalogParameters({
+                    status: "failed",
+                    parameters: [],
+                });
+                catalogReducers.setCatalogParameters(draft, action);
+            });
+            expect(newState.parameters).toEqual({ status: "failed", parameters: [] });
+        });
     });
 
     describe("addAttributeHierarchy", () => {

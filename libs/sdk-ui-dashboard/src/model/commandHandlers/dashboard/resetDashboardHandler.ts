@@ -18,7 +18,10 @@ import {
 
 import { type IResetDashboard } from "../../commands/dashboard.js";
 import { type IDashboardWasReset, dashboardWasReset } from "../../events/dashboard.js";
-import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
+import {
+    selectAllCatalogDisplayFormsMap,
+    selectCatalogParameters,
+} from "../../store/catalog/catalogSelectors.js";
 import {
     selectDateFilterConfig,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
@@ -234,6 +237,9 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             ? currentActiveTabId
             : persistedDashboard.tabs?.[0]?.localIdentifier;
 
+        const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
+            yield select(selectCatalogParameters);
+
         batch = yield call(
             actionsToInitializeExistingDashboard,
             ctx,
@@ -249,6 +255,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             displayForms,
             persistedDashboard,
             effectiveActiveTabId,
+            workspaceParameters,
         );
     } else {
         const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);

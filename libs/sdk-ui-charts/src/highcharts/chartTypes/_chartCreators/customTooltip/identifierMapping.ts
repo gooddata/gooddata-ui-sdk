@@ -1,16 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import {
-    type IExecutionDefinition,
-    type IMeasure,
-    isIdentifierRef,
-    isMeasure,
-    isSimpleMeasure,
-    measureItem,
-    measureLocalId,
-    measureMasterIdentifier,
-} from "@gooddata/sdk-model";
+import { type IExecutionDefinition, type IMeasure, isMeasure, measureLocalId } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { resolveMeasureLdmIdentifier } from "@gooddata/sdk-ui-vis-commons";
 
 /**
  * Highcharts point field that carries a measure's value. Differs by chart type:
@@ -30,28 +22,6 @@ export interface IMeasureMapping {
  */
 export interface IIdentifierMapping {
     measures: Record<string, IMeasureMapping>;
-}
-
-/**
- * Returns the LDM identifier the measure ultimately resolves to.
- *
- * - Simple measures: the identifier of the underlying catalog metric
- * - Derived measures (PoP, previous period): follows the chain to the master
- * - Arithmetic measures (and anything without an identifier ref): undefined
- */
-function resolveMeasureLdmIdentifier(measure: IMeasure, allMeasures: IMeasure[]): string | undefined {
-    if (isSimpleMeasure(measure)) {
-        const ref = measureItem(measure);
-        return ref && isIdentifierRef(ref) ? ref.identifier : undefined;
-    }
-
-    const masterLocalId = measureMasterIdentifier(measure);
-    if (!masterLocalId) {
-        return undefined;
-    }
-
-    const masterMeasure = allMeasures.find((m) => measureLocalId(m) === masterLocalId);
-    return masterMeasure ? resolveMeasureLdmIdentifier(masterMeasure, allMeasures) : undefined;
 }
 
 function getMeasurePointField(

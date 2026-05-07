@@ -5,10 +5,12 @@ import { DefaultAttributeFiltersCustomizer } from "./attributeFiltersCustomizer.
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { DefaultDateFiltersCustomizer } from "./dateFiltersCustomizer.js";
 import { DefaultFilterGroupsCustomizer } from "./filterGroupsCustomizer.js";
+import { DefaultMeasureValueFiltersCustomizer } from "./measureValueFiltersCustomizer.js";
 import { type CustomizerMutationsContext } from "./types.js";
 
 export class DefaultFiltersCustomizer implements IFiltersCustomizer {
     private readonly attributeFiltersCustomizer: DefaultAttributeFiltersCustomizer;
+    private readonly measureValueFiltersCustomizer: DefaultMeasureValueFiltersCustomizer;
     private readonly dateFiltersCustomizer: DefaultDateFiltersCustomizer;
     private readonly filterGroupCustomizer: DefaultFilterGroupsCustomizer;
 
@@ -20,12 +22,17 @@ export class DefaultFiltersCustomizer implements IFiltersCustomizer {
             this.logger,
             this.mutationContext,
         );
+        this.measureValueFiltersCustomizer = new DefaultMeasureValueFiltersCustomizer(this.logger);
         this.dateFiltersCustomizer = new DefaultDateFiltersCustomizer(this.logger);
         this.filterGroupCustomizer = new DefaultFilterGroupsCustomizer(this.logger);
     }
 
     public attribute(): DefaultAttributeFiltersCustomizer {
         return this.attributeFiltersCustomizer;
+    }
+
+    public measureValue(): DefaultMeasureValueFiltersCustomizer {
+        return this.measureValueFiltersCustomizer;
     }
 
     public date(): DefaultDateFiltersCustomizer {
@@ -38,6 +45,7 @@ export class DefaultFiltersCustomizer implements IFiltersCustomizer {
 
     public sealCustomizer = (): IFiltersCustomizer => {
         this.attributeFiltersCustomizer.sealCustomizer();
+        this.measureValueFiltersCustomizer.sealCustomizer();
         this.dateFiltersCustomizer.sealCustomizer();
         this.filterGroupCustomizer.sealCustomizer();
 

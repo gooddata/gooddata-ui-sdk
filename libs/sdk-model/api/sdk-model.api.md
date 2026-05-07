@@ -434,6 +434,12 @@ export type DashboardFiltersApplyMode = {
 };
 
 // @alpha
+export type DashboardParameterMode = "active" | "readonly" | "hidden";
+
+// @internal
+export const DashboardParameterModeValues: Record<Uppercase<DashboardParameterMode>, DashboardParameterMode>;
+
+// @alpha
 export type DashboardTextAttributeFilter = IDashboardArbitraryAttributeFilter | IDashboardMatchAttributeFilter;
 
 // @public
@@ -1629,6 +1635,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly filterContext?: IFilterContext | ITempFilterContext;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
+    readonly parameters?: IDashboardParameter[];
     readonly plugins?: IDashboardPluginLink[];
     readonly sectionHeadersDateDataSet?: ObjRef;
     readonly tabs?: IDashboardTab<TWidget>[];
@@ -1769,6 +1776,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
     readonly layout?: IDashboardLayout<TWidget>;
     readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
+    readonly parameters?: IDashboardParameter[];
     readonly plugins?: IDashboardPluginLink[];
     readonly sectionHeadersDateDataSet?: ObjRef;
     readonly tabs?: IDashboardTab<TWidget>[];
@@ -1948,6 +1956,15 @@ export interface IDashboardObjectIdentity {
     readonly identifier: string;
     readonly ref: ObjRef;
     readonly uri: string;
+}
+
+// @alpha
+export interface IDashboardParameter {
+    readonly label?: string;
+    readonly mode: DashboardParameterMode;
+    readonly parameterType: "NUMBER";
+    readonly ref: IdentifierRef;
+    readonly value?: number;
 }
 
 // @alpha
@@ -2496,6 +2513,7 @@ export interface IFeatureFlags {
     enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
     enableAiAgenticConversations?: boolean;
+    enableAiAgenticMultiConversations?: boolean;
     enableAiAgenticSuggestions?: boolean;
     enableAIDataSetting?: boolean;
     // @deprecated
@@ -4594,6 +4612,9 @@ export function isDashboardMeasureValueFilterReference(obj: unknown): obj is IDa
 
 // @public
 export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
+
+// @alpha
+export function isDashboardParameter(obj: unknown): obj is IDashboardParameter;
 
 // @alpha
 export function isDashboardTab(obj: unknown): obj is IDashboardTab;

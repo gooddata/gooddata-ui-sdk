@@ -49,6 +49,7 @@ export function convertChatConversationFromBackend(conversation: AiConversationR
         id: conversation.conversationId,
         createdAt: conversation.createdAt,
         updatedAt: conversation.lastActivityAt,
+        title: conversation.title ?? undefined,
     };
 }
 

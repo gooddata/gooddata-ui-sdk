@@ -5,9 +5,11 @@ import { type ComponentType, type ReactElement } from "react";
 import {
     type DashboardAttributeFilterItem,
     type IDashboardDateFilter,
+    type IDashboardMeasureValueFilter,
     type IFilter,
     type IInsight,
     type IKpi,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 import { type ICustomWidget } from "../../model/types/layoutTypes.js";
@@ -19,6 +21,8 @@ import { type ILayoutItemPath, type ILayoutSectionPath } from "../../types.js";
 export type DraggableContentItemType =
     | "attributeFilter"
     | "dateFilter"
+    | "parameter"
+    | "measureValueFilter"
     | "attributeFilter-placeholder"
     | "insightListItem"
     | "insight"
@@ -61,7 +65,9 @@ export type AttributeFilterDraggableItem = {
 /**
  * @internal
  */
-export function isAttributeFilterDraggableItem(item: any): item is AttributeFilterDraggableItem {
+export function isAttributeFilterDraggableItem(
+    item: DraggableContentItem,
+): item is AttributeFilterDraggableItem {
     return item.type === "attributeFilter";
 }
 
@@ -77,8 +83,41 @@ export type DateFilterDraggableItem = {
 /**
  * @internal
  */
-export function isDateFilterDraggableItem(item: any): item is DateFilterDraggableItem {
+export function isDateFilterDraggableItem(item: DraggableContentItem): item is DateFilterDraggableItem {
     return item.type === "dateFilter";
+}
+
+/**
+ * @internal
+ */
+export type ParameterDraggableItem = {
+    type: "parameter";
+    ref: ObjRef;
+};
+
+/**
+ * @internal
+ */
+export function isParameterDraggableItem(item: DraggableContentItem): item is ParameterDraggableItem {
+    return item.type === "parameter";
+}
+
+/**
+ * @internal
+ */
+export type MeasureValueFilterDraggableItem = {
+    type: "measureValueFilter";
+    filter: IDashboardMeasureValueFilter;
+    filterIndex: number;
+};
+
+/**
+ * @internal
+ */
+export function isMeasureValueFilterDraggableItem(
+    item: DraggableContentItem,
+): item is MeasureValueFilterDraggableItem {
+    return item.type === "measureValueFilter";
 }
 
 /**
@@ -325,6 +364,8 @@ export type DraggableContentItem =
     | AttributeFilterDraggableItem
     | AttributeFilterPlaceholderDraggableItem
     | DateFilterDraggableItem
+    | ParameterDraggableItem
+    | MeasureValueFilterDraggableItem
     | InsightDraggableItem
     | InsightDraggableListItem
     | InsightPlaceholderDraggableItem
@@ -371,6 +412,8 @@ export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & Dragg
 export type DraggableItemComponentTypeMapping = {
     attributeFilter: AttributeFilterDraggableItem;
     dateFilter: DateFilterDraggableItem;
+    measureValueFilter: MeasureValueFilterDraggableItem;
+    parameter: ParameterDraggableItem;
     "attributeFilter-placeholder": AttributeFilterPlaceholderDraggableItem;
     insight: InsightDraggableItem;
     insightListItem: InsightDraggableListItem;

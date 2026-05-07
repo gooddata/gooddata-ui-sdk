@@ -43,11 +43,6 @@ export const globalErrorSelector: (state: RootState) => Record<string, unknown> 
     (state) => state.globalError ?? null,
 );
 
-export const lastMessageIdSelector: (state: RootState) => string | undefined = createSelector(
-    messagesSelector,
-    (messages) => [...messages].reverse().find((message) => !!message.id)?.id,
-);
-
 export const threadIdSelector: (state: RootState) => string | undefined = createSelector(
     messagesSliceSelector,
     (state) => state.threadId,
@@ -58,7 +53,19 @@ export const conversationMessagesSelector: (state: RootState) => IChatConversati
         state.conversationItemsOrder.map((id) => state.conversationItems[id]),
     );
 
-export const conversationSelector: (state: RootState) => IChatConversation | undefined = createSelector(
+export const conversationSelector: (state: RootState) => IChatConversation | "new" | undefined =
+    createSelector(messagesSliceSelector, (state) => state.currentConversation);
+
+export const conversationByIdSelector: (
+    state: RootState,
+    conversationId: string,
+) => IChatConversation | undefined = createSelector(
+    [messagesSliceSelector, (_state: RootState, conversationId: string) => conversationId],
+    (state, conversationId) =>
+        state.conversations?.find((conversation) => conversation.id === conversationId),
+);
+
+export const conversationsSelector: (state: RootState) => IChatConversation[] | undefined = createSelector(
     messagesSliceSelector,
-    (state) => state.currentConversation,
+    (state) => state.conversations,
 );

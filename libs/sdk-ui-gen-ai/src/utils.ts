@@ -1,5 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type IntlShape } from "react-intl";
+
+import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
 export function getVisualizationHref(wsId: string, visId: string) {
@@ -38,4 +41,15 @@ export function getHeadlineComparison(metrics: IAttributeOrMeasure[]) {
             enabled: metrics.filter(Boolean).length > 1,
         },
     };
+}
+
+export function generateTemporaryTitle(intl: IntlShape, data: IChatConversation): string {
+    return intl.formatMessage(
+        { id: "gd.chat.conversation.generating-title" },
+        {
+            date: new Intl.DateTimeFormat(intl.locale, { dateStyle: "short", timeStyle: "short" }).format(
+                new Date(data.createdAt),
+            ),
+        },
+    );
 }

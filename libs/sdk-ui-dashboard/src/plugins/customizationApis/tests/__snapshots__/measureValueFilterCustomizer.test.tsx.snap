@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Measure Value Filter customizer > should fallback to rendering default component 1`] = `"<div id="default"></div>"`;
+
+exports[`Measure Value Filter customizer > withCustomProvider > should fallback to default component if measure value filter does not match provider criteria 1`] = `"<div id="default"></div>"`;
+
+exports[`Measure Value Filter customizer > withCustomProvider > should use component from latest registered provider that matches the filter 1`] = `"<div id="fromCustomProvider3"></div>"`;
+
+exports[`Measure Value Filter customizer > withCustomProvider > should work for measure value filter that matches predicate 1`] = `"<div id="fromCustomProvider"></div>"`;

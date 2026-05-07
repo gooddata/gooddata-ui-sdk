@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 6143c00ac12293f6f824fd4ac162a9047ee7f78061c85d166b68eac05cdc7969
+# schema-hash: 7a407027c7b9eb05b67431df553793f227fddced628421322b5574879979714c
 
 from __future__ import annotations
 
@@ -67,6 +67,8 @@ __all__ = [
     "Dataset3",
     "Dataset4",
     "Dataset5",
+    "Dataset6",
+    "Dataset7",
     "DateDataset",
     "DateFilterGranularity",
     "Description",
@@ -622,7 +624,7 @@ class Fields4(TypedDict):
 SourceColumn: TypeAlias = str
 
 
-DataType: TypeAlias = Literal['INT', 'STRING', 'DATE', 'NUMERIC', 'TIMESTAMP', 'TIMESTAMP_TZ', 'BOOLEAN']
+DataType: TypeAlias = Literal['INT', 'STRING', 'DATE', 'NUMERIC', 'TIMESTAMP', 'TIMESTAMP_TZ', 'BOOLEAN', 'HLL']
 
 
 Locale: TypeAlias = str
@@ -1096,7 +1098,7 @@ class AggregatedFact(TypedDict):
     tags: NotRequired[Tags]
     source_column: NotRequired[SourceColumn]
     data_type: DataType
-    aggregated_as: Literal['MIN', 'MAX', 'SUM']
+    aggregated_as: Literal['MIN', 'MAX', 'SUM', 'APPROXIMATE_COUNT']
     assigned_to: str
     is_nullable: NotRequired[bool]
     null_value_join_replacement: NotRequired[str]
@@ -1598,7 +1600,7 @@ QueryField: TypeAlias = (
 LayerItem: TypeAlias = LayerItemBase | LayerItem1 | LayerItem2
 
 
-class Dataset4(TypedDict):
+class Dataset5(TypedDict):
     id: Identifier
     type: Literal['dataset']
     title: NotRequired[Title]
@@ -1615,7 +1617,7 @@ class Dataset4(TypedDict):
     dataset_type: NotRequired[Literal['standard', 'auxiliary']]
 
 
-class Dataset5(TypedDict):
+class Dataset6(TypedDict):
     id: Identifier
     type: Literal['dataset']
     title: NotRequired[Title]
@@ -1632,7 +1634,24 @@ class Dataset5(TypedDict):
     dataset_type: NotRequired[Literal['standard', 'auxiliary']]
 
 
-Dataset: TypeAlias = Dataset4 | Dataset5
+class Dataset7(TypedDict):
+    id: Identifier
+    type: Literal['dataset']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    table_path: NotRequired[Any]
+    sql: NotRequired[Any]
+    primary_key: NotRequired[str | list[Identifier]]
+    fields: NotRequired[Fields]
+    references: NotRequired[list[Reference]]
+    workspace_data_filters: NotRequired[Any]
+    data_source: NotRequired[str]
+    precedence: NotRequired[Any]
+    dataset_type: Literal['auxiliary']
+
+
+Dataset: TypeAlias = Dataset5 | Dataset6 | Dataset7
 
 
 class Metadata1(TypedDict):
@@ -1673,7 +1692,24 @@ class Dataset3(TypedDict):
     dataset_type: NotRequired[Literal['standard', 'auxiliary']]
 
 
-Dataset1: TypeAlias = Dataset2 | Dataset3
+class Dataset4(TypedDict):
+    id: Identifier
+    type: Literal['dataset']
+    title: NotRequired[Title]
+    description: NotRequired[Description]
+    tags: NotRequired[Tags]
+    table_path: NotRequired[Any]
+    sql: NotRequired[Any]
+    primary_key: NotRequired[str | list[Identifier]]
+    fields: NotRequired[Fields]
+    references: NotRequired[list[Reference]]
+    workspace_data_filters: NotRequired[Any]
+    data_source: NotRequired[str]
+    precedence: NotRequired[Any]
+    dataset_type: Literal['auxiliary']
+
+
+Dataset1: TypeAlias = Dataset2 | Dataset3 | Dataset4
 
 
 QueryFields: TypeAlias = dict[str, QueryField]

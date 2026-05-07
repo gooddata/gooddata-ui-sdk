@@ -1491,6 +1491,174 @@ export const isDashboardFilterContextWorkingSelectionApplied =
 //
 
 /**
+ * Payload of the {@link IDashboardMeasureValueFilterAdded} event.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterAddedPayload {
+    /**
+     * Definition of the created measure value filter.
+     */
+    readonly added: IDashboardMeasureValueFilter;
+
+    /**
+     * Zero-based index indicating the position of the measure value filter among the draggable filters.
+     */
+    readonly index: number;
+}
+
+/**
+ * This event is emitted after a new dashboard measure value filter is successfully added.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterAdded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADDED";
+    readonly payload: IDashboardMeasureValueFilterAddedPayload;
+}
+
+export function measureValueFilterAdded(
+    ctx: DashboardContext,
+    added: IDashboardMeasureValueFilter,
+    index: number,
+    correlationId?: string,
+): IDashboardMeasureValueFilterAdded {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADDED",
+        ctx,
+        correlationId,
+        payload: {
+            added,
+            index,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardMeasureValueFilterAdded}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardMeasureValueFilterAdded = eventGuard<IDashboardMeasureValueFilterAdded>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADDED",
+);
+
+/**
+ * Payload of the {@link IDashboardMeasureValueFilterRemoved} event.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterRemovedPayload {
+    /**
+     * Removed measure value filter.
+     */
+    readonly removed: IDashboardMeasureValueFilter;
+}
+
+/**
+ * This event is emitted after a dashboard measure value filter is removed.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterRemoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVED";
+    readonly payload: IDashboardMeasureValueFilterRemovedPayload;
+}
+
+/**
+ * Creates the {@link IDashboardMeasureValueFilterRemoved} event.
+ *
+ * @alpha
+ */
+export function measureValueFilterRemoved(
+    ctx: DashboardContext,
+    removed: IDashboardMeasureValueFilter,
+    correlationId?: string,
+): IDashboardMeasureValueFilterRemoved {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVED",
+        ctx,
+        correlationId,
+        payload: {
+            removed,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardMeasureValueFilterRemoved}.
+ *
+ * @alpha
+ */
+export const isDashboardMeasureValueFilterRemoved = eventGuard<IDashboardMeasureValueFilterRemoved>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVED",
+);
+
+/**
+ * Payload of the {@link IDashboardMeasureValueFilterMoved} event.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterMovedPayload {
+    /**
+     * Moved measure value filter.
+     */
+    readonly filter: IDashboardMeasureValueFilter;
+    /**
+     * Original zero-based index among draggable filters.
+     */
+    readonly index: number;
+    /**
+     * New zero-based index among draggable filters.
+     */
+    readonly newIndex: number;
+}
+
+/**
+ * This event is emitted after a dashboard measure value filter is moved.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterMoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.MOVED";
+    readonly payload: IDashboardMeasureValueFilterMovedPayload;
+}
+
+/**
+ * Creates the {@link IDashboardMeasureValueFilterMoved} event.
+ *
+ * @alpha
+ */
+export function measureValueFilterMoved(
+    ctx: DashboardContext,
+    filter: IDashboardMeasureValueFilter,
+    index: number,
+    newIndex: number,
+    correlationId?: string,
+): IDashboardMeasureValueFilterMoved {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.MOVED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+            index,
+            newIndex,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardMeasureValueFilterMoved}.
+ *
+ * @alpha
+ */
+export const isDashboardMeasureValueFilterMoved = eventGuard<IDashboardMeasureValueFilterMoved>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.MOVED",
+);
+
+/**
  * Payload of the {@link IDashboardMeasureValueFilterConditionChanged} event.
  *
  * @alpha
@@ -1550,4 +1718,107 @@ export function measureValueFilterConditionChanged(
 export const isDashboardMeasureValueFilterConditionChanged =
     eventGuard<IDashboardMeasureValueFilterConditionChanged>(
         "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CONDITION_CHANGED",
+    );
+
+/**
+ * Payload of the {@link IDashboardMeasureValueFilterTitleChanged} event.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterTitleChangedPayload {
+    /**
+     * Updated measure value filter.
+     */
+    readonly filter: IDashboardMeasureValueFilter;
+}
+
+/**
+ * This event is emitted when the measure value filter title changes.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterTitleChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.TITLE_CHANGED";
+    readonly payload: IDashboardMeasureValueFilterTitleChangedPayload;
+}
+
+/**
+ * Creates the {@link IDashboardMeasureValueFilterTitleChanged} event.
+ *
+ * @alpha
+ */
+export function dashboardMeasureValueFilterTitleChanged(
+    ctx: DashboardContext,
+    filter: IDashboardMeasureValueFilter,
+    correlationId?: string,
+): IDashboardMeasureValueFilterTitleChanged {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.TITLE_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardMeasureValueFilterTitleChanged}.
+ *
+ * @alpha
+ */
+export const isDashboardMeasureValueFilterTitleChanged = eventGuard<IDashboardMeasureValueFilterTitleChanged>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.TITLE_CHANGED",
+);
+
+/**
+ * Payload of the {@link IDashboardMeasureValueFilterConfigModeChanged} event.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterConfigModeChangedPayload {
+    /**
+     * Updated measure value filter.
+     */
+    readonly filter: IDashboardMeasureValueFilter;
+}
+
+/**
+ * This event is emitted when the measure value filter mode changes.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterConfigModeChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.MEASURE_VALUE_FILTER_CONFIG.MODE_CHANGED";
+    readonly payload: IDashboardMeasureValueFilterConfigModeChangedPayload;
+}
+
+/**
+ * Creates the {@link IDashboardMeasureValueFilterConfigModeChanged} event.
+ *
+ * @alpha
+ */
+export function dashboardMeasureValueFilterConfigModeChanged(
+    ctx: DashboardContext,
+    filter: IDashboardMeasureValueFilter,
+    correlationId?: string,
+): IDashboardMeasureValueFilterConfigModeChanged {
+    return {
+        type: "GDC.DASH/EVT.MEASURE_VALUE_FILTER_CONFIG.MODE_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardMeasureValueFilterConfigModeChanged}.
+ *
+ * @alpha
+ */
+export const isDashboardMeasureValueFilterConfigModeChanged =
+    eventGuard<IDashboardMeasureValueFilterConfigModeChanged>(
+        "GDC.DASH/EVT.MEASURE_VALUE_FILTER_CONFIG.MODE_CHANGED",
     );

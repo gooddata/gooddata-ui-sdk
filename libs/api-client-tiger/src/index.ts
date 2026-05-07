@@ -141,6 +141,7 @@ export type {
     ITigerDashboardMeasureValueFilterConfig,
     ITigerDashboardFilterGroupsConfig,
     ITigerDashboardLayout,
+    ITigerDashboardParameter,
     ITigerDashboardTab,
     ITigerFilter,
     ITigerFilterContextItem,

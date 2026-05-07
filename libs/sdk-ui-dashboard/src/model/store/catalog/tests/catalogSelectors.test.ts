@@ -2,7 +2,15 @@
 
 import { describe, expect, it } from "vitest";
 
-import { selectAdhocDateHierarchies } from "../catalogSelectors.js";
+import { type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
+
+import {
+    selectAdhocDateHierarchies,
+    selectCatalogParameters,
+    selectCatalogParametersIsLoaded,
+    selectCatalogParametersStatus,
+} from "../catalogSelectors.js";
+import { type ICatalogParametersState } from "../catalogState.js";
 import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.fixture.js";
 
 describe("catalogSelectors", () => {
@@ -37,5 +45,46 @@ describe("catalogSelectors", () => {
             supportsAttributeHierarchies: true,
         });
         expect(selectAdhocDateHierarchies(initialState)).toMatchSnapshot();
+    });
+
+    describe("catalog parameters selectors", () => {
+        const topN: IParameterMetadataObject = {
+            type: "parameter",
+            id: "topN",
+            uri: "/topN",
+            ref: idRef("topN", "parameter"),
+            title: "Top N",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition: { type: "NUMBER", defaultValue: 10 },
+        };
+
+        const stateWith = (parameters: ICatalogParametersState): any => ({
+            catalog: { parameters },
+        });
+
+        it("returns parameters list and status when loaded", () => {
+            const state = stateWith({ status: "loaded", parameters: [topN] });
+            expect(selectCatalogParameters(state)).toEqual([topN]);
+            expect(selectCatalogParametersStatus(state)).toBe("loaded");
+            expect(selectCatalogParametersIsLoaded(state)).toBe(true);
+        });
+
+        it("returns empty parameters when loading", () => {
+            const state = stateWith({ status: "loading", parameters: [] });
+            expect(selectCatalogParameters(state)).toEqual([]);
+            expect(selectCatalogParametersIsLoaded(state)).toBe(false);
+        });
+
+        it("treats failed and gated-off as not loaded", () => {
+            expect(selectCatalogParametersIsLoaded(stateWith({ status: "failed", parameters: [] }))).toBe(
+                false,
+            );
+            expect(selectCatalogParametersIsLoaded(stateWith({ status: "gated-off", parameters: [] }))).toBe(
+                false,
+            );
+        });
     });
 });

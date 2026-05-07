@@ -1194,4 +1194,9 @@ export interface IFeatureFlags {
      * Enable ai agentic suggestions.
      */
     enableAiAgenticSuggestions?: boolean;
+
+    /**
+     * Enable ai agentic multi-conversations.
+     */
+    enableAiAgenticMultiConversations?: boolean;
 }

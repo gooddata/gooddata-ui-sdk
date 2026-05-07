@@ -1,11 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactElement, useCallback, useMemo } from "react";
+import { type ComponentProps, type ReactElement, useCallback, useMemo, useRef, useState } from "react";
 
+import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
-    type IMeasureMetadataObject,
+    type DashboardAttributeFilterConfigMode,
+    DashboardAttributeFilterConfigModeValues,
     type IMeasureValueFilter,
     type MeasureValueFilterCondition,
     type ObjRef,
@@ -13,34 +15,40 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import {
-    FilterButtonCustomIcon,
+    type IFilterButtonCustomIcon,
+    type IMeasureValueFilterBodyProps,
+    type IMeasureValueFilterDropdownActionsProps,
     type IMeasureValueFilterDropdownButtonProps,
     MeasureValueFilter,
     getMeasureValueFilterConditionLabel,
 } from "@gooddata/sdk-ui-filters";
-import { ShortenedText, isActionKey } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, type IAlignPoint, UiControlButton } from "@gooddata/sdk-ui-kit";
 
+import { setDashboardMeasureValueFilterConfigMode } from "../../../model/commands/dashboard.js";
+import { setMeasureValueFilterTitle } from "../../../model/commands/filters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCatalogMeasures } from "../../../model/store/catalog/catalogSelectors.js";
-import { selectLocale, selectSeparators } from "../../../model/store/config/configSelectors.js";
-import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import {
-    selectMeasureValueFilterConfigsModeMap,
-    selectMeasureValueFilterConfigsModeMapByTab,
-} from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectLocale,
+    selectSeparators,
+} from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectWorkingFilterContextMeasureValueFilterByLocalId } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectMeasureValueFilterConfigsModeMap } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import { useAttributeFilterConfigTexts } from "../attributeFilter/useAttributeFilterConfigTexts.js";
 import { getVisibilityIcon } from "../utils.js";
+import {
+    CustomConfigureMeasureValueFilterDropdownActions,
+    CustomMeasureValueFilterDropdownActions,
+} from "./CustomDropdownActions.js";
+import { MeasureValueFilterConfiguration } from "./MeasureValueFilterConfiguration.js";
 import { type IDashboardMeasureValueFilterProps } from "./types.js";
 
 const PERCENT_FORMAT_REGEX = /%/;
-
-// Tooltip alignment points reused from the attribute-filter chip so the MVF tooltip
-// for a truncated title appears in the same position relative to the button.
-const TITLE_TOOLTIP_ALIGN_POINTS = [
-    { align: "tc bc", offset: { x: 0, y: -2 } },
-    { align: "cc tc", offset: { x: 0, y: 10 } },
-    { align: "bl tr", offset: { x: -2, y: -8 } },
-];
+const DEFAULT_VISIBILITY_BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl", offset: { x: 0, y: 5 } }];
 
 function isPercentageFormat(format: string | undefined): boolean {
     return !!format && PERCENT_FORMAT_REGEX.test(format);
@@ -53,33 +61,106 @@ function findCatalogMetric(
     return measures.find((m) => areObjRefsEqual(m.measure.ref, measure));
 }
 
+function normalizeMeasureValueFilterConditions(
+    updated: IMeasureValueFilter | null,
+): MeasureValueFilterCondition[] | undefined {
+    const body = updated?.measureValueFilter;
+    return body?.conditions && body.conditions.length > 0
+        ? body.conditions
+        : body?.condition
+          ? [body.condition]
+          : undefined;
+}
+
+function MeasureValueFilterVisibilityIcon({
+    visibilityIcon,
+    disabled,
+}: {
+    visibilityIcon?: IFilterButtonCustomIcon;
+    disabled?: boolean;
+}) {
+    if (!visibilityIcon) {
+        return null;
+    }
+
+    return (
+        <div
+            className={cx("gd-filter-button-custom-icon-wrapper", "s-gd-filter-button-custom-icon-wrapper", {
+                disabled,
+                "s-disabled": disabled,
+            })}
+        >
+            <BubbleHoverTrigger>
+                <i
+                    className={`gd-filter-button-custom-icon s-gd-filter-button-custom-icon ${visibilityIcon.icon}`}
+                />
+                <Bubble
+                    className={`bubble-primary ${visibilityIcon.bubbleClassNames || ""}`}
+                    alignPoints={visibilityIcon.bubbleAlignPoints || DEFAULT_VISIBILITY_BUBBLE_ALIGN_POINTS}
+                >
+                    {visibilityIcon.tooltip}
+                </Bubble>
+            </BubbleHoverTrigger>
+        </div>
+    );
+}
+
 /**
  * @alpha
  */
 export function DefaultDashboardMeasureValueFilter(
     props: IDashboardMeasureValueFilterProps,
 ): ReactElement | null {
-    const { filter, readonly, autoOpen, onMeasureValueFilterChanged, tabId } = props;
+    const { filter, readonly, autoOpen, onMeasureValueFilterChanged } = props;
     const intl = useIntl();
 
     const measures = useDashboardSelector(selectCatalogMeasures);
     const separators = useDashboardSelector(selectSeparators);
     const locale = useDashboardSelector(selectLocale);
-    const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
-    const modeMapActive = useDashboardSelector(selectMeasureValueFilterConfigsModeMap);
-    const modeMapByTab = useDashboardSelector(selectMeasureValueFilterConfigsModeMapByTab);
-    const modeMap = useMemo(
-        () => (tabId ? (modeMapByTab[tabId] ?? new Map()) : modeMapActive),
-        [tabId, modeMapByTab, modeMapActive],
-    );
+    const measureValueFilterConfigsModeMap = useDashboardSelector(selectMeasureValueFilterConfigsModeMap);
+    const { cancelText, closeText, saveText, applyText, titleText, resetTitleText, modeCategoryTitleText } =
+        useAttributeFilterConfigTexts();
 
-    const { measure, localIdentifier, conditions, title: customTitle } = filter.dashboardMeasureValueFilter;
+    const { measure, localIdentifier, title: customTitle } = filter.dashboardMeasureValueFilter;
+    const workingFilter = useDashboardSelector(
+        selectWorkingFilterContextMeasureValueFilterByLocalId(localIdentifier),
+    );
+    const filterToDisplay = isApplyAllAtOnceEnabledAndSet ? (workingFilter ?? filter) : filter;
+    const conditions = filterToDisplay.dashboardMeasureValueFilter.conditions;
 
     const catalogMetric = useMemo(() => findCatalogMetric(measure, measures), [measure, measures]);
-    const metricTitle = customTitle ?? catalogMetric?.measure.title ?? objRefToString(measure);
+    const defaultMetricTitle = catalogMetric?.measure.title ?? objRefToString(measure);
+    const metricTitle = customTitle ?? defaultMetricTitle;
     const format = catalogMetric?.measure.format;
     const usePercentage = isPercentageFormat(format);
+    const mode =
+        measureValueFilterConfigsModeMap.get(localIdentifier) ??
+        DashboardAttributeFilterConfigModeValues.ACTIVE;
+    const visibilityIcon = getVisibilityIcon(
+        mode,
+        isEditMode,
+        !!capabilities.supportsHiddenAndLockedFiltersOnUI,
+        intl,
+    );
+
+    const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
+    const [draftTitle, setDraftTitle] = useState(metricTitle);
+    const [draftMode, setDraftMode] = useState<DashboardAttributeFilterConfigMode>(mode);
+
+    const { run: changeMeasureValueFilterTitle } = useDashboardCommandProcessing({
+        commandCreator: setMeasureValueFilterTitle,
+        successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.TITLE_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+    });
+
+    const { run: changeMeasureValueFilterMode } = useDashboardCommandProcessing({
+        commandCreator: setDashboardMeasureValueFilterConfigMode,
+        successEvent: "GDC.DASH/EVT.MEASURE_VALUE_FILTER_CONFIG.MODE_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+    });
 
     const conditionLabel = useMemo(
         () =>
@@ -101,106 +182,176 @@ export function DefaultDashboardMeasureValueFilter(
         [measure, localIdentifier, conditions],
     );
 
-    const loadMetricDetails = useCallback(
-        async (): Promise<IMeasureMetadataObject | undefined> => catalogMetric?.measure,
-        [catalogMetric],
-    );
-
-    const visibilityIcon = useMemo(
-        () =>
-            getVisibilityIcon(
-                modeMap.get(localIdentifier),
-                isInEditMode,
-                !!capabilities.supportsHiddenAndLockedFiltersOnUI,
-                intl,
-            ),
-        [modeMap, localIdentifier, isInEditMode, capabilities.supportsHiddenAndLockedFiltersOnUI, intl],
-    );
+    const handleClose = useCallback(() => {
+        setIsConfigurationOpen(false);
+    }, []);
 
     const handleApply = useCallback(
         (updated: IMeasureValueFilter | null) => {
-            // The SDK's MeasureValueFilterDropdown returns the filter using either `condition`
-            // (singular, for a single comparison/range) or `conditions` (plural, for multi-condition
-            // OR). The dashboard model only has `conditions` (plural), so normalize both forms into
-            // the array shape. When the user selected "All", neither is present and conditions is
-            // undefined.
-            const body = updated?.measureValueFilter;
-            const newConditions: MeasureValueFilterCondition[] | undefined =
-                body?.conditions && body.conditions.length > 0
-                    ? body.conditions
-                    : body?.condition
-                      ? [body.condition]
-                      : undefined;
+            const newConditions = normalizeMeasureValueFilterConditions(updated);
             onMeasureValueFilterChanged(filter, newConditions);
         },
         [filter, onMeasureValueFilterChanged],
     );
 
+    const handleChange = useCallback(
+        (updated: IMeasureValueFilter | null) => {
+            onMeasureValueFilterChanged(filter, normalizeMeasureValueFilterConditions(updated), true);
+        },
+        [filter, onMeasureValueFilterChanged],
+    );
+
+    const openConfiguration = useCallback(() => {
+        setDraftTitle(metricTitle);
+        setDraftMode(mode);
+        setIsConfigurationOpen(true);
+    }, [metricTitle, mode]);
+
+    const closeConfiguration = useCallback(() => {
+        setDraftTitle(metricTitle);
+        setDraftMode(mode);
+        setIsConfigurationOpen(false);
+    }, [metricTitle, mode]);
+
+    const saveConfiguration = useCallback(() => {
+        const normalizedTitle = draftTitle.trim();
+        const titleToSave = normalizedTitle === defaultMetricTitle ? undefined : normalizedTitle;
+
+        if (titleToSave !== customTitle) {
+            changeMeasureValueFilterTitle(localIdentifier, titleToSave);
+        }
+        if (draftMode !== mode) {
+            changeMeasureValueFilterMode(localIdentifier, draftMode);
+        }
+        setIsConfigurationOpen(false);
+    }, [
+        changeMeasureValueFilterMode,
+        changeMeasureValueFilterTitle,
+        customTitle,
+        defaultMetricTitle,
+        draftMode,
+        draftTitle,
+        localIdentifier,
+        mode,
+    ]);
+
+    const isConfigurationSaveDisabled =
+        draftTitle.trim().length === 0 || (draftTitle === metricTitle && draftMode === mode);
+
+    const configurationBodyPropsRef = useRef<ComponentProps<typeof MeasureValueFilterConfiguration> | null>(
+        null,
+    );
+    configurationBodyPropsRef.current = {
+        intl,
+        titleText,
+        resetTitleText,
+        modeCategoryTitleText,
+        title: draftTitle,
+        defaultTitle: defaultMetricTitle,
+        mode: draftMode,
+        showConfigModeSection: !!capabilities.supportsHiddenAndLockedFiltersOnUI,
+        onTitleChange: setDraftTitle,
+        onTitleReset: () => setDraftTitle(defaultMetricTitle),
+        onModeChange: setDraftMode,
+    };
+
+    const DropdownActionsComponent = useMemo(() => {
+        function DropdownActions(props: IMeasureValueFilterDropdownActionsProps) {
+            return isConfigurationOpen ? (
+                <CustomConfigureMeasureValueFilterDropdownActions
+                    isSaveDisabled={isConfigurationSaveDisabled}
+                    onSaveButtonClick={saveConfiguration}
+                    onCancelButtonClick={closeConfiguration}
+                    cancelText={cancelText}
+                    saveText={saveText}
+                />
+            ) : (
+                <CustomMeasureValueFilterDropdownActions
+                    {...props}
+                    isConfigurationButtonVisible={isEditMode}
+                    onConfigurationButtonClick={openConfiguration}
+                    cancelText={props.withoutApply ? closeText : cancelText}
+                    applyText={applyText}
+                />
+            );
+        }
+
+        return DropdownActions;
+    }, [
+        applyText,
+        cancelText,
+        closeConfiguration,
+        closeText,
+        isConfigurationOpen,
+        isConfigurationSaveDisabled,
+        isEditMode,
+        openConfiguration,
+        saveConfiguration,
+        saveText,
+    ]);
+
+    const ConfigurationBodyComponent = useMemo(() => {
+        function ConfigurationBody(_props: IMeasureValueFilterBodyProps) {
+            const configurationBodyProps = configurationBodyPropsRef.current;
+            return configurationBodyProps ? (
+                <MeasureValueFilterConfiguration {...configurationBodyProps} />
+            ) : null;
+        }
+
+        return ConfigurationBody;
+    }, []);
+
+    const BodyComponent = isConfigurationOpen ? ConfigurationBodyComponent : undefined;
+
     const DropdownButtonComponent = useMemo(() => {
-        function CustomDropdownButton({
+        function DashboardMeasureValueFilterDropdownButton({
             isActive,
             buttonTitle,
             onClick,
         }: IMeasureValueFilterDropdownButtonProps) {
-            const handleClick = useCallback(() => {
-                if (readonly) {
-                    return;
-                }
-                onClick();
-            }, [onClick]);
-
-            const handleKeyDown = useCallback(
-                (e: KeyboardEvent<HTMLDivElement>) => {
-                    if (readonly || !isActionKey(e)) {
-                        return;
-                    }
-                    e.preventDefault();
-                    onClick();
-                },
-                [onClick],
-            );
-
             return (
-                <div
-                    className={`gd-mvf-dashboard-filter-button__next s-dashboard-mvf-button ${
-                        isActive ? "gd-is-active" : ""
-                    } ${readonly ? "disabled" : ""}`}
-                    role="button"
-                    aria-haspopup="dialog"
-                    aria-expanded={isActive}
-                    aria-disabled={readonly || undefined}
-                    tabIndex={readonly ? -1 : 0}
-                    onClick={handleClick}
-                    onKeyDown={handleKeyDown}
-                    data-mvf-local-id={localIdentifier}
-                >
-                    <div className="gd-attribute-filter-dropdown-button-content__next">
-                        <div className="gd-attribute-filter-dropdown_button-title-content__next">
-                            <div className="gd-attribute-filter-dropdown-button-title__next">
-                                <ShortenedText
-                                    tooltipAlignPoints={TITLE_TOOLTIP_ALIGN_POINTS}
-                                    className="s-mvf-button-title"
-                                >
-                                    {buttonTitle}
-                                </ShortenedText>
-                            </div>
-                            <FilterButtonCustomIcon customIcon={visibilityIcon} disabled={readonly} />
-                        </div>
-                        <div className="gd-attribute-filter-dropdown-button-subtitle__next">
-                            <span className="gd-attribute-filter-dropdown-button-selected-items__next s-mvf-button-subtitle">
-                                {conditionLabel}
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                <UiControlButton
+                    title={buttonTitle}
+                    titleClassName="s-mvf-button-title"
+                    subtitle={
+                        <span className="gd-measure-value-filter-dropdown-button-selected-items__next s-mvf-button-subtitle">
+                            {conditionLabel}
+                        </span>
+                    }
+                    titleExtension={
+                        <MeasureValueFilterVisibilityIcon
+                            visibilityIcon={visibilityIcon}
+                            disabled={readonly}
+                        />
+                    }
+                    isOpen={isActive}
+                    isDraggable={isEditMode}
+                    disabled={readonly}
+                    disabledTooltip={
+                        readonly ? intl.formatMessage({ id: "filters.locked.filter.tooltip" }) : undefined
+                    }
+                    onClick={onClick}
+                    className={cx("gd-mvf-dashboard-filter-button__next", "s-dashboard-mvf-button", {
+                        "gd-is-active": isActive,
+                        "gd-is-draggable": isEditMode,
+                        disabled: readonly,
+                    })}
+                />
             );
         }
-        return CustomDropdownButton;
-    }, [readonly, localIdentifier, conditionLabel, visibilityIcon]);
+
+        return DashboardMeasureValueFilterDropdownButton;
+    }, [conditionLabel, intl, isEditMode, readonly, visibilityIcon]);
 
     return (
         <MeasureValueFilter
             onApply={handleApply}
+            onChange={isApplyAllAtOnceEnabledAndSet ? handleChange : undefined}
+            withoutApply={isApplyAllAtOnceEnabledAndSet}
+            BodyComponent={BodyComponent}
+            DropdownActionsComponent={DropdownActionsComponent}
+            DropdownButtonComponent={DropdownButtonComponent}
+            onCancel={handleClose}
             filter={dropdownFilter}
             measureIdentifier={localIdentifier}
             buttonTitle={metricTitle}
@@ -208,6 +359,7 @@ export function DefaultDashboardMeasureValueFilter(
             usePercentage={usePercentage}
             format={format}
             useShortFormat
+            displayTreatNullAsZeroOption
             separators={separators}
             locale={locale}
             enableOperatorSelection
@@ -215,9 +367,6 @@ export function DefaultDashboardMeasureValueFilter(
             isDimensionalityEnabled={false}
             isFilterSummaryEnabled
             autoOpen={autoOpen}
-            DropdownButtonComponent={DropdownButtonComponent}
-            loadMetricDetails={isInEditMode ? loadMetricDetails : undefined}
-            isHeaderEnabled
         />
     );
 }

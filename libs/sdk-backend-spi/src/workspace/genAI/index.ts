@@ -799,6 +799,10 @@ export type IChatConversation = {
      * Conversation last update date
      */
     updatedAt: string;
+    /**
+     * Conversation title
+     */
+    title?: string;
 };
 
 /**

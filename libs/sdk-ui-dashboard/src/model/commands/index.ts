@@ -18,6 +18,7 @@ import {
     type ISetDashboardAttributeFilterSelectionType,
     type ISetDashboardDateFilterConfigMode,
     type ISetDashboardDateFilterWithDimensionConfigMode,
+    type ISetDashboardMeasureValueFilterConfigMode,
     type ISetDateFilterConfigTitle,
     type InitializeDashboard,
     type SaveDashboardAs,
@@ -44,6 +45,7 @@ import {
     type ChangeFilterContextSelection,
     type IAddAttributeFilter,
     type IAddDateFilter,
+    type IAddMeasureValueFilter,
     type IAddTextAttributeFilter,
     type IApplyFilterContextWorkingSelection,
     type IApplyFilterView,
@@ -51,9 +53,11 @@ import {
     type IDeleteFilterView,
     type IMoveAttributeFilter,
     type IMoveDateFilter,
+    type IMoveMeasureValueFilter,
     type IReloadFilterViews,
     type IRemoveAttributeFilters,
     type IRemoveDateFilters,
+    type IRemoveMeasureValueFilter,
     type IResetFilterContextWorkingSelection,
     type ISaveFilterView,
     type ISetAttributeFilterDependentDateFilters,
@@ -62,6 +66,7 @@ import {
     type ISetAttributeFilterSelectionMode,
     type ISetAttributeFilterTitle,
     type ISetFilterViewAsDefault,
+    type ISetMeasureValueFilterTitle,
     type ReplaceAttributeFilterItemSelection,
 } from "./filters.js";
 import {
@@ -220,6 +225,7 @@ export type DashboardCommands =
     | IChangeSharing
     | ISetAttributeFilterDisplayForm
     | ISetAttributeFilterTitle
+    | ISetMeasureValueFilterTitle
     | ISetAttributeFilterSelectionMode
     | IChangeRichTextWidgetContent
     | IChangeRichTextWidgetFilterSettings
@@ -237,6 +243,7 @@ export type DashboardCommands =
     | IAddDrillTargets
     | ISetDashboardDateFilterConfigMode
     | ISetDashboardAttributeFilterConfigMode
+    | ISetDashboardMeasureValueFilterConfigMode
     | ISetDashboardAttributeFilterSelectionType
     | ISetDashboardAttributeFilterConfigDisplayAsLabel
     | IRemoveDrillDownForInsightWidget
@@ -247,9 +254,12 @@ export type DashboardCommands =
     | IKeyDriverAnalysis
     | IAttributeHierarchyModified
     | IAddDateFilter
+    | IAddMeasureValueFilter
+    | IRemoveMeasureValueFilter
     | IRemoveDateFilters
     | IMoveDateFilter
     | IChangeMeasureValueFilterCondition
+    | IMoveMeasureValueFilter
     | ISetDashboardDateFilterWithDimensionConfigMode
     | ISetDateFilterConfigTitle
     | IInitializeAutomations

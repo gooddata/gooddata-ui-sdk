@@ -4,6 +4,7 @@ import { call, fork, takeEvery, takeLatest } from "redux-saga/effects";
 
 import {
     clearThreadAction,
+    deleteConversationAction,
     loadThreadAction,
     newMessageAction,
     saveVisualisationRenderStatusAction,
@@ -15,6 +16,7 @@ import {
 import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
 import { loadSettings } from "./loadSettings.js";
+import { onConversationDelete } from "./onConversationDelete.js";
 import { onEvent } from "./onEvent.js";
 import { onThreadClear } from "./onThreadClear.js";
 import { onThreadLoad } from "./onThreadLoad.js";
@@ -38,6 +40,8 @@ export function* rootSaga() {
     yield takeEvery(saveVisualizationAction.type, onVisualizationSave);
     yield takeEvery(saveVisualizationSuccessAction.type, onVisualizationSuccessSave);
     yield takeEvery(saveVisualisationRenderStatusAction.type, onVisualisationRender);
+    //conversations API
+    yield takeEvery(deleteConversationAction.type, onConversationDelete);
     //others
     yield takeEvery(setVerboseAction.type, onVerboseStore);
     yield fork(onEvent);

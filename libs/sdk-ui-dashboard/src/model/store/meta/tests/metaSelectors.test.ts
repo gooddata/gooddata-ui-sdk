@@ -4,16 +4,20 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
+    DashboardAttributeFilterConfigModeValues,
     type IInsightWidgetDefinition,
+    idRef,
     newAbsoluteDateFilter,
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { renameDashboard } from "../../../commands/dashboard.js";
+import { renameDashboard, setDashboardMeasureValueFilterConfigMode } from "../../../commands/dashboard.js";
 import {
     addAttributeFilter,
+    addMeasureValueFilter,
     applyAttributeFilter,
     applyDateFilter,
+    changeMeasureValueFilterCondition,
     moveAttributeFilter,
     removeAttributeFilter,
 } from "../../../commands/filters.js";
@@ -45,6 +49,7 @@ import { selectIsDashboardDirty } from "../metaSelectors.js";
 
 describe("selectIsDashboardDirty", () => {
     let Tester: DashboardTester;
+    const measureRef = idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure");
 
     beforeEach(async () => {
         await preloadedTesterFactory((tester) => {
@@ -179,10 +184,51 @@ describe("selectIsDashboardDirty", () => {
             addAttributeFilter(ReferenceMd.Department.Default.attribute.displayForm, -1, TestCorrelation),
             "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADDED",
         ],
+        [
+            "measure value filter add",
+            addMeasureValueFilter(measureRef, -1, TestCorrelation, "test-mvf"),
+            "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADDED",
+        ],
     ];
 
     it.each(scenarios)(`should detect %s`, async (_, command, event) => {
         await Tester.dispatchAndWaitFor(command, event);
+        expect(Tester.select(selectIsDashboardDirty)).toBe(true);
+    });
+
+    it("should detect measure value filter condition change", async () => {
+        await Tester.dispatchAndWaitFor(
+            addMeasureValueFilter(measureRef, -1, TestCorrelation, "test-mvf"),
+            "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADDED",
+        );
+        await Tester.dispatchAndWaitFor(
+            changeMeasureValueFilterCondition("test-mvf", [
+                {
+                    comparison: {
+                        operator: "GREATER_THAN",
+                        value: 100,
+                    },
+                },
+            ]),
+            "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CONDITION_CHANGED",
+        );
+
+        expect(Tester.select(selectIsDashboardDirty)).toBe(true);
+    });
+
+    it("should detect measure value filter config change", async () => {
+        await Tester.dispatchAndWaitFor(
+            addMeasureValueFilter(measureRef, -1, TestCorrelation, "test-mvf"),
+            "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.ADDED",
+        );
+        await Tester.dispatchAndWaitFor(
+            setDashboardMeasureValueFilterConfigMode(
+                "test-mvf",
+                DashboardAttributeFilterConfigModeValues.READONLY,
+            ),
+            "GDC.DASH/EVT.MEASURE_VALUE_FILTER_CONFIG.MODE_CHANGED",
+        );
+
         expect(Tester.select(selectIsDashboardDirty)).toBe(true);
     });
 });

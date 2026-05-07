@@ -88,17 +88,13 @@ export {
     MeasureValueFilterDropdown,
 } from "./MeasureValueFilter/MeasureValueFilterDropdown.js";
 export type { IMeasureValueFilterDropdownButtonProps } from "./MeasureValueFilter/MeasureValueFilterButton.js";
-export {
-    MeasureValueFilterDropdownHeader,
-    type IMeasureValueFilterDropdownHeaderProps,
-} from "./MeasureValueFilter/MeasureValueFilterDropdownHeader.js";
-export {
-    MeasureValueFilterDetailsBubble,
-    type IMeasureValueFilterDetailsBubbleProps,
-} from "./MeasureValueFilter/MeasureValueFilterDetailsBubble.js";
+export { MeasureValueFilterDropdownActions } from "./MeasureValueFilter/MeasureValueFilterDropdownActions.js";
 export {
     type IMeasureValueFilterCommonProps,
+    type IMeasureValueFilterCustomComponentProps,
     type IMeasureValueFilterCustomComponentsProps,
+    type IMeasureValueFilterDropdownActionsProps,
+    type IMeasureValueFilterBodyProps,
     type IDimensionalityItem,
     type DimensionalityItemType,
     type WarningMessage,

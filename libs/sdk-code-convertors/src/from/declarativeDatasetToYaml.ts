@@ -30,8 +30,11 @@ function processDeclarativeLabel(
     profile: Profile | null,
 ): YAMLMap {
     const map = new YAMLMap();
+    const isAuxiliary = dataset.type === "AUXILIARY";
 
-    map.add(new Pair("source_column", label.sourceColumn));
+    if (!isAuxiliary) {
+        map.add(new Pair("source_column", label.sourceColumn));
+    }
     map.add(
         new Pair(
             "data_type",
@@ -95,9 +98,12 @@ function processDeclarativeAttribute(
     profile: Profile | null,
 ): YAMLMap {
     const map = new YAMLMap();
+    const isAuxiliary = dataset.type === "AUXILIARY";
 
     map.add(new Pair("type", "attribute"));
-    map.add(new Pair("source_column", attr.sourceColumn));
+    if (!isAuxiliary) {
+        map.add(new Pair("source_column", attr.sourceColumn));
+    }
     map.add(
         new Pair(
             "data_type",

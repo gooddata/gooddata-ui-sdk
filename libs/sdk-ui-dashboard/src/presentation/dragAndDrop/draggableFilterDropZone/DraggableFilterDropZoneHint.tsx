@@ -4,15 +4,23 @@ import { type Ref } from "react";
 
 import cx from "classnames";
 
-import { dashboardAttributeFilterItemLocalIdentifier } from "@gooddata/sdk-model";
+import {
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
+} from "@gooddata/sdk-model";
 
-import { moveAttributeFilter, moveDateFilter } from "../../../model/commands/filters.js";
+import {
+    moveAttributeFilter,
+    moveDateFilter,
+    moveMeasureValueFilter,
+} from "../../../model/commands/filters.js";
 import { useDashboardDispatch } from "../../../model/react/DashboardStoreProvider.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import {
     isAttributeFilterDraggableItem,
     isAttributeFilterPlaceholderDraggableItem,
     isDateFilterDraggableItem,
+    isMeasureValueFilterDraggableItem,
 } from "../types.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
 
@@ -55,11 +63,15 @@ export function DraggableFilterDropZoneHint({
 
     const [{ canDrop, isOver }, dropRef] = useDashboardDrop(
         acceptPlaceholder
-            ? ["attributeFilter", "dateFilter", "attributeFilter-placeholder"]
+            ? ["attributeFilter", "dateFilter", "attributeFilter-placeholder", "measureValueFilter"]
             : "attributeFilter",
         {
             canDrop: (item) => {
-                if (isAttributeFilterDraggableItem(item) || isDateFilterDraggableItem(item)) {
+                if (
+                    isAttributeFilterDraggableItem(item) ||
+                    isDateFilterDraggableItem(item) ||
+                    isMeasureValueFilterDraggableItem(item)
+                ) {
                     return !inactiveIndexes.includes(item.filterIndex);
                 }
 
@@ -68,21 +80,27 @@ export function DraggableFilterDropZoneHint({
             drop: (item) => {
                 const targetIndexPositionCorrection =
                     placement === "inside" && hintPosition === "next" ? 1 : 0;
+                const getMoveIndex = (originalIndex: number) => {
+                    const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
+                    return targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
+                };
 
                 if (isAttributeFilterDraggableItem(item)) {
                     const identifier = dashboardAttributeFilterItemLocalIdentifier(item.filter)!;
-                    const originalIndex = item.filterIndex;
-                    const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
-                    const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
+                    const index = getMoveIndex(item.filterIndex);
                     dispatch(moveAttributeFilter(identifier, index));
                 }
 
                 if (isDateFilterDraggableItem(item)) {
                     const ref = item.filter.dateFilter.dataSet!;
-                    const originalIndex = item.filterIndex;
-                    const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
-                    const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;
+                    const index = getMoveIndex(item.filterIndex);
                     dispatch(moveDateFilter(ref, index));
+                }
+
+                if (isMeasureValueFilterDraggableItem(item)) {
+                    const localIdentifier = dashboardFilterLocalIdentifier(item.filter)!;
+                    const index = getMoveIndex(item.filterIndex);
+                    dispatch(moveMeasureValueFilter(localIdentifier, index));
                 }
 
                 if (isAttributeFilterPlaceholderDraggableItem(item) && onAddAttributePlaceholder) {

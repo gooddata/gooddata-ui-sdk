@@ -686,6 +686,23 @@ export interface ITigerDashboardDateFilterConfig {
 }
 
 /**
+ * Tiger-specific dashboard parameter override entry.
+ *
+ * Smart-persistence rules apply at the model layer: `value`, `label`, and `mode` are omitted
+ * from the persisted JSON when equal to their defaults (workspace default, parameter title,
+ * and `"active"` respectively).
+ *
+ * @alpha
+ */
+export interface ITigerDashboardParameter {
+    ref: ObjRef;
+    parameterType: "NUMBER";
+    value?: number;
+    label?: string;
+    mode?: "active" | "readonly" | "hidden";
+}
+
+/**
  * Tiger-specific dashboard attribute filter config
  * @public
  */

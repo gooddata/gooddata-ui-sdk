@@ -8,6 +8,7 @@ import {
     type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import { type IFilterButtonCustomIcon, type VisibilityMode } from "@gooddata/sdk-ui-filters";
@@ -19,6 +20,7 @@ import {
     isFilterBarAttributeFilter,
     isFilterBarDateFilterWithDimension,
     isFilterBarFilterPlaceholder,
+    isFilterBarMeasureValueFilter,
 } from "./filterBar/useFiltersWithAddedPlaceholder.js";
 
 const VISIBILITY_BUBBLE_SETTINGS = {
@@ -63,18 +65,36 @@ export const areAllFiltersHidden = (
     effectedDateFilterMode: DashboardDateFilterConfigMode,
     effectedAttributeFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>,
     effectedDateFiltersModeMap: Map<string, DashboardDateFilterConfigMode>,
+    effectedMeasureValueFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode> = new Map(),
 ) => {
     const isCommonDateFilterHidden = effectedDateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN;
 
     const areAllDraggableFiltersHidden = draggableFilters.every((it) => {
         if (isFilterBarDateFilterWithDimension(it)) {
             return isDateFilterHidden(it, effectedDateFiltersModeMap);
+        } else if (isFilterBarMeasureValueFilter(it)) {
+            return isMeasureValueFilterHidden(it, effectedMeasureValueFiltersModeMap);
         } else {
             return isAttributeFilterHidden(it, effectedAttributeFiltersModeMap);
         }
     });
 
     return isCommonDateFilterHidden && areAllDraggableFiltersHidden;
+};
+
+const isMeasureValueFilterHidden = (
+    filter: FilterBarItem,
+    effectedMeasureValueFiltersModeMap: Map<string, DashboardAttributeFilterConfigMode>,
+) => {
+    if (isFilterBarFilterPlaceholder(filter)) {
+        return false;
+    }
+    if (isFilterBarMeasureValueFilter(filter)) {
+        const localId = dashboardFilterLocalIdentifier(filter.filter)!;
+        const measureValueFilterMode = effectedMeasureValueFiltersModeMap.get(localId);
+        return measureValueFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN;
+    }
+    return false;
 };
 
 const isAttributeFilterHidden = (

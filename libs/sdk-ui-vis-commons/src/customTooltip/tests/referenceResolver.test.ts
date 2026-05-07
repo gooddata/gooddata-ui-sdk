@@ -1,0 +1,131 @@
+// (C) 2026 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
+
+import { markdownToHtml } from "../markdownToHtml.js";
+import { resolveReferences } from "../referenceResolver.js";
+
+describe("resolveReferences", () => {
+    it("should substitute known references", () => {
+        const result = resolveReferences(
+            "Profit: {metric/profit_margin}",
+            {
+                "metric/profit_margin": "23.5%",
+            },
+            "(No data)",
+        );
+        expect(result).toBe("Profit: 23.5%");
+    });
+
+    it("backslash-escapes parens in the fallback text so they render as literal text", () => {
+        // The fallback travels through markdownToHtml just like resolved values,
+        // so its metacharacters must be escaped to render literally.
+        const result = resolveReferences("Value: {metric/unknown}", {}, "(No data)");
+        expect(result).toBe("Value: \\(No data\\)");
+    });
+
+    it("does not escape characters that are not markdown metacharacters", () => {
+        const result = resolveReferences("Value: {metric/unknown}", {}, "—");
+        expect(result).toBe("Value: —");
+    });
+
+    it("should resolve multiple references", () => {
+        const result = resolveReferences(
+            "**{metric/profit}** in {label/region}",
+            {
+                "metric/profit": "$1.2M",
+                "label/region": "East",
+            },
+            "(No data)",
+        );
+        expect(result).toBe("**$1.2M** in East");
+    });
+
+    it("should handle image URLs from label references", () => {
+        // URLs typically contain `:` and `/` but neither is a markdown metachar,
+        // so the substituted URL passes through unescaped and remains parsable
+        // as an image URL by markdownToHtml.
+        const result = resolveReferences(
+            "![product]({label/product_image_url})",
+            {
+                "label/product_image_url": "https://cdn.example.com/widget.png",
+            },
+            "(No data)",
+        );
+        expect(result).toBe("![product](https://cdn.example.com/widget.png)");
+    });
+
+    it("should return empty string for empty content", () => {
+        expect(resolveReferences("", {}, "(No data)")).toBe("");
+    });
+
+    it("normalizes the prefix case so {Metric/x} or {LABEL/x} resolve against lowercase-prefixed values", () => {
+        const result = resolveReferences(
+            "{Metric/revenue} in {LABEL/region}",
+            {
+                "metric/revenue": "$1M",
+                "label/region": "East",
+            },
+            "(No data)",
+        );
+        expect(result).toBe("$1M in East");
+    });
+
+    it("preserves identifier case (LDM identifiers are case-sensitive)", () => {
+        const result = resolveReferences(
+            "{metric/Revenue}",
+            {
+                "metric/Revenue": "case sensitive hit",
+                "metric/revenue": "wrong match",
+            },
+            "(No data)",
+        );
+        expect(result).toBe("case sensitive hit");
+    });
+
+    describe("markdown-metachar escaping in resolved values", () => {
+        // Resolved values come from data and may contain markdown syntax. Without
+        // escaping, those characters would be reinterpreted as formatting by
+        // markdownToHtml. The escape + parser's escape-protection cycle makes the
+        // characters render literally in the final tooltip.
+
+        it("escapes asterisks so values with `*` do not become italic/bold", () => {
+            const resolved = resolveReferences("Product: {label/name}", { "label/name": "5*5 promo" }, "—");
+            expect(resolved).toBe("Product: 5\\*5 promo");
+            expect(markdownToHtml(resolved)).toBe("<p>Product: 5*5 promo</p>");
+        });
+
+        it("escapes underscores so values with `_` do not become italic", () => {
+            const resolved = resolveReferences("{label/name}", { "label/name": "_underscore_" }, "—");
+            expect(markdownToHtml(resolved)).toBe("<p>_underscore_</p>");
+        });
+
+        it("escapes brackets and parens so values cannot form a fake link", () => {
+            const resolved = resolveReferences(
+                "{label/name}",
+                { "label/name": "[anchor](https://attacker.example)" },
+                "—",
+            );
+            // The whole thing should render as plain text — no <span> link wrapper.
+            const html = markdownToHtml(resolved);
+            expect(html).not.toContain("gd-viz-tooltip-custom-link");
+            expect(html).toContain("[anchor](https://attacker.example)");
+        });
+
+        it("escapes `!` so values cannot inject an image with attacker-controlled src", () => {
+            const resolved = resolveReferences(
+                "{label/name}",
+                { "label/name": "![pwn](https://attacker.example/track.png)" },
+                "—",
+            );
+            const html = markdownToHtml(resolved);
+            expect(html).not.toContain("<img");
+            expect(html).toContain("![pwn](https://attacker.example/track.png)");
+        });
+
+        it("escapes literal backslashes so they survive the parser's escape protection", () => {
+            const resolved = resolveReferences("Path: {label/path}", { "label/path": "C:\\Users\\me" }, "—");
+            expect(markdownToHtml(resolved)).toBe("<p>Path: C:\\Users\\me</p>");
+        });
+    });
+});

@@ -36,6 +36,34 @@ $base_path: "@gooddata/sdk-ui-kit/styles";
         mask-position: center;
     }
 }
+
+@keyframes gd-gen-ai-shimmer {
+    0% {
+        background-position: 1000% 0;
+    }
+
+    100% {
+        background-position: -1000% 0;
+    }
+}
+
+@mixin gd-reasoning {
+    background: linear-gradient(
+        90deg,
+        kit-variables.$gd-color-link 0%,
+        kit-variables.$gd-color-link 40%,
+        kit-variables.$gd-color-white 50%,
+        kit-variables.$gd-color-link 60%,
+        kit-variables.$gd-color-link 100%
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gd-gen-ai-shimmer 20s infinite linear;
+}
+
 $gd-dashboards-content-widget-title-color: var(
     --gd-dashboards-content-widget-title-color,
     kit-variables.$gd-color-text

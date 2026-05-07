@@ -1208,8 +1208,14 @@ export interface IMeasureDropdownItem {
     title: string;
 }
 
+// @beta
+export interface IMeasureValueFilterBodyProps {
+    onApplyButtonClick: () => void;
+    onCancelButtonClick: () => void;
+}
+
 // @beta (undocumented)
-export interface IMeasureValueFilterCommonProps {
+export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCustomComponentProps {
     catalogDimensionality?: IDimensionalityItem[];
     // (undocumented)
     dimensionality?: IDimensionalityItem[];
@@ -1238,6 +1244,7 @@ export interface IMeasureValueFilterCommonProps {
     measureTitle?: string;
     // (undocumented)
     onApply: (filter: IMeasureValueFilter | null) => void;
+    onChange?: (filter: IMeasureValueFilter | null) => void;
     onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
     // (undocumented)
     separators?: ISeparators;
@@ -1248,6 +1255,7 @@ export interface IMeasureValueFilterCommonProps {
     useShortFormat?: boolean;
     // (undocumented)
     warningMessage?: WarningMessage;
+    withoutApply?: boolean;
 }
 
 // @internal
@@ -1256,16 +1264,26 @@ export interface IMeasureValueFilterConditionLabelOptions {
     usePercentage?: boolean;
 }
 
+// @beta
+export interface IMeasureValueFilterCustomComponentProps {
+    BodyComponent?: ComponentType<IMeasureValueFilterBodyProps>;
+    DropdownActionsComponent?: ComponentType<IMeasureValueFilterDropdownActionsProps>;
+}
+
 // @public
 export interface IMeasureValueFilterCustomComponentsProps {
     // @beta
     DropdownButtonComponent?: ComponentType<IMeasureValueFilterDropdownButtonProps>;
 }
 
-// @internal
-export interface IMeasureValueFilterDetailsBubbleProps {
-    requestHandler?: () => Promise<IMeasureMetadataObject | undefined>;
-    title: string;
+// @beta
+export interface IMeasureValueFilterDropdownActionsProps {
+    applyDisabledTooltip?: string;
+    isApplyDisabled?: boolean;
+    isFilterChanged?: boolean;
+    onApplyButtonClick: () => void;
+    onCancelButtonClick: () => void;
+    withoutApply?: boolean;
 }
 
 // @beta
@@ -1276,12 +1294,6 @@ export interface IMeasureValueFilterDropdownButtonProps {
     isActive: boolean;
     // (undocumented)
     onClick: () => void;
-}
-
-// @internal
-export interface IMeasureValueFilterDropdownHeaderProps {
-    loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
-    title: string;
 }
 
 // @beta (undocumented)
@@ -1569,14 +1581,11 @@ export function mapAvailableSelectionTypesToInternal(selectionTypes: AttributeFi
 // @beta (undocumented)
 export const MeasureValueFilter: NamedExoticComponent<IMeasureValueFilterProps>;
 
-// @internal
-export function MeasureValueFilterDetailsBubble({ title, requestHandler }: IMeasureValueFilterDetailsBubbleProps): JSX.Element;
-
 // @beta (undocumented)
 export const MeasureValueFilterDropdown: NamedExoticComponent<IMeasureValueFilterDropdownProps>;
 
-// @internal
-export function MeasureValueFilterDropdownHeader({ title, loadMetricDetails }: IMeasureValueFilterDropdownHeaderProps): JSX.Element;
+// @beta
+export function MeasureValueFilterDropdownActions({ onApplyButtonClick, onCancelButtonClick, isApplyDisabled, applyDisabledTooltip, withoutApply }: IMeasureValueFilterDropdownActionsProps): JSX.Element;
 
 // @beta (undocumented)
 export type MeasureValueFilterOperator = ComparisonConditionOperator | RangeConditionOperator | "ALL";

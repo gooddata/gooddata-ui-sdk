@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type Ref } from "react";
+
 import classNames from "classnames";
 
 import { type IDashboardMeasureValueFilter, type MeasureValueFilterCondition } from "@gooddata/sdk-model";
@@ -9,6 +11,7 @@ import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSe
 import { selectCanAddMoreFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { type CustomDashboardMeasureValueFilterComponent } from "../../filterBar/measureValueFilter/types.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
+import { useDashboardDrag } from "../useDashboardDrag.js";
 
 type DraggableMeasureValueFilterProps = {
     filter: IDashboardMeasureValueFilter;
@@ -19,17 +22,14 @@ type DraggableMeasureValueFilterProps = {
     onMeasureValueFilterChanged: (
         filter: IDashboardMeasureValueFilter,
         conditions: MeasureValueFilterCondition[] | undefined,
+        isWorkingSelectionChange?: boolean,
     ) => void;
     onMeasureValueFilterAdded: (index: number) => void;
 };
 
 /**
- * Mirrors {@link DraggableAttributeFilter} so MVF chips occupy a real slot in the filter
- * list with proper neighbor drop targets. The chip itself is not yet a drag source — the
- * "measureValueFilter" drag type and the corresponding `moveMeasureValueFilter` model
- * command are not implemented yet (TODO CQ-2286). Until that lands, MVFs render in the
- * correct position and neighboring attribute/date drops resolve to correct indices, but
- * the MVF chip cannot itself be reordered via drag.
+ * Mirrors {@link DraggableAttributeFilter} so MVF chips occupy a real draggable slot in
+ * the filter list with proper neighbor drop targets.
  *
  * @internal
  */
@@ -43,9 +43,20 @@ export function DraggableMeasureValueFilter({
     onMeasureValueFilterAdded,
 }: DraggableMeasureValueFilterProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const [{ isDragging }, dragRef] = useDashboardDrag(
+        {
+            dragItem: {
+                type: "measureValueFilter",
+                filter,
+                filterIndex,
+            },
+            canDrag: isInEditMode,
+        },
+        [filter, filterIndex, isInEditMode],
+    );
     const canAddMoreFilters = useDashboardSelector(selectCanAddMoreFilters);
 
-    const showDropZones = isInEditMode;
+    const showDropZones = isInEditMode && !isDragging;
 
     return (
         <div className="draggable-measure-value-filter">
@@ -61,7 +72,9 @@ export function DraggableMeasureValueFilter({
             <div
                 className={classNames("dash-filters-notdate", "dash-filters-mvf", {
                     "dash-filter-is-edit-mode": isInEditMode,
+                    "is-dragging": isDragging,
                 })}
+                ref={dragRef as unknown as Ref<HTMLDivElement> | undefined}
             >
                 <FilterComponent
                     autoOpen={autoOpen}

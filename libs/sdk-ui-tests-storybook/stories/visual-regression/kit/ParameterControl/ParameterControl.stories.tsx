@@ -28,17 +28,25 @@ function ParameterControlExamples() {
                             name="Threshold"
                             value={25}
                             isActive={false}
+                            isDraggable
                             onClick={() => {}}
                         />
                     </Section>
                     <Section title="Active (open)">
-                        <ParameterControlButton name="Threshold" value={25} isActive onClick={() => {}} />
+                        <ParameterControlButton
+                            name="Threshold"
+                            value={25}
+                            isActive
+                            isDraggable
+                            onClick={() => {}}
+                        />
                     </Section>
                     <Section title="Long parameter name">
                         <ParameterControlButton
                             name="A very long parameter name that should ellipsise"
                             value={1234}
                             isActive={false}
+                            isDraggable
                             onClick={() => {}}
                         />
                     </Section>

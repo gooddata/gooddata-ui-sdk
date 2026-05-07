@@ -42,6 +42,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     filter,
     measureIdentifier,
     buttonTitle,
+    measureTitle,
     usePercentage,
     warningMessage,
     locale,
@@ -59,14 +60,17 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     loadCatalogDimensionality,
     onDimensionalityChange,
     isLoadingCatalogDimensionality,
+    withoutApply,
+    BodyComponent,
+    DropdownActionsComponent,
     enableMultipleConditions = false,
     enableRankingWithMvf,
     onApply,
     DropdownButtonComponent = DropdownButton,
     autoOpen,
     loadMetricDetails,
-    measureTitle,
     isHeaderEnabled,
+    onChange,
 }: IMeasureValueFilterProps) {
     const [displayDropdown, setDisplayDropdown] = useState(!!autoOpen);
     const buttonRef = useRef<HTMLDivElement>(null);
@@ -110,6 +114,10 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
             {displayDropdown ? (
                 <MeasureValueFilterDropdown
                     onApply={handleApply}
+                    onChange={onChange}
+                    withoutApply={withoutApply}
+                    BodyComponent={BodyComponent}
+                    DropdownActionsComponent={DropdownActionsComponent}
                     onCancel={handleCancel}
                     filter={filter}
                     measureIdentifier={measureIdentifier}

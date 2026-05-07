@@ -12,6 +12,7 @@ import { ChartFillType } from '@gooddata/sdk-ui-vis-commons';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { ComponentType } from 'react';
+import { CustomTooltipPlacement } from '@gooddata/sdk-ui-vis-commons';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
@@ -27,6 +28,7 @@ import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { ICustomTooltipConfig } from '@gooddata/sdk-ui-vis-commons';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
@@ -155,8 +157,7 @@ export const CoreXirr: ComponentType<ICoreChartProps>;
 // @internal
 export const createHeadlineProvider: (buckets: IBucket[], config: IChartConfig | undefined) => IHeadlineProvider;
 
-// @alpha
-export type CustomTooltipPlacement = "above" | "below" | "replace";
+export { CustomTooltipPlacement }
 
 // @internal (undocumented)
 export const DEFAULT_COMPARISON_PALETTE: IColorPalette;
@@ -531,12 +532,7 @@ export interface ICreateExecutionParams {
     sortItems?: ISortItem[];
 }
 
-// @alpha
-export interface ICustomTooltipConfig {
-    content?: string;
-    enabled?: boolean;
-    placement?: CustomTooltipPlacement;
-}
+export { ICustomTooltipConfig }
 
 // @public (undocumented)
 export interface IDataLabelsConfig {

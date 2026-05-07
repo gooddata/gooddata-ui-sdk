@@ -11,7 +11,7 @@ import {
     type IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
 
-import { type CatalogState } from "./catalogState.js";
+import { type CatalogState, type ICatalogParametersState } from "./catalogState.js";
 
 type CatalogReducer<A extends Action> = CaseReducer<CatalogState, A>;
 
@@ -87,10 +87,15 @@ const deleteAttributeHierarchy: CatalogReducer<PayloadAction<ICatalogAttributeHi
     );
 };
 
+const setCatalogParameters: CatalogReducer<PayloadAction<ICatalogParametersState>> = (state, action) => {
+    state.parameters = action.payload;
+};
+
 export const catalogReducers = {
     setCatalogItems,
     setCatalogMeasuresAndFacts,
     addAttributeHierarchy,
     updateAttributeHierarchy,
     deleteAttributeHierarchy,
+    setCatalogParameters,
 };

@@ -8,6 +8,7 @@ import {
     type IDashboardDateFilter,
     type IDashboardObjectIdentity,
     type IFilterContextDefinition,
+    type MeasureValueFilterCondition,
 } from "@gooddata/sdk-model";
 
 /**
@@ -20,11 +21,26 @@ export type WorkingDashboardAttributeFilter = {
 };
 
 /**
+ * Partial working measure value filter used in working filter context.
+ *
+ * @alpha
+ */
+export type WorkingDashboardMeasureValueFilter = {
+    dashboardMeasureValueFilter: {
+        localIdentifier: string;
+        conditions?: MeasureValueFilterCondition[];
+    };
+};
+
+/**
  * Partial working filter context item.
  *
  * @alpha
  */
-export type WorkingFilterContextItem = WorkingDashboardAttributeFilter | IDashboardDateFilter;
+export type WorkingFilterContextItem =
+    | WorkingDashboardAttributeFilter
+    | IDashboardDateFilter
+    | WorkingDashboardMeasureValueFilter;
 
 /**
  * Working filter context.
@@ -33,7 +49,7 @@ export type WorkingFilterContextItem = WorkingDashboardAttributeFilter | IDashbo
  */
 export interface IWorkingFilterContextDefinition {
     /**
-     * Partial attribute or date filters
+     * Partial attribute, date, or measure value filters
      */
     readonly filters: WorkingFilterContextItem[];
 }

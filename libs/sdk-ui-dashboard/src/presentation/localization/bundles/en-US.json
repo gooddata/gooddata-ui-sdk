@@ -1411,6 +1411,14 @@
         "text": "Remove access to this dashboard.",
         "crowdinContext": "Tooltip for the button that revokes a user's or group's access to the dashboard"
     },
+    "dashboardMeasureValueFilter.section.from_dashboard": {
+        "text": "From dashboard",
+        "crowdinContext": "Text of the section header in the dashboard metric value filter dropdown"
+    },
+    "dashboardMeasureValueFilter.section.all_other": {
+        "text": "All other",
+        "crowdinContext": "Text of the section header in the dashboard metric value filter dropdown"
+    },
     "dashboard.shareDialog.removeAccessCreatorTooltip": {
         "text": "The user that created this dashboard. Creators cannot be removed.",
         "crowdinContext": "Text of the tooltip shown above disabled button that removes user dashboard access right. Shown in the case when user cannot be removed because he is the creator of the dashboard."
@@ -2683,6 +2691,10 @@
         "text": "Information about Saved Views",
         "crowdinContext": "Aria label of the Filter Views tooltip."
     },
+    "filters.locked.filter.tooltip": {
+        "text": "This filter is locked",
+        "crowdinContext": "Tooltip explaining that the current filter is locked and cannot be interactive."
+    },
     "insightAlert.config.action.edit": {
         "text": "Edit",
         "crowdinContext": "Action in alert configuration"
@@ -3410,5 +3422,17 @@
     "dashboard.tabs.accessibility.add-button-label": {
         "text": "Add new tab",
         "crowdinContext": "Accessibility label for a button that adds a new tab"
+    },
+    "dashboard_add_filter.button.aria_label": {
+        "text": "Add filter",
+        "crowdinContext": "Aria label for the dashboard Add filter button (the + trigger that opens the menu)"
+    },
+    "dashboard_add_filter.menu.title": {
+        "text": "Add filter",
+        "crowdinContext": "Heading at the top of the dashboard Add filter menu dropdown"
+    },
+    "dashboard_add_filter.menu.parameter": {
+        "text": "Parameter",
+        "crowdinContext": "Menu item label for adding a dashboard parameter control"
     }
 }

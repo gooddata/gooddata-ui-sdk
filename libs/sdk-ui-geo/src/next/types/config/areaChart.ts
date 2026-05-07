@@ -2,7 +2,7 @@
 
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, type ISeparators } from "@gooddata/sdk-ui";
-import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorMapping, type ICustomTooltipConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import type { IGeoLngLat, IGeoLngLatBounds } from "../../../publicTypes/geoCommon.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
@@ -103,4 +103,11 @@ export interface IGeoAreaChartConfig {
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
     respectLegendPosition?: boolean;
+
+    /**
+     * Custom tooltip configuration with Markdown content and metric/attribute references.
+     *
+     * @alpha
+     */
+    customTooltip?: ICustomTooltipConfig;
 }

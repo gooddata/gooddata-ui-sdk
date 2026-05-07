@@ -174,6 +174,7 @@ export enum TigerFeaturesNames {
     EnableUserDataFiltersUi = "enableUserDataFiltersUi",
     EnableDateTimeSemanticsSetting = "enableDateTimeSemanticsSetting",
     EnableEnhancedInsightPicker = "enableEnhancedInsightPicker",
+    EnableAiAgenticMultiConversations = "enableAiAgenticMultiConversations",
 }
 
 export type ITigerFeatureFlags = {
@@ -311,6 +312,7 @@ export type ITigerFeatureFlags = {
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
     enableAiAgenticSuggestions: (typeof FeatureFlagsValues)["enableAiAgenticSuggestions"][number];
+    enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableEmptyDateValuesFilter"][number];
@@ -478,6 +480,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIMemory: false,
     enableAIKnowledge: false,
     enableAiAgenticSuggestions: false,
+    enableAiAgenticMultiConversations: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableEmptyDateValuesFilter: true,
@@ -646,6 +649,7 @@ export const FeatureFlagsValues = {
     enableGenAIMemory: [false, true] as const,
     enableAIKnowledge: [false, true] as const,
     enableAiAgenticSuggestions: [true, false] as const,
+    enableAiAgenticMultiConversations: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableEmptyDateValuesFilter: [true, false] as const,

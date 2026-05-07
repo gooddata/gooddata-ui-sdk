@@ -2760,6 +2760,8 @@ export interface AiConversationResponse {
     'isPreview'?: boolean;
     'lastActivityAt': string;
     'organizationId': string;
+    // (undocumented)
+    'title'?: string | null;
     'userId': string;
     'workspaceId': string;
 }
@@ -2776,6 +2778,12 @@ export interface AiConversationTurnResponse {
     'feedback'?: AiFeedback | null;
     'responseId': string;
     'updatedAt': string;
+}
+
+// @public
+export interface AiConversationUpdateRequest {
+    // (undocumented)
+    'title'?: string | null;
 }
 
 // @public (undocumented)
@@ -2798,7 +2806,7 @@ export const AiDateFilterGranularity: {
     readonly MINUTE: "MINUTE";
     readonly HOUR: "HOUR";
     readonly DAY: "DAY";
-    readonly WEEK: "WEEK";
+    readonly WEEK_US: "WEEK_US";
     readonly MONTH: "MONTH";
     readonly QUARTER: "QUARTER";
     readonly YEAR: "YEAR";
@@ -2835,7 +2843,7 @@ export type AiDateFilterRelativeTypeEnum = 'date_filter';
 // @public
 export const AiDateGranularity: {
     readonly DAY: "DAY";
-    readonly WEEK: "WEEK";
+    readonly WEEK_US: "WEEK_US";
     readonly MONTH: "MONTH";
     readonly QUARTER: "QUARTER";
     readonly YEAR: "YEAR";
@@ -2910,6 +2918,12 @@ export interface AiFilterByValue {
     // (undocumented)
     'bottom'?: number;
     // (undocumented)
+    'case_sensitive'?: boolean;
+    // (undocumented)
+    'condition': AiFilterByValueConditionEnum;
+    // (undocumented)
+    'display_as'?: string;
+    // (undocumented)
     'from': number;
     // (undocumented)
     'granularity': AiDateGranularity;
@@ -2923,10 +2937,17 @@ export interface AiFilterByValue {
     'type': AiFilterByValueTypeEnum;
     // (undocumented)
     'using': string;
+    // (undocumented)
+    'value': string;
+    // (undocumented)
+    'values': Array<string>;
 }
 
 // @public (undocumented)
-export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter';
+export type AiFilterByValueConditionEnum = 'contains' | 'doesNotContain' | 'startsWith' | 'doesNotStartWith' | 'endsWith' | 'doesNotEndWith';
+
+// @public (undocumented)
+export type AiFilterByValueTypeEnum = 'attribute_filter' | 'date_filter' | 'ranking_filter' | 'text_filter';
 
 // @public (undocumented)
 export interface AiForecastPeriod {
@@ -3376,6 +3397,50 @@ export interface AiSkillResponse {
     // (undocumented)
     'title': string;
 }
+
+// @public (undocumented)
+export interface AiTextFilterValue {
+    // (undocumented)
+    'case_sensitive'?: boolean;
+    // (undocumented)
+    'condition': AiTextFilterValueConditionEnum;
+    // (undocumented)
+    'display_as'?: string;
+    // (undocumented)
+    'type': AiTextFilterValueTypeEnum;
+    // (undocumented)
+    'using': string;
+    // (undocumented)
+    'value': string;
+}
+
+// @public (undocumented)
+export type AiTextFilterValueConditionEnum = 'contains' | 'doesNotContain' | 'startsWith' | 'doesNotStartWith' | 'endsWith' | 'doesNotEndWith';
+
+// @public (undocumented)
+export interface AiTextFilterValues {
+    // (undocumented)
+    'case_sensitive'?: boolean;
+    // (undocumented)
+    'condition': AiTextFilterValuesConditionEnum;
+    // (undocumented)
+    'display_as'?: string;
+    // (undocumented)
+    'type': AiTextFilterValuesTypeEnum;
+    // (undocumented)
+    'using': string;
+    // (undocumented)
+    'values': Array<string | null>;
+}
+
+// @public (undocumented)
+export type AiTextFilterValuesConditionEnum = 'is' | 'isNot';
+
+// @public (undocumented)
+export type AiTextFilterValuesTypeEnum = 'text_filter';
+
+// @public (undocumented)
+export type AiTextFilterValueTypeEnum = 'text_filter';
 
 // @public (undocumented)
 export interface AiTextMessageContent {
@@ -7587,6 +7652,7 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
+    patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 }
 
@@ -7606,6 +7672,9 @@ export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConvers
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet as GenAiApi_GetConversations }
 
 // @public
+export function ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
+
+// @public
 function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost }
 export { ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost as GenAiApi_PostConversations }
@@ -7618,6 +7687,9 @@ export function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWorkspace
 
 // @public
 export function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(workspaceId: string, isPreview?: boolean, page?: number, size?: number, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+
+// @public
+export function ConversationsAiAxiosParamCreator_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(workspaceId: string, conversationId: string, aiConversationUpdateRequest: AiConversationUpdateRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
 
 // @public
 export function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(workspaceId: string, isPreview?: boolean, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
@@ -7653,7 +7725,15 @@ export interface ConversationsAiInterface {
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
+    patchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
     postConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+}
+
+// @public
+export interface ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest {
+    readonly aiConversationUpdateRequest: AiConversationUpdateRequest;
+    readonly conversationId: string;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -18204,6 +18284,8 @@ interface IAnalyticalDashboard_2 {
     layout?: ITigerDashboardLayout;
     // (undocumented)
     measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
+    // @alpha
+    parameters?: ITigerDashboardParameter[];
     // (undocumented)
     plugins?: IDashboardPluginLink[];
     // (undocumented)
@@ -19163,6 +19245,20 @@ export interface ITigerDashboardMeasureValueFilterConfig {
     localIdentifier: string;
     // (undocumented)
     mode?: "active" | "readonly" | "hidden";
+}
+
+// @alpha
+export interface ITigerDashboardParameter {
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    mode?: "active" | "readonly" | "hidden";
+    // (undocumented)
+    parameterType: "NUMBER";
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    value?: number;
 }
 
 // @public
@@ -34174,8 +34270,8 @@ export interface Xliff {
 
 // Warnings were encountered during analysis:
 //
-// src/gd-tiger-model/TigerTypes.ts:806:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
-// src/gd-tiger-model/TigerTypes.ts:807:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
+// src/gd-tiger-model/TigerTypes.ts:823:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
+// src/gd-tiger-model/TigerTypes.ts:824:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
 // src/locationStyle.ts:53:5 - (ae-forgotten-export) The symbol "ILocationStyleListItem" needs to be exported by the entry point index.d.ts
 
 ```

@@ -11,6 +11,7 @@ import {
 import {
     convertChatConversationErrorFromBackend,
     convertChatConversationItemFromBackend,
+    convertChatSuggestionItemFromBackend,
 } from "../genAIConvertor.js";
 
 describe("genAIConvertor", () => {
@@ -102,6 +103,53 @@ describe("genAIConvertor", () => {
                 code: 500,
                 message: "Request failed",
                 traceId: "trace-123",
+            });
+        });
+
+        it("should use fallback values when status and detail are missing", () => {
+            const converted = convertChatConversationErrorFromBackend({});
+
+            expect(converted).toEqual({
+                type: "error",
+                code: 500,
+                message: "Unknown error",
+                reason: undefined,
+                traceId: undefined,
+            });
+        });
+    });
+
+    describe("convertChatSuggestionItemFromBackend", () => {
+        it("should convert follow-up and actions", () => {
+            const converted = convertChatSuggestionItemFromBackend({
+                followUpQuestion: "What do you want to analyze next?",
+                actions: [
+                    {
+                        label: "Revenue by region",
+                        query: "Show revenue by region",
+                    },
+                ],
+            });
+
+            expect(converted).toEqual({
+                type: "suggestions",
+                followUp: "What do you want to analyze next?",
+                actions: [
+                    {
+                        label: "Revenue by region",
+                        query: "Show revenue by region",
+                    },
+                ],
+            });
+        });
+
+        it("should gracefully handle undefined suggestions", () => {
+            const converted = convertChatSuggestionItemFromBackend(undefined);
+
+            expect(converted).toEqual({
+                type: "suggestions",
+                followUp: undefined,
+                actions: undefined,
             });
         });
     });

@@ -21,6 +21,7 @@ import {
     type IFilterContext,
     type IFilterContextDefinition,
     type IInsight,
+    type IParameterMetadataObject,
     type ISettings,
     type ITempFilterContext,
     type IWidget,
@@ -51,6 +52,7 @@ import { drillActions } from "../../../store/drill/index.js";
 import { insightsActions } from "../../../store/insights/index.js";
 import { metaActions } from "../../../store/meta/index.js";
 import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
+import { parametersActions } from "../../../store/parameters/index.js";
 import {
     type FilterContextState,
     filterContextInitialState,
@@ -70,6 +72,7 @@ import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
 import { EmptyDashboardLayout, dashboardInitialize } from "./dashboardInitialize.js";
 import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
 import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
+import { hydrateParameterEntries } from "./parameterHydration.js";
 
 /**
  * Processes a single tab's filterContext and returns initialized FilterContextState.
@@ -217,6 +220,7 @@ export function* actionsToInitializeNewDashboard(
     dateFilterConfig: IDateFilterConfig,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     initialTabId?: string,
+    workspaceParameters: IParameterMetadataObject[] = [],
 ): SagaIterator<{
     initActions: Array<PayloadAction<any>>;
     dashboard: IDashboard | undefined;
@@ -357,6 +361,9 @@ export function* actionsToInitializeNewDashboard(
                       insightsActions.setInsights(insights),
                       drillActions.resetCrossFiltering(),
                   ]),
+            parametersActions.setParameterEntries(
+                hydrateParameterEntries(dashboard?.parameters, workspaceParameters),
+            ),
         ],
         dashboard: initialContent ? dashboard : undefined,
         insights: initialContent ? insights : [],
@@ -639,6 +646,7 @@ export function* actionsToInitializeExistingDashboard(
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
     activeTabLocalIdentifier?: string,
+    workspaceParameters: IParameterMetadataObject[] = [],
 ): SagaIterator<Array<PayloadAction<any>>> {
     const effectiveActiveTabId =
         activeTabLocalIdentifier ?? dashboard.tabs?.[0]?.localIdentifier ?? DEFAULT_TAB_ID;
@@ -760,6 +768,7 @@ export function* actionsToInitializeExistingDashboard(
             dateFilterConfig: dashboard.dateFilterConfig,
             dateFilterConfigs: dashboard.dateFilterConfigs,
             attributeFilterConfigs: dashboard.attributeFilterConfigs,
+            measureValueFilterConfigs: dashboard.measureValueFilterConfigs,
             layout: dashboard.layout ?? EmptyDashboardLayout,
         };
 
@@ -810,6 +819,11 @@ export function* actionsToInitializeExistingDashboard(
                       attributeFilterConfigs: effectiveAttributeFilterConfigs,
                   }
                 : undefined,
+            measureValueFilterConfigs: dashboard.measureValueFilterConfigs
+                ? {
+                      measureValueFilterConfigs: dashboard.measureValueFilterConfigs,
+                  }
+                : undefined,
         };
 
         tabsAction = tabsActions.setTabs({
@@ -830,6 +844,9 @@ export function* actionsToInitializeExistingDashboard(
         uiActions.setWidgetsOverlay(modifiedWidgets),
         validationResults.length > 0 ? uiActions.setIncompatibleDefaultFiltersOverrideMessage() : null,
         drillActions.resetCrossFiltering(),
+        parametersActions.setParameterEntries(
+            hydrateParameterEntries((persistedDashboard ?? dashboard).parameters, workspaceParameters),
+        ),
     ]);
 }
 

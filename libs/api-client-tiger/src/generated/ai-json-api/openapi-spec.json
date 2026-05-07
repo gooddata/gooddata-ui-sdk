@@ -181,6 +181,71 @@
                     }
                 }
             },
+            "patch": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Patch Conversation",
+                "operationId": "patch_conversation_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__patch",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConversationUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConversationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request payload."
+                    },
+                    "404": {
+                        "description": "Conversation not found."
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "delete": {
                 "tags": [
                     "Conversations"
@@ -659,7 +724,7 @@
                     "Knowledge"
                 ],
                 "summary": "List Documents",
-                "description": "List knowledge documents accessible from the workspace.",
+                "description": "List knowledge documents accessible from the workspace (local + inherited + org-level).",
                 "operationId": "listDocuments",
                 "parameters": [
                     {
@@ -801,7 +866,7 @@
                     "Knowledge"
                 ],
                 "summary": "Download Document",
-                "description": "Download a knowledge document's raw file.",
+                "description": "Download a knowledge document's raw file. Inherited and org-level docs are visible.",
                 "operationId": "downloadDocument",
                 "parameters": [
                     {
@@ -851,7 +916,7 @@
                     "Knowledge"
                 ],
                 "summary": "Get Document",
-                "description": "Get a single knowledge document's metadata.",
+                "description": "Get a single knowledge document's metadata. Inherited and org-level docs are visible.",
                 "operationId": "getDocument",
                 "parameters": [
                     {
@@ -901,7 +966,7 @@
                     "Knowledge"
                 ],
                 "summary": "Delete Document",
-                "description": "Delete a knowledge document and all its chunks.",
+                "description": "Delete a knowledge document and all its chunks (local docs only).",
                 "operationId": "deleteDocument",
                 "parameters": [
                     {
@@ -951,7 +1016,7 @@
                     "Knowledge"
                 ],
                 "summary": "Patch Document",
-                "description": "Patch a knowledge document's metadata without re-uploading content.",
+                "description": "Patch a knowledge document's metadata (local docs only).",
                 "operationId": "patchDocument",
                 "parameters": [
                     {
@@ -1013,7 +1078,7 @@
                     "Knowledge"
                 ],
                 "summary": "Search Documents",
-                "description": "Search the knowledge base using semantic similarity.",
+                "description": "Search the knowledge base using semantic similarity across the workspace ancestor chain.",
                 "operationId": "searchKnowledge",
                 "parameters": [
                     {
@@ -2088,6 +2153,19 @@
                         "title": "Userid",
                         "description": "Owner user identifier."
                     },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 255
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title",
+                        "description": "Conversation title."
+                    },
                     "isPreview": {
                         "type": "boolean",
                         "title": "Ispreview",
@@ -2186,6 +2264,25 @@
                 ],
                 "title": "ConversationTurnResponse"
             },
+            "ConversationUpdateRequest": {
+                "properties": {
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 255
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    }
+                },
+                "type": "object",
+                "title": "ConversationUpdateRequest",
+                "description": "PATCH /conversations/{conversationId} body."
+            },
             "DateFilterAbsolute": {
                 "properties": {
                     "type": {
@@ -2222,7 +2319,7 @@
                     "MINUTE",
                     "HOUR",
                     "DAY",
-                    "WEEK",
+                    "WEEK_US",
                     "MONTH",
                     "QUARTER",
                     "YEAR",
@@ -2274,7 +2371,7 @@
                 "type": "string",
                 "enum": [
                     "DAY",
-                    "WEEK",
+                    "WEEK_US",
                     "MONTH",
                     "QUARTER",
                     "YEAR"
@@ -2875,6 +2972,12 @@
                                 },
                                 {
                                     "$ref": "#/components/schemas/RankingFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/TextFilterValues"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/TextFilterValue"
                                 }
                             ]
                         },
@@ -3615,6 +3718,104 @@
                 ],
                 "title": "SkillResponse",
                 "description": "A single skill available to the organization."
+            },
+            "TextFilterValue": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "text_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "condition": {
+                        "type": "string",
+                        "enum": [
+                            "contains",
+                            "doesNotContain",
+                            "startsWith",
+                            "doesNotStartWith",
+                            "endsWith",
+                            "doesNotEndWith"
+                        ],
+                        "title": "Condition"
+                    },
+                    "value": {
+                        "type": "string",
+                        "title": "Value"
+                    },
+                    "case_sensitive": {
+                        "type": "boolean",
+                        "title": "Case Sensitive"
+                    },
+                    "display_as": {
+                        "type": "string",
+                        "title": "Display As"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "value"
+                ],
+                "title": "TextFilterValue"
+            },
+            "TextFilterValues": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "text_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "condition": {
+                        "type": "string",
+                        "enum": [
+                            "is",
+                            "isNot"
+                        ],
+                        "title": "Condition"
+                    },
+                    "values": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Values"
+                    },
+                    "case_sensitive": {
+                        "type": "boolean",
+                        "title": "Case Sensitive"
+                    },
+                    "display_as": {
+                        "type": "string",
+                        "title": "Display As"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "condition",
+                    "values"
+                ],
+                "title": "TextFilterValues"
             },
             "TextMessageContent": {
                 "properties": {

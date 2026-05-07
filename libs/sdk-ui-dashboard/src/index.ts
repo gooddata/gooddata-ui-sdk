@@ -235,6 +235,8 @@ export {
     type ISetDashboardAttributeFilterConfigModePayload,
     type ISetDashboardAttributeFilterSelectionType,
     type ISetDashboardAttributeFilterSelectionTypePayload,
+    type ISetDashboardMeasureValueFilterConfigMode,
+    type ISetDashboardMeasureValueFilterConfigModePayload,
     type ISetDateFilterConfigTitle,
     type ISetDateFilterConfigTitlePayload,
     type ISetAttributeFilterLimitingItems,
@@ -262,6 +264,7 @@ export {
     setDashboardDateFilterWithDimensionConfigMode,
     setDashboardAttributeFilterConfigMode,
     setDashboardAttributeFilterSelectionType,
+    setDashboardMeasureValueFilterConfigMode,
     setDateFilterConfigTitle,
     setAttributeFilterLimitingItems,
     setDashboardAttributeFilterConfigDisplayAsLabel,
@@ -274,10 +277,16 @@ export {
     type AddAttributeFilterPayload,
     type IMoveAttributeFilter,
     type MoveAttributeFilterPayload,
+    type IMoveMeasureValueFilter,
+    type MoveMeasureValueFilterPayload,
     type IRemoveAttributeFilters,
     type IRemoveAttributeFiltersPayload,
     type IAddDateFilter,
+    type IAddMeasureValueFilter,
+    type IAddMeasureValueFilterPayload,
     type IAddDateFilterPayload,
+    type IRemoveMeasureValueFilter,
+    type IRemoveMeasureValueFilterPayload,
     type IRemoveDateFilters,
     type IRemoveDateFiltersPayload,
     type IMoveDateFilter,
@@ -303,6 +312,8 @@ export {
     type ISetAttributeFilterSelectionModePayload,
     type ISetAttributeFilterDependentDateFilters,
     type SetAttributeFilterDependentDateFiltersPayload,
+    type ISetMeasureValueFilterTitle,
+    type ISetMeasureValueFilterTitlePayload,
     type ISaveFilterView,
     type ISaveFilterViewPayload,
     type IDeleteFilterView,
@@ -324,13 +335,17 @@ export {
     removeAttributeFilter,
     removeAttributeFilters,
     addDateFilter,
+    addMeasureValueFilter,
+    removeMeasureValueFilter,
     removeDateFilter,
+    moveMeasureValueFilter,
     moveDateFilter,
     changeMeasureValueFilterCondition,
     resetAttributeFilterSelection,
     changeAttributeFilterSelection,
     changeMigratedAttributeFilterSelection,
     changeWorkingAttributeFilterSelection,
+    changeWorkingMeasureValueFilterCondition,
     replaceAttributeFilterItemSelection,
     replaceWorkingAttributeFilterItemSelection,
     setAttributeFilterParents,
@@ -340,6 +355,7 @@ export {
     applyDateFilter,
     setAttributeFilterDisplayForm,
     setAttributeFilterTitle,
+    setMeasureValueFilterTitle,
     setAttributeFilterSelectionMode,
     setAttributeFilterDependentDateFilters,
     saveFilterView,
@@ -808,6 +824,16 @@ export {
     type IDashboardAttributeFilterConfigModeChangedPayload,
     type IDashboardAttributeFilterConfigLimitingItemsChanged,
     type IDashboardAttributeFilterConfigLimitingItemsChangedPayload,
+    type IDashboardMeasureValueFilterAdded,
+    type IDashboardMeasureValueFilterAddedPayload,
+    type IDashboardMeasureValueFilterRemoved,
+    type IDashboardMeasureValueFilterRemovedPayload,
+    type IDashboardMeasureValueFilterMoved,
+    type IDashboardMeasureValueFilterMovedPayload,
+    type IDashboardMeasureValueFilterTitleChanged,
+    type IDashboardMeasureValueFilterTitleChangedPayload,
+    type IDashboardMeasureValueFilterConfigModeChanged,
+    type IDashboardMeasureValueFilterConfigModeChangedPayload,
     type IDashboardFilterViewCreationSucceeded,
     type IDashboardFilterViewCreationSucceededPayload,
     type IDashboardFilterViewCreationFailed,
@@ -825,6 +851,11 @@ export {
     type IDashboardFilterContextWorkingSelectionApplied,
     type IDashboardMeasureValueFilterConditionChanged,
     type IDashboardMeasureValueFilterConditionChangedPayload,
+    isDashboardMeasureValueFilterAdded,
+    isDashboardMeasureValueFilterRemoved,
+    isDashboardMeasureValueFilterMoved,
+    isDashboardMeasureValueFilterTitleChanged,
+    isDashboardMeasureValueFilterConfigModeChanged,
     isDashboardMeasureValueFilterConditionChanged,
     isDashboardAttributeFilterAdded,
     isDashboardAttributeFilterMoved,
@@ -1260,6 +1291,7 @@ export {
     selectIsDisabledCrossFiltering,
     selectIsDisableUserFilterReset,
     selectEnableScheduling,
+    selectEnableParameters,
     selectEnableFilterViews,
     selectEnableCustomizedDashboardsWithoutPluginOverlay,
     selectEnableAlerting,
@@ -1539,6 +1571,9 @@ export type {
     IChangeAttributeLimitingItemsPayload,
     IApplyWorkingSelectionPayload,
     IAddAttributeFilterDisplayFormPayload,
+    IRemoveMeasureValueFilterReducerPayload,
+    IMoveMeasureValueFilterPayload,
+    IChangeMeasureValueFilterConditionReducerPayload,
 } from "./model/store/tabs/filterContext/filterContextReducers.js";
 export {
     selectTabs,
@@ -1552,6 +1587,7 @@ export { type ITabState, DEFAULT_TAB_ID, type ITabsState } from "./model/store/t
 export type {
     FilterContextState,
     WorkingDashboardAttributeFilter,
+    WorkingDashboardMeasureValueFilter,
     WorkingFilterContextItem,
     IWorkingFilterContextDefinition,
 } from "./model/store/tabs/filterContext/filterContextState.js";
@@ -1571,7 +1607,11 @@ export {
     selectInsightByWidgetRef,
     selectRawExportOverridesForInsightByRef,
 } from "./model/store/insights/insightsSelectors.js";
-export type { CatalogState } from "./model/store/catalog/catalogState.js";
+export type {
+    CatalogState,
+    CatalogParametersStatus,
+    ICatalogParametersState,
+} from "./model/store/catalog/catalogState.js";
 export {
     selectCatalogIsLoaded,
     selectAttributesWithDrillDown,
@@ -1594,12 +1634,29 @@ export {
     selectAdhocDateHierarchies,
     selectAllCatalogAttributeHierarchies,
     selectCatalogAttributeDisplayFormsById,
+    selectCatalogParameters,
+    selectCatalogParametersStatus,
+    selectCatalogParametersIsLoaded,
 } from "./model/store/catalog/catalogSelectors.js";
 export { catalogActions } from "./model/store/catalog/index.js";
 export type {
     SetCatalogMeasuresAndFactsPayload,
     SetCatalogItemsPayload,
 } from "./model/store/catalog/catalogReducers.js";
+export { parametersActions } from "./model/store/parameters/index.js";
+export type {
+    IAddParameterPayload,
+    IRemoveParameterPayload,
+    ISetParameterRuntimeValuePayload,
+} from "./model/store/parameters/parametersReducers.js";
+export type { IDashboardParameterEntry, IParametersState } from "./model/store/parameters/parametersState.js";
+export {
+    selectDashboardParameterEntries,
+    selectDashboardParameters,
+    selectEffectiveParameterValuesForWidget,
+    selectIsParametersChanged,
+    selectParameterRuntimeOverrideByRef,
+} from "./model/store/parameters/parametersSelectors.js";
 export { drillActions } from "./model/store/drill/index.js";
 export {
     selectDrillableItems,
@@ -1986,6 +2043,10 @@ export {
     isAttributeFilterDraggableItem,
     type DateFilterDraggableItem,
     isDateFilterDraggableItem,
+    type ParameterDraggableItem,
+    isParameterDraggableItem,
+    type MeasureValueFilterDraggableItem,
+    isMeasureValueFilterDraggableItem,
     type BaseDraggableLayoutItemSize,
     type BaseDraggableLayoutItem,
     isBaseDraggableLayoutItem,
@@ -2116,6 +2177,7 @@ export type {
     IDashboardFilterGroupProps,
     ValuesLimitingItem,
 } from "./presentation/filterBar/attributeFilter/types.js";
+export type { DashboardFilterSelectionType } from "./presentation/filterBar/filterSelectionTypes.js";
 export {
     type UseParentFiltersResult,
     useParentFilters,
@@ -2515,6 +2577,7 @@ export type {
     FilterBarRenderingMode,
     IAttributeFiltersCustomizer,
     IFilterGroupsCustomizer,
+    IMeasureValueFiltersCustomizer,
     IDateFiltersCustomizer,
     IFiltersCustomizer,
     ITitleCustomizer,
