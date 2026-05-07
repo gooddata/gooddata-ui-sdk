@@ -111,7 +111,7 @@ function MeasureValueFilterVisibilityIcon({
 export function DefaultDashboardMeasureValueFilter(
     props: IDashboardMeasureValueFilterProps,
 ): ReactElement | null {
-    const { filter, readonly, autoOpen, onMeasureValueFilterChanged } = props;
+    const { filter, readonly, autoOpen, onMeasureValueFilterChanged, onMeasureValueFilterClose } = props;
     const intl = useIntl();
 
     const measures = useDashboardSelector(selectCatalogMeasures);
@@ -184,14 +184,16 @@ export function DefaultDashboardMeasureValueFilter(
 
     const handleClose = useCallback(() => {
         setIsConfigurationOpen(false);
-    }, []);
+        onMeasureValueFilterClose?.();
+    }, [onMeasureValueFilterClose]);
 
     const handleApply = useCallback(
         (updated: IMeasureValueFilter | null) => {
             const newConditions = normalizeMeasureValueFilterConditions(updated);
             onMeasureValueFilterChanged(filter, newConditions);
+            onMeasureValueFilterClose?.();
         },
-        [filter, onMeasureValueFilterChanged],
+        [filter, onMeasureValueFilterChanged, onMeasureValueFilterClose],
     );
 
     const handleChange = useCallback(

@@ -88,6 +88,8 @@ export type {
     IFilterOpReplaceAll,
     IFilterOpUnignoreAttributeFilter,
     IFilterOpIgnoreAttributeFilter,
+    IFilterOpIgnoreMeasureValueFilter,
+    IFilterOpUnignoreMeasureValueFilter,
     IFilterOpReplaceAttributeIgnores,
     IFilterOpDisableDateFilter,
     IFilterOpEnableDateFilter,

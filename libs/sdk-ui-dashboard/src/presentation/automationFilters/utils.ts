@@ -21,6 +21,7 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
@@ -38,6 +39,7 @@ import {
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
     isDateFilter,
     isInsightWidget,
     isLocalIdRef,
@@ -524,6 +526,13 @@ export function isFilterIgnoredByWidget(filter: FilterContextItem, widget: Exten
                       ignoredFilter.displayForm,
                       dashboardAttributeFilterItemDisplayForm(filter),
                   );
+              }
+
+              if (
+                  isDashboardMeasureValueFilter(filter) &&
+                  ignoredFilter.type === "measureValueFilterReference"
+              ) {
+                  return areObjRefsEqual(ignoredFilter.measure, dashboardFilterObjRef(filter));
               }
 
               return false;

@@ -13,14 +13,12 @@ import {
     isInsightWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
 import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
+import { FilterConfigurationItemLabel } from "./FilterConfigurationItemLabel.js";
 import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling.js";
 import { useIsFilterNotApplied } from "./useIsFilterNotApplied.js";
-
-const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 
 interface IAttributeFilterConfigurationItemProps {
     widget: IWidget;
@@ -74,21 +72,14 @@ export function AttributeFilterConfigurationItem({
 
     return (
         <div>
-            <label className={classNames} htmlFor={uniqueKey}>
-                <input
-                    id={uniqueKey}
-                    type="checkbox"
-                    className="input-checkbox"
-                    checked={isApplied}
-                    onChange={(e) => handleIgnoreChanged(e.target.checked)}
-                />
-                <span className="input-label-text">
-                    <ShortenedText tooltipAlignPoints={tooltipAlignPoints} tagName="span" className="title">
-                        {title}
-                    </ShortenedText>
-                </span>
-                {isLoading ? <div className="gd-spinner small" /> : null}
-            </label>
+            <FilterConfigurationItemLabel
+                className={classNames}
+                uniqueKey={uniqueKey}
+                title={title}
+                isApplied={isApplied}
+                isLoading={isLoading}
+                onChange={handleIgnoreChanged}
+            />
             {!!isError && (
                 <div className="gd-message error s-not-applied-attribute-filter">
                     {isInsightWidget(widget) ? (

@@ -24,6 +24,7 @@ import {
     dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemValidateElementsBy,
+    dashboardMeasureValueFilterLocalIdentifier,
     getAttributeElementsItems,
     isAllTimeDashboardDateFilter,
     isDashboardArbitraryAttributeFilter,
@@ -235,7 +236,7 @@ export function* changeFilterContextSelectionHandler(
     // by localIdentifier (last occurrence wins, mirroring text attribute filter handling).
     const measureValueFilters = uniqBy(
         normalizedFilters.filter(isDashboardMeasureValueFilter).slice().reverse(),
-        (f) => f.dashboardMeasureValueFilter.localIdentifier,
+        (f) => dashboardMeasureValueFilterLocalIdentifier(f),
     ).reverse();
 
     const uniqueFilters = uniqBy(supportedFilters, (filter) => {
@@ -816,11 +817,11 @@ function* getMeasureValueFiltersUpdateActions(
     const currentMeasureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> =
         yield select(selectFilterContextMeasureValueFilters);
     const currentByLocalId = new Map(
-        currentMeasureValueFilters.map((f) => [f.dashboardMeasureValueFilter.localIdentifier, f]),
+        currentMeasureValueFilters.map((f) => [dashboardMeasureValueFilterLocalIdentifier(f), f]),
     );
 
     for (const incoming of measureValueFilters) {
-        const localIdentifier = incoming.dashboardMeasureValueFilter.localIdentifier;
+        const localIdentifier = dashboardMeasureValueFilterLocalIdentifier(incoming);
         // Only update filters that already exist on the dashboard. Adding/removing MVFs is an
         // edit-mode operation and is not part of changeFilterContextSelection in view mode.
         if (!currentByLocalId.has(localIdentifier)) {
@@ -842,7 +843,7 @@ function* getMeasureValueFiltersUpdateActions(
         // Reset any current MVF that wasn't covered by the incoming payload back to the "All"
         // state (no conditions). Mirrors the behavior of attribute and date filters.
         for (const current of currentMeasureValueFilters) {
-            const localIdentifier = current.dashboardMeasureValueFilter.localIdentifier;
+            const localIdentifier = dashboardMeasureValueFilterLocalIdentifier(current);
             if (handledLocalIds.has(localIdentifier)) {
                 continue;
             }

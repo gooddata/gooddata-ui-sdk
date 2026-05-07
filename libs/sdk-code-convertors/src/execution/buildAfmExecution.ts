@@ -7,6 +7,7 @@ import {
     type CompoundMeasureValueFilter,
     type Dimension,
     type FilterDefinition,
+    type MatchAttributeFilterMatchAttributeFilterMatchTypeEnum,
     type MeasureItem,
     type MeasureValueCondition,
     type RangeMeasureValueFilter,
@@ -20,19 +21,22 @@ import type {
     RangeCondition,
     Sorts,
 } from "@gooddata/sdk-code-schemas/v1";
+import type { MatchFilterOperator } from "@gooddata/sdk-model";
 
 import { type ExportEntities, type ToExecutionResults } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
-import { parseDateValues } from "../utils/filterUtils.js";
+import { parseDateValues, yamlConditionToMatch } from "../utils/filterUtils.js";
 import { getFullField } from "../utils/sharedUtils.js";
 import {
     isAbsoluteDateFilter,
+    isArbitraryTextFilter,
     isArithmeticMetricField,
     isAttributeField,
     isAttributeSort,
     isCalculatedMetricField,
     isInlineMetricField,
+    isMatchTextFilter,
     isMetricAllValueFilter,
     isMetricComparisonValueFilter,
     isMetricField,
@@ -47,6 +51,15 @@ import {
     isSimpleMetricSort,
 } from "../utils/typeGuards.js";
 import { createIdentifier, createLocalIdentifier } from "../utils/yamlUtils.js";
+
+const MATCH_OPERATOR_TO_AFM: Record<
+    MatchFilterOperator,
+    MatchAttributeFilterMatchAttributeFilterMatchTypeEnum
+> = {
+    startsWith: "STARTS_WITH",
+    endsWith: "ENDS_WITH",
+    contains: "CONTAINS",
+};
 
 const ATTRIBUTES_DIMENSION = `dim_0`;
 const MEASURES_DIMENSION = `dim_1`;
@@ -284,6 +297,38 @@ function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undef
                     notIn: {
                         values: parseDateValues(entities, filter.using, filter.state?.exclude ?? []),
                     },
+                },
+            });
+        }
+        if (isArbitraryTextFilter(filter)) {
+            const values = filter.values ?? [];
+            if (filter.condition === "isNot") {
+                filters.push({
+                    negativeAttributeFilter: {
+                        label: createIdentifier<any>(filter.using),
+                        notIn: { values },
+                        usesArbitraryValues: true,
+                    },
+                });
+            } else {
+                filters.push({
+                    positiveAttributeFilter: {
+                        label: createIdentifier<any>(filter.using),
+                        in: { values },
+                        usesArbitraryValues: true,
+                    },
+                });
+            }
+        }
+        if (isMatchTextFilter(filter)) {
+            const { operator, negativeSelection } = yamlConditionToMatch(filter.condition);
+            filters.push({
+                matchAttributeFilter: {
+                    label: createIdentifier<any>(filter.using),
+                    literal: filter.value,
+                    matchType: MATCH_OPERATOR_TO_AFM[operator],
+                    ...(filter.case_sensitive ? { caseSensitive: filter.case_sensitive } : {}),
+                    ...(negativeSelection ? { negate: true } : {}),
                 },
             });
         }

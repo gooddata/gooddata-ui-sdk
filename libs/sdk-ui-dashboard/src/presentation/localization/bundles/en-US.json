@@ -1775,6 +1775,10 @@
         "text": "The visualization cannot be filtered by Date. Unselect the check box.",
         "crowdinContext": "Warning message when attempting to apply date filter to incompatible visualization"
     },
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": {
+        "text": "Filter is not applicable to this visualization.",
+        "crowdinContext": "Warning message when attempting to apply measure value filter to incompatible visualization"
+    },
     "configurationPanel.kpiCantBeFilteredByDate": {
         "text": "The kpi cannot be filtered by Date. Unselect the check box.",
         "crowdinContext": "Warning message when attempting to apply date filter to incompatible KPI"

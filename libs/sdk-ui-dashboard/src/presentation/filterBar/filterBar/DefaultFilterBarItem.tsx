@@ -233,6 +233,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
                 FilterComponent={CustomMeasureValueFilterComponent}
                 onMeasureValueFilterChanged={onMeasureValueFilterChanged}
                 onMeasureValueFilterAdded={addDraggableFilterPlaceholder}
+                onMeasureValueFilterClose={onCloseAttributeFilter}
             />
         );
     }

@@ -621,6 +621,15 @@ export function isDashboardMeasureValueFilter(obj: unknown): obj is IDashboardMe
 }
 
 /**
+ * Returns the local identifier of a dashboard measure value filter.
+ *
+ * @alpha
+ */
+export function dashboardMeasureValueFilterLocalIdentifier(filter: IDashboardMeasureValueFilter): string {
+    return filter.dashboardMeasureValueFilter.localIdentifier;
+}
+
+/**
  * Type-guard testing whether the provider object is an All values attribute filter
  * @alpha
  */

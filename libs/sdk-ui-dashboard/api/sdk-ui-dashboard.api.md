@@ -1969,7 +1969,7 @@ export function filterContextWorkingSelectionApplied(ctx: DashboardContext, corr
 export type FilterGroupComponentProvider = (filterGroup: IDashboardFilterGroup) => CustomDashboardFilterGroupComponent;
 
 // @beta (undocumented)
-export type FilterOperations = "enableDateFilter" | "disableDateFilter" | "replaceAttributeIgnores" | "ignoreAttributeFilter" | "unignoreAttributeFilter" | "ignoreDateFilter" | "unignoreDateFilter" | "replace";
+export type FilterOperations = "enableDateFilter" | "disableDateFilter" | "replaceAttributeIgnores" | "ignoreAttributeFilter" | "unignoreAttributeFilter" | "ignoreDateFilter" | "unignoreDateFilter" | "ignoreMeasureValueFilter" | "unignoreMeasureValueFilter" | "replace";
 
 // @alpha
 export type FiltersInfo = {
@@ -4736,6 +4736,7 @@ export interface IDashboardMeasureValueFilterProps {
     filter: IDashboardMeasureValueFilter;
     filterIndex: number;
     onMeasureValueFilterChanged: (filter: IDashboardMeasureValueFilter, conditions: MeasureValueFilterCondition[] | undefined, isWorkingSelectionChange?: boolean) => void;
+    onMeasureValueFilterClose?: () => void;
     readonly?: boolean;
     tabId?: string;
 }
@@ -5894,11 +5895,19 @@ export interface IFilterOpIgnoreDateFilter extends IFilterOp {
     type: "ignoreDateFilter";
 }
 
+// @alpha
+export interface IFilterOpIgnoreMeasureValueFilter extends IFilterOp {
+    measureRefs: ObjRef[];
+    // (undocumented)
+    type: "ignoreMeasureValueFilter";
+}
+
 // @beta
 export interface IFilterOpReplaceAll extends IFilterOp {
     readonly dateDatasetForFiltering?: ObjRef;
     readonly ignoreAttributeFilters?: ObjRef[];
     readonly ignoreDateFilters?: ObjRef[];
+    readonly ignoreMeasureValueFilters?: ObjRef[];
     // (undocumented)
     type: "replace";
 }
@@ -5922,6 +5931,13 @@ export interface IFilterOpUnignoreDateFilter extends IFilterOp {
     dateDataSetRefs: ObjRef[];
     // (undocumented)
     type: "unignoreDateFilter";
+}
+
+// @alpha
+export interface IFilterOpUnignoreMeasureValueFilter extends IFilterOp {
+    measureRefs: ObjRef[];
+    // (undocumented)
+    type: "unignoreMeasureValueFilter";
 }
 
 // @public
@@ -9167,7 +9183,7 @@ export interface IWidgetDescription {
 }
 
 // @beta
-export type IWidgetFilterOperation = IFilterOpEnableDateFilter | IFilterOpDisableDateFilter | IFilterOpReplaceAttributeIgnores | IFilterOpIgnoreAttributeFilter | IFilterOpUnignoreAttributeFilter | IFilterOpIgnoreDateFilter | IFilterOpUnignoreDateFilter | IFilterOpReplaceAll;
+export type IWidgetFilterOperation = IFilterOpEnableDateFilter | IFilterOpDisableDateFilter | IFilterOpReplaceAttributeIgnores | IFilterOpIgnoreAttributeFilter | IFilterOpUnignoreAttributeFilter | IFilterOpIgnoreDateFilter | IFilterOpUnignoreDateFilter | IFilterOpIgnoreMeasureValueFilter | IFilterOpUnignoreMeasureValueFilter | IFilterOpReplaceAll;
 
 // @beta (undocumented)
 export interface IWidgetHeader {

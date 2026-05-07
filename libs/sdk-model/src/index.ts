@@ -650,6 +650,7 @@ export {
     dashboardFilterObjRef,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardMeasureValueFilterLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     dashboardAttributeFilterItemFilterElementsBy,
     dashboardAttributeFilterItemFilterElementsByDate,

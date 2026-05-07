@@ -2,7 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type FilterContextItem, type IFilterContext, idRef } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    type IFilterContext,
+    type MeasureValueFilterCondition,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { changeFilterContextSelection } from "../filterViews.js";
 
@@ -1094,6 +1099,182 @@ describe("filterViews", () => {
                         },
                     ]);
                 });
+            });
+        });
+
+        describe("measure value filter", () => {
+            const measureRef = idRef("measureId");
+            const measureRef2 = idRef("measureId2");
+            const conditionGT = (value: number): MeasureValueFilterCondition => ({
+                comparison: { operator: "GREATER_THAN", value },
+            });
+
+            it("should restore MVF conditions from view when matched by localIdentifier", () => {
+                const filterContext = buildFilterContext([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [],
+                        },
+                    },
+                ]);
+
+                const filterViewFilters: FilterContextItem[] = [
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [conditionGT(100)],
+                        },
+                    },
+                ];
+
+                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                expect(updated.filterContext.filters).toEqual([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [conditionGT(100)],
+                        },
+                    },
+                ]);
+            });
+
+            it("should preserve dashboard MVF identity (measure, localIdentifier, title)", () => {
+                const filterContext = buildFilterContext([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            title: "Dashboard Title",
+                            conditions: [],
+                        },
+                    },
+                ]);
+
+                const filterViewFilters: FilterContextItem[] = [
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            title: "View Title",
+                            conditions: [conditionGT(100)],
+                        },
+                    },
+                ];
+
+                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                expect(updated.filterContext.filters).toEqual([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            title: "Dashboard Title",
+                            conditions: [conditionGT(100)],
+                        },
+                    },
+                ]);
+            });
+
+            it("should reset MVF conditions when localIdentifier matches but measure ref differs", () => {
+                const filterContext = buildFilterContext([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [conditionGT(50)],
+                        },
+                    },
+                ]);
+
+                const filterViewFilters: FilterContextItem[] = [
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef2,
+                            localIdentifier: "mvf1",
+                            conditions: [conditionGT(100)],
+                        },
+                    },
+                ];
+
+                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                expect(updated.filterContext.filters).toEqual([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [],
+                        },
+                    },
+                ]);
+            });
+
+            it("should reset MVF conditions to empty when not matched by localIdentifier", () => {
+                const filterContext = buildFilterContext([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [conditionGT(50)],
+                        },
+                    },
+                ]);
+
+                const filterViewFilters: FilterContextItem[] = [
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef2,
+                            localIdentifier: "mvf2",
+                            conditions: [conditionGT(100)],
+                        },
+                    },
+                ];
+
+                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                expect(updated.filterContext.filters).toEqual([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [],
+                        },
+                    },
+                ]);
+            });
+
+            it("should clear MVF conditions when view has empty conditions (All)", () => {
+                const filterContext = buildFilterContext([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [conditionGT(50)],
+                        },
+                    },
+                ]);
+
+                const filterViewFilters: FilterContextItem[] = [
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [],
+                        },
+                    },
+                ];
+
+                const updated = changeFilterContextSelection(filterContext, filterViewFilters);
+                expect(updated.filterContext.filters).toEqual([
+                    {
+                        dashboardMeasureValueFilter: {
+                            measure: measureRef,
+                            localIdentifier: "mvf1",
+                            conditions: [],
+                        },
+                    },
+                ]);
             });
         });
     });

@@ -5,9 +5,11 @@ import {
     type FilterContextItem,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
+    dashboardFilterObjRef,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
     isInsightWidget,
 } from "@gooddata/sdk-model";
 
@@ -40,6 +42,13 @@ export function removeIgnoredWidgetFilters(
                           ignoredFilter.displayForm,
                           dashboardAttributeFilterItemDisplayForm(filter),
                       );
+                  }
+
+                  if (
+                      isDashboardMeasureValueFilter(filter) &&
+                      ignoredFilter.type === "measureValueFilterReference"
+                  ) {
+                      return areObjRefsEqual(ignoredFilter.measure, dashboardFilterObjRef(filter));
                   }
 
                   return false;
