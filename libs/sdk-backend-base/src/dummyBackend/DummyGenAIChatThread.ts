@@ -148,6 +148,9 @@ export class DummyChatConversations implements IChatConversations {
     create(): Promise<IChatConversation> {
         throw new Error("Method not implemented.");
     }
+    update(_conversationId: string, _conversation: IChatConversation): Promise<IChatConversation> {
+        throw new Error("Method not implemented.");
+    }
     delete(_conversationId: string): Promise<void> {
         throw new Error("Method not implemented.");
     }

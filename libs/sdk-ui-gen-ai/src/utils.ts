@@ -5,6 +5,8 @@ import { type IntlShape } from "react-intl";
 import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
+import { REFERENCE_REGEX } from "./components/completion/references.js";
+
 export function getVisualizationHref(wsId: string, visId: string) {
     return `/analyze/#/${wsId}/${visId}/edit`;
 }
@@ -52,4 +54,34 @@ export function generateTemporaryTitle(intl: IntlShape, data: IChatConversation)
             ),
         },
     );
+}
+
+export function generateTitleFromQuestion(text: string): string {
+    const maxTitleLength = 50;
+
+    if (text.length <= maxTitleLength) {
+        return text.trim();
+    }
+
+    let sliceEnd = maxTitleLength;
+    const slicedText = text.slice(0, sliceEnd);
+    const lastOpeningBrace = slicedText.lastIndexOf("{");
+    const lastClosingBrace = slicedText.lastIndexOf("}");
+
+    if (lastOpeningBrace > lastClosingBrace) {
+        const referenceStart = text.slice(lastOpeningBrace);
+        REFERENCE_REGEX.lastIndex = 0;
+        const referenceMatch = REFERENCE_REGEX.exec(referenceStart);
+
+        if (referenceMatch?.index === 0) {
+            sliceEnd = lastOpeningBrace + referenceMatch[0].length;
+        } else {
+            const closingBrace = text.indexOf("}", sliceEnd);
+            if (closingBrace !== -1) {
+                sliceEnd = closingBrace + 1;
+            }
+        }
+    }
+
+    return `${text.slice(0, sliceEnd).trim()}...`;
 }

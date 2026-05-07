@@ -2,6 +2,60 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.34.0",
+            "tag": "@gooddata/sdk-ui-all_v11.34.0",
+            "date": "Thu, 07 May 2026 08:01:24 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: End-to-end dashboard parameters (active mode)"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Delete dashboard parameter via drag-to-delete zone"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add `UiControlButton`, `ParameterPicker`, `ParameterControlButton`, `ParameterControlDropdown` (all `@internal`)"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Refactor `AttributeFilterDropdownButton` to wrap kit `UiControlButton` (public API unchanged)"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Restore styles for the Add Filter menu"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `UiCombobox` close popup on blur"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: repair combobox focus management"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: add `allowSearch` support for `UiAsyncTable` for showing filtering"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `UiDrawer` supports header and disabling of backdrop, add new icons"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `UiCombobox` repair and unify behaviour with creatable options"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: support of multiple conversations hidden under FF"
+                    },
+                    {
+                        "comment": "Added SDK Backend AI Usage Limits setting"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Introduce Measure Value Filter on dashboard"
+                    },
+                    {
+                        "comment": "CQ-2320: round-trip aggregate-aware LDM shapes (AUXILIARY datasets, HLL data type, APPROXIMATE_COUNT aggregation) through WASM AAC convertors"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Update Measure Value filter on dashboard edit mode"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.32.0",
             "tag": "@gooddata/sdk-ui-all_v11.32.0",
             "date": "Thu, 30 Apr 2026 06:59:15 GMT",

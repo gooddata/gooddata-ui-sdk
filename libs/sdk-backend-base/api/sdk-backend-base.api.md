@@ -827,6 +827,8 @@ export class DummyChatConversations implements IChatConversations {
     getConversationItemsQuery(): IChatConversationItemsQuery;
     // (undocumented)
     getConversationThread(_conversationId: string): IChatConversationThread;
+    // (undocumented)
+    update(_conversationId: string, _conversation: IChatConversation): Promise<IChatConversation>;
 }
 
 // @internal
