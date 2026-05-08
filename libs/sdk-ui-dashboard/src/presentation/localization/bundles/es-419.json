@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Sólo usted puede visualizar y editar este panel.",
     "header.shareStatus.private.not.strict.tooltip": "El creador puede editar este panel. Otros usuarios con funciones de usuario apropiadas pueden editar este panel cuando exploren hacia él.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Eliminar acceso a este panel.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Desde el panel",
+    "dashboardMeasureValueFilter.section.all_other": "Todos los demás",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "El usuario que creó este panel. Los creadores no se pueden eliminar.",
     "attributesDropdown.placeholder": "Buscar…",
     "attributesDropdown.configuration": "Configuración",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Eliminar",
     "filters.filterViews.delete.cancelButton": "Cancelar",
     "filters.filterViews.tooltip.ariaLabel": "Información sobre las vistas guardadas",
+    "filters.locked.filter.tooltip": "Este filtro está bloqueado",
     "insightAlert.config.action.edit": "Editar",
     "insightAlert.config.action.pause": "Pausa",
     "insightAlert.config.action.resume": "Desactivar",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Agregar nueva pestaña",
     "dashboard.tabs.rename": "Rebautizar",
     "dashboard.tabs.accessibility.label": "Pestañas del salpicadero",
-    "dashboard.tabs.accessibility.add-button-label": "Agregar nueva pestaña"
+    "dashboard.tabs.accessibility.add-button-label": "Agregar nueva pestaña",
+    "dashboard_add_filter.button.aria_label": "Agregar filtro",
+    "dashboard_add_filter.menu.title": "Agregar filtro",
+    "dashboard_add_filter.menu.parameter": "Parámetro"
 }

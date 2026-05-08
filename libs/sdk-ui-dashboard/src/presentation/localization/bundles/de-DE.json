@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Nur Sie können dieses Dashboard ansehen und bearbeiten.",
     "header.shareStatus.private.not.strict.tooltip": "Der Ersteller kann dieses Dashboard bearbeiten. Andere Benutzer mit entsprechenden Benutzerrollen können dieses Dashboard bearbeiten, wenn sie danach suchen.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Entfernt den Zugriff auf dieses Dashboard.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Vom Dashboard",
+    "dashboardMeasureValueFilter.section.all_other": "Alle anderen",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Dies ist der Benutzer, der dieses Dashboard erstellt hat. Ersteller können nicht entfernt werden.",
     "attributesDropdown.placeholder": "Suchen…",
     "attributesDropdown.configuration": "Konfiguration",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Löschen",
     "filters.filterViews.delete.cancelButton": "Abbrechen",
     "filters.filterViews.tooltip.ariaLabel": "Informationen über gespeicherte Ansichten",
+    "filters.locked.filter.tooltip": "Dieser Filter ist gesperrt",
     "insightAlert.config.action.edit": "Bearbeiten",
     "insightAlert.config.action.pause": "Pausieren",
     "insightAlert.config.action.resume": "Aufheben",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Neuen Tab hinzufügen",
     "dashboard.tabs.rename": "Umbenennen",
     "dashboard.tabs.accessibility.label": "Dashboard-Registerkarten",
-    "dashboard.tabs.accessibility.add-button-label": "Neuen Tab hinzufügen"
+    "dashboard.tabs.accessibility.add-button-label": "Neuen Tab hinzufügen",
+    "dashboard_add_filter.button.aria_label": "Filter hinzufügen",
+    "dashboard_add_filter.menu.title": "Filter hinzufügen",
+    "dashboard_add_filter.menu.parameter": "Parameter"
 }

@@ -1138,6 +1138,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDashboardsSearch,
+            "enableDashboardsSearch",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardsSearch,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAiHub,
             "enableAiHub",
             "BOOLEAN",

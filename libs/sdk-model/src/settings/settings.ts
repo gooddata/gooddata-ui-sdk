@@ -1144,6 +1144,14 @@ export interface IFeatureFlags {
     enableDashboardDensitySetting?: boolean;
 
     /**
+     * Enable search for dashboards in the left navigation panel.
+     *
+     * When enabled, users can search the dashboards list (Cmd/Ctrl+F) and the input is
+     * always visible once the workspace contains more than ten dashboards.
+     */
+    enableDashboardsSearch?: boolean;
+
+    /**
      * Enable Analytical Catalog application.
      */
     enableAnalyticalCatalog?: boolean;

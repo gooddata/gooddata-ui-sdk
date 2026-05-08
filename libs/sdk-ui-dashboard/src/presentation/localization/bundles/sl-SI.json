@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Samo vi lahko ogledate in urejate to nadzorno ploščo.",
     "header.shareStatus.private.not.strict.tooltip": "Ustvarjalec lahko ureja to nadzorno ploščo. Drugi uporabniki s primernimi vlogami jo lahko urejajo, ko dostopajo prek poglobitve.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Odstrani dostop do te nadzorne plošče.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Z nadzorne plošče",
+    "dashboardMeasureValueFilter.section.all_other": "Vsi drugi",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Uporabnik, ki je ustvaril to nadzorno ploščo. Ustvarjalcev ni mogoče odstraniti.",
     "attributesDropdown.placeholder": "Iskanje…",
     "attributesDropdown.configuration": "Konfiguracija",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Izbriši",
     "filters.filterViews.delete.cancelButton": "Prekliči",
     "filters.filterViews.tooltip.ariaLabel": "Informacije o shranjenih pogledih",
+    "filters.locked.filter.tooltip": "Ta filter je zaklenjen",
     "insightAlert.config.action.edit": "Uredi",
     "insightAlert.config.action.pause": "Pavza",
     "insightAlert.config.action.resume": "Nadaljuj",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Dodaj novo kartico",
     "dashboard.tabs.rename": "Preimenuj",
     "dashboard.tabs.accessibility.label": "Zavihki nadzorne plošče",
-    "dashboard.tabs.accessibility.add-button-label": "Dodaj novo kartico"
+    "dashboard.tabs.accessibility.add-button-label": "Dodaj novo kartico",
+    "dashboard_add_filter.button.aria_label": "Dodaj filter",
+    "dashboard_add_filter.menu.title": "Dodaj filter",
+    "dashboard_add_filter.menu.parameter": "Parameter"
 }

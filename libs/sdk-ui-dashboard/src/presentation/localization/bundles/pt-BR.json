@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Somente você pode ver e editar o dashboard.",
     "header.shareStatus.private.not.strict.tooltip": "O criador não consegue editar este dashboard. Outros usuários com funções apropriadas poderão editá-lo no detalhamento.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Remover acesso a este dashboard.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Do painel",
+    "dashboardMeasureValueFilter.section.all_other": "Todos os outros",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "O usuário que criou o dashboard. Não é possível remover os criadores.",
     "attributesDropdown.placeholder": "Pesquisar…",
     "attributesDropdown.configuration": "Configuração",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Excluir",
     "filters.filterViews.delete.cancelButton": "Cancelar",
     "filters.filterViews.tooltip.ariaLabel": "Informações sobre exibições salvas",
+    "filters.locked.filter.tooltip": "Este filtro está bloqueado",
     "insightAlert.config.action.edit": "Editar",
     "insightAlert.config.action.pause": "Pausa",
     "insightAlert.config.action.resume": "Despausar",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Adicionar nova aba",
     "dashboard.tabs.rename": "Renomear",
     "dashboard.tabs.accessibility.label": "Guias do painel",
-    "dashboard.tabs.accessibility.add-button-label": "Adicionar nova aba"
+    "dashboard.tabs.accessibility.add-button-label": "Adicionar nova aba",
+    "dashboard_add_filter.button.aria_label": "Adicionar filtro",
+    "dashboard_add_filter.menu.title": "Adicionar filtro",
+    "dashboard_add_filter.menu.parameter": "Parâmetro"
 }

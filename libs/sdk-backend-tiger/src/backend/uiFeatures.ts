@@ -169,6 +169,7 @@ export enum TigerFeaturesNames {
     EnableShellApplication = "enableShellApplication",
     EnableNullJoins = "enableNullJoins",
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
+    EnableDashboardsSearch = "enableDashboardsSearch",
     EnableAiHub = "enableAiHub",
     EnableAutomationTrigger = "enableAutomationTrigger",
     EnableUserDataFiltersUi = "enableUserDataFiltersUi",
@@ -335,6 +336,7 @@ export type ITigerFeatureFlags = {
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
+    enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
     enableAiHub: (typeof FeatureFlagsValues)["enableAiHub"][number];
     enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
     enableGenAiAgenticDataShareOptOut: (typeof FeatureFlagsValues)["enableGenAiAgenticDataShareOptOut"][number];
@@ -503,6 +505,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableShellApplication: true,
     enableNullJoins: false,
     enableDashboardDensitySetting: false,
+    enableDashboardsSearch: false,
     enableAiHub: false,
     enableAiAgenticConversations: false,
     enableGenAiAgenticDataShareOptOut: false,
@@ -672,6 +675,7 @@ export const FeatureFlagsValues = {
     enableShellApplication: [true, false] as const,
     enableNullJoins: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
+    enableDashboardsSearch: [false, true] as const,
     enableAiHub: [true, false] as const,
     enableAiAgenticConversations: [true, false] as const,
     enableGenAiAgenticDataShareOptOut: [true, false] as const,

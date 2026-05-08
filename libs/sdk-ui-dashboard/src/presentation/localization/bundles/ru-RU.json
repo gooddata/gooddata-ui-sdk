@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Только вы можете просматривать и редактировать этот дашборд.",
     "header.shareStatus.private.not.strict.tooltip": "Создатель может редактировать этот дашборд. Другие пользователи с соответствующими ролями могут редактировать этот дашборд при переходе к нему.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Удалить доступ к этому дашборду.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Из дашборда",
+    "dashboardMeasureValueFilter.section.all_other": "Все остальные",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Это пользователь, создавший этот дашборд. Создателя невозможно удалить.",
     "attributesDropdown.placeholder": "Поиск…",
     "attributesDropdown.configuration": "Конфигурация",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Удалить",
     "filters.filterViews.delete.cancelButton": "Отмена",
     "filters.filterViews.tooltip.ariaLabel": "Информация о сохраненных представлениях",
+    "filters.locked.filter.tooltip": "Этот фильтр заблокирован",
     "insightAlert.config.action.edit": "Изменить",
     "insightAlert.config.action.pause": "Пауза",
     "insightAlert.config.action.resume": "Возобновить",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Добавить новую вкладку",
     "dashboard.tabs.rename": "Переименовать",
     "dashboard.tabs.accessibility.label": "Вкладки панели управления",
-    "dashboard.tabs.accessibility.add-button-label": "Добавить новую вкладку"
+    "dashboard.tabs.accessibility.add-button-label": "Добавить новую вкладку",
+    "dashboard_add_filter.button.aria_label": "Добавить фильтр",
+    "dashboard_add_filter.menu.title": "Добавить фильтр",
+    "dashboard_add_filter.menu.parameter": "Параметр"
 }

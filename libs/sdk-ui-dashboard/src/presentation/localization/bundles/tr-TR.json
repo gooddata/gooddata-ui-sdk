@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Bu gösterge tablosunu yalnızca siz görüntüleyebilir ve düzenleyebilirsiniz.",
     "header.shareStatus.private.not.strict.tooltip": "Oluşturucu bu gösterge tablosunu düzenleyebilir. Uygun kullanıcı rollerine sahip diğer kullanıcılar, bu gösterge tablosuna ayrıntılı inceleme yaptıklarında düzenleyebilirler.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Bu panoya erişimi kaldır.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Gösterge tablosundan",
+    "dashboardMeasureValueFilter.section.all_other": "Diğerlerinin tümü",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Bu panoyu oluşturan kullanıcı. Oluşturucular kaldırılamaz.",
     "attributesDropdown.placeholder": "Ara…",
     "attributesDropdown.configuration": "Yapılandırma",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Sil",
     "filters.filterViews.delete.cancelButton": "İptal",
     "filters.filterViews.tooltip.ariaLabel": "Kaydedilmiş Görünümler Hakkında Bilgi",
+    "filters.locked.filter.tooltip": "Bu filtre kilitli",
     "insightAlert.config.action.edit": "Düzenle",
     "insightAlert.config.action.pause": "Duraklat",
     "insightAlert.config.action.resume": "Devam ettir",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Yeni sekme ekle",
     "dashboard.tabs.rename": "Yeniden Adlandır",
     "dashboard.tabs.accessibility.label": "Gösterge Tablosu Sekmeleri",
-    "dashboard.tabs.accessibility.add-button-label": "Yeni sekme ekle"
+    "dashboard.tabs.accessibility.add-button-label": "Yeni sekme ekle",
+    "dashboard_add_filter.button.aria_label": "Filtre ekle",
+    "dashboard_add_filter.menu.title": "Filtre ekle",
+    "dashboard_add_filter.menu.parameter": "Parametre"
 }

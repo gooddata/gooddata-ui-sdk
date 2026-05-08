@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Лише ви можете переглядати та редагувати цей dashboard.",
     "header.shareStatus.private.not.strict.tooltip": "Творець може редагувати цей dashboard. Інші користувачі з відповідними ролями можуть редагувати цей dashboard, якщо перейдуть до нього через деталізацію.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Скасувати доступ до цього dashboard.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "З інформаційної панелі",
+    "dashboardMeasureValueFilter.section.all_other": "Усе інше",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Користувач, який створив цей dashboard. Творців не можна видаляти.",
     "attributesDropdown.placeholder": "Пошук…",
     "attributesDropdown.configuration": "Конфігурація",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Видалити",
     "filters.filterViews.delete.cancelButton": "Скасувати",
     "filters.filterViews.tooltip.ariaLabel": "Інформація про збережені подання",
+    "filters.locked.filter.tooltip": "Цей filter заблоковано",
     "insightAlert.config.action.edit": "Редагувати",
     "insightAlert.config.action.pause": "Призупинити",
     "insightAlert.config.action.resume": "Відновити",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Додати нову вкладку",
     "dashboard.tabs.rename": "Перейменувати",
     "dashboard.tabs.accessibility.label": "Вкладки інформаційної панелі",
-    "dashboard.tabs.accessibility.add-button-label": "Додати нову вкладку"
+    "dashboard.tabs.accessibility.add-button-label": "Додати нову вкладку",
+    "dashboard_add_filter.button.aria_label": "Додати фільтр",
+    "dashboard_add_filter.menu.title": "Додати фільтр",
+    "dashboard_add_filter.menu.parameter": "Параметр"
 }

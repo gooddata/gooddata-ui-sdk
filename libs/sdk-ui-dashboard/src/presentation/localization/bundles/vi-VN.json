@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Chỉ bạn mới có thể xem và chỉnh sửa bảng điều khiển này.",
     "header.shareStatus.private.not.strict.tooltip": "Người tạo có thể chỉnh sửa bảng điều khiển này. Những người dùng khác có vai trò người dùng phù hợp có thể chỉnh sửa bảng điều khiển này khi họ đi sâu vào nó.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Loại bỏ quyền truy cập vào bảng điều khiển này.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Từ bảng điều khiển",
+    "dashboardMeasureValueFilter.section.all_other": "Tất cả khác",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Người dùng đã tạo bảng điều khiển này. Không thể loại bỏ người tạo.",
     "attributesDropdown.placeholder": "Tìm kiếm…",
     "attributesDropdown.configuration": "Cấu hình",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Xóa",
     "filters.filterViews.delete.cancelButton": "Hủy",
     "filters.filterViews.tooltip.ariaLabel": "Thông tin về Chế độ xem đã lưu",
+    "filters.locked.filter.tooltip": "Bộ lọc này đã bị khóa",
     "insightAlert.config.action.edit": "Chỉnh sửa",
     "insightAlert.config.action.pause": "Tạm dừng",
     "insightAlert.config.action.resume": "Hủy tạm dừng",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Thêm tab mới",
     "dashboard.tabs.rename": "Đổi tên",
     "dashboard.tabs.accessibility.label": "Tab bảng điều khiển",
-    "dashboard.tabs.accessibility.add-button-label": "Thêm tab mới"
+    "dashboard.tabs.accessibility.add-button-label": "Thêm tab mới",
+    "dashboard_add_filter.button.aria_label": "Thêm bộ lọc",
+    "dashboard_add_filter.menu.title": "Thêm bộ lọc",
+    "dashboard_add_filter.menu.parameter": "Tham số"
 }

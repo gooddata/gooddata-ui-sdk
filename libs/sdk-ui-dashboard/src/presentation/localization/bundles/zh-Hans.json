@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "只有您可以查看和编辑此控制面板。",
     "header.shareStatus.private.not.strict.tooltip": "创建者可以编辑此控制面板。具有适当用户角色的其他用户可在深入查看此控制面板时对其进行编辑。",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "删除对此控制面板的访问权限。",
+    "dashboardMeasureValueFilter.section.from_dashboard": "来自仪表板",
+    "dashboardMeasureValueFilter.section.all_other": "所有其他",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "创建此控制面板的用户。无法删除创建者。",
     "attributesDropdown.placeholder": "搜索…",
     "attributesDropdown.configuration": "配置",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "删除",
     "filters.filterViews.delete.cancelButton": "取消",
     "filters.filterViews.tooltip.ariaLabel": "关于已保存视图的信息",
+    "filters.locked.filter.tooltip": "此过滤器已锁定",
     "insightAlert.config.action.edit": "编辑",
     "insightAlert.config.action.pause": "暂停",
     "insightAlert.config.action.resume": "取消暂停",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "添加新标签页",
     "dashboard.tabs.rename": "重命名",
     "dashboard.tabs.accessibility.label": "仪表盘标签",
-    "dashboard.tabs.accessibility.add-button-label": "添加新标签页"
+    "dashboard.tabs.accessibility.add-button-label": "添加新标签页",
+    "dashboard_add_filter.button.aria_label": "添加筛选器",
+    "dashboard_add_filter.menu.title": "添加筛选器",
+    "dashboard_add_filter.menu.parameter": "参数"
 }
