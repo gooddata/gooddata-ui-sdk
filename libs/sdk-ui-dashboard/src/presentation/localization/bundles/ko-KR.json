@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "이 대시보드는 귀하만 볼 수 있으며 편집할 수 있습니다.",
     "header.shareStatus.private.not.strict.tooltip": "생성자는 이 대시보드를 편집할 수 있습니다. 적절한 사용자 역할을 가진 다른 사용자들은 이 대시보드로 드릴다운할 때 편집할 수 있습니다.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "이 대시보드에 대한 접근 권한을 제거하세요.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "대시보드에서",
+    "dashboardMeasureValueFilter.section.all_other": "그 외 모두",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "이 대시보드를 생성한 사용자. 생성자는 제거할 수 없습니다.",
     "attributesDropdown.placeholder": "검색…",
     "attributesDropdown.configuration": "구성",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "삭제",
     "filters.filterViews.delete.cancelButton": "취소",
     "filters.filterViews.tooltip.ariaLabel": "저장된 보기 정보",
+    "filters.locked.filter.tooltip": "이 필터는 잠겨 있습니다",
     "insightAlert.config.action.edit": "편집",
     "insightAlert.config.action.pause": "일시 중지",
     "insightAlert.config.action.resume": "일시 중지 해제",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "새 탭 추가",
     "dashboard.tabs.rename": "이름 변경",
     "dashboard.tabs.accessibility.label": "대시보드 탭",
-    "dashboard.tabs.accessibility.add-button-label": "새 탭 추가"
+    "dashboard.tabs.accessibility.add-button-label": "새 탭 추가",
+    "dashboard_add_filter.button.aria_label": "필터 추가",
+    "dashboard_add_filter.menu.title": "필터 추가",
+    "dashboard_add_filter.menu.parameter": "매개변수"
 }

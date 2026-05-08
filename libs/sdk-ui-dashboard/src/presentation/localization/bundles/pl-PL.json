@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Tylko Ty możesz przeglądać i edytować ten pulpit nawigacyjny.",
     "header.shareStatus.private.not.strict.tooltip": "Twórca może edytować ten pulpit nawigacyjny. Inni użytkownicy z odpowiednimi rolami użytkownika mogą edytować ten pulpit nawigacyjny, gdy do niego przechodzą.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Usuń dostęp do tego pulpitu nawigacyjnego.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Z pulpitu",
+    "dashboardMeasureValueFilter.section.all_other": "Wszystkie pozostałe",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Użytkownik, który utworzył ten pulpit nawigacyjny. Twórcy nie mogą być usunięci.",
     "attributesDropdown.placeholder": "Szukaj…",
     "attributesDropdown.configuration": "Konfiguracja",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Usuń",
     "filters.filterViews.delete.cancelButton": "Anuluj",
     "filters.filterViews.tooltip.ariaLabel": "Informacje o zapisanych widokach",
+    "filters.locked.filter.tooltip": "Ten filtr jest zablokowany",
     "insightAlert.config.action.edit": "Edytuj",
     "insightAlert.config.action.pause": "Wstrzymaj",
     "insightAlert.config.action.resume": "Wznów",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Dodaj nową kartę",
     "dashboard.tabs.rename": "Zmień nazwę",
     "dashboard.tabs.accessibility.label": "Karty pulpitu",
-    "dashboard.tabs.accessibility.add-button-label": "Dodaj nową kartę"
+    "dashboard.tabs.accessibility.add-button-label": "Dodaj nową kartę",
+    "dashboard_add_filter.button.aria_label": "Dodaj filtr",
+    "dashboard_add_filter.menu.title": "Dodaj filtr",
+    "dashboard_add_filter.menu.parameter": "Parametr"
 }

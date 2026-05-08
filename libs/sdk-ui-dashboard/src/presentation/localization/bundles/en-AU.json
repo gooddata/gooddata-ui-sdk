@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Only you can view and edit this dashboard.",
     "header.shareStatus.private.not.strict.tooltip": "The creator can edit this dashboard. Other users with suitable user roles can edit this dashboard when they drill to it.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Remove access to this dashboard.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "From dashboard",
+    "dashboardMeasureValueFilter.section.all_other": "All other",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "The user that created this dashboard. Creators cannot be removed.",
     "attributesDropdown.placeholder": "Search…",
     "attributesDropdown.configuration": "Configuration",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Delete",
     "filters.filterViews.delete.cancelButton": "Cancel",
     "filters.filterViews.tooltip.ariaLabel": "Information about Saved Views",
+    "filters.locked.filter.tooltip": "This filter is secured",
     "insightAlert.config.action.edit": "Edit",
     "insightAlert.config.action.pause": "Pause",
     "insightAlert.config.action.resume": "Unpause",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Add new tab",
     "dashboard.tabs.rename": "Rename",
     "dashboard.tabs.accessibility.label": "Dashboard tabs",
-    "dashboard.tabs.accessibility.add-button-label": "Add new tab"
+    "dashboard.tabs.accessibility.add-button-label": "Add new tab",
+    "dashboard_add_filter.button.aria_label": "Add filter",
+    "dashboard_add_filter.menu.title": "Add filter",
+    "dashboard_add_filter.menu.parameter": "Parameter"
 }

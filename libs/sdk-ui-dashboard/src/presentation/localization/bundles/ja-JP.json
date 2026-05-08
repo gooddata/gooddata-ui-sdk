@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "このダッシュボードを表示および編集できるのは、あなたのみです。",
     "header.shareStatus.private.not.strict.tooltip": "作成者はこのダッシュボードを編集できます。適切なユーザーロールを持つ他のユーザーは、ドリルすることでダッシュボードを編集できます。",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "このダッシュボードへのアクセス権を削除します。",
+    "dashboardMeasureValueFilter.section.from_dashboard": "ダッシュボードから",
+    "dashboardMeasureValueFilter.section.all_other": "その他すべて",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "このダッシュボードを作成したユーザー。作成者は削除できません。",
     "attributesDropdown.placeholder": "検索…",
     "attributesDropdown.configuration": "設定",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "削除",
     "filters.filterViews.delete.cancelButton": "キャンセル",
     "filters.filterViews.tooltip.ariaLabel": "保存されたビューに関する情報",
+    "filters.locked.filter.tooltip": "このフィルターはロックされている",
     "insightAlert.config.action.edit": "編集",
     "insightAlert.config.action.pause": "一時停止する",
     "insightAlert.config.action.resume": "一時停止を解除する",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "新しいタブを追加する",
     "dashboard.tabs.rename": "名前変更",
     "dashboard.tabs.accessibility.label": "ダッシュボードタブ",
-    "dashboard.tabs.accessibility.add-button-label": "新しいタブを追加する"
+    "dashboard.tabs.accessibility.add-button-label": "新しいタブを追加する",
+    "dashboard_add_filter.button.aria_label": "フィルタを追加",
+    "dashboard_add_filter.menu.title": "フィルタを追加",
+    "dashboard_add_filter.menu.parameter": "パラメーター"
 }

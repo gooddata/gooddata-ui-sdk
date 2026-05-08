@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Hanya Anda yang dapat melihat dan mengedit dasbor ini.",
     "header.shareStatus.private.not.strict.tooltip": "Pembuat dapat mengedit dasbor ini. Pengguna lain dengan peran pengguna yang sesuai dapat mengedit dasbor ini saat mereka menelusuri ke sana.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Hapus akses ke dasbor ini.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Dari dasbor",
+    "dashboardMeasureValueFilter.section.all_other": "Semua lainnya",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Pengguna yang membuat dasbor ini. Pembuat tidak dapat dihapus.",
     "attributesDropdown.placeholder": "Cari…",
     "attributesDropdown.configuration": "Konfigurasi",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Hapus",
     "filters.filterViews.delete.cancelButton": "Batal",
     "filters.filterViews.tooltip.ariaLabel": "Informasi tentang Tampilan Tersimpan",
+    "filters.locked.filter.tooltip": "Filter ini terkunci",
     "insightAlert.config.action.edit": "Edit",
     "insightAlert.config.action.pause": "Jeda",
     "insightAlert.config.action.resume": "Batalkan jeda",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Tambahkan tab baru",
     "dashboard.tabs.rename": "Ganti nama",
     "dashboard.tabs.accessibility.label": "Tab dasbor",
-    "dashboard.tabs.accessibility.add-button-label": "Tambahkan tab baru"
+    "dashboard.tabs.accessibility.add-button-label": "Tambahkan tab baru",
+    "dashboard_add_filter.button.aria_label": "Tambahkan filter",
+    "dashboard_add_filter.menu.title": "Tambahkan filter",
+    "dashboard_add_filter.menu.parameter": "Parameter"
 }

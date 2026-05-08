@@ -2564,6 +2564,7 @@ export interface IFeatureFlags {
     enableDashboardSectionHeadersDateDataSet?: boolean;
     enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
+    enableDashboardsSearch?: boolean;
     enableDashboardTabularExport?: boolean;
     // (undocumented)
     enableDataSection?: boolean;

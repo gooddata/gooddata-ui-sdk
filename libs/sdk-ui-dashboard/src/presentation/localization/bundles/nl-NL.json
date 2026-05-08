@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Alleen u kunt dit dashboard bekijken en bewerken.",
     "header.shareStatus.private.not.strict.tooltip": "De maker kan dit dashboard bewerken. Andere gebruikers met geschikte gebruikersrollen kunnen dit dashboard bewerken als ze erop inzoomen.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Verwijder de toegang tot dit dashboard.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Van dashboard",
+    "dashboardMeasureValueFilter.section.all_other": "Alle andere",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "De gebruiker die dit dashboard heeft gemaakt. Makers kunnen niet worden verwijderd.",
     "attributesDropdown.placeholder": "Bezig met zoeken…",
     "attributesDropdown.configuration": "Configuratie",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Verwijderen",
     "filters.filterViews.delete.cancelButton": "Annuleren",
     "filters.filterViews.tooltip.ariaLabel": "Informatie over bewaarde weergaven",
+    "filters.locked.filter.tooltip": "Dit filter is vergrendeld",
     "insightAlert.config.action.edit": "Bewerken",
     "insightAlert.config.action.pause": "Pauzeren",
     "insightAlert.config.action.resume": "Hervatten",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Nieuw tabblad toevoegen",
     "dashboard.tabs.rename": "Hernoem",
     "dashboard.tabs.accessibility.label": "Tabbladen dashboard",
-    "dashboard.tabs.accessibility.add-button-label": "Nieuw tabblad toevoegen"
+    "dashboard.tabs.accessibility.add-button-label": "Nieuw tabblad toevoegen",
+    "dashboard_add_filter.button.aria_label": "Filter toevoegen",
+    "dashboard_add_filter.menu.title": "Filter toevoegen",
+    "dashboard_add_filter.menu.parameter": "Parameter"
 }

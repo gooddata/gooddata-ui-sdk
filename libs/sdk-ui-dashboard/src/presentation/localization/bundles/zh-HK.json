@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "只有您可以查看和編輯此儀錶板。",
     "header.shareStatus.private.not.strict.tooltip": "創建者可以編輯此儀錶板。 具有適當用戶角色嘅其他使用者可以喺切入到此儀錶板時編輯此儀錶板。",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "刪除對此儀錶板嘅存取權限。",
+    "dashboardMeasureValueFilter.section.from_dashboard": "來自儀表板",
+    "dashboardMeasureValueFilter.section.all_other": "所有其他",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "創建此儀錶板嘅使用者。 創作者無法被移除。",
     "attributesDropdown.placeholder": "搜尋...",
     "attributesDropdown.configuration": "配置",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "刪除",
     "filters.filterViews.delete.cancelButton": "取消",
     "filters.filterViews.tooltip.ariaLabel": "有關已保存視圖嘅信息",
+    "filters.locked.filter.tooltip": "呢個過濾器上鎖咗",
     "insightAlert.config.action.edit": "編輯",
     "insightAlert.config.action.pause": "暫停",
     "insightAlert.config.action.resume": "取消暫停",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "加入新標籤",
     "dashboard.tabs.rename": "改名",
     "dashboard.tabs.accessibility.label": "儀表板標籤",
-    "dashboard.tabs.accessibility.add-button-label": "加入新標籤"
+    "dashboard.tabs.accessibility.add-button-label": "加入新標籤",
+    "dashboard_add_filter.button.aria_label": "添加篩選器",
+    "dashboard_add_filter.menu.title": "添加篩選器",
+    "dashboard_add_filter.menu.parameter": "參數"
 }

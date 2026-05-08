@@ -352,6 +352,8 @@
     "header.shareStatus.private.strict.tooltip": "Vain sinä voit tarkastella ja muokata tätä kojelautaa.",
     "header.shareStatus.private.not.strict.tooltip": "Kojelaudan luoja voi muokata tätä kojelautaa. Muut käyttäjät, joilla on asianmukaiset käyttäjäroolit, voivat muokata tätä kojelautaa, kun he porautuvat siihen.",
     "dashboard.shareDialog.removeAccessGranteeTooltip": "Poista pääsy tähän kojelautaan.",
+    "dashboardMeasureValueFilter.section.from_dashboard": "Koontinäytöstä",
+    "dashboardMeasureValueFilter.section.all_other": "Kaikki muut",
     "dashboard.shareDialog.removeAccessCreatorTooltip": "Käyttäjä, joka loi tämän kojelaudan. Luoja ei voi poistaa.",
     "attributesDropdown.placeholder": "Hae…",
     "attributesDropdown.configuration": "Konfiguraatio",
@@ -670,6 +672,7 @@
     "filters.filterViews.delete.deleteButton": "Poista",
     "filters.filterViews.delete.cancelButton": "Peruuta",
     "filters.filterViews.tooltip.ariaLabel": "Tietoja tallennetuista näkymistä",
+    "filters.locked.filter.tooltip": "Tämä suodatin on lukittu",
     "insightAlert.config.action.edit": "Muokkaa",
     "insightAlert.config.action.pause": "Keskeytä",
     "insightAlert.config.action.resume": "Poista tauko",
@@ -851,5 +854,8 @@
     "dashboard.tabs.add-button-tooltip": "Lisää uusi välilehti",
     "dashboard.tabs.rename": "Nimeä uudelleen",
     "dashboard.tabs.accessibility.label": "Koontinäytön välilehdet",
-    "dashboard.tabs.accessibility.add-button-label": "Lisää uusi välilehti"
+    "dashboard.tabs.accessibility.add-button-label": "Lisää uusi välilehti",
+    "dashboard_add_filter.button.aria_label": "Lisää suodatin",
+    "dashboard_add_filter.menu.title": "Lisää suodatin",
+    "dashboard_add_filter.menu.parameter": "Parametri"
 }

@@ -42,6 +42,7 @@ import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";
 import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js";
 import { type DateNormalizer } from "./dateFormatting/types.js";
+import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import { visualizationObjectsItemToInsight } from "./InsightConverter.js";
 
 export function convertChatConversationFromBackend(conversation: AiConversationResponse): IChatConversation {
@@ -218,7 +219,7 @@ function convertKda(
         }),
         analyzedPeriod: dateNormalizer(kda.analyzedPeriod, dateGranularity, locale, timezone),
         referencePeriod: dateNormalizer(kda.referencePeriod, dateGranularity, locale, timezone),
-        filters: yamlFiltersToDeclarative([], kda.filters as AacFilter[], {}).filters,
+        filters: cloneWithSanitizedIds(yamlFiltersToDeclarative([], kda.filters as AacFilter[], {}).filters),
     };
 }
 
