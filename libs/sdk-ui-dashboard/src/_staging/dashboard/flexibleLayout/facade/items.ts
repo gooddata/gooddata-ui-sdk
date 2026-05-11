@@ -6,6 +6,7 @@ import { type IDashboardLayoutItem, type ScreenSize } from "@gooddata/sdk-model"
 
 import { asLayoutItemPath } from "../../../layout/coordinates.js";
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../config.js";
+
 import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutItemsFacade,

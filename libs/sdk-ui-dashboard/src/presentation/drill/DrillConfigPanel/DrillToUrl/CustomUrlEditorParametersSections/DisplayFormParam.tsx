@@ -13,6 +13,7 @@ import { useDashboardSelector } from "../../../../../model/react/DashboardStoreP
 import { selectAllCatalogAttributesMap } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { selectFilterContextAttributeFilterItemByDisplayForm } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
+
 import { Parameter } from "./Parameter.js";
 
 interface IXProps {

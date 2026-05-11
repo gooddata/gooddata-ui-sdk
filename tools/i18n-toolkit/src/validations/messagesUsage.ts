@@ -8,6 +8,7 @@ import fastGlob from "fast-glob";
 import { DefaultLocale, type ToolkitConfigFile, type UsageResult } from "../data.js";
 import { type LocalesStructure } from "../schema/localization.js";
 import { done, fail, message, resultsInfo, skipped } from "../utils/console.js";
+
 import { checkTranslations } from "./usage/checkTranslations.js";
 
 const { sync } = fastGlob;

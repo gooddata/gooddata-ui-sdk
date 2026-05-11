@@ -6,6 +6,7 @@ import { type IMapViewport, type IPushpinMapConfig } from "../../types/map/provi
 import { isLngLatTupleBounds } from "../../utils/guards.js";
 import { normalizeBoundsForShortestPath } from "../runtime/bounds.js";
 import { DEFAULT_BOUNDS_PADDING } from "../runtime/mapConfig.js";
+
 import { getViewportOptions } from "./viewportPresets.js";
 
 /**

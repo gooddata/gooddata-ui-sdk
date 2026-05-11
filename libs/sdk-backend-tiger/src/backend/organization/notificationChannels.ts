@@ -31,6 +31,7 @@ import {
 import { convertNotificationChannelFromBackend } from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
 import { convertNotificationChannelToBackend } from "../../convertors/toBackend/NotificationChannelsConvertor.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { NotificationChannelsQuery } from "./notificationChannelsQuery.js";
 
 export class OrganizationNotificationChannelService implements IOrganizationNotificationChannelService {

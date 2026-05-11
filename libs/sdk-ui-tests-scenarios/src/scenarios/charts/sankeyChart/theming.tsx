@@ -4,6 +4,7 @@ import { type ISankeyChartProps, SankeyChart } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { SankeyChartWithMeasureAttributeFromAndTo } from "./base.js";
 
 export const theming = scenariosFor<ISankeyChartProps>("SankeyChart", SankeyChart)

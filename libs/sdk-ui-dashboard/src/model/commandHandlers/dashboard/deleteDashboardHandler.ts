@@ -15,6 +15,7 @@ import { selectDateFilterConfig, selectSettings } from "../../store/config/confi
 import { executionResultsActions } from "../../store/executionResults/index.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { actionsToInitializeNewDashboard } from "./common/stateInitializers.js";
 
 function deleteDashboard(ctx: DashboardContext, dashboardRef: ObjRef): Promise<void> {

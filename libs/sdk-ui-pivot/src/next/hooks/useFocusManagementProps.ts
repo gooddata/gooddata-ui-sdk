@@ -8,6 +8,7 @@ import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { type AgGridProps } from "../types/agGrid.js";
 import { type AgGridRowData } from "../types/internal.js";
+
 import { useClearCellSelection } from "./useClearCellSelection.js";
 
 /**

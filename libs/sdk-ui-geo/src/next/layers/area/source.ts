@@ -11,6 +11,7 @@ import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
 import { getSelectedIntersections, isFeatureSelected } from "../common/selectionUtils.js";
 import { EMPTY_SEGMENT_VALUE } from "../pushpin/constants.js";
 import type { IAreaLayerOutput, IGeoAdapterContext } from "../registry/adapterTypes.js";
+
 import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
 import { getAreaAreaColors } from "./coloring/palette.js";
 import { DEFAULT_AREA_FILL_COLOR } from "./constants.js";

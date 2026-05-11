@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { CancelError, makeCancelable } from "../CancelablePromise.js";
+
 import { createDummyPromise } from "./toolkit.js";
 
 describe("CancelablePromise", () => {

@@ -3,6 +3,7 @@
 import { type ReactElement } from "react";
 
 import { type IShowAsTableButtonProps } from "../types.js";
+
 import { ShowAsTableButton } from "./ShowAsTableButton.js";
 
 /**

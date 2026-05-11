@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { newInsight } from "../../_staging/insight/insightBuilder.js";
+
 import { type IDashboardQuery } from "./base.js";
 
 /**

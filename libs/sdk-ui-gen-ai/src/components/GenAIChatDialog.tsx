@@ -16,6 +16,7 @@ import { isOpenSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setOpenAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler } from "../store/events.js";
 import { getIsOpened } from "../store/localStorage.js";
+
 import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";

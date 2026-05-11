@@ -55,6 +55,7 @@ import {
     type newMessageAction,
     setCurrentConversationAction,
 } from "../messages/messagesSlice.js";
+
 import { processContents } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
 import { convertMessageToChatConversation, extractError } from "./utils.js";

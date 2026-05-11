@@ -28,6 +28,7 @@ import {
     type IGeoAdapterContext,
     type IGeoLayerAdapter,
 } from "../registry/adapterTypes.js";
+
 import { deriveCollectionBoundingBox } from "./boundingBox.js";
 import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
 import { transformAreaData } from "./data/transformation.js";

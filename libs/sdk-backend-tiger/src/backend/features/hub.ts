@@ -5,6 +5,7 @@ import axios, { type AxiosResponse } from "axios";
 import { type FeatureContext, type ILiveFeatures } from "@gooddata/api-client-tiger";
 
 import { DefaultFeatureFlags, type ITigerFeatureFlags } from "../uiFeatures.js";
+
 import { type FeatureDef, type FeaturesMap, mapFeatures } from "./feature.js";
 
 type HubServiceState = Record<

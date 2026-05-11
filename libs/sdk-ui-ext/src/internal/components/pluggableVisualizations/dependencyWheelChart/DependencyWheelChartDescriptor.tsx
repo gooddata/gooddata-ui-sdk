@@ -20,6 +20,7 @@ import {
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { SankeyChartDescriptor } from "../sankeyChart/SankeyChartDescriptor.js";
+
 import { PluggableDependencyWheelChart } from "./PluggableDependencyWheelChart.js";
 
 export class DependencyWheelChartDescriptor

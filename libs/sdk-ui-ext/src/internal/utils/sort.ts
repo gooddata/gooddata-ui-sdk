@@ -37,6 +37,7 @@ import {
     type IExtendedReferencePoint,
     type IVisualizationProperties,
 } from "../interfaces/Visualization.js";
+
 import { getTranslation } from "./translations.js";
 
 export function getAttributeSortItem(

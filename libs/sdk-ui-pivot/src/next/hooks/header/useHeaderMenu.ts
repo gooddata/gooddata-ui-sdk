@@ -5,6 +5,7 @@ import { type MouseEvent } from "react";
 import { type IAttributeDescriptor } from "@gooddata/sdk-model";
 
 import { type AgGridHeaderGroupParams, type AgGridHeaderParams } from "../../types/agGrid.js";
+
 import { useHeaderDrilling } from "./useHeaderDrilling.js";
 import { useHeaderMenuAggregations } from "./useHeaderMenuAggregations.js";
 import { useHeaderMenuSorting } from "./useHeaderMenuSorting.js";

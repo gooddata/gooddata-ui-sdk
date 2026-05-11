@@ -9,6 +9,7 @@ import { useGeoLegend } from "../../context/GeoLegendContext.js";
 import { useMapRuntime } from "../../context/MapRuntimeContext.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import { resolveLayerColorConfig } from "../../utils/color/resolveLayerColorConfig.js";
+
 import { useApplyLayerSegmentFiltering } from "./useApplyLayerSegmentFiltering.js";
 import { useApplyLayerVisibility } from "./useApplyLayerVisibility.js";
 import { useInitLayersToMap } from "./useInitLayersToMap.js";

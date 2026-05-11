@@ -16,6 +16,7 @@ import {
     type RenderFunction,
     type UnmountFunction,
 } from "../../interfaces/Visualization.js";
+
 import { AbstractPluggableVisualization } from "./AbstractPluggableVisualization.js";
 
 export type IIntlLocalizedUnknownVisualizationClass = WrappedComponentProps & { onAfterRender?: () => void };

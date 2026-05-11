@@ -6,6 +6,7 @@ import { messages } from "../../../../locales.js";
 import { type IConfigItemSubsection } from "../../../interfaces/ConfigurationPanel.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSubsection } from "../../configurationControls/ConfigSubsection.js";
+
 import { NamePositionControl } from "./NamePositionControl.js";
 
 export const NameSubsection = memo(function NameSubsection(props: IConfigItemSubsection) {

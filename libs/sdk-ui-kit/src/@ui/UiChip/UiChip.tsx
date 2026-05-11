@@ -3,6 +3,7 @@
 import { type CSSProperties, useLayoutEffect, useRef, useState } from "react";
 
 import { bem } from "../@utils/bem.js";
+
 import { ChipContent } from "./ChipContent.js";
 import { ChipDeleteButton } from "./ChipDeleteButton.js";
 import { type IUiChipProps } from "./types.js";

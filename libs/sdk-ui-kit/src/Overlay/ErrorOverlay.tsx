@@ -10,6 +10,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Button } from "../Button/Button.js";
 import { Icon } from "../Icon/Icon.js";
 import { Typography } from "../Typography/Typography.js";
+
 import { Overlay } from "./Overlay.js";
 
 /**

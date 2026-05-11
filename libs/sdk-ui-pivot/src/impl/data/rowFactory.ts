@@ -37,6 +37,7 @@ import {
     type ISliceMeasureCol,
     isSeriesCol,
 } from "../structure/tableDescriptorTypes.js";
+
 import { getSubtotalStyles } from "./dataSourceUtils.js";
 import { type IAgGridPage, type IGridRow, type IGridTotalsRow } from "./resultTypes.js";
 

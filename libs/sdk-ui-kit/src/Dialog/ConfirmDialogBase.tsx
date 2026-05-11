@@ -10,6 +10,7 @@ import { Button } from "../Button/Button.js";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
 import { Typography } from "../Typography/Typography.js";
 import { useId } from "../utils/useId.js";
+
 import { DialogBase } from "./DialogBase.js";
 import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
 import { type IConfirmDialogBaseProps } from "./typings.js";

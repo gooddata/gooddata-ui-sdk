@@ -4,6 +4,7 @@ import { type ObjRef } from "@gooddata/sdk-model";
 import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeFilterContext } from "../../../Context/AttributeFilterContext.js";
+
 import { AttributeDisplayFormDropdown } from "./AttributeDisplayFormDropdown.js";
 
 /**

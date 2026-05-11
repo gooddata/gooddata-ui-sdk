@@ -28,6 +28,7 @@ import {
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoConfig } from "../../GeoChart.js";
+
 import { type IGeoChartInnerProps } from "./GeoChartInner.js";
 import { isLocationSet } from "./helpers/geoChart/common.js";
 

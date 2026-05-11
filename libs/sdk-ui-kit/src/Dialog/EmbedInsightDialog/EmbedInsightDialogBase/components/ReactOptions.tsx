@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 
 import { type CodeLanguageType, type IReactOptions, type InsightCodeType } from "../types.js";
+
 import { CodeLanguageSelect } from "./CodeLanguageSelect.js";
 import { CodeOptions } from "./CodeOptions.js";
 import { ComponentTypeSelect } from "./ComponentTypeSelect.js";

@@ -53,6 +53,7 @@ import {
     type OnLoadNextElementsPageStartCallbackPayload,
     type OnLoadNextElementsPageSuccessCallbackPayload,
 } from "../types/elementsLoader.js";
+
 import { AttributeFilterReduxBridge } from "./bridge.js";
 import { type AttributeFilterHandlerConfig } from "./types.js";
 

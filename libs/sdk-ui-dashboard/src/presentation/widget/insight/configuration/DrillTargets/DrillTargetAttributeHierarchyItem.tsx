@@ -15,6 +15,7 @@ import { useDashboardSelector } from "../../../../../model/react/DashboardStoreP
 import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
 import { selectAllCatalogAttributeHierarchies } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { type IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
+
 import { AttributeHierarchyDropdown } from "./AttributeHierarchyDropdown.js";
 import { EmptyAttributeHierarchyInfo } from "./EmptyAttributeHierarchyInfo.js";
 import { useAttributeHierarchy } from "./useAttributeHierarchy.js";

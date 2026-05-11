@@ -4,6 +4,7 @@ import { createSelector } from "@reduxjs/toolkit";
 
 import { type IChatConversationLocal, type IChatConversationLocalItem, type Message } from "../../model.js";
 import { type RootState } from "../types.js";
+
 import { messagesSliceName } from "./messagesSlice.js";
 
 const messagesSliceSelector = (state: RootState) => state[messagesSliceName];

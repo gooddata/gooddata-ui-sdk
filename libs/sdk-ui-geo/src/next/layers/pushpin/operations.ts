@@ -6,6 +6,7 @@ import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import { removeLayerIfExists, removeSourceIfExists } from "../common/layerOps.js";
 import { type GeoJSONSourceSpecification, type IMapFacade } from "../common/mapFacade.js";
+
 import { isClusteringAllowed } from "./clustering/clustering.js";
 import {
     createClusterLabels,

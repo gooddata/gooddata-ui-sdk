@@ -7,6 +7,7 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { type NavigationDirection } from "../../typings/navigation.js";
 import { getFocusableElements } from "../../utils/domUtilities.js";
 import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+
 import { type IUiFocusHelperConnectors } from "./types.js";
 
 /**

@@ -9,6 +9,7 @@ import { type IVisualizationProperties } from "../../../../interfaces/Visualizat
 import { getNumberFormat, getNumberSubFormat } from "../../../../utils/comparisonHelper.js";
 import { ConfigSubsection } from "../../ConfigSubsection.js";
 import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../ComparisonValuePath.js";
+
 import { ComparisonPositionControl } from "./ComparisonPositionControl.js";
 import { NumberFormatControl } from "./numberFormat/NumberFormatControl.js";
 

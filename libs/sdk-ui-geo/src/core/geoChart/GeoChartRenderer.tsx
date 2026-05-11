@@ -20,6 +20,7 @@ import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoConfig, type IGeoData } from "../../GeoChart.js";
 import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
+
 import {
     DEFAULT_CLUSTER_LABELS_CONFIG,
     DEFAULT_CLUSTER_LAYER_NAME,

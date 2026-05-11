@@ -9,6 +9,7 @@ import {
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
 } from "../types/selectionHandler.js";
+
 import { AttributeFilterLoader } from "./loader.js";
 import { type AttributeFilterHandlerConfig } from "./types.js";
 

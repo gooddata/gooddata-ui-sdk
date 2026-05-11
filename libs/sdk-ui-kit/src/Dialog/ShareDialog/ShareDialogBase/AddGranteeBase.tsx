@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import { BackButton } from "../../BackButton.js";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 import { ContentDivider } from "../../ContentDivider.js";
+
 import { AddGranteeContent } from "./AddGranteeContent.js";
 import { type IAddGranteeBaseProps } from "./types.js";
 

@@ -12,6 +12,7 @@ import {
 } from "react";
 
 import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
+
 import { type IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
 

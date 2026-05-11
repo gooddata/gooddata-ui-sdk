@@ -7,6 +7,7 @@ import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+
 import { drillTargetsAdapter } from "./drillTargetsEntityAdapter.js";
 import { type IDrillTargets } from "./drillTargetsTypes.js";
 

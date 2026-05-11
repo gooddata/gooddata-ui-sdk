@@ -9,6 +9,7 @@ import { type ICatalogDateDataset, type IWidget, type ObjRef, isInsightWidget } 
 import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
 
 import { useCurrentDateFilterConfig } from "../../../dragAndDrop/useCurrentDateFilterConfig.js";
+
 import { getUnrelatedDateDataset } from "./utils.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];

@@ -15,6 +15,7 @@ import { withContexts } from "../base/react/withContexts.js";
 import { type DataViewFacade } from "../base/results/facade.js";
 import { type IRawExecuteProps, RawExecute } from "../execution/RawExecute.js";
 import { type IWithLoadingEvents } from "../execution/withExecutionLoading.js";
+
 import { FormattedNumber } from "./FormattedNumber.js";
 import { KpiError } from "./KpiError.js";
 

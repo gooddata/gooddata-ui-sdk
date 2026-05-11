@@ -7,6 +7,7 @@ import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 import { DRILL_TARGET_TYPE } from "../../../../drill/types.js";
 import { ButtonWithIcon } from "../ButtonWithIcon.js";
 import { type IDrillTargetType } from "../useDrillTargetTypeItems.js";
+
 import { DrillTargetTypeListItem } from "./DrillTargetTypeListItem.js";
 
 export interface IDrillTargetProps {

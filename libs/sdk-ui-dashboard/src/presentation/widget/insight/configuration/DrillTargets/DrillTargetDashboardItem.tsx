@@ -12,6 +12,7 @@ import { selectInaccessibleDashboards } from "../../../../../model/store/inacces
 import { type IInaccessibleDashboard } from "../../../../../model/types/inaccessibleDashboardTypes.js";
 import { DashboardList } from "../../../../dashboardList/DashboardList.js";
 import { type IDrillableDashboardListItem } from "../../../../dashboardList/types.js";
+
 import { DrillTargetDashboardTabSelector } from "./DrillTargetDashboardTabSelector.js";
 
 interface IDrillTargetDashboardItemProps {

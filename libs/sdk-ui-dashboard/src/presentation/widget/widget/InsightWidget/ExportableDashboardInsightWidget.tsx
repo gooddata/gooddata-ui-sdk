@@ -2,6 +2,7 @@
 
 import { ExportModeInsightWidgetDescription } from "../../description/ExportModeInsightWidgetDescription.js";
 import { InsightWidgetDescriptionComponentProvider } from "../../description/InsightWidgetDescriptionComponentProvider.js";
+
 import { DefaultDashboardInsightWidget } from "./DefaultDashboardInsightWidget.js";
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 

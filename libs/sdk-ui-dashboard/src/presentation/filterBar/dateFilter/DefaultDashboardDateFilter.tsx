@@ -32,6 +32,7 @@ import {
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { useCurrentDateFilterConfig } from "../../dragAndDrop/useCurrentDateFilterConfig.js";
 import { getVisibilityIcon } from "../utils.js";
+
 import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
 import { type IDashboardDateFilterProps } from "./types.js";
 

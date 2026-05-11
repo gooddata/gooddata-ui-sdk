@@ -5,6 +5,7 @@ import { defineMessage } from "react-intl";
 import { type ISettings, type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { isFreemiumEdition } from "../utils/featureFlags.js";
+
 import { type IHeaderMenuItem } from "./typings.js";
 
 /**

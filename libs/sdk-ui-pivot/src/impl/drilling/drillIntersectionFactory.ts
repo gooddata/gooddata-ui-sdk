@@ -18,6 +18,7 @@ import {
     isSeriesCol,
     isSliceCol,
 } from "../structure/tableDescriptorTypes.js";
+
 import {
     createDataColLeafHeaders,
     createMixedValuesColHeaders,

@@ -16,6 +16,7 @@ import {
 
 import { type IResizedColumns, UIClick } from "../columnWidths.js";
 import { type ICorePivotTableProps, type IPivotTableConfig } from "../publicTypes.js";
+
 import { getHeaderHeight } from "./base/agApiWrapper.js";
 import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper.js";
 import { agColIds, isMeasureColumn, isMeasureOrAnyColumnTotal } from "./base/agUtils.js";

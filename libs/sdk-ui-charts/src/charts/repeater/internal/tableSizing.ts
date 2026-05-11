@@ -3,6 +3,7 @@
 import { type RefObject } from "react";
 
 import { scheduleAnimationFrame } from "../../_base/animationFrameScheduler.js";
+
 import { getManualResizedColumn } from "./columnSizing.js";
 import { type ColumnResizingConfig, type ResizingState } from "./privateTypes.js";
 

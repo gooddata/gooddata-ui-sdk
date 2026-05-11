@@ -8,6 +8,7 @@ import { scenariosFor } from "../../../scenarioGroup.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { axisRotationVariants } from "../_infra/axisRotationVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import {
     BarChartWithArithmeticMeasuresAndViewBy,
     BarChartWithTwoMeasuresAndTwoViewBy,

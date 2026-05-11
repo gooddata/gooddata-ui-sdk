@@ -8,6 +8,7 @@ import { comparisonMessages } from "../../../../locales.js";
 import { type IComparisonControlProperties } from "../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
+
 import { CalculationControl } from "./calculation/CalculationControl.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "./ComparisonValuePath.js";
 import { IndicatorSubSection } from "./indicators/IndicatorSubSection.js";

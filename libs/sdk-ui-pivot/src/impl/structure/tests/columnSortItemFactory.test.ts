@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { createSortItemForCol } from "../colSortItemFactory.js";
 import { TableDescriptor } from "../tableDescriptor.js";
+
 import {
     SingleMeasureWithColumnAttribute,
     SingleMeasureWithRowAttribute,

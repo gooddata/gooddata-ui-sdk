@@ -14,6 +14,7 @@ import { switcherSlideTransformer } from "../../_staging/slideshow/switcherSlide
 import { containsVisualizationSwitcher } from "../../_staging/slideshow/utils/index.js";
 import { widgetSlideTransformer } from "../../_staging/slideshow/widgetSlideTransformer.js";
 import { type IExportLayoutCustomizer, type SectionSlidesTransformer } from "../customizer.js";
+
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
 

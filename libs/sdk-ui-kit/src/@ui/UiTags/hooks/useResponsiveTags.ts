@@ -3,6 +3,7 @@
 import { type DependencyList, useLayoutEffect, useState } from "react";
 
 import { type IUiTagDef } from "../types.js";
+
 import { useTagsElements } from "./useTagsElements.js";
 
 const PADDING = 5;

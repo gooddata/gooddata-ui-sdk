@@ -9,6 +9,7 @@ import { type IAnalyticalBackend, type IElementsQuery } from "@gooddata/sdk-back
 import { type IAttributeDisplayFormMetadataObject, type IAttributeElement, idRef } from "@gooddata/sdk-model";
 
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
+
 import {
     type IRecording,
     type RecordingIndexEntry,

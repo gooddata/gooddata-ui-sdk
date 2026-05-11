@@ -7,6 +7,7 @@ import { comparisonMessages } from "../../../../../locales.js";
 import { type IComparisonControlProperties } from "../../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { ConfigSubsection } from "../../ConfigSubsection.js";
+
 import { ArrowControl } from "./ArrowControl.js";
 import { ColorsControl } from "./colorsControl/ColorsControl.js";
 

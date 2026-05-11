@@ -7,6 +7,7 @@ import {
     type ILegendGroup,
     isLegendColorScaleItem,
 } from "../../types/legend/model.js";
+
 import { resolveLegendGroupTitle } from "./groupTitle.js";
 import { LegendGroupContainer } from "./LegendGroupContainer.js";
 import { type LegendMessageFormatter } from "./legendMessages.js";

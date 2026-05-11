@@ -22,6 +22,7 @@ import { ColorFactory } from "../../highcharts/chartTypes/_chartOptions/colorFac
 import { getValidColorPalette } from "../../highcharts/chartTypes/_util/color.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type ICoreChartProps } from "../../interfaces/chartProps.js";
+
 import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
 import type { RepeaterColumnResizedCallback } from "./publicTypes.js";

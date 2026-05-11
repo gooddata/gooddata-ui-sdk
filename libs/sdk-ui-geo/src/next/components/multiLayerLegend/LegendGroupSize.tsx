@@ -7,6 +7,7 @@ import {
     type ILegendSizeAnchorItem,
     isLegendSizeAnchorItem,
 } from "../../types/legend/model.js";
+
 import { resolveLegendGroupTitle } from "./groupTitle.js";
 import { LegendGroupContainer } from "./LegendGroupContainer.js";
 

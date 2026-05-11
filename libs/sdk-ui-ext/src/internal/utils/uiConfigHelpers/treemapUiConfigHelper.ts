@@ -12,6 +12,7 @@ import { type IExtendedReferencePoint } from "../../interfaces/Visualization.js"
 import { getViewItems, setBucketTitles } from "../bucketHelper.js";
 import { hasMoreThanOneMasterMeasure, hasNoMeasures, hasOneCategory } from "../bucketRules.js";
 import { getTranslation } from "../translations.js";
+
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
 
 // If you need to edit these icons

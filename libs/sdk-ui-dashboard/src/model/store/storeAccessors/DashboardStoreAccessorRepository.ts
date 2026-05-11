@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 import { type ObjRef, idRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { type DashboardDispatch, type DashboardSelectorEvaluator, type DashboardState } from "../types.js";
+
 import { DashboardStoreAccessor } from "./DashboardStoreAccessor.js";
 
 /**

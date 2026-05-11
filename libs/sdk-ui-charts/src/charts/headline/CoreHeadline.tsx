@@ -13,6 +13,7 @@ import {
 
 import { type ICoreChartProps } from "../../interfaces/chartProps.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
+
 import { type IHeadlineTransformationProps } from "./HeadlineProvider.js";
 
 /**

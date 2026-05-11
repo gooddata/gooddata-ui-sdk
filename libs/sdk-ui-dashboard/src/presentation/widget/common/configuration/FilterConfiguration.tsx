@@ -26,6 +26,7 @@ import {
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+
 import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
 import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
 import { MeasureValueFilterConfigurationItem } from "./MeasureValueFilterConfigurationItem.js";

@@ -10,6 +10,7 @@ import {
 import { type ColumnHeadersPosition } from "../../publicTypes.js";
 import { type IGridRow } from "../data/resultTypes.js";
 import { type AnyCol } from "../structure/tableDescriptorTypes.js";
+
 import { createDrillHeaders } from "./colDrillHeadersFactory.js";
 
 export function isCellDrillable(

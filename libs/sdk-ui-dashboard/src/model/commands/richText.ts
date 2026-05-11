@@ -3,6 +3,7 @@
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import { type IWidgetFilterOperation } from "../types/widgetTypes.js";
+
 import { type IDashboardCommand } from "./base.js";
 
 /**

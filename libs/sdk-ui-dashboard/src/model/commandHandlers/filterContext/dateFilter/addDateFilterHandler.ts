@@ -19,6 +19,7 @@ import {
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
+
 // import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 

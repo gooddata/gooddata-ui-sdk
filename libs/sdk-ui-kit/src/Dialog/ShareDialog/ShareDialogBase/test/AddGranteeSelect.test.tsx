@@ -16,6 +16,7 @@ import { BackendProvider, WorkspaceProvider, withIntl } from "@gooddata/sdk-ui";
 import { mapWorkspaceUserToGrantee } from "../../shareDialogMappers.js";
 import { AddGranteeSelect } from "../AddGranteeSelect.js";
 import { type IAddGranteeSelectProps } from "../types.js";
+
 import {
     availableUserAccessGrantee,
     availableUserGroupAccessGrantee,

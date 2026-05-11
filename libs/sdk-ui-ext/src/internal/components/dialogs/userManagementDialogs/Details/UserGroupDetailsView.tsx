@@ -6,6 +6,7 @@ import { type IUserGroup } from "@gooddata/sdk-model";
 
 import { messages } from "../locales.js";
 import { type ListMode } from "../types.js";
+
 import { DetailRow } from "./DetailRow.js";
 
 export interface IUserGroupDetailsViewProps {

@@ -5,6 +5,7 @@ import cx from "classnames";
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { GridLayoutElement } from "../../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
+
 import { DashboardLayoutSectionBorderMarker } from "./DashboardLayoutSectionBorderMarker.js";
 import { type DashboardLayoutSectionBorderStatus } from "./types.js";
 

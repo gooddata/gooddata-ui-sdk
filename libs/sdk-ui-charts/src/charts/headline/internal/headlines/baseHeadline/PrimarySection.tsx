@@ -1,6 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
 import { PrimarySectionCompactContent } from "./PrimarySectionCompactContent.js";
 import { PrimarySectionContent } from "./PrimarySectionContent.js";

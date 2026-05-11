@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type DashboardDensity } from "../../types.js";
+
 import { type IDashboardCommand } from "./base.js";
 
 /**

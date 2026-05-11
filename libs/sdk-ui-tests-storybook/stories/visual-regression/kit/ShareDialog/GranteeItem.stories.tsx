@@ -14,6 +14,7 @@ import {
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+
 import {
     current,
     currentAndOwen,

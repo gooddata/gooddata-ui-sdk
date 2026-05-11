@@ -18,6 +18,7 @@ import { selectFilterContextAttributeFilterItemByLocalId } from "../../../store/
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
+
 import { resolveAndRegisterDisplayFormMetadata } from "./resolveDisplayFormMetadata.js";
 
 export function* replaceAttributeFilterItemSelectionHandler(

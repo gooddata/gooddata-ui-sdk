@@ -60,6 +60,7 @@ import { selectMeasureValueFilterConfigsOverridesByTab } from "../tabs/measureVa
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../tabs/tabsState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+
 import { type DashboardDescriptor } from "./metaState.js";
 
 const selectSelf = createSelector(

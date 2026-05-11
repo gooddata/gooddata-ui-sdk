@@ -6,6 +6,7 @@ import { isEqual } from "lodash-es";
 import { type IDimension } from "@gooddata/sdk-model";
 
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL, ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants.js";
+
 import { type IGridTotalsRow } from "./resultTypes.js";
 
 export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridTotalsRow[] | null): boolean {

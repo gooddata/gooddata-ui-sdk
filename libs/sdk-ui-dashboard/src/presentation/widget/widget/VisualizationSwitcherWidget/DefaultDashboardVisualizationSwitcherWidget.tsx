@@ -6,6 +6,7 @@ import { DashboardItem } from "../../../presentationComponents/DashboardItems/Da
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
+
 import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 
 /**

@@ -13,6 +13,7 @@ import { type IGridRow } from "../data/resultTypes.js";
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate.js";
 import { isRootCol, isSeriesCol } from "../structure/tableDescriptorTypes.js";
 import { type TableFacade } from "../tableFacade.js";
+
 import { getCellClassNames, getColumnTotalOrSubTotalInfo } from "./cellUtils.js";
 
 export type CellClassProvider = (cellClassParams: CellClassParams) => string;

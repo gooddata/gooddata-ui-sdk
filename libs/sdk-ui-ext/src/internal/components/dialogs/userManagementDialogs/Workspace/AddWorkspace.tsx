@@ -8,6 +8,7 @@ import { BackButton, ConfirmDialogBase, Hyperlink } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../types.js";
+
 import { AddSingleWorkspaceSelect } from "./AddSingleWorkspaceSelect.js";
 import { useAddWorkspace } from "./useAddWorkspace.js";
 import { GranularPermissions } from "./WorkspaceItem/GranularPermissions.js";

@@ -25,6 +25,7 @@ import {
     convertAgentToBackend,
 } from "../../convertors/toBackend/AgentConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { AgentsQuery } from "./agentsQuery.js";
 
 const AGENT_INCLUDE: Array<"createdBy" | "modifiedBy" | "userGroups"> = [

@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type HChart, type HighchartsOptions } from "../lib/index.js";
+
 import { initChartPlugins } from "./chartPlugins.js";
 import "highcharts/esm/highcharts-more.js";
 import "highcharts/esm/modules/drilldown.js";

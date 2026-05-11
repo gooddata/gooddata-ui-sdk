@@ -1,9 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IDataView } from "@gooddata/sdk-backend-spi";
 import { type DataValue } from "@gooddata/sdk-model";
 
 import { type DataAccessConfig } from "../dataAccessConfig.js";
+
 import { type ITableData } from "./interfaces/index.js";
 import { type IMappingOptions } from "./interfaces/mappingOptions.js";
 import { collectBucketsInfo } from "./mapping/collect/collectBucketsInfo.js";

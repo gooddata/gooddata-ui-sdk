@@ -8,6 +8,7 @@ import { type IDimensionDescriptor, type IExecutionDefinition } from "@gooddata/
 import { defaultDateFormatter } from "../../dateFormatting/defaultDateFormatter.js";
 import { getTransformDimensionHeaders } from "../DimensionHeaderConverter.js";
 import { transformGrandTotalData } from "../GrandTotalsConverter.js";
+
 import {
     mockDefinition1,
     mockDefinition2,

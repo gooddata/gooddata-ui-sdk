@@ -14,6 +14,7 @@ import { BACKEND_PAGE_SIZE, MAX_SELECTION_SIZE } from "../../hooks/constants.js"
 import { useAttributeFilterDropdownHeader } from "../../hooks/useAttributeFilterDropdownHeader.js";
 import { getElementKey, getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 import { AttributeFilterDropdownHeader } from "../Dropdown/AttributeFilterDropdownHeader.js";
+
 import { type IAttributeFilterElementsSelectProps } from "./types.js";
 
 const ITEM_HEIGHT = 28;

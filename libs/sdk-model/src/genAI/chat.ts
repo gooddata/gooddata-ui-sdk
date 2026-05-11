@@ -5,6 +5,7 @@ import type { IAttribute } from "../execution/attribute/index.js";
 import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
 import type { ObjRef } from "../objRef/index.js";
+
 import type { GenAIObjectType } from "./common.js";
 import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
 

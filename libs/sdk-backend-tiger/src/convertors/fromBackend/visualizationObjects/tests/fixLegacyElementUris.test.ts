@@ -9,6 +9,7 @@ import {
     fixInsightLegacyElementUris,
     fixWidgetLegacyElementUris,
 } from "../../fixLegacyElementUris.js";
+
 import { mockInsight, mockWidget } from "./fixLegacyElementUris.fixtures.js";
 
 describe("fixInsightLegacyElementUris", () => {

@@ -15,6 +15,7 @@ import type { IFeatureFlags, Identifier, ObjectOrigin } from "@gooddata/sdk-mode
 
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
+
 import {
     getAttributesQuery,
     getDashboardsQuery,

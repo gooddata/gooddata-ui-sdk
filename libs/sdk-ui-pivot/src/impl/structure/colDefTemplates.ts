@@ -12,6 +12,7 @@ import { cellClassFactory } from "../cell/cellClass.js";
 import { createCellRenderer } from "../cell/cellRenderer.js";
 import { getMeasureCellFormattedValue, getMeasureCellStyle } from "../cell/cellUtils.js";
 import { type TableFacade } from "../tableFacade.js";
+
 import { headerClassFactory } from "./colDefHeaderClass.js";
 import { ColumnTotalHeader } from "./headers/ColumnTotalHeader.js";
 import { MixedValuesColumnHeader } from "./headers/MixedValuesColumnHeader.js";

@@ -34,6 +34,7 @@ import { convertAutomation as convertAutomationFromBackend } from "../../../conv
 import { convertAutomation as convertAutomationToBackend } from "../../../convertors/toBackend/AutomationConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
+
 import { AutomationsQuery } from "./automationsQuery.js";
 
 export class TigerWorkspaceAutomationService implements IWorkspaceAutomationService {

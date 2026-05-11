@@ -9,6 +9,7 @@ import {
 } from "../../presentation/dashboardContexts/types.js";
 import { DefaultDashboardAttributeFilter } from "../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 import { type IAttributeFiltersCustomizer } from "../customizer.js";
+
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
 

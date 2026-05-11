@@ -17,6 +17,7 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { type IAlertingManagementDialogOldProps } from "../types.js";
+
 import { AlertsOld } from "./components/AlertsListOld.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";

@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { IntlContext } from "react-intl";
 
 import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
+
 import { InsightPickerCore } from "./InsightPickerCore.js";
 import { type IInsightPickerProps } from "./types.js";
 

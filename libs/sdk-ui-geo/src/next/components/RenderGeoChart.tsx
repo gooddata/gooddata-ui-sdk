@@ -26,6 +26,7 @@ import {
     getMapCanvasRuntimeCapabilities,
     mapCanvasInstructionMessagesById,
 } from "../utils/mapCanvasAccessibility.js";
+
 import { GeoChartLegendOverlay } from "./multiLayerLegend/GeoChartLegendOverlay.js";
 import { type LegendMessageFormatter, legendMessagesById } from "./multiLayerLegend/legendMessages.js";
 

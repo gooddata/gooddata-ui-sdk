@@ -3,6 +3,7 @@
 import { logInfo } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
+
 import { type InspectCmdActionConfig, getInspectCmdActionConfig } from "./actionConfig.js";
 import { type InspectObjectFn } from "./types.js";
 

@@ -3,6 +3,7 @@
 import { type ReactElement, useMemo } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+
 import { type IDashboardRichTextMenuTitleProps } from "./types.js";
 
 /**

@@ -14,6 +14,7 @@ import {
     type IWidgetFilterOperation,
     type IWidgetHeader,
 } from "../types/widgetTypes.js";
+
 import { type IDashboardCommand } from "./base.js";
 
 /**

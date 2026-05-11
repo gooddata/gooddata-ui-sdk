@@ -16,6 +16,7 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { sanitizeHeader } from "./utils.js";
 import { validateSectionExists } from "./validation/layoutValidation.js";
 

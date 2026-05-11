@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import { type SourceInsightFilterObjRef, type SourceMeasureFilterObjRef } from "@gooddata/sdk-model";
 
 import { type IDrillFiltersConfigExtended } from "../../../../drill/types.js";
+
 import { DrillFiltersConfigSection } from "./DrillFiltersConfigSection.js";
 import { messages } from "./messages.js";
 import { type IDrillFiltersConfigOption } from "./types.js";

@@ -35,6 +35,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IDashboardFilter } from "../../types.js";
+
 import { type IDashboardCommand } from "./base.js";
 
 /**

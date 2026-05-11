@@ -15,6 +15,7 @@ import {
     type WorkspacePermission,
     type WorkspacePermissionSubject,
 } from "../../types.js";
+
 import { getPermissionTitle } from "./locales.js";
 import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
 

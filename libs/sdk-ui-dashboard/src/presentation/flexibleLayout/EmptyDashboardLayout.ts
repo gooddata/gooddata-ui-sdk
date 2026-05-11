@@ -1,6 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { renderModeAware } from "../componentDefinition/renderModeAware.js";
+
 import { EmptyDashboardDropZone } from "./dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
 import { EmptyDashboardError } from "./EmptyDashboardError.js";
 import { ExportEmptyDashboardError } from "./ExportEmptyDashboardError.js";

@@ -11,6 +11,7 @@ import { Checkbox, Input, UiLink, isEnterKey, useIdPrefixed } from "@gooddata/sd
 import { useAttributeFilterDropdownHeader } from "../../hooks/useAttributeFilterDropdownHeader.js";
 import { isAllOperator, isMatchOperator } from "../../textFilterOperatorUtils.js";
 import { AttributeFilterDropdownHeader } from "../Dropdown/AttributeFilterDropdownHeader.js";
+
 import { ArbitraryValuesInput } from "./ArbitraryValuesInput.js";
 import { ArbitraryValuesTooltip } from "./ArbitraryValuesTooltip.js";
 import { TextFilterOperatorDropdown } from "./TextFilterOperatorDropdown.js";

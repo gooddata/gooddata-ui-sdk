@@ -21,6 +21,7 @@ import { elementRegion, isFixedPosition } from "../utils/domUtilities.js";
 import { GOODSTRAP_DRAG_EVENT } from "../utils/drag.js";
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment, getOverlayStyles } from "../utils/overlay.js";
 import { GOODSTRAP_SCROLLED_EVENT } from "../utils/scroll.js";
+
 import { OverlayContext } from "./OverlayContext.js";
 import { type IOverlayProps, type IOverlayState } from "./typings.js";
 

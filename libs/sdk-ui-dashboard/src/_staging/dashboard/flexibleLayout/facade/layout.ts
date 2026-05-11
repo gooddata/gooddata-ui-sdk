@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 import { type IDashboardLayout, type IDashboardLayoutSize, isDashboardLayout } from "@gooddata/sdk-model";
 
 import { type ILayoutItemPath } from "../../../../types.js";
+
 import {
     type IDashboardLayoutFacade,
     type IDashboardLayoutSectionFacade,

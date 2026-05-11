@@ -71,6 +71,7 @@ import { getDefaultCronExpression } from "../utils/cron.js";
 import { getDefaultPdfPageSize } from "../utils/pdfPageSize.js";
 import { isMobileView } from "../utils/responsive.js";
 import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
+
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
 import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";

@@ -16,6 +16,7 @@ import {
     writeAsJsonSync,
 } from "../_base/utils.js";
 import { getDashboardPluginTemplateArchive } from "../dashboard-plugin-template.js";
+
 import { type InitCmdActionConfig, getInitCmdActionConfig } from "./actionConfig.js";
 import { type IFileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 

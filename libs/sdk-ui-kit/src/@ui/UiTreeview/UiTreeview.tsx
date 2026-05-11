@@ -14,6 +14,7 @@ import {
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+
 import { DefaultUiTreeViewItemComponent } from "./defaults/DefaultUiTreeViewItemComponent.js";
 import {
     type IUiLeveledTreeViewProps,

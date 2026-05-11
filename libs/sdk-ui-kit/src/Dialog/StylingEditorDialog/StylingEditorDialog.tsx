@@ -13,6 +13,7 @@ import { Typography } from "../../Typography/Typography.js";
 import { useId } from "../../utils/useId.js";
 import { Dialog } from "../Dialog.js";
 import { type IDialogBaseProps } from "../typings.js";
+
 import { BubbleHeaderSeparator } from "./BubbleHeaderSeparator.js";
 import {
     StylingEditorDialogFooter,

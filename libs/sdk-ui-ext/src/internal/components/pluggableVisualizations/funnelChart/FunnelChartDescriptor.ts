@@ -20,6 +20,7 @@ import {
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+
 import { PluggableFunnelChart } from "./PluggableFunnelChart.js";
 
 export class FunnelChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {

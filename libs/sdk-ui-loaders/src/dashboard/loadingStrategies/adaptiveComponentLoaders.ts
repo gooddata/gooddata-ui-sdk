@@ -10,6 +10,7 @@ import {
     type LoadedPlugin,
     type ModuleFederationIntegration,
 } from "../types.js";
+
 import {
     dynamicDashboardBeforeLoad,
     dynamicDashboardEngineLoader,

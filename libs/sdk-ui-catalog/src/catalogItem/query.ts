@@ -7,6 +7,7 @@ import type {
 import { type IParameterMetadataObjectDefinition, type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import type { ObjectType } from "../objectType/types.js";
+
 import type {
     ICatalogItem,
     ICatalogItemAttribute,

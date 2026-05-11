@@ -11,6 +11,7 @@ import { UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { type ICatalogItemRef } from "../catalogItem/types.js";
 import { mapObjectType } from "../objectType/mapping.js";
 import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
+
 import { QualityIssueObjectDetail } from "./QualityIssueObjectDetail.js";
 
 type Props = {

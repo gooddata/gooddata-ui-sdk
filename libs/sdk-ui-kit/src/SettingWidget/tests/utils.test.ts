@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { getColorsPreviewFromTheme } from "../StylingSettingWidget/utils.js";
+
 import { customItemsMock, fullyDefinedThemeMock } from "./mocks.js";
 
 describe("getColorsPreviewFromTheme", () => {

@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { type IExecutionConfig, type IFilter } from "@gooddata/sdk-model";
 
 import { collectReferences } from "../helpers/references.js";
+
 import { useEvaluatedMetricsAndAttributes } from "./useEvaluatedMetricsAndAttributes.js";
 
 export function useEvaluatedReferences(

@@ -9,6 +9,7 @@ import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 import type { IChatConversationLocalItem } from "../../model.js";
 import { setUserFeedback } from "../../store/messages/messagesSlice.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
+
 import { FeedbackPopup } from "./FeedbackPopup.js";
 import { useUserFeedback } from "./useUserFeedback.js";
 

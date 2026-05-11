@@ -3,6 +3,7 @@
 import type { IKnowledgeDocumentsService, IOrganizationGenAIService } from "@gooddata/sdk-backend-spi";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+
 import { OrganizationKnowledgeDocumentsService } from "./KnowledgeDocumentsService.js";
 
 /**

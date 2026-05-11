@@ -27,6 +27,7 @@ import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
 
 import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
 import { type IAttributeFilterHandlerStoreContext } from "../store/types.js";
+
 import { InMemoryPaging } from "./InMemoryPaging.js";
 import { type IHiddenElementsInfo } from "./types.js";
 

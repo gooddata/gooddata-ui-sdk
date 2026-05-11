@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type ActionOptions } from "../types.js";
+
 import { createHostnameValidator, validOrDie } from "./validators.js";
 
 /**

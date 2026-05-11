@@ -8,6 +8,7 @@ import {
 import { type INotificationsQuery, type IOrganizationNotificationService } from "@gooddata/sdk-backend-spi";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { NotificationsQuery } from "./notificationsQuery.js";
 
 export class OrganizationNotificationService implements IOrganizationNotificationService {

@@ -1,6 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { type RemotePluggableApplicationsRegistry } from "../pluggableApplication/index.js";
+
 import { type IFeatureFlags, type IPermanentSettings } from "./settings.js";
 
 /**

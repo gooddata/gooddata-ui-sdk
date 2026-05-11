@@ -28,6 +28,7 @@ import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration.js";
 import { getScatterConfiguration } from "../scatterPlot/scatterConfiguration.js";
 import { getTreemapConfiguration } from "../treemap/treemapConfiguration.js";
 import { getWaterfallConfiguration } from "../waterfallChart/waterfallConfiguration.js";
+
 import { getCommonConfiguration } from "./commonConfiguration.js";
 import { getCustomizedConfiguration } from "./customConfiguration.js";
 

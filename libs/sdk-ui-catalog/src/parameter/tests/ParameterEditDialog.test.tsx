@@ -12,6 +12,7 @@ import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { ParameterEditDialog } from "../ParameterEditDialog.js";
 import { ParameterMutationProvider } from "../ParameterMutationContext.js";
 import type { IParameterMutationPort } from "../parameterMutationPort.js";
+
 import { createTestParameterMutationPort } from "./parameterMutationPort.test.utils.js";
 
 // Mock SyntaxHighlightingInput (CodeMirror doesn't work in happy-dom)

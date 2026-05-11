@@ -20,6 +20,7 @@ import {
     type ILegendSection,
     isLegendColorCategoryItem,
 } from "../../types/legend/model.js";
+
 import { type LegendMessageFormatter } from "./legendMessages.js";
 import { MultiLayerLegendSection } from "./MultiLayerLegendSection.js";
 

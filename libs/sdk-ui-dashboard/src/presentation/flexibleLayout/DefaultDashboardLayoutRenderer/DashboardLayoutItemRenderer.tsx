@@ -6,6 +6,7 @@ import { isCustomWidgetBase } from "../../../model/types/layoutTypes.js";
 import { renderModeAware } from "../../componentDefinition/renderModeAware.js";
 import { RowEndHotspot } from "../dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { useIsDraggingCurrentItem } from "../dragAndDrop/draggableWidget/useIsDraggingCurrentItem.js";
+
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { type IDashboardLayoutItemRenderProps, type IDashboardLayoutItemRenderer } from "./interfaces.js";
 

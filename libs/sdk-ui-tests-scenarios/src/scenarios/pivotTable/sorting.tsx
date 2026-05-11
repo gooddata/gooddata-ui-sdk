@@ -5,6 +5,7 @@ import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
 import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import { scenariosFor } from "../../scenarioGroup.js";
+
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndSingleRowAttr,

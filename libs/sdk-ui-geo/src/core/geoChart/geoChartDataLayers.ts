@@ -6,6 +6,7 @@ import type mapboxgl from "mapbox-gl";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { type IGeoConfig, type IGeoData, type IGeoPointsConfig } from "../../GeoChart.js";
+
 import {
     DEFAULT_CLUSTER_FILTER,
     DEFAULT_CLUSTER_LABELS_CONFIG,

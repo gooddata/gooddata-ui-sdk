@@ -8,6 +8,7 @@ import { type ObjRef } from "@gooddata/sdk-model";
 import { simplifyText } from "@gooddata/util";
 
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/types/attributeFilterTypes.js";
+
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 
 interface IConfigurationParentItemProps {

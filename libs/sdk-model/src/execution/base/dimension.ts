@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 
 import { type Identifier } from "../../objRef/index.js";
 import { type IAttribute, attributeLocalId, isAttribute } from "../attribute/index.js";
+
 import { type ITotal, isTotal } from "./totals.js";
 
 /**

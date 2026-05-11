@@ -5,6 +5,7 @@ import { type IDashboard, type IInsight, type IWorkspacePermissions, type ObjRef
 
 import { type DateFilterValidationResult, type ISharingProperties } from "../../types.js";
 import { type DashboardConfig, type DashboardContext } from "../types/commonTypes.js";
+
 import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 

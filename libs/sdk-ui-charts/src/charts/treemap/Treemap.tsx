@@ -25,6 +25,7 @@ import { type IBucketChartProps } from "../../interfaces/chartProps.js";
 import { withChart } from "../_base/withChart.js";
 import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { treemapDimensions } from "../_commons/dimensions.js";
+
 import { CoreTreemap } from "./CoreTreemap.js";
 
 //

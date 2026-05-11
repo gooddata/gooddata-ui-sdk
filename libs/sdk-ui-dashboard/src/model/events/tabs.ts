@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type DashboardContext } from "../types/commonTypes.js";
+
 import { type IDashboardEvent } from "./base.js";
 
 /**

@@ -16,6 +16,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
+
 import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
 import { type IAttributeFilterElementsSelectItemProps } from "./types.js";
 

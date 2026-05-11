@@ -15,6 +15,7 @@ import { useDashboardSelector } from "../../../../../model/react/DashboardStoreP
 import { selectAllCatalogDisplayFormsMap } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { type IParametersPanelSectionsCommonProps } from "../types.js";
+
 import { DisplayFormParam } from "./DisplayFormParam.js";
 
 export interface IDashboardParametersSectionProps extends IParametersPanelSectionsCommonProps {

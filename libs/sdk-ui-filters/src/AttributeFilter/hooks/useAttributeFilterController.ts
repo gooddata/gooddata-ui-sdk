@@ -34,6 +34,7 @@ import {
     type OnApplyCallbackType,
     type OnChangeCallbackType,
 } from "../types.js";
+
 import { type AttributeFilterController } from "./types.js";
 import { useElementsFilterController } from "./useElementsFilterController.js";
 import { useFilterDetailRequestHandler } from "./useFilterDetailRequestHandler.js";

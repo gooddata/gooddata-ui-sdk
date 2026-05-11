@@ -26,6 +26,7 @@ import {
 
 import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
+
 import {
     getOccupiedMeasureBucketsLocalIdentifiers,
     isComparativeSeries,

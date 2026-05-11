@@ -7,6 +7,7 @@ import {
     type IChatConversationMultipartLocalPart,
 } from "../../model.js";
 import { loadWhatIfScenarios } from "../../whatIf/whatIfMapping.js";
+
 import { ConversationErrorContent } from "./conversationContents/ConversationErrorContent.js";
 import { ConversationKdaContent } from "./conversationContents/ConversationKdaContent.js";
 import { ConversationReasoningContent } from "./conversationContents/ConversationReasoningContent.js";

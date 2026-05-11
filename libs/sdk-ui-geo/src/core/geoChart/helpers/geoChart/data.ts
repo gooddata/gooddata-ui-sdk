@@ -28,6 +28,7 @@ import {
     type IGeoSegmentItem,
 } from "../../../../GeoChart.js";
 import type { IGeoLngLat } from "../../../../publicTypes/geoCommon.js";
+
 import {
     dataValueAsFloat,
     getFormatFromExecutionResponse,

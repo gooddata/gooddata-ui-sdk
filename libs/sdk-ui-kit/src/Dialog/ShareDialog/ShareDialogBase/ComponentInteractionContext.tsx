@@ -12,6 +12,7 @@ import {
     type ShareDialogInteractionGranteeData,
     type ShareDialogInteractionType,
 } from "../types.js";
+
 import { type GranteeItem, isGranularGrantee, isGranularGranteeUser } from "./types.js";
 import { getGranularPermissionFromUserPermissions, getIsGranteeCurrentUser } from "./utils.js";
 

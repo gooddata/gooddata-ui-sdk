@@ -7,6 +7,7 @@ import { type IColorMapping, type ICustomTooltipConfig } from "@gooddata/sdk-ui-
 import type { IGeoLngLat, IGeoLngLatBounds } from "../../../publicTypes/geoCommon.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import type { GeoBasemap } from "../map/basemap.js";
+
 import { type IGeoAreasConfig } from "./areas.js";
 import { type IGeoChartLegendConfig } from "./legend.js";
 import { type IGeoChartViewport } from "./viewport.js";

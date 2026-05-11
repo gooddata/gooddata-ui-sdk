@@ -8,6 +8,7 @@ import { describe, expect, it } from "vitest";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { ColoredItemsList, type IColoredItemsListProps } from "../ColoredItemsList.js";
+
 import { inputItemsMock } from "./mock.js";
 
 const defaultProps: IColoredItemsListProps = {

@@ -1,6 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type MetadataObject } from "../metadata/index.js";
+
 import { type ICatalogAttribute, isCatalogAttribute } from "./attribute/index.js";
 import { type ICatalogAttributeHierarchy, isCatalogAttributeHierarchy } from "./attributeHierarchy/index.js";
 import { type ICatalogDateDataset } from "./dateDataset/index.js";

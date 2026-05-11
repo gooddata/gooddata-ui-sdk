@@ -4,6 +4,7 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { selectDashboardLoading } from "../../../model/store/loading/loadingSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { type IDashboardProps } from "../types.js";
+
 import { DashboardInner } from "./DashboardInner.js";
 
 export function DashboardLoading(props: IDashboardProps) {

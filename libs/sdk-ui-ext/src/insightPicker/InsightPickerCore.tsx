@@ -12,6 +12,7 @@ import {
     type ITabsIds,
     useInsightPagedList,
 } from "../internal/components/insightList/useInsightPagedList.js";
+
 import { InsightPickerFilterBar } from "./InsightPickerFilterBar.js";
 import { InsightPickerRow } from "./InsightPickerRow.js";
 import { messages } from "./messages.js";

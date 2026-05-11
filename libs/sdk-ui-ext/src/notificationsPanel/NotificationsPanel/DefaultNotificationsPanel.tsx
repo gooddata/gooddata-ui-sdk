@@ -12,6 +12,7 @@ import { type INotificationsListEmptyStateComponentProps } from "../Notification
 import { type INotificationsListErrorStateComponentProps } from "../NotificationsList/DefaultNotificationsListErrorState.js";
 import { type INotificationSkeletonItemComponentProps } from "../NotificationsList/DefaultSkeletonItem.js";
 import { type INotificationsPanelView } from "../types.js";
+
 import { type INotificationsPanelHeaderComponentProps } from "./DefaultNotificationsPanelHeader.js";
 
 const { b } = bem("gd-ui-ext-notifications-panel");

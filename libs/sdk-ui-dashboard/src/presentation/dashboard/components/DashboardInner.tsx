@@ -35,6 +35,7 @@ import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { type IDashboardProps } from "../types.js";
+
 import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

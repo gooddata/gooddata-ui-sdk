@@ -12,6 +12,7 @@ import { type IMenu } from "../../../publicTypes.js";
 import { AVAILABLE_TOTALS, HEADER_LABEL_CLASS } from "../../base/constants.js";
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { type TableDescriptor } from "../tableDescriptor.js";
+
 import { AggregationsMenu } from "./AggregationsMenu.js";
 
 export type AlignPositions = "left" | "right" | "center";

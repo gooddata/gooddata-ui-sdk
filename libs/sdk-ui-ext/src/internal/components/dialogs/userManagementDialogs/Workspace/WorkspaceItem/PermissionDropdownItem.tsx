@@ -6,6 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type IPermissionsItem, type WorkspacePermission } from "../../types.js";
+
 import { getPermissionTitle } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 

@@ -14,6 +14,7 @@ import cx from "classnames";
 import { pickBy, throttle } from "lodash-es";
 
 import { elementRegion } from "../utils/domUtilities.js";
+
 import { type IFlexDimensionsProps, type IFlexDimensionsState } from "./typings.js";
 
 /**

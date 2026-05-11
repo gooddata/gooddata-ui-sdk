@@ -15,6 +15,7 @@ import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/prof
 import { LIB_VERSION } from "../../__version.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { DefaultFeatureFlags, type ITigerFeatureFlags } from "../uiFeatures.js";
+
 import { getFeatureHubFeatures } from "./hub.js";
 import { getStaticFeatures } from "./static.js";
 

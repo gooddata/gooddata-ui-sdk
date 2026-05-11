@@ -82,6 +82,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { createMockGeoService } from "../geoService.js";
+
 import {
     type IExecutionResponse,
     type IExecutionResult as ILegacyExecutionResult,

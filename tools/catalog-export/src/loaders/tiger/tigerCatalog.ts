@@ -15,6 +15,7 @@ import {
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 
 import { type Attribute, type Catalog, type Fact, type Metric } from "../../base/types.js";
+
 import { convertAttribute, createLabelMap } from "./tigerCommon.js";
 
 function convertMetrics(metrics: JsonApiMetricOutList): Metric[] {

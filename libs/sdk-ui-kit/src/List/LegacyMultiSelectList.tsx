@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 
 import { Button } from "../Button/Button.js";
 import { FlexDimensions } from "../FlexDimensions/FlexDimensions.js";
+
 import { guidFor } from "./guid.js";
 import { LegacyList } from "./LegacyList.js";
 import { LegacyListItem } from "./LegacyListItem.js";

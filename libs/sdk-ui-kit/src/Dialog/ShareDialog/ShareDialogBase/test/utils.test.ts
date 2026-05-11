@@ -14,6 +14,7 @@ import {
     notInArrayFilter,
     sortGranteesByName,
 } from "../utils.js";
+
 import { current, granularRule, groupAll, owner, user } from "./GranteeMock.js";
 
 describe("utils", () => {

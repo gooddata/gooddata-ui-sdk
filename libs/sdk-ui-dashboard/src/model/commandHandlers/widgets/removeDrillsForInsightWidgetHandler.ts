@@ -13,6 +13,7 @@ import { selectWidgetByRef, selectWidgetsMap } from "../../store/tabs/layout/lay
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { validateDrills } from "../common/validateDrills.js";
 import { validateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
+
 import { existsDrillDefinitionInArray } from "./validation/insightDrillDefinitionUtils.js";
 import { validateRemoveDrillsByLocalIdentifier } from "./validation/removeDrillsSelectorValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";

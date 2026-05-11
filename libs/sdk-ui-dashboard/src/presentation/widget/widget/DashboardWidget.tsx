@@ -13,6 +13,7 @@ import {
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { LoadingDashboardPlaceholderWidget } from "../../dragAndDrop/draggableWidget/LoadingDashboardWidget.js";
 import { EmptyDashboardDropZone as FlexibleEmptyDashboardDropZone } from "../../flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.js";
+
 import { DefaultDashboardWidget } from "./DefaultDashboardWidget.js";
 import { type CustomDashboardWidgetComponent, type IDashboardWidgetProps } from "./types.js";
 

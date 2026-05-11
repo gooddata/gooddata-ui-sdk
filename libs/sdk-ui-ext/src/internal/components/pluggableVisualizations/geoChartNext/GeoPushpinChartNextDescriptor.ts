@@ -22,6 +22,7 @@ import {
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
 import { MAX_VISUALIZATION_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
+
 import { geoConfigFromInsight } from "./geoConfigBuilder.js";
 import { buildGeoChartNextGlobalFilters, buildGeoChartNextLayers } from "./geoEmbeddingLayers.js";
 import { PluggableGeoPushpinChartNext } from "./PluggableGeoPushpinChartNext.js";

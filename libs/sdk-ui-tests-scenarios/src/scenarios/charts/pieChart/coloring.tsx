@@ -9,6 +9,7 @@ import { AmountMeasurePredicate, AttributeElements, WonMeasurePredicate } from "
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+
 import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IPieChartProps>("PieChart", PieChart)

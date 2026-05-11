@@ -10,6 +10,7 @@ import { DataRecorderError } from "../base/types.js";
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 import { logError } from "../cli/loggers.js";
 import { RecordingFiles } from "../interface.js";
+
 import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 
 //

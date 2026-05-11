@@ -24,6 +24,7 @@ import {
     isVisualizationSwitcherDraggableItem,
 } from "../../../dragAndDrop/types.js";
 import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
+
 import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";

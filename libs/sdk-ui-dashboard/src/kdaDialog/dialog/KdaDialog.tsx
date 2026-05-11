@@ -18,6 +18,7 @@ import { MetricsBar } from "../composition/MetricsBar.js";
 import { KDA_DIALOG_OVERS_Z_INDEX } from "../const.js";
 import { useKdaState } from "../providers/KdaState.js";
 import { type IKdaDialogProps } from "../types.js";
+
 import { useChangeAnalysis } from "./hooks/useChangeAnalysis.js";
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { useKdaDialogTooltipsOverride } from "./hooks/useKdaDialogTooltipsOverride.js";

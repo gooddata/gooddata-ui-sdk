@@ -4,6 +4,7 @@ import { forwardRef } from "react";
 
 import { bem } from "../@utils/bem.js";
 import { UiTag as UiTagComponent } from "../UiTag/UiTag.js";
+
 import { type IUiTagDef } from "./types.js";
 
 const { e } = bem("gd-ui-kit-tags");

@@ -6,6 +6,7 @@ import { type IntlShape } from "react-intl";
 import { UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import type { VisualizationType } from "../catalogItem/types.js";
+
 import { getObjectTypeLabel } from "./labels.js";
 import type { ObjectType } from "./types.js";
 

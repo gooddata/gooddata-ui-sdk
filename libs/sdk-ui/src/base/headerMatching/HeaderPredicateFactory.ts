@@ -23,6 +23,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type DataViewFacade } from "../results/facade.js";
+
 import { type IHeaderPredicate, type IHeaderPredicateContext } from "./HeaderPredicate.js";
 import {
     type IMappingHeader,

@@ -9,6 +9,7 @@ import {
     type ThemeInconsistentCssVariable,
     type ThemeInternalCssVariable,
 } from "../types.js";
+
 import { type CssVariableUsage } from "./types.js";
 import { groupByUnique } from "./utils.js";
 

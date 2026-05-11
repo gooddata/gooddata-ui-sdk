@@ -43,6 +43,7 @@ import { selectFilterableWidgetByRef } from "../../../../model/store/tabs/layout
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
 import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
+
 import { ParametersPanel } from "./CustomUrlEditorParameters.js";
 import { type IAttributeWithDisplayForm } from "./types.js";
 

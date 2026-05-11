@@ -10,6 +10,7 @@ import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { UiButton, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { filterCreatedBy } from "../automation/testIds.js";
+
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
 

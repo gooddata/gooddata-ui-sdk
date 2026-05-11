@@ -21,6 +21,7 @@ import { LabelSubsection } from "../configurationControls/axis/LabelSubsection.j
 import { NameSubsection } from "../configurationControls/axis/NameSubsection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
+
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class HeatMapConfigurationPanel extends ConfigurationPanelContent {

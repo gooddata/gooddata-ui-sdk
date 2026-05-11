@@ -27,6 +27,7 @@ import {
     convertFilter,
     newFilterWithApplyOnResult,
 } from "../FilterConverter.js";
+
 import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture.js";
 
 describe("tiger filter converter from model to AFM", () => {

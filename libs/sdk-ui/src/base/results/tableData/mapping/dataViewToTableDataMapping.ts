@@ -5,6 +5,7 @@ import { type ITableDataValue } from "../interfaces/cells.js";
 import { type ITableColumnDefinition } from "../interfaces/columns.js";
 import { type IMappingOptions } from "../interfaces/mappingOptions.js";
 import { type ITableRowDefinition } from "../interfaces/rows.js";
+
 import { mapGrandTotalRowAttributeColumn } from "./grandTotalRow/attribute.js";
 import { mapGrandTotalRowGrandTotalColumn } from "./grandTotalRow/grandTotal.js";
 import { mapGrandTotalRowMeasureGroupHeaderColumn } from "./grandTotalRow/measureGroupHeader.js";

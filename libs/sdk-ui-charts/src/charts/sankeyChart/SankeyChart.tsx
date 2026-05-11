@@ -18,6 +18,7 @@ import { type IBucketChartProps } from "../../interfaces/chartProps.js";
 import { withChart } from "../_base/withChart.js";
 import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { sankeyDimensions } from "../_commons/dimensions.js";
+
 import { CoreSankeyChart } from "./CoreSankeyChart.js";
 
 //

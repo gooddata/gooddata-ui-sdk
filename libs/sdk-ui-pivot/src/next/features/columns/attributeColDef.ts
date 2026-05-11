@@ -7,6 +7,7 @@ import { type ITableAttributeColumnDefinition } from "@gooddata/sdk-ui";
 import { AttributeCell } from "../../components/Cell/AttributeCell.js";
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { HEADER_CELL_CLASSNAME } from "../styling/bem.js";
+
 import { extractIntlFormattedValue } from "./shared.js";
 
 /**

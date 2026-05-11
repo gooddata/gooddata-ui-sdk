@@ -18,6 +18,7 @@ import { selectEnableAlerting, selectEnableScheduling } from "../../model/store/
 import { selectDashboardTitle } from "../../model/store/meta/metaSelectors.js";
 import { uiActions } from "../../model/store/ui/index.js";
 import { selectIsDeleteDialogOpen } from "../../model/store/ui/uiSelectors.js";
+
 import { type IDeleteDialogProps } from "./types.js";
 
 const deleteMessages = defineMessages({

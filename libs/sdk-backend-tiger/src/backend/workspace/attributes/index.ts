@@ -51,6 +51,7 @@ import { getIdOrigin, isInheritedObject } from "../../../convertors/fromBackend/
 import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter.js";
 import { toLabelQualifier } from "../../../convertors/toBackend/ObjRefConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+
 import { AttributesQuery } from "./attributesQuery.js";
 import { TigerWorkspaceElements } from "./elements/index.js";
 

@@ -19,6 +19,7 @@ import { selectCatalogParameters, selectCatalogParametersIsLoaded } from "../cat
 import { selectEnableParameters } from "../config/configSelectors.js";
 import { selectInsightByWidgetRef } from "../insights/insightsSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+
 import { type IDashboardParameterEntry } from "./parametersState.js";
 
 const selectSelf = (state: DashboardState) => state.parameters;

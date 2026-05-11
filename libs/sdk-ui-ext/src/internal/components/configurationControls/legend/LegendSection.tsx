@@ -5,6 +5,7 @@ import { memo } from "react";
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
+
 import { LegendPositionControl } from "./LegendPositionControl.js";
 
 export interface ILegendSection {

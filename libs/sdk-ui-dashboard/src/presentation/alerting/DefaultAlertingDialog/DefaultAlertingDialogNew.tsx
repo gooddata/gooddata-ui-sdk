@@ -56,6 +56,7 @@ import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { type IAlertingDialogProps } from "../types.js";
+
 import { AlertingDialogHeader } from "./AlertingDialogHeader.js";
 import { AlertAttributeSelect } from "./components/AlertAttributeSelect.js";
 import { AlertComparisonOperatorSelect } from "./components/AlertComparisonOperatorSelect.js";

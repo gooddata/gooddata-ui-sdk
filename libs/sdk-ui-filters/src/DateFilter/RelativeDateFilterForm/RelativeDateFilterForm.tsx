@@ -7,6 +7,7 @@ import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { DATE_FILTER_RELATIVE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
 import { type DateFilterOption, type IUiRelativeDateFilterForm } from "../interfaces/index.js";
 import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker.js";
+
 import { GranularityTabs } from "./GranularityTabs.js";
 
 /**

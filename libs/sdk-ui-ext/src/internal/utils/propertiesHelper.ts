@@ -24,6 +24,7 @@ import {
     type IVisProps,
     type IVisualizationProperties,
 } from "../interfaces/Visualization.js";
+
 import {
     getAllMeasuresShowOnSecondaryAxis,
     getItemsCount,

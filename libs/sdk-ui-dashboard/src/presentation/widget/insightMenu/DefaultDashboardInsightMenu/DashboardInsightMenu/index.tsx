@@ -29,6 +29,7 @@ import {
     type IInsightMenuSubmenu,
     isIInsightMenuSubmenu,
 } from "../../types.js";
+
 import {
     CustomUiMenuContentComponent,
     CustomUiMenuContentItemComponent,

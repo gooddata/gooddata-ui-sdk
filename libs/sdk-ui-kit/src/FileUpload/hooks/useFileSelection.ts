@@ -3,6 +3,7 @@
 import { type Dispatch, type SetStateAction, useCallback, useState } from "react";
 
 import { type IFileRejection, type IFileValidationResult, type IFileValidationRules } from "../types.js";
+
 import { validateFile } from "./validateFile.js";
 
 /**

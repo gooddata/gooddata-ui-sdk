@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import type { ICatalogItem } from "../catalogItem/types.js";
+
 import { CatalogItemCard } from "./CatalogItemCard.js";
 
 type Props = {

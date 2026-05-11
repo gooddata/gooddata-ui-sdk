@@ -31,6 +31,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IDashboardFilter } from "../../types.js";
+
 import { createDefaultFilterContext } from "./defaultFilterContext.js";
 
 /**

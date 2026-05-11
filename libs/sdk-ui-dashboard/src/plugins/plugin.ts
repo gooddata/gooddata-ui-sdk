@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import type { DashboardContext } from "../model/types/commonTypes.js";
+
 import { type IDashboardCustomizer, type IDashboardEventHandling } from "./customizer.js";
 
 /**

@@ -14,6 +14,7 @@ import {
     isCatalogItemMeasure,
 } from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
+
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";

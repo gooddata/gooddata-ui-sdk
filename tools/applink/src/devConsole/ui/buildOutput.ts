@@ -13,6 +13,7 @@ import {
     type IEventListener,
     buildOutputExited,
 } from "../events.js";
+
 import { AppPanel, type AppPanelOptions } from "./appPanel.js";
 
 export class BuildOutput extends AppPanel implements IEventListener {

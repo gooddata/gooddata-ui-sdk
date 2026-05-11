@@ -3,6 +3,7 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 import { type IMenuPositionConfig } from "../MenuSharedTypes.js";
+
 import {
     calculateMenuPosition,
     getElementDimensions,

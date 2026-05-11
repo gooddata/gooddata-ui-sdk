@@ -27,6 +27,7 @@ import { useResizeHandlers, useResizeWidthItemStatus } from "../../../dragAndDro
 import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
 import { getDashboardLayoutItemMaxGridWidth } from "../../DefaultDashboardLayoutRenderer/utils/sizing.js";
 import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview.js";
+
 import { WidthResizer } from "./WidthResizer.js";
 
 export type WidthResizerHotspotProps = {

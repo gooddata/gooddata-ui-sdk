@@ -17,6 +17,7 @@ import {
     type IValuesLimitingItemWithTitle,
     useSearchableLimitingItems,
 } from "../shared/limitingItemsHook.js";
+
 import { PopupHeader } from "./PopupHeader.js";
 import { getTelemetryEventForLimitingItem } from "./telemetryUtils.js";
 

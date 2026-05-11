@@ -13,6 +13,7 @@ import {
 import { asyncProcessSelector, globalErrorSelector } from "../store/messages/messagesSelectors.js";
 import { clearThreadAction, setGlobalErrorAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
+
 import { GlobalError } from "./GlobalError.js";
 
 type ErrorBoundaryProps = {

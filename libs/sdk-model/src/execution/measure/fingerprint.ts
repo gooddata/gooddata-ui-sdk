@@ -5,6 +5,7 @@ import { merge } from "lodash-es";
 
 import { isFilterRelevantForFingerprinting } from "../filter/fingerprint.js";
 import { type IMeasureFilter } from "../filter/index.js";
+
 import { type IMeasure, type IMeasureDefinition, isSimpleMeasure } from "./index.js";
 
 type MeasureDefinitionPropsToDefault = Pick<

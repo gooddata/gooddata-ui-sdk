@@ -14,6 +14,7 @@ import { DashboardItem } from "../../presentationComponents/DashboardItems/Dashb
 import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
 import { getVisTypeCssClass } from "../../presentationComponents/DashboardItems/utils.js";
 import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
+
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
 import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useExecutionProgress } from "./useExecutionProgress.js";

@@ -13,6 +13,7 @@ import {
 import { type ISharingApplyPayload } from "@gooddata/sdk-ui-kit";
 
 import { type DashboardConfig } from "../types/commonTypes.js";
+
 import { type IDashboardCommand } from "./base.js";
 
 /**

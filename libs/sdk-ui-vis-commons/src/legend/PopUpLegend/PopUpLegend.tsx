@@ -9,6 +9,7 @@ import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { type ChartFillType } from "../../coloring/types.js";
 import { StaticLegend } from "../StaticLegend.js";
 import { type ISeriesItem, type ItemBorderRadiusPredicate } from "../types.js";
+
 import { LegendDialog } from "./LegendDialog.js";
 import { RowLegend } from "./RowLegend.js";
 

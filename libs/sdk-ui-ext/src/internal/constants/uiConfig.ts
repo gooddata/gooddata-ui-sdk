@@ -3,6 +3,7 @@
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IUiConfig } from "../interfaces/Visualization.js";
+
 import { ATTRIBUTE, DATE, FACT, GEO_ATTRIBUTE, METRIC } from "./bucket.js";
 
 export const MAX_METRICS_COUNT = 40;

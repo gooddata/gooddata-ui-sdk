@@ -3,6 +3,7 @@
 import { type ISortItem } from "../execution/base/sort.js";
 import { type IBucket } from "../execution/buckets/index.js";
 import { type IFilter } from "../execution/filter/index.js";
+
 import {
     type IAttributeFilterConfigs,
     type IInsightDefinition,

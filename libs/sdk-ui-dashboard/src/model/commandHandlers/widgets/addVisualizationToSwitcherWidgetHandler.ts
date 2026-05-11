@@ -15,6 +15,7 @@ import { insightsActions } from "../../store/insights/index.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { validateExistingVisualizationSwitcherWidget } from "./validation/widgetValidations.js";
 
 export function* addVisualizationToSwticherWidgetContentHandler(

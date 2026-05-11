@@ -14,6 +14,7 @@ import type { ICatalogItem, ICatalogItemParameter, ICatalogItemRef } from "../ca
 import { ParameterCreateDialog } from "../parameter/ParameterCreateDialog.js";
 import { ParameterDeleteDialog } from "../parameter/ParameterDeleteDialog.js";
 import { ParameterEditDialog } from "../parameter/ParameterEditDialog.js";
+
 import { CatalogDetailActionBar } from "./CatalogDetailActionBar.js";
 import type { ICatalogDetailAction, OpenHandlerEvent } from "./types.js";
 

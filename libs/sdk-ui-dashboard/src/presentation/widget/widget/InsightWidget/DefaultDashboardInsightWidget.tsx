@@ -33,6 +33,7 @@ import {
 } from "../../insight/insightToTable.js";
 import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
+
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";

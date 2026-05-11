@@ -11,6 +11,7 @@ import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.j
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
+
 import { type IDashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import { type IDashboardLayoutItemKeyGetter } from "./interfaces.js";

@@ -39,6 +39,7 @@ import {
 import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
 import { getAuthor } from "../../model/utils/author.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
+
 import { InsightListNoData } from "./InsightListNoData.js";
 import { type IInsightListProps } from "./types.js";
 

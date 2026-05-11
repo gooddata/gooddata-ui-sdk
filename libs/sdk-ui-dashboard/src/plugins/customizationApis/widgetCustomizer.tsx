@@ -4,6 +4,7 @@ import { isCustomWidget } from "../../model/types/layoutTypes.js";
 import type { OptionalWidgetComponentProvider } from "../../presentation/dashboardContexts/types.js";
 import type { CustomDashboardWidgetComponent } from "../../presentation/widget/widget/types.js";
 import { type IDashboardWidgetCustomizer } from "../customizer.js";
+
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 
 /*

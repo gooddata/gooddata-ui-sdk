@@ -6,6 +6,7 @@ import { type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
 import { validateDateFilterConfig } from "../validation.js";
+
 import { absoluteForm, allTime, lastMonth, relativeForm, year2019 } from "./fixtures.js";
 
 describe("validateDateFilterConfig", () => {

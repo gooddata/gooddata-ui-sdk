@@ -3,6 +3,7 @@
 import { type ISettings } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../../../types/commonTypes.js";
+
 import { loadNotificationChannelsCount } from "./loadNotificationChannelsCount.js";
 import { loadWorkspaceAutomationsCount } from "./loadWorkspaceAutomationsCount.js";
 

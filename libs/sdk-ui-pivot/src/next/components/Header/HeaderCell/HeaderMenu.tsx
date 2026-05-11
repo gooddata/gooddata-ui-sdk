@@ -22,6 +22,7 @@ import {
     type ISortingMenuItem,
     type ITextWrappingMenuItem,
 } from "../../../types/menu.js";
+
 import {
     type AggregationsMenuItemData,
     HeaderInteractiveItem,

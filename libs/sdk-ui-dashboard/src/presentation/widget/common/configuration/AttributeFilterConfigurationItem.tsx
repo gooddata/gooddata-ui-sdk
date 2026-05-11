@@ -16,6 +16,7 @@ import {
 import { simplifyText } from "@gooddata/util";
 
 import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
+
 import { FilterConfigurationItemLabel } from "./FilterConfigurationItemLabel.js";
 import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling.js";
 import { useIsFilterNotApplied } from "./useIsFilterNotApplied.js";

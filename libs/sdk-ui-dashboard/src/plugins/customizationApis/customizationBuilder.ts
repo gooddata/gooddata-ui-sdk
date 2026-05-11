@@ -28,6 +28,7 @@ import {
     type IVisualizationSwitcherCustomizer,
 } from "../customizer.js";
 import { type IDashboardPluginContract_V1 } from "../plugin.js";
+
 import { DashboardCustomizationLogger } from "./customizationLogging.js";
 import { DefaultDashboardContentCustomizer } from "./dashboardContentCustomizer.js";
 import { DefaultFilterBarCustomizer } from "./filterBarCustomizer.js";

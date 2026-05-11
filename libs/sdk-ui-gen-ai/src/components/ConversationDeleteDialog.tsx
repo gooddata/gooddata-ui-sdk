@@ -10,6 +10,7 @@ import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 import { type IChatConversationLocal } from "../model.js";
 import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { generateTemporaryTitle } from "../utils.js";
+
 import { collectReferences, replaceReferences } from "./completion/references.js";
 
 const messages = defineMessages({

@@ -11,6 +11,7 @@ import {
     selectCatalogParametersStatus,
 } from "../catalogSelectors.js";
 import { type ICatalogParametersState } from "../catalogState.js";
+
 import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.fixture.js";
 
 describe("catalogSelectors", () => {

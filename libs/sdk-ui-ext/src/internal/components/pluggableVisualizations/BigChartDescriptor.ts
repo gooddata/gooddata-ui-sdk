@@ -7,6 +7,7 @@ import {
     type IVisualizationSizeInfo,
     type PluggableVisualizationFactory,
 } from "../../interfaces/VisualizationDescriptor.js";
+
 import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor.js";
 import { MIN_VISUALIZATION_HEIGHT_FLEXIBLE_LAYOUT } from "./constants.js";
 

@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import { isWidgetAlert, isWidgetAlertDefinition } from "../alert.js";
+
 import {
     widgetAlert,
     widgetAlertDefinitionToCreate,

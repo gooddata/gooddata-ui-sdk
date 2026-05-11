@@ -31,6 +31,7 @@ import {
 import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
 import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";
+
 import { ConfigurationCategory } from "./ConfigurationCategory.js";
 import { ConfigurationPanelHeader } from "./ConfigurationPanelHeader.js";
 import { AttributeDisplayFormsDropdown } from "./displayForms/AttributeDisplayFormsDropdown.js";

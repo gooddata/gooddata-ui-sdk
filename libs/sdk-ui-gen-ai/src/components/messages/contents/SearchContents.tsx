@@ -7,6 +7,7 @@ import cx from "classnames";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { type SearchContents } from "../../../model.js";
+
 import { MarkdownComponent } from "./Markdown.js";
 import { replaceLinks } from "./replaceLinks.js";
 

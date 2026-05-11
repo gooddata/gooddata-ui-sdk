@@ -6,6 +6,7 @@ import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, DropdownButton, DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { type IConnectingAttribute } from "../../../../../../model/types/attributeFilterTypes.js";
+
 import { ConnectingAttributeItem } from "./ConnectingAttributeItem.js";
 
 interface IConnectingAttributeDropdownProps {

@@ -20,6 +20,7 @@ import {
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+
 import { PluggableSankeyChart } from "./PluggableSankeyChart.js";
 
 export class SankeyChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {

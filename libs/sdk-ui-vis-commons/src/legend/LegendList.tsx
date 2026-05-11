@@ -3,6 +3,7 @@
 import { type ReactElement, memo, useRef } from "react";
 
 import { type ChartFillType } from "../coloring/types.js";
+
 import { LegendSeriesContextStore } from "./context.js";
 import { groupSeries } from "./helpers.js";
 import { LegendGroup } from "./LegendGroup.js";

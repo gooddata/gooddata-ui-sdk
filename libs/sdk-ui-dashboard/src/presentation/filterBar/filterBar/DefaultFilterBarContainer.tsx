@@ -45,6 +45,7 @@ import {
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
+
 import { FilterViews } from "./filterViews/FilterViews.js";
 import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";

@@ -53,6 +53,7 @@ import {
     percentFormatter,
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
+
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
 import { type IIdentifierMapping } from "./customTooltip/identifierMapping.js";
 import { resolveReferencesFromPoint } from "./customTooltip/referenceResolver.js";

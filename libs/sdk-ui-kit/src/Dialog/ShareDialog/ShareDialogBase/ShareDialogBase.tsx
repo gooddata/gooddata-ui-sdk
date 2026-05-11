@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef } from "react";
 
 import { Overlay } from "../../../Overlay/Overlay.js";
 import { type IAlignPoint } from "../../../typings/positioning.js";
+
 import { AddGranteeBase } from "./AddGranteeBase.js";
 import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
 import { ShareGranteeBase } from "./ShareGranteeBase.js";

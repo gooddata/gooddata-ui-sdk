@@ -16,6 +16,7 @@ import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js"
 import { type IPointData, type ISeriesDataItem } from "../../typings/unsafe.js";
 import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
+
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 
 function getViewBy(

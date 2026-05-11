@@ -9,6 +9,7 @@ import { DrillFiltersConfig } from "../DrillFilters/DrillFiltersConfig.js";
 import { DrillOriginSelector } from "../DrillOriginSelector/DrillOriginSelector.js";
 import { InsightDrillConfigList } from "../InsightDrillConfigList.js";
 import { ZoomInsightConfiguration } from "../ZoomInsightConfiguration.js";
+
 import { useInsightDrillConfigPanel } from "./useInsightDrillConfigPanel.js";
 
 /**

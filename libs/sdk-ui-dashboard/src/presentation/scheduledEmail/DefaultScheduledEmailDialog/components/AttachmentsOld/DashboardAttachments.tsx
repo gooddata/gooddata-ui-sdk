@@ -9,6 +9,7 @@ import { Message, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import { getAutomationDashboardFilters } from "../../../../../_staging/automation/index.js";
 import { type IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
+
 import { type AttachmentFilterType, AttachmentFilters } from "./AttachmentFilters.js";
 import { AttachmentDashboard } from "./AttachmentItems.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";

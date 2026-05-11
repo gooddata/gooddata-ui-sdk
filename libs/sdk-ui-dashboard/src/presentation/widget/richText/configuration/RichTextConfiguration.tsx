@@ -8,6 +8,7 @@ import { simplifyText } from "@gooddata/util";
 
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { type IRichTextMenuSubmenuComponentProps } from "../../richTextMenu/types.js";
+
 import { RichTextFilters } from "./RichTextFilters.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

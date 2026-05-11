@@ -3,6 +3,7 @@
 import { type IDataSetMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
 import { type BuilderModifications, builderFactory } from "../builder.js";
+
 import { MetadataObjectBuilder } from "./factory.js";
 
 /**

@@ -11,6 +11,7 @@ import {
     RankingFilterDropdown,
     prepareRankingFilterState,
 } from "../RankingFilterDropdown.js";
+
 import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
 import {
     attribute1Ref as mockAttribute1Ref,

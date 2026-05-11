@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type ILegendGroup } from "../../types/legend/model.js";
+
 import { type LegendMessageFormatter } from "./legendMessages.js";
 
 /**

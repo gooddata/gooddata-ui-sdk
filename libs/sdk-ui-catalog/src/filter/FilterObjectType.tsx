@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { useCatalogFeedCounter } from "../catalogItem/CatalogFeedContext.js";
 import { ObjectTypeSelectMemo } from "../objectType/ObjectTypeSelect.js";
 import { useIsParametersEnabled } from "../parameter/gate.js";
+
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { FilterGroupLayout } from "./FilterGroupLayout.js";
 

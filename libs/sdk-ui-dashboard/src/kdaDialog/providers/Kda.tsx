@@ -6,6 +6,7 @@ import { type ISeparators, isAllValuesDashboardAttributeFilter } from "@gooddata
 
 import { type IKdaState } from "../internalTypes.js";
 import { type IKdaDefinition } from "../types.js";
+
 import { KdaStateProvider } from "./KdaState.js";
 
 export interface IKdaProps {

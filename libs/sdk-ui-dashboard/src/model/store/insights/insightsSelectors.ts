@@ -34,6 +34,7 @@ import {
 import { selectLocale } from "../config/configSelectors.js";
 import { selectWidgetByRef } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+
 import { insightsAdapter } from "./insightsEntityAdapter.js";
 
 const entitySelectors = insightsAdapter.getSelectors((state: DashboardState) => state.insights);

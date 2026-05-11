@@ -7,6 +7,7 @@ import { isEmpty } from "lodash-es";
 import { type HeadlineElementType } from "@gooddata/sdk-ui";
 
 import { type IComparison } from "../../../../interfaces/comparison.js";
+
 import { type IHeadlineDataItem } from "./Headlines.js";
 
 export const COMPARISON_DEFAULT_OBJECT: IComparison = {

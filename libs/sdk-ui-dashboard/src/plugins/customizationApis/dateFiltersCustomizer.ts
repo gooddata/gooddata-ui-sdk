@@ -8,6 +8,7 @@ import {
 } from "../../presentation/dashboardContexts/types.js";
 import { DefaultDashboardDateFilter } from "../../presentation/filterBar/dateFilter/DefaultDashboardDateFilter.js";
 import { type IDateFiltersCustomizer } from "../customizer.js";
+
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 
 const DefaultDateFilterRendererProvider: DateFilterComponentProvider = () => {

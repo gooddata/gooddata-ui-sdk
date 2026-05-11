@@ -8,6 +8,7 @@ import {
     saveChartFill,
     saveColorDefinitions,
 } from "../utils/configUtils.js";
+
 import { type ChartFillType, type ColorMapping, type PatternFillName } from "./types.js";
 import {
     type ConfigDefaults,

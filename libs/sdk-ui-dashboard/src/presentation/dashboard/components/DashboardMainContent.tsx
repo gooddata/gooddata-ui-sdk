@@ -11,6 +11,7 @@ import { useDashboardDrop } from "../../dragAndDrop/useDashboardDrop.js";
 import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
 import { DashboardLayout } from "../../widget/dashboardLayout/DashboardLayout.js";
 import { type IDashboardProps } from "../types.js";
+
 import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings.js";
 
 export const DashboardMainContent = forwardRef(function DashboardMainContent(_: IDashboardProps, ref) {

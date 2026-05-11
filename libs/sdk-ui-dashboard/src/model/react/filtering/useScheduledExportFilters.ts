@@ -3,6 +3,7 @@
 import { type IAutomationMetadataObject, type IInsight } from "@gooddata/sdk-model";
 
 import { type FilterableDashboardWidget } from "../../types/layoutTypes.js";
+
 import { useDashboardScheduledExportFilters } from "./useDashboardScheduledExportFilters.js";
 import { useWidgetScheduledExportFilters } from "./useWidgetScheduledExportFilters.js";
 

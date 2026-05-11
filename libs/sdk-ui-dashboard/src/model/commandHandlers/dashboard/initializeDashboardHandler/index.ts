@@ -59,6 +59,7 @@ import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "../common/stateInitializers.js";
+
 import { loadCatalog } from "./loadCatalog.js";
 import { loadDashboardList } from "./loadDashboardList.js";
 import { loadDashboardParameters } from "./loadDashboardParameters.js";

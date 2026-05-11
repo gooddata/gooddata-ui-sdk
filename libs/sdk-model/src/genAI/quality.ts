@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import type { Identifier } from "../objRef/index.js";
+
 import type { GenAIObjectType } from "./common.js";
 
 /**

@@ -12,6 +12,7 @@ import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getTranslation } from "../../../../utils/translations.js";
 import { isWaterfallColorHeaderItemKey } from "../../../../utils/uiConfigHelpers/waterfallChartUiConfigHelper.js";
 import { ColorDropdown } from "../colorDropdown/ColorDropdown.js";
+
 import { ColoredItemContent } from "./ColoredItemContent.js";
 
 export interface IColoredItemProps {

@@ -23,6 +23,7 @@ import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { GrandTotalsControl } from "../configurationControls/GrandTotalsControl.js";
 import { MetricsPositionControl } from "../configurationControls/MetricsPositionControl.js";
 import { PagingSection } from "../configurationControls/PagingSection.js";
+
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { type SectionName } from "./sectionName.js";
 

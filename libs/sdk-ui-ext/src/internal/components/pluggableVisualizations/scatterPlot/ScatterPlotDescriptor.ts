@@ -19,6 +19,7 @@ import {
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+
 import { PluggableScatterPlot } from "./PluggableScatterPlot.js";
 
 export class ScatterPlotDescriptor extends BigChartDescriptor {

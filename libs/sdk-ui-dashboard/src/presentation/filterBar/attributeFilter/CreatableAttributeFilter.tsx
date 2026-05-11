@@ -14,6 +14,7 @@ import { selectIsWhiteLabeled } from "../../../model/store/config/configSelector
 import { selectCanAddMoreFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import type { ICreatePanelItemComponentProps } from "../../componentDefinition/types.js";
 import { DraggableAttributeFilterCreatePanelItem } from "../../dragAndDrop/draggableAttributeFilter/DraggableAttributeFilterCreatePanelItem.js";
+
 import { AddAttributeFilterPlaceholder } from "./addAttributeFilter/AddAttributeFilterPlaceholder.js";
 
 /**

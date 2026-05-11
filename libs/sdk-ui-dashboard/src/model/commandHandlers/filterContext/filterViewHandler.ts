@@ -46,6 +46,7 @@ import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.j
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
+
 import { resetCrossFiltering } from "./common.js";
 
 function createFilterView(

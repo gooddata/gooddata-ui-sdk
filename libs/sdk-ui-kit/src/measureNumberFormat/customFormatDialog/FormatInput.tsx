@@ -9,6 +9,7 @@ import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { SyntaxHighlightingInput } from "../../syntaxHighlightingInput/SyntaxHighlightingInput.js";
 import { type IFormatTemplate } from "../typings.js";
+
 import { FormatTemplatesDropdown } from "./formatTemplatesDropdown/FormatTemplatesDropdown.js";
 
 type LanguageState = {

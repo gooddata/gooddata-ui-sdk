@@ -1,6 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { type DataViewFacade } from "../results/facade.js";
+
 import { type IMappingHeader } from "./MappingHeader.js";
 
 /**

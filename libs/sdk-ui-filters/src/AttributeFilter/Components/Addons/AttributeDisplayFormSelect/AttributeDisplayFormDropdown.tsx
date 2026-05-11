@@ -6,6 +6,7 @@ import { type IAttributeDisplayFormMetadataObject, type ObjRef, areObjRefsEqual 
 import { Dropdown, DropdownList, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS } from "../../../constants.js";
+
 import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton.js";
 import { AttributeDisplayFormSelectItem } from "./AttributeDisplayFormSelectItem.js";
 

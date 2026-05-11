@@ -17,6 +17,7 @@ import { type IChartConfig, type ITotalConfig } from "../../../interfaces/chartC
 import { type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
 import { getChartFillProperties } from "../_chartOptions/patternFillOptions.js";
 import { unwrap } from "../_util/common.js";
+
 import { getColorOrLegendIndex } from "./waterfallChartsSeries.js";
 
 function isTotalColumnEnabled(chartConfig: IChartConfig): boolean {

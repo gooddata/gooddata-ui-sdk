@@ -2,6 +2,7 @@
 
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { type ColumnWidthItem } from "../../types/resizing.js";
+
 import { getColumnWidthItemForColumnDefinition } from "./getColumnWidthItemForColumnDefinition.js";
 import { getColumnWidthItemValue } from "./getColumnWidthItemValue.js";
 

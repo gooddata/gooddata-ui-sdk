@@ -79,6 +79,7 @@ import { convertVisualizationObject } from "../../../convertors/fromBackend/visu
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier, objRefToUri } from "../../../utils/api.js";
+
 import { InsightsQuery } from "./insightsQuery.js";
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses.js";
 

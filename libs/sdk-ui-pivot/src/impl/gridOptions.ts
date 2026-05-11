@@ -3,6 +3,7 @@
 import { type FocusGridInnerElementParams } from "ag-grid-community";
 
 import { type ICorePivotTableProps } from "../publicTypes.js";
+
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_SUBTOTAL,

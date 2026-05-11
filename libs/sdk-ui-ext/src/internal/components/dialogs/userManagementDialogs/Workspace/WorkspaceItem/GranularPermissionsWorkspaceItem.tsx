@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 
 import { RemoveIcon } from "../../RemoveIcon.js";
 import { type IGrantedWorkspace } from "../../types.js";
+
 import { getHumanReadablePermissionsTitle } from "./granularPermissionUtils.js";
 import { workspaceGranularPermissionMessages } from "./locales.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";

@@ -12,6 +12,7 @@ import { type IUiTreeviewItemProps, UiIcon } from "@gooddata/sdk-ui-kit";
 import { semanticSearchItemDate, semanticSearchItemTitle } from "../automation/testIds.js";
 import { SearchItem } from "../SearchItem.js";
 import { getAriaLabel } from "../utils/getAriaLabel.js";
+
 import { GroupResultCounter } from "./GroupResultCounter.js";
 import { SearchItemDetails } from "./SearchItemDetails.js";
 import { SearchItemIcon } from "./SearchItemIcon.js";

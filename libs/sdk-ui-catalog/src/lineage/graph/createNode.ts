@@ -5,6 +5,7 @@ import * as joint from "@joint/core";
 import { type IReferencesResult } from "@gooddata/sdk-backend-spi";
 
 import { objRefToId, objRefToType } from "../utils.js";
+
 import { getIconData } from "./createIcon.js";
 
 const BASE_HEIGHT = 24;

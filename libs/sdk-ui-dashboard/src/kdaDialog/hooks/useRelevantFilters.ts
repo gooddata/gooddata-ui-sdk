@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -6,6 +6,7 @@ import { type ICatalogAttribute } from "@gooddata/sdk-model";
 
 import { useKdaState } from "../providers/KdaState.js";
 import { getOnlyRelevantFilters } from "../utils.js";
+
 import { useAttribute } from "./useAttribute.js";
 
 export function useRelevantFilters() {

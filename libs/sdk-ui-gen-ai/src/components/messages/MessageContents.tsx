@@ -7,6 +7,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { type Contents } from "../../model.js";
 import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
+
 import { ChangeAnalysisContentsComponent } from "./contents/ChangeAnalysisContentsComponent.js";
 import { ErrorContentsComponent } from "./contents/ErrorContents.js";
 import { RoutingContentsComponent } from "./contents/RoutingContents.js";

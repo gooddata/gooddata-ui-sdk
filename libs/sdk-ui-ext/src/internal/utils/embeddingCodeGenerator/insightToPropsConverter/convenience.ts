@@ -26,6 +26,7 @@ import { DefaultLocale } from "@gooddata/sdk-ui";
 import { removeUseless } from "../../removeUseless.js";
 import { createSorts } from "../../sort.js";
 import { type PropMeta } from "../types.js";
+
 import { type IInsightToPropConversion, bucketConversion, insightConversion } from "./convertor.js";
 
 function namedSdkModelPropMetaFor(name: string, propType: PropMeta["cardinality"]): PropMeta {

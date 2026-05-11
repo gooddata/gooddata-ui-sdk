@@ -1,18 +1,41 @@
-# (C) 2022 GoodData Corporation
+# (C) 2022-2026 GoodData Corporation
 
-name: "Action to update hugo version param in parmas.toml"
-description: "Action add new version to hugo version config set it latest and remove old one"
+name: "Check release version is latest"
+description: "Checks whether the given version is greater than the current latest GitHub release"
 
 inputs:
-    version:
-        description: "New version to be set"
-        required: true
+  version:
+    description: "New version to compare against the latest release"
+    required: true
 
 outputs:
   is-latest:
-    description: true if version could be set as latest
-
+    description: "true if version is greater than the latest release (or no latest release exists)"
+    value: ${{ steps.check.outputs.is-latest }}
 
 runs:
-    using: "node20"
-    main: "action-build/index.js"
+  using: composite
+  steps:
+    - id: check
+      shell: bash
+      env:
+        VERSION: ${{ inputs.version }}
+      run: |
+        set -euo pipefail
+        latest_tag=$(gh release view --json tagName -q .tagName 2>/dev/null || true)
+        if [[ -z "$latest_tag" ]]; then
+          echo "No latest release found, setting is-latest to true"
+          echo "is-latest=true" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+        latest=${latest_tag#v}
+        echo "latest release: $latest"
+        echo "New version: $VERSION"
+        sorted_top=$(npx -y semver@7.7.4 "$VERSION" "$latest" | tail -1)
+        if [[ "$sorted_top" == "$VERSION" && "$VERSION" != "$latest" ]]; then
+          is_latest=true
+        else
+          is_latest=false
+        fi
+        echo "is-latest: $is_latest"
+        echo "is-latest=$is_latest" >> "$GITHUB_OUTPUT"

@@ -11,6 +11,7 @@ import {
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectInsightByWidgetRef } from "../../../../model/store/insights/insightsSelectors.js";
 import { type DRILL_TARGET_TYPE, type IDrillConfigItem } from "../../../drill/types.js";
+
 import {
     DrillIntersectionIgnoredAttributesSelect,
     type IDrillIntersectionIgnoredAttributesSelectOption,

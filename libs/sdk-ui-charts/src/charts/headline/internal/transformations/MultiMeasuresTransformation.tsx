@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
 import { getBaseHeadlineData } from "../utils/BaseHeadlineTransformationUtils.js";
+
 import { useFireDrillEvent } from "./useFiredDrillEvent.js";
 
 /**

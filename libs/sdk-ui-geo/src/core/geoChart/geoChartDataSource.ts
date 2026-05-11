@@ -4,6 +4,7 @@ import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoConfig, type IGeoData, type IGeoPointsConfig, type IPushpinColor } from "../../GeoChart.js";
 import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
+
 import {
     DEFAULT_CLUSTER_MAX_ZOOM,
     DEFAULT_CLUSTER_RADIUS,

@@ -16,6 +16,7 @@ import { DashboardItem } from "../../../presentationComponents/DashboardItems/Da
 import { DashboardItemVisualization } from "../../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
 import { getVisTypeCssClass } from "../../../presentationComponents/DashboardItems/utils.js";
 import { DashboardInsight } from "../../insight/DashboardInsight.js";
+
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";

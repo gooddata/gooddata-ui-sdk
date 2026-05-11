@@ -7,6 +7,7 @@ import { GenAiApi_PostMessages } from "@gooddata/api-client-tiger/endpoints/genA
 
 import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+
 import { ChatConversationThreadQuery } from "./ChatConversations.js";
 
 vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({

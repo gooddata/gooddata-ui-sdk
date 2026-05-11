@@ -7,6 +7,7 @@ import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { AttributeElements } from "../../_infra/predicates.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import {
     BarChartWithSingleMeasureAndTwoViewByAndStack,
     BarChartWithSingleMeasureAndViewBy,

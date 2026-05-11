@@ -9,6 +9,7 @@ import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { extractUserGroupName } from "../utils.js";
+
 import { useUserGroupDetails } from "./detailsHooks.js";
 import { UserGroupDetailsView } from "./UserGroupDetailsView.js";
 

@@ -27,6 +27,7 @@ import {
     type IWrapCreatePanelItemWithDragComponent,
     type IWrapInsightListItemWithDragComponent,
 } from "../../dragAndDrop/types.js";
+
 import { DraggableInsightList } from "./DraggableInsightList/DraggableInsightList.js";
 
 interface ICreationPanelProps {

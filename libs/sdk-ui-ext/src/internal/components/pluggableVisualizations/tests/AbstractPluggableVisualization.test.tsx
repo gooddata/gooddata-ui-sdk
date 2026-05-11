@@ -17,6 +17,7 @@ import {
     multipleMetricsNoCategoriesReferencePoint,
 } from "../../../tests/mocks/referencePointMocks.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+
 import { DummyVisConstruct } from "./visConstruct.fixture.js";
 
 describe("AbstractPluggableVisualization", () => {

@@ -16,6 +16,7 @@ import {
 } from "../../constants/bubble.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
+
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class FunnelChartConfigurationPanel extends ConfigurationPanelContent {

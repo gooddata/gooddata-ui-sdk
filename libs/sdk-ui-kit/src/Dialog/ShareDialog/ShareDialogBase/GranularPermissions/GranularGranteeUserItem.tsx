@@ -10,6 +10,7 @@ import { useShareDialogInteraction } from "../ComponentInteractionContext.js";
 import { GranteeUserIcon } from "../GranteeIcons.js";
 import { type DialogModeType, type GranteeItem, type IGranularGranteeUser } from "../types.js";
 import { getGranteeItemTestId, getGranteeLabel } from "../utils.js";
+
 import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown.js";
 import { getGranteePossibilities } from "./permissionsLogic.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";

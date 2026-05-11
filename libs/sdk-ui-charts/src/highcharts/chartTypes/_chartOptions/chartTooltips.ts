@@ -21,6 +21,7 @@ import {
     isTreemap,
     unwrap,
 } from "../_util/common.js";
+
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip.js";
 

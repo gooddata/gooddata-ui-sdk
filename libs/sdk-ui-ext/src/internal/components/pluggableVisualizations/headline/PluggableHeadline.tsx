@@ -64,6 +64,7 @@ import {
 } from "../../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
 import { HeadlineConfigurationPanel } from "../../configurationPanels/HeadlineConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+
 import { setHeadlineRefPointBuckets, tryToMapForeignBuckets } from "./headlineBucketHelper.js";
 
 /**

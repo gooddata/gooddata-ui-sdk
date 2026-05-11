@@ -8,6 +8,7 @@ import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { type ICatalogItemParameter } from "../catalogItem/types.js";
+
 import { useParameterMutation } from "./ParameterMutationContext.js";
 
 const ParameterDialog = lazy(() =>

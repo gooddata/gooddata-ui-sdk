@@ -14,6 +14,7 @@ import { type ChartInteractions } from "../_infra/backendWithCapturing.js";
 import { createInsightDefinitionForChart } from "../_infra/insightFactory.js";
 import { mountChartAndCaptureNormalized } from "../_infra/render.js";
 import { mountInsight } from "../_infra/renderPlugVis.js";
+
 import { storeDirectoryFor } from "./store.js";
 import { readJsonSync, writeAsJsonSync } from "./utils.js";
 

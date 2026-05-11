@@ -3,6 +3,7 @@
 import { type ISortItem, sortDirection } from "@gooddata/sdk-model";
 
 import { type AgGridColumnDef } from "../../types/agGrid.js";
+
 import { getSortForColumnDefinition } from "./getSortForColumnDefinition.js";
 
 /**

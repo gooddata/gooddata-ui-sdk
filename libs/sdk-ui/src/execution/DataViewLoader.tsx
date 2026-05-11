@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { DataViewFacade } from "../base/results/facade.js";
+
 import { createExecution } from "./createExecution.js";
 import { type DataViewWindow } from "./withExecutionLoading.js";
 

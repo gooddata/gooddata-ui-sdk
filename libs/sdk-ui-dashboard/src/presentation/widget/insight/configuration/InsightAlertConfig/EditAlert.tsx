@@ -56,6 +56,7 @@ import {
 import { type AlertAttribute, type AlertMetric } from "../../../../alerting/types.js";
 import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
+
 import { AlertTitle } from "./AlertTitle.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";

@@ -5,6 +5,7 @@ import cx from "classnames";
 import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { DashboardRichText } from "../../richText/DashboardRichText.js";
+
 import { type IDefaultDashboardRichTextWidgetProps } from "./types.js";
 
 /**

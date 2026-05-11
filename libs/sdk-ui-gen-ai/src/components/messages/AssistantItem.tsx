@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 
 import { type IChatConversationLocalItem } from "../../model.js";
 import { type IChatMessagesGroup } from "../utils/groupUtility.js";
+
 import { AssistantItemFeedback } from "./AssistantItemFeedback.js";
 import { AssistantItemSuggestions } from "./AssistantItemSuggestions.js";
 import { ReasoningIcon } from "./contents/ReasoningIcon.js";

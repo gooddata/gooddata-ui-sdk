@@ -6,6 +6,7 @@ import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { Overlay } from "../../../Overlay/Overlay.js";
 import { type IFormatTemplate } from "../../typings.js";
+
 import { DropdownItem } from "./DropdownItem.js";
 import { DropdownToggleButton } from "./DropdownToggleButton.js";
 

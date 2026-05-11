@@ -10,6 +10,7 @@ import { ItemsWrapper, SubMenu } from "@gooddata/sdk-ui-kit";
 
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
 import { tableHasColumnAttributes, tableHasRowAttributes } from "../../utils.js";
+
 import { type IColumnTotal } from "./aggregationsMenuTypes.js";
 import { AggregationsSubMenuItems } from "./AggregationsSubMenuItems.js";
 import { ColumnsHeaderIcon } from "./subMenuIcons/ColumnsIcon.js";

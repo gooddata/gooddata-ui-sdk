@@ -25,6 +25,7 @@ import { Dropdown, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import { MediaQueries } from "../constants/MediaQueries.js";
 import { type IFilterButtonCustomIcon } from "../shared/interfaces/index.js";
+
 import {
     DATE_FILTER_ACTIVE_CALENDAR_TAB_ID,
     DATE_FILTER_CUSTOM_RELATIVE_ID,

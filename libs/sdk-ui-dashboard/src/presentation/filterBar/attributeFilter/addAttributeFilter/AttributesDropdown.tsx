@@ -30,6 +30,7 @@ import {
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectAllInsightWidgets } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { type IDashboardAttributeFilterPlaceholderProps } from "../types.js";
+
 import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
 import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
 import { AttributeListItem, getAttributeListItemTitle } from "./AttributeListItem.js";

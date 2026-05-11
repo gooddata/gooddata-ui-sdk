@@ -52,6 +52,7 @@ import { type DashboardSelector } from "../../types.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../tabsState.js";
+
 import { type ILayoutState, type LayoutStash, layoutInitialState } from "./layoutState.js";
 
 const selectSelf = createSelector(selectTabs, selectActiveTabLocalIdentifier, (tabs, activeTabId) => {

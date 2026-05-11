@@ -6,6 +6,7 @@ import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { type ArrowOffset } from "../Bubble/typings.js";
 import { type IAlignPoint } from "../typings/positioning.js";
+
 import { ALIGN_POINTS, ARROW_OFFSETS } from "./constants.js";
 
 /**

@@ -13,6 +13,7 @@ import { ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS, DEFAULT_DROPDOWN_BODY_WIDTH } fro
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
+
 import { type IAttributeFilterDropdownBodyProps } from "./types.js";
 
 /**

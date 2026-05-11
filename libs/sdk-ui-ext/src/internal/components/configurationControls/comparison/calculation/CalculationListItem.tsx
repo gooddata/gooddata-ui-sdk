@@ -6,6 +6,7 @@ import { type CalculationType } from "@gooddata/sdk-ui-charts";
 import { Bubble, BubbleHoverTrigger, type ISingleSelectListItemProps } from "@gooddata/sdk-ui-kit";
 
 import { HIDE_DELAY_DEFAULT, SHOW_DELAY_DEFAULT } from "../../../../constants/bubble.js";
+
 import { CalculationListItemInfo } from "./CalculationListItemInfo.js";
 
 const BUBBLE_INFO_ALIGN_POINTS = [{ align: "cr cl" }];

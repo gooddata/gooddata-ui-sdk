@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type DashboardEventBody, type ICustomDashboardEvent, type IDashboardEvent } from "../events/base.js";
+
 import { type IDashboardCommand } from "./base.js";
 
 /**

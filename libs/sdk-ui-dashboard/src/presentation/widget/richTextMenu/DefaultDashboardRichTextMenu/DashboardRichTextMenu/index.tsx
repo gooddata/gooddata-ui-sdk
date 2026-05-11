@@ -16,6 +16,7 @@ import {
     type IRichTextMenuItem,
     type IRichTextMenuSubmenu,
 } from "../../types.js";
+
 import { DashboardRichTextMenuContainer } from "./DashboardRichTextMenuContainer.js";
 
 export function DashboardRichTextMenuBody({

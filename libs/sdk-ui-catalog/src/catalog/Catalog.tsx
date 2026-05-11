@@ -24,6 +24,7 @@ import { QualityScoreCard } from "../quality/QualityScoreCard.js";
 import { FullTextSearchInput } from "../search/FullTextSearchInput.js";
 import { CatalogTabs } from "../tabs/CatalogTabs.js";
 import { useIsCatalogTrendingObjectsEnabled } from "../tabs/gate.js";
+
 import { Layout } from "./Layout.js";
 
 type Props = {

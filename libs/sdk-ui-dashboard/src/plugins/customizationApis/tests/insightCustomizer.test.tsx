@@ -19,6 +19,7 @@ import { type IDashboardInsightProps } from "../../../presentation/widget/insigh
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultInsightCustomizer } from "../insightCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+
 import { EMPTY_MUTATIONS } from "./utils.js";
 
 //

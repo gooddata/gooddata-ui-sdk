@@ -3,6 +3,7 @@
 import { type RichTextWidgetComponentSet } from "../../componentDefinition/types.js";
 import { type RichTextComponentProvider } from "../../dashboardContexts/types.js";
 import { RichTextDraggingComponent } from "../../dragAndDrop/draggableWidget/RichTextDraggingComponent.js";
+
 import { CreatableRichText } from "./CreatableRichText.js";
 
 /**

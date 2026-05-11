@@ -11,6 +11,7 @@ import {
 } from "react";
 
 import { handleOnScrollEvent } from "../utils/scroll.js";
+
 import { ScrollContext, type isElementInvisibleType } from "./ScrollContext.js";
 
 /**

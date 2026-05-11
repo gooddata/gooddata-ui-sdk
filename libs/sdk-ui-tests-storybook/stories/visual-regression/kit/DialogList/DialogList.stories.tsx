@@ -8,6 +8,7 @@ import { DialogList } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+
 import { itemsMock as items } from "./itemsMock.js";
 
 function Wrapper({ children }: { children?: ReactNode }) {

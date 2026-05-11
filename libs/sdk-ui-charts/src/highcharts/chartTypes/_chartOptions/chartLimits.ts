@@ -24,6 +24,7 @@ import { type ChartType } from "../../typings/chartType.js";
 import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
 import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
 import { isOneOfTypes, isTreemap } from "../_util/common.js";
+
 import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
 
 export interface IValidationResult {

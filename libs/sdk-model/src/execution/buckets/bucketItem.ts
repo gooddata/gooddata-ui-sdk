@@ -4,6 +4,7 @@ import { InvariantError, invariant } from "ts-invariant";
 
 import { attributeLocalId, isAttribute } from "../attribute/index.js";
 import { isMeasure, measureLocalId } from "../measure/index.js";
+
 import { type IAttributeOrMeasure } from "./index.js";
 
 /**

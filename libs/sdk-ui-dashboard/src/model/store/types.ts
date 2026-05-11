@@ -5,6 +5,7 @@ import { type AnyAction, type Dispatch, type EntityId, type EntityState } from "
 import { type IInsight, type IListedDashboard } from "@gooddata/sdk-model";
 
 import { type IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
+
 import { type IAccessibleDashboardsState } from "./accessibleDashboards/index.js";
 import { type IAutomationsState } from "./automations/automationsState.js";
 import { type BackendCapabilitiesState } from "./backendCapabilities/backendCapabilitiesState.js";

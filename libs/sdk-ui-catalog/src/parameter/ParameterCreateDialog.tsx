@@ -8,6 +8,7 @@ import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItemParameter } from "../catalogItem/types.js";
+
 import { createCopiedParameter, isDuplicateIdError } from "./parameterCopy.js";
 import type { ParameterDialogInitialParameter } from "./ParameterDialog.js";
 import { useParameterMutation } from "./ParameterMutationContext.js";

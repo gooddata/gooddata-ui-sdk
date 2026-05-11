@@ -6,6 +6,7 @@ import { useDashboardSelector } from "../../../../model/react/DashboardStoreProv
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectRenderMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
 import { DashboardInsightMenuBody } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/index.js";
+
 import { useVisualizationSwitcherEditableInsightMenu } from "./useVisualizationSwitcherEditableInsightMenu.js";
 
 interface IVisualizationConfigProps {

@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IGeoLngLat } from "../common/coordinates.js";
+
 import {
     type IGeoAttributeItem,
     type IGeoCommonData,

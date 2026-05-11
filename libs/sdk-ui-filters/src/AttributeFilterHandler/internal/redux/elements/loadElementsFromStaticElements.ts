@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
+
 import { InMemoryPaging } from "./InMemoryPaging.js";
 import { type IHiddenElementsInfo } from "./types.js";
 

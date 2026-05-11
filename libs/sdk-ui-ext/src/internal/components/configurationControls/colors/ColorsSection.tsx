@@ -16,6 +16,7 @@ import { getColoredInputItems, getProperties } from "../../../utils/colors.js";
 import { getTranslatedDropdownItems, getTranslation } from "../../../utils/translations.js";
 import { ConfigSection } from "../../configurationControls/ConfigSection.js";
 import { DropdownControl } from "../DropdownControl.js";
+
 import { ColoredItemsList } from "./coloredItemsList/ColoredItemsList.js";
 
 export interface IColorsSectionProps {

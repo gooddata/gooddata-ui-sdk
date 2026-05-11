@@ -13,6 +13,7 @@ import {
 } from "../../../tests/TestData.fixtures.js";
 import { CompareSection } from "../CompareSection.js";
 import { CompareSectionItem } from "../CompareSectionItem.js";
+
 import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 
 const useBaseHeadlineMock = vi.hoisted(() => vi.fn());

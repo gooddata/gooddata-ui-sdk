@@ -53,6 +53,7 @@ import {
     getColorAssignment,
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
+
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes.js";
 import {
     multiMeasuresAlternatingTypes,

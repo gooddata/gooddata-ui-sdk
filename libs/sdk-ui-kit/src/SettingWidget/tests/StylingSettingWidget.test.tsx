@@ -12,6 +12,7 @@ import {
     type IStylingSettingWidgetProps,
     StylingSettingWidget,
 } from "../StylingSettingWidget/StylingSettingWidget.js";
+
 import { customItemsMock, defaultItemMock } from "./mocks.js";
 
 vi.mock("../../responsive/useMediaQuery.js", () => ({

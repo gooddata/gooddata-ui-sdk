@@ -4,6 +4,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type UserMessage } from "../../model.js";
+
 import { MessageContents } from "./MessageContents.js";
 
 type UserMessageProps = {

@@ -16,6 +16,7 @@ import { type IDashboardAttributeFilterParentItem } from "../../../model/types/a
 import { type IDashboardDependentDateFilter } from "../../../model/types/dateFilterTypes.js";
 import type { IFilterBarFilterGroupItem } from "../filterBar/useFiltersWithAddedPlaceholder.js";
 import { type DashboardFilterSelectionType } from "../filterSelectionTypes.js";
+
 import { type IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
 
 /**

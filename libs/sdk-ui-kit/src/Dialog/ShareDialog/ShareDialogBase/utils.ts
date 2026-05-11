@@ -15,6 +15,7 @@ import {
 import { simplifyText } from "@gooddata/util";
 
 import { type CurrentUserPermissions } from "../types.js";
+
 import {
     type GranteeItem,
     type IGranteeGroupAll,

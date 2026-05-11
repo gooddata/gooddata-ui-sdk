@@ -4,6 +4,7 @@ import { type ReactElement, type ReactNode, useCallback, useRef } from "react";
 
 import { MenuPosition } from "../positioning/MenuPosition.js";
 import { OutsideClickHandler } from "../utils/OutsideClickHandler.js";
+
 import { type IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps.js";
 
 export function MenuOpenedByClick(props: IMenuOpenedBySharedProps): ReactElement {

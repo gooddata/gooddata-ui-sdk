@@ -10,6 +10,7 @@ import { setFullscreenAction, setHistoryAction } from "../store/chatWindow/chatW
 import { hasMessagesSelector } from "../store/messages/messagesSelectors.js";
 import { clearThreadAction, startNewConversationAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
+
 import { HeaderIcon } from "./HeaderIcon.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 

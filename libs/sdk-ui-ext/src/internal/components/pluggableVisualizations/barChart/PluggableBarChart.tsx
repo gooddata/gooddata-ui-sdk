@@ -17,6 +17,7 @@ import { getBucketItems } from "../../../utils/bucketHelper.js";
 import { getCustomSortDisabledExplanation } from "../../../utils/sort.js";
 import { BarChartConfigurationPanel } from "../../configurationPanels/BarChartConfigurationPanel.js";
 import { PluggableColumnBarCharts } from "../PluggableColumnBarCharts.js";
+
 import { canSortStackTotalValue } from "./sortHelpers.js";
 
 /**

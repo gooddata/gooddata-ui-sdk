@@ -17,6 +17,7 @@ import { type ObjectType } from "../objectType/types.js";
 import { usePermissionsState } from "../permission/PermissionsContext.js";
 import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { useQualityIssuesById, useQualityReportState } from "../quality/QualityContext.js";
+
 import { CatalogDetailActions } from "./CatalogDetailActions.js";
 import { CatalogDetailHeader, type ICatalogDetailHeaderRef } from "./CatalogDetailHeader.js";
 import { CatalogDetailStatus } from "./CatalogDetailStatus.js";

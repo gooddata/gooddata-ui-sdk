@@ -31,6 +31,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { convertTigerToSdkFilters } from "../shared/storedFilterConverter.js";
+
 import { convertFilter } from "./afm/FilterConverter.js";
 import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
 

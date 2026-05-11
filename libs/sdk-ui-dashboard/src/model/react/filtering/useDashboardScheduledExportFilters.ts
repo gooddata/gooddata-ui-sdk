@@ -3,6 +3,7 @@
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { getAutomationDashboardFilters } from "../../../_staging/automation/index.js";
+
 import { useAutomationAvailableDashboardFilters } from "./useAutomationAvailableDashboardFilters.js";
 
 /**

@@ -6,6 +6,7 @@ import cx from "classnames";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { selectIsInEditMode } from "../../model/store/renderMode/renderModeSelectors.js";
+
 import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
 import {
     type IWrapCreatePanelItemWithDragInnerProps,

@@ -8,6 +8,7 @@ import { type ISeparators } from "@gooddata/sdk-ui";
 
 import { InputWithNumberFormat } from "../../../Form/InputWithNumberFormat.js";
 import { FormattedPreview } from "../shared/FormattedPreview.js";
+
 import { ExtendedPreview } from "./ExtendedPreview.js";
 
 const DEFAULT_PREVIEW_VALUE = -1234.5678;

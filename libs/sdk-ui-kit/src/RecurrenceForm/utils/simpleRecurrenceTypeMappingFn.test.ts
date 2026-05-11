@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type WeekStart } from "@gooddata/sdk-model";
 
 import { RECURRENCE_TYPES } from "../constants.js";
+
 import { simpleRecurrenceTypeMappingFn } from "./simpleRecurrenceTypeMappingFn.js";
 
 describe("simpleRecurrenceTypeMappingFn", () => {

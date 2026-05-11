@@ -17,6 +17,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
+
 import { CoreHeadline, type ICoreHeadlineExtendedProps } from "./CoreHeadline.js";
 import { type IHeadlineProvider } from "./HeadlineProvider.js";
 import { createHeadlineProvider } from "./HeadlineProviderFactory.js";

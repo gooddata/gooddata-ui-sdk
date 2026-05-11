@@ -6,6 +6,7 @@ import { type IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { FilterConfiguration } from "../../common/configuration/FilterConfiguration.js";
+
 import { InsightCrossFiltering } from "./InsightCrossFiltering.js";
 import { InsightDateDataSetFilter } from "./InsightDateDataSetFilter.js";
 

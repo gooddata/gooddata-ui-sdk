@@ -7,6 +7,7 @@ import { Bubble, BubbleHoverTrigger, type IAlignPoint } from "@gooddata/sdk-ui-k
 
 import { useAttributeDataSet } from "../../dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
 import { useAttributeElements } from "../../dashboardDropdownBody/configuration/hooks/useAttributeElements.js";
+
 import { AttributeListItemTooltipContent } from "./AttributeListItemTooltipContent.js";
 
 const ATTR_ELEMENTS_LIMIT: number = 5;

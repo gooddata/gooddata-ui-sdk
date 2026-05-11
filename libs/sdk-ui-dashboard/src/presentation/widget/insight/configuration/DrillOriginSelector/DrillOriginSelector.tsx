@@ -8,6 +8,7 @@ import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
 import { type IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
+
 import { DrillOriginSelectorBody } from "./DrillOriginSelectorBody.js";
 
 export interface IDrillOriginSelectorProps {

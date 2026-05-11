@@ -10,6 +10,7 @@ import { type ISeparators, type IdentifierRef, areObjRefsEqual } from "@gooddata
 
 import { createReference } from "../helpers/references.js";
 import { type EvaluatedMetric } from "../hooks/useEvaluatedMetricsAndAttributes.js";
+
 import { type HtmlNode, REFERENCE_REGEX_MATCH, REFERENCE_REGEX_SPLIT, type TextNode } from "./types.js";
 
 export function rehypeReferences(intl: IntlShape, metrics?: EvaluatedMetric[], separators?: ISeparators) {

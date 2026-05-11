@@ -11,6 +11,7 @@ import {
 } from "../../events/drill.js";
 import { selectInsightByRef, selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { addDrillFiltersToInsight } from "./drillToInsightUtils.js";
 
 export function* drillToInsightHandler(

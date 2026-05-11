@@ -2,6 +2,7 @@
 
 import { hasParent } from "../../../../_staging/layout/coordinates.js";
 import { type ILayoutItemPath } from "../../../../types.js";
+
 import { WidgetDropZoneBox } from "./WidgetDropZoneBox.js";
 
 export type WidgetDropZoneProps = {

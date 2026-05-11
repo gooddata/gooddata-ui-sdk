@@ -23,6 +23,7 @@ import {
     insightConversion,
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { MAX_VISUALIZATION_HEIGHT } from "../constants.js";
+
 import {
     multipleSecondaryMeasuresBucketConversion,
     singleSecondaryMeasureBucketConversion,

@@ -80,6 +80,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
 } from "../drillDownUtil.js";
+
 import { getColumnAttributes, getRowAttributes, shouldAdjustColumnHeadersPositionToTop } from "./helpers.js";
 import { adaptReferencePointSortItemsToPivotTable, getSanitizedSortItems } from "./sortHelpers.js";
 import { removeInvalidTotals } from "./totalsHelpers.js";

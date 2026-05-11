@@ -25,6 +25,7 @@ import {
     type IDrillDownDefinition,
 } from "../../types.js";
 import { type DashboardContext, type FiltersInfo } from "../types/commonTypes.js";
+
 import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 

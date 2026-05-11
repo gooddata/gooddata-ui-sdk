@@ -18,6 +18,7 @@ import {
     type IGranularGrantee,
 } from "../types.js";
 import { getGranularGranteeClassNameId } from "../utils.js";
+
 import { GranularPermissionsDropdownBody } from "./GranularPermissionsDropdownBody.js";
 
 interface IGranularPermissionsDropdownProps {

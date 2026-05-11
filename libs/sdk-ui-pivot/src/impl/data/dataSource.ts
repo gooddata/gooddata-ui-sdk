@@ -22,6 +22,7 @@ import { type ColumnHeadersPosition } from "../../publicTypes.js";
 import { COLS_PER_PAGE } from "../base/constants.js";
 import { type OnExecutionTransformed, type OnTransformedExecutionFailed } from "../privateTypes.js";
 import { TableDescriptor } from "../structure/tableDescriptor.js";
+
 import { areTotalsChanged, isInvalidGetRowsRequest } from "./dataSourceUtils.js";
 import { createAgGridPage } from "./rowFactory.js";
 import { GroupingProviderFactory, type IGroupingProvider } from "./rowGroupingProvider.js";

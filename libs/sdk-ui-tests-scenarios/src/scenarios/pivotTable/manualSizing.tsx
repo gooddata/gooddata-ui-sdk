@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-ui-pivot";
 
 import { copyWithModifiedProps, scenariosFor } from "../../scenarioGroup.js";
+
 import {
     PivotTableWithSingleMeasureAndTwoRowsAndCols,
     PivotTableWithTwoMeasuresAndSingleRowAttr,

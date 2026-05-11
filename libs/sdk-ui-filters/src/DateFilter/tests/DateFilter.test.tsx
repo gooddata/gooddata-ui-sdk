@@ -7,6 +7,7 @@ import { suppressConsole } from "@gooddata/util";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
 import { verifyDateFormat } from "../DateFilterCore.js";
 import type { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
+
 import { AbsoluteForm } from "./AbsoluteForm.js";
 import {
     clickAbsoluteFilter,

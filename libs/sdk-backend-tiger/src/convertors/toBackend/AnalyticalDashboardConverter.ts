@@ -37,6 +37,7 @@ import { addFilterLocalIdentifier } from "../../utils/filterLocalidentifier.js";
 import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
 import { convertLayout } from "../shared/layoutConverter.js";
 import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
+
 import { cloneWithSanitizedIds, cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
 
 function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?: boolean): IDashboardWidget {

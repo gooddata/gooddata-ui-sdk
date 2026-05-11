@@ -5,6 +5,7 @@ import { memo, useCallback, useMemo } from "react";
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { filterVisibility } from "../automation/testIds.js";
+
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
 

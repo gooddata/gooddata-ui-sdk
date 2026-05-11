@@ -16,6 +16,7 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { convertUserToAutomationRecipient } from "../../../../../_staging/automation/index.js";
 import { createUser, matchUser } from "../../../utils/users.js";
 import { isEmail } from "../../../utils/validate.js";
+
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
 
 interface IRecipientsSelectProps {

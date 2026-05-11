@@ -18,6 +18,7 @@ import {
 
 import { DashboardInsightMenuTitle } from "../../DashboardInsightMenuTitle.js";
 import { type IDashboardInsightMenuTitleProps } from "../../types.js";
+
 import { DashboardInsightMenuItemButton } from "./DashboardInsightMenuItemButton.js";
 import { DashboardInsightSubmenuContainer } from "./DashboardInsightSubmenuContainer.js";
 

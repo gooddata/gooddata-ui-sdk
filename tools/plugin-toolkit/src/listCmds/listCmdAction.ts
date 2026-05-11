@@ -5,6 +5,7 @@ import columnify from "columnify";
 import { logInfo, logSuccess } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
+
 import { type ListCmdActionConfig, getListCmdActionConfig } from "./actionConfig.js";
 import { type ListObjectsFn } from "./types.js";
 

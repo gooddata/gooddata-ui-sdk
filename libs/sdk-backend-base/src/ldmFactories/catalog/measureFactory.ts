@@ -13,6 +13,7 @@ import {
 
 import { type BuilderModifications, builderFactory } from "../builder.js";
 import { type MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../metadata/measureFactory.js";
+
 import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 
 /**

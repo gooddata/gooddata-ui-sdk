@@ -33,6 +33,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
 } from "../drillDownUtil.js";
+
 import { pivotTableAdditionalFactories } from "./pivotTableAdditionalFactories.js";
 import { pivotTableConfigFromInsight } from "./pivotTableConfigFromInsight.js";
 import { PluggablePivotTable } from "./PluggablePivotTable.js";

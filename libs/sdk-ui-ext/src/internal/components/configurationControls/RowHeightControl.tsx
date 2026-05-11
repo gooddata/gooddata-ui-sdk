@@ -9,6 +9,7 @@ import { messages } from "../../../locales.js";
 import { rowSizingDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+
 import { DropdownControl } from "./DropdownControl.js";
 
 export interface IRowHeightControlProps {

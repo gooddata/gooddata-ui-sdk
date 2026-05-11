@@ -35,6 +35,7 @@ import { type GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
 import { type OnApplyCallbackType, type OnChangeCallbackType } from "../types.js";
 import { isValidSingleSelectionFilter } from "../utils.js";
+
 import {
     DISPLAY_FORM_CHANGED_CORRELATION,
     IRRELEVANT_SELECTION,

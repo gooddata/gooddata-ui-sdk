@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-ui-dashboard";
 
 import { type LoadedPlugin, type ModuleFederationIntegration } from "../types.js";
+
 import { determineDashboardEngine } from "./determineDashboardEngine.js";
 
 interface IEntryPoint {

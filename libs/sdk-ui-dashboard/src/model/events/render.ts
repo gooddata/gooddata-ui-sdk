@@ -2,6 +2,7 @@
 
 import { type IRenderingWorkerConfiguration } from "../commandHandlers/render/types.js";
 import { type DashboardContext } from "../types/commonTypes.js";
+
 import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 

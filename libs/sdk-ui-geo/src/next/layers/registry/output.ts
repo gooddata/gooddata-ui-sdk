@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
+
 import type { IGeoLayerOutput } from "./adapterTypes.js";
 
 /**

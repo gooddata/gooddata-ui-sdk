@@ -16,6 +16,7 @@ import {
     type HeadlineFiredDrillEvent,
     type IHeadlineFiredDrillEventItemContext,
 } from "../../headline/internal/interfaces/DrillEvents.js";
+
 import {
     applyDrillableItems,
     buildDrillEventData,

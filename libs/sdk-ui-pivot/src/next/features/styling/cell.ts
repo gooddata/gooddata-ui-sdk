@@ -36,6 +36,7 @@ import { type CellTypes } from "../../types/cellRendering.js";
 import { type AgGridRowData } from "../../types/internal.js";
 import { extractAttributeUri, getAttributeColIds, parentsMatch } from "../columns/shared.js";
 import { isCellDrillable } from "../drilling/isDrillable.js";
+
 import { CELL_CLASSNAME, e } from "./bem.js";
 
 /**

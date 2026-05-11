@@ -12,6 +12,7 @@ import {
 } from "../../../columnWidths.js";
 import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "../colLocatorMatching.js";
 import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
+
 import {
     MultipleMeasuresAndNoColumnsWithMetricsInRows,
     SingleColumn,

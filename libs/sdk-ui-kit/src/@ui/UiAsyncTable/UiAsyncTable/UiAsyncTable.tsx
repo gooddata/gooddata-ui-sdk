@@ -9,6 +9,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { b } from "../asyncTableBem.js";
 import { type IUiAsyncTableProps } from "../types.js";
+
 import { CHECKBOX_COLUMN_WIDTH, ROW_HEIGHT_LARGE, ROW_HEIGHT_NORMAL, SCROLLBAR_WIDTH } from "./constants.js";
 import { UiAsyncTableBody } from "./UiAsyncTableBody.js";
 import { UiAsyncTableEmptyState } from "./UiAsyncTableEmptyState.js";

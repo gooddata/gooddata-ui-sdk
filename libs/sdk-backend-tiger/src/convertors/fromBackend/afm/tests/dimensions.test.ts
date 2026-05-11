@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { transformResultDimensions } from "../dimensions.js";
+
 import { mockDimensions, mockGeoAreaDimensions, mockMultipleDimensions } from "./dimensions.fixture.js";
 
 describe("transformResultDimensions", () => {

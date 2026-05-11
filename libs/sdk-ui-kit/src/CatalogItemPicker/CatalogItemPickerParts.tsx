@@ -19,6 +19,7 @@ import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
 import { UiSubmenuHeader } from "../@ui/UiSubmenuHeader/UiSubmenuHeader.js";
 import { UiTooltip } from "../@ui/UiTooltip/UiTooltip.js";
 import { Input } from "../Form/Input.js";
+
 import { type CatalogItemListboxItem, type ICatalogItemPickerListItemData } from "./listboxItemBuilders.js";
 import { testIds } from "./messages.js";
 import { type CatalogItemPickerType } from "./types.js";

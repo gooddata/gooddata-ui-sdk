@@ -7,6 +7,7 @@ import { dataLabelStyleDropdownItems, dataLabelsDropdownItems } from "../../cons
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
+
 import { DropdownControl } from "./DropdownControl.js";
 
 export interface IDataLabelsControlProps {

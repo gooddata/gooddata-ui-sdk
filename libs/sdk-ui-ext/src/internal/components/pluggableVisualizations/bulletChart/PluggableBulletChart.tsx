@@ -50,6 +50,7 @@ import { getBulletChartUiConfig } from "../../../utils/uiConfigHelpers/bulletCha
 import { BulletChartConfigurationPanel } from "../../configurationPanels/BulletChartConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+
 import { transformBuckets } from "./bucketHelper.js";
 
 /**

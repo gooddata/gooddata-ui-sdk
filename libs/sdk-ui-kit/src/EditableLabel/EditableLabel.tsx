@@ -21,6 +21,7 @@ import { v4 as uuid } from "uuid";
 
 import { Overlay } from "../Overlay/Overlay.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
+
 import { type IEditableLabelProps } from "./typings.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).

@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { convertMeasure } from "../MeasureConverter.js";
+
 import { invalidMeasureDefinition, invalidObjQualifier } from "./InvalidInputs.fixture.js";
 
 describe("measure converter", () => {

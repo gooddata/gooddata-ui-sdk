@@ -21,6 +21,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoData, type IValidationResult } from "../../GeoChart.js";
+
 import { getColorStrategy } from "./colorStrategy/geoChart.js";
 import { DEFAULT_DATA_POINTS_LIMIT } from "./constants/geoChart.js";
 import { GeoChartInner, type IGeoChartInnerOptions, type IGeoChartInnerProps } from "./GeoChartInner.js";

@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-ui-loaders";
 
 import { PluginFactory } from "../plugin/index.js";
+
 // this import will be renamed in plugin-toolkit
 import { PluginToolbar } from "./PluginToolbar.js";
 

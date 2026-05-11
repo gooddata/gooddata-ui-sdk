@@ -9,6 +9,7 @@ import { simplifyText } from "@gooddata/util";
 import { Bubble } from "../../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger.js";
 import { ShortenedText } from "../../ShortenedText/ShortenedText.js";
+
 import { type IDialogListItemComponentProps } from "./typings.js";
 
 const ICON_TOOLTIP_ALIGN_POINTS = [

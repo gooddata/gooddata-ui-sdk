@@ -40,6 +40,7 @@ import { type CustomMenuButtonComponent } from "../topBar/menuButton/types.js";
 import { type CustomTitleComponent } from "../topBar/title/types.js";
 import { type CustomTopBarComponent } from "../topBar/topBar/types.js";
 import { type CustomDashboardLayoutComponent } from "../widget/dashboardLayout/types.js";
+
 import {
     type AttributeFilterComponentProvider,
     type DashboardContentComponentProvider,

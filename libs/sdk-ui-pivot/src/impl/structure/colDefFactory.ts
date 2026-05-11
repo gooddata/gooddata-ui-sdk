@@ -20,6 +20,7 @@ import {
     ROW_ATTRIBUTE_COLUMN,
     ROW_MEASURE_COLUMN,
 } from "../base/constants.js";
+
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching.js";
 import { ColumnTotalGroupHeader } from "./headers/ColumnTotalGroupHeader.js";
 import {

@@ -26,6 +26,7 @@ import { prepareExecutionWithGeoIcon } from "../execution/prepareGeoIconExecutio
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import { resolveAttributeDisplayForms } from "../execution/resolveAttributeDisplayForms.js";
 import type { IGeoAdapterContext, IGeoLayerAdapter, IPushpinLayerOutput } from "../registry/adapterTypes.js";
+
 import { isClusteringAllowed } from "./clustering/clustering.js";
 import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
 import { transformPushpinData } from "./data/transformation.js";

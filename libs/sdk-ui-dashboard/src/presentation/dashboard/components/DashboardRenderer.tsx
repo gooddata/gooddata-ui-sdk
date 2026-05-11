@@ -44,6 +44,7 @@ import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeA
 import { defaultDashboardThemeModifier } from "../defaultDashboardThemeModifier.js";
 import { useDashboard } from "../hooks/useDashboard.js";
 import { type IDashboardProps } from "../types.js";
+
 import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
 import { DashboardLoading } from "./DashboardLoading.js";
 import { DensityInitializer } from "./DensityInitializer.js";

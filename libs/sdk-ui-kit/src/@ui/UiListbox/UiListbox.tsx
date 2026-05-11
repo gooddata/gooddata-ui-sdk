@@ -5,6 +5,7 @@ import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } fro
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+
 import { DefaultUiListboxInteractiveItemComponent } from "./defaults/DefaultUiListboxInteractiveItemComponent.js";
 import { DefaultUiListboxStaticItemComponent } from "./defaults/DefaultUiListboxStaticItemComponent.js";
 import { firstCharacterSearch } from "./defaults/firstCharacterSearch.js";

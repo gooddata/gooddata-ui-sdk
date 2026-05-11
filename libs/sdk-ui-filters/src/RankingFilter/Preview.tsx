@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { type RankingFilterOperator } from "@gooddata/sdk-model";
 
 import { messages } from "../locales.js";
+
 import { type IAttributeDropdownItem, type IMeasureDropdownItem } from "./types.js";
 
 interface IPreviewProps {

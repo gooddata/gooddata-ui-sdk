@@ -9,6 +9,7 @@ import { AmountMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+
 import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)

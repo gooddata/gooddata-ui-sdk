@@ -6,6 +6,7 @@ import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-mo
 import { type IColorLegendItem, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IPushpinColor } from "../../GeoChart.js";
+
 import {
     DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
     DEFAULT_PUSHPIN_COLOR_OPACITY,

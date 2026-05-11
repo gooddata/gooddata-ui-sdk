@@ -7,6 +7,7 @@ import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import type { IGeoLayer } from "../../types/layers/index.js";
 import { getLayerAdapter } from "../registry/adapterRegistry.js";
 import type { IGeoAdapterContext } from "../registry/adapterTypes.js";
+
 import { createExecutionContextFromLayer } from "./layerContext.js";
 
 /**

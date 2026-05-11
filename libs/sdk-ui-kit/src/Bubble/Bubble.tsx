@@ -9,6 +9,7 @@ import isReactEqual from "react-fast-compare";
 import { ZoomAwareOverlay } from "../Overlay/ZoomAwareOverlay.js";
 import { type OverlayPositionType } from "../typings/overlay.js";
 import { type IAlignPoint } from "../typings/positioning.js";
+
 import { type ArrowDirections, type ArrowOffsets } from "./typings.js";
 
 const ARROW_DIRECTIONS: ArrowDirections = {

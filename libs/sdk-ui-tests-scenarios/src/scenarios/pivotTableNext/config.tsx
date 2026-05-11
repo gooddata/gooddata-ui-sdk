@@ -9,6 +9,7 @@ import {
 } from "@gooddata/sdk-ui-pivot/next";
 
 import { scenariosFor } from "../../scenarioGroup.js";
+
 import {
     PivotTableWithTwoMeasuresAndSingleRowAttr,
     PivotTableWithTwoMeasuresAndTwoRowsAndCols,

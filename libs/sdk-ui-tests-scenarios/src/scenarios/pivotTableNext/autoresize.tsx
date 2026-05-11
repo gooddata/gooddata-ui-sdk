@@ -4,6 +4,7 @@ import { requestPages } from "@gooddata/mock-handling";
 import { type IPivotTableNextProps, PivotTableNext } from "@gooddata/sdk-ui-pivot/next";
 
 import { scenariosFor } from "../../scenarioGroup.js";
+
 import {
     PivotTableWithSingleColumn,
     PivotTableWithSingleMeasureAndTwoRowsAndCols,

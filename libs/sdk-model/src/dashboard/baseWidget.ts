@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type ObjRef } from "../objRef/index.js";
+
 import { type DrillDefinition, type IDrillDownReference } from "./drill.js";
 import { type IDashboardFilterReference } from "./filterContext.js";
 

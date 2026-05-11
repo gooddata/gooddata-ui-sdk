@@ -2,6 +2,7 @@
 
 import { type VisualizationProperties } from "../insight/index.js";
 import { type ObjRef } from "../objRef/index.js";
+
 import {
     type IBaseWidget,
     type IDrillableWidget,

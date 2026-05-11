@@ -10,6 +10,7 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { selectIsSectionInsertedByPlugin } from "../../../model/store/ui/uiSelectors.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
 import { getRefsForSection } from "../refs.js";
+
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
 
 /**

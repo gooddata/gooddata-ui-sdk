@@ -16,6 +16,7 @@ import {
 } from "../UiCombobox/UiComboboxListItem.js";
 import { UiComboboxPopup } from "../UiCombobox/UiComboboxPopup.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
+
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";
 import { type IUiTagDef, type IUiTagsProps } from "./types.js";

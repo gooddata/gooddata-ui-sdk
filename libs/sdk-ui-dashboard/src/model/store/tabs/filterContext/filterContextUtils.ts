@@ -25,6 +25,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
+
 import type { FilterContextState, IWorkingFilterContextDefinition } from "./filterContextState.js";
 
 /**

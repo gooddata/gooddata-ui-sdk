@@ -24,6 +24,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { BigChartDescriptor } from "../BigChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+
 import { PluggableHeatmap } from "./PluggableHeatmap.js";
 
 export class HeatmapDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {

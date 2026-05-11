@@ -13,6 +13,7 @@ import { type MeasureGroupDimension } from "../../types/transposition.js";
 import { applyTotalsToExecutionDef } from "../aggregations/applyTotalsToExecutionDef.js";
 import { applySortByToExecutionDef } from "../sorting/applySortByToExecutionDef.js";
 import { applyTranspositionToExecutionDef } from "../transposition/applyTranspositionToExecutionDef.js";
+
 import { applyAttributesToExecutionDef } from "./executionDefinition/attributes.js";
 import { DEFAULT_PIVOT_TABLE_EXECUTION_DEFINITION } from "./executionDefinition/constants.js";
 import { applyExecConfigToExecutionDef } from "./executionDefinition/execConfig.js";

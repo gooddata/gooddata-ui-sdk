@@ -7,6 +7,7 @@ import { type GrandTotalsPosition } from "../../types/grandTotalsPosition.js";
 import { type AgGridRowData } from "../../types/internal.js";
 import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
+
 import { getTableData } from "./valueFormatter.js";
 
 /**

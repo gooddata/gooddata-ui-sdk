@@ -5,6 +5,7 @@ import { memo } from "react";
 import { type IntlShape, type WrappedComponentProps, injectIntl } from "react-intl";
 
 import { messages } from "../../locales.js";
+
 import { emptyHeaderTitleFromIntl } from "./intlUtils.js";
 
 /**

@@ -15,6 +15,7 @@ import {
     type ExtendedDashboardWidget,
     type StashedDashboardItemsId,
 } from "../types/layoutTypes.js";
+
 import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 

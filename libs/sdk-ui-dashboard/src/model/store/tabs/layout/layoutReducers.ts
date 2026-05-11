@@ -58,6 +58,7 @@ import { type IWidgetDescription, type IWidgetHeader } from "../../../types/widg
 import { addArrayElements, removeArrayElement } from "../../../utils/arrayOps.js";
 import { resetUndoReducer, undoReducer, withUndo } from "../../_infra/undoEnhancer.js";
 import { type ITabsState } from "../tabsState.js";
+
 import { type ILayoutState, layoutInitialState } from "./layoutState.js";
 import { getWidgetCoordinatesAndItem, resizeInsightWidget } from "./layoutUtils.js";
 

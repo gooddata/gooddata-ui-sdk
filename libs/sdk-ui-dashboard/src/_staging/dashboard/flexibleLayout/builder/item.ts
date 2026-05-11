@@ -24,6 +24,7 @@ import {
 
 import { type ILayoutItemPath } from "../../../../types.js";
 import { type IDashboardLayoutItemFacade } from "../facade/interfaces.js";
+
 import {
     type DashboardLayoutItemModifications,
     type IDashboardLayoutBuilder,

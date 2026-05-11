@@ -14,6 +14,7 @@ import {
 import { Header, Item } from "@gooddata/sdk-ui-kit";
 
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
+
 import { isTotalEnabledForSubMenuAttribute } from "./aggregationsMenuHelper.js";
 import { type IColumnTotal } from "./aggregationsMenuTypes.js";
 

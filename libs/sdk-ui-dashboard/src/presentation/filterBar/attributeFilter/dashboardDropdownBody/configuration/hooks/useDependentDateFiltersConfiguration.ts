@@ -10,6 +10,7 @@ import { type IDashboardAttributeFilter, type IDashboardDateFilter, isUriRef } f
 import { setAttributeFilterDependentDateFilters } from "../../../../../../model/commands/filters.js";
 import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
 import { type IDashboardDependentDateFilter } from "../../../../../../model/types/dateFilterTypes.js";
+
 import {
     useDependentCommonDateFilterConfigurationState,
     useDependentDateFilterConfigurationState,

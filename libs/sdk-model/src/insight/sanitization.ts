@@ -11,6 +11,7 @@ import {
     bucketSetTotals,
     bucketTotals,
 } from "../execution/buckets/index.js";
+
 import {
     type IInsightDefinition,
     insightAttributes,

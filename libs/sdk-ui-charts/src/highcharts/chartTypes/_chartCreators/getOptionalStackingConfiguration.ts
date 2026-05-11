@@ -24,6 +24,7 @@ import {
     isLineChart,
 } from "../_util/common.js";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
+
 import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers.js";
 import { isPrimaryYAxis } from "./isPrimaryYAxis.js";
 

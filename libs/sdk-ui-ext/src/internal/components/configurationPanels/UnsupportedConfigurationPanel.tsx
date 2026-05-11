@@ -5,6 +5,7 @@ import { type ReactNode } from "react";
 import { omit } from "lodash-es";
 
 import { UnsupportedProperties } from "../configurationControls/UnsupportedProperties.js";
+
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class UnsupportedConfigurationPanel extends ConfigurationPanelContent {

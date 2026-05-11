@@ -18,6 +18,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type IHeadlineData } from "../../../headline/internal/interfaces/Headlines.js";
+
 import { calculateXirr } from "./calculateXirr.js";
 
 export interface IXirrExecutionData {

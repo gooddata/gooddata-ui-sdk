@@ -14,6 +14,7 @@ import {
     setUserFeedback,
     setVerboseAction,
 } from "../messages/messagesSlice.js";
+
 import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
 import { loadSettings } from "./loadSettings.js";

@@ -38,6 +38,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { getFormatByGranularity } from "../../utils/dateUtils.js";
+
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";
 import type { FormattingLocale } from "./dateFormatting/defaultDateFormatter.js";

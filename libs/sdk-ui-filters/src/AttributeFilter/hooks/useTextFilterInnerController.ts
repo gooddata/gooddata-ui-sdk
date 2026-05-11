@@ -16,6 +16,7 @@ import {
     isArbitraryOperator,
     resolveValuesOnTextOperatorChange,
 } from "../textFilterOperatorUtils.js";
+
 import { MAX_SELECTION_SIZE } from "./constants.js";
 
 /**

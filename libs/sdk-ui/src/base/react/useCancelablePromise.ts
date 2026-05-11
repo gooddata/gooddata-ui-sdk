@@ -3,6 +3,7 @@
 import { type DependencyList, useEffect, useState } from "react";
 
 import { UnexpectedSdkError } from "../errors/GoodDataSdkError.js";
+
 import { makeCancelable } from "./CancelablePromise.js";
 import { safeSerialize } from "./safeSerialize.js";
 

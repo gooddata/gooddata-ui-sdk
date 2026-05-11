@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
+
 import { type ILegendGroup } from "./types.js";
 
 export function LegendGroup({

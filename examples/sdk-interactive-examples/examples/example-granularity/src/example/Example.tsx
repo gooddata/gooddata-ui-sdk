@@ -7,6 +7,7 @@ import { ComboChart } from "@gooddata/sdk-ui-charts";
 
 import { DateDatasets, GrossProfit, NrOfOrders } from "../catalog.js";
 import { Hint } from "../Hint.js";
+
 import { GranularitySelector } from "./GranularitySelector.js";
 
 // Try changing default granularity to DateDatasets.CustomerCreatedDate.CustomerCreatedDateMonthYear.Default 👇

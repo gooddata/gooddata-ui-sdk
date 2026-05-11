@@ -2,6 +2,7 @@
 
 import { removeLayerIfExists, removeSourceIfExists } from "../../layers/common/layerOps.js";
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
+
 import type { IExistingResources, IStyleReconciliationPlan } from "./types.js";
 
 /**

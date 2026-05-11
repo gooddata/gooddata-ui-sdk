@@ -5,6 +5,7 @@ import { type GridApi, type IDatasource, type IGetRowsParams } from "ag-grid-com
 import { DataViewFacade, type GoodDataSdkError, convertDataWindowError } from "@gooddata/sdk-ui";
 
 import { type IRepeaterChartConfig } from "../publicTypes.js";
+
 import { dataViewToRepeaterData } from "./dataViewToRepeaterData.js";
 
 const MAX_COLUMNS = 1000;

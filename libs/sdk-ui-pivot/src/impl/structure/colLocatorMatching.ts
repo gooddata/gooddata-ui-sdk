@@ -10,6 +10,7 @@ import {
     isMeasureColumnLocator,
     isTotalColumnLocator,
 } from "../../columnWidths.js";
+
 import { colMeasureLocalId } from "./colAccessors.js";
 import {
     type DataCol,

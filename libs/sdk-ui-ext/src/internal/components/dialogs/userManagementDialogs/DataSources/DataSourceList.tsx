@@ -4,6 +4,7 @@ import { type ReactElement, useMemo } from "react";
 
 import { type IGrantedDataSource, type ListMode, type WorkspacePermissionSubject } from "../types.js";
 import { sortByName } from "../utils.js";
+
 import { DataSourceItem } from "./DataSourceItem.js";
 import { DataSourceListEmpty } from "./DataSourceListEmpty.js";
 

@@ -11,6 +11,7 @@ import { ShortenedText, UiIcon } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { type AttributeFilterSelectionType } from "../../selectionTypes.js";
+
 import { AttributeFilterDetailsBubble } from "./AttributeFilterDetailsBubble.js";
 
 /**

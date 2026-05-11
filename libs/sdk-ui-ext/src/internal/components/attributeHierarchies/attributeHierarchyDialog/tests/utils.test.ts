@@ -9,6 +9,7 @@ import {
     findCatalogAttributeByRef,
     searchAttributes,
 } from "../utils.js";
+
 import { attributesData, catalogAttributes, catalogDateDatasets } from "./utils.fixture.js";
 
 describe("utils", () => {

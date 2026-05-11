@@ -18,6 +18,7 @@ import {
 } from "../../catalogItem/types.js";
 import { useMounted } from "../../hooks/useMounted.js";
 import { type ObjectType } from "../../objectType/types.js";
+
 import { useCatalogItemLoad } from "./useCatalogItemLoad.js";
 
 export interface IUseCatalogItemUpdate {

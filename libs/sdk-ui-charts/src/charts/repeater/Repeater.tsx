@@ -23,6 +23,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type IBucketChartProps, type ICoreChartProps } from "../../interfaces/chartProps.js";
+
 import { CoreRepeater } from "./CoreRepeater.js";
 import { constructRepeaterBuckets, constructRepeaterDimensions } from "./internal/repeaterExecution.js";
 

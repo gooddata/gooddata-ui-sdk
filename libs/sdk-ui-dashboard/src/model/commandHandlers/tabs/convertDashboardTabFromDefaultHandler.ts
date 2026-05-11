@@ -12,6 +12,7 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 
 export function* convertDashboardTabFromDefaultHandler(

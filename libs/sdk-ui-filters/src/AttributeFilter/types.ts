@@ -20,6 +20,7 @@ import {
 import { type IAlignPoint, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import { type IFilterButtonCustomIcon } from "../shared/interfaces/index.js";
+
 import { type IAttributeFilterErrorProps } from "./Components/AttributeFilterError.js";
 import { type IAttributeFilterLoadingProps } from "./Components/AttributeFilterLoading.js";
 import { type IAttributeFilterDropdownActionsProps } from "./Components/Dropdown/AttributeFilterDropdownActions.js";

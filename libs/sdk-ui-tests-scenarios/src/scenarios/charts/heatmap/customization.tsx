@@ -8,6 +8,7 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { legendResponsiveVariants } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { type IResponsiveSize, responsiveScenarios } from "../_infra/responsiveScenarios.js";
+
 import { HeatmapWithMeasureRowsAndColumns } from "./base.js";
 
 const legendScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)

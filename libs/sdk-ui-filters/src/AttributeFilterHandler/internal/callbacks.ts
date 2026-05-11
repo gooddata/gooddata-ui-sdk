@@ -44,6 +44,7 @@ import {
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
 } from "../types/selectionHandler.js";
+
 import {
     selectInvertableCommittedSelection,
     selectInvertableWorkingSelection,

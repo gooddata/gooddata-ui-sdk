@@ -8,6 +8,7 @@ import { type ICatalogAttributeHierarchy, type IParameterMetadataObject, idRef }
 import { catalogReducers } from "../catalogReducers.js";
 import { type CatalogState } from "../catalogState.js";
 import { catalogActions } from "../index.js";
+
 import { catalogAttributeHierarchies } from "./catalog.fixture.js";
 
 describe("catalogReducers", () => {

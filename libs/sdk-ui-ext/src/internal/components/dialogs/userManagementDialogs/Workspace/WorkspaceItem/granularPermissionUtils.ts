@@ -4,6 +4,7 @@ import { isEqual } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IGrantedWorkspace, type WorkspacePermission, type WorkspacePermissions } from "../../types.js";
+
 import { workspaceGranularPermissionMessages } from "./locales.js";
 
 export const workspacePermissions: WorkspacePermissions = ["MANAGE", "ANALYZE", "VIEW"];

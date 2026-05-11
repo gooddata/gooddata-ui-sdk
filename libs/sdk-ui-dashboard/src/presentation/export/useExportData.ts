@@ -23,6 +23,7 @@ import { selectInsightByWidgetRef } from "../../model/store/insights/insightsSel
 import { selectIsInExportMode } from "../../model/store/renderMode/renderModeSelectors.js";
 import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { type RenderMode } from "../../types.js";
+
 import {
     type CommonExportDataAttributes,
     type MetaExportData,

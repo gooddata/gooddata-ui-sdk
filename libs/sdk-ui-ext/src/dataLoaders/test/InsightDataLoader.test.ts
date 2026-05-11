@@ -7,6 +7,7 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import { insightDataLoaderFactory } from "../InsightDataLoader.js";
+
 import { noopWorkspaceInsightsService } from "./dataLoaders.mock.js";
 
 describe("InsightDataLoader", () => {

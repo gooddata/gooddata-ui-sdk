@@ -8,6 +8,7 @@ import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, type IAlignPoint, type IUiListboxItem, UiAutofocus } from "@gooddata/sdk-ui-kit";
 
 import { type AttributeFilterSelectionType } from "../../selectionTypes.js";
+
 import { FilterMenuButton } from "./FilterMenuButton.js";
 import { FilterMenuDropdownBody } from "./FilterMenuDropdownBody.js";
 import { type IFilterMenuProps, type ILabelItemData, type ISelectionTypeItemData } from "./types.js";

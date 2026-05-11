@@ -22,6 +22,7 @@ import { dashboardDeinitialized } from "../events/dashboard.js";
 import { type IReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
 import { getWidgetsOfType } from "../store/tabs/layout/layoutUtils.js";
 import type { DashboardConfig } from "../types/commonTypes.js";
+
 import { type IDashboardStoreProviderProps } from "./types.js";
 
 type InitProps = {

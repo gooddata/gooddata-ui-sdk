@@ -25,6 +25,7 @@ import { selectSettings } from "../../../../model/store/config/configSelectors.j
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { type ILayoutItemPath } from "../../../../types.js";
 import { newLoadingPlaceholderWidget } from "../../../../widgets/placeholders/types.js";
+
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useInsightListItemDropHandler(layoutPath: ILayoutItemPath) {

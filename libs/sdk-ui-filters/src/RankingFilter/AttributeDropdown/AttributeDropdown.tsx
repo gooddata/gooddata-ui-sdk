@@ -9,6 +9,7 @@ import { type ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
 
 import { type IAttributeDropdownItem, type ICustomGranularitySelection } from "../types.js";
+
 import { AttributeDropdownBody } from "./AttributeDropdownBody.js";
 
 const getItemTitle = (selectedItem: IAttributeDropdownItem | undefined, intl: IntlShape): string =>

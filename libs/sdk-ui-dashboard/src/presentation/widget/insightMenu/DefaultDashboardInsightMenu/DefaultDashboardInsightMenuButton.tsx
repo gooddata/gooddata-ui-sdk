@@ -3,6 +3,7 @@
 import { type ReactElement } from "react";
 
 import { type IDashboardInsightMenuButtonProps } from "../types.js";
+
 import { DashboardInsightMenuButton } from "./DashboardInsightMenuButton.js";
 
 /**

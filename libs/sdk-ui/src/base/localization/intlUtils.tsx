@@ -14,6 +14,7 @@ import { IntlProvider, type IntlShape, createIntl } from "react-intl";
 import type { IntlConfig } from "react-intl/src/types.js";
 
 import { wrapDisplayName } from "../react/wrapDisplayName.js";
+
 import { DefaultLocale, type ILocale, isLocale } from "./Locale.js";
 import { DEFAULT_MESSAGES, type ITranslations, resolveMessages } from "./messagesMap.js";
 

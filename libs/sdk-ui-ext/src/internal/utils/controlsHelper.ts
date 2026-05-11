@@ -14,6 +14,7 @@ import { BucketNames, type IPushData } from "@gooddata/sdk-ui";
 
 import { messages } from "../../locales.js";
 import { type IMinMaxControlProps, type IMinMaxControlState } from "../interfaces/MinMaxControl.js";
+
 import { getMeasureGroupDimensionFromProperties } from "./propertiesHelper.js";
 import { getTranslation } from "./translations.js";
 

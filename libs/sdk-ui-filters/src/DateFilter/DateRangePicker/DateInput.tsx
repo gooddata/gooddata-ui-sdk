@@ -22,6 +22,7 @@ import {
 import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
 
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
+
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody.js";
 import { InputErrorMessage } from "./InputErrorMessage.js";
 import { type IDateInputErrorMessageTexts, type IInputAccessibilityConfig } from "./types.js";

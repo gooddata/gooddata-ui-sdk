@@ -14,6 +14,7 @@ import {
     type AttributeFilterTextSelectionType,
 } from "../selectionTypes.js";
 import { type TextFilterOperator } from "../textFilterOperatorUtils.js";
+
 import { type ITextFilterState } from "./useTextFilterInnerController.js";
 
 /**

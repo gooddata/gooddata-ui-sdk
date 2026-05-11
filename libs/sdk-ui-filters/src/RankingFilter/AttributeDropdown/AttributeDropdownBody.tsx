@@ -1,9 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { type IAttributeDropdownItem, type ICustomGranularitySelection } from "../types.js";
+
 import { AllRecordsItem } from "./DropdownItems/AllRecordsItem.js";
 import { AttributeItem } from "./DropdownItems/AttributeItem.js";
 

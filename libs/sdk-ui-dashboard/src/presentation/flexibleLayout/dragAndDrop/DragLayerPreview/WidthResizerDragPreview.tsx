@@ -9,6 +9,7 @@ import { type DragResizeProps } from "../../../dragAndDrop/DragLayerPreview/type
 import { useResizeHandlers } from "../../../dragAndDrop/LayoutResizeContext.js";
 import { type IWidthResizerDragItem } from "../../../dragAndDrop/types.js";
 import { WidthResizer } from "../Resize/WidthResizer.js";
+
 import { applySizeLimitation } from "./sizeLimiting.js";
 
 export type WidthResizerDragPreviewProps = DragResizeProps<IWidthResizerDragItem>;

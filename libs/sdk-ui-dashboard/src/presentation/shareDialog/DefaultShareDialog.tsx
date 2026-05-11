@@ -8,6 +8,7 @@ import { type IShareDialogLabels, ShareDialog } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import { selectLocale } from "../../model/store/config/configSelectors.js";
+
 import { type IShareDialogProps } from "./types.js";
 
 /**

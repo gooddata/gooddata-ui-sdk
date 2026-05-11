@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import { isDashboardParameter } from "../parameter.js";
+
 import { dashboardParameterFull, dashboardParameterMinimal } from "./parameter.fixtures.js";
 
 describe("dashboard parameter type guards", () => {

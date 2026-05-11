@@ -17,6 +17,7 @@ import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectAllCatalogAttributesMap } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectFilterContextAttributeFilterItems } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+
 import { AttributeFilterConfigurationItem } from "./AttributeFilterConfigurationItem.js";
 import { getAttributeByDisplayForm } from "./utils.js";
 

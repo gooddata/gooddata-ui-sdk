@@ -15,6 +15,7 @@ import {
     type IDashboardAttributeFilterParentItem,
 } from "../../../../../../model/types/attributeFilterTypes.js";
 import { ConnectingAttributeDropdown } from "../connectingAttribute/ConnectingAttributeDropdown.js";
+
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 
 export interface IConfigurationParentItemProps {

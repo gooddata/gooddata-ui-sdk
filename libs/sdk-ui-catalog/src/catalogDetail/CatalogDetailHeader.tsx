@@ -12,6 +12,7 @@ import { type ICatalogItem } from "../catalogItem/types.js";
 import { CertificationIconMemo } from "../certification/CertificationIcon.js";
 import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
 import { ObjectTypeTooltip } from "../objectType/ObjectTypeTooltip.js";
+
 import { CatalogDetailGenerateDescription } from "./CatalogDetailGenerateDescription.js";
 import { CatalogDetailGenerateTitle } from "./CatalogDetailGenerateTitle.js";
 

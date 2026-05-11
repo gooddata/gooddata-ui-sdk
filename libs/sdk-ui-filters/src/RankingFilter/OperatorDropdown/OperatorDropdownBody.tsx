@@ -6,6 +6,7 @@ import { type RankingFilterOperator } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { type IOperatorDropdownItem } from "../types.js";
+
 import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
 
 interface IOperatorDropdownBodyComponentProps {

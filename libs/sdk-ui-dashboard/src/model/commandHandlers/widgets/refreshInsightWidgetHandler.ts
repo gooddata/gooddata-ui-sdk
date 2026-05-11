@@ -12,6 +12,7 @@ import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 

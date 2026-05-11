@@ -24,6 +24,7 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type IWidgetHeader, isWidgetHeader } from "../../types/widgetTypes.js";
+
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 
 function* validateMeasure(

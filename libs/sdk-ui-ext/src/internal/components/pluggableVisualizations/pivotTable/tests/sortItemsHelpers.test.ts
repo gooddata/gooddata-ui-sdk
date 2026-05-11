@@ -16,6 +16,7 @@ import {
     addDefaultSort,
     isSortItemVisible,
 } from "../sortItemsHelpers.js";
+
 import { getMockReferencePoint } from "./mockReferencePoint.js";
 import {
     invalidAttributeSort,

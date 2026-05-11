@@ -10,6 +10,7 @@ import {
     type PropsWithMeta,
 } from "../embeddingCodeGenerator/types.js";
 import { removeUseless } from "../removeUseless.js";
+
 import { configForInsightView, localeForInsightView } from "./insightViewConfig.js";
 
 const getInsightViewSpecification = (

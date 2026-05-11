@@ -10,6 +10,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../locales.js";
 import { type IOperatorDropdownItem } from "../types.js";
+
 import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
 
 const operatorItems = [

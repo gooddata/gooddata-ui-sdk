@@ -6,6 +6,7 @@ import { type ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
 import { DashboardLayoutItemViewRenderer } from "../../../DefaultDashboardLayoutRenderer/DashboardLayoutItemViewRenderer.js";
 import { type IDashboardLayoutItemRenderProps } from "../../../DefaultDashboardLayoutRenderer/interfaces.js";
+
 import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 
 export interface IDashboardEditLayoutItemRendererStateProps {

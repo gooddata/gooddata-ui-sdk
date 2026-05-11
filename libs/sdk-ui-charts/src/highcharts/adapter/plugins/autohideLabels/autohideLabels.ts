@@ -9,6 +9,7 @@ import {
     minimizeDataLabel,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers.js";
 import { getChartType } from "../../../chartTypes/_chartCreators/helpers.js";
+
 import {
     autohideBarLabels,
     autohideBarTotalLabels,

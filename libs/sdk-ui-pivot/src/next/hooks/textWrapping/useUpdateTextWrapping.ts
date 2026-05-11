@@ -8,6 +8,7 @@ import { type AgGridApi, type AgGridColumnDef } from "../../types/agGrid.js";
 import { type ITextWrapping } from "../../types/textWrapping.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
+
 import { useUpdateDefaultTextWrapping } from "./useUpdateDefaultTextWrapping.js";
 
 /**

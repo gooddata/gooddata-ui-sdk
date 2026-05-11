@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { commonConfigurations, v8Variants, v9Variants } from "../src/index.js";
+
 import { buildV8 } from "./build/v8.js";
 import { buildV9 } from "./build/v9.js";
 

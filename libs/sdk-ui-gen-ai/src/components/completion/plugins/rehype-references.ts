@@ -6,6 +6,7 @@ import { type Node, type Parent } from "unist";
 
 import { type TextContentObject } from "../../../model.js";
 import { getReferenceRegex } from "../utils.js";
+
 import { type HtmlNode, type TextNode } from "./types.js";
 
 export function rehypeReferences(references: TextContentObject[]) {

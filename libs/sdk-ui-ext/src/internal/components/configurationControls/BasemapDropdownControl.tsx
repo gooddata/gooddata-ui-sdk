@@ -4,6 +4,7 @@ import { memo } from "react";
 
 import { messages } from "../../../locales.js";
 import { type IDropdownItem } from "../../interfaces/Dropdown.js";
+
 import { DropdownControl, type IDropdownControlProps } from "./DropdownControl.js";
 
 export interface IBasemapDropdownControlProps extends Omit<

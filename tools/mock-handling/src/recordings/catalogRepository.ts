@@ -4,6 +4,7 @@ import * as path from "path";
 
 import { findFiles } from "../base/utils.js";
 import { logWarn } from "../cli/loggers.js";
+
 import { CatalogDefinition, CatalogRecording } from "./catalog.js";
 import { type IRecording, isNonNullRecording } from "./common.js";
 

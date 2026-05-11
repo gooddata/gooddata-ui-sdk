@@ -17,6 +17,7 @@ import {
     isSelectErrorOption,
     isWorkspaceItem,
 } from "../types.js";
+
 import {
     EmptyRenderer,
     GroupHeadingRenderer,

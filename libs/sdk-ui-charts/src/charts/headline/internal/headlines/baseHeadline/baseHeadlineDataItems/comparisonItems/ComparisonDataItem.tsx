@@ -10,6 +10,7 @@ import {
 } from "../../../../interfaces/BaseHeadlines.js";
 import { useOutOfBoundsDetection } from "../useOutOfBoundsDetection.js";
 import { withTitle } from "../withTitle.js";
+
 import { ComparisonValue } from "./ComparisonValue.js";
 import { useComparisonDataItem } from "./useComparisonDataItem.js";
 

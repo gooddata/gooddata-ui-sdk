@@ -9,6 +9,7 @@ import { type IPushpinColor, type IPushpinGeoData } from "../../types/geoData/pu
 import { SELECTED_FEATURE_PROPERTY } from "../common/constants.js";
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
 import { getSelectedIntersections, isFeatureSelected } from "../common/selectionUtils.js";
+
 import { getPushpinColors } from "./coloring/palette.js";
 import {
     DEFAULT_CLUSTER_MAX_ZOOM,

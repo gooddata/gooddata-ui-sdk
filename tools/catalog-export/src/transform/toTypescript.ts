@@ -19,6 +19,7 @@ import {
     type Metric,
     type WorkspaceMetadata,
 } from "../base/types.js";
+
 import { type TakenNamesSet, createUniqueVariableName, stringToVariableName } from "./titles.js";
 
 export type TypescriptOutput = {

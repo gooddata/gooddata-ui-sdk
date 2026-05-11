@@ -13,11 +13,16 @@ runs:
       uses: ./.github/actions/node/set-up-node
       id: node-init
 
-    # This is temporary solution to disable zstd before cached operation on runners see readme in zstd action directory
+    # This is temporary solution to disable zstd before cached operation on runners
     - name: detect zstd
+      id: detect-zstd
       uses: ./.github/actions/zstd/detect-zstd
-    - name: disbale zstd
+
+    - name: disable zstd
+      if: ${{ steps.detect-zstd.outputs.exists == 'true' }}
       uses: ./.github/actions/zstd/disable-zstd
+      with:
+        zstd-dir: ${{ steps.detect-zstd.outputs.zstd-dir }}
 
     # The runner is set up to assume a role using a web identity token, which is only possible for runners in the infra1-runners-arc group.
     # Region and role ARN and token file are passed as environment variables from the runner.
@@ -79,11 +84,12 @@ runs:
           common/temp/pnpm-store
         key: pnpm-cache-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}-${{ hashFiles('rush.json') }}
 
-
-    # All cached operation done enable zstd back
-    # This is temporary solution to disable zstd before cached operation on runners see readme in zstd action directory
+    # This is temporary solution to disable zstd before cached operation on runners
     - name: enable zstd
+      if: ${{ steps.detect-zstd.outputs.exists == 'true' }}
       uses: ./.github/actions/zstd/enable-zstd
+      with:
+        zstd-dir: ${{ steps.detect-zstd.outputs.zstd-dir }}
 
     # Install rush
     - name: Install rush

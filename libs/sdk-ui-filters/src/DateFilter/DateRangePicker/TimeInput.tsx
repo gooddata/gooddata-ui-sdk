@@ -8,6 +8,7 @@ import moment, { type Moment } from "moment/moment.js";
 import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
 
 import { TIME_FORMAT } from "../constants/Platform.js";
+
 import { InputErrorMessage } from "./InputErrorMessage.js";
 import { type IInputAccessibilityConfig, type ITime } from "./types.js";
 

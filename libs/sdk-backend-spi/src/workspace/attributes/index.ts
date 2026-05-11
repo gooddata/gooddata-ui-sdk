@@ -14,6 +14,7 @@ import {
 import type { IFilterBaseOptions } from "../../common/filtering.js";
 import type { IPagedResource } from "../../common/paging.js";
 import type { QueryMethod } from "../../common/query.js";
+
 import type { IElementsQueryFactory } from "./elements/index.js";
 
 /**

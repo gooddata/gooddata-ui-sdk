@@ -7,6 +7,7 @@ import { selectActiveSection } from "../../../model/store/ui/uiSelectors.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import { DashboardLayoutSectionBorder } from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/DashboardLayoutSectionBorder.js";
 import { type DashboardLayoutSectionBorderStatus } from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/types.js";
+
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import { type IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 

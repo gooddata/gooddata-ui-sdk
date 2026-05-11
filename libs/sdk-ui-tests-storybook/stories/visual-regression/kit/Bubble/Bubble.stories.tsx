@@ -6,6 +6,7 @@ import { Bubble, BubbleFocusTrigger, BubbleHoverTrigger, Button } from "@gooddat
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+
 import "./styles.scss";
 
 const alignOptions = ["tl", "tc", "tr", "cl", "cc", "cr", "bl", "bc", "br"];

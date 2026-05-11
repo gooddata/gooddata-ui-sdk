@@ -46,6 +46,7 @@ import {
 } from "../../constants/automations.js";
 import { AttributesDropdown } from "../../filterBar/attributeFilter/addAttributeFilter/AttributesDropdown.js";
 import { useAutomationFilters, useAutomationFiltersByTab } from "../useAutomationFilters.js";
+
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
 

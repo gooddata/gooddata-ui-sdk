@@ -6,6 +6,7 @@ import { type IListedDashboard } from "@gooddata/sdk-model";
 
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+
 import { accessibleDashboardsEntityAdapter } from "./accessibleDashboardsEntityAdapter.js";
 
 const selectSelf = createSelector(

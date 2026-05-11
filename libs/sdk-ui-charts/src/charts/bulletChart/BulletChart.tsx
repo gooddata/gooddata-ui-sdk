@@ -25,6 +25,7 @@ import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { stackedChartDimensions } from "../_commons/dimensions.js";
 import { sanitizeConfig } from "../_commons/sanitizeStacking.js";
 import { truncate } from "../_commons/truncate.js";
+
 import { CoreBulletChart } from "./CoreBulletChart.js";
 
 //

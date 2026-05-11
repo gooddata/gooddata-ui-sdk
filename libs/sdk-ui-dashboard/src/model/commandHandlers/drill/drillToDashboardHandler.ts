@@ -57,6 +57,7 @@ import {
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardState } from "../../store/types.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import {
     type IConversionResult,
     convertIntersectionToAttributeFilters,

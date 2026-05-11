@@ -8,6 +8,7 @@ import { CodeArea } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+
 import { code } from "./CodeMock.js";
 
 function AreaWrapper({ children }: { children?: ReactNode }) {

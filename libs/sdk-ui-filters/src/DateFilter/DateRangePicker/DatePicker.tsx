@@ -39,6 +39,7 @@ import { type WeekStart } from "@gooddata/sdk-model";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { type DateRangePosition } from "../interfaces/index.js";
+
 import { type IDateRange } from "./types.js";
 import { mergeDayPickerProps } from "./utils.js";
 

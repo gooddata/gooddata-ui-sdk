@@ -12,6 +12,7 @@ import type {
 import { DefaultVisualizationSwitcherToolbar } from "../../presentation/widget/visualizationSwitcher/configuration/DefaultVisualizationSwitcherToolbar.js";
 import { DefaultDashboardVisualizationSwitcher } from "../../presentation/widget/visualizationSwitcher/DefaultDashboardVisualizationSwitcher.js";
 import { type IVisualizationSwitcherCustomizer } from "../customizer.js";
+
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
 

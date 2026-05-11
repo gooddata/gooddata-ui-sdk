@@ -12,6 +12,7 @@ import { UiAutofocus } from "../UiFocusManager/UiAutofocus.js";
 import { UiFocusTrap } from "../UiFocusManager/UiFocusTrap.js";
 import { UiReturnFocusOnUnmount } from "../UiFocusManager/UiReturnFocusOnUnmount.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
+
 import { useToggleDrawer } from "./hooks/useToggleDrawer.js";
 import { type IUiDrawerProps } from "./types.js";
 

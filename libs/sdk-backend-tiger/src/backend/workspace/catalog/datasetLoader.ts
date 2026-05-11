@@ -25,6 +25,7 @@ import {
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
 import { convertAttributeHierarchy } from "../../../convertors/fromBackend/HierarchyConverter.js";
+
 import { addRsqlFilterToParams } from "./rsqlFilter.js";
 
 function lookupRelatedObject(included: JsonApiAttributeOutIncludes[] | undefined, id: string, type: string) {

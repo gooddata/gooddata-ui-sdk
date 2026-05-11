@@ -9,6 +9,7 @@ import {
 import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 import { type ILayoutItemPath } from "../../../types.js";
 import { findItem } from "../../layout/coordinates.js";
+
 import { type IDashboardLayoutItemFacade } from "./facade/interfaces.js";
 
 /**

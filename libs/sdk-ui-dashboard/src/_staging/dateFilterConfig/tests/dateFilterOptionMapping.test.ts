@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 import { matchDateFilterToDateFilterOption } from "../dateFilterOptionMapping.js";
+
 import { allTime, last30days } from "./fixtures.js";
 
 describe("matchDateFilterToDateFilterOption", () => {

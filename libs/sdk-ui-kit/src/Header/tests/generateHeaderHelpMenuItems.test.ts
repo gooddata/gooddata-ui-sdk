@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { generateHeaderHelpMenuItems } from "../generateHeaderHelpMenuItems.js";
+
 import { getHelpMenuFeatureFlagsMock } from "./mock.js";
 
 describe("generateHeaderHelpMenuItems", () => {

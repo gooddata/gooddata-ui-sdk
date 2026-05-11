@@ -30,6 +30,7 @@ import {
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
 import { MAX_VISUALIZATION_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";
+
 import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigCodeGenerator.js";
 import { PluggableGeoPushpinChart } from "./PluggableGeoPushpinChart.js";
 

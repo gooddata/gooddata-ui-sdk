@@ -11,6 +11,7 @@ import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import { type ILegendModel, type ILegendSection } from "../../types/legend/model.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { resolveLayerColorConfig } from "../color/resolveLayerColorConfig.js";
+
 import { computeAreaLegend } from "./computeAreaLegend.js";
 import { computePushpinLegend } from "./computePushpinLegend.js";
 

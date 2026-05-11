@@ -6,6 +6,7 @@ import {
     type IDrillConfigItem,
     type IDrillDownAttributeHierarchyDefinition,
 } from "../../../../drill/types.js";
+
 import { DrillFiltersConfigInner } from "./DrillFiltersConfigInner.js";
 import { useDrillFiltersConfig } from "./useDrillFiltersConfig.js";
 

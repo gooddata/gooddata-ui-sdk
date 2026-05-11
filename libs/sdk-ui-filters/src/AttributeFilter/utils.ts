@@ -20,6 +20,7 @@ import {
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
 import { getElementCacheKey } from "../AttributeFilterHandler/internal/redux/common/selectors.js";
+
 import { getSelectionTypeFromFilter } from "./selectionTypeUtils.js";
 import { getOperatorFromFilter, getValuesFromFilter } from "./textFilterOperatorUtils.js";
 import { getTextFilterStateText } from "./textFilterStateSummaryUtils.js";

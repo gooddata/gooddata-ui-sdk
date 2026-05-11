@@ -11,6 +11,7 @@ import {
     isDashboardEventOrCustomDashboardEvent,
 } from "../events/base.js";
 import { type DashboardEvents } from "../events/index.js";
+
 import { useDashboardDispatch } from "./DashboardStoreProvider.js";
 
 /**
