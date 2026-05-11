@@ -20,6 +20,7 @@ import {
 import { type DataAccessConfig, DefaultDataAccessConfig } from "../dataAccessConfig.js";
 import { dataViewToTableData } from "../tableData/dataViewToTableData.js";
 import { type ITableData } from "../tableData/interfaces/index.js";
+
 import { DataAccessImpl } from "./dataAccessImpl.js";
 
 class FilteredIterator<T> implements Iterator<T> {

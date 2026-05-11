@@ -10,6 +10,7 @@ import { useDashboardUserInteraction } from "../../../model/react/useDashboardUs
 import { selectEnableRichTextDynamicReferences } from "../../../model/store/config/configSelectors.js";
 import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";

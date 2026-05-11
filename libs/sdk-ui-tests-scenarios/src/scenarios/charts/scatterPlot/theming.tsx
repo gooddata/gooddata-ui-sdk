@@ -4,6 +4,7 @@ import { type IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { ScatterPlotWithMeasuresAndAttribute } from "./base.js";
 
 export const theming = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)

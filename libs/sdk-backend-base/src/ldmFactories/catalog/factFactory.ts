@@ -9,6 +9,7 @@ import {
 
 import { type BuilderModifications, builderFactory } from "../builder.js";
 import { type FactMetadataObjectBuilder, newFactMetadataObject } from "../metadata/factFactory.js";
+
 import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 
 /**

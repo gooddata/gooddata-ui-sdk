@@ -7,6 +7,7 @@ import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@go
 import { thresholdFilter } from "../filters/items.filters.js";
 import { getUIPath } from "../utils/getUIPath.js";
 import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
+
 import { type SearchTreeViewItem } from "./LeveledSearchTreeView.js";
 
 type BuildSearchOverlayItemsProps = {

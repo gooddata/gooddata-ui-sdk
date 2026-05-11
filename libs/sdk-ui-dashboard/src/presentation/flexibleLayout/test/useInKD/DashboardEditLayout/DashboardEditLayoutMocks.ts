@@ -4,6 +4,7 @@ import { type ObjRef, idRef } from "@gooddata/sdk-model";
 import { type VisType } from "@gooddata/sdk-ui";
 
 import { newInsight } from "../../../../../_staging/insight/insightBuilder.js";
+
 import {
     type IDashboardEditLayout,
     type IDashboardEditLayoutContent,

@@ -6,6 +6,7 @@ import { type WeekStart } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { RECURRENCE_TYPES } from "../constants.js";
+
 import {
     constructCronExpression,
     isLastOccurrenceOfWeekdayInMonth,

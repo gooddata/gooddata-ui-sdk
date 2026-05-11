@@ -36,6 +36,7 @@ import { type PromiseFnReturnType, type PromiseReturnType } from "../../../types
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";
+
 import { canFilterBeAdded } from "./validation/uniqueFiltersValidation.js";
 
 export function* addAttributeFilterHandler(

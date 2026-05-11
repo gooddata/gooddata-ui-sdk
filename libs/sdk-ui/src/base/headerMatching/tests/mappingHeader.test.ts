@@ -15,6 +15,7 @@ import {
     getMappingHeaderUri,
     hasMappingHeaderFormattedName,
 } from "../MappingHeader.js";
+
 import {
     attributeDescriptor,
     attributeHeaderItem,

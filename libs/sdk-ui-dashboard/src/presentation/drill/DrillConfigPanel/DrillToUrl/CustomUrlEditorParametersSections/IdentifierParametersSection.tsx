@@ -15,6 +15,7 @@ import { InsightIdParameterDetail } from "../ParameterDetails/InsightIdParameter
 import { ProjectIdParameterDetail } from "../ParameterDetails/ProjectIdParameterDetail.js";
 import { WidgetIdParameterDetail } from "../ParameterDetails/WidgetIdParameterDetail.js";
 import { type IIdentifierParametersSectionProps } from "../types.js";
+
 import { Parameter } from "./Parameter.js";
 
 interface IIdentifierParameter {

@@ -12,6 +12,7 @@ import { type IComparisonControlProperties } from "../../../../../interfaces/Con
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { getPresets, getTemplates } from "../../../../../utils/comparisonHelper.js";
 import { DisabledBubbleMessage } from "../../../../DisabledBubbleMessage.js";
+
 import { NumberFormatToggleButton } from "./NumberFormatToggleButton.js";
 
 interface INumberFormatControlProps {

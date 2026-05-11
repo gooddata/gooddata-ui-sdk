@@ -73,6 +73,7 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableAreaChart } from "../PluggableAreaChart.js";
+
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,

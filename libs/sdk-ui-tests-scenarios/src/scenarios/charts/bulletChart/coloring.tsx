@@ -9,6 +9,7 @@ import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors.js
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+
 import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)

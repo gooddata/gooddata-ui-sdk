@@ -21,6 +21,7 @@ import {
 } from "../../../model/store/config/configSelectors.js";
 import { selectCurrentUser } from "../../../model/store/user/userSelectors.js";
 import { getAuthor } from "../../../model/utils/author.js";
+
 import { InsightPickerListItem } from "./InsightPickerListItem.js";
 import { useInsertInsightToLayout } from "./useInsertInsightToLayout.js";
 

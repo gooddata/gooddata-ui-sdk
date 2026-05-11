@@ -40,6 +40,7 @@ import {
 } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { DefaultDashboardAttributeFilter } from "../attributeFilter/DefaultDashboardAttributeFilter.js";
 import type { IDashboardFilterGroupProps } from "../attributeFilter/types.js";
+
 import {
     type FilterBarAttributeFilterIndexed,
     isFilterBarAttributeFilter,

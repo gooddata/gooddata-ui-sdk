@@ -9,6 +9,7 @@ import {
     type IConnectingAttribute,
     type IDashboardAttributeFilterParentItem,
 } from "../../../../../../model/types/attributeFilterTypes.js";
+
 import { ParentFiltersListItem } from "./ParentFiltersListItem.js";
 import { ParentFiltersListItemWithoutConnectingAttributes } from "./ParentFiltersListItemWithoutConnectingAttributes.js";
 

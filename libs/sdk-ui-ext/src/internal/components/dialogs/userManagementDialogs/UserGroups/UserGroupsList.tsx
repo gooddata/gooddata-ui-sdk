@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { type IGrantedUserGroup, type ListMode } from "../types.js";
 import { sortByName } from "../utils.js";
+
 import { UserGroupItem } from "./UserGroupItem.js";
 import { UserGroupsListEmpty } from "./UserGroupsListEmpty.js";
 

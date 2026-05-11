@@ -6,6 +6,7 @@ import { type IDashboardCommand } from "../../../commands/base.js";
 import { type RemoveDrillsSelector, isAllDrillSelector } from "../../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
+
 import { validateDrillDefinitionByLocalIdentifier } from "./insightDrillDefinitionUtils.js";
 
 export function validateRemoveDrillsByLocalIdentifier(

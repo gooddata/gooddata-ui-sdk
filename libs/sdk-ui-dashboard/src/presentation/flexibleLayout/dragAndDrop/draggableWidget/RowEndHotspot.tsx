@@ -20,6 +20,7 @@ import { useScreenSize } from "../../../dashboard/components/DashboardScreenSize
 import { useIsDraggingWidget } from "../../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
 import { getRemainingHeightInColumn, getRemainingWidthInRow } from "../../rowEndHotspotHelper.js";
+
 import { Hotspot } from "./Hotspot.js";
 import { WidgetDropZoneColumn } from "./WidgetDropZoneColumn.js";
 

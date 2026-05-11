@@ -16,6 +16,7 @@ import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { isElementTextInput } from "../../utils/domUtilities.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+
 import { DefaultUiMenuContent } from "./components/defaults/DefaultUiMenuContent.js";
 import {
     DefaultUiMenuContentItem,

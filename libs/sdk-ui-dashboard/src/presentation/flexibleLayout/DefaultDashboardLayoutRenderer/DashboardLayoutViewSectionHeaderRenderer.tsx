@@ -15,6 +15,7 @@ import {
 } from "../../../model/store/config/configSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { type HeaderExportData } from "../../export/types.js";
+
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
 
 export interface IDashboardLayoutSectionHeaderProps {

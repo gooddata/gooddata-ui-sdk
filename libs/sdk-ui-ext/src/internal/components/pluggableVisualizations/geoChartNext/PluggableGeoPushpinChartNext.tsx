@@ -75,6 +75,7 @@ import {
     getGeoVisualizationPropertiesWithFallback,
 } from "../geoCommon/geoVisualizationPropertiesWithFallback.js";
 import { LiveMapViewTracker, createSyncedViewportHandlers } from "../geoCommon/liveMapViewTracking.js";
+
 import {
     extractControls,
     getLatitudeAttribute,

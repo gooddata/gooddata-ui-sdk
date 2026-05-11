@@ -25,6 +25,7 @@ import {
 } from "../../../drill/types.js";
 import { getDrillDownTitle } from "../../../drill/utils/drillDownUtils.js";
 import { type IDashboardInsightProps } from "../types.js";
+
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
 import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
 

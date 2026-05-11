@@ -16,6 +16,7 @@ import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeCon
 import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
 import { useDashboardExportData } from "../../export/useExportData.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
+
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import {

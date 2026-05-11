@@ -11,6 +11,7 @@ import { type IVisualizationProperties } from "../../../interfaces/Visualization
 import { CheckboxControl } from "../CheckboxControl.js";
 import { ConfigSection } from "../ConfigSection.js";
 import { InputControl } from "../InputControl.js";
+
 import { ForecastConfidenceControl } from "./ForecastConfidenceControl.js";
 
 export interface IForecastSection {

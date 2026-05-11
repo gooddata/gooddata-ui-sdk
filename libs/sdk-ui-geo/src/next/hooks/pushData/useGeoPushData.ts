@@ -18,6 +18,7 @@ import { normalizeAttributeDescriptorLocalIdentifier } from "../../layers/common
 import { type IAvailableLegends } from "../../types/common/legends.js";
 import { type GeoLayerType } from "../../types/layers/index.js";
 import { compareAlphabetically } from "../../utils/alphabeticalSorting.js";
+
 import { hasGeoSegmentConflict } from "./geoSegmentConflict.js";
 
 interface ILegendContext {

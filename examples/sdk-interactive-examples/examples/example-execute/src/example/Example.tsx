@@ -4,6 +4,7 @@ import { Execute } from "@gooddata/sdk-ui";
 
 import { CustomerCountry, GrossProfit, ProductCategory } from "../catalog.js";
 import { Hint } from "../Hint.js";
+
 import { CustomVisualization } from "./CustomVisualization.js";
 
 export function Example() {

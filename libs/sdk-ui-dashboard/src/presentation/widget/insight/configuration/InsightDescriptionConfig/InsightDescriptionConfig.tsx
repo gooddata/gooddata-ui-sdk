@@ -18,6 +18,7 @@ import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js
 import { selectSeparators } from "../../../../../model/store/config/configSelectors.js";
 import { selectInsightByRef } from "../../../../../model/store/insights/insightsSelectors.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
+
 import { InsightDescription } from "./InsightDescription.js";
 
 interface IInsightDescriptionConfigProps {

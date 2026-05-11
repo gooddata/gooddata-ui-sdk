@@ -6,6 +6,7 @@ import { DashboardItem } from "../../../presentationComponents/DashboardItems/Da
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { DashboardRichText } from "../../richText/DashboardRichText.js";
+
 import { type IDefaultDashboardRichTextWidgetProps } from "./types.js";
 
 /**

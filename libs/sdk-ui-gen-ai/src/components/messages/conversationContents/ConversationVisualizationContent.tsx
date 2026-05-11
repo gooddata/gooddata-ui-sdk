@@ -61,6 +61,7 @@ import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 import { DrillSelectDropdownMenu } from "../contents/drill/DrillSelectDropdownMenu.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
+
 import {
     ConversationVisualisation,
     type ConversationVisualisationProps,

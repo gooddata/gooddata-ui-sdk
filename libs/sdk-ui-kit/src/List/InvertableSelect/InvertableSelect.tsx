@@ -11,6 +11,7 @@ import { ErrorComponent } from "@gooddata/sdk-ui";
 import { LoadingMask } from "../../LoadingMask/LoadingMask.js";
 import { AsyncList } from "../AsyncList.js";
 import { type IRenderListItemProps } from "../List.js";
+
 import { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
 import { InvertableSelectItem } from "./InvertableSelectItem.js";
 import { InvertableSelectNoResultsMatch } from "./InvertableSelectNoResultsMatch.js";

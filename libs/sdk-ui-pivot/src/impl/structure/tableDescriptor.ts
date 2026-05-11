@@ -20,6 +20,7 @@ import {
     type ISliceMeasureColumnWidthItem,
 } from "../../columnWidths.js";
 import { type IPivotTableConfig } from "../../publicTypes.js";
+
 import { searchForLocatorMatch, searchForTransposedLocatorMatch } from "./colLocatorMatching.js";
 import { createSortItemForCol } from "./colSortItemFactory.js";
 import { createHeadersAndColDefs } from "./tableDescriptorFactory.js";

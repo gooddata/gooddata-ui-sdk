@@ -8,6 +8,7 @@ import { DropdownList, GOODSTRAP_SCROLLED_EVENT } from "@gooddata/sdk-ui-kit";
 
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getSearchedItems } from "../../../../utils/colors.js";
+
 import { ColoredItem } from "./ColoredItem.js";
 
 const DROPDOWN_MAX_HEIGHT = 150;

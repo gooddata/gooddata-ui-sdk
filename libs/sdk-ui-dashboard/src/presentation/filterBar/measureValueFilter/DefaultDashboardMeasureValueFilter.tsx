@@ -40,6 +40,7 @@ import { selectWorkingFilterContextMeasureValueFilterByLocalId } from "../../../
 import { selectMeasureValueFilterConfigsModeMap } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { useAttributeFilterConfigTexts } from "../attributeFilter/useAttributeFilterConfigTexts.js";
 import { getVisibilityIcon } from "../utils.js";
+
 import {
     CustomConfigureMeasureValueFilterDropdownActions,
     CustomMeasureValueFilterDropdownActions,

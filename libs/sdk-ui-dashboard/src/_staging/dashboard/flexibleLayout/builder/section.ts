@@ -15,6 +15,7 @@ import {
 
 import { getItemIndex } from "../../../layout/coordinates.js";
 import { type IDashboardLayoutSectionFacade } from "../facade/interfaces.js";
+
 import {
     type DashboardLayoutItemModifications,
     type DashboardLayoutItemsSelector,

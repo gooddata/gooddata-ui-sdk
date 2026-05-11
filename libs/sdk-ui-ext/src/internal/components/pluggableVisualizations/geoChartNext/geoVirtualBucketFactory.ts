@@ -10,6 +10,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
+
 import { createAttributeRef, getAttributeMetadata, getLatitudeAttribute } from "./geoAttributeHelper.js";
 
 /**

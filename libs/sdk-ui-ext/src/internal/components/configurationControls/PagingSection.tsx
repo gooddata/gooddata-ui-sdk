@@ -9,6 +9,7 @@ import { type IPushData } from "@gooddata/sdk-ui";
 
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
+
 import { ConfigSection } from "./ConfigSection.js";
 import { DropdownControl } from "./DropdownControl.js";
 

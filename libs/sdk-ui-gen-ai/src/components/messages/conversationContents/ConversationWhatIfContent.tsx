@@ -4,6 +4,7 @@ import cx from "classnames";
 
 import type { IChatConversationLocalItem, IChatConversationMultipartLocalPart } from "../../../model.js";
 import { type IWhatIfDefinition } from "../../../whatIf/whatIfMapping.js";
+
 import { ConversationVisualizationContent } from "./ConversationVisualizationContent.js";
 
 export type ConversationWhatIfContentProps = {

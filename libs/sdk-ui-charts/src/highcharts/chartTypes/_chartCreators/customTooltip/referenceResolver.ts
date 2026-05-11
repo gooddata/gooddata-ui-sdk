@@ -14,6 +14,7 @@ import { type IDrillEventIntersectionElement, isDrillIntersectionAttributeItem }
 import { type IResolvedReferenceValues } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
+
 import { type IIdentifierMapping } from "./identifierMapping.js";
 
 /**

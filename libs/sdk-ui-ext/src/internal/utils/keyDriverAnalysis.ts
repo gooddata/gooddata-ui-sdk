@@ -2,6 +2,7 @@
 
 import { METRIC } from "../constants/bucket.js";
 import { type IExtendedReferencePoint } from "../interfaces/Visualization.js";
+
 import { getAllItemsByType } from "./bucketHelper.js";
 
 export function cleanupKeyDriverAnalysisOnMetrics(

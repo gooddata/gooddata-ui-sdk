@@ -3,6 +3,7 @@
 import { createContext, useContext } from "react";
 
 import { type IShareDialogLabels } from "../types.js";
+
 import { type IComponentLabelsProviderProps } from "./types.js";
 
 const defaultLabels: IShareDialogLabels = {

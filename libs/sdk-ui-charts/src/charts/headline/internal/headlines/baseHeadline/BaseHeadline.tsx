@@ -11,6 +11,7 @@ import { type IChartConfig } from "../../../../../interfaces/chartConfig.js";
 import { type IBaseHeadlineData } from "../../interfaces/BaseHeadlines.js";
 import { type HeadlineFiredDrillEvent } from "../../interfaces/DrillEvents.js";
 import { type IHeadlineDataItem } from "../../interfaces/Headlines.js";
+
 import { BaseHeadlineContext } from "./BaseHeadlineContext.js";
 import { CompareSection } from "./CompareSection.js";
 import { PrimarySection } from "./PrimarySection.js";

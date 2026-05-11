@@ -21,6 +21,7 @@ import {
 import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
+
 import { InsightDescriptionConfig } from "./InsightDescriptionConfig/InsightDescriptionConfig.js";
 import { InsightFilters } from "./InsightFilters.js";
 import { InsightTitleConfig } from "./InsightTitleConfig.js";

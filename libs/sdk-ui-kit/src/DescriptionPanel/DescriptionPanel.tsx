@@ -15,6 +15,7 @@ import { type ArrowOffsets } from "../Bubble/typings.js";
 import { useMediaQuery } from "../responsive/useMediaQuery.js";
 import { RichText } from "../RichText/RichText.js";
 import { ZOOM_THRESHOLD, useIsZoomed } from "../ZoomContext/ZoomContext.js";
+
 import { EllipsisText } from "./EllipsisText.js";
 
 /**

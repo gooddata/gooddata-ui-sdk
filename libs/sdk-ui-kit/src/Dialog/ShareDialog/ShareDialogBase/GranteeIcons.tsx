@@ -4,6 +4,7 @@ import { FormattedMessage } from "react-intl";
 
 import { Bubble } from "../../../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../../../Bubble/BubbleHoverTrigger.js";
+
 import { useComponentLabelsContext } from "./ComponentLabelsContext.js";
 import { type DialogModeType } from "./types.js";
 

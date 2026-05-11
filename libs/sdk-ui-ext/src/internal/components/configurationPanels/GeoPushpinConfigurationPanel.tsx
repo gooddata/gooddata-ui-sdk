@@ -32,6 +32,7 @@ import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSecti
 import { PushpinShapeControl } from "../configurationControls/PushpinShapeControl.js";
 import { PushpinSizeControl } from "../configurationControls/PushpinSizeControl.js";
 import { PushpinViewportControl } from "../configurationControls/PushpinViewportControl.js";
+
 import {
     ConfigurationPanelContent,
     type IConfigurationPanelContentProps,

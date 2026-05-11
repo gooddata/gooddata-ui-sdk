@@ -41,6 +41,7 @@ import {
 } from "../../../utils/uiConfigHelpers/xirrUiConfigHelper.js";
 import { UnsupportedConfigurationPanel } from "../../configurationPanels/UnsupportedConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
+
 import { getXirrBuckets } from "./xirrBucketHelper.js";
 
 /**

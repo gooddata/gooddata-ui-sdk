@@ -44,6 +44,7 @@ import {
 
 import { type AlertAttribute, type AlertMetric, type AlertMetricComparator } from "../../types.js";
 import { DEFAULT_MEASURE_FORMAT } from "../constants.js";
+
 import { isChangeOperator, isDifferenceOperator } from "./guards.js";
 
 export type IMeasureFormatMap = { [key: string]: string };

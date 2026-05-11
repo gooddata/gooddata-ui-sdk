@@ -4,6 +4,7 @@ import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../common/coordinates.js";
 import { type IGeoPushpinChartConfig } from "../config/pushpinChart.js";
 import { type IGeoChartViewportNavigation } from "../config/viewport.js";
+
 import type { GeoBasemap } from "./basemap.js";
 
 /**

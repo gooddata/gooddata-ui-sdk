@@ -6,6 +6,7 @@ import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { PrimarySectionContent } from "../PrimarySectionContent.js";
+
 import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 
 const useBaseHeadlineMock = vi.hoisted(() => vi.fn());

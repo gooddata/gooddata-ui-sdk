@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type IResultHeader, isResultAttributeHeader } from "@gooddata/sdk-model";
 
 import { transformResultHeaders } from "../afm/result.js";
+
 import { resultHeaders, transformedResultHeaders } from "./AfmResultConverter.fixtures.js";
 
 const transformResultHeader = (resultHeader: IResultHeader): IResultHeader => {

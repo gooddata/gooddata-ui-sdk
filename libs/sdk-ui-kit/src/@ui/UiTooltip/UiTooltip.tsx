@@ -19,6 +19,7 @@ import { ConditionalScopedThemeProvider, useIsScopeThemed, useTheme } from "@goo
 import { bem } from "../@utils/bem.js";
 import { FLOATING_ELEMENT_DATA_ATTR } from "../hooks/useCloseOnOutsideClick.js";
 import { useFloatingPosition } from "../UiFloatingElement/useFloatingPosition.js";
+
 import { ARROW_HEIGHT, ARROW_WIDTH, HIDE_DELAY, SHOW_DELAY } from "./constants.js";
 import { type Dimensions, type IUiTooltipProps } from "./types.js";
 import {

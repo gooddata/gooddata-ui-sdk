@@ -36,6 +36,7 @@ import {
     isInsightSupportedForScheduledExports,
 } from "../pluggableVisualizations/alerts.js";
 import { isInsightSupportedForImplicitDrillToUrl } from "../pluggableVisualizations/drillDownUtil.js";
+
 import { type SectionName } from "./sectionName.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {

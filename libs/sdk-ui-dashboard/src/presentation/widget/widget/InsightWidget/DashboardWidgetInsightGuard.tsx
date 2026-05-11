@@ -4,6 +4,7 @@ import { type ComponentType } from "react";
 
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
+
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 
 interface IDashboardWidgetInsightGuardProps extends Omit<IDefaultDashboardInsightWidgetProps, "insight"> {

@@ -8,6 +8,7 @@ import { type ColumnWidthItem, type MeasureGroupDimension } from "@gooddata/sdk-
 import { type IBucketFilter, type IBucketItem } from "../../../../interfaces/Visualization.js";
 import { simpleStackedReferencePoint } from "../../../../tests/mocks/referencePointMocks.js";
 import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
+
 import {
     invalidAttributeColumnWidthItem,
     invalidMeasureColumnWidthItem,

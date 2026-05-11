@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type AlertMetric } from "../../types.js";
+
 import { type IMeasureFormatMap, getMeasureFormat, getMeasureTitle } from "./getters.js";
 import { transformAlertExecutionByMetric } from "./transformation.js";
 

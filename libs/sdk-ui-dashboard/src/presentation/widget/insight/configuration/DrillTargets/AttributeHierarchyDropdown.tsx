@@ -23,6 +23,7 @@ import { selectAllCatalogAttributeHierarchies } from "../../../../../model/store
 import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 import { existBlacklistHierarchyPredicate } from "../../../../../model/utils/attributeHierarchyUtils.js";
 import { type IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
+
 import { AttributeHierarchyList, type IAttributeHierarchyItem } from "./AttributeHierarchyList.js";
 
 interface IAttributeHierarchyDropdownProps {

@@ -9,6 +9,7 @@ import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import { buildSankeyChartSeries } from "../sankeyChartOptions.js";
+
 import { CHART_TYPE, COLOR_MAPPINGS, EMPTY_HEADER_TITLE_VALUE, RECORDS } from "./sankeyChart.fixture.js";
 
 describe("SankeyChart buildSankeyChartSeries", () => {

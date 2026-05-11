@@ -5,6 +5,7 @@ import { type ComponentType } from "react";
 import { type IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
 
 import { DataViewFacade } from "../base/results/facade.js";
+
 import {
     type DataViewWindow,
     type IWithLoadingEvents,

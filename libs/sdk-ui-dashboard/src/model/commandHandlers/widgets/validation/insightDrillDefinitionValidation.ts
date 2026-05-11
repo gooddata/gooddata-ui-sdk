@@ -36,6 +36,7 @@ import {
     resolveDisplayFormMetadata,
 } from "../../../utils/displayFormResolver.js";
 import { type IInsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
+
 import {
     type IInsightDrillDefinitionValidationData,
     extractDisplayFormIdentifiers,

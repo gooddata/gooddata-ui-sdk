@@ -33,6 +33,7 @@ import {
     type IMenu,
     type MeasureGroupDimension,
 } from "../publicTypes.js";
+
 import { type IScrollPosition } from "./stickyRowHandler.js";
 
 export interface IMenuAggregationClickConfig {

@@ -7,6 +7,7 @@ import { isEmpty } from "lodash-es";
 import { areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
 import { type ActionOptions } from "../_base/types.js";
+
 import { type InspectCmdActionConfig } from "./actionConfig.js";
 import { printObjectSummary } from "./output.js";
 

@@ -25,6 +25,7 @@ import {
 } from "../../../model/events/widget.js";
 import { useDashboardEventDispatch } from "../../../model/react/useDashboardEventDispatch.js";
 import { isExtendedDashboardLayoutWidget } from "../../../model/types/layoutTypes.js";
+
 import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/RenderModeAwareDashboardInsightWidget.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/RenderModeAwareDashboardRichTextWidget.js";

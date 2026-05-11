@@ -24,6 +24,7 @@ import {
 import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { InsightList } from "../../../insightList/InsightList.js";
 import { type IInsightListProps } from "../../../insightList/types.js";
+
 import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
 
 export function DraggableInsightListCore({

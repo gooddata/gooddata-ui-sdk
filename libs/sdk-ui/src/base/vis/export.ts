@@ -3,6 +3,7 @@
 import { type IExecutionResult, type IExportConfig, type IExportResult } from "@gooddata/sdk-backend-spi";
 
 import { type GoodDataSdkError } from "../errors/GoodDataSdkError.js";
+
 import { type IExportFunction, type IExtendedExportConfig } from "./Events.js";
 
 const escapeFileName = (str: string) => str?.replace(/[/?<>\\:*|"]/g, "");

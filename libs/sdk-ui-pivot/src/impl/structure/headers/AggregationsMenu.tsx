@@ -37,6 +37,7 @@ import {
     isSliceCol,
     isSliceMeasureCol,
 } from "../tableDescriptorTypes.js";
+
 import {
     getAttributeDescriptorsLocalId,
     getTotalsForAttributeHeader,

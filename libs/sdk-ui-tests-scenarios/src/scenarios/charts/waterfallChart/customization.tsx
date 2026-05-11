@@ -11,6 +11,7 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendForceEnabledCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+
 import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 
 const legendScenarios = scenariosFor<IWaterfallChartProps>("WaterfallChart", WaterfallChart)

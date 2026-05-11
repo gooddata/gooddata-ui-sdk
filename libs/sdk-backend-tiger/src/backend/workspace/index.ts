@@ -44,6 +44,7 @@ import {
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { TigerWorkspaceAttributes } from "./attributes/index.js";

@@ -57,6 +57,7 @@ import {
     visualizationErrorAction,
 } from "../../../store/messages/messagesSlice.js";
 import { getHeadlineComparison } from "../../../utils.js";
+
 import { useExecution } from "./useExecution.js";
 
 const VIS_HEIGHT = 250;

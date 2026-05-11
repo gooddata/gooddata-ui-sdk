@@ -31,6 +31,7 @@ import { useIsDraggingWidget } from "../../../dragAndDrop/draggableWidget/useIsD
 import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
+
 import { type IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 
 /**

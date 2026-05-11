@@ -10,6 +10,7 @@ import {
     WonMeasurePredicate,
 } from "../../_infra/predicates.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { HeadlinePositiveComparisonMeasures, comparisonDisabled, comparisonEnabled } from "./comparison.js";
 
 export const drilling = scenariosFor<IHeadlineProps>("Headline", Headline)

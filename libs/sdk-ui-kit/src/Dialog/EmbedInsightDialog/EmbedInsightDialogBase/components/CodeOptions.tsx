@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type IReactOptions, type UnitsType } from "../types.js";
+
 import { HeightSetting } from "./HeightSetting.js";
 import { ToggleSwitch } from "./ToggleSwitch.js";
 

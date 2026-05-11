@@ -14,6 +14,7 @@ import {
     isVisualizationSwitcherDraggableListItem,
 } from "../../../dragAndDrop/types.js";
 import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
+
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
 import { useNewSectionInsightListItemDropHandler } from "./useNewSectionInsightListItemDropHandler.js";

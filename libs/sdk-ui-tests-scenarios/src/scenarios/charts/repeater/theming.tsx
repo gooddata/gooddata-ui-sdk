@@ -4,6 +4,7 @@ import { type IRepeaterProps, Repeater } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { RepeaterWithOneAttributeAndInlineVisualisation } from "./base.js";
 
 export const theming = scenariosFor<IRepeaterProps>("Repeater", Repeater)

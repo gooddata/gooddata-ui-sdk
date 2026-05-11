@@ -9,6 +9,7 @@ import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { BaseHeadline } from "../headlines/baseHeadline/BaseHeadline.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 import { getComparisonBaseHeadlineData } from "../utils/ComparisonTransformationUtils.js";
+
 import { useFireDrillEvent } from "./useFiredDrillEvent.js";
 
 export function ComparisonTransformation({

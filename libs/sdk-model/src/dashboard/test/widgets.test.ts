@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import { isWidget, isWidgetDefinition } from "../widget.js";
+
 import { widget, widgetDefinition } from "./widgets.fixtures.js";
 
 describe("widget type guards", () => {

@@ -14,6 +14,7 @@ import {
 import { getComparisonColor } from "../../../../utils/ComparisonDataItemUtils.js";
 import { formatItemValue } from "../../../../utils/HeadlineDataItemUtils.js";
 import { useBaseHeadline } from "../../BaseHeadlineContext.js";
+
 import { ComparisonIndicators, getComparisonAriaLabelMessage } from "./ComparisonIndicator.js";
 
 function createComparisonAriaLabelFactory(

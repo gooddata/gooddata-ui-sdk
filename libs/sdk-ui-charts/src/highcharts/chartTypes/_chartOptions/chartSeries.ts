@@ -31,6 +31,7 @@ import { buildSankeyChartSeries } from "../sankeyChart/sankeyChartOptions.js";
 import { getScatterPlotSeries } from "../scatterPlot/scatterPlotSeries.js";
 import { getTreemapStackedSeries } from "../treemap/treemapChartSeries.js";
 import { getWaterfallChartSeries } from "../waterfallChart/waterfallChartsSeries.js";
+
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { getChartFillProperties, getColorOrPatternFillIndex, isSolidFill } from "./patternFillOptions.js";
 

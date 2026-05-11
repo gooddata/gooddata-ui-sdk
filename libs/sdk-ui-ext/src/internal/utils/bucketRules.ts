@@ -19,6 +19,7 @@ import {
     type IFiltersBucketItem,
     type IReferencePoint,
 } from "../interfaces/Visualization.js";
+
 import {
     getAllAttributeItems,
     getAllItemsByType,

@@ -5,6 +5,7 @@ import cx from "classnames";
 import { type WeekStart } from "@gooddata/sdk-model";
 
 import { useIdPrefixed } from "../utils/useId.js";
+
 import { RECURRENCE_TYPES } from "./constants.js";
 import { CronExpression } from "./CronExpression.js";
 import { CronExpressionSuggestion } from "./CronExpressionSuggestion.js";

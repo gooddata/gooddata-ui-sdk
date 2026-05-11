@@ -8,6 +8,7 @@ import { Dropdown, type IUiMenuItem, UiButton, UiIconButton, UiMenu } from "@goo
 
 import { catalogDetailActionsTrigger } from "../automation/testIds.js";
 import type { ICatalogItem } from "../catalogItem/types.js";
+
 import type { EditHandlerEvent, ICatalogDetailAction } from "./types.js";
 
 const messages = defineMessages({

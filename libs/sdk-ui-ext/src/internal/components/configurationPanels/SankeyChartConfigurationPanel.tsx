@@ -18,6 +18,7 @@ import {
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 import { LegendSection } from "../configurationControls/legend/LegendSection.js";
+
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class SankeyChartConfigurationPanel extends ConfigurationPanelContent {

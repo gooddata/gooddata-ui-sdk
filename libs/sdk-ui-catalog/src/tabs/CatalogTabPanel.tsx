@@ -7,6 +7,7 @@ import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 
 import type { ICatalogItem } from "../catalogItem/types.js";
 import { QualityScoreCard } from "../quality/QualityScoreCard.js";
+
 import { CatalogItemCardGrid } from "./CatalogItemCardGrid.js";
 import { useRecommendedItems } from "./useRecommendedItems.js";
 import { useTrendingItems } from "./useTrendingItems.js";

@@ -7,6 +7,7 @@ import cx from "classnames";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Button } from "../Button/Button.js";
+
 import { type ActionType, type ISettingItem } from "./typings.js";
 
 const DEFAULT_ALIGN_POINT_TITLE_TOOLTIP = [{ align: "cr cl" }, { align: "bl tl" }, { align: "bc tc" }];

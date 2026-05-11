@@ -7,6 +7,7 @@ import { FormattedMessage } from "react-intl";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 import { type IAvailableDrillTargetItem } from "../../../../drill/DrillSelect/types.js";
+
 import { DrillAttributeSelectorList } from "./DrillAttributeSelectorList.js";
 import { DrillMeasureSelectorList } from "./DrillMeasureSelectorList.js";
 

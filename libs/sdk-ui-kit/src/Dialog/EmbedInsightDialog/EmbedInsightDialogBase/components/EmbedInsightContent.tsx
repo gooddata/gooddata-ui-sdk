@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { type EmbedOptionsType, type IReactOptions, type IWebComponentsOptions } from "../types.js";
+
 import { EmbedInsightCodeArea } from "./CodeArea.js";
 import { PrepareEnvMessage } from "./PrepareEnvMessage.js";
 import { ReactOptions } from "./ReactOptions.js";

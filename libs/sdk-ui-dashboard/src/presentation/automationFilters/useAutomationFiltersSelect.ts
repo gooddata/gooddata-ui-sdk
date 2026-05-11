@@ -18,6 +18,7 @@ import {
 } from "../../model/store/filtering/dashboardFilterSelectors.js";
 import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../model/utils/widgetFilters.js";
+
 import {
     useAutomationVisibleFilters,
     useAutomationVisibleFiltersByTab,

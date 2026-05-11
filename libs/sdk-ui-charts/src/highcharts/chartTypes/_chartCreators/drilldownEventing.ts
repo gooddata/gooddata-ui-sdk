@@ -20,6 +20,7 @@ import {
 
 import { type DrilldownEventObject } from "../../lib/index.js";
 import { isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common.js";
+
 import { type IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent.js";
 
 export function getClickableElementNameByChartType(type: VisType): ChartElementType {

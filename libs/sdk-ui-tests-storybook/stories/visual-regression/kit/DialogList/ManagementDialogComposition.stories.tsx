@@ -12,6 +12,7 @@ import {
     State,
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+
 import { itemsMock as items } from "./itemsMock.js";
 import "./styles.scss";
 

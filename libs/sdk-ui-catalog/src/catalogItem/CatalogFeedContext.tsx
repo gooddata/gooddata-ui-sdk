@@ -6,6 +6,7 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { type AsyncStatus } from "../async/types.js";
 import type { ObjectType } from "../objectType/types.js";
+
 import type { ICatalogItem, ICatalogItemRef } from "./types.js";
 import { useCatalogItemFeed } from "./useCatalogItemFeed.js";
 

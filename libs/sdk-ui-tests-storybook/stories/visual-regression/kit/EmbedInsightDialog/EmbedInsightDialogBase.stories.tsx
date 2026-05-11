@@ -13,6 +13,7 @@ import {
     State,
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+
 import { code } from "./CodeMock.js";
 
 function EmbedInsightDialogBaseExamples() {

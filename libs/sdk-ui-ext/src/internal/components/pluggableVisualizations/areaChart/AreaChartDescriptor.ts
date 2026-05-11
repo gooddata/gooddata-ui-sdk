@@ -28,6 +28,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil.js";
+
 import { PluggableAreaChart } from "./PluggableAreaChart.js";
 
 export class AreaChartDescriptor extends BigChartDescriptor implements IVisualizationDescriptor {

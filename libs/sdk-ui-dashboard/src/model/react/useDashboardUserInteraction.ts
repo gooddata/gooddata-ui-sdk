@@ -14,6 +14,7 @@ import {
     type VisualizationSwitcherInteractionType,
     userInteractionTriggered,
 } from "../events/userInteraction.js";
+
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
 
 /**

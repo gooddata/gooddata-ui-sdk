@@ -4,6 +4,7 @@ import { isChatConversationItem } from "@gooddata/sdk-backend-spi";
 
 import { type AssistantMessage, type IChatConversationLocalItem } from "../../model.js";
 import { type setUserFeedback } from "../../store/messages/messagesSlice.js";
+
 import { type IFeedbackData } from "./FeedbackPopup.js";
 
 /**

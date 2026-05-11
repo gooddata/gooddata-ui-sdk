@@ -3,6 +3,7 @@
 import cx from "classnames";
 
 import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../../types.js";
+
 import { HierarchicalPermissionsDropdown } from "./HierarchicalPermissionsDropdown.js";
 import { PermissionsDropdown } from "./PermissionsDropdown.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";

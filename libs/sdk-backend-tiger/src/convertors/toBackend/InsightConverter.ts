@@ -25,6 +25,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
+
 import { cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
 
 function removeIdentifiers(insight: IInsight): IInsightDefinition {

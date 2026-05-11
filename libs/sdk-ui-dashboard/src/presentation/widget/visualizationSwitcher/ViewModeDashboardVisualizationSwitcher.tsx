@@ -30,6 +30,7 @@ import { useShowAsTable } from "../showAsTableButton/useShowAsTable.js";
 import { useAlertingAndScheduling } from "../widget/InsightWidget/useAlertingAndScheduling.js";
 import { useInsightMenu } from "../widget/InsightWidget/useInsightMenu.js";
 import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSwitcherWidget/VisualizationSwitcherNavigationHeader.js";
+
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
 import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useExecutionProgress } from "./useExecutionProgress.js";

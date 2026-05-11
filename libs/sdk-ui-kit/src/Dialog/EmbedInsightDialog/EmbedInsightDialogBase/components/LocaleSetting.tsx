@@ -12,6 +12,7 @@ import { DropdownList } from "../../../../Dropdown/DropdownList.js";
 import { SingleSelectListItem } from "../../../../List/ListItem.js";
 import { dialogChangeMessageLabels } from "../../../../locales.js";
 import { DEFAULT_LOCALE } from "../types.js";
+
 import { ToggleSwitch } from "./ToggleSwitch.js";
 
 /**

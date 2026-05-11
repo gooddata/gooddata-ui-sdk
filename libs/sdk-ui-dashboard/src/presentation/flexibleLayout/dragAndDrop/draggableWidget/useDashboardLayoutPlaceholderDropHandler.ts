@@ -12,6 +12,7 @@ import { useDashboardCommandProcessing } from "../../../../model/react/useDashbo
 import { uiActions } from "../../../../model/store/ui/index.js";
 import { type ILayoutItemPath } from "../../../../types.js";
 import { type BaseDraggableLayoutItemSize } from "../../../dragAndDrop/types.js";
+
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useDashboardLayoutPlaceholderDropHandler(layoutPath: ILayoutItemPath) {

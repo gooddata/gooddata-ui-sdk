@@ -10,6 +10,7 @@ import { idRef } from "@gooddata/sdk-model";
 
 import { createUniqueVariableNameForIdentifier } from "../base/variableNaming.js";
 import { type InsightRecordingSpec, RecordingFiles } from "../interface.js";
+
 import { type IRecording, type RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common.js";
 
 //

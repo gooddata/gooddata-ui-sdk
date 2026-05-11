@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../types.js";
+
 import { DropdownSectionHeader } from "./DropdownSectionHeader.js";
 
 type ToggleModalCallback = () => void;

@@ -3,6 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { GroupingProviderFactory, type IGroupingProvider } from "../rowGroupingProvider.js";
+
 import {
     noAttributesTwoMeasures,
     oneAttributeTwoMeasures,

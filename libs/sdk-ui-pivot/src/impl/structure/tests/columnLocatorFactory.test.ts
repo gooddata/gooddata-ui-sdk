@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { createColumnLocator, createTransposedColumnLocator } from "../colLocatorFactory.js";
 import { TableDescriptor } from "../tableDescriptor.js";
 import { type IScopeCol } from "../tableDescriptorTypes.js";
+
 import {
     MultipleMeasuresAndNoColumnsWithMetricsInRows,
     SingleMeasureWithRowAttribute,

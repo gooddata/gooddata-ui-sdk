@@ -16,6 +16,7 @@ import {
     isSliceCol,
     isSliceMeasureCol,
 } from "../tableDescriptorTypes.js";
+
 import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, type ICommonHeaderParams } from "./HeaderCell.js";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {

@@ -7,6 +7,7 @@ import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
 import { type AgGridOnColumnResized } from "../../types/agGrid.js";
 import { type ColumnWidthItem, newWidthForAttributeColumn } from "../../types/resizing.js";
+
 import { useManualResize } from "./useManualResize.js";
 
 const { usePivotTablePropsMock } = vi.hoisted(() => ({

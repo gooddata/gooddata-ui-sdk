@@ -13,6 +13,7 @@ import { type IGeoChartViewportNavigation } from "../../types/config/viewport.js
 import { type IMapOptions } from "../../types/map/provider.js";
 import { type IMapLibreLocale } from "../../utils/mapLocale.js";
 import { fetchMapStyle } from "../style/styleEndpoint.js";
+
 import { normalizeBoundsForShortestPath } from "./bounds.js";
 import {
     DEFAULT_MAPLIBRE_OPTIONS,

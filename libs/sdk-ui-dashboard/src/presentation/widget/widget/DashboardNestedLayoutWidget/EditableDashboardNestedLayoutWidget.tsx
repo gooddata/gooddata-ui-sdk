@@ -23,6 +23,7 @@ import { DashboardItem } from "../../../presentationComponents/DashboardItems/Da
 import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { DashboardLayout } from "../../dashboardLayout/DashboardLayout.js";
 import { type IDashboardLayoutProps } from "../../dashboardLayout/types.js";
+
 import { Toolbar } from "./Toolbar.js";
 
 /**

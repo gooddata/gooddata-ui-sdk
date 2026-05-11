@@ -9,6 +9,7 @@ import { RichText } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+
 import "./styles.scss";
 
 const placeholder = `# Heading

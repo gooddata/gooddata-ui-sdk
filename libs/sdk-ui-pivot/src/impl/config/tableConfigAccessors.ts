@@ -11,6 +11,7 @@ import {
     type MeasureGroupDimension,
 } from "../../publicTypes.js";
 import { type ICorePivotTableState } from "../../tableState.js";
+
 import {
     checkIsColumnAutoresizeEnabled,
     checkIsGrowToFitEnabled,

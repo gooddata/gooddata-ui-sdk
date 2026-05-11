@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectEnableRichTextDescriptions } from "../../../model/store/config/configSelectors.js";
+
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 
 export const useInsightWidgetDescription = (props: IInsightWidgetDescriptionTriggerProps) => {

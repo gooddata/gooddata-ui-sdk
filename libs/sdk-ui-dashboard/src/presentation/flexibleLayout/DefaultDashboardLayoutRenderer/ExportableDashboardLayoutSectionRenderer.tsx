@@ -1,6 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
+
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import { type IDashboardLayoutSectionRenderProps } from "./interfaces.js";
 

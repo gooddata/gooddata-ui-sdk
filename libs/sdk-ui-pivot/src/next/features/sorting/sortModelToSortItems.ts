@@ -5,6 +5,7 @@ import { type SortModelItem } from "ag-grid-enterprise";
 import { type ISortItem } from "@gooddata/sdk-model";
 
 import { type ITableColumnDefinitionByColId } from "../../types/internal.js";
+
 import { createSortForColumnDefinition } from "./createSortForColumnDefinition.js";
 
 /**

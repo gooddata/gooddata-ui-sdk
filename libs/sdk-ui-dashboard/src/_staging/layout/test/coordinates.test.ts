@@ -27,6 +27,7 @@ import {
     updateItemIndex,
     updateSectionIndex,
 } from "../coordinates.js";
+
 import { NESTED_LAYOUT } from "./coordinates.mock.js";
 
 describe("coordinates", () => {

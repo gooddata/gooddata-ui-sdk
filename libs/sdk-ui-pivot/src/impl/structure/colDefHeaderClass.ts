@@ -8,6 +8,7 @@ import { isResultTotalHeader } from "@gooddata/sdk-model";
 import { type ICorePivotTableProps } from "../../publicTypes.js";
 import { COLUMN_ATTRIBUTE_COLUMN, COLUMN_SUBTOTAL, COLUMN_TOTAL } from "../base/constants.js";
 import { type TableFacade } from "../tableFacade.js";
+
 import { type TableDescriptor } from "./tableDescriptor.js";
 import {
     type AnyCol,

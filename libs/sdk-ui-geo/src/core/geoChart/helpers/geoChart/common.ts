@@ -12,6 +12,7 @@ import {
 import { BucketNames, type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 
 import { type IGeoData, type IGeoPointsConfig } from "../../../../GeoChart.js";
+
 import { getResponsiveInfo } from "./responsive.js";
 
 export function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: IGeoData): IResultHeader[][] {

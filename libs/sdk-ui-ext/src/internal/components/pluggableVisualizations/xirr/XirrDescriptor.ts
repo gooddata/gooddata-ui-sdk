@@ -21,6 +21,7 @@ import {
 } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
 import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { MAX_VISUALIZATION_HEIGHT } from "../constants.js";
+
 import { PluggableXirr } from "./PluggableXirr.js";
 
 export class XirrDescriptor implements IVisualizationDescriptor {

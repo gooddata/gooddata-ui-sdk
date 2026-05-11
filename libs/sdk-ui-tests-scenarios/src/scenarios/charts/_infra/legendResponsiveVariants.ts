@@ -4,6 +4,7 @@ import { type IBucketChartProps, type ILegendConfig } from "@gooddata/sdk-ui-cha
 
 import { type UnboundVisProps } from "../../../scenario.js";
 import { type CustomizedScenario } from "../../../scenarioGroup.js";
+
 import { type IResponsiveSize } from "./responsiveScenarios.js";
 
 export const legendResponsiveSizeVariants: Array<IResponsiveSize> = [

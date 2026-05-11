@@ -9,6 +9,7 @@ import { idRef } from "@gooddata/sdk-model";
 
 import { type IGranularGranteeUser, type IShareDialogBaseProps } from "../types.js";
 import { useShareDialogBase } from "../useShareDialogBase.js";
+
 import {
     defaultUser,
     granularGranteeGroup,

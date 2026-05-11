@@ -31,6 +31,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     reverseAndTrimIntersection,
 } from "../drillDownUtil.js";
+
 import { PluggableLineChart } from "./PluggableLineChart.js";
 
 export class LineChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {

@@ -5,6 +5,7 @@ import { type CSSProperties, useMemo } from "react";
 import { calculateHeadlineHeightFontSize } from "@gooddata/sdk-ui-vis-commons";
 
 import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+
 import { useBaseHeadline } from "./BaseHeadlineContext.js";
 import { PrimarySectionContent } from "./PrimarySectionContent.js";
 

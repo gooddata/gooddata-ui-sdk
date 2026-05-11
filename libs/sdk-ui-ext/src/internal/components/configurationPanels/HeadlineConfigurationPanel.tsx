@@ -21,6 +21,7 @@ import {
     isComparisonEnabled,
 } from "../../utils/uiConfigHelpers/headlineUiConfigHelper.js";
 import { ComparisonSection } from "../configurationControls/comparison/ComparisonSection.js";
+
 import {
     ConfigurationPanelContent,
     type IConfigurationPanelContentProps,

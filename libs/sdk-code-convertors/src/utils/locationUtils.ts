@@ -5,6 +5,7 @@ import type { AttributeField, Dataset } from "@gooddata/sdk-code-schemas/v1";
 import { type IAttribute } from "@gooddata/sdk-model";
 
 import { type ExportEntities, type FromEntities } from "../types.js";
+
 import { isAttribute, parseReferenceObject } from "./typeGuards.js";
 import { createIdentifier, getIdentifier } from "./yamlUtils.js";
 

@@ -8,6 +8,7 @@ import { type ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { type IMeasureDropdownItem } from "../types.js";
+
 import { MeasureDropdownBody } from "./MeasureDropdownBody.js";
 
 interface IMeasureDropdownProps {

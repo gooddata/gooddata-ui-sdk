@@ -2,6 +2,7 @@
 
 import { bem } from "../@utils/bem.js";
 import { UiIcon } from "../UiIcon/UiIcon.js";
+
 import { type IChipContentProps } from "./types.js";
 
 const { e } = bem("gd-ui-kit-chip");

@@ -48,6 +48,7 @@ import {
 } from "../interfaces/Visualization.js";
 import { type PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor.js";
 import { cleanupKeyDriverAnalysisOnMetrics, hideKeyDriverOnMetrics } from "../utils/keyDriverAnalysis.js";
+
 import { FullVisualizationCatalog, type IVisualizationCatalog } from "./VisualizationCatalog.js";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {

@@ -8,6 +8,7 @@ import { Bubble, BubbleHoverTrigger, IconLock } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { gdColorStateBlank } from "../../../constants/colors.js";
+
 import { type ILockedStatusProps } from "./types.js";
 
 /**

@@ -3,6 +3,7 @@
 import { type ReactElement } from "react";
 
 import { type IDashboardInsightProps } from "../types.js";
+
 import { DashboardInsightWithDrillDialog } from "./DashboardInsightWithDrillDialog.js";
 
 /**

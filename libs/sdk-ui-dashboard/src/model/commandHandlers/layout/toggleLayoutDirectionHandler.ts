@@ -22,6 +22,7 @@ import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget, type IItemWithWidth } from "../../types/layoutTypes.js";
+
 import {
     getChildWidgetLayoutPaths,
     getChildWidgetLayoutPathsWithMinWidths,

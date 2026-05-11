@@ -3,6 +3,7 @@
 import type { GeoLayerType, IGeoLayer } from "../../types/layers/index.js";
 import { areaAdapter } from "../area/adapter.js";
 import { pushpinAdapter } from "../pushpin/adapter.js";
+
 import type { IGeoLayerAdapterByType } from "./adapterTypes.js";
 
 /**

@@ -5,6 +5,7 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { type INotification } from "@gooddata/sdk-model";
 
 import { bem } from "../bem.js";
+
 import { Notification } from "./Notification.js";
 
 /**

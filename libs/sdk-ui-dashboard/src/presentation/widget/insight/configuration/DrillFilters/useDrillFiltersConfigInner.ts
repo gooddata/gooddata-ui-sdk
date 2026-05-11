@@ -6,6 +6,7 @@ import { type SourceInsightFilterObjRef, type SourceMeasureFilterObjRef } from "
 
 import { isSourceInsightFilterObjRefEqual } from "../../../../../_staging/drills/drillingUtils.js";
 import { type IDrillFiltersConfigExtended } from "../../../../drill/types.js";
+
 import { type IDrillFiltersConfigOption } from "./types.js";
 
 export type IDrillFiltersConfigSelection = Partial<

@@ -34,6 +34,7 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableHeatmap } from "../PluggableHeatmap.js";
+
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,

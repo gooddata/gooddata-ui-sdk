@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type IDashboardDateFilterConfig, type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
 
 import { mergeDateFilterConfigs } from "../merge.js";
+
 import {
     absoluteForm,
     allTime,

@@ -4,6 +4,7 @@ import { type IExportTemplate } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 
 import { selectEnableExportTemplateSelection } from "../store/config/configSelectors.js";
+
 import { useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**

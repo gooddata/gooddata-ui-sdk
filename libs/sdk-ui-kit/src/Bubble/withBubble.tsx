@@ -5,6 +5,7 @@ import { type ComponentType, type ReactNode, forwardRef } from "react";
 import { useIntl } from "react-intl";
 
 import { type IAlignPoint } from "../typings/positioning.js";
+
 import { Bubble } from "./Bubble.js";
 import { BubbleHoverTrigger } from "./BubbleHoverTrigger.js";
 

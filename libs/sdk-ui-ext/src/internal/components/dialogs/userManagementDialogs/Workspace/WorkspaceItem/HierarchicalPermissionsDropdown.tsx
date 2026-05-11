@@ -10,6 +10,7 @@ import { simplifyText } from "@gooddata/util";
 
 import { type TrackEventCallback, useTelemetry } from "../../TelemetryContext.js";
 import { type IGrantedWorkspace, type WorkspacePermissionSubject } from "../../types.js";
+
 import { PermissionsDropdownList } from "./HierarchicalPermissionsDropdownList.js";
 import { hierarchicalPermissionMessages } from "./locales.js";
 

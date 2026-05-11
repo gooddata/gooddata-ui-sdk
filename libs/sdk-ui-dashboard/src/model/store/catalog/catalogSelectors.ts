@@ -39,6 +39,7 @@ import {
     selectSupportsAttributeHierarchies,
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+
 import { type CatalogParametersStatus } from "./catalogState.js";
 
 const selectSelf = createSelector(

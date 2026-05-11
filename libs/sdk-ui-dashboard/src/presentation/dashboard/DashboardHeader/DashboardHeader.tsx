@@ -21,6 +21,7 @@ import { TopBar } from "../../topBar/topBar/TopBar.js";
 import { useWidgetDeleteDialogProps } from "../../widgetDeleteDialog/DefaultWidgetDeleteDialog.js";
 import { WidgetDeleteDialog } from "../../widgetDeleteDialog/WidgetDeleteDialog.js";
 import { ToastMessages } from "../components/ToastMessages.js";
+
 import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
 import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";
 import { DensityDialogProvider } from "./DensityDialogProvider.js";

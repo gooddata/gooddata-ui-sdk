@@ -17,6 +17,7 @@ import { columnDefinitionToColId } from "../columns/colId.js";
 import { createColDef } from "../columns/createColDef.js";
 import { columnDefsToPivotGroups } from "../pivoting/columnDefsToPivotGroups.js";
 import { applyTextWrappingToGroupDef } from "../textWrapping/applyTextWrappingToGroupDef.js";
+
 import { getTableData } from "./valueFormatter.js";
 
 /**

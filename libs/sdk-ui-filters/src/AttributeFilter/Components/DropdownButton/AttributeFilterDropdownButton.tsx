@@ -18,6 +18,7 @@ import { simplifyText } from "@gooddata/util";
 
 import { FilterButtonCustomIcon } from "../../../shared/components/internal/FilterButtonCustomIcon.js";
 import { type IFilterButtonCustomIcon } from "../../../shared/interfaces/index.js";
+
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
 
 /**

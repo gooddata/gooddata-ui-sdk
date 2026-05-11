@@ -9,6 +9,7 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { generateTooltipSankeyChartFn } from "../../_chartOptions/chartTooltips.js";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
+
 import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.fixture.js";
 
 describe("SankeyChart tooltip", () => {

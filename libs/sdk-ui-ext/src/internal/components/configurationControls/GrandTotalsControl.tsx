@@ -6,6 +6,7 @@ import { messages } from "../../../locales.js";
 import { grandTotalsPositionDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+
 import { ConfigSubsection } from "./ConfigSubsection.js";
 import { DropdownControl } from "./DropdownControl.js";
 

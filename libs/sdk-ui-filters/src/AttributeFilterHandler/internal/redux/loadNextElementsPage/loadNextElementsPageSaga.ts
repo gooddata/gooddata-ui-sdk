@@ -8,6 +8,7 @@ import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { selectCacheId } from "../elements/elementsSelectors.js";
 import { actions } from "../store/slice.js";
+
 import { selectHasNextPage, selectLoadNextElementsPageOptions } from "./loadNextElementsPageSelectors.js";
 
 /**

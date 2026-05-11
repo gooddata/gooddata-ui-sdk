@@ -5,6 +5,7 @@ import { type ReactNode, memo, useState } from "react";
 import cx from "classnames";
 
 import { type ChartFillType } from "../coloring/types.js";
+
 import { calculateFluidLegend } from "./helpers.js";
 import { LegendList } from "./LegendList.js";
 import { LegendSeries } from "./LegendSeries.js";

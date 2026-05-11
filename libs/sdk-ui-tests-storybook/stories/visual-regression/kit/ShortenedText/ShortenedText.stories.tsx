@@ -4,6 +4,7 @@ import { ShortenedText } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
+
 import "./ShortenedText.css";
 
 function ShortenedTextExamples() {

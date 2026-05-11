@@ -22,6 +22,7 @@ import {
     type AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
 } from "../metadata/displayFormFactory.js";
+
 import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 
 /**

@@ -6,6 +6,7 @@ import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { BarChartWithArithmeticMeasuresAndViewBy, BarChartWithTwoMeasuresAndTwoViewBy } from "./base.js";
 
 export const reversedStacking = scenariosFor<IBarChartProps>("BarChart", BarChart)

@@ -2,6 +2,7 @@
 
 import { messages } from "../../../locales.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
+
 import { ConfigSubsection } from "./ConfigSubsection.js";
 import { CellTextWrappingControl } from "./PivotTableTextWrappingControl.js";
 

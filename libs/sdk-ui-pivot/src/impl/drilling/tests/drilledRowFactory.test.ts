@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { ReferenceData } from "@gooddata/reference-workspace";
 
 import { createDrilledRow } from "../drilledRowFactory.js";
+
 import { TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, createTestRow } from "./drilling.fixture.js";
 
 describe("createDrilledRow", () => {

@@ -31,6 +31,7 @@ import {
 import { type ILayoutItemPath } from "../../../../types.js";
 import { areLayoutPathsEqual, updateItemIndex } from "../../../layout/coordinates.js";
 import { determineWidthForScreen } from "../../../layout/sizing.js";
+
 import { type IDashboardLayoutItemFacade, type IDashboardLayoutSectionFacade } from "./interfaces.js";
 
 /**

@@ -6,6 +6,7 @@ import { FormattedMessage } from "react-intl";
 
 import { dialogChangeMessageLabels } from "../../../../locales.js";
 import { type InsightCodeType } from "../types.js";
+
 import { ComponentTypeItem } from "./ComponentTypeItem.js";
 
 /**

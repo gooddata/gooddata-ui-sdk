@@ -3,6 +3,7 @@
 import { type IAttributeDescriptor, type IMeasureDescriptor } from "@gooddata/sdk-model";
 
 import { type ITableGrandTotalRowDefinition, type ITableRowDefinition } from "../../interfaces/rows.js";
+
 import { type IDescriptorsInfo } from "./collectDescriptorsInfo.js";
 import { type IHeadersInfo } from "./collectHeadersInfo.js";
 import { type IMeasureDimensionInfo } from "./collectMeasureDimensionMeta.js";

@@ -7,6 +7,7 @@ import { type ISortItem, sortDirection } from "@gooddata/sdk-model";
 import { type ColumnHeadersPosition } from "../../../publicTypes.js";
 import { type ITableColumnDefinitionByColId } from "../../types/internal.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
+
 import { getSortForColumnDefinition } from "./getSortForColumnDefinition.js";
 
 /**

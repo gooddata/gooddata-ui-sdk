@@ -3,6 +3,7 @@
 import { bem } from "../@ui/@utils/bem.js";
 import { type IUiListboxItem } from "../@ui/UiListbox/types.js";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
+
 import { type ICatalogItemPickerItem } from "./types.js";
 
 const { e } = bem("gd-ui-kit-catalog-item-picker");

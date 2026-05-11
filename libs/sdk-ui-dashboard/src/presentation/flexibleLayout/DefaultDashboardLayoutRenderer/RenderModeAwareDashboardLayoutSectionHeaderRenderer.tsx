@@ -1,6 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { renderModeAware } from "../../componentDefinition/renderModeAware.js";
+
 import { DashboardLayoutEditSectionHeaderRenderer } from "./DashboardLayoutEditSectionHeaderRenderer.js";
 import { DashboardLayoutExportSectionHeaderRenderer } from "./DashboardLayoutExportSectionHeaderRenderer.js";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";

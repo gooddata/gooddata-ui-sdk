@@ -83,6 +83,7 @@ import {
     modifyBucketsAttributesForDrillDown,
     sanitizeTableProperties,
 } from "../drillDownUtil.js";
+
 import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,

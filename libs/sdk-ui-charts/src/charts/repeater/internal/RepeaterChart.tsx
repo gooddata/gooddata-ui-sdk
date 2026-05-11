@@ -43,6 +43,7 @@ import { useFocusMng } from "../hooks/useFocusMng.js";
 import { useRenderWatcher } from "../hooks/useRenderWatcher.js";
 import { MANUALLY_SIZED_MIN_WIDTH, useResizing } from "../hooks/useResizing.js";
 import { type IRepeaterChartProps } from "../publicTypes.js";
+
 import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { InlineLineChart } from "./InlineLineChart.js";

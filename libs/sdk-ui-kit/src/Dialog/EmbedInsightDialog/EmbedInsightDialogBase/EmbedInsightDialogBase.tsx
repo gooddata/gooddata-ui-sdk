@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
 import { dialogEmbedTabLabels, dialogHeadlineLabels } from "../../../locales.js";
 import { type ITab, Tabs } from "../../../Tabs/Tabs.js";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
+
 import { CompleteListPropsMessage } from "./components/CompleteListPropsMessage.js";
 import { EmbedInsightContent } from "./components/EmbedInsightContent.js";
 import {

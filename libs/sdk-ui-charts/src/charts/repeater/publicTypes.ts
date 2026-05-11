@@ -3,6 +3,7 @@
 import { type DataViewFacade, type ExplicitDrill, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
+
 import { type RepeaterColumnWidthItem } from "./columnWidths.js";
 
 /**

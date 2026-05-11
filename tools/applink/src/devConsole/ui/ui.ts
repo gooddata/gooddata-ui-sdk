@@ -13,6 +13,7 @@ import {
     autobuildToggled,
     packagesChanged,
 } from "../events.js";
+
 import { AppLog } from "./appLog.js";
 import { AppMenu, type AppMenuItem } from "./appMenu.js";
 import { BuildOutput } from "./buildOutput.js";

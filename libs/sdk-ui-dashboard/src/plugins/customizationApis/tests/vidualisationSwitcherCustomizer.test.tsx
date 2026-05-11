@@ -8,6 +8,7 @@ import { type IVisualizationSwitcherWidget, idRef } from "@gooddata/sdk-model";
 
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
 import { DefaultVisualizationSwitcherCustomizer } from "../visualizationSwitcherCustomizer.js";
+
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
 

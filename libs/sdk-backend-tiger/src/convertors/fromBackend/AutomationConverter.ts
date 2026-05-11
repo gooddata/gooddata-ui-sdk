@@ -57,6 +57,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { fixNumber } from "../../utils/fixNumber.js";
+
 import { convertFilter } from "./afm/FilterConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAttribute } from "./AttributeConvertor.js";

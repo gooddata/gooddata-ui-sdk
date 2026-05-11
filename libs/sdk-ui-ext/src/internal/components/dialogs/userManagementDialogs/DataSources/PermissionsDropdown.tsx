@@ -15,6 +15,7 @@ import {
     type IDataSourcePermissionsItem,
     type IGrantedDataSource,
 } from "../types.js";
+
 import { dataSourcePermissionMessages } from "./locales.js";
 import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
 

@@ -13,6 +13,7 @@ import {
 import { Message } from "@gooddata/sdk-ui-kit";
 
 import { AUTOMATION_ATTACHMENTS_GROUP_LABEL_ID } from "../../../../constants/automations.js";
+
 import { AttachmentsList } from "./AttachmentsList.js";
 import { AttachmentsSelect } from "./AttachmentsSelect.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";

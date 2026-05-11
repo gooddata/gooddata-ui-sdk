@@ -1,6 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { renderModeAware } from "../../componentDefinition/renderModeAware.js";
+
 import { EditModeDashboardRichText } from "./EditModeDashboardRichText.js";
 import { ExportModeDashboardRichText } from "./ExportModeDashboardRichText.js";
 import { ViewModeDashboardRichText } from "./ViewModeDashboardRichText.js";

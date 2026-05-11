@@ -29,6 +29,7 @@ import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { handleExportReady } from "../exports/exports.js";
 import { getSortModel } from "../sorting/agGridSortingApi.js";
 import { sortModelToSortItems } from "../sorting/sortModelToSortItems.js";
+
 import { agGridSetLoading } from "./agGridLoadingApi.js";
 import { dataViewToRowData } from "./dataViewToRowData.js";
 import { loadDataView } from "./loadDataView.js";

@@ -3,6 +3,7 @@
 import cx from "classnames";
 
 import { type ErrorContents } from "../../../model.js";
+
 import { MarkdownComponent } from "./Markdown.js";
 
 export type ErrorContentsProps = {

@@ -7,6 +7,7 @@ import type { IParameterMetadataObject } from "@gooddata/sdk-model";
 
 import type { ICatalogItemParameter } from "../../catalogItem/types.js";
 import { createParameterMutationAdapter } from "../parameterMutationPort.js";
+
 import { createTestParameterMutationPort } from "./parameterMutationPort.test.utils.js";
 
 const savedParameter: IParameterMetadataObject = {

@@ -5,6 +5,7 @@ import { type ReactNode } from "react";
 import { type ThemeColor } from "@gooddata/sdk-model";
 
 import { type BackgroundShape, type BackgroundType } from "../@types/background.js";
+
 import { b } from "./iconBackgroundBem.js";
 
 export function UiIconBackground({

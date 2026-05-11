@@ -12,6 +12,7 @@ import {
 import { DataViewFacade, convertError } from "@gooddata/sdk-ui";
 
 import { type ICorePivotTableProps } from "../publicTypes.js";
+
 import { COLS_PER_PAGE } from "./base/constants.js";
 import { getAvailableDrillTargets } from "./drilling/drillTargets.js";
 import {

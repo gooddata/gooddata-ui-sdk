@@ -15,6 +15,7 @@ import { ConfigModeSelect } from "../../configuration/ConfigurationModeSelect.js
 import { ConfigurationPanelHeader } from "../../configuration/ConfigurationPanelHeader.js";
 import { AttributeTitleRenaming } from "../../configuration/title/AttributeTitleRenaming.js";
 import { useDateFilterConfig } from "../useDateFilterConfig.js";
+
 import { DateFilterConfigurationActions } from "./DateFilterConfigurationActions.js";
 
 interface IDateFilterConfigurationProps extends IFilterConfigurationProps {

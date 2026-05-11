@@ -12,6 +12,7 @@ import {
     type IStylingPickerItem,
     type StylingPickerItemContent,
 } from "../../Dialog/StylingEditorDialog/StylingEditorDialog.js";
+
 import { StylingSettingList } from "./StylingSettingList.js";
 import { StylingSettingListItem } from "./StylingSettingListItem.js";
 

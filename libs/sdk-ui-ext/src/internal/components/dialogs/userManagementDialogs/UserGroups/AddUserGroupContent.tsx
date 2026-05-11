@@ -1,6 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type IGrantedUserGroup } from "../types.js";
+
 import { AddUserGroupSelect } from "./AddUserGroupSelect.js";
 import { UserGroupsList } from "./UserGroupsList.js";
 

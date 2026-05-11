@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { prepareDrillLocalIdentifierIfMissing } from "../AnalyticalDashboardConverter.js";
+
 import { dashboardLayout } from "./AnalyticalDashboardConverter.fixture.js";
 
 vi.mock("uuid", () => ({

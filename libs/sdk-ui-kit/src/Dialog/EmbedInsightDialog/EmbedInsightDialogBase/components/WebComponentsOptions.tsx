@@ -8,6 +8,7 @@ import { type ILocale } from "@gooddata/sdk-ui";
 
 import { dialogChangeMessageLabels } from "../../../../locales.js";
 import { type IWebComponentsOptions, type UnitsType } from "../types.js";
+
 import { HeightSetting } from "./HeightSetting.js";
 import { LocaleSetting } from "./LocaleSetting.js";
 import { ToggleSwitch } from "./ToggleSwitch.js";

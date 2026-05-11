@@ -5,6 +5,7 @@ import {
     type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
 import { BigChartDescriptor } from "../BigChartDescriptor.js";
+
 import { PluggableComboChartDeprecated } from "./PluggableComboChartDeprecated.js";
 
 export class ComboChartDescriptorDeprecated extends BigChartDescriptor {

@@ -7,6 +7,7 @@ import { type ITheme } from "@gooddata/sdk-model";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 
 import { clearCssProperties, setCssProperties } from "../cssProperties.js";
+
 import { ThemeContextProvider, type ThemeStatus } from "./Context.js";
 import { isDarkTheme } from "./isDarkTheme.js";
 import { prepareTheme } from "./prepareTheme.js";

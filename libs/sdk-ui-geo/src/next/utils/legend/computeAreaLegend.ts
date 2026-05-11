@@ -3,6 +3,7 @@
 import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
 import type { IAreaGeoData } from "../../types/geoData/area.js";
 import { type ILegendGroup, type ILegendSection } from "../../types/legend/model.js";
+
 import { computeColorScale } from "./computeColorScale.js";
 import {
     ATTRIBUTE_ONLY_URI_PREFIX,

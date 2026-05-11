@@ -17,6 +17,7 @@ import { useGeoChartData } from "../hooks/dataLoading/useGeoChartDataPipeline.js
 import { useCallbackOnChange } from "../hooks/utils/useCallbackOnChange.js";
 import { type ILayerExecutionRecord } from "../types/props/geoChart/internal.js";
 import { createGeoExportFunction } from "../utils/createGeoExportFunction.js";
+
 import { GeoChartProviders } from "./GeoChartProviders.js";
 import { GeoErrorComponent } from "./GeoErrorComponent.js";
 import { GeoLoadingComponent } from "./GeoLoadingComponent.js";

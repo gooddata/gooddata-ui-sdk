@@ -46,6 +46,7 @@ import { type IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
+
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { useDrillDialogSyncInsightProperties } from "./useDrillDialogSyncInsightProperties.js";
 import { useExcludedDrillDefinitionFilters } from "./useExcludedDrillDefinitionFilters.js";

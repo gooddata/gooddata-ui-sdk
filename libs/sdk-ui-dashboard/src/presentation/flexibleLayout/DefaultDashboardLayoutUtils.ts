@@ -17,6 +17,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type DashboardLayoutItemModifications } from "../../_staging/dashboard/flexibleLayout/builder/interfaces.js";
+
 import { validateDashboardLayoutWidgetSize } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
 
 /**

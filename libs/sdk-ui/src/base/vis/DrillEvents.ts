@@ -11,6 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IHeaderPredicate, isHeaderPredicate } from "../headerMatching/HeaderPredicate.js";
+
 import {
     type ChartElementType,
     type ChartType,

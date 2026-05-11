@@ -35,6 +35,7 @@ import { insightDataLoaderFactory } from "../dataLoaders/InsightDataLoader.js";
 import { userWorkspaceSettingsDataLoaderFactory } from "../dataLoaders/UserWorkspaceSettingsDataLoader.js";
 import { workspacePermissionsDataLoaderFactory } from "../dataLoaders/WorkspacePermissionsDataLoader.js";
 import { type IInsightViewProps } from "../internal/index.js";
+
 import { InsightError } from "./InsightError.js";
 import { InsightRenderer } from "./InsightRenderer.js";
 import { InsightTitle } from "./InsightTitle.js";

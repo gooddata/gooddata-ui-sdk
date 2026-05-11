@@ -11,6 +11,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import { isCancelError } from "../react/CancelablePromise.js";
+
 import {
     BadRequestSdkError,
     CancelledSdkError,

@@ -24,6 +24,7 @@ import {
     type ILegendGroup,
     isLegendColorCategoryItem,
 } from "../../types/legend/model.js";
+
 import { resolveLegendGroupTitle } from "./groupTitle.js";
 
 /**

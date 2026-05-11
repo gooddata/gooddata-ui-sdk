@@ -10,6 +10,7 @@ import ReactMeasure, { type Rect } from "react-measure";
 import { type ITranslationsComponentProps, IntlTranslationsProvider, IntlWrapper } from "@gooddata/sdk-ui";
 
 import { type ChartFillType } from "../coloring/types.js";
+
 import { FluidLegend } from "./FluidLegend.js";
 import { HeatmapLegend } from "./HeatmapLegend.js";
 import { type ButtonsOrientationType } from "./Paging.js";

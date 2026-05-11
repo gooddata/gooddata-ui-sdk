@@ -3,6 +3,7 @@
 import { type ComponentType } from "react";
 
 import { renderModeAware } from "../../componentDefinition/renderModeAware.js";
+
 import { SidebarConfigurationPanel } from "./SidebarConfigurationPanel.js";
 import { type ISidebarProps } from "./types.js";
 

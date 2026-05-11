@@ -10,6 +10,7 @@ import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 import { filterQuality } from "../automation/testIds.js";
 import { useQualityReportState } from "../quality/QualityContext.js";
 import { getQualityIssueCodes } from "../quality/utils.js";
+
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
 

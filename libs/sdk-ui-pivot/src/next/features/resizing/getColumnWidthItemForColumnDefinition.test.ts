@@ -13,6 +13,7 @@ import { type ITableColumnDefinition, type ITableValueColumnDefinition } from "@
 
 import { newAttributeColumnLocator } from "../../types/locators.js";
 import { newWidthForAllColumnsForMeasure, setNewWidthForSelectedColumns } from "../../types/resizing.js";
+
 import { getColumnWidthItemForColumnDefinition } from "./getColumnWidthItemForColumnDefinition.js";
 
 const ATTRIBUTE_IDENTIFIER = "region";

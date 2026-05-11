@@ -8,6 +8,7 @@ import { scenariosFor } from "../../../scenarioGroup.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { WaterfallChartWithMultiMeasures, WaterfallChartWithSingleMeasureAndViewBy } from "./base.js";
 
 const TotalPredicate = (header: IMappingHeader) => {

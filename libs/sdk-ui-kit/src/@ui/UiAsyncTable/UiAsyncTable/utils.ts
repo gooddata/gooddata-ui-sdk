@@ -5,6 +5,7 @@ import { type KeyboardEvent, type MouseEvent } from "react";
 import { type ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 import { type IUiAsyncTableColumn, type IUiAsyncTableFilterOption } from "../types.js";
+
 import {
     ASYNC_TABLE_ID_PREFIX,
     CHECKBOX_COLUMN_WIDTH,

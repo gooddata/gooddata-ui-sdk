@@ -60,6 +60,7 @@ import { type CustomMenuButtonComponent, type IMenuButtonConfiguration } from ".
 import { type CustomTitleComponent } from "../topBar/title/types.js";
 import { type CustomTopBarComponent } from "../topBar/topBar/types.js";
 import { type CustomDashboardLayoutComponent } from "../widget/dashboardLayout/types.js";
+
 import { type CustomSidebarComponent } from "./DashboardSidebar/types.js";
 
 /**

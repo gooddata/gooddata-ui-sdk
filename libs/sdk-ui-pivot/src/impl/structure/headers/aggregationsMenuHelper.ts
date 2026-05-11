@@ -11,6 +11,7 @@ import {
 
 import { AVAILABLE_TOTALS } from "../../base/constants.js";
 import { type IMenuAggregationClickConfig } from "../../privateTypes.js";
+
 import { type IColumnTotal } from "./aggregationsMenuTypes.js";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {

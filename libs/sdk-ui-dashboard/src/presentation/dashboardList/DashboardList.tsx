@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { Dropdown, DropdownList } from "@gooddata/sdk-ui-kit";
 
 import { dashboardMatch } from "../drill/utils/dashboardPredicate.js";
+
 import { DashboardListButton } from "./DashboardListButton.js";
 import { DashboardListItem } from "./DashboardListItem.js";
 import { type IDashboardListProps } from "./types.js";

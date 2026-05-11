@@ -16,6 +16,7 @@ import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { type IUiAsyncTableFilterOption, type IUiAsyncTableFilterProps } from "../types.js";
+
 import {
     FILTER_CHIP_MAX_WIDTH,
     FILTER_ITEMS_OFFSET,

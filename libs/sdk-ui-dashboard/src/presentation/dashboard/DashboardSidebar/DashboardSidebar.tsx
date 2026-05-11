@@ -3,6 +3,7 @@
 import { type ReactElement } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+
 import { type ISidebarProps } from "./types.js";
 
 export function DashboardSidebar(props: ISidebarProps): ReactElement {

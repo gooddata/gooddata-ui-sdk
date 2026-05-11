@@ -14,6 +14,7 @@ import {
 } from "../../../columnWidths.js";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import { MANUALLY_SIZED_MAX_WIDTH, updateColumnDefinitionsWithWidths } from "../columnSizing.js";
+
 import {
     TwoMeasuresWithRowAttribute,
     TwoMeasuresWithTwoRowAndTwoColumnAttributes,

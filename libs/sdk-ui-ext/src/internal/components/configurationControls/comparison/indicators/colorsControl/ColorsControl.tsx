@@ -12,6 +12,7 @@ import {
     COMPARISON_COLOR_CONFIG_NEGATIVE,
     COMPARISON_COLOR_CONFIG_POSITIVE,
 } from "../../ComparisonValuePath.js";
+
 import { ColorCheckbox } from "./ColorCheckbox.js";
 import { ColorItem } from "./ColorItem.js";
 import { ColorResetButton } from "./ColorResetButton.js";

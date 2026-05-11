@@ -42,6 +42,7 @@ import {
     DecoratedPreparedExecution,
 } from "../decoratedBackend/execution.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
+
 import { Denormalizer, type NormalizationState, Normalizer } from "./normalizer.js";
 
 class WithNormalizationExecutionFactory extends DecoratedExecutionFactory {

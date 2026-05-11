@@ -14,6 +14,7 @@ import {
 import { type StackingType } from "../../constants/stacking.js";
 import { type DataLabelsOptions } from "../../lib/index.js";
 import { isAreaChart, isBarChart, isColumnChart, isDependencyWheel, isOneOfTypes } from "../_util/common.js";
+
 import {
     type IAxisRange,
     type IAxisRangeForAxes,

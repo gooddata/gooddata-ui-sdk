@@ -3,6 +3,7 @@
 import { useIntl } from "react-intl";
 
 import { DynamicSelect } from "../../DateFilter/DynamicSelect/DynamicSelect.js";
+
 import { sanitizeCustomInput, sanitizeInput } from "./utils.js";
 
 interface IValueDropdownProps {

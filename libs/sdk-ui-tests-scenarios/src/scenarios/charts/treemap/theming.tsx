@@ -4,6 +4,7 @@ import { type ITreemapProps, Treemap } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { TreemapWithMeasureViewByAndSegmentBy } from "./base.js";
 
 export const theming = scenariosFor<ITreemapProps>("Treemap", Treemap)

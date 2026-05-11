@@ -11,6 +11,7 @@ import { Overlay } from "../../Overlay/Overlay.js";
 import { type IPositioning, SnapPoint } from "../../typings/positioning.js";
 import { positioningToAlignPoints } from "../../utils/positioning.js";
 import { type IFormatTemplate } from "../typings.js";
+
 import { DocumentationLink } from "./DocumentationLink.js";
 import { FormatInputWithIntl } from "./FormatInput.js";
 import { Preview } from "./previewSection/Preview.js";

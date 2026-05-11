@@ -4,6 +4,7 @@ import { BarChart, type IBarChartProps } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { BarChartWithSingleMeasureViewByAndStackBy } from "./base.js";
 
 export const theming = scenariosFor<IBarChartProps>("BarChart", BarChart)

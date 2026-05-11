@@ -11,6 +11,7 @@ import { MetricCell } from "../../components/Cell/MetricCell.js";
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { getMeasureCellStyle } from "../styling/cell.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
+
 import { extractFormattedValue } from "./shared.js";
 
 /**

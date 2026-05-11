@@ -7,6 +7,7 @@ import { v4 as uuid } from "uuid";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Button } from "../Button/Button.js";
+
 import { type IHeaderMenuItem } from "./typings.js";
 
 /**

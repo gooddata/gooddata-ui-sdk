@@ -3,6 +3,7 @@
 import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
 import { type ColumnWidthItem } from "../../types/resizing.js";
+
 import {
     createColumnWidthItemForColumnDefinition,
     createWeakColumnWidthItemForColumnDefinition,

@@ -8,6 +8,7 @@ import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { defaultFocusCheckFn } from "../@ui/UiFocusManager/utils.js";
 import { ScreenReaderToast } from "../Messages/toasts/ToastsCenter.js";
 import { isElementSubmitButton, isElementTextInput } from "../utils/domUtilities.js";
+
 import { DialogCloseButton } from "./DialogCloseButton.js";
 import { type IDialogBaseProps } from "./typings.js";
 

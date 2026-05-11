@@ -23,6 +23,7 @@ import {
 } from "../base/react/useCancelablePromiseUtils.js";
 import { useWorkspaceStrict } from "../base/react/WorkspaceContext.js";
 import { type DataViewFacade } from "../base/results/facade.js";
+
 import { useExecutionDataView } from "./useExecutionDataView.js";
 import { useInsight } from "./useInsight.js";
 import { type DataViewWindow } from "./withExecutionLoading.js";

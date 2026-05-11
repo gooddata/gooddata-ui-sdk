@@ -9,6 +9,7 @@ import { AmountMeasurePredicate, WonMeasurePredicate } from "../../_infra/predic
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+
 import { ComboChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 
 const colorsAndPalette = scenariosFor<IComboChartProps>("ComboChart", ComboChart)

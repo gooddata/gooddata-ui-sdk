@@ -8,6 +8,7 @@ import { messages } from "../../../../locales.js";
 import { type IColorConfiguration } from "../../../interfaces/Colors.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
+
 import { AnomalyColorControl } from "./AnomalyColorControl.js";
 import { AnomalyIndicatorControl } from "./AnomalyIndicatorControl.js";
 import { AnomalySensitivityControl } from "./AnomalySensitivityControl.js";

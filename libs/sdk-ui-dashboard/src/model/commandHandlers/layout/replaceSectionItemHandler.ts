@@ -24,6 +24,7 @@ import { selectLayout, selectScreen, selectStash } from "../../store/tabs/layout
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
+
 import { resizeParentContainers } from "./containerHeightSanitization.js";
 import {
     validateAndNormalizeWidgetItems,

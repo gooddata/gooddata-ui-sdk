@@ -49,6 +49,7 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableBulletChart } from "../PluggableBulletChart.js";
+
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,

@@ -10,6 +10,7 @@ import { Button } from "../Button/Button.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { isActionKey } from "../utils/events.js";
 import { useIdPrefixed } from "../utils/useId.js";
+
 import { type IHeaderAccountProps, type IHeaderMenuItem } from "./typings.js";
 
 export function HeaderAccount({

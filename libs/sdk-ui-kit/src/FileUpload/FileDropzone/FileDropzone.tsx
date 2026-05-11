@@ -13,6 +13,7 @@ import {
 import { useFileInput } from "../hooks/useFileInput.js";
 import { parseAcceptedTypes } from "../parseAcceptedTypes.js";
 import { FileValidationErrorCode, type IFileValidationResult } from "../types.js";
+
 import { b } from "./fileDropzoneBem.js";
 
 type DragState = "idle" | "valid" | "invalid";

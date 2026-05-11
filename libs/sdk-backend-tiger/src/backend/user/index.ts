@@ -9,6 +9,7 @@ import { type IUser } from "@gooddata/sdk-model";
 
 import { convertUser } from "../../convertors/fromBackend/UsersConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { TigerUserSettingsService } from "./settings.js";
 
 export class TigerUserService implements IUserService {

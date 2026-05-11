@@ -11,6 +11,7 @@ import { messages } from "../../../locales.js";
 import { orientationDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+
 import { DropdownControl } from "./DropdownControl.js";
 
 export interface IOrientationDropdownControl {

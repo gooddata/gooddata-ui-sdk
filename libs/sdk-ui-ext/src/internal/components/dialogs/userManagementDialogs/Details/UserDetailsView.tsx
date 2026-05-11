@@ -7,6 +7,7 @@ import { type IUser } from "@gooddata/sdk-model";
 import { messages } from "../locales.js";
 import { useTelemetry } from "../TelemetryContext.js";
 import { type ListMode } from "../types.js";
+
 import { DetailRow } from "./DetailRow.js";
 import { OrganizationMemberDropdown } from "./OrganizationMemberDropdown.js";
 

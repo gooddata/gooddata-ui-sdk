@@ -25,6 +25,7 @@ import {
 
 import { mapObjectType } from "../objectType/mapping.js";
 import { parseBackendDate } from "../utils/date.js";
+
 import type {
     ICatalogItem,
     ICatalogItemAttribute,

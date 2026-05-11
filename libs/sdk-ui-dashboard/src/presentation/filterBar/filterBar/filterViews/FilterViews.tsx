@@ -38,6 +38,7 @@ import {
     selectIsFilterViewsDialogOpen,
 } from "../../../../model/store/ui/uiSelectors.js";
 import { ConfigurationBubble } from "../../../widget/common/configuration/ConfigurationBubble.js";
+
 import { AddFilterView } from "./AddFilterView.js";
 import { FilterViewsList } from "./FilterViewsList.js";
 import { useFilterViewsToastMessages } from "./useFilterViewsToastMessages.js";

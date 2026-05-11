@@ -10,6 +10,7 @@ import {
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
 import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider.js";
+
 import { AutomationsCore } from "./AutomationsCore.js";
 import {
     DEFAULT_MAX_HEIGHT,

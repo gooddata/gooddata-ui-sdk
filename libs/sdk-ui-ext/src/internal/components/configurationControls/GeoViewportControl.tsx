@@ -19,6 +19,7 @@ import { messages } from "../../../locales.js";
 import { pushpinViewportDropdownItems } from "../../constants/dropdowns.js";
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+
 import { CheckboxControl } from "./CheckboxControl.js";
 import { DropdownControl } from "./DropdownControl.js";
 

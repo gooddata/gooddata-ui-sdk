@@ -8,6 +8,7 @@ import { type Matcher, suppressConsole } from "@gooddata/util";
 import { selectDrillTargetsByWidgetRef } from "../../drillTargets/drillTargetsSelectors.js";
 import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../../tabs/layout/layoutSelectors.js";
 import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDrillSelectors.js";
+
 import {
     availableDrillTargets,
     catalogAttributeHierarchies,

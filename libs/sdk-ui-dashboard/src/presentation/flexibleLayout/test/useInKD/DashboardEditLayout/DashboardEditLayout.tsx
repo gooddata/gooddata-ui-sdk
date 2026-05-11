@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import { objRefToString } from "@gooddata/sdk-model";
 
 import { DashboardLayout } from "../../../DefaultDashboardLayoutRenderer/DashboardLayout.js";
+
 import { DashboardEditLayoutItemRenderer } from "./DashboardEditLayoutItemRenderer.js";
 import { DashboardEditLayoutRowRenderer } from "./DashboardEditLayoutRowRenderer.js";
 import { DashboardEditLayoutSectionHeaderRenderer } from "./DashboardEditLayoutSectionHeaderRenderer.js";

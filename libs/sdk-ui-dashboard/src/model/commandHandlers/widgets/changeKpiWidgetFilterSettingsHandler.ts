@@ -18,6 +18,7 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { type FilterValidators, processFilterOp } from "./common/filterOperations.js";
 import {
     validateAttributeFiltersToIgnore,

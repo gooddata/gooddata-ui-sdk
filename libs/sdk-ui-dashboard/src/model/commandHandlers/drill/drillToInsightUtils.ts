@@ -23,6 +23,7 @@ import {
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
 
 import { type IDashboardDrillEvent } from "../../../types.js";
+
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 import {
     getIncludedSourceInsightFilters,

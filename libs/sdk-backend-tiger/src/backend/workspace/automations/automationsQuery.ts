@@ -19,6 +19,7 @@ import { convertAutomationListToAutomations } from "../../../convertors/fromBack
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from "../../common/automations.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
+
 import { buildFieldFilter, buildStatusFilter } from "./filterBuilders.js";
 
 export class AutomationsQuery implements IAutomationsQuery {

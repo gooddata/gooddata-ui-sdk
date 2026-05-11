@@ -18,6 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { toAfmExecution } from "../toAfmResultSpec.js";
+
 import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture.js";
 
 const workspace = "test workspace";

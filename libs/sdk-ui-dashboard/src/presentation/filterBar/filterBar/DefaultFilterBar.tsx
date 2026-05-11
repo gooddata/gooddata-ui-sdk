@@ -74,6 +74,7 @@ import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
 import { AddFilterMenu } from "../parameterFilter/AddFilterMenu.js";
 import { DashboardParameterFilter } from "../parameterFilter/DashboardParameterFilter.js";
 import { areAllFiltersHidden } from "../utils.js";
+
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
 import { DefaultFilterBarItem } from "./DefaultFilterBarItem.js";
 import { groupFilterItems } from "./filterGroupUtils.js";

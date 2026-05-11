@@ -47,6 +47,7 @@ import {
     ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS,
 } from "../AttributeFilter/constants.js";
 import { FilterButtonCustomIcon } from "../shared/components/internal/FilterButtonCustomIcon.js";
+
 import { useFilterGroupStatus } from "./useFilterGroupStatus.js";
 
 /**

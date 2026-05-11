@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { type IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
+
 import {
     attributeItems as mockAttributeItems,
     defaultFilter as mockDefaultFilter,

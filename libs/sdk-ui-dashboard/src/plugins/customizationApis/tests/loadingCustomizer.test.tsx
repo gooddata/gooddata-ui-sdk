@@ -7,6 +7,7 @@ import { type ILoadingProps } from "@gooddata/sdk-ui";
 
 import { DefaultLoadingCustomizer } from "../loadingCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
 

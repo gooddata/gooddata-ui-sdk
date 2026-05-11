@@ -6,6 +6,7 @@ import { type IRichTextWidget } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { FilterConfiguration } from "../../common/configuration/FilterConfiguration.js";
+
 import { RichTextDateDataSetFilter } from "./RichTextDateDataSetFilter.js";
 
 interface IRichTextFiltersProps {

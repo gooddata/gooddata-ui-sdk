@@ -10,6 +10,7 @@ import {
     type ITableDataMeasureScope,
     type ITableDataMeasureTotalScope,
 } from "../../interfaces/scope.js";
+
 import { type IBucketsInfo } from "./collectBucketsInfo.js";
 import { type IDescriptorsInfo } from "./collectDescriptorsInfo.js";
 import { type IHeadersInfo } from "./collectHeadersInfo.js";

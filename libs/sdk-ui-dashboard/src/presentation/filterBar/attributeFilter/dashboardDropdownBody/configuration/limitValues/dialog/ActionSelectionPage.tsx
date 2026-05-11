@@ -12,6 +12,7 @@ import { messages } from "../../../../../../../locales.js";
 import { useDashboardSelector } from "../../../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
 import { selectIsWhiteLabeled } from "../../../../../../../model/store/config/configSelectors.js";
+
 import { PopupHeader } from "./PopupHeader.js";
 
 interface IActionProps {

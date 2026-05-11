@@ -4,6 +4,7 @@ import { type IHeaderGroupParams } from "ag-grid-community";
 
 import { type IMenu } from "../../../publicTypes.js";
 import { agColId } from "../tableDescriptorTypes.js";
+
 import { ALIGN_LEFT, HeaderCell, type ICommonHeaderParams } from "./HeaderCell.js";
 
 export interface IProps extends ICommonHeaderParams, IHeaderGroupParams {

@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { stringComparatorFactory } from "../base/comparators.js";
+
 import {
     type IInsight,
     insightCreated,

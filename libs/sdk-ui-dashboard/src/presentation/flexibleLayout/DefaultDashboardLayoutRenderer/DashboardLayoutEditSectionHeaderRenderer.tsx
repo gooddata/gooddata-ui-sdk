@@ -6,6 +6,7 @@ import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { isInitialPlaceholderWidget } from "../../../widgets/placeholders/types.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+
 import { DashboardLayoutEditSectionHeader } from "./DashboardLayoutEditSectionHeader.js";
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { type IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";

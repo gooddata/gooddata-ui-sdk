@@ -17,6 +17,7 @@ import {
 import { getItemsCount, getStackItems, getViewItems, setBucketTitles } from "../bucketHelper.js";
 import { getMasterMeasuresCount, hasNoStacksWithDate } from "../bucketRules.js";
 import { getTranslation } from "../translations.js";
+
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
 
 // If you need to edit these icons

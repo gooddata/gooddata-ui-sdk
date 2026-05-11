@@ -23,6 +23,7 @@ import { LegendSection } from "../configurationControls/legend/LegendSection.js"
 import { OrientationDropdownControl } from "../configurationControls/OrientationDropdownControl.js";
 import { TotalSection } from "../configurationControls/total/TotalSection.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+
 import { BaseChartConfigurationPanel } from "./BaseChartConfigurationPanel.js";
 import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 

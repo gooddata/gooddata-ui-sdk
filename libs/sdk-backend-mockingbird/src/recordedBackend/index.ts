@@ -86,6 +86,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { createMockGeoService } from "../geoService.js";
+
 import { RecordedAttributeHierarchiesService } from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
 import { RecordedCatalogFactory } from "./catalog.js";

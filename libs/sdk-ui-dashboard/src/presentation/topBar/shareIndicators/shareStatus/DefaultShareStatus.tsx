@@ -5,6 +5,7 @@ import { type ReactElement } from "react";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsAccessControlCapability } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectCanManageAnalyticalDashboard } from "../../../../model/store/permissions/permissionsSelectors.js";
+
 import { ShareStatusIndicator } from "./ShareStatusIndicator.js";
 import { type IShareStatusProps } from "./types.js";
 

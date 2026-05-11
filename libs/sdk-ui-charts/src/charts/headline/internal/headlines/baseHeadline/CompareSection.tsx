@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import { HeadlinePagination } from "@gooddata/sdk-ui-vis-commons";
 
 import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../interfaces/BaseHeadlines.js";
+
 import { usePagination } from "./baseHeadlineDataItems/useOutOfBoundsDetection.js";
 import { CompareSectionItem } from "./CompareSectionItem.js";
 

@@ -5,6 +5,7 @@ import { type IResultWarning, type ObjRef, serializeObjRef } from "@gooddata/sdk
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { type IExecutionResultEnvelope } from "../store/executionResults/types.js";
+
 import { type IDashboardCommand } from "./base.js";
 
 /**

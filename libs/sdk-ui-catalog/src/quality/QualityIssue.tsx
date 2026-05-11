@@ -14,6 +14,7 @@ import {
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { type ICatalogItemRef } from "../catalogItem/types.js";
+
 import { QualityIssueObjects } from "./QualityIssueObjects.js";
 import { QualitySeverityIcon } from "./QualitySeverityIcon.js";
 

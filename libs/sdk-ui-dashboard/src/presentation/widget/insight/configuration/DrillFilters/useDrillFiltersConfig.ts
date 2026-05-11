@@ -38,6 +38,7 @@ import {
     type IDrillToInsightConfig,
     isDrillToInsightConfig,
 } from "../../../../drill/types.js";
+
 import { mapDashboardFilterToOption } from "./optionMappings/mapDashboardFilterToOption.js";
 import { mapIntersectionAttributeToOption } from "./optionMappings/mapIntersectionAttributeToOption.js";
 import { mapSourceInsightFilterToOption } from "./optionMappings/mapSourceInsightFilterToOption.js";

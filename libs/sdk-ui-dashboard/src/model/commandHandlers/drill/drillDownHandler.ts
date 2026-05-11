@@ -16,6 +16,7 @@ import {
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 
 export function* drillDownHandler(

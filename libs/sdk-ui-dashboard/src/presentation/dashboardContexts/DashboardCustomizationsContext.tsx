@@ -6,6 +6,7 @@ import {
     type DashboardLayoutExportTransformFn,
     type IDashboardExportSlideConfig,
 } from "../../model/types/commonTypes.js";
+
 import { type InsightMenuItemsProvider, type RichTextMenuItemsProvider } from "./types.js";
 
 /**

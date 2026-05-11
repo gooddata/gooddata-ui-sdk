@@ -5,6 +5,7 @@ import { type ScreenSize } from "@gooddata/sdk-model";
 import { type IDashboardLayoutItemFacade } from "../../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { DashboardLayoutItemViewRenderer } from "../../../DefaultDashboardLayoutRenderer/DashboardLayoutItemViewRenderer.js";
 import { type IDashboardLayoutSectionHeaderRenderProps } from "../../../DefaultDashboardLayoutRenderer/interfaces.js";
+
 import { DashboardEditLayoutSectionHeader } from "./DashboardEditLayoutSectionHeader.js";
 import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 

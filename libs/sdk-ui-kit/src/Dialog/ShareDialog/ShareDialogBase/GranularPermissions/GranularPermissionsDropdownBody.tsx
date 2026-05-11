@@ -20,6 +20,7 @@ import {
     type IGranteePermissionsPossibilities,
     type IGranularGrantee,
 } from "../types.js";
+
 import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem.js";
 
 interface IGranularPermissionsDropdownBodyProps {

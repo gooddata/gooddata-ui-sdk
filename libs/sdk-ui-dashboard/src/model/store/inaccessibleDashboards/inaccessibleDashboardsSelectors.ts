@@ -5,6 +5,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { type ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { type IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+
 import { inaccessibleDashboardsEntityAdapter } from "./inaccessibleDashboardsEntityAdapter.js";
 
 const selectSelf = createSelector(

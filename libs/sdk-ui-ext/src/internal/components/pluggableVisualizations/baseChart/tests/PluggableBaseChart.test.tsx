@@ -61,6 +61,7 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableBaseChart } from "../PluggableBaseChart.js";
+
 import {
     expectedInsightDefRegion,
     intersection,

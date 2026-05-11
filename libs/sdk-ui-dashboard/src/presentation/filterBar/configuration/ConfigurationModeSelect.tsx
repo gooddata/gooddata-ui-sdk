@@ -5,6 +5,7 @@ import { type ChangeEvent, useCallback } from "react";
 import { type IntlShape } from "react-intl/src/types.js";
 
 import { messages } from "../../../locales.js";
+
 import { ModeSelectItem } from "./ConfigurationModeSelectItem.js";
 
 export interface IConfigModeSelectProps {

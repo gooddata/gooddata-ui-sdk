@@ -19,6 +19,7 @@ import { ImageControl } from "../configurationControls/ImageControl.js";
 import { RowHeightControl } from "../configurationControls/RowHeightControl.js";
 import { TextWrappingControl } from "../configurationControls/TextWrappingControl.js";
 import { VerticalAlignControl } from "../configurationControls/VerticalAlignControl.js";
+
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 
 export class RepeaterConfigurationPanel extends ConfigurationPanelContent {

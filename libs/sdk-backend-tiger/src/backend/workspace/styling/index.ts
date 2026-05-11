@@ -19,6 +19,7 @@ import { type JsonApiId } from "../../../convertors/fromBackend/ObjRefConverter.
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 import { TigerWorkspaceSettings, getSettingsForCurrentUser } from "../settings/index.js";
+
 import { DefaultColorPalette } from "./mocks/colorPalette.js";
 import { DefaultTheme } from "./mocks/theme.js";
 

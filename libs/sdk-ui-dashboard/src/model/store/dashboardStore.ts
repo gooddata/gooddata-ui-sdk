@@ -22,6 +22,7 @@ import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
 import { type DashboardEventType } from "../events/base.js";
 import { AllQueryServices } from "../queryServices/index.js";
 import { type DashboardContext, type PrivateDashboardContext } from "../types/commonTypes.js";
+
 import { getDashboardContext } from "./_infra/contexts.js";
 import { createQueryProcessingModule } from "./_infra/queryProcessing.js";
 import { type IDashboardQueryService } from "./_infra/queryService.js";

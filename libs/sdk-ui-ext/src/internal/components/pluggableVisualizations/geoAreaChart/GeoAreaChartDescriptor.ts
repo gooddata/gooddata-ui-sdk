@@ -27,6 +27,7 @@ import {
     buildGeoChartNextGlobalFilters,
     buildGeoChartNextLayers,
 } from "../geoChartNext/geoEmbeddingLayers.js";
+
 import { PluggableGeoAreaChart } from "./PluggableGeoAreaChart.js";
 
 /**

@@ -7,6 +7,7 @@ import { isEqual } from "lodash-es";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { mapShareStatusToGroupAll } from "../shareDialogMappers.js";
+
 import { useGetAccessList } from "./backend/useGetAccessList.js";
 import { useShareDialogInteraction } from "./ComponentInteractionContext.js";
 import {

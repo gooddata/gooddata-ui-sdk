@@ -8,6 +8,7 @@ import { type IMeasureMetadataObject } from "@gooddata/sdk-model";
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
+
 import { useMeasureValueFilterDetails } from "./useMeasureValueFilterDetails.js";
 
 /**

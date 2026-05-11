@@ -16,6 +16,7 @@ import { type IInsightDefinition, type INullableFilter, type ISettings } from "@
 import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 
 import { type GeoLayerType, type IGeoLayer } from "../../layers/index.js";
+
 import { type IGeoChartProps } from "./public.js";
 
 /**

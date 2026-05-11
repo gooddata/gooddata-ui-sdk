@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+
 import { OrganizationAutomationsQuery } from "./automationsQuery.js";
 
 /**

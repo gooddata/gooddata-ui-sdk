@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type ActionOptions } from "../_base/types.js";
+
 import { type ListCmdActionConfig } from "./actionConfig.js";
 import { type ListEntry } from "./types.js";
 

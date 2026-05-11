@@ -34,6 +34,7 @@ import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tab
 import { DEFAULT_TAB_ID, type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
+
 import { applyDefaultFilterView } from "./common/filterViews.js";
 import { insightReferencesFromDashboard } from "./common/insightReferences.js";
 import { getMigratedAttributeFilters } from "./common/migratedAttributeFilters.js";

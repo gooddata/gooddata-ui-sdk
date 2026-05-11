@@ -1,6 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type IUserMember } from "../types.js";
+
 import { AddUserSelect } from "./AddUserSelect.js";
 import { UsersList } from "./UsersList.js";
 

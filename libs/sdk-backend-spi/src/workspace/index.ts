@@ -1,6 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import { type IPagedResource } from "../common/paging.js";
+
 import { type IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { type IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { type IWorkspaceAttributesService } from "./attributes/index.js";

@@ -16,6 +16,7 @@ import {
 
 import { type ICoreChartProps, type OnLegendReady } from "../../interfaces/chartProps.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
+
 import { type IRawChartProps, RawChart } from "./RawChart.js";
 
 /**

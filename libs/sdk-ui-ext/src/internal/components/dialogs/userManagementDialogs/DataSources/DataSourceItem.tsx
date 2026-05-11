@@ -7,6 +7,7 @@ import cx from "classnames";
 import { IconDataSource } from "@gooddata/sdk-ui-kit";
 
 import { type DataSourcePermissionSubject, type IGrantedDataSource } from "../types.js";
+
 import { PermissionsDropdown } from "./PermissionsDropdown.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";
 

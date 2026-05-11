@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+
 import { type IInsightBodyProps } from "./types.js";
 
 /**

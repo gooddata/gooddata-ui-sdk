@@ -47,6 +47,7 @@ import { ThemedLoadingEqualizer } from "../../../../presentationComponents/Theme
 import { useInsightExport } from "../../../common/useInsightExport.js";
 import { useShowAsTable } from "../../../showAsTableButton/useShowAsTable.js";
 import { supportsShowAsTable } from "../../insightToTable.js";
+
 import { DrillDialog } from "./DrillDialog.js";
 import { DrillDialogInsight } from "./DrillDialogInsight.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";

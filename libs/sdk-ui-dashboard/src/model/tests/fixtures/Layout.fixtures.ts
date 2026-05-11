@@ -23,6 +23,7 @@ import {
     newInsightPlaceholderWidget,
     newKpiPlaceholderWidget,
 } from "../../../widgets/placeholders/types.js";
+
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures.js";
 
 export const TestSectionHeader: IDashboardLayoutSectionHeader = {

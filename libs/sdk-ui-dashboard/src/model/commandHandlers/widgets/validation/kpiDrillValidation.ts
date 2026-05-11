@@ -5,6 +5,7 @@ import { type KpiDrillDefinition } from "@gooddata/sdk-model";
 import { type IDashboardCommand } from "../../../commands/base.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
+
 import { validateKpiDrillTarget } from "./kpiDrillValidationUtils.js";
 
 export function validateKpiDrill(drill: KpiDrillDefinition, ctx: DashboardContext, cmd: IDashboardCommand) {

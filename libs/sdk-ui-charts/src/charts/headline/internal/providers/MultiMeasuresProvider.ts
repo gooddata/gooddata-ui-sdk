@@ -4,6 +4,7 @@ import { type ComponentType } from "react";
 
 import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { MultiMeasuresTransformation } from "../transformations/MultiMeasuresTransformation.js";
+
 import { AbstractProvider } from "./AbstractProvider.js";
 
 export class MultiMeasuresProvider extends AbstractProvider {

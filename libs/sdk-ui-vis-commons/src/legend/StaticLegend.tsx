@@ -5,6 +5,7 @@ import { type ReactElement, type ReactNode, memo, useCallback, useState } from "
 import cx from "classnames";
 
 import { type ChartFillType } from "../coloring/types.js";
+
 import { ITEM_HEIGHT, STATIC_PAGING_HEIGHT, calculateStaticLegend } from "./helpers.js";
 import { LegendLabelItem } from "./LegendLabelItem.js";
 import { LegendList } from "./LegendList.js";

@@ -8,6 +8,7 @@ import type { ISeparators } from "@gooddata/sdk-model";
 
 import { KdaProvider } from "../providers/Kda.js";
 import type { IKdaDefinition, IKdaDialogProps } from "../types.js";
+
 import { KdaDialog } from "./KdaDialog.js";
 import { KdaDialogArbiter } from "./KdaDialogArbiter.js";
 import { KdaReplaceConfirmationDialog } from "./KdaReplaceConfirmationDialog.js";

@@ -3,6 +3,7 @@
 import { type IInsight } from "@gooddata/sdk-model";
 
 import { type IDrillConfigItem } from "../../../../drill/types.js";
+
 import { DrillingInsightDropdown } from "./DrillingInsightDropdown.js";
 
 export interface IDrillMeasureItemProps {

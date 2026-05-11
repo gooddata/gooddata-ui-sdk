@@ -9,6 +9,7 @@ import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { e } from "../asyncTableBem.js";
 import { messages } from "../locales.js";
 import { type IUiAsyncTableColumn, type IUiAsyncTableHeaderProps } from "../types.js";
+
 import { getColumnHeaderId, getColumnWidth } from "./utils.js";
 
 const arrowIcon = <UiIcon type="dropDown" size={11} color="complementary-6" />;

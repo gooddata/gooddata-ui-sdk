@@ -40,6 +40,7 @@ import { type DashboardContext } from "../../types/commonTypes.js";
 import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
 import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
+
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 
 function findMatchingVirtualFilter(

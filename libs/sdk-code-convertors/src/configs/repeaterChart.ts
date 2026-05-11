@@ -9,6 +9,7 @@ import {
     saveColumnWidths,
 } from "../utils/configUtils.js";
 import { getFullBucket } from "../utils/sharedUtils.js";
+
 import { type ColorMapping, type ColumnWidthItem } from "./types.js";
 import {
     type ConfigDefaults,

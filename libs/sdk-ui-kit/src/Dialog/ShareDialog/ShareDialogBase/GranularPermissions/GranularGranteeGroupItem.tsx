@@ -15,6 +15,7 @@ import {
     type IGranularGranteeGroup,
 } from "../types.js";
 import { getGranteeItemTestId, getGranteeLabel } from "../utils.js";
+
 import { GranularPermissionsDropdownWithBubble } from "./GranularPermissionsDropdown.js";
 import { getGranteePossibilities } from "./permissionsLogic.js";
 import { usePermissionsDropdownState } from "./usePermissionsDropdownState.js";

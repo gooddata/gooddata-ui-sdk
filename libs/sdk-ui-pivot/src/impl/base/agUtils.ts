@@ -4,6 +4,7 @@ import { type ColDef, type Column, type ColumnResizedEvent } from "ag-grid-commu
 
 import { ColumnEventSourceType } from "../../columnWidths.js";
 import { agColId } from "../structure/tableDescriptorTypes.js";
+
 import { COLUMN_SUBTOTAL, COLUMN_TOTAL, MEASURE_COLUMN } from "./constants.js";
 
 /*

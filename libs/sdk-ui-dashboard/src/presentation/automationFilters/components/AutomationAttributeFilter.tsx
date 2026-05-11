@@ -20,6 +20,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { DefaultDashboardAttributeFilter } from "../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
+
 import {
     AutomationAttributeFilterProvider,
     useAutomationAttributeFilterContext,

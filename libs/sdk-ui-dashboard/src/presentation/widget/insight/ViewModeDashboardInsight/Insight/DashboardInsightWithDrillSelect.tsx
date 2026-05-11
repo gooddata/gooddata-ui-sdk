@@ -4,6 +4,7 @@ import { type ReactElement } from "react";
 
 import { WithDrillSelect } from "../../../../drill/DrillSelect/WithDrillSelect.js";
 import { type IDashboardInsightProps } from "../../types.js";
+
 import { DashboardInsight } from "./DashboardInsight.js";
 
 /**

@@ -7,6 +7,7 @@ import { type INotification, isAlertNotification } from "@gooddata/sdk-model";
 import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
 
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
+
 import { useFetchNotifications } from "./useFetchNotifications.js";
 
 type OrganizationStatus = "pending" | "loading" | "success" | "error";

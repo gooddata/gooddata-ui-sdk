@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { Dropdown, DropdownButton, EditableLabel, UiDate, UiListbox } from "@gooddata/sdk-ui-kit";
 
 import { type ICatalogItem } from "../catalogItem/types.js";
+
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 
 const CERTIFICATION_STATUS = {

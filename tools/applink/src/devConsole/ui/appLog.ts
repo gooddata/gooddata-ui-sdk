@@ -9,6 +9,7 @@ import {
     type IEventListener,
     type Severity,
 } from "../events.js";
+
 import { AppPanel, type AppPanelOptions } from "./appPanel.js";
 import { getTerminalSize } from "./utils.js";
 

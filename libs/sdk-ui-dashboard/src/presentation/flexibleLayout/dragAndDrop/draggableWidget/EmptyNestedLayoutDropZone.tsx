@@ -9,6 +9,7 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { type DraggableItemType } from "../../../dragAndDrop/types.js";
+
 import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 

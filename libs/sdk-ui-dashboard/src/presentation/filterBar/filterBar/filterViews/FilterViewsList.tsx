@@ -35,6 +35,7 @@ import {
 } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectFilterViewsAreLoading } from "../../../../model/store/filterViews/filterViewsReducersSelectors.js";
 import { selectCanCreateFilterView } from "../../../../model/store/permissions/permissionsSelectors.js";
+
 import { FilterViewDeleteConfirm } from "./FilterViewDeleteConfirm.js";
 
 type IAction = "setDefault" | "delete" | typeof SELECT_ITEM_ACTION;

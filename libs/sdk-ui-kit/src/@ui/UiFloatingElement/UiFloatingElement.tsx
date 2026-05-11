@@ -12,6 +12,7 @@ import { useCloseOnEscape } from "../hooks/useCloseOnEscape.js";
 import { useCloseOnMouseDrag } from "../hooks/useCloseOnMouseDrag.js";
 import { FLOATING_ELEMENT_DATA_ATTR, useCloseOnOutsideClick } from "../hooks/useCloseOnOutsideClick.js";
 import { useCloseOnParentScroll } from "../hooks/useCloseOnParentScroll.js";
+
 import { type IUiFloatingElementProps } from "./types.js";
 import { useFloatingPosition } from "./useFloatingPosition.js";
 import { getDimensionsFromRef, resolveAnchor } from "./utils.js";

@@ -17,6 +17,7 @@ import {
     type RepeaterColumnWidth,
     type RepeaterColumnWidthItem,
 } from "../columnWidths.js";
+
 import { type ResizingState } from "./privateTypes.js";
 
 export function getColumnWidths(resizingState: ResizingState): RepeaterColumnWidthItem[] {

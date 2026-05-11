@@ -17,6 +17,7 @@ import {
     messagesSelector,
 } from "../store/messages/messagesSelectors.js";
 import { type RootState } from "../store/types.js";
+
 import { ChatSkeleton } from "./ChatSkeleton.js";
 import { parseReferences } from "./completion/references.js";
 import { useCustomization } from "./CustomizationProvider.js";

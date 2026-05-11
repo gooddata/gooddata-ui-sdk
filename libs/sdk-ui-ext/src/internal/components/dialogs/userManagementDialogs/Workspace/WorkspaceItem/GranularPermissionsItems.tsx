@@ -4,6 +4,7 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { type IPermissionsItem, type WorkspacePermission } from "../../types.js";
+
 import { getGranularPermissionTitle, granularTooltipMessages } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 

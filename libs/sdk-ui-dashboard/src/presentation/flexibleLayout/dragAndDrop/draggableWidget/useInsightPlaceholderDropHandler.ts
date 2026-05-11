@@ -18,6 +18,7 @@ import {
     INSIGHT_PLACEHOLDER_WIDGET_ID,
     newInsightPlaceholderWidget,
 } from "../../../../widgets/placeholders/types.js";
+
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 
 export function useInsightPlaceholderDropHandler(layoutPath: ILayoutItemPath) {

@@ -9,6 +9,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { type IAlignPoint } from "../typings/positioning.js";
+
 import { type IRichTextProps, RichText } from "./RichText.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "bc tc" }, { align: "tc bc" }];

@@ -12,6 +12,7 @@ import {
     type WorkspacePermission,
     type WorkspacePermissions,
 } from "../../types.js";
+
 import { AdditionalAccessPermissionItem, WorkspaceAccessPermissionItem } from "./GranularPermissionsItems.js";
 import {
     getGranularPermissions,

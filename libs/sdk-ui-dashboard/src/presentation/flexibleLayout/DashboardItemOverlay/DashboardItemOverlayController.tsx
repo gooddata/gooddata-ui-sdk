@@ -5,6 +5,7 @@ import { useDashboardDispatch, useDashboardSelector } from "../../../model/react
 import { uiActions } from "../../../model/store/ui/index.js";
 import { selectSectionModification, selectWidgetsOverlayState } from "../../../model/store/ui/uiSelectors.js";
 import { getRefsForSection } from "../refs.js";
+
 import { DashboardItemOverlay } from "./DashboardItemOverlay.js";
 
 interface IDashboardLayoutSectionOverlayControllerProps {

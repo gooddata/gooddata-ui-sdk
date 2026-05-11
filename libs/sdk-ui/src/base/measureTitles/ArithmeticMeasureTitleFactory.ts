@@ -5,6 +5,7 @@ import { type MessageDescriptor } from "react-intl";
 import { messages } from "../../locales.js";
 import { getTranslation } from "../localization/IntlStore.js";
 import { type ILocale } from "../localization/Locale.js";
+
 import { type IArithmeticMeasureTitleProps, type IMeasureTitleProps } from "./MeasureTitle.js";
 
 /**

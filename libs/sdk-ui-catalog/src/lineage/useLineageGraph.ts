@@ -8,6 +8,7 @@ import { type IReferencesResult } from "@gooddata/sdk-backend-spi";
 import { type ObjectType } from "@gooddata/sdk-model";
 
 import type { ICatalogItemRef } from "../catalogItem/types.js";
+
 import { applyLayout } from "./graph/applyLayout.js";
 import { createEdge } from "./graph/createEdge.js";
 import { createGraph } from "./graph/createGraph.js";

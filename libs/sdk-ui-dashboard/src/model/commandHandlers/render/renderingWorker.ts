@@ -9,6 +9,7 @@ import { newDashboardEventPredicate } from "../../events/index.js";
 import { renderRequested, renderResolvedWithDetails } from "../../events/render.js";
 import { executedActions } from "../../store/executed/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { type IRenderingWorkerConfiguration } from "./types.js";
 
 function* wait(ms: number): SagaIterator<true> {

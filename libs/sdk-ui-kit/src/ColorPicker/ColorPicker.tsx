@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import { type ColorFormats } from "tinycolor2";
 
 import { Button } from "../Button/Button.js";
+
 import { ColorPickerMatrix } from "./components/ColorPickerMatrix.js";
 import { ColorsPreview } from "./components/ColorsPreview.js";
 import { HexColorInput } from "./components/HexColorInput.js";

@@ -1,10 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useCallback, useContext, useRef, useState } from "react";
 
 import { type XYCoord } from "@evil-internetmann/react-dnd";
 
 import { emptyDOMRect } from "../constants.js";
+
 import { type ReachedResizingLimit } from "./DragLayerPreview/types.js";
 
 type ResizeDirection = "height" | "width" | "none";

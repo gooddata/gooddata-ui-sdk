@@ -33,6 +33,7 @@ import {
 } from "../store/messages/messagesSelectors.js";
 import { newMessageAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
+
 import { collectReferences } from "./completion/references.js";
 import { useCompletion } from "./completion/useCompletion.js";
 import { useHighlight } from "./highlight/useHighlight.js";

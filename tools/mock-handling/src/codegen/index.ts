@@ -13,6 +13,7 @@ import { type DisplayFormRecording } from "../recordings/displayForms.js";
 import { type ExecutionRecording } from "../recordings/execution.js";
 import { type InsightRecording } from "../recordings/insights.js";
 import { type VisClassesRecording } from "../recordings/visClasses.js";
+
 import { generateConstantsForCatalog } from "./catalog.js";
 import { generateConstantsForCollectionItems } from "./collectionItems.js";
 import { generateConstantsForDashboards } from "./dashboard.js";

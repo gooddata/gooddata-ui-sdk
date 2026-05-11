@@ -18,6 +18,7 @@ import {
 import { getLayoutConfiguration } from "../../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
+
 import { LayoutDirectionConfigurationDialog } from "./LayoutDirectionConfigurationDialog.js";
 
 const TOOLBAR_ALIGN_POINTS: IAlignPoint[] = [

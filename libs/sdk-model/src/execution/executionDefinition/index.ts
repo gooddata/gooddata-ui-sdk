@@ -16,6 +16,7 @@ import { type IFilter, type INullableFilter } from "../filter/index.js";
 import { measureFingerprint } from "../measure/fingerprint.js";
 import { type IMeasure } from "../measure/index.js";
 import { type IInsightParameterValue } from "../parameter/index.js";
+
 import { attributeFingerprint, dataSamplingFingerprint, sortFingerprint } from "./fingerprints.js";
 
 /**

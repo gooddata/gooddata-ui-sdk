@@ -14,6 +14,7 @@ import {
 import { type IFilterButtonCustomIcon, type VisibilityMode } from "@gooddata/sdk-ui-filters";
 
 import { messages } from "../../locales.js";
+
 import {
     type FilterBarDraggableItems,
     type FilterBarItem,

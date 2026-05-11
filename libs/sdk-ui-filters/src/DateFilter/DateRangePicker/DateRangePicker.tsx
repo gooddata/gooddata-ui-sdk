@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { type WeekStart } from "@gooddata/sdk-model";
 
 import { type DateRangePosition } from "../interfaces/index.js";
+
 import { DayPicker } from "./DatePicker.js";
 import { DateRangeHint } from "./DateRangeHint.js";
 import { EndDateInputField } from "./EndDateInputField.js";

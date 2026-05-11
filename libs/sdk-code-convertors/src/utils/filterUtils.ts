@@ -4,6 +4,7 @@ import type { DateDataset } from "@gooddata/sdk-code-schemas/v1";
 import type { MatchFilterOperator } from "@gooddata/sdk-model";
 
 import { type ExportEntities, type FromEntities } from "../types.js";
+
 import { convertGranularityToId, parseGranularityValue } from "./granularityUtils.js";
 import type { TextFilterCondition } from "./typeGuards.js";
 

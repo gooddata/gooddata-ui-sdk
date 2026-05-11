@@ -14,6 +14,7 @@ import { createNumberJsFormatter, messages as sdkMessages } from "@gooddata/sdk-
 import { UiTooltip, formatNumberWithSeparators, shortenNumber } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
+
 import {
     getOperatorTranslationKey,
     getOperatorWithValueTranslationKey,

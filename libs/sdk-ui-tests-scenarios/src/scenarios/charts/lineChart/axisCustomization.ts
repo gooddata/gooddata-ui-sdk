@@ -7,6 +7,7 @@ import { type ILineChartProps, LineChart } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { LineChartTwoMeasuresWithTrendyBy, LineChartWithArithmeticMeasuresAndViewBy } from "./base.js";
 
 const axisConfig = scenariosFor<ILineChartProps>("LineChart", LineChart)

@@ -40,6 +40,7 @@ import {
     insightDefinitionToInsight,
 } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableTreemap } from "../PluggableTreemap.js";
+
 import {
     expectedInsightDefDepartment,
     expectedInsightDefRegion,

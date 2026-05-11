@@ -9,6 +9,7 @@ import {
     type ILegendSection,
     type ILegendSizeAnchorItem,
 } from "../../types/legend/model.js";
+
 import { computeColorScale } from "./computeColorScale.js";
 import {
     ATTRIBUTE_ONLY_URI_PREFIX,

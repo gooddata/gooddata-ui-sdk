@@ -3,6 +3,7 @@
 import { type ITableColumnDefinition } from "@gooddata/sdk-ui";
 
 import { type IColumnTextWrappingItem } from "../../types/textWrapping.js";
+
 import { createColumnTextWrappingItemForColumnDefinition } from "./createColumnTextWrappingItemForColumnDefinition.js";
 import { isColumnTextWrappingItemMatch } from "./isColumnTextWrappingItemMatch.js";
 

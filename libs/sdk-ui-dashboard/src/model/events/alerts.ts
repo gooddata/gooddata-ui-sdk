@@ -3,6 +3,7 @@
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../types/commonTypes.js";
+
 import { type IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
 

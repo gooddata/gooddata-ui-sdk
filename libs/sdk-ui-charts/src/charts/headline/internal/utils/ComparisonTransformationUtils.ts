@@ -35,6 +35,7 @@ import {
     type ComparisonDataItem as IComparisonDataItemType,
     type IComparisonDataWithSubItem,
 } from "../interfaces/BaseHeadlines.js";
+
 import { createBaseHeadlineItem } from "./BaseHeadlineTransformationUtils.js";
 import { type IHeadlineExecutionData, getExecutionData } from "./HeadlineTransformationUtils.js";
 

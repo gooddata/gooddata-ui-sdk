@@ -6,6 +6,7 @@ import { type IHeaderParams } from "ag-grid-community";
 
 import { type IMenu } from "../../../publicTypes.js";
 import { isEmptyScopeCol, isSliceCol } from "../tableDescriptorTypes.js";
+
 import { ALIGN_LEFT, ALIGN_RIGHT, HeaderCell, type ICommonHeaderParams } from "./HeaderCell.js";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {

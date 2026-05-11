@@ -69,6 +69,7 @@ import { type IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
+
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
 import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
 

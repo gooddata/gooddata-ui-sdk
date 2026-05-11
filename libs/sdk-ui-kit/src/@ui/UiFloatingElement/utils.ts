@@ -4,6 +4,7 @@ import { type OffsetOptions, type Placement, type VirtualElement } from "@floati
 
 import { type IRegion } from "../../typings/domUtilities.js";
 import { elementRegion } from "../../utils/domUtilities.js";
+
 import { type IFloatingAnchor, type ILegacyAlignPoint } from "./types.js";
 
 const ALIGN_POINT_MAP: Record<string, Placement> = {

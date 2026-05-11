@@ -9,6 +9,7 @@ import { columnHeadersPositionDropdownItems } from "../../constants/dropdowns.js
 import { type IVisualizationProperties } from "../../interfaces/Visualization.js";
 import { isSetColumnHeadersPositionToLeftAllowed } from "../../utils/controlsHelper.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
+
 import { ConfigSubsection } from "./ConfigSubsection.js";
 import { DropdownControl } from "./DropdownControl.js";
 import { ColumnHeaderTextWrappingControl } from "./PivotTableTextWrappingControl.js";

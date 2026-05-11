@@ -17,6 +17,7 @@ import { selectSettings } from "../config/configSelectors.js";
 import { selectCanExecuteRaw, selectCanExportTabular } from "../permissions/permissionsSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
+
 import { executionResultsAdapter } from "./executionResultsEntityAdapter.js";
 import { type IExecutionResultEnvelope } from "./types.js";
 

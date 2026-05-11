@@ -16,6 +16,7 @@ import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectEnableFilterValuesResolutionInDrillEvents } from "../../store/config/configSelectors.js";
 import { type DashboardContext, type FiltersInfo, type ResolvableFilter } from "../../types/commonTypes.js";
+
 import { resolveFilterValues } from "./common/filterValuesResolver.js";
 
 export function* getDrillToUrlFiltersWithResolvedValues(

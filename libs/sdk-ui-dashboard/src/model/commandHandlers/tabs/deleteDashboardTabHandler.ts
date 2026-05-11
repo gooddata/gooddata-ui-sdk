@@ -16,6 +16,7 @@ import { selectAllAnalyticalWidgets } from "../../store/tabs/layout/layoutSelect
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { validateDrills } from "../common/validateDrills.js";
+
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 
 /**

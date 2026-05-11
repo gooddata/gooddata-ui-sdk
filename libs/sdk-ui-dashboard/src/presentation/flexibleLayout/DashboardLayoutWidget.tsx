@@ -61,6 +61,7 @@ import { useDashboardDrag } from "../dragAndDrop/useDashboardDrag.js";
 import { useWidgetExportData } from "../export/useExportData.js";
 import { DashboardWidget } from "../widget/widget/DashboardWidget.js";
 import { type IDashboardWidgetProps } from "../widget/widget/types.js";
+
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import { type IDashboardLayoutWidgetRenderProps } from "./DefaultDashboardLayoutRenderer/interfaces.js";

@@ -8,6 +8,7 @@ import { type IDashboardDefinition, areObjRefsEqual, idRef } from "@gooddata/sdk
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
+
 import { type UnlinkCmdActionConfig, getUnlinkCmdActionConfig } from "./actionConfig.js";
 
 function printUnlinkConfigSummary({ hostname, workspace, dashboard, identifier }: UnlinkCmdActionConfig) {

@@ -95,6 +95,7 @@ import { mapVisualizationWhatIfToScenarios } from "../../../whatIf/whatIfMapping
 import { useConfig } from "../../ConfigContext.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
+
 import { DrillSelectDropdownMenu } from "./drill/DrillSelectDropdownMenu.js";
 import { MarkdownComponent } from "./Markdown.js";
 import { useExecution } from "./useExecution.js";

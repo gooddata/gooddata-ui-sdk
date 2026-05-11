@@ -6,6 +6,7 @@ import Highcharts from "highcharts/esm/highcharts.js";
 import { type IResultAttributeHeaderItem } from "@gooddata/sdk-model";
 
 import { type HighchartsOptions } from "../../../highcharts/lib/index.js";
+
 import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import { getTooltipHtml } from "./highcharts.js";
 

@@ -15,6 +15,7 @@ import {
 import { UiIconButton, UiTooltip, useElementSize } from "@gooddata/sdk-ui-kit";
 
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
+
 import { HIDDEN_ITEMS, LEAF_TYPES } from "./const.js";
 import { useLineageGraph } from "./useLineageGraph.js";
 

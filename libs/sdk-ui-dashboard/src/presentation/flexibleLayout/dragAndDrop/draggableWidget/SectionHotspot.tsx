@@ -13,6 +13,7 @@ import { getDropZoneDebugStyle } from "../../../dragAndDrop/debug.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
 import { isBaseDraggableMovingItem } from "../../../dragAndDrop/types.js";
 import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
+
 import { SectionDropZoneBox } from "./SectionDropZoneBox.js";
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";

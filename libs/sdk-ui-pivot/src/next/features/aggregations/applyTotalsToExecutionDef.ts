@@ -4,6 +4,7 @@ import { type IAttribute, type ITotal, bucketSetTotals } from "@gooddata/sdk-mod
 
 import { addTotalsToDimension } from "../data/executionDefinition/dimensions.js";
 import { type IPivotTableExecutionDefinition } from "../data/executionDefinition/types.js";
+
 import { orderTotals } from "./ordering.js";
 
 /**

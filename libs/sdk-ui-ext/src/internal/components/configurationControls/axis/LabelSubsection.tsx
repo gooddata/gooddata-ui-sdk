@@ -6,6 +6,7 @@ import { messages } from "../../../../locales.js";
 import { type AxisType } from "../../../interfaces/AxisType.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSubsection } from "../../configurationControls/ConfigSubsection.js";
+
 import { LabelFormatControl } from "./LabelFormatControl.js";
 import { LabelRotationControl } from "./LabelRotationControl.js";
 

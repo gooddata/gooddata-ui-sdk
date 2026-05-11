@@ -8,6 +8,7 @@ import { usePropState } from "@gooddata/sdk-ui";
 
 import { Checkbox } from "../Form/Checkbox.js";
 import { useIdPrefixed } from "../utils/useId.js";
+
 import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
 import { type IExportDialogBaseProps } from "./typings.js";
 

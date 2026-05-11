@@ -7,6 +7,7 @@ import { ReferenceData } from "@gooddata/reference-workspace";
 import { type IGridRow } from "../../data/resultTypes.js";
 import { type AnyCol } from "../../structure/tableDescriptorTypes.js";
 import { createDrillIntersection } from "../drillIntersectionFactory.js";
+
 import { TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, createTestRow } from "./drilling.fixture.js";
 
 describe("createDrillIntersection", () => {

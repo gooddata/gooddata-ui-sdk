@@ -10,6 +10,7 @@ import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 
 /**

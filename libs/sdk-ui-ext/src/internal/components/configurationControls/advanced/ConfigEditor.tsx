@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
 import { Button, Hyperlink, type IAlignPoint, Overlay } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
+
 import { CodeMirrorEditor } from "./CodeMirrorEditor.js";
 import { SnippetHeader, SnippetItem } from "./SnippetItem.js";
 import { type IChartConfigurationItemSnippet, SNIPPETS } from "./snippets.js";

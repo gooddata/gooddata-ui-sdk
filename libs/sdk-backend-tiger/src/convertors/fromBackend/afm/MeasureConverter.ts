@@ -17,6 +17,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { toObjRef } from "../ObjRefConverter.js";
+
 import { convertFilter } from "./FilterConverter.js";
 
 const isArithmeticMeasureDefinition = (definition: unknown): definition is ArithmeticMeasureDefinition => {

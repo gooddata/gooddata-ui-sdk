@@ -8,6 +8,7 @@ import { isEnterKey } from "../../../utils/events.js";
 import { makeGridKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
 import { type IUiAsyncTableBodyProps } from "../types.js";
+
 import { useSkeletonItem } from "./SkeletonItemFactory.js";
 import { getCellId, getItemKey, getRowId } from "./utils.js";
 

@@ -15,6 +15,7 @@ import {
     objRefMatch,
     uriMatch,
 } from "../HeaderPredicateFactory.js";
+
 import {
     attributeDescriptor,
     attributeHeaderItem,

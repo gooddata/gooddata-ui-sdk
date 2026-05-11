@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { filterReset } from "../automation/testIds.js";
+
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 
 export function FilterResetButton() {

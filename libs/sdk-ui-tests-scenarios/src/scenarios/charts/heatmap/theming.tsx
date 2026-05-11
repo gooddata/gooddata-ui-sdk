@@ -4,6 +4,7 @@ import { Heatmap, type IHeatmapProps } from "@gooddata/sdk-ui-charts";
 
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { HeatmapWithMeasureRowsAndColumns, HeatmapWithNullDataPoints } from "./base.js";
 
 export const theming = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)

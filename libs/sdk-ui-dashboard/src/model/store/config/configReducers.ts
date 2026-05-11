@@ -3,6 +3,7 @@
 import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/toolkit";
 
 import { type ResolvedDashboardConfig } from "../../types/commonTypes.js";
+
 import { type ConfigState } from "./configState.js";
 
 type ConfigReducer<A extends Action> = CaseReducer<ConfigState, A>;

@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type AgGridRowData } from "../../types/internal.js";
+
 import { e } from "./bem.js";
 
 /**

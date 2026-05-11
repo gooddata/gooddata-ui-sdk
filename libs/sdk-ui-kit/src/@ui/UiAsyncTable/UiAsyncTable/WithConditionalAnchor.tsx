@@ -3,6 +3,7 @@
 import { type ReactNode } from "react";
 
 import { UiLink } from "../../UiLink/UiLink.js";
+
 import { stopPropagationCallback } from "./utils.js";
 
 export function WithConditionalAnchor({ href, children }: { href?: string; children: ReactNode }) {

@@ -7,6 +7,7 @@ import {
     type IChatConversationMultipartLocalPart,
     type TextContentObject,
 } from "../../model.js";
+
 import { getCatalogItemId, getCatalogItemTitle, getCatalogItemType } from "./utils.js";
 
 export const REFERENCE_REGEX_PART = "[^{}\\/]+\\/[^{}]+";

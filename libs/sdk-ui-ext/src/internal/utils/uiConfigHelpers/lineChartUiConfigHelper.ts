@@ -18,6 +18,7 @@ import {
 } from "../bucketRules.js";
 import { hasColorMapping } from "../propertiesHelper.js";
 import { getTranslation } from "../translations.js";
+
 import { getBucketItemsWarningMessage } from "./baseChartUiConfigHelper.js";
 
 // If you need to edit these icons

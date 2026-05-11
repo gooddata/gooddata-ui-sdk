@@ -2,6 +2,7 @@
 
 import { type UnboundVisProps, type VisProps } from "../../../scenario.js";
 import { type CustomizedScenario } from "../../../scenarioGroup.js";
+
 import { type ComboChartTypes } from "./base.js";
 
 const AllExplicitCombinations: ComboChartTypes[][] = [

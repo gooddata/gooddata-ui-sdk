@@ -22,6 +22,7 @@ import {
     convertMemoryItemCreatedByUsers,
 } from "../../../convertors/fromBackend/MemoryItemConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+
 import { MemoryItemsQuery } from "./MemoryItemsQuery.js";
 
 export class MemoryItemsService implements IMemoryItemsService {

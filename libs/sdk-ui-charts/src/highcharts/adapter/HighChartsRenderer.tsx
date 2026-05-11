@@ -44,6 +44,7 @@ import {
 import { type HChart, type HighchartsOptions, type XAxisOptions, type YAxisOptions } from "../lib/index.js";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess.js";
 import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../typings/unsafe.js";
+
 import { Chart, type IChartProps } from "./Chart.js";
 import { coalesceNulls, skipLeadingZeros } from "./dataSanitizers.js";
 import { mergePropertiesWithOverride } from "./propertyMerger.js";

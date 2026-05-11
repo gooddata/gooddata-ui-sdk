@@ -12,6 +12,7 @@ import {
     type WorkspacePermission,
     type WorkspacePermissionSubject,
 } from "../../types.js";
+
 import { workspacePermissionMessages } from "./locales.js";
 import { PermissionDropdownItem } from "./PermissionDropdownItem.js";
 

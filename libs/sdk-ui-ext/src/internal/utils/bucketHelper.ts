@@ -45,6 +45,7 @@ import {
     type IUiConfig,
     type IVisualizationProperties,
 } from "../interfaces/Visualization.js";
+
 import { getTranslation } from "./translations.js";
 
 export function isDateFilter(filter: IBucketFilter | undefined): filter is IDateFilter {

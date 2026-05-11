@@ -3,6 +3,7 @@
 import { type Node, type Parent, type Point } from "unist";
 
 import { getReferenceRegex } from "../utils.js";
+
 import { type TextNode } from "./types.js";
 
 export function remarkReferences() {

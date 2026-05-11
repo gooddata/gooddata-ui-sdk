@@ -3,6 +3,7 @@
 import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
 
 import { loadColorMapping, saveColorMapping } from "../utils/configUtils.js";
+
 import { type ColorMapping } from "./types.js";
 import {
     type ConfigDefaults,

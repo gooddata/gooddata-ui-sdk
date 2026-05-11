@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 import { ContentDivider } from "../../ContentDivider.js";
+
 import { AdminInformationMessage } from "./AdminInformationMessage.js";
 import { SharedObjectLockControl } from "./SharedObjectLockControl.js";
 import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientControl.js";

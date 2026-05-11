@@ -12,6 +12,7 @@ import {
 
 import { scenariosFor } from "../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
+
 import { OfflineMapStyle } from "./_infra/offlineMapStyle.js";
 
 const legendPositions: Array<IGeoChartLegendConfig["position"]> = [

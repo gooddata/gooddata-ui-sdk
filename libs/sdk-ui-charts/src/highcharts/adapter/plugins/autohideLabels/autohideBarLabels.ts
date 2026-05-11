@@ -28,6 +28,7 @@ import {
     toNeighbors,
 } from "../../../chartTypes/_chartCreators/helpers.js";
 import { type Axis } from "../../../lib/index.js";
+
 import { areLabelsOverlappingColumns, getStackItems, getStackTotalGroups } from "./autohideColumnLabels.js";
 
 const toggleStackedChartLabels = (

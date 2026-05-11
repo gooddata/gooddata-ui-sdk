@@ -19,6 +19,7 @@ import {
     getPivotCellTestIdPropsFromCellTypes,
 } from "../../testing/dataTestIdGenerators.js";
 import { type CellTypes } from "../../types/cellRendering.js";
+
 import { ImageCell } from "./ImageCell.js";
 
 const IMAGE_LABEL_TYPE: AttributeDisplayFormType = "GDC.image";

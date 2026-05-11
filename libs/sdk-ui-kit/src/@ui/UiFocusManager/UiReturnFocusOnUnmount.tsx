@@ -5,6 +5,7 @@ import { type ReactNode, type RefObject, useCallback, useMemo, useRef } from "re
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 
 import { getFocusableElements, isElementFocusable } from "../../utils/domUtilities.js";
+
 import { type IUiFocusHelperConnectors } from "./types.js";
 import { resolveRef } from "./utils.js";
 

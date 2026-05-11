@@ -4,6 +4,7 @@ import { type KeyboardEvent, memo, useEffect, useId, useMemo, useRef } from "rea
 
 import { bem } from "../@ui/@utils/bem.js";
 import { LoadingSpinner } from "../LoadingSpinner/LoadingSpinner.js";
+
 import {
     CatalogItemPickerFooter,
     CatalogItemPickerHeader,

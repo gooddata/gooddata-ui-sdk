@@ -4,6 +4,7 @@ import { type ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/s
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { type IMeasureDropdownItem } from "../types.js";
+
 import { MeasureDropdownItem } from "./MeasureDropdownItem.js";
 
 interface IMeasureDropdownBodyProps {

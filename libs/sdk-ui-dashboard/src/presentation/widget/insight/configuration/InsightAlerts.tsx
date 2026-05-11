@@ -3,6 +3,7 @@
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectEnableAutomationFilterContext } from "../../../../model/store/config/configSelectors.js";
 import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
+
 import { InsightAlertsNew } from "./InsightAlertsNew.js";
 import { InsightAlertsOld } from "./InsightAlertsOld.js";
 

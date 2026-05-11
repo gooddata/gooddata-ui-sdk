@@ -19,6 +19,7 @@ import { ContinuousLineControl } from "../configurationControls/ContinuousLineCo
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 import { DataPointsControl } from "../configurationControls/DataPointsControl.js";
 import { DistinctPointShapesControl } from "../configurationControls/DistintcPointShapesControl.js";
+
 import { BaseChartConfigurationPanel } from "./BaseChartConfigurationPanel.js";
 import { type IConfigurationPanelContentProps } from "./ConfigurationPanelContent.js";
 

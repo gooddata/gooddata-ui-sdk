@@ -12,6 +12,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { ConfigSection } from "../ConfigSection.js";
+
 import { ConfigEditor } from "./ConfigEditor.js";
 import { useOverflow } from "./useOverflow.js";
 

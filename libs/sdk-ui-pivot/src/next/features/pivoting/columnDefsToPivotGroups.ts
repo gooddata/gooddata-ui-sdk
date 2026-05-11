@@ -15,6 +15,7 @@ import { type ColumnHeadersPosition } from "../../types/transposition.js";
 import { columnDefinitionToColDefIdentifiers } from "../columns/colDefIdentifiers.js";
 import { columnDefinitionToColId } from "../columns/colId.js";
 import { getHeaderCellClassName } from "../styling/headerCell.js";
+
 import { columnDefinitionToHeaderNames } from "./columnDefinitionToHeaderNames.js";
 
 /**

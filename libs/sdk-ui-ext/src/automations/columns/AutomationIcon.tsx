@@ -13,6 +13,7 @@ import { formatAutomationSubtitle, formatCellValue } from "../format.js";
 import { messages } from "../messages.js";
 import { type IAutomationIconProps } from "../types.js";
 import { getRecipientName } from "../utils.js";
+
 import { AutomationIconTooltip } from "./AutomationIconTooltip.js";
 
 const { e } = bem("gd-ui-ext-automation-icon-tooltip");

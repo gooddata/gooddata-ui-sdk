@@ -15,6 +15,7 @@ import { type DataViewFacade, getTotalInfo } from "@gooddata/sdk-ui";
 
 import { type IPivotTableConfig } from "../../publicTypes.js";
 import { getDataViewSeriesDescriptors } from "../utils.js";
+
 import { createColDefsFromTableDescriptor } from "./colDefFactory.js";
 import {
     type AnyCol,

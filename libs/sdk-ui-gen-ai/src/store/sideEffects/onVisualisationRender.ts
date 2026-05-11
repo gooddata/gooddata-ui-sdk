@@ -8,6 +8,7 @@ import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IChatConversationLocal, type Message, isVisualizationContents } from "../../model.js";
 import { conversationSelector, messagesSelector } from "../messages/messagesSelectors.js";
 import { saveVisualisationRenderStatusSuccessAction } from "../messages/messagesSlice.js";
+
 import { extractError } from "./utils.js";
 
 /**

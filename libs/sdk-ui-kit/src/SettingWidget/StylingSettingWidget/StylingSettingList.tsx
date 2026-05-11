@@ -9,6 +9,7 @@ import {
     type IStylingPickerItem,
     type StylingPickerItemContent,
 } from "../../Dialog/StylingEditorDialog/StylingEditorDialog.js";
+
 import { StylingSettingListItem } from "./StylingSettingListItem.js";
 
 interface IStylingSettingListProps<T extends StylingPickerItemContent> {

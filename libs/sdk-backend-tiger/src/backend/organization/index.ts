@@ -26,6 +26,7 @@ import {
 import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate, idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import { OrganizationAgentsService } from "./agents.js";
 import { TigerOrganizationAutomationService } from "./automations/index.js";
 import { OrganizationExportTemplatesService } from "./exportTemplates.js";

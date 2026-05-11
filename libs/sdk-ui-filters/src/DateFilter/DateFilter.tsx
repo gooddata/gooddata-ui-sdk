@@ -15,6 +15,7 @@ import {
 import { type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import { type IFilterButtonCustomIcon, type VisibilityMode } from "../shared/interfaces/index.js";
+
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform.js";
 import { type IFilterConfigurationProps } from "./DateFilterBody/types.js";
 import { type IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";

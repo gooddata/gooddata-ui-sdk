@@ -10,6 +10,7 @@ import {
     asLayoutItemPath,
     updateSectionIndex,
 } from "../../../layout/coordinates.js";
+
 import {
     type IDashboardLayoutFacade,
     type IDashboardLayoutItemFacade,

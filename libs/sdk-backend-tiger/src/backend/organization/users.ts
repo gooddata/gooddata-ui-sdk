@@ -33,6 +33,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
+
 import {
     convertEntityUserToOrganizationUser,
     convertIncludedUser,

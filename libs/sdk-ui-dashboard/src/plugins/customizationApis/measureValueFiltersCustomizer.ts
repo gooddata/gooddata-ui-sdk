@@ -8,6 +8,7 @@ import {
 } from "../../presentation/dashboardContexts/types.js";
 import { DefaultDashboardMeasureValueFilter } from "../../presentation/filterBar/measureValueFilter/DefaultDashboardMeasureValueFilter.js";
 import { type IMeasureValueFiltersCustomizer } from "../customizer.js";
+
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 
 const DefaultMeasureValueFilterRendererProvider: MeasureValueFilterComponentProvider = () => {

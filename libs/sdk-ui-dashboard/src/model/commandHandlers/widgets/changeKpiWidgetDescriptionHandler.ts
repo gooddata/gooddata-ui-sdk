@@ -8,6 +8,7 @@ import { type IDashboardKpiWidgetDescriptionChanged, kpiWidgetDescriptionChanged
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
 
 export function* changeKpiWidgetDescriptionHandler(

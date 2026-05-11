@@ -17,6 +17,7 @@ import type {
 
 import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
 import { ChatConversationsService } from "./ChatConversations.js";
 import { ChatThreadService } from "./ChatThread.js";

@@ -9,6 +9,7 @@ import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
 import { useFeatureFlags } from "../permission/PermissionsContext.js";
 import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
+
 import { convertEntityToCatalogItem } from "./converter.js";
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemRef } from "./types.js";
 import { type FeedEndpoint, useCatalogEndpoints, useCatalogQueryOptions } from "./useCatalogEndpoints.js";

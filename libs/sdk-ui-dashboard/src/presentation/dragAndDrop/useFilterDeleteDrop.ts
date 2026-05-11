@@ -12,6 +12,7 @@ import {
 } from "../../model/commands/filters.js";
 import { useDashboardDispatch } from "../../model/react/DashboardStoreProvider.js";
 import { parametersActions } from "../../model/store/parameters/index.js";
+
 import {
     isAttributeFilterDraggableItem,
     isDateFilterDraggableItem,

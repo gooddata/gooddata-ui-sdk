@@ -16,6 +16,7 @@ import {
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
 } from "../interfaces/index.js";
+
 import { applyExcludeCurrentPeriod } from "./PeriodExclusion.js";
 
 export const mapAbsoluteFilterToAfm = (

@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { objRef } from "../../model/utils/objRef.js";
+
 import { containerSlideTransformer } from "./containerSlideTransformer.js";
 import { containsVisualizationSwitcher } from "./utils/index.js";
 

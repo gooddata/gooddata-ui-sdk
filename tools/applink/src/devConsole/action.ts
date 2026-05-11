@@ -3,6 +3,7 @@
 import { getSourceDescriptor } from "../base/sourceDiscovery.js";
 import { getTargetDescriptor } from "../base/targetDiscovery.js";
 import { type SourceDescriptor, type TargetDependency, type TargetDescriptor } from "../base/types.js";
+
 import { GlobalEventBus, sourceInitialized, targetSelected } from "./events.js";
 import { BuildScheduler } from "./pipeline/buildScheduler.js";
 import { ChangeDetector } from "./pipeline/changeDetector.js";

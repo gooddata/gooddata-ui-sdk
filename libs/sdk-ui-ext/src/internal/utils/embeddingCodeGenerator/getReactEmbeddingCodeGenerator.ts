@@ -5,6 +5,7 @@ import { compact, groupBy, isEmpty, partition, sortBy, uniqBy } from "lodash-es"
 import { type IInsightDefinition, factoryNotationFor } from "@gooddata/sdk-model";
 
 import { type IEmbeddingCodeConfig } from "../../interfaces/VisualizationDescriptor.js";
+
 import { normalizeInsight } from "./normalizeInsight.js";
 import {
     type IAdditionalFactoryDefinition,

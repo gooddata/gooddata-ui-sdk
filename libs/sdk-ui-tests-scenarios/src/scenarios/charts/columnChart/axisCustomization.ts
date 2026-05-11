@@ -7,6 +7,7 @@ import { ColumnChart, type IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import {
     ColumnChartWithArithmeticMeasuresAndViewBy,
     ColumnChartWithTwoMeasuresAndTwoViewBy,

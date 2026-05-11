@@ -1,6 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { type IStoryParameters } from "../../_infra/backstopScenario.js";
+
 import {
     DialogComponent,
     dialogContentLoadingState,

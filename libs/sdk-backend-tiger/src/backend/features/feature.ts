@@ -1,6 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { FeatureFlagsValues, type ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures.js";
+
 import { convertState } from "./state.js";
 
 export type FeatureDef = {

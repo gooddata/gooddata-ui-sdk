@@ -2,6 +2,7 @@
 
 import { useElementSize } from "../../hooks/useElementSize.js";
 import { type IUiAsyncTableColumnDefinitionResponsive } from "../types.js";
+
 import { CHECKBOX_COLUMN_WIDTH, SCROLLBAR_WIDTH } from "./constants.js";
 import { computeProportionalWidth, getColumnWidth } from "./utils.js";
 

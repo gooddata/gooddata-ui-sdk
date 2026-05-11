@@ -3,6 +3,7 @@
 import { FormattedMessage } from "react-intl";
 
 import { semanticSearchNoResults } from "../automation/testIds.js";
+
 import { type IErrorMessageProps, getErrorMessage } from "./errorMessage.js";
 
 export interface ISearchNoResults {

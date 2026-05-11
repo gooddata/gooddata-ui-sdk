@@ -9,6 +9,7 @@ import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { usePivotTableProps } from "../context/PivotTablePropsContext.js";
 import { useTableReady } from "../context/TableReadyContext.js";
 import { type AgGridProps } from "../types/agGrid.js";
+
 import { fixRowgroupRoles } from "./useAccessibilityProps.js";
 
 /**

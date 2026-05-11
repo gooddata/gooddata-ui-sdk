@@ -8,6 +8,7 @@ import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
 import { Button } from "../Button/Button.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { useIdPrefixed } from "../utils/useId.js";
+
 import { useHeaderSearch } from "./headerSearchContext.js";
 
 export type HeaderSearchProps = PropsWithChildren<{

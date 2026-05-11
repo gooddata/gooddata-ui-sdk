@@ -16,6 +16,7 @@ import {
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
 import { type IInaccessibleDashboard } from "../../types/inaccessibleDashboardTypes.js";
+
 import { ComplexDashboardIdentifier } from "./ComplexDashboard.fixtures.js";
 
 export const SimpleDashboardIdentifier = "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0";

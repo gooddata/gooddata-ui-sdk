@@ -21,6 +21,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ICancelable } from "../../cancelation/index.js";
+
 import { type IExportConfig, type IExportResult } from "./export.js";
 
 /**

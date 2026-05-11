@@ -12,6 +12,7 @@ import { indigoDarkTheme, redLightTheme } from "@gooddata/sdk-ui-theme-provider/
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
+
 import tooltipImage from "./assets/tooltip-image.png";
 
 const propCombination = propCombinationsFor({} as IUiTooltipProps);

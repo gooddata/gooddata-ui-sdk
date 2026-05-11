@@ -6,6 +6,7 @@ import { describe, expect, it } from "vitest";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { createHeadersAndColDefs } from "../tableDescriptorFactory.js";
+
 import {
     SingleAttribute,
     SingleColumn,

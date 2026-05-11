@@ -28,6 +28,7 @@ import { type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
+
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 
 const getTabState = ({

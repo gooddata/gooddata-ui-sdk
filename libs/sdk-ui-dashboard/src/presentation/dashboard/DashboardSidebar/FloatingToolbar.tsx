@@ -58,6 +58,7 @@ import { gdColorStateBlank } from "../../constants/colors.js";
 import { useWidgetDragEndHandler } from "../../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
 import { type DraggableItem } from "../../dragAndDrop/types.js";
 import { useDashboardDrag } from "../../dragAndDrop/useDashboardDrag.js";
+
 import { InsightPickerPanel } from "./InsightPickerPanel.js";
 
 const ICON_SIZE = 28;

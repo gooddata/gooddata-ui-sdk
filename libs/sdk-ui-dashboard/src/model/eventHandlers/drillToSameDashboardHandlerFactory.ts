@@ -5,6 +5,7 @@ import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { changeFilterContextSelectionByParams } from "../commands/filters.js";
 import { type IDashboardDrillToDashboardResolved } from "../events/drill.js";
 import { newDashboardEventPredicate } from "../events/index.js";
+
 import { type DashboardEventHandler } from "./eventHandler.js";
 
 /**

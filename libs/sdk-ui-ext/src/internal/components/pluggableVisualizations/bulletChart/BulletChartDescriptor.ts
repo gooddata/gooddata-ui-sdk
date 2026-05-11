@@ -24,6 +24,7 @@ import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownH
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
+
 import { PluggableBulletChart } from "./PluggableBulletChart.js";
 
 export class BulletChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {

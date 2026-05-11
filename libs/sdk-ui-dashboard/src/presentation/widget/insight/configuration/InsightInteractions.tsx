@@ -7,6 +7,7 @@ import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@
 import { simplifyText } from "@gooddata/util";
 
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
+
 import { TargetDashboardFiltersProvider } from "./DrillFilters/TargetDashboardFiltersContext.js";
 import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel.js";
 

@@ -12,6 +12,7 @@ import {
 import { Message, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import { type OldWidgetAttachmentType } from "../../types.js";
+
 import { AttachmentWidgets } from "./AttachmentItems.js";
 import { AttachmentsWrapper } from "./AttachmentsWrapper.js";
 

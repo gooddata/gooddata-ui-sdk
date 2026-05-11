@@ -30,6 +30,7 @@ import {
     type IGeoLayerPushpin,
     isGeoLayerPushpin,
 } from "../types/layers/index.js";
+
 import { isRecord } from "./guards.js";
 import { registerHeaderPredicateKey } from "./predicateFingerprint.js";
 

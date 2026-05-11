@@ -9,6 +9,7 @@ import { type IGenAIVisualization } from "@gooddata/sdk-model";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 
 import { saveVisualizationAction } from "../../../store/messages/messagesSlice.js";
+
 import { useVisualisationSaving } from "./hooks/useVisualisationSaving.js";
 
 export type VisualizationSaveDialogProps = {

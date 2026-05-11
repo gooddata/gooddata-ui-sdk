@@ -11,6 +11,7 @@ import {
 import { type IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 
 import { scenariosFor } from "../../scenarioGroup.js";
+
 import {
     PivotTableWighSingleMeasureAndSingleRowColAttr,
     PivotTableWighTwoMeasureAndSingleRowColAttr,

@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import type { GeoJSONSourceSpecification, IMapFacade } from "../../layers/common/mapFacade.js";
+
 import type {
     IReconciliationLayerEntry,
     IReconciliationSourceEntry,

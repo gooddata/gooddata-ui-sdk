@@ -7,6 +7,7 @@ import { type IDashboardPlugin } from "@gooddata/sdk-model";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions } from "../_base/types.js";
 import { genericErrorReporter } from "../_base/utils.js";
+
 import { type AddCmdActionConfig, getAddCmdActionConfig } from "./actionConfig.js";
 
 function printAddConfigSummary({

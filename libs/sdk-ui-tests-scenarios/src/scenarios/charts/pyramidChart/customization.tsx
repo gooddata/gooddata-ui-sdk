@@ -12,6 +12,7 @@ import {
 } from "../_infra/legendResponsiveVariants.js";
 import { legendCustomizer } from "../_infra/legendVariants.js";
 import { responsiveScenarios } from "../_infra/responsiveScenarios.js";
+
 import { PyramidChartWithMeasureAndViewBy, PyramidChartWithTwoMeasures } from "./base.js";
 
 const legendScenarios = scenariosFor<IPyramidChartProps>("PyramidChart", PyramidChart)

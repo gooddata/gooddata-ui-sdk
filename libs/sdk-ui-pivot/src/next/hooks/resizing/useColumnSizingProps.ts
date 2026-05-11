@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { UnexpectedSdkError, useDebounce } from "@gooddata/sdk-ui";
 
 import { type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
+
 import { useColumnSizingDefault } from "./useColumnSizingDefault.js";
 import { useColumnSizingForAutoResize } from "./useColumnSizingForAutoResize.js";
 import { useColumnSizingForFullHorizontalSpace } from "./useColumnSizingForFullHorizontalSpace.js";

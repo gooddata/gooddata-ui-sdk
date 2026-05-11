@@ -13,6 +13,7 @@ import { type IComparisonControlProperties } from "../../../../interfaces/Contro
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { DropdownControl } from "../../DropdownControl.js";
 import { COMPARISON_CALCULATION_TYPE_VALUE_PATH } from "../ComparisonValuePath.js";
+
 import { CalculationListItem } from "./CalculationListItem.js";
 
 interface ICalculationControlProps {

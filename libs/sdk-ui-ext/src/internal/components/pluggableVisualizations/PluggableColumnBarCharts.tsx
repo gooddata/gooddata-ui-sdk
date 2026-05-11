@@ -54,6 +54,7 @@ import {
     setSecondaryMeasures,
 } from "../../utils/propertiesHelper.js";
 import { setColumnBarChartUiConfig } from "../../utils/uiConfigHelpers/columnBarChartUiConfigHelper.js";
+
 import { PluggableBaseChart } from "./baseChart/PluggableBaseChart.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil.js";
 

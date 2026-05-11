@@ -11,6 +11,7 @@ import { recordedDataFacade } from "../../../testUtils/recordings.js";
 import { AttributeColorStrategy } from "../attribute.js";
 import { getRgbString } from "../color.js";
 import { type IColorMapping } from "../types.js";
+
 import { getColorsFromStrategy } from "./helper.js";
 
 const RgbPalette: IColorPalette = [

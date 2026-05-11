@@ -12,6 +12,7 @@ import {
     type DataSourcePermissionSubject,
     type IDataSourcePermissionsItem,
 } from "../types.js";
+
 import { dataSourcePermissionMessages } from "./locales.js";
 import { PermissionDropdownItem } from "./PermissionsDropdownItem.js";
 

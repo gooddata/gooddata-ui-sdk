@@ -24,6 +24,7 @@ import {
     defaultAlignPoints,
     defaultArrowDirections,
 } from "../../common/configuration/ConfigurationBubble.js";
+
 import { ToolbarBottom } from "./ToolbarBottom.js";
 import { ToolbarTop } from "./ToolbarTop.js";
 

@@ -4,6 +4,7 @@ import { type InsightDrillDefinition } from "@gooddata/sdk-model";
 import { ScrollableItem } from "@gooddata/sdk-ui-kit";
 
 import { type IDrillConfigItem, type IDrillDownAttributeHierarchyDefinition } from "../../../drill/types.js";
+
 import { DrillConfigItem } from "./InsightDrillConfigItem.js";
 import { useDrillTargetTypeItems } from "./useDrillTargetTypeItems.js";
 

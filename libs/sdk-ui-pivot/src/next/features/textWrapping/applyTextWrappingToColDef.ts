@@ -2,6 +2,7 @@
 
 import { type AgGridColumnDef } from "../../types/agGrid.js";
 import { type ITextWrapping } from "../../types/textWrapping.js";
+
 import { allowCellWrappingByColumnDefinition } from "./allowCellWrappingByColumnDefinition.js";
 import { getColumnTextWrappingItemForColumnDefinition } from "./getColumnTextWrappingItemForColumnDefinition.js";
 import { getPivotGroupTextWrappingItemForColumnDefinition } from "./getPivotGroupTextWrappingItemForColumnDefinition.js";

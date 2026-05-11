@@ -37,6 +37,7 @@ import {
     type OnWidgetDrill,
 } from "../../drill/types.js";
 import { type WidgetExportDataAttributes } from "../../export/types.js";
+
 import { type ILayerTableDefinition } from "./insightToTable.js";
 
 ///

@@ -3,6 +3,7 @@
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
 
 import { type HeadlineControlProperties } from "../interfaces/ControlProperties.js";
+
 import { AXIS } from "./axis.js";
 
 const CUSTOM_TOOLTIP_PROPERTIES = ["customTooltip"];

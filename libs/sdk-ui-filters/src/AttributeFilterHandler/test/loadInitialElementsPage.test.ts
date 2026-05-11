@@ -8,6 +8,7 @@ import { BadRequestSdkError } from "@gooddata/sdk-ui";
 import { suppressConsole } from "@gooddata/util";
 
 import { loadElements as mockLoadElements } from "../internal/redux/elements/loadElements.js";
+
 import {
     limitingAttributeFilters,
     limitingDateFilters,

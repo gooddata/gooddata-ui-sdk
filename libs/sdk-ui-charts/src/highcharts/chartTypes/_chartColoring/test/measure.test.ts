@@ -12,6 +12,7 @@ import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { getMVS } from "../../_util/test/helper.js";
 import { MeasureColorStrategy } from "../measure.js";
+
 import { TwoColorPalette } from "./color.fixture.js";
 import { getColorsFromStrategy } from "./helper.js";
 

@@ -8,6 +8,7 @@ import { type ObjRef, isInsightWidget } from "@gooddata/sdk-model";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectInsightByRef } from "../../../../../model/store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+
 import { ParameterDetail } from "./ParameterDetail.js";
 
 interface IIdentifierDetailProps {

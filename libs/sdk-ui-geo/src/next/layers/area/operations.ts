@@ -5,6 +5,7 @@ import { applyStylePlan } from "../../map/styleReconciliation/reconcileStyle.js"
 import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { removeLayerIfExists, removeSourceIfExists } from "../common/layerOps.js";
 import { type GeoJSONSourceSpecification, type IMapFacade } from "../common/mapFacade.js";
+
 import { createAreaFillLayer, createAreaOutlineLayer } from "./layers.js";
 
 /**

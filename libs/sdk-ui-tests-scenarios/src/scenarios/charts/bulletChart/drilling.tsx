@@ -5,6 +5,7 @@ import { BulletChart, type IBulletChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { AttributeElements } from "../../_infra/predicates.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { BulletChartWithAllMeasuresAndTwoViewBy, BulletChartWithAllMeasuresAndViewBy } from "./base.js";
 
 export const drilling = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)

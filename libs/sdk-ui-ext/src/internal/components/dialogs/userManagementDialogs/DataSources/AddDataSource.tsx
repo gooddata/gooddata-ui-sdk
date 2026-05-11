@@ -8,6 +8,7 @@ import { BackButton, ConfirmDialogBase } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 import { type DataSourcePermissionSubject, type IGrantedDataSource } from "../types.js";
+
 import { AddDataSourceSelect } from "./AddDataSourceSelect.js";
 import { DataSourceList } from "./DataSourceList.js";
 import { useAddDataSource } from "./useAddDataSource.js";

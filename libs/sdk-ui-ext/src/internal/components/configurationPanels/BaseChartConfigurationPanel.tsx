@@ -26,6 +26,7 @@ import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { DataLabelsControl } from "../configurationControls/DataLabelsControl.js";
 import { MinMaxControl } from "../configurationControls/MinMaxControl.js";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection.js";
+
 import {
     ConfigurationPanelContent,
     type IConfigurationPanelContentProps,

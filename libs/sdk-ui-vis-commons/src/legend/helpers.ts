@@ -6,6 +6,7 @@ import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme } from "@gooddata/sdk-model";
 
 import { parseRGBString } from "../coloring/color.js";
+
 import { LEFT, RIGHT } from "./PositionTypes.js";
 import {
     type IColorLegendItem,

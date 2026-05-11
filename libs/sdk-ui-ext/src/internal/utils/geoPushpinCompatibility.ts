@@ -5,6 +5,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { type GeoChartShapeType } from "@gooddata/sdk-ui-geo";
 
 import { type IBucketOfFun } from "../interfaces/Visualization.js";
+
 import { getItemsCount } from "./bucketHelper.js";
 
 function isPushpinIconShape(shapeType: GeoChartShapeType = "circle"): boolean {

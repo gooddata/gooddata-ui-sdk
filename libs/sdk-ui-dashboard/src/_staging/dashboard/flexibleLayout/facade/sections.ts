@@ -3,6 +3,7 @@
 import { type IDashboardLayoutSection } from "@gooddata/sdk-model";
 
 import { type ILayoutItemPath } from "../../../../types.js";
+
 import {
     type IDashboardLayoutFacade,
     type IDashboardLayoutSectionFacade,

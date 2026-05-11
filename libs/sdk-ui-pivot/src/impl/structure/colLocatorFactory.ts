@@ -17,6 +17,7 @@ import {
     type IMeasureColumnLocator,
     type ITotalColumnLocator,
 } from "../../columnWidths.js";
+
 import { type LeafDataCol, type TransposedMeasureDataCol, isScopeCol } from "./tableDescriptorTypes.js";
 
 function createAttributeLocator(

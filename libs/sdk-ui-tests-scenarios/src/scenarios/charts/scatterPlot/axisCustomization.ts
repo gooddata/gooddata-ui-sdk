@@ -5,6 +5,7 @@ import { type IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../scenarioGroup.js";
 import { axisNameCustomization } from "../_infra/axisNameCustomization.js";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
 import { ScatterPlotWithMeasuresAndAttribute } from "./base.js";
 
 const axisConfig = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)

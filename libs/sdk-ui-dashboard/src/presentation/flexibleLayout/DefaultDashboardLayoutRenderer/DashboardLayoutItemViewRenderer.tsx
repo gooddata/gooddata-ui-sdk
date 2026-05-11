@@ -8,6 +8,7 @@ import { type ScreenSize } from "@gooddata/sdk-model";
 
 import { type IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import { type IDashboardLayoutItemRenderProps } from "./interfaces.js";
 

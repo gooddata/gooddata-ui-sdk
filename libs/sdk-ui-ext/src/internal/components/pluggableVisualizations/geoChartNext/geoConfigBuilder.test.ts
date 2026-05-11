@@ -8,6 +8,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
 import { buildAreaVisualizationConfig } from "../geoAreaChart/geoAreaConfigBuilder.js";
+
 import {
     buildGeoVisualizationConfig,
     geoConfigFromInsight,

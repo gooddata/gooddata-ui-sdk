@@ -14,6 +14,7 @@ import { ColorsSection } from "../configurationControls/colors/ColorsSection.js"
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { GeoViewportControl, type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
 import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSection.js";
+
 import {
     ConfigurationPanelContent,
     type IConfigurationPanelContentProps,

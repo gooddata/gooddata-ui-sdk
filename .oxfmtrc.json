@@ -14,7 +14,8 @@
             "external",
             "gooddata-group",
             "internal",
-            ["parent", "sibling", "index"],
+            "parent",
+            ["sibling", "index"],
             "unknown"
         ],
         "customGroups": [

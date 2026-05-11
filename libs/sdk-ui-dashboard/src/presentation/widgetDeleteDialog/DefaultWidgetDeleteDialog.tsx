@@ -21,6 +21,7 @@ import {
     selectIsWidgetDeleteDialogOpen,
     selectWidgetDeleteDialogWidgetRef,
 } from "../../model/store/ui/uiSelectors.js";
+
 import { type IWidgetDeleteDialogProps } from "./types.js";
 
 const deleteMessages = defineMessages({

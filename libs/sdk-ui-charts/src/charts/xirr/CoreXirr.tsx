@@ -13,6 +13,7 @@ import {
 
 import { type ICoreChartProps } from "../../interfaces/chartProps.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
+
 import { XirrTransformation } from "./internal/XirrTransformation.js";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;

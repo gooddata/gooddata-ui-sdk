@@ -8,6 +8,7 @@ import {
     type IVisualizationMeta,
     type PluggableVisualizationFactory,
 } from "../../interfaces/VisualizationDescriptor.js";
+
 import { BaseChartDescriptor } from "./baseChart/BaseChartDescriptor.js";
 import { PluggableUnknownChart } from "./PluggableUnknownChart.js";
 

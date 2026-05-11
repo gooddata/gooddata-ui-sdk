@@ -5,6 +5,7 @@ import { type ReactElement } from "react";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 import { selectSettings } from "../../../model/store/config/configSelectors.js";
+
 import { CreationPanel } from "./CreationPanel.js";
 import { FloatingToolbar } from "./FloatingToolbar.js";
 import { type ISidebarProps } from "./types.js";

@@ -14,6 +14,7 @@ import {
 import { selectIsShareButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
 import { selectDashboardDensity } from "../../../../../model/store/ui/uiSelectors.js";
+
 import { HiddenShareButton } from "./HiddenShareButton.js";
 import { type IShareButtonProps } from "./types.js";
 

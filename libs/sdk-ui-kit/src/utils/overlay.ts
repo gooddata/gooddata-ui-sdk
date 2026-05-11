@@ -10,6 +10,7 @@ import {
     type IOptimalAlignment,
 } from "../typings/overlay.js";
 import { type IAlignPoint, type IOffset } from "../typings/positioning.js";
+
 import { elementRegion } from "./domUtilities.js";
 
 const ALIGN_RATIOS_X: Record<string, number> = {

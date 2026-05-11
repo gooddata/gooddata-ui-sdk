@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 import { type Contents, type ReasoningContents, isReasoningContents } from "../../model.js";
 import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
+
 import { ReasoningContentsComponent } from "./contents/ReasoningContents.js";
 import { type AssistantMessageState } from "./messageState.js";
 import { ReasoningDropdown, getLastReasoningStepTitle } from "./ReasoningDropdown.js";

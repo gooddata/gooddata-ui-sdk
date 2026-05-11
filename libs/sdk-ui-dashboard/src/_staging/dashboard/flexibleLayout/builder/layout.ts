@@ -15,6 +15,7 @@ import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../../types
 import { getSectionIndex } from "../../../layout/coordinates.js";
 import { type IDashboardLayoutFacade } from "../facade/interfaces.js";
 import { DashboardLayoutFacade } from "../facade/layout.js";
+
 import {
     type DashboardLayoutModifications,
     type DashboardLayoutSectionModifications,

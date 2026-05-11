@@ -13,6 +13,7 @@ import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { GlobalError } from "../components/GlobalError.js";
+
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 import { emptyWorkspacePermissions } from "./utils.js";
 

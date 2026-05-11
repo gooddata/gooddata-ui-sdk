@@ -5,6 +5,7 @@ import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 import { LoadingSpinner, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import type { KdaAsyncStatus } from "../internalTypes.js";
+
 import { KdaDialogActionButtons } from "./KdaDialogActionButtons.js";
 
 type KdaFloatingStatus = "step01" | "step02" | "done" | "error";

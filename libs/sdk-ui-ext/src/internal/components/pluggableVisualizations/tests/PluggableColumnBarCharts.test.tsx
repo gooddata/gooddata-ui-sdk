@@ -51,6 +51,7 @@ import {
 } from "../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { PluggableColumnChart } from "../columnChart/PluggableColumnChart.js";
+
 import {
     expectedInsightDefinitionDrillToRegion,
     expectedInsightDefinitionWithStackByDrillToDepartment,

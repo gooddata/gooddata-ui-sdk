@@ -7,6 +7,7 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { ConfirmDialog, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { type ICatalogItemParameter } from "../catalogItem/types.js";
+
 import { useParameterMutation } from "./ParameterMutationContext.js";
 
 const messages = defineMessages({

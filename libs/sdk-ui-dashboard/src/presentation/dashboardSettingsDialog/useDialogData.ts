@@ -13,6 +13,7 @@ import {
     selectEvaluationFrequency,
     selectSectionHeadersDateDataSet,
 } from "../../model/store/meta/metaSelectors.js";
+
 import { type IDashboardSettingsApplyPayload } from "./types.js";
 
 export function useDialogData() {

@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ValueOrUpdateCallback } from "../builder.js";
+
 import { type IWidgetBaseBuilder, WidgetBaseBuilder } from "./widgetFactory.js";
 
 /**

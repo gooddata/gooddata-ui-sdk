@@ -8,6 +8,7 @@ import { useIntl } from "react-intl";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../bem.js";
+
 import { NOTIFICATIONS_PANEL_ID } from "./DefaultNotificationsPanel.js";
 const { b, e } = bem("gd-ui-ext-notifications-panel-button");
 

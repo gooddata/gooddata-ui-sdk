@@ -60,6 +60,7 @@ import {
     selectPreloadedAttributesWithReferences,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { getVisibilityIcon } from "../utils.js";
+
 import {
     AttributeFilterParentFilteringProvider,
     useAttributeFilterParentFiltering,

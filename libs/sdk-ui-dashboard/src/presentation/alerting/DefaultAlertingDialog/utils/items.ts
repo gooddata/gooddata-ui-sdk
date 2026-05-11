@@ -31,6 +31,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { type AlertAttribute, type AlertMetric, AlertMetricComparatorType } from "../../types.js";
+
 import { getCatalogAttribute, getFiltersAttribute } from "./getters.js";
 
 type InsightType =

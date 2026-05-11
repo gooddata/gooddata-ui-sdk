@@ -12,6 +12,7 @@ import type {
     FilterSpecification,
     SymbolLayerSpecification,
 } from "../common/mapFacade.js";
+
 import {
     DEFAULT_CLUSTER_LAYER_NAME,
     DEFAULT_LAYER_NAME,

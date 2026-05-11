@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IAvailableLegends, type IGeoData } from "../../GeoChart.js";
+
 import { generateLegendColorData } from "./geoChartColor.js";
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import {

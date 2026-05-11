@@ -17,6 +17,7 @@ import {
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";
+
 import { EMPTY_MUTATIONS } from "./utils.js";
 
 const EmptyLayout: IDashboardLayout<ExtendedDashboardWidget> = {

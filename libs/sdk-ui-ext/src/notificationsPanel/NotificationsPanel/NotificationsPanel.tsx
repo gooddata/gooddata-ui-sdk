@@ -33,6 +33,7 @@ import {
     type INotificationSkeletonItemComponentProps,
 } from "../NotificationsList/DefaultSkeletonItem.js";
 import { type INotificationsPanelView } from "../types.js";
+
 import {
     DefaultNotificationsPanel,
     type INotificationsPanelComponentProps,

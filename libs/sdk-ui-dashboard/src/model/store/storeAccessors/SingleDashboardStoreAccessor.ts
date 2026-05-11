@@ -3,6 +3,7 @@
 import { idRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import { type DashboardDispatch, type DashboardSelectorEvaluator, type DashboardState } from "../types.js";
+
 import { DashboardStoreAccessorRepository } from "./DashboardStoreAccessorRepository.js";
 
 /**
