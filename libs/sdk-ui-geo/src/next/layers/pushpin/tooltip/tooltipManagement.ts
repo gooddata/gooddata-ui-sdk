@@ -5,6 +5,7 @@ import { type IntlShape } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type ICustomTooltipConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import { getTooltipContentWidth } from "../../../map/style/tooltipFormatting.js";
 import { type IGeoPushpinChartConfig } from "../../../types/config/pushpinChart.js";
@@ -15,6 +16,7 @@ import {
     isLngLatTuple,
     isRecord,
 } from "../../../utils/guards.js";
+import { buildCustomTooltipPieces, composeTooltipBody } from "../../common/customTooltipSection.js";
 import { type IPopupFacade } from "../../common/mapFacade.js";
 import {
     type TooltipFormatConfig,
@@ -26,7 +28,7 @@ import {
     isTooltipPayloadValid,
     parseTooltipPayload,
 } from "../../common/tooltipUtils.js";
-import type { IGeoTooltipConfig } from "../../registry/adapterTypes.js";
+import type { IGeoTooltipConfig, ITooltipReferenceMaps } from "../../registry/adapterTypes.js";
 import {
     DEFAULT_PUSHPIN_COLOR_VALUE,
     NULL_TOOLTIP_VALUE,
@@ -145,7 +147,16 @@ function getInteractionMessage(drillableItems?: IHeaderPredicate[], intl?: IntlS
  * @param maxWidth - Maximum width of tooltip
  * @param separators - Number format separators
  * @param drillableItems - Drillable items configuration
- * @param intl - Internationalization shape
+ * @param intl - Internationalization shape (used for the custom-tooltip
+ *   `(No data)` fallback string)
+ * @param showStroke - Whether to render the stroke band above the body
+ *   (defaults to `true`; pass `false` for icon-shape pushpins)
+ * @param customConfig - Optional custom-tooltip config (markdown content +
+ *   placement). When omitted or disabled, the tooltip renders the default
+ *   items only.
+ * @param referenceMaps - Optional per-layer maps used by the custom-tooltip
+ *   resolver to translate `localIdentifier` / `attrId` into the LDM ids
+ *   referenced as `{metric/<id>}` and `{label/<id>}`.
  * @returns HTML string for tooltip
  *
  * @internal
@@ -154,10 +165,12 @@ export function getTooltipHtml(
     geoProperties: GeoJSON.GeoJsonProperties,
     tooltipStroke: string,
     maxWidth: number,
-    separators?: ISeparators,
-    drillableItems?: IHeaderPredicate[],
-    intl?: IntlShape,
+    separators: ISeparators | undefined,
+    drillableItems: IHeaderPredicate[] | undefined,
+    intl: IntlShape,
     showStroke: boolean = true,
+    customConfig?: ICustomTooltipConfig,
+    referenceMaps?: ITooltipReferenceMaps,
 ): string {
     const interactionMessage = getInteractionMessage(drillableItems, intl);
     const properties = getTooltipProperties(geoProperties);
@@ -185,13 +198,23 @@ export function getTooltipHtml(
         .filter((item): item is string => item !== null)
         .join("");
 
+    const fallbackText = `(${intl.formatMessage({ id: "richText.no_data" })})`;
+    const customPieces = buildCustomTooltipPieces(
+        geoProperties,
+        customConfig,
+        referenceMaps,
+        separators,
+        fallbackText,
+    );
+    const itemsBody = composeTooltipBody(tooltipItems, customPieces, customConfig?.placement);
+
     const strokeHtml = showStroke
         ? `<span class="gd-viz-tooltip-stroke" style="border-top-color: ${tooltipStroke}"></span>`
         : "";
 
     return `<div class="gd-viz-tooltip" style="max-width:${maxWidth}px">
                 ${strokeHtml}
-                <div class="gd-viz-tooltip-content">${tooltipItems}${interactionMessage}</div>
+                <div class="gd-viz-tooltip-content">${itemsBody}${interactionMessage}</div>
             </div>`;
 }
 
@@ -225,6 +248,7 @@ export function createPushpinTooltipConfig(
     drillableItems: IHeaderPredicate[] | undefined,
     intl: IntlShape,
     layerIds: string[],
+    referenceMaps?: ITooltipReferenceMaps,
 ): IGeoTooltipConfig {
     const { separators } = config;
 
@@ -239,7 +263,14 @@ export function createPushpinTooltipConfig(
             const { properties, geometry } = feature;
             const parsedProps = parsePushpinGeoProperties(properties);
 
-            if (!shouldShowTooltip(parsedProps)) {
+            // Render even when no default payload items are valid if the user
+            // configured a non-empty custom tooltip — otherwise `replace`-mode
+            // and data-sparse scenarios would silently suppress the tooltip
+            // (mirrors area's `items.length === 0 && !customPieces.sectionHtml`).
+            const hasCustomTooltipContent = Boolean(
+                config.customTooltip?.enabled && config.customTooltip?.content,
+            );
+            if (!shouldShowTooltip(parsedProps) && !hasCustomTooltipContent) {
                 return;
             }
 
@@ -272,6 +303,8 @@ export function createPushpinTooltipConfig(
                 drillableItems,
                 intl,
                 !isIconShape,
+                config.customTooltip,
+                referenceMaps,
             );
 
             tooltip

@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "Эту визуализацию нельзя фильтровать по {attributeName}. Снимите флажок.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "Этот КПЭ нельзя фильтровать по {attributeName}. Снимите флажок.",
     "configurationPanel.vizCantBeFilteredByDate": "Эту визуализацию нельзя фильтровать по дате. Снимите флажок.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Фильтр неприменим к этой визуализации.",
     "configurationPanel.kpiCantBeFilteredByDate": "Этот КПЭ нельзя фильтровать по дате. Снимите флажок.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" больше нельзя применять к визуализации. Выберите другое измерение или отредактируйте визуализацию.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" больше нельзя применять к КПЭ. Выберите другое измерение или отредактируйте анализ.",

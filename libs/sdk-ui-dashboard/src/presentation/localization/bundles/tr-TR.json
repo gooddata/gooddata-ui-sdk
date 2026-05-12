@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "Görselleştirme {attributeName} ile filtrelenemez. Onay kutusunun işaretini kaldırın.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI, {attributeName} tarafından filtrelenemez. Onay kutusunun işaretini kaldırın.",
     "configurationPanel.vizCantBeFilteredByDate": "Görselleştirme Tarihe göre filtrelenemez. Onay kutusunun işaretini kaldırın.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filtre bu görselleştirme için uygulanamaz.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI, Tarihe göre filtrelenemez. Onay kutusunun işaretini kaldırın.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" artık görselleştirmeye uygulanamaz. Farklı bir boyut seçin veya görselleştirmeyi düzenleyin.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" artık KPI'ya uygulanamaz. Farklı bir boyut seçin veya KPI'yı düzenleyin.",

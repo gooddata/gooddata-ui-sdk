@@ -45,7 +45,6 @@ export enum TigerFeaturesNames {
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableParameters = "enableParameters",
     EnableAlerting = "enableAlerting",
-    EnableLlmEndpointReplacement = "enableLlmEndpointReplacement",
     EnableAlertingAttributes = "enableAlertAttributes",
     EnableComparisonInAlerting = "enableComparisonInAlerting",
     EnableSmtp = "enableSmtp",
@@ -211,7 +210,6 @@ export type ITigerFeatureFlags = {
     enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
     enableParameters: (typeof FeatureFlagsValues)["enableParameters"][number];
     enableAlerting: (typeof FeatureFlagsValues)["enableAlerting"][number];
-    enableLlmEndpointReplacement: (typeof FeatureFlagsValues)["enableLlmEndpointReplacement"][number];
     enableAlertAttributes: (typeof FeatureFlagsValues)["enableAlertAttributes"][number];
     enableComparisonInAlerting: (typeof FeatureFlagsValues)["enableComparisonInAlerting"][number];
     enableSmtp: (typeof FeatureFlagsValues)["enableSmtp"][number];
@@ -383,7 +381,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalCatalog: false,
     enableParameters: false,
     enableAlerting: true,
-    enableLlmEndpointReplacement: false,
     enableAlertAttributes: true,
     enableComparisonInAlerting: true,
     enableSmtp: true,
@@ -552,7 +549,6 @@ export const FeatureFlagsValues = {
     enableAnalyticalCatalog: [true, false] as const,
     enableParameters: [true, false] as const,
     enableAlerting: [true, false] as const,
-    enableLlmEndpointReplacement: [true, false] as const,
     enableAlertAttributes: [true, false] as const,
     enableComparisonInAlerting: [true, false] as const,
     enableSmtp: [true, false] as const,

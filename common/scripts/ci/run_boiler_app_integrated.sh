@@ -47,9 +47,9 @@ fi
 # Run Playwright tests
 export BASE_URL=$BOILER_APP_HOST
 if [ -n "$FILTER" ]; then
-  npx playwright test --config ./playwright/playwright.config.ts --grep "@checklist_integrated_boiler_tiger" $(echo "$FILTER" | tr "," " ");
+  npx playwright test --config ./playwright/playwright.config.ts --grep "@checklist_boiler_tiger" $(echo "$FILTER" | tr "," " ");
 else
-  npx playwright test --config ./playwright/playwright.config.ts --grep "@checklist_integrated_boiler_tiger";
+  npx playwright test --config ./playwright/playwright.config.ts --grep "@checklist_boiler_tiger";
 fi
 
 # Cleanup workspace (scripts moved to sdk-ui-tests-reference-workspace package)

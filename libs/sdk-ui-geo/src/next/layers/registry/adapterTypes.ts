@@ -95,6 +95,39 @@ export interface IGeoAdapterContext {
 }
 
 /**
+ * Maps that let the custom-tooltip resolver register feature values under the
+ * LDM identifier(s) users reference in `{metric/<id>}` and `{label/<id>}`.
+ *
+ * For measures, this means translating `localIdentifier` → LDM id. For
+ * attributes, this means pairing the display-form id (already on the payload
+ * as `attrId`) with its parent attribute id so the resolver can register the
+ * same value under both keys.
+ *
+ * Built once per layer at `prepareLayer` time and stashed on
+ * {@link IGeoLayerOutput} for the tooltip handler to pick up.
+ *
+ * @internal
+ */
+export interface ITooltipReferenceMaps {
+    /**
+     * `localIdentifier` → LDM measure identifier. Derived measures (PoP, previous
+     * period) trace back to the master simple measure's LDM id.
+     *
+     * Entries are omitted for measures whose identifier ref can't be resolved
+     * (e.g. arithmetic measures), so the map may be smaller than
+     * `definition.measures`.
+     */
+    measures: Record<string, string>;
+
+    /**
+     * Display-form identifier → attribute identifier. Lets the resolver register
+     * `{label/<displayFormId>}` AND `{label/<attributeId>}` against the same value
+     * so users may reference an attribute by either id, mirroring Highcharts.
+     */
+    attributes: Record<string, string>;
+}
+
+/**
  * Legend computation result.
  *
  * @internal
@@ -163,6 +196,22 @@ export interface IGeoLayerOutput<
      * Optional viewport suggestion based on layer data.
      */
     initialViewport?: Partial<IMapViewport> | null;
+
+    /**
+     * Reference id maps for custom-tooltip resolution.
+     *
+     * @remarks
+     * Adapters build this from the layer's execution definition + attribute
+     * descriptors. The adapter's `getTooltipConfig` forwards it into the
+     * layer's tooltip renderer, which calls the resolver at hover time so
+     * `{metric/<id>}` / `{label/<id>}` references resolve.
+     *
+     * Optional — adapters that don't support custom tooltips may omit it; the
+     * resolver treats missing maps as empty (which simply means fewer
+     * references resolve, leaving unresolved tokens to fall back via
+     * `resolveReferences`).
+     */
+    tooltipReferenceMaps?: ITooltipReferenceMaps;
 }
 
 /**

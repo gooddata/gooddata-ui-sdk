@@ -50,12 +50,14 @@ interface IPushpinFeatureContext {
     segmentTitle: string;
     sizeFormat: string;
     colorFormat: string;
+    sizeLocalId?: string;
+    colorLocalId?: string;
     locationNameData: string[];
     segmentData: string[];
     segmentUris: string[];
     sizeData: number[];
     colorData: number[];
-    measures: Array<{ title: string; format: string; data: number[] }>;
+    measures: Array<{ title: string; format: string; data: number[]; localId?: string }>;
     geoIconData: string[];
     pushpinColors: IPushpinColor[];
     geoPointsConfig: IGeoChartPointsConfig;
@@ -99,6 +101,8 @@ function buildPushpinFeatureProperties(
         segmentTitle,
         sizeFormat,
         colorFormat,
+        sizeLocalId,
+        colorLocalId,
         locationNameData,
         segmentData,
         segmentUris,
@@ -137,11 +141,13 @@ function buildPushpinFeatureProperties(
             title: colorTitle,
             value: colorData[index],
             format: colorFormat,
+            localId: colorLocalId,
         },
         size: {
             title: sizeTitle,
             value: sizeData[index],
             format: sizeFormat,
+            localId: sizeLocalId,
         },
         segment: {
             title: segmentTitle,
@@ -156,6 +162,7 @@ function buildPushpinFeatureProperties(
             title: m.title,
             value: m.data[index],
             format: m.format,
+            localId: m.localId,
         }));
         // Keep backward-compatible "metric" property for single measure,
         // and always provide "measures" array for multi-measure support.
@@ -188,6 +195,7 @@ function createPushpinFeatures({
         title: m.name,
         format: m.format,
         data: m.data,
+        localId: m.localIdentifier,
     }));
     const geoIconData = geoIcon?.data ?? [];
     const { min: minSizeFromData, max: maxSizeFromData } = getMinMax(sizeData);
@@ -204,6 +212,8 @@ function createPushpinFeatures({
         segmentTitle: segment?.name ?? "",
         sizeFormat: size?.format ?? "",
         colorFormat: color?.format ?? "",
+        sizeLocalId: size?.localIdentifier,
+        colorLocalId: color?.localIdentifier,
         measures: measuresCtx,
         locationNameData,
         segmentData: segment?.data ?? [],

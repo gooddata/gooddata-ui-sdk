@@ -9,8 +9,6 @@
         "importHelpers": true,
         "incremental": false,
         "resolveJsonModule": true,
-        "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true
+        "declaration": true
     }
 }

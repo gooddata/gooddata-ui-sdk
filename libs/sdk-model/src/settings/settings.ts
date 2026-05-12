@@ -597,11 +597,6 @@ export interface IFeatureFlags {
     enableAlerting?: boolean;
 
     /**
-     * Enables the replacement of LLM endpoints.
-     */
-    enableLlmEndpointReplacement?: boolean;
-
-    /**
      * Enables attributes in alerts.
      */
     enableAlertAttributes?: boolean;

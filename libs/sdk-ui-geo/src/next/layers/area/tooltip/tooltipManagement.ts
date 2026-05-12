@@ -4,8 +4,10 @@ import { type IntlShape } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
+import { type ICustomTooltipConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoAreaChartConfig } from "../../../types/config/areaChart.js";
+import { buildCustomTooltipPieces, composeTooltipBody } from "../../common/customTooltipSection.js";
 import type { IPopupFacade } from "../../common/mapFacade.js";
 import {
     type TooltipFormatConfig,
@@ -16,7 +18,7 @@ import {
     getTooltipProperties,
     parseTooltipPayload,
 } from "../../common/tooltipUtils.js";
-import type { IGeoTooltipConfig } from "../../registry/adapterTypes.js";
+import type { IGeoTooltipConfig, ITooltipReferenceMaps } from "../../registry/adapterTypes.js";
 
 function escapeHtml(str: string): string {
     return str
@@ -33,26 +35,44 @@ const tooltipFormatConfig: TooltipFormatConfig = {
 };
 
 function buildAreaTooltipHtml(
+    rawProperties: GeoJSON.GeoJsonProperties,
     locationName: TooltipPayload | undefined,
     color: TooltipPayload | undefined,
     segment: TooltipPayload | undefined,
     strokeColor: string,
-    separators?: ISeparators,
+    separators: ISeparators | undefined,
+    customConfig: ICustomTooltipConfig | undefined,
+    referenceMaps: ITooltipReferenceMaps | undefined,
+    intl: IntlShape,
 ): string | null {
     const attributeItems = dedupeAttributePayloadsByAttrId([locationName, segment])
         .map((payload) => formatAttributeHtml(payload, tooltipFormatConfig))
         .filter((item): item is string => item !== null);
     const measureItem = formatMeasureHtml(color, separators, tooltipFormatConfig);
     const items = [...attributeItems, ...(measureItem ? [measureItem] : [])];
+    const defaultItemsHtml = items.join("");
 
-    if (items.length === 0) {
+    const fallbackText = `(${intl.formatMessage({ id: "richText.no_data" })})`;
+    const customPieces = buildCustomTooltipPieces(
+        rawProperties,
+        customConfig,
+        referenceMaps,
+        separators,
+        fallbackText,
+    );
+
+    // Suppress the tooltip entirely only when there's nothing to show in
+    // either the default or the custom section.
+    if (items.length === 0 && !customPieces.sectionHtml) {
         return null;
     }
+
+    const body = composeTooltipBody(defaultItemsHtml, customPieces, customConfig?.placement);
 
     return `
         <div class="gd-viz-tooltip" style="max-width:320px">
             <span class="gd-viz-tooltip-stroke" style="border-top-color: ${strokeColor}"></span>
-            <div class="gd-viz-tooltip-content">${items.join("")}</div>
+            <div class="gd-viz-tooltip-content">${body}</div>
         </div>
     `;
 }
@@ -63,8 +83,10 @@ function buildAreaTooltipHtml(
  * @param tooltip - Popup facade for displaying tooltips
  * @param config - Chart configuration
  * @param _drillableItems - Drillable items predicates (unused for area)
- * @param _intl - Internationalization instance (unused for area)
+ * @param intl - Internationalization instance (used for the custom-tooltip
+ *   `(No data)` fallback string)
  * @param layerIds - MapLibre layer IDs to monitor
+ * @param referenceMaps - Per-layer maps used by the custom-tooltip resolver
  * @returns Tooltip configuration for unified handling
  *
  * @internal
@@ -73,8 +95,9 @@ export function createAreaTooltipConfig(
     tooltip: IPopupFacade,
     config: IGeoAreaChartConfig,
     _drillableItems: IHeaderPredicate[] | undefined,
-    _intl: IntlShape,
+    intl: IntlShape,
     layerIds: string[],
+    referenceMaps?: ITooltipReferenceMaps,
 ): IGeoTooltipConfig {
     const { separators } = config;
 
@@ -93,7 +116,17 @@ export function createAreaTooltipConfig(
             const fallbackStroke = properties["color_fill"];
             const tooltipStroke =
                 color?.fill ?? (typeof fallbackStroke === "string" ? fallbackStroke : "#20B2E2");
-            const tooltipHtml = buildAreaTooltipHtml(locationName, color, segment, tooltipStroke, separators);
+            const tooltipHtml = buildAreaTooltipHtml(
+                feature.properties,
+                locationName,
+                color,
+                segment,
+                tooltipStroke,
+                separators,
+                config.customTooltip,
+                referenceMaps,
+                intl,
+            );
 
             if (tooltipHtml) {
                 tooltip

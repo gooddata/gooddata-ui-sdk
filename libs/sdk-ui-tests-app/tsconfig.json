@@ -7,7 +7,6 @@
         "moduleResolution": "bundler",
         "noEmit": true,
         "outDir": "dist",
-        "sourceMap": true,
         "allowSyntheticDefaultImports": true,
         "paths": {
             "react": ["./node_modules/@types/react"]

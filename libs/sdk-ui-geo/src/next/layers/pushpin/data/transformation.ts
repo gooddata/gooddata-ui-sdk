@@ -383,11 +383,13 @@ function processSizeBucket(ctx: IBucketProcessingContext): IGeoMeasureItem | und
         return undefined;
     }
 
+    const measureDescriptors = dv.meta().measureDescriptors();
     return {
         index: sizeBucket.index,
         name: sizeBucket.name,
         data: getMeasureData(dv, sizeIndex),
         format: getFormatFromExecutionResponse(dv, sizeIndex),
+        localIdentifier: measureDescriptors[sizeIndex]?.measureHeaderItem.localIdentifier,
     };
 }
 
@@ -403,11 +405,13 @@ function processColorBucket(ctx: IBucketProcessingContext): IGeoMeasureItem | un
         return undefined;
     }
 
+    const measureDescriptors = dv.meta().measureDescriptors();
     return {
         index: colorBucket.index,
         name: colorBucket.name,
         data: getMeasureData(dv, colorIndex),
         format: getFormatFromExecutionResponse(dv, colorIndex),
+        localIdentifier: measureDescriptors[colorIndex]?.measureHeaderItem.localIdentifier,
     };
 }
 
@@ -450,6 +454,7 @@ function processMetricBuckets(ctx: IBucketProcessingContext): IGeoMeasureItem[] 
                 name: measureDescriptors[index].measureHeaderItem.name,
                 data: getMeasureData(dv, index),
                 format: getFormatFromExecutionResponse(dv, index),
+                localIdentifier: measureDescriptors[index].measureHeaderItem.localIdentifier,
             });
         }
     }

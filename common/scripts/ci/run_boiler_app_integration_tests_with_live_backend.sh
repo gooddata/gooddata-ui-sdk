@@ -39,7 +39,7 @@ fi
 pushd $E2E_TEST_DIR
 cat > .env <<-EOF
 HOST=${HOST:-}
-PLAYWRIGHT_GREP=@checklist_integrated_boiler_tiger
+PLAYWRIGHT_GREP=@checklist_boiler_tiger
 FIXTURE_TYPE=${FIXTURE_TYPE:-}
 FILTER=${FILTER:-}
 TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME:-}

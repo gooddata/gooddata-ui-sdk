@@ -30,6 +30,7 @@ interface IGeoAreaControls {
     mapStyle?: IGeoAreaChartConfig["mapStyle"];
     basemap?: IGeoAreaChartConfig["basemap"];
     tileset?: unknown;
+    customTooltip?: IGeoAreaChartConfig["customTooltip"];
 }
 
 /**
@@ -50,7 +51,17 @@ export function buildAreaVisualizationConfig({
     const { config = {}, customVisualizationConfig = {}, a11yTitle } = options;
     const { colorPalette, separators, isInEditMode, isExportMode } = config;
     const controls = (supportedControls.controls ?? supportedControls ?? {}) as IGeoAreaControls;
-    const { center, zoom, bounds, legend = {}, viewport = {}, mapStyle, basemap, tileset } = controls;
+    const {
+        center,
+        zoom,
+        bounds,
+        legend = {},
+        viewport = {},
+        mapStyle,
+        basemap,
+        tileset,
+        customTooltip,
+    } = controls;
     const legendEnabled = legend?.enabled;
     const legendPosition = normalizeGeoLegendPosition(legend?.position);
     const isBasemapConfigEnabled = isGeoBasemapConfigEnabled(featureFlags);
@@ -104,6 +115,7 @@ export function buildAreaVisualizationConfig({
         enableGeoChartA11yImprovements: featureFlags?.["enableGeoChartA11yImprovements"] ?? false,
         enableGeoChartsViewportConfig: isViewportConfigEnabled,
         applyViewportNavigation,
+        ...(customTooltip ? { customTooltip } : {}),
         ...customVisualizationConfig,
     };
 

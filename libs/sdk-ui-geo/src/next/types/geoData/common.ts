@@ -62,6 +62,15 @@ export interface IGeoMeasureItem extends IGeoDataItem {
      * Array of numeric values
      */
     data: number[];
+    /**
+     * Bucket localIdentifier of the underlying measure.
+     *
+     * @remarks
+     * Used by custom-tooltip reference resolution as the lookup key into
+     * `ITooltipReferenceMaps.measures` to find the LDM identifier referenced
+     * as `{metric/<id>}` in tooltip content.
+     */
+    localIdentifier?: string;
 }
 
 /**

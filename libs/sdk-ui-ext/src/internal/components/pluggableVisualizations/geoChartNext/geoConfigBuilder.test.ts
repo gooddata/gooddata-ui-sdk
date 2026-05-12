@@ -362,6 +362,21 @@ describe("buildGeoVisualizationConfig", () => {
         expect(config.center).toEqual({ lat: 40, lng: -74 });
         expect(config.zoom).toBe(3);
     });
+
+    it("propagates customTooltip from supportedControls into the rendered config", () => {
+        const customTooltip = {
+            enabled: true,
+            content: "**{label/region}** — Revenue: {metric/revenue}",
+            placement: "above" as const,
+        };
+        const config = buildGeoVisualizationConfig({
+            options,
+            supportedControls: { customTooltip },
+            colorMapping: undefined,
+            environment: DASHBOARDS_ENVIRONMENT,
+        });
+        expect(config.customTooltip).toEqual(customTooltip);
+    });
 });
 
 describe("buildAreaVisualizationConfig", () => {
@@ -465,5 +480,20 @@ describe("buildAreaVisualizationConfig", () => {
         });
 
         expect(config.basemap).toBe("satellite");
+    });
+
+    it("propagates customTooltip from supportedControls into the rendered config", () => {
+        const customTooltip = {
+            enabled: true,
+            content: "# {label/state}\n{metric/population}",
+            placement: "above" as const,
+        };
+        const config = buildAreaVisualizationConfig({
+            options,
+            supportedControls: { customTooltip },
+            colorMapping: undefined,
+            environment: DASHBOARDS_ENVIRONMENT,
+        });
+        expect(config.customTooltip).toEqual(customTooltip);
     });
 });

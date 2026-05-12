@@ -13,7 +13,7 @@ runs:
     # create s3 cache for node installation
     - name: Cache Node.js
       if: ${{ steps.check-node.outputs.node-installed == 'false' }}
-      uses: runs-on/cache@v4
+      uses: runs-on/cache@v5.0.5
       id: node-cache
       env:
         RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache

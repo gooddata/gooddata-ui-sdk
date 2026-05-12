@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "De visualisatie kan niet worden gefilterd op {attributeName}. Schakel het selectievakje uit.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "De KPI kan niet worden gefilterd op {attributeName}. Vink het selectievakje af.",
     "configurationPanel.vizCantBeFilteredByDate": "De visualisatie kan niet worden gefilterd op Datum. Schakel het selectievakje uit.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filter is niet van toepassing op deze visualisatie.",
     "configurationPanel.kpiCantBeFilteredByDate": "De KPI kan niet worden gefilterd op Datum. Vink het selectievakje af.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" kan niet langer worden toegepast op de visualisatie. Selecteer een andere dimensie of bewerk de visualisatie.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" kan niet langer op de KPI worden toegepast. Selecteer een andere dimensie of bewerk de KPI.",

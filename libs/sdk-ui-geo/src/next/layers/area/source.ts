@@ -123,6 +123,7 @@ function buildAreaProperties(args: {
     colorTitle?: string;
     colorValue?: number;
     colorFormat?: string;
+    colorLocalId?: string;
     areaColorFill: string;
     segmentTitle?: string;
     segmentValue?: string;
@@ -142,6 +143,7 @@ function buildAreaProperties(args: {
         colorTitle,
         colorValue,
         colorFormat,
+        colorLocalId,
         areaColorFill,
         segmentTitle,
         segmentValue,
@@ -164,6 +166,7 @@ function buildAreaProperties(args: {
             title: colorTitle ?? "",
             value: colorValue,
             format: colorFormat ?? "",
+            localId: colorLocalId,
         },
     };
 
@@ -433,6 +436,7 @@ function createAreaFeatures({
             colorTitle,
             colorValue: areaData.colorValue,
             colorFormat,
+            colorLocalId: color?.localIdentifier,
             areaColorFill: areaData.areaColorFill,
             segmentTitle: areaData.segmentTitle,
             segmentValue: areaData.segmentValue,

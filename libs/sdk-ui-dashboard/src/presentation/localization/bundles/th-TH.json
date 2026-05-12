@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "การแสดงภาพข้อมูลไม่สามารถถูกกรองโดย {attributeName} ได้ ยกเลิกการเลือกช่องทำเครื่องหมาย",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI ไม่สามารถถูกกรองโดย {attributeName} ได้ ยกเลิกการเลือกช่องทำเครื่องหมาย",
     "configurationPanel.vizCantBeFilteredByDate": "การแสดงภาพข้อมูลไม่สามารถถูกกรองตามวันที่ได้ ยกเลิกการเลือกช่องทำเครื่องหมาย",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "ตัวกรองไม่สามารถใช้ได้กับการแสดงภาพข้อมูลนี้",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI ไม่สามารถถูกกรองตามวันที่ได้ ยกเลิกการเลือกช่องทำเครื่องหมาย",
     "configurationPanel.unrelatedVizDateInfo": "ไม่สามารถนำ \"{dateDataSet}\" ไปใช้กับการแสดงภาพข้อมูลได้อีกต่อไป เลือกมิติอื่นหรือแก้ไขการแสดงภาพข้อมูล",
     "configurationPanel.unrelatedKpiDateInfo": "ไม่สามารถนำ \"{dateDataSet}\" ไปใช้กับ kpi ได้อีกต่อไป เลือกมิติอื่นหรือแก้ไข kpi",

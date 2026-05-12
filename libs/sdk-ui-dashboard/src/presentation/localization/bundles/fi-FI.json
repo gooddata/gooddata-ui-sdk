@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "Visualisointia ei voida suodattaa {attributeName}. Poista valintaruudun valinta.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI:ta ei voi suodattaa {attributeName}. Poista valintamerkki.",
     "configurationPanel.vizCantBeFilteredByDate": "Visualisointia ei voida suodattaa päivämäärän mukaan. Poista valinta valintaruudusta.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Suodatin ei sovellu tähän visualisointiin.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI:ta ei voi suodattaa päivämäärällä. Poista valintamerkki.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" ei voida enää soveltaa visualisointiin. Valitse toinen ulottuvuus tai muokkaa visualisointia.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" ei voi enää soveltaa KPI:hin. Valitse eri ulottuvuus tai muokkaa KPI:tä.",

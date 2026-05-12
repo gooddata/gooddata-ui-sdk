@@ -23,8 +23,6 @@
         "incremental": false,
         "resolveJsonModule": true,
         "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true,
         "strictNullChecks": false,
         "tsBuildInfoFile": "./tsconfig.check.tsbuildinfo",
         "noEmit": true,

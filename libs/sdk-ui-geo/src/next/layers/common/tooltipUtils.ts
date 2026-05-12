@@ -11,6 +11,14 @@ export type TooltipPayload = {
     format?: string;
     attrId?: string;
     fill?: string;
+    /**
+     * Bucket `localIdentifier` of the underlying measure. By convention only
+     * set by measure payload writers (size, color, items in `measures[]`);
+     * the parser doesn't constrain other slots. Used by the custom-tooltip
+     * resolver as the lookup key into `ITooltipReferenceMaps.measures` to
+     * find the LDM identifier referenced as `{metric/<id>}`.
+     */
+    localId?: string;
 };
 
 function isPayloadRecord(value: unknown): value is Record<string, unknown> {
@@ -50,6 +58,7 @@ export function parseTooltipPayload(item: JsonValue): TooltipPayload | undefined
     const format = typeof parsed["format"] === "string" ? parsed["format"] : undefined;
     const attrId = typeof parsed["attrId"] === "string" ? parsed["attrId"] : undefined;
     const fill = typeof parsed["fill"] === "string" ? parsed["fill"] : undefined;
+    const localId = typeof parsed["localId"] === "string" ? parsed["localId"] : undefined;
 
     return {
         title,
@@ -57,6 +66,7 @@ export function parseTooltipPayload(item: JsonValue): TooltipPayload | undefined
         format,
         attrId,
         fill,
+        localId,
     };
 }
 

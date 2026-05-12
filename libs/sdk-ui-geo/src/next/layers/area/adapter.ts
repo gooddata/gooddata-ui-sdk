@@ -20,6 +20,7 @@ import { getHeaderPredicateFingerprint } from "../../utils/predicateFingerprint.
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
+import { buildTooltipReferenceMaps } from "../common/tooltipReferenceMaps.js";
 import { createLayerInsight, sanitizeDeduplicatedGlobalFilters } from "../execution/layerInsightFactory.js";
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import { resolveAttributeDisplayForms } from "../execution/resolveAttributeDisplayForms.js";
@@ -195,7 +196,9 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         const bbox = deriveCollectionBoundingBox(boundaryFeatures);
         const initialViewport = bboxToViewport(bbox);
 
-        return { source, legend, geoData, colorStrategy, initialViewport };
+        const tooltipReferenceMaps = buildTooltipReferenceMaps(dataView);
+
+        return { source, legend, geoData, colorStrategy, initialViewport, tooltipReferenceMaps };
     },
 
     syncToMap(layer, map, output, dataView, context): void {
@@ -269,7 +272,7 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         removeAreaLayer(map, layer.id);
     },
 
-    getTooltipConfig(layer, _output, context, { tooltip, drillablePredicates }) {
+    getTooltipConfig(layer, output, context, { tooltip, drillablePredicates }) {
         if (!tooltip || !context.intl) {
             return undefined;
         }
@@ -278,7 +281,14 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         const ids = getAreaLayerIds(layer.id);
         const layerIds = [ids.fillLayerId, ids.outlineLayerId];
 
-        return createAreaTooltipConfig(tooltip, config, drillablePredicates, context.intl, layerIds);
+        return createAreaTooltipConfig(
+            tooltip,
+            config,
+            drillablePredicates,
+            context.intl,
+            layerIds,
+            output.tooltipReferenceMaps,
+        );
     },
 
     getMapLibreLayerIds(layer) {

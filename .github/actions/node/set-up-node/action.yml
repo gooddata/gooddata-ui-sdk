@@ -13,7 +13,7 @@ runs:
     # restore s3 cache for node installation
     - name: Restore Node.js from cache
       if: ${{ steps.check-node.outputs.node-installed == 'false' }}
-      uses: runs-on/cache/restore@v4
+      uses: runs-on/cache/restore@v5.0.5
       id: node-cache
       env:
         RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache

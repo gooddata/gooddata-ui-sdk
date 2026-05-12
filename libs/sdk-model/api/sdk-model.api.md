@@ -2613,7 +2613,6 @@ export interface IFeatureFlags {
     enableKDRichText?: boolean;
     enableKDVisualizationSwitcher?: boolean;
     enableLineChartTrendThreshold?: boolean;
-    enableLlmEndpointReplacement?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
@@ -5208,6 +5207,9 @@ export function isWidgetAttachment(obj: unknown): obj is IWidgetAttachment;
 
 // @alpha
 export function isWidgetDefinition(obj: unknown): obj is IWidgetDefinition;
+
+// @alpha
+export function isWidgetWithFilterSettings(widget: unknown): widget is IWidget;
 
 // @public
 export type ItemInDimension = {

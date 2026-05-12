@@ -16,7 +16,7 @@ import { ConfigSection } from "../ConfigSection.js";
 import { DropdownControl } from "../DropdownControl.js";
 
 const FORMATTING_OPTIONS_DOC_URL =
-    "https://www.gooddata.com/docs/cloud/create-visualizations/customizable-tooltips/";
+    "https://www.gooddata.com/docs/cloud/create-visualizations/custom-tooltips/";
 
 export interface ICustomTooltipSectionProps {
     controlsDisabled: boolean;

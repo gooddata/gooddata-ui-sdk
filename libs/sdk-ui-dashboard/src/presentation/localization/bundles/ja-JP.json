@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "ビジュアライゼーションは{attributeName} でフィルターできません。チェックボックスをオフにします。",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPIは{attributeName}でフィルターできません。チェックボックスの選択を解除してください。",
     "configurationPanel.vizCantBeFilteredByDate": "ビジュアライゼーションを日付でフィルターすることはできません。チェックボックスの選択を解除してください。",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "この可視化にはフィルターを適用できません。",
     "configurationPanel.kpiCantBeFilteredByDate": "KPIは日付でフィルターできません。チェックボックスの選択を解除してください。",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" はビジュアライゼーションに適用できなくなりました。別の次元を選択するか、ビジュアライゼーションを編集してください。",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"はKPIに適用できなくなりました。別のディメンションを選ぶか、KPIを編集してください。",

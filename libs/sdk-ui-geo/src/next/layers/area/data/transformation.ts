@@ -276,11 +276,13 @@ function processColorBucket(ctx: IAreaBucketProcessingContext): IGeoMeasureItem 
         return undefined;
     }
 
+    const measureDescriptors = dv.meta().measureDescriptors();
     return {
         index: colorBucket.index,
         name: colorBucket.name,
         data: getMeasureData(dv, colorIndex),
         format: getFormatFromExecutionResponse(dv, colorIndex),
+        localIdentifier: measureDescriptors[colorIndex]?.measureHeaderItem.localIdentifier,
     };
 }
 

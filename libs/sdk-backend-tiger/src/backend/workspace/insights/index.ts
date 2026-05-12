@@ -303,6 +303,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                             content: convertInsight(insight),
                             title: insightTitle(insight),
                             tags: insightTags(insight),
+                            isHidden: insight.insight.isHidden,
                         },
                     },
                 },

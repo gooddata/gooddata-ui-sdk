@@ -49,7 +49,8 @@ export function MeasureValueFilterConfigurationItem({
 
     const isLoading = status === "loading";
     const isIncompatible = !isCompatible;
-    const isDisabled = isIncompatible && !isApplied;
+    const isDisabled = isIncompatible;
+    const isChecked = isCompatible && isApplied;
 
     const classNames = cx(
         `s-${simplifyText(title)}`,
@@ -71,7 +72,7 @@ export function MeasureValueFilterConfigurationItem({
             className={classNames}
             uniqueKey={uniqueKey}
             title={title}
-            isApplied={isApplied}
+            isApplied={isChecked}
             isLoading={isLoading}
             disabled={isDisabled}
             onChange={handleIgnoreChanged}
