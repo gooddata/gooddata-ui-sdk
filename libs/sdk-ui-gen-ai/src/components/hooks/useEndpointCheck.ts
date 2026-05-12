@@ -13,33 +13,20 @@ export function useEndpointCheck(settings: IUserWorkspaceSettings | undefined, c
 
     const promise = async () => {
         if (!canFullControl) {
-            if (settings?.enableLlmEndpointReplacement) {
-                const unsupportedProvider = hasUnsupportedActiveProvider(
-                    settings?.activeLlmProvider,
-                    settings?.enableAiAgenticConversations,
-                );
-                return createInfo(0, unsupportedProvider, unsupportedProvider);
-            } else {
-                return createInfo();
-            }
+            const unsupportedProvider = hasUnsupportedActiveProvider(
+                settings?.activeLlmProvider,
+                settings?.enableAiAgenticConversations,
+            );
+            return createInfo(0, unsupportedProvider, unsupportedProvider);
         }
         try {
-            if (settings?.enableLlmEndpointReplacement) {
-                return getProviderInfo(backend, settings);
-            } else {
-                return getEndpointInfo(backend);
-            }
+            return getProviderInfo(backend, settings);
         } catch {
             return createInfo();
         }
     };
 
-    const { result, status } = useCancelablePromise({ promise }, [
-        backend,
-        canFullControl,
-        tries,
-        settings?.enableLlmEndpointReplacement,
-    ]);
+    const { result, status } = useCancelablePromise({ promise }, [backend, canFullControl, tries, settings]);
 
     const restart = useCallback(() => {
         retry();
@@ -66,12 +53,6 @@ async function getProviderInfo(backend: IAnalyticalBackend, settings: IUserWorks
     const org = await backend.organizations().getCurrentOrganization();
     const providers = await org.llmProviders().getProvidersQuery().queryAll();
     return createInfo(providers.length, true, unsupportedProvider);
-}
-
-async function getEndpointInfo(backend: IAnalyticalBackend) {
-    const org = await backend.organizations().getCurrentOrganization();
-    const endpoints = await org.llmEndpoints().getEndpointsQuery().queryAll();
-    return createInfo(endpoints.length, true, false);
 }
 
 function createInfo(count = 0, evaluated = false, hasUnsupportedOpenAiModel = false) {

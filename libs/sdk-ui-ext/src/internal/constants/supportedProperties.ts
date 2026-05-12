@@ -409,9 +409,10 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
  * Legacy pushpin chart still relies on `tooltipText` and therefore keeps it in
  * {@link GEOPUSHPIN_SUPPORTED_PROPERTIES}.
  */
-export const GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES = GEOPUSHPIN_SUPPORTED_PROPERTIES.filter(
-    (p) => p !== "tooltipText",
-);
+export const GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES = [
+    ...GEOPUSHPIN_SUPPORTED_PROPERTIES.filter((p) => p !== "tooltipText"),
+    ...CUSTOM_TOOLTIP_PROPERTIES,
+];
 
 export const GEOAREA_SUPPORTED_PROPERTIES = [
     "legend",
@@ -429,6 +430,7 @@ export const GEOAREA_SUPPORTED_PROPERTIES = [
     "disableKeyDriveAnalysis",
     "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
+    ...CUSTOM_TOOLTIP_PROPERTIES,
 ];
 
 export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [

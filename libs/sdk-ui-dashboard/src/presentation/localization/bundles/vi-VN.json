@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "Trực quan hóa không thể được lọc theo {attributeName}. Bỏ chọn hộp kiểm.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI không thể được lọc theo {attributeName}. Bỏ chọn hộp kiểm.",
     "configurationPanel.vizCantBeFilteredByDate": "Trực quan hóa không thể được lọc theo Ngày. Bỏ chọn hộp kiểm.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Bộ lọc không áp dụng được cho trực quan hóa này.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI không thể được lọc theo Ngày. Bỏ chọn hộp kiểm.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" không còn có thể áp dụng cho trực quan hóa. Chọn một chiều khác hoặc chỉnh sửa trực quan hóa.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" không thể áp dụng cho KPI nữa. Hãy chọn một chiều dữ liệu khác hoặc chỉnh sửa KPI.",

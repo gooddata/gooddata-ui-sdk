@@ -107,6 +107,7 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAre
                 {this.renderColorSection()}
                 {this.renderViewportSection()}
                 {this.renderInteractionsSection()}
+                {this.renderCustomTooltipSection()}
             </div>
         );
     }

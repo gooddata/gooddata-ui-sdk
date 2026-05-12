@@ -12,8 +12,6 @@
         "incremental": false,
         "resolveJsonModule": true,
         "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true,
         "strictNullChecks": false,
         "rootDir": ".",
         "outDir": "./dist",

@@ -192,6 +192,7 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
                     {this.renderLegendSection()}
                     {this.renderViewportSection()}
                     {this.renderPointsSection()}
+                    {this.renderCustomTooltipSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}

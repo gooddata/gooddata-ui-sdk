@@ -8,8 +8,6 @@
         "incremental": false,
         "resolveJsonModule": true,
         "noImplicitReturns": true,
-        "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true
+        "declaration": true
     }
 }

@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "Visualisasi tidak dapat difilter oleh {attributeName}. Batalkan pilihan kotak centang.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "kpi tidak dapat difilter oleh {attributeName}. Batalkan pilihan kotak centang.",
     "configurationPanel.vizCantBeFilteredByDate": "Visualisasi tidak dapat difilter oleh Tanggal. Batalkan pilihan kotak centang.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filter tidak dapat diterapkan pada visualisasi ini.",
     "configurationPanel.kpiCantBeFilteredByDate": "kpi tidak dapat difilter oleh Tanggal. Batalkan pilihan kotak centang.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" tidak dapat lagi diterapkan pada visualisasi. Pilih dimensi lain atau edit visualisasi.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" tidak dapat lagi diterapkan pada kpi. Pilih dimensi lain atau edit kpi.",

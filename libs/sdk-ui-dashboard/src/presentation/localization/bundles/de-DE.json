@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "Die Visualisierung kann nicht nach {attributeName} gefiltert werden. Markierung des Kontrollfelds entfernen.",
     "configurationPanel.kpiCantBeFilteredByAttribute": " Leistungskennzahl kann nicht nach {attributeName} gefiltert werden. Markierung des Kontrollfelds entfernen.",
     "configurationPanel.vizCantBeFilteredByDate": "Die Visualisierung kann nicht nach Datum gefiltert werden. Markierung des Kontrollfelds entfernen.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filtern ist auf diese Visualisierung nicht anwendbar.",
     "configurationPanel.kpiCantBeFilteredByDate": "Leistungskennzahl kann nicht nach Datum gefiltert werden. Markierung des Kontrollfelds entfernen.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" kann nicht mehr auf die Visualisierung angewendet werden. Wählen Sie eine andere Dimension oder bearbeiten Sie die Visualisierung.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" kann nicht mehr auf den Leistungskennzahl angewandt werden. Wählen Sie eine andere Dimension oder bearbeiten Sie den Leistungskennzahl.",

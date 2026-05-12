@@ -7,6 +7,7 @@ import { invariant } from "ts-invariant";
 
 import {
     type DashboardAttributeFilterItem,
+    type IDashboardMeasureValueFilter,
     type IInsight,
     type IInsightWidget,
     type IKpiWidget,
@@ -15,11 +16,15 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterObjRef,
+    insightMeasures,
     insightRef,
     isDashboardAttributeFilterReference,
+    isDashboardMeasureValueFilterReference,
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
+    measureItem,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -35,7 +40,10 @@ import {
 import { type IMeasureDateDatasets, queryDateDatasetsForMeasure } from "../../../queries/kpis.js";
 import { query } from "../../../store/_infra/queryCall.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextAttributeFilterItems } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextAttributeFilterItems,
+    selectFilterContextMeasureValueFilters,
+} from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { type ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils.js";
@@ -243,6 +251,49 @@ function removeObsoleteAttributeFilterIgnores<T extends IKpiWidget | IInsightWid
     };
 }
 
+function resolveMeasureValueFilterIgnores<T extends IKpiWidget | IInsightWidget | IRichTextWidget>(
+    widget: T,
+    measureValueFilters: IDashboardMeasureValueFilter[],
+    widgetMeasureRefs: ObjRef[],
+): T {
+    const ignoreDashboardFilters = [...widget.ignoreDashboardFilters];
+
+    measureValueFilters.forEach((filter) => {
+        const filterMeasureRef = dashboardFilterObjRef(filter);
+        const usesMeasure =
+            filterMeasureRef &&
+            widgetMeasureRefs.some((widgetMeasureRef) => areObjRefsEqual(widgetMeasureRef, filterMeasureRef));
+
+        if (usesMeasure || !filterMeasureRef) {
+            return;
+        }
+
+        const isAlreadyIgnored = ignoreDashboardFilters.some(
+            (reference) =>
+                isDashboardMeasureValueFilterReference(reference) &&
+                areObjRefsEqual(reference.measure, filterMeasureRef),
+        );
+
+        if (!isAlreadyIgnored) {
+            ignoreDashboardFilters.push({
+                type: "measureValueFilterReference",
+                measure: filterMeasureRef,
+            });
+        }
+    });
+
+    return {
+        ...widget,
+        ignoreDashboardFilters,
+    };
+}
+
+function getInsightMeasureRefs(insight: IInsight) {
+    return insightMeasures(insight)
+        .map(measureItem)
+        .filter((ref): ref is ObjRef => !!ref);
+}
+
 /**
  * This generator function will ensure that Insight and KPI widgets that are included in the `items`
  * have valid filter settings:
@@ -272,6 +323,9 @@ export function* validateAndResolveItemFilterSettings(
     const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
         selectAttributeFilterConfigsDisplayAsLabelMap,
     );
+    const measureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> = yield select(
+        selectFilterContextMeasureValueFilters,
+    );
     const { resolvedInsights, normalizedItems } = items;
     const updatedItems: ExtendedDashboardItem[] = [];
     let i = 0;
@@ -297,10 +351,15 @@ export function* validateAndResolveItemFilterSettings(
                         autoDateDataset,
                         resolvedInsight,
                     );
+                const widgetWithMeasureValueFilterIgnores = resolveMeasureValueFilterIgnores(
+                    updatedWidget,
+                    measureValueFilters,
+                    getInsightMeasureRefs(resolvedInsight),
+                );
 
                 updatedItems.push({
                     ...item,
-                    widget: updatedWidget,
+                    widget: widgetWithMeasureValueFilterIgnores,
                 });
             } else if (isKpiWidget(widget)) {
                 const updatedWidget: SagaReturnType<typeof validateAndResolveKpiFilters> = yield call(
@@ -310,10 +369,15 @@ export function* validateAndResolveItemFilterSettings(
                     widget,
                     autoDateDataset,
                 );
+                const widgetWithMeasureValueFilterIgnores = resolveMeasureValueFilterIgnores(
+                    updatedWidget,
+                    measureValueFilters,
+                    [widget.kpi.metric],
+                );
 
                 updatedItems.push({
                     ...item,
-                    widget: updatedWidget,
+                    widget: widgetWithMeasureValueFilterIgnores,
                 });
             } else if (isRichTextWidget(widget)) {
                 const updatedWidget: SagaReturnType<typeof validateAndResolveRichTextFilters> = yield call(
@@ -323,10 +387,15 @@ export function* validateAndResolveItemFilterSettings(
                     widget,
                     autoDateDataset,
                 );
+                const widgetWithMeasureValueFilterIgnores = resolveMeasureValueFilterIgnores(
+                    updatedWidget,
+                    measureValueFilters,
+                    [],
+                );
 
                 updatedItems.push({
                     ...item,
-                    widget: updatedWidget,
+                    widget: widgetWithMeasureValueFilterIgnores,
                 });
             } else {
                 updatedItems.push(item);
@@ -351,10 +420,26 @@ export function* validateAndResolveItemFilterSettings(
                     attributeFilters,
                     displayAsLabelMap,
                 );
+                const resolvedInsight = isInsightWidget(updatedWidget)
+                    ? resolvedInsights.resolved.get(updatedWidget.insight)
+                    : undefined;
+                let widgetMeasureRefs: ObjRef[];
+                if (isInsightWidget(updatedWidget)) {
+                    widgetMeasureRefs = resolvedInsight ? getInsightMeasureRefs(resolvedInsight) : [];
+                } else if (isKpiWidget(updatedWidget)) {
+                    widgetMeasureRefs = [updatedWidget.kpi.metric];
+                } else {
+                    widgetMeasureRefs = [];
+                }
+                const widgetWithMeasureValueFilterIgnores = resolveMeasureValueFilterIgnores(
+                    updatedWidget,
+                    measureValueFilters,
+                    widgetMeasureRefs,
+                );
 
                 updatedItems.push({
                     ...item,
-                    widget: updatedWidget,
+                    widget: widgetWithMeasureValueFilterIgnores,
                 });
             } else {
                 updatedItems.push(item);

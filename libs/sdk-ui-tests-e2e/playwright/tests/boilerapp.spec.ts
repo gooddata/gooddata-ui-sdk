@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.topLevelDescribe("Boiler app Chart", "boilerapp", () => {
-    test(`check boiler app tiger`, { tag: ["@checklist_integrated_boiler_tiger"] }, async ({ page }) => {
+    test(`check boiler app tiger`, { tag: ["@checklist_boiler_tiger"] }, async ({ page }) => {
         await page.goto("/");
 
         const container = page.locator(".insight-view-visualization .headline");

@@ -56,6 +56,14 @@ export interface IConfigurationPanelContentProps<PanelConfig = any> {
     pushData?(data: any): void;
     panelConfig?: PanelConfig;
     configurationPanelRenderers?: IConfigurationPanelRenderers;
+    /**
+     * Indicates whether the visualization's runtime can render the custom-tooltip
+     * section. Gates {@link ConfigurationPanelContent.renderCustomTooltipSection}
+     * alongside the `enableCustomTooltip` feature flag. Defaults to `true`; set
+     * to `false` from pluggables whose runtime can't render the section (e.g.,
+     * legacy Mapbox geo pushpin).
+     */
+    supportsCustomTooltip?: boolean;
 }
 
 export abstract class ConfigurationPanelContent<
@@ -76,6 +84,7 @@ export abstract class ConfigurationPanelContent<
         permissions: undefined,
         axis: undefined,
         panelConfig: {},
+        supportsCustomTooltip: true,
     };
 
     protected supportedPropertiesList: string[] | undefined;
@@ -253,9 +262,9 @@ export abstract class ConfigurationPanelContent<
     }
 
     protected renderCustomTooltipSection(): ReactNode {
-        const { pushData, properties, propertiesMeta, featureFlags } = this.props;
+        const { pushData, properties, propertiesMeta, featureFlags, supportsCustomTooltip } = this.props;
 
-        if (!featureFlags?.enableCustomTooltip) {
+        if (!featureFlags?.enableCustomTooltip || !supportsCustomTooltip) {
             return null;
         }
 

@@ -875,6 +875,7 @@ export {
     type IWidgetDefinition,
     isWidget,
     isWidgetDefinition,
+    isWidgetWithFilterSettings,
     widgetUri,
     widgetId,
     widgetRef,

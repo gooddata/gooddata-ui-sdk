@@ -243,13 +243,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableLlmEndpointReplacement,
-            "enableLlmEndpointReplacement",
-            "BOOLEAN",
-            FeatureFlagsValues.enableLlmEndpointReplacement,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableAlertingAttributes,
             "enableAlertAttributes",
             "BOOLEAN",

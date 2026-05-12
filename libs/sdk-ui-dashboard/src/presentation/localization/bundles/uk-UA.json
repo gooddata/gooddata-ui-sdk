@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "Візуалізацію не можна фільтрувати за {attributeName}. Зніміть прапорець.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI не можна фільтрувати за {attributeName}. Зніміть прапорець.",
     "configurationPanel.vizCantBeFilteredByDate": "Візуалізацію не можна фільтрувати за датою. Зніміть прапорець.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Фільтр не можна застосувати до цієї візуалізації.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI не можна фільтрувати за датою. Зніміть прапорець.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" більше не можна застосувати до візуалізації. Виберіть інший вимір або відредагуйте візуалізацію.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" більше не можна застосувати до KPI. Виберіть інший вимір або відредагуйте KPI.",

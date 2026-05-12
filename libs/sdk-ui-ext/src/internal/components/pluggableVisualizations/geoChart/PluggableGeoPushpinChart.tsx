@@ -269,6 +269,9 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                     basemapItems={basemapItems}
                     featureFlags={this.featureFlags}
                     permissions={this.permissions}
+                    // Legacy Mapbox runtime doesn't render the custom-tooltip section;
+                    // hide its config UI to avoid users configuring something inert.
+                    supportsCustomTooltip={false}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,

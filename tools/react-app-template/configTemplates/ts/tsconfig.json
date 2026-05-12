@@ -17,8 +17,6 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "composite": false,
-        "declaration": true,
-        "declarationMap": true,
-        "sourceMap": true
+        "declaration": true
     }
 }

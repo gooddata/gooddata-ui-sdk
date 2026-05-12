@@ -5,11 +5,20 @@ import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
+    type IDashboardFilterReference,
     type IDashboardMeasureValueFilter,
+    type IWidget,
+    type ObjRef,
     areObjRefsEqual,
     dashboardFilterLocalIdentifier,
     dashboardFilterObjRef,
+    insightMeasures,
+    isInsightWidget,
+    isKpiWidget,
+    isWidgetWithFilterSettings,
+    measureItem,
     objRefToString,
+    widgetRef,
 } from "@gooddata/sdk-model";
 
 import { type IAddMeasureValueFilter } from "../../../commands/filters.js";
@@ -18,12 +27,14 @@ import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { selectBackendCapabilities } from "../../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectAllCatalogMeasuresMap } from "../../../store/catalog/catalogSelectors.js";
+import { selectInsightsMap } from "../../../store/insights/insightsSelectors.js";
 import {
     selectCanAddMoreFilters,
     selectFilterContextFilters,
     selectFilterContextMeasureValueFilters,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
+import { selectWidgets } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
@@ -115,7 +126,74 @@ export function* addMeasureValueFilterHandler(
         );
     }
 
+    yield call(disableMeasureValueFilterForIncompatibleWidgets, cmd, measure);
+
     yield dispatchDashboardEvent(measureValueFilterAdded(ctx, addedFilter, index, cmd.correlationId));
 
     yield call(dispatchFilterContextChanged, ctx, cmd);
+}
+
+function* disableMeasureValueFilterForIncompatibleWidgets(
+    cmd: IAddMeasureValueFilter,
+    measure: ObjRef,
+): SagaIterator<void> {
+    const widgets: ReturnType<typeof selectWidgets> = yield select(selectWidgets);
+    const insightsMap: ReturnType<typeof selectInsightsMap> = yield select(selectInsightsMap);
+
+    for (const widget of widgets) {
+        if (!isWidgetWithFilterSettings(widget) || widgetUsesMeasure(widget, insightsMap, measure)) {
+            continue;
+        }
+
+        const isAlreadyIgnored = widget.ignoreDashboardFilters.some(
+            (reference) =>
+                reference.type === "measureValueFilterReference" &&
+                areObjRefsEqual(reference.measure, measure),
+        );
+
+        if (isAlreadyIgnored) {
+            continue;
+        }
+
+        const measureValueFilterReference: IDashboardFilterReference = {
+            type: "measureValueFilterReference",
+            measure,
+        };
+
+        yield put(
+            tabsActions.replaceWidgetFilterSettings({
+                ref: widgetRef(widget),
+                dateDataSet: widget.dateDataSet,
+                ignoreDashboardFilters: [...widget.ignoreDashboardFilters, measureValueFilterReference],
+                undo: {
+                    cmd,
+                },
+            }),
+        );
+    }
+}
+
+function widgetUsesMeasure(
+    widget: IWidget,
+    insightsMap: ReturnType<typeof selectInsightsMap>,
+    measure: ObjRef,
+): boolean {
+    if (isInsightWidget(widget)) {
+        const insight = insightsMap.get(widget.insight);
+
+        return (
+            !!insight &&
+            insightMeasures(insight).some((insightMeasure) => {
+                const insightMeasureRef = measureItem(insightMeasure);
+
+                return !!insightMeasureRef && areObjRefsEqual(insightMeasureRef, measure);
+            })
+        );
+    }
+
+    if (isKpiWidget(widget)) {
+        return areObjRefsEqual(widget.kpi.metric, measure);
+    }
+
+    return false;
 }

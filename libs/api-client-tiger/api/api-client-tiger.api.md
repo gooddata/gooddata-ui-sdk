@@ -34292,8 +34292,8 @@ export interface Xliff {
 
 // Warnings were encountered during analysis:
 //
-// src/gd-tiger-model/TigerTypes.ts:823:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
-// src/gd-tiger-model/TigerTypes.ts:824:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
-// src/locationStyle.ts:53:5 - (ae-forgotten-export) The symbol "ILocationStyleListItem" needs to be exported by the entry point index.d.ts
+// esm/gd-tiger-model/TigerTypes.d.ts:681:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
+// esm/gd-tiger-model/TigerTypes.d.ts:682:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
+// esm/locationStyle.d.ts:44:5 - (ae-forgotten-export) The symbol "ILocationStyleListItem" needs to be exported by the entry point index.d.ts
 
 ```

@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "可視化不能依以下條件過濾{attributeName}。取消選取該複選框。",
     "configurationPanel.kpiCantBeFilteredByAttribute": "kpi 無法過濾 {attributeName}。取消選取該複選框。",
     "configurationPanel.vizCantBeFilteredByDate": "可視化無法按日期過濾。取消選取該複選框。",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "篩選不適用於此視覺化。",
     "configurationPanel.kpiCantBeFilteredByDate": "kpi 無法按日期過濾。取消選取該複選框。",
     "configurationPanel.unrelatedVizDateInfo": "」{dateDataSet} \" 無法再套用於視覺化。選擇不同的維度或編輯視覺化。",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" 無法再套用於 kpi。選擇其他維度或編輯 kpi。",

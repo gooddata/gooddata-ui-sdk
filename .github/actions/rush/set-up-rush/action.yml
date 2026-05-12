@@ -64,7 +64,7 @@ runs:
     # Restore cache for global rush installation
     # We need defined unified home folder for rush on runners and different docker images
     - name: Cache Rush
-      uses: runs-on/cache/restore@v4
+      uses: runs-on/cache/restore@v5.0.5
       env:
         RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
       with:
@@ -76,7 +76,7 @@ runs:
     - name: Cache pnpm
       if: ${{ inputs.install-dependencies == 'true' }}
       id: cache-pnpm
-      uses: runs-on/cache/restore@v4
+      uses: runs-on/cache/restore@v5.0.5
       env:
         RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
       with:

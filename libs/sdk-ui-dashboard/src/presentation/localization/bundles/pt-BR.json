@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "A visualização não pode ser filtrada pelo {attributeName}. Desmarque a caixa de seleção.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "O KPI não pode ser filtrado por {attributeName}. Desmarque a caixa de seleção.",
     "configurationPanel.vizCantBeFilteredByDate": "A visualização não pode ser filtrada por Data. Desmarque a caixa de seleção.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "O filtro não é aplicável a esta visualização.",
     "configurationPanel.kpiCantBeFilteredByDate": "O KPI não pode ser filtrado por Data. Desmarque a caixa de seleção.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" não pode mais ser aplicado à visualização. Selecione uma dimensão diferente ou edite a visualização.",
     "configurationPanel.unrelatedKpiDateInfo": "Não é possível aplicar \"{dateDataSet}\" ao KPI. Selecione uma dimensão diferente ou edite o KPI.",

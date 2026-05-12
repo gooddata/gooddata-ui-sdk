@@ -194,3 +194,13 @@ export function isVisualizationSwitcherWidgetDefinition(
         (obj as IVisualizationSwitcherWidgetDefinition).type === "visualizationSwitcher"
     );
 }
+
+/**
+ * Type-guard testing whether the provided object is a widget that can store dashboard filter settings.
+ *
+ * @alpha
+ */
+
+export function isWidgetWithFilterSettings(widget: unknown): widget is IWidget {
+    return isInsightWidget(widget) || isKpiWidget(widget) || isRichTextWidget(widget);
+}

@@ -159,6 +159,7 @@ const supportedGeoConfigProperties = new Set<keyof IGeoChartConfig>([
     "viewport",
     "points",
     "showLabels",
+    "customTooltip",
 ]);
 
 export function geoConfigFromInsight(

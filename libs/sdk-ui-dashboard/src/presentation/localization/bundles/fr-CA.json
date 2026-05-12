@@ -443,6 +443,7 @@
     "configurationPanel.vizCantBeFilteredByAttribute": "La visualisation ne peut pas être filtrée par {attributeName}. Désélectionnez la case à cocher.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "Le KPI ne peut pas être filtré par {attributeName}. Décochez la case.",
     "configurationPanel.vizCantBeFilteredByDate": "La visualisation ne peut pas être filtrée par la Date. Désélectionnez la case à cocher.",
+    "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Le filtre ne s’applique pas à cette visualisation.",
     "configurationPanel.kpiCantBeFilteredByDate": "Le KPI ne peut pas être filtré par Date. Décochez la case.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" ne peut plus être appliqué à la visualisation. Sélectionnez une dimension différente ou modifiez la visualisation.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" ne peut plus être appliqué au KPI. Sélectionnez une dimension différente ou modifiez le KPI.",

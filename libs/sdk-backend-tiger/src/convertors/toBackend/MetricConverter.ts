@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { type JsonApiMetricOutAttributes } from "@gooddata/api-client-tiger";
+import { type JsonApiMetricPostOptionalIdAttributes } from "@gooddata/api-client-tiger";
 import { type IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 export function convertMetricToBackend(
     measure: IMeasureMetadataObjectDefinition,
-): JsonApiMetricOutAttributes {
+): JsonApiMetricPostOptionalIdAttributes {
     return {
         title: measure.title,
         description: measure.description,
@@ -15,5 +15,7 @@ export function convertMetricToBackend(
             ...(typeof measure.metricType === "undefined" ? {} : { metricType: measure.metricType }),
         },
         tags: measure.tags,
+        isHidden: measure.isHidden,
+        isHiddenFromKda: measure.isHiddenFromKda,
     };
 }
