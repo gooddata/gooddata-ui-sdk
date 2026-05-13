@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type BubbleChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -55,7 +56,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<BubbleChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: false,
@@ -97,7 +99,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const BUBBLE_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function bubbleChartLoad(props: VisualisationConfig<BubbleChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -188,7 +194,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function bubbleChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -243,8 +250,22 @@ function save(
     });
 }
 
-export const bubbleChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use bubbleChartLoad and bubbleChartSave instead.
+ */
+export interface IBubbleChartConfig {
+    load: typeof bubbleChartLoad;
+    save: typeof bubbleChartSave;
+    DEFAULTS: ConfigDefaults<BubbleChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use bubbleChartLoad and bubbleChartSave instead.
+ */
+export const bubbleChart: IBubbleChartConfig = {
+    load: bubbleChartLoad,
+    save: bubbleChartSave,
     DEFAULTS,
 };

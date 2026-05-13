@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type ScatterChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -56,7 +57,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<ScatterChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: false,
@@ -99,7 +101,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const SCATTER_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function scatterChartLoad(props: VisualisationConfig<ScatterChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -204,7 +210,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function scatterChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -268,8 +275,22 @@ function save(
     });
 }
 
-export const scatterChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use scatterChartLoad and scatterChartSave instead.
+ */
+export interface IScatterChartConfig {
+    load: typeof scatterChartLoad;
+    save: typeof scatterChartSave;
+    DEFAULTS: ConfigDefaults<ScatterChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use scatterChartLoad and scatterChartSave instead.
+ */
+export const scatterChart: IScatterChartConfig = {
+    load: scatterChartLoad,
+    save: scatterChartSave,
     DEFAULTS,
 };

@@ -37,6 +37,37 @@ export function getAbsoluteWorkspaceSettingHref(workspaceId: string, section: st
     return `${window.location.origin}${getWorkspaceSettingHref(workspaceId, section, action)}`;
 }
 
+// Shell-host route shape: the host serves the home-ui module under
+// `/organization/settings`, and uses `configuration` (not `settings`) for the
+// workspace detail route. Used when `enableShellApplication` is on, so
+// standalone `/settings`/`/workspaces/{id}/settings` URLs aren't bounced to the
+// workspaces list.
+export function getShellAppOrgSettingHref(section: string, action?: string) {
+    if (!action) {
+        return `/organization/settings/configuration#/${section}`;
+    }
+    return `/organization/settings/configuration#/${section}/${action}`;
+}
+
+export function getAbsoluteShellAppOrgSettingHref(section: string, action?: string) {
+    return `${window.location.origin}${getShellAppOrgSettingHref(section, action)}`;
+}
+
+export function getShellAppWorkspaceSettingHref(workspaceId: string, section: string, action?: string) {
+    if (!action) {
+        return `/organization/settings/workspaces/${workspaceId}/configuration#/${section}`;
+    }
+    return `/organization/settings/workspaces/${workspaceId}/configuration#/${section}/${action}`;
+}
+
+export function getAbsoluteShellAppWorkspaceSettingHref(
+    workspaceId: string,
+    section: string,
+    action?: string,
+) {
+    return `${window.location.origin}${getShellAppWorkspaceSettingHref(workspaceId, section, action)}`;
+}
+
 export function getHeadlineComparison(metrics: IAttributeOrMeasure[]) {
     return {
         comparison: {

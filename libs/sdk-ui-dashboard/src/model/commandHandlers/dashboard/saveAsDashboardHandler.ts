@@ -9,6 +9,7 @@ import {
     type IAccessControlAware,
     type IDashboard,
     type IDashboardDefinition,
+    type IDashboardParameter,
     type IDashboardTab,
     type IFilterContext,
     type ITempFilterContext,
@@ -36,7 +37,6 @@ import {
     selectPersistedDashboard,
     selectPersistedDashboardFilterContextAsFilterContextDefinition,
 } from "../../store/meta/metaSelectors.js";
-import { selectSmartPersistedDashboardParameters } from "../../store/parameters/parametersSelectors.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { savingActions } from "../../store/saving/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -49,6 +49,7 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectMeasureValueFilterConfigsOverrides } from "../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import { selectSmartPersistedTabsParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type ITabState } from "../../store/tabs/tabsState.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
@@ -99,6 +100,7 @@ function createDashboard(ctx: DashboardContext, saveAsCtx: DashboardSaveAsContex
  */
 function processExistingTabsForSaveAs(
     tabs: ITabState[],
+    parametersByTab: Record<string, IDashboardParameter[]>,
     useOriginalFilterContext?: boolean,
 ): IDashboardTab[] {
     return tabs.map((tab) => {
@@ -130,6 +132,8 @@ function processExistingTabsForSaveAs(
               } as IFilterContext | ITempFilterContext)
             : undefined;
 
+        const tabParameters = parametersByTab[tab.localIdentifier] ?? [];
+
         const result: IDashboardTab = {
             // explicitly type the result to avoid type errors caused by spread operators
             localIdentifier: tab.localIdentifier,
@@ -141,6 +145,9 @@ function processExistingTabsForSaveAs(
             ...dateFilterConfigsProp,
             ...attributeFilterConfigsProp,
             ...measureValueFilterConfigsProp,
+            // Always persist `parameters` (incl. `[]`) so V1 root fallback never re-hydrates stale
+            // root parameters when every tab has been emptied.
+            parameters: tabParameters,
         };
 
         return result;
@@ -208,8 +215,8 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         yield select(selectMeasureValueFilterConfigsOverrides);
 
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const parameters: ReturnType<typeof selectSmartPersistedDashboardParameters> = yield select(
-        selectSmartPersistedDashboardParameters,
+    const parametersByTab: ReturnType<typeof selectSmartPersistedTabsParameters> = yield select(
+        selectSmartPersistedTabsParameters,
     );
 
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
@@ -219,7 +226,9 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
 
     // Process tabs if tabs exist
     const processedTabs: IDashboardTab[] | undefined =
-        tabs && tabs.length > 0 ? processExistingTabsForSaveAs(tabs, useOriginalFilterContext) : undefined;
+        tabs && tabs.length > 0
+            ? processExistingTabsForSaveAs(tabs, parametersByTab, useOriginalFilterContext)
+            : undefined;
 
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
@@ -233,7 +242,6 @@ function* createDashboardSaveAsContext(cmd: SaveDashboardAs): SagaIterator<Dashb
         ...(dateFilterConfigs?.length ? { dateFilterConfigs } : {}),
         ...(measureValueFilterConfigs?.length ? { measureValueFilterConfigs } : {}),
         ...(processedTabs ? { tabs: processedTabs } : {}),
-        ...(parameters.length ? { parameters } : {}),
     };
 
     const pluginsProp = persistedDashboard?.plugins ? { plugins: persistedDashboard.plugins } : {};

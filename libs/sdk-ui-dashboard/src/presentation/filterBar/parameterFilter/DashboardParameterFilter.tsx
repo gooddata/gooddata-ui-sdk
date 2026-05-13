@@ -12,9 +12,9 @@ import { Dropdown, ParameterControlButton, ParameterControlDropdown } from "@goo
 
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
-import { parametersActions } from "../../../model/store/parameters/index.js";
-import { selectParameterRuntimeOverrideByRef } from "../../../model/store/parameters/parametersSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { tabsActions } from "../../../model/store/tabs/index.js";
+import { selectParameterRuntimeOverrideByRef } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import { DraggableChipSource } from "../../dragAndDrop/DraggableChipSource.js";
 
 /**
@@ -80,9 +80,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                         value={runtimeOverride}
                         constraints={constraints}
                         onApply={(value) => {
-                            dispatch(
-                                parametersActions.setParameterRuntimeValue({ ref: parameter.ref, value }),
-                            );
+                            dispatch(tabsActions.setParameterRuntimeValue({ ref: parameter.ref, value }));
                             closeDropdown();
                         }}
                         onCancel={closeDropdown}

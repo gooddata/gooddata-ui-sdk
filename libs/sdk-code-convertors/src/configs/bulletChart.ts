@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type BulletChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     legend: {
         enabled: boolean;
@@ -52,7 +53,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<BulletChartConfigProperties> = {
     colorMapping: [],
     legend: {
         enabled: true,
@@ -90,7 +92,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const BULLET_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function bulletChartLoad(props: VisualisationConfig<BulletChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -179,7 +185,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function bulletChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -228,8 +235,22 @@ function save(
     });
 }
 
-export const bulletChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use bulletChartLoad and bulletChartSave instead.
+ */
+export interface IBulletChartConfig {
+    load: typeof bulletChartLoad;
+    save: typeof bulletChartSave;
+    DEFAULTS: ConfigDefaults<BulletChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use bulletChartLoad and bulletChartSave instead.
+ */
+export const bulletChart: IBulletChartConfig = {
+    load: bulletChartLoad,
+    save: bulletChartSave,
     DEFAULTS,
 };

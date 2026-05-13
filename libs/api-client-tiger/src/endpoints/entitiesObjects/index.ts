@@ -51,6 +51,7 @@ export {
     FilterContextApi_CreateEntityFilterContexts,
     FilterContextApi_GetEntityFilterContexts,
     FilterContextApi_UpdateEntityFilterContexts,
+    FilterContextApi_DeleteEntityFilterContexts,
     type FilterContextApiCreateEntityFilterContextsRequest,
     type FilterContextApiGetEntityFilterContextsRequest,
     type FilterContextApiUpdateEntityFilterContextsRequest,

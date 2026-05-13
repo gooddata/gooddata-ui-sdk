@@ -51,10 +51,8 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
 // @public (undocumented)
 export type AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
-// Warning: (ae-forgotten-export) The symbol "CompoundMeasureValueFilter_2" needs to be exported by the entry point index.d.ts
-//
 // @public
-export type AbstractMeasureValueFilter = AfmComparisonMeasureValueFilter | CompoundMeasureValueFilter_2 | AfmRangeMeasureValueFilter | AfmRankingFilter;
+export type AbstractMeasureValueFilter = AfmComparisonMeasureValueFilter | AfmCompoundMeasureValueFilter | AfmRangeMeasureValueFilter | AfmRankingFilter;
 
 // @public
 export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
@@ -144,8 +142,6 @@ export function ActionsApi_InheritedEntityConflicts(axios: AxiosInstance, basePa
 // @public
 export function ActionsApi_InheritedEntityPrefixes(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiInheritedEntityPrefixesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<Array<string>>;
 
-// Warning: (ae-forgotten-export) The symbol "ListLlmProviderModelsResponse" needs to be exported by the entry point index.d.ts
-//
 // @public
 export function ActionsApi_ListLlmProviderModels(axios: AxiosInstance, basePath: string, requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig, configuration?: LabelElementsConfiguration): AxiosPromise<ListLlmProviderModelsResponse>;
 
@@ -442,6 +438,24 @@ export interface ActionsApiCancelExecutionsRequest {
 }
 
 // @public
+export interface ActionsApiCancelWorkflowRequest {
+    readonly runId: string;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiChangeAnalysisRequest {
+    readonly changeAnalysisRequest: AfmChangeAnalysisRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiChangeAnalysisResultRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiCheckEntityOverridesRequest {
     readonly hierarchyObjectIdentification: Array<HierarchyObjectIdentification>;
     readonly workspaceId: string;
@@ -485,6 +499,14 @@ export interface ActionsApiComputeLabelElementsPostRequest {
 }
 
 // @public
+export interface ActionsApiComputeReportForVisualizationObjectRequest {
+    readonly skipCache?: boolean;
+    readonly visualizationObjectExecution?: VisualizationObjectExecution;
+    readonly visualizationObjectId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiComputeReportRequest {
     readonly afmExecution: AfmExecution;
     readonly skipCache?: boolean;
@@ -502,6 +524,16 @@ export interface ActionsApiComputeValidDescendantsRequest {
 export interface ActionsApiComputeValidObjectsRequest {
     readonly afmValidObjectsQuery: AfmValidObjectsQuery;
     readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiConvertGeoFileRequest {
+    readonly convertGeoFileRequest: ConvertGeoFileRequest;
+}
+
+// @public
+export interface ActionsApiCustomGeoCollectionStagingUploadRequest {
+    readonly file: File;
 }
 
 // @public
@@ -551,9 +583,27 @@ export interface ActionsApiForecastResultRequest {
 }
 
 // @public
+export interface ActionsApiGenerateDashboardSummaryRequest {
+    readonly workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiGenerateDescriptionRequest {
+    readonly generateDescriptionRequest: GenerateDescriptionRequest;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiGenerateLogicalModelRequest {
     readonly dataSourceId: string;
     readonly generateLdmRequest: GenerateLdmRequest;
+}
+
+// @public
+export interface ActionsApiGenerateTitleRequest {
+    readonly generateTitleRequest: GenerateTitleRequest;
+    readonly workspaceId: string;
 }
 
 // @public
@@ -585,9 +635,21 @@ export interface ActionsApiGetTranslationTagsRequest {
 }
 
 // @public
+export interface ActionsApiGetWorkflowStatusRequest {
+    readonly runId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiImportCsvRequest {
     readonly dataSourceId: string;
     readonly importCsvRequest: ImportCsvRequest;
+}
+
+// @public
+export interface ActionsApiImportCustomGeoCollectionRequest {
+    readonly collectionId: string;
+    readonly importGeoCollectionRequest: ImportGeoCollectionRequest;
 }
 
 // @public
@@ -676,7 +738,6 @@ export interface ActionsApiListLlmProviderModelsByIdRequest {
 
 // @public
 export interface ActionsApiListLlmProviderModelsRequest {
-    // Warning: (ae-forgotten-export) The symbol "ListLlmProviderModelsRequest" needs to be exported by the entry point index.d.ts
     readonly listLlmProviderModelsRequest: ListLlmProviderModelsRequest;
 }
 
@@ -722,6 +783,21 @@ export interface ActionsApiManageWorkspacePermissionsRequest {
 
 // @public
 export interface ActionsApiMetadataSyncRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiOutlierDetectionRequest {
+    readonly outlierDetectionRequest: OutlierDetectionRequest;
+    readonly skipCache?: boolean;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiOutlierDetectionResultRequest {
+    readonly limit?: number;
+    readonly offset?: number;
+    readonly resultId: string;
     readonly workspaceId: string;
 }
 
@@ -773,6 +849,11 @@ export interface ActionsApiResolveLlmEndpointsRequest {
 }
 
 // @public
+export interface ActionsApiResolveLlmProvidersRequest {
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiResolveRequestedEntitlementsRequest {
     readonly entitlementsRequest: EntitlementsRequest;
 }
@@ -787,6 +868,13 @@ export interface ActionsApiResolveSettingsWithoutWorkspaceRequest {
 export interface ActionsApiRetrieveExecutionMetadataRequest {
     readonly resultId: string;
     readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiRetrieveResultBinaryRequest {
+    readonly resultId: string;
+    readonly workspaceId: string;
+    readonly xGDCCANCELTOKEN?: string;
 }
 
 // @public
@@ -815,6 +903,12 @@ export interface ActionsApiScanDataSourceRequest {
 export interface ActionsApiScanSqlRequest {
     readonly dataSourceId: string;
     readonly scanSqlRequest: ScanSqlRequest;
+}
+
+// @public
+export interface ActionsApiScanStatisticsRequest {
+    readonly dataSourceId: string;
+    readonly tableStatisticsRequest: TableStatisticsRequest;
 }
 
 // @public
@@ -848,6 +942,11 @@ export interface ActionsApiTestDataSourceDefinitionRequest {
 export interface ActionsApiTestDataSourceRequest {
     readonly dataSourceId: string;
     readonly testRequest: TestRequest;
+}
+
+// @public
+export interface ActionsApiTrendingObjectsRequest {
+    readonly workspaceId: string;
 }
 
 // @public
@@ -1228,8 +1327,7 @@ export interface AfmAbsoluteDateFilterAbsoluteDateFilter {
     'applyOnResult'?: boolean;
     // (undocumented)
     'dataset': AfmModelObjectIdentifierDataset;
-    // Warning: (ae-forgotten-export) The symbol "AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum_2" needs to be exported by the entry point index.d.ts
-    'emptyValueHandling'?: AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum_2;
+    'emptyValueHandling'?: AfmAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
     // (undocumented)
     'from': string;
     // (undocumented)
@@ -1237,6 +1335,9 @@ export interface AfmAbsoluteDateFilterAbsoluteDateFilter {
     // (undocumented)
     'to': string;
 }
+
+// @public (undocumented)
+export type AfmAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 // @public
 export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApiInterface {
@@ -1248,23 +1349,16 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiCancelWorkflowRequest" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiChangeAnalysisRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "ChangeAnalysisResponse" needs to be exported by the entry point index.d.ts
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiChangeAnalysisResultRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "ChangeAnalysisResult" needs to be exported by the entry point index.d.ts
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     clusteringResult(requestParameters: ActionsApiClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<ClusteringResult>;
     computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): AxiosPromise<ElementsResponse>;
     computeReport(requestParameters: ActionsApiComputeReportRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiComputeReportForVisualizationObjectRequest" needs to be exported by the entry point index.d.ts
     computeReportForVisualizationObject(requestParameters: ActionsApiComputeReportForVisualizationObjectRequest, options?: AxiosRequestConfig): AxiosPromise<AfmExecutionResponse>;
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
@@ -1272,22 +1366,12 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateDashboardSummaryRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "WorkflowDashboardSummaryResponseDto" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateDescriptionRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "GenerateDescriptionResponse" needs to be exported by the entry point index.d.ts
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateTitleRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "GenerateTitleResponse" needs to be exported by the entry point index.d.ts
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiGetWorkflowStatusRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "WorkflowStatusResponseDto" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
@@ -1295,27 +1379,17 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     listLlmProviderModelsById(requestParameters: ActionsApiListLlmProviderModelsByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
     memoryCreatedByUsers(requestParameters: GenAiApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiOutlierDetectionRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "OutlierDetectionResponse" needs to be exported by the entry point index.d.ts
     outlierDetection(requestParameters: ActionsApiOutlierDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiOutlierDetectionResultRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "OutlierDetectionResult" needs to be exported by the entry point index.d.ts
     outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
     // @deprecated
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiResolveLlmProvidersRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "ResolvedLlms" needs to be exported by the entry point index.d.ts
     resolveLlmProviders(requestParameters: ActionsApiResolveLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlms>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiRetrieveResultBinaryRequest" needs to be exported by the entry point index.d.ts
     retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     tags(requestParameters: GenAiApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
-    // Warning: (ae-forgotten-export) The symbol "TestLlmProviderResponse" needs to be exported by the entry point index.d.ts
     testLlmProvider(requestParameters: GenAiApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     testLlmProviderById(requestParameters: GenAiApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiTrendingObjectsRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "TrendingObjectsResult" needs to be exported by the entry point index.d.ts
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
     // @deprecated
@@ -1389,6 +1463,47 @@ export interface AfmActionsApiInterface {
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 }
 
+// @public
+export interface AfmAfmObjectIdentifierParameter {
+    // (undocumented)
+    'identifier': AfmAfmObjectIdentifierParameterIdentifier;
+}
+
+// @public (undocumented)
+export interface AfmAfmObjectIdentifierParameterIdentifier {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'type': AfmAfmObjectIdentifierParameterIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmAfmObjectIdentifierParameterIdentifierTypeEnum = 'parameter';
+
+// @public
+export interface AfmAllTimeDateFilter {
+    // (undocumented)
+    'allTimeDateFilter': AfmAllTimeDateFilterAllTimeDateFilter;
+}
+
+// @public (undocumented)
+export interface AfmAllTimeDateFilterAllTimeDateFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    // (undocumented)
+    'dataset': AfmModelObjectIdentifierDataset;
+    'emptyValueHandling'?: AfmAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum;
+    'granularity'?: AfmAllTimeDateFilterAllTimeDateFilterGranularityEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+}
+
+// @public (undocumented)
+export type AfmAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+
+// @public (undocumented)
+export type AfmAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+
 // @public (undocumented)
 export interface AfmAnalyticsCatalogCreatedBy {
     'reasoning': string;
@@ -1423,10 +1538,8 @@ export interface AfmArithmeticMeasureDefinitionArithmeticMeasure {
 // @public (undocumented)
 export type AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = 'SUM' | 'DIFFERENCE' | 'MULTIPLICATION' | 'RATIO' | 'CHANGE';
 
-// Warning: (ae-forgotten-export) The symbol "MatchAttributeFilter_2" needs to be exported by the entry point index.d.ts
-//
 // @public
-export type AfmAttributeFilter = MatchAttributeFilter_2 | AfmNegativeAttributeFilter | AfmPositiveAttributeFilter;
+export type AfmAttributeFilter = AfmMatchAttributeFilter | AfmNegativeAttributeFilter | AfmPositiveAttributeFilter;
 
 // @public
 export interface AfmAttributeFilterElements {
@@ -1440,6 +1553,48 @@ export interface AfmAttributeItem {
     'localIdentifier': string;
     'showAllValues'?: boolean;
 }
+
+// @public (undocumented)
+export interface AfmAwsBedrockAccessKeyAuth {
+    'accessKeyId'?: string | null;
+    'secretAccessKey'?: string | null;
+    'sessionToken'?: string | null;
+    'type': AfmAwsBedrockAccessKeyAuthTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmAwsBedrockAccessKeyAuthTypeEnum = 'ACCESS_KEY';
+
+// @public
+export interface AfmAwsBedrockProviderConfig {
+    // (undocumented)
+    'auth': AfmAwsBedrockAccessKeyAuth;
+    'region': string;
+    'type': AfmAwsBedrockProviderConfigTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmAwsBedrockProviderConfigTypeEnum = 'AWS_BEDROCK';
+
+// @public (undocumented)
+export interface AfmAzureFoundryApiKeyAuth {
+    'apiKey'?: string | null;
+    'type': AfmAzureFoundryApiKeyAuthTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmAzureFoundryApiKeyAuthTypeEnum = 'API_KEY';
+
+// @public
+export interface AfmAzureFoundryProviderConfig {
+    // (undocumented)
+    'auth': AfmAzureFoundryApiKeyAuth;
+    'endpoint': string;
+    'type': AfmAzureFoundryProviderConfigTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmAzureFoundryProviderConfigTypeEnum = 'AZURE_FOUNDRY';
 
 // @public
 export interface AfmBoundedFilter {
@@ -1466,7 +1621,6 @@ export interface AfmChangeAnalysisRequest {
     // (undocumented)
     'dateAttribute': AfmAttributeItem;
     'excludeTags'?: Array<string>;
-    // Warning: (ae-forgotten-export) The symbol "OutlierDetectionRequestFiltersInner" needs to be exported by the entry point index.d.ts
     'filters'?: Array<OutlierDetectionRequestFiltersInner>;
     'includeTags'?: Array<string>;
     // (undocumented)
@@ -1474,6 +1628,23 @@ export interface AfmChangeAnalysisRequest {
     'referencePeriod': string;
     'useSmartAttributeSelection'?: boolean;
 }
+
+// @public
+export interface AfmComparisonCondition {
+    // (undocumented)
+    'comparison': AfmComparisonConditionComparison;
+}
+
+// @public (undocumented)
+export interface AfmComparisonConditionComparison {
+    // (undocumented)
+    'operator': AfmComparisonConditionComparisonOperatorEnum;
+    // (undocumented)
+    'value': number;
+}
+
+// @public (undocumented)
+export type AfmComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
 
 // @public
 export interface AfmComparisonMeasureValueFilter {
@@ -1500,10 +1671,27 @@ export interface AfmComparisonMeasureValueFilterComparisonMeasureValueFilter {
 // @public (undocumented)
 export type AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
 
-// Warning: (ae-forgotten-export) The symbol "AllTimeDateFilter_2" needs to be exported by the entry point index.d.ts
-//
 // @public
-export type AfmDateFilter = AfmAbsoluteDateFilter | AllTimeDateFilter_2 | AfmRelativeDateFilter;
+export interface AfmCompoundMeasureValueFilter {
+    // (undocumented)
+    'compoundMeasureValueFilter': AfmCompoundMeasureValueFilterCompoundMeasureValueFilter;
+}
+
+// @public (undocumented)
+export interface AfmCompoundMeasureValueFilterCompoundMeasureValueFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    'conditions': Array<AfmMeasureValueCondition>;
+    'dimensionality'?: Array<AfmModelIdentifier>;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'measure': AfmModelIdentifier;
+    'treatNullValuesAs'?: number;
+}
+
+// @public
+export type AfmDateFilter = AfmAbsoluteDateFilter | AfmAllTimeDateFilter | AfmRelativeDateFilter;
 
 // @public (undocumented)
 export interface AfmExecution {
@@ -1528,15 +1716,29 @@ export interface AfmExecutionSettings {
 }
 
 // @public
-export type AfmFilterDefinition = AfmAbsoluteDateFilter | AllTimeDateFilter_2 | AfmComparisonMeasureValueFilter | CompoundMeasureValueFilter_2 | AfmInlineFilterDefinition | MatchAttributeFilter_2 | AfmNegativeAttributeFilter | AfmPositiveAttributeFilter | AfmRangeMeasureValueFilter | AfmRankingFilter | AfmRelativeDateFilter;
+export type AfmFilterDefinition = AfmAbsoluteDateFilter | AfmAllTimeDateFilter | AfmComparisonMeasureValueFilter | AfmCompoundMeasureValueFilter | AfmInlineFilterDefinition | AfmMatchAttributeFilter | AfmNegativeAttributeFilter | AfmPositiveAttributeFilter | AfmRangeMeasureValueFilter | AfmRankingFilter | AfmRelativeDateFilter;
 
 // @public
 export type AfmFilterDefinitionForSimpleMeasure = AfmAttributeFilter | AfmDateFilter;
 
+// @public
+export interface AfmGeoAreaConfig {
+    // (undocumented)
+    'collection': AfmGeoCollectionIdentifier;
+}
+
+// @public (undocumented)
+export interface AfmGeoCollectionIdentifier {
+    'id': string;
+    'kind'?: AfmGeoCollectionIdentifierKindEnum;
+}
+
+// @public (undocumented)
+export type AfmGeoCollectionIdentifierKindEnum = 'STATIC' | 'CUSTOM';
+
 // @public (undocumented)
 export interface AfmGetQualityIssuesResponse {
     'issues': Array<AfmQualityIssue>;
-    // Warning: (ae-forgotten-export) The symbol "GetQualityIssuesResponseStatusEnum" needs to be exported by the entry point index.d.ts
     'status': GetQualityIssuesResponseStatusEnum;
     'updatedAt'?: string;
 }
@@ -1577,6 +1779,29 @@ export interface AfmLocalIdentifier {
 }
 
 // @public
+export interface AfmMatchAttributeFilter {
+    // (undocumented)
+    'matchAttributeFilter': AfmMatchAttributeFilterMatchAttributeFilter;
+}
+
+// @public (undocumented)
+export interface AfmMatchAttributeFilterMatchAttributeFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    'caseSensitive'?: boolean;
+    // (undocumented)
+    'label': AfmModelIdentifier;
+    'literal': string;
+    // (undocumented)
+    'localIdentifier'?: string;
+    'matchType': AfmMatchAttributeFilterMatchAttributeFilterMatchTypeEnum;
+    'negate'?: boolean;
+}
+
+// @public (undocumented)
+export type AfmMatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
+
+// @public
 export type AfmMeasureDefinition = AfmArithmeticMeasureDefinition | AfmInlineMeasureDefinition | AfmPopMeasureDefinition | AfmSimpleMeasureDefinition;
 
 // @public
@@ -1585,6 +1810,9 @@ export interface AfmMeasureItem {
     'definition': AfmMeasureDefinition;
     'localIdentifier': string;
 }
+
+// @public
+export type AfmMeasureValueCondition = AfmComparisonCondition | AfmRangeCondition;
 
 // @public (undocumented)
 export interface AfmMemoryItemCreatedByUsers {
@@ -1629,7 +1857,6 @@ export interface AfmModel {
     'filters': Array<AfmFilterDefinition>;
     'measureDefinitionOverrides'?: Array<AfmMetricDefinitionOverride>;
     'measures': Array<AfmMeasureItem>;
-    // Warning: (ae-forgotten-export) The symbol "ParameterItem_2" needs to be exported by the entry point index.d.ts
     'parameters'?: Array<ParameterItem_2>;
 }
 
@@ -1848,6 +2075,27 @@ export interface AfmObjectIdentifierParameterIdentifier {
 // @public (undocumented)
 export type AfmObjectIdentifierParameterIdentifierTypeEnum = 'parameter';
 
+// @public (undocumented)
+export interface AfmOpenAiApiKeyAuth {
+    'apiKey'?: string | null;
+    'type': AfmOpenAiApiKeyAuthTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmOpenAiApiKeyAuthTypeEnum = 'API_KEY';
+
+// @public
+export interface AfmOpenAIProviderConfig {
+    // (undocumented)
+    'auth': AfmOpenAiApiKeyAuth;
+    'baseUrl'?: string;
+    'organization'?: string | null;
+    'type': AfmOpenAIProviderConfigTypeEnum;
+}
+
+// @public (undocumented)
+export type AfmOpenAIProviderConfigTypeEnum = 'OPENAI';
+
 // @public
 export interface AfmPopDataset {
     // (undocumented)
@@ -1918,7 +2166,6 @@ export interface AfmQualityIssue {
     };
     'id': string;
     'objects': Array<AfmQualityIssueObject>;
-    // Warning: (ae-forgotten-export) The symbol "QualityIssueSeverityEnum" needs to be exported by the entry point index.d.ts
     'severity': QualityIssueSeverityEnum;
 }
 
@@ -1939,6 +2186,25 @@ export interface AfmQualityIssuesCalculationStatusResponse {
 
 // @public (undocumented)
 export type AfmQualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
+
+// @public
+export interface AfmRangeCondition {
+    // (undocumented)
+    'range': AfmRangeConditionRange;
+}
+
+// @public (undocumented)
+export interface AfmRangeConditionRange {
+    // (undocumented)
+    'from': number;
+    // (undocumented)
+    'operator': AfmRangeConditionRangeOperatorEnum;
+    // (undocumented)
+    'to': number;
+}
+
+// @public (undocumented)
+export type AfmRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
 
 // @public
 export interface AfmRangeMeasureValueFilter {
@@ -2002,14 +2268,16 @@ export interface AfmRelativeDateFilterRelativeDateFilter {
     'boundedFilter'?: AfmBoundedFilter;
     // (undocumented)
     'dataset': AfmModelObjectIdentifierDataset;
-    // Warning: (ae-forgotten-export) The symbol "RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum_2" needs to be exported by the entry point index.d.ts
-    'emptyValueHandling'?: RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum_2;
+    'emptyValueHandling'?: AfmRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     'from': number;
     'granularity': AfmRelativeDateFilterRelativeDateFilterGranularityEnum;
     // (undocumented)
     'localIdentifier'?: string;
     'to': number;
 }
+
+// @public (undocumented)
+export type AfmRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 // @public (undocumented)
 export type AfmRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
@@ -2035,7 +2303,6 @@ export type AfmSimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT' |
 // @public (undocumented)
 export interface AfmTriggerQualityIssuesCalculationResponse {
     'processId': string;
-    // Warning: (ae-forgotten-export) The symbol "TriggerQualityIssuesCalculationResponseStatusEnum" needs to be exported by the entry point index.d.ts
     'status': TriggerQualityIssuesCalculationResponseStatusEnum;
 }
 
@@ -2068,22 +2335,16 @@ export interface AfmValidObjectsResponse {
     'items': Array<RestApiIdentifier>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "BaseAPI" needs to be exported by the entry point index.d.ts
-//
 // @public
-export class AgentAi extends BaseAPI implements AgentAiInterface {
+export class AgentAi extends AiBaseAPI implements AgentAiInterface {
     listAvailableSkills(options?: AxiosRequestConfig): AxiosPromise<AiSkillResponse[]>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Configuration_2" needs to be exported by the entry point index.d.ts
-//
 // @public
-export function AgentAi_ListAvailableSkills(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<Array<AiSkillResponse>>;
+export function AgentAi_ListAvailableSkills(axios: AxiosInstance, basePath: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<Array<AiSkillResponse>>;
 
-// Warning: (ae-forgotten-export) The symbol "RequestArgs" needs to be exported by the entry point index.d.ts
-//
 // @public
-export function AgentAiAxiosParamCreator_ListAvailableSkills(options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function AgentAiAxiosParamCreator_ListAvailableSkills(options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export interface AgentAiInterface {
@@ -2683,6 +2944,17 @@ export type AiAttributeSortItemDirectionEnum = 'ASC' | 'DESC';
 export type AiAttributeSortItemTypeEnum = 'attribute_sort';
 
 // @public (undocumented)
+export class AiBaseAPI {
+    constructor(configuration?: AiConfiguration, basePath?: string, axios?: AxiosInstance);
+    // (undocumented)
+    protected axios: AxiosInstance;
+    // (undocumented)
+    protected basePath: string;
+    // (undocumented)
+    protected configuration: AiConfiguration | undefined;
+}
+
+// @public (undocumented)
 export interface AiBucketRefObject {
     // (undocumented)
     'field': string;
@@ -2690,6 +2962,40 @@ export interface AiBucketRefObject {
 
 // @public (undocumented)
 export interface AiClusteringAmount {
+}
+
+// @public (undocumented)
+export class AiConfiguration {
+    constructor(param?: AiConfigurationParameters);
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    baseOptions?: any;
+    basePath?: string;
+    formDataCtor?: new () => any;
+    isJsonMime(mime: string): boolean;
+    password?: string;
+    serverIndex?: number;
+    username?: string;
+}
+
+// @public
+export interface AiConfigurationParameters {
+    // (undocumented)
+    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
+    // (undocumented)
+    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
+    // (undocumented)
+    baseOptions?: any;
+    // (undocumented)
+    basePath?: string;
+    // (undocumented)
+    formDataCtor?: new () => any;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    serverIndex?: number;
+    // (undocumented)
+    username?: string;
 }
 
 // @public
@@ -2760,6 +3066,7 @@ export interface AiConversationResponse {
     'isPreview'?: boolean;
     'lastActivityAt': string;
     'organizationId': string;
+    'pinned'?: boolean;
     // (undocumented)
     'title'?: string | null;
     'userId': string;
@@ -2782,6 +3089,8 @@ export interface AiConversationTurnResponse {
 
 // @public
 export interface AiConversationUpdateRequest {
+    // (undocumented)
+    'pinned'?: boolean | null;
     // (undocumented)
     'title'?: string | null;
 }
@@ -3227,6 +3536,14 @@ export interface AiReasoningContent {
 export type AiReasoningContentTypeEnum = 'reasoning';
 
 // @public (undocumented)
+export interface AiRequestArgs {
+    // (undocumented)
+    options: RawAxiosRequestConfig;
+    // (undocumented)
+    url: string;
+}
+
+// @public (undocumented)
 export interface AiResponseFeedback {
     // (undocumented)
     'text'?: string | null;
@@ -3476,6 +3793,13 @@ export interface AiUploadDocumentResponse {
     'numChunks': number;
     // (undocumented)
     'success': boolean;
+}
+
+// @public
+export interface AiUsageMetadataItem {
+    'counterType': string;
+    'currentValue': number;
+    'limit': number;
 }
 
 // @public (undocumented)
@@ -4707,10 +5031,8 @@ export interface AttributeHeaderAttributeHeader {
     'attributeName': string;
     // (undocumented)
     'format'?: AttributeFormat;
-    // Warning: (ae-forgotten-export) The symbol "GeoAreaConfig_2" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
-    'geoAreaConfig'?: GeoAreaConfig_2;
+    'geoAreaConfig'?: AfmGeoAreaConfig;
     'granularity'?: AttributeHeaderAttributeHeaderGranularityEnum;
     // (undocumented)
     'label': RestApiIdentifier;
@@ -5108,7 +5430,6 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     'applyOnResult'?: boolean;
     // (undocumented)
     'dataset': AutomationAfmObjectIdentifierDataset;
-    // Warning: (ae-forgotten-export) The symbol "AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum" needs to be exported by the entry point index.d.ts
     'emptyValueHandling'?: AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
     // (undocumented)
     'from': string;
@@ -5118,8 +5439,9 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     'to': string;
 }
 
-// Warning: (ae-forgotten-export) The symbol "AutomationCompoundMeasureValueFilter" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export type AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+
 // @public
 export type AutomationAbstractMeasureValueFilter = AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter;
 
@@ -5163,10 +5485,8 @@ export interface AutomationAFM {
     'attributes': Array<AutomationAttributeItem>;
     'auxMeasures'?: Array<AutomationMeasureItem>;
     'filters': Array<AutomationAFMFiltersInner>;
-    // Warning: (ae-forgotten-export) The symbol "AutomationMetricDefinitionOverride" needs to be exported by the entry point index.d.ts
     'measureDefinitionOverrides'?: Array<AutomationMetricDefinitionOverride>;
     'measures': Array<AutomationMeasureItem>;
-    // Warning: (ae-forgotten-export) The symbol "AutomationParameterItem" needs to be exported by the entry point index.d.ts
     'parameters'?: Array<AutomationParameterItem>;
 }
 
@@ -5267,12 +5587,27 @@ export interface AutomationAfmObjectIdentifierLabelIdentifier {
 // @public (undocumented)
 export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
 
+// @public
+export interface AutomationAfmObjectIdentifierParameter {
+    // (undocumented)
+    'identifier': AutomationAfmObjectIdentifierParameterIdentifier;
+}
+
+// @public (undocumented)
+export interface AutomationAfmObjectIdentifierParameterIdentifier {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'type': AutomationAfmObjectIdentifierParameterIdentifierTypeEnum;
+}
+
+// @public (undocumented)
+export type AutomationAfmObjectIdentifierParameterIdentifierTypeEnum = 'parameter';
+
 // @public (undocumented)
 export interface AutomationAlert {
-    // Warning: (ae-forgotten-export) The symbol "AutomationAlertCondition_2" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
-    'condition': AutomationAlertCondition_2;
+    'condition': MdAutomationAlertCondition;
     // (undocumented)
     'execution': AlertAfm;
     'interval'?: AutomationAlertIntervalEnum;
@@ -5287,8 +5622,6 @@ export interface AutomationAlertAfm {
     'measures': Array<AutomationMeasureItem>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "AutomationAnomalyDetectionWrapper" needs to be exported by the entry point index.d.ts
-//
 // @public
 export type AutomationAlertCondition = AutomationAnomalyDetectionWrapper | AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper;
 
@@ -5350,6 +5683,52 @@ export type AutomationAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' |
 // @public (undocumented)
 export type AutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
 
+// @public
+export interface AutomationAllTimeDateFilter {
+    // (undocumented)
+    'allTimeDateFilter': AutomationAllTimeDateFilterAllTimeDateFilter;
+}
+
+// @public (undocumented)
+export interface AutomationAllTimeDateFilterAllTimeDateFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    // (undocumented)
+    'dataset': AutomationAfmObjectIdentifierDataset;
+    'emptyValueHandling'?: AutomationAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum;
+    'granularity'?: AutomationAllTimeDateFilterAllTimeDateFilterGranularityEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+}
+
+// @public (undocumented)
+export type AutomationAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+
+// @public (undocumented)
+export type AutomationAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+
+// @public (undocumented)
+export interface AutomationAnomalyDetection {
+    // (undocumented)
+    'dataset': AutomationAfmObjectIdentifierDataset;
+    'granularity': AutomationAnomalyDetectionGranularityEnum;
+    // (undocumented)
+    'measure': AutomationLocalIdentifier;
+    'sensitivity': AutomationAnomalyDetectionSensitivityEnum;
+}
+
+// @public (undocumented)
+export type AutomationAnomalyDetectionGranularityEnum = 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+
+// @public (undocumented)
+export type AutomationAnomalyDetectionSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
+
+// @public (undocumented)
+export interface AutomationAnomalyDetectionWrapper {
+    // (undocumented)
+    'anomaly': AutomationAnomalyDetection;
+}
+
 // @public (undocumented)
 export interface AutomationArithmeticMeasure {
     // (undocumented)
@@ -5390,8 +5769,6 @@ export interface AutomationAttributeElementsByValue {
     'values': Array<string | null>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "AutomationMatchAttributeFilter" needs to be exported by the entry point index.d.ts
-//
 // @public
 export type AutomationAttributeFilter = AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter;
 
@@ -5430,13 +5807,15 @@ export interface AutomationAutomationAlert {
     'condition': AutomationAutomationAlertCondition;
     // (undocumented)
     'execution': AutomationAlertAfm;
-    // Warning: (ae-forgotten-export) The symbol "AutomationAutomationAlertIntervalEnum" needs to be exported by the entry point index.d.ts
     'interval'?: AutomationAutomationAlertIntervalEnum;
     'trigger'?: AutomationAutomationAlertTriggerEnum;
 }
 
 // @public
 export type AutomationAutomationAlertCondition = AutomationAnomalyDetectionWrapper | AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper;
+
+// @public (undocumented)
+export type AutomationAutomationAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
 
 // @public (undocumented)
 export type AutomationAutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
@@ -5530,6 +5909,23 @@ export interface AutomationComparison {
 }
 
 // @public
+export interface AutomationComparisonCondition {
+    // (undocumented)
+    'comparison': AutomationComparisonConditionComparison;
+}
+
+// @public (undocumented)
+export interface AutomationComparisonConditionComparison {
+    // (undocumented)
+    'operator': AutomationComparisonConditionComparisonOperatorEnum;
+    // (undocumented)
+    'value': number;
+}
+
+// @public (undocumented)
+export type AutomationComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
+
+// @public
 export interface AutomationComparisonMeasureValueFilter {
     // (undocumented)
     'comparisonMeasureValueFilter': AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter;
@@ -5561,6 +5957,25 @@ export type AutomationComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR
 export interface AutomationComparisonWrapper {
     // (undocumented)
     'comparison': AutomationComparison;
+}
+
+// @public
+export interface AutomationCompoundMeasureValueFilter {
+    // (undocumented)
+    'compoundMeasureValueFilter': AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter;
+}
+
+// @public (undocumented)
+export interface AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    'conditions': Array<AutomationMeasureValueCondition>;
+    'dimensionality'?: Array<AutomationAfmIdentifier>;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'measure': AutomationAfmIdentifier;
+    'treatNullValuesAs'?: number;
 }
 
 // @public (undocumented)
@@ -5816,8 +6231,6 @@ export interface AutomationDashboardDateFilterDateFilter {
     'boundedFilter'?: AutomationRelativeBoundedDateFilter;
     // (undocumented)
     'dataSet'?: AutomationIdentifierRef;
-    // Warning: (ae-forgotten-export) The symbol "AutomationDashboardDateFilterDateFilterEmptyValueHandlingEnum" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     'emptyValueHandling'?: AutomationDashboardDateFilterDateFilterEmptyValueHandlingEnum;
     // (undocumented)
@@ -5832,6 +6245,9 @@ export interface AutomationDashboardDateFilterDateFilter {
     'type': AutomationDashboardDateFilterDateFilterTypeEnum;
 }
 
+// @public (undocumented)
+export type AutomationDashboardDateFilterDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
+
 // @public
 export type AutomationDashboardDateFilterDateFilterFrom = number | string;
 
@@ -5845,11 +6261,15 @@ export type AutomationDashboardDateFilterDateFilterTypeEnum = 'relative' | 'abso
 export interface AutomationDashboardExportSettings {
     'exportInfo'?: boolean;
     'mergeHeaders'?: boolean;
-    // Warning: (ae-forgotten-export) The symbol "AutomationDashboardExportSettingsPageOrientationEnum" needs to be exported by the entry point index.d.ts
     'pageOrientation'?: AutomationDashboardExportSettingsPageOrientationEnum;
-    // Warning: (ae-forgotten-export) The symbol "AutomationDashboardExportSettingsPageSizeEnum" needs to be exported by the entry point index.d.ts
     'pageSize'?: AutomationDashboardExportSettingsPageSizeEnum;
 }
+
+// @public (undocumented)
+export type AutomationDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
+
+// @public (undocumented)
+export type AutomationDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
 export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter;
@@ -5904,8 +6324,6 @@ export interface AutomationDashboardTabularExportRequestV2 {
 // @public (undocumented)
 export type AutomationDashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF';
 
-// Warning: (ae-forgotten-export) The symbol "AutomationAllTimeDateFilter" needs to be exported by the entry point index.d.ts
-//
 // @public
 export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationAllTimeDateFilter | AutomationRelativeDateFilter;
 
@@ -6073,6 +6491,29 @@ export interface AutomationLocalIdentifier {
 }
 
 // @public
+export interface AutomationMatchAttributeFilter {
+    // (undocumented)
+    'matchAttributeFilter': AutomationMatchAttributeFilterMatchAttributeFilter;
+}
+
+// @public (undocumented)
+export interface AutomationMatchAttributeFilterMatchAttributeFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    'caseSensitive'?: boolean;
+    // (undocumented)
+    'label': AutomationAfmIdentifier;
+    'literal': string;
+    // (undocumented)
+    'localIdentifier'?: string;
+    'matchType': AutomationMatchAttributeFilterMatchAttributeFilterMatchTypeEnum;
+    'negate'?: boolean;
+}
+
+// @public (undocumented)
+export type AutomationMatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
+
+// @public
 export type AutomationMeasureDefinition = AutomationArithmeticMeasureDefinition | AutomationInlineMeasureDefinition | AutomationPopMeasureDefinition | AutomationSimpleMeasureDefinition;
 
 // @public
@@ -6086,6 +6527,9 @@ export interface AutomationMeasureItem {
 export type AutomationMeasureItemDefinition = AutomationArithmeticMeasureDefinition | AutomationInlineMeasureDefinition | AutomationPopDatasetMeasureDefinition | AutomationPopDateMeasureDefinition | AutomationPopMeasureDefinition | AutomationSimpleMeasureDefinition;
 
 // @public
+export type AutomationMeasureValueCondition = AutomationComparisonCondition | AutomationRangeCondition;
+
+// @public
 export type AutomationMeasureValueFilter = AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationRangeMeasureValueFilter;
 
 // @public
@@ -6096,6 +6540,14 @@ export interface AutomationMetadata {
     'visibleFilters'?: Array<VisibleFilter>;
     // (undocumented)
     'widget'?: string;
+}
+
+// @public
+export interface AutomationMetricDefinitionOverride {
+    // (undocumented)
+    'definition': AutomationInlineMeasureDefinition;
+    // (undocumented)
+    'item': AutomationAfmObjectIdentifierCore;
 }
 
 // @public (undocumented)
@@ -6216,6 +6668,13 @@ export interface AutomationOver {
 }
 
 // @public
+export interface AutomationParameterItem {
+    // (undocumented)
+    'parameter': AutomationAfmObjectIdentifierParameter;
+    'value': string;
+}
+
+// @public
 export interface AutomationPdfTableStyle {
     'properties'?: Array<AutomationPdfTableStyleProperty>;
     'selector': string;
@@ -6300,6 +6759,25 @@ export interface AutomationRange {
     // (undocumented)
     'to': AutomationValue;
 }
+
+// @public
+export interface AutomationRangeCondition {
+    // (undocumented)
+    'range': AutomationRangeConditionRange;
+}
+
+// @public (undocumented)
+export interface AutomationRangeConditionRange {
+    // (undocumented)
+    'from': number;
+    // (undocumented)
+    'operator': AutomationRangeConditionRangeOperatorEnum;
+    // (undocumented)
+    'to': number;
+}
+
+// @public (undocumented)
+export type AutomationRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
 
 // @public
 export interface AutomationRangeMeasureValueFilter {
@@ -6437,7 +6915,6 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
     'boundedFilter'?: AutomationBoundedFilter;
     // (undocumented)
     'dataset': AutomationAfmObjectIdentifierDataset;
-    // Warning: (ae-forgotten-export) The symbol "AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum" needs to be exported by the entry point index.d.ts
     'emptyValueHandling'?: AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     'from': number;
     'granularity': AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
@@ -6445,6 +6922,9 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
     'localIdentifier'?: string;
     'to': number;
 }
+
+// @public (undocumented)
+export type AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 // @public (undocumented)
 export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
@@ -6858,12 +7338,9 @@ export interface AutomationSchedule {
 export interface AutomationSettings {
     'delimiter'?: string;
     'exportInfo'?: boolean;
-    // Warning: (ae-forgotten-export) The symbol "AutomationSettingsGrandTotalsPositionEnum" needs to be exported by the entry point index.d.ts
     'grandTotalsPosition'?: AutomationSettingsGrandTotalsPositionEnum;
     'mergeHeaders'?: boolean;
-    // Warning: (ae-forgotten-export) The symbol "AutomationSettingsPageOrientationEnum" needs to be exported by the entry point index.d.ts
     'pageOrientation'?: AutomationSettingsPageOrientationEnum;
-    // Warning: (ae-forgotten-export) The symbol "AutomationSettingsPageSizeEnum" needs to be exported by the entry point index.d.ts
     'pageSize'?: AutomationSettingsPageSizeEnum;
     // @deprecated
     'pdfPageSize'?: string;
@@ -6876,6 +7353,15 @@ export interface AutomationSettings {
     // @deprecated
     'showFilters'?: boolean;
 }
+
+// @public (undocumented)
+export type AutomationSettingsGrandTotalsPositionEnum = 'pinnedBottom' | 'pinnedTop' | 'bottom' | 'top';
+
+// @public (undocumented)
+export type AutomationSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
+
+// @public (undocumented)
+export type AutomationSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
 export interface AutomationSimpleMeasureDefinition {
@@ -7210,9 +7696,32 @@ export interface CertificationApiSetCertificationRequest {
 }
 
 // @public
+export interface ChangeAnalysisParams {
+    'analyzedPeriod': string;
+    'attributes': Array<AfmAttributeItem>;
+    // (undocumented)
+    'dateAttribute': AfmAttributeItem;
+    'filters': Array<OutlierDetectionRequestFiltersInner>;
+    // (undocumented)
+    'measure': AfmMeasureItem;
+    'measureTitle': string;
+    'referencePeriod': string;
+    'useSmartAttributeSelection': boolean;
+}
+
+// @public
+export interface ChangeAnalysisResponse {
+    // (undocumented)
+    'links': ExecutionLinks;
+}
+
+// @public
+export interface ChangeAnalysisResult {
+    'data': Array<AfmMetricValueChange>;
+}
+
+// @public
 export interface ChatHistoryInteraction {
-    // Warning: (ae-forgotten-export) The symbol "ChangeAnalysisParams" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     'changeAnalysisParams'?: ChangeAnalysisParams;
     'chatHistoryInteractionId': string;
@@ -7223,8 +7732,6 @@ export interface ChatHistoryInteraction {
     'foundObjects'?: FoundObjects;
     'interactionFinished': boolean;
     'question': string;
-    // Warning: (ae-forgotten-export) The symbol "Reasoning" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     'reasoning'?: Reasoning;
     // (undocumented)
@@ -7270,7 +7777,6 @@ export interface ChatRequest {
     'limitCreate'?: number;
     'limitCreateContext'?: number;
     'limitSearch'?: number;
-    // Warning: (ae-forgotten-export) The symbol "ChatRequestObjectTypesEnum" needs to be exported by the entry point index.d.ts
     'objectTypes'?: Array<ChatRequestObjectTypesEnum>;
     'question': string;
     'relevantScoreThreshold'?: number;
@@ -7280,6 +7786,9 @@ export interface ChatRequest {
     // (undocumented)
     'userContext'?: UserContext;
 }
+
+// @public (undocumented)
+export type ChatRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
 
 // @public (undocumented)
 export interface ChatResult {
@@ -7299,9 +7808,7 @@ export interface ChatResult {
     'semanticSearch'?: SearchResult;
     'textResponse'?: string;
     'threadIdSuffix'?: string;
-    // Warning: (ae-forgotten-export) The symbol "ToolCallEventResult" needs to be exported by the entry point index.d.ts
     'toolCallEvents'?: Array<ToolCallEventResult>;
-    // Warning: (ae-forgotten-export) The symbol "AiUsageMetadataItem" needs to be exported by the entry point index.d.ts
     'usage'?: Array<AiUsageMetadataItem>;
 }
 
@@ -7648,7 +8155,7 @@ export interface ContentSlideTemplate {
 }
 
 // @public
-export class ConversationsAi extends BaseAPI implements ConversationsAiInterface {
+export class ConversationsAi extends AiBaseAPI implements ConversationsAiInterface {
     deleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
     getConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationListResponse>;
@@ -7658,52 +8165,52 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
 }
 
 // @public
-function ConversationsAi_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<void>;
+function ConversationsAi_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
 export { ConversationsAi_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete }
 export { ConversationsAi_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete as GenAiApi_DeleteConversation }
 
 // @public
-function ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
+function ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet }
 export { ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet as GenAiApi_GetConversation }
 
 // @public
-function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationListResponse>;
+function ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationListResponse>;
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet }
 export { ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet as GenAiApi_GetConversations }
 
 // @public
-function ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
+function ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch }
 export { ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch as GenAiApi_PatchConversation }
 
 // @public
-function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
+function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost }
 export { ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost as GenAiApi_PostConversations }
 
 // @public
-function ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponse>;
+function ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(axios: AxiosInstance, basePath: string, requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponse>;
 export { ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost }
 export { ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost as GenAiApi_PostGenerateConversationTitle }
 
 // @public
-export function ConversationsAiAxiosParamCreator_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(workspaceId: string, isPreview?: boolean, page?: number, size?: number, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet(workspaceId: string, isPreview?: boolean, page?: number, size?: number, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function ConversationsAiAxiosParamCreator_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(workspaceId: string, conversationId: string, aiConversationUpdateRequest: AiConversationUpdateRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch(workspaceId: string, conversationId: string, aiConversationUpdateRequest: AiConversationUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(workspaceId: string, isPreview?: boolean, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(workspaceId: string, isPreview?: boolean, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function ConversationsAiAxiosParamCreator_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ConversationsAiAxiosParamCreator_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 interface ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest {
@@ -7765,6 +8272,16 @@ interface ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspace
 }
 export { ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest }
 export { ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest as GenAiApiPostGenerateConversationTitleRequest }
+
+// @public
+export interface ConvertGeoFileRequest {
+    'location': string;
+}
+
+// @public
+export interface ConvertGeoFileResponse {
+    'location': string;
+}
 
 // @public
 export class CookieSecurityConfigurationApi extends MetadataBaseApi implements CookieSecurityConfigurationApiInterface {
@@ -8451,6 +8968,12 @@ export interface DashboardAttributeFilterAttributeFilter {
 
 // @public (undocumented)
 export type DashboardAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
+
+// @public
+export interface DashboardContext {
+    'id': string;
+    'widgets': Array<WidgetDescriptor>;
+}
 
 // @public (undocumented)
 export interface DashboardDateFilter {
@@ -11052,7 +11575,7 @@ export interface DependsOnDateFilter {
 // @public
 export interface DependsOnMatchFilter {
     // (undocumented)
-    'matchFilter': MatchAttributeFilter_2;
+    'matchFilter': AfmMatchAttributeFilter;
 }
 
 // @public
@@ -17920,13 +18443,11 @@ export interface GenAiApiTagsRequest {
 // @public
 export interface GenAiApiTestLlmProviderByIdRequest {
     readonly llmProviderId: string;
-    // Warning: (ae-forgotten-export) The symbol "TestLlmProviderByIdRequest" needs to be exported by the entry point index.d.ts
     readonly testLlmProviderByIdRequest?: TestLlmProviderByIdRequest;
 }
 
 // @public
 export interface GenAiApiTestLlmProviderRequest {
-    // Warning: (ae-forgotten-export) The symbol "TestLlmProviderDefinitionRequest" needs to be exported by the entry point index.d.ts
     readonly testLlmProviderDefinitionRequest: TestLlmProviderDefinitionRequest;
 }
 
@@ -17934,6 +18455,21 @@ export interface GenAiApiTestLlmProviderRequest {
 export type GenAiApiTrendingObjectsRequest = {
     readonly workspaceId: string;
 };
+
+// @public (undocumented)
+export interface GenerateDescriptionRequest {
+    'objectId': string;
+    'objectType': GenerateDescriptionRequestObjectTypeEnum;
+}
+
+// @public (undocumented)
+export type GenerateDescriptionRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
+
+// @public (undocumented)
+export interface GenerateDescriptionResponse {
+    'description'?: string;
+    'note'?: string;
+}
 
 // @public
 export interface GenerateLdmRequest {
@@ -17982,6 +18518,21 @@ export interface GenerateLogicalDataModelApiGenerateLogicalModelRequest {
 // @public
 export interface GenerateLogicalDataModelApiInterface {
     generateLogicalModel(requestParameters: GenerateLogicalDataModelApiGenerateLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
+}
+
+// @public (undocumented)
+export interface GenerateTitleRequest {
+    'objectId': string;
+    'objectType': GenerateTitleRequestObjectTypeEnum;
+}
+
+// @public (undocumented)
+export type GenerateTitleRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
+
+// @public (undocumented)
+export interface GenerateTitleResponse {
+    'note'?: string;
+    'title'?: string;
 }
 
 // @public
@@ -18093,6 +18644,41 @@ export interface GeographicDataApiUpdateEntityCustomGeoCollectionsRequest {
     readonly id: string;
     readonly jsonApiCustomGeoCollectionInDocument: JsonApiCustomGeoCollectionInDocument;
 }
+
+// @public
+export interface GeoJsonFeature {
+    // (undocumented)
+    'geometry'?: GeoJsonGeometry;
+    // (undocumented)
+    'id'?: object;
+    // (undocumented)
+    'properties': {
+        [key: string]: object;
+    };
+    // (undocumented)
+    'type': string;
+}
+
+// @public
+export interface GeoJsonFeatureCollection {
+    // (undocumented)
+    'bbox'?: Array<number>;
+    // (undocumented)
+    'features': Array<GeoJsonFeature>;
+    // (undocumented)
+    'type': string;
+}
+
+// @public
+export interface GeoJsonGeometry {
+    // (undocumented)
+    'coordinates': object;
+    // (undocumented)
+    'type': string;
+}
+
+// @public (undocumented)
+export type GetQualityIssuesResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
 
 // @public
 export interface GrainIdentifier {
@@ -18661,6 +19247,13 @@ export interface ILiveFeatures {
 }
 
 // @public
+export interface ILocationStyleListItem {
+    id: string;
+    link: string;
+    title: string;
+}
+
+// @public
 export interface ILocationStyleParams {
     language?: string;
 }
@@ -18774,6 +19367,16 @@ export interface ImportCsvRequestTableSourceConfig {
 // @public
 export interface ImportCsvResponse {
     'name': string;
+    'version': number;
+}
+
+// @public
+export interface ImportGeoCollectionRequest {
+    'location': string;
+}
+
+// @public
+export interface ImportGeoCollectionResponse {
     'version': number;
 }
 
@@ -18973,17 +19576,17 @@ function isVisualizationObject_2(visualizationObject: unknown): visualizationObj
 export function isVisualizationObjectsItem(visualizationObject: unknown): visualizationObject is JsonApiVisualizationObjectOutWithLinks;
 
 // @public
-export class ItemsAi extends BaseAPI implements ItemsAiInterface {
+export class ItemsAi extends AiBaseAPI implements ItemsAiInterface {
     getConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationItemListResponse>;
 }
 
 // @public
-function ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(axios: AxiosInstance, basePath: string, requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationItemListResponse>;
+function ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(axios: AxiosInstance, basePath: string, requestParameters: ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationItemListResponse>;
 export { ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet as GenAiApi_GetConversationItems }
 export { ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet }
 
 // @public
-export function ItemsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ItemsAiAxiosParamCreator_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 interface ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest {
@@ -18999,6 +19602,40 @@ export interface ItemsAiInterface {
 }
 
 // @public
+export interface ITigerAbsoluteDateFilter {
+    // (undocumented)
+    absoluteDateFilter: {
+        dataSet: ObjRef;
+        from: string;
+        to: string;
+        localIdentifier?: string;
+    };
+}
+
+// @public
+export interface ITigerArithmeticMeasure {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    definition: ITigerArithmeticMeasureDefinition;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @public (undocumented)
+export interface ITigerArithmeticMeasureDefinition {
+    // (undocumented)
+    arithmeticMeasure: {
+        measureIdentifiers: string[];
+        operator: "sum" | "difference" | "multiplication" | "ratio" | "change";
+    };
+}
+
+// @public
 export interface ITigerAttribute {
     // (undocumented)
     attribute: {
@@ -19007,6 +19644,21 @@ export interface ITigerAttribute {
         alias?: string;
         showAllValues?: boolean;
     };
+}
+
+// @public (undocumented)
+export type ITigerAttributeElements = ITigerAttributeElementsByRef | ITigerAttributeElementsByValue;
+
+// @public
+export interface ITigerAttributeElementsByRef {
+    // (undocumented)
+    uris: Array<string | null>;
+}
+
+// @public
+export interface ITigerAttributeElementsByValue {
+    // (undocumented)
+    values: Array<string | null>;
 }
 
 // @public
@@ -19054,13 +19706,23 @@ export interface ITigerAttributeSortItem {
 }
 
 // @public
+export interface ITigerBaseWidget {
+    // (undocumented)
+    localIdentifier?: string;
+    // (undocumented)
+    size?: ITigerDashboardLayoutSize;
+    // (undocumented)
+    sizeByScreen?: ITigerDashboardLayoutSizeByScreenSize;
+    // (undocumented)
+    type: string;
+}
+
+// @public
 export interface ITigerBucket {
     // (undocumented)
     items: ITigerAttributeOrMeasure[];
     // (undocumented)
     localIdentifier?: string;
-    // Warning: (ae-forgotten-export) The symbol "ITigerTotal" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     totals?: ITigerTotal[];
 }
@@ -19075,8 +19737,6 @@ export interface ITigerClient extends ITigerClientBase {
     automation: ReturnType<typeof tigerAutomationClientFactory>;
     // (undocumented)
     declarativeLayout: ReturnType<typeof tigerLayoutClientFactory>;
-    // Warning: (ae-forgotten-export) The symbol "tigerEntitiesObjectsClientFactory" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
     // (undocumented)
@@ -19089,8 +19749,6 @@ export interface ITigerClient extends ITigerClientBase {
     export: ReturnType<typeof tigerExportClientFactory>;
     // @beta (undocumented)
     genAI: ReturnType<typeof tigerGenAIClientFactory>;
-    // Warning: (ae-forgotten-export) The symbol "tigerGeoCollectionsClientFactory" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     geoCollections: ReturnType<typeof tigerGeoCollectionsClientFactory>;
     // (undocumented)
@@ -19167,6 +19825,14 @@ export interface ITigerDashboardArbitraryAttributeFilter {
 }
 
 // @public
+export interface ITigerDashboardAttributeFilterByDate {
+    // (undocumented)
+    filterLocalIdentifier: string;
+    // (undocumented)
+    isCommonDate: boolean;
+}
+
+// @public
 export interface ITigerDashboardAttributeFilterConfig {
     // (undocumented)
     displayAsLabel?: ObjRef;
@@ -19185,6 +19851,16 @@ export interface ITigerDashboardAttributeFilterConfig {
     selectionMode?: "single" | "multi";
     // (undocumented)
     title?: string;
+}
+
+// @public
+export interface ITigerDashboardAttributeFilterParent {
+    // (undocumented)
+    filterLocalIdentifier: string;
+    // (undocumented)
+    over: {
+        attributes: ObjRef[];
+    };
 }
 
 // @public
@@ -19216,23 +19892,95 @@ export interface ITigerDashboardDateFilterConfig {
 }
 
 // @public
+export interface ITigerDashboardFilterGroup {
+    // (undocumented)
+    filters: Array<{
+        filterLocalIdentifier: string;
+    }>;
+    // (undocumented)
+    localIdentifier?: string;
+    // (undocumented)
+    title: string;
+}
+
+// @public
 export interface ITigerDashboardFilterGroupsConfig {
-    // Warning: (ae-forgotten-export) The symbol "ITigerDashboardFilterGroup" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     groups: ITigerDashboardFilterGroup[];
 }
 
-// Warning: (ae-forgotten-export) The symbol "ITigerWidget" needs to be exported by the entry point index.d.ts
-//
 // @public
 export interface ITigerDashboardLayout<TWidget = ITigerWidget> {
-    // Warning: (ae-forgotten-export) The symbol "ITigerDashboardLayoutSection" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     sections?: Array<ITigerDashboardLayoutSection<TWidget>>;
     // (undocumented)
     type: "IDashboardLayout";
+}
+
+// @public
+export interface ITigerDashboardLayoutColumn<TWidget = ITigerWidget> {
+    // (undocumented)
+    items?: Array<ITigerDashboardLayoutItem<TWidget>>;
+    // (undocumented)
+    size?: ITigerDashboardLayoutSize;
+    // (undocumented)
+    sizeByScreen?: ITigerDashboardLayoutSizeByScreenSize;
+    // (undocumented)
+    type: "IDashboardLayoutColumn";
+}
+
+// @public
+export interface ITigerDashboardLayoutItem<TWidget = ITigerWidget> {
+    // (undocumented)
+    size?: ITigerDashboardLayoutSize;
+    // (undocumented)
+    sizeByScreen?: ITigerDashboardLayoutSizeByScreenSize;
+    // (undocumented)
+    type: "IDashboardLayoutItem";
+    // (undocumented)
+    widget?: TWidget | ITigerDashboardLayout<TWidget>;
+}
+
+// @public
+export interface ITigerDashboardLayoutSection<TWidget = ITigerWidget> {
+    // (undocumented)
+    header?: ITigerDashboardLayoutSectionHeader;
+    // (undocumented)
+    items?: Array<ITigerDashboardLayoutColumn<TWidget>>;
+    // (undocumented)
+    type: "IDashboardLayoutSection";
+}
+
+// @public
+export interface ITigerDashboardLayoutSectionHeader {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @public
+export interface ITigerDashboardLayoutSize {
+    // (undocumented)
+    gridHeight?: number;
+    // (undocumented)
+    gridWidth: number;
+    // (undocumented)
+    heightAsRatio?: number;
+}
+
+// @public
+export interface ITigerDashboardLayoutSizeByScreenSize {
+    // (undocumented)
+    lg?: ITigerDashboardLayoutSize;
+    // (undocumented)
+    md?: ITigerDashboardLayoutSize;
+    // (undocumented)
+    sm?: ITigerDashboardLayoutSize;
+    // (undocumented)
+    xl?: ITigerDashboardLayoutSize;
+    // (undocumented)
+    xs?: ITigerDashboardLayoutSize;
 }
 
 // @public
@@ -19304,16 +20052,12 @@ export interface ITigerDashboardTab {
     localIdentifier: string;
     // (undocumented)
     measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
+    // @alpha
+    parameters?: ITigerDashboardParameter[];
     // (undocumented)
     title: string;
 }
 
-// Warning: (ae-forgotten-export) The symbol "ITigerAbsoluteDateFilter" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ITigerRelativeDateFilter" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ITigerPositiveAttributeFilter" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ITigerNegativeAttributeFilter" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ITigerRankingFilter" needs to be exported by the entry point index.d.ts
-//
 // @public
 export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
 
@@ -19348,13 +20092,66 @@ export interface ITigerInsightParameterValue {
     value: number;
 }
 
-// Warning: (ae-forgotten-export) The symbol "ITigerSimpleMeasure" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ITigerArithmeticMeasure" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ITigerPopMeasure" needs to be exported by the entry point index.d.ts
-// Warning: (ae-forgotten-export) The symbol "ITigerPreviousPeriodMeasure" needs to be exported by the entry point index.d.ts
-//
+// @public
+export interface ITigerInsightWidget extends ITigerBaseWidget {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    drills?: any[];
+    // (undocumented)
+    ignoreDashboardFilters?: Array<{
+        type: "attributeFilterReference" | "dateFilterReference";
+        displayForm?: ObjRef;
+        dataSet?: ObjRef;
+    }>;
+    // (undocumented)
+    insight: ObjRef;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    type: "insight";
+}
+
+// @public
+export interface ITigerKpiWidget extends ITigerBaseWidget {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    ignoreDashboardFilters?: Array<{
+        type: "attributeFilterReference" | "dateFilterReference";
+        displayForm?: ObjRef;
+        dataSet?: ObjRef;
+    }>;
+    // (undocumented)
+    kpi: ObjRef;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    type: "kpi";
+}
+
+// @public (undocumented)
+export type ITigerLocatorItem = ITigerAttributeLocatorItem | ITigerMeasureLocatorItem | ITigerTotalLocatorItem;
+
 // @public
 export type ITigerMeasure = ITigerSimpleMeasure | ITigerArithmeticMeasure | ITigerPopMeasure | ITigerPreviousPeriodMeasure;
+
+// @public
+export interface ITigerMeasureLocatorItem {
+    // (undocumented)
+    measureLocatorItem: {
+        measureIdentifier: string;
+    };
+}
+
+// @public
+export interface ITigerMeasureSortItem {
+    // (undocumented)
+    measureSortItem: {
+        direction: "asc" | "desc";
+        locators: ITigerLocatorItem[];
+    };
+}
 
 // @public
 export interface ITigerMeasureValueFilter {
@@ -19368,6 +20165,75 @@ export interface ITigerMeasureValueFilter {
 
 // @public (undocumented)
 export type ITigerMeasureValueFilterCondition = ITigerComparisonCondition | ITigerRangeCondition | ITigerCompoundCondition;
+
+// @public
+export interface ITigerNegativeAttributeFilter {
+    // (undocumented)
+    negativeAttributeFilter: {
+        displayForm: ObjRef;
+        notIn: ITigerAttributeElements;
+        localIdentifier?: string;
+    };
+}
+
+// @public
+export interface ITigerPopMeasure {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    definition: ITigerPopMeasureDefinition;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @public (undocumented)
+export interface ITigerPopMeasureDefinition {
+    // (undocumented)
+    popMeasure: {
+        measureIdentifier: string;
+        popAttribute: ObjRef;
+    };
+}
+
+// @public
+export interface ITigerPositiveAttributeFilter {
+    // (undocumented)
+    positiveAttributeFilter: {
+        displayForm: ObjRef;
+        in: ITigerAttributeElements;
+        localIdentifier?: string;
+    };
+}
+
+// @public
+export interface ITigerPreviousPeriodMeasure {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    definition: ITigerPreviousPeriodMeasureDefinition;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @public (undocumented)
+export interface ITigerPreviousPeriodMeasureDefinition {
+    // (undocumented)
+    previousPeriodMeasure: {
+        measureIdentifier: string;
+        dateDataSets: Array<{
+            dataSet: ObjRef;
+            periodsAgo: number;
+        }>;
+    };
+}
 
 // @public
 export interface ITigerRangeCondition {
@@ -19390,15 +20256,94 @@ export interface ITigerRangeConditionInCompound {
     };
 }
 
-// Warning: (ae-forgotten-export) The symbol "ITigerMeasureSortItem" needs to be exported by the entry point index.d.ts
-//
+// @public
+export interface ITigerRankingFilter {
+    // (undocumented)
+    rankingFilter: {
+        measure: ObjRef;
+        attributes?: ObjRef[];
+        operator: "TOP" | "BOTTOM";
+        value: number;
+        localIdentifier?: string;
+    };
+}
+
+// @public
+export interface ITigerRelativeDateFilter {
+    // (undocumented)
+    relativeDateFilter: {
+        dataSet: ObjRef;
+        granularity: string;
+        from: number;
+        to: number;
+        localIdentifier?: string;
+    };
+}
+
+// @public
+export interface ITigerRichTextWidget extends ITigerBaseWidget {
+    // (undocumented)
+    content?: string;
+    // (undocumented)
+    type: "richText";
+}
+
+// @public
+export interface ITigerSimpleMeasure {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    definition: ITigerSimpleMeasureDefinition;
+    // (undocumented)
+    format?: string;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @public (undocumented)
+export interface ITigerSimpleMeasureDefinition {
+    // (undocumented)
+    measure: {
+        item: ObjRef;
+        aggregation?: "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+        filters?: ITigerFilter[];
+        computeRatio?: boolean;
+    };
+}
+
 // @public
 export type ITigerSortItem = ITigerAttributeSortItem | ITigerMeasureSortItem;
+
+// @public
+export interface ITigerTotal {
+    // (undocumented)
+    alias?: string;
+    // (undocumented)
+    attributeIdentifier: string;
+    // (undocumented)
+    measureIdentifier: string;
+    // (undocumented)
+    type: "sum" | "avg" | "max" | "min" | "nat" | "med";
+}
+
+// @public
+export interface ITigerTotalLocatorItem {
+    // (undocumented)
+    totalLocatorItem: {
+        attributeIdentifier: string;
+        totalFunction: string;
+    };
+}
 
 // @public
 export type ITigerVisualizationProperties = {
     [key: string]: any;
 };
+
+// @public (undocumented)
+export type ITigerWidget = ITigerInsightWidget | ITigerKpiWidget | ITigerRichTextWidget;
 
 // @public @deprecated
 interface ITotalItem {
@@ -25998,7 +26943,7 @@ export interface KeyDriversResult {
 }
 
 // @public
-export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
+export class KnowledgeAi extends AiBaseAPI implements KnowledgeAiInterface {
     createDocument(requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
     createOrgDocument(requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiUploadDocumentResponse>;
     deleteDocument(requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<AiDeleteDocumentResponse>;
@@ -26018,128 +26963,128 @@ export class KnowledgeAi extends BaseAPI implements KnowledgeAiInterface {
 }
 
 // @public
-function KnowledgeAi_CreateDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+function KnowledgeAi_CreateDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiCreateDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiUploadDocumentResponse>;
 export { KnowledgeAi_CreateDocument as GenAiApi_CreateKnowledgeDocument }
 export { KnowledgeAi_CreateDocument }
 
 // @public
-function KnowledgeAi_CreateOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+function KnowledgeAi_CreateOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiCreateOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiUploadDocumentResponse>;
 export { KnowledgeAi_CreateOrgDocument as GenAiApi_CreateOrgKnowledgeDocument }
 export { KnowledgeAi_CreateOrgDocument }
 
 // @public
-function KnowledgeAi_DeleteDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDeleteDocumentResponse>;
+function KnowledgeAi_DeleteDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDeleteDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiDeleteDocumentResponse>;
 export { KnowledgeAi_DeleteDocument as GenAiApi_DeleteKnowledgeDocument }
 export { KnowledgeAi_DeleteDocument }
 
 // @public
-function KnowledgeAi_DeleteOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDeleteDocumentResponse>;
+function KnowledgeAi_DeleteOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDeleteOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiDeleteDocumentResponse>;
 export { KnowledgeAi_DeleteOrgDocument as GenAiApi_DeleteOrgKnowledgeDocument }
 export { KnowledgeAi_DeleteOrgDocument }
 
 // @public
-export function KnowledgeAi_DownloadDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<any>;
+export function KnowledgeAi_DownloadDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<any>;
 
 // @public
-export function KnowledgeAi_DownloadOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<any>;
+export function KnowledgeAi_DownloadOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiDownloadOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<any>;
 
 // @public
-function KnowledgeAi_GetDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+function KnowledgeAi_GetDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiGetDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiDocumentMetadataResponse>;
 export { KnowledgeAi_GetDocument as GenAiApi_GetKnowledgeDocument }
 export { KnowledgeAi_GetDocument }
 
 // @public
-function KnowledgeAi_GetOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+function KnowledgeAi_GetOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiGetOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiDocumentMetadataResponse>;
 export { KnowledgeAi_GetOrgDocument as GenAiApi_GetOrgKnowledgeDocument }
 export { KnowledgeAi_GetOrgDocument }
 
 // @public
-function KnowledgeAi_ListDocuments(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiListDocumentsResponse>;
+function KnowledgeAi_ListDocuments(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiListDocumentsRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiListDocumentsResponse>;
 export { KnowledgeAi_ListDocuments as GenAiApi_ListKnowledgeDocuments }
 export { KnowledgeAi_ListDocuments }
 
 // @public
-function KnowledgeAi_ListOrgDocuments(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiListOrgDocumentsRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiListDocumentsResponse>;
+function KnowledgeAi_ListOrgDocuments(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiListOrgDocumentsRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiListDocumentsResponse>;
 export { KnowledgeAi_ListOrgDocuments as GenAiApi_ListOrgKnowledgeDocuments }
 export { KnowledgeAi_ListOrgDocuments }
 
 // @public
-function KnowledgeAi_PatchDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+function KnowledgeAi_PatchDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiDocumentMetadataResponse>;
 export { KnowledgeAi_PatchDocument as GenAiApi_PatchKnowledgeDocument }
 export { KnowledgeAi_PatchDocument }
 
 // @public
-function KnowledgeAi_PatchOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiPatchOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiDocumentMetadataResponse>;
+function KnowledgeAi_PatchOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiPatchOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiDocumentMetadataResponse>;
 export { KnowledgeAi_PatchOrgDocument as GenAiApi_PatchOrgKnowledgeDocument }
 export { KnowledgeAi_PatchOrgDocument }
 
 // @public
-function KnowledgeAi_SearchKnowledge(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiSearchDocumentsResponse>;
+function KnowledgeAi_SearchKnowledge(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiSearchKnowledgeRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSearchDocumentsResponse>;
 export { KnowledgeAi_SearchKnowledge as GenAiApi_SearchKnowledge }
 export { KnowledgeAi_SearchKnowledge }
 
 // @public
-function KnowledgeAi_SearchOrgKnowledge(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiSearchOrgKnowledgeRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiSearchDocumentsResponse>;
+function KnowledgeAi_SearchOrgKnowledge(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiSearchOrgKnowledgeRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSearchDocumentsResponse>;
 export { KnowledgeAi_SearchOrgKnowledge as GenAiApi_SearchOrgKnowledge }
 export { KnowledgeAi_SearchOrgKnowledge }
 
 // @public
-function KnowledgeAi_UpsertDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+function KnowledgeAi_UpsertDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiUploadDocumentResponse>;
 export { KnowledgeAi_UpsertDocument as GenAiApi_UpsertKnowledgeDocument }
 export { KnowledgeAi_UpsertDocument }
 
 // @public
-function KnowledgeAi_UpsertOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiUploadDocumentResponse>;
+function KnowledgeAi_UpsertOrgDocument(axios: AxiosInstance, basePath: string, requestParameters: KnowledgeAiUpsertOrgDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiUploadDocumentResponse>;
 export { KnowledgeAi_UpsertOrgDocument as GenAiApi_UpsertOrgKnowledgeDocument }
 export { KnowledgeAi_UpsertOrgDocument }
 
 // @public
-export function KnowledgeAiAxiosParamCreator_CreateDocument(workspaceId: string, file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_CreateDocument(workspaceId: string, file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_CreateOrgDocument(file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_CreateOrgDocument(file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_DeleteDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_DeleteDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_DeleteOrgDocument(documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_DeleteOrgDocument(documentId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_DownloadDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_DownloadDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_DownloadOrgDocument(documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_DownloadOrgDocument(documentId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_GetDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_GetDocument(workspaceId: string, documentId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_GetOrgDocument(documentId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_GetOrgDocument(documentId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_ListDocuments(workspaceId: string, scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string, state?: 'enabled' | 'disabled', query?: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_ListDocuments(workspaceId: string, scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string, state?: 'enabled' | 'disabled', query?: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_ListOrgDocuments(scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string, state?: 'enabled' | 'disabled', query?: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_ListOrgDocuments(scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string, state?: 'enabled' | 'disabled', query?: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_PatchDocument(workspaceId: string, documentId: string, aiPatchDocumentRequest: AiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_PatchDocument(workspaceId: string, documentId: string, aiPatchDocumentRequest: AiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_PatchOrgDocument(documentId: string, aiPatchDocumentRequest: AiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_PatchOrgDocument(documentId: string, aiPatchDocumentRequest: AiPatchDocumentRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_SearchKnowledge(workspaceId: string, query: string, limit?: number, minScore?: number, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_SearchKnowledge(workspaceId: string, query: string, limit?: number, minScore?: number, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_SearchOrgKnowledge(query: string, limit?: number, minScore?: number, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_SearchOrgKnowledge(query: string, limit?: number, minScore?: number, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_UpsertDocument(workspaceId: string, file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_UpsertDocument(workspaceId: string, file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function KnowledgeAiAxiosParamCreator_UpsertOrgDocument(file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function KnowledgeAiAxiosParamCreator_UpsertOrgDocument(file: File, title?: string, scopes?: Array<string>, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 interface KnowledgeAiCreateDocumentRequest {
@@ -27302,6 +28247,19 @@ export interface ListLinks {
     'self': string;
 }
 
+// @public (undocumented)
+export interface ListLlmProviderModelsRequest {
+    // (undocumented)
+    'providerConfig': TestLlmProviderByIdRequestProviderConfig;
+}
+
+// @public (undocumented)
+export interface ListLlmProviderModelsResponse {
+    'message': string;
+    'models': Array<LlmModel>;
+    'success': boolean;
+}
+
 // @public
 export class LlmEndpointControllerApi extends MetadataBaseApi implements LlmEndpointControllerApiInterface {
     // @deprecated
@@ -27515,6 +28473,15 @@ export interface LLMEndpointsApiUpdateEntityLlmEndpointsRequest {
     readonly id: string;
     readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
 }
+
+// @public
+export interface LlmModel {
+    'family': LlmModelFamilyEnum;
+    'id': string;
+}
+
+// @public (undocumented)
+export type LlmModelFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
 
 // @public (undocumented)
 export interface LlmProviderAuth {
@@ -27810,6 +28777,9 @@ export interface MatchAttributeFilterMatchAttributeFilter {
 export type MatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
 
 // @public
+export type MdAutomationAlertCondition = AnomalyDetectionWrapper | ComparisonWrapper | RangeWrapper | RelativeWrapper;
+
+// @public
 export type MeasureDefinition = ArithmeticMeasureDefinition | InlineMeasureDefinition | PopMeasureDefinition | SimpleMeasureDefinition;
 
 // @public (undocumented)
@@ -27847,7 +28817,7 @@ export interface MeasureResultHeader {
 export type MeasureValueCondition = ComparisonCondition | RangeCondition;
 
 // @public
-export type MeasureValueFilter = AfmComparisonMeasureValueFilter | CompoundMeasureValueFilter_2 | AfmRangeMeasureValueFilter;
+export type MeasureValueFilter = AfmComparisonMeasureValueFilter | AfmCompoundMeasureValueFilter | AfmRangeMeasureValueFilter;
 
 // @public
 export class MemoryItemControllerApi extends MetadataBaseApi implements MemoryItemControllerApiInterface {
@@ -27977,17 +28947,17 @@ export interface MemoryItemControllerApiUpdateEntityMemoryItemsRequest {
 }
 
 // @public
-export class MessagesAi extends BaseAPI implements MessagesAiInterface {
+export class MessagesAi extends AiBaseAPI implements MessagesAiInterface {
     postMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig): AxiosPromise<any>;
 }
 
 // @public
-function MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(axios: AxiosInstance, basePath: string, requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<any>;
+function MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(axios: AxiosInstance, basePath: string, requestParameters: MessagesAiPostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPostRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<any>;
 export { MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost as GenAiApi_PostMessages }
 export { MessagesAi_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost }
 
 // @public
-export function MessagesAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(workspaceId: string, conversationId: string, aiSendMessageRequest: AiSendMessageRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function MessagesAiAxiosParamCreator_PostMessagesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdMessagesPost(workspaceId: string, conversationId: string, aiSendMessageRequest: AiSendMessageRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export interface MessagesAiInterface {
@@ -28055,6 +29025,9 @@ export type MetadataGetEntitiesColorPaletteParams = {
 
 // @internal
 export type MetadataGetEntitiesFn<T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams> = (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
+
+// @internal (undocumented)
+export type MetadataGetEntitiesFnNew<T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams> = (axios: AxiosInstance, basePath: string, params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
 
 // @internal
 export type MetadataGetEntitiesOptions = {
@@ -28132,8 +29105,6 @@ export interface MetadataSyncApiMetadataSyncRequest {
 // @internal
 export class MetadataUtilities {
     static filterValidEntities<T extends MetadataGetEntitiesResult>(result: T): T;
-    // Warning: (ae-forgotten-export) The symbol "MetadataGetEntitiesFnNew" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     static getAllPagesOf: <T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams>(client: ITigerClientBase, entitiesGet: MetadataGetEntitiesFnNew<T, P>, params: P, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
     static getAllPagesOfParallel: <T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams>(client: ITigerClientBase, entitiesGet: MetadataGetEntitiesFnNew<T, P>, params: P, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
@@ -28457,6 +29428,13 @@ export type ModelFileTranslateEnum = 'YES' | 'NO';
 
 // @public (undocumented)
 export type ModelFileTrgDirEnum = 'LTR' | 'RTL' | 'AUTO';
+
+// @public
+export interface ModelTestResult {
+    'message': string;
+    'modelId': string;
+    'successful': boolean;
+}
 
 // @public
 export interface NegativeAttributeFilter {
@@ -28894,6 +29872,44 @@ export interface ObjectLinksContainer {
 }
 
 // @public (undocumented)
+export interface ObjectReference {
+    'id': string;
+    'type': ObjectReferenceTypeEnum;
+}
+
+// @public (undocumented)
+export interface ObjectReferenceGroup {
+    // (undocumented)
+    'context'?: ObjectReference;
+    'objects': Array<ObjectReference>;
+}
+
+// @public (undocumented)
+export type ObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIBUTE' | 'DASHBOARD';
+
+// @public
+export interface OGCAPIFeaturesApiGetCollectionItemsRequest {
+    readonly bbox?: string;
+    readonly collectionId: string;
+    readonly limit?: number;
+    readonly values?: Array<string>;
+}
+
+// @public
+export interface OGCAPIFeaturesApiGetCustomCollectionItemsRequest {
+    readonly bbox?: string;
+    readonly collectionId: string;
+    readonly limit?: number;
+    readonly values?: Array<string>;
+}
+
+// @public
+export interface OGCAPIFeaturesApiInterface {
+    getCollectionItems(requestParameters: OGCAPIFeaturesApiGetCollectionItemsRequest, options?: AxiosRequestConfig): AxiosPromise<GeoJsonFeatureCollection>;
+    getCustomCollectionItems(requestParameters: OGCAPIFeaturesApiGetCustomCollectionItemsRequest, options?: AxiosRequestConfig): AxiosPromise<GeoJsonFeatureCollection>;
+}
+
+// @public (undocumented)
 export interface OpenAiApiKeyAuth {
     'apiKey'?: string | null;
     'type': OpenAiApiKeyAuthTypeEnum;
@@ -29257,6 +30273,9 @@ export interface OrganizationEntityControllerApiUpdateEntityOrganizationsRequest
 export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams> = (params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
 
 // @internal
+export type OrganizationGetEntitiesFnNew<T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams> = (axios: AxiosInstance, basePath: string, params: P, options: AxiosRequestConfig) => AxiosPromise<T>;
+
+// @internal
 export type OrganizationGetEntitiesParams = EntitiesApiGetAllEntitiesAttributesRequest | EntitiesApiGetAllEntitiesFactsRequest | EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest | EntitiesApiGetAllEntitiesDashboardPluginsRequest | EntitiesApiGetAllEntitiesVisualizationObjectsRequest | EntitiesApiGetAllEntitiesMetricsRequest | EntitiesApiGetAllEntitiesWorkspacesRequest | EntitiesApiGetAllEntitiesExportDefinitionsRequest;
 
 // @internal
@@ -29373,11 +30392,43 @@ export interface OrganizationSettingControllerApiUpdateEntityOrganizationSetting
 
 // @internal
 export class OrganizationUtilities {
-    // Warning: (ae-forgotten-export) The symbol "OrganizationGetEntitiesFnNew" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams>(client: ITigerClientBase, entitiesGet: OrganizationGetEntitiesFnNew<T, P>, params: P, options?: AxiosRequestConfig<any>) => Promise<T[]>;
     static mergeEntitiesResults<T extends OrganizationGetEntitiesResult>(pages: T[]): T;
+}
+
+// @public (undocumented)
+export interface OutlierDetectionRequest {
+    'attributes': Array<AfmAttributeItem>;
+    'auxMeasures'?: Array<AfmMeasureItem>;
+    'filters': Array<OutlierDetectionRequestFiltersInner>;
+    'granularity': OutlierDetectionRequestGranularityEnum;
+    // (undocumented)
+    'measures': Array<AfmMeasureItem>;
+    'sensitivity': OutlierDetectionRequestSensitivityEnum;
+}
+
+// @public
+export type OutlierDetectionRequestFiltersInner = AbstractMeasureValueFilter | AfmFilterDefinitionForSimpleMeasure | AfmInlineFilterDefinition;
+
+// @public (undocumented)
+export type OutlierDetectionRequestGranularityEnum = 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
+
+// @public (undocumented)
+export type OutlierDetectionRequestSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
+
+// @public (undocumented)
+export interface OutlierDetectionResponse {
+    // (undocumented)
+    'links': ExecutionLinks;
+}
+
+// @public (undocumented)
+export interface OutlierDetectionResult {
+    'attribute': Array<string> | null;
+    'values': {
+        [key: string]: Array<number | null> | null;
+    } | null;
 }
 
 // @public (undocumented)
@@ -29543,6 +30594,15 @@ export interface ParameterItem {
     'parameter': AfmObjectIdentifierParameter;
     'value': string;
 }
+
+// @public
+interface ParameterItem_2 {
+    // (undocumented)
+    'parameter': AfmAfmObjectIdentifierParameter;
+    'value': string;
+}
+export { ParameterItem_2 as AfmParameterItem }
+export { ParameterItem_2 as LabelElementsParameterItem }
 
 // @public
 export class ParametersApi extends MetadataBaseApi implements ParametersApiInterface {
@@ -30139,6 +31199,9 @@ export type ProfileApiInterface = {
 };
 
 // @public (undocumented)
+export type QualityIssueSeverityEnum = 'WARNING' | 'INFO';
+
+// @public (undocumented)
 interface Range_2 {
     // (undocumented)
     'from': Value;
@@ -30320,6 +31383,18 @@ export interface ReadCsvFileManifestsResponse {
 }
 
 // @public
+export interface Reasoning {
+    'answer'?: string;
+    'steps': Array<ReasoningStep>;
+}
+
+// @public
+export interface ReasoningStep {
+    'thoughts': Array<Thought>;
+    'title': string;
+}
+
+// @public
 export interface ReferenceIdentifier {
     'id': string;
     'type': ReferenceIdentifierTypeEnum;
@@ -30451,6 +31526,23 @@ export interface ResolvedLlmEndpoints {
     'data': Array<ResolvedLlmEndpoint>;
 }
 
+// @public (undocumented)
+export interface ResolvedLlmProvider {
+    'id': string;
+    // (undocumented)
+    'models': Array<LlmModel>;
+    'title': string;
+}
+
+// @public (undocumented)
+export interface ResolvedLlms {
+    // (undocumented)
+    'data'?: ResolvedLlmsData;
+}
+
+// @public
+export type ResolvedLlmsData = ResolvedLlmEndpoint | ResolvedLlmProvider;
+
 // @public
 export interface ResolvedSetting {
     'content'?: object | null;
@@ -30468,26 +31560,26 @@ export interface ResolveSettingsRequest {
 }
 
 // @public
-export class ResponsesAi extends BaseAPI implements ResponsesAiInterface {
+export class ResponsesAi extends AiBaseAPI implements ResponsesAiInterface {
     getConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponseList>;
     patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
-function ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<AiConversationResponseList>;
+function ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiConversationResponseList>;
 export { ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet as GenAiApi_GetConversationResponses }
 export { ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet }
 
 // @public
-function ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<void>;
+function ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(axios: AxiosInstance, basePath: string, requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
 export { ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch as GenAiApi_PatchConversationResponse }
 export { ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch }
 
 // @public
-export function ResponsesAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ResponsesAiAxiosParamCreator_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet(workspaceId: string, conversationId: string, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
-export function ResponsesAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(workspaceId: string, conversationId: string, responseId: string, aiResponseFeedbackRequest: AiResponseFeedbackRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function ResponsesAiAxiosParamCreator_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(workspaceId: string, conversationId: string, responseId: string, aiResponseFeedbackRequest: AiResponseFeedbackRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 interface ResponsesAiGetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGetRequest {
@@ -30525,16 +31617,10 @@ export interface RestApiIdentifier {
 export interface ResultActionsApiInterface {
     analyzeCsv(requestParameters: ActionsApiAnalyzeCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeCsvResponse>>;
     collectCacheUsage(options?: AxiosRequestConfig): AxiosPromise<CacheUsageData>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiConvertGeoFileRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "ConvertGeoFileResponse" needs to be exported by the entry point index.d.ts
     convertGeoFile(requestParameters: ActionsApiConvertGeoFileRequest, options?: AxiosRequestConfig): AxiosPromise<ConvertGeoFileResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiCustomGeoCollectionStagingUploadRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "UploadGeoCollectionFileResponse" needs to be exported by the entry point index.d.ts
     customGeoCollectionStagingUpload(requestParameters: ActionsApiCustomGeoCollectionStagingUploadRequest, options?: AxiosRequestConfig): AxiosPromise<UploadGeoCollectionFileResponse>;
     deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     importCsv(requestParameters: ActionsApiImportCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportCsvResponse>>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiImportCustomGeoCollectionRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "ImportGeoCollectionResponse" needs to be exported by the entry point index.d.ts
     importCustomGeoCollection(requestParameters: ActionsApiImportCustomGeoCollectionRequest, options?: AxiosRequestConfig): AxiosPromise<ImportGeoCollectionResponse>;
     listFiles(requestParameters: ActionsApiListFilesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<GdStorageFile>>;
     readCsvFileManifests(requestParameters: ActionsApiReadCsvFileManifestsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ReadCsvFileManifestsResponse>>;
@@ -30643,8 +31729,6 @@ export interface ScanModelActionsApiInterface {
     getDataSourceSchemata(requestParameters: ActionsApiGetDataSourceSchemataRequest, options?: AxiosRequestConfig): AxiosPromise<DataSourceSchemata>;
     scanDataSource(requestParameters: ActionsApiScanDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<ScanResultPdm>;
     scanSql(requestParameters: ActionsApiScanSqlRequest, options?: AxiosRequestConfig): AxiosPromise<ScanSqlResponse>;
-    // Warning: (ae-forgotten-export) The symbol "ActionsApiScanStatisticsRequest" needs to be exported by the entry point index.d.ts
-    // Warning: (ae-forgotten-export) The symbol "TableStatisticsResponse" needs to be exported by the entry point index.d.ts
     scanStatistics(requestParameters: ActionsApiScanStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<TableStatisticsResponse>;
     testDataSource(requestParameters: ActionsApiTestDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<TestResponse>;
     testDataSourceDefinition(requestParameters: ActionsApiTestDataSourceDefinitionRequest, options?: AxiosRequestConfig): AxiosPromise<TestResponse>;
@@ -30659,6 +31743,17 @@ export class ScanModelBaseApi {
     protected basePath: string;
     // (undocumented)
     protected configuration: ScanModelConfiguration | undefined;
+}
+
+// @public (undocumented)
+export interface ScanModelColumnStatisticsEntry {
+    // (undocumented)
+    'columnName': string;
+    'dataSize'?: number;
+    'max'?: string;
+    'min'?: string;
+    'ndv'?: number;
+    'nullCount'?: number;
 }
 
 // @public (undocumented)
@@ -30729,6 +31824,18 @@ export interface ScanModelRequestArgs {
     options: RawAxiosRequestConfig;
     // (undocumented)
     url: string;
+}
+
+// @public (undocumented)
+export interface ScanModelTableStatisticsEntry {
+    // (undocumented)
+    'columns': Array<ScanModelColumnStatisticsEntry>;
+    'dataSize'?: number;
+    'rowCount'?: number;
+    // (undocumented)
+    'schemaName': string;
+    // (undocumented)
+    'tableName': string;
 }
 
 // @public
@@ -31109,6 +32216,30 @@ export interface TableStatisticsEntry {
     'tableName': string;
 }
 
+// @public (undocumented)
+export interface TableStatisticsRequest {
+    // (undocumented)
+    'schemata': Array<string>;
+    // (undocumented)
+    'tableNames'?: Array<string>;
+}
+
+// @public (undocumented)
+export interface TableStatisticsResponse {
+    // (undocumented)
+    'tables': Array<ScanModelTableStatisticsEntry>;
+    // (undocumented)
+    'warnings': Array<TableStatisticsWarning>;
+}
+
+// @public (undocumented)
+export interface TableStatisticsWarning {
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'tableName'?: string;
+}
+
 // @public
 export interface TableWarning {
     // (undocumented)
@@ -31204,6 +32335,30 @@ export interface TestDefinitionRequest {
 
 // @public (undocumented)
 export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE';
+
+// @public (undocumented)
+export interface TestLlmProviderByIdRequest {
+    'models'?: Array<LlmModel>;
+    // (undocumented)
+    'providerConfig'?: TestLlmProviderByIdRequestProviderConfig;
+}
+
+// @public
+export type TestLlmProviderByIdRequestProviderConfig = AfmAwsBedrockProviderConfig | AfmAzureFoundryProviderConfig | AfmOpenAIProviderConfig;
+
+// @public (undocumented)
+export interface TestLlmProviderDefinitionRequest {
+    'models'?: Array<LlmModel>;
+    // (undocumented)
+    'providerConfig': TestLlmProviderByIdRequestProviderConfig;
+}
+
+// @public (undocumented)
+export interface TestLlmProviderResponse {
+    'modelResults': Array<ModelTestResult>;
+    'providerMessage': string;
+    'providerReachable': boolean;
+}
 
 // @public
 export interface TestQueryDuration {
@@ -31329,6 +32484,11 @@ export interface ThemeControllerApiUpdateEntityThemesRequest {
     readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
 }
 
+// @public
+export interface Thought {
+    'text': string;
+}
+
 // @public (undocumented)
 export const tigerActionsClientFactory: (axios: AxiosInstance) => ActionsApiInterface;
 
@@ -31347,6 +32507,9 @@ export const tigerClientBaseFactory: (axios: AxiosInstance, basePath?: string) =
 // @public @deprecated
 export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 
+// @public (undocumented)
+export const tigerEntitiesObjectsClientFactory: (axios: AxiosInstance) => EntitiesApiInterface;
+
 // @public
 export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "changeAnalysis" | "computeReport">;
 
@@ -31358,6 +32521,9 @@ export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportIn
 
 // @public
 export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiChat" | "aiChatHistory" | "aiChatStream" | "aiSearch" | "createdBy" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "memoryCreatedByUsers" | "tags" | "triggerQualityIssuesCalculation" | "validateLLMEndpoint" | "validateLLMEndpointById">;
+
+// @public (undocumented)
+export const tigerGeoCollectionsClientFactory: (axios: AxiosInstance) => OGCAPIFeaturesApiInterface;
 
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeLabelElementsPost">;
@@ -31388,6 +32554,13 @@ export const tigerValidDescendantsClientFactory: (axios: AxiosInstance) => Pick<
 
 // @public (undocumented)
 export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeValidObjects">;
+
+// @public
+export interface ToolCallEventResult {
+    'functionArguments': string;
+    'functionName': string;
+    'result': string;
+}
 
 // @public
 export interface Total {
@@ -31486,7 +32659,50 @@ export interface TranslationsApiSetTranslationsRequest {
 }
 
 // @public
+export interface TrendingObjectItem {
+    'createdAt'?: string;
+    'createdBy'?: string;
+    'datasetId'?: string;
+    'datasetTitle'?: string;
+    'datasetType'?: string;
+    'description'?: string;
+    'id': string;
+    'isHidden'?: boolean;
+    'isHiddenFromKda'?: boolean;
+    'metricType'?: string;
+    'modifiedAt'?: string;
+    'modifiedBy'?: string;
+    // (undocumented)
+    'tags': Array<string>;
+    'title': string;
+    'type': string;
+    'usageCount': number;
+    'visualizationUrl'?: string;
+    'workspaceId': string;
+}
+
+// @public (undocumented)
+export interface TrendingObjectsResult {
+    // (undocumented)
+    'objects': Array<TrendingObjectItem>;
+}
+
+// @public (undocumented)
+export type TriggerQualityIssuesCalculationResponseStatusEnum = 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'DISABLED';
+
+// @public
+export interface UIContext {
+    // (undocumented)
+    'dashboard'?: DashboardContext;
+}
+
+// @public
 export interface UploadFileResponse {
+    'location': string;
+}
+
+// @public
+export interface UploadGeoCollectionFileResponse {
     'location': string;
 }
 
@@ -31531,10 +32747,7 @@ export interface UserAssignee {
 export interface UserContext {
     // (undocumented)
     'activeObject'?: ActiveObjectIdentification;
-    // Warning: (ae-forgotten-export) The symbol "ObjectReferenceGroup" needs to be exported by the entry point index.d.ts
     'referencedObjects'?: Array<ObjectReferenceGroup>;
-    // Warning: (ae-forgotten-export) The symbol "UIContext" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     'view'?: UIContext;
 }
@@ -33163,6 +34376,13 @@ export interface VisualizationObjectControllerApiUpdateEntityVisualizationObject
     readonly workspaceId: string;
 }
 
+// @public (undocumented)
+export interface VisualizationObjectExecution {
+    'filters'?: Array<AfmFilterDefinition>;
+    // (undocumented)
+    'settings'?: AfmExecutionSettings;
+}
+
 declare namespace VisualizationObjectModelV1 {
     export {
         isVisualizationObject,
@@ -33187,17 +34407,17 @@ declare namespace VisualizationObjectModelV2 {
 export { VisualizationObjectModelV2 }
 
 // @public
-export class VisualizationsAi extends BaseAPI implements VisualizationsAiInterface {
+export class VisualizationsAi extends AiBaseAPI implements VisualizationsAiInterface {
     patchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
-function VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): AxiosPromise<void>;
+function VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(axios: AxiosInstance, basePath: string, requestParameters: VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<void>;
 export { VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch as GenAiApi_PatchVisualization }
 export { VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch }
 
 // @public
-export function VisualizationsAiAxiosParamCreator_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(workspaceId: string, conversationId: string, visualizationId: string, aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest, options?: AxiosRequestConfig, configuration?: Configuration_2): Promise<RequestArgs>;
+export function VisualizationsAiAxiosParamCreator_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch(workspaceId: string, conversationId: string, visualizationId: string, aiVisualizationIdUpdateRequest: AiVisualizationIdUpdateRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): Promise<AiRequestArgs>;
 
 // @public
 export interface VisualizationsAiInterface {
@@ -33247,6 +34467,18 @@ export interface WhatIfScenarioItem {
 }
 
 // @public
+export interface WidgetDescriptor {
+    // (undocumented)
+    'filters'?: Array<OutlierDetectionRequestFiltersInner>;
+    // (undocumented)
+    'title': string;
+    // (undocumented)
+    'widgetId': string;
+    // (undocumented)
+    'widgetType': string;
+}
+
+// @public
 export interface WidgetSlidesTemplate {
     'appliedOn': Array<WidgetSlidesTemplateAppliedOnEnum>;
     // (undocumented)
@@ -33255,6 +34487,46 @@ export interface WidgetSlidesTemplate {
 
 // @public (undocumented)
 export type WidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+// @public (undocumented)
+export interface WorkflowDashboardSummaryRequestDto {
+    // (undocumented)
+    'customUserPrompt'?: string;
+    // (undocumented)
+    'dashboardId': string;
+    // (undocumented)
+    'keyMetricIds'?: Array<string>;
+    // (undocumented)
+    'referenceQuarter'?: string;
+}
+
+// @public (undocumented)
+export interface WorkflowDashboardSummaryResponseDto {
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'runId': string;
+    // (undocumented)
+    'status': string;
+}
+
+// @public (undocumented)
+export interface WorkflowStatusResponseDto {
+    // (undocumented)
+    'currentPhase'?: string;
+    // (undocumented)
+    'error'?: string;
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'result'?: {
+        [key: string]: object;
+    };
+    // (undocumented)
+    'runId': string;
+    // (undocumented)
+    'status': string;
+}
 
 // @public (undocumented)
 export interface WorkspaceAutomationIdentifier {
@@ -34289,11 +35561,5 @@ export interface Xliff {
     // (undocumented)
     'version'?: string;
 }
-
-// Warnings were encountered during analysis:
-//
-// esm/gd-tiger-model/TigerTypes.d.ts:681:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
-// esm/gd-tiger-model/TigerTypes.d.ts:682:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
-// esm/locationStyle.d.ts:44:5 - (ae-forgotten-export) The symbol "ILocationStyleListItem" needs to be exported by the entry point index.d.ts
 
 ```

@@ -46,6 +46,7 @@ export {
     yamlReportToDeclarative,
     yamlReportTotalToDeclarative,
     yamlSortsToDeclarative,
+    type VisualisationDefinition,
 } from "./to/yamlVisualisationToDeclarative.js";
 export {
     yamlDashboardToDeclarative,
@@ -54,6 +55,11 @@ export {
     yamlPluginsToDeclarative,
     yamlWidgetItemToDeclarative,
     yamlWidgetToDeclarative,
+    type DashboardDefinition,
+    type DashboardSection,
+    type DashboardWidget,
+    type EmptyValueHandling,
+    type FilterContextDefinition,
 } from "./to/yamlDashboardToDeclarative.js";
 export { yamlPluginToDeclarative } from "./to/yamlPluginToDeclarative.js";
 export { yamlAttributeHierarchyToDeclarative } from "./to/yamlAttributeHierarchyToDeclarative.js";
@@ -83,6 +89,14 @@ export {
     declarativeRelativeDateFilterToYaml,
     declarativeSortsToYaml,
     declarativeTotalToYaml,
+    type YamlSorts,
+    type YamlPostProcessors,
+    type YamlBuckets,
+    type YamlBucketGroup,
+    type YamlBucketGroupItems,
+    type YamlFieldData,
+    type YamlFilterMapEntry,
+    type YamlFilters,
 } from "./from/declarativeVisualisationToYaml.js";
 export {
     declarativeDashboardToYaml,
@@ -115,28 +129,185 @@ export {
 } from "./conts.js";
 
 // Configs
-export { table } from "./configs/table.js";
-export { barChart } from "./configs/barChart.js";
-export { columnChart } from "./configs/columnChart.js";
-export { lineChart } from "./configs/lineChart.js";
-export { areaChart } from "./configs/areaChart.js";
-export { scatterChart } from "./configs/scatterChart.js";
-export { bubbleChart } from "./configs/bubbleChart.js";
-export { pieChart } from "./configs/pieChart.js";
-export { donutChart } from "./configs/donutChart.js";
-export { treemapChart } from "./configs/treemapChart.js";
-export { pyramidChart } from "./configs/pyramidChart.js";
-export { funnelChart } from "./configs/funnelChart.js";
-export { heatmapChart } from "./configs/heatmapChart.js";
-export { bulletChart } from "./configs/bulletChart.js";
-export { waterfallChart } from "./configs/waterfallChart.js";
-export { dependencyWheelChart } from "./configs/dependencyWheelChart.js";
-export { sankeyChart } from "./configs/sankeyChart.js";
-export { headlineChart } from "./configs/headlineChart.js";
-export { comboChart } from "./configs/comboChart.js";
-export { geoChart } from "./configs/geoChart.js";
-export { geoAreaChart } from "./configs/geoAreaChart.js";
-export { repeaterChart, type InlineVisualizations } from "./configs/repeaterChart.js";
+export {
+    table,
+    tableLoad,
+    tableSave,
+    TABLE_DEFAULTS,
+    type ITableConfig,
+    type TableConfigProperties,
+} from "./configs/table.js";
+export {
+    barChart,
+    barChartLoad,
+    barChartSave,
+    BAR_CHART_DEFAULTS,
+    type IBarChartConfig,
+    type BarChartConfigProperties,
+} from "./configs/barChart.js";
+export {
+    columnChart,
+    columnChartLoad,
+    columnChartSave,
+    COLUMN_CHART_DEFAULTS,
+    type IColumnChartConfig,
+    type ColumnChartConfigProperties,
+} from "./configs/columnChart.js";
+export {
+    lineChart,
+    lineChartLoad,
+    lineChartSave,
+    LINE_CHART_DEFAULTS,
+    type ILineChartConfig,
+    type LineChartConfigProperties,
+} from "./configs/lineChart.js";
+export {
+    areaChart,
+    areaChartLoad,
+    areaChartSave,
+    AREA_CHART_DEFAULTS,
+    type IAreaChartConfig,
+    type AreaChartConfigProperties,
+} from "./configs/areaChart.js";
+
+export {
+    scatterChart,
+    scatterChartLoad,
+    scatterChartSave,
+    SCATTER_CHART_DEFAULTS,
+    type IScatterChartConfig,
+    type ScatterChartConfigProperties,
+} from "./configs/scatterChart.js";
+export {
+    bubbleChart,
+    bubbleChartLoad,
+    bubbleChartSave,
+    BUBBLE_CHART_DEFAULTS,
+    type IBubbleChartConfig,
+    type BubbleChartConfigProperties,
+} from "./configs/bubbleChart.js";
+export {
+    pieChart,
+    pieChartLoad,
+    pieChartSave,
+    PIE_CHART_DEFAULTS,
+    type IPieChartConfig,
+    type PieChartConfigProperties,
+} from "./configs/pieChart.js";
+export {
+    donutChart,
+    donutChartLoad,
+    donutChartSave,
+    DONUT_CHART_DEFAULTS,
+    type IDonutChartConfig,
+    type DonutChartConfigProperties,
+} from "./configs/donutChart.js";
+export {
+    treemapChart,
+    treemapChartLoad,
+    treemapChartSave,
+    TREEMAP_CHART_DEFAULTS,
+    type ITreemapChartConfig,
+    type TreemapChartConfigProperties,
+} from "./configs/treemapChart.js";
+export {
+    pyramidChart,
+    pyramidChartLoad,
+    pyramidChartSave,
+    PYRAMID_CHART_DEFAULTS,
+    type IPyramidChartConfig,
+    type PyramidChartConfigProperties,
+} from "./configs/pyramidChart.js";
+export {
+    funnelChart,
+    funnelChartLoad,
+    funnelChartSave,
+    FUNNEL_CHART_DEFAULTS,
+    type IFunnelChartConfig,
+    type FunnelChartConfigProperties,
+} from "./configs/funnelChart.js";
+export {
+    heatmapChart,
+    heatmapChartLoad,
+    heatmapChartSave,
+    HEATMAP_CHART_DEFAULTS,
+    type IHeatmapChartConfig,
+    type HeatmapChartConfigProperties,
+} from "./configs/heatmapChart.js";
+export {
+    bulletChart,
+    bulletChartLoad,
+    bulletChartSave,
+    BULLET_CHART_DEFAULTS,
+    type IBulletChartConfig,
+    type BulletChartConfigProperties,
+} from "./configs/bulletChart.js";
+export {
+    waterfallChart,
+    waterfallChartLoad,
+    waterfallChartSave,
+    WATERFALL_CHART_DEFAULTS,
+    type IWaterfallChartConfig,
+    type WaterfallChartConfigProperties,
+} from "./configs/waterfallChart.js";
+export {
+    dependencyWheelChart,
+    dependencyWheelChartLoad,
+    dependencyWheelChartSave,
+    DEPENDENCY_WHEEL_CHART_DEFAULTS,
+    type IDependencyWheelChartConfig,
+    type DependencyWheelChartConfigProperties,
+} from "./configs/dependencyWheelChart.js";
+export {
+    sankeyChart,
+    sankeyChartLoad,
+    sankeyChartSave,
+    SANKEY_CHART_DEFAULTS,
+    type ISankeyChartConfig,
+    type SankeyChartConfigProperties,
+} from "./configs/sankeyChart.js";
+export {
+    headlineChart,
+    headlineChartLoad,
+    headlineChartSave,
+    HEADLINE_CHART_DEFAULTS,
+    type IHeadlineChartConfig,
+    type HeadlineChartConfigProperties,
+} from "./configs/headlineChart.js";
+export {
+    comboChart,
+    comboChartLoad,
+    comboChartSave,
+    COMBO_CHART_DEFAULTS,
+    type IComboChartConfig,
+    type ComboChartConfigProperties,
+} from "./configs/comboChart.js";
+export {
+    geoChart,
+    geoChartLoad,
+    geoChartSave,
+    GEO_CHART_DEFAULTS,
+    type IGeoChartConfig,
+    type GeoChartConfigProperties,
+} from "./configs/geoChart.js";
+export {
+    geoAreaChart,
+    geoAreaChartLoad,
+    geoAreaChartSave,
+    GEO_AREA_CHART_DEFAULTS,
+    type IGeoAreaChartConfig,
+    type GeoAreaChartConfigProperties,
+} from "./configs/geoAreaChart.js";
+export {
+    repeaterChart,
+    repeaterChartLoad,
+    repeaterChartSave,
+    REPEATER_CHART_DEFAULTS,
+    saveInlineVisualizations,
+    type IRepeaterChartConfig,
+    type RepeaterChartConfigProperties,
+    type InlineVisualizations,
+} from "./configs/repeaterChart.js";
 export type {
     IChartFill as ChartFill,
     ChartFillType,
@@ -167,11 +338,16 @@ export type {
     PatternFillName,
     PointShapeSymbol,
 } from "./configs/types.js";
-export { getValueOrDefault, type VisualisationConfig, type ValueType } from "./configs/utils.js";
+export {
+    getValueOrDefault,
+    type ConfigDefaults,
+    type VisualisationConfig,
+    type ValueType,
+} from "./configs/utils.js";
 
 // Utils needed by orchestrators
 export { generateFileName, resolveIdFromFileName, type FileNamesUsed } from "./utils/nameUtils.js";
-export { assertUnreachable, type FilePath } from "./utils/sharedUtils.js";
+export { assertUnreachable, type FilePath, type FullFields } from "./utils/sharedUtils.js";
 export { convertBucketToTitle } from "./utils/convertBucketToTitle.js";
 export { createIdentifier, getIdentifier } from "./utils/yamlUtils.js";
 export {

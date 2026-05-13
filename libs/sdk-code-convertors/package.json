@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.35.0-alpha.5",
+    "version": "11.35.0-alpha.6",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -33,7 +33,7 @@
         "build-ts": "tsgo -p tsconfig.build.json",
         "build-wasm": "bash wasm/build.sh",
         "check-python-types": "node scripts/check-python-types.mjs",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf esm coverage *.log tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf esm coverage temp *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",

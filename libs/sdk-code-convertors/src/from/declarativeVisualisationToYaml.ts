@@ -177,7 +177,7 @@ export function declarativeVisualisationToYaml(
 
 type Report = {
     report: YAMLMap;
-    derivedBuckets: BucketGroup[];
+    derivedBuckets: YamlBucketGroup[];
 };
 
 function declarativeReportToYaml(
@@ -266,7 +266,7 @@ function declarativeReportToYaml(
 
 function appendLayerFieldsToReport(
     fieldsMap: YAMLMap,
-    postProcessors: PostProcessors,
+    postProcessors: YamlPostProcessors,
     entities: FromEntities,
     layers?: IInsightLayerDefinition[],
     errorContext?: IErrorContext,
@@ -340,7 +340,7 @@ function getPairKeyValue(pair: Pair): string | undefined {
 
 export function declarativeFiltersConfigToYaml(
     insight: IInsightDefinition["insight"],
-    filtersMap: Record<string, FilterMapEntry>,
+    filtersMap: Record<string, YamlFilterMapEntry>,
     errorContext?: IErrorContext,
 ) {
     Object.keys(insight.attributeFilterConfigs ?? {}).forEach((key) => {
@@ -367,6 +367,7 @@ export function declarativeFiltersConfigToYaml(
     });
 }
 
+/** @internal */
 export function declarativeVisTypeToYaml(def: IInsightDefinition["insight"]): string | null {
     switch (def.visualizationUrl) {
         case "local:table":
@@ -506,17 +507,20 @@ function declarativeVisToYaml(
 
 //buckets
 
-type PostProcessors = {
+/** @internal */
+export type YamlPostProcessors = {
     filters: Array<{ item: YAMLMap; filters: IFilter[] }>;
 };
 
-type Buckets = {
+/** @internal */
+export type YamlBuckets = {
     fieldsMap: YAMLMap;
-    groups: BucketGroup[];
-    postProcessors: PostProcessors;
+    groups: YamlBucketGroup[];
+    postProcessors: YamlPostProcessors;
 };
 
-type BucketGroupItems = Array<{
+/** @internal */
+export type YamlBucketGroupItems = Array<{
     field: string;
     format?: string;
     totals?: YAMLMap[];
@@ -524,28 +528,36 @@ type BucketGroupItems = Array<{
     display_as?: "metric" | "line" | "column";
 } | null>;
 
-type BucketGroup = {
+/** @internal */
+export type YamlBucketGroup = {
     type: BucketsType;
-    items: BucketGroupItems;
+    items: YamlBucketGroupItems;
 };
 
-type FieldData = {
+/** @internal */
+export type YamlFieldData = {
     format?: string;
     axis?: "primary" | "secondary";
 };
 
+/** @internal */
 export function declarativeBucketsToYaml(
     entities: FromEntities,
     buckets: IBucket[],
     errorContext?: IErrorContext,
-): Buckets {
+): YamlBuckets {
     const fullFieldsMap = new YAMLMap();
-    const groups: BucketGroup[] = [];
-    const postProcessors: PostProcessors = {
+    const groups: YamlBucketGroup[] = [];
+    const postProcessors: YamlPostProcessors = {
         filters: [],
     };
 
-    const addField = (local: string, def: YAMLMap, group: BucketGroup, { format, axis }: FieldData = {}) => {
+    const addField = (
+        local: string,
+        def: YAMLMap,
+        group: YamlBucketGroup,
+        { format, axis }: YamlFieldData = {},
+    ) => {
         fullFieldsMap.add(new Pair(local, def));
         group.items.push(createBucketGroupItem(local, format, axis));
     };
@@ -553,7 +565,7 @@ export function declarativeBucketsToYaml(
     //create buckets
     buckets.forEach((bucket, bi) => {
         if (isBucket(bucket)) {
-            const group: BucketGroup = { items: [], type: bucket.localIdentifier as BucketsType };
+            const group: YamlBucketGroup = { items: [], type: bucket.localIdentifier as BucketsType };
             const attributesMap: Record<string, YAMLMap> = {};
             const isLocation = bucket.localIdentifier === BucketsType.Location;
 
@@ -679,6 +691,7 @@ export function declarativeBucketsToYaml(
     };
 }
 
+/** @internal */
 export function declarativeAttributeToYaml(def: IAttributeBody, errorContext?: IErrorContext): YAMLMap {
     const map = new YAMLMap();
 
@@ -701,6 +714,7 @@ export function declarativeAttributeToYaml(def: IAttributeBody, errorContext?: I
     return map;
 }
 
+/** @internal */
 export function declarativeInlineMetricToYaml(
     def: IMeasureBody,
     inlineDef: IInlineMeasureDefinition,
@@ -715,10 +729,11 @@ export function declarativeInlineMetricToYaml(
     return map;
 }
 
+/** @internal */
 export function declarativeNormalMetricToYaml(
     def: IMeasureBody,
     metricDefinition: IMeasureDefinition,
-    postProcessors: PostProcessors,
+    postProcessors: YamlPostProcessors,
     errorContext?: IErrorContext,
 ): YAMLMap {
     const map = new YAMLMap();
@@ -748,6 +763,7 @@ export function declarativeNormalMetricToYaml(
     return map;
 }
 
+/** @internal */
 export function declarativeArithmeticMetricToYaml(
     def: IMeasureBody,
     arithmeticDefinition: IArithmeticMeasureDefinition,
@@ -763,6 +779,7 @@ export function declarativeArithmeticMetricToYaml(
     return map;
 }
 
+/** @internal */
 export function declarativePoPMetricToYaml(
     def: IMeasureBody,
     popDefinition: IPoPMeasureDefinition,
@@ -789,6 +806,7 @@ export function declarativePoPMetricToYaml(
     return map;
 }
 
+/** @internal */
 export function declarativePreviousPeriodMetricToYaml(
     def: IMeasureBody,
     previousDefinition: IPreviousPeriodMeasureDefinition,
@@ -841,7 +859,7 @@ function createBucketGroupItem(
     field: string,
     format?: string,
     axis?: "primary" | "secondary",
-): BucketGroupItems[number] {
+): YamlBucketGroupItems[number] {
     return {
         field,
         ...(format ? { format } : {}),
@@ -861,13 +879,15 @@ function getShortenedBucket(def: YAMLMap): string | false {
 
 //filters
 
-type FilterMapEntry = {
+/** @internal */
+export type YamlFilterMapEntry = {
     yaml: YAMLMap;
     filter: IFilter;
 };
 
-type Filters = {
-    filtersMap: Record<string, FilterMapEntry>;
+/** @internal */
+export type YamlFilters = {
+    filtersMap: Record<string, YamlFilterMapEntry>;
     filtersArray: YAMLMap;
 };
 
@@ -985,13 +1005,14 @@ function groupFiltersByDateFilter(filters: IFilter[]): {
     return result;
 }
 
+/** @internal */
 export function declarativeFiltersToYaml(
     entities: FromEntities,
     filters: IFilter[],
     errorContext?: IErrorContext,
-): Filters {
+): YamlFilters {
     const filtersArray: Array<Pair> = [];
-    const filtersMap: Record<string, FilterMapEntry> = {};
+    const filtersMap: Record<string, YamlFilterMapEntry> = {};
     const usedKeys = new Set<string>();
 
     const getUniqueKey = (baseKey: string) => {
@@ -1233,6 +1254,7 @@ function processConnectedAttributeFilters(
     });
 }
 
+/** @internal */
 export function declarativeAbsoluteDateFilterToYaml(
     absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"],
     connectedAttributeFilters: IFilter[] = [],
@@ -1279,6 +1301,7 @@ function isRelativeDateFilterAllTime(
     return granularity === "GDC.time.year" && from === undefined && to === undefined;
 }
 
+/** @internal */
 export function declarativeRelativeDateFilterToYaml(
     relativeDateFilter: IRelativeDateFilter["relativeDateFilter"],
     connectedAttributeFilters: IFilter[] = [],
@@ -1319,6 +1342,7 @@ export function declarativeRelativeDateFilterToYaml(
     return map;
 }
 
+/** @internal */
 export function declarativePositiveAttributeFilterToYaml(
     entities: FromEntities,
     attributeFilter: IPositiveAttributeFilterBody,
@@ -1347,6 +1371,7 @@ export function declarativePositiveAttributeFilterToYaml(
     return map;
 }
 
+/** @internal */
 export function declarativeNegativeAttributeFilterToYaml(
     entities: FromEntities,
     attributeFilter: INegativeAttributeFilterBody,
@@ -1473,6 +1498,7 @@ function addConditionToYamlMap(conditionMap: YAMLMap, condition: MeasureValueFil
     return hasTreatNullValues;
 }
 
+/** @internal */
 export function declarativeMeasureValueFilterToYaml(
     measureValueFilter: IMeasureValueFilterBody,
     errorContext?: IErrorContext,
@@ -1541,6 +1567,7 @@ export function declarativeMeasureValueFilterToYaml(
     return map;
 }
 
+/** @internal */
 export function declarativeRankingFilterToYaml(
     rankingFilter: IRankingFilterBody,
     errorContext?: IErrorContext,
@@ -1588,11 +1615,13 @@ export function declarativeRankingFilterToYaml(
 
 //sorts
 
-type Sorts = {
+/** @internal */
+export type YamlSorts = {
     sortsArray: YAMLMap[];
 };
 
-export function declarativeSortsToYaml(sorts: ISortItem[], _errorContext?: IErrorContext): Sorts {
+/** @internal */
+export function declarativeSortsToYaml(sorts: ISortItem[], _errorContext?: IErrorContext): YamlSorts {
     const sortsArray: YAMLMap[] = [];
 
     sorts.forEach((sort) => {
@@ -1609,6 +1638,7 @@ export function declarativeSortsToYaml(sorts: ISortItem[], _errorContext?: IErro
     };
 }
 
+/** @internal */
 export function declarativeAttributeSortToYaml(sort: IAttributeSortItem): YAMLMap {
     const { attributeIdentifier, aggregation, direction } = sort.attributeSortItem;
     const map = new YAMLMap();
@@ -1623,6 +1653,7 @@ export function declarativeAttributeSortToYaml(sort: IAttributeSortItem): YAMLMa
     return map;
 }
 
+/** @internal */
 export function declarativeMeasureSortToYaml(sort: IMeasureSortItem): YAMLMap {
     const { locators, direction } = sort.measureSortItem;
     const map = new YAMLMap();
@@ -1810,7 +1841,7 @@ function declarativeVisScatterToYaml(
     //buckets
     const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
-    const metrics: BucketGroup = {
+    const metrics: YamlBucketGroup = {
         items: cleanUpItems([
             ...(metrics1?.items.length ? metrics1.items : [null]),
             ...(metrics2?.items.length ? metrics2.items : [null]),
@@ -1846,7 +1877,7 @@ function declarativeVisBubbleToYaml(
     //buckets
     const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
-    const metrics: BucketGroup = {
+    const metrics: YamlBucketGroup = {
         items: cleanUpItems([
             ...(metrics1?.items.length ? metrics1.items : [null]),
             ...(metrics2?.items.length ? metrics2.items : [null]),
@@ -2031,7 +2062,7 @@ function declarativeVisBulletToYaml(
     const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
     const metrics3 = report.derivedBuckets.find((item) => item.type === BucketsType.TertiaryMeasures);
-    const metrics: BucketGroup = {
+    const metrics: YamlBucketGroup = {
         items: cleanUpItems([
             ...(metrics1?.items.length ? metrics1.items : [null]),
             ...(metrics2?.items.length ? metrics2.items : [null]),
@@ -2091,7 +2122,7 @@ function declarativeVisDependencyWheelToYaml(
 
     const from = report.derivedBuckets.find((item) => item.type === BucketsType.AttributeFrom);
     const to = report.derivedBuckets.find((item) => item.type === BucketsType.AttributeTo);
-    const view: BucketGroup = {
+    const view: YamlBucketGroup = {
         items: cleanUpItems([
             ...(from?.items.length ? from.items : [null]),
             ...(to?.items.length ? to.items : [null]),
@@ -2123,7 +2154,7 @@ function declarativeVisSankeyToYaml(
 
     const from = report.derivedBuckets.find((item) => item.type === BucketsType.AttributeFrom);
     const to = report.derivedBuckets.find((item) => item.type === BucketsType.AttributeTo);
-    const view: BucketGroup = {
+    const view: YamlBucketGroup = {
         items: cleanUpItems([
             ...(from?.items.length ? from.items : [null]),
             ...(to?.items.length ? to.items : [null]),
@@ -2150,7 +2181,7 @@ function declarativeVisHeadlineToYaml(
     //buckets
     const metrics1 = report.derivedBuckets.find((item) => item.type === BucketsType.Measures);
     const metrics2 = report.derivedBuckets.find((item) => item.type === BucketsType.SecondaryMeasures);
-    const metrics: BucketGroup = {
+    const metrics: YamlBucketGroup = {
         items: [...(metrics1?.items ?? [null]), ...(metrics2?.items ?? [])],
         type: BucketsType.Measures,
     };
@@ -2180,7 +2211,7 @@ function declarativeVisComboToYaml(
         "secondary",
     );
 
-    const metrics: BucketGroup = {
+    const metrics: YamlBucketGroup = {
         items: [...(metrics1?.items ?? []), ...(metrics2?.items ?? [])],
         type: BucketsType.Measures,
     };
@@ -2199,11 +2230,11 @@ function declarativeVisComboToYaml(
     }
 }
 
-function addPushpinBucketsToYaml(target: Document | YAMLMap, groups: BucketGroup[]) {
+function addPushpinBucketsToYaml(target: Document | YAMLMap, groups: YamlBucketGroup[]) {
     const sizeBucket = groups.find((item) => item.type === BucketsType.Size);
     const colorBucket = groups.find((item) => item.type === BucketsType.Color);
 
-    const metrics: BucketGroup = {
+    const metrics: YamlBucketGroup = {
         items: cleanUpItems([
             ...(sizeBucket?.items.length ? sizeBucket.items : [null]),
             ...(colorBucket?.items ? colorBucket.items : [null]),
@@ -2226,10 +2257,10 @@ function addPushpinBucketsToYaml(target: Document | YAMLMap, groups: BucketGroup
     }
 }
 
-function addGeoAreaBucketsToYaml(target: Document | YAMLMap, groups: BucketGroup[]) {
+function addGeoAreaBucketsToYaml(target: Document | YAMLMap, groups: YamlBucketGroup[]) {
     const colorBucket = groups.find((item) => item.type === BucketsType.Color);
 
-    const metrics: BucketGroup = {
+    const metrics: YamlBucketGroup = {
         items: cleanUpItems([...(colorBucket?.items.length ? colorBucket.items : [null])]),
         type: BucketsType.Measures,
     };
@@ -2334,6 +2365,7 @@ function declarativeVisRepeaterToYaml(
 
 //TOTALS
 
+/** @internal */
 export function declarativeTotalToYaml(total: ITotal, _errorContext?: IErrorContext) {
     const map = new YAMLMap();
 
@@ -2350,7 +2382,7 @@ export function declarativeTotalToYaml(total: ITotal, _errorContext?: IErrorCont
     };
 }
 
-function groupToYaml(group: BucketGroup) {
+function groupToYaml(group: YamlBucketGroup) {
     return group.items.map((item) => {
         if (!item) {
             return null;
@@ -2380,7 +2412,7 @@ function groupToYaml(group: BucketGroup) {
     });
 }
 
-function addAxisTypeToGroup(group: BucketGroup | undefined, axis: "primary" | "secondary") {
+function addAxisTypeToGroup(group: YamlBucketGroup | undefined, axis: "primary" | "secondary") {
     if (!group) {
         return undefined;
     }
@@ -2399,7 +2431,7 @@ function addAxisTypeToGroup(group: BucketGroup | undefined, axis: "primary" | "s
 }
 
 function addChartTypeToGroup(
-    group: BucketGroup | undefined,
+    group: YamlBucketGroup | undefined,
     config: IInsightDefinition["insight"]["properties"],
 ) {
     if (!group || !config) {
@@ -2482,7 +2514,7 @@ function resolveLayerExportKind(rawLayerType?: string, errorContext?: IErrorCont
 
 function appendLayerBucketsForKind(
     layerMap: YAMLMap,
-    groups: BucketGroup[],
+    groups: YamlBucketGroup[],
     kind: LayerExportKind,
     errorContext?: IErrorContext,
 ) {

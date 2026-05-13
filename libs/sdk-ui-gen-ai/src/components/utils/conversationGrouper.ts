@@ -3,6 +3,7 @@
 import { type IChatConversationLocal } from "../../model.js";
 
 export enum ConversationDateGroup {
+    PINNED = "PINNED",
     TODAY = "TODAY",
     LAST_7_DAYS = "LAST_7_DAYS",
     OLDER = "OLDER",
@@ -19,6 +20,7 @@ export type ConversationDateBucket = {
 };
 
 export const DEFAULT_CONVERSATION_DATE_GROUPS: ConversationDateGroupConfig[] = [
+    { group: ConversationDateGroup.PINNED, maxAgeDays: Number.POSITIVE_INFINITY },
     { group: ConversationDateGroup.TODAY, maxAgeDays: 0 },
     { group: ConversationDateGroup.LAST_7_DAYS, maxAgeDays: 6 },
     { group: ConversationDateGroup.OLDER, maxAgeDays: Number.POSITIVE_INFINITY },
@@ -40,10 +42,16 @@ export function groupConversationsByDate(
         .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
 
     sorted.forEach((conversation) => {
+        if (conversation.pinned) {
+            conversationGroups.get(ConversationDateGroup.PINNED)?.push(conversation);
+            return;
+        }
+
         const updatedAt = new Date(conversation.updatedAt);
         const ageInDays = getAgeInDays(updatedAt, now);
         const targetGroup =
             groups
+                .filter((group) => group.group !== ConversationDateGroup.PINNED)
                 .filter((group) => ageInDays <= group.maxAgeDays)
                 .sort((a, b) => a.maxAgeDays - b.maxAgeDays)[0]?.group ?? groups[groups.length - 1].group;
 

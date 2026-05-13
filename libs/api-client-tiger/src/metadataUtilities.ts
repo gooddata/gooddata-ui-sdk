@@ -138,6 +138,9 @@ export type MetadataGetEntitiesFn<
     P extends MetadataGetEntitiesParams,
 > = (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
 
+/**
+ * @internal
+ */
 export type MetadataGetEntitiesFnNew<
     T extends MetadataGetEntitiesResult,
     P extends MetadataGetEntitiesParams,

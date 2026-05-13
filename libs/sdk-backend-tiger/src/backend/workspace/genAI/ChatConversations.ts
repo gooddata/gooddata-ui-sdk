@@ -75,7 +75,7 @@ export class ChatConversationsService implements IChatConversations {
 
     async update(
         conversationId: string,
-        update: Partial<Pick<IChatConversation, "title">>,
+        update: Partial<Pick<IChatConversation, "title" | "pinned">>,
     ): Promise<IChatConversation> {
         return await this.authCall(async (client) => {
             const response = await GenAiApi_PatchConversation(client.axios, client.basePath, {

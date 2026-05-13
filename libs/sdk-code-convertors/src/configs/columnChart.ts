@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type ColumnChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         totalsVisible: boolean | "auto";
@@ -59,7 +60,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<ColumnChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         totalsVisible: "auto",
@@ -104,7 +106,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const COLUMN_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function columnChartLoad(props: VisualisationConfig<ColumnChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -215,7 +221,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function columnChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -279,8 +286,22 @@ function save(
     });
 }
 
-export const columnChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use columnChartLoad and columnChartSave instead.
+ */
+export interface IColumnChartConfig {
+    load: typeof columnChartLoad;
+    save: typeof columnChartSave;
+    DEFAULTS: ConfigDefaults<ColumnChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use columnChartLoad and columnChartSave instead.
+ */
+export const columnChart: IColumnChartConfig = {
+    load: columnChartLoad,
+    save: columnChartSave,
     DEFAULTS,
 };

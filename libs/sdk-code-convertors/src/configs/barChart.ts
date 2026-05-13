@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type BarChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         totalsVisible: boolean | "auto";
@@ -59,7 +60,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<BarChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         totalsVisible: "auto",
@@ -104,7 +106,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const BAR_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function barChartLoad(props: VisualisationConfig<BarChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -215,7 +221,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function barChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -279,8 +286,22 @@ function save(
     });
 }
 
-export const barChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use barChartLoad and barChartSave instead.
+ */
+export interface IBarChartConfig {
+    load: typeof barChartLoad;
+    save: typeof barChartSave;
+    DEFAULTS: ConfigDefaults<BarChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use barChartLoad and barChartSave instead.
+ */
+export const barChart: IBarChartConfig = {
+    load: barChartLoad,
+    save: barChartSave,
     DEFAULTS,
 };

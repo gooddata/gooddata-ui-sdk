@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Add per-tab `IDashboardTab.parameters`; deprecate root `IDashboard.parameters`",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

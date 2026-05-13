@@ -2219,6 +2219,12 @@
                         "description": "Whether this is a preview conversation.",
                         "default": false
                     },
+                    "pinned": {
+                        "type": "boolean",
+                        "title": "Pinned",
+                        "description": "Whether this conversation is pinned by the user.",
+                        "default": false
+                    },
                     "createdAt": {
                         "type": "string",
                         "title": "Createdat",
@@ -2324,6 +2330,17 @@
                             }
                         ],
                         "title": "Title"
+                    },
+                    "pinned": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Pinned"
                     }
                 },
                 "type": "object",

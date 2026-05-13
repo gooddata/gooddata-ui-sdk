@@ -18,7 +18,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type WaterfallChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -68,7 +69,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<WaterfallChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: "auto",
@@ -117,7 +119,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const WATERFALL_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function waterfallChartLoad(props: VisualisationConfig<WaterfallChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -224,7 +230,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function waterfallChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -284,8 +291,22 @@ function save(
     });
 }
 
-export const waterfallChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use waterfallChartLoad and waterfallChartSave instead.
+ */
+export interface IWaterfallChartConfig {
+    load: typeof waterfallChartLoad;
+    save: typeof waterfallChartSave;
+    DEFAULTS: ConfigDefaults<WaterfallChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use waterfallChartLoad and waterfallChartSave instead.
+ */
+export const waterfallChart: IWaterfallChartConfig = {
+    load: waterfallChartLoad,
+    save: waterfallChartSave,
     DEFAULTS,
 };

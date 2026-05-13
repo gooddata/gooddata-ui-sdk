@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type HeatmapChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -46,7 +47,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<HeatmapChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: "auto",
@@ -79,7 +81,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const HEATMAP_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function heatmapChartLoad(props: VisualisationConfig<HeatmapChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -160,7 +166,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function heatmapChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -206,8 +213,22 @@ function save(
     });
 }
 
-export const heatmapChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use heatmapChartLoad and heatmapChartSave instead.
+ */
+export interface IHeatmapChartConfig {
+    load: typeof heatmapChartLoad;
+    save: typeof heatmapChartSave;
+    DEFAULTS: ConfigDefaults<HeatmapChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use heatmapChartLoad and heatmapChartSave instead.
+ */
+export const heatmapChart: IHeatmapChartConfig = {
+    load: heatmapChartLoad,
+    save: heatmapChartSave,
     DEFAULTS,
 };

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IDashboardParameter } from "@gooddata/sdk-model";
+import { type IDashboardParameter, type IDashboardTab } from "@gooddata/sdk-model";
 
 /**
  * Per-parameter state tracked by the dashboard store.
@@ -33,3 +33,24 @@ export interface IParametersState {
 export const parametersInitialState: IParametersState = {
     parameters: [],
 };
+
+/**
+ * Picks a tab's persisted parameter source under the V1 → per-tab migration rule.
+ *
+ * - If the tab has its own `parameters` (including `[]`) → return it.
+ * - Else if every tab's `parameters === undefined` AND root `parameters` is defined → root array.
+ * - Else → `undefined`.
+ *
+ * @internal
+ */
+export function pickTabParametersSource(
+    tab: IDashboardTab,
+    allTabs: ReadonlyArray<IDashboardTab>,
+    rootParameters: IDashboardParameter[] | undefined,
+): IDashboardParameter[] | undefined {
+    if (tab.parameters !== undefined) {
+        return tab.parameters;
+    }
+    const everyTabUndefined = allTabs.length > 0 && allTabs.every((other) => other.parameters === undefined);
+    return everyTabUndefined ? rootParameters : undefined;
+}

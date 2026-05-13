@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type GeoAreaChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     legend: {
         enabled: boolean;
@@ -59,7 +60,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<GeoAreaChartConfigProperties> = {
     colorMapping: [],
     legend: {
         enabled: true,
@@ -87,7 +89,7 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function sanitizeControls(controls: DefaultProperties): DefaultProperties {
+function sanitizeControls(controls: GeoAreaChartConfigProperties): GeoAreaChartConfigProperties {
     const sanitized = { ...controls };
 
     // Strip center/zoom when bounds are present (bounds is canonical for custom viewport)
@@ -114,7 +116,11 @@ function sanitizeControls(controls: DefaultProperties): DefaultProperties {
     return sanitized;
 }
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const GEO_AREA_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function geoAreaChartLoad(props: VisualisationConfig<GeoAreaChartConfigProperties>) {
     const sanitizedProps = props.controls ? { controls: sanitizeControls(props.controls) } : props;
     return loadConfig(sanitizedProps, (key, value) => {
         switch (key) {
@@ -195,7 +201,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function geoAreaChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
     _positions: Array<{ longitude: string; latitude: string }>,
@@ -284,8 +291,22 @@ function save(
     });
 }
 
-export const geoAreaChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use geoAreaChartLoad and geoAreaChartSave instead.
+ */
+export interface IGeoAreaChartConfig {
+    load: typeof geoAreaChartLoad;
+    save: typeof geoAreaChartSave;
+    DEFAULTS: ConfigDefaults<GeoAreaChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use geoAreaChartLoad and geoAreaChartSave instead.
+ */
+export const geoAreaChart: IGeoAreaChartConfig = {
+    load: geoAreaChartLoad,
+    save: geoAreaChartSave,
     DEFAULTS,
 };

@@ -52,7 +52,6 @@ import { drillActions } from "../../../store/drill/index.js";
 import { insightsActions } from "../../../store/insights/index.js";
 import { metaActions } from "../../../store/meta/index.js";
 import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
-import { parametersActions } from "../../../store/parameters/index.js";
 import {
     type FilterContextState,
     filterContextInitialState,
@@ -73,7 +72,7 @@ import { resolveFilterDisplayForms } from "../../../utils/filterResolver.js";
 import { EmptyDashboardLayout, dashboardInitialize } from "./dashboardInitialize.js";
 import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
 import { mergedMigratedAttributeFilters } from "./migratedAttributeFilters.js";
-import { hydrateParameterEntries } from "./parameterHydration.js";
+import { distributeParametersToTabs } from "./parameterHydration.js";
 
 /**
  * Processes a single tab's filterContext and returns initialized FilterContextState.
@@ -262,86 +261,49 @@ export function* actionsToInitializeNewDashboard(
             dateFilterConfigs: [],
             attributeFilterConfigs: [],
             layout: dashboardLayout ?? EmptyDashboardLayout,
+            parameters: dashboard?.parameters,
         },
     ];
+    const parametersByTab = distributeParametersToTabs(tabs, dashboard?.parameters, workspaceParameters);
 
     // Prepare tabs action with complete filterContext for each tab
-    const tabsAction = tabs
-        ? [
-              tabsActions.setTabs({
-                  tabs: tabs.map((tab: IDashboardTab) => ({
-                      title: tab.title,
-                      localIdentifier: tab.localIdentifier,
-                      filterContext: {
-                          ...filterContextInitialState,
-                          filterContextDefinition,
-                          originalFilterContextDefinition,
-                          filterContextIdentity,
-                          attributeFilterDisplayForms,
-                      },
-                      dateFilterConfig: {
-                          dateFilterConfig: tab.dateFilterConfig,
-                          effectiveDateFilterConfig: dateFilterConfig,
-                          isUsingDashboardOverrides: false,
-                          dateFilterConfigValidationWarnings: undefined,
-                      },
-                      dateFilterConfigs: {
-                          dateFilterConfigs: tab.dateFilterConfigs ?? [],
-                      },
-                      attributeFilterConfigs: {
-                          attributeFilterConfigs: tab.attributeFilterConfigs ?? [],
-                      },
-                      measureValueFilterConfigs: {
-                          measureValueFilterConfigs: tab.measureValueFilterConfigs ?? [],
-                      },
-                      layout: {
-                          ...layoutInitialState,
-                          layout: tab.layout ?? dashboardLayout ?? EmptyDashboardLayout,
-                      },
-                      filterGroupsConfig: tab.filterGroupsConfig,
-                  })),
-                  activeTabLocalIdentifier:
-                      initialTabId ?? dashboard?.activeTabLocalIdentifier ?? DEFAULT_TAB_ID,
-              }),
-          ]
-        : [
-              // For dashboards without tabs, create a single default tab
-              tabsActions.setTabs({
-                  tabs: [
-                      {
-                          localIdentifier: DEFAULT_TAB_ID,
-                          title: "",
-                          filterContext: {
-                              ...filterContextInitialState,
-                              filterContextDefinition,
-                              originalFilterContextDefinition,
-                              filterContextIdentity,
-                              attributeFilterDisplayForms,
-                          },
-                          layout: {
-                              ...layoutInitialState,
-                              layout: dashboardLayout ?? EmptyDashboardLayout,
-                          },
-                          dateFilterConfig: {
-                              dateFilterConfig: dashboard?.dateFilterConfig,
-                              effectiveDateFilterConfig: dateFilterConfig,
-                              isUsingDashboardOverrides: false,
-                              dateFilterConfigValidationWarnings: undefined,
-                          },
-                          dateFilterConfigs: {
-                              dateFilterConfigs: dashboard?.dateFilterConfigs ?? [],
-                          },
-                          attributeFilterConfigs: {
-                              attributeFilterConfigs: dashboard?.attributeFilterConfigs ?? [],
-                          },
-                          measureValueFilterConfigs: {
-                              measureValueFilterConfigs: dashboard?.measureValueFilterConfigs ?? [],
-                          },
-                      },
-                  ],
-                  activeTabLocalIdentifier: DEFAULT_TAB_ID,
-              }),
-          ];
+    const tabsAction = [
+        tabsActions.setTabs({
+            tabs: tabs.map((tab: IDashboardTab) => ({
+                title: tab.title,
+                localIdentifier: tab.localIdentifier,
+                filterContext: {
+                    ...filterContextInitialState,
+                    filterContextDefinition,
+                    originalFilterContextDefinition,
+                    filterContextIdentity,
+                    attributeFilterDisplayForms,
+                },
+                dateFilterConfig: {
+                    dateFilterConfig: tab.dateFilterConfig,
+                    effectiveDateFilterConfig: dateFilterConfig,
+                    isUsingDashboardOverrides: false,
+                    dateFilterConfigValidationWarnings: undefined,
+                },
+                dateFilterConfigs: {
+                    dateFilterConfigs: tab.dateFilterConfigs ?? [],
+                },
+                attributeFilterConfigs: {
+                    attributeFilterConfigs: tab.attributeFilterConfigs ?? [],
+                },
+                measureValueFilterConfigs: {
+                    measureValueFilterConfigs: tab.measureValueFilterConfigs ?? [],
+                },
+                layout: {
+                    ...layoutInitialState,
+                    layout: tab.layout ?? dashboardLayout ?? EmptyDashboardLayout,
+                },
+                filterGroupsConfig: tab.filterGroupsConfig,
+                parameters: { parameters: parametersByTab[tab.localIdentifier] ?? [] },
+            })),
+            activeTabLocalIdentifier: initialTabId ?? dashboard?.activeTabLocalIdentifier ?? DEFAULT_TAB_ID,
+        }),
+    ];
 
     return {
         initActions: [
@@ -363,9 +325,6 @@ export function* actionsToInitializeNewDashboard(
                       insightsActions.setInsights(insights),
                       drillActions.resetCrossFiltering(),
                   ]),
-            parametersActions.setParameterEntries(
-                hydrateParameterEntries(dashboard?.parameters, workspaceParameters),
-            ),
         ],
         dashboard: initialContent ? dashboard : undefined,
         insights: initialContent ? insights : [],
@@ -684,6 +643,13 @@ export function* actionsToInitializeExistingDashboard(
 
     const screen: SagaReturnType<typeof selectScreen> = yield select(selectScreen);
 
+    const parameterSourceDashboard = persistedDashboard ?? dashboard;
+    const parametersByTab = distributeParametersToTabs(
+        parameterSourceDashboard.tabs,
+        parameterSourceDashboard.parameters,
+        workspaceParameters,
+    );
+
     // Process tabs with complete filterContext initialization for each tab
     let tabsAction = null;
     const validationResults: ValidationResult[] = [];
@@ -753,6 +719,7 @@ export function* actionsToInitializeExistingDashboard(
                     layout: tabLayout,
                     screen, // Preserve only screen from current state
                 },
+                parameters: { parameters: parametersByTab[tab.localIdentifier] ?? [] },
             };
 
             processedTabs.push(tabState);
@@ -826,6 +793,7 @@ export function* actionsToInitializeExistingDashboard(
                       measureValueFilterConfigs: dashboard.measureValueFilterConfigs,
                   }
                 : undefined,
+            parameters: { parameters: parametersByTab[tabIdentifier] ?? [] },
         };
 
         tabsAction = tabsActions.setTabs({
@@ -846,9 +814,6 @@ export function* actionsToInitializeExistingDashboard(
         uiActions.setWidgetsOverlay(modifiedWidgets),
         validationResults.length > 0 ? uiActions.setIncompatibleDefaultFiltersOverrideMessage() : null,
         drillActions.resetCrossFiltering(),
-        parametersActions.setParameterEntries(
-            hydrateParameterEntries((persistedDashboard ?? dashboard).parameters, workspaceParameters),
-        ),
     ]);
 }
 

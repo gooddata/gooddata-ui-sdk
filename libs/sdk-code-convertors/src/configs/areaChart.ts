@@ -18,7 +18,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type AreaChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     distinctPointShapes: {
         enabled: boolean;
@@ -70,7 +71,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<AreaChartConfigProperties> = {
     colorMapping: [],
     distinctPointShapes: {
         enabled: false,
@@ -120,7 +122,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const AREA_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function areaChartLoad(props: VisualisationConfig<AreaChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -242,7 +248,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function areaChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -314,8 +321,22 @@ function save(
     });
 }
 
-export const areaChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use areaChartLoad and areaChartSave instead.
+ */
+export interface IAreaChartConfig {
+    load: typeof areaChartLoad;
+    save: typeof areaChartSave;
+    DEFAULTS: ConfigDefaults<AreaChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use areaChartLoad and areaChartSave instead.
+ */
+export const areaChart: IAreaChartConfig = {
+    load: areaChartLoad,
+    save: areaChartSave,
     DEFAULTS,
 };

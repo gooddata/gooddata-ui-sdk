@@ -24,6 +24,7 @@
     min-width: 220px;
     position: relative;
     margin: -5px;
+    height: calc(100% + 10px);
 
     &#{$root}--isFullscreen {
         width: 300px;
@@ -39,6 +40,13 @@
     &__divider {
         width: 100%;
         height: 1px;
+        background-color: kit-variables.$gd-border-color;
+    }
+
+    &__divider_menu {
+        width: calc(100% - 20px);
+        height: 1px;
+        margin: 0 10px;
         background-color: kit-variables.$gd-border-color;
     }
 
@@ -62,6 +70,49 @@
         line-height: 20px;
     }
 
+    &__drop-placeholder {
+        z-index: 1;
+        position: absolute;
+        display: none;
+        text-transform: uppercase;
+        inset: 0;
+        margin: 0 10px;
+        padding: 4px 4px;
+        border: 2px dashed kit-variables.$gd-palette-primary-base;
+        background-color: kit-variables.$gd-palette-primary-dimmed;
+        border-radius: 5px;
+        color: kit-variables.$gd-color-text;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 14px;
+        text-align: center;
+
+        &.isDragging,
+        &.isDraggingOver {
+            display: block;
+        }
+
+        & &__content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+        }
+
+        &.isDraggingOver &__content {
+            background-color: kit-variables.$gd-palette-primary-base;
+            color: kit-variables.$gd-color-white;
+        }
+    }
+
+    &__drop-overlay {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+    }
+
     &__list {
         $list-root: &;
 
@@ -72,11 +123,21 @@
         align-items: stretch;
         gap: 10px;
         align-self: stretch;
+        height: 100%;
 
         .gd-ui-kit-menu {
+            max-height: none;
+            .gd-ui-kit-menu__item-wrapper {
+                cursor: grab;
+            }
+
+            .gd-ui-kit-menu__item-wrapper:active {
+                cursor: grabbing;
+            }
+
             #{$list-root}__delete-button {
                 position: absolute;
-                right: 10px;
+                right: 0;
             }
             #{$list-root}__delete-button button {
                 opacity: 0;
@@ -93,22 +154,37 @@
                 pointer-events: auto;
             }
 
-            .gd-ui-kit-menu__item-wrapper:has(#{$list-root}__delete-button button:hover)
-                .gd-ui-kit-menu__item,
-            .gd-ui-kit-menu__item-wrapper:has(#{$list-root}__delete-button button:focus-visible)
-                .gd-ui-kit-menu__item {
-                background-color: kit-variables.$gd-palette-error-dimmed;
-                color: kit-variables.$gd-palette-error-base;
-            }
-
             .gd-ui-kit-menu__group-title-container {
                 padding: 10px 10px 0 10px;
+            }
+        }
+
+        &__item.openedMenu {
+            .gd-ui-kit-menu__item-wrapper #{$list-root}__delete-button button {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .gd-ui-kit-menu__item {
+                background-color: kit-variables.$is-focused-background;
+                color: kit-variables.$gd-color-dark;
+            }
+            .gd-ui-kit-menu__item.gd-ui-kit-menu__item--isSelected {
+                background-color: kit-variables.$gd-palette-primary-dimmed;
+                color: kit-variables.$gd-palette-primary-base;
             }
         }
 
         &__item.generatingTitle .gd-ui-kit-menu__item-title {
             @include variables.gd-reasoning();
         }
+
+        &__item.dragging {
+            opacity: 0.45;
+        }
+    }
+
+    &__drop-group {
+        position: relative;
     }
 
     &__delete-button {

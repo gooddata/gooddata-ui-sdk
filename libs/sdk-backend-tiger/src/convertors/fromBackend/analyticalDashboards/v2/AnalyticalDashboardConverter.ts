@@ -201,6 +201,7 @@ function convertDashboardTabContent(
             IDashboardMeasureValueFilterConfig[] | undefined
         >(tab.measureValueFilterConfigs),
         filterGroupsConfig: cloneWithSanitizedIds(tab.filterGroupsConfig),
+        parameters: tab.parameters?.map(convertDashboardParameter),
     };
 }
 

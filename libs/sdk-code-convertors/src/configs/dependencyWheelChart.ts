@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type DependencyWheelChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -27,7 +28,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<DependencyWheelChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: "auto",
@@ -41,7 +43,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const DEPENDENCY_WHEEL_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function dependencyWheelChartLoad(props: VisualisationConfig<DependencyWheelChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -83,7 +89,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function dependencyWheelChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -110,8 +117,22 @@ function save(
     });
 }
 
-export const dependencyWheelChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use dependencyWheelChartLoad and dependencyWheelChartSave instead.
+ */
+export interface IDependencyWheelChartConfig {
+    load: typeof dependencyWheelChartLoad;
+    save: typeof dependencyWheelChartSave;
+    DEFAULTS: ConfigDefaults<DependencyWheelChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use dependencyWheelChartLoad and dependencyWheelChartSave instead.
+ */
+export const dependencyWheelChart: IDependencyWheelChartConfig = {
+    load: dependencyWheelChartLoad,
+    save: dependencyWheelChartSave,
     DEFAULTS,
 };

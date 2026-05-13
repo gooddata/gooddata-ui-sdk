@@ -2,7 +2,7 @@
 
 import { type RemotePluggableApplicationsRegistry } from "../pluggableApplication/index.js";
 
-import { type IFeatureFlags, type IPermanentSettings } from "./settings.js";
+import { type IFeatureFlags, type IPermanentSettings, type ISeparators } from "./settings.js";
 
 /**
  * Settings are obtained from the backend and are effectively a collection of feature flags or settings with
@@ -27,3 +27,54 @@ export interface ISettings extends IPermanentSettings, IFeatureFlags {
 
     [key: string]: number | boolean | string | object | undefined | null;
 }
+
+/**
+ * Settings for a particular user.
+ *
+ * @public
+ */
+export interface IUserSettings extends ISettings {
+    /**
+     * User to which the settings belong.
+     */
+    userId: string;
+
+    /**
+     * User locale
+     */
+    locale: string;
+
+    /**
+     * Regional number formatting
+     */
+    separators: ISeparators;
+}
+
+/**
+ * Settings for a particular workspace.
+ *
+ * @public
+ */
+export interface IWorkspaceSettings extends ISettings {
+    /**
+     * Workspace to which the settings belong.
+     */
+    workspace: string;
+
+    /**
+     * Stores Mapbox token used for WS
+     */
+    mapboxToken?: string;
+
+    /**
+     * Stores AgGrid token used for WS
+     */
+    agGridToken?: string;
+}
+
+/**
+ * Settings for a particular combination of user and workspace.
+ *
+ * @public
+ */
+export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {}

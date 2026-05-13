@@ -18,8 +18,12 @@ import { cancelAsyncAction, clearThreadAction, loadThreadAction } from "../store
 import { type RootState } from "../store/types.js";
 import {
     getAbsoluteSettingHref,
+    getAbsoluteShellAppOrgSettingHref,
+    getAbsoluteShellAppWorkspaceSettingHref,
     getAbsoluteWorkspaceSettingHref,
     getSettingHref,
+    getShellAppOrgSettingHref,
+    getShellAppWorkspaceSettingHref,
     getWorkspaceSettingHref,
 } from "../utils.js";
 
@@ -96,16 +100,27 @@ export function GenAIChatWrapperComponent({
         tabIndex: -1,
     });
 
+    // When the shell host is enabled, the standalone home-ui at `/settings` or
+    // `/workspaces/{id}/settings` is bounced to the host base path, dropping the
+    // workspaceId and hash. Switch to host-shaped URLs so the deep-link
+    // (e.g. `#/ai/change-llm-model`) reaches the settings page intact.
+    const useShellAppUrls = Boolean(settings?.enableShellApplication);
     const onSettingClick = useCallback(
         (type: "change-model" | "create") => (e: MouseEvent) => {
             switch (type) {
                 case "change-model":
                     if (allowNativeLinks) {
-                        window.location.href = getAbsoluteWorkspaceSettingHref(
-                            workspaceId,
-                            GEN_AI_SECTION,
-                            CHANGE_LLM_MODEL_ACTION,
-                        );
+                        window.location.href = useShellAppUrls
+                            ? getAbsoluteShellAppWorkspaceSettingHref(
+                                  workspaceId,
+                                  GEN_AI_SECTION,
+                                  CHANGE_LLM_MODEL_ACTION,
+                              )
+                            : getAbsoluteWorkspaceSettingHref(
+                                  workspaceId,
+                                  GEN_AI_SECTION,
+                                  CHANGE_LLM_MODEL_ACTION,
+                              );
                     } else {
                         linkHandler?.({
                             id: CHANGE_LLM_MODEL_ACTION,
@@ -114,21 +129,26 @@ export function GenAIChatWrapperComponent({
                             newTab: e.metaKey,
                             section: GEN_AI_SECTION,
                             preventDefault: e.preventDefault.bind(e),
-                            itemUrl: getWorkspaceSettingHref(
-                                workspaceId,
-                                GEN_AI_SECTION,
-                                CHANGE_LLM_MODEL_ACTION,
-                            ),
+                            itemUrl: useShellAppUrls
+                                ? getShellAppWorkspaceSettingHref(
+                                      workspaceId,
+                                      GEN_AI_SECTION,
+                                      CHANGE_LLM_MODEL_ACTION,
+                                  )
+                                : getWorkspaceSettingHref(
+                                      workspaceId,
+                                      GEN_AI_SECTION,
+                                      CHANGE_LLM_MODEL_ACTION,
+                                  ),
                         });
                         e.stopPropagation();
                     }
                     break;
                 case "create":
                     if (allowNativeLinks) {
-                        window.location.href = getAbsoluteSettingHref(
-                            GEN_AI_SECTION,
-                            CREATE_LLM_PROVIDER_ACTION,
-                        );
+                        window.location.href = useShellAppUrls
+                            ? getAbsoluteShellAppOrgSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION)
+                            : getAbsoluteSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION);
                     } else {
                         linkHandler?.({
                             id: CREATE_LLM_PROVIDER_ACTION,
@@ -137,14 +157,16 @@ export function GenAIChatWrapperComponent({
                             newTab: e.metaKey,
                             section: GEN_AI_SECTION,
                             preventDefault: e.preventDefault.bind(e),
-                            itemUrl: getSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION),
+                            itemUrl: useShellAppUrls
+                                ? getShellAppOrgSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION)
+                                : getSettingHref(GEN_AI_SECTION, CREATE_LLM_PROVIDER_ACTION),
                         });
                         e.stopPropagation();
                     }
                     break;
             }
         },
-        [allowNativeLinks, linkHandler, workspaceId],
+        [allowNativeLinks, linkHandler, workspaceId, useShellAppUrls],
     );
 
     if (evaluated && hasUnsupportedOpenAiModel) {

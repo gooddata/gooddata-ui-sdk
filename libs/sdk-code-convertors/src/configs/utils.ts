@@ -9,6 +9,7 @@ export type VisualisationConfig<T> = {
     controls?: T;
 };
 
+/** @internal */
 export type ConfigDefaults<T> = {
     [key in keyof T]: T[key];
 };

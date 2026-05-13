@@ -891,4 +891,9 @@ export interface ITigerDashboardTab {
     attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
     measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
     filterGroupsConfig?: ITigerDashboardFilterGroupsConfig;
+    /**
+     * Tab-scoped parameter overrides.
+     * @alpha
+     */
+    parameters?: ITigerDashboardParameter[];
 }

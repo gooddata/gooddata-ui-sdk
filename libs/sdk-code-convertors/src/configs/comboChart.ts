@@ -19,7 +19,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type ComboChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     continuousLine: {
         enabled: boolean;
@@ -92,7 +93,8 @@ type DefaultProperties = {
     thresholdExcludedMeasures: string[];
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<ComboChartConfigProperties> = {
     colorMapping: [],
     continuousLine: {
         enabled: false,
@@ -163,7 +165,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     thresholdExcludedMeasures: [],
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const COMBO_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function comboChartLoad(props: VisualisationConfig<ComboChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -359,7 +365,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function comboChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
     buckets: Bucket[] = [],
@@ -504,8 +511,22 @@ function save(
     });
 }
 
-export const comboChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use comboChartLoad and comboChartSave instead.
+ */
+export interface IComboChartConfig {
+    load: typeof comboChartLoad;
+    save: typeof comboChartSave;
+    DEFAULTS: ConfigDefaults<ComboChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use comboChartLoad and comboChartSave instead.
+ */
+export const comboChart: IComboChartConfig = {
+    load: comboChartLoad,
+    save: comboChartSave,
     DEFAULTS,
 };

@@ -13,6 +13,7 @@ import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IChatConversation } from '@gooddata/sdk-backend-spi';
 import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
 import { IChatConversationError } from '@gooddata/sdk-backend-spi';
 import { IChatConversationItem } from '@gooddata/sdk-backend-spi';
@@ -69,13 +70,40 @@ export type ChatClosedEvent = BaseEvent & {
 };
 
 // @public
+export type ChatConversationDeletedErrorEvent = BaseEvent & {
+    type: "chatConversationDeletedError";
+    conversation: IChatConversation;
+    error: Error;
+};
+
+// @public
+export type ChatConversationDeletedEvent = BaseEvent & {
+    type: "chatConversationDeleted";
+    conversation: IChatConversation;
+};
+
+// @public
+export type ChatConversationPinErrorEvent = BaseEvent & {
+    type: "chatConversationPinError";
+    conversationId: string;
+    error: Error;
+};
+
+// @public
+export type ChatConversationPinnedEvent = BaseEvent & {
+    type: "chatConversationPinned";
+    conversationId: string;
+    pinned: boolean;
+};
+
+// @public
 export type ChatCopyToClipboardEvent = BaseEvent & {
     type: "chatCopyToClipboard";
     content: string;
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeletedEvent | ChatConversationDeletedErrorEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -272,6 +300,18 @@ export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAss
 
 // @public
 export const isChatClosedEvent: (event: ChatEvent) => event is ChatClosedEvent;
+
+// @public
+export const isChatConversationDeletedErrorEvent: (event: ChatEvent) => event is ChatConversationDeletedErrorEvent;
+
+// @public
+export const isChatConversationDeletedEvent: (event: ChatEvent) => event is ChatConversationDeletedEvent;
+
+// @public
+export const isChatConversationPinErrorEvent: (event: ChatEvent) => event is ChatConversationPinErrorEvent;
+
+// @public
+export const isChatConversationPinnedEvent: (event: ChatEvent) => event is ChatConversationPinnedEvent;
 
 // @public
 export const isChatCopyToClipboardEvent: (event: ChatEvent) => event is ChatCopyToClipboardEvent;

@@ -47,7 +47,6 @@ import { listedDashboardsSliceReducer } from "./listedDashboards/index.js";
 import { loadingSliceReducer } from "./loading/index.js";
 import { metaSliceReducer } from "./meta/index.js";
 import { notificationChannelsSliceReducer } from "./notificationChannels/index.js";
-import { parametersSliceReducer } from "./parameters/index.js";
 import { permissionsSliceReducer } from "./permissions/index.js";
 import { renderModeSliceReducer } from "./renderMode/index.js";
 import { savingSliceReducer } from "./saving/index.js";
@@ -324,7 +323,6 @@ export function createDashboardRootReducer({
         dashboardPermissions: dashboardPermissionsSliceReducer,
         showWidgetAsTable: showWidgetAsTableSliceReducer,
         notificationChannels: notificationChannelsSliceReducer,
-        parameters: parametersSliceReducer,
         automations: automationsSliceReducer,
         users: usersSliceReducer,
         filterViews: filterViewsSliceReducer,

@@ -7,6 +7,7 @@ import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { ILayerPreparedData } from "../hooks/layers/useLayersPrepare.js";
 import type { GeoJSONSourceSpecification } from "../layers/common/mapFacade.js";
+import type { ITooltipReferenceMaps } from "../layers/registry/adapterTypes.js";
 import { type IAvailableLegends, type IGeoLegendItem } from "../types/common/legends.js";
 import { type IAreaGeoData } from "../types/geoData/area.js";
 import { type IPushpinGeoData } from "../types/geoData/pushpin.js";
@@ -76,6 +77,11 @@ export interface IGeoLayerData {
      * Initial viewport hint derived from the layer data.
      */
     initialViewport: Partial<IMapViewport> | null;
+
+    /**
+     * Reference id maps for custom-tooltip resolution.
+     */
+    tooltipReferenceMaps?: ITooltipReferenceMaps;
 }
 
 /**
@@ -140,6 +146,7 @@ export function GeoLayersProvider({
                     baseLegendItems: prepared.output?.legend.items ?? EMPTY_LEGEND_ITEMS,
                     availableLegends: prepared.output?.legend.available ?? EMPTY_AVAILABLE_LEGENDS,
                     initialViewport: prepared.output?.initialViewport ?? null,
+                    tooltipReferenceMaps: prepared.output?.tooltipReferenceMaps,
                 });
             }
         }

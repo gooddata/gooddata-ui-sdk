@@ -44,7 +44,7 @@ export function* onConversationDelete({
 
         yield put(
             deleteConversationSuccessAction({
-                conversationId: payload.conversationId,
+                conversation: conversation,
             }),
         );
     } catch (e) {

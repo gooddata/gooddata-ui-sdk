@@ -8,6 +8,7 @@ import {
     evaluateMessageUpdateAction,
     loadThreadAction,
     newMessageAction,
+    pinConversationAction,
     saveVisualisationRenderStatusAction,
     saveVisualizationAction,
     saveVisualizationSuccessAction,
@@ -19,6 +20,7 @@ import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
 import { loadSettings } from "./loadSettings.js";
 import { onConversationDelete } from "./onConversationDelete.js";
+import { onConversationPin } from "./onConversationPin.js";
 import { onEvent } from "./onEvent.js";
 import { onThreadClear } from "./onThreadClear.js";
 import { onThreadLoad } from "./onThreadLoad.js";
@@ -44,6 +46,7 @@ export function* rootSaga() {
     yield takeEvery(saveVisualizationSuccessAction.type, onVisualizationSuccessSave);
     yield takeEvery(saveVisualisationRenderStatusAction.type, onVisualisationRender);
     //conversations API
+    yield takeEvery(pinConversationAction.type, onConversationPin);
     yield takeEvery(deleteConversationAction.type, onConversationDelete);
     yield takeEvery(evaluateMessageUpdateAction.type, onUserMessageUpdate);
     //others

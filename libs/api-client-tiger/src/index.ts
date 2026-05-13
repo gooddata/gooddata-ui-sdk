@@ -54,9 +54,13 @@ export {
 export {
     Configuration as LabelElementsConfiguration,
     type ConfigurationParameters as LabelElementsConfigurationParameters,
+    type ParameterItem as LabelElementsParameterItem,
 } from "./generated/afm-rest-api/index.js";
 
-export type { ActionsApiInterface as ResultActionsApiInterface } from "./generated/result-json-api/index.js";
+export type {
+    ActionsApiInterface as ResultActionsApiInterface,
+    OGCAPIFeaturesApiInterface,
+} from "./generated/result-json-api/index.js";
 
 // -----------------------------------------------------------------------------
 // Specific API Interfaces
@@ -66,6 +70,7 @@ export {
     type LocationStyleApiInterface,
     type LocationStyleDocument,
     type ILocationStyleParams,
+    type ILocationStyleListItem,
     tigerLocationStyleClientFactory,
 } from "./locationStyle.js";
 
@@ -84,7 +89,7 @@ export {
 // Client Factories
 // -----------------------------------------------------------------------------
 
-// export { tigerEntitiesObjectsClientFactory } from "./entitiesObjects.js";
+export { tigerEntitiesObjectsClientFactory } from "./entitiesObjects.js";
 export { tigerClientBaseFactory, type ITigerClient, type ITigerClientBase, tigerClientFactory };
 
 export { tigerActionsClientFactory } from "./actions.js";
@@ -96,7 +101,7 @@ export { tigerExecutionResultClientFactory } from "./executionResult.js";
 export { tigerExportClientFactory } from "./export.js";
 export { tigerLabelElementsClientFactory } from "./labelElements.js";
 export { tigerLayoutClientFactory } from "./layout.js";
-export { tigerResultClientFactory } from "./result.js";
+export { tigerResultClientFactory, tigerGeoCollectionsClientFactory } from "./result.js";
 export { tigerScanModelClientFactory } from "./scanModel.js";
 export { tigerSmartFunctionsClientFactory } from "./smartFunctions.js";
 export { tigerUserManagementClientFactory } from "./userManagement.js";
@@ -108,9 +113,14 @@ export { tigerValidObjectsClientFactory } from "./validObjects.js";
 // -----------------------------------------------------------------------------
 
 export * from "./generated/ai-json-api/api.js";
+
+export { BaseAPI as AiBaseAPI, type RequestArgs as AiRequestArgs } from "./generated/ai-json-api/base.js";
 export { tigerGenAIClientFactory } from "./genAI.js";
 export * from "./endpoints/genAI/index.js";
-
+export type {
+    Configuration as AiConfiguration,
+    ConfigurationParameters as AiConfigurationParameters,
+} from "./generated/ai-json-api/configuration.js";
 // -----------------------------------------------------------------------------
 // GD Tiger Model
 // -----------------------------------------------------------------------------
@@ -148,6 +158,41 @@ export type {
     ITigerInsightLayerDefinition,
     ITigerInsightParameterValue,
     ITigerMeasure,
+    ITigerSimpleMeasure,
+    ITigerSimpleMeasureDefinition,
+    ITigerArithmeticMeasure,
+    ITigerArithmeticMeasureDefinition,
+    ITigerPopMeasure,
+    ITigerPopMeasureDefinition,
+    ITigerPreviousPeriodMeasure,
+    ITigerPreviousPeriodMeasureDefinition,
+    ITigerTotal,
+    ITigerAbsoluteDateFilter,
+    ITigerRelativeDateFilter,
+    ITigerPositiveAttributeFilter,
+    ITigerNegativeAttributeFilter,
+    ITigerRankingFilter,
+    ITigerMeasureSortItem,
+    ITigerWidget,
+    ITigerDashboardLayoutSection,
+    ITigerDashboardFilterGroup,
+    ITigerDashboardAttributeFilterParent,
+    ITigerDashboardAttributeFilterByDate,
+    ITigerAttributeElements,
+    ITigerLocatorItem,
+    ITigerInsightWidget,
+    ITigerKpiWidget,
+    ITigerRichTextWidget,
+    ITigerDashboardLayoutSectionHeader,
+    ITigerDashboardLayoutColumn,
+    ITigerAttributeElementsByRef,
+    ITigerAttributeElementsByValue,
+    ITigerMeasureLocatorItem,
+    ITigerTotalLocatorItem,
+    ITigerBaseWidget,
+    ITigerDashboardLayoutSize,
+    ITigerDashboardLayoutSizeByScreenSize,
+    ITigerDashboardLayoutItem,
     ITigerMeasureValueFilter,
     ITigerMeasureValueFilterCondition,
     ITigerRangeCondition,
@@ -184,6 +229,18 @@ export {
 export { newAxios, setAxiosAuthorizationToken, setGlobalAuthorizationToken };
 
 export type {
+    GeoAreaConfig as AfmGeoAreaConfig,
+    MatchAttributeFilter as AfmMatchAttributeFilter,
+    CompoundMeasureValueFilter as AfmCompoundMeasureValueFilter,
+    AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum as AfmAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum,
+    ParameterItem as AfmParameterItem,
+    AllTimeDateFilter as AfmAllTimeDateFilter,
+    GeoCollectionIdentifier as AfmGeoCollectionIdentifier,
+    AfmObjectIdentifierParameter as AfmAfmObjectIdentifierParameter,
+    MatchAttributeFilterMatchAttributeFilter as AfmMatchAttributeFilterMatchAttributeFilter,
+    GeoCollectionIdentifierKindEnum as AfmGeoCollectionIdentifierKindEnum,
+    AllTimeDateFilterAllTimeDateFilter as AfmAllTimeDateFilterAllTimeDateFilter,
+    AfmObjectIdentifierParameterIdentifier as AfmAfmObjectIdentifierParameterIdentifier,
     AFM as AfmModel,
     AfmIdentifier as AfmModelIdentifier,
     AfmLocalIdentifier as AfmModelLocalIdentifier,
@@ -425,13 +482,98 @@ export type {
     SearchRequestObjectTypesEnum,
     CreatedVisualizationVisualizationTypeEnum,
     MetricAggFunctionEnum,
+    AfmObjectIdentifierParameterIdentifierTypeEnum as AfmAfmObjectIdentifierParameterIdentifierTypeEnum,
+    AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum as AfmAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum,
+    AllTimeDateFilterAllTimeDateFilterGranularityEnum as AfmAllTimeDateFilterAllTimeDateFilterGranularityEnum,
+    CompoundMeasureValueFilterCompoundMeasureValueFilter as AfmCompoundMeasureValueFilterCompoundMeasureValueFilter,
+    MatchAttributeFilterMatchAttributeFilterMatchTypeEnum as AfmMatchAttributeFilterMatchAttributeFilterMatchTypeEnum,
+    RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum as AfmRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum,
+    OutlierDetectionRequestFiltersInner,
+    ChangeAnalysisParams,
+    Reasoning,
+    ChatRequestObjectTypesEnum,
+    ToolCallEventResult,
+    AiUsageMetadataItem,
+    GetQualityIssuesResponseStatusEnum,
+    QualityIssueSeverityEnum,
+    TriggerQualityIssuesCalculationResponseStatusEnum,
+    UIContext,
+    ObjectReferenceGroup,
+    ListLlmProviderModelsResponse,
+    ListLlmProviderModelsRequest,
+    TestLlmProviderDefinitionRequest,
+    TestLlmProviderByIdRequest,
+    ActionsApiCancelWorkflowRequest,
+    ActionsApiChangeAnalysisRequest,
+    ChangeAnalysisResponse,
+    ActionsApiChangeAnalysisResultRequest,
+    ChangeAnalysisResult,
+    ActionsApiComputeReportForVisualizationObjectRequest,
+    ActionsApiGenerateDashboardSummaryRequest,
+    WorkflowDashboardSummaryResponseDto,
+    ActionsApiGenerateDescriptionRequest,
+    GenerateDescriptionResponse,
+    ActionsApiGenerateTitleRequest,
+    GenerateTitleResponse,
+    ActionsApiGetWorkflowStatusRequest,
+    WorkflowStatusResponseDto,
+    ActionsApiOutlierDetectionRequest,
+    OutlierDetectionResponse,
+    ActionsApiOutlierDetectionResultRequest,
+    OutlierDetectionResult,
+    ActionsApiResolveLlmProvidersRequest,
+    ResolvedLlms,
+    ActionsApiRetrieveResultBinaryRequest,
+    TestLlmProviderResponse,
+    ActionsApiTrendingObjectsRequest,
+    TrendingObjectsResult,
+    MeasureValueCondition as AfmMeasureValueCondition,
+    TestLlmProviderByIdRequestProviderConfig,
+    LlmModel,
+    ObjectReference,
+    ReasoningStep,
+    ResolvedLlmsData,
+    ModelTestResult,
+    TrendingObjectItem,
+    DashboardContext,
+    VisualizationObjectExecution,
+    WorkflowDashboardSummaryRequestDto,
+    GenerateDescriptionRequest,
+    GenerateTitleRequest,
+    OutlierDetectionRequest,
+    WidgetDescriptor,
+    GenerateDescriptionRequestObjectTypeEnum,
+    GenerateTitleRequestObjectTypeEnum,
+    LlmModelFamilyEnum,
+    ComparisonCondition as AfmComparisonCondition,
+    RangeCondition as AfmRangeCondition,
+    ObjectReferenceTypeEnum,
+    OutlierDetectionRequestSensitivityEnum,
+    OutlierDetectionRequestGranularityEnum,
+    Thought,
+    ResolvedLlmProvider,
+    AwsBedrockProviderConfig as AfmAwsBedrockProviderConfig,
+    AzureFoundryProviderConfig as AfmAzureFoundryProviderConfig,
+    OpenAIProviderConfig as AfmOpenAIProviderConfig,
+    AwsBedrockAccessKeyAuth as AfmAwsBedrockAccessKeyAuth,
+    AwsBedrockProviderConfigTypeEnum as AfmAwsBedrockProviderConfigTypeEnum,
+    AzureFoundryApiKeyAuth as AfmAzureFoundryApiKeyAuth,
+    AzureFoundryProviderConfigTypeEnum as AfmAzureFoundryProviderConfigTypeEnum,
+    ComparisonConditionComparison as AfmComparisonConditionComparison,
+    OpenAiApiKeyAuth as AfmOpenAiApiKeyAuth,
+    OpenAIProviderConfigTypeEnum as AfmOpenAIProviderConfigTypeEnum,
+    RangeConditionRange as AfmRangeConditionRange,
+    AwsBedrockAccessKeyAuthTypeEnum as AfmAwsBedrockAccessKeyAuthTypeEnum,
+    AzureFoundryApiKeyAuthTypeEnum as AfmAzureFoundryApiKeyAuthTypeEnum,
+    ComparisonConditionComparisonOperatorEnum as AfmComparisonConditionComparisonOperatorEnum,
+    OpenAiApiKeyAuthTypeEnum as AfmOpenAiApiKeyAuthTypeEnum,
+    RangeConditionRangeOperatorEnum as AfmRangeConditionRangeOperatorEnum,
 } from "./generated/afm-rest-api/api.js";
 export type {
     ActionsApiInterface as AuthActionsApiInterface,
     ActionsApiProcessInvitationRequest,
     Invitation,
 } from "./generated/auth-json-api/api.js";
-// export { ActionsApiFactory as AuthActionsApiFactory } from "./generated/auth-json-api/api.js";
 export { type ConfigurationParameters, Configuration } from "./generated/auth-json-api/configuration.js";
 export type {
     AutomationNotificationFilter,
@@ -631,21 +773,49 @@ export type {
     AutomationRelativeBoundedDateFilterGranularityEnum,
     AutomationRelativeDateFilterRelativeDateFilterGranularityEnum,
     AutomationsAutomation,
-    //AutomationsAutomationFactory,
-    //    AutomationsAutomationAxiosParamCreator,
-    //    AutomationsAutomationFp,
     AutomationSlidesExportRequestFormatEnum,
     AutomationSmtpPortEnum,
     AutomationSmtpTypeEnum,
     AutomationTabularExportRequestFormatEnum,
     AutomationWebhookTypeEnum,
     AutomationSimpleMeasureDefinitionMeasureAggregationEnum,
-    //NotificationChannelsAutomationAxiosParamCreator,
-    // NotificationChannelsAutomationFactory,
     NotificationChannelsAutomation,
-    //NotificationChannelsAutomationFp,
     Configuration as AutomationConfiguration,
     ConfigurationParameters as AutomationConfigurationParameters,
+    AutomationParameterItem,
+    AutomationMetricDefinitionOverride,
+    AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum,
+    AutomationCompoundMeasureValueFilter,
+    AutomationAnomalyDetectionWrapper,
+    AutomationMatchAttributeFilter,
+    AutomationAutomationAlertIntervalEnum,
+    AutomationDashboardDateFilterDateFilterEmptyValueHandlingEnum,
+    AutomationDashboardExportSettingsPageSizeEnum,
+    AutomationDashboardExportSettingsPageOrientationEnum,
+    AutomationAllTimeDateFilter,
+    AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum,
+    AutomationSettingsPageSizeEnum,
+    AutomationSettingsPageOrientationEnum,
+    AutomationSettingsGrandTotalsPositionEnum,
+    AutomationAllTimeDateFilterAllTimeDateFilter,
+    AutomationAnomalyDetection,
+    AutomationCompoundMeasureValueFilterCompoundMeasureValueFilter,
+    AutomationMatchAttributeFilterMatchAttributeFilter,
+    AutomationAfmObjectIdentifierParameter,
+    AutomationAfmObjectIdentifierParameterIdentifier,
+    AutomationAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum,
+    AutomationAllTimeDateFilterAllTimeDateFilterGranularityEnum,
+    AutomationAnomalyDetectionSensitivityEnum,
+    AutomationAnomalyDetectionGranularityEnum,
+    AutomationMeasureValueCondition,
+    AutomationMatchAttributeFilterMatchAttributeFilterMatchTypeEnum,
+    AutomationAfmObjectIdentifierParameterIdentifierTypeEnum,
+    AutomationComparisonCondition,
+    AutomationRangeCondition,
+    AutomationComparisonConditionComparison,
+    AutomationRangeConditionRange,
+    AutomationComparisonConditionComparisonOperatorEnum,
+    AutomationRangeConditionRangeOperatorEnum,
 } from "./generated/automation-json-api/index.js";
 export type {
     BaseAPI as AutomationBaseAPI,
@@ -653,6 +823,7 @@ export type {
 } from "./generated/automation-json-api/base.js";
 
 export * from "./generated/metadata-json-api/api.js";
+export type { AutomationAlertCondition as MdAutomationAlertCondition } from "./generated/metadata-json-api/api.js";
 
 export type {
     ActionsApiGetDataSourceSchemataRequest,
@@ -695,6 +866,12 @@ export type {
     SqlColumnDataTypeEnum as ScanApiSqlColumnDataTypeEnum,
     ColumnStatisticTypeEnum,
     ColumnStatisticsRequestStatisticsEnum,
+    ActionsApiScanStatisticsRequest,
+    TableStatisticsResponse,
+    TableStatisticsEntry as ScanModelTableStatisticsEntry,
+    TableStatisticsWarning,
+    TableStatisticsRequest,
+    ColumnStatisticsEntry as ScanModelColumnStatisticsEntry,
 } from "./generated/scan-json-api/api.js";
 
 export type {
@@ -735,6 +912,19 @@ export type {
     WorkspaceCacheUsage,
     WorkspaceCurrentCacheUsage,
     GdStorageFileTypeEnum,
+    ActionsApiConvertGeoFileRequest,
+    ConvertGeoFileResponse,
+    ActionsApiCustomGeoCollectionStagingUploadRequest,
+    UploadGeoCollectionFileResponse,
+    ActionsApiImportCustomGeoCollectionRequest,
+    ImportGeoCollectionResponse,
+    ConvertGeoFileRequest,
+    ImportGeoCollectionRequest,
+    OGCAPIFeaturesApiGetCollectionItemsRequest,
+    GeoJsonFeatureCollection,
+    OGCAPIFeaturesApiGetCustomCollectionItemsRequest,
+    GeoJsonFeature,
+    GeoJsonGeometry,
 } from "./generated/result-json-api/api.js";
 
 export type * from "./generated/export-json-api/index.js";
@@ -752,6 +942,7 @@ export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "
 export {
     type MetadataGetEntitiesResult,
     type MetadataGetEntitiesFn,
+    type MetadataGetEntitiesFnNew,
     type MetadataGetEntitiesOptions,
     type MetadataGetEntitiesParams,
     type MetadataGetEntitiesThemeParams,
@@ -765,6 +956,7 @@ export {
     type OrganizationGetEntitiesResult,
     type OrganizationGetEntitiesSupportingIncludedResult,
     type OrganizationGetEntitiesFn,
+    type OrganizationGetEntitiesFnNew,
     type OrganizationGetEntitiesParams,
     OrganizationUtilities,
 } from "./organizationUtilities.js";

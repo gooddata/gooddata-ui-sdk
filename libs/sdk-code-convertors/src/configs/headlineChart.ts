@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type HeadlineChartConfigProperties = {
     comparison: {
         enabled: boolean;
         calculationType: "change" | "change_difference" | "ratio" | "difference";
@@ -38,7 +39,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<HeadlineChartConfigProperties> = {
     comparison: {
         calculationType: "ratio",
         format: "#,##0%",
@@ -63,7 +65,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const HEADLINE_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function headlineChartLoad(props: VisualisationConfig<HeadlineChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "comparison": {
@@ -142,7 +148,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function headlineChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined = {},
 ) {
@@ -187,8 +194,22 @@ function save(
     });
 }
 
-export const headlineChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use headlineChartLoad and headlineChartSave instead.
+ */
+export interface IHeadlineChartConfig {
+    load: typeof headlineChartLoad;
+    save: typeof headlineChartSave;
+    DEFAULTS: ConfigDefaults<HeadlineChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use headlineChartLoad and headlineChartSave instead.
+ */
+export const headlineChart: IHeadlineChartConfig = {
+    load: headlineChartLoad,
+    save: headlineChartSave,
     DEFAULTS,
 };

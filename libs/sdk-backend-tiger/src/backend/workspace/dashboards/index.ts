@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { isEmpty, isEqual } from "lodash-es";
+import { differenceBy, isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
@@ -37,6 +37,7 @@ import {
     EntitiesApi_GetEntityDashboardPlugins,
     EntitiesApi_GetEntityWorkspaces,
     FilterContextApi_CreateEntityFilterContexts,
+    FilterContextApi_DeleteEntityFilterContexts,
     FilterContextApi_GetEntityFilterContexts,
     FilterContextApi_UpdateEntityFilterContexts,
     FilterViewsApi_CreateEntityFilterViews,
@@ -88,6 +89,7 @@ import {
     type IDashboardPermissions,
     type IDashboardPlugin,
     type IDashboardPluginDefinition,
+    type IDashboardTab,
     type IDashboardWidget,
     type IDateFilter,
     type IExecutionDefinition,
@@ -140,6 +142,10 @@ import { getSettingsForCurrentUser } from "../settings/index.js";
 import { type TigerDashboardPermissionType, buildDashboardPermissions } from "./dashboardPermissions.js";
 import { DashboardsQuery } from "./dashboardsQuery.js";
 import { resolveWidgetFilters, resolveWidgetFiltersWithMultipleDateFilters } from "./widgetFilters.js";
+
+export function getDeletedDashboardTabs(originalTabs: IDashboardTab[], updatedTabs: IDashboardTab[]) {
+    return differenceBy(originalTabs, updatedTabs, "localIdentifier");
+}
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(
@@ -508,7 +514,31 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
          * and return just `convertDashboard(result.data, filterContext);` below
          */
         const { id, type } = result.data.data;
-        return this.getDashboard(idRef(id, type));
+
+        // This should ideally be named `updatedDashboard`, but this name is already taken above.
+        const dashboard = await this.getDashboard(idRef(id, type));
+
+        /**
+         * Perform a side-effect cleanup that deletes filter contexts of the deleted dashboard tabs. This should ideally be done
+         * on the backend, but due to complicated implementation it has been agreed per LX-2173 to be done on the frontend for now.
+         * Remove this if the backend handles this cleanup properly in the future.
+         *
+         * Currently the backend only cleans up filter contexts of tabs when the dashboard is deleted, but not when individual
+         * dashboard tabs are deleted, leaving orphaned filter contexts in the DB. Note that such orphans persist even when
+         * the whole dashboard is deleted, because on dashboard deletion, the backend cleans only filter contexts of _current_ tabs.
+         *
+         * The following code prevents the creation of new filter-context orphans.
+         */
+        getDeletedDashboardTabs(originalDashboard.tabs ?? [], dashboard.tabs ?? [])
+            .map(({ filterContext }) => filterContext)
+            .filter(isFilterContext)
+            .forEach((filterContext) => {
+                this.deleteFilterContext(filterContext).catch((error) => {
+                    console.warn(`Failed to cleanup orphaned filter context`, filterContext.ref, error);
+                });
+            });
+
+        return dashboard;
     };
 
     /**
@@ -1523,6 +1553,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return convertFilterContextFromBackend(result.data);
+    };
+
+    private deleteFilterContext = async (filterContext: IFilterContext): Promise<void> => {
+        await this.authCall((client) =>
+            FilterContextApi_DeleteEntityFilterContexts(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                // Note that `this.authCall` is not actually used. See `objRefToIdentifier()` implementation for details.
+                objectId: objRefToIdentifier(filterContext.ref, this.authCall),
+            }),
+        );
     };
 
     private getFilterContext = async (filterContextRef: ObjRef) => {

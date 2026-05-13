@@ -1283,6 +1283,10 @@
             color: kit-variables.$gd-palette-error-base;
         }
     }
+
+    &--visualization {
+        position: relative;
+    }
 }
 
 .gd-gen-ai-chat__conversation__item__feedback {

@@ -101,7 +101,8 @@ import {
 } from "../utils/typeGuards.js";
 import { createIdentifier, createLocalIdentifier } from "../utils/yamlUtils.js";
 
-type VisualisationDefinition = Pick<
+/** @internal */
+export type VisualisationDefinition = Pick<
     IInsight["insight"],
     "visualizationUrl" | "properties" | "filters" | "buckets" | "sorts" | "attributeFilterConfigs"
 > & {
@@ -305,6 +306,7 @@ function yamlConfigToDeclarative(
 
 //REPORT
 
+/** @internal */
 export function yamlReportToDeclarative(
     entities: ExportEntities,
     input: Visualisation,
@@ -595,6 +597,7 @@ function resolveField(localName: string, field?: Field) {
 
 //SORTS
 
+/** @internal */
 export function yamlSortsToDeclarative(
     sort_by: Sorts | undefined,
     fields: Visualisation["query"]["fields"],
@@ -1120,6 +1123,7 @@ function mergeDeclarativeResults(...results: YamlFilterToDeclarativeResult[]): Y
     };
 }
 
+/** @internal */
 export function yamlFiltersToDeclarative(
     entities: ExportEntities,
     filters_by: QueryFilters | Filter[] | undefined,
@@ -1150,6 +1154,7 @@ export function yamlFiltersToDeclarative(
 
 //TOTALS
 
+/** @internal */
 export function yamlReportTotalToDeclarative(totals: Total[] = [], attributeIdentifier: string): ITotal[] {
     return totals.map((total) => {
         return {
@@ -1163,6 +1168,7 @@ export function yamlReportTotalToDeclarative(totals: Total[] = [], attributeIden
 
 //BUCKETS
 
+/** @internal */
 export function yamlBucketsToDeclarative(
     entities: ExportEntities,
     input: Visualisation,

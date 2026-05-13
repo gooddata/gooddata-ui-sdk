@@ -976,7 +976,12 @@ export {
     isDashboardParameter,
 } from "./dashboard/parameter.js";
 
-export { type ISettings } from "./settings/index.js";
+export {
+    type ISettings,
+    type IUserSettings,
+    type IWorkspaceSettings,
+    type IUserWorkspaceSettings,
+} from "./settings/index.js";
 
 export {
     type ISeparators,

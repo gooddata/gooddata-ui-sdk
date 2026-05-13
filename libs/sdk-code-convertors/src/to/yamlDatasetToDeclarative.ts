@@ -181,6 +181,7 @@ export function buildGrain(entities: ExportEntities, primaryKey?: string | strin
 /**
  * Build declarative references
  */
+/** @internal */
 export function buildReferences(
     entities: ExportEntities,
     refs: Dataset["references"] = [],
@@ -262,6 +263,7 @@ export function buildWorkspaceDataFilterReferences(
 /**
  * Build declarative facts out of AaC fields
  */
+/** @internal */
 export function buildFacts(fields?: Fields): DeclarativeFact[] {
     if (!fields) {
         return [];
@@ -364,6 +366,7 @@ export function buildAggregatedFacts(
 /**
  * Build declarative attributes out of AaC fields
  */
+/** @internal */
 export function buildAttributes(fields?: Fields, isAuxiliaryDataset = false): DeclarativeAttribute[] {
     if (!fields) {
         return [];
@@ -432,6 +435,7 @@ export function buildAttributes(fields?: Fields, isAuxiliaryDataset = false): De
 /**
  * Build declarative attribute labels out of AaC labels
  */
+/** @internal */
 export function buildAttributeLabels(
     labels?: Attribute["labels"],
     isAuxiliaryDataset = false,

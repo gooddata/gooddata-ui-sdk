@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type LineChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     continuousLine: {
         enabled: boolean;
@@ -76,7 +77,8 @@ type DefaultProperties = {
     thresholdExcludedMeasures: string[];
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<LineChartConfigProperties> = {
     colorMapping: [],
     continuousLine: {
         enabled: false,
@@ -138,7 +140,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     thresholdExcludedMeasures: [],
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const LINE_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function lineChartLoad(props: VisualisationConfig<LineChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -296,7 +302,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function lineChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -389,8 +396,22 @@ function save(
     });
 }
 
-export const lineChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use lineChartLoad and lineChartSave instead.
+ */
+export interface ILineChartConfig {
+    load: typeof lineChartLoad;
+    save: typeof lineChartSave;
+    DEFAULTS: ConfigDefaults<LineChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use lineChartLoad and lineChartSave instead.
+ */
+export const lineChart: ILineChartConfig = {
+    load: lineChartLoad,
+    save: lineChartSave,
     DEFAULTS,
 };

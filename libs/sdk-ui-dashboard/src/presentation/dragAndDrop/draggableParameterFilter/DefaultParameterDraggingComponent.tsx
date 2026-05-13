@@ -4,7 +4,7 @@ import { ParameterControlButton } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
-import { selectDashboardParameterEntryByRef } from "../../../model/store/parameters/parametersSelectors.js";
+import { selectDashboardParameterEntryByRef } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import { type ParameterDraggableItem } from "../types.js";
 
 /**

@@ -882,6 +882,59 @@ const messagesSlice = createSlice({
                 errorMessage?: string;
             }>,
         ) => state,
+        pinConversationAction: (
+            state,
+            _action: PayloadAction<{
+                conversationId: string;
+                pinned: boolean;
+            }>,
+        ) => state,
+        pinConversationSuccessAction: (
+            state,
+            { payload }: PayloadAction<{ conversationId: string; pinned: boolean }>,
+        ) => {
+            state.conversations = state.conversations?.map((conversation) =>
+                conversation.id === payload.conversationId
+                    ? {
+                          ...conversation,
+                          pinned: payload.pinned,
+                      }
+                    : conversation,
+            );
+
+            if (
+                state.currentConversation !== "new" &&
+                state.currentConversation?.id === payload.conversationId
+            ) {
+                state.currentConversation = {
+                    ...state.currentConversation,
+                    pinned: payload.pinned,
+                };
+            }
+        },
+        pinConversationFailureAction: (
+            state,
+            { payload }: PayloadAction<{ conversationId: string; error: Error; pinned?: boolean }>,
+        ) => {
+            state.conversations = state.conversations?.map((conversation) =>
+                conversation.id === payload.conversationId
+                    ? {
+                          ...conversation,
+                          pinned: payload.pinned,
+                      }
+                    : conversation,
+            );
+
+            if (
+                state.currentConversation !== "new" &&
+                state.currentConversation?.id === payload.conversationId
+            ) {
+                state.currentConversation = {
+                    ...state.currentConversation,
+                    pinned: payload.pinned,
+                };
+            }
+        },
         deleteConversationAction: (state, _action: PayloadAction<{ conversationId: string }>) => state,
         deleteConversationStartAction: (state, { payload }: PayloadAction<{ conversationId: string }>) => {
             if (
@@ -897,7 +950,10 @@ const messagesSlice = createSlice({
                 (conversation) => conversation.id !== payload.conversationId,
             );
         },
-        deleteConversationSuccessAction: (state, _action: PayloadAction<{ conversationId: string }>) => state,
+        deleteConversationSuccessAction: (
+            state,
+            _action: PayloadAction<{ conversation: IChatConversationLocal }>,
+        ) => state,
         deleteConversationFailureAction: (
             state,
             { payload }: PayloadAction<{ conversation: IChatConversationLocal; error: Error }>,
@@ -944,6 +1000,9 @@ export const {
     visualizationErrorAction,
     startNewConversationAction,
     setCurrentConversationAction,
+    pinConversationAction,
+    pinConversationSuccessAction,
+    pinConversationFailureAction,
     deleteConversationAction,
     deleteConversationStartAction,
     deleteConversationSuccessAction,

@@ -22,7 +22,6 @@ import { type IFilterViewsState } from "./filterViews/filterViewsState.js";
 import { type ILoadingState } from "./loading/loadingState.js";
 import { type IDashboardMetaState } from "./meta/metaState.js";
 import { type INotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
-import { type IParametersState } from "./parameters/parametersState.js";
 import { type PermissionsState } from "./permissions/permissionsState.js";
 import { type IRenderModeState } from "./renderMode/renderModeState.js";
 import { type SavingState } from "./saving/savingState.js";
@@ -91,12 +90,6 @@ export type DashboardState = {
     users: IUsersState;
     /** @alpha */
     notificationChannels: INotificationChannelsState;
-
-    /**
-     * Dashboard-level parameter overrides slice.
-     * @alpha
-     */
-    parameters: IParametersState;
 
     /**
      * Internal state for dashboard summary AI workflow.

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-e2e-utils",
-    "version": "11.35.0-alpha.5",
+    "version": "11.35.0-alpha.6",
     "description": "GoodData utility functions for Playwright E2E tests",
     "license": "MIT",
     "author": "GoodData",
@@ -29,7 +29,7 @@
         "build": "npm-run-all -p build-check build-ts && npm run api-extractor",
         "build-check": "tsgo",
         "build-ts": "tsgo -p tsconfig.build.json",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf esm api temp",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf esm temp",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "lint": "oxlint . --type-aware --quiet && eslint .",

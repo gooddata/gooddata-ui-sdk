@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type SankeyChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -28,7 +29,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<SankeyChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: "auto",
@@ -43,7 +45,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const SANKEY_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function sankeyChartLoad(props: VisualisationConfig<SankeyChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -86,7 +92,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function sankeyChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -114,8 +121,22 @@ function save(
     });
 }
 
-export const sankeyChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use sankeyChartLoad and sankeyChartSave instead.
+ */
+export interface ISankeyChartConfig {
+    load: typeof sankeyChartLoad;
+    save: typeof sankeyChartSave;
+    DEFAULTS: ConfigDefaults<SankeyChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use sankeyChartLoad and sankeyChartSave instead.
+ */
+export const sankeyChart: ISankeyChartConfig = {
+    load: sankeyChartLoad,
+    save: sankeyChartSave,
     DEFAULTS,
 };

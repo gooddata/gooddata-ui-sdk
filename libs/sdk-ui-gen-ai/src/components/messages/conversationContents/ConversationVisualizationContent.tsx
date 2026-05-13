@@ -119,11 +119,11 @@ function ConversationVisualizationContentCore({
     const [isTable, setIsTable] = useState(false);
     const moreButtonDescId = useId();
 
-    const { setDrillState, DrillOverlay, DrillChooser } = useDrillState({
-        containerRef,
-        filters: [],
-        setKeyDriverAnalysis,
-    });
+    const [drillState, setDrillState] = useState<{
+        keyDriverData: IDashboardKeyDriverCombinationItem[];
+        event: IDrillEvent;
+    } | null>(null);
+
     const { setSaveDialogOpen, SaveDialog } = useSaveDialog({
         message,
         part,
@@ -166,7 +166,12 @@ function ConversationVisualizationContentCore({
 
     return (
         <div className={classNames}>
-            <DrillChooser>
+            <DrillState
+                drillState={drillState}
+                setDrillState={setDrillState}
+                containerRef={containerRef}
+                setKeyDriverAnalysis={setKeyDriverAnalysis}
+            >
                 <Wrapper containerRef={containerRef} visualization={visualization}>
                     <VisualisationMenu
                         visualization={visualization}
@@ -203,9 +208,8 @@ function ConversationVisualizationContentCore({
                         onVisualisationError={onVisualizationError}
                     />
                     <SaveDialog />
-                    <DrillOverlay />
                 </Wrapper>
-            </DrillChooser>
+            </DrillState>
             <VisualizationErrorReport error={visError} />
         </div>
     );
@@ -561,103 +565,97 @@ function VisualizationErrorReport({ error }: IVisualizationErrorReportProps) {
 
 //hooks
 
-interface IUseDrillStateProps {
+interface IDrillStateProps {
     containerRef: RefObject<HTMLDivElement | null>;
-    filters: IFilter[];
-    setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
-}
-
-function useDrillState({ containerRef, filters, setKeyDriverAnalysis }: IUseDrillStateProps) {
-    const intl = useIntl();
-    const [drillState, setDrillState] = useState<{
+    drillState: {
         keyDriverData: IDashboardKeyDriverCombinationItem[];
         event: IDrillEvent;
-    } | null>(null);
+    } | null;
+    setDrillState: (
+        state: { keyDriverData: IDashboardKeyDriverCombinationItem[]; event: IDrillEvent } | null,
+    ) => void;
+    filters?: IFilter[];
+    setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
+    children?: ReactNode;
+}
+
+function DrillState({
+    containerRef,
+    filters,
+    setKeyDriverAnalysis,
+    children,
+    drillState,
+    setDrillState,
+}: IDrillStateProps) {
+    const intl = useIntl();
     const catalogItems = useSelector(catalogItemsSelector);
 
-    const DrillChooser = useCallback(
-        ({ children }: { children: ReactNode }) => {
-            return (
-                <Dropdown
-                    enableAutoToggle={false}
-                    isOpen={Boolean(drillState)}
-                    onToggle={(state) => {
-                        if (!state) {
+    return (
+        <Dropdown
+            enableAutoToggle={false}
+            isOpen={Boolean(drillState)}
+            onToggle={(state) => {
+                if (!state) {
+                    setDrillState(null);
+                }
+            }}
+            closeOnEscape
+            closeOnParentScroll
+            alignPoints={[
+                {
+                    align: "tl tl",
+                    offset: calculateOffset(containerRef.current, drillState?.event),
+                },
+                {
+                    align: "tl tr",
+                    offset: calculateOffset(containerRef.current, drillState?.event),
+                },
+            ]}
+            renderBody={() => {
+                return (
+                    <DrillSelectDropdownMenu
+                        drillState={drillState}
+                        onSelect={(item) => {
+                            const data = item.data.context as IDashboardKeyDriverCombinationItem;
+                            const event = drillState?.event;
+
+                            if (!event) {
+                                return;
+                            }
+
+                            const allFilters = mergeFilters(
+                                convertIntersectionToAttributeFilters(event.drillContext.intersection ?? []),
+                                (filters?.map(getDashboardAttributeFilter).filter(Boolean) ??
+                                    []) as IDashboardAttributeFilter[],
+                            );
+
+                            const definition = createKdaDefinitionFromDrill(
+                                catalogItems,
+                                intl.locale,
+                                data,
+                                event,
+                                allFilters,
+                            );
+                            setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
+                        }}
+                        onClose={() => {
                             setDrillState(null);
-                        }
-                    }}
-                    closeOnEscape
-                    closeOnParentScroll
-                    alignPoints={[
-                        {
-                            align: "tl tl",
-                            offset: calculateOffset(containerRef.current, drillState?.event),
-                        },
-                        {
-                            align: "tl tr",
-                            offset: calculateOffset(containerRef.current, drillState?.event),
-                        },
-                    ]}
-                    renderBody={() => {
-                        return (
-                            <DrillSelectDropdownMenu
-                                drillState={drillState}
-                                onSelect={(item) => {
-                                    const data = item.data.context as IDashboardKeyDriverCombinationItem;
-                                    const event = drillState?.event;
-
-                                    if (!event) {
-                                        return;
-                                    }
-
-                                    const allFilters = mergeFilters(
-                                        convertIntersectionToAttributeFilters(
-                                            event.drillContext.intersection ?? [],
-                                        ),
-                                        filters
-                                            .map(getDashboardAttributeFilter)
-                                            .filter(Boolean) as IDashboardAttributeFilter[],
-                                    );
-
-                                    const definition = createKdaDefinitionFromDrill(
-                                        catalogItems,
-                                        intl.locale,
-                                        data,
-                                        event,
-                                        allFilters,
-                                    );
-                                    setKeyDriverAnalysis?.({ keyDriverAnalysis: definition });
-                                }}
-                                onClose={() => {
-                                    setDrillState(null);
-                                }}
-                            />
-                        );
-                    }}
-                    renderButton={() => <>{children}</>}
-                />
-            );
-        },
-        [catalogItems, containerRef, drillState, filters, intl.locale, setKeyDriverAnalysis],
+                        }}
+                    />
+                );
+            }}
+            renderButton={() => (
+                <>
+                    {children}
+                    <>
+                        {drillState ? (
+                            <div className="gd-gen-ai-chat__conversation__visualization__drill_overlay" />
+                        ) : null}
+                    </>
+                </>
+            )}
+        />
     );
-
-    const DrillOverlay = useCallback(
-        () => (
-            <>
-                {drillState ? (
-                    <div className="gd-gen-ai-chat__conversation__visualization__drill_overlay" />
-                ) : null}
-            </>
-        ),
-        [drillState],
-    );
-
-    return {
-        DrillOverlay,
-        DrillChooser,
-        setDrillState,
-        drillState,
-    };
 }
 
 function calculateOffset(container?: HTMLDivElement | null, drillEvent?: IDrillEvent) {
