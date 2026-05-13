@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pivot",
-    "version": "11.35.0-alpha.5",
+    "version": "11.35.0-alpha.6",
     "description": "GoodData.UI SDK - Pivot Table",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -39,7 +39,7 @@
         "build": "bash scripts/build.sh",
         "build-check": "tsgo",
         "build-ts": "tsgo -p tsconfig.build.json",
-        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage temp *.log styles/css tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",

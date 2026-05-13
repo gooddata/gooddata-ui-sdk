@@ -10,12 +10,37 @@ import {
 
 import {
     convertChatConversationErrorFromBackend,
+    convertChatConversationFromBackend,
     convertChatConversationItemFromBackend,
     convertChatSuggestionItemFromBackend,
 } from "../genAIConvertor.js";
 
 describe("genAIConvertor", () => {
     const dateNormalizer = vi.fn((val) => val);
+
+    describe("convertChatConversationFromBackend", () => {
+        it("should propagate pinned status", () => {
+            const converted = convertChatConversationFromBackend({
+                conversationId: "conv-1",
+                workspaceId: "ws-1",
+                organizationId: "org-1",
+                userId: "user-1",
+                createdAt: "2024-01-01T00:00:00Z",
+                lastActivityAt: "2024-01-02T00:00:00Z",
+                title: "My conversation",
+                pinned: true,
+                isPreview: false,
+            });
+
+            expect(converted).toEqual({
+                id: "conv-1",
+                createdAt: "2024-01-01T00:00:00Z",
+                updatedAt: "2024-01-02T00:00:00Z",
+                title: "My conversation",
+                pinned: true,
+            });
+        });
+    });
 
     describe("convertWhatIf", () => {
         it("should correctly convert AiWhatIfScenario to IChatWhatIfDefinition", () => {

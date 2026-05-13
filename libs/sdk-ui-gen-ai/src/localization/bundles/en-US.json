@@ -243,9 +243,29 @@
         "text": "Older",
         "crowdinContext": "Header for conversations older than 7 days"
     },
-    "gd.gen-ai.conversations.delete-button.aria-label": {
-        "text": "Delete conversation",
-        "crowdinContext": "Aria label for button that opens delete confirmation for a conversation in history list"
+    "gd.gen-ai.conversations.group.pinned": {
+        "text": "Pinned",
+        "crowdinContext": "Menu option to pin a conversation to the top of the conversation history list"
+    },
+    "gd.gen-ai.conversations.menu.pin": {
+        "text": "Pin",
+        "crowdinContext": "Menu option to pin a conversation to the top of the conversation history list"
+    },
+    "gd.gen-ai.conversations.menu.unpin": {
+        "text": "Unpin",
+        "crowdinContext": "Menu option to unpin a conversation from the top of the conversation history list"
+    },
+    "gd.gen-ai.conversations.menu.aria-label": {
+        "text": "Conversation menu",
+        "crowdinContext": "Accessibility label for the conversation menu"
+    },
+    "gd.gen-ai.conversations.dnd.pin-placeholder": {
+        "text": "Drop to pin",
+        "crowdinContext": "Drop placeholder shown while dragging an unpinned conversation to pin it"
+    },
+    "gd.gen-ai.conversations.dnd.unpin-placeholder": {
+        "text": "Drop to unpin",
+        "crowdinContext": "Drop placeholder shown while dragging a pinned conversation to unpin it"
     },
     "gd.gen-ai.conversations.delete-dialog.title": {
         "text": "Delete conversation?",

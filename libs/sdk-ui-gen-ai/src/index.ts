@@ -55,6 +55,10 @@ export {
     type ChatSaveVisualizationErrorEvent,
     type ChatSaveVisualizationSuccessEvent,
     type ChatCopyToClipboardEvent,
+    type ChatConversationPinnedEvent,
+    type ChatConversationDeletedEvent,
+    type ChatConversationPinErrorEvent,
+    type ChatConversationDeletedErrorEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -66,6 +70,10 @@ export {
     isChatSaveVisualizationErrorEvent,
     isChatSaveVisualizationSuccessEvent,
     isChatCopyToClipboardEvent,
+    isChatConversationDeletedEvent,
+    isChatConversationPinnedEvent,
+    isChatConversationPinErrorEvent,
+    isChatConversationDeletedErrorEvent,
 } from "./store/events.js";
 
 export { clearThreadAction, newMessageAction } from "./store/messages/messagesSlice.js";

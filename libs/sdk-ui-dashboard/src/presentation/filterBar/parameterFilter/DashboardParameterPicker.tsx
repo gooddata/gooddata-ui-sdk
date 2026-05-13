@@ -10,8 +10,8 @@ import {
     selectCatalogParameters,
     selectCatalogParametersStatus,
 } from "../../../model/store/catalog/catalogSelectors.js";
-import { parametersActions } from "../../../model/store/parameters/index.js";
-import { selectActiveParameterRefKeys } from "../../../model/store/parameters/parametersSelectors.js";
+import { tabsActions } from "../../../model/store/tabs/index.js";
+import { selectActiveParameterRefKeys } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 
 const PICKER_MAX_LIST_HEIGHT = 320;
 
@@ -48,7 +48,7 @@ export function DashboardParameterPicker({ onAdd, onCancel }: IDashboardParamete
                         continue;
                     }
                     dispatch(
-                        parametersActions.addParameter({
+                        tabsActions.addParameter({
                             parameter: {
                                 ref,
                                 parameterType: "NUMBER",

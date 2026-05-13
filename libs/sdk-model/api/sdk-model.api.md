@@ -2011,6 +2011,7 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
     layout?: IDashboardLayout<TWidget>;
     localIdentifier: string;
     measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
+    parameters?: IDashboardParameter[];
     title: string;
 }
 
@@ -5744,8 +5745,19 @@ export interface IUserGroupDataFilterDefinition extends IUserDataFilterDefinitio
 // @alpha
 export type IUserGroupWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserGroupAccessGrantee;
 
+// @public
+export interface IUserSettings extends ISettings {
+    locale: string;
+    separators: ISeparators;
+    userId: string;
+}
+
 // @alpha
 export type IUserWorkspaceAccessGrantee = IWorkspaceAccess & IGranularUserAccessGrantee;
+
+// @public
+export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {
+}
 
 // @public
 export interface IVariableMetadataObject extends IMetadataObject {
@@ -5957,6 +5969,13 @@ export interface IWorkspacePermissionAssignment {
 export type IWorkspacePermissions = {
     [permission in WorkspacePermission]: boolean;
 };
+
+// @public
+export interface IWorkspaceSettings extends ISettings {
+    agGridToken?: string;
+    mapboxToken?: string;
+    workspace: string;
+}
 
 // @public
 export interface IWorkspaceUser {

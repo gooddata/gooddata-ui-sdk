@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type GeoChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     legend: {
         enabled: boolean;
@@ -68,7 +69,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<GeoChartConfigProperties> = {
     colorMapping: [],
     legend: {
         enabled: true,
@@ -105,7 +107,7 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function sanitizeControls(controls: DefaultProperties): DefaultProperties {
+function sanitizeControls(controls: GeoChartConfigProperties): GeoChartConfigProperties {
     const sanitized = { ...controls };
 
     // Strip icon when shapeType is not "oneIcon"
@@ -138,7 +140,11 @@ function sanitizeControls(controls: DefaultProperties): DefaultProperties {
     return sanitized;
 }
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const GEO_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function geoChartLoad(props: VisualisationConfig<GeoChartConfigProperties>) {
     const sanitizedProps = props.controls ? { controls: sanitizeControls(props.controls) } : props;
     return loadConfig(sanitizedProps, (key, value) => {
         switch (key) {
@@ -234,7 +240,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function geoChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
     positions: Array<{ longitude: string; latitude: string }>,
@@ -349,8 +356,22 @@ function save(
     });
 }
 
-export const geoChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use geoChartLoad and geoChartSave instead.
+ */
+export interface IGeoChartConfig {
+    load: typeof geoChartLoad;
+    save: typeof geoChartSave;
+    DEFAULTS: ConfigDefaults<GeoChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use geoChartLoad and geoChartSave instead.
+ */
+export const geoChart: IGeoChartConfig = {
+    load: geoChartLoad,
+    save: geoChartSave,
     DEFAULTS,
 };

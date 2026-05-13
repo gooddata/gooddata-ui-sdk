@@ -75,6 +75,7 @@ export function convertIdOrTitleToId(id: string, title?: string | null): string 
     return id;
 }
 
+/** @public */
 export type FullFields =
     | AttributeField
     | MetricField

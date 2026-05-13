@@ -1,12 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { type IUserSettings } from "@gooddata/sdk-backend-spi";
 import {
     type ApplicationScope,
     type IEntitlementDescriptor,
     type ILocale,
     type ITheme,
     type IUser,
+    type IUserSettings,
     type IWhiteLabeling,
     type IWorkspacePermissions,
     type ObjRef,

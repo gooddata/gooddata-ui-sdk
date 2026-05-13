@@ -68,6 +68,7 @@ import {
     getIdentifier,
 } from "../utils/yamlUtils.js";
 
+/** @internal */
 export type OverrideDashboardDefinition = Omit<IDashboardDefinition, "filterContext"> & {
     filterContextRef?: AfmObjectIdentifier;
     tabs?: DashboardTab[];
@@ -237,6 +238,7 @@ export function declarativeDashboardToYaml(
     };
 }
 
+/** @internal */
 export function declarativeTabsToYaml(
     tabs: DashboardTab[],
     filterContexts?: DeclarativeFilterContext[],
@@ -308,6 +310,7 @@ export function declarativeTabsToYaml(
     return yamlTabs;
 }
 
+/** @internal */
 export function declarativeSectionsToYaml(
     layout?: IDashboardLayout,
     entities?: FromEntities,
@@ -355,6 +358,7 @@ export function declarativeSectionsToYaml(
     return sections;
 }
 
+/** @internal */
 export function declarativeWidgetToYaml(
     widget?: IDashboardWidget | null,
     size?: IDashboardLayoutItem["size"],
@@ -696,6 +700,7 @@ export function declarativeContainerWidgetToYaml(
     return yamlWidget;
 }
 
+/** @internal */
 export function declarativeDrillToYaml(
     drill: InsightDrillDefinition,
     entities?: FromEntities,
@@ -994,6 +999,7 @@ function sourceMeasureFilterRefsToYaml(
         .filter(Boolean) as string[];
 }
 
+/** @internal */
 export type FilterContextItem = { yaml: YAMLMap; filter: IFilterContextDefinition["filters"][number] };
 type EmptyValueHandling = NonNullable<IDashboardDateFilter["dateFilter"]["emptyValueHandling"]>;
 
@@ -1005,6 +1011,7 @@ function getDateFilterEmptyValueHandling(filter: IDashboardDateFilter): EmptyVal
     return undefined;
 }
 
+/** @internal */
 export function declarativeFilterContextToYaml(
     dateFilterConfig?: IDashboardDateFilterConfig,
     filterContext?: DeclarativeFilterContext,
@@ -1367,6 +1374,7 @@ function declarativeMeasureValueFilterToYaml(
     return measureValueFilter;
 }
 
+/** @internal */
 export function declarativeFiltersConfigToYaml(
     filtersMap: Record<string, FilterContextItem>,
     dateFilterConfig?: IDashboardDateFilterConfig,
@@ -1531,6 +1539,7 @@ function getFilterGroupIdBase({ title, localIdentifier }: IDashboardFilterGroup)
         .toLowerCase();
 }
 
+/** @internal */
 export function declarativePluginsToYaml(dashboard: IDashboardDefinition, errorContext?: IErrorContext) {
     if (!dashboard.plugins?.length) {
         return;

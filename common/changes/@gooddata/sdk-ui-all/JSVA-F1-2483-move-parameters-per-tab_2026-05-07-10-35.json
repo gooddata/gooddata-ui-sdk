@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "api-client-tiger: Add `ITigerDashboardTab.parameters`",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -1645,20 +1645,22 @@ export type {
     SetCatalogMeasuresAndFactsPayload,
     SetCatalogItemsPayload,
 } from "./model/store/catalog/catalogReducers.js";
-export { parametersActions } from "./model/store/parameters/index.js";
 export type {
     IAddParameterPayload,
     IRemoveParameterPayload,
     ISetParameterRuntimeValuePayload,
-} from "./model/store/parameters/parametersReducers.js";
-export type { IDashboardParameterEntry, IParametersState } from "./model/store/parameters/parametersState.js";
+} from "./model/store/tabs/parameters/parametersReducers.js";
+export type {
+    IDashboardParameterEntry,
+    IParametersState,
+} from "./model/store/tabs/parameters/parametersState.js";
 export {
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveParameterValuesForWidget,
     selectIsParametersChanged,
     selectParameterRuntimeOverrideByRef,
-} from "./model/store/parameters/parametersSelectors.js";
+} from "./model/store/tabs/parameters/parametersSelectors.js";
 export { drillActions } from "./model/store/drill/index.js";
 export {
     selectDrillableItems,

@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type TreemapChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -32,7 +33,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<TreemapChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: "auto",
@@ -50,7 +52,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const TREEMAP_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function treemapChartLoad(props: VisualisationConfig<TreemapChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -101,7 +107,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function treemapChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -130,8 +137,22 @@ function save(
     });
 }
 
-export const treemapChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use treemapChartLoad and treemapChartSave instead.
+ */
+export interface ITreemapChartConfig {
+    load: typeof treemapChartLoad;
+    save: typeof treemapChartSave;
+    DEFAULTS: ConfigDefaults<TreemapChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use treemapChartLoad and treemapChartSave instead.
+ */
+export const treemapChart: ITreemapChartConfig = {
+    load: treemapChartLoad,
+    save: treemapChartSave,
     DEFAULTS,
 };

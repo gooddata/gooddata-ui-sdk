@@ -136,6 +136,7 @@ function convertDashboardTabToBackend(
             ITigerDashboardMeasureValueFilterConfig[] | undefined
         >(tab.measureValueFilterConfigs),
         filterGroupsConfig: cloneWithSanitizedIds(tab.filterGroupsConfig),
+        parameters: tab.parameters?.map(convertDashboardParameterToBackend),
     };
 }
 
@@ -161,6 +162,7 @@ export function convertAnalyticalDashboard(
     let effectiveDateFilterConfigs = dashboard.dateFilterConfigs;
     let effectiveAttributeFilterConfigs = dashboard.attributeFilterConfigs;
     let effectiveMeasureValueFilterConfigs = dashboard.measureValueFilterConfigs;
+    let effectiveParameters = dashboard.parameters;
 
     if (dashboard.tabs && dashboard.tabs.length > 0) {
         const effectiveTab = dashboard.tabs[0];
@@ -171,6 +173,7 @@ export function convertAnalyticalDashboard(
         effectiveDateFilterConfigs = effectiveTab.dateFilterConfigs;
         effectiveAttributeFilterConfigs = effectiveTab.attributeFilterConfigs;
         effectiveMeasureValueFilterConfigs = effectiveTab.measureValueFilterConfigs;
+        effectiveParameters = effectiveTab.parameters;
     }
 
     const layout = convertLayout(
@@ -197,7 +200,7 @@ export function convertAnalyticalDashboard(
             layout,
         ),
         plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
-        parameters: dashboard.parameters?.map(convertDashboardParameterToBackend),
+        parameters: effectiveParameters?.map(convertDashboardParameterToBackend),
         disableCrossFiltering: dashboard.disableCrossFiltering,
         disableUserFilterReset: dashboard.disableUserFilterReset,
         disableUserFilterSave: dashboard.disableUserFilterSave,

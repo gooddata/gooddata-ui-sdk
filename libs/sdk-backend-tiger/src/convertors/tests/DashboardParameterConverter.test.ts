@@ -6,7 +6,12 @@ import {
     type AnalyticalDashboardModelV2,
     type JsonApiAnalyticalDashboardOutDocument,
 } from "@gooddata/api-client-tiger";
-import { type IDashboardDefinition, type IDashboardParameter, idRef } from "@gooddata/sdk-model";
+import {
+    type IDashboardDefinition,
+    type IDashboardParameter,
+    type IDashboardTab,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { convertDashboard } from "../fromBackend/analyticalDashboards/v2/AnalyticalDashboardConverter.js";
 import { convertAnalyticalDashboard } from "../toBackend/AnalyticalDashboardConverter.js";
@@ -28,27 +33,54 @@ function makeDashboardDocument(
     };
 }
 
-function makeTigerContent(
+function makeTigerContentRootOnly(
     parameters: AnalyticalDashboardModelV2.IAnalyticalDashboard["parameters"],
 ): AnalyticalDashboardModelV2.IAnalyticalDashboard {
     return { version: "2", parameters };
 }
 
-function makeDashboardDefinition(parameters: IDashboardParameter[]): IDashboardDefinition {
+function makeTigerContentWithTabs(
+    tabs: AnalyticalDashboardModelV2.IDashboardTab[],
+): AnalyticalDashboardModelV2.IAnalyticalDashboard {
+    return { version: "2", tabs };
+}
+
+function makeTigerTab(
+    localIdentifier: string,
+    parameters?: AnalyticalDashboardModelV2.IDashboardTab["parameters"],
+): AnalyticalDashboardModelV2.IDashboardTab {
+    return {
+        localIdentifier,
+        title: "",
+        layout: { type: "IDashboardLayout", sections: [] } as never,
+        filterContextRef: {} as never,
+        ...(parameters ? { parameters } : {}),
+    };
+}
+
+function makeDashboardDefinitionWithTabs(tabs: IDashboardTab[]): IDashboardDefinition {
     return {
         type: "IDashboard",
         title: "",
         description: "",
         shareStatus: "private",
-        parameters,
+        tabs,
     } as IDashboardDefinition;
+}
+
+function makeTab(localIdentifier: string, parameters?: IDashboardParameter[]): IDashboardTab {
+    return {
+        localIdentifier,
+        title: "",
+        ...(parameters ? { parameters } : {}),
+    } as IDashboardTab;
 }
 
 describe("dashboard parameter converters", () => {
     describe("from backend", () => {
-        it("converts a fully-specified parameter entry", () => {
+        it("V1: reads root parameters when no tabs[]", () => {
             const doc = makeDashboardDocument(
-                makeTigerContent([
+                makeTigerContentRootOnly([
                     {
                         ref: tigerRef as never,
                         parameterType: "NUMBER",
@@ -72,45 +104,92 @@ describe("dashboard parameter converters", () => {
             ]);
         });
 
-        it("defaults mode to active when omitted", () => {
+        it("V2: reads each tab's parameters per tab", () => {
             const doc = makeDashboardDocument(
-                makeTigerContent([
-                    {
-                        ref: tigerRef as never,
-                        parameterType: "NUMBER",
-                    },
+                makeTigerContentWithTabs([
+                    makeTigerTab("tab-A", [{ ref: tigerRef as never, parameterType: "NUMBER", value: 25 }]),
+                    makeTigerTab("tab-B"),
                 ]),
             );
 
             const dashboard = convertDashboard(doc);
 
-            expect(dashboard.parameters).toEqual([
+            expect(dashboard.tabs?.[0]?.parameters).toEqual([
                 {
                     ref: idRef("topN", "parameter"),
                     parameterType: "NUMBER",
+                    value: 25,
                     mode: "active",
                 },
             ]);
+            expect(dashboard.tabs?.[1]?.parameters).toBeUndefined();
         });
 
-        it("returns undefined parameters when content has none", () => {
+        it("defaults mode to active when omitted on a tab parameter", () => {
+            const doc = makeDashboardDocument(
+                makeTigerContentWithTabs([
+                    makeTigerTab("tab-A", [{ ref: tigerRef as never, parameterType: "NUMBER" }]),
+                ]),
+            );
+
+            const dashboard = convertDashboard(doc);
+
+            expect(dashboard.tabs?.[0]?.parameters?.[0]?.mode).toBe("active");
+        });
+
+        it("returns undefined parameters when neither root nor any tab has them", () => {
             const doc = makeDashboardDocument({ version: "2" });
             const dashboard = convertDashboard(doc);
             expect(dashboard.parameters).toBeUndefined();
+            expect(dashboard.tabs).toBeUndefined();
         });
     });
 
     describe("to backend", () => {
-        it("preserves a fully-specified parameter entry", () => {
-            const definition = makeDashboardDefinition([
-                {
-                    ref: idRef("topN", "parameter"),
-                    parameterType: "NUMBER",
-                    value: 25,
-                    label: "Top N",
-                    mode: "readonly",
-                },
+        it("V2: writes parameters per tab and mirrors tabs[0] to root for V1 readers", () => {
+            const definition = makeDashboardDefinitionWithTabs([
+                makeTab("tab-A", [
+                    {
+                        ref: idRef("topN", "parameter"),
+                        parameterType: "NUMBER",
+                        value: 25,
+                        label: "Top N",
+                        mode: "readonly",
+                    },
+                ]),
+                makeTab("tab-B"),
             ]);
+
+            const result = convertAnalyticalDashboard(definition);
+
+            const tigerTopN = {
+                ref: tigerRef,
+                parameterType: "NUMBER",
+                value: 25,
+                label: "Top N",
+                mode: "readonly",
+            };
+            expect(result.parameters).toEqual([tigerTopN]);
+            expect(result.tabs?.[0]?.parameters).toEqual([tigerTopN]);
+            expect(result.tabs?.[1]?.parameters).toBeUndefined();
+        });
+
+        it("V2: writes root parameters when definition has no tabs (legacy root-only)", () => {
+            const definition = {
+                type: "IDashboard",
+                title: "",
+                description: "",
+                shareStatus: "private",
+                parameters: [
+                    {
+                        ref: idRef("topN", "parameter"),
+                        parameterType: "NUMBER",
+                        value: 25,
+                        label: "Top N",
+                        mode: "readonly",
+                    },
+                ],
+            } as IDashboardDefinition;
 
             const result = convertAnalyticalDashboard(definition);
 
@@ -123,20 +202,23 @@ describe("dashboard parameter converters", () => {
                     mode: "readonly",
                 },
             ]);
+            expect(result.tabs).toBeUndefined();
         });
 
-        it("omits mode field when set to active", () => {
-            const definition = makeDashboardDefinition([
-                {
-                    ref: idRef("topN", "parameter"),
-                    parameterType: "NUMBER",
-                    mode: "active",
-                },
+        it("omits mode field when set to active on a tab parameter", () => {
+            const definition = makeDashboardDefinitionWithTabs([
+                makeTab("tab-A", [
+                    {
+                        ref: idRef("topN", "parameter"),
+                        parameterType: "NUMBER",
+                        mode: "active",
+                    },
+                ]),
             ]);
 
             const result = convertAnalyticalDashboard(definition);
 
-            expect(result.parameters).toEqual([
+            expect(result.tabs?.[0]?.parameters).toEqual([
                 {
                     ref: tigerRef,
                     parameterType: "NUMBER",
@@ -144,44 +226,42 @@ describe("dashboard parameter converters", () => {
             ]);
         });
 
-        it("emits no parameters field when none defined", () => {
-            const definition = makeDashboardDefinition([]);
-            const result = convertAnalyticalDashboard({ ...definition, parameters: undefined });
+        it("emits no parameters field when no tab declares any", () => {
+            const definition = makeDashboardDefinitionWithTabs([makeTab("tab-A")]);
+            const result = convertAnalyticalDashboard(definition);
             expect(result.parameters).toBeUndefined();
+            expect(result.tabs?.[0]?.parameters).toBeUndefined();
         });
     });
 
     describe("round-trip", () => {
-        it("preserves explicit value and label across to->from converters", () => {
-            const definition = makeDashboardDefinition([
-                {
-                    ref: idRef("topN", "parameter"),
-                    parameterType: "NUMBER",
-                    value: 25,
-                    label: "Top N",
-                    mode: "active",
-                },
+        it("preserves per-tab parameters across to->from converters", () => {
+            const definition = makeDashboardDefinitionWithTabs([
+                makeTab("tab-A", [
+                    {
+                        ref: idRef("topN", "parameter"),
+                        parameterType: "NUMBER",
+                        value: 25,
+                        label: "Top N",
+                        mode: "active",
+                    },
+                ]),
+                makeTab("tab-B", [
+                    {
+                        ref: idRef("topN", "parameter"),
+                        parameterType: "NUMBER",
+                        mode: "active",
+                    },
+                ]),
             ]);
 
             const tigerContent = convertAnalyticalDashboard(definition);
             const dashboard = convertDashboard(makeDashboardDocument(tigerContent));
 
-            expect(dashboard.parameters).toEqual(definition.parameters);
-        });
-
-        it("preserves a minimal entry (only ref+parameterType+active mode)", () => {
-            const definition = makeDashboardDefinition([
-                {
-                    ref: idRef("topN", "parameter"),
-                    parameterType: "NUMBER",
-                    mode: "active",
-                },
-            ]);
-
-            const tigerContent = convertAnalyticalDashboard(definition);
-            const dashboard = convertDashboard(makeDashboardDocument(tigerContent));
-
-            expect(dashboard.parameters).toEqual(definition.parameters);
+            expect(dashboard.tabs?.[0]?.parameters).toEqual(definition.tabs?.[0]?.parameters);
+            expect(dashboard.tabs?.[1]?.parameters).toEqual(definition.tabs?.[1]?.parameters);
+            // Root mirrors tabs[0] for V1 readers; on read-back, both root and tabs[0] are populated.
+            expect(dashboard.parameters).toEqual(definition.tabs?.[0]?.parameters);
         });
     });
 });

@@ -1289,7 +1289,6 @@ export type DashboardState = {
     automations: IAutomationsState;
     users: IUsersState;
     notificationChannels: INotificationChannelsState;
-    parameters: IParametersState;
     dashboardSummaryWorkflow: DashboardSummaryWorkflowState;
     renderMode: IRenderModeState;
     ui: IUiState;
@@ -8590,6 +8589,8 @@ export interface ITabState {
     // (undocumented)
     measureValueFilterConfigs?: IMeasureValueFilterConfigsState;
     // (undocumented)
+    parameters?: IParametersState;
+    // (undocumented)
     title?: string;
 }
 
@@ -9704,14 +9705,6 @@ export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentPr
 export type ParameterDraggableItem = {
     type: "parameter";
     ref: ObjRef;
-};
-
-// @internal (undocumented)
-export const parametersActions: {
-    addParameter: ActionCreatorWithPayload<IAddParameterPayload, "parameters/addParameter">;
-    setParameterRuntimeValue: ActionCreatorWithPayload<ISetParameterRuntimeValuePayload, "parameters/setParameterRuntimeValue">;
-    removeParameter: ActionCreatorWithPayload<IRemoveParameterPayload, "parameters/removeParameter">;
-    setParameterEntries: ActionCreatorWithPayload<IDashboardParameterEntry[], "parameters/setParameterEntries">;
 };
 
 // @beta (undocumented)
@@ -12475,6 +12468,18 @@ type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeMeasureValueFilterConfig: (state: WritableDraft<ITabsState>, action: {
 payload: string;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addParameter: (state: WritableDraft<ITabsState>, action: {
+payload: IAddParameterPayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setParameterRuntimeValue: (state: WritableDraft<ITabsState>, action: {
+payload: ISetParameterRuntimeValuePayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeParameter: (state: WritableDraft<ITabsState>, action: {
+payload: IRemoveParameterPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 }, "tabs">;

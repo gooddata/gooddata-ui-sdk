@@ -90,7 +90,8 @@ import {
 } from "../utils/typeGuards.js";
 import { createIdentifier, createLocalIdentifier } from "../utils/yamlUtils.js";
 
-type DashboardDefinition = Pick<
+/** @internal */
+export type DashboardDefinition = Pick<
     OverrideDashboardDefinition,
     | "layout"
     | "plugins"
@@ -108,12 +109,17 @@ type DashboardDefinition = Pick<
 > & {
     version: string;
 };
-type FilterContextDefinition = Pick<IFilterContextDefinition, "filters"> & {
+
+/** @internal */
+export type FilterContextDefinition = Pick<IFilterContextDefinition, "filters"> & {
     version: string;
 };
-type DashboardSection = Required<DashboardDefinition>["layout"]["sections"][number];
-type DashboardWidget = DashboardSection["items"][number];
-type EmptyValueHandling = NonNullable<IDashboardDateFilter["dateFilter"]["emptyValueHandling"]>;
+/** @internal */
+export type DashboardSection = Required<DashboardDefinition>["layout"]["sections"][number];
+/** @internal */
+export type DashboardWidget = DashboardSection["items"][number];
+/** @internal */
+export type EmptyValueHandling = NonNullable<IDashboardDateFilter["dateFilter"]["emptyValueHandling"]>;
 
 function extractDashboardEmptyValueHandling(filter: unknown): EmptyValueHandling | undefined {
     const value = (filter as { empty_values?: unknown }).empty_values;
@@ -349,6 +355,7 @@ function yamlSectionToDeclarative(
     };
 }
 
+/** @internal */
 export function yamlWidgetItemToDeclarative(
     entities: ExportEntities,
     input: Widget,
@@ -420,6 +427,7 @@ function yamlInsightWidgetToDeclarative(
     };
 }
 
+/** @internal */
 export function yamlWidgetToDeclarative(
     entities: ExportEntities,
     input: VisualisationWidget | RichTextWidget | VisualizationSwitcherWidget | ContainerWidget,
@@ -554,6 +562,7 @@ function yamlWidgetPropertiesToDeclarative(input: VisualisationWidget): any {
     return {};
 }
 
+/** @internal */
 export function yamlInteractionToDeclarative(
     entities: ExportEntities,
     visualisation: string,
@@ -800,6 +809,7 @@ function yamlIgnoredFilterToDeclarative(input: string): IDashboardFilterReferenc
     return null;
 }
 
+/** @internal */
 export function yamlPluginsToDeclarative(plugins: Dashboard["plugins"]) {
     return plugins?.map((plugin) => yamlPluginToDeclarative(plugin));
 }
@@ -870,6 +880,7 @@ function flattenFilters(
     return result;
 }
 
+/** @internal */
 export function yamlFilterContextToDeclarative(
     baseId: string,
     yamlFilters: DashboardFilters | undefined,

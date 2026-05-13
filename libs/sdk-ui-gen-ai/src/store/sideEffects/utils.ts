@@ -11,10 +11,6 @@ export function extractError(e: unknown) {
         return `${e.name}: ${message}`;
     }
 
-    if (typeof e === "object" && e !== null && "detail" in e) {
-        return String(e.detail);
-    }
-
     return String(e);
 }
 

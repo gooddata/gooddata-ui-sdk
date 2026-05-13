@@ -23,5 +23,6 @@ export function buildOutputFromLayerData(layerData: IGeoLayerData): IGeoLayerOut
         geoData: layerData.geoData,
         colorStrategy: layerData.colorStrategy,
         initialViewport: layerData.initialViewport,
+        tooltipReferenceMaps: layerData.tooltipReferenceMaps,
     };
 }

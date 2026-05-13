@@ -8,6 +8,7 @@ import { dateFilterConfigsReducers } from "./dateFilterConfigs/dateFilterConfigs
 import { filterContextReducers } from "./filterContext/filterContextReducers.js";
 import { layoutReducers } from "./layout/layoutReducers.js";
 import { measureValueFilterConfigsReducers } from "./measureValueFilterConfigs/measureValueFilterConfigsReducers.js";
+import { parametersReducers } from "./parameters/parametersReducers.js";
 import { tabsReducers } from "./tabsReducers.js";
 import { tabsInitialState } from "./tabsState.js";
 
@@ -19,6 +20,7 @@ const allReducers = {
     ...measureValueFilterConfigsReducers,
     ...filterContextReducers,
     ...layoutReducers,
+    ...parametersReducers,
 } as const;
 
 const tabsSlice = createSlice({

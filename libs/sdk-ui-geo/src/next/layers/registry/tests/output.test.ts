@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -71,5 +71,15 @@ describe("buildOutputFromLayerData", () => {
         expect(output?.legend.items).toBe(legendItems);
         expect(output?.legend.available).toBe(availableLegends);
         expect(output?.source).toBe(testSource);
+    });
+
+    it("propagates tooltipReferenceMaps from layer data to output", () => {
+        const tooltipReferenceMaps = {
+            measures: { m_local: "f_population" },
+            attributes: { "df.city": "attr.city" },
+        };
+        const output = buildOutputFromLayerData(createLayerData({ tooltipReferenceMaps }));
+
+        expect(output?.tooltipReferenceMaps).toBe(tooltipReferenceMaps);
     });
 });

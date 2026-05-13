@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type DonutChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -32,7 +33,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<DonutChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: false,
@@ -50,7 +52,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const DONUT_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function donutChartLoad(props: VisualisationConfig<DonutChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -101,7 +107,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function donutChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -130,8 +137,22 @@ function save(
     });
 }
 
-export const donutChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use donutChartLoad and donutChartSave instead.
+ */
+export interface IDonutChartConfig {
+    load: typeof donutChartLoad;
+    save: typeof donutChartSave;
+    DEFAULTS: ConfigDefaults<DonutChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use donutChartLoad and donutChartSave instead.
+ */
+export const donutChart: IDonutChartConfig = {
+    load: donutChartLoad,
+    save: donutChartSave,
     DEFAULTS,
 };

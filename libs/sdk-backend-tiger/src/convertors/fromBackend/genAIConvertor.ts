@@ -52,6 +52,7 @@ export function convertChatConversationFromBackend(conversation: AiConversationR
         createdAt: conversation.createdAt,
         updatedAt: conversation.lastActivityAt,
         title: conversation.title ?? undefined,
+        pinned: conversation.pinned,
     };
 }
 

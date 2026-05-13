@@ -4,12 +4,14 @@ import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/tool
 
 import { type IDashboardParameter, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { type IDashboardParameterEntry, type IParametersState } from "./parametersState.js";
+import { type ITabsState, getActiveTab } from "../tabsState.js";
 
-type ParametersReducer<A extends Action> = CaseReducer<IParametersState, A>;
+import { parametersInitialState } from "./parametersState.js";
+
+type ParametersReducer<A extends Action> = CaseReducer<ITabsState, A>;
 
 /**
- * Add a parameter to the dashboard. Initial `runtimeOverride` is `parameter.value`
+ * Add a parameter to the active tab. Initial `runtimeOverride` is `parameter.value`
  * (when pinned) otherwise the workspace default supplied by the caller.
  *
  * @alpha
@@ -20,14 +22,21 @@ export interface IAddParameterPayload {
 }
 
 const addParameter: ParametersReducer<PayloadAction<IAddParameterPayload>> = (state, action) => {
-    const { parameter, workspaceDefault } = action.payload;
-    if (state.parameters.some((entry) => areObjRefsEqual(entry.parameter.ref, parameter.ref))) {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
         return;
     }
-    state.parameters.push({
-        parameter,
-        runtimeOverride: parameter.value ?? workspaceDefault,
-    });
+    const { parameter, workspaceDefault } = action.payload;
+    const tabParameters = activeTab.parameters ?? parametersInitialState;
+    if (tabParameters.parameters.some((entry) => areObjRefsEqual(entry.parameter.ref, parameter.ref))) {
+        return;
+    }
+    activeTab.parameters = {
+        parameters: [
+            ...tabParameters.parameters,
+            { parameter, runtimeOverride: parameter.value ?? workspaceDefault },
+        ],
+    };
 };
 
 /**
@@ -42,8 +51,12 @@ const setParameterRuntimeValue: ParametersReducer<PayloadAction<ISetParameterRun
     state,
     action,
 ) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab?.parameters) {
+        return;
+    }
     const { ref, value } = action.payload;
-    const entry = state.parameters.find((item) => areObjRefsEqual(item.parameter.ref, ref));
+    const entry = activeTab.parameters.parameters.find((item) => areObjRefsEqual(item.parameter.ref, ref));
     if (entry) {
         entry.runtimeOverride = value;
     }
@@ -57,23 +70,19 @@ export interface IRemoveParameterPayload {
 }
 
 const removeParameter: ParametersReducer<PayloadAction<IRemoveParameterPayload>> = (state, action) => {
-    state.parameters = state.parameters.filter(
-        (entry) => !areObjRefsEqual(entry.parameter.ref, action.payload.ref),
-    );
-};
-
-/**
- * Replace the entire entry list. Used when (re-)loading a persisted dashboard.
- *
- * @alpha
- */
-const setParameterEntries: ParametersReducer<PayloadAction<IDashboardParameterEntry[]>> = (state, action) => {
-    state.parameters = action.payload;
+    const activeTab = getActiveTab(state);
+    if (!activeTab?.parameters) {
+        return;
+    }
+    activeTab.parameters = {
+        parameters: activeTab.parameters.parameters.filter(
+            (entry) => !areObjRefsEqual(entry.parameter.ref, action.payload.ref),
+        ),
+    };
 };
 
 export const parametersReducers = {
     addParameter,
     setParameterRuntimeValue,
     removeParameter,
-    setParameterEntries,
 };

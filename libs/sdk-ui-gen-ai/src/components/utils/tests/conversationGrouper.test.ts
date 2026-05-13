@@ -71,4 +71,28 @@ describe("groupConversationsByDate", () => {
             },
         ]);
     });
+
+    it("should put pinned conversations to pinned bucket first", () => {
+        const conversations: IChatConversationLocal[] = [
+            {
+                ...createConversation("unpinned", daysAgoIso(0, now)),
+                pinned: false,
+            },
+            {
+                ...createConversation("pinned", daysAgoIso(14, now)),
+                pinned: true,
+            },
+        ];
+
+        expect(groupConversationsByDate(conversations, undefined, now)).toEqual([
+            {
+                group: ConversationDateGroup.PINNED,
+                conversations: [conversations[1]],
+            },
+            {
+                group: ConversationDateGroup.TODAY,
+                conversations: [conversations[0]],
+            },
+        ]);
+    });
 });

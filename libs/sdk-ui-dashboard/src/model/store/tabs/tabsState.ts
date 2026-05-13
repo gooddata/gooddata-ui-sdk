@@ -9,6 +9,7 @@ import { type IDateFilterConfigsState } from "./dateFilterConfigs/dateFilterConf
 import type { FilterContextState } from "./filterContext/filterContextState.js";
 import type { ILayoutState } from "./layout/layoutState.js";
 import { type IMeasureValueFilterConfigsState } from "./measureValueFilterConfigs/measureValueFilterConfigsState.js";
+import { type IParametersState } from "./parameters/parametersState.js";
 
 /**
  * Identifier used for dashboards without explicit tabs support and the first tab created automatically.
@@ -57,6 +58,7 @@ export interface ITabState {
     filterContext?: FilterContextState;
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
     layout?: ILayoutState;
+    parameters?: IParametersState;
 
     /**
      * UI-only flag indicating the tab is currently being renamed.

@@ -19,7 +19,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type RepeaterChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     columnWidths: Array<ColumnWidthItem>;
     cellImageSizing: "fit" | "fill";
@@ -30,6 +31,7 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
+/** @internal */
 export type InlineVisualizations = Record<
     string,
     {
@@ -37,7 +39,8 @@ export type InlineVisualizations = Record<
     }
 >;
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<RepeaterChartConfigProperties> = {
     colorMapping: [],
     columnWidths: [],
     rowHeight: "small",
@@ -48,7 +51,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const REPEATER_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function repeaterChartLoad(props: VisualisationConfig<RepeaterChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "columnWidths": {
@@ -115,7 +122,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function repeaterChartSave(
     fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -139,7 +147,8 @@ function save(
     });
 }
 
-function saveInlineVisualizations(metrics: Bucket[] = []) {
+/** @internal */
+export function saveInlineVisualizations(metrics: Bucket[] = []) {
     return metrics?.reduce<InlineVisualizations>((map, b) => {
         const bucket = getFullBucket(b);
         if (bucket.display_as && bucket.field) {
@@ -151,9 +160,24 @@ function saveInlineVisualizations(metrics: Bucket[] = []) {
     }, {});
 }
 
-export const repeaterChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use repeaterChartLoad and repeaterChartSave instead.
+ */
+export interface IRepeaterChartConfig {
+    load: typeof repeaterChartLoad;
+    save: typeof repeaterChartSave;
+    saveInlineVisualizations: typeof saveInlineVisualizations;
+    DEFAULTS: ConfigDefaults<RepeaterChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use repeaterChartLoad and repeaterChartSave instead.
+ */
+export const repeaterChart: IRepeaterChartConfig = {
+    load: repeaterChartLoad,
+    save: repeaterChartSave,
     saveInlineVisualizations,
     DEFAULTS,
 };

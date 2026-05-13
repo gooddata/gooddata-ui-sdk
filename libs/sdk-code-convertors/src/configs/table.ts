@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type TableConfigProperties = {
     columnWidths: Array<ColumnWidthItem>;
     measureGroupDimension: "columns" | "rows";
     columnHeadersPosition: "top" | "left";
@@ -39,7 +40,8 @@ type DefaultProperties = {
     grandTotalsPosition: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<TableConfigProperties> = {
     columnWidths: [],
     measureGroupDimension: "columns",
     columnHeadersPosition: "top",
@@ -60,7 +62,7 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     grandTotalsPosition: "pinnedBottom",
 };
 
-type TextWrapping = DefaultProperties["textWrapping"];
+type TextWrapping = TableConfigProperties["textWrapping"];
 type TextWrappingOverride = TextWrapping["columnOverrides"][number];
 
 function loadTextWrapping(value: TextWrapping | undefined): object | undefined {
@@ -142,7 +144,11 @@ function saveTextWrapping(value: YamlTextWrapping | undefined): TextWrapping | u
     };
 }
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const TABLE_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function tableLoad(props: VisualisationConfig<TableConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "columnWidths": {
@@ -208,7 +214,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function tableSave(
     fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -244,8 +251,22 @@ function save(
     });
 }
 
-export const table = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use tableLoad and tableSave instead.
+ */
+export interface ITableConfig {
+    load: typeof tableLoad;
+    save: typeof tableSave;
+    DEFAULTS: ConfigDefaults<TableConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use tableLoad and tableSave instead.
+ */
+export const table: ITableConfig = {
+    load: tableLoad,
+    save: tableSave,
     DEFAULTS,
 };

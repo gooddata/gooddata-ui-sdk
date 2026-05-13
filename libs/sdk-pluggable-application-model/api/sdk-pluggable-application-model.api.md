@@ -9,7 +9,7 @@ import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
-import { IUserSettings } from '@gooddata/sdk-backend-spi';
+import { IUserSettings } from '@gooddata/sdk-model';
 import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';

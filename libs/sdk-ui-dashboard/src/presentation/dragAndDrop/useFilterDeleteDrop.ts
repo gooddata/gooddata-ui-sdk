@@ -11,7 +11,7 @@ import {
     removeMeasureValueFilter,
 } from "../../model/commands/filters.js";
 import { useDashboardDispatch } from "../../model/react/DashboardStoreProvider.js";
-import { parametersActions } from "../../model/store/parameters/index.js";
+import { tabsActions } from "../../model/store/tabs/index.js";
 
 import {
     isAttributeFilterDraggableItem,
@@ -42,7 +42,7 @@ export function useFilterDeleteDrop() {
                     const identifier = dashboardFilterLocalIdentifier(item.filter)!;
                     dispatch(removeMeasureValueFilter(identifier));
                 } else if (isParameterDraggableItem(item)) {
-                    dispatch(parametersActions.removeParameter({ ref: item.ref }));
+                    dispatch(tabsActions.removeParameter({ ref: item.ref }));
                 }
             },
         },

@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type PyramidChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -32,7 +33,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<PyramidChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: "auto",
@@ -50,7 +52,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const PYRAMID_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function pyramidChartLoad(props: VisualisationConfig<PyramidChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -101,7 +107,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function pyramidChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -130,8 +137,22 @@ function save(
     });
 }
 
-export const pyramidChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use pyramidChartLoad and pyramidChartSave instead.
+ */
+export interface IPyramidChartConfig {
+    load: typeof pyramidChartLoad;
+    save: typeof pyramidChartSave;
+    DEFAULTS: ConfigDefaults<PyramidChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use pyramidChartLoad and pyramidChartSave instead.
+ */
+export const pyramidChart: IPyramidChartConfig = {
+    load: pyramidChartLoad,
+    save: pyramidChartSave,
     DEFAULTS,
 };

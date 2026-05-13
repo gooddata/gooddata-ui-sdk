@@ -13,6 +13,7 @@ import {
     type IDashboardDefinition,
     type IDashboardLayout,
     type IDashboardObjectIdentity,
+    type IDashboardParameter,
     type IDashboardTab,
     type IFilterContext,
     type ITempFilterContext,
@@ -37,7 +38,6 @@ import { selectLocale } from "../../store/config/configSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import { selectSmartPersistedDashboardParameters } from "../../store/parameters/parametersSelectors.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { savingActions } from "../../store/saving/index.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -50,6 +50,7 @@ import {
 import { tabsActions } from "../../store/tabs/index.js";
 import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectMeasureValueFilterConfigsOverrides } from "../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import { selectSmartPersistedTabsParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
@@ -131,9 +132,13 @@ export function getDashboardWithSharing(
  * Converts TabState[] from the dashboard state into IDashboardTab[] for saving.
  *
  * @param tabs - Array of TabState objects from the dashboard state
+ * @param parametersByTab - Smart-persisted parameters keyed by tab localIdentifier
  * @returns Array of IDashboardTab objects ready for saving to backend
  */
-function processExistingTabs(tabs: ITabState[]): IDashboardTab[] {
+function processExistingTabs(
+    tabs: ITabState[],
+    parametersByTab: Record<string, IDashboardParameter[]>,
+): IDashboardTab[] {
     return tabs.map((tab) => {
         const dateFilterConfig = tab.dateFilterConfig?.dateFilterConfig;
 
@@ -168,6 +173,8 @@ function processExistingTabs(tabs: ITabState[]): IDashboardTab[] {
               } as IFilterContext | ITempFilterContext)
             : undefined;
 
+        const tabParameters = parametersByTab[tab.localIdentifier] ?? [];
+
         const result: IDashboardTab = {
             // explicitly type the result to avoid type errors caused by spread operators
             localIdentifier: tab.localIdentifier,
@@ -180,6 +187,9 @@ function processExistingTabs(tabs: ITabState[]): IDashboardTab[] {
             ...attributeFilterConfigsProp,
             ...measureValueFilterConfigsProp,
             ...filterGroupsConfigProp,
+            // Always persist `parameters` (incl. `[]`) so V1 root fallback never re-hydrates stale
+            // root parameters when every tab has been emptied.
+            parameters: tabParameters,
         };
         return result;
     });
@@ -235,6 +245,7 @@ function resolveProcessedTabs(
     attributeFilterConfigs: IDashboardDefinition["attributeFilterConfigs"],
     dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
     measureValueFilterConfigs: IDashboardDefinition["measureValueFilterConfigs"],
+    parametersByTab: Record<string, IDashboardParameter[]>,
 ): IDashboardTab[] | undefined {
     // If no tabs exist, create a default tab with root-level properties
     const shouldCreateDefaultTab = !tabs || tabs.length === 0;
@@ -251,7 +262,7 @@ function resolveProcessedTabs(
     }
 
     if (tabs) {
-        return processExistingTabs(tabs);
+        return processExistingTabs(tabs, parametersByTab);
     }
 
     return undefined;
@@ -289,8 +300,8 @@ function* createDashboardSaveContext(
     const measureValueFilterConfigs: ReturnType<typeof selectMeasureValueFilterConfigsOverrides> =
         yield select(selectMeasureValueFilterConfigsOverrides);
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
-    const parameters: ReturnType<typeof selectSmartPersistedDashboardParameters> = yield select(
-        selectSmartPersistedDashboardParameters,
+    const parametersByTab: ReturnType<typeof selectSmartPersistedTabsParameters> = yield select(
+        selectSmartPersistedTabsParameters,
     );
     const capabilities: ReturnType<typeof selectBackendCapabilities> =
         yield select(selectBackendCapabilities);
@@ -324,6 +335,7 @@ function* createDashboardSaveContext(
         attributeFilterConfigs,
         dateFilterConfigs,
         measureValueFilterConfigs,
+        parametersByTab,
     );
 
     const locale: ReturnType<typeof selectLocale> = yield select(selectLocale);
@@ -349,7 +361,6 @@ function* createDashboardSaveContext(
             measureValueFilterConfigs,
         ),
         ...(processedTabs ? { tabs: processedTabs } : {}),
-        ...(parameters.length > 0 ? { parameters } : {}),
         ...pluginsProp,
     };
 

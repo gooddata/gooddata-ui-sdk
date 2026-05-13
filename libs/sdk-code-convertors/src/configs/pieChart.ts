@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type PieChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -32,7 +33,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<PieChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: false,
@@ -50,7 +52,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const PIE_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function pieChartLoad(props: VisualisationConfig<PieChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -101,7 +107,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function pieChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -130,8 +137,22 @@ function save(
     });
 }
 
-export const pieChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use pieChartLoad and pieChartSave instead.
+ */
+export interface IPieChartConfig {
+    load: typeof pieChartLoad;
+    save: typeof pieChartSave;
+    DEFAULTS: ConfigDefaults<PieChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use pieChartLoad and pieChartSave instead.
+ */
+export const pieChart: IPieChartConfig = {
+    load: pieChartLoad,
+    save: pieChartSave,
     DEFAULTS,
 };

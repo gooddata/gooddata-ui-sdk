@@ -53,12 +53,12 @@ import {
     selectCrossFilteringSelectedPointsByWidgetRef,
     selectDrillableItems,
 } from "../../../../../model/store/drill/drillSelectors.js";
-import { selectEffectiveParameterValuesForWidget } from "../../../../../model/store/parameters/parametersSelectors.js";
 import { selectPermissions } from "../../../../../model/store/permissions/permissionsSelectors.js";
 import {
     selectIsInEditMode,
     selectIsInExportMode,
 } from "../../../../../model/store/renderMode/renderModeSelectors.js";
+import { selectEffectiveParameterValuesForWidget } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
 import { useMinimalSizeValidation } from "../../../../export/hooks/useMinimalSizeValidation.js";

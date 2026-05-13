@@ -161,6 +161,10 @@ export interface AiConversationResponse {
      */
     'isPreview'?: boolean;
     /**
+     * Whether this conversation is pinned by the user.
+     */
+    'pinned'?: boolean;
+    /**
      * Conversation creation timestamp (ISO-8601 UTC).
      */
     'createdAt': string;
@@ -199,6 +203,7 @@ export interface AiConversationTurnResponse {
  */
 export interface AiConversationUpdateRequest {
     'title'?: string | null;
+    'pinned'?: boolean | null;
 }
 
 export interface AiDateFilterAbsolute {

@@ -36,10 +36,6 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import {
-    selectIsParametersChanged,
-    selectSmartPersistedDashboardParameters,
-} from "../parameters/parametersSelectors.js";
 import { selectAttributeFilterConfigsOverridesByTab } from "../tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectDateFilterConfigOverrides,
@@ -57,6 +53,10 @@ import {
     selectBasicLayoutByTab,
 } from "../tabs/layout/layoutSelectors.js";
 import { selectMeasureValueFilterConfigsOverridesByTab } from "../tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import {
+    selectIsParametersChanged,
+    selectSmartPersistedTabsParameters,
+} from "../tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../tabs/tabsState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
@@ -142,6 +142,7 @@ export const selectPersistedDashboardTabs = createSelector(selectSelf, (state): 
             dateFilterConfig: persistedDashboard.dateFilterConfig,
             dateFilterConfigs: persistedDashboard.dateFilterConfigs,
             layout: persistedDashboard.layout,
+            parameters: persistedDashboard.parameters,
         },
     ];
 });
@@ -1175,7 +1176,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
         selectBasicLayout,
         selectDateFilterConfigOverrides,
         selectTabs,
-        selectSmartPersistedDashboardParameters,
+        selectSmartPersistedTabsParameters,
         (
             persistedDashboard,
             dashboardDescriptor,
@@ -1184,7 +1185,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
             layout,
             dateFilterConfig,
             tabs,
-            parameters,
+            parametersByTab,
         ): IDashboardDefinition => {
             const dashboardIdentity: Partial<IDashboardObjectIdentity> = {
                 ref: persistedDashboard?.ref,
@@ -1204,7 +1205,6 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                 },
                 layout,
                 dateFilterConfig,
-                ...(parameters.length > 0 ? { parameters } : {}),
                 ...(tabs
                     ? {
                           tabs: tabs.map(
@@ -1226,6 +1226,7 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                                   measureValueFilterConfigs:
                                       tab.measureValueFilterConfigs?.measureValueFilterConfigs,
                                   filterGroupsConfig: tab.filterGroupsConfig,
+                                  parameters: parametersByTab[tab.localIdentifier] ?? [],
                               }),
                           ),
                       }

@@ -141,6 +141,8 @@ import { IThemeDefinition } from '@gooddata/sdk-model';
 import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserGroup } from '@gooddata/sdk-model';
+import { IUserSettings } from '@gooddata/sdk-model';
+import { IUserWorkspaceSettings } from '@gooddata/sdk-model';
 import type { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
@@ -151,6 +153,7 @@ import { IWorkspaceDataFilter } from '@gooddata/sdk-model';
 import { IWorkspaceDataFilterDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
+import { IWorkspaceSettings } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
@@ -654,6 +657,7 @@ export type IChatConversation = {
     createdAt: string;
     updatedAt: string;
     title?: string;
+    pinned?: boolean;
 };
 
 // @internal
@@ -729,7 +733,7 @@ export interface IChatConversations {
     getConversation(conversationId: string): Promise<IChatConversation>;
     getConversationItemsQuery(): IChatConversationItemsQuery;
     getConversationThread(conversationId: string): IChatConversationThread;
-    update(conversationId: string, update: Partial<Pick<IChatConversation, "title">>): Promise<IChatConversation>;
+    update(conversationId: string, update: Partial<Pick<IChatConversation, "title" | "pinned">>): Promise<IChatConversation>;
 }
 
 // @internal
@@ -2439,12 +2443,7 @@ export interface IUserService {
     settings(): IUserSettingsService;
 }
 
-// @public
-export interface IUserSettings extends ISettings {
-    locale: string;
-    separators: ISeparators;
-    userId: string;
-}
+export { IUserSettings }
 
 // @public
 export interface IUserSettingsService {
@@ -2455,9 +2454,7 @@ export interface IUserSettingsService {
     setSeparators(separators: ISeparators): Promise<void>;
 }
 
-// @public
-export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {
-}
+export { IUserWorkspaceSettings }
 
 // @alpha
 export interface IWidgetAlertCount {
@@ -2779,12 +2776,7 @@ export interface IWorkspacePermissionsService {
     getPermissionsForCurrentUser(): Promise<IWorkspacePermissions>;
 }
 
-// @public
-export interface IWorkspaceSettings extends ISettings {
-    agGridToken?: string;
-    mapboxToken?: string;
-    workspace: string;
-}
+export { IWorkspaceSettings }
 
 // @public
 export interface IWorkspaceSettingsService {

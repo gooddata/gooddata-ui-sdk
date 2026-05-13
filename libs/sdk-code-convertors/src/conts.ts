@@ -1,17 +1,24 @@
 // (C) 2024-2026 GoodData Corporation
 
+/** @internal */
 export const DatasetTypes = ["dataset"];
 
+/** @internal */
 export const DateDatasetTypes = ["date"];
 
+/** @internal */
 export const MetricTypes = ["metric"];
 
+/** @internal */
 export const DashboardTypes = ["dashboard"];
 
+/** @internal */
 export const PluginTypes = ["plugin"];
 
+/** @internal */
 export const AttributeHierarchyTypes = ["attribute_hierarchy"];
 
+/** @internal */
 export const VisualisationsTypes = [
     "table",
     "bar_chart",
@@ -37,6 +44,7 @@ export const VisualisationsTypes = [
     "repeater_chart",
 ];
 
+/** @internal */
 export const AllTypes = [
     ...DatasetTypes,
     ...DateDatasetTypes,

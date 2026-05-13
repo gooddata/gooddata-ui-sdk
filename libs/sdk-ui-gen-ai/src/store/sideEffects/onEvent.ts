@@ -27,10 +27,14 @@ import {
 } from "../messages/messagesSelectors.js";
 import {
     clearThreadAction,
+    deleteConversationFailureAction,
+    deleteConversationSuccessAction,
     evaluateMessageCompleteAction,
     loadConversationSuccessAction,
     loadThreadSuccessAction,
     newMessageAction,
+    pinConversationFailureAction,
+    pinConversationSuccessAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
     setUserFeedback,
@@ -51,6 +55,65 @@ export function* onEvent() {
     yield takeEvery(saveVisualizationErrorAction.type, onSaveVisualizationError);
     yield takeEvery(saveVisualizationSuccessAction.type, onSaveVisualizationSuccess);
     yield takeEvery(copyToClipboardAction.type, onCopyToClipboard);
+    yield takeEvery(pinConversationSuccessAction.type, onConversationPinUpdated);
+    yield takeEvery(pinConversationFailureAction.type, onConversationPinError);
+    yield takeEvery(deleteConversationSuccessAction.type, onConversationDeletedSuccess);
+    yield takeEvery(deleteConversationFailureAction.type, onConversationDeletedError);
+}
+
+function* onConversationPinUpdated({
+    payload: { conversationId, pinned },
+}: ReturnType<typeof pinConversationSuccessAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationPinned",
+        threadId,
+        conversationId,
+        pinned,
+    });
+}
+
+function* onConversationPinError({
+    payload: { conversationId, error },
+}: ReturnType<typeof pinConversationFailureAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationPinError",
+        threadId,
+        conversationId,
+        error,
+    });
+}
+
+function* onConversationDeletedSuccess({
+    payload: { conversation },
+}: ReturnType<typeof deleteConversationSuccessAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationDeleted",
+        threadId,
+        conversation,
+    });
+}
+
+function* onConversationDeletedError({
+    payload: { conversation, error },
+}: ReturnType<typeof deleteConversationFailureAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationDeletedError",
+        threadId,
+        conversation,
+        error,
+    });
 }
 
 function* persistMessages() {

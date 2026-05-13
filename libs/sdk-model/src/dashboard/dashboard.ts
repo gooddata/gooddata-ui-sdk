@@ -286,6 +286,16 @@ export interface IDashboardTab<TWidget = IDashboardWidget> {
      * If not defined, filters are displayed ungrouped as defined in single context.
      */
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
+
+    /**
+     * Tab-scoped parameter overrides. Each entry references a workspace parameter and optionally
+     * pins a dashboard-scope value, label, and mode. A parameter affects only the widgets on the
+     * tab where it is configured; the same ref may be added independently to multiple tabs with
+     * independent values, labels, and modes.
+     *
+     * @alpha
+     */
+    parameters?: IDashboardParameter[];
 }
 
 /**
@@ -486,9 +496,9 @@ export interface IDashboard<TWidget = IDashboardWidget>
     readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
 
     /**
-     * Dashboard-level parameter overrides. Each entry references a workspace parameter and
-     * optionally pins a dashboard-scope value, label, and mode. See {@link IDashboardParameter}
-     * for smart-persistence rules.
+     * Legacy dashboard-level parameters. Preserved as a read-only fallback for legacy metadata;
+     * saves emit parameters per tab on {@link IDashboardTab.parameters} instead. Honored on load
+     * only when no tab carries parameters.
      *
      * @alpha
      */
@@ -584,7 +594,9 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
     readonly measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[];
 
     /**
-     * Dashboard-level parameter overrides. See {@link IDashboardParameter}.
+     * Legacy dashboard-level parameters. Preserved as a read-only fallback for legacy metadata;
+     * saves emit parameters per tab on {@link IDashboardTab.parameters} instead. Honored on load
+     * only when no tab carries parameters.
      *
      * @alpha
      */

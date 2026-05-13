@@ -13,7 +13,8 @@ import {
     saveConfigObject,
 } from "./utils.js";
 
-type DefaultProperties = {
+/** @internal */
+export type FunnelChartConfigProperties = {
     colorMapping: Array<ColorMapping>;
     dataLabels: {
         visible: boolean | "auto";
@@ -32,7 +33,8 @@ type DefaultProperties = {
     disableScheduledExports: boolean;
 };
 
-const DEFAULTS: ConfigDefaults<DefaultProperties> = {
+/** @internal */
+const DEFAULTS: ConfigDefaults<FunnelChartConfigProperties> = {
     colorMapping: [],
     dataLabels: {
         visible: "auto",
@@ -50,7 +52,11 @@ const DEFAULTS: ConfigDefaults<DefaultProperties> = {
     disableScheduledExports: false,
 };
 
-function load(props: VisualisationConfig<DefaultProperties>) {
+/** @internal */
+export const FUNNEL_CHART_DEFAULTS = DEFAULTS;
+
+/** @internal */
+export function funnelChartLoad(props: VisualisationConfig<FunnelChartConfigProperties>) {
     return loadConfig(props, (key, value) => {
         switch (key) {
             case "colorMapping":
@@ -101,7 +107,8 @@ function load(props: VisualisationConfig<DefaultProperties>) {
     });
 }
 
-function save(
+/** @internal */
+export function funnelChartSave(
     _fields: Visualisation["query"]["fields"] | undefined,
     config: Visualisation["config"] | undefined,
 ) {
@@ -130,8 +137,22 @@ function save(
     });
 }
 
-export const funnelChart = {
-    load,
-    save,
+/**
+ * @internal
+ * @deprecated Use funnelChartLoad and funnelChartSave instead.
+ */
+export interface IFunnelChartConfig {
+    load: typeof funnelChartLoad;
+    save: typeof funnelChartSave;
+    DEFAULTS: ConfigDefaults<FunnelChartConfigProperties>;
+}
+
+/**
+ * @internal
+ * @deprecated Use funnelChartLoad and funnelChartSave instead.
+ */
+export const funnelChart: IFunnelChartConfig = {
+    load: funnelChartLoad,
+    save: funnelChartSave,
     DEFAULTS,
 };

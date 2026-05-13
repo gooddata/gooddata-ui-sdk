@@ -1,53 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
-import { type ISeparators, type ISettings } from "@gooddata/sdk-model";
+// (C) 2020-2026 GoodData Corporation
 
-/**
- * Settings for particular user.
- *
- * @public
- */
-export interface IUserSettings extends ISettings {
-    /**
-     * User to which the settings belong.
-     */
-    userId: string;
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
-    /**
-     * User locale
-     */
-    locale: string;
-
-    /**
-     * Regional number formatting
-     */
-    separators: ISeparators;
-}
-
-/**
- * Settings for particular workspace.
- *
- * @public
- */
-export interface IWorkspaceSettings extends ISettings {
-    /**
-     * Workspace to which the settings belong.
-     */
-    workspace: string;
-
-    /**
-     * Stores Mapbox token used for WS
-     */
-    mapboxToken?: string;
-
-    /**
-     * Stores AgGrid token used for WS
-     */
-    agGridToken?: string;
-}
-
-/**
- * Settings for particular combination of user and workspace.
- *
- * @public
- */
-export interface IUserWorkspaceSettings extends IUserSettings, IWorkspaceSettings {}
+export type { IUserSettings, IWorkspaceSettings, IUserWorkspaceSettings } from "@gooddata/sdk-model";

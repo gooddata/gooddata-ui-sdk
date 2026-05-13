@@ -2,12 +2,17 @@
 
 import {
     type IDashboardParameter,
+    type IDashboardTab,
     type IParameterMetadataObject,
     isNumberParameterDefinition,
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardParameterEntry } from "../../../store/parameters/parametersState.js";
+import {
+    type IDashboardParameterEntry,
+    pickTabParametersSource,
+} from "../../../store/tabs/parameters/parametersState.js";
+import { DEFAULT_TAB_ID } from "../../../store/tabs/tabsState.js";
 
 /**
  * Builds the parameter slice entries from the dashboard's persisted parameters and the
@@ -39,4 +44,28 @@ export function hydrateParameterEntries(
                 : undefined;
         return { parameter, runtimeOverride: workspaceDefault };
     });
+}
+
+/**
+ * Distributes the dashboard's persisted parameters into per-tab hydrated entry lists, applying
+ * the V1 → per-tab migration rule (see {@link pickTabParametersSource}). Each tab's parameter
+ * list is hydrated against the workspace catalog via {@link hydrateParameterEntries}.
+ *
+ * For legacy single-tab dashboards (no `tabs[]`), a synthetic tab with `DEFAULT_TAB_ID` is used
+ * so the V1 root-level `parameters` migrate transparently.
+ */
+export function distributeParametersToTabs(
+    tabs: IDashboardTab[] | undefined,
+    rootParameters: IDashboardParameter[] | undefined,
+    workspaceParameters: IParameterMetadataObject[],
+): Record<string, IDashboardParameterEntry[]> {
+    const effectiveTabs: IDashboardTab[] = tabs ?? [
+        { localIdentifier: DEFAULT_TAB_ID, title: "", parameters: rootParameters },
+    ];
+    const result: Record<string, IDashboardParameterEntry[]> = {};
+    for (const tab of effectiveTabs) {
+        const source = pickTabParametersSource(tab, effectiveTabs, rootParameters);
+        result[tab.localIdentifier] = hydrateParameterEntries(source, workspaceParameters);
+    }
+    return result;
 }

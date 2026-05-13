@@ -50,7 +50,6 @@ import {
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectIsExport,
 } from "../../../model/store/config/configSelectors.js";
-import { selectDashboardParameters } from "../../../model/store/parameters/parametersSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectEffectiveAttributeFiltersModeMap } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
@@ -66,6 +65,7 @@ import {
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectFilterGroupsConfig } from "../../../model/store/tabs/filterGroups/filterGroupsSelectors.js";
 import { selectEffectiveMeasureValueFiltersModeMap } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import { selectDashboardParameters } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DraggableFilterDropZone } from "../../dragAndDrop/draggableFilterDropZone/DraggableFilterDropZone.js";
 import { DraggableFilterDropZoneHint } from "../../dragAndDrop/draggableFilterDropZone/DraggableFilterDropZoneHint.js";

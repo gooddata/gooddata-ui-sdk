@@ -1,5 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type TextContentObject } from "../model.js";
@@ -58,6 +59,79 @@ export type ChatResetEvent = BaseEvent & {
  */
 export const isChatResetEvent = (event: ChatEvent): event is ChatResetEvent => {
     return event.type === "chatReset";
+};
+
+/**
+ * A chat conversation pinned state change event.
+ * @public
+ */
+export type ChatConversationPinnedEvent = BaseEvent & {
+    type: "chatConversationPinned";
+    conversationId: string;
+    pinned: boolean;
+};
+
+/**
+ * Type guard for the ChatConversationPinnedEvent.
+ * @public
+ */
+export const isChatConversationPinnedEvent = (event: ChatEvent): event is ChatConversationPinnedEvent => {
+    return event.type === "chatConversationPinned";
+};
+
+/**
+ * A chat conversation pinned state change error event.
+ * @public
+ */
+export type ChatConversationPinErrorEvent = BaseEvent & {
+    type: "chatConversationPinError";
+    conversationId: string;
+    error: Error;
+};
+
+/**
+ * Type guard for the ChatConversationPinnedEvent.
+ * @public
+ */
+export const isChatConversationPinErrorEvent = (event: ChatEvent): event is ChatConversationPinErrorEvent => {
+    return event.type === "chatConversationPinError";
+};
+
+/**
+ * A chat conversation deleted event.
+ * @public
+ */
+export type ChatConversationDeletedEvent = BaseEvent & {
+    type: "chatConversationDeleted";
+    conversation: IChatConversation;
+};
+
+/**
+ * Type guard for the ChatConversationDeletedEvent.
+ * @public
+ */
+export const isChatConversationDeletedEvent = (event: ChatEvent): event is ChatConversationDeletedEvent => {
+    return event.type === "chatConversationDeleted";
+};
+
+/**
+ * A chat conversation deleted error event.
+ * @public
+ */
+export type ChatConversationDeletedErrorEvent = BaseEvent & {
+    type: "chatConversationDeletedError";
+    conversation: IChatConversation;
+    error: Error;
+};
+
+/**
+ * Type guard for the ChatConversationDeletedEvent.
+ * @public
+ */
+export const isChatConversationDeletedErrorEvent = (
+    event: ChatEvent,
+): event is ChatConversationDeletedErrorEvent => {
+    return event.type === "chatConversationDeletedError";
 };
 
 /**
@@ -215,6 +289,10 @@ export type ChatEvent =
     | ChatOpenedEvent
     | ChatClosedEvent
     | ChatResetEvent
+    | ChatConversationPinnedEvent
+    | ChatConversationPinErrorEvent
+    | ChatConversationDeletedEvent
+    | ChatConversationDeletedErrorEvent
     | ChatUserMessageEvent
     | ChatAssistantMessageEvent
     | ChatFeedbackEvent

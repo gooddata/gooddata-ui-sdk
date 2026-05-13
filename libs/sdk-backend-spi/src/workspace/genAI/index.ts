@@ -732,7 +732,7 @@ export interface IChatConversations {
      */
     update(
         conversationId: string,
-        update: Partial<Pick<IChatConversation, "title">>,
+        update: Partial<Pick<IChatConversation, "title" | "pinned">>,
     ): Promise<IChatConversation>;
 
     /**
@@ -816,6 +816,10 @@ export type IChatConversation = {
      * Conversation title
      */
     title?: string;
+    /**
+     * Conversation pinned status
+     */
+    pinned?: boolean;
 };
 
 /**

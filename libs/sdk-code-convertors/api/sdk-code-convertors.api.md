@@ -40,6 +40,7 @@ import { IAttributeFilterConfigs } from '@gooddata/sdk-model';
 import { IAttributeSortItem } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
@@ -136,45 +137,327 @@ export type AacSection = Section;
 // @public (undocumented)
 export type AacVisualisation = Visualisation;
 
-// Warning: (ae-missing-release-tag) "AllTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export const AllTypes: string[];
 
-// Warning: (ae-missing-release-tag) "areaChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const areaChart: {
-    load: typeof load_5;
-    save: typeof save_5;
-    DEFAULTS: ConfigDefaults<DefaultProperties_5>;
+// @internal (undocumented)
+export const AREA_CHART_DEFAULTS: ConfigDefaults<AreaChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const areaChart: IAreaChartConfig;
+
+// @internal (undocumented)
+export type AreaChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    distinctPointShapes: {
+        enabled: boolean;
+        pointShapeMapping?: Record<string, PointShapeSymbol>;
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    dataPoints: {
+        visible: boolean | "auto";
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    stackMeasures: boolean;
+    stackMeasuresToPercent: boolean;
+    xaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function areaChartLoad(props: VisualisationConfig<AreaChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function areaChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    distinctPointShapes: {
+        enabled: boolean | undefined;
+        pointShapeMapping: Record<string, PointShapeSymbol> | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    dataPoints: {
+        visible: "auto" | boolean | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    stackMeasuresToPercent: boolean | undefined;
+    stackMeasures: boolean | undefined;
+    xaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
 
 // @public (undocumented)
 export function assertUnreachable(x: never): never;
 
-// Warning: (ae-missing-release-tag) "AttributeHierarchyTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export const AttributeHierarchyTypes: string[];
 
-// Warning: (ae-missing-release-tag) "barChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const barChart: {
-    load: typeof load_2;
-    save: typeof save_2;
-    DEFAULTS: ConfigDefaults<DefaultProperties_2>;
+// @internal (undocumented)
+export const BAR_CHART_DEFAULTS: ConfigDefaults<BarChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const barChart: IBarChartConfig;
+
+// @internal (undocumented)
+export type BarChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        totalsVisible: boolean | "auto";
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    stackMeasures: boolean;
+    stackMeasuresToPercent: boolean;
+    xaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "bubbleChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const bubbleChart: {
-    load: typeof load_7;
-    save: typeof save_7;
-    DEFAULTS: ConfigDefaults<DefaultProperties_7>;
+// @internal (undocumented)
+export function barChartLoad(props: VisualisationConfig<BarChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function barChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        totalsVisible: "auto" | boolean | undefined;
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    stackMeasuresToPercent: boolean | undefined;
+    stackMeasures: boolean | undefined;
+    xaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal (undocumented)
+export const BUBBLE_CHART_DEFAULTS: ConfigDefaults<BubbleChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const bubbleChart: IBubbleChartConfig;
+
+// @internal (undocumented)
+export type BubbleChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    xaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function bubbleChartLoad(props: VisualisationConfig<BubbleChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function bubbleChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    xaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
 
 // @public (undocumented)
 export enum BucketsType {
@@ -213,38 +496,108 @@ export enum BucketsType {
 // @public (undocumented)
 export function buildAfmExecution(entities: ExportEntities, query: Query): ToExecutionResults;
 
-// Warning: (ae-missing-release-tag) "buildAttributeLabels" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public
+// @internal (undocumented)
 export function buildAttributeLabels(labels?: Attribute["labels"], isAuxiliaryDataset?: boolean): DeclarativeLabel[];
 
-// Warning: (ae-missing-release-tag) "buildAttributes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public
+// @internal (undocumented)
 export function buildAttributes(fields?: Fields, isAuxiliaryDataset?: boolean): DeclarativeAttribute[];
 
-// Warning: (ae-missing-release-tag) "buildFacts" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public
+// @internal (undocumented)
 export function buildFacts(fields?: Fields): DeclarativeFact[];
 
-// Warning: (ae-missing-release-tag) "buildReferences" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public
+// @internal (undocumented)
 export function buildReferences(entities: ExportEntities, refs?: Dataset["references"]): DeclarativeReference[];
 
-// Warning: (ae-missing-release-tag) "bulletChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const bulletChart: {
-    load: typeof load_14;
-    save: typeof save_14;
-    DEFAULTS: ConfigDefaults<DefaultProperties_14>;
+// @internal (undocumented)
+export const BULLET_CHART_DEFAULTS: ConfigDefaults<BulletChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const bulletChart: IBulletChartConfig;
+
+// @internal (undocumented)
+export type BulletChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    xaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "IChartFill" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export function bulletChartLoad(props: VisualisationConfig<BulletChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function bulletChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    xaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal (undocumented)
 export interface ChartFill {
     // (undocumented)
     measureToPatternName?: Record<string, PatternFillName>;
@@ -252,13 +605,9 @@ export interface ChartFill {
     type: ChartFillType;
 }
 
-// Warning: (ae-missing-release-tag) "ChartFillType" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export type ChartFillType = "solid" | "pattern" | "outline";
 
-// Warning: (ae-missing-release-tag) "ColorMapping" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export type ColorMapping = {
     id: string;
@@ -275,41 +624,280 @@ export type ColorMapping = {
     };
 };
 
-// Warning: (ae-missing-release-tag) "columnChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const columnChart: {
-    load: typeof load_3;
-    save: typeof save_3;
-    DEFAULTS: ConfigDefaults<DefaultProperties_3>;
+// @internal (undocumented)
+export const COLUMN_CHART_DEFAULTS: ConfigDefaults<ColumnChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const columnChart: IColumnChartConfig;
+
+// @internal (undocumented)
+export type ColumnChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        totalsVisible: boolean | "auto";
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    stackMeasures: boolean;
+    stackMeasuresToPercent: boolean;
+    xaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "ColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
+// @internal (undocumented)
+export function columnChartLoad(props: VisualisationConfig<ColumnChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function columnChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        totalsVisible: "auto" | boolean | undefined;
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    stackMeasuresToPercent: boolean | undefined;
+    stackMeasures: boolean | undefined;
+    xaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
 // @public (undocumented)
 export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator;
 
-// Warning: (ae-missing-release-tag) "ColumnWidth" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 
-// Warning: (ae-missing-release-tag) "ColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
 
-// Warning: (ae-missing-release-tag) "comboChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const comboChart: {
-    load: typeof load_19;
-    save: typeof save_19;
-    DEFAULTS: ConfigDefaults<DefaultProperties_19>;
+// @internal (undocumented)
+export const COMBO_CHART_DEFAULTS: ConfigDefaults<ComboChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const comboChart: IComboChartConfig;
+
+// @internal (undocumented)
+export type ComboChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    continuousLine: {
+        enabled: boolean;
+    };
+    distinctPointShapes: {
+        enabled: boolean;
+        pointShapeMapping?: Record<string, PointShapeSymbol>;
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    dataPoints: {
+        visible: boolean | "auto";
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    dualAxis: boolean;
+    primaryChartType: "column" | "area" | "line";
+    secondaryChartType: "column" | "area" | "line";
+    stackMeasures: boolean;
+    stackMeasuresToPercent: boolean;
+    xaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    secondary_yaxis: {
+        measures: string[];
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
+    thresholdMeasures: string[];
+    thresholdExcludedMeasures: string[];
 };
 
-// Warning: (ae-forgotten-export) The symbol "FullFields" needs to be exported by the entry point index.d.ts
-//
+// @internal (undocumented)
+export function comboChartLoad(props: VisualisationConfig<ComboChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function comboChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined, buckets?: Bucket[]): {
+    colorMapping: ColorMapping[] | undefined;
+    continuousLine: {
+        enabled: boolean | undefined;
+    } | undefined;
+    distinctPointShapes: {
+        enabled: boolean | undefined;
+        pointShapeMapping: Record<string, PointShapeSymbol> | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    dataPoints: {
+        visible: "auto" | boolean | undefined;
+    } | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    stackMeasuresToPercent: boolean | undefined;
+    stackMeasures: boolean | undefined;
+    xaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    primaryChartType: "area" | "column" | "line" | undefined;
+    yaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    secondaryChartType: "area" | "column" | "line" | undefined;
+    secondary_yaxis: {
+        measures: string[] | undefined;
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    dualAxis: boolean | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+    thresholdMeasures: string[] | undefined;
+    thresholdExcludedMeasures: string[] | undefined;
+} | undefined;
+
+// @internal (undocumented)
+export type ConfigDefaults<T> = {
+    [key in keyof T]: T[key];
+};
+
 // @public (undocumented)
 export function convertBucketToTitle(entities: ExportEntities, query: Query, field: FullFields, location?: boolean): string | null;
 
@@ -353,6 +941,14 @@ export function createIdentifier<T = AfmObjectIdentifier>(data: string, { forceM
     forceType?: "user" | "userGroup" | "dataset" | "date" | "attribute" | "label" | "measure" | "workspaceDataFilter" | "visualizationObject" | "analyticalDashboard" | "dashboardPlugin" | "filterContext";
 }): T | null;
 
+// @internal (undocumented)
+export type DashboardDefinition = Pick<OverrideDashboardDefinition, "layout" | "plugins" | "dateFilterConfig" | "dateFilterConfigs" | "disableCrossFiltering" | "disableUserFilterSave" | "disableUserFilterReset" | "disableFilterViews" | "attributeFilterConfigs" | "measureValueFilterConfigs" | "filterContextRef" | "tabs" | "activeTabLocalIdentifier"> & {
+    version: string;
+};
+
+// @internal (undocumented)
+export type DashboardSection = Required<DashboardDefinition>["layout"]["sections"][number];
+
 // @public (undocumented)
 export type DashboardTab = {
     localIdentifier: string;
@@ -366,29 +962,22 @@ export type DashboardTab = {
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
 };
 
-// Warning: (ae-missing-release-tag) "DashboardTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export const DashboardTypes: string[];
 
-// Warning: (ae-missing-release-tag) "DatasetTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export type DashboardWidget = DashboardSection["items"][number];
+
+// @internal (undocumented)
 export const DatasetTypes: string[];
 
-// Warning: (ae-missing-release-tag) "DateDatasetTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export const DateDatasetTypes: string[];
 
-// Warning: (ae-missing-release-tag) "declarativeAbsoluteDateFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeAbsoluteDateFilterToYaml(absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativeArithmeticMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeArithmeticMetricToYaml(def: IMeasureBody, arithmeticDefinition: IArithmeticMeasureDefinition): YAMLMap;
 
 // @public (undocumented)
@@ -397,21 +986,14 @@ export function declarativeAttributeHierarchyToYaml(hierarchy: DeclarativeAttrib
     json: AttributeHierarchy;
 };
 
-// Warning: (ae-missing-release-tag) "declarativeAttributeSortToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeAttributeSortToYaml(sort: IAttributeSortItem): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativeAttributeToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeAttributeToYaml(def: IAttributeBody, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-forgotten-export) The symbol "Buckets" needs to be exported by the entry point index.d.ts
-// Warning: (ae-missing-release-tag) "declarativeBucketsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[], errorContext?: IErrorContext): Buckets;
+// @internal (undocumented)
+export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[], errorContext?: IErrorContext): YamlBuckets;
 
 // @public (undocumented)
 export function declarativeDashboardToYaml(entities: FromEntities, dashboard: DeclarativeAnalyticalDashboard, filterContexts?: DeclarativeFilterContext[], context?: IErrorContext): {
@@ -431,14 +1013,10 @@ export function declarativeDateInstanceToYaml(dataset: DeclarativeDateDataset): 
     json: DateDataset;
 };
 
-// Warning: (ae-missing-release-tag) "declarativeDrillToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeDrillToYaml(drill: InsightDrillDefinition, entities?: FromEntities, sourceVisualizationId?: string, errorContext?: IErrorContext): YAMLMap<unknown, unknown>;
 
-// Warning: (ae-missing-release-tag) "declarativeFilterContextToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDateFilterConfig, filterContext?: DeclarativeFilterContext, errorContext?: IErrorContext): {
     filters: YAMLMap<unknown, unknown>;
     filtersMap: {
@@ -446,30 +1024,19 @@ export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDate
     };
 };
 
-// Warning: (ae-missing-release-tag) "declarativeFiltersConfigToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeFiltersConfigToYaml(filtersMap: Record<string, FilterContextItem>, dateFilterConfig?: IDashboardDateFilterConfig, dateFilterConfigs?: IDashboardDateFilterConfigItem[], attributeFilterConfigs?: IDashboardAttributeFilterConfig[], measureValueFilterConfigs?: IDashboardMeasureValueFilterConfig[], errorContext?: IErrorContext): void;
 
-// Warning: (ae-forgotten-export) The symbol "Filters" needs to be exported by the entry point index.d.ts
-// Warning: (ae-missing-release-tag) "declarativeFiltersToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[], errorContext?: IErrorContext): Filters;
+// @internal (undocumented)
+export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[], errorContext?: IErrorContext): YamlFilters;
 
-// Warning: (ae-missing-release-tag) "declarativeInlineMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeInlineMetricToYaml(def: IMeasureBody, inlineDef: IInlineMeasureDefinition): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativeMeasureSortToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeMeasureSortToYaml(sort: IMeasureSortItem): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativeMeasureValueFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeMeasureValueFilterToYaml(measureValueFilter: IMeasureValueFilterBody, errorContext?: IErrorContext): YAMLMap;
 
 // @public (undocumented)
@@ -478,20 +1045,13 @@ export function declarativeMetricToYaml(metric: DeclarativeMetric): {
     json: Metric;
 };
 
-// Warning: (ae-missing-release-tag) "declarativeNegativeAttributeFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeNegativeAttributeFilterToYaml(entities: FromEntities, attributeFilter: INegativeAttributeFilterBody, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-forgotten-export) The symbol "PostProcessors" needs to be exported by the entry point index.d.ts
-// Warning: (ae-missing-release-tag) "declarativeNormalMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export function declarativeNormalMetricToYaml(def: IMeasureBody, metricDefinition: IMeasureDefinition, postProcessors: PostProcessors, errorContext?: IErrorContext): YAMLMap;
+// @internal (undocumented)
+export function declarativeNormalMetricToYaml(def: IMeasureBody, metricDefinition: IMeasureDefinition, postProcessors: YamlPostProcessors, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativePluginsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativePluginsToYaml(dashboard: IDashboardDefinition, errorContext?: IErrorContext): YAMLSeq<unknown> | undefined;
 
 // @public (undocumented)
@@ -500,58 +1060,37 @@ export function declarativePluginToYaml(plugin: DeclarativeDashboardPlugin): {
     json: Plugin_2;
 };
 
-// Warning: (ae-missing-release-tag) "declarativePoPMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativePoPMetricToYaml(def: IMeasureBody, popDefinition: IPoPMeasureDefinition, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativePositiveAttributeFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativePositiveAttributeFilterToYaml(entities: FromEntities, attributeFilter: IPositiveAttributeFilterBody, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativePreviousPeriodMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativePreviousPeriodMetricToYaml(def: IMeasureBody, previousDefinition: IPreviousPeriodMeasureDefinition, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativeRankingFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativeRelativeDateFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeRelativeDateFilterToYaml(relativeDateFilter: IRelativeDateFilter["relativeDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string, errorContext?: IErrorContext): YAMLMap;
 
-// Warning: (ae-missing-release-tag) "declarativeSectionsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: FromEntities, errorContext?: IErrorContext): YAMLSeq<unknown> | undefined;
 
-// Warning: (ae-forgotten-export) The symbol "Sorts_2" needs to be exported by the entry point index.d.ts
-// Warning: (ae-missing-release-tag) "declarativeSortsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export function declarativeSortsToYaml(sorts: ISortItem[], _errorContext?: IErrorContext): Sorts_2;
+// @internal (undocumented)
+export function declarativeSortsToYaml(sorts: ISortItem[], _errorContext?: IErrorContext): YamlSorts;
 
-// Warning: (ae-missing-release-tag) "declarativeTabsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeTabsToYaml(tabs: DashboardTab[], filterContexts?: DeclarativeFilterContext[], entities?: FromEntities, errorContext?: IErrorContext): YAMLSeq | undefined;
 
-// Warning: (ae-missing-release-tag) "declarativeTotalToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeTotalToYaml(total: ITotal, _errorContext?: IErrorContext): {
     totalMap: YAMLMap<unknown, unknown>;
     attribute: string;
 };
 
-// Warning: (ae-missing-release-tag) "declarativeVisTypeToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeVisTypeToYaml(def: IInsightDefinition["insight"]): string | null;
 
 // @public (undocumented)
@@ -560,28 +1099,99 @@ export function declarativeVisualisationToYaml(entities: FromEntities, visualisa
     json?: Visualisation;
 };
 
-// Warning: (ae-missing-release-tag) "declarativeWidgetToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function declarativeWidgetToYaml(widget?: IDashboardWidget | null, size?: IDashboardLayoutItem["size"], entities?: FromEntities, errorContext?: IErrorContext): YAMLMap<unknown, unknown> | undefined;
 
-// Warning: (ae-missing-release-tag) "dependencyWheelChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const dependencyWheelChart: {
-    load: typeof load_16;
-    save: typeof save_16;
-    DEFAULTS: ConfigDefaults<DefaultProperties_16>;
+// @internal (undocumented)
+export const DEPENDENCY_WHEEL_CHART_DEFAULTS: ConfigDefaults<DependencyWheelChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const dependencyWheelChart: IDependencyWheelChartConfig;
+
+// @internal (undocumented)
+export type DependencyWheelChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "donutChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const donutChart: {
-    load: typeof load_9;
-    save: typeof save_9;
-    DEFAULTS: ConfigDefaults<DefaultProperties_9>;
+// @internal (undocumented)
+export function dependencyWheelChartLoad(props: VisualisationConfig<DependencyWheelChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function dependencyWheelChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal (undocumented)
+export const DONUT_CHART_DEFAULTS: ConfigDefaults<DonutChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const donutChart: IDonutChartConfig;
+
+// @internal (undocumented)
+export type DonutChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function donutChartLoad(props: VisualisationConfig<DonutChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function donutChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal (undocumented)
+export type EmptyValueHandling = NonNullable<IDashboardDateFilter["dateFilter"]["emptyValueHandling"]>;
 
 // @public (undocumented)
 export type ExportEntities = Array<{
@@ -603,9 +1213,12 @@ export type FileNamesUsed = {
 // @public (undocumented)
 export type FilePath = string[] | string;
 
-// Warning: (ae-missing-release-tag) "FilterContextItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export type FilterContextDefinition = Pick<IFilterContextDefinition, "filters"> & {
+    version: string;
+};
+
+// @internal (undocumented)
 export type FilterContextItem = {
     yaml: YAMLMap;
     filter: IFilterContextDefinition["filters"][number];
@@ -622,14 +1235,57 @@ export type FromEntities = Array<{
     data?: Dataset | DateDataset | Metric | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
 }>;
 
-// Warning: (ae-missing-release-tag) "funnelChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
-export const funnelChart: {
-    load: typeof load_12;
-    save: typeof save_12;
-    DEFAULTS: ConfigDefaults<DefaultProperties_12>;
+export type FullFields = AttributeField | MetricField | CalculatedMetricField | InlineMetricField | ArithmeticMetricField | PoPMetricField | PreviousPeriodMetricField;
+
+// @internal (undocumented)
+export const FUNNEL_CHART_DEFAULTS: ConfigDefaults<FunnelChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const funnelChart: IFunnelChartConfig;
+
+// @internal (undocumented)
+export type FunnelChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function funnelChartLoad(props: VisualisationConfig<FunnelChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function funnelChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
 
 // @public (undocumented)
 export function generateFileName(used: FileNamesUsed, base: string[], id: string, title?: string | null): string;
@@ -654,23 +1310,149 @@ export type GenericAssigneeRulePermission = {
 // @public (undocumented)
 export type GenericPermission = GenericAssigneePermission | GenericAssigneeRulePermission;
 
-// Warning: (ae-missing-release-tag) "geoAreaChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const geoAreaChart: {
-    load: typeof load_21;
-    save: typeof save_21;
-    DEFAULTS: ConfigDefaults<DefaultProperties_21>;
+// @internal (undocumented)
+export const GEO_AREA_CHART_DEFAULTS: ConfigDefaults<GeoAreaChartConfigProperties>;
+
+// @internal (undocumented)
+export const GEO_CHART_DEFAULTS: ConfigDefaults<GeoChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const geoAreaChart: IGeoAreaChartConfig;
+
+// @internal (undocumented)
+export type GeoAreaChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto" | "top-left" | "top-right" | "bottom-left" | "bottom-right";
+    };
+    tooltipText: string;
+    basemap: string;
+    viewport: {
+        area: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+        navigation: {
+            pan: boolean;
+            zoom: boolean;
+        };
+    };
+    center: {
+        lat: number;
+        lng: number;
+    };
+    zoom: number;
+    bounds: {
+        northEast: {
+            lat: number;
+            lng: number;
+        };
+        southWest: {
+            lat: number;
+            lng: number;
+        };
+    };
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "geoChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const geoChart: {
-    load: typeof load_20;
-    save: typeof save_20;
-    DEFAULTS: ConfigDefaults<DefaultProperties_20>;
+// @internal (undocumented)
+export function geoAreaChartLoad(props: VisualisationConfig<GeoAreaChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function geoAreaChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined, _positions: Array<{
+    longitude: string;
+    latitude: string;
+}>): {
+    colorMapping: ColorMapping[] | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    tooltipText: string | undefined;
+    basemap: string | undefined;
+    viewport: {
+        area: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "custom" | "world" | undefined;
+        navigation: {
+            pan: boolean | undefined;
+            zoom: boolean | undefined;
+        } | undefined;
+    } | undefined;
+    center: {
+        lat: number | undefined;
+        lng: number | undefined;
+    } | undefined;
+    zoom: number | undefined;
+    bounds: {
+        northEast: {
+            lat: number | undefined;
+            lng: number | undefined;
+        } | undefined;
+        southWest: {
+            lat: number | undefined;
+            lng: number | undefined;
+        } | undefined;
+    } | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal @deprecated (undocumented)
+export const geoChart: IGeoChartConfig;
+
+// @internal (undocumented)
+export type GeoChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto" | "top-left" | "top-right" | "bottom-left" | "bottom-right";
+    };
+    longitude: string;
+    latitude: string;
+    tooltipText: string;
+    basemap: string;
+    viewport: {
+        area: "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world" | "custom";
+        navigation: {
+            pan: boolean;
+            zoom: boolean;
+        };
+    };
+    center: {
+        lat: number;
+        lng: number;
+    };
+    zoom: number;
+    bounds: {
+        northEast: {
+            lat: number;
+            lng: number;
+        };
+        southWest: {
+            lat: number;
+            lng: number;
+        };
+    };
+    points: {
+        groupNearbyPoints: boolean;
+        maxSize: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+        minSize: "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+        shapeType: "circle" | "iconByValue" | "oneIcon";
+        icon: string;
+    };
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function geoChartLoad(props: VisualisationConfig<GeoChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function geoChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined, positions: Array<{
+    longitude: string;
+    latitude: string;
+}>): {
+    longitude: string;
+    latitude: string;
+} | undefined;
 
 // @public (undocumented)
 export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier, untype?: boolean, errorContext?: IErrorContext): string;
@@ -678,26 +1460,174 @@ export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier,
 // @public (undocumented)
 export function getValueOrDefault<T>(value: T, defaultValue: T, type?: ValueType, undefinedAsDefault?: boolean): T | undefined;
 
-// Warning: (ae-missing-release-tag) "headlineChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const headlineChart: {
-    load: typeof load_18;
-    save: typeof save_18;
-    DEFAULTS: ConfigDefaults<DefaultProperties_18>;
+// @internal (undocumented)
+export const HEADLINE_CHART_DEFAULTS: ConfigDefaults<HeadlineChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const headlineChart: IHeadlineChartConfig;
+
+// @internal (undocumented)
+export type HeadlineChartConfigProperties = {
+    comparison: {
+        enabled: boolean;
+        calculationType: "change" | "change_difference" | "ratio" | "difference";
+        format: "inherit" | string;
+        position: "right" | "left" | "top" | "auto";
+        isArrowEnabled: boolean;
+        colorConfig?: {
+            disabled: boolean;
+            equals: ColorMapping["color"] | undefined;
+            negative: ColorMapping["color"] | undefined;
+            positive: ColorMapping["color"] | undefined;
+        };
+        labelConfig?: {
+            isConditional: boolean;
+            unconditionalValue: string;
+            equals: string;
+            negative: string;
+            positive: string;
+        };
+    };
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "heatmapChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const heatmapChart: {
-    load: typeof load_13;
-    save: typeof save_13;
-    DEFAULTS: ConfigDefaults<DefaultProperties_13>;
+// @internal (undocumented)
+export function headlineChartLoad(props: VisualisationConfig<HeadlineChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function headlineChartSave(_fields: Visualisation["query"]["fields"] | undefined, config?: Visualisation["config"] | undefined): {
+    comparison: {
+        calculationType: string | undefined;
+        format: string | undefined;
+        enabled: boolean | undefined;
+        position: string | undefined;
+        isArrowEnabled: boolean | undefined;
+        labelConfig: {
+            isConditional: boolean | undefined;
+            unconditionalValue: string | undefined;
+            equals: string | undefined;
+            negative: string | undefined;
+            positive: string | undefined;
+        } | undefined;
+        colorConfig: {
+            disabled: boolean | undefined;
+            equals: {
+                type: "guid";
+                value: string;
+            } | {
+                type: "rgb";
+                value: {
+                    r: number;
+                    g: number;
+                    b: number;
+                };
+            } | undefined;
+            negative: {
+                type: "guid";
+                value: string;
+            } | {
+                type: "rgb";
+                value: {
+                    r: number;
+                    g: number;
+                    b: number;
+                };
+            } | undefined;
+            positive: {
+                type: "guid";
+                value: string;
+            } | {
+                type: "rgb";
+                value: {
+                    r: number;
+                    g: number;
+                    b: number;
+                };
+            } | undefined;
+        } | undefined;
+    } | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal (undocumented)
+export const HEATMAP_CHART_DEFAULTS: ConfigDefaults<HeatmapChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const heatmapChart: IHeatmapChartConfig;
+
+// @internal (undocumented)
+export type HeatmapChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    xaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "IAbsoluteColumnWidth" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
+// @internal (undocumented)
+export function heatmapChartLoad(props: VisualisationConfig<HeatmapChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function heatmapChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    xaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
 // @public (undocumented)
 export interface IAbsoluteColumnWidth {
     // (undocumented)
@@ -706,32 +1636,34 @@ export interface IAbsoluteColumnWidth {
     value: number;
 }
 
-// Warning: (ae-missing-release-tag) "IAllMeasureColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IAllMeasureColumnWidthItem {
     // (undocumented)
     measureColumnWidthItem: IAllMeasureColumnWidthItemBody;
 }
 
-// Warning: (ae-missing-release-tag) "IAllMeasureColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IAllMeasureColumnWidthItemBody {
     // (undocumented)
     width: IAbsoluteColumnWidth;
 }
 
-// Warning: (ae-missing-release-tag) "IAttributeColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
+// @internal @deprecated (undocumented)
+export interface IAreaChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<AreaChartConfigProperties>;
+    // (undocumented)
+    load: typeof areaChartLoad;
+    // (undocumented)
+    save: typeof areaChartSave;
+}
+
 // @public (undocumented)
 export interface IAttributeColumnLocator {
     // (undocumented)
     attributeLocatorItem: IAttributeColumnLocatorBody;
 }
 
-// Warning: (ae-missing-release-tag) "IAttributeColumnLocatorBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IAttributeColumnLocatorBody {
     // (undocumented)
@@ -740,16 +1672,12 @@ export interface IAttributeColumnLocatorBody {
     element?: string | null;
 }
 
-// Warning: (ae-missing-release-tag) "IAttributeColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IAttributeColumnWidthItem {
     // (undocumented)
     attributeColumnWidthItem: IAttributeColumnWidthItemBody;
 }
 
-// Warning: (ae-missing-release-tag) "IAttributeColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IAttributeColumnWidthItemBody {
     // (undocumented)
@@ -758,12 +1686,60 @@ export interface IAttributeColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
 }
 
-// Warning: (ae-missing-release-tag) "IAutoColumnWidth" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IAutoColumnWidth {
     // (undocumented)
     value: "auto";
+}
+
+// @internal @deprecated (undocumented)
+export interface IBarChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<BarChartConfigProperties>;
+    // (undocumented)
+    load: typeof barChartLoad;
+    // (undocumented)
+    save: typeof barChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IBubbleChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<BubbleChartConfigProperties>;
+    // (undocumented)
+    load: typeof bubbleChartLoad;
+    // (undocumented)
+    save: typeof bubbleChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IBulletChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<BulletChartConfigProperties>;
+    // (undocumented)
+    load: typeof bulletChartLoad;
+    // (undocumented)
+    save: typeof bulletChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IColumnChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<ColumnChartConfigProperties>;
+    // (undocumented)
+    load: typeof columnChartLoad;
+    // (undocumented)
+    save: typeof columnChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IComboChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<ComboChartConfigProperties>;
+    // (undocumented)
+    load: typeof comboChartLoad;
+    // (undocumented)
+    save: typeof comboChartSave;
 }
 
 // @public (undocumented)
@@ -776,6 +1752,26 @@ export interface ICoreError extends Error {
     type: (typeof CoreErrorTypes)[keyof typeof CoreErrorTypes];
 }
 
+// @internal @deprecated (undocumented)
+export interface IDependencyWheelChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<DependencyWheelChartConfigProperties>;
+    // (undocumented)
+    load: typeof dependencyWheelChartLoad;
+    // (undocumented)
+    save: typeof dependencyWheelChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IDonutChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<DonutChartConfigProperties>;
+    // (undocumented)
+    load: typeof donutChartLoad;
+    // (undocumented)
+    save: typeof donutChartSave;
+}
+
 // @public (undocumented)
 export interface IErrorContext {
     // (undocumented)
@@ -786,32 +1782,84 @@ export interface IErrorContext {
     type?: string;
 }
 
-// Warning: (ae-missing-release-tag) "IMeasureColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
+// @internal @deprecated (undocumented)
+export interface IFunnelChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<FunnelChartConfigProperties>;
+    // (undocumented)
+    load: typeof funnelChartLoad;
+    // (undocumented)
+    save: typeof funnelChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IGeoAreaChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<GeoAreaChartConfigProperties>;
+    // (undocumented)
+    load: typeof geoAreaChartLoad;
+    // (undocumented)
+    save: typeof geoAreaChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IGeoChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<GeoChartConfigProperties>;
+    // (undocumented)
+    load: typeof geoChartLoad;
+    // (undocumented)
+    save: typeof geoChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IHeadlineChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<HeadlineChartConfigProperties>;
+    // (undocumented)
+    load: typeof headlineChartLoad;
+    // (undocumented)
+    save: typeof headlineChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IHeatmapChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<HeatmapChartConfigProperties>;
+    // (undocumented)
+    load: typeof heatmapChartLoad;
+    // (undocumented)
+    save: typeof heatmapChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface ILineChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<LineChartConfigProperties>;
+    // (undocumented)
+    load: typeof lineChartLoad;
+    // (undocumented)
+    save: typeof lineChartSave;
+}
+
 // @public (undocumented)
 export interface IMeasureColumnLocator {
     // (undocumented)
     measureLocatorItem: IMeasureColumnLocatorBody;
 }
 
-// Warning: (ae-missing-release-tag) "IMeasureColumnLocatorBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IMeasureColumnLocatorBody {
     // (undocumented)
     measureIdentifier: string;
 }
 
-// Warning: (ae-missing-release-tag) "IMeasureColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IMeasureColumnWidthItem {
     // (undocumented)
     measureColumnWidthItem: IMeasureColumnWidthItemBody;
 }
 
-// Warning: (ae-missing-release-tag) "IMeasureColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IMeasureColumnWidthItemBody {
     // (undocumented)
@@ -820,16 +1868,12 @@ export interface IMeasureColumnWidthItemBody {
     width: ColumnWidth;
 }
 
-// Warning: (ae-missing-release-tag) "IMixedValuesColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IMixedValuesColumnWidthItem {
     // (undocumented)
     mixedValuesColumnWidthItem: IMixedValuesColumnWidthItemBody;
 }
 
-// Warning: (ae-missing-release-tag) "IMixedValuesColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IMixedValuesColumnWidthItemBody {
     // (undocumented)
@@ -838,23 +1882,69 @@ export interface IMixedValuesColumnWidthItemBody {
     width: ColumnWidth;
 }
 
-// Warning: (ae-missing-release-tag) "InlineVisualizations" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export type InlineVisualizations = Record<string, {
     type: "metric" | "line" | "column";
 }>;
 
-// Warning: (ae-missing-release-tag) "ISliceMeasureColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
+// @internal @deprecated (undocumented)
+export interface IPieChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<PieChartConfigProperties>;
+    // (undocumented)
+    load: typeof pieChartLoad;
+    // (undocumented)
+    save: typeof pieChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IPyramidChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<PyramidChartConfigProperties>;
+    // (undocumented)
+    load: typeof pyramidChartLoad;
+    // (undocumented)
+    save: typeof pyramidChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IRepeaterChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<RepeaterChartConfigProperties>;
+    // (undocumented)
+    load: typeof repeaterChartLoad;
+    // (undocumented)
+    save: typeof repeaterChartSave;
+    // (undocumented)
+    saveInlineVisualizations: typeof saveInlineVisualizations;
+}
+
+// @internal @deprecated (undocumented)
+export interface ISankeyChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<SankeyChartConfigProperties>;
+    // (undocumented)
+    load: typeof sankeyChartLoad;
+    // (undocumented)
+    save: typeof sankeyChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IScatterChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<ScatterChartConfigProperties>;
+    // (undocumented)
+    load: typeof scatterChartLoad;
+    // (undocumented)
+    save: typeof scatterChartSave;
+}
+
 // @public (undocumented)
 export interface ISliceMeasureColumnWidthItem {
     // (undocumented)
     sliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItemBody;
 }
 
-// Warning: (ae-missing-release-tag) "ISliceMeasureColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface ISliceMeasureColumnWidthItemBody {
     // (undocumented)
@@ -863,16 +1953,22 @@ export interface ISliceMeasureColumnWidthItemBody {
     width: ColumnWidth;
 }
 
-// Warning: (ae-missing-release-tag) "ITotalColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
+// @internal @deprecated (undocumented)
+export interface ITableConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<TableConfigProperties>;
+    // (undocumented)
+    load: typeof tableLoad;
+    // (undocumented)
+    save: typeof tableSave;
+}
+
 // @public (undocumented)
 export interface ITotalColumnLocator {
     // (undocumented)
     totalLocatorItem: ITotalColumnLocatorBody;
 }
 
-// Warning: (ae-missing-release-tag) "ITotalColumnLocatorBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface ITotalColumnLocatorBody {
     // (undocumented)
@@ -881,16 +1977,32 @@ export interface ITotalColumnLocatorBody {
     totalFunction: string;
 }
 
-// Warning: (ae-missing-release-tag) "IWeakMeasureColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
+// @internal @deprecated (undocumented)
+export interface ITreemapChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<TreemapChartConfigProperties>;
+    // (undocumented)
+    load: typeof treemapChartLoad;
+    // (undocumented)
+    save: typeof treemapChartSave;
+}
+
+// @internal @deprecated (undocumented)
+export interface IWaterfallChartConfig {
+    // (undocumented)
+    DEFAULTS: ConfigDefaults<WaterfallChartConfigProperties>;
+    // (undocumented)
+    load: typeof waterfallChartLoad;
+    // (undocumented)
+    save: typeof waterfallChartSave;
+}
+
 // @public (undocumented)
 export interface IWeakMeasureColumnWidthItem {
     // (undocumented)
     measureColumnWidthItem: IWeakMeasureColumnWidthItemBody;
 }
 
-// Warning: (ae-missing-release-tag) "IWeakMeasureColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
 // @public (undocumented)
 export interface IWeakMeasureColumnWidthItemBody {
     // (undocumented)
@@ -899,14 +2011,142 @@ export interface IWeakMeasureColumnWidthItemBody {
     width: IAbsoluteColumnWidth;
 }
 
-// Warning: (ae-missing-release-tag) "lineChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const lineChart: {
-    load: typeof load_4;
-    save: typeof save_4;
-    DEFAULTS: ConfigDefaults<DefaultProperties_4>;
+// @internal (undocumented)
+export const LINE_CHART_DEFAULTS: ConfigDefaults<LineChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const lineChart: ILineChartConfig;
+
+// @internal (undocumented)
+export type LineChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    continuousLine: {
+        enabled: boolean;
+    };
+    distinctPointShapes: {
+        enabled: boolean;
+        pointShapeMapping?: Record<string, PointShapeSymbol>;
+    };
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    dataPoints: {
+        visible: boolean | "auto";
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    xaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    forecast: {
+        enabled: boolean;
+        confidence: number;
+        period: number;
+        seasonal: boolean;
+    };
+    anomalies: {
+        enabled: boolean;
+        sensitivity: "low" | "medium" | "high";
+        size: "small" | "medium" | "big";
+        color: string | number;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
+    thresholdMeasures: string[];
+    thresholdExcludedMeasures: string[];
 };
+
+// @internal (undocumented)
+export function lineChartLoad(props: VisualisationConfig<LineChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function lineChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    continuousLine: {
+        enabled: boolean | undefined;
+    } | undefined;
+    distinctPointShapes: {
+        enabled: boolean | undefined;
+        pointShapeMapping: Record<string, PointShapeSymbol> | undefined;
+    } | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    dataPoints: {
+        visible: "auto" | boolean | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    xaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    forecast: {
+        enabled: boolean | undefined;
+        confidence: number | undefined;
+        period: number | undefined;
+        seasonal: boolean | undefined;
+    } | undefined;
+    anomalies: {
+        enabled: boolean | undefined;
+        sensitivity: "high" | "low" | "medium" | undefined;
+        size: "big" | "medium" | "small" | undefined;
+        color: string | number | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+    thresholdMeasures: string[] | undefined;
+    thresholdExcludedMeasures: string[] | undefined;
+} | undefined;
 
 // @public (undocumented)
 export function loadColorMapping(mappings: Array<ColorMapping>): YAMLMap<keyof ListOfColors, Color>;
@@ -914,23 +2154,17 @@ export function loadColorMapping(mappings: Array<ColorMapping>): YAMLMap<keyof L
 // @public (undocumented)
 export function loadColumnsWidth(widths: Array<ColumnWidthItem>): YAMLMap<keyof Width, any>[] | undefined;
 
-// Warning: (ae-missing-release-tag) "MetricTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export const MetricTypes: string[];
 
-// Warning: (ae-missing-release-tag) "OverrideDashboardDefinition" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export type OverrideDashboardDefinition = Omit<IDashboardDefinition, "filterContext"> & {
     filterContextRef?: AfmObjectIdentifier;
     tabs?: DashboardTab[];
     activeTabLocalIdentifier?: string;
 };
 
-// Warning: (ae-missing-release-tag) "PatternFillName" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export type PatternFillName = "diagonal_grid_small" | "vertical_lines_small" | "grid_small" | "horizontal_lines_small" | "circle_small" | "flag_small" | "waffle_small" | "dot_small" | "pyramid_small" | "needle_small" | "diamond_small" | "pizza_small" | "diagonal_grid_medium" | "vertical_lines_medium" | "grid_large" | "horizontal_lines_medium" | "circle_medium" | "flag_medium" | "waffle_medium" | "dot_medium" | "pyramid_medium" | "needle_medium" | "diamond_medium" | "pizza_medium";
 
 // @public (undocumented)
@@ -943,23 +2177,59 @@ type Permissions_2 = {
 };
 export { Permissions_2 as Permissions }
 
-// Warning: (ae-missing-release-tag) "pieChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const pieChart: {
-    load: typeof load_8;
-    save: typeof save_8;
-    DEFAULTS: ConfigDefaults<DefaultProperties_8>;
+// @internal (undocumented)
+export const PIE_CHART_DEFAULTS: ConfigDefaults<PieChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const pieChart: IPieChartConfig;
+
+// @internal (undocumented)
+export type PieChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "PluginTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export function pieChartLoad(props: VisualisationConfig<PieChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function pieChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal (undocumented)
 export const PluginTypes: string[];
 
-// Warning: (ae-missing-release-tag) "PointShapeSymbol" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export type PointShapeSymbol = "circle" | "square" | "diamond" | "triangle" | "triangle-down";
 
 // @public (undocumented)
@@ -970,36 +2240,131 @@ export type Profile = {
     data_source?: string;
 };
 
-// Warning: (ae-missing-release-tag) "pyramidChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const pyramidChart: {
-    load: typeof load_11;
-    save: typeof save_11;
-    DEFAULTS: ConfigDefaults<DefaultProperties_11>;
+// @internal (undocumented)
+export const PYRAMID_CHART_DEFAULTS: ConfigDefaults<PyramidChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const pyramidChart: IPyramidChartConfig;
+
+// @internal (undocumented)
+export type PyramidChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "repeaterChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const repeaterChart: {
-    load: typeof load_22;
-    save: typeof save_22;
-    saveInlineVisualizations: typeof saveInlineVisualizations;
-    DEFAULTS: ConfigDefaults<DefaultProperties_22>;
+// @internal (undocumented)
+export function pyramidChartLoad(props: VisualisationConfig<PyramidChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function pyramidChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal (undocumented)
+export const REPEATER_CHART_DEFAULTS: ConfigDefaults<RepeaterChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const repeaterChart: IRepeaterChartConfig;
+
+// @internal (undocumented)
+export type RepeaterChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    columnWidths: Array<ColumnWidthItem>;
+    cellImageSizing: "fit" | "fill";
+    cellTextWrapping: "clip" | "wrap";
+    cellVerticalAlign: "top" | "middle" | "bottom";
+    rowHeight: "small" | "medium" | "large";
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function repeaterChartLoad(props: VisualisationConfig<RepeaterChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function repeaterChartSave(fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    columnWidths: ColumnWidthItem[] | undefined;
+    colorMapping: ColorMapping[] | undefined;
+    rowHeight: "large" | "medium" | "small" | undefined;
+    cellVerticalAlign: "bottom" | "middle" | "top" | undefined;
+    cellTextWrapping: "clip" | "wrap" | undefined;
+    cellImageSizing: "fill" | "fit" | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
 
 // @public (undocumented)
 export function resolveIdFromFileName(fileName: FilePath): string;
 
-// Warning: (ae-missing-release-tag) "sankeyChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const sankeyChart: {
-    load: typeof load_17;
-    save: typeof save_17;
-    DEFAULTS: ConfigDefaults<DefaultProperties_17>;
+// @internal (undocumented)
+export const SANKEY_CHART_DEFAULTS: ConfigDefaults<SankeyChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const sankeyChart: ISankeyChartConfig;
+
+// @internal (undocumented)
+export type SankeyChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function sankeyChartLoad(props: VisualisationConfig<SankeyChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function sankeyChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
 
 // @public (undocumented)
 export function saveColorMapping(mapping: ListOfColors): Array<ColorMapping> | undefined;
@@ -1007,23 +2372,168 @@ export function saveColorMapping(mapping: ListOfColors): Array<ColorMapping> | u
 // @public (undocumented)
 export function saveColumnWidths(fields: Visualisation["query"]["fields"], widths: Width[] | undefined): ColumnWidthItem[] | undefined;
 
-// Warning: (ae-missing-release-tag) "scatterChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const scatterChart: {
-    load: typeof load_6;
-    save: typeof save_6;
-    DEFAULTS: ConfigDefaults<DefaultProperties_6>;
+// @internal (undocumented)
+export function saveInlineVisualizations(metrics?: Bucket[]): InlineVisualizations;
+
+// @internal (undocumented)
+export const SCATTER_CHART_DEFAULTS: ConfigDefaults<ScatterChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const scatterChart: IScatterChartConfig;
+
+// @internal (undocumented)
+export type ScatterChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    xaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    clustering: {
+        enabled: boolean;
+        numberOfClusters: number;
+        threshold: number;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
 
-// Warning: (ae-missing-release-tag) "table" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const table: {
-    load: typeof load;
-    save: typeof save;
-    DEFAULTS: ConfigDefaults<DefaultProperties>;
+// @internal (undocumented)
+export function scatterChartLoad(props: VisualisationConfig<ScatterChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function scatterChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    xaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    clustering: {
+        enabled: boolean | undefined;
+        numberOfClusters: number | undefined;
+        threshold: number | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
+
+// @internal @deprecated (undocumented)
+export const table: ITableConfig;
+
+// @internal (undocumented)
+export const TABLE_DEFAULTS: ConfigDefaults<TableConfigProperties>;
+
+// @internal (undocumented)
+export type TableConfigProperties = {
+    columnWidths: Array<ColumnWidthItem>;
+    measureGroupDimension: "columns" | "rows";
+    columnHeadersPosition: "top" | "left";
+    disableDrillDown: boolean;
+    disableDrillIntoURL: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
+    textWrapping: {
+        wrapText: boolean;
+        wrapHeaderText: boolean;
+        columnOverrides: Array<{
+            locators: ColumnLocator[];
+            wrapText: boolean;
+            wrapHeaderText: boolean;
+            matchType: "column" | "pivotGroup";
+        }>;
+    };
+    enableAccessibility: boolean;
+    pagination: {
+        enabled: boolean;
+    };
+    pageSize: number;
+    grandTotalsPosition: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
 };
+
+// @internal (undocumented)
+export function tableLoad(props: VisualisationConfig<TableConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function tableSave(fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    columnWidths: ColumnWidthItem[] | undefined;
+    columnHeadersPosition: string | undefined;
+    measureGroupDimension: string | undefined;
+    disableDrillDown: boolean | undefined;
+    disableDrillIntoURL: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+    textWrapping: {
+        wrapText: boolean;
+        wrapHeaderText: boolean;
+        columnOverrides: {
+            locators: ColumnLocator[];
+            wrapText: boolean;
+            wrapHeaderText: boolean;
+            matchType: "column" | "pivotGroup";
+        }[];
+    } | undefined;
+    enableAccessibility: boolean | undefined;
+    pagination: {
+        enabled: boolean;
+    } | undefined;
+    pageSize: number | undefined;
+    grandTotalsPosition: "bottom" | "pinnedBottom" | "pinnedTop" | "top" | undefined;
+} | undefined;
 
 // @public (undocumented)
 export const toDeclarativePermissions: (permissions?: {
@@ -1041,14 +2551,54 @@ export type ToExecutionResults = {
     sorting: Record<string, "ASC" | "DESC">;
 };
 
-// Warning: (ae-missing-release-tag) "treemapChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const treemapChart: {
-    load: typeof load_10;
-    save: typeof save_10;
-    DEFAULTS: ConfigDefaults<DefaultProperties_10>;
+// @internal (undocumented)
+export const TREEMAP_CHART_DEFAULTS: ConfigDefaults<TreemapChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const treemapChart: ITreemapChartConfig;
+
+// @internal (undocumented)
+export type TreemapChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function treemapChartLoad(props: VisualisationConfig<TreemapChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function treemapChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
 
 // @public (undocumented)
 export type ValueType = "string" | "bool" | "number" | "bool_auto" | "array";
@@ -1058,26 +2608,151 @@ export type VisualisationConfig<T> = {
     controls?: T;
 };
 
-// Warning: (ae-missing-release-tag) "VisualisationsTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export type VisualisationDefinition = Pick<IInsight["insight"], "visualizationUrl" | "properties" | "filters" | "buckets" | "sorts" | "attributeFilterConfigs"> & {
+    version: string;
+};
+
+// @internal (undocumented)
 export const VisualisationsTypes: string[];
 
-// Warning: (ae-missing-release-tag) "waterfallChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
-export const waterfallChart: {
-    load: typeof load_15;
-    save: typeof save_15;
-    DEFAULTS: ConfigDefaults<DefaultProperties_15>;
+// @internal (undocumented)
+export const WATERFALL_CHART_DEFAULTS: ConfigDefaults<WaterfallChartConfigProperties>;
+
+// @internal @deprecated (undocumented)
+export const waterfallChart: IWaterfallChartConfig;
+
+// @internal (undocumented)
+export type WaterfallChartConfigProperties = {
+    colorMapping: Array<ColorMapping>;
+    dataLabels: {
+        visible: boolean | "auto";
+        style: "auto" | "backplate";
+    };
+    chartFill: {
+        type: ChartFillType;
+        measureToPatternName?: Record<string, PatternFillName>;
+    };
+    orientation: {
+        position: "horizontal" | "vertical";
+    };
+    total: {
+        enabled: boolean;
+        name: string;
+    };
+    legend: {
+        enabled: boolean;
+        position: "top" | "bottom" | "left" | "right" | "auto";
+    };
+    xaxis: {
+        format: "inherit" | "auto";
+        max: number | string;
+        min: number | string;
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    yaxis: {
+        name: {
+            visible: boolean;
+            position: "center" | "left" | "right" | "auto";
+        };
+        labelsEnabled: boolean;
+        rotation: "0" | "30" | "60" | "90" | "auto";
+        visible: boolean;
+    };
+    grid: {
+        enabled: boolean;
+    };
+    disableDrillDown: boolean;
+    disableAlerts: boolean;
+    disableScheduledExports: boolean;
 };
+
+// @internal (undocumented)
+export function waterfallChartLoad(props: VisualisationConfig<WaterfallChartConfigProperties>): Pair<Scalar<string>, any> | null;
+
+// @internal (undocumented)
+export function waterfallChartSave(_fields: Visualisation["query"]["fields"] | undefined, config: Visualisation["config"] | undefined): {
+    colorMapping: ColorMapping[] | undefined;
+    dataLabels: {
+        visible: "auto" | boolean | undefined;
+        style: "auto" | "backplate" | undefined;
+    } | undefined;
+    chartFill: {
+        type: ChartFillType | undefined;
+        measureToPatternName: Record<string, PatternFillName> | undefined;
+    } | undefined;
+    orientation: {
+        position: string | undefined;
+    } | undefined;
+    total: {
+        enabled: boolean | undefined;
+        name: string | undefined;
+    } | undefined;
+    legend: {
+        enabled: boolean | undefined;
+        position: string | undefined;
+    } | undefined;
+    xaxis: {
+        format: string | undefined;
+        max: string | number | undefined;
+        min: string | number | undefined;
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    yaxis: {
+        name: {
+            position: string | undefined;
+            visible: boolean | undefined;
+        } | undefined;
+        rotation: string | undefined;
+        visible: boolean | undefined;
+        labelsEnabled: boolean | undefined;
+    } | undefined;
+    grid: {
+        enabled: boolean | undefined;
+    } | undefined;
+    disableDrillDown: boolean | undefined;
+    disableAlerts: boolean | undefined;
+    disableScheduledExports: boolean | undefined;
+} | undefined;
 
 // @public (undocumented)
 export function yamlAttributeHierarchyToDeclarative(input: AttributeHierarchy): DeclarativeAttributeHierarchy;
 
-// Warning: (ae-missing-release-tag) "yamlBucketsToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export type YamlBucketGroup = {
+    type: BucketsType;
+    items: YamlBucketGroupItems;
+};
+
+// @internal (undocumented)
+export type YamlBucketGroupItems = Array<{
+    field: string;
+    format?: string;
+    totals?: YAMLMap[];
+    axis?: "primary" | "secondary";
+    display_as?: "metric" | "line" | "column";
+} | null>;
+
+// @internal (undocumented)
+export type YamlBuckets = {
+    fieldsMap: YAMLMap;
+    groups: YamlBucketGroup[];
+    postProcessors: YamlPostProcessors;
+};
+
+// @internal (undocumented)
 export function yamlBucketsToDeclarative(entities: ExportEntities, input: Visualisation): {
     buckets: VisualisationDefinition["buckets"];
     positions: Array<{
@@ -1100,9 +2775,13 @@ export function yamlDatasetToDeclarative(entities: ExportEntities, input: Datase
 // @public (undocumented)
 export function yamlDateDatesetToDeclarative(input: DateDataset): DeclarativeDateDataset;
 
-// Warning: (ae-missing-release-tag) "yamlFilterContextToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export type YamlFieldData = {
+    format?: string;
+    axis?: "primary" | "secondary";
+};
+
+// @internal (undocumented)
 export function yamlFilterContextToDeclarative(baseId: string, yamlFilters: DashboardFilters | undefined): {
     filterContext: DeclarativeFilterContext;
     dateFilterConfig: IDashboardDateFilterConfig | undefined;
@@ -1112,33 +2791,45 @@ export function yamlFilterContextToDeclarative(baseId: string, yamlFilters: Dash
     filterGroupsConfig: IDashboardFilterGroupsConfig | undefined;
 };
 
-// Warning: (ae-missing-release-tag) "yamlFiltersToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export type YamlFilterMapEntry = {
+    yaml: YAMLMap;
+    filter: IFilter;
+};
+
+// @internal (undocumented)
+export type YamlFilters = {
+    filtersMap: Record<string, YamlFilterMapEntry>;
+    filtersArray: YAMLMap;
+};
+
+// @internal (undocumented)
 export function yamlFiltersToDeclarative(entities: ExportEntities, filters_by: QueryFilters | Filter[] | undefined, attributeFilterConfigs?: IAttributeFilterConfigs): {
     filters: IFilter[];
     attributeFilterConfigs: IAttributeFilterConfigs | undefined;
 };
 
-// Warning: (ae-missing-release-tag) "yamlInteractionToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function yamlInteractionToDeclarative(entities: ExportEntities, visualisation: string, input: Interaction): IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl | null;
 
 // @public (undocumented)
 export function yamlMetricToDeclarative(input: Metric): DeclarativeMetric;
 
-// Warning: (ae-missing-release-tag) "yamlPluginsToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function yamlPluginsToDeclarative(plugins: Dashboard["plugins"]): IDashboardPluginLink[] | undefined;
 
 // @public (undocumented)
 export function yamlPluginToDeclarative(input: Plugin_2): DeclarativeDashboardPlugin;
 
-// Warning: (ae-missing-release-tag) "yamlReportToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export type YamlPostProcessors = {
+    filters: Array<{
+        item: YAMLMap;
+        filters: IFilter[];
+    }>;
+};
+
+// @internal (undocumented)
 export function yamlReportToDeclarative(entities: ExportEntities, input: Visualisation): {
     buckets: VisualisationDefinition["buckets"];
     sorts: VisualisationDefinition["sorts"];
@@ -1150,14 +2841,15 @@ export function yamlReportToDeclarative(entities: ExportEntities, input: Visuali
     attributeFilterConfigs?: IAttributeFilterConfigs;
 };
 
-// Warning: (ae-missing-release-tag) "yamlReportTotalToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function yamlReportTotalToDeclarative(totals: Total[] | undefined, attributeIdentifier: string): ITotal[];
 
-// Warning: (ae-missing-release-tag) "yamlSortsToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
+export type YamlSorts = {
+    sortsArray: YAMLMap[];
+};
+
+// @internal (undocumented)
 export function yamlSortsToDeclarative(sort_by: Sorts | undefined, fields: Visualisation["query"]["fields"]): ISortItem[];
 
 // @public (undocumented)
@@ -1166,88 +2858,11 @@ export function yamlVisualisationToDeclarative(entities: ExportEntities, input: 
 // @public (undocumented)
 export function yamlVisualisationToMetadataObject(entities: ExportEntities, input: Visualisation): JsonApiVisualizationObjectOut;
 
-// Warning: (ae-forgotten-export) The symbol "DashboardWidget" needs to be exported by the entry point index.d.ts
-// Warning: (ae-missing-release-tag) "yamlWidgetItemToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function yamlWidgetItemToDeclarative(entities: ExportEntities, input: Widget, enableSectionHeaders?: boolean): DashboardWidget | null;
 
-// Warning: (ae-missing-release-tag) "yamlWidgetToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
-//
-// @public (undocumented)
+// @internal (undocumented)
 export function yamlWidgetToDeclarative(entities: ExportEntities, input: VisualisationWidget | RichTextWidget | VisualizationSwitcherWidget | ContainerWidget, enableSectionHeaders?: boolean): DashboardWidget["widget"];
-
-// Warnings were encountered during analysis:
-//
-// esm/configs/areaChart.d.ts:108:5 - (ae-forgotten-export) The symbol "load_5" needs to be exported by the entry point index.d.ts
-// esm/configs/areaChart.d.ts:109:5 - (ae-forgotten-export) The symbol "save_5" needs to be exported by the entry point index.d.ts
-// esm/configs/areaChart.d.ts:110:5 - (ae-forgotten-export) The symbol "ConfigDefaults" needs to be exported by the entry point index.d.ts
-// esm/configs/areaChart.d.ts:110:5 - (ae-forgotten-export) The symbol "DefaultProperties_5" needs to be exported by the entry point index.d.ts
-// esm/configs/barChart.d.ts:96:5 - (ae-forgotten-export) The symbol "load_2" needs to be exported by the entry point index.d.ts
-// esm/configs/barChart.d.ts:97:5 - (ae-forgotten-export) The symbol "save_2" needs to be exported by the entry point index.d.ts
-// esm/configs/barChart.d.ts:98:5 - (ae-forgotten-export) The symbol "DefaultProperties_2" needs to be exported by the entry point index.d.ts
-// esm/configs/bubbleChart.d.ts:88:5 - (ae-forgotten-export) The symbol "load_7" needs to be exported by the entry point index.d.ts
-// esm/configs/bubbleChart.d.ts:89:5 - (ae-forgotten-export) The symbol "save_7" needs to be exported by the entry point index.d.ts
-// esm/configs/bubbleChart.d.ts:90:5 - (ae-forgotten-export) The symbol "DefaultProperties_7" needs to be exported by the entry point index.d.ts
-// esm/configs/bulletChart.d.ts:82:5 - (ae-forgotten-export) The symbol "load_14" needs to be exported by the entry point index.d.ts
-// esm/configs/bulletChart.d.ts:83:5 - (ae-forgotten-export) The symbol "save_14" needs to be exported by the entry point index.d.ts
-// esm/configs/bulletChart.d.ts:84:5 - (ae-forgotten-export) The symbol "DefaultProperties_14" needs to be exported by the entry point index.d.ts
-// esm/configs/columnChart.d.ts:96:5 - (ae-forgotten-export) The symbol "load_3" needs to be exported by the entry point index.d.ts
-// esm/configs/columnChart.d.ts:97:5 - (ae-forgotten-export) The symbol "save_3" needs to be exported by the entry point index.d.ts
-// esm/configs/columnChart.d.ts:98:5 - (ae-forgotten-export) The symbol "DefaultProperties_3" needs to be exported by the entry point index.d.ts
-// esm/configs/comboChart.d.ts:150:5 - (ae-forgotten-export) The symbol "load_19" needs to be exported by the entry point index.d.ts
-// esm/configs/comboChart.d.ts:151:5 - (ae-forgotten-export) The symbol "save_19" needs to be exported by the entry point index.d.ts
-// esm/configs/comboChart.d.ts:152:5 - (ae-forgotten-export) The symbol "DefaultProperties_19" needs to be exported by the entry point index.d.ts
-// esm/configs/dependencyWheelChart.d.ts:32:5 - (ae-forgotten-export) The symbol "load_16" needs to be exported by the entry point index.d.ts
-// esm/configs/dependencyWheelChart.d.ts:33:5 - (ae-forgotten-export) The symbol "save_16" needs to be exported by the entry point index.d.ts
-// esm/configs/dependencyWheelChart.d.ts:34:5 - (ae-forgotten-export) The symbol "DefaultProperties_16" needs to be exported by the entry point index.d.ts
-// esm/configs/donutChart.d.ts:42:5 - (ae-forgotten-export) The symbol "load_9" needs to be exported by the entry point index.d.ts
-// esm/configs/donutChart.d.ts:43:5 - (ae-forgotten-export) The symbol "save_9" needs to be exported by the entry point index.d.ts
-// esm/configs/donutChart.d.ts:44:5 - (ae-forgotten-export) The symbol "DefaultProperties_9" needs to be exported by the entry point index.d.ts
-// esm/configs/funnelChart.d.ts:42:5 - (ae-forgotten-export) The symbol "load_12" needs to be exported by the entry point index.d.ts
-// esm/configs/funnelChart.d.ts:43:5 - (ae-forgotten-export) The symbol "save_12" needs to be exported by the entry point index.d.ts
-// esm/configs/funnelChart.d.ts:44:5 - (ae-forgotten-export) The symbol "DefaultProperties_12" needs to be exported by the entry point index.d.ts
-// esm/configs/geoAreaChart.d.ts:75:5 - (ae-forgotten-export) The symbol "load_21" needs to be exported by the entry point index.d.ts
-// esm/configs/geoAreaChart.d.ts:76:5 - (ae-forgotten-export) The symbol "save_21" needs to be exported by the entry point index.d.ts
-// esm/configs/geoAreaChart.d.ts:77:5 - (ae-forgotten-export) The symbol "DefaultProperties_21" needs to be exported by the entry point index.d.ts
-// esm/configs/geoChart.d.ts:55:5 - (ae-forgotten-export) The symbol "load_20" needs to be exported by the entry point index.d.ts
-// esm/configs/geoChart.d.ts:56:5 - (ae-forgotten-export) The symbol "save_20" needs to be exported by the entry point index.d.ts
-// esm/configs/geoChart.d.ts:57:5 - (ae-forgotten-export) The symbol "DefaultProperties_20" needs to be exported by the entry point index.d.ts
-// esm/configs/headlineChart.d.ts:84:5 - (ae-forgotten-export) The symbol "load_18" needs to be exported by the entry point index.d.ts
-// esm/configs/headlineChart.d.ts:85:5 - (ae-forgotten-export) The symbol "save_18" needs to be exported by the entry point index.d.ts
-// esm/configs/headlineChart.d.ts:86:5 - (ae-forgotten-export) The symbol "DefaultProperties_18" needs to be exported by the entry point index.d.ts
-// esm/configs/heatmapChart.d.ts:70:5 - (ae-forgotten-export) The symbol "load_13" needs to be exported by the entry point index.d.ts
-// esm/configs/heatmapChart.d.ts:71:5 - (ae-forgotten-export) The symbol "save_13" needs to be exported by the entry point index.d.ts
-// esm/configs/heatmapChart.d.ts:72:5 - (ae-forgotten-export) The symbol "DefaultProperties_13" needs to be exported by the entry point index.d.ts
-// esm/configs/lineChart.d.ts:130:5 - (ae-forgotten-export) The symbol "load_4" needs to be exported by the entry point index.d.ts
-// esm/configs/lineChart.d.ts:131:5 - (ae-forgotten-export) The symbol "save_4" needs to be exported by the entry point index.d.ts
-// esm/configs/lineChart.d.ts:132:5 - (ae-forgotten-export) The symbol "DefaultProperties_4" needs to be exported by the entry point index.d.ts
-// esm/configs/pieChart.d.ts:42:5 - (ae-forgotten-export) The symbol "load_8" needs to be exported by the entry point index.d.ts
-// esm/configs/pieChart.d.ts:43:5 - (ae-forgotten-export) The symbol "save_8" needs to be exported by the entry point index.d.ts
-// esm/configs/pieChart.d.ts:44:5 - (ae-forgotten-export) The symbol "DefaultProperties_8" needs to be exported by the entry point index.d.ts
-// esm/configs/pyramidChart.d.ts:42:5 - (ae-forgotten-export) The symbol "load_11" needs to be exported by the entry point index.d.ts
-// esm/configs/pyramidChart.d.ts:43:5 - (ae-forgotten-export) The symbol "save_11" needs to be exported by the entry point index.d.ts
-// esm/configs/pyramidChart.d.ts:44:5 - (ae-forgotten-export) The symbol "DefaultProperties_11" needs to be exported by the entry point index.d.ts
-// esm/configs/repeaterChart.d.ts:30:5 - (ae-forgotten-export) The symbol "load_22" needs to be exported by the entry point index.d.ts
-// esm/configs/repeaterChart.d.ts:31:5 - (ae-forgotten-export) The symbol "save_22" needs to be exported by the entry point index.d.ts
-// esm/configs/repeaterChart.d.ts:32:5 - (ae-forgotten-export) The symbol "saveInlineVisualizations" needs to be exported by the entry point index.d.ts
-// esm/configs/repeaterChart.d.ts:33:5 - (ae-forgotten-export) The symbol "DefaultProperties_22" needs to be exported by the entry point index.d.ts
-// esm/configs/sankeyChart.d.ts:34:5 - (ae-forgotten-export) The symbol "load_17" needs to be exported by the entry point index.d.ts
-// esm/configs/sankeyChart.d.ts:35:5 - (ae-forgotten-export) The symbol "save_17" needs to be exported by the entry point index.d.ts
-// esm/configs/sankeyChart.d.ts:36:5 - (ae-forgotten-export) The symbol "DefaultProperties_17" needs to be exported by the entry point index.d.ts
-// esm/configs/scatterChart.d.ts:90:5 - (ae-forgotten-export) The symbol "load_6" needs to be exported by the entry point index.d.ts
-// esm/configs/scatterChart.d.ts:91:5 - (ae-forgotten-export) The symbol "save_6" needs to be exported by the entry point index.d.ts
-// esm/configs/scatterChart.d.ts:92:5 - (ae-forgotten-export) The symbol "DefaultProperties_6" needs to be exported by the entry point index.d.ts
-// esm/configs/table.d.ts:56:5 - (ae-forgotten-export) The symbol "load" needs to be exported by the entry point index.d.ts
-// esm/configs/table.d.ts:57:5 - (ae-forgotten-export) The symbol "save" needs to be exported by the entry point index.d.ts
-// esm/configs/table.d.ts:58:5 - (ae-forgotten-export) The symbol "DefaultProperties" needs to be exported by the entry point index.d.ts
-// esm/configs/treemapChart.d.ts:42:5 - (ae-forgotten-export) The symbol "load_10" needs to be exported by the entry point index.d.ts
-// esm/configs/treemapChart.d.ts:43:5 - (ae-forgotten-export) The symbol "save_10" needs to be exported by the entry point index.d.ts
-// esm/configs/treemapChart.d.ts:44:5 - (ae-forgotten-export) The symbol "DefaultProperties_10" needs to be exported by the entry point index.d.ts
-// esm/configs/waterfallChart.d.ts:104:5 - (ae-forgotten-export) The symbol "load_15" needs to be exported by the entry point index.d.ts
-// esm/configs/waterfallChart.d.ts:105:5 - (ae-forgotten-export) The symbol "save_15" needs to be exported by the entry point index.d.ts
-// esm/configs/waterfallChart.d.ts:106:5 - (ae-forgotten-export) The symbol "DefaultProperties_15" needs to be exported by the entry point index.d.ts
-// esm/to/yamlVisualisationToDeclarative.d.ts:29:5 - (ae-forgotten-export) The symbol "VisualisationDefinition" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
