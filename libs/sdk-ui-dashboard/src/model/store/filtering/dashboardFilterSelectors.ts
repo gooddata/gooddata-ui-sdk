@@ -10,11 +10,13 @@ import {
     type IDashboardDateFilterConfigItem,
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
+    isAllDashboardMeasureValueFilter,
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardMeasureValueFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -143,7 +145,7 @@ export const selectAutomationAvailableDashboardFilters: DashboardSelector<Filter
 export const selectAutomationDefaultSelectedFilters: DashboardSelector<FilterContextItem[]> = createSelector(
     selectAutomationAvailableDashboardFilters,
     (availableDashboardFilters) => {
-        return removeEmptyDashboardAttributeFilters(availableDashboardFilters);
+        return removeEmptyDashboardFilters(availableDashboardFilters);
     },
 );
 
@@ -182,10 +184,13 @@ const removeCrossFilteringFilters = (
     });
 };
 
-export function removeEmptyDashboardAttributeFilters(filters: FilterContextItem[] = []) {
+export function removeEmptyDashboardFilters(filters: FilterContextItem[] = []) {
     return filters.filter((filter) => {
         if (isDashboardAttributeFilterItem(filter)) {
             return !isAllValuesDashboardAttributeFilter(filter);
+        }
+        if (isDashboardMeasureValueFilter(filter)) {
+            return !isAllDashboardMeasureValueFilter(filter);
         }
 
         return true;
@@ -381,8 +386,8 @@ export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersT
                 isFilterContextItemHidden(filter, filterConfigurations),
             );
 
-            // Get default selected filters (empty "All values" attribute filters removed)
-            const defaultSelectedFilters = removeEmptyDashboardAttributeFilters(availableFilters);
+            // Get default selected filters (noop "All" filters removed — attribute and MVF)
+            const defaultSelectedFilters = removeEmptyDashboardFilters(availableFilters);
 
             return {
                 tabId,

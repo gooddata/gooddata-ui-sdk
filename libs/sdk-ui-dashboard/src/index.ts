@@ -1897,7 +1897,7 @@ export {
 
 export { isTemporaryIdentity, getWidgetTitle } from "./model/utils/dashboardItemUtils.js";
 export { existBlacklistHierarchyPredicate } from "./model/utils/attributeHierarchyUtils.js";
-export { removeDateFilters, removeIgnoredWidgetFilters } from "./model/utils/widgetFilters.js";
+export { getAttributeFilters, removeIgnoredWidgetFilters } from "./model/utils/widgetFilters.js";
 export { getAuthor } from "./model/utils/author.js";
 
 export type {

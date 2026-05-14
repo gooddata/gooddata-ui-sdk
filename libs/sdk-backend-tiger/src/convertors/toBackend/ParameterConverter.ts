@@ -1,10 +1,25 @@
 // (C) 2026 GoodData Corporation
 
 import type {
+    JsonApiParameterOutAttributesDefinition,
     JsonApiParameterPatchAttributes,
     JsonApiParameterPostOptionalIdAttributes,
 } from "@gooddata/api-client-tiger";
-import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
+import type { IParameterDefinition, IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
+
+function convertParameterDefinitionToBackend(
+    definition: IParameterDefinition,
+): JsonApiParameterOutAttributesDefinition {
+    if (definition.type === "NUMBER") {
+        return {
+            type: "NUMBER",
+            defaultValue: definition.defaultValue,
+            ...(definition.constraints === undefined ? {} : { constraints: definition.constraints }),
+        };
+    } else {
+        throw new Error(`Unsupported parameter definition type: ${definition.type}`);
+    }
+}
 
 export function convertParameterToBackendCreate(
     parameter: IParameterMetadataObjectDefinition,
@@ -13,11 +28,7 @@ export function convertParameterToBackendCreate(
         title: parameter.title,
         description: parameter.description,
         tags: parameter.tags,
-        definition: {
-            type: parameter.definition.type,
-            defaultValue: parameter.definition.defaultValue,
-            constraints: parameter.definition.constraints,
-        },
+        definition: convertParameterDefinitionToBackend(parameter.definition),
     };
 }
 
@@ -30,14 +41,6 @@ export function convertParameterToBackendUpdate(
         ...(parameter.tags === undefined ? {} : { tags: parameter.tags }),
         ...(parameter.definition === undefined
             ? {}
-            : {
-                  definition: {
-                      type: parameter.definition.type,
-                      defaultValue: parameter.definition.defaultValue,
-                      ...(parameter.definition.constraints === undefined
-                          ? {}
-                          : { constraints: parameter.definition.constraints }),
-                  },
-              }),
+            : { definition: convertParameterDefinitionToBackend(parameter.definition) }),
     };
 }

@@ -32,6 +32,7 @@ import {
     loadThreadSuccessAction,
     restoreCachedMessagesAction,
 } from "../messages/messagesSlice.js";
+import { createEmptyConversation } from "../utils.js";
 
 import { interactionsToMessages } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
@@ -185,7 +186,12 @@ function* fetchAllConversations() {
         return;
     }
 
-    const conversationItems = resultsConversations.items;
+    const conversationItems = resultsConversations.items.map((item) => {
+        return {
+            ...item,
+            localId: item.id,
+        };
+    });
     yield put(
         loadConversationsSuccessAction({
             conversations: conversationItems,
@@ -199,13 +205,13 @@ function* fetchCurrentConversation() {
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
     const conversations: IChatConversationLocal[] | undefined = yield select(conversationsSelector);
-    const conversation: "new" | IChatConversationLocal | undefined = yield select(conversationSelector);
+    const conversation: IChatConversationLocal | undefined = yield select(conversationSelector);
 
     // New conversation selected
-    if (conversation === "new") {
+    if (conversation?.localId && !conversation.id) {
         yield put(
             loadConversationSuccessAction({
-                currentConversation: "new",
+                currentConversation: conversation,
                 conversationItems: [],
             }),
         );
@@ -214,8 +220,12 @@ function* fetchCurrentConversation() {
 
     const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
 
+    //Sort by createion date, because normally there are pinned on top
+    const sortedConv = conversations
+        ?.slice()
+        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
     //Load the first conversation if there are any or create a new one
-    const selectedConversation = conversation ?? conversations?.[0] ?? undefined;
+    const selectedConversation = conversation ?? sortedConv?.[0] ?? undefined;
     if (selectedConversation) {
         const preparedThread = api.getConversationThread(selectedConversation.id);
         const [resultsItems, cancelledItems]: [
@@ -243,7 +253,7 @@ function* fetchCurrentConversation() {
     } else {
         yield put(
             loadConversationSuccessAction({
-                currentConversation: "new",
+                currentConversation: createEmptyConversation(),
                 conversationItems: [],
             }),
         );

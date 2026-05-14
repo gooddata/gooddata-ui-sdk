@@ -353,7 +353,9 @@ export type Message = UserMessage | AssistantMessage;
  * Includes additional optional properties specific to the local context.
  */
 export type IChatConversationLocal = IChatConversation & {
+    localId: string;
     generatingTitle?: boolean;
+    inProgress?: boolean;
 };
 
 /**

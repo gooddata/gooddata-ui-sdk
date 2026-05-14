@@ -35,6 +35,7 @@ import {
     setCurrentConversationAction,
 } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
+import { isConversationWithLocalId } from "../store/utils.js";
 import { generateTemporaryTitle } from "../utils.js";
 
 import { collectReferences, replaceReferences } from "./completion/references.js";
@@ -91,7 +92,7 @@ function GenAIChatConversationsComponent({
                 data: group.group,
                 subItems: group.conversations.map((conversation) => ({
                     type: "interactive" as const,
-                    id: conversation.id,
+                    id: conversation.localId,
                     stringTitle: replaceReferences(
                         conversation.title ?? "",
                         collectReferences(conversation.title ?? "", catalogItems),
@@ -101,9 +102,9 @@ function GenAIChatConversationsComponent({
                         <div className="gd-gen-ai-chat__window__conversations__list__delete-button">
                             <Dropdown
                                 onToggle={() => {
-                                    setOpenedId(openedId ? undefined : conversation.id);
+                                    setOpenedId(openedId ? undefined : conversation.localId);
                                 }}
-                                isOpen={openedId === conversation.id}
+                                isOpen={openedId === conversation.localId}
                                 alignPoints={[{ align: "bl tl" }]}
                                 renderButton={({
                                     toggleDropdown,
@@ -186,7 +187,7 @@ function GenAIChatConversationsComponent({
                                                 setConversationToDelete(conversation);
                                             } else {
                                                 pinConversation({
-                                                    conversationId: selectedConversation.id,
+                                                    conversationId: selectedConversation.localId,
                                                     pinned: !selectedConversation.pinned,
                                                 });
                                             }
@@ -202,15 +203,14 @@ function GenAIChatConversationsComponent({
                             />
                         </div>
                     ),
-                    isSelected:
-                        currentConversation === "new" ? false : conversation.id === currentConversation?.id,
+                    isSelected: isConversationWithLocalId(currentConversation, conversation.localId),
                 })),
             })),
         [groupedConversations, intl, catalogItems, openedId, currentConversation, pinConversation],
     );
 
     const draggedConversation = useMemo(
-        () => conversations?.find((conversation) => conversation.id === draggedConversationId),
+        () => conversations?.find((conversation) => conversation.localId === draggedConversationId),
         [conversations, draggedConversationId],
     );
 
@@ -228,7 +228,7 @@ function GenAIChatConversationsComponent({
 
     const handleDeleteSubmit = useCallback(() => {
         if (conversationToDelete) {
-            deleteConversation({ conversationId: conversationToDelete.id });
+            deleteConversation({ conversationId: conversationToDelete.localId });
         }
         setConversationToDelete(undefined);
     }, [conversationToDelete, deleteConversation]);
@@ -284,7 +284,7 @@ function GenAIChatConversationsComponent({
             const shouldBePinned = dropZone === "pin";
             if (draggedConversation.pinned !== shouldBePinned) {
                 pinConversation({
-                    conversationId: draggedConversation.id,
+                    conversationId: draggedConversation.localId,
                     pinned: shouldBePinned,
                 });
             }
@@ -425,6 +425,7 @@ function DrawerContent({
                             className={cx("gd-gen-ai-chat__window__conversations__drop-placeholder", {
                                 isDragging: activeDropZone === "body" && !draggedConversation?.pinned,
                                 isDraggingOver: activeDropZone === "pin",
+                                isEmpty: pinnedItems.length === 0,
                             })}
                         >
                             <div className="gd-gen-ai-chat__window__conversations__drop-placeholder__content">
@@ -550,11 +551,12 @@ function DraggableConversationItem(props: DraggableConversationItemProps) {
             draggable
             className={cx("gd-gen-ai-chat__window__conversations__list__item", {
                 generatingTitle: data.generatingTitle,
+                inProgress: data.inProgress,
                 openedMenu: props.openedId === props.item.id,
             })}
             onDragStart={(event) => {
                 event.currentTarget.classList.add("dragging");
-                props.onDragStart(data.id, event);
+                props.onDragStart(data.localId, event);
             }}
             onDragEnd={(event) => {
                 event.currentTarget.classList.remove("dragging");

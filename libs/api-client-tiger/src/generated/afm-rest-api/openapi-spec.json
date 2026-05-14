@@ -224,6 +224,96 @@
                 }
             }
         },
+        "/api/v1/ailake/database/instances/{instanceId}/dataSources": {
+            "get": {
+                "tags": [
+                    "AI Lake - Databases",
+                    "AI Lake"
+                ],
+                "summary": "(BETA) List data sources of an AILake Database instance",
+                "description": "(BETA) Returns all data source associations for the specified AI Lake database instance.",
+                "operationId": "listAiLakeDatabaseDataSources",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data sources successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListDatabaseDataSourcesResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to list data sources of an AI Lake database instance."
+                }
+            },
+            "post": {
+                "tags": [
+                    "AI Lake - Databases",
+                    "AI Lake"
+                ],
+                "summary": "(BETA) Add a data source to an AILake Database instance",
+                "description": "(BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.",
+                "operationId": "addAiLakeDatabaseDataSource",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddDatabaseDataSourceRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data source successfully added",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AddDatabaseDataSourceResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to add a data source to an AI Lake database instance."
+                }
+            }
+        },
         "/api/v1/ailake/database/instances/{instanceId}/analyzeStatistics": {
             "post": {
                 "tags": [
@@ -691,7 +781,8 @@
                             }
                         }
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/execution/detectOutliers": {
@@ -959,7 +1050,7 @@
                     {
                         "name": "explainType",
                         "in": "query",
-                        "description": "Requested explain type. If not specified all types are bundled in a ZIP archive.\n\n`MAQL` - MAQL Abstract Syntax Tree, execution dimensions and related info\n\n`GRPC_MODEL` - Datasets used in execution\n\n`GRPC_MODEL_SVG` - Generated SVG image of the datasets\n\n`COMPRESSED_GRPC_MODEL_SVG` - Generated SVG image of the model fragment used in the query\n\n`WDF` - Workspace data filters in execution workspace context\n\n`QT` - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL\n\n`QT_SVG` - Generated SVG image of the Query Tree\n\n`OPT_QT` - Optimized Query Tree\n\n`OPT_QT_SVG` - Generated SVG image of the Optimized Query Tree\n\n`SQL` - Final SQL to be executed\n\n`COMPRESSED_SQL` - Final SQL to be executed with rolled SQL datasets\n\n`SETTINGS` - Settings used to execute explain request",
+                        "description": "Requested explain type. If not specified all types are bundled in a ZIP archive.\n\n`MAQL` - MAQL Abstract Syntax Tree, execution dimensions and related info\n\n`GRPC_MODEL` - Datasets used in execution\n\n`GRPC_MODEL_SVG` - Generated SVG image of the datasets\n\n`COMPRESSED_GRPC_MODEL_SVG` - Generated SVG image of the model fragment used in the query\n\n`WDF` - Workspace data filters in execution workspace context\n\n`QT` - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL\n\n`QT_SVG` - Generated SVG image of the Query Tree\n\n`OPT_QT` - Optimized Query Tree\n\n`OPT_QT_SVG` - Generated SVG image of the Optimized Query Tree\n\n`SQL` - Final SQL to be executed\n\n`COMPRESSED_SQL` - Final SQL to be executed with rolled SQL datasets\n\n`SETTINGS` - Settings used to execute explain request\n\n`GIT` - Git properties of current build",
                         "required": false,
                         "schema": {
                             "type": "string",
@@ -974,7 +1065,9 @@
                                 "OPT_QT_SVG",
                                 "SQL",
                                 "SETTINGS",
-                                "COMPRESSED_SQL"
+                                "COMPRESSED_SQL",
+                                "COMPRESSED_GRPC_MODEL_SVG",
+                                "GIT"
                             ]
                         }
                     }
@@ -1860,6 +1953,57 @@
                 "deprecated": true
             }
         },
+        "/api/v1/ailake/database/instances/{instanceId}/dataSource": {
+            "patch": {
+                "tags": [
+                    "AI Lake - Databases",
+                    "AI Lake"
+                ],
+                "summary": "(BETA) Update the data source of an AILake Database instance",
+                "description": "(BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.",
+                "operationId": "updateAiLakeDatabaseDataSource",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateDatabaseDataSourceRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data source successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateDatabaseDataSourceResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to update the data source of an AI Lake database instance."
+                }
+            }
+        },
         "/api/v1/ailake/services/{serviceId}/status": {
             "get": {
                 "tags": [
@@ -2010,6 +2154,35 @@
                         "MANAGE"
                     ],
                     "description": "Permissions required to get details of a Long Running Operation."
+                }
+            }
+        },
+        "/api/v1/ailake/object-storages": {
+            "get": {
+                "tags": [
+                    "AI Lake - Databases",
+                    "AI Lake"
+                ],
+                "summary": "(BETA) List registered AI Lake ObjectStorages",
+                "description": "(BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.",
+                "operationId": "listAiLakeObjectStorages",
+                "responses": {
+                    "200": {
+                        "description": "AI Lake ObjectStorages successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListObjectStoragesResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to list registered AI Lake ObjectStorages."
                 }
             }
         },
@@ -2435,7 +2608,8 @@
                             }
                         }
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/execution/detectOutliers/result/{resultId}": {
@@ -3198,6 +3372,57 @@
                     }
                 }
             }
+        },
+        "/api/v1/ailake/database/instances/{instanceId}/dataSources/{dataSourceId}": {
+            "delete": {
+                "tags": [
+                    "AI Lake - Databases",
+                    "AI Lake"
+                ],
+                "summary": "(BETA) Remove a data source from an AILake Database instance",
+                "description": "(BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.",
+                "operationId": "removeAiLakeDatabaseDataSource",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    },
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "description": "Identifier of the data source to remove.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Identifier of the data source to remove."
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data source successfully removed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RemoveDatabaseDataSourceResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to remove a data source from an AI Lake database instance."
+                }
+            }
         }
     },
     "components": {
@@ -3242,6 +3467,30 @@
                     }
                 },
                 "description": "Aggregate key model — pre-aggregates rows sharing the same key columns."
+            },
+            "ColumnExpression": {
+                "required": [
+                    "column",
+                    "function"
+                ],
+                "type": "object",
+                "properties": {
+                    "function": {
+                        "type": "string",
+                        "description": "StarRocks transform applied to a source column when projecting it through the generated CREATE PIPE ... AS INSERT statement.",
+                        "enum": [
+                            "HLL_HASH",
+                            "BITMAP_HASH",
+                            "BITMAP_HASH64",
+                            "TO_BITMAP"
+                        ]
+                    },
+                    "column": {
+                        "type": "string",
+                        "description": "Source column produced by parquet schema inference (after columnOverrides)."
+                    }
+                },
+                "description": "Single column projection override: applies `function(column)` to a source column."
             },
             "ColumnPartitionConfig": {
                 "required": [
@@ -3317,6 +3566,13 @@
                             "description": "Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is 'aggregate'. Ignored for other key types."
                         },
                         "description": "Maps non-key column names to their StarRocks aggregation function (SUM, MIN, MAX, REPLACE, REPLACE_IF_NOT_NULL, HLL_UNION, BITMAP_UNION, PERCENTILE_UNION). Required for every non-key column when keyConfig type is 'aggregate'. Ignored for other key types."
+                    },
+                    "columnExpressions": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/ColumnExpression"
+                        },
+                        "description": "Per-target-column projection overrides. Each entry emits `<function>(<column>) AS <key>` in the SELECT list of the generated CREATE PIPE ... AS INSERT; keys absent from the map are projected as-is. Required for AGGREGATE-KEY tables that include native HLL columns (StarRocks rejects raw VARBINARY into HLL columns)."
                     },
                     "pollingIntervalSeconds": {
                         "type": "integer",
@@ -3526,6 +3782,58 @@
                     }
                 },
                 "description": "Unique key model — enforces uniqueness, replaces on conflict."
+            },
+            "AddDatabaseDataSourceRequest": {
+                "required": [
+                    "dataSourceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "dataSourceId": {
+                        "type": "string",
+                        "description": "Identifier for the new data source in metadata-api. Must be unique within the organization."
+                    },
+                    "dataSourceName": {
+                        "type": "string",
+                        "description": "Display name for the new data source in metadata-api. Defaults to dataSourceId when omitted."
+                    }
+                },
+                "description": "Request to add a data source to an AI Lake Database instance"
+            },
+            "AddDatabaseDataSourceResponse": {
+                "required": [
+                    "dataSource"
+                ],
+                "type": "object",
+                "properties": {
+                    "dataSource": {
+                        "$ref": "#/components/schemas/DataSourceInfo"
+                    }
+                },
+                "description": "Newly created data source association for an AI Lake Database instance"
+            },
+            "DataSourceInfo": {
+                "required": [
+                    "dataSourceId",
+                    "dataSourceName",
+                    "id"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id of the data source association record."
+                    },
+                    "dataSourceId": {
+                        "type": "string",
+                        "description": "Identifier of the data source in metadata-api."
+                    },
+                    "dataSourceName": {
+                        "type": "string",
+                        "description": "Display name of the data source in metadata-api."
+                    }
+                },
+                "description": "A single data source association for an AI Lake Database instance"
             },
             "AnalyzeStatisticsRequest": {
                 "type": "object",
@@ -8482,6 +8790,46 @@
                     }
                 }
             },
+            "UpdateDatabaseDataSourceRequest": {
+                "required": [
+                    "dataSourceId",
+                    "oldDataSourceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "dataSourceId": {
+                        "type": "string",
+                        "description": "New identifier for the data source in metadata-api. Must be unique within the organization."
+                    },
+                    "dataSourceName": {
+                        "type": "string",
+                        "description": "New display name for the data source in metadata-api. Defaults to dataSourceId when omitted."
+                    },
+                    "oldDataSourceId": {
+                        "type": "string",
+                        "description": "Identifier of the existing data source to replace."
+                    }
+                },
+                "description": "Request to update the data source associated with an AI Lake Database instance"
+            },
+            "UpdateDatabaseDataSourceResponse": {
+                "required": [
+                    "dataSourceId",
+                    "dataSourceName"
+                ],
+                "type": "object",
+                "properties": {
+                    "dataSourceId": {
+                        "type": "string",
+                        "description": "New identifier of the data source in metadata-api."
+                    },
+                    "dataSourceName": {
+                        "type": "string",
+                        "description": "New display name of the data source in metadata-api."
+                    }
+                },
+                "description": "Updated data source details for an AI Lake Database instance"
+            },
             "GetServiceStatusResponse": {
                 "required": [
                     "status"
@@ -8651,6 +8999,56 @@
                         }
                     }
                 ]
+            },
+            "ListObjectStoragesResponse": {
+                "required": [
+                    "storages"
+                ],
+                "type": "object",
+                "properties": {
+                    "storages": {
+                        "type": "array",
+                        "description": "Registered storages, ordered by name.",
+                        "items": {
+                            "$ref": "#/components/schemas/ObjectStorageInfo"
+                        }
+                    }
+                },
+                "description": "Response for listing ObjectStorages registered for the organization."
+            },
+            "ObjectStorageInfo": {
+                "required": [
+                    "name",
+                    "storageConfig",
+                    "storageId",
+                    "storageType"
+                ],
+                "type": "object",
+                "properties": {
+                    "storageId": {
+                        "type": "string",
+                        "description": "Stable identifier of the storage configuration (UUID)."
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Human-readable name. Use this as `sourceStorageName` in CreatePipeTable, or pass `storageId` to ProvisionDatabase.storageIds.",
+                        "example": "s3-data-lake"
+                    },
+                    "storageType": {
+                        "type": "string",
+                        "description": "Provider type.",
+                        "example": "s3"
+                    },
+                    "storageConfig": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Provider-specific descriptors (e.g. bucket, region, endpoint, container). Credential references (any keys ending in `_env`) are stripped server-side."
+                        },
+                        "description": "Provider-specific descriptors (e.g. bucket, region, endpoint, container). Credential references (any keys ending in `_env`) are stripped server-side."
+                    }
+                },
+                "description": "Descriptor of a registered ObjectStorage. Provider credentials are stripped — only fields useful for identifying the storage are returned."
             },
             "ColumnInfo": {
                 "required": [
@@ -8823,8 +9221,25 @@
                 },
                 "description": "Lightweight pipe table entry used in list responses"
             },
+            "ListDatabaseDataSourcesResponse": {
+                "required": [
+                    "dataSources"
+                ],
+                "type": "object",
+                "properties": {
+                    "dataSources": {
+                        "type": "array",
+                        "description": "List of data source associations.",
+                        "items": {
+                            "$ref": "#/components/schemas/DataSourceInfo"
+                        }
+                    }
+                },
+                "description": "All data source associations for an AI Lake Database instance"
+            },
             "DatabaseInstance": {
                 "required": [
+                    "dataSources",
                     "id",
                     "name",
                     "storageIds"
@@ -8848,13 +9263,12 @@
                             "description": "Set of ids of the storage instances this database instance should access."
                         }
                     },
-                    "dataSourceId": {
-                        "type": "string",
-                        "description": "Identifier of the data source created in metadata-api."
-                    },
-                    "dataSourceName": {
-                        "type": "string",
-                        "description": "Display name of the data source created in metadata-api."
+                    "dataSources": {
+                        "type": "array",
+                        "description": "All data source associations for this database instance.",
+                        "items": {
+                            "$ref": "#/components/schemas/DataSourceInfo"
+                        }
                     }
                 },
                 "description": "A single AI Lake Database instance"
@@ -9981,6 +10395,19 @@
                     }
                 },
                 "description": "Users who created any object in the catalog"
+            },
+            "RemoveDatabaseDataSourceResponse": {
+                "required": [
+                    "dataSourceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "dataSourceId": {
+                        "type": "string",
+                        "description": "Identifier of the removed data source in metadata-api."
+                    }
+                },
+                "description": "Confirmation of data source removal from an AI Lake Database instance"
             }
         }
     }

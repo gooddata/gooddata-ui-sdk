@@ -160,15 +160,20 @@ function InputComponent({
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
-        if (e.key === "Enter" && !e.shiftKey && !isBusy && value) {
+        if (e.key === "Enter" && !e.shiftKey) {
+            const trimmed = value.trim();
+            if (isBusy || !trimmed) {
+                return true;
+            }
             e.preventDefault();
+            e.stopPropagation();
             handleSubmit();
             return true;
         }
         return false;
     };
 
-    const buttonDisabled = !value || isBusy || isEvaluating;
+    const buttonDisabled = !value.trim() || isBusy || isEvaluating;
     const buttonClasses = cx("gd-gen-ai-chat__input__send_button", {
         "gd-gen-ai-chat__input__send_button--disabled": buttonDisabled,
     });
@@ -198,7 +203,6 @@ function InputComponent({
                     placeholder={intl.formatMessage(msgs.placeholder)}
                     label={isMac ? intl.formatMessage(msgs.labelMac) : intl.formatMessage(msgs.labelWin)}
                     value={value}
-                    disabled={isBusy}
                     autocompletion={{
                         aboveCursor: true,
                         whenTyping: true,

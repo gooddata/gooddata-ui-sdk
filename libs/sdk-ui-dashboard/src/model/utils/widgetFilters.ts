@@ -59,6 +59,6 @@ export function removeIgnoredWidgetFilters(
 /**
  * @internal
  */
-export function removeDateFilters(filters: FilterContextItem[]): DashboardAttributeFilterItem[] {
+export function getAttributeFilters(filters: FilterContextItem[]): DashboardAttributeFilterItem[] {
     return filters.filter(isDashboardAttributeFilterItem);
 }

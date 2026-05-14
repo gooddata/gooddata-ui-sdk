@@ -121,7 +121,7 @@ export interface DataSourceSchemata {
  */
 export interface DeclarativeColumn {
     /**
-     * Column name
+     * Column name. Must not contain NUL (0x00) characters.
      */
     'name': string;
     /**

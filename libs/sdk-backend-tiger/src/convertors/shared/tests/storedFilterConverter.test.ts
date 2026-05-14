@@ -319,6 +319,50 @@ describe("storedFilterConverter", () => {
             const tigerItem = convertSdkFilterContextItemToTiger(sdkItem);
             expect(tigerItem).toHaveProperty("attributeFilter");
         });
+
+        it("preserves dashboard MVF shape and sanitizes IDs SDK <-> Tiger", () => {
+            const sdkItem: FilterContextItem = {
+                dashboardMeasureValueFilter: {
+                    measure: idRef("m1", "measure"),
+                    localIdentifier: "mvf1",
+                    conditions: [
+                        { comparison: { operator: "GREATER_THAN", value: 10 } },
+                        { range: { operator: "BETWEEN", from: 1, to: 5 } },
+                    ],
+                    title: "Revenue > 10",
+                },
+            };
+
+            const tigerItems = convertSdkFiltersToTiger([sdkItem]) ?? [];
+            expect(tigerItems).toHaveLength(1);
+            const tigerItem = tigerItems[0] as ITigerFilterContextItem;
+            expect(tigerItem).toHaveProperty("dashboardMeasureValueFilter");
+            if ("dashboardMeasureValueFilter" in tigerItem) {
+                // ID type gets sanitized (measure -> metric)
+                expect(tigerItem.dashboardMeasureValueFilter.measure).toEqual({
+                    identifier: { id: "m1", type: "metric" },
+                });
+                // Wrapped condition shape is preserved through the converter.
+                expect(tigerItem.dashboardMeasureValueFilter.conditions).toEqual([
+                    { comparison: { operator: "GREATER_THAN", value: 10 } },
+                    { range: { operator: "BETWEEN", from: 1, to: 5 } },
+                ]);
+                expect(tigerItem.dashboardMeasureValueFilter.title).toBe("Revenue > 10");
+            }
+
+            const roundtripped = convertTigerToSdkFilters(tigerItems) ?? [];
+            expect(roundtripped).toHaveLength(1);
+            const result = roundtripped[0] as FilterContextItem;
+            expect(result).toHaveProperty("dashboardMeasureValueFilter");
+            if ("dashboardMeasureValueFilter" in result) {
+                expect(result.dashboardMeasureValueFilter.localIdentifier).toBe("mvf1");
+                expect(result.dashboardMeasureValueFilter.conditions).toEqual([
+                    { comparison: { operator: "GREATER_THAN", value: 10 } },
+                    { range: { operator: "BETWEEN", from: 1, to: 5 } },
+                ]);
+                expect(result.dashboardMeasureValueFilter.title).toBe("Revenue > 10");
+            }
+        });
     });
 
     describe("compound condition preservation", () => {

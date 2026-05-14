@@ -48,9 +48,13 @@ import {
     isFilter,
     isFilterContextItem,
     isMatchAttributeFilter,
+    isMeasureValueFilter,
     isNegativeAttributeFilter,
+    isObjRef,
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
+    measureValueFilterConditions,
+    measureValueFilterMeasure,
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
@@ -469,7 +473,11 @@ function convertLegacyTabularFiltersToFilterContext(
     }
 
     const convertedFilters = filters
-        .map((filter) => (isFilter(filter) ? convertExecutionFilterToFilterContextItem(filter) : undefined))
+        .map((filter, index) =>
+            isFilter(filter)
+                ? convertExecutionFilterToFilterContextItem(filter, `legacy-mvf-${index}`)
+                : undefined,
+        )
         .filter((filter): filter is FilterContextItem => Boolean(filter));
 
     if (!convertedFilters.length) {
@@ -488,7 +496,18 @@ function convertLegacyTabularFiltersToFilterContext(
     };
 }
 
-function convertExecutionFilterToFilterContextItem(filter: IFilter): FilterContextItem | undefined {
+/**
+ * Converts a legacy execution-level filter to a dashboard `FilterContextItem`. Used during
+ * lazy migration of XLSX export definitions that historically stored `IFilter[]` instead of
+ * `FilterContextItem[]`. Pure: no random ids — the caller passes a deterministic
+ * `fallbackLocalIdentifier` for MVFs that lack one.
+ *
+ * @internal
+ */
+export function convertExecutionFilterToFilterContextItem(
+    filter: IFilter,
+    fallbackLocalIdentifier: string,
+): FilterContextItem | undefined {
     if (isAttributeFilterWithSelection(filter)) {
         return {
             attributeFilter: {
@@ -553,6 +572,32 @@ function convertExecutionFilterToFilterContextItem(filter: IFilter): FilterConte
             isRelativeBoundedDateFilter(filter) ? filter.relativeDateFilter.boundedFilter : undefined,
             filter.relativeDateFilter.emptyValueHandling,
         );
+    }
+
+    if (isMeasureValueFilter(filter)) {
+        const measure = measureValueFilterMeasure(filter);
+        // Dashboard MVF requires an ObjRef catalog metric. LocalIdRef-keyed MVFs only exist on
+        // execution filters coming from insights and must not appear here — log and drop.
+        if (!isObjRef(measure)) {
+            console.warn(
+                "MeasureValueFilter with LocalIdRef cannot be converted to a dashboard MVF — dropped",
+                filter,
+            );
+            return undefined;
+        }
+        const body = filter.measureValueFilter;
+        const conditions = measureValueFilterConditions(filter);
+        // The SDK execution-side body does not declare `title`, but inputs may carry one at runtime
+        // (e.g. exports coming from a richer source). Propagate it if present.
+        const title = "title" in body ? (body as { title?: string }).title : undefined;
+        return {
+            dashboardMeasureValueFilter: {
+                measure,
+                localIdentifier: body.localIdentifier ?? fallbackLocalIdentifier,
+                ...(conditions ? { conditions } : {}),
+                ...(title ? { title } : {}),
+            },
+        };
     }
 
     return undefined;

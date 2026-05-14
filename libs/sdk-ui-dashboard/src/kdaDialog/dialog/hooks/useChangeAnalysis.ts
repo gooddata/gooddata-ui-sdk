@@ -10,16 +10,22 @@ import {
     type DashboardAttributeFilterItem,
     type IAttribute,
     type ICatalogAttribute,
+    type IDashboardMeasureValueFilter,
+    type IFilter,
     type IMeasure,
     type ISeparators,
     type ObjRef,
+    isAllDashboardMeasureValueFilter,
     isAllValuesDashboardAttributeFilter,
     newAttribute,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
-import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
+import {
+    dashboardAttributeFilterItemToAttributeFilter,
+    dashboardMeasureValueFilterToMeasureValueFilter,
+} from "../../../converters/filterConverters.js";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
@@ -39,9 +45,10 @@ export function useChangeAnalysis() {
     }, [state.selectedUpdated]);
 
     const filters = useRelevantFilters();
+    const measureValueFilters = state.measureValueFilters;
     const loading = state.relevantStatus === "loading" || state.relevantStatus === "pending";
 
-    const results = useChangeAnalysisResults(definition, attributes, filters, loading);
+    const results = useChangeAnalysisResults(definition, attributes, filters, measureValueFilters, loading);
     const list = useKdaStateWithList(results, definition);
 
     useEffect(() => {
@@ -53,6 +60,7 @@ function useChangeAnalysisResults(
     definition: DeepReadonly<IKdaDefinition> | null,
     attrs: ObjRef[],
     attrFilters: DashboardAttributeFilterItem[],
+    measureValueFilters: IDashboardMeasureValueFilter[],
     loading: boolean,
 ) {
     const backend = useBackendStrict();
@@ -70,6 +78,14 @@ function useChangeAnalysisResults(
             .join();
     }, [attrFilters]);
 
+    // Use the same fingerprint approach for MVF so cancelable-promise recomputes only when conditions actually change.
+    const measureValueFiltersFingerprint = useMemo(() => {
+        return measureValueFilters
+            .filter((f) => !isAllDashboardMeasureValueFilter(f))
+            .map((f) => stringify(f))
+            .join();
+    }, [measureValueFilters]);
+
     const dateAttribute = dateAttributeFinder(definition?.dateAttribute);
     const shouldComputeChangeAnalysis = !!definition && !!dateAttribute && !loading;
 
@@ -86,9 +102,16 @@ function useChangeAnalysisResults(
                               return attr ? newAttribute(ref) : null;
                           })
                           .filter(Boolean) as IAttribute[];
-                      const filters = attrFilters
+                      const attributeExecutionFilters: IFilter[] = attrFilters
                           .filter((f) => !isAllValuesDashboardAttributeFilter(f))
                           .map(dashboardAttributeFilterItemToAttributeFilter);
+                      const measureValueExecutionFilters: IFilter[] = measureValueFilters
+                          .filter((f) => !isAllDashboardMeasureValueFilter(f))
+                          .map(dashboardMeasureValueFilterToMeasureValueFilter);
+                      const filters: IFilter[] = [
+                          ...attributeExecutionFilters,
+                          ...measureValueExecutionFilters,
+                      ];
 
                       return backend
                           .workspace(workspace)
@@ -124,6 +147,7 @@ function useChangeAnalysisResults(
             loading,
             dateAttribute,
             attributeFiltersFingerprint,
+            measureValueFiltersFingerprint,
             includeTags,
             excludeTags,
         ],

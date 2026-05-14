@@ -49,6 +49,7 @@ import { useAutomationFilters, useAutomationFiltersByTab } from "../useAutomatio
 
 import { AutomationAttributeFilter } from "./AutomationAttributeFilter.js";
 import { AutomationDateFilter } from "./AutomationDateFilter.js";
+import { AutomationMeasureValueFilter } from "./AutomationMeasureValueFilter.js";
 
 const COLLAPSED_FILTERS_COUNT = 2;
 
@@ -223,6 +224,7 @@ export function AutomationFiltersSelect({
     const filters = shouldRenderByTab ? [] : flatFiltersData.visibleFilters;
     const attributes = shouldRenderByTab ? [] : flatFiltersData.attributes;
     const dateDatasets = shouldRenderByTab ? [] : flatFiltersData.dateDatasets;
+    const measures = shouldRenderByTab ? [] : flatFiltersData.measures;
 
     const handleChangeFilter = shouldRenderByTab
         ? () => {} // Not used in tab mode
@@ -382,6 +384,7 @@ export function AutomationFiltersSelect({
                                                 }}
                                                 attributes={tab.attributes}
                                                 dateDatasets={tab.dateDatasets}
+                                                measures={tab.measures}
                                                 openOnInit={false}
                                                 overlayPositionType={overlayPositionType}
                                                 className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
@@ -501,6 +504,7 @@ export function AutomationFiltersSelect({
                                     }}
                                     attributes={attributes}
                                     dateDatasets={dateDatasets}
+                                    measures={measures}
                                     openOnInit={false}
                                     overlayPositionType={overlayPositionType}
                                     className="gd-automation-filters__dropdown s-automation-filters-add-filter-dropdown"
@@ -660,6 +664,22 @@ function AutomationFilter({
                 overlayPositionType={overlayPositionType}
                 readonly={isReadOnly}
                 tabId={tabId}
+            />
+        );
+    } else if (isDashboardMeasureValueFilter(filter)) {
+        const isLocked = lockedFilters.some(
+            (f) => dashboardFilterLocalIdentifier(f) === dashboardFilterLocalIdentifier(filter),
+        );
+
+        return (
+            <AutomationMeasureValueFilter
+                key={filter.dashboardMeasureValueFilter.localIdentifier}
+                filter={filter}
+                onChange={onChange}
+                onDelete={onDelete}
+                isLocked={isLocked}
+                overlayPositionType={overlayPositionType}
+                readonly={isReadOnly}
             />
         );
     }

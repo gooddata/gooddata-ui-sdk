@@ -663,6 +663,58 @@
                 }
             }
         },
+        "/api/v1/ai/workspaces/{workspace_id}/summary": {
+            "post": {
+                "tags": [
+                    "Summary"
+                ],
+                "summary": "Post Summary",
+                "operationId": "summarizeDashboard",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SummarizeRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SummarizeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents": {
             "post": {
                 "tags": [
@@ -3783,6 +3835,82 @@
                 "title": "SkillResponse",
                 "description": "A single skill available to the organization."
             },
+            "SummarizeRequest": {
+                "properties": {
+                    "visualizations": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "minItems": 1,
+                        "title": "Visualizations"
+                    },
+                    "filterContext": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Filtercontext"
+                    },
+                    "dashboardId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Dashboardid"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "visualizations",
+                    "filterContext",
+                    "dashboardId"
+                ],
+                "title": "SummarizeRequest"
+            },
+            "SummarizeResponse": {
+                "properties": {
+                    "summary": {
+                        "type": "string",
+                        "title": "Summary"
+                    },
+                    "filterContext": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Filtercontext"
+                    },
+                    "visualizationsIncluded": {
+                        "items": {
+                            "$ref": "#/components/schemas/VisualizationIncludedResponse"
+                        },
+                        "type": "array",
+                        "title": "Visualizationsincluded"
+                    },
+                    "visualizationsExcluded": {
+                        "items": {
+                            "$ref": "#/components/schemas/VisualizationExcludedResponse"
+                        },
+                        "type": "array",
+                        "title": "Visualizationsexcluded"
+                    },
+                    "generatedAt": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Generatedat"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "summary",
+                    "filterContext",
+                    "visualizationsIncluded",
+                    "visualizationsExcluded",
+                    "generatedAt"
+                ],
+                "title": "SummarizeResponse"
+            },
             "TextFilterValue": {
                 "properties": {
                     "type": {
@@ -4573,6 +4701,35 @@
                 "type": "object",
                 "title": "VisualizationConfig"
             },
+            "VisualizationExcludedResponse": {
+                "properties": {
+                    "visualizationId": {
+                        "type": "string",
+                        "title": "Visualizationid"
+                    },
+                    "reason": {
+                        "type": "string",
+                        "title": "Reason"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "visualizationId",
+                    "reason"
+                ],
+                "title": "VisualizationExcludedResponse"
+            },
             "VisualizationFilter": {
                 "oneOf": [
                     {
@@ -4612,6 +4769,30 @@
                 ],
                 "title": "VisualizationIdUpdateRequest",
                 "description": "PATCH /conversations/{conversationId}/visualizations/{visualizationId} body."
+            },
+            "VisualizationIncludedResponse": {
+                "properties": {
+                    "visualizationId": {
+                        "type": "string",
+                        "title": "Visualizationid"
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Title"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "visualizationId"
+                ],
+                "title": "VisualizationIncludedResponse"
             },
             "VisualizationMetricValueComparisonFilter": {
                 "properties": {

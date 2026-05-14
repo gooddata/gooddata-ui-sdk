@@ -8,8 +8,10 @@ import {
     type IAutomationVisibleFilter,
     type ICatalogAttribute,
     type ICatalogDateDataset,
+    type ICatalogMeasure,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfigItem,
+    type IDashboardMeasureValueFilterConfig,
     type IDateFilter,
     type IFilter,
     type IInsight,
@@ -26,8 +28,10 @@ import {
     filterLocalIdentifier,
     filterObjRef,
     getAttributeElementsItems,
+    hasMeasureValueFilterConditions,
     insightAttributes,
     isAbsoluteDateFilter,
+    isAllDashboardMeasureValueFilter,
     isAllTimeDateFilter,
     isAllValuesAttributeFilter,
     isAllValuesDashboardAttributeFilter,
@@ -111,6 +115,29 @@ export const getCatalogAttributesByFilters = (
     });
 };
 
+export const getCatalogMeasuresByFilters = (
+    filters: FilterContextItem[],
+    measures: ICatalogMeasure[],
+    mvfConfigs: IDashboardMeasureValueFilterConfig[],
+): ICatalogMeasure[] => {
+    const ignoredLocalIdentifiers = mvfConfigs
+        .filter((config) => config.mode === "hidden")
+        .map((config) => config.localIdentifier);
+
+    return measures.filter((measure) => {
+        return filters.some((filter) => {
+            if (isDashboardMeasureValueFilter(filter)) {
+                const localIdentifier = filter.dashboardMeasureValueFilter.localIdentifier;
+                return (
+                    !ignoredLocalIdentifiers.includes(localIdentifier) &&
+                    areObjRefsEqual(filter.dashboardMeasureValueFilter.measure, measure.measure.ref)
+                );
+            }
+            return false;
+        });
+    });
+};
+
 export const getCatalogDateDatasetsByFilters = (
     filters: FilterContextItem[],
     dateDataset: ICatalogDateDataset[],
@@ -146,6 +173,8 @@ export const getFilterByCatalogItemRef = (
             return areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(filter), ref);
         } else if (isDashboardDateFilter(filter)) {
             return areObjRefsEqual(filter.dateFilter.dataSet, ref);
+        } else if (isDashboardMeasureValueFilter(filter)) {
+            return areObjRefsEqual(filter.dashboardMeasureValueFilter.measure, ref);
         }
         return false;
     });
@@ -161,9 +190,12 @@ export const getVisibleFiltersByFilters = (
     }
 
     const filters = (selectedFilters ?? [])
-        // Strip noop "All values" attribute filters — they have no effect on execution
-        // and should not be stored in visible filters metadata.
-        .filter((filter) => !isAllValuesDashboardAttributeFilter(filter))
+        // Strip noop "All values" attribute filters and "All" measure value filters —
+        // they have no effect on execution and should not be stored in visible filters metadata.
+        .filter(
+            (filter) =>
+                !isAllValuesDashboardAttributeFilter(filter) && !isAllDashboardMeasureValueFilter(filter),
+        )
         .map((selectedFilter) => {
             const selectedLocalIdentifier = getFilterLocalIdentifier(selectedFilter);
             const targetFilter = (visibleFiltersMetadata ?? []).find((visibleFilter) => {
@@ -311,6 +343,10 @@ export const getAppliedWidgetFilters = (
         if (isDateFilter(filter)) {
             return !isNoopAllTimeDateFilterFixed(filter);
         }
+        // Strip noop "All" measure value filters (no conditions).
+        if (isMeasureValueFilter(filter)) {
+            return hasMeasureValueFilterConditions(filter);
+        }
         // Strip noop "All values" attribute filters (negative filter with empty exclusion list).
         return !isAllValuesAttributeFilter(filter);
     });
@@ -337,7 +373,11 @@ export const getAppliedDashboardFilters = (
         if (isDashboardDateFilter(filter)) {
             return !isNoopAllTimeDashboardDateFilter(filter);
         }
-        // Strip noop "All values" attribute filters (negative selection with empty element list).
+        // Strip noop "All" measure value filters (no/empty conditions).
+        if (isDashboardMeasureValueFilter(filter)) {
+            return !isAllDashboardMeasureValueFilter(filter);
+        }
+        // Strip noop "All values" attribute filters.
         return !isAllValuesDashboardAttributeFilter(filter);
     });
 };
@@ -593,6 +633,10 @@ export const getFilterTitle = (
             areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
         );
         return dateDataset?.dataSet.title || "";
+    }
+
+    if (isDashboardMeasureValueFilter(filter)) {
+        return filter.dashboardMeasureValueFilter.title || "";
     }
 
     return "";

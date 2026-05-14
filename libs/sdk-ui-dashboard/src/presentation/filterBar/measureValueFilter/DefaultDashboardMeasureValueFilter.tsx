@@ -9,10 +9,6 @@ import {
     type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
     type IMeasureValueFilter,
-    type MeasureValueFilterCondition,
-    type ObjRef,
-    areObjRefsEqual,
-    objRefToString,
 } from "@gooddata/sdk-model";
 import {
     type IFilterButtonCustomIcon,
@@ -20,7 +16,6 @@ import {
     type IMeasureValueFilterDropdownActionsProps,
     type IMeasureValueFilterDropdownButtonProps,
     MeasureValueFilter,
-    getMeasureValueFilterConditionLabel,
 } from "@gooddata/sdk-ui-filters";
 import { Bubble, BubbleHoverTrigger, type IAlignPoint, UiControlButton } from "@gooddata/sdk-ui-kit";
 
@@ -29,12 +24,7 @@ import { setMeasureValueFilterTitle } from "../../../model/commands/filters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectCatalogMeasures } from "../../../model/store/catalog/catalogSelectors.js";
-import {
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectLocale,
-    selectSeparators,
-} from "../../../model/store/config/configSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectWorkingFilterContextMeasureValueFilterByLocalId } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectMeasureValueFilterConfigsModeMap } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
@@ -47,31 +37,13 @@ import {
 } from "./CustomDropdownActions.js";
 import { MeasureValueFilterConfiguration } from "./MeasureValueFilterConfiguration.js";
 import { type IDashboardMeasureValueFilterProps } from "./types.js";
+import {
+    getSharedDashboardMvfProps,
+    normalizeMeasureValueFilterConditions,
+    useDashboardMeasureValueFilterData,
+} from "./useDashboardMeasureValueFilterData.js";
 
-const PERCENT_FORMAT_REGEX = /%/;
 const DEFAULT_VISIBILITY_BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl", offset: { x: 0, y: 5 } }];
-
-function isPercentageFormat(format: string | undefined): boolean {
-    return !!format && PERCENT_FORMAT_REGEX.test(format);
-}
-
-function findCatalogMetric(
-    measure: ObjRef,
-    measures: ReturnType<typeof selectCatalogMeasures>,
-): ReturnType<typeof selectCatalogMeasures>[number] | undefined {
-    return measures.find((m) => areObjRefsEqual(m.measure.ref, measure));
-}
-
-function normalizeMeasureValueFilterConditions(
-    updated: IMeasureValueFilter | null,
-): MeasureValueFilterCondition[] | undefined {
-    const body = updated?.measureValueFilter;
-    return body?.conditions && body.conditions.length > 0
-        ? body.conditions
-        : body?.condition
-          ? [body.condition]
-          : undefined;
-}
 
 function MeasureValueFilterVisibilityIcon({
     visibilityIcon,
@@ -115,9 +87,6 @@ export function DefaultDashboardMeasureValueFilter(
     const { filter, readonly, autoOpen, onMeasureValueFilterChanged, onMeasureValueFilterClose } = props;
     const intl = useIntl();
 
-    const measures = useDashboardSelector(selectCatalogMeasures);
-    const separators = useDashboardSelector(selectSeparators);
-    const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
@@ -125,18 +94,15 @@ export function DefaultDashboardMeasureValueFilter(
     const { cancelText, closeText, saveText, applyText, titleText, resetTitleText, modeCategoryTitleText } =
         useAttributeFilterConfigTexts();
 
-    const { measure, localIdentifier, title: customTitle } = filter.dashboardMeasureValueFilter;
     const workingFilter = useDashboardSelector(
-        selectWorkingFilterContextMeasureValueFilterByLocalId(localIdentifier),
+        selectWorkingFilterContextMeasureValueFilterByLocalId(
+            filter.dashboardMeasureValueFilter.localIdentifier,
+        ),
     );
     const filterToDisplay = isApplyAllAtOnceEnabledAndSet ? (workingFilter ?? filter) : filter;
-    const conditions = filterToDisplay.dashboardMeasureValueFilter.conditions;
+    const mvfData = useDashboardMeasureValueFilterData(filter, filterToDisplay);
+    const { localIdentifier, customTitle, defaultMetricTitle, metricTitle, conditionLabel } = mvfData;
 
-    const catalogMetric = useMemo(() => findCatalogMetric(measure, measures), [measure, measures]);
-    const defaultMetricTitle = catalogMetric?.measure.title ?? objRefToString(measure);
-    const metricTitle = customTitle ?? defaultMetricTitle;
-    const format = catalogMetric?.measure.format;
-    const usePercentage = isPercentageFormat(format);
     const mode =
         measureValueFilterConfigsModeMap.get(localIdentifier) ??
         DashboardAttributeFilterConfigModeValues.ACTIVE;
@@ -162,26 +128,6 @@ export function DefaultDashboardMeasureValueFilter(
         successEvent: "GDC.DASH/EVT.MEASURE_VALUE_FILTER_CONFIG.MODE_CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
     });
-
-    const conditionLabel = useMemo(
-        () =>
-            getMeasureValueFilterConditionLabel(intl, conditions, {
-                usePercentage,
-                separators,
-            }),
-        [intl, conditions, usePercentage, separators],
-    );
-
-    const dropdownFilter = useMemo<IMeasureValueFilter>(
-        () => ({
-            measureValueFilter: {
-                measure,
-                localIdentifier,
-                ...(conditions && conditions.length > 0 ? { conditions } : {}),
-            },
-        }),
-        [measure, localIdentifier, conditions],
-    );
 
     const handleClose = useCallback(() => {
         setIsConfigurationOpen(false);
@@ -348,6 +294,7 @@ export function DefaultDashboardMeasureValueFilter(
 
     return (
         <MeasureValueFilter
+            {...getSharedDashboardMvfProps(mvfData)}
             onApply={handleApply}
             onChange={isApplyAllAtOnceEnabledAndSet ? handleChange : undefined}
             withoutApply={isApplyAllAtOnceEnabledAndSet}
@@ -355,20 +302,6 @@ export function DefaultDashboardMeasureValueFilter(
             DropdownActionsComponent={DropdownActionsComponent}
             DropdownButtonComponent={DropdownButtonComponent}
             onCancel={handleClose}
-            filter={dropdownFilter}
-            measureIdentifier={localIdentifier}
-            buttonTitle={metricTitle}
-            measureTitle={metricTitle}
-            usePercentage={usePercentage}
-            format={format}
-            useShortFormat
-            displayTreatNullAsZeroOption
-            separators={separators}
-            locale={locale}
-            enableOperatorSelection
-            enableMultipleConditions
-            isDimensionalityEnabled={false}
-            isFilterSummaryEnabled
             autoOpen={autoOpen}
         />
     );

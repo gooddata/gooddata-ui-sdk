@@ -423,6 +423,34 @@ export interface ExportDashboardAttributeFilterAttributeFilter {
 
 export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
 
+export interface ExportDashboardCompoundComparisonCondition {
+    'comparison': ExportDashboardCompoundComparisonConditionComparison;
+}
+
+export interface ExportDashboardCompoundComparisonConditionComparison {
+    'operator': ExportDashboardCompoundComparisonConditionComparisonOperatorEnum;
+    'value': number;
+}
+
+export type ExportDashboardCompoundComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
+
+/**
+ * @type ExportDashboardCompoundConditionItem
+ */
+export type ExportDashboardCompoundConditionItem = ExportDashboardCompoundComparisonCondition | ExportDashboardCompoundRangeCondition;
+
+export interface ExportDashboardCompoundRangeCondition {
+    'range': ExportDashboardCompoundRangeConditionRange;
+}
+
+export interface ExportDashboardCompoundRangeConditionRange {
+    'operator': ExportDashboardCompoundRangeConditionRangeOperatorEnum;
+    'from': number;
+    'to': number;
+}
+
+export type ExportDashboardCompoundRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
+
 export interface ExportDashboardDateFilter {
     'dateFilter': ExportDashboardDateFilterDateFilter;
 }
@@ -476,7 +504,7 @@ export type ExportDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LAN
 /**
  * @type ExportDashboardFilter
  */
-export type ExportDashboardFilter = ExportDashboardArbitraryAttributeFilter | ExportDashboardAttributeFilter | ExportDashboardDateFilter | ExportDashboardMatchAttributeFilter;
+export type ExportDashboardFilter = ExportDashboardArbitraryAttributeFilter | ExportDashboardAttributeFilter | ExportDashboardDateFilter | ExportDashboardMatchAttributeFilter | ExportDashboardMeasureValueFilter;
 
 export interface ExportDashboardMatchAttributeFilter {
     'matchAttributeFilter': ExportDashboardMatchAttributeFilterMatchAttributeFilter;
@@ -493,6 +521,17 @@ export interface ExportDashboardMatchAttributeFilterMatchAttributeFilter {
 }
 
 export type ExportDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
+
+export interface ExportDashboardMeasureValueFilter {
+    'dashboardMeasureValueFilter': ExportDashboardMeasureValueFilterDashboardMeasureValueFilter;
+}
+
+export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
+    'measure': ExportIdentifierRef;
+    'conditions': Array<ExportDashboardCompoundConditionItem>;
+    'title'?: string;
+    'localIdentifier'?: string;
+}
 
 /**
  * Export request object describing the export properties for dashboard tabular exports.

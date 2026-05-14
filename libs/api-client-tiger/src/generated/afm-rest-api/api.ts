@@ -95,6 +95,27 @@ export interface ActiveObjectIdentification {
 }
 
 /**
+ * Request to add a data source to an AI Lake Database instance
+ */
+export interface AddDatabaseDataSourceRequest {
+    /**
+     * Identifier for the new data source in metadata-api. Must be unique within the organization.
+     */
+    'dataSourceId': string;
+    /**
+     * Display name for the new data source in metadata-api. Defaults to dataSourceId when omitted.
+     */
+    'dataSourceName'?: string;
+}
+
+/**
+ * Newly created data source association for an AI Lake Database instance
+ */
+export interface AddDatabaseDataSourceResponse {
+    'dataSource': DataSourceInfo;
+}
+
+/**
  * Any information related to cancellation.
  */
 export interface AfmCancelTokens {
@@ -909,6 +930,22 @@ export interface ClusteringResult {
 }
 
 /**
+ * Single column projection override: applies `function(column)` to a source column.
+ */
+export interface ColumnExpression {
+    /**
+     * StarRocks transform applied to a source column when projecting it through the generated CREATE PIPE ... AS INSERT statement.
+     */
+    'function': ColumnExpressionFunctionEnum;
+    /**
+     * Source column produced by parquet schema inference (after columnOverrides).
+     */
+    'column': string;
+}
+
+export type ColumnExpressionFunctionEnum = 'HLL_HASH' | 'BITMAP_HASH' | 'BITMAP_HASH64' | 'TO_BITMAP';
+
+/**
  * A single column definition inferred from the parquet schema
  */
 export interface ColumnInfo {
@@ -1032,6 +1069,10 @@ export interface CreatePipeTableRequest {
      */
     'aggregationOverrides'?: { [key: string]: string; };
     /**
+     * Per-target-column projection overrides. Each entry emits `<function>(<column>) AS <key>` in the SELECT list of the generated CREATE PIPE ... AS INSERT; keys absent from the map are projected as-is. Required for AGGREGATE-KEY tables that include native HLL columns (StarRocks rejects raw VARBINARY into HLL columns).
+     */
+    'columnExpressions'?: { [key: string]: ColumnExpression; };
+    /**
      * How often (in seconds) the pipe polls for new files. 0 or null = use server default.
      */
     'pollingIntervalSeconds'?: number;
@@ -1136,6 +1177,24 @@ export interface DataColumnLocators {
 }
 
 /**
+ * A single data source association for an AI Lake Database instance
+ */
+export interface DataSourceInfo {
+    /**
+     * Id of the data source association record.
+     */
+    'id': string;
+    /**
+     * Identifier of the data source in metadata-api.
+     */
+    'dataSourceId': string;
+    /**
+     * Display name of the data source in metadata-api.
+     */
+    'dataSourceName': string;
+}
+
+/**
  * A single AI Lake Database instance
  */
 export interface DatabaseInstance {
@@ -1152,13 +1211,9 @@ export interface DatabaseInstance {
      */
     'storageIds': Array<string>;
     /**
-     * Identifier of the data source created in metadata-api.
+     * All data source associations for this database instance.
      */
-    'dataSourceId'?: string;
-    /**
-     * Display name of the data source created in metadata-api.
-     */
-    'dataSourceName'?: string;
+    'dataSources': Array<DataSourceInfo>;
 }
 
 export interface DateAbsoluteFilter {
@@ -1835,6 +1890,16 @@ export interface KeyDriversResult {
 }
 
 /**
+ * All data source associations for an AI Lake Database instance
+ */
+export interface ListDatabaseDataSourcesResponse {
+    /**
+     * List of data source associations.
+     */
+    'dataSources': Array<DataSourceInfo>;
+}
+
+/**
  * Paged response for listing AI Lake database instances
  */
 export interface ListDatabaseInstancesResponse {
@@ -1865,6 +1930,16 @@ export interface ListLlmProviderModelsResponse {
      * Available models on the provider.
      */
     'models': Array<LlmModel>;
+}
+
+/**
+ * Response for listing ObjectStorages registered for the organization.
+ */
+export interface ListObjectStoragesResponse {
+    /**
+     * Registered storages, ordered by name.
+     */
+    'storages': Array<ObjectStorageInfo>;
 }
 
 /**
@@ -2176,6 +2251,28 @@ export interface ObjectReferenceGroup {
      * Objects the user explicitly referenced within this context.
      */
     'objects': Array<ObjectReference>;
+}
+
+/**
+ * Descriptor of a registered ObjectStorage. Provider credentials are stripped — only fields useful for identifying the storage are returned.
+ */
+export interface ObjectStorageInfo {
+    /**
+     * Stable identifier of the storage configuration (UUID).
+     */
+    'storageId': string;
+    /**
+     * Human-readable name. Use this as `sourceStorageName` in CreatePipeTable, or pass `storageId` to ProvisionDatabase.storageIds.
+     */
+    'name': string;
+    /**
+     * Provider type.
+     */
+    'storageType': string;
+    /**
+     * Provider-specific descriptors (e.g. bucket, region, endpoint, container). Credential references (any keys ending in `_env`) are stripped server-side.
+     */
+    'storageConfig': { [key: string]: string; };
 }
 
 /**
@@ -2738,6 +2835,16 @@ export interface RelativeDateFilterRelativeDateFilter {
 
 export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 export type RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+
+/**
+ * Confirmation of data source removal from an AI Lake Database instance
+ */
+export interface RemoveDatabaseDataSourceResponse {
+    /**
+     * Identifier of the removed data source in metadata-api.
+     */
+    'dataSourceId': string;
+}
 
 /**
  * The resolved LLM configuration, or null if none is configured.
@@ -3414,6 +3521,38 @@ export interface UniqueKeyConfig {
 }
 
 /**
+ * Request to update the data source associated with an AI Lake Database instance
+ */
+export interface UpdateDatabaseDataSourceRequest {
+    /**
+     * New identifier for the data source in metadata-api. Must be unique within the organization.
+     */
+    'dataSourceId': string;
+    /**
+     * New display name for the data source in metadata-api. Defaults to dataSourceId when omitted.
+     */
+    'dataSourceName'?: string;
+    /**
+     * Identifier of the existing data source to replace.
+     */
+    'oldDataSourceId': string;
+}
+
+/**
+ * Updated data source details for an AI Lake Database instance
+ */
+export interface UpdateDatabaseDataSourceResponse {
+    /**
+     * New identifier of the data source in metadata-api.
+     */
+    'dataSourceId': string;
+    /**
+     * New display name of the data source in metadata-api.
+     */
+    'dataSourceName': string;
+}
+
+/**
  * User context with ambient UI state (view) and explicitly referenced objects.
  */
 export interface UserContext {
@@ -3619,6 +3758,68 @@ export interface WorkflowStatusResponseDto {
     'currentPhase'?: string;
 }
 
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.
+ * @summary (BETA) Add a data source to an AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {AddDatabaseDataSourceRequest} addDatabaseDataSourceRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_AddAiLakeDatabaseDataSource(
+    instanceId: string, addDatabaseDataSourceRequest: AddDatabaseDataSourceRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('addAiLakeDatabaseDataSource', 'instanceId', instanceId)
+    // verify required parameter 'addDatabaseDataSourceRequest' is not null or undefined
+    assertParamExists('addAiLakeDatabaseDataSource', 'addDatabaseDataSourceRequest', addDatabaseDataSourceRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSources`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof addDatabaseDataSourceRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(addDatabaseDataSourceRequest !== undefined ? addDatabaseDataSourceRequest : {})
+        : addDatabaseDataSourceRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
 
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
@@ -4045,6 +4246,51 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeServiceStatus(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
+ * (BETA) Returns all data source associations for the specified AI Lake database instance.
+ * @summary (BETA) List data sources of an AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
+    instanceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('listAiLakeDatabaseDataSources', 'instanceId', instanceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSources`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
  * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
  * @summary (BETA) List AI Lake Database instances
  * @param {number} [size] 
@@ -4081,6 +4327,47 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
     }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+ * @summary (BETA) List registered AI Lake ObjectStorages
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ailake/object-storages`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
 
 
     
@@ -4265,6 +4552,55 @@ export async function AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
+ * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
+ * @summary (BETA) Remove a data source from an AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} dataSourceId Identifier of the data source to remove.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_RemoveAiLakeDatabaseDataSource(
+    instanceId: string, dataSourceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('removeAiLakeDatabaseDataSource', 'instanceId', instanceId)
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists('removeAiLakeDatabaseDataSource', 'dataSourceId', dataSourceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSources/{dataSourceId}`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
  * (BETA) Runs a specific AI Lake service command.
  * @summary (BETA) Run an AI Lake services command
  * @param {string} serviceId 
@@ -4333,6 +4669,94 @@ export async function AILakeApiAxiosParamCreator_RunAiLakeServiceCommand(
     };
 }
 
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
+ * @summary (BETA) Update the data source of an AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {UpdateDatabaseDataSourceRequest} updateDatabaseDataSourceRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_UpdateAiLakeDatabaseDataSource(
+    instanceId: string, updateDatabaseDataSourceRequest: UpdateDatabaseDataSourceRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('updateAiLakeDatabaseDataSource', 'instanceId', instanceId)
+    // verify required parameter 'updateDatabaseDataSourceRequest' is not null or undefined
+    assertParamExists('updateAiLakeDatabaseDataSource', 'updateDatabaseDataSourceRequest', updateDatabaseDataSourceRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSource`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof updateDatabaseDataSourceRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(updateDatabaseDataSourceRequest !== undefined ? updateDatabaseDataSourceRequest : {})
+        : updateDatabaseDataSourceRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AILakeApi Api FP
+/**
+ * (BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.
+ * @summary (BETA) Add a data source to an AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiAddAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_AddAiLakeDatabaseDataSource(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiAddAiLakeDatabaseDataSourceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AddDatabaseDataSourceResponse> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_AddAiLakeDatabaseDataSource(
+        requestParameters.instanceId, requestParameters.addDatabaseDataSourceRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
 
 
 // AILakeApi Api FP
@@ -4545,6 +4969,32 @@ export async function AILakeApi_GetAiLakeServiceStatus(
 
 // AILakeApi Api FP
 /**
+ * (BETA) Returns all data source associations for the specified AI Lake database instance.
+ * @summary (BETA) List data sources of an AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_ListAiLakeDatabaseDataSources(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiListAiLakeDatabaseDataSourcesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListDatabaseDataSourcesResponse> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
+        requestParameters.instanceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
  * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
  * @summary (BETA) List AI Lake Database instances
  * @param {AxiosInstance} axios Axios instance.
@@ -4562,6 +5012,31 @@ export async function AILakeApi_ListAiLakeDatabaseInstances(
 ): AxiosPromise<ListDatabaseInstancesResponse> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
         requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
+ * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+ * @summary (BETA) List registered AI Lake ObjectStorages
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_ListAiLakeObjectStorages(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListObjectStoragesResponse> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
+        
         options || {},
         configuration,
     );
@@ -4649,6 +5124,32 @@ export async function AILakeApi_ProvisionAiLakeDatabaseInstance(
 
 // AILakeApi Api FP
 /**
+ * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
+ * @summary (BETA) Remove a data source from an AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiRemoveAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_RemoveAiLakeDatabaseDataSource(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiRemoveAiLakeDatabaseDataSourceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<RemoveDatabaseDataSourceResponse> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_RemoveAiLakeDatabaseDataSource(
+        requestParameters.instanceId, requestParameters.dataSourceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
  * (BETA) Runs a specific AI Lake service command.
  * @summary (BETA) Run an AI Lake services command
  * @param {AxiosInstance} axios Axios instance.
@@ -4673,12 +5174,48 @@ export async function AILakeApi_RunAiLakeServiceCommand(
 }
 
 
+// AILakeApi Api FP
+/**
+ * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
+ * @summary (BETA) Update the data source of an AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiUpdateAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_UpdateAiLakeDatabaseDataSource(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiUpdateAiLakeDatabaseDataSourceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<UpdateDatabaseDataSourceResponse> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_UpdateAiLakeDatabaseDataSource(
+        requestParameters.instanceId, requestParameters.updateDatabaseDataSourceRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * AILakeApi - interface
  * @export
  * @interface AILakeApi
  */
 export interface AILakeApiInterface {
+    /**
+     * (BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.
+     * @summary (BETA) Add a data source to an AILake Database instance
+     * @param {AILakeApiAddAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    addAiLakeDatabaseDataSource(requestParameters: AILakeApiAddAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<AddDatabaseDataSourceResponse>;
+
     /**
      * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
      * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
@@ -4760,6 +5297,16 @@ export interface AILakeApiInterface {
     getAiLakeServiceStatus(requestParameters: AILakeApiGetAiLakeServiceStatusRequest, options?: AxiosRequestConfig): AxiosPromise<GetServiceStatusResponse>;
 
     /**
+     * (BETA) Returns all data source associations for the specified AI Lake database instance.
+     * @summary (BETA) List data sources of an AILake Database instance
+     * @param {AILakeApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    listAiLakeDatabaseDataSources(requestParameters: AILakeApiListAiLakeDatabaseDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseDataSourcesResponse>;
+
+    /**
      * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
      * @summary (BETA) List AI Lake Database instances
      * @param {AILakeApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
@@ -4768,6 +5315,15 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseInstancesResponse>;
+
+    /**
+     * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+     * @summary (BETA) List registered AI Lake ObjectStorages
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    listAiLakeObjectStorages(options?: AxiosRequestConfig): AxiosPromise<ListObjectStoragesResponse>;
 
     /**
      * (BETA) Lists all active pipe tables in the given AI Lake database instance.
@@ -4800,6 +5356,16 @@ export interface AILakeApiInterface {
     provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
 
     /**
+     * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
+     * @summary (BETA) Remove a data source from an AILake Database instance
+     * @param {AILakeApiRemoveAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    removeAiLakeDatabaseDataSource(requestParameters: AILakeApiRemoveAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<RemoveDatabaseDataSourceResponse>;
+
+    /**
      * (BETA) Runs a specific AI Lake service command.
      * @summary (BETA) Run an AI Lake services command
      * @param {AILakeApiRunAiLakeServiceCommandRequest} requestParameters Request parameters.
@@ -4809,6 +5375,37 @@ export interface AILakeApiInterface {
      */
     runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
 
+    /**
+     * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
+     * @summary (BETA) Update the data source of an AILake Database instance
+     * @param {AILakeApiUpdateAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    updateAiLakeDatabaseDataSource(requestParameters: AILakeApiUpdateAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<UpdateDatabaseDataSourceResponse>;
+
+}
+
+/**
+ * Request parameters for addAiLakeDatabaseDataSource operation in AILakeApi.
+ * @export
+ * @interface AILakeApiAddAiLakeDatabaseDataSourceRequest
+ */
+export interface AILakeApiAddAiLakeDatabaseDataSourceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiAddAiLakeDatabaseDataSource
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {AddDatabaseDataSourceRequest}
+     * @memberof AILakeApiAddAiLakeDatabaseDataSource
+     */
+    readonly addDatabaseDataSourceRequest: AddDatabaseDataSourceRequest
 }
 
 /**
@@ -4980,6 +5577,20 @@ export interface AILakeApiGetAiLakeServiceStatusRequest {
 }
 
 /**
+ * Request parameters for listAiLakeDatabaseDataSources operation in AILakeApi.
+ * @export
+ * @interface AILakeApiListAiLakeDatabaseDataSourcesRequest
+ */
+export interface AILakeApiListAiLakeDatabaseDataSourcesRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiListAiLakeDatabaseDataSources
+     */
+    readonly instanceId: string
+}
+
+/**
  * Request parameters for listAiLakeDatabaseInstances operation in AILakeApi.
  * @export
  * @interface AILakeApiListAiLakeDatabaseInstancesRequest
@@ -5071,6 +5682,27 @@ export interface AILakeApiProvisionAiLakeDatabaseInstanceRequest {
 }
 
 /**
+ * Request parameters for removeAiLakeDatabaseDataSource operation in AILakeApi.
+ * @export
+ * @interface AILakeApiRemoveAiLakeDatabaseDataSourceRequest
+ */
+export interface AILakeApiRemoveAiLakeDatabaseDataSourceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiRemoveAiLakeDatabaseDataSource
+     */
+    readonly instanceId: string
+
+    /**
+     * Identifier of the data source to remove.
+     * @type {string}
+     * @memberof AILakeApiRemoveAiLakeDatabaseDataSource
+     */
+    readonly dataSourceId: string
+}
+
+/**
  * Request parameters for runAiLakeServiceCommand operation in AILakeApi.
  * @export
  * @interface AILakeApiRunAiLakeServiceCommandRequest
@@ -5106,12 +5738,45 @@ export interface AILakeApiRunAiLakeServiceCommandRequest {
 }
 
 /**
+ * Request parameters for updateAiLakeDatabaseDataSource operation in AILakeApi.
+ * @export
+ * @interface AILakeApiUpdateAiLakeDatabaseDataSourceRequest
+ */
+export interface AILakeApiUpdateAiLakeDatabaseDataSourceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiUpdateAiLakeDatabaseDataSource
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {UpdateDatabaseDataSourceRequest}
+     * @memberof AILakeApiUpdateAiLakeDatabaseDataSource
+     */
+    readonly updateDatabaseDataSourceRequest: UpdateDatabaseDataSourceRequest
+}
+
+/**
  * AILakeApi - object-oriented interface
  * @export
  * @class AILakeApi
  * @extends {BaseAPI}
  */
 export class AILakeApi extends BaseAPI implements AILakeApiInterface {
+    /**
+     * (BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.
+     * @summary (BETA) Add a data source to an AILake Database instance
+     * @param {AILakeApiAddAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public addAiLakeDatabaseDataSource(requestParameters: AILakeApiAddAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_AddAiLakeDatabaseDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
     /**
      * (BETA) Collects CBO statistics for tables in a StarRocks database. Works for both internal (native/PIPE) and external (Iceberg) catalogs. If tableNames is empty, all tables are analyzed.
      * @summary (BETA) Run ANALYZE TABLE for tables in a database instance
@@ -5209,6 +5874,18 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
+     * (BETA) Returns all data source associations for the specified AI Lake database instance.
+     * @summary (BETA) List data sources of an AILake Database instance
+     * @param {AILakeApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public listAiLakeDatabaseDataSources(requestParameters: AILakeApiListAiLakeDatabaseDataSourcesRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_ListAiLakeDatabaseDataSources(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
      * @summary (BETA) List AI Lake Database instances
      * @param {AILakeApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
@@ -5218,6 +5895,17 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest = {}, options?: AxiosRequestConfig) {
         return AILakeApi_ListAiLakeDatabaseInstances(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+     * @summary (BETA) List registered AI Lake ObjectStorages
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public listAiLakeObjectStorages(options?: AxiosRequestConfig) {
+        return AILakeApi_ListAiLakeObjectStorages(this.axios, this.basePath, options, this.configuration);
     }
 
     /**
@@ -5257,6 +5945,18 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
+     * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
+     * @summary (BETA) Remove a data source from an AILake Database instance
+     * @param {AILakeApiRemoveAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public removeAiLakeDatabaseDataSource(requestParameters: AILakeApiRemoveAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_RemoveAiLakeDatabaseDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * (BETA) Runs a specific AI Lake service command.
      * @summary (BETA) Run an AI Lake services command
      * @param {AILakeApiRunAiLakeServiceCommandRequest} requestParameters Request parameters.
@@ -5267,6 +5967,80 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     public runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig) {
         return AILakeApi_RunAiLakeServiceCommand(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
+
+    /**
+     * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
+     * @summary (BETA) Update the data source of an AILake Database instance
+     * @param {AILakeApiUpdateAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public updateAiLakeDatabaseDataSource(requestParameters: AILakeApiUpdateAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_UpdateAiLakeDatabaseDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.
+ * @summary (BETA) Add a data source to an AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {AddDatabaseDataSourceRequest} addDatabaseDataSourceRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_AddAiLakeDatabaseDataSource(
+    instanceId: string, addDatabaseDataSourceRequest: AddDatabaseDataSourceRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('addAiLakeDatabaseDataSource', 'instanceId', instanceId)
+    // verify required parameter 'addDatabaseDataSourceRequest' is not null or undefined
+    assertParamExists('addAiLakeDatabaseDataSource', 'addDatabaseDataSourceRequest', addDatabaseDataSourceRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSources`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof addDatabaseDataSourceRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(addDatabaseDataSourceRequest !== undefined ? addDatabaseDataSourceRequest : {})
+        : addDatabaseDataSourceRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
 }
 
 
@@ -5367,6 +6141,51 @@ export async function AILakeDatabasesApiAxiosParamCreator_GetAiLakeDatabaseInsta
 
 // AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
 /**
+ * (BETA) Returns all data source associations for the specified AI Lake database instance.
+ * @summary (BETA) List data sources of an AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
+    instanceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('listAiLakeDatabaseDataSources', 'instanceId', instanceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSources`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
  * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
  * @summary (BETA) List AI Lake Database instances
  * @param {number} [size] 
@@ -5403,6 +6222,47 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInst
     if (metaInclude) {
         localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
     }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+ * @summary (BETA) List registered AI Lake ObjectStorages
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeObjectStorages(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ailake/object-storages`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
 
 
     
@@ -5484,6 +6344,143 @@ export async function AILakeDatabasesApiAxiosParamCreator_ProvisionAiLakeDatabas
 }
 
 
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
+ * @summary (BETA) Remove a data source from an AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} dataSourceId Identifier of the data source to remove.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_RemoveAiLakeDatabaseDataSource(
+    instanceId: string, dataSourceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('removeAiLakeDatabaseDataSource', 'instanceId', instanceId)
+    // verify required parameter 'dataSourceId' is not null or undefined
+    assertParamExists('removeAiLakeDatabaseDataSource', 'dataSourceId', dataSourceId)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSources/{dataSourceId}`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"dataSourceId"}}`, encodeURIComponent(String(dataSourceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
+/**
+ * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
+ * @summary (BETA) Update the data source of an AILake Database instance
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {UpdateDatabaseDataSourceRequest} updateDatabaseDataSourceRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApiAxiosParamCreator_UpdateAiLakeDatabaseDataSource(
+    instanceId: string, updateDatabaseDataSourceRequest: UpdateDatabaseDataSourceRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('updateAiLakeDatabaseDataSource', 'instanceId', instanceId)
+    // verify required parameter 'updateDatabaseDataSourceRequest' is not null or undefined
+    assertParamExists('updateAiLakeDatabaseDataSource', 'updateDatabaseDataSourceRequest', updateDatabaseDataSourceRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/dataSource`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof updateDatabaseDataSourceRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(updateDatabaseDataSourceRequest !== undefined ? updateDatabaseDataSourceRequest : {})
+        : updateDatabaseDataSourceRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AILakeDatabasesApi Api FP
+/**
+ * (BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.
+ * @summary (BETA) Add a data source to an AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_AddAiLakeDatabaseDataSource(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AddDatabaseDataSourceResponse> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_AddAiLakeDatabaseDataSource(
+        requestParameters.instanceId, requestParameters.addDatabaseDataSourceRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
 
 // AILakeDatabasesApi Api FP
 /**
@@ -5539,6 +6536,32 @@ export async function AILakeDatabasesApi_GetAiLakeDatabaseInstance(
 
 // AILakeDatabasesApi Api FP
 /**
+ * (BETA) Returns all data source associations for the specified AI Lake database instance.
+ * @summary (BETA) List data sources of an AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_ListAiLakeDatabaseDataSources(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListDatabaseDataSourcesResponse> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
+        requestParameters.instanceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeDatabasesApi Api FP
+/**
  * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
  * @summary (BETA) List AI Lake Database instances
  * @param {AxiosInstance} axios Axios instance.
@@ -5556,6 +6579,31 @@ export async function AILakeDatabasesApi_ListAiLakeDatabaseInstances(
 ): AxiosPromise<ListDatabaseInstancesResponse> {
     const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInstances(
         requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeDatabasesApi Api FP
+/**
+ * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+ * @summary (BETA) List registered AI Lake ObjectStorages
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_ListAiLakeObjectStorages(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListObjectStoragesResponse> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ListAiLakeObjectStorages(
+        
         options || {},
         configuration,
     );
@@ -5589,12 +6637,74 @@ export async function AILakeDatabasesApi_ProvisionAiLakeDatabaseInstance(
 }
 
 
+// AILakeDatabasesApi Api FP
+/**
+ * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
+ * @summary (BETA) Remove a data source from an AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_RemoveAiLakeDatabaseDataSource(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<RemoveDatabaseDataSourceResponse> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_RemoveAiLakeDatabaseDataSource(
+        requestParameters.instanceId, requestParameters.dataSourceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeDatabasesApi Api FP
+/**
+ * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
+ * @summary (BETA) Update the data source of an AILake Database instance
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeDatabasesApi_UpdateAiLakeDatabaseDataSource(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<UpdateDatabaseDataSourceResponse> {
+    const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_UpdateAiLakeDatabaseDataSource(
+        requestParameters.instanceId, requestParameters.updateDatabaseDataSourceRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * AILakeDatabasesApi - interface
  * @export
  * @interface AILakeDatabasesApi
  */
 export interface AILakeDatabasesApiInterface {
+    /**
+     * (BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.
+     * @summary (BETA) Add a data source to an AILake Database instance
+     * @param {AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    addAiLakeDatabaseDataSource(requestParameters: AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<AddDatabaseDataSourceResponse>;
+
     /**
      * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
@@ -5616,6 +6726,16 @@ export interface AILakeDatabasesApiInterface {
     getAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<DatabaseInstance>;
 
     /**
+     * (BETA) Returns all data source associations for the specified AI Lake database instance.
+     * @summary (BETA) List data sources of an AILake Database instance
+     * @param {AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    listAiLakeDatabaseDataSources(requestParameters: AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseDataSourcesResponse>;
+
+    /**
      * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
      * @summary (BETA) List AI Lake Database instances
      * @param {AILakeDatabasesApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
@@ -5624,6 +6744,15 @@ export interface AILakeDatabasesApiInterface {
      * @memberof AILakeDatabasesApiInterface
      */
     listAiLakeDatabaseInstances(requestParameters: AILakeDatabasesApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseInstancesResponse>;
+
+    /**
+     * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+     * @summary (BETA) List registered AI Lake ObjectStorages
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    listAiLakeObjectStorages(options?: AxiosRequestConfig): AxiosPromise<ListObjectStoragesResponse>;
 
     /**
      * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
@@ -5635,6 +6764,47 @@ export interface AILakeDatabasesApiInterface {
      */
     provisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
 
+    /**
+     * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
+     * @summary (BETA) Remove a data source from an AILake Database instance
+     * @param {AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    removeAiLakeDatabaseDataSource(requestParameters: AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<RemoveDatabaseDataSourceResponse>;
+
+    /**
+     * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
+     * @summary (BETA) Update the data source of an AILake Database instance
+     * @param {AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApiInterface
+     */
+    updateAiLakeDatabaseDataSource(requestParameters: AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig): AxiosPromise<UpdateDatabaseDataSourceResponse>;
+
+}
+
+/**
+ * Request parameters for addAiLakeDatabaseDataSource operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest
+ */
+export interface AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeDatabasesApiAddAiLakeDatabaseDataSource
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {AddDatabaseDataSourceRequest}
+     * @memberof AILakeDatabasesApiAddAiLakeDatabaseDataSource
+     */
+    readonly addDatabaseDataSourceRequest: AddDatabaseDataSourceRequest
 }
 
 /**
@@ -5668,6 +6838,20 @@ export interface AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest {
      * Database instance identifier. Accepts the database name (preferred) or UUID.
      * @type {string}
      * @memberof AILakeDatabasesApiGetAiLakeDatabaseInstance
+     */
+    readonly instanceId: string
+}
+
+/**
+ * Request parameters for listAiLakeDatabaseDataSources operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest
+ */
+export interface AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeDatabasesApiListAiLakeDatabaseDataSources
      */
     readonly instanceId: string
 }
@@ -5722,12 +6906,66 @@ export interface AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest {
 }
 
 /**
+ * Request parameters for removeAiLakeDatabaseDataSource operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest
+ */
+export interface AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeDatabasesApiRemoveAiLakeDatabaseDataSource
+     */
+    readonly instanceId: string
+
+    /**
+     * Identifier of the data source to remove.
+     * @type {string}
+     * @memberof AILakeDatabasesApiRemoveAiLakeDatabaseDataSource
+     */
+    readonly dataSourceId: string
+}
+
+/**
+ * Request parameters for updateAiLakeDatabaseDataSource operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest
+ */
+export interface AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeDatabasesApiUpdateAiLakeDatabaseDataSource
+     */
+    readonly instanceId: string
+
+    /**
+     * 
+     * @type {UpdateDatabaseDataSourceRequest}
+     * @memberof AILakeDatabasesApiUpdateAiLakeDatabaseDataSource
+     */
+    readonly updateDatabaseDataSourceRequest: UpdateDatabaseDataSourceRequest
+}
+
+/**
  * AILakeDatabasesApi - object-oriented interface
  * @export
  * @class AILakeDatabasesApi
  * @extends {BaseAPI}
  */
 export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInterface {
+    /**
+     * (BETA) Associates an additional metadata-api data source with an existing AI Lake database instance. The new data source uses the same StarRocks connection details as the primary data source.
+     * @summary (BETA) Add a data source to an AILake Database instance
+     * @param {AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public addAiLakeDatabaseDataSource(requestParameters: AILakeDatabasesApiAddAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_AddAiLakeDatabaseDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
     /**
      * (BETA) Deletes an existing database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Delete an existing AILake Database instance
@@ -5753,6 +6991,18 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
     }
 
     /**
+     * (BETA) Returns all data source associations for the specified AI Lake database instance.
+     * @summary (BETA) List data sources of an AILake Database instance
+     * @param {AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public listAiLakeDatabaseDataSources(requestParameters: AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_ListAiLakeDatabaseDataSources(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
      * @summary (BETA) List AI Lake Database instances
      * @param {AILakeDatabasesApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
@@ -5765,6 +7015,17 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
     }
 
     /**
+     * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
+     * @summary (BETA) List registered AI Lake ObjectStorages
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public listAiLakeObjectStorages(options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_ListAiLakeObjectStorages(this.axios, this.basePath, options, this.configuration);
+    }
+
+    /**
      * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
      * @summary (BETA) Create a new AILake Database instance
      * @param {AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest} requestParameters Request parameters.
@@ -5774,6 +7035,30 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
      */
     public provisionAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
         return AILakeDatabasesApi_ProvisionAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
+     * @summary (BETA) Remove a data source from an AILake Database instance
+     * @param {AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public removeAiLakeDatabaseDataSource(requestParameters: AILakeDatabasesApiRemoveAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_RemoveAiLakeDatabaseDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Updates the data source ID and name for an existing AI Lake database instance without deleting the underlying database. Use this to recover from a wrong data source ID provisioned on an existing database instance.
+     * @summary (BETA) Update the data source of an AILake Database instance
+     * @param {AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeDatabasesApi
+     */
+    public updateAiLakeDatabaseDataSource(requestParameters: AILakeDatabasesApiUpdateAiLakeDatabaseDataSourceRequest, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_UpdateAiLakeDatabaseDataSource(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -8122,13 +9407,13 @@ export async function ActionsApiAxiosParamCreator_CreatedBy(
  * @summary AFM explain resource.
  * @param {string} workspaceId Workspace identifier
  * @param {AfmExecution} afmExecution 
- * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+ * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_ExplainAFM(
-    workspaceId: string, afmExecution: AfmExecution, explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL', 
+    workspaceId: string, afmExecution: AfmExecution, explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT', 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -10954,6 +12239,7 @@ export interface ActionsApiInterface {
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
      * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
@@ -10964,6 +12250,7 @@ export interface ActionsApiInterface {
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
      * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
@@ -11882,11 +13169,11 @@ export interface ActionsApiExplainAFMRequest {
     readonly afmExecution: AfmExecution
 
     /**
-     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
-     * @type {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'}
+     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
+     * @type {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'}
      * @memberof ActionsApiExplainAFM
      */
-    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'
+    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'
 }
 
 /**
@@ -12556,6 +13843,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
      * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
@@ -12568,6 +13856,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
      * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
@@ -13578,13 +14867,13 @@ export async function ComputationApiAxiosParamCreator_ComputeValidObjects(
  * @summary AFM explain resource.
  * @param {string} workspaceId Workspace identifier
  * @param {AfmExecution} afmExecution 
- * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
+ * @param {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'} [explainType] Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ComputationApiAxiosParamCreator_ExplainAFM(
-    workspaceId: string, afmExecution: AfmExecution, explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL', 
+    workspaceId: string, afmExecution: AfmExecution, explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT', 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -14886,11 +16175,11 @@ export interface ComputationApiExplainAFMRequest {
     readonly afmExecution: AfmExecution
 
     /**
-     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request
-     * @type {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'}
+     * Requested explain type. If not specified all types are bundled in a ZIP archive.  &#x60;MAQL&#x60; - MAQL Abstract Syntax Tree, execution dimensions and related info  &#x60;GRPC_MODEL&#x60; - Datasets used in execution  &#x60;GRPC_MODEL_SVG&#x60; - Generated SVG image of the datasets  &#x60;COMPRESSED_GRPC_MODEL_SVG&#x60; - Generated SVG image of the model fragment used in the query  &#x60;WDF&#x60; - Workspace data filters in execution workspace context  &#x60;QT&#x60; - Query Tree, created from MAQL AST using Logical Data Model,  contains all information needed to generate SQL  &#x60;QT_SVG&#x60; - Generated SVG image of the Query Tree  &#x60;OPT_QT&#x60; - Optimized Query Tree  &#x60;OPT_QT_SVG&#x60; - Generated SVG image of the Optimized Query Tree  &#x60;SQL&#x60; - Final SQL to be executed  &#x60;COMPRESSED_SQL&#x60; - Final SQL to be executed with rolled SQL datasets  &#x60;SETTINGS&#x60; - Settings used to execute explain request  &#x60;GIT&#x60; - Git properties of current build
+     * @type {'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'}
      * @memberof ComputationApiExplainAFM
      */
-    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL'
+    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL' | 'COMPRESSED_GRPC_MODEL_SVG' | 'GIT'
 }
 
 /**
@@ -17663,6 +18952,7 @@ export interface SmartFunctionsApiInterface {
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
      * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
@@ -17673,6 +18963,7 @@ export interface SmartFunctionsApiInterface {
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
      * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
@@ -18546,6 +19837,7 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
      * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */
@@ -18558,6 +19850,7 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
      * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */

@@ -4,6 +4,7 @@ import { call, cancel, cancelled, getContext, put, select } from "redux-saga/eff
 
 import {
     type IAnalyticalBackend,
+    type IChatConversation,
     type IChatConversationError,
     type IChatConversationItem,
     type IChatConversationThreadQuery,
@@ -41,7 +42,7 @@ import {
 } from "../chatWindow/chatWindowSelectors.js";
 import { clearUserContextAction } from "../chatWindow/chatWindowSlice.js";
 import {
-    conversationMessagesSelector,
+    conversationMessagesByIdSelector,
     conversationSelector,
     messagesSelector,
 } from "../messages/messagesSelectors.js";
@@ -65,7 +66,7 @@ import { convertMessageToChatConversation, extractError } from "./utils.js";
  * @internal
  */
 export function* onUserMessage({ payload }: ReturnType<typeof newMessageAction>) {
-    const conversation: IChatConversationLocal | "new" | undefined = yield select(conversationSelector);
+    const conversation: IChatConversationLocal | undefined = yield select(conversationSelector);
     let message = payload;
 
     if (conversation && !isChatConversationLocalItem(message)) {
@@ -286,6 +287,10 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
     let initialAssistantMessage: IChatConversationLocalItem | undefined = undefined;
     let lastAssistantMessage: IChatConversationLocalItem | undefined = undefined;
 
+    // Check current conversation
+    const conversationState: IChatConversationLocal | undefined = yield select(conversationSelector);
+    let conversation: IChatConversationLocal | undefined = undefined;
+
     try {
         // Make sure the message is a user message and it got text contents
         if (message.role !== "user") {
@@ -300,36 +305,39 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         const workspace: string = yield getContext("workspace");
         const isPreview: boolean | undefined = yield getContext("isPreview");
 
-        // Check current conversation
-        const conversationState: IChatConversationLocal | "new" | undefined =
-            yield select(conversationSelector);
-
         // Check state
-        if (conversationState !== "new" && !conversationState?.id) {
+        if (!conversationState?.localId) {
             throw new Error("Conversation ID is not available.");
         }
 
         // Create assistant message
         initialAssistantMessage = makeAssistantItem();
 
-        // Set evaluation state in store
-        yield put(evaluateMessageAction({ message: initialAssistantMessage }));
-
-        let conversation: IChatConversationLocal;
         // If we are in the transient new-conversation state, create the conversation first
-        if (conversationState === "new") {
+        if (conversationState.id) {
+            conversation = conversationState;
+        } else {
             const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-            const created: IChatConversationLocal = yield call(api.create.bind(api));
-            const updated: IChatConversationLocal = yield call(api.update.bind(api), created.id, {
+            const created: IChatConversation = yield call(api.create.bind(api));
+            const updated: IChatConversation = yield call(api.update.bind(api), created.id, {
                 title: generateTitleFromQuestion(message.content.text),
             });
-            // Store it as current conversation and clear the transient flag
-            yield put(setCurrentConversationAction({ conversation: updated }));
             //save
-            conversation = updated;
-        } else {
-            conversation = conversationState;
+            conversation = {
+                ...updated,
+                localId: conversationState.localId,
+            };
+            // Store it as current conversation and clear the transient flag
+            yield put(setCurrentConversationAction({ conversation }));
         }
+
+        // Set evaluation state in store
+        yield put(
+            evaluateMessageAction({
+                message: initialAssistantMessage,
+                conversationId: conversation.localId,
+            }),
+        );
 
         // Make the request to start the evaluation
         const chatThreadQuery = backend
@@ -347,7 +355,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             message,
             initialAssistantMessage,
             chatThreadQuery,
-            conversationState === "new",
+            !conversationState.id,
         );
         lastAssistantMessage = result.lastAssistantMessage;
     } catch (e) {
@@ -360,6 +368,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
                 evaluateMessageErrorAction({
                     assistantMessageId: messageToError.localId,
                     error: extractError(e),
+                    conversationId: conversation?.localId,
                 }),
             );
         }
@@ -371,13 +380,17 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         if (messageToComplete && !wasCanceled) {
             // Check if the message still exists before marking it complete
             // (it may have been removed if the chat was cleared)
-            const currentMessages: Message[] = yield select(conversationMessagesSelector);
+            const currentMessages: Message[] = yield select(
+                conversationMessagesByIdSelector,
+                conversation?.localId,
+            );
             const messageExists = currentMessages.some((m) => m.localId === messageToComplete.localId);
 
             if (messageExists) {
                 yield put(
                     evaluateMessageCompleteAction({
                         assistantMessageId: messageToComplete.localId,
+                        conversationId: conversation?.localId,
                     }),
                 );
             }
@@ -457,6 +470,7 @@ function* evaluateUserConversationMessage(
                         yield put(
                             evaluateMessageUpdateAction({
                                 conversation,
+                                conversationId: conversation.localId,
                                 userMessageId: currentUserMessage.localId,
                                 interactionId: value.id,
                                 message: value,
@@ -481,7 +495,8 @@ function* evaluateUserConversationMessage(
                         // Check if the current message still exists before marking it complete
                         // (it may have been removed if the chat was cleared)
                         const currentMessages: IChatConversationLocalItem[] = yield select(
-                            conversationMessagesSelector,
+                            conversationMessagesByIdSelector,
+                            conversation.localId,
                         );
                         const messageExists = currentMessages.some(
                             (m) => m.localId === currentAssistantMessage.localId,
@@ -492,13 +507,19 @@ function* evaluateUserConversationMessage(
                             yield put(
                                 evaluateMessageCompleteAction({
                                     assistantMessageId: currentAssistantMessage.localId,
+                                    conversationId: conversation.localId,
                                 }),
                             );
                         }
 
                         // Create new assistant message for the new interaction
                         currentAssistantMessage = makeAssistantItem();
-                        yield put(evaluateMessageAction({ message: currentAssistantMessage }));
+                        yield put(
+                            evaluateMessageAction({
+                                message: currentAssistantMessage,
+                                conversationId: conversation.localId,
+                            }),
+                        );
                     }
 
                     // Track the current interaction ID
@@ -509,10 +530,11 @@ function* evaluateUserConversationMessage(
                     // Dispatch streaming content to current message
                     yield put(
                         evaluateMessageStreamingAction({
+                            content: convertToLocalContent(value.content),
                             assistantMessageId: currentAssistantMessage.localId,
+                            conversationId: conversation.localId,
                             interactionId: chunkInteractionId,
                             item: value,
-                            content: convertToLocalContent(value.content),
                         }),
                     );
                 }
@@ -521,6 +543,7 @@ function* evaluateUserConversationMessage(
                     yield put(
                         evaluateMessageSuggestionsAction({
                             assistantMessageId: currentAssistantMessage.localId,
+                            conversationId: conversation.localId,
                             item: value,
                         }),
                     );
@@ -536,7 +559,8 @@ function* evaluateUserConversationMessage(
                         // Check if the current message still exists before marking it complete
                         // (it may have been removed if the chat was cleared)
                         const currentMessages: IChatConversationLocalItem[] = yield select(
-                            conversationMessagesSelector,
+                            conversationMessagesByIdSelector,
+                            conversation.localId,
                         );
                         const messageExists = currentMessages.some(
                             (m) => m.localId === currentAssistantMessage.localId,
@@ -547,13 +571,19 @@ function* evaluateUserConversationMessage(
                             yield put(
                                 evaluateMessageCompleteAction({
                                     assistantMessageId: currentAssistantMessage.localId,
+                                    conversationId: conversation.localId,
                                 }),
                             );
                         }
 
                         // Create new assistant message for the new interaction
                         currentAssistantMessage = makeAssistantItem();
-                        yield put(evaluateMessageAction({ message: currentAssistantMessage }));
+                        yield put(
+                            evaluateMessageAction({
+                                message: currentAssistantMessage,
+                                conversationId: conversation.localId,
+                            }),
+                        );
                     }
 
                     // Track the current interaction ID
@@ -567,6 +597,7 @@ function* evaluateUserConversationMessage(
                             assistantMessageId: currentAssistantMessage.localId,
                             interactionId: chunkInteractionId,
                             content: value,
+                            conversationId: conversation.localId,
                         }),
                     );
                 }
@@ -586,7 +617,10 @@ function* evaluateUserConversationMessage(
         }
 
         //Cancel saga
-        const messages: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
+        const messages: IChatConversationLocalItem[] = yield select(
+            conversationMessagesByIdSelector,
+            conversation.localId,
+        );
         const found = messages.find((m) => m.localId === currentAssistantMessage.localId);
         if (!found) {
             yield cancel();

@@ -631,6 +631,21 @@ export function dashboardMeasureValueFilterLocalIdentifier(filter: IDashboardMea
 }
 
 /**
+ * Type-guard testing whether the provided object is an "All" dashboard measure value filter —
+ * a no-op MVF with no effective conditions (undefined or empty array). Such filters do not
+ * restrict execution and are typically stripped from stored filter contexts.
+ *
+ * @alpha
+ */
+export function isAllDashboardMeasureValueFilter(obj: unknown): boolean {
+    if (!isDashboardMeasureValueFilter(obj)) {
+        return false;
+    }
+    const conditions = obj.dashboardMeasureValueFilter.conditions;
+    return !conditions || conditions.length === 0;
+}
+
+/**
  * Type-guard testing whether the provider object is an All values attribute filter
  * @alpha
  */

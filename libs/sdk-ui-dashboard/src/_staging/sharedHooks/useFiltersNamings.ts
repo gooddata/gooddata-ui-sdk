@@ -6,10 +6,14 @@ import { v4 as uuidv4 } from "uuid";
 import {
     type FilterContextItem,
     type IAttributeElement,
+    type ICatalogMeasure,
+    type ISeparators,
     type ObjRef,
+    areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     getAttributeElementsItems,
+    isAllDashboardMeasureValueFilter,
     isAllTimeDashboardDateFilter,
     isAllValuesDashboardAttributeFilter,
     isDashboardArbitraryAttributeFilter,
@@ -18,6 +22,8 @@ import {
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
+    objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
@@ -26,12 +32,16 @@ import {
     type TextFilterOperator,
     getAttributeFilterSubtitle,
     getLocalizedIcuDateFormatPattern,
+    getMeasureValueFilterConditionLabel,
     getTextFilterStateText,
 } from "@gooddata/sdk-ui-filters";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
-import { selectAllCatalogAttributesMap } from "../../model/store/catalog/catalogSelectors.js";
-import { selectLocale, selectSettings } from "../../model/store/config/configSelectors.js";
+import {
+    selectAllCatalogAttributesMap,
+    selectCatalogMeasures,
+} from "../../model/store/catalog/catalogSelectors.js";
+import { selectLocale, selectSeparators, selectSettings } from "../../model/store/config/configSelectors.js";
 import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../dateFilterConfig/dateFilterOptionMapping.js";
 import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
@@ -42,7 +52,7 @@ import { useCommonDateFilterTitle } from "./useCommonDateFilterTitle.js";
 import { useDateFiltersTitles } from "./useDateFiltersTitles.js";
 
 export type FilterNaming = {
-    type: "attributeFilter" | "dateFilter";
+    type: "attributeFilter" | "dateFilter" | "measureValueFilter";
     all: boolean;
     id: string;
     title: string;
@@ -57,9 +67,17 @@ type FilterNamingDependencies = {
     dateFormat: string | undefined;
     getAttributeFilterDisplayFormFromMap: ReturnType<typeof useAttributeFilterDisplayFormFromMap>;
     attrMap: ReturnType<typeof selectAllCatalogAttributesMap>;
+    measures: ICatalogMeasure[];
+    separators: ISeparators;
     commonDateFilterTitle: string | undefined;
     allDateFiltersTitlesObj: Record<string, string>;
 };
+
+const PERCENT_FORMAT_REGEX = /%/;
+
+function isPercentageFormat(format: string | undefined): boolean {
+    return !!format && PERCENT_FORMAT_REGEX.test(format);
+}
 
 /**
  * Hook that gathers all dependencies needed for filter naming transformations.
@@ -77,6 +95,8 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
         : settings.responsiveUiDateFormat;
     const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
+    const measures = useDashboardSelector(selectCatalogMeasures);
+    const separators = useDashboardSelector(selectSeparators);
     const dateFiltersForTitles = filtersForTitles.filter(isDashboardDateFilterWithDimension);
     const commonDateFilterTitle = useCommonDateFilterTitle(intl);
     const allDateFiltersTitlesObj = useDateFiltersTitles(dateFiltersForTitles, intl);
@@ -87,6 +107,8 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
         dateFormat,
         getAttributeFilterDisplayFormFromMap,
         attrMap,
+        measures,
+        separators,
         commonDateFilterTitle,
         allDateFiltersTitlesObj,
     };
@@ -105,6 +127,8 @@ function transformFiltersToNamings(
         dateFormat,
         getAttributeFilterDisplayFormFromMap,
         attrMap,
+        measures,
+        separators,
         commonDateFilterTitle,
         allDateFiltersTitlesObj,
     } = deps;
@@ -208,6 +232,29 @@ function transformFiltersToNamings(
                 type: "attributeFilter",
                 all: values.length === 0 && negativeSelection,
                 id: dashboardAttributeFilterItemLocalIdentifier(filter)!,
+                title,
+                subtitle,
+            };
+        } else if (isDashboardMeasureValueFilter(filter)) {
+            const {
+                measure,
+                localIdentifier,
+                title: customTitle,
+                conditions,
+            } = filter.dashboardMeasureValueFilter;
+            const catalogMetric = measures.find((m) => areObjRefsEqual(m.measure.ref, measure));
+            const defaultTitle = catalogMetric?.measure.title ?? objRefToString(measure);
+            const title = customTitle ?? defaultTitle;
+            const format = catalogMetric?.measure.format;
+            const usePercentage = isPercentageFormat(format);
+            const subtitle = getMeasureValueFilterConditionLabel(intl, conditions, {
+                usePercentage,
+                separators,
+            });
+            return {
+                type: "measureValueFilter",
+                all: isAllDashboardMeasureValueFilter(filter),
+                id: localIdentifier,
                 title,
                 subtitle,
             };

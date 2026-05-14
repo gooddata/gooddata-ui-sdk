@@ -453,6 +453,9 @@ function recordedWorkspace(
                 getKnowledgeDocuments() {
                     throw new NotSupported("not supported");
                 },
+                summarizeDashboard() {
+                    throw new NotSupported("not supported");
+                },
             };
         },
         references(): IReferencesService {

@@ -1014,6 +1014,46 @@ export interface IDashboardsQuery {
 // @public
 export type IDashboardsQueryResult = IPagedResource<IListedDashboard>;
 
+// @beta
+export interface IDashboardSummary {
+    // (undocumented)
+    filterContext: FilterContextItem[];
+    // (undocumented)
+    generatedAt: string;
+    // (undocumented)
+    summary: string;
+    // (undocumented)
+    visualizationsExcluded: IDashboardSummaryExcludedVisualization[];
+    // (undocumented)
+    visualizationsIncluded: IDashboardSummaryIncludedVisualization[];
+}
+
+// @beta
+export interface IDashboardSummaryExcludedVisualization {
+    // (undocumented)
+    reason: string;
+    // (undocumented)
+    title?: string | null;
+    // (undocumented)
+    visualizationId: string;
+}
+
+// @beta
+export interface IDashboardSummaryIncludedVisualization {
+    // (undocumented)
+    title?: string | null;
+    // (undocumented)
+    visualizationId: string;
+}
+
+// @beta
+export interface IDashboardSummaryRequest {
+    // (undocumented)
+    dashboardId: string;
+    filterContext: FilterContextItem[] | null;
+    visualizations: string[] | null;
+}
+
 // @internal
 export interface IDashboardSummaryWorkflowStartResult {
     // (undocumented)
@@ -1482,6 +1522,9 @@ export interface IGenAIService {
     getSemanticQuality(): ISemanticQualityService;
     getSemanticSearchQuery(): ISemanticSearchQuery;
     semanticSearchIndex(): Promise<void>;
+    summarizeDashboard(request: IDashboardSummaryRequest, options?: {
+        signal?: AbortSignal;
+    }): Promise<IDashboardSummary>;
 }
 
 // @alpha
