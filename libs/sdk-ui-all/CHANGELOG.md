@@ -1,6 +1,30 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 07 May 2026 08:01:24 GMT and should not be manually modified.
+This log was last generated on Thu, 14 May 2026 07:11:19 GMT and should not be manually modified.
+
+## 11.35.0
+
+Thu, 14 May 2026 07:11:19 GMT
+
+### Updates
+
+- sdk-code-convertors: Map AAC text_filter to the AFM matchAttributeFilter / arbitrary positiveAttributeFilter / negativeAttributeFilter in buildAfmExecution, so text filters created by the AI Assistant are honoured at execution time.
+- sdk-ui-gen-ai: Remove enableLlmEndpointReplacement feature flag and the legacy LLM endpoint code path; the provider mode is now the only supported behavior.
+- fix: preserve isHidden/isHiddenFromKda on insight and metric save
+- sdk-model: Add per-tab `IDashboardTab.parameters`; deprecate root `IDashboard.parameters`
+- api-client-tiger: Add `ITigerDashboardTab.parameters`
+- sdk-backend-tiger: Read/write per-tab `parameters`; V1 root fallback only when no tab declares any
+- sdk-backend-tiger: Prevented creating new orphaned filter contexts on FE.
+- sdk-gen-ai: add support for generating conversation titles
+- sdk-ui-gen-ai: sanitize filter IDs in backend chat conversion
+- sdk-ui-gen-ai: implement conversation drag and drop using native browser DnD across pinned and rest sections
+- sdk-ui-gen-ai: refactor drill state management by replacing useDrillState hook with DrillState component and integrating it into ConversationVisualizationContent
+- sdk-ui-dashboard: Support measure value filter in saved views.
+- sdk-ui-all: Add support of measure value filter in scheduling.
+- sdk-ui-dashboard: Propagate measure value filter to KDA.
+- Fix yamlDatasetToDeclarative emitting reference.type='fact' for APPROXIMATE_COUNT aggregated facts against attribute targets (CQ-2147)
+- sdk-ui-gen-ai: build shell-host setting URLs in the AI chat when enableShellApplication is on, so the "Change LLM model" link lands on /organization/settings/workspaces/{id}/configuration with the #/ai/change-llm-model deep-link intact
+- sdk-model, spi-backend-spi: move ISettings related types from spi to model
 
 ## 11.34.0
 

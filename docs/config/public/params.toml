@@ -12,104 +12,103 @@
     versionPage = "https://sdk.gooddata.com/gooddata-ui-apidocs/VERSION/docs/index.html"
 
 [[versions]]
-    version = "11.34"
+    version = "11.35"
     dirpath = "latest"
     url = "/latest/"
 [[versions]]
-    version = "11.32"
+    dirpath = "11.34"
+    url = "/11.34/"
+    version = "11.34"
+[[versions]]
     dirpath = "11.32"
     url = "/11.32/"
+    version = "11.32"
 [[versions]]
-    version = "11.31"
     dirpath = "11.31"
     url = "/11.31/"
+    version = "11.31"
 [[versions]]
-    version = "11.30"
     dirpath = "11.30"
     url = "/11.30/"
+    version = "11.30"
 [[versions]]
-    version = "11.29"
     dirpath = "11.29"
     url = "/11.29/"
+    version = "11.29"
 [[versions]]
-    version = "11.28"
     dirpath = "11.28"
     url = "/11.28/"
+    version = "11.28"
 [[versions]]
-    version = "11.27"
     dirpath = "11.27"
     url = "/11.27/"
+    version = "11.27"
 [[versions]]
-    version = "11.26"
     dirpath = "11.26"
     url = "/11.26/"
+    version = "11.26"
 [[versions]]
-    version = "11.25"
     dirpath = "11.25"
     url = "/11.25/"
+    version = "11.25"
 [[versions]]
-    version = "11.24"
     dirpath = "11.24"
     url = "/11.24/"
+    version = "11.24"
 [[versions]]
-    version = "11.22"
     dirpath = "11.22"
     url = "/11.22/"
+    version = "11.22"
 [[versions]]
-    version = "11.21"
     dirpath = "11.21"
     url = "/11.21/"
+    version = "11.21"
 [[versions]]
-    version = "11.20"
     dirpath = "11.20"
     url = "/11.20/"
+    version = "11.20"
 [[versions]]
-    version = "11.19"
     dirpath = "11.19"
     url = "/11.19/"
+    version = "11.19"
 [[versions]]
-    version = "11.18"
     dirpath = "11.18"
     url = "/11.18/"
+    version = "11.18"
 [[versions]]
-    version = "11.17"
     dirpath = "11.17"
     url = "/11.17/"
+    version = "11.17"
 [[versions]]
-    version = "11.16"
     dirpath = "11.16"
     url = "/11.16/"
+    version = "11.16"
 [[versions]]
-    version = "11.15"
     dirpath = "11.15"
     url = "/11.15/"
+    version = "11.15"
 [[versions]]
-    version = "11.14"
     dirpath = "11.14"
     url = "/11.14/"
+    version = "11.14"
 [[versions]]
-    version = "11.13"
     dirpath = "11.13"
     url = "/11.13/"
+    version = "11.13"
 [[versions]]
-    version = "11.12"
     dirpath = "11.12"
     url = "/11.12/"
+    version = "11.12"
 [[versions]]
-    version = "11.11"
     dirpath = "11.11"
     url = "/11.11/"
+    version = "11.11"
 [[versions]]
-    version = "11.10"
     dirpath = "11.10"
     url = "/11.10/"
+    version = "11.10"
 [[versions]]
-    version = "10.43"
-    changelog = "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#10430"
-    dirpath = "10.43"
-    url = "https://www.gooddata.ai/docs/gd-ui/10.43"
-[[versions]]
-    version = "6.3"
     changelog = "https://github.com/gooddata/gooddata-react-components/blob/master/CHANGELOG.md#630"
     dirpath = "6.3"
     url = "https://sdk.gooddata.com/gooddata-ui/docs/6.3.0/about_gooddataui.html"
+    version = "6.3"
