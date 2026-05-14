@@ -1689,6 +1689,82 @@
                     }
                 }
             },
+            "DashboardCompoundComparisonCondition": {
+                "required": [
+                    "comparison"
+                ],
+                "type": "object",
+                "properties": {
+                    "comparison": {
+                        "required": [
+                            "operator",
+                            "value"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "operator": {
+                                "type": "string",
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ]
+                            },
+                            "value": {
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    }
+                }
+            },
+            "DashboardCompoundConditionItem": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/DashboardCompoundComparisonCondition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardCompoundRangeCondition"
+                    }
+                ]
+            },
+            "DashboardCompoundRangeCondition": {
+                "required": [
+                    "range"
+                ],
+                "type": "object",
+                "properties": {
+                    "range": {
+                        "required": [
+                            "from",
+                            "operator",
+                            "to"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "operator": {
+                                "type": "string",
+                                "enum": [
+                                    "BETWEEN",
+                                    "NOT_BETWEEN"
+                                ]
+                            },
+                            "from": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "to": {
+                                "type": "number",
+                                "format": "double"
+                            }
+                        }
+                    }
+                }
+            },
             "DashboardDateFilter": {
                 "required": [
                     "dateFilter"
@@ -1837,6 +1913,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/DashboardMatchAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardMeasureValueFilter"
                     }
                 ]
             },
@@ -1875,6 +1954,38 @@
                             },
                             "caseSensitive": {
                                 "type": "boolean"
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "DashboardMeasureValueFilter": {
+                "required": [
+                    "dashboardMeasureValueFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "dashboardMeasureValueFilter": {
+                        "required": [
+                            "conditions",
+                            "measure"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "measure": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "conditions": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/DashboardCompoundConditionItem"
+                                }
                             },
                             "title": {
                                 "type": "string"

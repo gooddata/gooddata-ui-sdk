@@ -2,7 +2,11 @@
 
 import { type ReactNode, useMemo } from "react";
 
-import { type ISeparators, isAllValuesDashboardAttributeFilter } from "@gooddata/sdk-model";
+import {
+    type ISeparators,
+    isAllDashboardMeasureValueFilter,
+    isAllValuesDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
 
 import { type IKdaState } from "../internalTypes.js";
 import { type IKdaDefinition } from "../types.js";
@@ -30,6 +34,11 @@ export function KdaProvider({ children, definition, separators, includeTags, exc
             isMinimized: true,
             attributeFilters: (definition.filters?.slice() ?? []).filter(
                 (f) => !isAllValuesDashboardAttributeFilter(f),
+            ),
+            // MVF flows through from the dashboard filter context; noop "All" MVFs are dropped
+            // so the backend only receives meaningful conditions.
+            measureValueFilters: (definition.measureValueFilters?.slice() ?? []).filter(
+                (f) => !isAllDashboardMeasureValueFilter(f),
             ),
         };
     }, [definition, separators, includeTags, excludeTags]);

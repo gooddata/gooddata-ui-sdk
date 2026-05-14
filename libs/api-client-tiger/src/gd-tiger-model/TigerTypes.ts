@@ -563,9 +563,10 @@ export interface ITigerInsightWidget extends ITigerBaseWidget {
     type: "insight";
     insight: ObjRef;
     ignoreDashboardFilters?: Array<{
-        type: "attributeFilterReference" | "dateFilterReference";
+        type: "attributeFilterReference" | "dateFilterReference" | "measureValueFilterReference";
         displayForm?: ObjRef;
         dataSet?: ObjRef;
+        measure?: ObjRef;
     }>;
 
     drills?: any[];

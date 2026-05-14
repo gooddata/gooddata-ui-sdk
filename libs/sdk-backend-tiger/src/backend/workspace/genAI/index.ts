@@ -4,10 +4,13 @@ import {
     ActionsApi_MetadataSync,
     ActionsApi_ResolveLlmProviders,
 } from "@gooddata/api-client-tiger/endpoints/actions";
+import { GenAiApi_SummarizeDashboard } from "@gooddata/api-client-tiger/endpoints/genAI";
 import type {
     IAnalyticsCatalogService,
     IChatConversations,
     IChatThread,
+    IDashboardSummary,
+    IDashboardSummaryRequest,
     IGenAIService,
     IKnowledgeDocumentsService,
     IMemoryItemsService,
@@ -76,5 +79,43 @@ export class GenAIService implements IGenAIService {
 
     getSemanticQuality(): ISemanticQualityService {
         return new SemanticQualityService(this.authCall, this.workspaceId);
+    }
+
+    async summarizeDashboard(
+        request: IDashboardSummaryRequest,
+        options?: { signal?: AbortSignal },
+    ): Promise<IDashboardSummary> {
+        const response = await this.authCall((client) =>
+            GenAiApi_SummarizeDashboard(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspaceId,
+                    aiSummarizeRequest: {
+                        dashboardId: request.dashboardId,
+                        // Casts strip `| null` from our SPI types — the generated client still
+                        // declares these required. Drop the casts once backend allows null.
+                        visualizations: request.visualizations as string[],
+                        filterContext: request.filterContext as object[],
+                    },
+                },
+                { signal: options?.signal },
+            ),
+        );
+
+        return {
+            summary: response.data.summary,
+            filterContext: response.data.filterContext as IDashboardSummary["filterContext"],
+            visualizationsIncluded: response.data.visualizationsIncluded.map((v) => ({
+                visualizationId: v.visualizationId,
+                title: v.title,
+            })),
+            visualizationsExcluded: response.data.visualizationsExcluded.map((v) => ({
+                visualizationId: v.visualizationId,
+                reason: v.reason,
+                title: v.title,
+            })),
+            generatedAt: response.data.generatedAt,
+        };
     }
 }

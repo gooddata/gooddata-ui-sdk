@@ -623,6 +623,34 @@ export interface AutomationDashboardAttributeFilterAttributeFilter {
 
 export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
 
+export interface AutomationDashboardCompoundComparisonCondition {
+    'comparison': AutomationDashboardCompoundComparisonConditionComparison;
+}
+
+export interface AutomationDashboardCompoundComparisonConditionComparison {
+    'operator': AutomationDashboardCompoundComparisonConditionComparisonOperatorEnum;
+    'value': number;
+}
+
+export type AutomationDashboardCompoundComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
+
+/**
+ * @type AutomationDashboardCompoundConditionItem
+ */
+export type AutomationDashboardCompoundConditionItem = AutomationDashboardCompoundComparisonCondition | AutomationDashboardCompoundRangeCondition;
+
+export interface AutomationDashboardCompoundRangeCondition {
+    'range': AutomationDashboardCompoundRangeConditionRange;
+}
+
+export interface AutomationDashboardCompoundRangeConditionRange {
+    'operator': AutomationDashboardCompoundRangeConditionRangeOperatorEnum;
+    'from': number;
+    'to': number;
+}
+
+export type AutomationDashboardCompoundRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
+
 export interface AutomationDashboardDateFilter {
     'dateFilter': AutomationDashboardDateFilterDateFilter;
 }
@@ -676,7 +704,7 @@ export type AutomationDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 
 /**
  * @type AutomationDashboardFilter
  */
-export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter;
+export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter | AutomationDashboardMeasureValueFilter;
 
 export interface AutomationDashboardMatchAttributeFilter {
     'matchAttributeFilter': AutomationDashboardMatchAttributeFilterMatchAttributeFilter;
@@ -693,6 +721,17 @@ export interface AutomationDashboardMatchAttributeFilterMatchAttributeFilter {
 }
 
 export type AutomationDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
+
+export interface AutomationDashboardMeasureValueFilter {
+    'dashboardMeasureValueFilter': AutomationDashboardMeasureValueFilterDashboardMeasureValueFilter;
+}
+
+export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilter {
+    'measure': AutomationIdentifierRef;
+    'conditions': Array<AutomationDashboardCompoundConditionItem>;
+    'title'?: string;
+    'localIdentifier'?: string;
+}
 
 /**
  * Export request object describing the export properties for dashboard tabular exports (v2 with dashboardId).

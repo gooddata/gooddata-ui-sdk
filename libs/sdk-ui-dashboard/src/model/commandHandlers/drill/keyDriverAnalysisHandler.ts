@@ -9,6 +9,7 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     isAttributeDescriptor,
+    isDashboardMeasureValueFilter,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 
@@ -24,7 +25,7 @@ import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js"
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
-import { removeDateFilters, removeIgnoredWidgetFilters } from "../../utils/widgetFilters.js";
+import { getAttributeFilters, removeIgnoredWidgetFilters } from "../../utils/widgetFilters.js";
 
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 
@@ -104,7 +105,11 @@ export function* keyDriverAnalysisHandler(
     });
 
     const widget = yield select(selectWidgetByRef(drillEvent.widgetRef));
-    const attributeFilters = removeDateFilters(removeIgnoredWidgetFilters(availableFilters, widget));
+    const widgetFilters = removeIgnoredWidgetFilters(availableFilters, widget);
+    // KDA defines its own date range — drop date filters. Keep attribute and measure value
+    // filters so the change analysis respects the rest of the dashboard filter context.
+    const attributeFilters = getAttributeFilters(widgetFilters);
+    const measureValueFilters = widgetFilters.filter(isDashboardMeasureValueFilter);
 
     const filters = mergeFilters(intersectionFilters, attributeFilters);
 
@@ -123,6 +128,7 @@ export function* keyDriverAnalysisHandler(
             },
             metrics,
             filters,
+            measureValueFilters,
             dateAttribute: dateAttribute.attribute.ref,
             range: [
                 {

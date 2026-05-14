@@ -1,4 +1,5 @@
 {
+    "targets": [{}],
     "ignores": [
         "README.md",
         "favicon.ico",

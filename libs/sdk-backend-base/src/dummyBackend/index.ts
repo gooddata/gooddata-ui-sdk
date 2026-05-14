@@ -558,6 +558,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 getKnowledgeDocuments() {
                     throw new NotSupported("not supported");
                 },
+                summarizeDashboard() {
+                    throw new NotSupported("not supported");
+                },
             };
         },
         references(): IReferencesService {

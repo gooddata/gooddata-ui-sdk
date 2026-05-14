@@ -45,7 +45,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IAddDateFilterPayload, type IAddMeasureValueFilterPayload } from "../../../commands/filters.js";
-import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
+import {
+    generateFilterLocalIdentifier,
+    generateMeasureValueFilterLocalIdentifier,
+} from "../../_infra/generators.js";
 import { type ITabsState, getActiveTab, getTabOrActive } from "../tabsState.js";
 
 import { type WorkingDashboardMeasureValueFilter, filterContextInitialState } from "./filterContextState.js";
@@ -1311,7 +1314,8 @@ const addMeasureValueFilter: FilterContextReducer<PayloadAction<IAddMeasureValue
     const filter: IDashboardMeasureValueFilter = {
         dashboardMeasureValueFilter: {
             measure,
-            localIdentifier: localIdentifier ?? generateFilterLocalIdentifier(measure, Math.max(0, index)),
+            localIdentifier:
+                localIdentifier ?? generateMeasureValueFilterLocalIdentifier(measure, Math.max(0, index)),
             title,
         },
     };

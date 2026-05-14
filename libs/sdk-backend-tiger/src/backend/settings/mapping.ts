@@ -22,7 +22,8 @@ type UnmappedTypes =
     | "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS"
     | "SORT_CASE_SENSITIVE"
     | "ENABLE_QUERY_TAGS"
-    | "CERTIFY_PARENT_OBJECTS";
+    | "CERTIFY_PARENT_OBJECTS"
+    | "HLL_TYPE";
 
 // Only mandatory types
 type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;

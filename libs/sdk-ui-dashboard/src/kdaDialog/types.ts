@@ -3,6 +3,7 @@
 import {
     type DashboardAttributeFilterItem,
     type IAttributeDescriptorBody,
+    type IDashboardMeasureValueFilter,
     type IMeasure,
     type ObjRef,
 } from "@gooddata/sdk-model";
@@ -74,9 +75,20 @@ export interface IKdaDefinition {
      */
     metrics?: IMeasure[];
     /**
-     * Filters to apply
+     * Attribute filters to apply.
+     *
+     * Attribute filters drive both the KDA "segment-by attribute" UI in the dialog and the
+     * scope of the change analysis computation.
      */
     filters?: DashboardAttributeFilterItem[];
+    /**
+     * Measure value filters to apply to the change analysis computation.
+     *
+     * They are not editable in the dialog UI (KDA segments by attribute, not by metric value),
+     * but the dashboard MVFs are propagated to the backend so the computation respects the
+     * same metric-driven scope as the rest of the dashboard.
+     */
+    measureValueFilters?: IDashboardMeasureValueFilter[];
     /**
      * Date attribute
      */

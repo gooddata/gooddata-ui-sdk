@@ -1985,6 +1985,9 @@ export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashb
 // @beta (undocumented)
 export function formatKeyDriverAnalysisDateRange(range: DeepReadonly<[IKdaDataPoint, IKdaDataPoint]> | undefined, splitter: string): string;
 
+// @internal (undocumented)
+export function getAttributeFilters(filters: FilterContextItem[]): DashboardAttributeFilterItem[];
+
 // @internal
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
@@ -6247,6 +6250,7 @@ export interface IKdaDataPoint {
 export interface IKdaDefinition {
     dateAttribute: ObjRef;
     filters?: DashboardAttributeFilterItem[];
+    measureValueFilters?: IDashboardMeasureValueFilter[];
     metric: IMeasure;
     metrics?: IMeasure[];
     range: [IKdaDataPoint, IKdaDataPoint];
@@ -9864,9 +9868,6 @@ export function removeAttributeFilters(filterLocalIds: string[], correlationId?:
 
 // @beta
 export function removeDateFilter(dataSet: ObjRef, correlationId?: string): IRemoveDateFilters;
-
-// @internal (undocumented)
-export function removeDateFilters(filters: FilterContextItem[]): DashboardAttributeFilterItem[];
 
 // @alpha
 export function removeDrillDownForInsightWidget(ref: ObjRef, blacklistHierarchies: IDrillDownReference[], correlationId?: string): IRemoveDrillDownForInsightWidget;

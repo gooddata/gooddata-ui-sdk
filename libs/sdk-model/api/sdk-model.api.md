@@ -18,7 +18,7 @@ export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUser
 export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
 // @alpha
-export type AgentCustomSkill = "alert" | "anomaly_detection" | "clustering" | "forecasting" | "key_driver_analysis" | "metric" | "schedule_export" | "visualization" | "visualization_summary" | "what_if_analysis" | "knowledge";
+export type AgentCustomSkill = "alert" | "anomaly_detection" | "clustering" | "dashboard_summary" | "forecasting" | "key_driver_analysis" | "metric" | "schedule_export" | "visualization" | "visualization_summary" | "what_if_analysis" | "knowledge";
 
 // @alpha
 export type AgentSkillsMode = "all" | "custom";
@@ -4365,6 +4365,9 @@ export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition
 
 // @public
 export function isAlertNotification(notification: unknown): notification is IAlertNotification;
+
+// @alpha
+export function isAllDashboardMeasureValueFilter(obj: unknown): boolean;
 
 // @alpha
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean;

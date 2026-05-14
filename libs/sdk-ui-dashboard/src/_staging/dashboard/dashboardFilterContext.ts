@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+import { v4 as uuidv4 } from "uuid";
+
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type DateFilterGranularity,
@@ -21,10 +23,14 @@ import {
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isMatchAttributeFilter,
+    isMeasureValueFilter,
     isNegativeAttributeFilter,
+    isObjRef,
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
     isTempFilterContext,
+    measureValueFilterConditions,
+    measureValueFilterMeasure,
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
@@ -225,6 +231,23 @@ export function dashboardFilterToFilterContextItem(
             isRelativeBoundedDateFilter(filter) ? filter.relativeDateFilter.boundedFilter : undefined,
             filter.relativeDateFilter.emptyValueHandling,
         );
+    } else if (isMeasureValueFilter(filter)) {
+        const measure = measureValueFilterMeasure(filter);
+        // Dashboard MVF requires an ObjRef (catalog metric reference); LocalIdRef cannot
+        // survive the round-trip from execution to filter context.
+        if (!isObjRef(measure)) {
+            throw new NotSupported(
+                `Unsupported filter type! Please provide valid dashboard filter. Filter: ${JSON.stringify(filter)}`,
+            );
+        }
+        const conditions = measureValueFilterConditions(filter);
+        return {
+            dashboardMeasureValueFilter: {
+                measure,
+                localIdentifier: filter.measureValueFilter.localIdentifier ?? uuidv4(),
+                ...(conditions ? { conditions } : {}),
+            },
+        };
     }
 
     throw new NotSupported(

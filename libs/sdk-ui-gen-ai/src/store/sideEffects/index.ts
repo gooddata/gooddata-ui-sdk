@@ -39,7 +39,7 @@ import { onVisualizationSuccessSave } from "./onVisualizationSuccessSave.js";
 export function* rootSaga() {
     yield takeLatest(loadThreadAction.type, onThreadLoad);
     yield takeLatest(clearThreadAction.type, onThreadClear);
-    yield takeLatest(newMessageAction.type, onUserMessage);
+    yield takeEvery(newMessageAction.type, onUserMessage);
     //messages API
     yield takeEvery(setUserFeedback.type, onUserFeedback);
     yield takeEvery(saveVisualizationAction.type, onVisualizationSave);

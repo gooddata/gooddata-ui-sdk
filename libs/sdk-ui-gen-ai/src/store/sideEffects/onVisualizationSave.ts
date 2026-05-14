@@ -95,6 +95,7 @@ export function* onVisualizationSave({
                     assistantMessageId: payload.assistantMessageId,
                     savedVisualizationId: savedVisualization.insight.identifier,
                     explore: payload.explore,
+                    conversationId: conversation.localId,
                 }),
             );
         } else {
@@ -145,6 +146,7 @@ export function* onVisualizationSave({
                 },
                 visualizationId: payload.visualizationId,
                 assistantMessageId: payload.assistantMessageId,
+                conversationId: conversation?.localId,
             }),
         );
     }

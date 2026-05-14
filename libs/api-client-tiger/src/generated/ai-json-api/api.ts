@@ -757,6 +757,20 @@ export interface AiSkillResponse {
     'examples': Array<string>;
 }
 
+export interface AiSummarizeRequest {
+    'visualizations': Array<string>;
+    'filterContext': Array<object>;
+    'dashboardId': string;
+}
+
+export interface AiSummarizeResponse {
+    'summary': string;
+    'filterContext': Array<object>;
+    'visualizationsIncluded': Array<AiVisualizationIncludedResponse>;
+    'visualizationsExcluded': Array<AiVisualizationExcludedResponse>;
+    'generatedAt': string;
+}
+
 export interface AiTextFilterValue {
     'type': AiTextFilterValueTypeEnum;
     'using': string;
@@ -968,6 +982,12 @@ export interface AiVisualizationConfig {
 export type AiVisualizationConfigAnomalyDetectionSensitivityEnum = 'low' | 'medium' | 'high';
 export type AiVisualizationConfigAnomalyDetectionSizeEnum = 'small' | 'medium' | 'large';
 
+export interface AiVisualizationExcludedResponse {
+    'visualizationId': string;
+    'reason': string;
+    'title'?: string | null;
+}
+
 /**
  * @type AiVisualizationFilter
  */
@@ -978,6 +998,11 @@ export type AiVisualizationFilter = AiVisualizationAbsoluteDateFilter | AiVisual
  */
 export interface AiVisualizationIdUpdateRequest {
     'id': string;
+}
+
+export interface AiVisualizationIncludedResponse {
+    'visualizationId': string;
+    'title'?: string | null;
 }
 
 export interface AiVisualizationMetricValueComparisonFilter {
@@ -4738,6 +4763,155 @@ export class ResponsesAi extends BaseAPI implements ResponsesAiInterface {
      */
     public patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig) {
         return ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+}
+
+
+// SummaryAi FP - SummaryAiAxiosParamCreator
+/**
+ * 
+ * @summary Post Summary
+ * @param {string} workspaceId 
+ * @param {AiSummarizeRequest} aiSummarizeRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SummaryAiAxiosParamCreator_SummarizeDashboard(
+    workspaceId: string, aiSummarizeRequest: AiSummarizeRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('summarizeDashboard', 'workspaceId', workspaceId)
+    // verify required parameter 'aiSummarizeRequest' is not null or undefined
+    assertParamExists('summarizeDashboard', 'aiSummarizeRequest', aiSummarizeRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/summary`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiSummarizeRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiSummarizeRequest !== undefined ? aiSummarizeRequest : {})
+        : aiSummarizeRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// SummaryAi Api FP
+/**
+ * 
+ * @summary Post Summary
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SummaryAi_SummarizeDashboard(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SummaryAiSummarizeDashboardRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiSummarizeResponse> {
+    const localVarAxiosArgs = await SummaryAiAxiosParamCreator_SummarizeDashboard(
+        requestParameters.workspaceId, requestParameters.aiSummarizeRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * SummaryAi - interface
+ * @export
+ * @interface SummaryAi
+ */
+export interface SummaryAiInterface {
+    /**
+     * 
+     * @summary Post Summary
+     * @param {SummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SummaryAiInterface
+     */
+    summarizeDashboard(requestParameters: SummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig): AxiosPromise<AiSummarizeResponse>;
+
+}
+
+/**
+ * Request parameters for summarizeDashboard operation in SummaryAi.
+ * @export
+ * @interface SummaryAiSummarizeDashboardRequest
+ */
+export interface SummaryAiSummarizeDashboardRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof SummaryAiSummarizeDashboard
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {AiSummarizeRequest}
+     * @memberof SummaryAiSummarizeDashboard
+     */
+    readonly aiSummarizeRequest: AiSummarizeRequest
+}
+
+/**
+ * SummaryAi - object-oriented interface
+ * @export
+ * @class SummaryAi
+ * @extends {BaseAPI}
+ */
+export class SummaryAi extends BaseAPI implements SummaryAiInterface {
+    /**
+     * 
+     * @summary Post Summary
+     * @param {SummaryAiSummarizeDashboardRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SummaryAi
+     */
+    public summarizeDashboard(requestParameters: SummaryAiSummarizeDashboardRequest, options?: AxiosRequestConfig) {
+        return SummaryAi_SummarizeDashboard(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

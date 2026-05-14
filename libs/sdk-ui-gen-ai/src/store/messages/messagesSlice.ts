@@ -23,7 +23,14 @@ import {
     makeErrorContent,
     makeErrorContents,
 } from "../../model.js";
+import { type StoredConversation } from "../../types.js";
 import { convertMessageToChatConversation } from "../sideEffects/utils.js";
+import {
+    createEmptyConversation,
+    getConversationData,
+    getConversationLocalId,
+    isConversationWithLocalId,
+} from "../utils.js";
 
 type MessagesSliceState = {
     /**
@@ -42,31 +49,6 @@ type MessagesSliceState = {
      * An order of messages in the chat.
      */
     messageOrder: string[];
-
-    /**
-     * A list of conversations.
-     */
-    conversations: IChatConversationLocal[] | undefined;
-    /**
-     * The current conversation.
-     *  - "new": indicates UI is in a transient state to start a brand new conversation.
-     *  - undefined: no conversation is selected
-     */
-    currentConversation: IChatConversationLocal | "new" | undefined;
-    /**
-     * Conversation items.
-     */
-    conversationItems: Record<string, IChatConversationLocalItem>;
-    /**
-     * Conversation items order.
-     */
-    conversationItemsOrder: string[];
-
-    /**
-     * A global error object. I.e. if something unexpected went wrong,
-     * not on the interaction level.
-     */
-    globalError?: Record<string, unknown>;
     /**
      * If the interface is busy, this specifies the details of the async operation.
      * Where:
@@ -75,7 +57,27 @@ type MessagesSliceState = {
      * - clearing: the thread is being cleared
      * - evaluating: the new user message is being evaluated by assistant
      */
-    asyncProcess?: "loading" | "restoring" | "clearing" | "evaluating";
+    messageAsyncProcess?: "loading" | "restoring" | "clearing" | "evaluating";
+
+    /**
+     * A list of conversations.
+     */
+    conversations: IChatConversationLocal[] | undefined;
+    /**
+     * The current conversation.
+     *  - undefined: no conversation is selected
+     */
+    currentConversation: IChatConversationLocal | undefined;
+    /**
+     * Conversation data
+     */
+    conversationsData: Record<string, StoredConversation>;
+
+    /**
+     * A global error object. I.e. if something unexpected went wrong,
+     * not on the interaction level.
+     */
+    globalError?: Record<string, unknown>;
     /**
      * An ID of the conversation thread.
      * Not the same as threadIdSuffix in some of the REST APIs,
@@ -101,17 +103,16 @@ const getInitialVerboseState = () => {
 
 const initialState: MessagesSliceState = {
     // Start with loading state to avoid re-render from empty state on startup
-    asyncProcess: "loading",
     loaded: false,
     verbose: getInitialVerboseState(),
     //old messages
+    messageAsyncProcess: "loading",
     messageOrder: [],
     messages: {},
     //conversations
     conversations: undefined,
     currentConversation: undefined,
-    conversationItems: {},
-    conversationItemsOrder: [],
+    conversationsData: {},
 };
 
 const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) => {
@@ -132,27 +133,59 @@ const setNormalizedConversations = (state: MessagesSliceState, conversations: IC
 
 const setNormalizedConversation = (
     state: MessagesSliceState,
-    conversation: IChatConversationLocal | "new",
+    conversation: IChatConversationLocal,
     items: IChatConversationLocalItem[] = [],
 ) => {
     state.currentConversation = conversation;
-    state.conversationItems = items.reduce(
+    state.loaded = true;
+
+    const data = getConversationData(state.conversationsData, conversation.localId);
+    const normalizedItems = items.reduce(
         (acc, message) => {
             acc[message.localId] = message;
             return acc;
         },
-        {} as MessagesSliceState["conversationItems"],
+        {} as Record<string, IChatConversationLocalItem>,
     );
-    state.conversationItemsOrder = items.map((message) => message.localId);
-    state.loaded = true;
+    const normalizedOrder = items.map((message) => message.localId);
+    if (data) {
+        data.order = normalizedOrder;
+        data.items = normalizedItems;
+    }
+};
+
+const setConversationInProgress = (
+    state: MessagesSliceState,
+    inProgress: boolean,
+    localConversationId?: string,
+) => {
+    if (!localConversationId) {
+        return;
+    }
+
+    state.conversations = state.conversations?.map((conversation) =>
+        conversation.localId === localConversationId ? { ...conversation, inProgress } : conversation,
+    );
+
+    if (isConversationWithLocalId(state.currentConversation, localConversationId)) {
+        state.currentConversation = {
+            ...state.currentConversation,
+            inProgress,
+        };
+    }
 };
 
 const getAssistantMessageStrict = (
     state: MessagesSliceState,
     assistantMessageId: string,
+    conversationId?: string,
 ): AssistantMessage | IChatConversationLocalItem => {
     if (state.currentConversation) {
-        const message = state.conversationItems[assistantMessageId];
+        const data = getConversationData(state.conversationsData, conversationId);
+        if (!data) {
+            throw new Error(`Unexpected error during message evaluation.`);
+        }
+        const message = data.items[assistantMessageId];
         if (message.role !== "assistant") {
             throw new Error(`Unexpected error during message evaluation.`);
         }
@@ -169,9 +202,14 @@ const getAssistantMessageStrict = (
 const getUserMessageStrict = (
     state: MessagesSliceState,
     assistantMessageId: string,
+    conversationId?: string,
 ): UserMessage | IChatConversationLocalItem => {
     if (state.currentConversation) {
-        const message = state.conversationItems[assistantMessageId];
+        const data = getConversationData(state.conversationsData, conversationId);
+        if (!data) {
+            throw new Error(`Unexpected error during message evaluation.`);
+        }
+        const message = data.items[assistantMessageId];
         if (message.role !== "user") {
             throw new Error(`Unexpected error during message evaluation.`);
         }
@@ -185,9 +223,17 @@ const getUserMessageStrict = (
     }
 };
 
-const getMessageExists = (state: MessagesSliceState, assistantMessageId: string): boolean => {
+const getMessageExists = (
+    state: MessagesSliceState,
+    assistantMessageId: string,
+    conversationId?: string,
+): boolean => {
     if (state.currentConversation) {
-        return !!state.conversationItems[assistantMessageId];
+        if (!conversationId) {
+            return false;
+        }
+        const data = getConversationData(state.conversationsData, conversationId);
+        return !!data?.items[assistantMessageId];
     }
     return !!state.messages[assistantMessageId];
 };
@@ -199,13 +245,18 @@ const getMessageExists = (state: MessagesSliceState, assistantMessageId: string)
 const getUserMessageBeforeSafe = (
     state: MessagesSliceState,
     assistantMessageId: string,
+    conversationId?: string,
 ): UserMessage | IChatConversationLocalItem | undefined => {
     if (state.currentConversation) {
-        const messageIndex = state.conversationItemsOrder.indexOf(assistantMessageId);
+        const data = getConversationData(state.conversationsData, conversationId);
+        if (!data) {
+            return undefined;
+        }
+        const messageIndex = data.order.indexOf(assistantMessageId);
         if (messageIndex <= 0) {
             return undefined;
         }
-        const message = state.conversationItems[state.conversationItemsOrder[messageIndex - 1]];
+        const message = data.items[data.order[messageIndex - 1]];
         return message.role === "user" ? message : undefined;
     }
 
@@ -222,15 +273,23 @@ const messagesSlice = createSlice({
     initialState,
     reducers: {
         loadThreadAction: (state) => {
-            // do not override loading if new conversation landing is active
-            if (state.currentConversation === "new") {
-                return;
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                if (data) {
+                    data.asyncProcess = "loading";
+                }
+            } else {
+                state.messageAsyncProcess = "loading";
             }
-            state.asyncProcess = "loading";
         },
         loadThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
             state.globalError = errorToObject(error);
-            delete state.asyncProcess;
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                delete data?.asyncProcess;
+            } else {
+                delete state.messageAsyncProcess;
+            }
         },
         loadThreadSuccessAction: (
             state,
@@ -238,7 +297,12 @@ const messagesSlice = createSlice({
         ) => {
             setNormalizedMessages(state, messages);
             state.threadId = threadId;
-            delete state.asyncProcess;
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                delete data?.asyncProcess;
+            } else {
+                delete state.messageAsyncProcess;
+            }
         },
         /**
          * Restore previously cached messages immediately while the backend is still loading.
@@ -252,17 +316,15 @@ const messagesSlice = createSlice({
             state,
             { payload: { messages } }: PayloadAction<{ messages: Message[] }>,
         ) => {
-            //TODO: s.hacker New needs to be changed
-            const normalized = messages.reduce(
+            state.messages = messages.reduce(
                 (acc, message) => {
                     acc[message.localId] = message;
                     return acc;
                 },
                 {} as MessagesSliceState["messages"],
             );
-            state.messages = normalized;
             state.messageOrder = messages.map((message) => message.localId);
-            state.asyncProcess = "restoring";
+            state.messageAsyncProcess = "restoring";
         },
         loadConversationsSuccessAction: (
             state,
@@ -279,28 +341,50 @@ const messagesSlice = createSlice({
             {
                 payload: { currentConversation, conversationItems, threadId },
             }: PayloadAction<{
-                currentConversation: IChatConversationLocal | "new";
+                currentConversation: IChatConversationLocal;
                 conversationItems: IChatConversationLocalItem[];
                 threadId?: string;
             }>,
         ) => {
             setNormalizedConversation(state, currentConversation, conversationItems);
             state.threadId = threadId;
-            delete state.asyncProcess;
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                delete data?.asyncProcess;
+            } else {
+                delete state.messageAsyncProcess;
+            }
         },
         clearThreadAction: (state) => {
-            state.asyncProcess = "clearing";
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                if (data) {
+                    data.asyncProcess = "clearing";
+                }
+            } else {
+                state.messageAsyncProcess = "clearing";
+            }
         },
         clearThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: Error }>) => {
             state.globalError = errorToObject(error);
-            delete state.asyncProcess;
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                delete data?.asyncProcess;
+            } else {
+                delete state.messageAsyncProcess;
+            }
         },
         clearThreadSuccessAction: (state) => {
             state.messages = {};
             state.messageOrder = [];
             state.loaded = false;
-            delete state.asyncProcess;
             delete state.globalError;
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                delete data?.asyncProcess;
+            } else {
+                delete state.messageAsyncProcess;
+            }
         },
         clearConversationSuccessAction: (
             state,
@@ -310,12 +394,11 @@ const messagesSlice = createSlice({
         ) => {
             state.conversations = [conversation, ...(state.conversations ?? [])];
             state.currentConversation = conversation;
-            state.conversationItems = {};
-            state.conversationItemsOrder = [];
             state.threadId = threadId;
             state.loaded = false;
-            delete state.asyncProcess;
             delete state.globalError;
+            const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+            delete data?.asyncProcess;
         },
         /**
          * Add message to the stack
@@ -332,20 +415,22 @@ const messagesSlice = createSlice({
                     throw new Error("Working with conversation message but thread mode is active.");
                 }
                 const currentConversation = state.currentConversation;
-                if (currentConversation !== "new") {
-                    currentConversation.updatedAt = new Date().toISOString();
-                    state.conversations = state.conversations?.map((conversation) => {
-                        if (conversation.id === currentConversation.id) {
-                            return {
-                                ...conversation,
-                                updatedAt: currentConversation.updatedAt,
-                            };
-                        }
-                        return conversation;
-                    });
+                currentConversation.updatedAt = new Date().toISOString();
+                state.conversations = state.conversations?.map((conversation) => {
+                    if (conversation.localId === currentConversation.localId) {
+                        return {
+                            ...conversation,
+                            updatedAt: currentConversation.updatedAt,
+                        };
+                    }
+                    return conversation;
+                });
+
+                const data = getConversationData(state.conversationsData, currentConversation.localId);
+                if (data) {
+                    data.items[message.localId] = message;
+                    data.order.push(message.localId);
                 }
-                state.conversationItems[message.localId] = message;
-                state.conversationItemsOrder.push(message.localId);
             } else {
                 if (state.currentConversation) {
                     throw new Error("Working with thread message but conversation mode is active.");
@@ -361,15 +446,22 @@ const messagesSlice = createSlice({
         evaluateMessageAction: (
             state,
             {
-                payload: { message },
-            }: PayloadAction<{ message: AssistantMessage | IChatConversationLocalItem }>,
+                payload: { message, conversationId },
+            }: PayloadAction<{
+                message: AssistantMessage | IChatConversationLocalItem;
+                conversationId?: string;
+            }>,
         ) => {
             if (isChatConversationLocalItem(message)) {
-                if (!state.currentConversation) {
+                if (!conversationId) {
                     throw new Error("Working with conversation message but thread mode is active.");
                 }
-                state.conversationItems[message.localId] = message;
-                state.conversationItemsOrder.push(message.localId);
+                const data = getConversationData(state.conversationsData, conversationId);
+                if (data) {
+                    data.items[message.localId] = message;
+                    data.order.push(message.localId);
+                }
+                setConversationInProgress(state, true, conversationId);
             } else {
                 if (state.currentConversation) {
                     throw new Error("Working with thread message but conversation mode is active.");
@@ -377,7 +469,14 @@ const messagesSlice = createSlice({
                 state.messages[message.localId] = message;
                 state.messageOrder.push(message.localId);
             }
-            state.asyncProcess = "evaluating";
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, conversationId);
+                if (data) {
+                    data.asyncProcess = "evaluating";
+                }
+            } else {
+                state.messageAsyncProcess = "evaluating";
+            }
         },
         /**
          * The evaluation failed, need to update the assistant message.
@@ -389,19 +488,26 @@ const messagesSlice = createSlice({
             }: PayloadAction<{
                 error: string;
                 assistantMessageId: string;
+                conversationId?: string;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 assistantMessage.complete = true;
                 assistantMessage.streaming = false;
                 assistantMessage.content = makeErrorContent(payload.error);
+                const data = getConversationData(state.conversationsData, payload.conversationId);
+                delete data?.asyncProcess;
             } else {
                 assistantMessage.complete = true;
                 assistantMessage.content.push(makeErrorContents(payload.error));
+                delete state.messageAsyncProcess;
             }
-            delete state.asyncProcess;
         },
         /**
          * Received new chunk from server over SSE.
@@ -416,17 +522,22 @@ const messagesSlice = createSlice({
                 content?: IChatConversationLocalContent | IChatConversationErrorContent;
                 assistantMessageId: string;
                 interactionId?: string;
+                conversationId?: string;
             }>,
         ) => {
             //NOTE: During streaming a message, user can choose to close or reset a chat
             // and without this check, we would get an unwanted error
-            const exists = getMessageExists(state, payload.assistantMessageId);
+            const exists = getMessageExists(state, payload.assistantMessageId, payload.conversationId);
             if (!exists) {
                 return;
             }
 
             // Update assistant message
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
             assistantMessage.id = payload.interactionId ?? assistantMessage.id;
 
             if (isChatConversationLocalItem(assistantMessage)) {
@@ -446,7 +557,11 @@ const messagesSlice = createSlice({
             // Also update the interaction id in the relevant user message (if one exists)
             // Note: dynamically created assistant messages (for multi-interaction streams)
             // may not have a preceding user message
-            const userMessage = getUserMessageBeforeSafe(state, payload.assistantMessageId);
+            const userMessage = getUserMessageBeforeSafe(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
             if (userMessage) {
                 userMessage.id = payload.interactionId ?? userMessage.id;
             }
@@ -461,7 +576,7 @@ const messagesSlice = createSlice({
                 title?: string;
             }>,
         ) => {
-            const conversation = state.conversations?.find((c) => c.id === payload.conversation.id);
+            const conversation = state.conversations?.find((c) => c.localId === payload.conversation.localId);
             if (!conversation) {
                 return;
             }
@@ -469,10 +584,7 @@ const messagesSlice = createSlice({
             conversation.generatingTitle = payload.generatingTitle;
             if (payload.title) {
                 conversation.title = payload.title;
-                if (
-                    state.currentConversation !== "new" &&
-                    state.currentConversation?.id === conversation.id
-                ) {
+                if (isConversationWithLocalId(state.currentConversation, conversation.localId)) {
                     state.currentConversation.title = payload.title;
                 }
             }
@@ -487,17 +599,18 @@ const messagesSlice = createSlice({
                 message: IChatConversationItem | UserMessage;
                 isStartMessage: boolean;
                 interactionId?: string;
+                conversationId?: string;
             }>,
         ) => {
             //NOTE: During streaming a message, user can choose to close or reset a chat
             // and without this check, we would get an unwanted error
-            const exists = getMessageExists(state, payload.userMessageId);
+            const exists = getMessageExists(state, payload.userMessageId, payload.conversationId);
             if (!exists) {
                 return;
             }
 
             // Update assistant message
-            const userMessage = getUserMessageStrict(state, payload.userMessageId);
+            const userMessage = getUserMessageStrict(state, payload.userMessageId, payload.conversationId);
             userMessage.id = payload.interactionId ?? userMessage.id;
 
             if (isChatConversationLocalItem(userMessage)) {
@@ -516,11 +629,20 @@ const messagesSlice = createSlice({
                 payload,
             }: PayloadAction<{
                 assistantMessageId: string;
+                conversationId?: string;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
             assistantMessage.complete = true;
-            delete state.asyncProcess;
+            setConversationInProgress(state, false, payload.conversationId);
+
+            const data = getConversationData(state.conversationsData, payload.conversationId);
+            delete data?.asyncProcess;
+            delete state.messageAsyncProcess;
         },
         evaluateMessageSuggestionsAction: (
             state,
@@ -529,9 +651,14 @@ const messagesSlice = createSlice({
             }: PayloadAction<{
                 item?: IChatSuggestionsItem;
                 assistantMessageId: string;
+                conversationId?: string;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 assistantMessage.suggestions = payload.item;
@@ -555,35 +682,26 @@ const messagesSlice = createSlice({
         },
         startNewConversationAction: (state) => {
             // keep list of conversations, but clear current conversation data in the view
-            state.currentConversation = "new";
-            state.conversationItems = {};
-            state.conversationItemsOrder = [];
+            state.currentConversation = createEmptyConversation();
             // mark as loaded to prevent auto-loading last conversation while on landing
             state.loaded = true;
-            delete state.asyncProcess;
         },
         setCurrentConversationAction: (
             state,
             { payload }: PayloadAction<{ conversation: IChatConversationLocal }>,
         ) => {
-            const existing = state.conversations?.find((c) => c.id === payload.conversation.id);
+            const existing = state.conversations?.find((c) => c.localId === payload.conversation.localId);
 
             if (existing) {
-                //Same conversation as current, do nothing
-                if (state.currentConversation !== "new" && state.currentConversation?.id === existing.id) {
-                    return;
-                }
-
+                const data = getConversationData(state.conversationsData, existing.localId);
                 state.currentConversation = existing;
-                state.threadId = existing.id;
-                state.messages = {};
-                state.messageOrder = [];
-                state.loaded = false;
-                //TODO: Existing conversation
+                state.loaded = !!data?.order.length;
+                state.threadId = payload.conversation.id;
+                existing.id = payload.conversation.id;
             } else {
                 state.conversations = [payload.conversation, ...(state.conversations ?? [])];
                 state.currentConversation = payload.conversation;
-                state.threadId = payload.conversation.id;
+                state.threadId = payload.conversation.localId;
                 state.loaded = true;
             }
         },
@@ -591,7 +709,12 @@ const messagesSlice = createSlice({
             state.globalError = errorToObject(error);
         },
         cancelAsyncAction: (state) => {
-            delete state.asyncProcess;
+            if (state.currentConversation) {
+                const data = getConversationData(state.conversationsData, state.currentConversation.localId);
+                delete data?.asyncProcess;
+            } else {
+                delete state.messageAsyncProcess;
+            }
         },
         setUserFeedback: (
             state,
@@ -603,7 +726,12 @@ const messagesSlice = createSlice({
                 userTextFeedback?: string;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const conversationId = getConversationLocalId(state.currentConversation);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 const original = assistantMessage.feedback ?? {
@@ -625,11 +753,16 @@ const messagesSlice = createSlice({
                 payload,
             }: PayloadAction<{
                 assistantMessageId: string;
+                conversationId?: string;
                 error: string;
             }>,
         ) => {
             // Reset feedback to NONE and set error when submission fails
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 const original = assistantMessage.feedback ?? {
@@ -654,10 +787,15 @@ const messagesSlice = createSlice({
                 payload,
             }: PayloadAction<{
                 assistantMessageId: string;
+                conversationId?: string;
             }>,
         ) => {
             // Clear feedback error after showing toast
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
             if (isChatConversationLocalItem(assistantMessage)) {
                 delete assistantMessage.feedback?.error;
             } else {
@@ -675,7 +813,12 @@ const messagesSlice = createSlice({
                 explore: boolean;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const conversationId = getConversationLocalId(state.currentConversation);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 if (assistantMessage.content.type !== "multipart") {
@@ -717,7 +860,12 @@ const messagesSlice = createSlice({
                 assistantMessageId: string;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const conversationId = getConversationLocalId(state.currentConversation);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 if (assistantMessage.content.type !== "multipart") {
@@ -748,9 +896,14 @@ const messagesSlice = createSlice({
                 };
                 visualizationId: string;
                 assistantMessageId: string;
+                conversationId?: string;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 if (assistantMessage.content.type !== "multipart") {
@@ -791,10 +944,15 @@ const messagesSlice = createSlice({
                 visualizationId: string;
                 assistantMessageId: string;
                 savedVisualizationId: string;
+                conversationId?: string;
                 explore: boolean;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                payload.conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 if (assistantMessage.content.type !== "multipart") {
@@ -846,7 +1004,12 @@ const messagesSlice = createSlice({
                 status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS";
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+            const conversationId = getConversationLocalId(state.currentConversation);
+            const assistantMessage = getAssistantMessageStrict(
+                state,
+                payload.assistantMessageId,
+                conversationId,
+            );
 
             if (isChatConversationLocalItem(assistantMessage)) {
                 if (assistantMessage.content.type !== "multipart") {
@@ -894,7 +1057,7 @@ const messagesSlice = createSlice({
             { payload }: PayloadAction<{ conversationId: string; pinned: boolean }>,
         ) => {
             state.conversations = state.conversations?.map((conversation) =>
-                conversation.id === payload.conversationId
+                conversation.localId === payload.conversationId
                     ? {
                           ...conversation,
                           pinned: payload.pinned,
@@ -902,10 +1065,7 @@ const messagesSlice = createSlice({
                     : conversation,
             );
 
-            if (
-                state.currentConversation !== "new" &&
-                state.currentConversation?.id === payload.conversationId
-            ) {
+            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
                 state.currentConversation = {
                     ...state.currentConversation,
                     pinned: payload.pinned,
@@ -917,7 +1077,7 @@ const messagesSlice = createSlice({
             { payload }: PayloadAction<{ conversationId: string; error: Error; pinned?: boolean }>,
         ) => {
             state.conversations = state.conversations?.map((conversation) =>
-                conversation.id === payload.conversationId
+                conversation.localId === payload.conversationId
                     ? {
                           ...conversation,
                           pinned: payload.pinned,
@@ -925,10 +1085,7 @@ const messagesSlice = createSlice({
                     : conversation,
             );
 
-            if (
-                state.currentConversation !== "new" &&
-                state.currentConversation?.id === payload.conversationId
-            ) {
+            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
                 state.currentConversation = {
                     ...state.currentConversation,
                     pinned: payload.pinned,
@@ -937,17 +1094,13 @@ const messagesSlice = createSlice({
         },
         deleteConversationAction: (state, _action: PayloadAction<{ conversationId: string }>) => state,
         deleteConversationStartAction: (state, { payload }: PayloadAction<{ conversationId: string }>) => {
-            if (
-                state.currentConversation !== "new" &&
-                payload.conversationId === state.currentConversation?.id
-            ) {
+            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
                 // keep list of conversations, but clear current conversation data in the view
-                state.currentConversation = "new";
-                state.conversationItems = {};
-                state.conversationItemsOrder = [];
+                state.currentConversation = createEmptyConversation();
             }
+            delete state.conversationsData[payload.conversationId];
             state.conversations = state.conversations?.filter(
-                (conversation) => conversation.id !== payload.conversationId,
+                (conversation) => conversation.localId !== payload.conversationId,
             );
         },
         deleteConversationSuccessAction: (

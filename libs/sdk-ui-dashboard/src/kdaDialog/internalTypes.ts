@@ -3,6 +3,7 @@
 import {
     type DashboardAttributeFilterItem,
     type ICatalogDateAttribute,
+    type IDashboardMeasureValueFilter,
     type ISeparators,
     type ObjRef,
 } from "@gooddata/sdk-model";
@@ -67,6 +68,11 @@ export interface IKdaState {
     selectedStatus: KdaAsyncStatus;
     selectedError: Error | undefined;
     attributeFilters: DashboardAttributeFilterItem[];
+    /**
+     * Dashboard measure value filters propagated to the change analysis computation.
+     * Not editable in the dialog UI — these flow through from the dashboard filter context.
+     */
+    measureValueFilters: IDashboardMeasureValueFilter[];
     items: IUiListboxInteractiveItem<IKdaItem>[];
     itemsStatus: KdaAsyncStatus;
     itemsError: Error | undefined;

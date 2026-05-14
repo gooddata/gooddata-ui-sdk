@@ -35,8 +35,8 @@ export function* onUserFeedback({
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
 
     if (settings?.enableAiAgenticConversations) {
+        const conversation: IChatConversationLocal = yield select(conversationSelector);
         try {
-            const conversation: IChatConversationLocal = yield select(conversationSelector);
             const messages: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
             const message = messages.find((message) => message.localId === payload.assistantMessageId);
 
@@ -59,6 +59,7 @@ export function* onUserFeedback({
                 setUserFeedbackError({
                     assistantMessageId: payload.assistantMessageId,
                     error: extractError(e),
+                    conversationId: conversation.localId,
                 }),
             );
         }

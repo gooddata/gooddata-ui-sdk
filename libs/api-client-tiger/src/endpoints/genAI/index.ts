@@ -40,6 +40,8 @@ import {
 } from "../../generated/afm-rest-api/index.js";
 import {
     type AiPatchDocumentRequest,
+    type AiSummarizeRequest,
+    type AiSummarizeResponse,
     type ConversationsAiDeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDeleteRequest,
     type ConversationsAiGetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGetRequest,
     type ConversationsAiGetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGetRequest,
@@ -88,6 +90,8 @@ import {
     type ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest,
     ResponsesAi_GetConversationResponsesApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesGet,
     ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch,
+    type SummaryAiSummarizeDashboardRequest,
+    SummaryAi_SummarizeDashboard,
     type VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest,
     VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch,
 } from "../../generated/ai-json-api/index.js";
@@ -145,6 +149,11 @@ export {
     type ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest as GenAiApiPatchConversationResponseRequest,
     VisualizationsAi_PatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatch as GenAiApi_PatchVisualization,
     type VisualizationsAiPatchVisualizationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdVisualizationsVisualizationIdPatchRequest as GenAiApiPatchVisualizationRequest,
+    // Dashboard Summary
+    SummaryAi_SummarizeDashboard as GenAiApi_SummarizeDashboard,
+    type SummaryAiSummarizeDashboardRequest as GenAiApiSummarizeDashboardRequest,
+    type AiSummarizeRequest as GenAiApiSummarizeRequest,
+    type AiSummarizeResponse as GenAiApiSummarizeResponse,
     ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost as GenAiApi_PostGenerateConversationTitle,
     type ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest as GenAiApiPostGenerateConversationTitleRequest,
     // Knowledge Documents

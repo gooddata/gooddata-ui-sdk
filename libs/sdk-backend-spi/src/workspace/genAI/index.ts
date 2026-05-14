@@ -2,6 +2,7 @@
 
 import type {
     DateAttributeGranularity,
+    FilterContextItem,
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
@@ -93,6 +94,62 @@ export interface IGenAIService {
      * Get check if LLM is configured.
      */
     getLlmConfigured(): Promise<boolean>;
+
+    /**
+     * Generate an AI summary of a dashboard for the given visualizations and filter context.
+     * @beta
+     */
+    summarizeDashboard(
+        request: IDashboardSummaryRequest,
+        options?: { signal?: AbortSignal },
+    ): Promise<IDashboardSummary>;
+}
+
+/**
+ * Request payload for AI dashboard summarization.
+ * @beta
+ */
+export interface IDashboardSummaryRequest {
+    dashboardId: string;
+    /**
+     * Visualizations to include in the summary. `null` means include all visualizations on the dashboard.
+     */
+    visualizations: string[] | null;
+    /**
+     * Filter context to apply when generating the summary. `null` means use all dashboard filters.
+     */
+    filterContext: FilterContextItem[] | null;
+}
+
+/**
+ * A visualization included in the AI dashboard summary.
+ * @beta
+ */
+export interface IDashboardSummaryIncludedVisualization {
+    visualizationId: string;
+    title?: string | null;
+}
+
+/**
+ * A visualization excluded from the AI dashboard summary, along with the reason.
+ * @beta
+ */
+export interface IDashboardSummaryExcludedVisualization {
+    visualizationId: string;
+    reason: string;
+    title?: string | null;
+}
+
+/**
+ * Response payload for AI dashboard summarization.
+ * @beta
+ */
+export interface IDashboardSummary {
+    summary: string;
+    filterContext: FilterContextItem[];
+    visualizationsIncluded: IDashboardSummaryIncludedVisualization[];
+    visualizationsExcluded: IDashboardSummaryExcludedVisualization[];
+    generatedAt: string;
 }
 
 /**

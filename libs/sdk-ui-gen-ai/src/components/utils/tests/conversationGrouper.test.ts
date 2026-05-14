@@ -12,6 +12,7 @@ import {
 function createConversation(id: string, updatedAt: string): IChatConversationLocal {
     return {
         id,
+        localId: id,
         createdAt: updatedAt,
         updatedAt,
     };

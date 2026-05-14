@@ -637,6 +637,7 @@ export {
     isRelativeDashboardDateFilter,
     isAbsoluteDashboardDateFilter,
     isDashboardDateFilterReference,
+    isAllDashboardMeasureValueFilter,
     isDashboardMeasureValueFilter,
     isDashboardMeasureValueFilterReference,
     isFilterContext,

@@ -39,9 +39,13 @@ export function convertParameter(
 function convertParameterDefinition(
     definition: JsonApiParameterOutWithLinks["attributes"]["definition"],
 ): IParameterDefinition {
-    return {
-        type: definition.type,
-        defaultValue: definition.defaultValue,
-        ...(definition.constraints ? { constraints: definition.constraints } : {}),
-    };
+    if (definition.type === "NUMBER") {
+        return {
+            type: "NUMBER",
+            defaultValue: definition.defaultValue,
+            ...(definition.constraints ? { constraints: definition.constraints } : {}),
+        };
+    } else {
+        throw new Error(`Unsupported parameter definition type: ${definition.type}`);
+    }
 }

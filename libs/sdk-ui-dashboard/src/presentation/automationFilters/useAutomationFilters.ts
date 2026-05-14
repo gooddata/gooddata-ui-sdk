@@ -8,19 +8,23 @@ import {
     type FilterContextItem,
     type ICatalogAttribute,
     type ICatalogDateDataset,
+    type ICatalogMeasure,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfigItem,
+    type IDashboardMeasureValueFilterConfig,
     type ObjRef,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
     selectCatalogAttributes,
     selectCatalogDateDatasets,
+    selectCatalogMeasures,
 } from "../../model/store/catalog/catalogSelectors.js";
 import { selectEnableNewScheduledExport } from "../../model/store/config/configSelectors.js";
 import {
@@ -38,11 +42,16 @@ import {
     selectDateFilterConfigsOverrides,
     selectDateFilterConfigsOverridesByTab,
 } from "../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    selectMeasureValueFilterConfigsOverrides,
+    selectMeasureValueFilterConfigsOverridesByTab,
+} from "../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 
 import {
     areFiltersMatchedByIdentifier,
     getCatalogAttributesByFilters,
     getCatalogDateDatasetsByFilters,
+    getCatalogMeasuresByFilters,
     getFilterByCatalogItemRef,
     getFilterLocalIdentifier,
     getFilterTitle,
@@ -57,8 +66,10 @@ import {
 interface IFilterProcessingContext {
     allAttributes: ICatalogAttribute[];
     allDateDatasets: ICatalogDateDataset[];
+    allMeasures: ICatalogMeasure[];
     attributeConfigs: IDashboardAttributeFilterConfig[];
     dateConfigs: IDashboardDateFilterConfigItem[];
+    mvfConfigs: IDashboardMeasureValueFilterConfig[];
     isCommonDateFilterHidden: boolean;
     disableDateFilters: boolean;
 }
@@ -99,6 +110,16 @@ function computeAddDropdownDateDatasets(
     return getCatalogDateDatasetsByFilters(nonSelectedFilters, context.allDateDatasets, context.dateConfigs);
 }
 
+/**
+ * Computes catalog measures available for the Add filter dropdown.
+ */
+function computeAddDropdownMeasures(
+    nonSelectedFilters: FilterContextItem[],
+    context: IFilterProcessingContext,
+): ICatalogMeasure[] {
+    return getCatalogMeasuresByFilters(nonSelectedFilters, context.allMeasures, context.mvfConfigs);
+}
+
 //
 // Processed tab data interface
 //
@@ -119,6 +140,8 @@ export interface IProcessedAutomationFiltersTab {
     attributes: ICatalogAttribute[];
     /** Catalog date datasets available for Add filter dropdown */
     dateDatasets: ICatalogDateDataset[];
+    /** Catalog measures available for Add filter dropdown (for re-adding removed MVFs) */
+    measures: ICatalogMeasure[];
     /** Non-selected filters (available but not yet selected) */
     nonSelectedFilters: FilterContextItem[];
     /** Attribute filter configs for this tab */
@@ -150,8 +173,10 @@ export const useAutomationFilters = ({
     const intl = useIntl();
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const allMeasures = useDashboardSelector(selectCatalogMeasures);
     const attributeConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
     const dateConfigs = useDashboardSelector(selectDateFilterConfigsOverrides);
+    const mvfConfigs = useDashboardSelector(selectMeasureValueFilterConfigsOverrides);
     const dateFilterConfig = useDashboardSelector(selectPersistedDashboardFilterContextDateFilterConfig);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const lockedFilters = useDashboardSelector(selectDashboardLockedFilters);
@@ -169,16 +194,20 @@ export const useAutomationFilters = ({
         () => ({
             allAttributes,
             allDateDatasets,
+            allMeasures,
             attributeConfigs,
             dateConfigs,
+            mvfConfigs,
             isCommonDateFilterHidden,
             disableDateFilters,
         }),
         [
             allAttributes,
             allDateDatasets,
+            allMeasures,
             attributeConfigs,
             dateConfigs,
+            mvfConfigs,
             isCommonDateFilterHidden,
             disableDateFilters,
         ],
@@ -201,6 +230,11 @@ export const useAutomationFilters = ({
 
     const dateDatasets = useMemo(
         () => computeAddDropdownDateDatasets(nonSelectedFilters, processingContext),
+        [nonSelectedFilters, processingContext],
+    );
+
+    const measures = useMemo(
+        () => computeAddDropdownMeasures(nonSelectedFilters, processingContext),
         [nonSelectedFilters, processingContext],
     );
 
@@ -307,7 +341,13 @@ export const useAutomationFilters = ({
                 undefined,
             );
 
-            const filter = attributeFilter || dateFilter;
+            // For MVF: the dropdown emits the metric's catalog ref directly; look it up by ref.
+            const measureFilter = getFilterByCatalogItemRef(catalogItemRef, nonSelectedFilters);
+
+            const filter =
+                attributeFilter ||
+                dateFilter ||
+                (measureFilter && isDashboardMeasureValueFilter(measureFilter) ? measureFilter : undefined);
 
             if (filter) {
                 const filterTitle = getFilterTitle(filter, allAttributes, allDateDatasets, intl);
@@ -362,6 +402,7 @@ export const useAutomationFilters = ({
         visibleFilters,
         attributes,
         dateDatasets,
+        measures,
         attributeConfigs,
         dateConfigs,
         filterAnnouncement,
@@ -399,6 +440,7 @@ export const useAutomationFiltersByTab = ({
 }) => {
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const allMeasures = useDashboardSelector(selectCatalogMeasures);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
 
     const [filterAnnouncement] = useState<string>("");
@@ -409,6 +451,7 @@ export const useAutomationFiltersByTab = ({
     const attributeConfigsByTab = useDashboardSelector(selectAttributeFilterConfigsOverridesByTab);
     const dateConfigsByTab = useDashboardSelector(selectDateFilterConfigsOverridesByTab);
     const dateFilterConfigByTab = useDashboardSelector(selectDateFilterConfigOverridesByTab);
+    const mvfConfigsByTab = useDashboardSelector(selectMeasureValueFilterConfigsOverridesByTab);
 
     const processedFiltersByTab = useMemo(() => {
         if (!filtersByTab || filtersByTab.length === 0) {
@@ -421,6 +464,7 @@ export const useAutomationFiltersByTab = ({
             // Get configs specific to this tab
             const attributeConfigs = attributeConfigsByTab[tabId] ?? [];
             const dateConfigs = dateConfigsByTab[tabId] ?? [];
+            const mvfConfigs = mvfConfigsByTab[tabId] ?? [];
             const dateFilterConfig = dateFilterConfigByTab[tabId];
             const isCommonDateFilterHidden = dateFilterConfig?.mode === "hidden";
 
@@ -428,8 +472,10 @@ export const useAutomationFiltersByTab = ({
             const processingContext: IFilterProcessingContext = {
                 allAttributes,
                 allDateDatasets,
+                allMeasures,
                 attributeConfigs,
                 dateConfigs,
+                mvfConfigs,
                 isCommonDateFilterHidden,
                 disableDateFilters,
             };
@@ -447,6 +493,7 @@ export const useAutomationFiltersByTab = ({
             // Compute catalog items for Add dropdown
             const attributes = computeAddDropdownAttributes(nonSelectedFilters, processingContext);
             const dateDatasets = computeAddDropdownDateDatasets(nonSelectedFilters, processingContext);
+            const measures = computeAddDropdownMeasures(nonSelectedFilters, processingContext);
 
             return {
                 tabId: tab.tabId,
@@ -455,6 +502,7 @@ export const useAutomationFiltersByTab = ({
                 lockedFilters: tab.lockedFilters,
                 attributes,
                 dateDatasets,
+                measures,
                 nonSelectedFilters,
                 attributeConfigs,
                 dateConfigs,
@@ -465,9 +513,11 @@ export const useAutomationFiltersByTab = ({
         editedFiltersByTab,
         allAttributes,
         allDateDatasets,
+        allMeasures,
         attributeConfigsByTab,
         dateConfigsByTab,
         dateFilterConfigByTab,
+        mvfConfigsByTab,
         disableDateFilters,
     ]);
 
@@ -561,6 +611,8 @@ export const useAutomationFiltersByTab = ({
                     return selectedDateDataSets.some((ds) =>
                         areObjRefsEqual(f.dateFilter.dataSet, ds.dataSet.ref),
                     );
+                } else if (isDashboardMeasureValueFilter(f)) {
+                    return areObjRefsEqual(f.dashboardMeasureValueFilter.measure, displayForm);
                 }
                 return false;
             });

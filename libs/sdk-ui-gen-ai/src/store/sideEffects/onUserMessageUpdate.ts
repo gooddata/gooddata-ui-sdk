@@ -2,7 +2,7 @@
 
 import { call, getContext, put, select } from "redux-saga/effects";
 
-import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IChatConversation } from "@gooddata/sdk-backend-spi";
 
 import { type IChatConversationLocal } from "../../model.js";
 import { conversationByIdSelector } from "../messages/messagesSelectors.js";
@@ -26,7 +26,7 @@ export function* onUserMessageUpdate({ payload }: ReturnType<typeof evaluateMess
 
     const conversation: IChatConversationLocal = yield select(
         conversationByIdSelector,
-        payload.conversation.id,
+        payload.conversation.localId,
     );
 
     if (!conversation) {
@@ -47,14 +47,17 @@ export function* onUserMessageUpdate({ payload }: ReturnType<typeof evaluateMess
     try {
         const conversationsCall = backend.workspace(workspace).genAI().getChatConversations();
 
-        const updated: IChatConversationLocal = yield call(
+        const updated: IChatConversation = yield call(
             conversationsCall.generateTitle.bind(conversationsCall),
             payload.conversation.id,
         );
 
         yield put(
             evaluateConversationTitleAction({
-                conversation: updated,
+                conversation: {
+                    ...updated,
+                    localId: conversation.localId,
+                },
                 generatingTitle: false,
                 title: updated.title,
             }),
