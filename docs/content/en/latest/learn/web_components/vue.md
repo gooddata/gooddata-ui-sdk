@@ -65,13 +65,13 @@ Update your `vite.config.js` file:
 
 ## Embed visualizations
 
-You can now use `gd-insight`, `gd-dashboard`, and `gd-ai-assistant` elements anywhere in your Vue template.
+You can now use `gd-insight-embed`, `gd-dashboard-embed`, and `gd-ai-assistant` elements anywhere in your Vue template.
 For example, in `src/App.vue` file.
 
 ```html
 <template>
-    <gd-insight insight="my-visualization-id" style="height:500px"></gd-insight>
-    <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
+    <gd-insight-embed insight="my-visualization-id" style="height:500px"></gd-insight-embed>
+    <gd-dashboard-embed dashboard="my-dashboard-id"></gd-dashboard-embed>
     <gd-ai-assistant></gd-ai-assistant>
 </template>
 ```
@@ -80,7 +80,7 @@ You can copy the _visualization id_ and _dashboard id_ from the URL bar of your 
 from the Analyze and Dashboards pages respectively. At this point you should see an visualization and a dashboard rendering
 on the screen.
 
-We set the height of the `gd-insight` to a static value as it's expecting a flex layout and would collapse to a `0` height
+We set the height of the `gd-insight-embed` to a static value as it's expecting a flex layout and would collapse to a `0` height
 otherwise.
 
 ## Define dashboardId and visualizationId dynamically
@@ -95,21 +95,21 @@ You can use attribute binding to define the IDs dynamically from the Vue compone
     </script>
 
     <template>
--     <gd-insight insight="my-visualization-id" style="height:500px"></gd-insight>
--     <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
-+     <gd-insight :insight="visualizationId" style="height:500px"></gd-insight>
-+     <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
+-     <gd-insight-embed insight="my-visualization-id" style="height:500px"></gd-insight-embed>
+-     <gd-dashboard-embed dashboard="my-dashboard-id"></gd-dashboard-embed>
++     <gd-insight-embed :insight="visualizationId" style="height:500px"></gd-insight-embed>
++     <gd-dashboard-embed :dashboard="dashboardId"></gd-dashboard-embed>
 +     <gd-ai-assistant :workspace="workspaceId"></gd-ai-assistant>
     </template>
 ```
 
 ## Add event listeners
 
-Both `gd-insight`, `gd-dashboard`, and `gd-ai-assistant` are dispatching custom events.
+Both `gd-insight-embed`, `gd-dashboard-embed`, and `gd-ai-assistant` are dispatching custom events.
 
 ### Visualization event listener
 
-In case of `gd-insight` you can use the Vue event binding syntax.
+In case of `gd-insight-embed` you can use the Vue event binding syntax.
 
 ```diff
     <script setup>
@@ -120,18 +120,18 @@ In case of `gd-insight` you can use the Vue event binding syntax.
     </script>
 
     <template>
--     <gd-insight :insight="visualizationId" style="height:500px"></gd-insight>
-+     <gd-insight :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
-      <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
+-     <gd-insight-embed :insight="visualizationId" style="height:500px"></gd-insight-embed>
++     <gd-insight-embed :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight-embed>
+      <gd-dashboard-embed :dashboard="dashboardId"></gd-dashboard-embed>
       <gd-ai-assistant :workspace="workspaceId"></gd-ai-assistant>
     </template>
 ```
 
-[Read more about visualization events](../).
+[Read more about visualization events](./insight_custom_element/#supported-events).
 
 ### Dashboard event listener
 
-The setup for `gd-dashboard` is more complicated, as our event names do not follow the Vue naming convention. You would
+The setup for `gd-dashboard-embed` is more complicated, as our event names do not follow the Vue naming convention. You would
 need to obtain a reference to the DOM object and add event listeners directly. Keep in mind that you
 also need to remove the listeners on the component unmount.
 
@@ -157,14 +157,14 @@ also need to remove the listeners on the component unmount.
     </script>
 
     <template>
-      <gd-insight :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
--     <gd-dashboard :dashboard="dashboardId"></gd-dashboard>
-+     <gd-dashboard :dashboard="dashboardId" ref="dashboard"></gd-dashboard>
+      <gd-insight-embed :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight-embed>
+-     <gd-dashboard-embed :dashboard="dashboardId"></gd-dashboard-embed>
++     <gd-dashboard-embed :dashboard="dashboardId" ref="dashboard"></gd-dashboard-embed>
       <gd-ai-assistant :workspace="workspaceId"></gd-ai-assistant>
     </template>
 ```
 
-[Read more about Dashboard events]webcomponents_dashboard#supported-events.
+[Read more about Dashboard events](./dashboard_custom_element/#supported-events).
 
 ### AI Assistant event listener
 
@@ -197,10 +197,10 @@ Similar to the dashboard, the `gd-ai-assistant` component requires direct DOM ev
     </script>
 
     <template>
-      <gd-insight :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight>
-      <gd-dashboard :dashboard="dashboardId" ref="dashboard"></gd-dashboard>
+      <gd-insight-embed :insight="visualizationId" @insightLoaded="onInsightLoaded" style="height:500px"></gd-insight-embed>
+      <gd-dashboard-embed :dashboard="dashboardId" ref="dashboard"></gd-dashboard-embed>
 +     <gd-ai-assistant :workspace="workspaceId" ref="aiChat"></gd-ai-assistant>
     </template>
 ```
 
-[Read more about AI Assistant events](./ai_assistant_custom_element.md#supported-events).
+[Read more about AI Assistant events](./ai_assistant_custom_element/#supported-events).

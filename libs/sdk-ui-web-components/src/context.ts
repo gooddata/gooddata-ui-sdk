@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -16,23 +17,28 @@ export type CustomElementContext = {
 };
 
 let contextPromiseResolve: (context: CustomElementContext) => void;
-let contextPromiseResolved = false;
+let currentContext: CustomElementContext | undefined;
 const contextPromise: Promise<CustomElementContext> = new Promise((resolve) => {
     contextPromiseResolve = resolve;
 });
 
 /**
- * A setter function for a singleton context.
+ * A setter function for the default runtime context snapshot.
  *
  * @public
  */
 export const setContext = (context: CustomElementContext) => {
-    if (contextPromiseResolved) {
-        throw new Error("Context is already set.");
-    }
-
-    contextPromiseResolved = true;
+    currentContext = context;
     contextPromiseResolve(context);
+};
+
+/**
+ * A getter for the latest context snapshot.
+ *
+ * @public
+ */
+export const getContextSnapshot = (): CustomElementContext | undefined => {
+    return currentContext;
 };
 
 /**
@@ -44,5 +50,5 @@ export const setContext = (context: CustomElementContext) => {
  * @public
  */
 export const getContext = (): Promise<CustomElementContext> => {
-    return contextPromise;
+    return currentContext ? Promise.resolve(currentContext) : contextPromise;
 };

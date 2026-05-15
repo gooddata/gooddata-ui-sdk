@@ -8,34 +8,32 @@ import { resolveLocale } from "@gooddata/sdk-ui";
 import type { Dashboard as OriginalDashboard } from "@gooddata/sdk-ui-dashboard";
 
 import {
-    CustomElementAdapter,
-    EVENT_HANDLER,
-    GET_COMPONENT,
-    LOAD_COMPONENT,
-} from "../common/CustomElementAdapter.js";
+    LEGACY_EVENT_HANDLER,
+    LEGACY_GET_COMPONENT,
+    LEGACY_LOAD_COMPONENT,
+    LegacyCustomElementAdapter,
+} from "../common/LegacyCustomElementAdapter.js";
 import { type CustomElementContext } from "../context.js";
 
 type IDashboard = typeof OriginalDashboard;
 
-export class Dashboard extends CustomElementAdapter<IDashboard> {
+export class Dashboard extends LegacyCustomElementAdapter<IDashboard> {
     static get observedAttributes() {
         return ["workspace", "dashboard", "locale", "readonly", "mapbox", "agGrid"];
     }
 
-    async [LOAD_COMPONENT]() {
+    async [LEGACY_LOAD_COMPONENT]() {
         return (await import("@gooddata/sdk-ui-dashboard")).Dashboard;
     }
 
-    [GET_COMPONENT](
+    [LEGACY_GET_COMPONENT](
         Component: IDashboard,
         { backend, workspaceId, mapboxToken, agGridToken }: CustomElementContext,
     ) {
         const dashboard = this.getAttribute("dashboard");
 
-        // "dashboard" property is mandatory
         invariant(dashboard, '"dashboard" is a mandatory attribute and it cannot be empty');
 
-        // Collect the rest of the props
         const extraProps: Partial<ComponentProps<IDashboard>> = { config: {} };
 
         if (this.hasAttribute("locale")) {
@@ -63,7 +61,7 @@ export class Dashboard extends CustomElementAdapter<IDashboard> {
                     {
                         eval: () => true,
                         handler: (event) => {
-                            this[EVENT_HANDLER](event.type)(event.payload);
+                            this[LEGACY_EVENT_HANDLER](event.type)(event.payload);
                         },
                     },
                 ]}

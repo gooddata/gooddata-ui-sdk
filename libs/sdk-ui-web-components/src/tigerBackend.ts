@@ -25,5 +25,4 @@ export default tigerBackend;
 
 // Re-export Tiger backend, so it can be imported by user as a separate entry point
 // This helps us with chunking and keeping the original entry point slim
-// eslint-disable-next-line no-restricted-syntax
 export * from "@gooddata/sdk-backend-tiger";

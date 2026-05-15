@@ -29,13 +29,13 @@ export class GenAIAssistant extends CustomElementAdapter<IGenAIAssistant> {
         return ["workspace", "locale", "objectTypes"];
     }
 
-    async [LOAD_COMPONENT]() {
+    override async [LOAD_COMPONENT]() {
         return (await import("@gooddata/sdk-ui-gen-ai")).GenAIAssistant;
     }
 
     onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
 
-    [GET_COMPONENT](Component: IGenAIAssistant, { backend, workspaceId }: CustomElementContext) {
+    override [GET_COMPONENT](Component: IGenAIAssistant, { backend, workspaceId }: CustomElementContext) {
         // Collect the rest of the props
         const extraProps: Partial<ComponentProps<IGenAIAssistant>> = {};
 

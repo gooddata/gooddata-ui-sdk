@@ -71,6 +71,15 @@ import {
 } from "../components/Scenarios/Visualizations/ScatterPlot/ScatterPlot";
 import { ShortenMetricNameChartScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameChartScenario";
 import { ShortenMetricNameTableScenario } from "../components/Scenarios/Visualizations/ShortenMetricName/ShortenMetricNameTableScenario";
+import { DashboardCommandsScenario } from "../components/Scenarios/WebComponents/DashboardCommandsScenario";
+import { DashboardInvalidUsageScenario } from "../components/Scenarios/WebComponents/DashboardInvalidUsageScenario";
+import { DashboardLifecycleScenario } from "../components/Scenarios/WebComponents/DashboardLifecycleScenario";
+import { DashboardPluginWarningScenario } from "../components/Scenarios/WebComponents/DashboardPluginWarningScenario";
+import { DashboardPrecedenceScenario } from "../components/Scenarios/WebComponents/DashboardPrecedenceScenario";
+import { InsightInvalidUsageScenario } from "../components/Scenarios/WebComponents/InsightInvalidUsageScenario";
+import { InsightLifecycleScenario } from "../components/Scenarios/WebComponents/InsightLifecycleScenario";
+import { InsightPrecedenceScenario } from "../components/Scenarios/WebComponents/InsightPrecedenceScenario";
+import { InsightRefreshScenario } from "../components/Scenarios/WebComponents/InsightRefreshScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -130,6 +139,15 @@ export const SCENARIO_KEYS = {
     INSIGHT_TRANSPOSE_HAS_MC_ROW: "insight/insight-transpose-has-mc-row",
     INSIGHT_TRANSPOSE_HAS_MC_LEFT: "insight/insight-transpose-has-mc-left",
     DASHBOARD_MULTIPLE_DATE_FILTERS: "dashboard/multiple-date-filters",
+    WEB_COMPONENT_DASHBOARD_LIFECYCLE: "web-components/dashboard/lifecycle",
+    WEB_COMPONENT_DASHBOARD_PRECEDENCE: "web-components/dashboard/precedence",
+    WEB_COMPONENT_DASHBOARD_COMMANDS: "web-components/dashboard/commands",
+    WEB_COMPONENT_DASHBOARD_INVALID_USAGE: "web-components/dashboard/invalid-usage",
+    WEB_COMPONENT_DASHBOARD_PLUGIN_WARNING: "web-components/dashboard/plugin-warning",
+    WEB_COMPONENT_INSIGHT_LIFECYCLE: "web-components/insight/lifecycle",
+    WEB_COMPONENT_INSIGHT_PRECEDENCE: "web-components/insight/precedence",
+    WEB_COMPONENT_INSIGHT_REFRESH: "web-components/insight/refresh",
+    WEB_COMPONENT_INSIGHT_INVALID_USAGE: "web-components/insight/invalid-usage",
     VIS_REPEATER_FULL_CONFIGS: "visualizations/repeater/repeater-full-configs",
     VIS_REPEATER_INSIGHT_VIEW: "visualizations/repeater/repeater-insight-view",
     DASHBOARD_REPEATER: "visualizations/repeater/repeater-dashboard",
@@ -192,6 +210,15 @@ const scenarios = new Map<string, ComponentType>([
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_ROW, InsightTranspose_MetricRow],
     [SCENARIO_KEYS.INSIGHT_TRANSPOSE_HAS_MC_LEFT, InsightTranspose_ColHeaderLeft],
     [SCENARIO_KEYS.DASHBOARD_MULTIPLE_DATE_FILTERS, DashboardMultipleDateFiltersScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_DASHBOARD_LIFECYCLE, DashboardLifecycleScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_DASHBOARD_PRECEDENCE, DashboardPrecedenceScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_DASHBOARD_COMMANDS, DashboardCommandsScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_DASHBOARD_INVALID_USAGE, DashboardInvalidUsageScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_DASHBOARD_PLUGIN_WARNING, DashboardPluginWarningScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_INSIGHT_LIFECYCLE, InsightLifecycleScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_INSIGHT_PRECEDENCE, InsightPrecedenceScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_INSIGHT_REFRESH, InsightRefreshScenario],
+    [SCENARIO_KEYS.WEB_COMPONENT_INSIGHT_INVALID_USAGE, InsightInvalidUsageScenario],
     [SCENARIO_KEYS.VIS_REPEATER_FULL_CONFIGS, RepeaterFullConfigs],
     [SCENARIO_KEYS.VIS_REPEATER_INSIGHT_VIEW, RepeaterInsightView],
     [SCENARIO_KEYS.VIS_REPEATER_NO_COLUMN, RepeaterNoColumn],
