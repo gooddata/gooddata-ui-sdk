@@ -64,11 +64,11 @@ unknown components.
 
 ## Embed visualizations
 
-You can now use `gd-insight`, `gd-dashboard`, and `gd-ai-assistant` elements anywhere in your `src/app/app.component.html` template.
+You can now use `gd-insight-embed`, `gd-dashboard-embed`, and `gd-ai-assistant` elements anywhere in your `src/app/app.component.html` template.
 
 ```html
-<gd-insight insight="my-visualization-id" style="height:500px"></gd-insight>
-<gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
+<gd-insight-embed insight="my-visualization-id" style="height:500px"></gd-insight-embed>
+<gd-dashboard-embed dashboard="my-dashboard-id"></gd-dashboard-embed>
 <gd-ai-assistant></gd-ai-assistant>
 ```
 
@@ -76,7 +76,7 @@ You can copy the _visualization id_ and _dashboard id_ from the URL bar of your 
 from the Analyze and Dashboards pages respectively. At this point you should see an visualization and a dashboard rendering
 on the screen.
 
-We set the height of the `gd-insight` to a static value as it's expecting a flex layout and would collapse to a `0` height
+We set the height of the `gd-insight-embed` to a static value as it's expecting a flex layout and would collapse to a `0` height
 otherwise.
 
 ## Define dashboardId and visualizationId dynamically
@@ -104,18 +104,18 @@ Define component variables in `src/app/app.component.ts`:
 Update the `src/app/app.component.html` template:
 
 ```html
-<gd-insight [attr.insight]="visualizationId" style="height:500px"></gd-insight>
-<gd-dashboard [attr.dashboard]="dashboardId"></gd-dashboard>
+<gd-insight-embed [attr.insight]="visualizationId" style="height:500px"></gd-insight-embed>
+<gd-dashboard-embed [attr.dashboard]="dashboardId"></gd-dashboard-embed>
 <gd-ai-assistant [attr.workspace]="workspaceId"></gd-ai-assistant>
 ```
 
 ## Add event listeners
 
-Both `gd-insight`, `gd-dashboard`, and `gd-ai-assistant` are dispatching custom events.
+Both `gd-insight-embed`, `gd-dashboard-embed`, and `gd-ai-assistant` are dispatching custom events.
 
 ### Visualization event listener
 
-In case of `gd-insight` you can use the Angular event binding syntax. Define an event listener function in
+In case of `gd-insight-embed` you can use the Angular event binding syntax. Define an event listener function in
 your component code (`src/app/app.component.ts`):
 
 ```diff
@@ -141,24 +141,24 @@ your component code (`src/app/app.component.ts`):
 Attach the event listener to the visualization at `src/app/app.component.html`:
 
 ```html
-<gd-insight
+<gd-insight-embed
     [attr.insight]="visualizationId"
     style="height:500px"
     (insightLoaded)="onInsightLoaded($event)"
-></gd-insight>
+></gd-insight-embed>
 ```
 
-[Read more about visualization events](../##supported-events).
+[Read more about visualization events](./insight_custom_element/#supported-events).
 
 ### Dashboard event listener
 
-The setup for `gd-dashboard` is more complicated, as event names do not follow Angular naming convention. You would
+The setup for `gd-dashboard-embed` is more complicated, as event names do not follow Angular naming convention. You would
 need to obtain a reference to the DOM object and add event listeners directly.
 
 First, use the template reference variable to mark the dashboard element in `src/app/app.component.html`:
 
 ```html
-<gd-dashboard [attr.dashboard]="dashboardId" #dashboard></gd-dashboard>
+<gd-dashboard-embed [attr.dashboard]="dashboardId" #dashboard></gd-dashboard-embed>
 ```
 
 Now you can obtain the element and attach event listeners in `src/app/app.component.ts`. Keep in mind that you
@@ -202,7 +202,7 @@ also need to remove the listeners on the component unmount.
     }
 ```
 
-[Read more about Dashboard events](../dashboard_custom_element/#supported-events).
+[Read more about Dashboard events](./dashboard_custom_element/#supported-events).
 
 ### AI Assistant event listener
 
@@ -266,4 +266,4 @@ Now you can obtain the element and attach event listeners in `src/app/app.compon
     }
 ```
 
-[Read more about AI Assistant events](./ai_assistant_custom_element.md#supported-events).
+[Read more about AI Assistant events](./ai_assistant_custom_element/#supported-events).

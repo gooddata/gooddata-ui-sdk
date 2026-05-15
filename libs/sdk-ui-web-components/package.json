@@ -66,6 +66,7 @@
         "@gooddata/sdk-ui-gen-ai": "workspace:*",
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
+        "@gooddata/sdk-ui-loaders": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
         "lodash-es": "^4.17.23",
         "react-intl": "7.1.11",

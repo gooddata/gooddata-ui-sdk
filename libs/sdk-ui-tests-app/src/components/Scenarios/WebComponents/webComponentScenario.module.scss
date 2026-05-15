@@ -1,0 +1,20 @@
+:global(.s-wc-scenario-root) {
+    display: grid;
+    gap: 12px;
+}
+
+:global(.s-wc-status) {
+    display: grid;
+    gap: 4px;
+}
+
+:global(.s-wc-ready-count),
+:global(.s-wc-last-error) {
+    font-family: Monaco, monospace;
+    line-height: 1.4;
+}
+
+:global(.s-wc-host) {
+    display: block;
+    min-height: 480px;
+}

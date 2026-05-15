@@ -240,7 +240,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-loaders",
-      "allowedCategories": [ "examples", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-pivot",

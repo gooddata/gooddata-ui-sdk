@@ -5979,6 +5979,9 @@ importers:
       '@gooddata/sdk-ui-tests-reference-workspace':
         specifier: workspace:*
         version: link:../sdk-ui-tests-reference-workspace
+      '@gooddata/sdk-ui-web-components':
+        specifier: workspace:*
+        version: link:../sdk-ui-web-components
       '@types/react':
         specifier: 19.1.11
         version: 19.1.11
@@ -6983,6 +6986,9 @@ importers:
       '@gooddata/sdk-ui-kit':
         specifier: workspace:*
         version: link:../sdk-ui-kit
+      '@gooddata/sdk-ui-loaders':
+        specifier: workspace:*
+        version: link:../sdk-ui-loaders
       '@gooddata/sdk-ui-pivot':
         specifier: workspace:*
         version: link:../sdk-ui-pivot

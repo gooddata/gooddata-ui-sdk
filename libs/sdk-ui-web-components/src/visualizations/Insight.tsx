@@ -15,11 +15,11 @@ import {
 import type { InsightView } from "@gooddata/sdk-ui-ext";
 
 import {
-    CustomElementAdapter,
-    EVENT_HANDLER,
-    GET_COMPONENT,
-    LOAD_COMPONENT,
-} from "../common/CustomElementAdapter.js";
+    LEGACY_EVENT_HANDLER,
+    LEGACY_GET_COMPONENT,
+    LEGACY_LOAD_COMPONENT,
+    LegacyCustomElementAdapter,
+} from "../common/LegacyCustomElementAdapter.js";
 import { stringToFilters } from "../common/typeGuards/stringToFilters.js";
 import { type CustomElementContext } from "../context.js";
 
@@ -37,24 +37,22 @@ function parseFilters(stringifiedFilters: string | null | undefined) {
     }
 }
 
-export class Insight extends CustomElementAdapter<IInsightView> {
+export class Insight extends LegacyCustomElementAdapter<IInsightView> {
     static get observedAttributes() {
         return ["workspace", "insight", "locale", "title", "mapbox", "filters"];
     }
 
-    async [LOAD_COMPONENT]() {
+    async [LEGACY_LOAD_COMPONENT]() {
         return (await import("@gooddata/sdk-ui-ext")).InsightView;
     }
 
-    [GET_COMPONENT](
+    [LEGACY_GET_COMPONENT](
         Component: IInsightView,
         { backend, workspaceId, mapboxToken, agGridToken }: CustomElementContext,
     ) {
-        // Ensure mandatory property is provided
         const insight = this.getAttribute("insight");
         invariant(insight, '"insight" is a mandatory attribute and it cannot be empty');
 
-        // Collect the rest of the props
         const extraProps: Partial<ComponentProps<typeof Component>> = { config: {} };
 
         const localeAttr = this.getAttribute("locale");
@@ -62,9 +60,6 @@ export class Insight extends CustomElementAdapter<IInsightView> {
             extraProps.locale = resolveLocale(localeAttr);
         }
 
-        // title can be either string or boolean. We can't accept function in attribute.
-        // Empty string means a shortcut attribute = true. Any other notation is taken as a string literal
-        //  including <... title="true"> = the title is set to the string "true"
         const titleAttr = this.getAttribute("title");
         if (titleAttr !== null) {
             extraProps.showTitle = titleAttr || true;
@@ -90,11 +85,11 @@ export class Insight extends CustomElementAdapter<IInsightView> {
                 backend={backend}
                 workspace={workspaceId}
                 insight={insight}
-                onDrill={this[EVENT_HANDLER]<IDrillEvent>("drill")}
-                onError={this[EVENT_HANDLER]<GoodDataSdkError>("error")}
-                onExportReady={this[EVENT_HANDLER]<IExportFunction>("exportReady")}
-                onLoadingChanged={this[EVENT_HANDLER]<ILoadingState>("loadingChanged")}
-                onInsightLoaded={this[EVENT_HANDLER]<IInsight>("insightLoaded")}
+                onDrill={this[LEGACY_EVENT_HANDLER]<IDrillEvent>("drill")}
+                onError={this[LEGACY_EVENT_HANDLER]<GoodDataSdkError>("error")}
+                onExportReady={this[LEGACY_EVENT_HANDLER]<IExportFunction>("exportReady")}
+                onLoadingChanged={this[LEGACY_EVENT_HANDLER]<ILoadingState>("loadingChanged")}
+                onInsightLoaded={this[LEGACY_EVENT_HANDLER]<IInsight>("insightLoaded")}
                 {...extraProps}
             />
         );

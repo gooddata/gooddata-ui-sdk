@@ -46,6 +46,7 @@
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
         "@gooddata/sdk-ui-tests-reference-workspace": "workspace:*",
+        "@gooddata/sdk-ui-web-components": "workspace:*",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "8.58.0",
