@@ -14,6 +14,7 @@ import {
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
     type IParameterMetadataObject,
+    type IdentifierRef,
     type ObjRef,
     areObjRefsEqual,
     getHierarchyAttributes,
@@ -40,7 +41,7 @@ import {
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
-import { type CatalogParametersStatus } from "./catalogState.js";
+import { type CatalogMeasureParametersStatus, type CatalogParametersStatus } from "./catalogState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -100,6 +101,23 @@ export const selectCatalogParametersIsLoaded: DashboardSelector<boolean> = creat
     selectCatalogParametersStatus,
     (status) => status === "loaded",
 );
+
+/**
+ * Returns the dashboard-wide map from metric ref string to the parameter refs the metric depends on.
+ * The map is populated during dashboard initialization from the workspace references service.
+ *
+ * @alpha
+ */
+export const selectCatalogMeasureParameters: DashboardSelector<Record<string, IdentifierRef[]>> =
+    createSelector(selectSelf, (state) => state.measureParameters.byMetric);
+
+/**
+ * Returns the load status of the dashboard-wide metric → parameter dependency map.
+ *
+ * @alpha
+ */
+export const selectCatalogMeasureParametersStatus: DashboardSelector<CatalogMeasureParametersStatus> =
+    createSelector(selectSelf, (state) => state.measureParameters.status);
 
 /**
  * @alpha

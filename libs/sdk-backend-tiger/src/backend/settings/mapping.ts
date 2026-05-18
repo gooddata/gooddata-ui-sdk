@@ -67,6 +67,7 @@ const TYPE_TO_KEY_MAP = {
     RESTRICT_BASE_UI: "restrictBaseUi",
     ACTIVE_LLM_PROVIDER: "activeLlmProvider",
     SORT_COLLATION: "sortCollation",
+    ENABLE_PARTIAL_DATA_RESULTS: "enablePartialDataResults",
 } as const satisfies Record<MandatoryTypes, keyof ISettings>;
 
 export function mapTypeToKey(

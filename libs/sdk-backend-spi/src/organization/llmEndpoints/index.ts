@@ -1,10 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import {
-    type ILlmEndpointOpenAI,
-    type LlmEndpointOpenAIPatch,
-    type LlmEndpointTestResults,
-} from "@gooddata/sdk-model";
+import { type ILlmEndpointOpenAI, type LlmEndpointOpenAIPatch } from "@gooddata/sdk-model";
 
 import { type IPagedResource } from "../../common/paging.js";
 
@@ -125,16 +121,4 @@ export interface IOrganizationLlmEndpointsService {
      * @returns Promise resolved when the llm endpoint is patched.
      */
     patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
-
-    /**
-     * Test existing llm endpoint
-     *
-     * @param endpoint - definition of the llm endpoint
-     * @param token - token for the llm endpoint, if applicable
-     * @returns Promise resolved with test results.
-     */
-    testLlmEndpoint(
-        endpoint: Partial<LlmEndpointOpenAIPatch>,
-        token?: string,
-    ): Promise<LlmEndpointTestResults>;
 }

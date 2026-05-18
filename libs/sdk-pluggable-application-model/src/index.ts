@@ -10,6 +10,8 @@
 
 export { DefaultApplicationId } from "./defaultPlatformApplications.js";
 
+export { LIB_VERSION, LIB_DESCRIPTION, LIB_NAME } from "./__version.js";
+
 export {
     type EmbeddingMode,
     type IApiTokenAuthCredentials,

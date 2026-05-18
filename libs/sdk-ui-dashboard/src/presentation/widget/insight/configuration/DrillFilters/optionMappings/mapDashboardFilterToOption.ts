@@ -6,29 +6,37 @@ import {
     type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
+    type ICatalogMeasure,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
+    type IDashboardMeasureValueFilter,
     type ObjRef,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
+    dashboardFilterObjRef,
+    dashboardMeasureValueFilterLocalIdentifier,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
 import {
     canTransferDashboardAttributeFilter,
     canTransferTextAttributeFilter,
+    getCatalogMeasureTitle,
     getDashboardDateFilterCustomTitle,
     getDateDatasetTitle,
     getDisabledOptionProps,
     getDisabledOptionPropsForTransferResult,
     getDisplayFormTitle,
+    hasCompatibleTargetInsightMeasureValueFilter,
     hasMatchingTargetDashboardDateFilter,
+    hasMatchingTargetDashboardMeasureValueFilter,
 } from "../drillFiltersConfigUtils.js";
 import { messages } from "../messages.js";
 import { type IDrillFiltersConfigOption } from "../types.js";
@@ -36,6 +44,7 @@ import { type IDrillFiltersConfigOption } from "../types.js";
 interface IMapDashboardFilterToOptionParams {
     dashboardFilter: FilterContextItem;
     allCatalogDisplayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>;
+    allCatalogMeasures: ICatalogMeasure[];
     allCatalogDateDatasets: Array<{ dataSet: { ref: ObjRef; title?: string } }>;
     dateFilterConfigOverride: IDashboardDateFilterConfig | undefined;
     allDateFilterConfigsOverrides: IDashboardDateFilterConfigItem[];
@@ -43,8 +52,11 @@ interface IMapDashboardFilterToOptionParams {
     targetDashboardFilters: FilterContextItem[];
     targetDashboardAttributeFilters: IDashboardAttributeFilter[];
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
+    targetDashboardMeasureValueFilters: IDashboardMeasureValueFilter[];
+    targetInsightCompatibleMeasureValueFilters: IDashboardMeasureValueFilter[];
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
     isDrillDown: boolean;
+    isDrillToInsight: boolean;
     isDrillToDashboard: boolean;
     intl: IntlShape;
 }
@@ -52,6 +64,7 @@ interface IMapDashboardFilterToOptionParams {
 export function mapDashboardFilterToOption({
     dashboardFilter,
     allCatalogDisplayFormsMap,
+    allCatalogMeasures,
     allCatalogDateDatasets,
     dateFilterConfigOverride,
     allDateFilterConfigsOverrides,
@@ -59,8 +72,11 @@ export function mapDashboardFilterToOption({
     targetDashboardFilters,
     targetDashboardAttributeFilters,
     targetDashboardTextAttributeFilters,
+    targetDashboardMeasureValueFilters,
+    targetInsightCompatibleMeasureValueFilters,
     targetDashboardAttributeFilterConfigs,
     isDrillDown,
+    isDrillToInsight,
     isDrillToDashboard,
     intl,
 }: IMapDashboardFilterToOptionParams): IDrillFiltersConfigOption | undefined {
@@ -153,6 +169,38 @@ export function mapDashboardFilterToOption({
             ...getDisabledOptionProps(
                 isDrillToDashboard && !hasMatchingTargetDateFilter,
                 intl.formatMessage(messages.drillToDashboardDashboardFilterTooltip),
+                false,
+            ),
+        };
+    }
+
+    if (isDashboardMeasureValueFilter(dashboardFilter)) {
+        const measure = dashboardFilterObjRef(dashboardFilter)!;
+        const localIdentifier = dashboardMeasureValueFilterLocalIdentifier(dashboardFilter);
+        const title = dashboardFilter.dashboardMeasureValueFilter.title;
+
+        const hasMatchingTargetMeasureValueFilter = hasMatchingTargetDashboardMeasureValueFilter(
+            measure,
+            targetDashboardMeasureValueFilters,
+        );
+        const compatible = hasCompatibleTargetInsightMeasureValueFilter(
+            measure,
+            targetInsightCompatibleMeasureValueFilters,
+        );
+
+        return {
+            id: localIdentifier,
+            title: title ?? getCatalogMeasureTitle(measure, allCatalogMeasures),
+            metricFilterMeasureRef: measure,
+            ...disabled,
+            ...getDisabledOptionProps(
+                isDrillToDashboard && !hasMatchingTargetMeasureValueFilter,
+                intl.formatMessage(messages.drillToDashboardDashboardFilterTooltip),
+                false,
+            ),
+            ...getDisabledOptionProps(
+                isDrillToInsight && !compatible,
+                intl.formatMessage(messages.drillToInsightMeasureValueFilterTooltip),
                 false,
             ),
         };

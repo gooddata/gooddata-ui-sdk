@@ -15,5 +15,5 @@ export const DefaultApplicationId = {
     ANALYTICAL_DESIGNER: "gdc-analytical-designer",
     METRIC_EDITOR: "gdc-metric-editor",
     LDM_MODELER: "gdc-ldm-modeler",
-    WORKSPACE_CATALOG: "gdc-workspace-catalog",
+    WORKSPACE_CATALOG: "gdc-catalog",
 };

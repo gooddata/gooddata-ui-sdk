@@ -1206,10 +1206,6 @@ class DummyOrganization implements IOrganization {
                 Promise.resolve({
                     ...dummyEndpoint,
                 }),
-            testLlmEndpoint: () =>
-                Promise.resolve({
-                    success: true,
-                }),
         };
     }
 

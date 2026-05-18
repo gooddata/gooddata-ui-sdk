@@ -66,6 +66,7 @@ import { loadDashboardParameters } from "./loadDashboardParameters.js";
 import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
 import { loadFilterViews } from "./loadFilterViews.js";
+import { loadMeasureParameterDependencies } from "./loadMeasureParameterDependencies.js";
 import { loadUser } from "./loadUser.js";
 import { type IDateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
 import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
@@ -302,19 +303,19 @@ function* loadExistingDashboard(
     );
     const dashboard = dashboardWithFilterView;
 
-    const { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource } = yield call(
-        getTabsFilterConfigs,
-        dashboard,
-        config,
-        ctx,
-        cmd,
-    );
-
-    const workspaceParameters: SagaReturnType<typeof loadWorkspaceParametersWithStatus> = yield call(
-        loadWorkspaceParametersWithStatus,
-        ctx,
-        config.settings?.enableParameters ?? false,
-    );
+    const [
+        { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource },
+        workspaceParameters,
+        measureParameterDependencies,
+    ]: [
+        SagaReturnType<typeof getTabsFilterConfigs>,
+        SagaReturnType<typeof loadWorkspaceParametersWithStatus>,
+        PromiseFnReturnType<typeof loadMeasureParameterDependencies>,
+    ] = yield all([
+        call(getTabsFilterConfigs, dashboard, config, ctx, cmd),
+        call(loadWorkspaceParametersWithStatus, ctx, config.settings?.enableParameters ?? false),
+        call(loadMeasureParameterDependencies, ctx, insights, config.settings?.enableParameters ?? false),
+    ]);
     const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
 
     const initActions: SagaReturnType<typeof actionsToInitializeExistingDashboard> = yield call(
@@ -348,6 +349,7 @@ function* loadExistingDashboard(
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems(catalogPayload),
             catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
+            catalogActions.setCatalogMeasureParameters(measureParameterDependencies),
             ...initActions,
             // NOTE: Tab configs (dateFilterConfig, dateFilterConfigs, attributeFilterConfigs, filterContext)
             // are now initialized as part of the tabs state in initActions via setTabs action
@@ -425,6 +427,14 @@ function* initializeNewDashboard(
             workspaceParametersList,
         );
 
+    const measureParameterDependencies: PromiseFnReturnType<typeof loadMeasureParameterDependencies> =
+        yield call(
+            loadMeasureParameterDependencies,
+            ctx,
+            insights,
+            config.settings?.enableParameters ?? false,
+        );
+
     const batch: BatchAction = batchActions(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
@@ -441,6 +451,7 @@ function* initializeNewDashboard(
                 dateHierarchyTemplates: dateHierarchyTemplates,
             }),
             catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
+            catalogActions.setCatalogMeasureParameters(measureParameterDependencies),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(listedDashboards),
             executionResultsActions.clearAllExecutionResults(),

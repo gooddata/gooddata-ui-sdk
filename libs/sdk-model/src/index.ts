@@ -1315,12 +1315,7 @@ export type {
     IGeoCollectionFileUploadResult,
 } from "./geoCollections/index.js";
 
-export type {
-    ILlmEndpointBase,
-    ILlmEndpointOpenAI,
-    LlmEndpointOpenAIPatch,
-    LlmEndpointTestResults,
-} from "./llmEndpoints/index.js";
+export type { ILlmEndpointBase, ILlmEndpointOpenAI, LlmEndpointOpenAIPatch } from "./llmEndpoints/index.js";
 
 export type {
     ILlmProvider,
@@ -1329,6 +1324,7 @@ export type {
     IOpenAIProviderConfig,
     IAzureFoundryProviderConfig,
     IAwsBedrockProviderConfig,
+    IAnthropicProviderConfig,
     LlmProviderFamily,
     LlmProviderPatch,
     LlmProviderTestResults,

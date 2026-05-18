@@ -981,6 +981,16 @@ export interface IAnalyticalWidget extends IBaseWidget, IWidgetDescription, IFil
     readonly type: AnalyticalWidgetType;
 }
 
+// @alpha (undocumented)
+export interface IAnthropicProviderConfig {
+    // (undocumented)
+    apiKey?: string;
+    // (undocumented)
+    baseUrl?: string;
+    // (undocumented)
+    type: "anthropic";
+}
+
 // @public
 export interface IArbitraryAttributeFilter {
     // (undocumented)
@@ -2348,7 +2358,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount" | "AiLake" | "AiModule" | "AiQueryLimit" | "AiKnowledgeStorageLimit" | "AiAgentLimit";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "PdfExports" | "Tier" | "UiLocalization" | "UserCount" | "WhiteLabeling" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement" | "AuditLogging" | "ControlledFeatureRollout" | "ManagedIdpUserCount" | "AiLake" | "AiModule" | "AiQueryLimit" | "AiKnowledgeStorageLimit" | "AiAgentLimit" | "AiWorkspaceLimit";
 
 // @public
 export interface IExecutionConfig {
@@ -2524,6 +2534,7 @@ export interface IFeatureFlags {
     enableAIFunctions?: boolean;
     enableAiHub?: boolean;
     enableAIKnowledge?: boolean;
+    enableAiLlmAnthropicProvider?: boolean;
     enableAiOnData?: boolean;
     enableAlertAttributes?: boolean;
     enableAlerting?: boolean;
@@ -2570,7 +2581,6 @@ export interface IFeatureFlags {
     // (undocumented)
     enableDataSection?: boolean;
     enableDateFilterIdentifiersRollout?: boolean;
-    enableDateTimeSemanticsSetting?: boolean;
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
@@ -2657,6 +2667,7 @@ export interface IFeatureFlags {
     enableSemanticSearch?: boolean;
     enableSemanticSearchRollout?: boolean;
     enableShellApplication?: boolean;
+    enableShellApplication_catalog?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;
@@ -6013,12 +6024,6 @@ export type ListedDashboardAvailability = "full" | "viaLink";
 export type LlmEndpointOpenAIPatch = Partial<ILlmEndpointOpenAI> & Pick<ILlmEndpointOpenAI, "id">;
 
 // @alpha
-export type LlmEndpointTestResults = {
-    success: boolean;
-    message?: string;
-};
-
-// @alpha
 export type LlmModelsTestResults = {
     id: string;
     success: boolean;
@@ -6026,7 +6031,7 @@ export type LlmModelsTestResults = {
 };
 
 // @alpha (undocumented)
-export type LlmProviderConfig = IOpenAIProviderConfig | IAzureFoundryProviderConfig | IAwsBedrockProviderConfig;
+export type LlmProviderConfig = IOpenAIProviderConfig | IAzureFoundryProviderConfig | IAwsBedrockProviderConfig | IAnthropicProviderConfig;
 
 // @alpha (undocumented)
 export type LlmProviderFamily = "OPENAI" | "ANTHROPIC" | "META" | "MISTRAL" | "AMAZON" | "GOOGLE" | "COHERE" | "UNKNOWN";

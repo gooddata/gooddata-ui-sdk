@@ -3,6 +3,7 @@
 import { FormattedMessage } from "react-intl";
 
 import { semanticSearchNoResults } from "../automation/testIds.js";
+import { SemanticSearchError } from "../SemanticSearchError.js";
 
 import { type IErrorMessageProps, getErrorMessage } from "./errorMessage.js";
 
@@ -12,11 +13,15 @@ export interface ISearchNoResults {
 }
 
 export function SearchNoResults({ searchError, searchTerm }: ISearchNoResults) {
+    const err = getErrorMessage(searchError);
+
+    if (err && searchError) {
+        return <SemanticSearchError searchError={searchError} />;
+    }
+
     return (
         <div className="gd-semantic-search__overlay-no-results" data-testid={semanticSearchNoResults}>
-            {getErrorMessage(searchError) ?? (
-                <FormattedMessage id="semantic-search.no-results" values={{ query: searchTerm }} />
-            )}
+            <FormattedMessage id="semantic-search.no-results" values={{ query: searchTerm }} />
         </div>
     );
 }

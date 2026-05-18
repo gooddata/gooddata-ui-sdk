@@ -10,8 +10,8 @@ import {
     GenAiApi_GetConversationResponses,
     GenAiApi_GetConversations,
     GenAiApi_PatchConversation,
-    GenAiApi_PatchConversationResponse,
     GenAiApi_PatchVisualization,
+    GenAiApi_PostConversationFeedback,
     GenAiApi_PostConversations,
     GenAiApi_PostGenerateConversationTitle,
     GenAiApi_PostMessages,
@@ -247,11 +247,11 @@ export class ConversationThread implements IChatConversationThread {
         }
 
         await this.authCall((client) => {
-            return GenAiApi_PatchConversationResponse(client.axios, client.basePath, {
+            return GenAiApi_PostConversationFeedback(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 conversationId,
-                responseId,
-                aiResponseFeedbackRequest: {
+                aiConversationFeedbackRequest: {
+                    responseId,
                     feedback:
                         feedback === "NONE"
                             ? null

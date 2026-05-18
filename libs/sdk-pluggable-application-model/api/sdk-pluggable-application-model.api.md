@@ -10,6 +10,7 @@ import { ILocale } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserSettings } from '@gooddata/sdk-model';
+import { IUserWorkspaceSettings } from '@gooddata/sdk-model';
 import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -173,6 +174,7 @@ export interface IPlatformContextV1 {
     whiteLabeling: IWhiteLabeling | undefined;
     // (undocumented)
     workspacePermissions?: IWorkspacePermissions;
+    workspaceSettings?: IUserWorkspaceSettings;
 }
 
 // @alpha
@@ -240,6 +242,15 @@ export interface ITelemetryEventOptions {
 
 // @alpha
 export type KnownPluggableAppEventTypeName = (typeof PluggableAppEventType)[keyof typeof PluggableAppEventType];
+
+// @alpha (undocumented)
+export const LIB_DESCRIPTION: string;
+
+// @alpha (undocumented)
+export const LIB_NAME: string;
+
+// @alpha (undocumented)
+export const LIB_VERSION: string;
 
 // @alpha
 export enum PantherTier {

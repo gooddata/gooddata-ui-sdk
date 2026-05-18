@@ -20,10 +20,69 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
+export interface AiAbsoluteDateFilter {
+    'absoluteDateFilter': AiAbsoluteDateFilterBody;
+}
+
+export interface AiAbsoluteDateFilterBody {
+    'dataset': AiAfmObjectIdentifier;
+    'from': string;
+    'to': string;
+    'applyOnResult'?: boolean | null;
+    'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'localIdentifier'?: string | null;
+}
+
+
 export interface AiActiveObjectIdentification {
     'id': string;
     'type': string;
     'workspaceId': string;
+}
+
+/**
+ * Local reference: ``{\"localIdentifier\": \"...\"}``.
+ */
+export interface AiAfmLocalIdentifier {
+    'localIdentifier': string;
+}
+
+/**
+ * MD object reference: ``{\"identifier\": {\"id\": \"...\", \"type\": \"...\"}}``.
+ */
+export interface AiAfmObjectIdentifier {
+    'identifier': AiAfmObjectIdentifierBody;
+}
+
+export interface AiAfmObjectIdentifierBody {
+    'id': string;
+    'type': string;
+}
+
+export interface AiAllTimeDateFilterBodyInput {
+    'dataset': AiAfmObjectIdentifier;
+    'granularity'?: AiDateGranularityInput | null;
+    'applyOnResult'?: boolean | null;
+    'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'localIdentifier'?: string | null;
+}
+
+
+export interface AiAllTimeDateFilterBodyOutput {
+    'dataset': AiAfmObjectIdentifier;
+    'granularity'?: AiAppApplicationDtosAfmFilterDefinitionDateGranularity | null;
+    'applyOnResult'?: boolean | null;
+    'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'localIdentifier'?: string | null;
+}
+
+
+export interface AiAllTimeDateFilterInput {
+    'allTimeDateFilter': AiAllTimeDateFilterBodyInput;
+}
+
+export interface AiAllTimeDateFilterOutput {
+    'allTimeDateFilter': AiAllTimeDateFilterBodyOutput;
 }
 
 export interface AiAllowedRelationshipType {
@@ -32,6 +91,61 @@ export interface AiAllowedRelationshipType {
     'allowOrphans'?: boolean;
 }
 
+
+export const AiAppApplicationDtosAfmFilterDefinitionDateGranularity = {
+    MINUTE: 'MINUTE',
+    HOUR: 'HOUR',
+    DAY: 'DAY',
+    WEEK: 'WEEK',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR',
+    MINUTE_OF_HOUR: 'MINUTE_OF_HOUR',
+    HOUR_OF_DAY: 'HOUR_OF_DAY',
+    DAY_OF_WEEK: 'DAY_OF_WEEK',
+    DAY_OF_MONTH: 'DAY_OF_MONTH',
+    DAY_OF_QUARTER: 'DAY_OF_QUARTER',
+    DAY_OF_YEAR: 'DAY_OF_YEAR',
+    WEEK_OF_YEAR: 'WEEK_OF_YEAR',
+    MONTH_OF_YEAR: 'MONTH_OF_YEAR',
+    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR',
+    FISCAL_MONTH: 'FISCAL_MONTH',
+    FISCAL_QUARTER: 'FISCAL_QUARTER',
+    FISCAL_YEAR: 'FISCAL_YEAR'
+} as const;
+
+export type AiAppApplicationDtosAfmFilterDefinitionDateGranularity = typeof AiAppApplicationDtosAfmFilterDefinitionDateGranularity[keyof typeof AiAppApplicationDtosAfmFilterDefinitionDateGranularity];
+
+
+export interface AiAppApplicationDtosAfmFilterDefinitionRankingFilter {
+    'rankingFilter': AiRankingFilterBody;
+}
+
+/**
+ * Date granularity for date filters.
+ */
+
+export const AiAppDomainConversationsVisualizationDateGranularity = {
+    DAY: 'DAY',
+    WEEK_US: 'WEEK_US',
+    MONTH: 'MONTH',
+    QUARTER: 'QUARTER',
+    YEAR: 'YEAR'
+} as const;
+
+export type AiAppDomainConversationsVisualizationDateGranularity = typeof AiAppDomainConversationsVisualizationDateGranularity[keyof typeof AiAppDomainConversationsVisualizationDateGranularity];
+
+
+export interface AiAppDomainConversationsVisualizationRankingFilter {
+    'type': AiAppDomainConversationsVisualizationRankingFilterTypeEnum;
+    'using': string;
+    'attribute'?: string;
+    'top'?: number;
+    'bottom'?: number;
+}
+
+export type AiAppDomainConversationsVisualizationRankingFilterTypeEnum = 'ranking_filter';
+
 export interface AiAttributeFilter {
     'type': AiAttributeFilterTypeEnum;
     'using': string;
@@ -39,6 +153,10 @@ export interface AiAttributeFilter {
 }
 
 export type AiAttributeFilterTypeEnum = 'attribute_filter';
+
+export interface AiAttributeFilterElements {
+    'values': Array<string | null>;
+}
 
 export interface AiAttributeFilterState {
     'include'?: Array<string>;
@@ -56,6 +174,20 @@ export type AiAttributeSortItemTypeEnum = 'attribute_sort';
 export type AiAttributeSortItemDirectionEnum = 'ASC' | 'DESC';
 export type AiAttributeSortItemAggregationEnum = 'SUM';
 
+export interface AiBoundedFilterInput {
+    'granularity': AiDateGranularityInput;
+    'from'?: number | null;
+    'to'?: number | null;
+}
+
+
+export interface AiBoundedFilterOutput {
+    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
+    'from'?: number | null;
+    'to'?: number | null;
+}
+
+
 export interface AiBucketRefObject {
     'field': string;
 }
@@ -63,11 +195,67 @@ export interface AiBucketRefObject {
 export interface AiClusteringAmount {
 }
 
+export interface AiComparisonMeasureValueFilter {
+    'comparisonMeasureValueFilter': AiComparisonMeasureValueFilterBody;
+}
+
+export interface AiComparisonMeasureValueFilterBody {
+    'measure': AiMeasure;
+    'operator': AiComparisonMeasureValueOperator;
+    'value': number;
+    'treatNullValuesAs'?: number | null;
+    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
+    'applyOnResult'?: boolean | null;
+    'localIdentifier'?: string | null;
+}
+
+
+export interface AiComparisonMeasureValueFilterBodyDimensionalityInner {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
+
+
+export const AiComparisonMeasureValueOperator = {
+    GREATER_THAN: 'GREATER_THAN',
+    GREATER_THAN_OR_EQUAL_TO: 'GREATER_THAN_OR_EQUAL_TO',
+    LESS_THAN: 'LESS_THAN',
+    LESS_THAN_OR_EQUAL_TO: 'LESS_THAN_OR_EQUAL_TO',
+    EQUAL_TO: 'EQUAL_TO',
+    NOT_EQUAL_TO: 'NOT_EQUAL_TO'
+} as const;
+
+export type AiComparisonMeasureValueOperator = typeof AiComparisonMeasureValueOperator[keyof typeof AiComparisonMeasureValueOperator];
+
+
+export interface AiCompoundMeasureValueFilter {
+    'compoundMeasureValueFilter': AiCompoundMeasureValueFilterBody;
+}
+
+export interface AiCompoundMeasureValueFilterBody {
+    'measure': AiMeasure;
+    'conditions': Array<AiCompoundMeasureValueFilterBodyConditionsInner>;
+    'treatNullValuesAs'?: number | null;
+    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
+    'applyOnResult'?: boolean | null;
+    'localIdentifier'?: string | null;
+}
+
+export interface AiCompoundMeasureValueFilterBodyConditionsInner {
+    'comparison': AiMeasureValueComparisonInner;
+    'range': AiMeasureValueRangeInner;
+}
+
 /**
  * @type AiContent
  * Conversation item content payload.
  */
 export type AiContent = { type: 'multipart' } & AiMultipartContent | { type: 'reasoning' } & AiReasoningContent | { type: 'text' } & AiTextMessageContent | { type: 'toolCall' } & AiFunctionCallContent | { type: 'toolResult' } & AiFunctionResultContent;
+
+export interface AiConversationFeedbackRequest {
+    'responseId': string;
+    'feedback': AiResponseFeedback | null;
+}
 
 /**
  * Conversation item list response.
@@ -240,26 +428,37 @@ export type AiDateFilterGranularity = typeof AiDateFilterGranularity[keyof typeo
 export interface AiDateFilterRelative {
     'type': AiDateFilterRelativeTypeEnum;
     'using': string;
-    'granularity': AiDateGranularity;
+    'granularity': AiAppDomainConversationsVisualizationDateGranularity;
     'from': number;
     'to': number;
 }
 
 export type AiDateFilterRelativeTypeEnum = 'date_filter';
 
-/**
- * Date granularity for date filters.
- */
 
-export const AiDateGranularity = {
+export const AiDateGranularityInput = {
+    MINUTE: 'MINUTE',
+    HOUR: 'HOUR',
     DAY: 'DAY',
-    WEEK_US: 'WEEK_US',
+    WEEK: 'WEEK',
     MONTH: 'MONTH',
     QUARTER: 'QUARTER',
-    YEAR: 'YEAR'
+    YEAR: 'YEAR',
+    MINUTE_OF_HOUR: 'MINUTE_OF_HOUR',
+    HOUR_OF_DAY: 'HOUR_OF_DAY',
+    DAY_OF_WEEK: 'DAY_OF_WEEK',
+    DAY_OF_MONTH: 'DAY_OF_MONTH',
+    DAY_OF_QUARTER: 'DAY_OF_QUARTER',
+    DAY_OF_YEAR: 'DAY_OF_YEAR',
+    WEEK_OF_YEAR: 'WEEK_OF_YEAR',
+    MONTH_OF_YEAR: 'MONTH_OF_YEAR',
+    QUARTER_OF_YEAR: 'QUARTER_OF_YEAR',
+    FISCAL_MONTH: 'FISCAL_MONTH',
+    FISCAL_QUARTER: 'FISCAL_QUARTER',
+    FISCAL_YEAR: 'FISCAL_YEAR'
 } as const;
 
-export type AiDateGranularity = typeof AiDateGranularity[keyof typeof AiDateGranularity];
+export type AiDateGranularityInput = typeof AiDateGranularityInput[keyof typeof AiDateGranularityInput];
 
 
 /**
@@ -287,6 +486,16 @@ export interface AiDocumentMetadataResponse {
     'isDisabled'?: boolean | null;
 }
 
+
+export const AiEmptyValueHandling = {
+    INCLUDE: 'INCLUDE',
+    EXCLUDE: 'EXCLUDE',
+    ONLY: 'ONLY'
+} as const;
+
+export type AiEmptyValueHandling = typeof AiEmptyValueHandling[keyof typeof AiEmptyValueHandling];
+
+
 export interface AiFeedback {
     /**
      * Feedback type.
@@ -312,7 +521,7 @@ export interface AiFilterByValue {
     'state': AiAttributeFilterState;
     'from': number;
     'to': number;
-    'granularity': AiDateGranularity;
+    'granularity': AiAppDomainConversationsVisualizationDateGranularity;
     'attribute'?: string;
     'top'?: number;
     'bottom'?: number;
@@ -378,6 +587,16 @@ export interface AiHTTPValidationError {
     'detail'?: Array<AiValidationError>;
 }
 
+export interface AiInlineFilterDefinition {
+    'inline': AiInlineFilterDefinitionBody;
+}
+
+export interface AiInlineFilterDefinitionBody {
+    'filter': string;
+    'applyOnResult'?: boolean | null;
+    'localIdentifier'?: string | null;
+}
+
 export interface AiKeyDriverAnalysis {
     [key: string]: any;
 
@@ -428,6 +647,11 @@ export interface AiKeyDriverAnalysisPart {
 
 export type AiKeyDriverAnalysisPartTypeEnum = 'kda';
 
+export interface AiLabel {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
+
 /**
  * Response for GET /documents.
  */
@@ -436,6 +660,63 @@ export interface AiListDocumentsResponse {
     'totalCount'?: number | null;
     'nextPageToken'?: string | null;
 }
+
+export interface AiMatchAttributeFilter {
+    'matchAttributeFilter': AiMatchAttributeFilterBody;
+}
+
+export interface AiMatchAttributeFilterBody {
+    'label': AiLabel;
+    'literal': string;
+    'matchType': AiMatchType;
+    'caseSensitive'?: boolean;
+    'negate'?: boolean;
+    'applyOnResult'?: boolean | null;
+    'localIdentifier'?: string | null;
+}
+
+
+
+export const AiMatchType = {
+    STARTS_WITH: 'STARTS_WITH',
+    ENDS_WITH: 'ENDS_WITH',
+    CONTAINS: 'CONTAINS'
+} as const;
+
+export type AiMatchType = typeof AiMatchType[keyof typeof AiMatchType];
+
+
+export interface AiMeasure {
+    'identifier': AiAfmObjectIdentifierBody;
+    'localIdentifier': string;
+}
+
+/**
+ * Comparison branch of a compound measure value condition: ``{\"comparison\": {...}}``.
+ */
+export interface AiMeasureValueComparisonCondition {
+    'comparison': AiMeasureValueComparisonInner;
+}
+
+export interface AiMeasureValueComparisonInner {
+    'operator': AiComparisonMeasureValueOperator;
+    'value': number;
+}
+
+
+/**
+ * Range branch of a compound measure value condition: ``{\"range\": {...}}``.
+ */
+export interface AiMeasureValueRangeCondition {
+    'range': AiMeasureValueRangeInner;
+}
+
+export interface AiMeasureValueRangeInner {
+    'operator': AiRangeMeasureValueOperator;
+    'from': number;
+    'to': number;
+}
+
 
 export interface AiMetricSortItem {
     'type': AiMetricSortItemTypeEnum;
@@ -498,6 +779,18 @@ export type AiMultipartContentTypeEnum = 'multipart';
  */
 export type AiMultipartContentPartsInner = { type: 'kda' } & AiKeyDriverAnalysisPart | { type: 'searchResults' } & AiSearchResults | { type: 'text' } & AiTextPart | { type: 'visualization' } & AiVisualizationPart | { type: 'whatIf' } & AiWhatIfAnalysisPart;
 
+export interface AiNegativeAttributeFilter {
+    'negativeAttributeFilter': AiNegativeAttributeFilterBody;
+}
+
+export interface AiNegativeAttributeFilterBody {
+    'label': AiLabel;
+    'notIn': AiAttributeFilterElements;
+    'applyOnResult'?: boolean | null;
+    'localIdentifier'?: string | null;
+    'usesArbitraryValues'?: boolean | null;
+}
+
 
 export const AiObjectType = {
     UNIDENTIFIED: 'unidentified',
@@ -524,6 +817,18 @@ export interface AiPatchDocumentRequest {
     'isDisabled'?: boolean | null;
     'title'?: string | null;
     'scopes'?: Array<string> | null;
+}
+
+export interface AiPositiveAttributeFilter {
+    'positiveAttributeFilter': AiPositiveAttributeFilterBody;
+}
+
+export interface AiPositiveAttributeFilterBody {
+    'label': AiLabel;
+    'in': AiAttributeFilterElements;
+    'applyOnResult'?: boolean | null;
+    'localIdentifier'?: string | null;
+    'usesArbitraryValues'?: boolean | null;
 }
 
 export interface AiQuery {
@@ -561,15 +866,53 @@ export type AiQuerySortByInnerTypeEnum = 'attribute_sort' | 'metric_sort';
 export type AiQuerySortByInnerDirectionEnum = 'ASC' | 'DESC';
 export type AiQuerySortByInnerAggregationEnum = 'SUM';
 
-export interface AiRankingFilter {
-    'type': AiRankingFilterTypeEnum;
-    'using': string;
-    'attribute'?: string;
-    'top'?: number;
-    'bottom'?: number;
+export interface AiRangeMeasureValueFilter {
+    'rangeMeasureValueFilter': AiRangeMeasureValueFilterBody;
 }
 
-export type AiRankingFilterTypeEnum = 'ranking_filter';
+export interface AiRangeMeasureValueFilterBody {
+    'measure': AiMeasure;
+    'operator': AiRangeMeasureValueOperator;
+    'from': number;
+    'to': number;
+    'treatNullValuesAs'?: number | null;
+    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
+    'applyOnResult'?: boolean | null;
+    'localIdentifier'?: string | null;
+}
+
+
+
+export const AiRangeMeasureValueOperator = {
+    BETWEEN: 'BETWEEN',
+    NOT_BETWEEN: 'NOT_BETWEEN'
+} as const;
+
+export type AiRangeMeasureValueOperator = typeof AiRangeMeasureValueOperator[keyof typeof AiRangeMeasureValueOperator];
+
+
+export interface AiRankingFilterBody {
+    'measures': Array<AiComparisonMeasureValueFilterBodyDimensionalityInner>;
+    'operator': AiRankingOperator;
+    'value': number;
+    'dimensionality'?: Array<AiComparisonMeasureValueFilterBodyDimensionalityInner> | null;
+    'applyOnResult'?: boolean | null;
+    'localIdentifier'?: string | null;
+}
+
+
+export interface AiRankingFilterInput {
+    'rankingFilter': AiRankingFilterBody;
+}
+
+
+export const AiRankingOperator = {
+    TOP: 'TOP',
+    BOTTOM: 'BOTTOM'
+} as const;
+
+export type AiRankingOperator = typeof AiRankingOperator[keyof typeof AiRankingOperator];
+
 
 export interface AiReasoningContent {
     /**
@@ -583,6 +926,38 @@ export interface AiReasoningContent {
 }
 
 export type AiReasoningContentTypeEnum = 'reasoning';
+
+export interface AiRelativeDateFilterBodyInput {
+    'dataset': AiAfmObjectIdentifier;
+    'granularity': AiDateGranularityInput;
+    'from': number;
+    'to': number;
+    'applyOnResult'?: boolean | null;
+    'boundedFilter'?: AiBoundedFilterInput | null;
+    'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'localIdentifier'?: string | null;
+}
+
+
+export interface AiRelativeDateFilterBodyOutput {
+    'dataset': AiAfmObjectIdentifier;
+    'granularity': AiAppApplicationDtosAfmFilterDefinitionDateGranularity;
+    'from': number;
+    'to': number;
+    'applyOnResult'?: boolean | null;
+    'boundedFilter'?: AiBoundedFilterOutput | null;
+    'emptyValueHandling'?: AiEmptyValueHandling | null;
+    'localIdentifier'?: string | null;
+}
+
+
+export interface AiRelativeDateFilterInput {
+    'relativeDateFilter': AiRelativeDateFilterBodyInput;
+}
+
+export interface AiRelativeDateFilterOutput {
+    'relativeDateFilter': AiRelativeDateFilterBodyOutput;
+}
 
 export interface AiResponseFeedback {
     'type': AiResponseFeedbackTypeEnum;
@@ -758,18 +1133,29 @@ export interface AiSkillResponse {
 }
 
 export interface AiSummarizeRequest {
-    'visualizations': Array<string>;
-    'filterContext': Array<object>;
+    'visualizations'?: Array<string> | null;
+    'filterContext'?: Array<AiSummarizeRequestFilterContextInner> | null;
     'dashboardId': string;
+    'formatHint'?: string | null;
 }
+
+/**
+ * @type AiSummarizeRequestFilterContextInner
+ */
+export type AiSummarizeRequestFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilterInput | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilter | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRankingFilterInput | AiRelativeDateFilterInput;
 
 export interface AiSummarizeResponse {
     'summary': string;
-    'filterContext': Array<object>;
+    'filterContext': Array<AiSummarizeResponseFilterContextInner>;
     'visualizationsIncluded': Array<AiVisualizationIncludedResponse>;
     'visualizationsExcluded': Array<AiVisualizationExcludedResponse>;
     'generatedAt': string;
 }
+
+/**
+ * @type AiSummarizeResponseFilterContextInner
+ */
+export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilterOutput | AiAppApplicationDtosAfmFilterDefinitionRankingFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilter | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRelativeDateFilterOutput;
 
 export interface AiTextFilterValue {
     'type': AiTextFilterValueTypeEnum;
@@ -4597,6 +4983,72 @@ export async function ResponsesAiAxiosParamCreator_PatchResponseApiV1AiWorkspace
 }
 
 
+// ResponsesAi FP - ResponsesAiAxiosParamCreator
+/**
+ * 
+ * @summary Post Feedback
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {AiConversationFeedbackRequest} aiConversationFeedbackRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ResponsesAiAxiosParamCreator_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
+    workspaceId: string, conversationId: string, aiConversationFeedbackRequest: AiConversationFeedbackRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'conversationId', conversationId)
+    // verify required parameter 'aiConversationFeedbackRequest' is not null or undefined
+    assertParamExists('postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost', 'aiConversationFeedbackRequest', aiConversationFeedbackRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/feedback`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiConversationFeedbackRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiConversationFeedbackRequest !== undefined ? aiConversationFeedbackRequest : {})
+        : aiConversationFeedbackRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
 
 // ResponsesAi Api FP
 /**
@@ -4650,6 +5102,32 @@ export async function ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatC
 }
 
 
+// ResponsesAi Api FP
+/**
+ * 
+ * @summary Post Feedback
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ResponsesAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<void> {
+    const localVarAxiosArgs = await ResponsesAiAxiosParamCreator_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.aiConversationFeedbackRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
 /**
  * ResponsesAi - interface
  * @export
@@ -4675,6 +5153,16 @@ export interface ResponsesAiInterface {
      * @memberof ResponsesAiInterface
      */
     patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+
+    /**
+     * 
+     * @summary Post Feedback
+     * @param {ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResponsesAiInterface
+     */
+    postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
 }
 
@@ -4735,6 +5223,34 @@ export interface ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConvers
 }
 
 /**
+ * Request parameters for postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost operation in ResponsesAi.
+ * @export
+ * @interface ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest
+ */
+export interface ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {AiConversationFeedbackRequest}
+     * @memberof ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost
+     */
+    readonly aiConversationFeedbackRequest: AiConversationFeedbackRequest
+}
+
+/**
  * ResponsesAi - object-oriented interface
  * @export
  * @class ResponsesAi
@@ -4763,6 +5279,18 @@ export class ResponsesAi extends BaseAPI implements ResponsesAiInterface {
      */
     public patchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(requestParameters: ResponsesAiPatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatchRequest, options?: AxiosRequestConfig) {
         return ResponsesAi_PatchResponseApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdResponsesResponseIdPatch(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Post Feedback
+     * @param {ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ResponsesAi
+     */
+    public postFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(requestParameters: ResponsesAiPostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPostRequest, options?: AxiosRequestConfig) {
+        return ResponsesAi_PostFeedbackApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdFeedbackPost(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

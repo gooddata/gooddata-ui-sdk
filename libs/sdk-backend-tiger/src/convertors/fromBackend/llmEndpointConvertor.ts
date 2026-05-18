@@ -1,7 +1,7 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { type JsonApiLlmEndpointOutWithLinks, type ResolvedLlmEndpoint } from "@gooddata/api-client-tiger";
-import { type ILlmEndpointBase, type ILlmEndpointOpenAI } from "@gooddata/sdk-model";
+import { type JsonApiLlmEndpointOutWithLinks } from "@gooddata/api-client-tiger";
+import { type ILlmEndpointOpenAI } from "@gooddata/sdk-model";
 
 export function convertLlmEndpoint(endpoint: JsonApiLlmEndpointOutWithLinks): ILlmEndpointOpenAI {
     if (endpoint.attributes?.provider === "OPENAI") {
@@ -24,13 +24,4 @@ export function convertLlmEndpoint(endpoint: JsonApiLlmEndpointOutWithLinks): IL
     }
 
     throw new Error(`Unknown llm endpoint provider: ${endpoint.attributes?.provider}`);
-}
-
-export function convertResolvedLlmEndpoint(endpoints: ResolvedLlmEndpoint[]): ILlmEndpointBase[] {
-    return endpoints.map((e) => {
-        return {
-            id: e.id,
-            title: e.title,
-        };
-    });
 }

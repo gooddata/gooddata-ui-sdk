@@ -3,7 +3,6 @@
 import { describe, expect, it } from "vitest";
 
 import { type IReferencesResult } from "@gooddata/sdk-backend-spi";
-import { type IdentifierRef } from "@gooddata/sdk-model";
 
 import { filterLeafNodes } from "./utils.js";
 
@@ -32,7 +31,7 @@ describe("filterLeafNodes", () => {
 
         const result = filterLeafNodes(nodes, edges, ["dataSet"]);
 
-        const nodeIds = result.nodes.map((n) => (n as IdentifierRef).identifier);
+        const nodeIds = result.nodes.map((n) => n.identifier);
         expect(nodeIds).toContain("ds1");
         expect(nodeIds).not.toContain("l1");
         expect(nodeIds).toContain("m1");
@@ -61,7 +60,7 @@ describe("filterLeafNodes", () => {
         ];
         // l1 is a leaf child of both ds1 and a1.
         const result = filterLeafNodes(nodes, edges, ["dataSet", "attribute"]);
-        const nodeIds = result.nodes.map((n) => (n as IdentifierRef).identifier);
+        const nodeIds = result.nodes.map((n) => n.identifier);
         expect(nodeIds).not.toContain("l1");
         expect(nodeIds).toContain("ds1");
         expect(nodeIds).toContain("a1");
@@ -82,7 +81,7 @@ describe("filterLeafNodes", () => {
         // l2 is a leaf child of a1.
         // If we only filter 'dataSet', l1 should be removed, but l2 should stay.
         const result = filterLeafNodes(nodes, edges, ["dataSet"]);
-        const nodeIds = result.nodes.map((n) => (n as IdentifierRef).identifier);
+        const nodeIds = result.nodes.map((n) => n.identifier);
         expect(nodeIds).not.toContain("l1");
         expect(nodeIds).toContain("l2");
         expect(nodeIds).toContain("ds1");
@@ -104,7 +103,7 @@ describe("filterLeafNodes", () => {
         ];
         // m1 is a child of ds1, but it's not a leaf.
         const result = filterLeafNodes(nodes, edges, ["dataSet"]);
-        const nodeIds = result.nodes.map((n) => (n as IdentifierRef).identifier);
+        const nodeIds = result.nodes.map((n) => n.identifier);
         expect(nodeIds).toContain("m1");
     });
 
@@ -124,7 +123,7 @@ describe("filterLeafNodes", () => {
         // It should be kept because it has more than 1 incoming connection.
 
         const result = filterLeafNodes(nodes, edges, ["dataSet"]);
-        const nodeIds = result.nodes.map((n) => (n as IdentifierRef).identifier);
+        const nodeIds = result.nodes.map((n) => n.identifier);
         expect(nodeIds).toContain("l1");
     });
 });

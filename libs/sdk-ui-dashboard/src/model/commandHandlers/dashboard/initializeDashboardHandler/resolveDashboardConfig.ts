@@ -222,6 +222,7 @@ export function* resolveDashboardConfig(
             config.maxZoomLevel === undefined
                 ? (settings.settings?.maxZoomLevel as number | null | undefined)
                 : config.maxZoomLevel,
+        isWhiteLabeled: config.isWhiteLabeled ?? settings.settings?.whiteLabeling?.enabled ?? false,
     };
 }
 

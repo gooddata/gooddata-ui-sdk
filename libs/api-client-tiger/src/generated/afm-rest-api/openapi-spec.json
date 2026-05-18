@@ -1882,8 +1882,8 @@
                     "Smart Functions",
                     "actions"
                 ],
-                "summary": "Validate LLM Endpoint By Id",
-                "description": "Will be soon removed and replaced by testLlmProviderById.",
+                "summary": "Validate LLM Endpoint By Id (Removed)",
+                "description": "Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.",
                 "operationId": "validateLLMEndpointById",
                 "parameters": [
                     {
@@ -1895,25 +1895,9 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ValidateLLMEndpointByIdRequest"
-                            }
-                        }
-                    }
-                },
                 "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidateLLMEndpointResponse"
-                                }
-                            }
-                        }
+                    "410": {
+                        "description": "Gone"
                     }
                 },
                 "deprecated": true
@@ -1925,29 +1909,12 @@
                     "Smart Functions",
                     "actions"
                 ],
-                "summary": "Validate LLM Endpoint",
-                "description": "Will be soon removed and replaced by testLlmProvider.",
+                "summary": "Validate LLM Endpoint (Removed)",
+                "description": "Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.",
                 "operationId": "validateLLMEndpoint",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ValidateLLMEndpointRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
                 "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidateLLMEndpointResponse"
-                                }
-                            }
-                        }
+                    "410": {
+                        "description": "Gone"
                     }
                 },
                 "deprecated": true
@@ -2157,7 +2124,7 @@
                 }
             }
         },
-        "/api/v1/ailake/object-storages": {
+        "/api/v1/ailake/objectStorages": {
             "get": {
                 "tags": [
                     "AI Lake - Databases",
@@ -3056,7 +3023,7 @@
                     "actions"
                 ],
                 "summary": "Get Active LLM configuration for this workspace",
-                "description": "Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.",
+                "description": "Resolves the active LLM provider configuration for the given workspace.",
                 "operationId": "resolveLlmProviders",
                 "parameters": [
                     {
@@ -3090,8 +3057,8 @@
                     "Smart Functions",
                     "actions"
                 ],
-                "summary": "Get Active LLM Endpoints for this workspace",
-                "description": "Will be soon removed and replaced by LlmProvider-based resolution.",
+                "summary": "Get Active LLM Endpoints for this workspace (Removed)",
+                "description": "Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.",
                 "operationId": "resolveLlmEndpoints",
                 "parameters": [
                     {
@@ -3106,15 +3073,8 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ResolvedLlmEndpoints"
-                                }
-                            }
-                        }
+                    "410": {
+                        "description": "Gone"
                     }
                 },
                 "deprecated": true
@@ -8321,6 +8281,68 @@
                     }
                 }
             },
+            "AnthropicApiKeyAuth": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "apiKey": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Anthropic API key.",
+                                "nullable": true,
+                                "writeOnly": true
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Authentication type.",
+                                "enum": [
+                                    "API_KEY"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "AnthropicProviderAuth": {
+                "type": "object",
+                "description": "Authentication configuration.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AnthropicApiKeyAuth"
+                    }
+                ]
+            },
+            "AnthropicProviderConfig": {
+                "required": [
+                    "auth",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "baseUrl": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Custom base URL for the Anthropic API. Defaults to the official endpoint; override only for enterprise proxies or compatible gateways.",
+                        "default": "https://api.anthropic.com"
+                    },
+                    "auth": {
+                        "$ref": "#/components/schemas/AnthropicProviderAuth"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Provider type.",
+                        "enum": [
+                            "ANTHROPIC"
+                        ]
+                    }
+                },
+                "description": "Configuration for Anthropic provider."
+            },
             "AwsBedrockAccessKeyAuth": {
                 "required": [
                     "type"
@@ -8494,6 +8516,9 @@
                 "description": "Provider configuration overrides.",
                 "oneOf": [
                     {
+                        "$ref": "#/components/schemas/AnthropicProviderConfig"
+                    },
+                    {
                         "$ref": "#/components/schemas/AwsBedrockProviderConfig"
                     },
                     {
@@ -8577,6 +8602,9 @@
                 "properties": {
                     "providerConfig": {
                         "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/AnthropicProviderConfig"
+                            },
                             {
                                 "$ref": "#/components/schemas/AwsBedrockProviderConfig"
                             },
@@ -8679,6 +8707,9 @@
                     "providerConfig": {
                         "oneOf": [
                             {
+                                "$ref": "#/components/schemas/AnthropicProviderConfig"
+                            },
+                            {
                                 "$ref": "#/components/schemas/AwsBedrockProviderConfig"
                             },
                             {
@@ -8707,6 +8738,9 @@
                     "providerConfig": {
                         "oneOf": [
                             {
+                                "$ref": "#/components/schemas/AnthropicProviderConfig"
+                            },
+                            {
                                 "$ref": "#/components/schemas/AwsBedrockProviderConfig"
                             },
                             {
@@ -8716,77 +8750,6 @@
                                 "$ref": "#/components/schemas/OpenAIProviderConfig"
                             }
                         ]
-                    }
-                }
-            },
-            "ValidateLLMEndpointByIdRequest": {
-                "type": "object",
-                "properties": {
-                    "provider": {
-                        "type": "string",
-                        "description": "Provider for the LLM endpoint validation"
-                    },
-                    "baseUrl": {
-                        "type": "string",
-                        "description": "Base URL for the LLM endpoint validation"
-                    },
-                    "token": {
-                        "type": "string",
-                        "description": "Token for the LLM endpoint validation"
-                    },
-                    "llmOrganization": {
-                        "type": "string",
-                        "description": "Organization name for the LLM endpoint validation"
-                    },
-                    "llmModel": {
-                        "type": "string",
-                        "description": "LLM model for the LLM endpoint validation"
-                    }
-                }
-            },
-            "ValidateLLMEndpointResponse": {
-                "required": [
-                    "message",
-                    "successful"
-                ],
-                "type": "object",
-                "properties": {
-                    "successful": {
-                        "type": "boolean",
-                        "description": "Whether the LLM endpoint validation was successful"
-                    },
-                    "message": {
-                        "type": "string",
-                        "description": "Additional message about the LLM endpoint validation"
-                    }
-                }
-            },
-            "ValidateLLMEndpointRequest": {
-                "required": [
-                    "provider",
-                    "token"
-                ],
-                "type": "object",
-                "properties": {
-                    "provider": {
-                        "type": "string",
-                        "description": "Provider for the LLM endpoint validation"
-                    },
-                    "baseUrl": {
-                        "type": "string",
-                        "description": "Base URL for the LLM endpoint validation"
-                    },
-                    "token": {
-                        "type": "string",
-                        "description": "Token for the LLM endpoint validation"
-                    },
-                    "llmOrganization": {
-                        "type": "string",
-                        "description": "Organization name for the LLM endpoint validation"
-                    },
-                    "llmModel": {
-                        "type": "string",
-                        "description": "LLM model for the LLM endpoint validation"
                     }
                 }
             },
@@ -9934,31 +9897,6 @@
                 },
                 "description": "The resolved LLM configuration, or null if none is configured."
             },
-            "ResolvedLlmEndpoint": {
-                "required": [
-                    "id",
-                    "title"
-                ],
-                "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/ResolvedLlm"
-                    },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "string",
-                                "description": "Endpoint Id"
-                            },
-                            "title": {
-                                "type": "string",
-                                "description": "Endpoint Title"
-                            }
-                        }
-                    }
-                ]
-            },
             "ResolvedLlmProvider": {
                 "required": [
                     "id",
@@ -9999,26 +9937,9 @@
                     "data": {
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/ResolvedLlmEndpoint"
-                            },
-                            {
                                 "$ref": "#/components/schemas/ResolvedLlmProvider"
                             }
                         ]
-                    }
-                }
-            },
-            "ResolvedLlmEndpoints": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/ResolvedLlmEndpoint"
-                        }
                     }
                 }
             },

@@ -3,6 +3,8 @@
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
+import { dashboardFilterObjRef } from "@gooddata/sdk-model";
+
 import { type IRemoveMeasureValueFilter } from "../../../commands/filters.js";
 import { measureValueFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -25,8 +27,17 @@ export function* removeMeasureValueFilterHandler(
         throw invalidArgumentsProvided(ctx, cmd, `Filter with localIdentifier ${localIdentifier} not found.`);
     }
 
+    const removedMeasureRef = dashboardFilterObjRef(affectedFilter);
+
     yield put(tabsActions.removeMeasureValueFilter({ localIdentifier }));
     yield put(tabsActions.removeMeasureValueFilterConfig(localIdentifier));
+    if (removedMeasureRef) {
+        yield put(
+            tabsActions.removeIgnoredMeasureValueFilter({
+                measureRefs: [removedMeasureRef],
+            }),
+        );
+    }
 
     yield dispatchDashboardEvent(measureValueFilterRemoved(ctx, affectedFilter, cmd.correlationId));
     yield call(dispatchFilterContextChanged, ctx, cmd);

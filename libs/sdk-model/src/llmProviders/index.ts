@@ -55,10 +55,20 @@ export interface IAwsBedrockProviderConfig {
 /**
  * @alpha
  */
+export interface IAnthropicProviderConfig {
+    type: "anthropic";
+    apiKey?: string;
+    baseUrl?: string;
+}
+
+/**
+ * @alpha
+ */
 export type LlmProviderConfig =
     | IOpenAIProviderConfig
     | IAzureFoundryProviderConfig
-    | IAwsBedrockProviderConfig;
+    | IAwsBedrockProviderConfig
+    | IAnthropicProviderConfig;
 
 /**
  * @alpha

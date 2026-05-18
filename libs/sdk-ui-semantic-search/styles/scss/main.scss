@@ -212,10 +212,12 @@
     &__message {
         display: flex;
         justify-content: center;
-        align-items: center;
         color: kit-variables.$gd-color-state-blank;
-        height: 100px;
-        padding: 0 10px;
+        margin: 10px 10px 0 10px;
+
+        & > div {
+            width: 100%;
+        }
     }
 }
 

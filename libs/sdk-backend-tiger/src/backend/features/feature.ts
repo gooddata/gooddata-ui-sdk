@@ -971,6 +971,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAiLlmAnthropicProvider,
+            "enableAiLlmAnthropicProvider",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAiLlmAnthropicProvider,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAiVisualizationSummarySkill,
             "enableGenAiVisualizationSummarySkill",
             "BOOLEAN",
@@ -1118,6 +1125,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableShellApplicationCatalog,
+            "enableShellApplication_catalog",
+            "BOOLEAN",
+            FeatureFlagsValues.enableShellApplication_catalog,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableNullJoins,
             "enableNullJoins",
             "BOOLEAN",
@@ -1157,13 +1171,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableUserDataFiltersUi",
             "BOOLEAN",
             FeatureFlagsValues.enableUserDataFiltersUi,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableDateTimeSemanticsSetting,
-            "enableDateTimeSemanticsSetting",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDateTimeSemanticsSetting,
         ),
         ...loadFeature(
             features,

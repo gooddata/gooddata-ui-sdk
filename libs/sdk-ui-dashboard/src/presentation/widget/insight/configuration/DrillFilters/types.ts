@@ -1,6 +1,10 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type SourceInsightFilterObjRef, type SourceMeasureFilterObjRef } from "@gooddata/sdk-model";
+import {
+    type ObjRefInScope,
+    type SourceInsightFilterObjRef,
+    type SourceMeasureFilterObjRef,
+} from "@gooddata/sdk-model";
 
 export interface IDrillFiltersConfigOptionDisabled {
     message: string;
@@ -13,6 +17,7 @@ export interface IDrillFiltersConfigOption {
     disabled?: IDrillFiltersConfigOptionDisabled;
     sourceInsightFilterObjRef?: SourceInsightFilterObjRef;
     sourceMeasureFilterObjRef?: SourceMeasureFilterObjRef;
+    metricFilterMeasureRef?: ObjRefInScope;
 }
 
 export function isDrillFiltersConfigOptionSelected(

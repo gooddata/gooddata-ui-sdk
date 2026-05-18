@@ -11,7 +11,11 @@ import {
     type IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
 
-import { type CatalogState, type ICatalogParametersState } from "./catalogState.js";
+import {
+    type CatalogState,
+    type ICatalogMeasureParametersState,
+    type ICatalogParametersState,
+} from "./catalogState.js";
 
 type CatalogReducer<A extends Action> = CaseReducer<CatalogState, A>;
 
@@ -91,6 +95,13 @@ const setCatalogParameters: CatalogReducer<PayloadAction<ICatalogParametersState
     state.parameters = action.payload;
 };
 
+const setCatalogMeasureParameters: CatalogReducer<PayloadAction<ICatalogMeasureParametersState>> = (
+    state,
+    action,
+) => {
+    state.measureParameters = action.payload;
+};
+
 export const catalogReducers = {
     setCatalogItems,
     setCatalogMeasuresAndFacts,
@@ -98,4 +109,5 @@ export const catalogReducers = {
     updateAttributeHierarchy,
     deleteAttributeHierarchy,
     setCatalogParameters,
+    setCatalogMeasureParameters,
 };

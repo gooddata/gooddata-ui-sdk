@@ -1931,6 +1931,14 @@
         "text": "Metric filters cannot be passed to the target dashboard.",
         "crowdinContext": "Tooltip shown for disabled metric value filters in drill-to-dashboard configuration because metric filters are not supported on the target dashboard"
     },
+    "configurationPanel.drillConfig.filterSelection.drillToDashboardDuplicateMetricFilter.tooltip": {
+        "text": "Another filter for this metric is already being passed.",
+        "crowdinContext": "Tooltip shown for a disabled dashboard or visualization metric filter in drill-to-dashboard configuration when another filter for the same metric is already selected"
+    },
+    "configurationPanel.drillConfig.filterSelection.drillToInsightMeasureValueFilter.tooltip": {
+        "text": "Filter is not applicable to the drill destination.",
+        "crowdinContext": "Tooltip shown for disabled measure value filters in drill-to-insight configuration because measure value filters are not supported on the target dashboard"
+    },
     "configurationPanel.drillConfig.filterSelection.drillToDashboardRankingFilter.tooltip": {
         "text": "Top/bottom filters can’t be passed to the target dashboard.",
         "crowdinContext": "Tooltip shown for disabled ranking filters in drill-to-dashboard configuration because top and bottom filters are not transferred to the target dashboard"

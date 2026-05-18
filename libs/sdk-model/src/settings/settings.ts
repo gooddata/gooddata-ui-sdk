@@ -1126,6 +1126,14 @@ export interface IFeatureFlags {
     enableShellApplication?: boolean;
 
     /**
+     * Per-app sub-flag under enableShellApplication. When true (and
+     * enableShellApplication is also true), the catalog runs as a pluggable
+     * app inside the host. When false, the legacy in-app catalog at
+     * `/workspaces/{id}/catalog/*` is rendered instead.
+     */
+    enableShellApplication_catalog?: boolean;
+
+    /**
      * Enable NULL-aware joins used for FULL OUTER JOIN conditions.
      */
     enableNullJoins?: boolean;
@@ -1184,11 +1192,6 @@ export interface IFeatureFlags {
     enableParameters?: boolean;
 
     /**
-     * Indicates whether the user can set dateTimeSemantics for data sources that support it.
-     */
-    enableDateTimeSemanticsSetting?: boolean;
-
-    /**
      * Enable enhanced insight picker.
      */
     enableEnhancedInsightPicker?: boolean;
@@ -1202,4 +1205,9 @@ export interface IFeatureFlags {
      * Enable ai agentic multi-conversations.
      */
     enableAiAgenticMultiConversations?: boolean;
+
+    /**
+     * Enable Anthropic provider in LLM configuration.
+     */
+    enableAiLlmAnthropicProvider?: boolean;
 }

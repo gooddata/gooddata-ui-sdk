@@ -1,25 +1,28 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { uniqBy } from "lodash-es";
+
 import {
     ActionsApi_GetDependentEntitiesGraphFromEntryPoints,
     type DependentEntitiesGraph,
     type DependentEntitiesRequestRelationEnum,
-    type EntityIdentifierTypeEnum,
+    type EntityIdentifier,
 } from "@gooddata/api-client-tiger";
 import {
     type IReferencesOption,
     type IReferencesResult,
     type IReferencesService,
 } from "@gooddata/sdk-backend-spi";
-import { type ObjRef, areObjRefsEqual, isIdentifierRef } from "@gooddata/sdk-model";
+import { type IdentifierRef, type ObjectType, serializeObjRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard, type TigerObjectType } from "../../../types/index.js";
 import {
-    type TigerCompatibleObjectType,
+    isTigerType,
     objectTypeToTigerIdType,
     tigerIdTypeToObjectType,
 } from "../../../types/refTypeMapping.js";
-import { objRefToIdentifier } from "../../../utils/api.js";
+
+const sdkObjectTypeToTigerType: Partial<Record<ObjectType, TigerObjectType>> = objectTypeToTigerIdType;
 
 export class TigerReferencesService implements IReferencesService {
     constructor(
@@ -27,130 +30,119 @@ export class TigerReferencesService implements IReferencesService {
         private readonly workspace: string,
     ) {}
 
-    public async getReferences(root: ObjRef, opts?: IReferencesOption): Promise<IReferencesResult> {
-        const id = objRefToIdentifier(root, this.authCall);
-        const type =
-            isIdentifierRef(root) && root.type
-                ? objectTypeToTigerIdType[root.type as TigerCompatibleObjectType]
-                : "visualizationObject";
+    public async getReferences(
+        root: IdentifierRef | IdentifierRef[],
+        opts?: IReferencesOption,
+    ): Promise<IReferencesResult> {
+        const roots = Array.isArray(root) ? root : [root];
+        const direction = opts?.direction;
 
-        // Prompt and parameter are not supported by the dependency graph endpoint.
-        if (type === "prompt" || type === "parameter") {
-            return {
-                nodes: [],
-                edges: [],
-            };
+        if (direction === "both") {
+            const [dependencies, dependents] = await Promise.all([
+                getGraph(this.authCall, this.workspace, roots, "DEPENDENCIES"),
+                getGraph(this.authCall, this.workspace, roots, "DEPENDENTS"),
+            ]);
+            return mergeGraphs(dependencies, dependents);
         }
 
-        if (opts?.direction === "both") {
-            const dependenciesGraph = await getData(this.authCall, this.workspace, id, type, "DEPENDENCIES");
-            const dependentsGraph = await getData(this.authCall, this.workspace, id, type, "DEPENDENTS");
-
-            const graph = mergeGraphs(dependenciesGraph, dependentsGraph, root);
-            return {
-                nodes: graph.nodes,
-                edges: revertGraphDirection(graph.edges, opts),
-            };
-        } else {
-            const entitiesGraph = await getData(
-                this.authCall,
-                this.workspace,
-                id,
-                type,
-                opts?.direction === "up" ? "DEPENDENTS" : "DEPENDENCIES",
-            );
-
-            const graph = createGraph(entitiesGraph, root);
-            return {
-                nodes: graph.nodes,
-                edges: revertGraphDirection(graph.edges, opts),
-            };
-        }
+        return getGraph(
+            this.authCall,
+            this.workspace,
+            roots,
+            direction === "up" ? "DEPENDENTS" : "DEPENDENCIES",
+        );
     }
 }
 
-async function getData(
+async function getGraph(
     authCall: TigerAuthenticatedCallGuard,
     workspace: string,
-    id: string,
-    type: EntityIdentifierTypeEnum,
-    direction: DependentEntitiesRequestRelationEnum,
-) {
-    return await authCall((client) =>
-        ActionsApi_GetDependentEntitiesGraphFromEntryPoints(client.axios, client.basePath, {
-            workspaceId: workspace,
-            dependentEntitiesRequest: {
-                identifiers: [{ id, type }],
-                relation: direction,
-            },
-        }).then((res) => res.data.graph),
-    );
-}
+    roots: IdentifierRef[],
+    relation: DependentEntitiesRequestRelationEnum,
+): Promise<IReferencesResult> {
+    const identifiers = roots.flatMap(refToEntityIdentifier);
 
-function mergeGraphs(
-    dependenciesGraph: DependentEntitiesGraph,
-    dependentsGraph: DependentEntitiesGraph,
-    root: ObjRef,
-) {
-    const dependencies = createGraph(dependenciesGraph, root);
-    const dependents = createGraph(dependentsGraph, root);
-
-    const nodes = [...dependencies.nodes];
-    dependents.nodes.forEach((node) => {
-        if (!nodes.some((n) => areObjRefsEqual(n, node))) {
-            nodes.push(node);
-        }
-    });
-
-    const edges = [...dependencies.edges];
-    dependents.edges.forEach((edge) => {
-        if (!edges.some((e) => areObjRefsEqual(e.from, edge.from) && areObjRefsEqual(e.to, edge.to))) {
-            edges.push(edge);
-        }
-    });
-
-    return {
-        nodes,
-        edges,
-    };
-}
-
-function createGraph(entitiesGraph: DependentEntitiesGraph, root: ObjRef) {
-    const nodes: IReferencesResult["nodes"] = [];
-    entitiesGraph.nodes.forEach((node) => {
-        const ref = createRef(node.id, node.type as TigerObjectType);
-        nodes.push({
-            ...ref,
-            title: node.title ?? node.id,
-            isRoot: areObjRefsEqual(ref, root),
-        });
-    });
-    const edges: IReferencesResult["edges"] = [];
-    entitiesGraph.edges.forEach(([from, to]) => {
-        edges.push({
-            from: createRef(from.id, from.type as TigerObjectType),
-            to: createRef(to.id, to.type as TigerObjectType),
-        });
-    });
-
-    return {
-        nodes,
-        edges,
-    };
-}
-
-function revertGraphDirection(edges: IReferencesResult["edges"], opts?: IReferencesOption) {
-    const direction = opts?.direction ?? "down";
-
-    if (direction === "down" || direction === "both") {
-        return edges.map((edge) => ({ from: edge.to, to: edge.from }));
+    if (identifiers.length === 0) {
+        return { nodes: [], edges: [] };
     }
-    return edges;
+
+    const rootKeys = new Set(identifiers.map(entityKey));
+
+    const entitiesGraph = await authCall(async (client) => {
+        const response = await ActionsApi_GetDependentEntitiesGraphFromEntryPoints(
+            client.axios,
+            client.basePath,
+            {
+                workspaceId: workspace,
+                dependentEntitiesRequest: {
+                    identifiers,
+                    relation,
+                },
+            },
+        );
+        return response.data.graph;
+    });
+
+    return createGraph(entitiesGraph, rootKeys, relation);
 }
 
-function createRef(id: string, type: TigerObjectType): ObjRef {
+function createGraph(
+    entitiesGraph: DependentEntitiesGraph,
+    rootKeys: Set<string>,
+    relation: DependentEntitiesRequestRelationEnum,
+): IReferencesResult {
+    const nodes: IReferencesResult["nodes"] = entitiesGraph.nodes.flatMap((node) => {
+        const ref = tigerNodeToRef(node);
+        if (!ref) {
+            return [];
+        }
+        return [{ ...ref, title: node.title ?? node.id, isRoot: rootKeys.has(entityKey(node)) }];
+    });
+
+    const edges: IReferencesResult["edges"] = entitiesGraph.edges.flatMap((edge) => {
+        const [from, to] = edge;
+        if (!from || !to) {
+            return [];
+        }
+        const fromRef = tigerNodeToRef(from);
+        const toRef = tigerNodeToRef(to);
+        if (!fromRef || !toRef) {
+            return [];
+        }
+        return relation === "DEPENDENCIES" ? [{ from: toRef, to: fromRef }] : [{ from: fromRef, to: toRef }];
+    });
+
+    return { nodes, edges };
+}
+
+function mergeGraphs(a: IReferencesResult, b: IReferencesResult): IReferencesResult {
     return {
-        identifier: id,
-        type: tigerIdTypeToObjectType[type],
+        nodes: uniqBy([...a.nodes, ...b.nodes], serializeObjRef),
+        edges: uniqBy(
+            [...a.edges, ...b.edges],
+            (edge) => `${serializeObjRef(edge.from)}|${serializeObjRef(edge.to)}`,
+        ),
     };
+}
+
+function refToEntityIdentifier(ref: IdentifierRef): EntityIdentifier[] {
+    const tigerType = ref.type ? sdkObjectTypeToTigerType[ref.type] : "visualizationObject";
+    return isGraphSupportedType(tigerType) ? [{ id: ref.identifier, type: tigerType }] : [];
+}
+
+function tigerNodeToRef(node: { id: string; type: string }): IdentifierRef | undefined {
+    return isTigerType(node.type)
+        ? { identifier: node.id, type: tigerIdTypeToObjectType[node.type] }
+        : undefined;
+}
+
+// Prompt is not accepted by the dependency graph endpoint.
+function isGraphSupportedType(
+    type: TigerObjectType | undefined,
+): type is Extract<TigerObjectType, EntityIdentifier["type"]> {
+    return type !== undefined && type !== "prompt";
+}
+
+function entityKey(entity: { id: string; type: string }): string {
+    return `${entity.type}/${entity.id}`;
 }

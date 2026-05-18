@@ -1613,6 +1613,8 @@ export type {
     CatalogState,
     CatalogParametersStatus,
     ICatalogParametersState,
+    CatalogMeasureParametersStatus,
+    ICatalogMeasureParametersState,
 } from "./model/store/catalog/catalogState.js";
 export {
     selectCatalogIsLoaded,
@@ -1639,6 +1641,8 @@ export {
     selectCatalogParameters,
     selectCatalogParametersStatus,
     selectCatalogParametersIsLoaded,
+    selectCatalogMeasureParameters,
+    selectCatalogMeasureParametersStatus,
 } from "./model/store/catalog/catalogSelectors.js";
 export { catalogActions } from "./model/store/catalog/index.js";
 export type {

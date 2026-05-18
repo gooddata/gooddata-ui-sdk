@@ -7,7 +7,9 @@ import {
     type IDrillToInsight,
     type IFilter,
     type IInsight,
+    type IMeasure,
     type SourceInsightFilterObjRef,
+    filterMeasureRef,
     insightFilters,
     insightMeasures,
     isAttributeFilter,
@@ -19,7 +21,10 @@ import {
 import {
     getSourceMeasureFiltersForDrillDefinition,
     isMatchingSourceInsightFilter,
+    resolveSourceMeasureRef,
 } from "../../../../_staging/drills/drillingUtils.js";
+
+import { type SourceFilter } from "./mergeFilters.js";
 
 type IDrillDefinitionWithIncludedSourceFilters = Pick<
     IDrillToDashboard | IDrillToInsight,
@@ -65,17 +70,43 @@ export function getIncludedSourceMeasureFilters(
 export function getIncludedSourceFiltersForDashboard(
     sourceInsight: IInsight | null,
     drillDefinition: IDrillDefinitionWithIncludedSourceFilters,
-): Array<IAttributeFilter | IDateFilter> {
+): Array<SourceFilter> {
+    const sourceInsightMeasures = sourceInsight ? insightMeasures(sourceInsight) : [];
     const sourceMeasureFilters = getIncludedSourceMeasureFilters(sourceInsight, drillDefinition);
     const sourceInsightFilters = getIncludedSourceInsightFilters(
         sourceInsight,
         drillDefinition.includedSourceInsightFiltersObjRefs ?? [],
-    ).filter((filter): filter is IAttributeFilter | IDateFilter => {
-        return isAttributeFilter(filter) || isDateFilter(filter);
-    });
+    )
+        .filter((filter): filter is SourceFilter => {
+            return isAttributeFilter(filter) || isDateFilter(filter) || isMeasureValueFilter(filter);
+        })
+        .flatMap((filter) => normalizeSourceFilterForDashboard(filter, sourceInsightMeasures));
 
     // Keep the same precedence as drill-to-insight: measure filters win over source insight filters.
     return [...sourceMeasureFilters, ...sourceInsightFilters];
+}
+
+function normalizeSourceFilterForDashboard(
+    filter: SourceFilter,
+    sourceInsightMeasures: IMeasure[],
+): SourceFilter[] {
+    if (!isMeasureValueFilter(filter)) {
+        return [filter];
+    }
+
+    const measureRef = resolveSourceMeasureRef(filterMeasureRef(filter), sourceInsightMeasures);
+    if (!measureRef) {
+        return [];
+    }
+
+    return [
+        {
+            measureValueFilter: {
+                ...filter.measureValueFilter,
+                measure: measureRef,
+            },
+        },
+    ];
 }
 
 function includedSourceFilters<T extends IFilter>(

@@ -8,6 +8,7 @@ import {
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
     type IParameterMetadataObject,
+    type IdentifierRef,
 } from "@gooddata/sdk-model";
 
 /**
@@ -28,6 +29,25 @@ export interface ICatalogParametersState {
 }
 
 /**
+ * Status of the dashboard-wide metric → parameter dependency map.
+ *
+ * @alpha
+ */
+export type CatalogMeasureParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
+
+/**
+ * Maps each referenced metric (keyed by `objRefToString(metricRef)`) to the parameter refs the
+ * metric depends on, as reported by the workspace references service. Drives runtime parameter
+ * applicability for widget execution.
+ *
+ * @alpha
+ */
+export interface ICatalogMeasureParametersState {
+    status: CatalogMeasureParametersStatus;
+    byMetric: Record<string, IdentifierRef[]>;
+}
+
+/**
  * @public
  */
 export type CatalogState = {
@@ -45,6 +65,8 @@ export type CatalogState = {
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
     /** @alpha */
     parameters: ICatalogParametersState;
+    /** @alpha */
+    measureParameters: ICatalogMeasureParametersState;
 };
 
 export const catalogInitialState: CatalogState = {
@@ -55,4 +77,5 @@ export const catalogInitialState: CatalogState = {
     attributeHierarchies: undefined,
     dateHierarchyTemplates: undefined,
     parameters: { status: "uninitialized", parameters: [] },
+    measureParameters: { status: "uninitialized", byMetric: {} },
 };

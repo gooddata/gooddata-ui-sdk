@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 /**
  * Base endpoint interface
@@ -42,12 +42,3 @@ export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
  * @alpha
  */
 export type LlmEndpointOpenAIPatch = Partial<ILlmEndpointOpenAI> & Pick<ILlmEndpointOpenAI, "id">;
-
-/**
- * @alpha
- * Results of the llm endpoint test
- */
-export type LlmEndpointTestResults = {
-    success: boolean;
-    message?: string;
-};
