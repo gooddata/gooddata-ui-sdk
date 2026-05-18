@@ -4,7 +4,10 @@ import {
     ActionsApi_MetadataSync,
     ActionsApi_ResolveLlmProviders,
 } from "@gooddata/api-client-tiger/endpoints/actions";
-import { GenAiApi_SummarizeDashboard } from "@gooddata/api-client-tiger/endpoints/genAI";
+import {
+    type GenAiApiSummarizeRequest,
+    GenAiApi_SummarizeDashboard,
+} from "@gooddata/api-client-tiger/endpoints/genAI";
 import type {
     IAnalyticsCatalogService,
     IChatConversations,
@@ -96,7 +99,7 @@ export class GenAIService implements IGenAIService {
                         // Casts strip `| null` from our SPI types — the generated client still
                         // declares these required. Drop the casts once backend allows null.
                         visualizations: request.visualizations as string[],
-                        filterContext: request.filterContext as object[],
+                        filterContext: request.filterContext as GenAiApiSummarizeRequest["filterContext"],
                     },
                 },
                 { signal: options?.signal },
@@ -105,7 +108,7 @@ export class GenAIService implements IGenAIService {
 
         return {
             summary: response.data.summary,
-            filterContext: response.data.filterContext as IDashboardSummary["filterContext"],
+            filterContext: response.data.filterContext as unknown as IDashboardSummary["filterContext"],
             visualizationsIncluded: response.data.visualizationsIncluded.map((v) => ({
                 visualizationId: v.visualizationId,
                 title: v.title,

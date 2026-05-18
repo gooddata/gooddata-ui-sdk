@@ -8,6 +8,7 @@ import {
     isAttributeFilter,
     isDateFilter,
     isDrillToInsight,
+    isMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
 import { type IDashboardInsightProps } from "../../types.js";
@@ -27,7 +28,7 @@ export function useExcludedDrillDefinitionFilters(
     return useMemo(
         () =>
             filtersForInsight?.filter((filter) => {
-                if (!isAttributeFilter(filter) && !isDateFilter(filter)) {
+                if (!isAttributeFilter(filter) && !isDateFilter(filter) && !isMeasureValueFilter(filter)) {
                     return true;
                 }
 

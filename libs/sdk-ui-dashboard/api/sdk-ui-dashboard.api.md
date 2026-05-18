@@ -435,7 +435,11 @@ export const catalogActions: {
     updateAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/updateAttributeHierarchy">;
     deleteAttributeHierarchy: ActionCreatorWithPayload<ICatalogAttributeHierarchy, "catalog/deleteAttributeHierarchy">;
     setCatalogParameters: ActionCreatorWithPayload<ICatalogParametersState, "catalog/setCatalogParameters">;
+    setCatalogMeasureParameters: ActionCreatorWithPayload<ICatalogMeasureParametersState, "catalog/setCatalogMeasureParameters">;
 };
+
+// @alpha
+export type CatalogMeasureParametersStatus = "uninitialized" | "loading" | "loaded" | "failed";
 
 // @alpha
 export type CatalogParametersStatus = "uninitialized" | "loading" | "loaded" | "failed" | "gated-off";
@@ -449,6 +453,7 @@ export type CatalogState = {
     attributeHierarchies?: ICatalogAttributeHierarchy[];
     dateHierarchyTemplates?: IDateHierarchyTemplate[];
     parameters: ICatalogParametersState;
+    measureParameters: ICatalogMeasureParametersState;
 };
 
 // @public
@@ -2482,6 +2487,14 @@ export interface ICancelRenamingDashboardTab extends IDashboardCommand {
 // @alpha
 export interface ICancelRenamingDashboardTabPayload {
     readonly tabId?: string;
+}
+
+// @alpha
+export interface ICatalogMeasureParametersState {
+    // (undocumented)
+    byMetric: Record<string, IdentifierRef[]>;
+    // (undocumented)
+    status: CatalogMeasureParametersStatus;
 }
 
 // @alpha
@@ -10441,6 +10454,12 @@ export const selectCatalogFacts: DashboardSelector<ICatalogFact[]>;
 // @alpha (undocumented)
 export const selectCatalogIsLoaded: DashboardSelector<boolean>;
 
+// @alpha
+export const selectCatalogMeasureParameters: DashboardSelector<Record<string, IdentifierRef[]>>;
+
+// @alpha
+export const selectCatalogMeasureParametersStatus: DashboardSelector<CatalogMeasureParametersStatus>;
+
 // @public (undocumented)
 export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]>;
 
@@ -12185,6 +12204,12 @@ type: string;
 readonly removeIgnoredDateFilter: (state: WritableDraft<ITabsState>, action: {
 payload: {
 dateDataSets: ObjRef[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeIgnoredMeasureValueFilter: (state: WritableDraft<ITabsState>, action: {
+payload: {
+measureRefs: ObjRef[];
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;

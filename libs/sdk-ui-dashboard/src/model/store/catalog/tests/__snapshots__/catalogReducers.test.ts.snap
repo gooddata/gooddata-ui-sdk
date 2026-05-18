@@ -182,6 +182,10 @@ exports[`catalogReducers > addAttributeHierarchy > should add attribute hierarch
       "type": "attributeHierarchy",
     },
   ],
+  "measureParameters": {
+    "byMetric": {},
+    "status": "uninitialized",
+  },
   "parameters": {
     "parameters": [],
     "status": "uninitialized",
@@ -224,6 +228,10 @@ exports[`catalogReducers > addAttributeHierarchy > should add attribute hierarch
       "type": "attributeHierarchy",
     },
   ],
+  "measureParameters": {
+    "byMetric": {},
+    "status": "uninitialized",
+  },
   "parameters": {
     "parameters": [],
     "status": "uninitialized",
@@ -347,6 +355,10 @@ exports[`catalogReducers > deleteAttributeHierarchy > should delete attribute hi
       "type": "attributeHierarchy",
     },
   ],
+  "measureParameters": {
+    "byMetric": {},
+    "status": "uninitialized",
+  },
   "parameters": {
     "parameters": [],
     "status": "uninitialized",
@@ -505,6 +517,10 @@ exports[`catalogReducers > updateAttributeHierarchy > should update attribute hi
       "type": "attributeHierarchy",
     },
   ],
+  "measureParameters": {
+    "byMetric": {},
+    "status": "uninitialized",
+  },
   "parameters": {
     "parameters": [],
     "status": "uninitialized",

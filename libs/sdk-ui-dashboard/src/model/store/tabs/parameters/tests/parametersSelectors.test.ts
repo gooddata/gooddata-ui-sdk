@@ -8,11 +8,17 @@ import {
     type IInsight,
     type IInsightParameterValue,
     type IParameterMetadataObject,
+    type IdentifierRef,
     type ObjRef,
     idRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import { type RenderMode } from "../../../../../types.js";
+import {
+    type CatalogMeasureParametersStatus,
+    type CatalogParametersStatus,
+} from "../../../catalog/catalogState.js";
 import { insightsAdapter } from "../../../insights/insightsEntityAdapter.js";
 import { type DashboardState } from "../../../types.js";
 import {
@@ -21,21 +27,36 @@ import {
     selectDashboardParameters,
     selectEffectiveParameterValuesForWidget,
     selectIsParametersChanged,
+    selectParameterResetValueByRef,
     selectParameterRuntimeOverrideByRef,
     selectSmartPersistedTabsParameters,
 } from "../parametersSelectors.js";
 import { type IDashboardParameterEntry } from "../parametersState.js";
 
-function makeInsight(ref: ObjRef, parameters: IInsightParameterValue[]): IInsight {
-    const identifier = (ref as { identifier?: string }).identifier ?? "insight";
+function makeInsightWithMetric(
+    insightRef: ObjRef,
+    metricRefOrRefs: ObjRef | ObjRef[],
+    parameters: IInsightParameterValue[] = [],
+): IInsight {
+    const identifier = (insightRef as { identifier?: string }).identifier ?? "insight";
+    const metricRefs = Array.isArray(metricRefOrRefs) ? metricRefOrRefs : [metricRefOrRefs];
     return {
         insight: {
-            ref,
+            ref: insightRef,
             identifier,
             uri: `/insights/${identifier}`,
             title: identifier,
             visualizationUrl: "local:test",
-            buckets: [],
+            buckets: [
+                {
+                    items: metricRefs.map((metricRef, idx) => ({
+                        measure: {
+                            localIdentifier: metricRefs.length === 1 ? "metric" : `metric-${idx}`,
+                            definition: { measureDefinition: { item: metricRef } },
+                        },
+                    })),
+                },
+            ],
             filters: [],
             sorts: [],
             properties: {},
@@ -99,10 +120,13 @@ function makeState(parameters: IDashboardParameterEntry[]): DashboardState {
 interface IFullStateOptions {
     entries: IDashboardParameterEntry[];
     workspaceParameters?: IParameterMetadataObject[];
-    catalogStatus?: "loaded" | "loading" | "failed" | "gated-off" | "uninitialized";
+    catalogStatus?: CatalogParametersStatus;
     persistedDashboardParameters?: IDashboardParameter[];
     enableParameters?: boolean;
     insights?: IInsight[];
+    renderMode?: RenderMode;
+    measureParametersStatus?: CatalogMeasureParametersStatus;
+    measureParameters?: Record<string, IdentifierRef[]>;
 }
 
 const TAB_ID = "tab-1";
@@ -116,6 +140,9 @@ function makeFullState({
     persistedDashboardParameters,
     enableParameters = true,
     insights = [],
+    renderMode = "view",
+    measureParametersStatus = "loaded",
+    measureParameters: byMetric = {},
 }: IFullStateOptions): DashboardState {
     const persistedDashboard: Partial<IDashboard> | undefined =
         persistedDashboardParameters === undefined
@@ -167,9 +194,11 @@ function makeFullState({
         backendCapabilities: BACKEND_CAPABILITIES,
         catalog: {
             parameters: { status: catalogStatus, parameters: workspaceParameters },
+            measureParameters: { status: measureParametersStatus, byMetric },
         },
         meta: { persistedDashboard },
         config: { config: { settings: { enableParameters } } },
+        renderMode: { renderMode },
     } as unknown as DashboardState;
 }
 
@@ -190,6 +219,69 @@ describe("parameter selectors (per tab)", () => {
     it("selectParameterRuntimeOverrideByRef returns undefined when ref absent", () => {
         const select = selectParameterRuntimeOverrideByRef(otherRef);
         expect(select(makeState([entry]))).toBeUndefined();
+    });
+
+    describe("selectParameterResetValueByRef", () => {
+        it("view mode: returns parameter.value (dashboard override) when set", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }],
+                workspaceParameters: [topNWorkspace],
+                renderMode: "view",
+            });
+            expect(selectParameterResetValueByRef(topNRef)(state)).toBe(50);
+        });
+
+        it("view mode: falls back to workspace default when parameter.value is undefined", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 99 }],
+                workspaceParameters: [topNWorkspace],
+                renderMode: "view",
+            });
+            expect(selectParameterResetValueByRef(topNRef)(state)).toBe(10);
+        });
+
+        it("edit mode: returns workspace default when parameter.value is set and differs from default", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }],
+                workspaceParameters: [topNWorkspace],
+                renderMode: "edit",
+            });
+            expect(selectParameterResetValueByRef(topNRef)(state)).toBe(10);
+        });
+
+        it("edit mode: returns undefined when parameter.value is undefined (entry already inherits default)", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 99 }],
+                workspaceParameters: [topNWorkspace],
+                renderMode: "edit",
+            });
+            expect(selectParameterResetValueByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("edit mode: returns undefined when parameter.value equals workspace default (unpin no-op)", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 10 }, runtimeOverride: 99 }],
+                workspaceParameters: [topNWorkspace],
+                renderMode: "edit",
+            });
+            expect(selectParameterResetValueByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("returns undefined when no entry exists on the active tab", () => {
+            const state = makeFullState({
+                entries: [],
+                workspaceParameters: [topNWorkspace],
+            });
+            expect(selectParameterResetValueByRef(topNRef)(state)).toBeUndefined();
+        });
+
+        it("returns undefined when workspace parameter is not loaded into the catalog", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }],
+                workspaceParameters: [],
+            });
+            expect(selectParameterResetValueByRef(topNRef)(state)).toBeUndefined();
+        });
     });
 
     describe("selectSmartPersistedTabsParameters", () => {
@@ -312,19 +404,34 @@ describe("parameter selectors (per tab)", () => {
     describe("selectEffectiveParameterValuesForWidget", () => {
         const widgetRef = W1_REF;
         const sampleSizeRef = idRef("sampleSize", "parameter");
-        const insightWithTopN: IInsight = makeInsight(W1_INSIGHT_REF, [{ ref: topNRef, value: 0 }]);
+        const metricRef = idRef("m1", "measure");
+        const insightWithTopN: IInsight = makeInsightWithMetric(W1_INSIGHT_REF, metricRef);
+        const depMapTopN = { m1: [topNRef] };
 
-        it("returns runtimeOverride for parameters referenced by the insight", () => {
+        it("returns runtimeOverride when metric dependency map includes the parameter (insight.parameters empty)", () => {
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [insightWithTopN],
+                measureParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 25 },
             ]);
         });
 
-        it("excludes dashboard parameters not referenced by the insight", () => {
+        it("returns nothing when the metric has no MAQL parameter references", () => {
+            const insightWithLegacyParam = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 0 },
+            ]);
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                insights: [insightWithLegacyParam],
+                measureParameters: {},
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
+        });
+
+        it("excludes dashboard parameters not referenced by the metric dependency map", () => {
             const sampleSize: IDashboardParameter = {
                 ref: sampleSizeRef,
                 parameterType: "NUMBER",
@@ -336,6 +443,7 @@ describe("parameter selectors (per tab)", () => {
                     { parameter: sampleSize, runtimeOverride: 99 },
                 ],
                 insights: [insightWithTopN],
+                measureParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
                 { ref: topNRef, value: 25 },
@@ -346,6 +454,7 @@ describe("parameter selectors (per tab)", () => {
             const stateWithoutUnrelated = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 insights: [insightWithTopN],
+                measureParameters: depMapTopN,
             });
             const sampleSize: IDashboardParameter = {
                 ref: sampleSizeRef,
@@ -358,16 +467,159 @@ describe("parameter selectors (per tab)", () => {
                     { parameter: sampleSize, runtimeOverride: 99 },
                 ],
                 insights: [insightWithTopN],
+                measureParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(stateWithoutUnrelated)).toEqual(
                 selectEffectiveParameterValuesForWidget(widgetRef)(stateWithUnrelated),
             );
         });
 
+        it("unions parameter refs from every metric on a multi-measure insight", () => {
+            const m1 = idRef("m1", "measure");
+            const m2 = idRef("m2", "measure");
+            const multiMeasureInsight: IInsight = {
+                insight: {
+                    ref: W1_INSIGHT_REF,
+                    identifier: "insight-1",
+                    uri: "/insights/insight-1",
+                    title: "insight-1",
+                    visualizationUrl: "local:test",
+                    buckets: [
+                        {
+                            items: [
+                                {
+                                    measure: {
+                                        localIdentifier: "a",
+                                        definition: { measureDefinition: { item: m1 } },
+                                    },
+                                },
+                                {
+                                    measure: {
+                                        localIdentifier: "b",
+                                        definition: { measureDefinition: { item: m2 } },
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    filters: [],
+                    sorts: [],
+                    properties: {},
+                },
+            } as unknown as IInsight;
+            const sampleSize: IDashboardParameter = {
+                ref: sampleSizeRef,
+                parameterType: "NUMBER",
+                mode: "active",
+            };
+            const state = makeFullState({
+                entries: [
+                    { parameter: topNParameter, runtimeOverride: 25 },
+                    { parameter: sampleSize, runtimeOverride: 99 },
+                ],
+                insights: [multiMeasureInsight],
+                measureParameters: { m1: [topNRef], m2: [sampleSizeRef] },
+            });
+            const result = selectEffectiveParameterValuesForWidget(widgetRef)(state);
+            expect(result).toEqual(
+                expect.arrayContaining([
+                    { ref: topNRef, value: 25 },
+                    { ref: sampleSizeRef, value: 99 },
+                ]),
+            );
+            expect(result).toHaveLength(2);
+        });
+
+        it("applies sibling simple-measure deps even when the insight also has an arithmetic measure", () => {
+            const m1 = idRef("m1", "measure");
+            const arithAndSimpleInsight: IInsight = {
+                insight: {
+                    ref: W1_INSIGHT_REF,
+                    identifier: "insight-1",
+                    uri: "/insights/insight-1",
+                    title: "insight-1",
+                    visualizationUrl: "local:test",
+                    buckets: [
+                        {
+                            items: [
+                                {
+                                    measure: {
+                                        localIdentifier: "arith",
+                                        definition: {
+                                            arithmeticMeasure: {
+                                                measureIdentifiers: ["a"],
+                                                operator: "sum",
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    measure: {
+                                        localIdentifier: "simple",
+                                        definition: { measureDefinition: { item: m1 } },
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    filters: [],
+                    sorts: [],
+                    properties: {},
+                },
+            } as unknown as IInsight;
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                insights: [arithAndSimpleInsight],
+                measureParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 25 },
+            ]);
+        });
+
+        it("ignores inline / PoP / arithmetic measures without crashing (no dep contribution)", () => {
+            const popOnlyInsight: IInsight = {
+                insight: {
+                    ref: W1_INSIGHT_REF,
+                    identifier: "insight-1",
+                    uri: "/insights/insight-1",
+                    title: "insight-1",
+                    visualizationUrl: "local:test",
+                    buckets: [
+                        {
+                            items: [
+                                {
+                                    measure: {
+                                        localIdentifier: "pop",
+                                        definition: {
+                                            popMeasureDefinition: {
+                                                measureIdentifier: "x",
+                                                popAttribute: idRef("attr-x", "attribute"),
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    filters: [],
+                    sorts: [],
+                    properties: {},
+                },
+            } as unknown as IInsight;
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                insights: [popOnlyInsight],
+                measureParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
+        });
+
         it("returns empty array when widget has no insight", () => {
             const missingRef = idRef("missing", "insight");
             const state = makeFullState({
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                measureParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(missingRef)(state)).toEqual([]);
         });
@@ -377,8 +629,158 @@ describe("parameter selectors (per tab)", () => {
                 entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 enableParameters: false,
                 insights: [insightWithTopN],
+                measureParameters: depMapTopN,
             });
             expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
+        });
+
+        it("returns empty array when measure-parameter status is uninitialized", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                insights: [insightWithTopN],
+                measureParameters: depMapTopN,
+                measureParametersStatus: "uninitialized",
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
+        });
+
+        it("returns empty array when measure-parameter status is failed", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                insights: [insightWithTopN],
+                measureParameters: {},
+                measureParametersStatus: "failed",
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
+        });
+
+        it("falls back to insight.parameters when no dashboard entry claims the parameter", () => {
+            const insightWithFallback = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 5 },
+            ]);
+            const state = makeFullState({
+                entries: [],
+                insights: [insightWithFallback],
+                measureParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 5 },
+            ]);
+        });
+
+        it("returns equal results when insight.parameters contains an unrelated ref (defFingerprint stability)", () => {
+            const insightWithOnlyRelevantParam = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 5 },
+            ]);
+            const insightWithUnrelatedExtra = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 5 },
+                { ref: sampleSizeRef, value: 99 },
+            ]);
+            const stateWithoutUnrelated = makeFullState({
+                entries: [],
+                insights: [insightWithOnlyRelevantParam],
+                measureParameters: depMapTopN,
+            });
+            const stateWithUnrelated = makeFullState({
+                entries: [],
+                insights: [insightWithUnrelatedExtra],
+                measureParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(stateWithoutUnrelated)).toEqual(
+                selectEffectiveParameterValuesForWidget(widgetRef)(stateWithUnrelated),
+            );
+        });
+
+        it("insight chain is gated by enableParameters", () => {
+            const insightWithFallback = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 5 },
+            ]);
+            const state = makeFullState({
+                entries: [],
+                enableParameters: false,
+                insights: [insightWithFallback],
+                measureParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
+        });
+
+        it.each(["uninitialized", "loading", "failed"] as const)(
+            "insight chain is gated by measure-parameter status (%s)",
+            (status) => {
+                const insightWithFallback = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                    { ref: topNRef, value: 5 },
+                ]);
+                const state = makeFullState({
+                    entries: [],
+                    insights: [insightWithFallback],
+                    measureParameters: depMapTopN,
+                    measureParametersStatus: status,
+                });
+                expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
+            },
+        );
+
+        it("mixes dashboard runtimeOverride and insight.parameters across measures of one insight", () => {
+            const m1 = idRef("m1", "measure");
+            const m2 = idRef("m2", "measure");
+            const multiMeasureInsight = makeInsightWithMetric(
+                W1_INSIGHT_REF,
+                [m1, m2],
+                [{ ref: sampleSizeRef, value: 50 }],
+            );
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                insights: [multiMeasureInsight],
+                measureParameters: { m1: [topNRef], m2: [sampleSizeRef] },
+            });
+            const result = selectEffectiveParameterValuesForWidget(widgetRef)(state);
+            expect(result).toEqual(
+                expect.arrayContaining([
+                    { ref: topNRef, value: 25 },
+                    { ref: sampleSizeRef, value: 50 },
+                ]),
+            );
+            expect(result).toHaveLength(2);
+        });
+
+        it("filters stale insight.parameters refs not present in the dependency map", () => {
+            const insightWithStaleParam = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 5 },
+            ]);
+            const state = makeFullState({
+                entries: [],
+                insights: [insightWithStaleParam],
+                measureParameters: { m1: [] },
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([]);
+        });
+
+        it("falls through to insight.parameters when dashboard entry has no runtimeOverride", () => {
+            const insightWithFallback = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 5 },
+            ]);
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: undefined }],
+                insights: [insightWithFallback],
+                measureParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 5 },
+            ]);
+        });
+
+        it("dashboard runtimeOverride wins over insight.parameters when both are present", () => {
+            const insightWithFallback = makeInsightWithMetric(W1_INSIGHT_REF, metricRef, [
+                { ref: topNRef, value: 5 },
+            ]);
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                insights: [insightWithFallback],
+                measureParameters: depMapTopN,
+            });
+            expect(selectEffectiveParameterValuesForWidget(widgetRef)(state)).toEqual([
+                { ref: topNRef, value: 25 },
+            ]);
         });
 
         it("resolves the owning tab for an insight nested in a visualization switcher", () => {
@@ -427,10 +829,16 @@ describe("parameter selectors (per tab)", () => {
                     activeTabLocalIdentifier: TAB_ID,
                 },
                 insights: makeInsightsSliceState([
-                    makeInsight(switcherChildInsightRef, [{ ref: topNRef, value: 0 }]),
+                    makeInsightWithMetric(switcherChildInsightRef, idRef("metric-switcher", "measure")),
                 ]),
                 backendCapabilities: BACKEND_CAPABILITIES,
-                catalog: { parameters: { status: "loaded", parameters: [] } },
+                catalog: {
+                    parameters: { status: "loaded", parameters: [] },
+                    measureParameters: {
+                        status: "loaded",
+                        byMetric: { "metric-switcher": [topNRef] },
+                    },
+                },
                 meta: { persistedDashboard: undefined },
                 config: { config: { settings: { enableParameters: true } } },
             } as unknown as DashboardState;
@@ -446,8 +854,12 @@ describe("parameter selectors (per tab)", () => {
         const widgetB = { identifier: "w-B", type: "insight" } as const;
         const insightARef = idRef("insight-A", "insight");
         const insightBRef = idRef("insight-B", "insight");
-        const insightAWithTopN = makeInsight(insightARef, [{ ref: topNRef, value: 0 }]);
-        const insightBWithTopN = makeInsight(insightBRef, [{ ref: topNRef, value: 0 }]);
+        const insightAWithTopN = makeInsightWithMetric(insightARef, idRef("metric-A", "measure"), [
+            { ref: topNRef, value: 0 },
+        ]);
+        const insightBWithTopN = makeInsightWithMetric(insightBRef, idRef("metric-B", "measure"), [
+            { ref: topNRef, value: 0 },
+        ]);
 
         function makeTwoTabState({
             tabAEntries,
@@ -524,14 +936,24 @@ describe("parameter selectors (per tab)", () => {
                 },
                 insights: makeInsightsSliceState(insights),
                 backendCapabilities: BACKEND_CAPABILITIES,
-                catalog: { parameters: { status: "loaded", parameters: workspaceParameters } },
+                catalog: {
+                    parameters: { status: "loaded", parameters: workspaceParameters },
+                    measureParameters: {
+                        status: "loaded",
+                        byMetric: {
+                            "metric-A": [topNRef],
+                            "metric-B": [topNRef],
+                        },
+                    },
+                },
                 meta: { persistedDashboard: undefined },
                 config: { config: { settings: { enableParameters } } },
             } as unknown as DashboardState;
         }
 
-        it("per-tab widget execution — widget on tab A consumes tab A's runtime, widget on tab B does not", () => {
+        it("per-tab widget execution — widget on tab A consumes tab A's runtime, widget on tab B falls back to insight", () => {
             // Both widgets reference param topN via insight, but only tab A has it added.
+            // Tab B has no dashboard entry → widget B falls back to its insight.parameters value.
             const state = makeTwoTabState({
                 tabAEntries: [{ parameter: topNParameter, runtimeOverride: 25 }],
                 tabBEntries: [],
@@ -541,7 +963,9 @@ describe("parameter selectors (per tab)", () => {
             expect(selectEffectiveParameterValuesForWidget(widgetA)(state)).toEqual([
                 { ref: topNRef, value: 25 },
             ]);
-            expect(selectEffectiveParameterValuesForWidget(widgetB)(state)).toEqual([]);
+            expect(selectEffectiveParameterValuesForWidget(widgetB)(state)).toEqual([
+                { ref: topNRef, value: 0 },
+            ]);
         });
 
         it("widgets on different tabs see their own tab's runtimeOverride", () => {

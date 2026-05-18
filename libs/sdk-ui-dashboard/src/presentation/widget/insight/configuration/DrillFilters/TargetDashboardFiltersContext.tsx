@@ -8,8 +8,10 @@ import {
     type IDashboard,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
+    type IDashboardMeasureValueFilter,
     type ObjRef,
     isDashboardAttributeFilter,
+    isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
@@ -25,6 +27,7 @@ interface ITargetDashboardFiltersCacheEntry {
     targetDashboardFilters: FilterContextItem[];
     targetDashboardAttributeFilters: IDashboardAttributeFilter[];
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
+    targetDashboardMeasureValueFilters: IDashboardMeasureValueFilter[];
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
 }
 
@@ -63,6 +66,7 @@ function getTargetDashboardFilterData(
         targetDashboardFilters,
         targetDashboardAttributeFilters: targetDashboardFilters.filter(isDashboardAttributeFilter),
         targetDashboardTextAttributeFilters: targetDashboardFilters.filter(isDashboardTextAttributeFilter),
+        targetDashboardMeasureValueFilters: targetDashboardFilters.filter(isDashboardMeasureValueFilter),
         targetDashboardAttributeFilterConfigs: targetDashboard.attributeFilterConfigs ?? [],
     };
 }
@@ -75,6 +79,7 @@ function createEmptyCacheEntry(
         targetDashboardFilters: [],
         targetDashboardAttributeFilters: [],
         targetDashboardTextAttributeFilters: [],
+        targetDashboardMeasureValueFilters: [],
         targetDashboardAttributeFilterConfigs: [],
     };
 }

@@ -6,11 +6,13 @@ import { type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
 
 import {
     selectAdhocDateHierarchies,
+    selectCatalogMeasureParameters,
+    selectCatalogMeasureParametersStatus,
     selectCatalogParameters,
     selectCatalogParametersIsLoaded,
     selectCatalogParametersStatus,
 } from "../catalogSelectors.js";
-import { type ICatalogParametersState } from "../catalogState.js";
+import { type ICatalogMeasureParametersState, type ICatalogParametersState } from "../catalogState.js";
 
 import { catalogDateDatasets, defaultDateHierarchyTemplates } from "./catalogSelectors.fixture.js";
 
@@ -86,6 +88,30 @@ describe("catalogSelectors", () => {
             expect(selectCatalogParametersIsLoaded(stateWith({ status: "gated-off", parameters: [] }))).toBe(
                 false,
             );
+        });
+    });
+
+    describe("catalog measure-parameter dependency selectors", () => {
+        const stateWith = (measureParameters: ICatalogMeasureParametersState): any => ({
+            catalog: { measureParameters },
+        });
+
+        it("returns map and status when loaded", () => {
+            const map = { m1: [idRef("topN", "parameter")] };
+            const state = stateWith({ status: "loaded", byMetric: map });
+            expect(selectCatalogMeasureParameters(state)).toEqual(map);
+            expect(selectCatalogMeasureParametersStatus(state)).toBe("loaded");
+        });
+
+        it("returns empty map and failed status", () => {
+            const state = stateWith({ status: "failed", byMetric: {} });
+            expect(selectCatalogMeasureParameters(state)).toEqual({});
+            expect(selectCatalogMeasureParametersStatus(state)).toBe("failed");
+        });
+
+        it("returns uninitialized status by default", () => {
+            const state = stateWith({ status: "uninitialized", byMetric: {} });
+            expect(selectCatalogMeasureParametersStatus(state)).toBe("uninitialized");
         });
     });
 });

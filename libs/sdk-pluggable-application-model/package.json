@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-pluggable-application-model",
-    "version": "11.36.0-alpha.1",
+    "version": "11.36.0-alpha.2",
     "description": "GoodData SDK model contracts for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -22,11 +22,12 @@
     "exports": "./esm/index.js",
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:test": "echo \"No tests for @gooddata/sdk-pluggable-application-model\"",
-        "_phase:validate": "npm run validate",
+        "_phase:test": "npm run build-dynamic-files && echo \"No tests for @gooddata/sdk-pluggable-application-model\"",
+        "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "npm-run-all -p build-check build-ts && npm run api-extractor",
+        "build": "bash scripts/build.sh",
         "build-check": "tsgo",
+        "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "build-ts": "tsgo -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage temp *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",

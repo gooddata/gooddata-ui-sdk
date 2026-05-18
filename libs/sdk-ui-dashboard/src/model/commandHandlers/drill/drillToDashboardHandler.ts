@@ -12,10 +12,12 @@ import {
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilter,
+    type IDashboardMeasureValueFilter,
     type IDateFilter,
     type IFilter,
     type IInsight,
     type IInsightWidget,
+    type IMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
     dashboardFilterLocalIdentifier,
@@ -31,6 +33,7 @@ import {
 import {
     dashboardAttributeFilterItemToAttributeFilter,
     dashboardDateFilterToDateFilterByWidget,
+    dashboardMeasureValueFilterToMeasureValueFilter,
 } from "../../../converters/filterConverters.js";
 import { type IDashboardFilter } from "../../../types.js";
 import { type IDrillToDashboard } from "../../commands/drill.js";
@@ -53,6 +56,7 @@ import {
     selectFilterContextAttributeFilterItems,
     selectFilterContextDateFilter,
     selectFilterContextDraggableFilterItems,
+    selectFilterContextMeasureValueFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardState } from "../../store/types.js";
@@ -106,19 +110,23 @@ export function* drillToDashboardHandler(
     const enableMultipleDateFilters = yield select(selectEnableMultipleDateFilters);
     const includeOtherDateFilters = supportsMultipleDateFilters && enableMultipleDateFilters;
 
-    const allOtherFilters: ReturnType<typeof selectAllOtherFilters> = yield select(selectAllOtherFilters);
+    const allDraggableFilters: ReturnType<typeof selectAllDraggableFilters> =
+        yield select(selectAllDraggableFilters);
     const allAttributeFilters: ReturnType<typeof selectAllAttributeFilters> =
         yield select(selectAllAttributeFilters);
+    const allMeasureValueFilters: ReturnType<typeof selectAllMeasureValueFilters> = yield select(
+        selectAllMeasureValueFilters,
+    );
+    const allNonDateFilters = [...allAttributeFilters, ...allMeasureValueFilters];
+    const dashboardFiltersToResolve = includeOtherDateFilters ? allDraggableFilters : allNonDateFilters;
 
     const widgetAwareFilters: SagaReturnType<typeof getWidgetAwareDashboardFilters> = isDrillingToSelf
         ? []
-        : yield call(getWidgetAwareDashboardFilters, ctx, widget, includeOtherDateFilters);
+        : yield call(getWidgetAwareDashboardFilters, ctx, widget, dashboardFiltersToResolve);
 
     const candidateDashboardFilters = isDrillingToSelf
         ? // if drilling to self, just take all filters
-          includeOtherDateFilters
-            ? allOtherFilters
-            : allAttributeFilters
+          dashboardFiltersToResolve
         : // if drilling to other, resolve widget filter ignores
           widgetAwareFilters;
     const dashboardFilters = removeIgnoredDashboardFilters(
@@ -251,16 +259,23 @@ function selectAllAttributeFilters(state: DashboardState): DashboardAttributeFil
     return selectFilterContextAttributeFilterItems(state);
 }
 
-function selectAllOtherFilters(state: DashboardState): FilterContextItem[] {
+function selectAllMeasureValueFilters(state: DashboardState): IDashboardMeasureValueFilter[] {
+    return selectFilterContextMeasureValueFilters(state);
+}
+
+function selectAllDraggableFilters(state: DashboardState): FilterContextItem[] {
     return selectFilterContextDraggableFilterItems(state);
 }
 
 function convertFilterItemsToFilters(
-    filter: DashboardAttributeFilterItem | IDashboardDateFilter,
+    filter: FilterContextItem,
     widget: IInsightWidget,
-): IAttributeFilter | IDateFilter {
+): IAttributeFilter | IDateFilter | IMeasureValueFilter {
     if ("dateFilter" in filter) {
         return dashboardDateFilterToDateFilterByWidget(filter, widget);
+    }
+    if (isDashboardMeasureValueFilter(filter)) {
+        return dashboardMeasureValueFilterToMeasureValueFilter(filter);
     }
     return dashboardAttributeFilterItemToAttributeFilter(filter);
 }
@@ -282,28 +297,13 @@ function removeIgnoredDashboardFilters<T extends FilterContextItem>(
 function* getWidgetAwareDashboardFilters(
     ctx: DashboardContext,
     widget: IInsightWidget,
-    includeOtherDateFilters: boolean,
+    filterContextItems: FilterContextItem[],
 ): SagaIterator<FilterContextItem[]> {
-    const filtersIncludingDateFilters: ReturnType<typeof selectFilterContextDraggableFilterItems> =
-        yield select(selectFilterContextDraggableFilterItems);
-    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
-        selectFilterContextAttributeFilterItems,
-    );
-
-    const filterContextItems = includeOtherDateFilters ? filtersIncludingDateFilters : attributeFilters;
-
     const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
         selectAttributeFilterConfigsOverrides,
     );
 
-    // Drill-to-dashboard does not transfer measure value filters between dashboards in this iteration.
-    // TODO INE: will be solved in https://gooddata.atlassian.net/browse/CQ-2285
-    const drillTransferableItems = filterContextItems.filter(
-        (item): item is DashboardAttributeFilterItem | IDashboardDateFilter =>
-            !isDashboardMeasureValueFilter(item),
-    );
-
-    const filtersPairs = drillTransferableItems.map((filter) => ({
+    const filtersPairs = filterContextItems.map((filter) => ({
         filter: convertFilterItemsToFilters(filter, widget),
         originalFilter: filter,
     }));

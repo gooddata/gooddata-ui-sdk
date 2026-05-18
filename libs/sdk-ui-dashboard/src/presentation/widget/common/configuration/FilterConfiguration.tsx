@@ -13,6 +13,7 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
+    isInsightWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -24,6 +25,7 @@ import {
     selectAllCatalogDateDatasetsMap,
     selectAllCatalogMeasuresMap,
 } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectInsightByRef } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
@@ -67,7 +69,12 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
         () => draggableFilters.filter(isDashboardMeasureValueFilter),
         [draggableFilters],
     );
-    const { isCompatible } = useMeasureValueFilterCompatibility(widget, measureValueFilters);
+
+    const insight = useDashboardSelector(
+        selectInsightByRef(isInsightWidget(widget) ? widget.insight : undefined),
+    );
+
+    const { isCompatible } = useMeasureValueFilterCompatibility(insight, measureValueFilters);
 
     if (attributesLoading) {
         return <span className={"gd-spinner small s-attribute-filter-configuration-loading"} />;

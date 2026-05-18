@@ -7,13 +7,14 @@ import {
     type ITheme,
     type IUser,
     type IUserSettings,
+    type IUserWorkspaceSettings,
     type IWhiteLabeling,
     type IWorkspacePermissions,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**
- * Pluggable application embedding mode.
+ * Plˍuggable application embedding mode.
  *
  * @alpha
  */
@@ -159,6 +160,19 @@ export interface IPlatformContextV1 {
     entitlements?: IEntitlementDescriptor[];
 
     userSettings: IUserSettings;
+
+    /**
+     * Effective workspace-scoped settings for the current user.
+     *
+     * @remarks
+     * Populated by the host when the active route is workspace-scoped.
+     * Merges workspace-level overrides with user-level defaults — use this
+     * for workspace feature flags (e.g. `enableAIKnowledge`) instead of
+     * `userSettings`, which only contains user-level values.
+     *
+     * `undefined` when no workspace is active (organization-scoped routes).
+     */
+    workspaceSettings?: IUserWorkspaceSettings;
 
     whiteLabeling: IWhiteLabeling | undefined;
     preferredLocale?: ILocale;

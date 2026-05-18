@@ -11,6 +11,7 @@ import {
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfigItem,
+    type IDashboardMeasureValueFilter,
     type IMeasure,
     type ObjRef,
     type ObjRefInScope,
@@ -19,6 +20,7 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     isDashboardDateFilterWithDimension,
+    isDashboardMeasureValueFilter,
     isLocalIdRef,
     measureAlias,
     measureFilters,
@@ -181,6 +183,13 @@ export function getDashboardDateFilterCustomTitle({
     return customTitle || undefined;
 }
 
+export function getCatalogMeasureTitle(measureRef: ObjRef, allCatalogMeasures: ICatalogMeasure[]): string {
+    return (
+        allCatalogMeasures.find((measure) => areObjRefsEqual(measure.measure.ref, measureRef))?.measure
+            .title ?? ""
+    );
+}
+
 export function hasMatchingTargetDashboardAttributeFilterDisplayForm(
     displayFormRef: ObjRef,
     targetDashboardAttributeFilters: IDashboardAttributeFilter[],
@@ -244,6 +253,30 @@ export function hasMatchingTargetDashboardDateFilter(
         (targetDashboardFilter) =>
             isDashboardDateFilterWithDimension(targetDashboardFilter) &&
             areObjRefsEqual(datasetRef, targetDashboardFilter.dateFilter.dataSet),
+    );
+}
+
+export function hasMatchingTargetDashboardMeasureValueFilter(
+    measureRef: ObjRefInScope | undefined,
+    targetDashboardFilters: FilterContextItem[],
+): boolean {
+    if (!measureRef) {
+        return false;
+    }
+
+    return targetDashboardFilters.some(
+        (targetDashboardFilter) =>
+            isDashboardMeasureValueFilter(targetDashboardFilter) &&
+            areObjRefsEqual(measureRef, targetDashboardFilter.dashboardMeasureValueFilter.measure),
+    );
+}
+
+export function hasCompatibleTargetInsightMeasureValueFilter(
+    measureRef: ObjRef,
+    targetInsightCompatibleMeasureValueFilters: IDashboardMeasureValueFilter[],
+): boolean {
+    return targetInsightCompatibleMeasureValueFilters.some((targetMeasureValueFilter) =>
+        areObjRefsEqual(measureRef, targetMeasureValueFilter.dashboardMeasureValueFilter.measure),
     );
 }
 

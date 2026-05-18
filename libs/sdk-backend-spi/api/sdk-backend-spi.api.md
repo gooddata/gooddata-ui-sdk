@@ -65,6 +65,7 @@ import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
 import type { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
+import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
@@ -157,7 +158,6 @@ import { IWorkspaceSettings } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
-import { LlmEndpointTestResults } from '@gooddata/sdk-model';
 import { LlmProviderListModelsResults } from '@gooddata/sdk-model';
 import { LlmProviderPatch } from '@gooddata/sdk-model';
 import { LlmProviderTestResults } from '@gooddata/sdk-model';
@@ -2007,7 +2007,6 @@ export interface IOrganizationLlmEndpointsService {
     getEndpointsQuery(): ILlmEndpointsQuery;
     getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined>;
     patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
-    testLlmEndpoint(endpoint: Partial<LlmEndpointOpenAIPatch>, token?: string): Promise<LlmEndpointTestResults>;
     updateLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
 }
 
@@ -2313,11 +2312,11 @@ export interface IReferencesOption {
 export interface IReferencesResult {
     // (undocumented)
     edges: {
-        from: ObjRef;
-        to: ObjRef;
+        from: IdentifierRef;
+        to: IdentifierRef;
     }[];
     // (undocumented)
-    nodes: (ObjRef & {
+    nodes: (IdentifierRef & {
         title: string;
         isRoot?: boolean;
     })[];
@@ -2326,7 +2325,7 @@ export interface IReferencesResult {
 // @alpha (undocumented)
 export interface IReferencesService {
     // (undocumented)
-    getReferences(root: ObjRef, opts?: IReferencesOption): Promise<IReferencesResult>;
+    getReferences(root: IdentifierRef | IdentifierRef[], opts?: IReferencesOption): Promise<IReferencesResult>;
 }
 
 // @public

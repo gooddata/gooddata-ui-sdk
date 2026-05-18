@@ -16,7 +16,7 @@ vi.mock("@gooddata/api-client-tiger/endpoints/genAI", () => ({
     GenAiApi_GetConversationItems: vi.fn(),
     GenAiApi_GetConversationResponses: vi.fn(),
     GenAiApi_GetConversations: vi.fn(),
-    GenAiApi_PatchConversationResponse: vi.fn(),
+    GenAiApi_PostConversationFeedback: vi.fn(),
     GenAiApi_PatchVisualization: vi.fn(),
     GenAiApi_PostConversations: vi.fn(),
     GenAiApi_PostMessages: vi.fn(),

@@ -9,6 +9,7 @@ import {
     type ICatalogMeasure,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
+    type IDashboardMeasureValueFilter,
     type IFilter,
     type IMeasure,
     type ObjRef,
@@ -18,7 +19,10 @@ import {
     isRankingFilter,
 } from "@gooddata/sdk-model";
 
-import { sourceInsightFilterObjRef as getSourceInsightFilterObjRef } from "../../../../../../_staging/drills/drillingUtils.js";
+import {
+    sourceInsightFilterObjRef as getSourceInsightFilterObjRef,
+    resolveSourceMeasureRef,
+} from "../../../../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
 import {
     canTransferAttributeFilterByDisplayForm,
@@ -28,6 +32,7 @@ import {
     getDisplayFormTitle,
     getMeasureTitleFromSourceInsightMeasures,
     hasMatchingTargetDashboardDateFilter,
+    hasMatchingTargetDashboardMeasureValueFilter,
     sourceFilterOptionId,
 } from "../drillFiltersConfigUtils.js";
 import { messages } from "../messages.js";
@@ -42,9 +47,11 @@ interface IMapSourceInsightFilterToOptionParams {
     targetDashboardFilters: FilterContextItem[];
     targetDashboardAttributeFilters: IDashboardAttributeFilter[];
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
+    targetDashboardMeasureValueFilters: IDashboardMeasureValueFilter[];
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
     isDrillDown: boolean;
     isDrillToDashboard: boolean;
+    enableMeasureValueFilter: boolean;
     intl: IntlShape;
 }
 
@@ -57,9 +64,11 @@ export function mapSourceInsightFilterToOption({
     targetDashboardFilters,
     targetDashboardAttributeFilters,
     targetDashboardTextAttributeFilters,
+    targetDashboardMeasureValueFilters,
     targetDashboardAttributeFilterConfigs,
     isDrillDown,
     isDrillToDashboard,
+    enableMeasureValueFilter,
     intl,
 }: IMapSourceInsightFilterToOptionParams): IDrillFiltersConfigOption | undefined {
     const sourceFilterObjRef = getSourceInsightFilterObjRef(sourceInsightFilter);
@@ -140,6 +149,12 @@ export function mapSourceInsightFilterToOption({
 
     if (sourceFilterObjRef.type === "measureValueFilter") {
         const measureRef = sourceFilterObjRef.measure;
+        const dashboardMeasureRef = resolveSourceMeasureRef(measureRef, sourceInsightMeasures);
+
+        const hasMatchingTargetMeasureValueFilter = hasMatchingTargetDashboardMeasureValueFilter(
+            dashboardMeasureRef,
+            targetDashboardMeasureValueFilters,
+        );
         const measureTitleFromInsight = getMeasureTitleFromSourceInsightMeasures(
             sourceInsightMeasures,
             measureRef,
@@ -150,13 +165,17 @@ export function mapSourceInsightFilterToOption({
         return {
             id: sourceFilterOptionId(sourceFilterObjRef),
             title: measureTitleFromInsight ?? "",
-            ...(isDrillToDashboard
-                ? getDisabledOptionProps(
-                      true,
-                      intl.formatMessage(messages.drillToDashboardMetricFilterTooltip),
-                      false,
-                  )
-                : disabled),
+            ...(dashboardMeasureRef ? { metricFilterMeasureRef: dashboardMeasureRef } : {}),
+            ...disabled,
+            ...getDisabledOptionProps(
+                isDrillToDashboard && (!enableMeasureValueFilter || !hasMatchingTargetMeasureValueFilter),
+                intl.formatMessage(
+                    enableMeasureValueFilter
+                        ? messages.drillToDashboardDashboardFilterTooltip
+                        : messages.drillToDashboardMetricFilterTooltip,
+                ),
+                false,
+            ),
             sourceInsightFilterObjRef: sourceFilterObjRef,
         };
     }

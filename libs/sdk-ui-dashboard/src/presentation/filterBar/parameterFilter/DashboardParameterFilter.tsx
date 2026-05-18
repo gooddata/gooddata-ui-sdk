@@ -14,7 +14,10 @@ import { useDashboardDispatch, useDashboardSelector } from "../../../model/react
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { tabsActions } from "../../../model/store/tabs/index.js";
-import { selectParameterRuntimeOverrideByRef } from "../../../model/store/tabs/parameters/parametersSelectors.js";
+import {
+    selectParameterResetValueByRef,
+    selectParameterRuntimeOverrideByRef,
+} from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import { DraggableChipSource } from "../../dragAndDrop/DraggableChipSource.js";
 
 /**
@@ -33,6 +36,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
     const dispatch = useDashboardDispatch();
     const workspaceParameter = useDashboardSelector(selectCatalogParameterByRef(parameter.ref));
     const runtimeOverride = useDashboardSelector(selectParameterRuntimeOverrideByRef(parameter.ref));
+    const resetValue = useDashboardSelector(selectParameterResetValueByRef(parameter.ref));
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
 
     if (parameter.mode === DashboardParameterModeValues.HIDDEN || runtimeOverride === undefined) {
@@ -78,6 +82,7 @@ export function DashboardParameterFilter({ parameter }: IDashboardParameterFilte
                     <ParameterControlDropdown
                         name={name}
                         value={runtimeOverride}
+                        resetValue={resetValue}
                         constraints={constraints}
                         onApply={(value) => {
                             dispatch(tabsActions.setParameterRuntimeValue({ ref: parameter.ref, value }));

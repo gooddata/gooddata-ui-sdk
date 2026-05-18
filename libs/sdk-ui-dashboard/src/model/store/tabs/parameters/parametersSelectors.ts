@@ -12,9 +12,11 @@ import {
     type IParameterMetadataObject,
     type ObjRef,
     areObjRefsEqual,
+    insightMeasures,
     insightParameters,
     isDashboardLayout,
     isInsightWidget,
+    isMeasureDefinition,
     isNumberParameterDefinition,
     isVisualizationSwitcherWidget,
     objRefToString,
@@ -22,9 +24,16 @@ import {
 
 import { type ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
-import { selectCatalogParameters, selectCatalogParametersIsLoaded } from "../../catalog/catalogSelectors.js";
+import {
+    selectCatalogMeasureParameters,
+    selectCatalogMeasureParametersStatus,
+    selectCatalogParameterByRef,
+    selectCatalogParameters,
+    selectCatalogParametersIsLoaded,
+} from "../../catalog/catalogSelectors.js";
 import { selectEnableParameters } from "../../config/configSelectors.js";
 import { selectInsightsMap } from "../../insights/insightsSelectors.js";
+import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { type DashboardSelector } from "../../types.js";
 import { selectActiveTab, selectTabs } from "../tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../tabsState.js";
@@ -36,6 +45,7 @@ import {
 } from "./parametersState.js";
 
 const EMPTY_PARAMETERS: IDashboardParameter[] = [];
+const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
 
 const selectParametersState = createSelector(
@@ -103,6 +113,40 @@ export const selectDashboardParameterEntryByRef: (
 export const selectParameterRuntimeOverrideByRef: (ref: ObjRef) => DashboardSelector<number | undefined> =
     createMemoizedSelector((ref: ObjRef) =>
         createSelector(selectDashboardParameterEntryByRef(ref), (entry) => entry?.runtimeOverride),
+    );
+
+/**
+ * Reset value for a parameter chip's dropdown, bound to the kit dropdown's `resetValue` prop.
+ *
+ * Returns `undefined` (Reset hidden) in edit mode when `parameter.value` is unset or already
+ * equals the workspace default — both would be unpin no-ops on next save.
+ *
+ * @alpha
+ */
+export const selectParameterResetValueByRef: (ref: ObjRef) => DashboardSelector<number | undefined> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(
+            selectDashboardParameterEntryByRef(ref),
+            selectCatalogParameterByRef(ref),
+            selectIsInEditMode,
+            (entry, workspaceParameter, isInEditMode) => {
+                if (!entry) {
+                    return undefined;
+                }
+                if (!workspaceParameter || !isNumberParameterDefinition(workspaceParameter.definition)) {
+                    return undefined;
+                }
+                const workspaceDefault = workspaceParameter.definition.defaultValue;
+                const dashboardOverride = entry.parameter.value;
+                if (isInEditMode) {
+                    if (dashboardOverride === undefined || dashboardOverride === workspaceDefault) {
+                        return undefined;
+                    }
+                    return workspaceDefault;
+                }
+                return dashboardOverride ?? workspaceDefault;
+            },
+        ),
     );
 
 /**
@@ -202,12 +246,16 @@ export const selectIsParametersChanged: DashboardSelector<boolean> = createSelec
  * Returns the parameter values to inject into the widget's `IExecutionConfig.parameterValues`.
  *
  * @remarks
- * The widget's owning tab is resolved from layout, then the result is the intersection of that
- * tab's parameter entries and the parameters referenced by the widget's insight (per
- * `insightParameters`). Dashboard parameters not referenced by the widget's insight are excluded
- * so that adding/removing unrelated parameters does not invalidate the widget's `defFingerprint`.
- * Returns an empty array when `enableParameters` is off so persisted parameter values cannot
- * silently affect execution while the UI is hidden.
+ * For each parameter referenced by the widget's metrics (via the dashboard-wide MAQL
+ * metric → parameter dependency map), the value is resolved in this order:
+ *
+ * 1. dashboard chip on the widget's tab with `runtimeOverride !== undefined`,
+ * 2. else `insight.parameters` entry for that ref (AD-authored per-insight override),
+ * 3. else nothing (backend uses workspace default).
+ *
+ * Parameters not referenced by the widget's metrics are excluded so that adding/removing
+ * unrelated parameters does not invalidate the widget's `defFingerprint`. Returns `[]` when
+ * `enableParameters` is off or while the dependency map has not been loaded.
  *
  * @alpha
  */
@@ -218,28 +266,50 @@ export const selectEffectiveParameterValuesForWidget: (
         selectParameterExecutionContextByWidgetRef(ref),
         selectInsightsMap,
         selectEnableParameters,
-        (context, insights, isEnabled) => {
-            if (!isEnabled || !context) {
-                return [];
+        selectCatalogMeasureParameters,
+        selectCatalogMeasureParametersStatus,
+        (context, insights, isEnabled, measureParameters, measureParametersStatus) => {
+            if (!isEnabled || !context || measureParametersStatus !== "loaded") {
+                return EMPTY_PARAMETER_VALUES;
             }
             const insight = insights.get(context.widget.insight);
             if (!insight) {
-                return [];
+                return EMPTY_PARAMETER_VALUES;
+            }
+            const referencedRefs = new Set<string>();
+            for (const measure of insightMeasures(insight)) {
+                const def = measure.measure.definition;
+                if (!isMeasureDefinition(def)) {
+                    continue;
+                }
+                const parameterRefs = measureParameters[objRefToString(def.measureDefinition.item)] ?? [];
+                for (const parameterRef of parameterRefs) {
+                    referencedRefs.add(objRefToString(parameterRef));
+                }
             }
             const entries = context.tab.parameters?.parameters ?? parametersInitialState.parameters;
-            const referencedRefs = new Set(
-                insightParameters(insight).map((parameter) => objRefToString(parameter.ref)),
-            );
             const result: IInsightParameterValue[] = [];
+            const seen = new Set<string>();
             for (const entry of entries) {
                 if (entry.runtimeOverride === undefined) {
                     continue;
                 }
-                if (referencedRefs.has(objRefToString(entry.parameter.ref))) {
-                    result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
+                const refKey = objRefToString(entry.parameter.ref);
+                if (!referencedRefs.has(refKey)) {
+                    continue;
                 }
+                result.push({ ref: entry.parameter.ref, value: entry.runtimeOverride });
+                seen.add(refKey);
             }
-            return result;
+            for (const insightParameter of insightParameters(insight)) {
+                const refKey = objRefToString(insightParameter.ref);
+                if (!referencedRefs.has(refKey) || seen.has(refKey)) {
+                    continue;
+                }
+                result.push(insightParameter);
+                seen.add(refKey);
+            }
+            return result.length === 0 ? EMPTY_PARAMETER_VALUES : result;
         },
     ),
 );

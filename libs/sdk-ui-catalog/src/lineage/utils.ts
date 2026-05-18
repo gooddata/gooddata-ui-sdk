@@ -1,25 +1,14 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IReferencesResult } from "@gooddata/sdk-backend-spi";
-import { type ObjRef, type ObjectType, isIdentifierRef } from "@gooddata/sdk-model";
+import { type IdentifierRef, type ObjectType } from "@gooddata/sdk-model";
 
-export function objRefToId(objRef: ObjRef) {
-    if (isIdentifierRef(objRef)) {
-        if (objRef.type) {
-            return `${objRef.type}/${objRef.identifier}`;
-        }
-        return objRef.identifier;
-    }
-    return objRef.uri;
+export function objRefToId(ref: IdentifierRef) {
+    return ref.type ? `${ref.type}/${ref.identifier}` : ref.identifier;
 }
 
-export function objRefToType(objRef: ObjRef) {
-    if (isIdentifierRef(objRef)) {
-        if (objRef.type) {
-            return objRef.type;
-        }
-    }
-    return "unknown";
+export function objRefToType(ref: IdentifierRef) {
+    return ref.type ?? "unknown";
 }
 
 export function filterNodes(

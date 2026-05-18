@@ -9,21 +9,29 @@ import {
     type IDrillToDashboard,
     type IDrillToInsight,
     type InsightDrillDefinition,
+    type ObjRefInScope,
+    areObjRefsEqual,
     bucketsAttributes,
     insightBuckets,
     insightFilters,
     insightMeasures,
+    isDashboardMeasureValueFilter,
     measureFilters,
     measureLocalId,
 } from "@gooddata/sdk-model";
 
+import { isSourceInsightFilterObjRefEqual } from "../../../../../_staging/drills/drillingUtils.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
 } from "../../../../../model/store/catalog/catalogSelectors.js";
-import { selectInsightByWidgetRef } from "../../../../../model/store/insights/insightsSelectors.js";
+import { selectEnableMeasureValueFilterKD } from "../../../../../model/store/config/configSelectors.js";
+import {
+    selectInsightByRef,
+    selectInsightByWidgetRef,
+} from "../../../../../model/store/insights/insightsSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectDateFilterConfigOverrides } from "../../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
@@ -38,12 +46,14 @@ import {
     type IDrillToInsightConfig,
     isDrillToInsightConfig,
 } from "../../../../drill/types.js";
+import { useMeasureValueFilterCompatibility } from "../../../common/configuration/useMeasureValueFilterCompatibility.js";
 
+import { messages } from "./messages.js";
 import { mapDashboardFilterToOption } from "./optionMappings/mapDashboardFilterToOption.js";
 import { mapIntersectionAttributeToOption } from "./optionMappings/mapIntersectionAttributeToOption.js";
 import { mapSourceInsightFilterToOption } from "./optionMappings/mapSourceInsightFilterToOption.js";
 import { mapSourceMeasureFilterToOption } from "./optionMappings/mapSourceMeasureFilterToOption.js";
-import { type IDrillFiltersConfigOption } from "./types.js";
+import { type IDrillFiltersConfigOption, isDrillFiltersConfigOptionSelected } from "./types.js";
 import { type IDrillFiltersConfigSelection } from "./useDrillFiltersConfigInner.js";
 import { useFetchTargetDashboardFilters } from "./useFetchTargetDashboardFilters.js";
 
@@ -58,16 +68,21 @@ interface IUseDrillFiltersConfigParams {
 export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFiltersConfigParams) {
     const intl = useIntl();
     const isDrillToDashboard = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
+    const isDrillToInsight = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_INSIGHT;
+    const isDrillDown = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN;
     const supportsExtendedFiltersConfig =
         item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_INSIGHT ||
         item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
-    const isDrillDown = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN;
     const extendedDrillFiltersItem =
         isDrillToInsightConfig(item) || item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD
             ? (item as IDrillToInsightConfig | IDrillToDashboardConfig)
             : undefined;
     const insight = useDashboardSelector(selectInsightByWidgetRef(item.widgetRef));
+    const targetInsight = useDashboardSelector(
+        selectInsightByRef(isDrillToInsight ? (item as IDrillToInsightConfig).insightRef : undefined),
+    );
     const widgetDrills = useDashboardSelector(selectWidgetDrills(item.widgetRef));
+    const enableMeasureValueFilter = useDashboardSelector(selectEnableMeasureValueFilterKD);
     const sourceDashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const sourceDashboardAttributeFilterConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
     const allCatalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
@@ -80,6 +95,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         targetDashboardAttributeFilters,
         targetDashboardTextAttributeFilters,
         targetDashboardAttributeFilterConfigs,
+        targetDashboardMeasureValueFilters,
         isLoading,
     } = useFetchTargetDashboardFilters(item);
 
@@ -97,6 +113,14 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         item.type === "measure"
             ? sourceInsightMeasures.find((measure) => measureLocalId(measure) === item.originLocalIdentifier)
             : undefined;
+
+    const sourceDashboardMeasureValueFilters = useMemo(
+        () => sourceDashboardFilters.filter(isDashboardMeasureValueFilter),
+        [sourceDashboardFilters],
+    );
+
+    const { compatibleMeasureValueFilters: targetInsightCompatibleMeasureValueFilters } =
+        useMeasureValueFilterCompatibility(targetInsight, sourceDashboardMeasureValueFilters);
 
     const intersectionAttributesOptions = useMemo(
         () =>
@@ -136,9 +160,11 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
                     targetDashboardFilters,
                     targetDashboardAttributeFilters,
                     targetDashboardTextAttributeFilters,
+                    targetDashboardMeasureValueFilters,
                     targetDashboardAttributeFilterConfigs,
                     isDrillDown,
                     isDrillToDashboard,
+                    enableMeasureValueFilter,
                     intl,
                 }),
             )
@@ -153,9 +179,11 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         targetDashboardFilters,
         targetDashboardAttributeFilters,
         targetDashboardTextAttributeFilters,
+        targetDashboardMeasureValueFilters,
         targetDashboardAttributeFilterConfigs,
         isDrillDown,
         isDrillToDashboard,
+        enableMeasureValueFilter,
         intl,
     ]);
     const sourceMeasureFiltersOptions = useMemo(() => {
@@ -201,15 +229,19 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
                 mapDashboardFilterToOption({
                     dashboardFilter,
                     allCatalogDisplayFormsMap,
+                    allCatalogMeasures,
                     allCatalogDateDatasets,
                     dateFilterConfigOverride,
                     allDateFilterConfigsOverrides,
                     sourceDashboardAttributeFilterConfigs,
                     targetDashboardFilters,
+                    targetDashboardMeasureValueFilters,
+                    targetInsightCompatibleMeasureValueFilters,
                     targetDashboardAttributeFilters,
                     targetDashboardTextAttributeFilters,
                     targetDashboardAttributeFilterConfigs,
                     isDrillDown,
+                    isDrillToInsight,
                     isDrillToDashboard,
                     intl,
                 }),
@@ -220,6 +252,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         isDrillDown,
         sourceDashboardFilters,
         allCatalogDisplayFormsMap,
+        allCatalogMeasures,
         allCatalogDateDatasets,
         dateFilterConfigOverride,
         allDateFilterConfigsOverrides,
@@ -227,8 +260,11 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         targetDashboardFilters,
         targetDashboardAttributeFilters,
         targetDashboardTextAttributeFilters,
+        targetDashboardMeasureValueFilters,
+        targetInsightCompatibleMeasureValueFilters,
         targetDashboardAttributeFilterConfigs,
         isDrillToDashboard,
+        isDrillToInsight,
         intl,
     ]);
 
@@ -246,6 +282,74 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
             extendedDrillFiltersItem?.includedSourceInsightFiltersObjRefs,
             extendedDrillFiltersItem?.ignoredDashboardFilters,
             extendedDrillFiltersItem?.includedSourceMeasureFiltersObjRefs,
+        ],
+    );
+
+    const dashboardSelection = useMemo(
+        () =>
+            dashboardFiltersOptions
+                .map((option) => option.id)
+                .filter((id) => !currentSelection.ignoredDashboardFilters?.includes(id)),
+        [dashboardFiltersOptions, currentSelection.ignoredDashboardFilters],
+    );
+    const sourceInsightSelection = useMemo(
+        () =>
+            sourceInsightFiltersOptions
+                .filter((option) =>
+                    currentSelection.includedSourceInsightFiltersObjRefs?.some(
+                        (includedFilter) =>
+                            option.sourceInsightFilterObjRef &&
+                            isSourceInsightFilterObjRefEqual(
+                                includedFilter,
+                                option.sourceInsightFilterObjRef,
+                            ),
+                    ),
+                )
+                .map((option) => option.id),
+        [sourceInsightFiltersOptions, currentSelection.includedSourceInsightFiltersObjRefs],
+    );
+
+    const duplicateMetricFilterMessage = intl.formatMessage(
+        messages.drillToDashboardDuplicateMetricFilterTooltip,
+    );
+    const selectedDashboardMetricFilterRefs = useMemo(
+        () => getSelectedMetricFilterRefs(dashboardFiltersOptions, dashboardSelection),
+        [dashboardFiltersOptions, dashboardSelection],
+    );
+    const selectedSourceInsightMetricFilterRefs = useMemo(
+        () => getSelectedMetricFilterRefs(sourceInsightFiltersOptions, sourceInsightSelection),
+        [sourceInsightFiltersOptions, sourceInsightSelection],
+    );
+    const dashboardFiltersOptionsWithDuplicateMetricState = useMemo(
+        () =>
+            applyDuplicateMetricFilterState(
+                dashboardFiltersOptions,
+                dashboardSelection,
+                isDrillToDashboard ? selectedSourceInsightMetricFilterRefs : [],
+                duplicateMetricFilterMessage,
+            ),
+        [
+            dashboardFiltersOptions,
+            dashboardSelection,
+            isDrillToDashboard,
+            selectedSourceInsightMetricFilterRefs,
+            duplicateMetricFilterMessage,
+        ],
+    );
+    const sourceInsightFiltersOptionsWithDuplicateMetricState = useMemo(
+        () =>
+            applyDuplicateMetricFilterState(
+                sourceInsightFiltersOptions,
+                sourceInsightSelection,
+                isDrillToDashboard ? selectedDashboardMetricFilterRefs : [],
+                duplicateMetricFilterMessage,
+            ),
+        [
+            sourceInsightFiltersOptions,
+            sourceInsightSelection,
+            isDrillToDashboard,
+            selectedDashboardMetricFilterRefs,
+            duplicateMetricFilterMessage,
         ],
     );
 
@@ -338,13 +442,58 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         isLoading,
         supportsExtendedFiltersConfig,
         intersectionAttributesOptions,
-        sourceInsightFiltersOptions,
+        sourceInsightFiltersOptions: sourceInsightFiltersOptionsWithDuplicateMetricState,
         sourceMeasureFiltersOptions,
-        dashboardFiltersOptions,
+        dashboardFiltersOptions: dashboardFiltersOptionsWithDuplicateMetricState,
         drillIntersectionIgnoredAttributes: currentSelection.drillIntersectionIgnoredAttributes ?? [],
         includedSourceInsightFiltersObjRefs: currentSelection.includedSourceInsightFiltersObjRefs ?? [],
         ignoredDashboardFilters: currentSelection.ignoredDashboardFilters ?? [],
         includedSourceMeasureFiltersObjRefs: currentSelection.includedSourceMeasureFiltersObjRefs ?? [],
         onDrillFiltersChange,
     };
+}
+
+function getSelectedMetricFilterRefs(
+    options: IDrillFiltersConfigOption[],
+    selectedIds: string[],
+): ObjRefInScope[] {
+    return options.flatMap((option) =>
+        option.metricFilterMeasureRef && isDrillFiltersConfigOptionSelected(option, selectedIds)
+            ? [option.metricFilterMeasureRef]
+            : [],
+    );
+}
+
+function applyDuplicateMetricFilterState(
+    options: IDrillFiltersConfigOption[],
+    selectedIds: string[],
+    selectedMetricFilterRefsFromOtherSection: ObjRefInScope[],
+    message: string,
+): IDrillFiltersConfigOption[] {
+    if (!selectedMetricFilterRefsFromOtherSection.length) {
+        return options;
+    }
+
+    return options.map((option) => {
+        const metricFilterMeasureRef = option.metricFilterMeasureRef;
+
+        if (
+            option.disabled ||
+            !metricFilterMeasureRef ||
+            isDrillFiltersConfigOptionSelected(option, selectedIds) ||
+            !selectedMetricFilterRefsFromOtherSection.some((measureRef) =>
+                areObjRefsEqual(measureRef, metricFilterMeasureRef),
+            )
+        ) {
+            return option;
+        }
+
+        return {
+            ...option,
+            disabled: {
+                message,
+                selected: false,
+            },
+        };
+    });
 }

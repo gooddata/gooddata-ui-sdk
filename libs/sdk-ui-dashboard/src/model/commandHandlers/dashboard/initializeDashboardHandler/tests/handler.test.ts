@@ -196,4 +196,61 @@ describe("initialize dashboard handler", () => {
             expect(persistedDashboard).toBeUndefined();
         });
     });
+
+    describe("isWhiteLabeled config resolution", () => {
+        it("should derive isWhiteLabeled=true from org WHITE_LABELING setting when not explicitly passed", async () => {
+            let Tester: DashboardTester;
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        globalSettings: { whiteLabeling: { enabled: true } },
+                    },
+                },
+            );
+
+            const config = selectConfig(Tester!.state());
+            expect(config.isWhiteLabeled).toBe(true);
+        });
+
+        it("should keep isWhiteLabeled=false when org WHITE_LABELING is disabled", async () => {
+            let Tester: DashboardTester;
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    backendConfig: {
+                        globalSettings: { whiteLabeling: { enabled: false } },
+                    },
+                },
+            );
+
+            const config = selectConfig(Tester!.state());
+            expect(config.isWhiteLabeled).toBe(false);
+        });
+
+        it("should respect explicit config.isWhiteLabeled=false even when org WHITE_LABELING is enabled", async () => {
+            let Tester: DashboardTester;
+            await preloadedTesterFactory(
+                (tester) => {
+                    Tester = tester;
+                },
+                SimpleDashboardIdentifier,
+                {
+                    initCommand: initializeDashboard({ isWhiteLabeled: false }),
+                    backendConfig: {
+                        globalSettings: { whiteLabeling: { enabled: true } },
+                    },
+                },
+            );
+
+            const config = selectConfig(Tester!.state());
+            expect(config.isWhiteLabeled).toBe(false);
+        });
+    });
 });

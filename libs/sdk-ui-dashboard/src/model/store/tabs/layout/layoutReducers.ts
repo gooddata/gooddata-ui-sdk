@@ -1030,6 +1030,49 @@ const removeIgnoredDateFilter: LayoutReducer<RemoveIgnoredDateFilter> = (state, 
 //
 //
 
+type RemoveIgnoredMeasureValueFilter = {
+    measureRefs: ObjRef[];
+};
+
+const removeIgnoredMeasureValueFilterFromLayout = (
+    layout: Draft<IDashboardLayout<ExtendedDashboardWidget>>,
+    measureRefs: ObjRef[],
+) => {
+    layout.sections.forEach((section) => {
+        section.items.forEach((item) => {
+            const widget = item.widget;
+
+            if (isInsightWidget(widget) || isKpiWidget(widget)) {
+                widget.ignoreDashboardFilters = widget.ignoreDashboardFilters.filter((filter) => {
+                    if (
+                        isDashboardAttributeFilterReference(filter) ||
+                        isDashboardDateFilterReference(filter)
+                    ) {
+                        return true;
+                    }
+
+                    return (
+                        measureRefs.find((removed) => areObjRefsEqual(removed, filter.measure)) === undefined
+                    );
+                });
+            } else if (isDashboardLayout(widget)) {
+                removeIgnoredMeasureValueFilterFromLayout(widget, measureRefs);
+            }
+        });
+    });
+};
+
+const removeIgnoredMeasureValueFilter: LayoutReducer<RemoveIgnoredMeasureValueFilter> = (state, action) => {
+    const layoutState = getActiveTabLayout(state);
+    invariant(layoutState?.layout);
+
+    removeIgnoredMeasureValueFilterFromLayout(layoutState.layout, action.payload.measureRefs);
+};
+
+//
+//
+//
+
 type ReplaceKpiWidgetMeasure = {
     ref: ObjRef;
     measureRef: ObjRef;
@@ -1269,6 +1312,7 @@ export const layoutReducers = {
     updateWidgetIdentitiesForTab,
     removeIgnoredAttributeFilter,
     removeIgnoredDateFilter,
+    removeIgnoredMeasureValueFilter,
     addSection,
     removeSection,
     moveSection,

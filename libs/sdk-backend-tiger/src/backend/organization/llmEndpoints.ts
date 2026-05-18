@@ -9,16 +9,8 @@ import {
     EntitiesApi_PatchEntityLlmEndpoints,
     EntitiesApi_UpdateEntityLlmEndpoints,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
-import {
-    GenAiApi_ValidateLLMEndpoint,
-    GenAiApi_ValidateLLMEndpointById,
-} from "@gooddata/api-client-tiger/endpoints/genAI";
 import { type ILlmEndpointsQuery, type IOrganizationLlmEndpointsService } from "@gooddata/sdk-backend-spi";
-import {
-    type ILlmEndpointOpenAI,
-    type LlmEndpointOpenAIPatch,
-    type LlmEndpointTestResults,
-} from "@gooddata/sdk-model";
+import { type ILlmEndpointOpenAI, type LlmEndpointOpenAIPatch } from "@gooddata/sdk-model";
 
 import { convertLlmEndpoint } from "../../convertors/fromBackend/llmEndpointConvertor.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -146,44 +138,6 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
     public deleteLlmEndpoint(id: string): Promise<void> {
         return this.authCall(async (client: ITigerClientBase) => {
             await EntitiesApi_DeleteEntityLlmEndpoints(client.axios, client.basePath, { id });
-        });
-    }
-
-    public testLlmEndpoint(
-        endpoint: Partial<LlmEndpointOpenAIPatch>,
-        token?: string,
-    ): Promise<LlmEndpointTestResults> {
-        return this.authCall(async (client: ITigerClientBase) => {
-            if (endpoint.id) {
-                const result = await GenAiApi_ValidateLLMEndpointById(client.axios, client.basePath, {
-                    llmEndpointId: endpoint.id,
-                    validateLLMEndpointByIdRequest: {
-                        ...(endpoint.provider ? { provider: endpoint.provider } : {}),
-                        ...(token ? { token } : {}),
-                        ...(endpoint.organization ? { llmOrganization: endpoint.organization } : {}),
-                        ...(endpoint.model ? { llmModel: endpoint.model } : {}),
-                    },
-                });
-
-                return {
-                    success: result.data?.successful,
-                    message: result.data?.message,
-                };
-            }
-
-            const result = await GenAiApi_ValidateLLMEndpoint(client.axios, client.basePath, {
-                validateLLMEndpointRequest: {
-                    provider: endpoint.provider ?? "OPENAI",
-                    token: token ?? "",
-                    llmOrganization: endpoint.organization,
-                    llmModel: endpoint.model,
-                },
-            });
-
-            return {
-                success: result.data?.successful,
-                message: result.data?.message,
-            };
         });
     }
 }

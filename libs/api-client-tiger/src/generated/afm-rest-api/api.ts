@@ -407,6 +407,36 @@ export interface AnomalyDetectionResult {
     'anomalyFlag': Array<boolean | null>;
 }
 
+export interface AnthropicApiKeyAuth {
+    /**
+     * Anthropic API key.
+     */
+    'apiKey'?: string | null;
+    /**
+     * Authentication type.
+     */
+    'type': AnthropicApiKeyAuthTypeEnum;
+}
+
+export type AnthropicApiKeyAuthTypeEnum = 'API_KEY';
+
+/**
+ * Configuration for Anthropic provider.
+ */
+export interface AnthropicProviderConfig {
+    /**
+     * Custom base URL for the Anthropic API. Defaults to the official endpoint; override only for enterprise proxies or compatible gateways.
+     */
+    'baseUrl'?: string;
+    'auth': AnthropicApiKeyAuth;
+    /**
+     * Provider type.
+     */
+    'type': AnthropicProviderConfigTypeEnum;
+}
+
+export type AnthropicProviderConfigTypeEnum = 'ANTHROPIC';
+
 /**
  * Metric representing arithmetics between other metrics.
  */
@@ -1986,7 +2016,7 @@ export type LlmModelFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | '
  * @type LlmProviderConfig
  * Provider configuration overrides.
  */
-export type LlmProviderConfig = AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type LlmProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 /**
  * Filter via label with given match type and literal value.
@@ -2854,21 +2884,6 @@ export interface ResolvedLlm {
     'title': string;
 }
 
-export interface ResolvedLlmEndpoint {
-    /**
-     * Endpoint Id
-     */
-    'id': string;
-    /**
-     * Endpoint Title
-     */
-    'title': string;
-}
-
-export interface ResolvedLlmEndpoints {
-    'data': Array<ResolvedLlmEndpoint>;
-}
-
 export interface ResolvedLlmProvider {
     /**
      * Provider Id
@@ -2882,13 +2897,8 @@ export interface ResolvedLlmProvider {
 }
 
 export interface ResolvedLlms {
-    'data'?: ResolvedLlmsData;
+    'data'?: ResolvedLlmProvider;
 }
-
-/**
- * @type ResolvedLlmsData
- */
-export type ResolvedLlmsData = ResolvedLlmEndpoint | ResolvedLlmProvider;
 
 /**
  * Object identifier.
@@ -3292,7 +3302,7 @@ export interface TestLlmProviderByIdRequest {
 /**
  * @type TestLlmProviderByIdRequestProviderConfig
  */
-export type TestLlmProviderByIdRequestProviderConfig = AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+export type TestLlmProviderByIdRequestProviderConfig = AnthropicProviderConfig | AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 export interface TestLlmProviderDefinitionRequest {
     'providerConfig': TestLlmProviderByIdRequestProviderConfig;
@@ -3573,63 +3583,6 @@ export interface ValidateByItem {
      * Specifies entity type which could be label, attribute, fact, or metric.
      */
     'type': string;
-}
-
-export interface ValidateLLMEndpointByIdRequest {
-    /**
-     * Provider for the LLM endpoint validation
-     */
-    'provider'?: string;
-    /**
-     * Base URL for the LLM endpoint validation
-     */
-    'baseUrl'?: string;
-    /**
-     * Token for the LLM endpoint validation
-     */
-    'token'?: string;
-    /**
-     * Organization name for the LLM endpoint validation
-     */
-    'llmOrganization'?: string;
-    /**
-     * LLM model for the LLM endpoint validation
-     */
-    'llmModel'?: string;
-}
-
-export interface ValidateLLMEndpointRequest {
-    /**
-     * Provider for the LLM endpoint validation
-     */
-    'provider': string;
-    /**
-     * Base URL for the LLM endpoint validation
-     */
-    'baseUrl'?: string;
-    /**
-     * Token for the LLM endpoint validation
-     */
-    'token': string;
-    /**
-     * Organization name for the LLM endpoint validation
-     */
-    'llmOrganization'?: string;
-    /**
-     * LLM model for the LLM endpoint validation
-     */
-    'llmModel'?: string;
-}
-
-export interface ValidateLLMEndpointResponse {
-    /**
-     * Whether the LLM endpoint validation was successful
-     */
-    'successful': boolean;
-    /**
-     * Additional message about the LLM endpoint validation
-     */
-    'message': string;
 }
 
 /**
@@ -4358,7 +4311,7 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
-    const localVarPath = `/api/v1/ailake/object-storages`;
+    const localVarPath = `/api/v1/ailake/objectStorages`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -6253,7 +6206,7 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeObjectStorag
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
-    const localVarPath = `/api/v1/ailake/object-storages`;
+    const localVarPath = `/api/v1/ailake/objectStorages`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -10327,8 +10280,8 @@ export async function ActionsApiAxiosParamCreator_OutlierDetectionResult(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Will be soon removed and replaced by LlmProvider-based resolution.
- * @summary Get Active LLM Endpoints for this workspace
+ * Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.
+ * @summary Get Active LLM Endpoints for this workspace (Removed)
  * @param {string} workspaceId Workspace identifier
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -10372,7 +10325,7 @@ export async function ActionsApiAxiosParamCreator_ResolveLlmEndpoints(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+ * Resolves the active LLM provider configuration for the given workspace.
  * @summary Get Active LLM configuration for this workspace
  * @param {string} workspaceId Workspace identifier
  * @param {*} [options] Override http request option.
@@ -10842,20 +10795,17 @@ export async function ActionsApiAxiosParamCreator_TriggerQualityIssuesCalculatio
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Will be soon removed and replaced by testLlmProvider.
- * @summary Validate LLM Endpoint
- * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest 
+ * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
+ * @summary Validate LLM Endpoint (Removed)
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
-    validateLLMEndpointRequest: ValidateLLMEndpointRequest, 
+    
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
-    // verify required parameter 'validateLLMEndpointRequest' is not null or undefined
-    assertParamExists('validateLLMEndpoint', 'validateLLMEndpointRequest', validateLLMEndpointRequest)
     const localVarPath = `/api/v1/actions/ai/llmEndpoint/test`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -10869,14 +10819,6 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -10884,12 +10826,6 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof validateLLMEndpointRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
-        : validateLLMEndpointRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -10900,16 +10836,15 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Will be soon removed and replaced by testLlmProviderById.
- * @summary Validate LLM Endpoint By Id
+ * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.
+ * @summary Validate LLM Endpoint By Id (Removed)
  * @param {string} llmEndpointId 
- * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_ValidateLLMEndpointById(
-    llmEndpointId: string, validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest, 
+    llmEndpointId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -10929,14 +10864,6 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpointById(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -10944,12 +10871,6 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpointById(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof validateLLMEndpointByIdRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(validateLLMEndpointByIdRequest !== undefined ? validateLLMEndpointByIdRequest : {})
-        : validateLLMEndpointByIdRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -11868,8 +11789,8 @@ export async function ActionsApi_OutlierDetectionResult(
 
 // ActionsApi Api FP
 /**
- * Will be soon removed and replaced by LlmProvider-based resolution.
- * @summary Get Active LLM Endpoints for this workspace
+ * Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.
+ * @summary Get Active LLM Endpoints for this workspace (Removed)
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
@@ -11882,7 +11803,7 @@ export async function ActionsApi_ResolveLlmEndpoints(
     requestParameters: ActionsApiResolveLlmEndpointsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ResolvedLlmEndpoints> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ResolveLlmEndpoints(
         requestParameters.workspaceId, 
         options || {},
@@ -11894,7 +11815,7 @@ export async function ActionsApi_ResolveLlmEndpoints(
 
 // ActionsApi Api FP
 /**
- * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+ * Resolves the active LLM provider configuration for the given workspace.
  * @summary Get Active LLM configuration for this workspace
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -12128,23 +12049,22 @@ export async function ActionsApi_TriggerQualityIssuesCalculation(
 
 // ActionsApi Api FP
 /**
- * Will be soon removed and replaced by testLlmProvider.
- * @summary Validate LLM Endpoint
+ * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
+ * @summary Validate LLM Endpoint (Removed)
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
- * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApi_ValidateLLMEndpoint(
     axios: AxiosInstance, basePath: string,
-    requestParameters: ActionsApiValidateLLMEndpointRequest, 
+    
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ValidateLLMEndpointResponse> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
-        requestParameters.validateLLMEndpointRequest, 
+        
         options || {},
         configuration,
     );
@@ -12154,8 +12074,8 @@ export async function ActionsApi_ValidateLLMEndpoint(
 
 // ActionsApi Api FP
 /**
- * Will be soon removed and replaced by testLlmProviderById.
- * @summary Validate LLM Endpoint By Id
+ * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.
+ * @summary Validate LLM Endpoint By Id (Removed)
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
@@ -12168,9 +12088,9 @@ export async function ActionsApi_ValidateLLMEndpointById(
     requestParameters: ActionsApiValidateLLMEndpointByIdRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ValidateLLMEndpointResponse> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ValidateLLMEndpointById(
-        requestParameters.llmEndpointId, requestParameters.validateLLMEndpointByIdRequest, 
+        requestParameters.llmEndpointId, 
         options || {},
         configuration,
     );
@@ -12534,18 +12454,18 @@ export interface ActionsApiInterface {
     outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
 
     /**
-     * Will be soon removed and replaced by LlmProvider-based resolution.
-     * @summary Get Active LLM Endpoints for this workspace
+     * Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.
+     * @summary Get Active LLM Endpoints for this workspace (Removed)
      * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
+    resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+     * Resolves the active LLM provider configuration for the given workspace.
      * @summary Get Active LLM configuration for this workspace
      * @param {ActionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12635,26 +12555,25 @@ export interface ActionsApiInterface {
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
 
     /**
-     * Will be soon removed and replaced by testLlmProvider.
-     * @summary Validate LLM Endpoint
-     * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+     * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
+     * @summary Validate LLM Endpoint (Removed)
      * @param {*} [options] Override http request option.
      * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
+    validateLLMEndpoint(options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Will be soon removed and replaced by testLlmProviderById.
-     * @summary Validate LLM Endpoint By Id
+     * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.
+     * @summary Validate LLM Endpoint By Id (Removed)
      * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
+    validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
 }
 
@@ -13737,20 +13656,6 @@ export interface ActionsApiTriggerQualityIssuesCalculationRequest {
 }
 
 /**
- * Request parameters for validateLLMEndpoint operation in ActionsApi.
- * @export
- * @interface ActionsApiValidateLLMEndpointRequest
- */
-export interface ActionsApiValidateLLMEndpointRequest {
-    /**
-     * 
-     * @type {ValidateLLMEndpointRequest}
-     * @memberof ActionsApiValidateLLMEndpoint
-     */
-    readonly validateLLMEndpointRequest: ValidateLLMEndpointRequest
-}
-
-/**
  * Request parameters for validateLLMEndpointById operation in ActionsApi.
  * @export
  * @interface ActionsApiValidateLLMEndpointByIdRequest
@@ -13762,13 +13667,6 @@ export interface ActionsApiValidateLLMEndpointByIdRequest {
      * @memberof ActionsApiValidateLLMEndpointById
      */
     readonly llmEndpointId: string
-
-    /**
-     * 
-     * @type {ValidateLLMEndpointByIdRequest}
-     * @memberof ActionsApiValidateLLMEndpointById
-     */
-    readonly validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest
 }
 
 /**
@@ -14198,8 +14096,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Will be soon removed and replaced by LlmProvider-based resolution.
-     * @summary Get Active LLM Endpoints for this workspace
+     * Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.
+     * @summary Get Active LLM Endpoints for this workspace (Removed)
      * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
@@ -14211,7 +14109,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+     * Resolves the active LLM provider configuration for the given workspace.
      * @summary Get Active LLM configuration for this workspace
      * @param {ActionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -14319,21 +14217,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Will be soon removed and replaced by testLlmProvider.
-     * @summary Validate LLM Endpoint
-     * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+     * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
+     * @summary Validate LLM Endpoint (Removed)
      * @param {*} [options] Override http request option.
      * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
-    public validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig) {
-        return ActionsApi_ValidateLLMEndpoint(this.axios, this.basePath, requestParameters, options, this.configuration);
+    public validateLLMEndpoint(options?: AxiosRequestConfig) {
+        return ActionsApi_ValidateLLMEndpoint(this.axios, this.basePath, options, this.configuration);
     }
 
     /**
-     * Will be soon removed and replaced by testLlmProviderById.
-     * @summary Validate LLM Endpoint By Id
+     * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.
+     * @summary Validate LLM Endpoint By Id (Removed)
      * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
@@ -17703,8 +17600,8 @@ export async function SmartFunctionsApiAxiosParamCreator_MemoryCreatedByUsers(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * Will be soon removed and replaced by LlmProvider-based resolution.
- * @summary Get Active LLM Endpoints for this workspace
+ * Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.
+ * @summary Get Active LLM Endpoints for this workspace (Removed)
  * @param {string} workspaceId Workspace identifier
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -17748,7 +17645,7 @@ export async function SmartFunctionsApiAxiosParamCreator_ResolveLlmEndpoints(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+ * Resolves the active LLM provider configuration for the given workspace.
  * @summary Get Active LLM configuration for this workspace
  * @param {string} workspaceId Workspace identifier
  * @param {*} [options] Override http request option.
@@ -18046,20 +17943,17 @@ export async function SmartFunctionsApiAxiosParamCreator_TriggerQualityIssuesCal
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * Will be soon removed and replaced by testLlmProvider.
- * @summary Validate LLM Endpoint
- * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest 
+ * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
+ * @summary Validate LLM Endpoint (Removed)
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
-    validateLLMEndpointRequest: ValidateLLMEndpointRequest, 
+    
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
-    // verify required parameter 'validateLLMEndpointRequest' is not null or undefined
-    assertParamExists('validateLLMEndpoint', 'validateLLMEndpointRequest', validateLLMEndpointRequest)
     const localVarPath = `/api/v1/actions/ai/llmEndpoint/test`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -18073,14 +17967,6 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -18088,12 +17974,6 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof validateLLMEndpointRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(validateLLMEndpointRequest !== undefined ? validateLLMEndpointRequest : {})
-        : validateLLMEndpointRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -18104,16 +17984,15 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * Will be soon removed and replaced by testLlmProviderById.
- * @summary Validate LLM Endpoint By Id
+ * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.
+ * @summary Validate LLM Endpoint By Id (Removed)
  * @param {string} llmEndpointId 
- * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpointById(
-    llmEndpointId: string, validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest, 
+    llmEndpointId: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -18133,14 +18012,6 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpointById
 
 
     
-    const consumes = [
-        'application/json'
-    ];
-    // use application/json if present, otherwise fallback to the first one
-    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
-        ? 'application/json'
-        : consumes[0];
-
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -18148,12 +18019,6 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpointById
         ...headersFromBaseOptions,
         ...options.headers,
     };
-    const needsSerialization =
-        typeof validateLLMEndpointByIdRequest !== "string" ||
-        localVarRequestOptions.headers["Content-Type"] === "application/json";
-    localVarRequestOptions.data = needsSerialization
-        ? JSON.stringify(validateLLMEndpointByIdRequest !== undefined ? validateLLMEndpointByIdRequest : {})
-        : validateLLMEndpointByIdRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -18659,8 +18524,8 @@ export async function SmartFunctionsApi_MemoryCreatedByUsers(
 
 // SmartFunctionsApi Api FP
 /**
- * Will be soon removed and replaced by LlmProvider-based resolution.
- * @summary Get Active LLM Endpoints for this workspace
+ * Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.
+ * @summary Get Active LLM Endpoints for this workspace (Removed)
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
@@ -18673,7 +18538,7 @@ export async function SmartFunctionsApi_ResolveLlmEndpoints(
     requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ResolvedLlmEndpoints> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ResolveLlmEndpoints(
         requestParameters.workspaceId, 
         options || {},
@@ -18685,7 +18550,7 @@ export async function SmartFunctionsApi_ResolveLlmEndpoints(
 
 // SmartFunctionsApi Api FP
 /**
- * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+ * Resolves the active LLM provider configuration for the given workspace.
  * @summary Get Active LLM configuration for this workspace
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -18841,23 +18706,22 @@ export async function SmartFunctionsApi_TriggerQualityIssuesCalculation(
 
 // SmartFunctionsApi Api FP
 /**
- * Will be soon removed and replaced by testLlmProvider.
- * @summary Validate LLM Endpoint
+ * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
+ * @summary Validate LLM Endpoint (Removed)
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
- * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function SmartFunctionsApi_ValidateLLMEndpoint(
     axios: AxiosInstance, basePath: string,
-    requestParameters: SmartFunctionsApiValidateLLMEndpointRequest, 
+    
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ValidateLLMEndpointResponse> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
-        requestParameters.validateLLMEndpointRequest, 
+        
         options || {},
         configuration,
     );
@@ -18867,8 +18731,8 @@ export async function SmartFunctionsApi_ValidateLLMEndpoint(
 
 // SmartFunctionsApi Api FP
 /**
- * Will be soon removed and replaced by testLlmProviderById.
- * @summary Validate LLM Endpoint By Id
+ * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.
+ * @summary Validate LLM Endpoint By Id (Removed)
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
@@ -18881,9 +18745,9 @@ export async function SmartFunctionsApi_ValidateLLMEndpointById(
     requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ValidateLLMEndpointResponse> {
+): AxiosPromise<void> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpointById(
-        requestParameters.llmEndpointId, requestParameters.validateLLMEndpointByIdRequest, 
+        requestParameters.llmEndpointId, 
         options || {},
         configuration,
     );
@@ -19090,18 +18954,18 @@ export interface SmartFunctionsApiInterface {
     memoryCreatedByUsers(requestParameters: SmartFunctionsApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<MemoryItemCreatedByUsers>;
 
     /**
-     * Will be soon removed and replaced by LlmProvider-based resolution.
-     * @summary Get Active LLM Endpoints for this workspace
+     * Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.
+     * @summary Get Active LLM Endpoints for this workspace (Removed)
      * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
-    resolveLlmEndpoints(requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
+    resolveLlmEndpoints(requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+     * Resolves the active LLM provider configuration for the given workspace.
      * @summary Get Active LLM configuration for this workspace
      * @param {SmartFunctionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -19161,26 +19025,25 @@ export interface SmartFunctionsApiInterface {
     triggerQualityIssuesCalculation(requestParameters: SmartFunctionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
 
     /**
-     * Will be soon removed and replaced by testLlmProvider.
-     * @summary Validate LLM Endpoint
-     * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+     * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
+     * @summary Validate LLM Endpoint (Removed)
      * @param {*} [options] Override http request option.
      * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
-    validateLLMEndpoint(requestParameters: SmartFunctionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
+    validateLLMEndpoint(options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
-     * Will be soon removed and replaced by testLlmProviderById.
-     * @summary Validate LLM Endpoint By Id
+     * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.
+     * @summary Validate LLM Endpoint By Id (Removed)
      * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
-    validateLLMEndpointById(requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
+    validateLLMEndpointById(requestParameters: SmartFunctionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
 
 }
 
@@ -19731,20 +19594,6 @@ export interface SmartFunctionsApiTriggerQualityIssuesCalculationRequest {
 }
 
 /**
- * Request parameters for validateLLMEndpoint operation in SmartFunctionsApi.
- * @export
- * @interface SmartFunctionsApiValidateLLMEndpointRequest
- */
-export interface SmartFunctionsApiValidateLLMEndpointRequest {
-    /**
-     * 
-     * @type {ValidateLLMEndpointRequest}
-     * @memberof SmartFunctionsApiValidateLLMEndpoint
-     */
-    readonly validateLLMEndpointRequest: ValidateLLMEndpointRequest
-}
-
-/**
  * Request parameters for validateLLMEndpointById operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiValidateLLMEndpointByIdRequest
@@ -19756,13 +19605,6 @@ export interface SmartFunctionsApiValidateLLMEndpointByIdRequest {
      * @memberof SmartFunctionsApiValidateLLMEndpointById
      */
     readonly llmEndpointId: string
-
-    /**
-     * 
-     * @type {ValidateLLMEndpointByIdRequest}
-     * @memberof SmartFunctionsApiValidateLLMEndpointById
-     */
-    readonly validateLLMEndpointByIdRequest?: ValidateLLMEndpointByIdRequest
 }
 
 /**
@@ -20003,8 +19845,8 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * Will be soon removed and replaced by LlmProvider-based resolution.
-     * @summary Get Active LLM Endpoints for this workspace
+     * Permanently removed. Use GET /api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders instead. Always returns 410 Gone.
+     * @summary Get Active LLM Endpoints for this workspace (Removed)
      * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
@@ -20016,7 +19858,7 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+     * Resolves the active LLM provider configuration for the given workspace.
      * @summary Get Active LLM configuration for this workspace
      * @param {SmartFunctionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -20088,21 +19930,20 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * Will be soon removed and replaced by testLlmProvider.
-     * @summary Validate LLM Endpoint
-     * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
+     * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
+     * @summary Validate LLM Endpoint (Removed)
      * @param {*} [options] Override http request option.
      * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */
-    public validateLLMEndpoint(requestParameters: SmartFunctionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig) {
-        return SmartFunctionsApi_ValidateLLMEndpoint(this.axios, this.basePath, requestParameters, options, this.configuration);
+    public validateLLMEndpoint(options?: AxiosRequestConfig) {
+        return SmartFunctionsApi_ValidateLLMEndpoint(this.axios, this.basePath, options, this.configuration);
     }
 
     /**
-     * Will be soon removed and replaced by testLlmProviderById.
-     * @summary Validate LLM Endpoint By Id
+     * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/{llmProviderId}/test instead. Always returns 410 Gone.
+     * @summary Validate LLM Endpoint By Id (Removed)
      * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated

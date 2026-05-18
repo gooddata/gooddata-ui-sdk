@@ -106,13 +106,13 @@ export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
                                     <ContentDivider />
                                     <div className={e("filter-buttons")}>
                                         <UiButton
-                                            label="Cancel"
+                                            label={intl.formatMessage(messages["filterOptionCancel"])}
                                             onClick={onCancelFactory(closeDropdown)}
                                             variant="secondary"
                                             size="small"
                                         />
                                         <UiButton
-                                            label="Apply"
+                                            label={intl.formatMessage(messages["filterOptionApply"])}
                                             onClick={onApplyFactory(closeDropdown)}
                                             variant="primary"
                                             size="small"

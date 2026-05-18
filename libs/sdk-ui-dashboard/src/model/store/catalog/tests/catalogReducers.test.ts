@@ -15,6 +15,7 @@ describe("catalogReducers", () => {
     const prepareState = (attributeHierarchies?: ICatalogAttributeHierarchy[]): CatalogState => ({
         attributeHierarchies,
         parameters: { status: "uninitialized", parameters: [] },
+        measureParameters: { status: "uninitialized", byMetric: {} },
     });
 
     describe("setCatalogParameters", () => {
@@ -53,6 +54,38 @@ describe("catalogReducers", () => {
                 catalogReducers.setCatalogParameters(draft, action);
             });
             expect(newState.parameters).toEqual({ status: "failed", parameters: [] });
+        });
+    });
+
+    describe("setCatalogMeasureParameters", () => {
+        const metricRef = idRef("m1", "measure");
+        const paramRef = idRef("topN", "parameter");
+
+        it("stores the measure → parameters map and transitions status to loaded", () => {
+            const state = prepareState();
+            const newState = produce(state, (draft) => {
+                const action = catalogActions.setCatalogMeasureParameters({
+                    status: "loaded",
+                    byMetric: { [metricRef.identifier]: [paramRef] },
+                });
+                catalogReducers.setCatalogMeasureParameters(draft, action);
+            });
+            expect(newState.measureParameters).toEqual({
+                status: "loaded",
+                byMetric: { [metricRef.identifier]: [paramRef] },
+            });
+        });
+
+        it("records failed status with empty map", () => {
+            const state = prepareState();
+            const newState = produce(state, (draft) => {
+                const action = catalogActions.setCatalogMeasureParameters({
+                    status: "failed",
+                    byMetric: {},
+                });
+                catalogReducers.setCatalogMeasureParameters(draft, action);
+            });
+            expect(newState.measureParameters).toEqual({ status: "failed", byMetric: {} });
         });
     });
 

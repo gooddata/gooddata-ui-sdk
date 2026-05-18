@@ -7,8 +7,10 @@ import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
+    type IDashboardMeasureValueFilter,
     areObjRefsEqual,
     isDashboardAttributeFilter,
+    isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
 
@@ -31,6 +33,7 @@ interface IUseFetchTargetDashboardFiltersResult {
     targetDashboardFilters: FilterContextItem[];
     targetDashboardAttributeFilters: IDashboardAttributeFilter[];
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
+    targetDashboardMeasureValueFilters: IDashboardMeasureValueFilter[];
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
     isLoading: boolean;
 }
@@ -81,6 +84,7 @@ export function useFetchTargetDashboardFilters(
             targetDashboardFilters: [],
             targetDashboardAttributeFilters: [],
             targetDashboardTextAttributeFilters: [],
+            targetDashboardMeasureValueFilters: [],
             targetDashboardAttributeFilterConfigs: [],
             isLoading: false,
         };
@@ -93,6 +97,7 @@ export function useFetchTargetDashboardFilters(
             targetDashboardTextAttributeFilters: sourceDashboardFilters.filter(
                 isDashboardTextAttributeFilter,
             ),
+            targetDashboardMeasureValueFilters: sourceDashboardFilters.filter(isDashboardMeasureValueFilter),
             targetDashboardAttributeFilterConfigs: sourceDashboardAttributeFilterConfigs,
             isLoading: false,
         };
@@ -104,6 +109,8 @@ export function useFetchTargetDashboardFilters(
             targetDashboardFiltersCacheEntry?.targetDashboardAttributeFilters ?? [],
         targetDashboardTextAttributeFilters:
             targetDashboardFiltersCacheEntry?.targetDashboardTextAttributeFilters ?? [],
+        targetDashboardMeasureValueFilters:
+            targetDashboardFiltersCacheEntry?.targetDashboardMeasureValueFilters ?? [],
         targetDashboardAttributeFilterConfigs:
             targetDashboardFiltersCacheEntry?.targetDashboardAttributeFilterConfigs ?? [],
         isLoading: !targetDashboardFiltersCacheEntry || targetDashboardFiltersCacheEntry.status === "loading",

@@ -569,6 +569,66 @@
                 }
             }
         },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/feedback": {
+            "post": {
+                "tags": [
+                    "Responses"
+                ],
+                "summary": "Post Feedback",
+                "operationId": "post_feedback_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__feedback_post",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConversationFeedbackRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "400": {
+                        "description": "Bad request payload."
+                    },
+                    "404": {
+                        "description": "Conversation or response not found."
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/visualizations/{visualization_id}": {
             "patch": {
                 "tags": [
@@ -1742,6 +1802,76 @@
     },
     "components": {
         "schemas": {
+            "AbsoluteDateFilter": {
+                "properties": {
+                    "absoluteDateFilter": {
+                        "$ref": "#/components/schemas/AbsoluteDateFilterBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "absoluteDateFilter"
+                ],
+                "title": "AbsoluteDateFilter"
+            },
+            "AbsoluteDateFilterBody": {
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
+                    "from": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}( \\d{1,2}:\\d{1,2})?$",
+                        "title": "To"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "emptyValueHandling": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValueHandling"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "dataset",
+                    "from",
+                    "to"
+                ],
+                "title": "AbsoluteDateFilterBody"
+            },
             "ActiveObjectIdentification": {
                 "properties": {
                     "id": {
@@ -1764,6 +1894,192 @@
                     "workspaceId"
                 ],
                 "title": "ActiveObjectIdentification"
+            },
+            "AfmLocalIdentifier": {
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string",
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "localIdentifier"
+                ],
+                "title": "AfmLocalIdentifier",
+                "description": "Local reference: ``{\"localIdentifier\": \"...\"}``."
+            },
+            "AfmObjectIdentifier": {
+                "properties": {
+                    "identifier": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "identifier"
+                ],
+                "title": "AfmObjectIdentifier",
+                "description": "MD object reference: ``{\"identifier\": {\"id\": \"...\", \"type\": \"...\"}}``."
+            },
+            "AfmObjectIdentifierBody": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "maxLength": 255,
+                        "minLength": 1,
+                        "title": "Id"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "title": "AfmObjectIdentifierBody"
+            },
+            "AllTimeDateFilter-Input": {
+                "properties": {
+                    "allTimeDateFilter": {
+                        "$ref": "#/components/schemas/AllTimeDateFilterBody-Input"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "allTimeDateFilter"
+                ],
+                "title": "AllTimeDateFilter"
+            },
+            "AllTimeDateFilter-Output": {
+                "properties": {
+                    "allTimeDateFilter": {
+                        "$ref": "#/components/schemas/AllTimeDateFilterBody-Output"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "allTimeDateFilter"
+                ],
+                "title": "AllTimeDateFilter"
+            },
+            "AllTimeDateFilterBody-Input": {
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
+                    "granularity": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DateGranularity-Input"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "emptyValueHandling": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValueHandling"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "dataset"
+                ],
+                "title": "AllTimeDateFilterBody"
+            },
+            "AllTimeDateFilterBody-Output": {
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
+                    "granularity": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "emptyValueHandling": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValueHandling"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "dataset"
+                ],
+                "title": "AllTimeDateFilterBody"
             },
             "AllowedRelationshipType": {
                 "properties": {
@@ -1811,6 +2127,30 @@
                     "state"
                 ],
                 "title": "AttributeFilter"
+            },
+            "AttributeFilterElements": {
+                "properties": {
+                    "values": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Values"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "values"
+                ],
+                "title": "AttributeFilterElements"
             },
             "AttributeFilterState": {
                 "properties": {
@@ -2023,6 +2363,76 @@
                 ],
                 "title": "Body_upsertOrgDocument"
             },
+            "BoundedFilter-Input": {
+                "properties": {
+                    "granularity": {
+                        "$ref": "#/components/schemas/DateGranularity-Input"
+                    },
+                    "from": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From"
+                    },
+                    "to": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "To"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "granularity"
+                ],
+                "title": "BoundedFilter"
+            },
+            "BoundedFilter-Output": {
+                "properties": {
+                    "granularity": {
+                        "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
+                    },
+                    "from": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "From"
+                    },
+                    "to": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "To"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "granularity"
+                ],
+                "title": "BoundedFilter"
+            },
             "BucketRefObject": {
                 "properties": {
                     "field": {
@@ -2036,6 +2446,243 @@
                     "field"
                 ],
                 "title": "BucketRefObject"
+            },
+            "ComparisonMeasureValueFilter": {
+                "properties": {
+                    "comparisonMeasureValueFilter": {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilterBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "comparisonMeasureValueFilter"
+                ],
+                "title": "ComparisonMeasureValueFilter"
+            },
+            "ComparisonMeasureValueFilterBody": {
+                "properties": {
+                    "measure": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Measure"
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueOperator"
+                    },
+                    "value": {
+                        "type": "number",
+                        "title": "Value"
+                    },
+                    "treatNullValuesAs": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Treatnullvaluesas"
+                    },
+                    "dimensionality": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "measure",
+                    "operator",
+                    "value"
+                ],
+                "title": "ComparisonMeasureValueFilterBody"
+            },
+            "ComparisonMeasureValueOperator": {
+                "type": "string",
+                "enum": [
+                    "GREATER_THAN",
+                    "GREATER_THAN_OR_EQUAL_TO",
+                    "LESS_THAN",
+                    "LESS_THAN_OR_EQUAL_TO",
+                    "EQUAL_TO",
+                    "NOT_EQUAL_TO"
+                ],
+                "title": "ComparisonMeasureValueOperator"
+            },
+            "CompoundMeasureValueFilter": {
+                "properties": {
+                    "compoundMeasureValueFilter": {
+                        "$ref": "#/components/schemas/CompoundMeasureValueFilterBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "compoundMeasureValueFilter"
+                ],
+                "title": "CompoundMeasureValueFilter"
+            },
+            "CompoundMeasureValueFilterBody": {
+                "properties": {
+                    "measure": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Measure"
+                    },
+                    "conditions": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/MeasureValueComparisonCondition"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/MeasureValueRangeCondition"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Conditions"
+                    },
+                    "treatNullValuesAs": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Treatnullvaluesas"
+                    },
+                    "dimensionality": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "measure",
+                    "conditions"
+                ],
+                "title": "CompoundMeasureValueFilterBody"
+            },
+            "ConversationFeedbackRequest": {
+                "properties": {
+                    "responseId": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Responseid"
+                    },
+                    "feedback": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ResponseFeedback"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "responseId",
+                    "feedback"
+                ],
+                "title": "ConversationFeedbackRequest"
             },
             "ConversationItemListResponse": {
                 "properties": {
@@ -2461,7 +3108,7 @@
                         "title": "Using"
                     },
                     "granularity": {
-                        "$ref": "#/components/schemas/DateGranularity"
+                        "$ref": "#/components/schemas/app__domain__conversations__visualization__DateGranularity"
                     },
                     "from": {
                         "type": "integer",
@@ -2483,17 +3130,30 @@
                 ],
                 "title": "DateFilterRelative"
             },
-            "DateGranularity": {
+            "DateGranularity-Input": {
                 "type": "string",
                 "enum": [
+                    "MINUTE",
+                    "HOUR",
                     "DAY",
-                    "WEEK_US",
+                    "WEEK",
                     "MONTH",
                     "QUARTER",
-                    "YEAR"
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_QUARTER",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR",
+                    "FISCAL_MONTH",
+                    "FISCAL_QUARTER",
+                    "FISCAL_YEAR"
                 ],
-                "title": "DateGranularity",
-                "description": "Date granularity for date filters."
+                "title": "DateGranularity"
             },
             "DeleteDocumentResponse": {
                 "properties": {
@@ -2598,6 +3258,15 @@
                 ],
                 "title": "DocumentMetadataResponse",
                 "description": "Document metadata returned by GET /documents/{document_id} and list."
+            },
+            "EmptyValueHandling": {
+                "type": "string",
+                "enum": [
+                    "INCLUDE",
+                    "EXCLUDE",
+                    "ONLY"
+                ],
+                "title": "EmptyValueHandling"
             },
             "Feedback": {
                 "properties": {
@@ -2711,6 +3380,55 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
+            },
+            "InlineFilterDefinition": {
+                "properties": {
+                    "inline": {
+                        "$ref": "#/components/schemas/InlineFilterDefinitionBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "inline"
+                ],
+                "title": "InlineFilterDefinition"
+            },
+            "InlineFilterDefinitionBody": {
+                "properties": {
+                    "filter": {
+                        "type": "string",
+                        "title": "Filter"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "filter"
+                ],
+                "title": "InlineFilterDefinitionBody"
             },
             "KeyDriverAnalysis": {
                 "properties": {
@@ -2864,6 +3582,118 @@
                 "title": "ListDocumentsResponse",
                 "description": "Response for GET /documents."
             },
+            "MatchAttributeFilter": {
+                "properties": {
+                    "matchAttributeFilter": {
+                        "$ref": "#/components/schemas/MatchAttributeFilterBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "matchAttributeFilter"
+                ],
+                "title": "MatchAttributeFilter"
+            },
+            "MatchAttributeFilterBody": {
+                "properties": {
+                    "label": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Label"
+                    },
+                    "literal": {
+                        "type": "string",
+                        "title": "Literal"
+                    },
+                    "matchType": {
+                        "$ref": "#/components/schemas/MatchType"
+                    },
+                    "caseSensitive": {
+                        "type": "boolean",
+                        "title": "Casesensitive",
+                        "default": false
+                    },
+                    "negate": {
+                        "type": "boolean",
+                        "title": "Negate",
+                        "default": false
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "label",
+                    "literal",
+                    "matchType"
+                ],
+                "title": "MatchAttributeFilterBody"
+            },
+            "MatchType": {
+                "type": "string",
+                "enum": [
+                    "STARTS_WITH",
+                    "ENDS_WITH",
+                    "CONTAINS"
+                ],
+                "title": "MatchType"
+            },
+            "MeasureValueComparisonCondition": {
+                "properties": {
+                    "comparison": {
+                        "$ref": "#/components/schemas/_MeasureValueComparisonInner"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "comparison"
+                ],
+                "title": "MeasureValueComparisonCondition",
+                "description": "Comparison branch of a compound measure value condition: ``{\"comparison\": {...}}``."
+            },
+            "MeasureValueRangeCondition": {
+                "properties": {
+                    "range": {
+                        "$ref": "#/components/schemas/_MeasureValueRangeInner"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "range"
+                ],
+                "title": "MeasureValueRangeCondition",
+                "description": "Range branch of a compound measure value condition: ``{\"range\": {...}}``."
+            },
             "MetricSortItem": {
                 "properties": {
                     "type": {
@@ -2994,6 +3824,77 @@
                 ],
                 "title": "MultipartContent"
             },
+            "NegativeAttributeFilter": {
+                "properties": {
+                    "negativeAttributeFilter": {
+                        "$ref": "#/components/schemas/NegativeAttributeFilterBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "negativeAttributeFilter"
+                ],
+                "title": "NegativeAttributeFilter"
+            },
+            "NegativeAttributeFilterBody": {
+                "properties": {
+                    "label": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Label"
+                    },
+                    "notIn": {
+                        "$ref": "#/components/schemas/AttributeFilterElements"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    },
+                    "usesArbitraryValues": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Usesarbitraryvalues"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "label",
+                    "notIn"
+                ],
+                "title": "NegativeAttributeFilterBody"
+            },
             "ObjectType": {
                 "type": "string",
                 "enum": [
@@ -3055,6 +3956,77 @@
                 "title": "PatchDocumentRequest",
                 "description": "Request body for PATCH /documents/{documentId}."
             },
+            "PositiveAttributeFilter": {
+                "properties": {
+                    "positiveAttributeFilter": {
+                        "$ref": "#/components/schemas/PositiveAttributeFilterBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "positiveAttributeFilter"
+                ],
+                "title": "PositiveAttributeFilter"
+            },
+            "PositiveAttributeFilterBody": {
+                "properties": {
+                    "label": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Label"
+                    },
+                    "in": {
+                        "$ref": "#/components/schemas/AttributeFilterElements"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    },
+                    "usesArbitraryValues": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Usesarbitraryvalues"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "label",
+                    "in"
+                ],
+                "title": "PositiveAttributeFilterBody"
+            },
             "Query": {
                 "properties": {
                     "fields": {
@@ -3087,7 +4059,7 @@
                                     "$ref": "#/components/schemas/DateFilterRelative"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/RankingFilter"
+                                    "$ref": "#/components/schemas/app__domain__conversations__visualization__RankingFilter"
                                 },
                                 {
                                     "$ref": "#/components/schemas/TextFilterValues"
@@ -3175,37 +4147,212 @@
                 "title": "QueryFieldMeasure",
                 "description": "Metric/fact/attribute measure field (attribute requires COUNT)."
             },
-            "RankingFilter": {
+            "RangeMeasureValueFilter": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "ranking_filter",
-                        "title": "Type"
-                    },
-                    "using": {
-                        "type": "string",
-                        "title": "Using"
-                    },
-                    "attribute": {
-                        "type": "string",
-                        "title": "Attribute"
-                    },
-                    "top": {
-                        "type": "integer",
-                        "title": "Top"
-                    },
-                    "bottom": {
-                        "type": "integer",
-                        "title": "Bottom"
+                    "rangeMeasureValueFilter": {
+                        "$ref": "#/components/schemas/RangeMeasureValueFilterBody"
                     }
                 },
                 "additionalProperties": false,
                 "type": "object",
                 "required": [
-                    "type",
-                    "using"
+                    "rangeMeasureValueFilter"
+                ],
+                "title": "RangeMeasureValueFilter"
+            },
+            "RangeMeasureValueFilterBody": {
+                "properties": {
+                    "measure": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AfmLocalIdentifier"
+                            }
+                        ],
+                        "title": "Measure"
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/RangeMeasureValueOperator"
+                    },
+                    "from": {
+                        "type": "number",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "number",
+                        "title": "To"
+                    },
+                    "treatNullValuesAs": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Treatnullvaluesas"
+                    },
+                    "dimensionality": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "measure",
+                    "operator",
+                    "from",
+                    "to"
+                ],
+                "title": "RangeMeasureValueFilterBody"
+            },
+            "RangeMeasureValueOperator": {
+                "type": "string",
+                "enum": [
+                    "BETWEEN",
+                    "NOT_BETWEEN"
+                ],
+                "title": "RangeMeasureValueOperator"
+            },
+            "RankingFilter-Input": {
+                "properties": {
+                    "rankingFilter": {
+                        "$ref": "#/components/schemas/RankingFilterBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "rankingFilter"
                 ],
                 "title": "RankingFilter"
+            },
+            "RankingFilterBody": {
+                "properties": {
+                    "measures": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Measures"
+                    },
+                    "operator": {
+                        "$ref": "#/components/schemas/RankingOperator"
+                    },
+                    "value": {
+                        "type": "integer",
+                        "title": "Value"
+                    },
+                    "dimensionality": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/AfmObjectIdentifier"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/AfmLocalIdentifier"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Dimensionality"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "measures",
+                    "operator",
+                    "value"
+                ],
+                "title": "RankingFilterBody"
+            },
+            "RankingOperator": {
+                "type": "string",
+                "enum": [
+                    "TOP",
+                    "BOTTOM"
+                ],
+                "title": "RankingOperator"
             },
             "ReasoningContent": {
                 "properties": {
@@ -3228,6 +4375,170 @@
                     "summary"
                 ],
                 "title": "ReasoningContent"
+            },
+            "RelativeDateFilter-Input": {
+                "properties": {
+                    "relativeDateFilter": {
+                        "$ref": "#/components/schemas/RelativeDateFilterBody-Input"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "relativeDateFilter"
+                ],
+                "title": "RelativeDateFilter"
+            },
+            "RelativeDateFilter-Output": {
+                "properties": {
+                    "relativeDateFilter": {
+                        "$ref": "#/components/schemas/RelativeDateFilterBody-Output"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "relativeDateFilter"
+                ],
+                "title": "RelativeDateFilter"
+            },
+            "RelativeDateFilterBody-Input": {
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/DateGranularity-Input"
+                    },
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "boundedFilter": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/BoundedFilter-Input"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "emptyValueHandling": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValueHandling"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "dataset",
+                    "granularity",
+                    "from",
+                    "to"
+                ],
+                "title": "RelativeDateFilterBody"
+            },
+            "RelativeDateFilterBody-Output": {
+                "properties": {
+                    "dataset": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__DateGranularity"
+                    },
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
+                    },
+                    "applyOnResult": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Applyonresult"
+                    },
+                    "boundedFilter": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/BoundedFilter-Output"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "emptyValueHandling": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/EmptyValueHandling"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    },
+                    "localIdentifier": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Localidentifier"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "dataset",
+                    "granularity",
+                    "from",
+                    "to"
+                ],
+                "title": "RelativeDateFilterBody"
             },
             "ResponseFeedback": {
                 "properties": {
@@ -3838,31 +5149,88 @@
             "SummarizeRequest": {
                 "properties": {
                     "visualizations": {
-                        "items": {
-                            "type": "string"
-                        },
-                        "type": "array",
-                        "minItems": 1,
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array",
+                                "minItems": 1
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
                         "title": "Visualizations"
                     },
                     "filterContext": {
-                        "items": {
-                            "additionalProperties": true,
-                            "type": "object"
-                        },
-                        "type": "array",
-                        "title": "Filtercontext"
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/PositiveAttributeFilter"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/NegativeAttributeFilter"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/MatchAttributeFilter"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/AbsoluteDateFilter"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/RelativeDateFilter-Input"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/AllTimeDateFilter-Input"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/RankingFilter-Input"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/CompoundMeasureValueFilter"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/InlineFilterDefinition"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filtercontext",
+                        "description": "AFM filters in the same shape consumed by the AFM execute endpoint, merged on top of each visualization's stored filters using the type-aware merge rules. Omit or send `null` to fall back to the dashboard's saved filter context. Send `[]` to explicitly apply no request filters."
                     },
                     "dashboardId": {
                         "type": "string",
                         "minLength": 1,
                         "title": "Dashboardid"
+                    },
+                    "formatHint": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Formathint"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "visualizations",
-                    "filterContext",
                     "dashboardId"
                 ],
                 "title": "SummarizeRequest"
@@ -3875,8 +5243,41 @@
                     },
                     "filterContext": {
                         "items": {
-                            "additionalProperties": true,
-                            "type": "object"
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/PositiveAttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/NegativeAttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/MatchAttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AbsoluteDateFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RelativeDateFilter-Output"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AllTimeDateFilter-Output"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/app__application__dtos__afm__filter_definition__RankingFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/ComparisonMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RangeMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/CompoundMeasureValueFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/InlineFilterDefinition"
+                                }
+                            ]
                         },
                         "type": "array",
                         "title": "Filtercontext"
@@ -5088,6 +6489,129 @@
                     "adjustments"
                 ],
                 "title": "WhatIfScenarioVariant"
+            },
+            "_MeasureValueComparisonInner": {
+                "properties": {
+                    "operator": {
+                        "$ref": "#/components/schemas/ComparisonMeasureValueOperator"
+                    },
+                    "value": {
+                        "type": "number",
+                        "title": "Value"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "operator",
+                    "value"
+                ],
+                "title": "_MeasureValueComparisonInner"
+            },
+            "_MeasureValueRangeInner": {
+                "properties": {
+                    "operator": {
+                        "$ref": "#/components/schemas/RangeMeasureValueOperator"
+                    },
+                    "from": {
+                        "type": "number",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "number",
+                        "title": "To"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "operator",
+                    "from",
+                    "to"
+                ],
+                "title": "_MeasureValueRangeInner"
+            },
+            "app__application__dtos__afm__filter_definition__DateGranularity": {
+                "type": "string",
+                "enum": [
+                    "MINUTE",
+                    "HOUR",
+                    "DAY",
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR",
+                    "MINUTE_OF_HOUR",
+                    "HOUR_OF_DAY",
+                    "DAY_OF_WEEK",
+                    "DAY_OF_MONTH",
+                    "DAY_OF_QUARTER",
+                    "DAY_OF_YEAR",
+                    "WEEK_OF_YEAR",
+                    "MONTH_OF_YEAR",
+                    "QUARTER_OF_YEAR",
+                    "FISCAL_MONTH",
+                    "FISCAL_QUARTER",
+                    "FISCAL_YEAR"
+                ],
+                "title": "DateGranularity"
+            },
+            "app__application__dtos__afm__filter_definition__RankingFilter": {
+                "properties": {
+                    "rankingFilter": {
+                        "$ref": "#/components/schemas/RankingFilterBody"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "rankingFilter"
+                ],
+                "title": "RankingFilter"
+            },
+            "app__domain__conversations__visualization__DateGranularity": {
+                "type": "string",
+                "enum": [
+                    "DAY",
+                    "WEEK_US",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR"
+                ],
+                "title": "DateGranularity",
+                "description": "Date granularity for date filters."
+            },
+            "app__domain__conversations__visualization__RankingFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ranking_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "attribute": {
+                        "type": "string",
+                        "title": "Attribute"
+                    },
+                    "top": {
+                        "type": "integer",
+                        "title": "Top"
+                    },
+                    "bottom": {
+                        "type": "integer",
+                        "title": "Bottom"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using"
+                ],
+                "title": "RankingFilter"
             }
         }
     }

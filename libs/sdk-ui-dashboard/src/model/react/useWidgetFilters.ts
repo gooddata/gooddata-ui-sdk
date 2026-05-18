@@ -19,6 +19,7 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 
@@ -232,6 +233,10 @@ function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | nu
                 } else if (isDashboardDateFilterWithDimension(filter)) {
                     return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
                         areObjRefsEqual(validRef, filter.dateFilter.dataSet),
+                    );
+                } else if (isDashboardMeasureValueFilter(filter)) {
+                    return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
+                        areObjRefsEqual(validRef, filter.dashboardMeasureValueFilter.measure),
                     );
                 } else {
                     // Common date filter: include only when widget does not ignore date filters

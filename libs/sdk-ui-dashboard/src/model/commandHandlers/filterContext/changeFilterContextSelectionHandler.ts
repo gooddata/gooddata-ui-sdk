@@ -24,6 +24,7 @@ import {
     dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemValidateElementsBy,
+    dashboardFilterObjRef,
     dashboardMeasureValueFilterLocalIdentifier,
     getAttributeElementsItems,
     isAllTimeDashboardDateFilter,
@@ -822,15 +823,23 @@ function* getMeasureValueFiltersUpdateActions(
     );
 
     for (const incoming of measureValueFilters) {
-        const localIdentifier = dashboardMeasureValueFilterLocalIdentifier(incoming);
+        const incomingLocalIdentifier = dashboardMeasureValueFilterLocalIdentifier(incoming);
+        const currentFilter =
+            currentByLocalId.get(incomingLocalIdentifier) ??
+            currentMeasureValueFilters.find((current) =>
+                areObjRefsEqual(dashboardFilterObjRef(current), dashboardFilterObjRef(incoming)),
+            );
+
         // Only update filters that already exist on the dashboard. Adding/removing MVFs is an
         // edit-mode operation and is not part of changeFilterContextSelection in view mode.
-        if (!currentByLocalId.has(localIdentifier)) {
+        if (!currentFilter) {
             console.warn(
-                `changeFilterContextSelection: ignoring measure value filter with unknown localIdentifier "${localIdentifier}". The dashboard does not currently have a measure value filter with this id; adding new MVFs is not supported in view mode.`,
+                `changeFilterContextSelection: ignoring measure value filter with unknown localIdentifier "${incomingLocalIdentifier}". The dashboard does not currently have a measure value filter with this id or metric; adding new MVFs is not supported in view mode.`,
             );
             continue;
         }
+        const localIdentifier = dashboardMeasureValueFilterLocalIdentifier(currentFilter);
+
         handledLocalIds.add(localIdentifier);
         updateActions.push(
             tabsActions.changeMeasureValueFilterCondition({

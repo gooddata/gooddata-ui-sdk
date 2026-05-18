@@ -166,15 +166,16 @@ export enum TigerFeaturesNames {
     EnableMeasureValueFilterKD = "enableMeasureValueFilterKD",
     EnableFilterControlInDrillingConfiguration = "enableFilterControlInDrillingConfiguration",
     EnableShellApplication = "enableShellApplication",
+    EnableShellApplicationCatalog = "enableShellApplication_catalog",
     EnableNullJoins = "enableNullJoins",
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
     EnableDashboardsSearch = "enableDashboardsSearch",
     EnableAiHub = "enableAiHub",
     EnableAutomationTrigger = "enableAutomationTrigger",
     EnableUserDataFiltersUi = "enableUserDataFiltersUi",
-    EnableDateTimeSemanticsSetting = "enableDateTimeSemanticsSetting",
     EnableEnhancedInsightPicker = "enableEnhancedInsightPicker",
     EnableAiAgenticMultiConversations = "enableAiAgenticMultiConversations",
+    EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
 }
 
 export type ITigerFeatureFlags = {
@@ -332,6 +333,7 @@ export type ITigerFeatureFlags = {
     enableMeasureValueFilterKD: (typeof FeatureFlagsValues)["enableMeasureValueFilterKD"][number];
     enableFilterControlInDrillingConfiguration: (typeof FeatureFlagsValues)["enableFilterControlInDrillingConfiguration"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
+    enableShellApplication_catalog: (typeof FeatureFlagsValues)["enableShellApplication_catalog"][number];
     enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
     enableDashboardsSearch: (typeof FeatureFlagsValues)["enableDashboardsSearch"][number];
@@ -341,8 +343,8 @@ export type ITigerFeatureFlags = {
     enableGenAiVisualizationSummarySkill: (typeof FeatureFlagsValues)["enableGenAiVisualizationSummarySkill"][number];
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
-    enableDateTimeSemanticsSetting: (typeof FeatureFlagsValues)["enableDateTimeSemanticsSetting"][number];
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
+    enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -500,6 +502,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMeasureValueFilterKD: false,
     enableFilterControlInDrillingConfiguration: true,
     enableShellApplication: true,
+    enableShellApplication_catalog: false,
     enableNullJoins: false,
     enableDashboardDensitySetting: false,
     enableDashboardsSearch: false,
@@ -509,8 +512,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAiVisualizationSummarySkill: false,
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
-    enableDateTimeSemanticsSetting: false,
     enableEnhancedInsightPicker: false,
+    enableAiLlmAnthropicProvider: false,
 };
 
 export const FeatureFlagsValues = {
@@ -669,6 +672,7 @@ export const FeatureFlagsValues = {
     enableMeasureValueFilterKD: [false, true] as const,
     enableFilterControlInDrillingConfiguration: [true, false] as const,
     enableShellApplication: [true, false] as const,
+    enableShellApplication_catalog: [false, true] as const,
     enableNullJoins: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
     enableDashboardsSearch: [false, true] as const,
@@ -678,6 +682,6 @@ export const FeatureFlagsValues = {
     enableGenAiVisualizationSummarySkill: [false, true] as const,
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,
-    enableDateTimeSemanticsSetting: [true, false] as const,
     enableEnhancedInsightPicker: [true, false] as const,
+    enableAiLlmAnthropicProvider: [true, false] as const,
 };

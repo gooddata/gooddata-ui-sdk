@@ -6,22 +6,29 @@ import {
     type IAttributeFilter,
     type IAttributeFilterWithSelection,
     type IDashboardAttributeFilter,
+    type IDashboardMeasureValueFilter,
     type IDateFilter,
+    type IMeasureValueFilter,
     areObjRefsEqual,
     filterAttributeElements,
+    filterMeasureRef,
     filterObjRef,
     isAttributeFilterWithSelection,
     isDashboardAttributeFilter,
+    isDashboardMeasureValueFilter,
+    isMeasureValueFilter,
     isNegativeAttributeFilter,
+    measureValueFilterConditions,
 } from "@gooddata/sdk-model";
 
-type SourceFilter = IAttributeFilter | IDateFilter;
+export type SourceFilter = IAttributeFilter | IDateFilter | IMeasureValueFilter;
 
 /**
  * Merges dashboard filters with source filters by intersecting attribute element values
  * for filters that target the same attribute (matched by display form ref).
  *
  * - Matching attribute filters: element values are intersected (AND semantics).
+ * - Matching measure value filters: conditions get replaced.
  * - Unmatched filters from either side: passed through as-is.
  * - Date filters: passed through as-is (no intersection).
  */
@@ -36,6 +43,29 @@ export function mergeDashboardAndSourceFilters(
     const usedSourceIndices = new Set<number>();
 
     const mergedDashboardFilters = dashboardFilters.map((dashFilter) => {
+        if (isDashboardMeasureValueFilter(dashFilter)) {
+            const dashRef = dashFilter.dashboardMeasureValueFilter.measure;
+
+            const sourceIndex = sourceFilters.findIndex((sf, i) => {
+                if (usedSourceIndices.has(i) || !isMeasureValueFilter(sf)) {
+                    return false;
+                }
+
+                const sourceRef = filterMeasureRef(sf);
+
+                return sourceRef ? areObjRefsEqual(dashRef, sourceRef) : false;
+            });
+
+            if (sourceIndex === -1) {
+                return dashFilter;
+            }
+
+            usedSourceIndices.add(sourceIndex);
+            const sourceFilter = sourceFilters[sourceIndex] as IMeasureValueFilter;
+
+            return intersectMeasureValueFilters(dashFilter, sourceFilter);
+        }
+
         if (!isDashboardAttributeFilter(dashFilter)) {
             return dashFilter;
         }
@@ -63,6 +93,18 @@ export function mergeDashboardAndSourceFilters(
     const remainingSourceFilters = sourceFilters.filter((_, i) => !usedSourceIndices.has(i));
 
     return [...mergedDashboardFilters, ...remainingSourceFilters];
+}
+
+function intersectMeasureValueFilters(
+    dashFilter: IDashboardMeasureValueFilter,
+    sourceFilter: IMeasureValueFilter,
+): IDashboardMeasureValueFilter {
+    return {
+        dashboardMeasureValueFilter: {
+            ...dashFilter.dashboardMeasureValueFilter,
+            conditions: measureValueFilterConditions(sourceFilter),
+        },
+    };
 }
 
 function intersectAttributeFilters(

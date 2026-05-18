@@ -32,6 +32,7 @@ import {
     isMeasureValueFilter,
     isRankingFilter,
     measureFilters,
+    measureItem,
     measureLocalId,
 } from "@gooddata/sdk-model";
 import {
@@ -311,4 +312,31 @@ export function sourceInsightFilterObjRefValue(sourceFilterObjRef: SourceInsight
     }
 
     throw new Error("Invalid SourceInsightFilterObjRef");
+}
+
+/**
+ * Resolves a measure-scoped ref from an insight filter to the underlying catalog measure ref.
+ *
+ * Source insight MVFs usually target a local measure identifier, while dashboard MVFs target
+ * the metric object ref. Use this when comparing or merging source MVFs with dashboard MVFs.
+ *
+ * @internal
+ */
+export function resolveSourceMeasureRef(
+    measureRef: ObjRefInScope | undefined,
+    sourceInsightMeasures: IMeasure[],
+): ObjRef | undefined {
+    if (!measureRef) {
+        return undefined;
+    }
+
+    if (!isLocalIdRef(measureRef)) {
+        return measureRef;
+    }
+
+    const sourceMeasure = sourceInsightMeasures.find(
+        (measure) => measureLocalId(measure) === measureRef.localIdentifier,
+    );
+
+    return sourceMeasure ? measureItem(sourceMeasure) : undefined;
 }
