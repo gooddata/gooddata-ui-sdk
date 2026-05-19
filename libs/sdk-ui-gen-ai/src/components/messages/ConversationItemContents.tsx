@@ -82,7 +82,6 @@ export function ConversationItemContents({ message, isLoading }: ConversationIte
                     if (part.type === "visualization" && !whatIf) {
                         return (
                             <ConversationVisualizationContent
-                                useMarkdown
                                 key={index}
                                 message={message}
                                 part={part}

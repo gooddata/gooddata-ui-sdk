@@ -164,7 +164,7 @@
         "crowdinContext": "Tooltip for button that resets the AI chatbot conversation"
     },
     "gd.gen-ai.header.conversations-tooltip": {
-        "text": "Conversations",
+        "text": "Recent conversations",
         "crowdinContext": "Tooltip for button that opens the conversation history list"
     },
     "gd.gen-ai.header.new-conversation-tooltip": {
@@ -224,7 +224,7 @@
         "crowdinContext": "Tooltip for button that closes the conversation history list"
     },
     "gd.gen-ai.conversations.title": {
-        "text": "Recent Conversations",
+        "text": "Recent conversations",
         "crowdinContext": "Title shown above the conversation history list"
     },
     "gd.gen-ai.conversations.empty": {
@@ -255,8 +255,12 @@
         "text": "Unpin",
         "crowdinContext": "Menu option to unpin a conversation from the top of the conversation history list"
     },
+    "gd.gen-ai.conversations.menu.rename": {
+        "text": "Rename",
+        "crowdinContext": "Menu option to rename an existing conversation"
+    },
     "gd.gen-ai.conversations.menu.aria-label": {
-        "text": "Conversation menu",
+        "text": "More options",
         "crowdinContext": "Accessibility label for the conversation menu"
     },
     "gd.gen-ai.conversations.dnd.pin-placeholder": {
@@ -282,6 +286,22 @@
     "gd.gen-ai.conversations.delete-dialog.cancel": {
         "text": "Cancel",
         "crowdinContext": "Cancel button label in conversation delete confirmation dialog"
+    },
+    "gd.gen-ai.conversations.rename-dialog.title": {
+        "text": "Rename conversation",
+        "crowdinContext": "Title of the dialog for renaming a conversation"
+    },
+    "gd.gen-ai.conversations.rename-dialog.label": {
+        "text": "Conversation name",
+        "crowdinContext": "Label for the input field used to rename a conversation"
+    },
+    "gd.gen-ai.conversations.rename-dialog.submit": {
+        "text": "Rename",
+        "crowdinContext": "Submit button label in conversation rename dialog"
+    },
+    "gd.gen-ai.conversations.rename-dialog.cancel": {
+        "text": "Cancel",
+        "crowdinContext": "Cancel button label in conversation rename dialog"
     },
     "gd.chat.conversation.generating-title": {
         "text": "Conversation {date}",

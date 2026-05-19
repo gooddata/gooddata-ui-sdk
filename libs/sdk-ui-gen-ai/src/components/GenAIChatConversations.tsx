@@ -32,6 +32,7 @@ import { conversationSelector, conversationsSelector } from "../store/messages/m
 import {
     deleteConversationAction,
     pinConversationAction,
+    renameConversationAction,
     setCurrentConversationAction,
 } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
@@ -40,6 +41,7 @@ import { generateTemporaryTitle } from "../utils.js";
 
 import { collectReferences, replaceReferences } from "./completion/references.js";
 import { ConversationDeleteDialog } from "./ConversationDeleteDialog.js";
+import { ConversationRenameDialog } from "./ConversationRenameDialog.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { useHistoryCheck } from "./hooks/useHistoryCheck.js";
 import { ConversationDateGroup, groupConversationsByDate } from "./utils/conversationGrouper.js";
@@ -54,6 +56,7 @@ type GenAIChatConversationsDispatchProps = {
     loadConversation: typeof setCurrentConversationAction;
     deleteConversation: typeof deleteConversationAction;
     pinConversation: typeof pinConversationAction;
+    renameConversation: typeof renameConversationAction;
 };
 
 export type GenAIChatConversationsProps = GenAIChatConversationsStateProps &
@@ -65,6 +68,7 @@ function GenAIChatConversationsComponent({
     setHistory,
     deleteConversation,
     pinConversation,
+    renameConversation,
     loadConversation,
     conversations,
     conversation: currentConversation,
@@ -75,6 +79,7 @@ function GenAIChatConversationsComponent({
     const { isFullscreen, isSmallScreen } = useFullscreenCheck();
     const { isHistory } = useHistoryCheck();
     const [conversationToDelete, setConversationToDelete] = useState<IChatConversationLocal | undefined>();
+    const [conversationToRename, setConversationToRename] = useState<IChatConversationLocal | undefined>();
     const [openedId, setOpenedId] = useState<string | undefined>();
     const [draggedConversationId, setDraggedConversationId] = useState<string | undefined>();
     const [activeDropZone, setActiveDropZone] = useState<ConversationDropZone | undefined>();
@@ -128,8 +133,11 @@ function GenAIChatConversationsComponent({
                                         }}
                                         accessibilityConfig={{
                                             ...accessibilityConfig,
+                                            ariaLabel: intl.formatMessage({
+                                                id: "gd.gen-ai.conversations.menu.aria-label",
+                                            }),
                                             ariaExpanded: ariaAttributes["aria-expanded"],
-                                            ariaHaspopup: ariaAttributes["aria-haspopup"],
+                                            ariaHaspopup: "menu",
                                             ariaControls: ariaAttributes["aria-controls"],
                                         }}
                                         tabIndex={-1}
@@ -140,6 +148,19 @@ function GenAIChatConversationsComponent({
                                     <UiMenu
                                         shouldCloseOnSelect
                                         items={[
+                                            {
+                                                type: "interactive",
+                                                id: "rename",
+                                                stringTitle: intl.formatMessage({
+                                                    id: "gd.gen-ai.conversations.menu.rename",
+                                                }),
+                                                isDisabled: conversation.generatingTitle,
+                                                iconLeft: <UiIcon type="pencil" size={14} />,
+                                                data: {
+                                                    ...conversation,
+                                                    action: "rename",
+                                                },
+                                            },
                                             {
                                                 type: "interactive",
                                                 id: conversation.pinned ? "unpin" : "pin",
@@ -181,10 +202,12 @@ function GenAIChatConversationsComponent({
                                         onSelect={(item, event) => {
                                             const selectedConversation =
                                                 item.data as IChatConversationLocal & {
-                                                    action?: "delete";
+                                                    action?: "delete" | "rename";
                                                 };
                                             if (selectedConversation.action === "delete") {
                                                 setConversationToDelete(conversation);
+                                            } else if (selectedConversation.action === "rename") {
+                                                setConversationToRename(conversation);
                                             } else {
                                                 pinConversation({
                                                     conversationId: selectedConversation.localId,
@@ -206,7 +229,15 @@ function GenAIChatConversationsComponent({
                     isSelected: isConversationWithLocalId(currentConversation, conversation.localId),
                 })),
             })),
-        [groupedConversations, intl, catalogItems, openedId, currentConversation, pinConversation],
+        [
+            groupedConversations,
+            intl,
+            catalogItems,
+            openedId,
+            currentConversation,
+            pinConversation,
+            setConversationToRename,
+        ],
     );
 
     const draggedConversation = useMemo(
@@ -216,6 +247,10 @@ function GenAIChatConversationsComponent({
 
     const handleDeleteCancel = useCallback(() => {
         setConversationToDelete(undefined);
+    }, []);
+
+    const handleRenameCancel = useCallback(() => {
+        setConversationToRename(undefined);
     }, []);
 
     const handleSelect = useCallback(
@@ -232,6 +267,19 @@ function GenAIChatConversationsComponent({
         }
         setConversationToDelete(undefined);
     }, [conversationToDelete, deleteConversation]);
+
+    const handleRenameSubmit = useCallback(
+        (title: string) => {
+            if (conversationToRename) {
+                renameConversation({
+                    conversationId: conversationToRename.localId,
+                    title,
+                });
+            }
+            setConversationToRename(undefined);
+        },
+        [conversationToRename, renameConversation],
+    );
 
     const handleDragStart = useCallback((conversationId: string, event: DragEvent<HTMLDivElement>) => {
         event.dataTransfer.effectAllowed = "move";
@@ -354,6 +402,13 @@ function GenAIChatConversationsComponent({
                     conversation={conversationToDelete}
                     onClose={handleDeleteCancel}
                     onDelete={handleDeleteSubmit}
+                />
+            ) : null}
+            {conversationToRename ? (
+                <ConversationRenameDialog
+                    conversation={conversationToRename}
+                    onClose={handleRenameCancel}
+                    onRename={handleRenameSubmit}
                 />
             ) : null}
         </>
@@ -545,10 +600,12 @@ type DraggableConversationItemProps = Parameters<typeof DefaultUiMenuInteractive
 
 function DraggableConversationItem(props: DraggableConversationItemProps) {
     const data = props.item.data as IChatConversationLocal;
+    const itemTitle = props.item.stringTitle || generateTemporaryTitle(props.intl, data);
 
     return (
         <div
             draggable
+            title={itemTitle}
             className={cx("gd-gen-ai-chat__window__conversations__list__item", {
                 generatingTitle: data.generatingTitle,
                 inProgress: data.inProgress,
@@ -567,7 +624,7 @@ function DraggableConversationItem(props: DraggableConversationItemProps) {
                 {...props}
                 item={{
                     ...props.item,
-                    stringTitle: props.item.stringTitle || generateTemporaryTitle(props.intl, data),
+                    stringTitle: itemTitle,
                 }}
             />
         </div>
@@ -583,6 +640,7 @@ const mapDispatchToProps: GenAIChatConversationsDispatchProps = {
     setHistory: setHistoryAction,
     deleteConversation: deleteConversationAction,
     pinConversation: pinConversationAction,
+    renameConversation: renameConversationAction,
     loadConversation: setCurrentConversationAction,
 };
 

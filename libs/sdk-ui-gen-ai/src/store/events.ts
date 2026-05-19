@@ -135,6 +135,45 @@ export const isChatConversationDeletedErrorEvent = (
 };
 
 /**
+ * A chat conversation renamed event.
+ * @public
+ */
+export type ChatConversationRenamedEvent = BaseEvent & {
+    type: "chatConversationRenamed";
+    conversationId: string;
+    title: string;
+};
+
+/**
+ * Type guard for the ChatConversationRenamedEvent.
+ * @public
+ */
+export const isChatConversationRenamedEvent = (event: ChatEvent): event is ChatConversationRenamedEvent => {
+    return event.type === "chatConversationRenamed";
+};
+
+/**
+ * A chat conversation renamed error event.
+ * @public
+ */
+export type ChatConversationRenamedErrorEvent = BaseEvent & {
+    type: "chatConversationRenamedError";
+    conversationId: string;
+    title: string;
+    error: Error;
+};
+
+/**
+ * Type guard for the ChatConversationRenamedErrorEvent.
+ * @public
+ */
+export const isChatConversationRenamedErrorEvent = (
+    event: ChatEvent,
+): event is ChatConversationRenamedErrorEvent => {
+    return event.type === "chatConversationRenamedError";
+};
+
+/**
  * A chat user message event.
  * @public
  */
@@ -293,6 +332,8 @@ export type ChatEvent =
     | ChatConversationPinErrorEvent
     | ChatConversationDeletedEvent
     | ChatConversationDeletedErrorEvent
+    | ChatConversationRenamedEvent
+    | ChatConversationRenamedErrorEvent
     | ChatUserMessageEvent
     | ChatAssistantMessageEvent
     | ChatFeedbackEvent

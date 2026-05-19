@@ -148,7 +148,6 @@ export enum TigerFeaturesNames {
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     AIChatSearchLimit = "aiChatSearchLimit",
-    EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
     EnableKDEmptyDateValuesFilter = "enableKDEmptyDateValuesFilter",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
@@ -315,7 +314,6 @@ export type ITigerFeatureFlags = {
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
-    enableEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableEmptyDateValuesFilter"][number];
     enableKDEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableKDEmptyDateValuesFilter"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
@@ -484,7 +482,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiAgenticMultiConversations: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
-    enableEmptyDateValuesFilter: true,
     enableKDEmptyDateValuesFilter: true,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
@@ -654,7 +651,6 @@ export const FeatureFlagsValues = {
     enableAiAgenticMultiConversations: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
-    enableEmptyDateValuesFilter: [true, false] as const,
     enableKDEmptyDateValuesFilter: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,

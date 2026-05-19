@@ -714,6 +714,7 @@ export type IChatConversationKeyDriverAnalysisContent = {
 export type IChatConversationMultipartContent = {
     type: "multipart";
     parts: IChatConversationMultipartPart[];
+    suggestions?: IChatSuggestions;
 };
 
 // @internal
@@ -766,7 +767,7 @@ export interface IChatConversationThreadQuery {
     query(options?: {
         signal?: AbortSignal;
     }): Promise<IChatConversationItem[]>;
-    stream(): ReadableStream<IChatConversationItem | IChatConversationError | IChatSuggestionsItem>;
+    stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
     withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatConversationThreadQuery;
     withCreateLimit(createLimit: number): IChatConversationThreadQuery;
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatConversationThreadQuery;
@@ -825,16 +826,9 @@ export type IChatSuggestion = {
 };
 
 // @internal
-export type IChatSuggestionsAction = {
-    label: string;
-    query: string;
-};
-
-// @internal
-export type IChatSuggestionsItem = {
-    type: "suggestions";
-    followUp?: string;
-    actions?: IChatSuggestionsAction[];
+export type IChatSuggestions = {
+    followUpQuestion?: string;
+    actions?: IChatSuggestion[];
 };
 
 // @beta
@@ -2340,7 +2334,7 @@ export function isAbortError(obj: unknown): obj is AbortError;
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
 
 // @internal
-export function isChatConversationError(item: Partial<IChatConversationItem | IChatConversationError | IChatSuggestionsItem>): item is IChatConversationError;
+export function isChatConversationError(item: Partial<IChatConversationItem | IChatConversationError>): item is IChatConversationError;
 
 // @internal
 export function isChatConversationItem(item: unknown): item is IChatConversationItem;
@@ -2371,9 +2365,6 @@ export function isChatConversationVisualisationContent(content: IChatConversatio
 
 // @internal
 export function isChatConversationWhatIfContent(content: IChatConversationMultipartPart): content is IChatConversationWhatIfContent;
-
-// @internal
-export function isChatSuggestionsItem(item: unknown): item is IChatSuggestionsItem;
 
 // @public
 export function isContractExpired(obj: unknown): obj is ContractExpired;

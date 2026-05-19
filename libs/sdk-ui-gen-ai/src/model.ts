@@ -8,7 +8,7 @@ import {
     type IChatConversationError,
     type IChatConversationItem,
     type IChatConversationMultipartPart,
-    type IChatSuggestionsItem,
+    type IChatSuggestions,
     isChatConversationItem,
 } from "@gooddata/sdk-backend-spi";
 import type {
@@ -370,7 +370,6 @@ export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> 
     //data
     localId: string;
     content: IChatConversationLocalContent | IChatConversationErrorContent;
-    suggestions?: IChatSuggestionsItem;
 };
 
 /**
@@ -417,6 +416,7 @@ export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart
         message: string;
     };
     objects?: TextContentObject[];
+    suggestions?: IChatSuggestions;
 };
 
 /**

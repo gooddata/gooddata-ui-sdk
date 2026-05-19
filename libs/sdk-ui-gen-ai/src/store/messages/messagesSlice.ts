@@ -2,7 +2,7 @@
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
-import { type IChatConversationItem, type IChatSuggestionsItem } from "@gooddata/sdk-backend-spi";
+import { type IChatConversationItem } from "@gooddata/sdk-backend-spi";
 import { type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
@@ -644,26 +644,6 @@ const messagesSlice = createSlice({
             delete data?.asyncProcess;
             delete state.messageAsyncProcess;
         },
-        evaluateMessageSuggestionsAction: (
-            state,
-            {
-                payload,
-            }: PayloadAction<{
-                item?: IChatSuggestionsItem;
-                assistantMessageId: string;
-                conversationId?: string;
-            }>,
-        ) => {
-            const assistantMessage = getAssistantMessageStrict(
-                state,
-                payload.assistantMessageId,
-                payload.conversationId,
-            );
-
-            if (isChatConversationLocalItem(assistantMessage)) {
-                assistantMessage.suggestions = payload.item;
-            }
-        },
         setMessagesAction: (
             state,
             {
@@ -1092,6 +1072,53 @@ const messagesSlice = createSlice({
                 };
             }
         },
+        renameConversationAction: (
+            state,
+            _action: PayloadAction<{
+                conversationId: string;
+                title: string;
+            }>,
+        ) => state,
+        renameConversationSuccessAction: (
+            state,
+            { payload }: PayloadAction<{ conversationId: string; title: string }>,
+        ) => {
+            state.conversations = state.conversations?.map((conversation) =>
+                conversation.localId === payload.conversationId
+                    ? {
+                          ...conversation,
+                          title: payload.title,
+                      }
+                    : conversation,
+            );
+
+            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
+                state.currentConversation = {
+                    ...state.currentConversation,
+                    title: payload.title,
+                };
+            }
+        },
+        renameConversationFailureAction: (
+            state,
+            { payload }: PayloadAction<{ conversationId: string; error: Error; title?: string }>,
+        ) => {
+            state.conversations = state.conversations?.map((conversation) =>
+                conversation.localId === payload.conversationId
+                    ? {
+                          ...conversation,
+                          title: payload.title,
+                      }
+                    : conversation,
+            );
+
+            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
+                state.currentConversation = {
+                    ...state.currentConversation,
+                    title: payload.title,
+                };
+            }
+        },
         deleteConversationAction: (state, _action: PayloadAction<{ conversationId: string }>) => state,
         deleteConversationStartAction: (state, { payload }: PayloadAction<{ conversationId: string }>) => {
             if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
@@ -1135,7 +1162,6 @@ export const {
     evaluateMessageErrorAction,
     evaluateMessageStreamingAction,
     evaluateMessageUpdateAction,
-    evaluateMessageSuggestionsAction,
     evaluateMessageCompleteAction,
     setMessagesAction,
     setVerboseAction,
@@ -1156,6 +1182,9 @@ export const {
     pinConversationAction,
     pinConversationSuccessAction,
     pinConversationFailureAction,
+    renameConversationAction,
+    renameConversationSuccessAction,
+    renameConversationFailureAction,
     deleteConversationAction,
     deleteConversationStartAction,
     deleteConversationSuccessAction,

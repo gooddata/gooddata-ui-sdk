@@ -2,28 +2,36 @@
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { type IChatSuggestionsItem } from "@gooddata/sdk-backend-spi";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 
-import { makeUserItem } from "../../model.js";
+import {
+    type IChatConversationErrorContent,
+    type IChatConversationLocalContent,
+    makeUserItem,
+} from "../../model.js";
 import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { newMessageAction } from "../../store/messages/messagesSlice.js";
 
 export interface IAssistantItemSuggestionsProps {
     showSuggestions?: boolean;
-    suggestions: IChatSuggestionsItem | undefined;
+    content: IChatConversationLocalContent | IChatConversationErrorContent;
     type: "followUp" | "actions";
 }
 
-export function AssistantItemSuggestions({
-    type,
-    suggestions,
-    showSuggestions,
-}: IAssistantItemSuggestionsProps) {
+export function AssistantItemSuggestions({ type, content, showSuggestions }: IAssistantItemSuggestionsProps) {
     const dispatch = useDispatch();
     const settings = useSelector(settingsSelector);
 
-    if (!suggestions || !showSuggestions || !settings?.enableAiAgenticSuggestions) {
+    if (!showSuggestions || !settings?.enableAiAgenticSuggestions) {
+        return null;
+    }
+
+    if (content.type !== "multipart") {
+        return null;
+    }
+
+    const suggestions = content.suggestions;
+    if (!suggestions) {
         return null;
     }
 
@@ -47,9 +55,9 @@ export function AssistantItemSuggestions({
                     ))}
                 </div>
             ) : null}
-            {suggestions.followUp && type === "followUp" ? (
+            {suggestions.followUpQuestion && type === "followUp" ? (
                 <div className="gd-gen-ai-chat__conversation__visualization__followUp">
-                    {suggestions.followUp}
+                    {suggestions.followUpQuestion}
                 </div>
             ) : null}
         </>

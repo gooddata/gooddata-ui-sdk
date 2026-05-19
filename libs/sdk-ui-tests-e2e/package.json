@@ -17,7 +17,7 @@
     ],
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:pack-build-test": "tar -czf sdk-ui-tests-e2e.tgz -C dist .",
+        "_phase:pack-build": "tar -czf sdk-ui-tests-e2e.tgz -C dist .",
         "_phase:publish-test-docker-images": "bash ../../../common/scripts/docker/publish-test-docker-image.sh",
         "_phase:validate": "npm run validate",
         "build": "npm-run-all -p build-check dist",

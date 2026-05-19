@@ -1,8 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -131,5 +131,49 @@ describe("Catalog", () => {
         );
 
         expect(screen.getByText("Semantic quality")).toBeVisible();
+    });
+
+    it("hides Create > Parameter option for users without canManageProject permission", () => {
+        render(
+            <TestPermissionsProvider
+                status="success"
+                result={{
+                    settings: { enableParameters: true } as IUserWorkspaceSettings,
+                    permissions: {
+                        canCreateVisualization: true,
+                        canManageProject: false,
+                    } as IWorkspacePermissions,
+                }}
+            >
+                <Catalog {...props} onCreateObject={vi.fn()} />
+            </TestPermissionsProvider>,
+            { wrapper },
+        );
+
+        fireEvent.click(screen.getByText("Create"));
+
+        expect(screen.queryByText("Parameter")).not.toBeInTheDocument();
+    });
+
+    it("shows Create > Parameter option for users with canManageProject permission", () => {
+        render(
+            <TestPermissionsProvider
+                status="success"
+                result={{
+                    settings: { enableParameters: true } as IUserWorkspaceSettings,
+                    permissions: {
+                        canCreateVisualization: true,
+                        canManageProject: true,
+                    } as IWorkspacePermissions,
+                }}
+            >
+                <Catalog {...props} onCreateObject={vi.fn()} />
+            </TestPermissionsProvider>,
+            { wrapper },
+        );
+
+        fireEvent.click(screen.getByText("Create"));
+
+        expect(screen.getByText("Parameter")).toBeInTheDocument();
     });
 });

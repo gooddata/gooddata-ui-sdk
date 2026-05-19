@@ -32,8 +32,11 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilterContextItem,
     isInsightWidget,
+    isMeasureValueFilter,
+    isObjRef,
     isRelativeDateFilter,
     isSingleSelectionFilter,
+    measureValueFilterMeasure,
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
@@ -578,6 +581,12 @@ function getDashboardFiltersOnly(
  */
 function removeAlertFilters(filters: IFilter[]) {
     return filters?.filter((f) => {
+        if (isMeasureValueFilter(f)) {
+            // Keep MVFs whose measure is an ObjRef —
+            // dashboard MVFs always store an ObjRef (catalog metric) and the downstream conversion
+            // in dashboardFilterToFilterContextItem requires it.
+            return isObjRef(measureValueFilterMeasure(f));
+        }
         const objRef = filterObjRef(f);
         return !!objRef;
     });

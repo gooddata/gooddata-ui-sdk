@@ -44,6 +44,7 @@
         "**/dist/**",
         "**/esm/**",
         "**/temp/**",
-        "libs/api-client-tiger/src/generated/**"
+        "libs/api-client-tiger/src/generated/**",
+        "**/__version.ts"
     ]
 }

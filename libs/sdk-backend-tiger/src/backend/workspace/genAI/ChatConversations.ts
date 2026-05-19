@@ -26,7 +26,6 @@ import {
     type IChatConversationThread,
     type IChatConversationThreadQuery,
     type IChatConversations,
-    type IChatSuggestionsItem,
 } from "@gooddata/sdk-backend-spi";
 import {
     type GenAIChatInteractionUserFeedback,
@@ -39,11 +38,9 @@ import {
 import { type FormattingLocale } from "../../../convertors/fromBackend/dateFormatting/defaultDateFormatter.js";
 import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import {
-    type AiSuggestions,
     convertChatConversationErrorFromBackend,
     convertChatConversationFromBackend,
     convertChatConversationItemFromBackend,
-    convertChatSuggestionItemFromBackend,
 } from "../../../convertors/fromBackend/genAIConvertor.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -396,7 +393,7 @@ export class ChatConversationThreadQuery implements IChatConversationThreadQuery
             convertChatConversationItemFromBackend(item, undefined, this.dateNormalizer),
         );
     }
-    stream(): ReadableStream<IChatConversationItem | IChatConversationError | IChatSuggestionsItem> {
+    stream(): ReadableStream<IChatConversationItem | IChatConversationError> {
         // We are using Axios <1.7, which does not support streaming,
         // as it can't use fetch API instead of XHR.
         // This method can be simplified once we upgrade to Axios >=1.7.
@@ -507,7 +504,7 @@ class ServerSentEventsDataParser extends TransformStream<
  */
 class ServerSentEventsDataConverter extends TransformStream<
     { type: "item" | "error" | "response_ended"; data: object },
-    IChatConversationItem | IChatConversationError | IChatSuggestionsItem
+    IChatConversationItem | IChatConversationError
 > {
     constructor(
         dateNormalizer: DateNormalizer,
@@ -531,12 +528,6 @@ class ServerSentEventsDataConverter extends TransformStream<
                             timezone,
                         ),
                     );
-                } else if (event.type === "response_ended" && event.data) {
-                    if ("suggestions" in event.data) {
-                        controller.enqueue(
-                            convertChatSuggestionItemFromBackend(event.data.suggestions as AiSuggestions),
-                        );
-                    }
                 }
             },
         });

@@ -863,6 +863,19 @@ export function insightIsLocked(insight: IInsight): boolean {
 }
 
 /**
+ * Checks if insight is hidden
+ *
+ * @param insight - insight
+ * @returns boolean
+ * @alpha
+ */
+export function insightIsHidden(insight: IInsight): boolean {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.isHidden || false;
+}
+
+/**
  * Gets a new insight that 'inherits' all data from the provided insight but has different properties.
  *
  * @remarks

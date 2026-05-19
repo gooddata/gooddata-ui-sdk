@@ -13,7 +13,7 @@ RUN npm install --no-save @playwright/test@1.59.1
 # Compare JSON fixture files
 COPY playwright/fixtures ./playwright/fixtures
 
-# Bundled test code (Rolldown output, packed by _phase:pack-build-test)
+# Bundled test code (Rolldown output, packed by _phase:pack-build)
 ADD sdk-ui-tests-e2e.tgz ./playwright/
 
 USER root

@@ -11,6 +11,7 @@ import {
     type AiKeyDriverAnalysis,
     type AiSearchObject,
     type AiSearchRelationship,
+    type AiSuggestions,
     type AiWhatIfScenario,
 } from "@gooddata/api-client-tiger";
 import {
@@ -20,7 +21,7 @@ import {
     type IChatConversationFeedback,
     type IChatConversationItem,
     type IChatKdaDefinition,
-    type IChatSuggestionsItem,
+    type IChatSuggestions,
     type IChatWhatIfDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -156,6 +157,7 @@ function convertChatConversationContentFromBackend(
                             throw new Error(`Unexpected part: ${JSON.stringify(part)}`);
                     }
                 }),
+                suggestions: convertChatSuggestionItemFromBackend(content.suggestions),
             };
         case "toolCall":
             return {
@@ -275,24 +277,11 @@ function convertSearchRelationships(
     );
 }
 
-/**
- * Represents AI-generated suggestions, which may include a follow-up question
- * and a list of actions with associated labels and queries.
- *
- * TODO: This is mock types, must be loaded from openapi when will be ready
- */
-export type AiSuggestions = {
-    followUpQuestion?: string;
-    actions?: {
-        label: string;
-        query: string;
-    }[];
-};
-
-export function convertChatSuggestionItemFromBackend(item: AiSuggestions | undefined): IChatSuggestionsItem {
+export function convertChatSuggestionItemFromBackend(
+    item: AiSuggestions | null | undefined,
+): IChatSuggestions {
     return {
-        type: "suggestions",
-        followUp: item?.followUpQuestion,
+        followUpQuestion: item?.followUpQuestion,
         actions: item?.actions?.map((action) => ({
             label: action.label,
             query: action.query,
