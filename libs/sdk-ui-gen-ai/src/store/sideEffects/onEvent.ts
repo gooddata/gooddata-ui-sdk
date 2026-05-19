@@ -35,6 +35,8 @@ import {
     newMessageAction,
     pinConversationFailureAction,
     pinConversationSuccessAction,
+    renameConversationFailureAction,
+    renameConversationSuccessAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
     setUserFeedback,
@@ -59,6 +61,8 @@ export function* onEvent() {
     yield takeEvery(pinConversationFailureAction.type, onConversationPinError);
     yield takeEvery(deleteConversationSuccessAction.type, onConversationDeletedSuccess);
     yield takeEvery(deleteConversationFailureAction.type, onConversationDeletedError);
+    yield takeEvery(renameConversationSuccessAction.type, onConversationRenamedSuccess);
+    yield takeEvery(renameConversationFailureAction.type, onConversationRenamedError);
 }
 
 function* onConversationPinUpdated({
@@ -112,6 +116,35 @@ function* onConversationDeletedError({
         type: "chatConversationDeletedError",
         threadId,
         conversation,
+        error,
+    });
+}
+
+function* onConversationRenamedSuccess({
+    payload: { conversationId, title },
+}: ReturnType<typeof renameConversationSuccessAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationRenamed",
+        threadId,
+        conversationId,
+        title,
+    });
+}
+
+function* onConversationRenamedError({
+    payload: { conversationId, title, error },
+}: ReturnType<typeof renameConversationFailureAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationRenamedError",
+        title: title ?? "",
+        threadId,
+        conversationId,
         error,
     });
 }

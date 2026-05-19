@@ -34,7 +34,6 @@ export function ConversationWhatIfContent({
         <div className={classNames}>
             {whatIf.scenarios.map((scenario, index) => (
                 <ConversationVisualizationContent
-                    useMarkdown
                     key={index}
                     message={message}
                     part={part}

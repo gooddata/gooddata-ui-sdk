@@ -3712,6 +3712,9 @@ export function insightHasMeasures(insight: IInsightDefinition): boolean;
 // @public
 export function insightId(insight: IInsight): string;
 
+// @alpha
+export function insightIsHidden(insight: IInsight): boolean;
+
 // @public
 export function insightIsLocked(insight: IInsight): boolean;
 

@@ -3476,7 +3476,7 @@
         "crowdinContext": "Description of permission"
     },
     "userManagement.workspace.granularPermission.manage.description": {
-        "text": "Allows users can to, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
+        "text": "Allows users to create, edit, or delete the logical data model and metrics, access all dashboards, and edit dashboard permissions without limitations.",
         "crowdinContext": "Description of permission"
     },
     "userManagement.workspace.granularPermission.warning": {

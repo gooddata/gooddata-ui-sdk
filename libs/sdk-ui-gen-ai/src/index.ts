@@ -59,6 +59,8 @@ export {
     type ChatConversationDeletedEvent,
     type ChatConversationPinErrorEvent,
     type ChatConversationDeletedErrorEvent,
+    type ChatConversationRenamedEvent,
+    type ChatConversationRenamedErrorEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -74,6 +76,8 @@ export {
     isChatConversationPinnedEvent,
     isChatConversationPinErrorEvent,
     isChatConversationDeletedErrorEvent,
+    isChatConversationRenamedEvent,
+    isChatConversationRenamedErrorEvent,
 } from "./store/events.js";
 
 export { clearThreadAction, newMessageAction } from "./store/messages/messagesSlice.js";

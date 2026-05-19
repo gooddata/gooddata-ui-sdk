@@ -22,7 +22,7 @@ COPY --from=builder /app/app /usr/bin/app
 # Copy static dir (dashboard-test.html)
 COPY tiny_web_server/static/ ./static/
 
-# Add web components tgz (packed by package.json script _phase:pack-build-test)
+# Add web components tgz (packed by package.json script _phase:pack-build)
 ADD sdk-ui-web-components.tgz ./static/components/
 
 # Expose port

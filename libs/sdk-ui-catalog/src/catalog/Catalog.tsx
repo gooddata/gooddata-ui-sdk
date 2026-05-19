@@ -16,7 +16,7 @@ import { Header } from "../header/Header.js";
 import { useCatalogItemOpen } from "../main/hooks/useCatalogItemOpen.js";
 import { Main } from "../main/Main.js";
 import type { CatalogCreateObjectType } from "../objectType/types.js";
-import { useIsParametersEnabled } from "../parameter/gate.js";
+import { useCanManageParameter } from "../parameter/gate.js";
 import { ParameterMutationProvider } from "../parameter/ParameterMutationContext.js";
 import { PermissionsGate } from "../permission/PermissionsGate.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
@@ -49,7 +49,7 @@ export function Catalog({
     onCreateObject,
 }: Props) {
     const intl = useIntl();
-    const isParametersEnabled = useIsParametersEnabled();
+    const showParameter = useCanManageParameter();
     const isTrendingEnabled = useIsCatalogTrendingObjectsEnabled();
     const isQualityEnabled = useIsCatalogQualityEnabled();
 
@@ -89,7 +89,7 @@ export function Catalog({
                                 onCreateObject ? (
                                     <CreateObjectButton
                                         onCreateObject={onCreateObject}
-                                        showParameter={isParametersEnabled}
+                                        showParameter={showParameter}
                                     />
                                 ) : null
                             }

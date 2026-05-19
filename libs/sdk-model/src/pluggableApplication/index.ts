@@ -459,8 +459,16 @@ export interface IExternalUrlPluggableApplicationModule {
     /**
      * URL of the external application.
      *
+     * May contain the placeholder `{workspaceId}` which the host substitutes with the
+     * id of the currently active workspace at navigation time. The placeholder is the
+     * only supported variable; other tokens are left untouched. If no workspace is
+     * active when the URL is composed, the placeholder is substituted with an empty
+     * string.
+     *
      * @example
      * https://google.com
+     * @example
+     * /dashboards/#/project/\{workspaceId\}
      */
     url: string;
 }

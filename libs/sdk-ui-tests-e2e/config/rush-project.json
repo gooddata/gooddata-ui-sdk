@@ -11,7 +11,7 @@
             "outputFolderNames": []
         },
         {
-            "operationName": "_phase:pack-build-test",
+            "operationName": "_phase:pack-build",
             "outputFolderNames": [],
             "disableBuildCacheForOperation": true
         },

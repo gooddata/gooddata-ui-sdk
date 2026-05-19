@@ -80,15 +80,6 @@ const FEATURE_HUB_RESPONSE = [
                 value: true,
                 v: "0d2K",
             },
-            {
-                id: "78538cca-c3db-43a3-ac43-eb385b1ebea8",
-                key: "enableEmptyDateValuesFilter",
-                l: false,
-                version: 13,
-                type: "BOOLEAN",
-                value: true,
-                v: "NsVT",
-            },
         ],
     },
 ] satisfies IFeatureHubEnvironment[];

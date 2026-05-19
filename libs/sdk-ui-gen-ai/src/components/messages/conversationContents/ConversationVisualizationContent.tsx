@@ -60,7 +60,6 @@ import { useConfig } from "../../ConfigContext.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 import { DrillSelectDropdownMenu } from "../contents/drill/DrillSelectDropdownMenu.js";
-import { MarkdownComponent } from "../contents/Markdown.js";
 
 import {
     ConversationVisualisation,
@@ -88,7 +87,6 @@ export type ConversationVisualizationContentProps = {
     colorPalette?: IColorPalette;
     className?: string;
     agGridToken?: string;
-    useMarkdown?: boolean;
     onCopyToClipboard?: (data: { content: string }) => void;
     setKeyDriverAnalysis?: typeof setKeyDriverAnalysisAction;
     enableChangeAnalysis?: boolean;
@@ -102,7 +100,6 @@ function ConversationVisualizationContentCore({
     scenario,
     visualization,
     className,
-    useMarkdown,
     onCopyToClipboard,
     setKeyDriverAnalysis,
     colorPalette,
@@ -187,12 +184,7 @@ function ConversationVisualizationContentCore({
                         onCopy={onCopy}
                         isLoading={part.reporting ?? false}
                     />
-                    <Title
-                        id={moreButtonDescId}
-                        visualization={visualization}
-                        scenario={scenario}
-                        useMarkdown={useMarkdown}
-                    />
+                    <Title id={moreButtonDescId} visualization={visualization} scenario={scenario} />
                     <VisualisationWrapper
                         message={message}
                         colorPalette={colorPalette}
@@ -245,15 +237,12 @@ interface ITitleProps {
     visualization: IChatConversationVisualisationContent["visualization"];
     scenario?: IWhatIfRenderableScenario;
     id: string;
-    useMarkdown?: boolean;
 }
 
-function Title({ id, visualization, scenario, useMarkdown }: ITitleProps) {
+function Title({ id, visualization, scenario }: ITitleProps) {
     return (
         <div className="gd-gen-ai-chat__conversation__visualization__title" id={id}>
-            <MarkdownComponent allowMarkdown={useMarkdown}>
-                {scenario?.label ?? visualization?.insight.title ?? ""}
-            </MarkdownComponent>
+            {scenario?.label ?? visualization?.insight.title ?? ""}
         </div>
     );
 }

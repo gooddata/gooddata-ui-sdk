@@ -517,6 +517,7 @@ export {
     insightTitle,
     insightUri,
     insightIsLocked,
+    insightIsHidden,
     insightCreated,
     insightCreatedBy,
     insightUpdated,

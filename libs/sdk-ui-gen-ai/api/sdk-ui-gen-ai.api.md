@@ -18,7 +18,7 @@ import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
 import { IChatConversationError } from '@gooddata/sdk-backend-spi';
 import { IChatConversationItem } from '@gooddata/sdk-backend-spi';
 import { IChatConversationMultipartPart } from '@gooddata/sdk-backend-spi';
-import { IChatSuggestionsItem } from '@gooddata/sdk-backend-spi';
+import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIVisualization } from '@gooddata/sdk-model';
@@ -97,13 +97,28 @@ export type ChatConversationPinnedEvent = BaseEvent & {
 };
 
 // @public
+export type ChatConversationRenamedErrorEvent = BaseEvent & {
+    type: "chatConversationRenamedError";
+    conversationId: string;
+    title: string;
+    error: Error;
+};
+
+// @public
+export type ChatConversationRenamedEvent = BaseEvent & {
+    type: "chatConversationRenamed";
+    conversationId: string;
+    title: string;
+};
+
+// @public
 export type ChatCopyToClipboardEvent = BaseEvent & {
     type: "chatCopyToClipboard";
     content: string;
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeletedEvent | ChatConversationDeletedErrorEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeletedEvent | ChatConversationDeletedErrorEvent | ChatConversationRenamedEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -248,7 +263,6 @@ export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> 
     streaming?: boolean;
     localId: string;
     content: IChatConversationLocalContent | IChatConversationErrorContent;
-    suggestions?: IChatSuggestionsItem;
 };
 
 // @public
@@ -263,6 +277,7 @@ export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart
         message: string;
     };
     objects?: TextContentObject[];
+    suggestions?: IChatSuggestions;
 };
 
 // @beta (undocumented)
@@ -312,6 +327,12 @@ export const isChatConversationPinErrorEvent: (event: ChatEvent) => event is Cha
 
 // @public
 export const isChatConversationPinnedEvent: (event: ChatEvent) => event is ChatConversationPinnedEvent;
+
+// @public
+export const isChatConversationRenamedErrorEvent: (event: ChatEvent) => event is ChatConversationRenamedErrorEvent;
+
+// @public
+export const isChatConversationRenamedEvent: (event: ChatEvent) => event is ChatConversationRenamedEvent;
 
 // @public
 export const isChatCopyToClipboardEvent: (event: ChatEvent) => event is ChatCopyToClipboardEvent;

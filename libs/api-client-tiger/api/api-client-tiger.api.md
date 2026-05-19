@@ -3810,6 +3810,8 @@ export type AiMetricValueFilterConditionRange = typeof AiMetricValueFilterCondit
 // @public (undocumented)
 export interface AiMultipartContent {
     'parts': Array<AiMultipartContentPartsInner>;
+    // (undocumented)
+    'suggestions'?: AiSuggestions | null;
     'type'?: AiMultipartContentTypeEnum;
 }
 
@@ -4265,6 +4267,18 @@ export interface AiSkillResponse {
     'tags': Array<string>;
     // (undocumented)
     'title': string;
+}
+
+// @public
+export interface AiSuggestedAction {
+    'label': string;
+    'query': string;
+}
+
+// @public
+export interface AiSuggestions {
+    'actions': Array<AiSuggestedAction>;
+    'followUpQuestion': string;
 }
 
 // @public (undocumented)

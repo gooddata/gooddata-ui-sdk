@@ -220,3 +220,16 @@
         }
     }
 }
+
+.gd-gen-ai-chat__rename-dialog {
+    min-width: 440px;
+
+    &__input .gd-input-label {
+        text-transform: none;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 21px;
+        margin-bottom: 0;
+    }
+}

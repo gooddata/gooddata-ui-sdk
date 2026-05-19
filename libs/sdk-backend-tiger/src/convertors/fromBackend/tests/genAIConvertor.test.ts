@@ -157,8 +157,7 @@ describe("genAIConvertor", () => {
             });
 
             expect(converted).toEqual({
-                type: "suggestions",
-                followUp: "What do you want to analyze next?",
+                followUpQuestion: "What do you want to analyze next?",
                 actions: [
                     {
                         label: "Revenue by region",
@@ -172,8 +171,7 @@ describe("genAIConvertor", () => {
             const converted = convertChatSuggestionItemFromBackend(undefined);
 
             expect(converted).toEqual({
-                type: "suggestions",
-                followUp: undefined,
+                followUpQuestion: undefined,
                 actions: undefined,
             });
         });

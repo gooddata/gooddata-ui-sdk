@@ -16,11 +16,6 @@
             "disableBuildCacheForOperation": true
         },
         {
-            "operationName": "_phase:pack-build-test",
-            "outputFolderNames": [],
-            "disableBuildCacheForOperation": true
-        },
-        {
             "operationName": "_phase:publish-test-docker-images",
             "outputFolderNames": [],
             "disableBuildCacheForOperation": true
