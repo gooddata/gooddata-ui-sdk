@@ -178,8 +178,24 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
             }
 
             function AttributeFilterComponent(attributeFilterProps: IAttributeFilterProps) {
+                // When the filter swaps between Loading / Error / DropdownButton renderings,
+                // the focused DOM node is unmounted. Capture focus on ref-cleanup and
+                // re-apply it when the replacement mounts, so the user doesn't visually lose focus.
+                const wasFocusedRef = useRef(false);
                 const setFilterItemRef = useCallback((element: HTMLElement | null) => {
+                    if (element === null) {
+                        const prev = filterItemRefs.current.get(filterIdentifier);
+                        wasFocusedRef.current =
+                            !!prev &&
+                            (prev === document.activeElement || prev.contains(document.activeElement));
+                        filterItemRefs.current.set(filterIdentifier, null);
+                        return;
+                    }
                     filterItemRefs.current.set(filterIdentifier, element);
+                    if (wasFocusedRef.current) {
+                        wasFocusedRef.current = false;
+                        element.focus();
+                    }
                 }, []);
                 const onError = useCallback(
                     (error: GoodDataSdkError) => errorHandler(filterIdentifier)(error),
@@ -219,12 +235,12 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                         [attributeFilterProps.DropdownButtonComponent, setFilterItemRef],
                     );
                 const LoadingComponent: NonNullable<IAttributeFilterProps["LoadingComponent"]> = useCallback(
-                    () => <FilterGroupItem isLoading />,
-                    [],
+                    () => <FilterGroupItem isLoading buttonRef={setFilterItemRef} />,
+                    [setFilterItemRef],
                 );
                 const ErrorComponent: NonNullable<IAttributeFilterProps["ErrorComponent"]> = useCallback(
-                    () => <FilterGroupItem isError />,
-                    [],
+                    () => <FilterGroupItem isError buttonRef={setFilterItemRef} />,
+                    [setFilterItemRef],
                 );
                 const ElementsSearchBarComponent: NonNullable<
                     IAttributeFilterProps["ElementsSearchBarComponent"]
@@ -264,14 +280,10 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
     }, [availableFilterIdentifiers, getTitleExtension, errorHandler, initLoadingChangedHandler]);
 
     const renderItem = useCallback(
-        ({ item, rowIndex }: IFilterGroupDropdownListItemProps<P>) => {
+        ({ item }: IFilterGroupDropdownListItemProps<P>) => {
             const identifier = getFilterIdentifier(item);
             const AttributeFilterComponent = attributeFilterComponentsByIdentifier.get(identifier);
-            return (
-                <div role="row" aria-rowindex={rowIndex + 1}>
-                    <div role="gridcell">{renderFilter(item, AttributeFilterComponent)}</div>
-                </div>
-            );
+            return renderFilter(item, AttributeFilterComponent);
         },
         [attributeFilterComponentsByIdentifier, getFilterIdentifier, renderFilter],
     );
@@ -303,17 +315,27 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         [getFilterIdentifier],
     );
 
+    const groupAriaLabel = intl.formatMessage({ id: "filterGroup.aria.label" }, { title });
+    const groupAriaLabelWithState = intl.formatMessage(
+        { id: "filterGroup.aria.label.withState" },
+        { title, state: subtitle },
+    );
     const renderBody = useCallback(
         ({ isMobile, closeDropdown }: IDropdownBodyRenderProps) => (
-            <div onKeyDownCapture={handleKeyDownCapture} onKeyDown={handleKeyDown}>
+            <div
+                role="dialog"
+                aria-label={groupAriaLabel}
+                onKeyDownCapture={handleKeyDownCapture}
+                onKeyDown={handleKeyDown}
+            >
                 <DropdownList
                     className="gd-filter-group-body"
                     items={filters}
                     maxHeight={450}
                     itemHeight={53}
                     accessibilityConfig={{
-                        role: "grid",
-                        ariaLabel: title,
+                        role: "list",
+                        ariaLabel: groupAriaLabel,
                     }}
                     renderItem={renderItem}
                     onKeyDownSelect={handleItemKeyboardAction}
@@ -322,7 +344,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                 />
             </div>
         ),
-        [filters, renderItem, handleKeyDown, handleKeyDownCapture, handleItemKeyboardAction, title],
+        [filters, renderItem, handleKeyDown, handleKeyDownCapture, handleItemKeyboardAction, groupAriaLabel],
     );
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -343,10 +365,19 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     buttonRef={buttonRef}
                     onClick={toggleDropdown}
                     isError={isAnyFilterError}
+                    ariaLabel={groupAriaLabelWithState}
                 />
             </div>
         ),
-        [title, subtitle, isAnyFilterError, selectedItemsCount, totalItemsCount, isMobile],
+        [
+            title,
+            subtitle,
+            isAnyFilterError,
+            selectedItemsCount,
+            totalItemsCount,
+            isMobile,
+            groupAriaLabelWithState,
+        ],
     );
 
     return (

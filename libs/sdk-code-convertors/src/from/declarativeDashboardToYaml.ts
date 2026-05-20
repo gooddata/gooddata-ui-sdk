@@ -101,6 +101,23 @@ export function declarativeDashboardToYaml(
     // Add intro comment to the document
     doc.commentBefore = DASHBOARD_COMMENT;
 
+    // Infer the YAML model version from the declarative structure:
+    //  - V3 (tabs are the sole source of content) when tabs are present and no root-level
+    //    layout / filter configs / parameters exist.
+    //  - V2 (legacy) otherwise — covers both root-only dashboards and tab dashboards that
+    //    still carry mirrored root content for backward compatibility.
+    const hasContentTabs = (content.tabs?.length ?? 0) > 0;
+    const hasRootContent = Boolean(
+        content.layout ||
+        content.dateFilterConfig ||
+        (content.dateFilterConfigs && content.dateFilterConfigs.length > 0) ||
+        (content.attributeFilterConfigs && content.attributeFilterConfigs.length > 0) ||
+        (content.measureValueFilterConfigs && content.measureValueFilterConfigs.length > 0) ||
+        (content.parameters && content.parameters.length > 0),
+    );
+    const yamlVersion: "2" | "3" = hasContentTabs && !hasRootContent ? "3" : "2";
+    doc.add(entryWithSpace("version", yamlVersion));
+
     // Add optional meta fields
     fillOptionalMetaFields(doc, dashboard);
 
@@ -118,13 +135,6 @@ export function declarativeDashboardToYaml(
         doc.add(entryWithSpace("filter_views", false));
     }
 
-    // Add enable_section_headers
-    if (content.layout?.configuration?.sections?.enableHeader) {
-        doc.add(
-            entryWithSpace("enable_section_headers", content.layout?.configuration?.sections?.enableHeader),
-        );
-    }
-
     // Add dashboard tabs
     // Note: If there's only 1 tab without a title (implicit first tab visible in edit mode),
     // treat as "no tabs" and use sections format to preserve previous YAML structure
@@ -133,6 +143,15 @@ export function declarativeDashboardToYaml(
     const shouldUseTabs = hasMultipleTabs || hasSingleTabWithTitle;
 
     if (content.tabs && shouldUseTabs) {
+        // Add enable_section_headers
+        if (content.tabs[0].layout?.configuration?.sections?.enableHeader) {
+            doc.add(
+                entryWithSpace(
+                    "enable_section_headers",
+                    content.tabs[0].layout?.configuration?.sections?.enableHeader,
+                ),
+            );
+        }
         const tabs = declarativeTabsToYaml(
             content.tabs,
             filterContexts,
@@ -143,6 +162,15 @@ export function declarativeDashboardToYaml(
             doc.add(entryWithSpace("tabs", tabs));
         }
     } else if (content.tabs?.length === 1) {
+        // Add enable_section_headers
+        if (content.tabs[0].layout?.configuration?.sections?.enableHeader) {
+            doc.add(
+                entryWithSpace(
+                    "enable_section_headers",
+                    content.tabs[0].layout?.configuration?.sections?.enableHeader,
+                ),
+            );
+        }
         // Dashboard with implicit single tab - create root yaml structure like without tabs
         // but read all metadata from a single tab
         const tab = content.tabs[0];
@@ -181,6 +209,15 @@ export function declarativeDashboardToYaml(
         }
     } else {
         // Dashboard without tabs - add sections and filters
+        // Add enable_section_headers
+        if (content.layout?.configuration?.sections?.enableHeader) {
+            doc.add(
+                entryWithSpace(
+                    "enable_section_headers",
+                    content.layout?.configuration?.sections?.enableHeader,
+                ),
+            );
+        }
         const section = declarativeSectionsToYaml(
             content.layout,
             entities,

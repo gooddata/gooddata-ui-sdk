@@ -11,7 +11,6 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type IWorkspaceUser,
-    type ObjRef,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -20,13 +19,6 @@ import { type ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 ///
 /// Component props
 ///
-
-/**
- * @internal
- */
-export interface IScheduledEmailDialogPropsContext {
-    widgetRef?: ObjRef | undefined;
-}
 
 /**
  * @alpha

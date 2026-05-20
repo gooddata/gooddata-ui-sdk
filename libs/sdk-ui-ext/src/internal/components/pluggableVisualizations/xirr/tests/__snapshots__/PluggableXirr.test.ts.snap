@@ -37,6 +37,7 @@ exports[`PluggableXirr > getExtendedReferencePoint > should correctly process em
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -138,6 +139,7 @@ exports[`PluggableXirr > getExtendedReferencePoint > should return proper extend
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

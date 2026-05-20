@@ -136,7 +136,7 @@ interface IAnalyticalDashboardContent {
     tabs?: IDashboardTab[];
 }
 
-function convertDashboardParameter(parameter: ITigerDashboardParameter): IDashboardParameter {
+export function convertDashboardParameter(parameter: ITigerDashboardParameter): IDashboardParameter {
     return {
         ref: cloneWithSanitizedIds(parameter.ref),
         parameterType: parameter.parameterType,

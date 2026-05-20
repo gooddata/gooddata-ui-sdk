@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type MutableRefObject, type ReactNode } from "react";
 
@@ -7,6 +7,7 @@ import { isEmpty } from "lodash-es";
 import {
     type AccessGranularPermission,
     type FilterContextItem,
+    type IDashboardParameter,
     type IUser,
     type ObjRef,
     type ShareStatus,
@@ -238,6 +239,7 @@ export interface IShareDialogBaseProps {
     currentUser: IUser;
     currentUserPermissions: CurrentUserPermissions;
     dashboardFilters?: FilterContextItem[];
+    dashboardParameters?: IDashboardParameter[];
     isShareGrantHidden?: boolean;
     applyShareGrantOnSelect?: boolean;
     showDashboardShareLink?: boolean;
@@ -283,6 +285,7 @@ export interface IShareGranteeBaseProps {
     isCurrentUserWorkspaceManager: boolean;
     currentUserPermissions: CurrentUserPermissions;
     dashboardFilters?: FilterContextItem[];
+    dashboardParameters?: IDashboardParameter[];
     isShareGrantHidden?: boolean;
     applyShareGrantOnSelect?: boolean;
     showDashboardShareLink?: boolean;
@@ -370,6 +373,7 @@ export interface IGranteesListProps {
  */
 export interface IShareLinkProps {
     dashboardFilters?: FilterContextItem[];
+    dashboardParameters?: IDashboardParameter[];
     headline: string;
     helperText: string;
     buttonLabel: string;

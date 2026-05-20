@@ -118,7 +118,6 @@ export class PluggableComboChart extends PluggableBaseChart {
                 stackMeasures: this.isStackMeasuresByDefault(),
             },
         });
-        this.addMetricToFiltersIfEnabled(config);
         return config;
     }
 
@@ -164,9 +163,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         );
         newReferencePoint = applyUiConfig(newReferencePoint);
 
-        return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
-        );
+        return Promise.resolve(sanitizeFilters(newReferencePoint, referencePoint));
     }
 
     public isStackMeasuresByDefault(): boolean {

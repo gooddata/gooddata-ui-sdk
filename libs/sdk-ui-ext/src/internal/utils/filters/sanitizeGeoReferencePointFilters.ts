@@ -72,11 +72,7 @@ function transformMeasureValueFilterDimensionalityToRefs(
     oldRootAttributes: IBucketItem[],
     oldRootAttributeLocalIds: Set<string>,
     newRootAttributeLocalIds: Set<string>,
-    enableImprovedAdFilters: boolean,
 ): IMeasureValueFilter {
-    if (!enableImprovedAdFilters) {
-        return filter;
-    }
     if (!filter.dimensionality?.length) {
         return filter;
     }
@@ -124,7 +120,6 @@ export function sanitizeGeoReferencePointFilters(
     filters: IFilters | undefined,
     oldBuckets: IBucketOfFun[],
     newBuckets: IBucketOfFun[],
-    enableImprovedAdFilters: boolean,
 ): IFilters {
     const safeFilters = ensureFiltersBucket(filters);
     const oldRootMeasures = getAllMeasures(oldBuckets);
@@ -148,35 +143,21 @@ export function sanitizeGeoReferencePointFilters(
             return item;
         }
 
-        const wasRemovedFromNewRoot = !newRootMeasureLocalIds.has(measureLocalId);
-        if (wasRemovedFromNewRoot && !enableImprovedAdFilters) {
-            return undefined;
-        }
-
-        const withMeasureRef =
-            wasRemovedFromNewRoot && enableImprovedAdFilters
-                ? transformMeasureValueFilterMeasureToRefIfPossible(filter, oldRootMeasures)
-                : filter;
+        const withMeasureRef = newRootMeasureLocalIds.has(measureLocalId)
+            ? filter
+            : transformMeasureValueFilterMeasureToRefIfPossible(filter, oldRootMeasures);
 
         const withDimensionalityRefs = transformMeasureValueFilterDimensionalityToRefs(
             withMeasureRef,
             oldRootAttributes,
             oldRootAttributeLocalIds,
             newRootAttributeLocalIds,
-            enableImprovedAdFilters,
         );
 
         const measureLocalIdAfter = withDimensionalityRefs.measureLocalIdentifier;
         const isMeasureLocalIdValid = !measureLocalIdAfter || newRootMeasureLocalIds.has(measureLocalIdAfter);
 
-        const usesObjRefMeasure = Boolean(withDimensionalityRefs.measureRef);
-        const usesObjRefDimensionality = Boolean(withDimensionalityRefs.dimensionality?.some(isObjRef));
-        const usesAnyObjRefs = usesObjRefMeasure || usesObjRefDimensionality;
-        const areObjRefsAllowed = enableImprovedAdFilters || !usesAnyObjRefs;
-
-        const isValid = isMeasureLocalIdValid && areObjRefsAllowed;
-
-        if (!isValid) {
+        if (!isMeasureLocalIdValid) {
             return undefined;
         }
 

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -9,14 +9,22 @@ import { Bubble, BubbleHoverTrigger, IconBoldHyperlink } from "@gooddata/sdk-ui-
  */
 export interface IAttributeFilterDependencyTooltipProps {
     tooltipContent: ReactNode;
+    /**
+     * Accessible label for the dependency icon wrapper. Already-localized string announced
+     * by screen readers in place of the visible icon.
+     */
+    ariaLabel?: string;
 }
 
 /**
  * @internal
  */
-export function AttributeFilterDependencyTooltip({ tooltipContent }: IAttributeFilterDependencyTooltipProps) {
+export function AttributeFilterDependencyTooltip({
+    tooltipContent,
+    ariaLabel,
+}: IAttributeFilterDependencyTooltipProps) {
     return (
-        <span className="gd-attribute-filter-dropdown-button-icon-tooltip">
+        <span className="gd-attribute-filter-dropdown-button-icon-tooltip" aria-label={ariaLabel}>
             <BubbleHoverTrigger>
                 <IconBoldHyperlink width={12} height={16} />
                 <Bubble

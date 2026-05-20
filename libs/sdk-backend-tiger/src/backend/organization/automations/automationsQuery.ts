@@ -158,7 +158,6 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
                     : [];
 
                 // Note: Organization-level automations always include user data
-                const enableAutomationFilterContext = true;
                 const enableNewScheduledExport = true;
 
                 const requestParams: AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest =
@@ -197,7 +196,6 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
                             convertAutomation(
                                 automationObject,
                                 (res.data?.included ?? []) as JsonApiAutomationOutIncludes[],
-                                enableAutomationFilterContext,
                                 enableNewScheduledExport,
                             ),
                         );

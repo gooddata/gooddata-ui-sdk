@@ -63,7 +63,6 @@ export class PluggableSankeyChart extends PluggableBaseChart {
         referencePoint: IReferencePoint,
     ): Promise<IExtendedReferencePoint> {
         const uiConfig = cloneDeep(DEFAULT_SANKEY_UI_CONFIG);
-        this.addMetricToFiltersIfEnabled(uiConfig);
 
         let extendedReferencePoint: IExtendedReferencePoint = {
             ...cloneDeep(referencePoint),
@@ -77,13 +76,7 @@ export class PluggableSankeyChart extends PluggableBaseChart {
         extendedReferencePoint = configureOverTimeComparison(extendedReferencePoint);
         extendedReferencePoint = configSankeyUiConfig(extendedReferencePoint, this.intl, this.type);
 
-        return Promise.resolve(
-            sanitizeFilters(
-                extendedReferencePoint,
-                this.featureFlags?.enableImprovedAdFilters,
-                referencePoint,
-            ),
-        );
+        return Promise.resolve(sanitizeFilters(extendedReferencePoint, referencePoint));
     }
 
     protected override getSupportedPropertiesList(): string[] {

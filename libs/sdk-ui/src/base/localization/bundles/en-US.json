@@ -123,6 +123,14 @@
         "text": "N/A",
         "crowdinContext": "Stands for 'Not Available"
     },
+    "filterGroup.aria.label": {
+        "text": "Filter group: {title}",
+        "crowdinContext": "Accessible name for the filter group dropdown body and its list of filters. Announced by screen readers to distinguish a group of filters from an individual filter."
+    },
+    "filterGroup.aria.label.withState": {
+        "text": "Filter group: {title}: {state}",
+        "crowdinContext": "Accessible name for the filter group trigger button. Announced by screen readers; {state} is the localized selection summary (e.g., 'All (3)' or '(2/3)')."
+    },
     "gs.list.searchResults": {
         "text": "search results",
         "crowdinContext": "Label for indicating search results in filter dropdowns and list components. Used in phrases like '5 search results'."

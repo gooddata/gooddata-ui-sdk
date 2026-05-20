@@ -45,7 +45,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
 
     public getAutomations = async (options: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> => {
         const { loadUserData = false } = options ?? {};
-        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
         const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClientBase) => {
@@ -66,7 +65,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 convertAutomationFromBackend(
                     automation,
                     result.data.included ?? [],
-                    enableAutomationFilterContext,
                     enableNewScheduledExport,
                 ),
             );
@@ -82,7 +80,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         options?: IGetAutomationOptions,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
-        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
         const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClientBase) => {
@@ -100,7 +97,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
             return convertAutomationFromBackend(
                 result.data.data,
                 result.data.included ?? [],
-                enableAutomationFilterContext,
                 enableNewScheduledExport,
             );
         });
@@ -113,13 +109,11 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
-        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
         const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClientBase) => {
             const convertedAutomation = convertAutomationToBackend(
                 automation,
-                enableAutomationFilterContext,
                 enableNewScheduledExport,
                 widgetExecution,
                 overrides,
@@ -141,7 +135,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
             return convertAutomationFromBackend(
                 result.data.data,
                 result.data.included ?? [],
-                enableAutomationFilterContext,
                 enableNewScheduledExport,
             );
         });
@@ -154,13 +147,11 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         overrides?: IRawExportCustomOverrides,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
-        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
         const enableNewScheduledExport = await this.getEnableNewScheduledExport();
 
         return this.authCall(async (client: ITigerClientBase) => {
             const convertedAutomation = convertAutomationToBackend(
                 automation,
-                enableAutomationFilterContext,
                 enableNewScheduledExport,
                 widgetExecution,
                 overrides,
@@ -182,7 +173,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
             return convertAutomationFromBackend(
                 result.data.data,
                 result.data.included ?? [],
-                enableAutomationFilterContext,
                 enableNewScheduledExport,
             );
         });
@@ -266,11 +256,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
             });
         });
     }
-
-    private getEnableAutomationFilterContext = async (): Promise<boolean> => {
-        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspaceId);
-        return userSettings.enableAutomationFilterContext ?? true;
-    };
 
     private getEnableNewScheduledExport = async (): Promise<boolean> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspaceId);

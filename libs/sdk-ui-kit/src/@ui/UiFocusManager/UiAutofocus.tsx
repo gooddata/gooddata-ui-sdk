@@ -46,38 +46,97 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         }
     }, []);
 
-    // If the element is outside of the viewport, calling focus() will not work.
-    // This can happen for example with floating elements, that are repositioned after they mount
+    // Focus the first focusable inside the wrapper. Robust against slow renders, virtualized lists
+    // that recycle DOM nodes, and floating overlays that finish positioning after mount.
+    //
+    // `.focus()` is a no-op on elements that are not currently focusable (e.g. inside an ancestor
+    // with `visibility: hidden`, which Overlay applies until alignment completes). The browser
+    // does not throw or fire `focusin` in that case. To handle this we watch two signals:
+    //
+    //  - IntersectionObserver observes the resolved TARGET — fires when the target moves into the
+    //    viewport (e.g. an Overlay completing alignment from off-screen to its real position).
+    //    This is the moment `.focus()` will start taking.
+    //  - MutationObserver observes the wrapper — fires on descendant additions/removals
+    //    (lazy mount, virtualization) and on attribute changes (style/class/inert/hidden/...)
+    //    that may affect focusability without a position change.
+    //
+    // Each signal re-runs `attemptFocus`, which re-resolves the target and re-attaches the
+    // IntersectionObserver to it. A single rAF coalesces bursts into one attempt per frame.
     useEffect(() => {
-        const elementToFocus = getElementToFocus(element, initialFocus, true);
-
-        if (!elementToFocus || !active) {
+        if (!element || !active) {
             return undefined;
         }
 
-        const observer = new IntersectionObserver(([{ target }]) => {
-            // Focusing a newly created element sometimes fails if not done through requestAnimationFrame()
-            window.requestAnimationFrame(() => {
-                if (
-                    element?.contains(document.activeElement) ||
-                    target.contains(document.activeElement) ||
-                    isElementTextInput(document.activeElement)
-                ) {
-                    observer.disconnect();
-                    return;
-                }
+        let rafId = 0;
+        let stopped = false;
+        let observedTarget: HTMLElement | null = null;
 
-                (target as HTMLElement).focus();
-
-                if (document.activeElement === target) {
-                    observer.disconnect();
-                }
-            });
+        const intersectionObserver = new IntersectionObserver(() => {
+            scheduleAttempt();
         });
 
-        observer.observe(elementToFocus);
+        const observeTarget = (newTarget: HTMLElement | null | undefined) => {
+            if (newTarget === observedTarget) {
+                return;
+            }
+            if (observedTarget) {
+                intersectionObserver.unobserve(observedTarget);
+            }
+            observedTarget = newTarget ?? null;
+            if (observedTarget) {
+                intersectionObserver.observe(observedTarget);
+            }
+        };
 
-        return () => observer.disconnect();
+        const isFocusSettled = () =>
+            element.contains(document.activeElement) || isElementTextInput(document.activeElement);
+
+        const attemptFocus = () => {
+            if (isFocusSettled()) {
+                return true;
+            }
+            const target = getElementToFocus(element, initialFocus, true);
+            // Always (re-)observe the resolved target; the IntersectionObserver wakes us up when
+            // it moves into the viewport — the moment `.focus()` will take after Overlay alignment.
+            observeTarget(target);
+            if (!target?.isConnected) {
+                return false;
+            }
+            target.focus();
+            return document.activeElement === target;
+        };
+
+        const scheduleAttempt = () => {
+            if (stopped) {
+                return;
+            }
+            cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                if (attemptFocus()) {
+                    stop();
+                }
+            });
+        };
+
+        const stop = () => {
+            stopped = true;
+            cancelAnimationFrame(rafId);
+            mutationObserver.disconnect();
+            intersectionObserver.disconnect();
+        };
+
+        const mutationObserver = new MutationObserver(scheduleAttempt);
+        mutationObserver.observe(element, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ["style", "class", "hidden", "inert", "disabled", "tabindex", "aria-hidden"],
+        });
+
+        // Initial attempt — fast path when the first focusable is already present and visible.
+        scheduleAttempt();
+
+        return stop;
     }, [refocusKey, element, initialFocus, active]);
 
     return useMemo(() => ({ ref }), [ref]);

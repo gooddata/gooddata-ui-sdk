@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { type ReactNode } from "react";
+
 import cx from "classnames";
 import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
@@ -31,6 +33,8 @@ export interface IColorsSectionProps {
     supportsChartFill?: boolean;
     chartFillIgnoredMeasures?: string[];
     isChartFillDisabled?: boolean;
+    /** Optional controls rendered above the fill dropdown, inside the section. */
+    additionalControls?: ReactNode;
 }
 
 export const COLOR_MAPPING_CHANGED = "COLOR_MAPPING_CHANGED";
@@ -46,6 +50,7 @@ export function ColorsSection({
     supportsChartFill,
     chartFillIgnoredMeasures = [],
     isChartFillDisabled,
+    additionalControls,
 }: IColorsSectionProps) {
     const intl = useIntl();
     const onSelect = (selectedColorItem: IColoredItem, color: IColor) => {
@@ -146,6 +151,7 @@ export function ColorsSection({
                     chartFillIgnoredMeasures={chartFillIgnoredMeasures}
                 />
                 {renderResetButton()}
+                {additionalControls}
                 {renderFillDropdown()}
             </>
         );

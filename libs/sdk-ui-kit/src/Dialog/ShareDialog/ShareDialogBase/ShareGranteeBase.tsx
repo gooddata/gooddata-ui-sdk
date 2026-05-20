@@ -28,6 +28,7 @@ export function ShareGranteeBase({
     isDirty,
     currentUserPermissions,
     dashboardFilters,
+    dashboardParameters,
     isShareGrantHidden,
     applyShareGrantOnSelect,
     showDashboardShareLink,
@@ -118,6 +119,7 @@ export function ShareGranteeBase({
             {showDashboardShareLink ? (
                 <ShareLink
                     dashboardFilters={dashboardFilters}
+                    dashboardParameters={dashboardParameters}
                     onShareLinkCopy={onShareLinkCopy}
                     headline={dialogLabels.linkHeadline}
                     helperText={dialogLabels.linkHelperText}

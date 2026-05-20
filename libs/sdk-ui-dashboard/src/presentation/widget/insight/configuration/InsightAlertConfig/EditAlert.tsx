@@ -22,7 +22,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { type IExecutionResultEnvelope } from "../../../../../model/store/executionResults/types.js";
-import { AlertAttributeSelectOld } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelectOld.js";
+import { AlertAttributeSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelect.js";
 import { AlertComparisonOperatorSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
 import { AlertComparisonPeriodSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonPeriodSelect.js";
 import { AlertDestinationSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertDestinationSelect.js";
@@ -223,7 +223,7 @@ export function EditAlert({
 
                         {Boolean(canManageAttributes) && (
                             <>
-                                <AlertAttributeSelectOld
+                                <AlertAttributeSelect
                                     id="alert.attribute"
                                     selectedAttribute={selectedAttribute}
                                     selectedValue={selectedValue}
@@ -233,6 +233,8 @@ export function EditAlert({
                                     catalogDateDatasets={catalogDateDatasets}
                                     getAttributeValues={getAttributeValues}
                                     isResultLoading={isResultLoading}
+                                    showLabel
+                                    closeOnParentScroll
                                 />
                             </>
                         )}

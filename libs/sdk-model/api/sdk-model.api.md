@@ -1832,6 +1832,7 @@ export interface IDashboardFilterView {
     readonly isDefault?: boolean;
     // (undocumented)
     readonly name: string;
+    readonly parameters?: IDashboardParameter[];
     // (undocumented)
     readonly ref: ObjRef;
     // (undocumented)
@@ -1850,6 +1851,7 @@ export interface IDashboardFilterViewSaveRequest {
     readonly isDefault?: boolean;
     // (undocumented)
     readonly name: string;
+    readonly parameters?: IDashboardParameter[];
     // (undocumented)
     readonly tabLocalIdentifier?: string;
 }
@@ -2543,13 +2545,14 @@ export interface IFeatureFlags {
     enableAlertsEvaluationFrequencySetup?: boolean;
     enableAmplitudeTracker?: boolean;
     enableAnalyticalCatalog?: boolean;
+    // @alpha
+    enableAnalyticalDashboardVersion3?: boolean;
     enableAnomalyDetectionAlert?: boolean;
     enableAnomalyDetectionVisualization?: boolean;
     enableArbitraryFilterAD?: boolean;
     enableArbitraryFilterKD?: boolean;
     // (undocumented)
     enableAthenaDataSource?: boolean;
-    enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
     enableAutomationTrigger?: boolean;
     enableCatalogSmartSearchResults?: boolean;
@@ -2615,7 +2618,6 @@ export interface IFeatureFlags {
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImplicitDrillToUrl?: boolean;
-    enableImprovedAdFilters?: boolean;
     enableInPlatformNotifications?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
@@ -2654,6 +2656,7 @@ export interface IFeatureFlags {
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTablePagination?: boolean;
     enablePreAggregationDatasets?: boolean;
+    enableRadarChart?: boolean;
     enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
     enableRichTextDescriptions?: boolean;

@@ -929,6 +929,7 @@ export type DashboardConfig = {
     settings?: ISettings;
     dateFilterConfig?: IDateFilterConfig;
     overrideDefaultFilters?: FilterContextItem[];
+    overrideDefaultParameters?: IDashboardParameter[];
     overrideTitle?: string;
     colorPalette?: IColorPalette;
     objectAvailability?: ObjectAvailabilityConfig;
@@ -1448,16 +1449,10 @@ export const DEFAULT_MESSAGES: Record<string, ITranslations>;
 export const DEFAULT_TAB_ID = "defaultTabId";
 
 // @alpha (undocumented)
-export function DefaultAlertingDialogNew(props: IAlertingDialogProps): JSX.Element;
-
-// @alpha (undocumented)
-export function DefaultAlertingDialogOld({ editAlert, editWidget, anchorEl, onCancel, onUpdate }: IAlertingDialogOldProps): JSX.Element | null;
+export function DefaultAlertingDialog(props: IAlertingDialogProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultAlertingManagementDialogNew({ onPauseSuccess, onPauseError, onEdit, onAdd, onDeleteSuccess, onDeleteError, onClose, isLoadingAlertingData, automations }: IAlertingManagementDialogProps): JSX.Element;
-
-// @alpha (undocumented)
-export function DefaultAlertingManagementDialogOld({ onPauseSuccess, onPauseError, onEdit, onDeleteSuccess, onDeleteError, onClose, isLoadingAlertingData, automations }: IAlertingManagementDialogOldProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultButtonBar({ children, cancelButtonProps, saveButtonProps, settingButtonProps, editButtonProps, saveAsNewButtonProps, shareButtonProps, childContentPosition }: IButtonBarProps): ReactElement;
@@ -1595,7 +1590,7 @@ export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTit
 export function DefaultShareButton({ isVisible, onShareButtonClick }: IShareButtonProps): ReactElement | null;
 
 // @alpha (undocumented)
-export function DefaultShareDialog({ workspace, backend, isVisible, sharedObject, currentUser, isLockingSupported, isCurrentUserWorkspaceManager, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onApply, onCancel, onError, onInteraction, onShareLinkCopy }: IShareDialogProps): ReactElement | null;
+export function DefaultShareDialog({ workspace, backend, isVisible, sharedObject, currentUser, isLockingSupported, isCurrentUserWorkspaceManager, currentUserPermissions, dashboardFilters, dashboardParameters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onApply, onCancel, onError, onInteraction, onShareLinkCopy }: IShareDialogProps): ReactElement | null;
 
 // @alpha (undocumented)
 export function DefaultShareStatus(props: IShareStatusProps): ReactElement | null;
@@ -2295,15 +2290,6 @@ export interface IAlertDialogContext {
 }
 
 // @alpha (undocumented)
-export interface IAlertingDialogOldProps {
-    anchorEl?: HTMLElement | null;
-    editAlert?: IAutomationMetadataObject;
-    editWidget?: IInsightWidget;
-    onCancel?: () => void;
-    onUpdate?: (alertingDefinition: IAutomationMetadataObject) => void;
-}
-
-// @alpha (undocumented)
 export interface IAlertingDialogProps {
     alertToEdit?: IAutomationMetadataObject;
     insight?: IInsight;
@@ -2319,19 +2305,6 @@ export interface IAlertingDialogProps {
     users: IWorkspaceUser[];
     usersError?: GoodDataSdkError;
     widget?: ExtendedDashboardWidget;
-}
-
-// @alpha (undocumented)
-export interface IAlertingManagementDialogOldProps {
-    alertingDataError?: GoodDataSdkError;
-    automations: IAutomationMetadataObject[];
-    isLoadingAlertingData: boolean;
-    onClose?: () => void;
-    onDeleteError?: (error: GoodDataSdkError) => void;
-    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
-    onEdit?: (alertingDefinition: IAutomationMetadataObject, widget: IInsightWidget | undefined, anchor: HTMLElement | null, onClosed: () => void) => void;
-    onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
-    onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
 }
 
 // @alpha (undocumented)
@@ -7571,12 +7544,6 @@ export interface IScheduledEmailDialogProps {
     widgetFilters?: IFilter[];
 }
 
-// @internal (undocumented)
-export interface IScheduledEmailDialogPropsContext {
-    // (undocumented)
-    widgetRef?: ObjRef | undefined;
-}
-
 // @alpha (undocumented)
 export interface IScheduledEmailManagementDialogProps {
     automations: IAutomationMetadataObject[];
@@ -8323,7 +8290,13 @@ export interface ISetParameterRuntimeValuePayload {
     // (undocumented)
     ref: ObjRef;
     // (undocumented)
-    value: number;
+    value: number | undefined;
+}
+
+// @alpha (undocumented)
+export interface ISetParameterRuntimeValuesPayload {
+    // (undocumented)
+    values: ISetParameterRuntimeValuePayload[];
 }
 
 // @internal (undocumented)
@@ -8390,6 +8363,7 @@ export interface IShareDialogProps {
     currentUser: IUser;
     currentUserPermissions: CurrentUserPermissions;
     dashboardFilters: FilterContextItem[];
+    dashboardParameters?: IDashboardParameter[];
     isCurrentUserWorkspaceManager: boolean;
     isGranteeShareLoading: boolean;
     isLockingSupported: boolean;
@@ -9123,30 +9097,6 @@ export interface IUsersState {
     status: "pending" | "loading" | "success" | "error";
     // (undocumented)
     users?: IWorkspaceUser[];
-}
-
-// @alpha @deprecated (undocumented)
-export interface IUseScheduledExportFiltersProps {
-    // (undocumented)
-    insight?: IInsight;
-    // (undocumented)
-    scheduledExportToEdit?: IAutomationMetadataObject;
-    // (undocumented)
-    widget?: FilterableDashboardWidget;
-}
-
-// @alpha (undocumented)
-export interface IUseWidgetAlertFiltersProps {
-    alertToEdit?: IAutomationMetadataObjectDefinition;
-    insight?: IInsightDefinition;
-    widget?: FilterableDashboardWidget;
-}
-
-// @alpha @deprecated (undocumented)
-export interface IUseWidgetScheduledExportFiltersProps {
-    insight?: IInsightDefinition;
-    scheduledExportToEdit?: IAutomationMetadataObjectDefinition;
-    widget?: FilterableDashboardWidget;
 }
 
 // @internal (undocumented)
@@ -10046,7 +9996,7 @@ export type ResolveAsyncRenderPayload = {
 };
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "exportMetadata" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideDefaultParameters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -10744,9 +10694,6 @@ export const selectEnableAnomalyDetectionAlert: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableAutomationEvaluationMode: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableAutomationFilterContext: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableAutomationManagement: DashboardSelector<boolean>;
@@ -12504,6 +12451,10 @@ readonly setParameterRuntimeValue: (state: WritableDraft<ITabsState>, action: {
 payload: ISetParameterRuntimeValuePayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setParameterRuntimeValues: (state: WritableDraft<ITabsState>, action: {
+payload: ISetParameterRuntimeValuesPayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
 readonly removeParameter: (state: WritableDraft<ITabsState>, action: {
 payload: IRemoveParameterPayload;
 type: string;
@@ -12649,9 +12600,6 @@ export function unignoreFilterOnRichTextWidget(ref: ObjRef, oneOrMoreDisplayForm
 // @beta
 export function updateVisualizationsFromSwitcherWidgetContent(ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): IUpdateVisualizationsFromVisualizationSwitcherWidgetContent;
 
-// @alpha @deprecated
-export function useAutomationAvailableDashboardFilters(): FilterContextItem[] | undefined;
-
 // @internal (undocumented)
 export function useCancelButtonProps(): ICancelButtonProps;
 
@@ -12709,33 +12657,6 @@ export const useDashboardAlerts: () => {
     onAlertingManagementLoadingError: () => void;
     onAlertingManagementPauseSuccess: (_alert: IAutomationMetadataObject, pause: boolean) => void;
     onAlertingManagementPauseError: (_error: GoodDataSdkError, pause: boolean) => void;
-};
-
-// @alpha
-export const useDashboardAlertsOld: () => {
-    isInitialized: boolean;
-    automations: IAutomationMetadataObject[];
-    alertingToEdit: {
-        alert: IAutomationMetadataObject;
-        widget: IInsightWidget | undefined;
-        anchor: HTMLElement | null;
-    } | null;
-    alertingLoadError: GoodDataSdkError | undefined;
-    isAlertingLoading: boolean;
-    isAlertsManagementVisible: boolean;
-    isAlertingDialogOpen: boolean;
-    isAlertingManagementDialogOpen: boolean;
-    defaultOnAlerting: () => void;
-    defaultOnAlertsManagement: () => void;
-    onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget: IInsightWidget | undefined, anchor: HTMLElement | null, onClosed: () => void) => void;
-    onAlertingManagementClose: () => void;
-    onAlertingManagementDeleteSuccess: () => void;
-    onAlertingManagementDeleteError: () => void;
-    onAlertingManagementLoadingError: () => void;
-    onAlertingManagementPauseSuccess: (_alert: IAutomationMetadataObject, pause: boolean) => void;
-    onAlertingManagementPauseError: (_err: GoodDataSdkError, pause: boolean) => void;
-    onAlertingCancel: () => void;
-    onAlertingUpdate: (_alert: IAutomationMetadataObject) => void;
 };
 
 // @public
@@ -13372,9 +13293,6 @@ export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: 
 // @internal (undocumented)
 export function useEditButtonProps(): IEditButtonProps;
 
-// @internal (undocumented)
-export const useEnableAlertingAutomationFilterContext: () => boolean;
-
 // @alpha (undocumented)
 export const useFilterBarProps: () => IFilterBarProps;
 
@@ -13438,14 +13356,6 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 // @internal (undocumented)
 export function useSaveButtonProps(): ISaveButtonProps;
 
-// @alpha @deprecated
-export const useScheduledExportFilters: ({ scheduledExportToEdit, widget, insight, }: IUseScheduledExportFiltersProps) => {
-    widgetFilters: IFilter[] | undefined;
-    widgetFiltersLoading: boolean;
-    widgetFiltersError: GoodDataSdkError | undefined;
-    dashboardFilters: FilterContextItem[] | undefined;
-};
-
 // @alpha (undocumented)
 export const useSectionDescriptionExportData: (exportData: SectionExportData | undefined, loading: boolean, error: boolean) => SectionExportData | undefined;
 
@@ -13464,9 +13374,6 @@ export const useTopBarProps: () => ITopBarProps;
 // @alpha (undocumented)
 export const useVisualizationExportData: (widget: WidgetExportDataAttributes | undefined, loading: boolean, error: boolean) => Partial<WidgetExportDataAttributes> | undefined;
 
-// @alpha @deprecated
-export function useWidgetAlertFilters({ alertToEdit, widget, insight }: IUseWidgetAlertFiltersProps): QueryProcessingState<IFilter[]>;
-
 // @internal (undocumented)
 export function useWidgetDragEndHandler(): () => void;
 
@@ -13483,9 +13390,6 @@ export const useWidgetExportData: (widget: ExtendedDashboardWidget) => WidgetExp
 
 // @public
 export function useWidgetFilters(widget: FilterableDashboardWidget | undefined | null, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
-
-// @alpha @deprecated
-export function useWidgetScheduledExportFilters({ scheduledExportToEdit, widget, insight }: IUseWidgetScheduledExportFiltersProps): QueryProcessingState<IFilter[]>;
 
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;

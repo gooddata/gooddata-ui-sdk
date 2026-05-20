@@ -188,6 +188,7 @@ exports[`PluggableHeatmap > heatmap should allow date attribute in column bucket
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -367,6 +368,7 @@ exports[`PluggableHeatmap > should return reference point with one metric, categ
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

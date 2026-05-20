@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "작업 공간 권한에 대해 알아보기",
     "userManagement.workspace.granularPermission.view.description": "사용자가 자신에게 또는 사용자 그룹에 공유된 대시보드를 볼 수 있도록 허용합니다.",
     "userManagement.workspace.granularPermission.analyze.description": "사용자가 대시보드 및 시각화를 생성, 편집 또는 삭제할 수 있으며, 논리 데이터 모델(LDM) 및 메트릭을 볼 수 있도록 허용합니다.",
-    "userManagement.workspace.granularPermission.manage.description": "사용자가 논리 데이터 모델과 메트릭을 편집하거나 삭제할 수 있으며, 모든 대시보드에 접근하고 대시보드 권한을 제한 없이 편집할 수 있도록 허용합니다.",
     "userManagement.workspace.granularPermission.warning": "<b>주의:</b> 이 작업을 수행하면 중복된 조합이 제거됩니다.",
     "userManagement.workspace.permission.remove": "제거",
     "userManagement.workspace.permission.and": "및",

@@ -677,6 +677,7 @@ interface Dashboard {
     type: "dashboard";
     user_filters_reset?: boolean;
     user_filters_save?: boolean;
+    version?: "2" | "3";
 }
 
 // Warning: (ae-missing-release-tag) "DashboardAbsoluteDateFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -2370,6 +2371,11 @@ export const metadata_v1: {
                     type: {
                         type: string;
                         enum: string[];
+                    };
+                    version: {
+                        type: string;
+                        enum: string[];
+                        description: string;
                     };
                     title: {
                         $ref: string;
@@ -6439,6 +6445,11 @@ export const metadata_v1: {
                 type: {
                     type: string;
                     enum: string[];
+                };
+                version: {
+                    type: string;
+                    enum: string[];
+                    description: string;
                 };
                 title: {
                     $ref: string;

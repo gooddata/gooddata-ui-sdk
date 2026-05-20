@@ -192,7 +192,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const clonedReferencePoint = cloneDeep(referencePoint);
         const newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
-            uiConfig: getPivotTableDefaultUiConfig(this.featureFlags),
+            uiConfig: getPivotTableDefaultUiConfig(),
         };
 
         const buckets = newReferencePoint.buckets;
@@ -320,9 +320,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             getReferencePointWithSupportedProperties(newReferencePoint, this.supportedPropertiesList),
         );
 
-        return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
-        );
+        return Promise.resolve(sanitizeFilters(newReferencePoint, referencePoint));
     }
 
     public override getInsightWithDrillDownApplied(

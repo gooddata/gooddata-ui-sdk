@@ -121,6 +121,7 @@ export function MeasureValueFilterDetailsBubble({
                 }
                 content={tooltipContent}
                 triggerBy={["hover", "focus"]}
+                hoverCloseDelay={0}
                 onOpen={handleOpen}
                 onClose={handleClose}
                 arrowPlacement="left"

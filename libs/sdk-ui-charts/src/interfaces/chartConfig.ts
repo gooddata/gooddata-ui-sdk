@@ -473,6 +473,33 @@ export interface IChartConfig {
      * @beta
      */
     enableSingleBubbleSeries?: boolean;
+
+    /**
+     * Controls whether the radar chart is rendered as filled polygons ("filled") or
+     * bare polygon outlines ("outline").
+     *
+     * @remarks
+     * - "filled": uses Highcharts area type in polar mode with semi-transparent fill (default)
+     * - "outline": uses Highcharts line type in polar mode with no fill
+     *
+     * Default: "filled"
+     *
+     * @beta
+     */
+    radarRenderAs?: "outline" | "filled";
+
+    /**
+     * Controls the shape of the grid lines on the radial axis of a radar chart.
+     *
+     * @remarks
+     * - "polygon": spider web / angular grid lines (default)
+     * - "circle": concentric circular grid lines
+     *
+     * Default: "polygon"
+     *
+     * @beta
+     */
+    radarGridLineShape?: "polygon" | "circle";
 }
 
 /**

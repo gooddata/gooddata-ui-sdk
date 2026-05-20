@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.36.0-alpha.3",
+    "version": "11.36.0-alpha.6",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -58,7 +58,7 @@
         "@gooddata/sdk-code-convertors": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/util": "workspace:*",
-        "axios": "^1.9.0",
+        "axios": "1.13.5",
         "date-fns": "4.1.0",
         "date-fns-tz": "^3.2.0",
         "eventsource-parser": "~3.0.0",

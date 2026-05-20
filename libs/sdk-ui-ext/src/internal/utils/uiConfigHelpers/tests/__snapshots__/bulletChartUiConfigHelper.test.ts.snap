@@ -66,6 +66,7 @@ exports[`bulletChartUiConfigHelper > getBulletChartUiConfig > should return bull
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "Çalışma alanı izinleri hakkında bilgi edinin",
     "userManagement.workspace.granularPermission.view.description": "Kullanıcıların kendileriyle veya kullanıcı gruplarıyla paylaşılan panoları görüntülemelerine olanak tanır.",
     "userManagement.workspace.granularPermission.analyze.description": "Kullanıcıların panolar ve görselleştirmeler oluşturmasına, düzenlemesine veya silmesine, ayrıca Mantıksal Veri Modeli (LDM) ve metrikleri görüntülemesine olanak tanır.",
-    "userManagement.workspace.granularPermission.manage.description": "Kullanıcıların mantıksal veri modelini ve metrikleri düzenlemesine veya silmesine, tüm panolara erişmesine ve pano izinlerini sınırsız bir şekilde düzenlemesine olanak tanır.",
     "userManagement.workspace.granularPermission.warning": "<b>Dikkat:</b> Bu işlem, gereksiz kombinasyonları kaldıracaktır.",
     "userManagement.workspace.permission.remove": "Kaldır",
     "userManagement.workspace.permission.and": "ve",

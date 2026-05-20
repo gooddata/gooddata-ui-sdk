@@ -101,7 +101,7 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
                     Keyboard close
                 </button>
                 {items.map((item: unknown, index: number) => (
-                    <div key={index}>
+                    <li key={index}>
                         <button
                             type="button"
                             data-testid={`keyboard-select-${index}`}
@@ -112,7 +112,7 @@ vi.mock("@gooddata/sdk-ui-kit", async () => {
                             Keyboard select {index}
                         </button>
                         {renderItem({ item, rowIndex: index })}
-                    </div>
+                    </li>
                 ))}
             </div>
         ),
@@ -333,7 +333,7 @@ describe("FilterGroup", () => {
         ).toBe(searchInputBeforeToggle);
     });
 
-    it("should render grouped filter items inside grid rows and cells", async () => {
+    it("should render grouped filter items inside a dialog with a list", async () => {
         const filters = [
             { id: "region", title: "Region" },
             { id: "product", title: "Product" },
@@ -363,14 +363,12 @@ describe("FilterGroup", () => {
 
         fireEvent.click(screen.getByRole("button", { name: /filter group/i }));
 
-        const grid = await screen.findByRole("grid", { name: "Filter group" });
-        const rows = screen.getAllByRole("row");
+        const dialog = await screen.findByRole("dialog", { name: "Filter group: Filter group" });
+        const list = await screen.findByRole("list", { name: "Filter group: Filter group" });
+        const items = screen.getAllByRole("listitem");
 
-        expect(grid).toBeInTheDocument();
-        expect(rows).toHaveLength(filters.length);
-        expect(rows[0]).toHaveAttribute("aria-rowindex", "1");
-        expect(rows[1]).toHaveAttribute("aria-rowindex", "2");
-        expect(rows[0]).toContainElement(screen.getByRole("gridcell", { name: /region/i }));
-        expect(rows[1]).toContainElement(screen.getByRole("gridcell", { name: /product/i }));
+        expect(dialog).toBeInTheDocument();
+        expect(dialog).toContainElement(list);
+        expect(items).toHaveLength(filters.length);
     });
 });

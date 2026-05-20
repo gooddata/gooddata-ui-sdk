@@ -130,7 +130,6 @@ export class AutomationsQuery implements IAutomationsQuery {
                     this.authCall,
                     this.requestParameters.workspaceId,
                 );
-                const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? true;
                 const enableNewScheduledExport = userSettings.enableNewScheduledExport ?? true;
 
                 const items = await this.authCall((client) =>
@@ -159,11 +158,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                         if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
-                        return convertAutomationListToAutomations(
-                            data,
-                            enableAutomationFilterContext,
-                            enableNewScheduledExport,
-                        );
+                        return convertAutomationListToAutomations(data, enableNewScheduledExport);
                     });
 
                 return { items, totalCount: this.totalCount! };

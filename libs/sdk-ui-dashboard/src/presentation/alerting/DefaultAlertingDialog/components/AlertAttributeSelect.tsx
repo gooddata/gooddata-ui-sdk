@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type MutableRefObject, type ReactNode, useCallback, useMemo } from "react";
+import { type MutableRefObject, type ReactNode, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -17,6 +17,9 @@ import {
     type IUiMenuInteractiveItem,
     type IUiMenuItem,
     type IUiMenuStaticItemProps,
+    InvertableSelectSearchBar,
+    Item,
+    Separator,
     UiMenu,
 } from "@gooddata/sdk-ui-kit";
 
@@ -46,6 +49,7 @@ interface IAttributeMenuItemData {
 
 interface IAttributeMenuData {
     interactive: IAttributeMenuItemData;
+    content: undefined;
 }
 
 const createInteractiveItem = (
@@ -76,6 +80,90 @@ const createSeparator = (id: string): IUiMenuItem<IAttributeMenuData> => ({
 
 function CustomStaticItem({ item: _item }: IUiMenuStaticItemProps<IAttributeMenuData>): ReactNode {
     return <div className="gd-alert-attribute-select__dropdown-separator" />;
+}
+
+interface IAttributeValuesSearchContentProps {
+    attribute: AlertAttribute;
+    values: AttributeValue[];
+    isSelected: boolean;
+    selectedAttributeValue: AttributeValue | undefined;
+    onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
+    onClose: () => void;
+}
+
+function AttributeValuesSearchContent({
+    attribute,
+    values,
+    isSelected,
+    selectedAttributeValue,
+    onAttributeChange,
+    onClose,
+}: IAttributeValuesSearchContentProps) {
+    const intl = useIntl();
+    const [searchString, setSearchString] = useState("");
+
+    const filteredValues = useMemo(() => {
+        if (!searchString) {
+            return values;
+        }
+
+        const loweredSearch = searchString.toLowerCase();
+        return values.filter((item) => (item.title ?? item.name ?? "").toLowerCase().includes(loweredSearch));
+    }, [searchString, values]);
+
+    return (
+        <div
+            className={cx("gd-alert-attribute-select__submenu-content", "s-alert-attribute-submenu-content")}
+        >
+            <div>
+                <InvertableSelectSearchBar
+                    onSearch={setSearchString}
+                    searchString={searchString}
+                    searchPlaceholder={intl.formatMessage({
+                        id: "attributesDropdown.placeholder",
+                    })}
+                    className="gd-alert-attribute-select__menu-item_search"
+                />
+            </div>
+            <Item
+                className="gd-alert-attribute-select__menu-item_wrapper"
+                checked={Boolean(isSelected && !selectedAttributeValue)}
+                onClick={(e) => {
+                    onAttributeChange(attribute, undefined);
+                    onClose();
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+            >
+                <div className="gd-alert-attribute-select__menu-item s-menu-alert-attribute-item-value">
+                    {intl.formatMessage({
+                        id: "insightAlert.config.selectAttribute",
+                    })}{" "}
+                    ({values.length})
+                </div>
+            </Item>
+            <Separator />
+            <div className="gd-alert-attribute-select__menu-item__values">
+                {filteredValues.map((value, index) => (
+                    <Item
+                        key={index}
+                        checked={Boolean(isSelected && value.value === selectedAttributeValue?.value)}
+                        className="gd-alert-attribute-select__menu-item_wrapper"
+                        onClick={(e) => {
+                            onAttributeChange(attribute, value);
+                            onClose();
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }}
+                    >
+                        <div className="gd-alert-attribute-select__menu-item s-menu-alert-attribute-item-value">
+                            {(value.title ?? value.name) || `(${intl.formatMessage({ id: "empty_value" })})`}
+                        </div>
+                    </Item>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export function AlertAttributeSelect({
@@ -127,9 +215,29 @@ export function AlertAttributeSelect({
                 areObjRefsEqual(df.ref, attribute.attribute.attribute.displayForm),
             );
 
-            // Create sub-items for attribute values
+            const isSelected = Boolean(hasDisplayForm);
+
+            if (values.length > 5) {
+                attributeItems.push({
+                    type: "content" as const,
+                    id: `attribute-${item.id}`,
+                    stringTitle: item.title || intl.formatMessage({ id: "empty_value" }),
+                    data: undefined,
+                    Component: ({ onClose }) => (
+                        <AttributeValuesSearchContent
+                            attribute={attribute}
+                            values={values}
+                            isSelected={isSelected}
+                            selectedAttributeValue={selectedAttributeValue}
+                            onAttributeChange={onAttributeChange}
+                            onClose={onClose}
+                        />
+                    ),
+                });
+                continue;
+            }
+
             const subItems: IUiMenuItem<IAttributeMenuData>[] = [
-                // "All" option
                 createInteractiveItem(
                     `all-${item.id}`,
                     `${accessibilityAriaLabel} (${values.length})`,
@@ -137,13 +245,8 @@ export function AlertAttributeSelect({
                     undefined,
                     Boolean(hasDisplayForm && !selectedAttributeValue),
                 ),
-                // Separator after All option
                 createSeparator(`separator-${item.id}`),
-            ];
-
-            // Add individual value items
-            for (const value of values) {
-                subItems.push(
+                ...values.map((value) =>
                     createInteractiveItem(
                         `value-${value.value}`,
                         (value.title ?? value.name) || intl.formatMessage({ id: "empty_value" }),
@@ -151,8 +254,8 @@ export function AlertAttributeSelect({
                         value,
                         Boolean(hasDisplayForm && selectedAttributeValue?.value === value.value),
                     ),
-                );
-            }
+                ),
+            ];
 
             // Check if any child is selected to determine parent selection state
             const hasSelectedChild = subItems.some(
@@ -201,6 +304,7 @@ export function AlertAttributeSelect({
         catalogDateDatasets,
         getAttributeValues,
         intl,
+        onAttributeChange,
         selectedAttribute,
         selectedAttributeValue,
     ]);

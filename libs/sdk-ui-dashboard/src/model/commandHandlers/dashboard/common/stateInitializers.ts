@@ -643,11 +643,14 @@ export function* actionsToInitializeExistingDashboard(
 
     const screen: SagaReturnType<typeof selectScreen> = yield select(selectScreen);
 
-    const parameterSourceDashboard = persistedDashboard ?? dashboard;
+    const overrideDefaultParameters = ctx.config?.overrideDefaultParameters;
     const parametersByTab = distributeParametersToTabs(
-        parameterSourceDashboard.tabs,
-        parameterSourceDashboard.parameters,
+        dashboard.tabs,
+        dashboard.parameters,
         workspaceParameters,
+        overrideDefaultParameters
+            ? { tabId: effectiveActiveTabId, overrides: overrideDefaultParameters }
+            : undefined,
     );
 
     // Process tabs with complete filterContext initialization for each tab

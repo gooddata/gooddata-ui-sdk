@@ -143,6 +143,21 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
     ],
 };
 
+export const RADAR_CHART_SUPPORTED_PROPERTIES = [
+    ...BASE_PROPERTIES,
+    ...ANOMALIES_PROPERTIES,
+    ...BASE_X_AXIS_PROPERTIES,
+    ...BASE_Y_AXIS_PROPERTIES,
+    "yaxis.min",
+    "yaxis.max",
+    "dataPoints.visible",
+    "distinctPointShapes",
+    "chartFill",
+    "continuousLine.enabled",
+    "radarRenderAs",
+    "radarGridLineShape",
+];
+
 export const BAR_CHART_SUPPORTED_PROPERTIES = {
     [AXIS.PRIMARY]: [
         ...BASE_PROPERTIES,

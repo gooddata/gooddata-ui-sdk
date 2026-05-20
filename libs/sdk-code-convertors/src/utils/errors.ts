@@ -17,6 +17,7 @@ export enum CoreErrorCode {
     MultipleCommonDateFilters = "core.multipleCommonDateFilters",
     DuplicateFilterLocalIdentifier = "core.duplicateFilterLocalIdentifier",
     DuplicateTabIdentifier = "core.duplicateTabIdentifier",
+    TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
 }
 
 /**
@@ -35,6 +36,7 @@ export const CoreErrorMessages: Record<CoreErrorCode, string> = {
     [CoreErrorCode.MultipleCommonDateFilters]: `Multiple usage of common date filters in dashboard. Define exactly one date filter that has no date dataset defined.`,
     [CoreErrorCode.DuplicateFilterLocalIdentifier]: `Duplicate filter local identifier "{0}". Each filter must have a unique local identifier across a dashboard tab, including filters in groups.`,
     [CoreErrorCode.DuplicateTabIdentifier]: `Duplicate tab identifier "{0}". Each tab must have a unique identifier within the dashboard.`,
+    [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: `Dashboard "{0}" defines both "tabs" and root-level "sections" or "filters". These are mutually exclusive — keep all content inside tabs or at the root, not both.`,
 };
 
 /**
@@ -53,6 +55,7 @@ export const CoreErrorTypes: Record<CoreErrorCode, string> = {
     [CoreErrorCode.MultipleCommonDateFilters]: "MultipleCommonDateFilters",
     [CoreErrorCode.DuplicateFilterLocalIdentifier]: "DuplicateFilterLocalIdentifier",
     [CoreErrorCode.DuplicateTabIdentifier]: "DuplicateTabIdentifier",
+    [CoreErrorCode.TabsAndRootContentMutuallyExclusive]: "TabsAndRootContentMutuallyExclusive",
 };
 
 /**

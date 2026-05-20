@@ -17,21 +17,18 @@ describe("ExportMetadataConverter", () => {
         },
     };
 
-    it("converts filters and filtersByTab when automation filter context is enabled", () => {
-        const metadata = convertExportMetadata(
-            {
-                filters: [tigerDashboardFilter],
-                filtersByTab: {
-                    tabA: [tigerDashboardFilter],
-                },
-                title: "Export title",
-                hideWidgetTitles: true,
-                exportMetadata: {
-                    selectedTab: "switcher-tab-1",
-                },
+    it("converts filters and filtersByTab", () => {
+        const metadata = convertExportMetadata({
+            filters: [tigerDashboardFilter],
+            filtersByTab: {
+                tabA: [tigerDashboardFilter],
             },
-            true,
-        );
+            title: "Export title",
+            hideWidgetTitles: true,
+            exportMetadata: {
+                selectedTab: "switcher-tab-1",
+            },
+        });
 
         expect(metadata?.title).toBe("Export title");
         expect(metadata?.hideWidgetTitles).toBe(true);
@@ -52,31 +49,8 @@ describe("ExportMetadataConverter", () => {
         }
     });
 
-    it("keeps only top-level filters when automation filter context is disabled", () => {
-        const metadata = convertExportMetadata(
-            {
-                filters: [tigerDashboardFilter],
-                filtersByTab: {
-                    tabA: [tigerDashboardFilter],
-                },
-                exportMetadata: {
-                    selectedTab: "switcher-tab-1",
-                },
-            },
-            false,
-        );
-
-        expect(metadata).toEqual({
-            filters: [tigerDashboardFilter],
-            exportMetadata: {
-                selectedTab: "switcher-tab-1",
-            },
-        });
-        expect(metadata).not.toHaveProperty("filtersByTab");
-    });
-
     it("returns empty object for empty metadata", () => {
-        expect(convertExportMetadata(undefined, true)).toEqual({});
-        expect(convertExportMetadata(null, false)).toEqual({});
+        expect(convertExportMetadata(undefined)).toEqual({});
+        expect(convertExportMetadata(null)).toEqual({});
     });
 });

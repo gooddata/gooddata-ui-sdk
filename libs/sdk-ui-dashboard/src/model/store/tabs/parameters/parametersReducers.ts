@@ -44,21 +44,29 @@ const addParameter: ParametersReducer<PayloadAction<IAddParameterPayload>> = (st
  */
 export interface ISetParameterRuntimeValuePayload {
     ref: ObjRef;
-    value: number;
+    value: number | undefined;
 }
 
 const setParameterRuntimeValue: ParametersReducer<PayloadAction<ISetParameterRuntimeValuePayload>> = (
     state,
     action,
 ) => {
-    const activeTab = getActiveTab(state);
-    if (!activeTab?.parameters) {
-        return;
-    }
-    const { ref, value } = action.payload;
-    const entry = activeTab.parameters.parameters.find((item) => areObjRefsEqual(item.parameter.ref, ref));
-    if (entry) {
-        entry.runtimeOverride = value;
+    setRuntimeOverride(state, action.payload);
+};
+
+/**
+ * @alpha
+ */
+export interface ISetParameterRuntimeValuesPayload {
+    values: ISetParameterRuntimeValuePayload[];
+}
+
+const setParameterRuntimeValues: ParametersReducer<PayloadAction<ISetParameterRuntimeValuesPayload>> = (
+    state,
+    action,
+) => {
+    for (const entry of action.payload.values) {
+        setRuntimeOverride(state, entry);
     }
 };
 
@@ -81,8 +89,20 @@ const removeParameter: ParametersReducer<PayloadAction<IRemoveParameterPayload>>
     };
 };
 
+function setRuntimeOverride(state: ITabsState, { ref, value }: ISetParameterRuntimeValuePayload): void {
+    const activeTab = getActiveTab(state);
+    if (!activeTab?.parameters) {
+        return;
+    }
+    const entry = activeTab.parameters.parameters.find((item) => areObjRefsEqual(item.parameter.ref, ref));
+    if (entry && entry.runtimeOverride !== value) {
+        entry.runtimeOverride = value;
+    }
+}
+
 export const parametersReducers = {
     addParameter,
     setParameterRuntimeValue,
+    setParameterRuntimeValues,
     removeParameter,
 };

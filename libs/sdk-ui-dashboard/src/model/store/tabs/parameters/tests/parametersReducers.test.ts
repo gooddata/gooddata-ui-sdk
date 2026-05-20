@@ -188,4 +188,95 @@ describe("parameters reducers (per tab)", () => {
             expect(activeParameters(next as ITabsState)).toEqual([]);
         });
     });
+
+    describe("setParameterRuntimeValues", () => {
+        it("updates runtimeOverride for refs present on the active tab", () => {
+            const sampleParameter: IDashboardParameter = {
+                ref: sampleRef,
+                parameterType: "NUMBER",
+                mode: "active",
+            };
+            const initial = makeState([
+                { parameter: topNParameter, runtimeOverride: 10 },
+                { parameter: sampleParameter, runtimeOverride: 100 },
+            ]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValues(
+                    draft,
+                    tabsActions.setParameterRuntimeValues({
+                        values: [
+                            { ref: topNRef, value: 99 },
+                            { ref: sampleRef, value: 500 },
+                        ],
+                    }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)).toEqual([
+                { parameter: topNParameter, runtimeOverride: 99 },
+                { parameter: sampleParameter, runtimeOverride: 500 },
+            ]);
+        });
+
+        it("ignores entries that are not on the active tab", () => {
+            const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValues(
+                    draft,
+                    tabsActions.setParameterRuntimeValues({
+                        values: [{ ref: sampleRef, value: 500 }],
+                    }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)).toEqual([
+                { parameter: topNParameter, runtimeOverride: 10 },
+            ]);
+        });
+
+        it("leaves active-tab entries untouched when their ref is not in the payload", () => {
+            const sampleParameter: IDashboardParameter = {
+                ref: sampleRef,
+                parameterType: "NUMBER",
+                mode: "active",
+            };
+            const initial = makeState([
+                { parameter: topNParameter, runtimeOverride: 10 },
+                { parameter: sampleParameter, runtimeOverride: 100 },
+            ]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValues(
+                    draft,
+                    tabsActions.setParameterRuntimeValues({
+                        values: [{ ref: topNRef, value: 99 }],
+                    }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)).toEqual([
+                { parameter: topNParameter, runtimeOverride: 99 },
+                { parameter: sampleParameter, runtimeOverride: 100 },
+            ]);
+        });
+
+        it("clears runtimeOverride when the entry value is undefined", () => {
+            const initial = makeState([{ parameter: topNParameter, runtimeOverride: 10 }]);
+
+            const next = produce(initial, (draft) =>
+                parametersReducers.setParameterRuntimeValues(
+                    draft,
+                    tabsActions.setParameterRuntimeValues({
+                        values: [{ ref: topNRef, value: undefined }],
+                    }),
+                ),
+            );
+
+            expect(activeParameters(next as ITabsState)).toEqual([
+                { parameter: topNParameter, runtimeOverride: undefined },
+            ]);
+        });
+    });
 });

@@ -10,12 +10,16 @@ import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import {
     type IAttributeFilter,
     type IDashboardAttributeFilterConfig,
+    type IDashboardMeasureValueFilter,
+    type IMeasureValueFilter,
     type ObjRef,
     filterObjRef,
     idRef,
+    insightFilters as insightDefinitionFilters,
     isArbitraryAttributeFilter,
     isAttributeFilter,
     isMatchAttributeFilter,
+    isMeasureValueFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isUriRef,
@@ -35,10 +39,20 @@ import {
 import { dashboardAttributeFilterItemToAttributeFilter } from "../../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetFilters } from "../../../../model/react/useWidgetFilters.js";
-import { selectAllCatalogDisplayFormsMap } from "../../../../model/store/catalog/catalogSelectors.js";
-import { selectIsWhiteLabeled } from "../../../../model/store/config/configSelectors.js";
+import {
+    selectAllCatalogDisplayFormsMap,
+    selectAllCatalogMeasuresMap,
+} from "../../../../model/store/catalog/catalogSelectors.js";
+import {
+    selectEnableMeasureValueFilterKD,
+    selectIsWhiteLabeled,
+} from "../../../../model/store/config/configSelectors.js";
+import { selectInsightByWidgetRef } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextAttributeFilterItems } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextAttributeFilterItems,
+    selectFilterContextMeasureValueFilters,
+} from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectFilterableWidgetByRef } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
@@ -142,6 +156,9 @@ interface IUrlInputPanelProps {
     attributeDisplayForms?: IAttributeWithDisplayForm[];
     insightFilters?: IAttributeFilter[];
     dashboardFilters?: IAttributeFilter[];
+    dashboardMeasureValueFilters?: IDashboardMeasureValueFilter[];
+    insightMeasureValueFilters?: IMeasureValueFilter[];
+    enableInsightMeasureValueFilters: boolean;
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     documentationLink?: string;
     intl: IntlShape;
@@ -204,6 +221,36 @@ const buildValidDashboardFiltersFormattingRule = (
     };
 };
 
+const buildValidDashboardMvfFormattingRule = (measureIdentifiers: string[]) => {
+    if (measureIdentifiers.length === 0) {
+        return undefined;
+    }
+
+    const validDashboardMvfPlaceholders = measureIdentifiers
+        .map((id) => `{dash_mvf_condition\\(${id}\\)}`)
+        .join("|");
+
+    return {
+        regex: new RegExp(`^${validDashboardMvfPlaceholders}`),
+        token: customTags.filter.toString(),
+    };
+};
+
+const buildValidInsightMvfFormattingRule = (measureIdentifiers: string[]) => {
+    if (measureIdentifiers.length === 0) {
+        return undefined;
+    }
+
+    const validInsightMvfPlaceholders = measureIdentifiers
+        .map((id) => `{mvf_condition\\(${id}\\)}`)
+        .join("|");
+
+    return {
+        regex: new RegExp(`^${validInsightMvfPlaceholders}`),
+        token: customTags.filter.toString(),
+    };
+};
+
 interface IFormattingRule {
     regex: RegExp;
     token: string;
@@ -222,6 +269,14 @@ const INVALID_DASHBOARD_ATTRIBUTE_FILTER_RULE: IFormattingRule = {
     regex: /^\{dash_attribute_filter_selection\(.*?\)\}/,
     token: customTags.invalidFilter.toString(),
 };
+const INVALID_DASHBOARD_MVF_RULE: IFormattingRule = {
+    regex: /^\{dash_mvf_condition\(.*?\)\}/,
+    token: customTags.invalidFilter.toString(),
+};
+const INVALID_INSIGHT_MVF_RULE: IFormattingRule = {
+    regex: /^\{mvf_condition\(.*?\)\}/,
+    token: customTags.invalidFilter.toString(),
+};
 const INVALID_INSIGHT_ATTRIBUTE_FILTER_RULE: IFormattingRule = {
     regex: /^\{attribute_filter_selection\(.*?\)\}/,
     token: customTags.invalidFilter.toString(),
@@ -229,6 +284,8 @@ const INVALID_INSIGHT_ATTRIBUTE_FILTER_RULE: IFormattingRule = {
 const DEFAULT_RULES: IFormattingRule[] = [
     INVALID_DISPLAY_FORMS_RULE,
     INVALID_DASHBOARD_ATTRIBUTE_FILTER_RULE,
+    INVALID_DASHBOARD_MVF_RULE,
+    INVALID_INSIGHT_MVF_RULE,
     INVALID_INSIGHT_ATTRIBUTE_FILTER_RULE,
     IDENTIFIER_RULE,
     INVALID_IDENTIFIER_RULE,
@@ -238,6 +295,8 @@ const buildFormattingRules = (
     attributeDisplayForms: IAttributeWithDisplayForm[],
     dashboardFilters: IAttributeFilter[],
     insightFilters: IAttributeFilter[],
+    dashboardMeasureIdentifiers: string[],
+    insightMeasureIdentifiers: string[],
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
 ): IFormattingRule[] => {
     const validDisplayFormsRule = buildValidDisplayFormsFormattingRule(attributeDisplayForms);
@@ -246,10 +305,14 @@ const buildFormattingRules = (
         dashboardFilters,
         attributeFilterConfigs,
     );
+    const validDashboardMvfRule = buildValidDashboardMvfFormattingRule(dashboardMeasureIdentifiers);
+    const validInsightMvfRule = buildValidInsightMvfFormattingRule(insightMeasureIdentifiers);
     return compact([
         validDisplayFormsRule,
         validDashboardFiltersRule,
+        validDashboardMvfRule,
         validInsightFiltersRule,
+        validInsightMvfRule,
         ...DEFAULT_RULES,
     ]);
 };
@@ -263,22 +326,55 @@ function UrlInputPanel({
     intl,
     insightFilters,
     dashboardFilters,
+    dashboardMeasureValueFilters,
+    insightMeasureValueFilters,
+    enableInsightMeasureValueFilters,
     attributeFilterConfigs,
 }: IUrlInputPanelProps) {
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
+    const catalogMeasuresMap = useDashboardSelector(selectAllCatalogMeasuresMap);
+
+    const dashboardMeasureIdentifiers = useMemo(() => {
+        return (dashboardMeasureValueFilters ?? []).map((filter) => {
+            const measureRef = filter.dashboardMeasureValueFilter.measure;
+            return catalogMeasuresMap.get(measureRef)?.measure.id ?? objRefToString(measureRef);
+        });
+    }, [catalogMeasuresMap, dashboardMeasureValueFilters]);
+
+    const insightMeasureIdentifiers = useMemo(
+        () =>
+            enableInsightMeasureValueFilters
+                ? (insightMeasureValueFilters ?? []).map((filter) => {
+                      const measureRef = filter.measureValueFilter.measure;
+                      return objRefToString(measureRef);
+                  })
+                : [],
+        [enableInsightMeasureValueFilters, insightMeasureValueFilters],
+    );
 
     const syntaxHighlightingRules = useMemo(
         () =>
             attributeDisplayForms &&
             insightFilters &&
             dashboardFilters &&
+            dashboardMeasureValueFilters &&
             buildFormattingRules(
                 attributeDisplayForms,
                 dashboardFilters,
                 insightFilters,
+                dashboardMeasureIdentifiers,
+                insightMeasureIdentifiers,
                 attributeFilterConfigs,
             ),
-        [attributeDisplayForms, insightFilters, dashboardFilters, attributeFilterConfigs],
+        [
+            attributeDisplayForms,
+            insightFilters,
+            dashboardFilters,
+            dashboardMeasureValueFilters,
+            dashboardMeasureIdentifiers,
+            insightMeasureIdentifiers,
+            attributeFilterConfigs,
+        ],
     );
     return (
         <div>
@@ -310,12 +406,22 @@ const initialCursorPosition: ICursorPosition = {
 const insertPlaceholderAtCursor = (text: string, placeholder: string, cursor: ICursorPosition): string =>
     `${text.substring(0, cursor.from)}${placeholder}${text.substring(cursor.to)}`;
 
-const assertValidUrl = (url: string) =>
-    /^[A-Za-z0-9.\-+]+:|^\{attribute_title\(|^\{attribute_filter_selection\(|^\{dash_attribute_filter_selection\(/.test(
-        url,
-    )
-        ? url
-        : `https://${url}`;
+const URL_START_RULES = [
+    /^[A-Za-z0-9.\-+]+:/,
+    /^\{attribute_title\(/,
+    /^\{attribute_filter_selection\(/,
+    /^\{dash_attribute_filter_selection\(/,
+    /^\{dash_mvf_condition\(/,
+];
+const INSIGHT_MVF_URL_START_RULE = /^\{mvf_condition\(/;
+
+const assertValidUrl = (url: string, enableInsightMeasureValueFilters: boolean) => {
+    const rules = enableInsightMeasureValueFilters
+        ? [...URL_START_RULES, INSIGHT_MVF_URL_START_RULE]
+        : URL_START_RULES;
+
+    return rules.some((rule) => rule.test(url)) ? url : `https://${url}`;
+};
 
 const getWarningTextForInvalidParameters = (parameters: string[]): ReactElement => {
     const invalidParameters = parameters.map((parameter) => `"${parameter}"`).join(", ");
@@ -355,14 +461,23 @@ function CustomUrlEditorDialog({
     widgetRef,
 }: ICustomUrlEditorProps) {
     const intl = useIntl();
+    const enableInsightMeasureValueFilters = useDashboardSelector(selectEnableMeasureValueFilterKD);
 
     const insightFilters = useSanitizedInsightFilters(widgetRef);
+    const insightMeasureValueFilters = useInsightMeasureValueFilters(
+        widgetRef,
+        enableInsightMeasureValueFilters,
+    );
     const dashboardFilters = useSanitizedDashboardFilters();
+    const dashboardMeasureValueFilters = useDashboardSelector(selectFilterContextMeasureValueFilters);
     const attributeFilterConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
     const invalidFilteringParametersIdentifiers = useInvalidFilteringParametersIdentifiers(
         urlDrillTarget,
         insightFilters,
         dashboardFilters,
+        dashboardMeasureValueFilters,
+        enableInsightMeasureValueFilters ? insightMeasureValueFilters : undefined,
+        enableInsightMeasureValueFilters,
         attributeFilterConfigs,
     );
 
@@ -375,7 +490,7 @@ function CustomUrlEditorDialog({
         : "";
 
     const [currentValue, setCurrentValue] = useState(previousValue);
-    const apply = () => onSelect(assertValidUrl(currentValue));
+    const apply = () => onSelect(assertValidUrl(currentValue, enableInsightMeasureValueFilters));
     const handleOnChange = (value: string) => setCurrentValue(value);
 
     const isApplyEnabled = currentValue && currentValue.localeCompare(previousValue) !== 0;
@@ -418,12 +533,17 @@ function CustomUrlEditorDialog({
                 attributeDisplayForms={attributeDisplayForms}
                 insightFilters={insightFilters}
                 dashboardFilters={dashboardFilters}
+                dashboardMeasureValueFilters={dashboardMeasureValueFilters}
+                insightMeasureValueFilters={insightMeasureValueFilters}
+                enableInsightMeasureValueFilters={enableInsightMeasureValueFilters}
                 attributeFilterConfigs={attributeFilterConfigs}
                 intl={intl}
             />
             <ParametersPanel
                 insightFilters={insightFilters}
                 dashboardFilters={dashboardFilters}
+                dashboardMeasureValueFilters={dashboardMeasureValueFilters}
+                insightMeasureValueFilters={insightMeasureValueFilters}
                 attributeFilterConfigs={attributeFilterConfigs}
                 attributeDisplayForms={attributeDisplayForms}
                 loadingAttributeDisplayForms={loadingAttributeDisplayForms}
@@ -458,6 +578,18 @@ export function CustomUrlEditor(props: ICustomUrlEditorProps) {
             </SelectedOverlay>
         </OverlayControllerProvider>
     );
+}
+
+function useInsightMeasureValueFilters(widgetRef: ObjRef, enabled: boolean) {
+    const insight = useDashboardSelector(selectInsightByWidgetRef(widgetRef));
+
+    return useMemo(() => {
+        if (!enabled || !insight) {
+            return [];
+        }
+
+        return insightDefinitionFilters(insight).filter(isMeasureValueFilter);
+    }, [enabled, insight]);
 }
 
 function useSanitizedInsightFilters(widgetRef: ObjRef) {

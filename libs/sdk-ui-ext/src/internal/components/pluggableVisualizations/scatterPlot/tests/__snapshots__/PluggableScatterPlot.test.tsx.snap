@@ -78,6 +78,7 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -214,6 +215,7 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -359,6 +361,7 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -495,6 +498,7 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -640,6 +644,7 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

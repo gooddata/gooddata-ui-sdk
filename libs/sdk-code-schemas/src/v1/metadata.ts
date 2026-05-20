@@ -1741,6 +1741,10 @@ export interface Dashboard {
     id: Id8;
     type: "dashboard";
     /**
+     * Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.
+     */
+    version?: "2" | "3";
+    /**
      * An optional human readable title for the dashboard. Will be derived from id if not provided explicitly.
      */
     title?: string;

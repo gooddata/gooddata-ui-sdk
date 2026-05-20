@@ -105,9 +105,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        const config = cloneDeep(AREA_UICONFIG_WITH_MULTIPLE_DATES);
-        this.addMetricToFiltersIfEnabled(config);
-        return config;
+        return cloneDeep(AREA_UICONFIG_WITH_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(
@@ -135,9 +133,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
             newReferencePoint,
             this.supportedPropertiesList,
         );
-        return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
-        );
+        return Promise.resolve(sanitizeFilters(newReferencePoint, referencePoint));
     }
 
     public override getInsightWithDrillDownApplied(

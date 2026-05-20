@@ -13,6 +13,7 @@ import {
     type IDashboardDateFilter,
     type IDashboardFilterView,
     type IDashboardMeasureValueFilter,
+    type IDashboardParameter,
     type IFilterContext,
     type ISettings,
     type ObjRef,
@@ -483,6 +484,10 @@ export function applyDefaultFilterView(
             // Use tab-specific default, or fall back to legacy global default only for the first tab
             const isFirstTab = index === 0;
             const effectiveDefaultView = tabDefaultView ?? (isFirstTab ? legacyDefaultView : undefined);
+            const parameters = applyFilterViewParameterValues(
+                tab.parameters,
+                effectiveDefaultView?.parameters,
+            );
 
             if (effectiveDefaultView && tab.filterContext && isFilterContext(tab.filterContext)) {
                 const { filterContext: updatedFilterContext, configUpdates } = changeFilterContextSelection(
@@ -492,12 +497,13 @@ export function applyDefaultFilterView(
                 );
                 return {
                     ...tab,
+                    ...(parameters === undefined ? {} : { parameters }),
                     filterContext: updatedFilterContext,
                     attributeFilterConfigs: applyConfigUpdates(tab.attributeFilterConfigs, configUpdates),
                 };
             }
 
-            return tab;
+            return parameters === undefined ? tab : { ...tab, parameters };
         });
 
         return {
@@ -519,8 +525,36 @@ export function applyDefaultFilterView(
             ...dashboard,
             filterContext: updatedFilterContext,
             attributeFilterConfigs: applyConfigUpdates(dashboard.attributeFilterConfigs, configUpdates),
+            parameters: applyFilterViewParameterValues(dashboard.parameters, defaultFilterView.parameters),
         };
     }
 
     return dashboard;
+}
+
+/**
+ * Default filter views are applied before tab parameters are hydrated into runtime state.
+ * Copy captured filter view values into matching dashboard parameters so hydration initializes chips
+ * from the default view.
+ */
+function applyFilterViewParameterValues(
+    dashboardParameters: IDashboardParameter[] | undefined,
+    filterViewParameters: IDashboardParameter[] | undefined,
+): IDashboardParameter[] | undefined {
+    if (!dashboardParameters || !filterViewParameters || filterViewParameters.length === 0) {
+        return dashboardParameters;
+    }
+
+    return dashboardParameters.map((parameter) => {
+        const filterViewParameter = filterViewParameters.find((item) =>
+            areObjRefsEqual(item.ref, parameter.ref),
+        );
+        if (!filterViewParameter) {
+            return parameter;
+        }
+        if (filterViewParameter.value === undefined) {
+            return omit(parameter, ["value"]);
+        }
+        return { ...parameter, value: filterViewParameter.value };
+    });
 }

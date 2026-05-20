@@ -175,6 +175,14 @@ export interface IAttributeFilterDropdownButtonProps {
      * @beta
      */
     dropdownId?: string;
+
+    /**
+     * Overrides the accessible name of the button. When omitted, the name is derived from the
+     * rendered title.
+     *
+     * @beta
+     */
+    ariaLabel?: string;
 }
 
 /**
@@ -211,6 +219,7 @@ export function AttributeFilterDropdownButton({
     buttonRef,
     buttonId,
     dropdownId,
+    ariaLabel,
 }: IAttributeFilterDropdownButtonProps) {
     const intl = useIntl();
     const subtitleSelectedItemsRef = useRef<HTMLSpanElement>(null);
@@ -297,6 +306,7 @@ export function AttributeFilterDropdownButton({
             buttonRef={handleButtonRef}
             buttonId={buttonId}
             dropdownId={dropdownId}
+            ariaLabel={ariaLabel}
             className={cx(
                 "gd-attribute-filter-dropdown-button__next",
                 "s-attribute-filter",

@@ -115,6 +115,7 @@ exports[`PluggableSankeyChart > sankey should allow date attribute in attribute 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -250,6 +251,7 @@ exports[`PluggableSankeyChart > should return reference point with one metric, a
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -437,6 +439,7 @@ exports[`PluggableSankeyChart > should reuse one measure and order attribute typ
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

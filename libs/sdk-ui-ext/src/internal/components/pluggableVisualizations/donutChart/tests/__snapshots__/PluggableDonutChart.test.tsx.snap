@@ -70,6 +70,7 @@ exports[`PluggableDonutChart > should return reference point with multiple metri
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -162,6 +163,7 @@ exports[`PluggableDonutChart > should return reference point with one metric and
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -295,6 +297,7 @@ exports[`PluggableDonutChart > should return reference point with only one metri
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

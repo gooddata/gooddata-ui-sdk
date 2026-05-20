@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "Remove legacy automation variants",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

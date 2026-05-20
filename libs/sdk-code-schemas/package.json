@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-schemas",
-    "version": "11.36.0-alpha.3",
+    "version": "11.36.0-alpha.6",
     "description": "GoodData AAC JSON Schema types and compiled schemas",
     "license": "MIT",
     "author": "GoodData",
@@ -70,8 +70,7 @@
         "oxfmt": "0.45.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
-        "prettier": "^3.1.0",
-        "readdirp": "^4.0.0",
+        "readdirp": "4.1.2",
         "typescript": "5.9.3",
         "vitest": "4.1.0"
     }

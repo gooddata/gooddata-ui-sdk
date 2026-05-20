@@ -89,7 +89,6 @@ export class PluggablePieChart extends PluggableBaseChart {
     ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         const uiConfig = cloneDeep(DEFAULT_PIE_UICONFIG);
-        this.addMetricToFiltersIfEnabled(uiConfig);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -147,9 +146,7 @@ export class PluggablePieChart extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
 
-        return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
-        );
+        return Promise.resolve(sanitizeFilters(newReferencePoint, referencePoint));
     }
 
     protected getDefaultAndAvailableSort(

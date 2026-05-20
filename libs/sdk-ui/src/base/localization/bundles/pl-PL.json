@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "Dowiedz się o uprawnieniach w przestrzeni roboczej",
     "userManagement.workspace.granularPermission.view.description": "Umożliwia użytkownikom przeglądanie pulpitów nawigacyjnych, które zostały z nimi udostępnione lub ich grupie użytkowników.",
     "userManagement.workspace.granularPermission.analyze.description": "Pozwala użytkownikom tworzyć, edytować lub usuwać pulpity nawigacyjne i wizualizacje, a także przeglądać Logiczny Model Danych (LDM) i metryki.",
-    "userManagement.workspace.granularPermission.manage.description": "Pozwala użytkownikom edytować lub usuwać logiczny model danych i metryki oraz uzyskiwać dostęp do wszystkich pulpitów nawigacyjnych i edytować ich uprawnienia bez ograniczeń.",
     "userManagement.workspace.granularPermission.warning": "<b>Przestroga:</b> Ta czynność spowoduje usunięcie wszystkich zbędnych kombinacji.",
     "userManagement.workspace.permission.remove": "Usuń",
     "userManagement.workspace.permission.and": "i",

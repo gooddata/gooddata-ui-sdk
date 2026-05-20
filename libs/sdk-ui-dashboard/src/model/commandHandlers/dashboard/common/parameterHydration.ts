@@ -53,11 +53,15 @@ export function hydrateParameterEntries(
  *
  * For legacy single-tab dashboards (no `tabs[]`), a synthetic tab with `DEFAULT_TAB_ID` is used
  * so the V1 root-level `parameters` migrate transparently.
+ *
+ * `activeTabOverride` patches `runtimeOverride` on its named tab for refs that match an entry;
+ * non-matching refs are silently ignored (see `overrideDefaultParameters` on DashboardConfig).
  */
 export function distributeParametersToTabs(
     tabs: IDashboardTab[] | undefined,
     rootParameters: IDashboardParameter[] | undefined,
     workspaceParameters: IParameterMetadataObject[],
+    activeTabOverride?: { tabId: string; overrides: IDashboardParameter[] },
 ): Record<string, IDashboardParameterEntry[]> {
     const effectiveTabs: IDashboardTab[] = tabs ?? [
         { localIdentifier: DEFAULT_TAB_ID, title: "", parameters: rootParameters },
@@ -65,7 +69,24 @@ export function distributeParametersToTabs(
     const result: Record<string, IDashboardParameterEntry[]> = {};
     for (const tab of effectiveTabs) {
         const source = pickTabParametersSource(tab, effectiveTabs, rootParameters);
-        result[tab.localIdentifier] = hydrateParameterEntries(source, workspaceParameters);
+        const entries = hydrateParameterEntries(source, workspaceParameters);
+        result[tab.localIdentifier] =
+            tab.localIdentifier === activeTabOverride?.tabId
+                ? applyRuntimeOverrides(entries, activeTabOverride.overrides)
+                : entries;
     }
     return result;
+}
+
+function applyRuntimeOverrides(
+    entries: IDashboardParameterEntry[],
+    overrides: IDashboardParameter[],
+): IDashboardParameterEntry[] {
+    const overrideByRef = new Map<string, number | undefined>(
+        overrides.map((o) => [objRefToString(o.ref), o.value]),
+    );
+    return entries.map((entry) => {
+        const key = objRefToString(entry.parameter.ref);
+        return overrideByRef.has(key) ? { ...entry, runtimeOverride: overrideByRef.get(key) } : entry;
+    });
 }

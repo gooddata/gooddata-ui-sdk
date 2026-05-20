@@ -116,7 +116,7 @@ export type AttributeFilterControllerData = CommonFilterControllerData & Element
 export function AttributeFilterDeleteButton({ onDelete }: IAttributeFilterDeleteButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeFilterDependencyTooltip({ tooltipContent }: IAttributeFilterDependencyTooltipProps): JSX.Element;
+export function AttributeFilterDependencyTooltip({ tooltipContent, ariaLabel }: IAttributeFilterDependencyTooltipProps): JSX.Element;
 
 // @beta
 export function AttributeFilterDropdownActions({ isApplyDisabled, onApplyButtonClick, onCancelButtonClick, applyDisabledTooltip, withoutApply }: IAttributeFilterDropdownActionsProps): JSX.Element;
@@ -125,7 +125,7 @@ export function AttributeFilterDropdownActions({ isApplyDisabled, onApplyButtonC
 export function AttributeFilterDropdownBody({ onApplyButtonClick, onCancelButtonClick, width }: IAttributeFilterDropdownBodyProps): JSX.Element;
 
 // @beta
-export function AttributeFilterDropdownButton({ isOpen, title, selectedItemsCount, totalItemsCount, showSelectionCount, subtitle, disabled, customIcon, isFiltering, isLoading, isLoaded, isError, isDraggable, icon, TooltipContentComponent, titleExtension, onClick, className, buttonRef, buttonId, dropdownId }: IAttributeFilterDropdownButtonProps): JSX.Element;
+export function AttributeFilterDropdownButton({ isOpen, title, selectedItemsCount, totalItemsCount, showSelectionCount, subtitle, disabled, customIcon, isFiltering, isLoading, isLoaded, isError, isDraggable, icon, TooltipContentComponent, titleExtension, onClick, className, buttonRef, buttonId, dropdownId, ariaLabel }: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
 export function AttributeFilterElementsActions(props: IAttributeFilterElementsActionsProps): JSX.Element;
@@ -645,6 +645,7 @@ export interface IAttributeFilterDeleteButtonProps {
 
 // @internal (undocumented)
 export interface IAttributeFilterDependencyTooltipProps {
+    ariaLabel?: string;
     // (undocumented)
     tooltipContent: ReactNode;
 }
@@ -670,6 +671,7 @@ export interface IAttributeFilterDropdownBodyProps {
 
 // @beta
 export interface IAttributeFilterDropdownButtonProps {
+    ariaLabel?: string;
     buttonId?: string;
     buttonRef?: Ref<HTMLElement>;
     className?: string;

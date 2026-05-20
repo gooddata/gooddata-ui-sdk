@@ -8,5 +8,7 @@ export {
     splitDrillUrlParts,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
+    getDashboardMeasureValueFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
+    getInsightMeasureValueFilterPlaceholdersFromUrl,
 } from "./dashboard/drillUrl.js";

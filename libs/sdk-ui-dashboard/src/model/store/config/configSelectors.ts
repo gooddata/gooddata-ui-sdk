@@ -899,18 +899,6 @@ export const selectEnableDashboardShareLink: DashboardSelector<boolean> = create
 );
 
 /**
- * Selector for the automation filter context feature flag
- *
- * @internal
- */
-export const selectEnableAutomationFilterContext: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return Boolean(state.settings?.enableAutomationFilterContext);
-    },
-);
-
-/**
  * Selector for the date filter local identifiers feature flag
  *
  * @internal

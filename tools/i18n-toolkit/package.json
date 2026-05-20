@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "11.36.0-alpha.3",
+    "version": "11.36.0-alpha.6",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "license": "MIT",
     "author": "GoodData",
@@ -46,8 +46,8 @@
         "@formatjs/cli-lib": "^6.1.1",
         "@formatjs/icu-messageformat-parser": "^2.1.10",
         "@gooddata/util": "workspace:*",
-        "chalk": "^4.1.1",
-        "commander": "^8.1.0",
+        "chalk": "5.3.0",
+        "commander": "8.3.0",
         "fast-glob": "3.3.3",
         "html-validate": "10.3.1",
         "jsonschema": "^1.2.6",

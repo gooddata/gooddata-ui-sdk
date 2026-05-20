@@ -69,12 +69,12 @@ function sanitizeCommonDateFilter(filter: IDashboardFilter, commonDateFilterId?:
 }
 
 function shouldSkipValidation(
-    enableAutomationFilterContext: boolean | undefined,
     automationToEdit: IAutomationMetadataObject | undefined,
     widget: ExtendedDashboardWidget | undefined,
     savedDashboardFilters: FilterContextItem[] | undefined,
+    savedDashboardFiltersByTab: Record<string, FilterContextItem[]> | undefined,
 ): boolean {
-    if (!enableAutomationFilterContext || !automationToEdit) {
+    if (!automationToEdit) {
         return true;
     }
     // Handle case, when dashboard scheduled export filters are not saved (undefined === always use latest dashboard filters in the scheduled export)
@@ -82,7 +82,7 @@ function shouldSkipValidation(
     if (widget) {
         return !isInsightWidget(widget);
     }
-    return typeof savedDashboardFilters === "undefined";
+    return typeof savedDashboardFilters === "undefined" && typeof savedDashboardFiltersByTab === "undefined";
 }
 
 function hasMatchingPerTabFormat(
@@ -144,12 +144,10 @@ export function useValidateExistingAutomationFilters({
     automationToEdit,
     widget,
     insight,
-    enableAutomationFilterContext,
 }: {
     automationToEdit?: IAutomationMetadataObject;
     widget?: ExtendedDashboardWidget;
     insight?: IInsight;
-    enableAutomationFilterContext?: boolean;
 }): IAutomationValidationResult {
     const lockedFilters = useDashboardSelector(selectDashboardLockedFilters);
     const hiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
@@ -170,9 +168,7 @@ export function useValidateExistingAutomationFilters({
     const savedDashboardFilters = getAutomationDashboardFilters(automationToEdit);
     const savedDashboardFiltersByTab = getAutomationDashboardFiltersByTab(automationToEdit);
 
-    if (
-        shouldSkipValidation(enableAutomationFilterContext, automationToEdit, widget, savedDashboardFilters)
-    ) {
+    if (shouldSkipValidation(automationToEdit, widget, savedDashboardFilters, savedDashboardFiltersByTab)) {
         return defaultValidState;
     }
 

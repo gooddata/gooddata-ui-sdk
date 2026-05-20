@@ -325,17 +325,20 @@ export function DropdownList<T>({
                                 style={{ width: listWidth }}
                                 className={listClassNames}
                                 role={
-                                    accessibilityConfig?.role === "listbox"
+                                    accessibilityConfig?.role === "listbox" ||
+                                    accessibilityConfig?.role === "list"
                                         ? undefined
                                         : accessibilityConfig?.role
                                 }
                                 aria-label={
-                                    accessibilityConfig?.role === "listbox"
+                                    accessibilityConfig?.role === "listbox" ||
+                                    accessibilityConfig?.role === "list"
                                         ? undefined
                                         : accessibilityConfig?.ariaLabel
                                 }
                                 aria-labelledby={
-                                    accessibilityConfig?.role === "listbox"
+                                    accessibilityConfig?.role === "listbox" ||
+                                    accessibilityConfig?.role === "list"
                                         ? undefined
                                         : accessibilityConfig?.ariaLabelledBy
                                 }
@@ -361,10 +364,15 @@ export function DropdownList<T>({
                                     scrollToItem={scrollToItem}
                                     scrollToItemKeyExtractor={scrollToItemKeyExtractor}
                                     representAs={
-                                        accessibilityConfig?.role === "listbox" ? "listbox" : undefined
+                                        accessibilityConfig?.role === "listbox"
+                                            ? "listbox"
+                                            : accessibilityConfig?.role === "list"
+                                              ? "list"
+                                              : undefined
                                     }
                                     listboxProps={
-                                        accessibilityConfig?.role === "listbox"
+                                        accessibilityConfig?.role === "listbox" ||
+                                        accessibilityConfig?.role === "list"
                                             ? {
                                                   "aria-label": accessibilityConfig?.ariaLabel,
                                                   "aria-labelledby": accessibilityConfig?.ariaLabelledBy,

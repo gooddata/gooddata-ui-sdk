@@ -307,6 +307,7 @@ exports[`PluggableLineChart > should cut out measures tail when getting nM 0Vb 1
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -446,6 +447,7 @@ exports[`PluggableLineChart > should handle wrong order of buckets in reference 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -575,6 +577,7 @@ exports[`PluggableLineChart > should return reference point when no categories a
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -714,6 +717,7 @@ exports[`PluggableLineChart > should return reference point with Date in categor
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -853,6 +857,7 @@ exports[`PluggableLineChart > should return reference point with one category an
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1047,6 +1052,7 @@ exports[`PluggableLineChart > should reuse all measures, only one category and n
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1231,6 +1237,7 @@ exports[`PluggableLineChart > should reuse one measure, only one category and on
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

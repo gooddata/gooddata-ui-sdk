@@ -203,7 +203,7 @@ export class CancelledSdkError extends GoodDataSdkError {
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
 // @public (undocumented)
-export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "choropleth" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater";
+export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "choropleth" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pyramid" | "pareto" | "alluvial" | "sankey" | "dependencywheel" | "repeater" | "radar";
 
 // @alpha
 export function ClientWorkspaceProvider(props: IClientWorkspaceProviderProps): JSX.Element;
@@ -2632,6 +2632,7 @@ export const VisualizationTypes: {
     DEPENDENCY_WHEEL: "dependencywheel";
     XIRR: "xirr";
     REPEATER: "repeater";
+    RADAR: "radar";
 };
 
 // @internal

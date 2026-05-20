@@ -67,7 +67,7 @@ export interface IUiPagedVirtualListProps<T> {
     children: (item: T, focusedIndex?: number) => ReactNode;
     scrollbarHoverEffect?: boolean;
     SkeletonItem?: ComponentType<IUiPagedVirtualListSkeletonItemProps>;
-    representAs?: "grid" | "listbox";
+    representAs?: "grid" | "listbox" | "list";
     listboxProps?: Record<string, any>;
     // keyboard and focus management
     tabIndex?: number; // tabindex=-1 means that keyboard navigation and focus are handled by the parent
@@ -204,17 +204,21 @@ function UiPagedVirtualListNotWrapped<T>(
                         width: "100%",
                         position: "relative",
                     }}
-                    tabIndex={tabIndex}
-                    onFocus={onFocus}
+                    tabIndex={representAs === "list" ? undefined : tabIndex}
+                    onFocus={representAs === "list" ? undefined : onFocus}
                     onKeyDown={
-                        tabIndex < 0 ? undefined : (customKeyboardNavigationHandler ?? onKeyboardNavigation)
+                        representAs === "list" || tabIndex < 0
+                            ? undefined
+                            : (customKeyboardNavigationHandler ?? onKeyboardNavigation)
                     }
                     role={
                         representAs === "grid"
                             ? "rowgroup"
                             : representAs === "listbox"
                               ? "listbox"
-                              : undefined
+                              : representAs === "list"
+                                ? "list"
+                                : undefined
                     }
                     {...listboxProps}
                 >
@@ -250,7 +254,9 @@ function UiPagedVirtualListNotWrapped<T>(
                                           ? makeId?.({ item, specifier: SELECT_ITEM_ACTION })
                                           : undefined,
                                   }
-                                : {};
+                                : representAs === "list"
+                                  ? { role: "listitem" }
+                                  : {};
 
                         return (
                             <ItemElement

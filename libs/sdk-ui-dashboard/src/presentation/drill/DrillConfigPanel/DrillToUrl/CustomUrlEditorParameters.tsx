@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 
@@ -28,6 +28,8 @@ export function ParametersPanel({
     onAdd,
     intl,
     dashboardFilters,
+    dashboardMeasureValueFilters,
+    insightMeasureValueFilters,
     attributeFilterConfigs,
     insightFilters,
     widgetRef,
@@ -50,11 +52,14 @@ export function ParametersPanel({
                     onAdd={onAdd}
                     intl={intl}
                     insightFilters={insightFilters}
+                    insightMeasureValueFilters={insightMeasureValueFilters}
+                    widgetRef={widgetRef}
                 />
                 <DashboardParametersSection
                     intl={intl}
                     onAdd={onAdd}
                     dashboardFilters={dashboardFilters}
+                    dashboardMeasureValueFilters={dashboardMeasureValueFilters}
                     attributeFilterConfigs={attributeFilterConfigs}
                 />
                 <IdentifierParametersSection

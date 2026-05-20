@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "เรียนรู้เกี่ยวกับสิทธิ์ของพื้นที่ทำงาน",
     "userManagement.workspace.granularPermission.view.description": "อนุญาตให้ผู้ใช้ดูแดชบอร์ดที่ถูกแชร์กับพวกเขาหรือกลุ่มผู้ใช้ของพวกเขา",
     "userManagement.workspace.granularPermission.analyze.description": "อนุญาตให้ผู้ใช้สร้าง แก้ไข หรือลบแดชบอร์ดและการแสดงภาพข้อมูล พร้อมกับดูแบบจำลองข้อมูลเชิงตรรกะ (LDM) และเมตริก",
-    "userManagement.workspace.granularPermission.manage.description": "อนุญาตให้ผู้ใช้สามารถแก้ไขหรือลบแบบจำลองข้อมูลเชิงตรรกะและเมตริก และเข้าถึงแดชบอร์ดทั้งหมดและแก้ไขสิทธิ์ของแดชบอร์ดโดยไม่มีข้อจำกัด",
     "userManagement.workspace.granularPermission.warning": "<b>ข้อควรระวัง:</b> การดำเนินการนี้จะนำชุดค่าผสมที่ซ้ำซ้อนออก",
     "userManagement.workspace.permission.remove": "นำออก",
     "userManagement.workspace.permission.and": "และ",

@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "En savoir plus sur les autorisations de l'espace de travail",
     "userManagement.workspace.granularPermission.view.description": "Permet aux utilisateurs de visualiser les tableaux de bord qui ont été partagés avec eux ou avec leur groupe d'utilisateurs.",
     "userManagement.workspace.granularPermission.analyze.description": "Permet aux utilisateurs de créer, modifier ou supprimer des tableaux de bord et des visualisations, tout en visualisant le modèle logique de données (MLD) et les métriques.",
-    "userManagement.workspace.granularPermission.manage.description": "Permet aux utilisateurs d'accéder, de modifier ou de supprimer le modèle logique de données et les métriques, d'accéder à tous les tableaux de bord et de modifier leurs droits d'accès aux tableaux de bord sans aucune limitation.",
     "userManagement.workspace.granularPermission.warning": "<b>Attention :</b> cette action supprimera toutes les combinaisons redondantes.",
     "userManagement.workspace.permission.remove": "Supprimer",
     "userManagement.workspace.permission.and": "et",

@@ -292,6 +292,9 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                     strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                 },
             );
+            const filterDependencyIconAriaLabel = intl.formatMessage({
+                id: "filter.dependency.icon.aria.label",
+            });
 
             const CustomTooltipComponent = useMemo(() => {
                 // When text filter FFs are enabled, the attribute filter dropdown header
@@ -320,7 +323,10 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
             const shouldExtendTitle =
                 !!capabilities.supportsKeepingDependentFiltersSelection && isAttributeFilterDependent;
             const titleExtension = shouldExtendTitle ? (
-                <AttributeFilterDependencyTooltip tooltipContent={filterDependencyIconTooltip} />
+                <AttributeFilterDependencyTooltip
+                    tooltipContent={filterDependencyIconTooltip}
+                    ariaLabel={filterDependencyIconAriaLabel}
+                />
             ) : null;
 
             return (

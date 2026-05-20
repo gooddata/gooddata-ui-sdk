@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "Saiba mais sobre as permissões do espaço de trabalho",
     "userManagement.workspace.granularPermission.view.description": "Permite que os utilizadores exibam painéis que foram compartilhados com eles ou com seu grupo de utilizadores.",
     "userManagement.workspace.granularPermission.analyze.description": "Permite que os utilizadores criem, editem ou excluam painéis e visualizações, além de visualizar o LDM (Modelo de Dados Lógicos) e as métricas.",
-    "userManagement.workspace.granularPermission.manage.description": "Permite que os utilizadores possam editar ou excluir o modelo de dados lógicos e as métricas, acessar todos os painéis e editar as suas permissões de painel sem limitações.",
     "userManagement.workspace.granularPermission.warning": "<b>Cuidado:</b> Esta ação removerá todas as combinações redundantes.",
     "userManagement.workspace.permission.remove": "Remover",
     "userManagement.workspace.permission.and": "e",

@@ -13,7 +13,7 @@ import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-k
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { DashboardStoreProvider } from "../../../model/react/DashboardStoreProvider.js";
-import { DefaultAlertingDialogNew } from "../../alerting/DefaultAlertingDialog/DefaultAlertingDialogNew.js";
+import { DefaultAlertingDialog } from "../../alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
 import { DefaultAlertingManagementDialogNew } from "../../alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
 import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/zIndex.js";
 import { DashboardComponentsProvider } from "../../dashboardContexts/DashboardComponentsContext.js";
@@ -72,7 +72,7 @@ function resolveDialogComponents(props: IDashboardProps) {
         ShareDialogComponent: props.ShareDialogComponent ?? DefaultShareDialog,
         AlertingManagementDialogComponent:
             props.AlertingManagementDialogComponent ?? DefaultAlertingManagementDialogNew,
-        AlertingDialogComponent: props.AlertingDialogComponent ?? DefaultAlertingDialogNew,
+        AlertingDialogComponent: props.AlertingDialogComponent ?? DefaultAlertingDialog,
         SaveAsDialogComponent: props.SaveAsDialogComponent ?? DefaultSaveAsDialog,
         DashboardSettingsDialogComponent:
             props.DashboardSettingsDialogComponent ?? DefaultDashboardSettingsDialog,

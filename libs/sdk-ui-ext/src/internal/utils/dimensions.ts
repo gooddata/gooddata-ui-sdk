@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { compact } from "lodash-es";
 
 import {
@@ -155,6 +156,7 @@ export function generateDimensions(
             return getTreemapDimensions(insight);
 
         case VisualizationTypes.LINE:
+        case VisualizationTypes.RADAR:
             return getLineDimensions(insight);
 
         case VisualizationTypes.AREA:

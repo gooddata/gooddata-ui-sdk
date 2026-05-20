@@ -33,7 +33,6 @@ import { convertMeasure } from "./afm/MeasureConverter.js";
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
-    enableAutomationFilterContext: boolean,
 ): JsonApiExportDefinitionPostOptionalIdDocument => {
     const { title, description, tags, requestPayload } = exportDefinition;
 
@@ -44,11 +43,7 @@ export const convertExportDefinitionMdObjectDefinition = (
                 title,
                 description,
                 tags,
-                requestPayload: convertExportDefinitionRequestPayload(
-                    requestPayload,
-                    enableAutomationFilterContext,
-                    title,
-                ),
+                requestPayload: convertExportDefinitionRequestPayload(requestPayload, title),
             },
         },
     };
@@ -397,7 +392,6 @@ export const convertVisualizationToDashboardTabularExportRequest = (
 
 export const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
-    enableAutomationFilterContext: boolean,
     title?: string,
 ): TabularExportRequest | VisualExportRequest => {
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
@@ -418,9 +412,7 @@ export const convertExportDefinitionRequestPayload = (
                       metadata: {
                           ...(filters
                               ? {
-                                    filters: enableAutomationFilterContext
-                                        ? convertSdkFiltersToTiger(filters)
-                                        : filters,
+                                    filters: convertSdkFiltersToTiger(filters),
                                 }
                               : {}),
                           ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
@@ -463,12 +455,8 @@ export const convertExportDefinitionRequestPayload = (
 export const convertExportDefinitionMdObject = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
     identifier: string,
-    enableAutomationFilterContext: boolean,
 ): JsonApiExportDefinitionInDocument => {
-    const postDefinition = convertExportDefinitionMdObjectDefinition(
-        exportDefinition,
-        enableAutomationFilterContext,
-    );
+    const postDefinition = convertExportDefinitionMdObjectDefinition(exportDefinition);
 
     return {
         data: {

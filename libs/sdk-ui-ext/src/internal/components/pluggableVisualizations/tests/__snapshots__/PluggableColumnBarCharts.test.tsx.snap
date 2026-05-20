@@ -54,6 +54,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -272,6 +273,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -421,6 +423,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -655,6 +658,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -873,6 +877,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

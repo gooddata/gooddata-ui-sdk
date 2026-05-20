@@ -73,7 +73,6 @@ export class PluggableBubbleChart extends PluggableBaseChart {
     ): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         const uiConfig = cloneDeep(DEFAULT_BUBBLE_CHART_CONFIG);
-        this.addMetricToFiltersIfEnabled(uiConfig);
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -155,9 +154,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         );
         newReferencePoint = removeSort(newReferencePoint);
 
-        return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
-        );
+        return Promise.resolve(sanitizeFilters(newReferencePoint, referencePoint));
     }
 
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): null {

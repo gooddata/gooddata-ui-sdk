@@ -159,7 +159,6 @@ export const convertDashboardTabularExportRequest = (
 
 export const convertVisualExportRequest = (
     exportRequest: AutomationAutomationVisualExport,
-    enableAutomationFilterContext: boolean,
 ): IExportDefinitionDashboardRequestPayload => {
     const {
         requestPayload: { fileName, dashboardId, metadata: metadataObj },
@@ -170,16 +169,15 @@ export const convertVisualExportRequest = (
     const filtersObj = metadata?.filters ? { filters } : {};
 
     // Convert filtersByTab from metadata
-    const filtersByTab =
-        enableAutomationFilterContext && metadata?.filtersByTab
-            ? Object.entries(metadata.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
-                  (acc, [tabId, tabFilters]) => {
-                      acc[tabId] = convertTigerToSdkFilters(tabFilters) ?? [];
-                      return acc;
-                  },
-                  {},
-              )
-            : undefined;
+    const filtersByTab = metadata?.filtersByTab
+        ? Object.entries(metadata.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
+              (acc, [tabId, tabFilters]) => {
+                  acc[tabId] = convertTigerToSdkFilters(tabFilters) ?? [];
+                  return acc;
+              },
+              {},
+          )
+        : undefined;
     const filtersByTabObj = filtersByTab ? { filtersByTab } : {};
 
     return {
@@ -329,7 +327,6 @@ export const convertTabularExportRequest = (
 export const convertExportDefinitionMdObject = (
     exportDefinitionOut: JsonApiExportDefinitionOutWithLinks,
     included: JsonApiExportDefinitionOutIncludes[] = [],
-    enableAutomationFilterContext: boolean,
 ): IExportDefinitionMetadataObject => {
     const { id, attributes, links, relationships = {} } = exportDefinitionOut;
     const { createdBy, modifiedBy } = relationships;
@@ -343,7 +340,6 @@ export const convertExportDefinitionMdObject = (
     } = attributes ?? {};
     const request = convertExportDefinitionRequestPayload(
         requestPayload as VisualExportRequest | TabularExportRequest,
-        enableAutomationFilterContext,
     );
 
     return {
@@ -367,13 +363,9 @@ export const convertExportDefinitionMdObject = (
 
 export const convertInlineExportDefinitionMdObject = (
     exportDefinitionOut: AutomationAutomationTabularExport | AutomationAutomationVisualExport,
-    enableAutomationFilterContext: boolean,
 ): IExportDefinitionMetadataObject => {
     const id = uuid();
-    const request = convertExportDefinitionRequestPayload(
-        exportDefinitionOut.requestPayload,
-        enableAutomationFilterContext,
-    );
+    const request = convertExportDefinitionRequestPayload(exportDefinitionOut.requestPayload);
     const metadata = exportDefinitionOut.requestPayload.metadata as MetadataObjectDefinition | undefined;
 
     return {
@@ -393,7 +385,6 @@ export const convertInlineExportDefinitionMdObject = (
 
 const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
-    enableAutomationFilterContext: boolean,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest)) {
         const { widget } = (exportRequest.metadata as MetadataObjectDefinition) ?? {};
@@ -431,16 +422,15 @@ const convertExportDefinitionRequestPayload = (
         const filtersObj = filters ? { filters } : {};
 
         // Convert filtersByTab from metadata
-        const filtersByTab =
-            enableAutomationFilterContext && metadata?.filtersByTab
-                ? Object.entries(metadata.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
-                      (acc, [tabId, tabFilters]) => {
-                          acc[tabId] = convertTigerToSdkFilters(tabFilters) ?? [];
-                          return acc;
-                      },
-                      {},
-                  )
-                : undefined;
+        const filtersByTab = metadata?.filtersByTab
+            ? Object.entries(metadata.filtersByTab).reduce<Record<string, FilterContextItem[]>>(
+                  (acc, [tabId, tabFilters]) => {
+                      acc[tabId] = convertTigerToSdkFilters(tabFilters) ?? [];
+                      return acc;
+                  },
+                  {},
+              )
+            : undefined;
         const filtersByTabObj = filtersByTab ? { filtersByTab } : {};
 
         return {

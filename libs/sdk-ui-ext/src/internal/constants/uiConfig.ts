@@ -69,19 +69,6 @@ const stackBaseWithDate = {
 
 export const defaultFilters = {
     filters: {
-        accepts: [ATTRIBUTE, DATE],
-        itemsLimit: MAX_FILTERS_COUNT,
-        itemsLimitByType: {
-            date: 1,
-        },
-        allowsReordering: false,
-        enabled: true,
-        isShowInPercentEnabled: false,
-    },
-};
-
-export const defaultImprovedFilters = {
-    filters: {
         accepts: [ATTRIBUTE, METRIC, DATE],
         itemsLimit: MAX_FILTERS_COUNT,
         itemsLimitByType: {
@@ -285,6 +272,32 @@ export const LINE_UICONFIG_WITH_MULTIPLE_DATES: IUiConfig = {
             ...measuresBase,
             isShowOnSecondaryAxisVisible: true,
             allowThresholdMeasure: true,
+        },
+        trend: {
+            ...viewBase,
+            allowsDuplicateDates: true,
+        },
+        segment: {
+            ...stackBaseWithDate,
+            itemsLimitByType: {
+                date: 1,
+            },
+            allowsDuplicateDates: true,
+        },
+        ...defaultFilters,
+    },
+    ...defaultRootUiConfigProperties,
+    ...enabledOpenAsReportConfig,
+    supportedOverTimeComparisonTypes: [
+        OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
+        OverTimeComparisonTypes.PREVIOUS_PERIOD,
+    ],
+};
+
+export const RADAR_UICONFIG: IUiConfig = {
+    buckets: {
+        measures: {
+            ...measuresBase,
         },
         trend: {
             ...viewBase,

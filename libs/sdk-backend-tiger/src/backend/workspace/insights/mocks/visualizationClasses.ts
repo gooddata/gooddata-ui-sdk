@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { sortBy } from "lodash-es";
 
@@ -232,6 +232,18 @@ export const visualizationClasses: IVisualizationClass[] = sortBy(
                 title: "Sankey chart",
                 identifier: "gdc.visualization.sankey",
                 uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu5gpyn/obj/1319",
+            },
+        },
+        {
+            visualizationClass: {
+                checksum: "local",
+                icon: "local:radar",
+                orderIndex: 19.4,
+                iconSelected: "local:radar.selected",
+                url: "local:radar",
+                title: "Radar chart",
+                identifier: "gdc.visualization.radar",
+                uri: "/gdc/md/gtl83h4doozbp26q0kf5qg8uiyu4glyn/obj/1419",
             },
         },
         {

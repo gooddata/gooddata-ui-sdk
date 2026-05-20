@@ -24,6 +24,7 @@ import { PieChartDescriptor } from "./pluggableVisualizations/pieChart/PieChartD
 import { PivotTableDescriptor } from "./pluggableVisualizations/pivotTable/PivotTableDescriptor.js";
 import { PivotTableNextDescriptor } from "./pluggableVisualizations/pivotTableNext/PivotTableNextDescriptor.js";
 import { PyramidChartDescriptor } from "./pluggableVisualizations/pyramidChart/PyramidChartDescriptor.js";
+import { RadarChartDescriptor } from "./pluggableVisualizations/radarChart/RadarChartDescriptor.js";
 import { RepeaterDescriptor } from "./pluggableVisualizations/repeater/RepeaterDescriptor.js";
 import { SankeyChartDescriptor } from "./pluggableVisualizations/sankeyChart/SankeyChartDescriptor.js";
 import { ScatterPlotDescriptor } from "./pluggableVisualizations/scatterPlot/ScatterPlotDescriptor.js";
@@ -172,6 +173,7 @@ const DefaultVisualizations = {
     treemap: TreemapDescriptor,
     funnel: FunnelChartDescriptor,
     pyramid: PyramidChartDescriptor,
+    radar: RadarChartDescriptor,
     pushpin: GeoPushpinChartDescriptor,
     sankey: SankeyChartDescriptor,
     dependencywheel: DependencyWheelChartDescriptor,

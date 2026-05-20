@@ -92,9 +92,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        const config = cloneDeep(BULLET_CHART_CONFIG_MULTIPLE_DATES);
-        this.addMetricToFiltersIfEnabled(config);
-        return config;
+        return cloneDeep(BULLET_CHART_CONFIG_MULTIPLE_DATES);
     }
 
     public override getExtendedReferencePoint(
@@ -128,9 +126,7 @@ export class PluggableBulletChart extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
 
-        return Promise.resolve(
-            sanitizeFilters(newReferencePoint, this.featureFlags?.enableImprovedAdFilters, referencePoint),
-        );
+        return Promise.resolve(sanitizeFilters(newReferencePoint, referencePoint));
     }
 
     private addFiltersForBullet(

@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 33fb2515f2ec8bec50f7549dc1e3ebd5f4f2200351cfb0c55859c029bf46e6d8
+# schema-hash: 93b86453ec9f096fb04bd2fc1d77a6268752e83f8fd9e3badaf3d4c8ee70ee84
 
 from __future__ import annotations
 
@@ -2104,20 +2104,14 @@ Visualisation: TypeAlias = (
 
 
 Metadata: TypeAlias = Union[
-    Metadata1,
-    Metadata2,
-    Metadata3,
-    "Metadata4",
-    Metadata5,
-    Metadata6,
-    Metadata1,
-    Metadata8,
+    Metadata1, Metadata2, Metadata3, "Metadata4", Metadata5, Metadata6, Metadata8
 ]
 
 
 class Dashboard1(TypedDict):
     id: Identifier
     type: Literal['dashboard']
+    version: NotRequired[Literal['2', '3']]
     title: NotRequired[Title]
     description: NotRequired[Description]
     tags: NotRequired[Tags]
@@ -2161,6 +2155,7 @@ Widget: TypeAlias = VisualizationWidget | Widget1 | Widget2 | Widget3
 class Dashboard(TypedDict):
     id: Identifier
     type: Literal['dashboard']
+    version: NotRequired[Literal['2', '3']]
     title: NotRequired[Title]
     description: NotRequired[Description]
     tags: NotRequired[Tags]

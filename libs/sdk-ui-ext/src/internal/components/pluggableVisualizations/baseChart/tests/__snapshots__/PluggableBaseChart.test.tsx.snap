@@ -54,6 +54,7 @@ exports[`PluggableBaseChart > should cut out measures tail when getting nM 0Vb 1
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -187,6 +188,7 @@ exports[`PluggableBaseChart > should handle wrong order of buckets in reference 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -366,6 +368,7 @@ exports[`PluggableBaseChart > should return ref. point with multiple metrics and
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -479,6 +482,7 @@ exports[`PluggableBaseChart > should return reference point with base recommenda
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -649,6 +653,7 @@ exports[`PluggableBaseChart > should return reference point with multiple metric
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -783,6 +788,7 @@ exports[`PluggableBaseChart > should return reference point with one metric and 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -970,6 +976,7 @@ exports[`PluggableBaseChart > should return reference point with one metric and 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1148,6 +1155,7 @@ exports[`PluggableBaseChart > should return reference point with one metric, one
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1281,6 +1289,7 @@ exports[`PluggableBaseChart > should return reference point without Date in stac
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1414,6 +1423,7 @@ exports[`PluggableBaseChart > should use second non-date attribute when switchin
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

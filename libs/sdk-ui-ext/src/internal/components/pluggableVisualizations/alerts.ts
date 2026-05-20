@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type IInsight,
@@ -38,6 +38,7 @@ export const isInsightSupportedForAlerts = (
         case "sankey":
         case "pushpin":
         case "table":
+        case "radar":
             return true;
         default:
             return false;

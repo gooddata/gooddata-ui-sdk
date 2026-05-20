@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -15,7 +15,6 @@ import {
     MAX_TABLE_CATEGORIES_COUNT,
     UICONFIG,
     defaultFilters,
-    defaultImprovedFilters,
     defaultRootUiConfigProperties,
     disabledOpenAsReportConfig,
     measuresBase,
@@ -149,7 +148,7 @@ export function setPivotTableUiConfig(
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], tableColumnsIcon);
 }
 
-export function getPivotTableDefaultUiConfig(settings: ISettings): IUiConfig {
+export function getPivotTableDefaultUiConfig(): IUiConfig {
     return {
         buckets: {
             measures: {
@@ -175,7 +174,7 @@ export function getPivotTableDefaultUiConfig(settings: ISettings): IUiConfig {
                     date: MAX_TABLE_CATEGORIES_COUNT,
                 },
             },
-            ...(settings.enableImprovedAdFilters ? defaultImprovedFilters : defaultFilters),
+            ...defaultFilters,
         },
         ...defaultRootUiConfigProperties,
         ...disabledOpenAsReportConfig,

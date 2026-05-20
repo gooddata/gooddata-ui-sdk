@@ -926,6 +926,8 @@ export enum CoreErrorCode {
     // (undocumented)
     ReferenceTypeNotSupported = "core.referenceTypeNotSupported",
     // (undocumented)
+    TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
+    // (undocumented)
     VisualizationNotSupported = "core.visualizationNotSupported"
 }
 
@@ -1201,7 +1203,8 @@ export type ExportEntities = Array<{
     data: Dataset | DateDataset | Metric | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
     declarative?: DeclarativeDataset | DeclarativeDateDataset | DeclarativeMetric | DeclarativeVisualizationObject | DeclarativeDashboardPlugin | DeclarativeAttributeHierarchy | {
         dashboard: DeclarativeAnalyticalDashboard;
-        filterContext: DeclarativeFilterContext;
+        filterContext?: DeclarativeFilterContext;
+        tabFilterContexts?: DeclarativeFilterContext[];
     };
 }>;
 
@@ -2765,7 +2768,7 @@ export function yamlBucketsToDeclarative(entities: ExportEntities, input: Visual
 // @public (undocumented)
 export function yamlDashboardToDeclarative(entities: ExportEntities, input: Dashboard): {
     dashboard: DeclarativeAnalyticalDashboard;
-    filterContext: DeclarativeFilterContext;
+    filterContext?: DeclarativeFilterContext;
     tabFilterContexts?: DeclarativeFilterContext[];
 };
 

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -43,6 +43,7 @@ export function ShareDialog({
     labels,
     currentUserPermissions,
     dashboardFilters,
+    dashboardParameters,
     isShareGrantHidden,
     applyShareGrantOnSelect,
     showDashboardShareLink,
@@ -143,6 +144,7 @@ export function ShareDialog({
                                 isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
                                 currentUserPermissions={currentUserPermissions}
                                 dashboardFilters={dashboardFilters}
+                                dashboardParameters={dashboardParameters}
                                 onCancel={onCancel}
                                 onSubmit={onSubmit}
                                 onError={onShareDialogBaseError}

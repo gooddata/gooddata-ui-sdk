@@ -9,32 +9,44 @@ import {
     type DashboardAttributeFilterItem,
     type DashboardTextAttributeFilter,
     type IAttributeDisplayFormMetadataObject,
+    type IDashboardMeasureValueFilter,
     type IDrillToCustomUrl as IDrillToCustomUrlModel,
     type IFilter,
     type IInsightWidget,
+    type IMeasureValueFilter,
     type MatchFilterOperator,
+    type MeasureValueFilterCondition,
     type ObjRef,
     type TextAttributeFilter,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
+    dashboardFilterObjRef,
     filterAttributeElements,
     filterObjRef,
     idRef,
+    insightFilters as insightDefinitionFilters,
     insightId,
     isArbitraryAttributeFilter,
     isAttributeDescriptor,
     isAttributeElementsByValue,
+    isComparisonCondition,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardTextAttributeFilter,
+    isMeasureValueFilter,
     isNegativeAttributeFilter,
+    isRangeCondition,
     isTextAttributeFilter,
+    measureValueFilterConditions,
+    measureValueFilterMeasure,
 } from "@gooddata/sdk-model";
 import {
     type IDrillToUrlPlaceholder,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
+    getDashboardMeasureValueFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
+    getInsightMeasureValueFilterPlaceholdersFromUrl,
 } from "@gooddata/sdk-model/internal";
 import {
     type IDrillEvent,
@@ -48,16 +60,25 @@ import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
 import {
     selectAllCatalogDisplayFormsMap,
+    selectAllCatalogMeasuresMap,
     selectCatalogDateAttributes,
 } from "../../store/catalog/catalogSelectors.js";
+import { selectEnableMeasureValueFilterKD } from "../../store/config/configSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextAttributeFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextAttributeFilterItems,
+    selectFilterContextMeasureValueFilters,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import {
+    dashboardMeasureValueFilterMatchesIdentifier,
+    insightMeasureValueFilterMatchesIdentifier,
+} from "../../utils/measureValueFilterUtils.js";
 
 import { getElementTitle, getElementsSecondaryTitles } from "./getElementTitle.js";
 
@@ -364,6 +385,89 @@ export function* getDashboardAttributeFilterReplacements(
     );
 }
 
+function resolveDashboardMeasureValueFilterReplacement(
+    { placeholder: toBeReplaced, identifier }: IDrillToUrlPlaceholder,
+    measureValueFilters: IDashboardMeasureValueFilter[],
+    catalogMeasures: ReturnType<typeof selectAllCatalogMeasuresMap>,
+): IDrillToUrlPlaceholderReplacement {
+    const usedFilter = measureValueFilters.find((filter) => {
+        const measureRef = dashboardFilterObjRef(filter)!;
+
+        return dashboardMeasureValueFilterMatchesIdentifier(measureRef, identifier, catalogMeasures);
+    });
+
+    const parsedFilter = stringifyMeasureValueFilterCondition(
+        usedFilter?.dashboardMeasureValueFilter.conditions,
+    );
+    const replacement = usedFilter ? encodeParameterIfSet(parsedFilter) : undefined;
+
+    return {
+        toBeReplaced,
+        replacement: replacement!,
+    };
+}
+
+export function* getDashboardMeasureValueFilterReplacements(
+    url: string,
+): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
+    const measureValueFilterPlaceholders = getDashboardMeasureValueFilterPlaceholdersFromUrl(url);
+
+    if (measureValueFilterPlaceholders.length === 0) {
+        return [];
+    }
+
+    const measureValueFilters: ReturnType<typeof selectFilterContextMeasureValueFilters> = yield select(
+        selectFilterContextMeasureValueFilters,
+    );
+    const catalogMeasures: ReturnType<typeof selectAllCatalogMeasuresMap> =
+        yield select(selectAllCatalogMeasuresMap);
+
+    return measureValueFilterPlaceholders.map((placeholder: IDrillToUrlPlaceholder) =>
+        resolveDashboardMeasureValueFilterReplacement(placeholder, measureValueFilters, catalogMeasures),
+    );
+}
+
+function resolveInsightMeasureValueFilterReplacement(
+    { placeholder: toBeReplaced, identifier }: IDrillToUrlPlaceholder,
+    measureValueFilters: IMeasureValueFilter[],
+): IDrillToUrlPlaceholderReplacement {
+    const usedFilter = measureValueFilters.find((filter) => {
+        const measureRef = measureValueFilterMeasure(filter);
+        return insightMeasureValueFilterMatchesIdentifier(measureRef, identifier);
+    });
+
+    const parsedFilter = stringifyMeasureValueFilterCondition(
+        usedFilter ? measureValueFilterConditions(usedFilter) : undefined,
+    );
+    const replacement = usedFilter ? encodeParameterIfSet(parsedFilter) : undefined;
+
+    return {
+        toBeReplaced,
+        replacement: replacement!,
+    };
+}
+
+export function* getInsightMeasureValueFilterReplacements(
+    url: string,
+    widgetRef: ObjRef,
+): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
+    const measureValueFilterPlaceholders = getInsightMeasureValueFilterPlaceholdersFromUrl(url);
+
+    if (measureValueFilterPlaceholders.length === 0) {
+        return [];
+    }
+
+    const widget: IInsightWidget = yield select(selectAnalyticalWidgetByRef(widgetRef));
+    const insight: ReturnType<ReturnType<typeof selectInsightByRef>> = yield select(
+        selectInsightByRef(widget.insight),
+    );
+    const measureValueFilters = insight ? insightDefinitionFilters(insight).filter(isMeasureValueFilter) : [];
+
+    return measureValueFilterPlaceholders.map((placeholder: IDrillToUrlPlaceholder) =>
+        resolveInsightMeasureValueFilterReplacement(placeholder, measureValueFilters),
+    );
+}
+
 export function* getInsightAttributeFilterReplacements(
     url: string,
     widgetRef: ObjRef,
@@ -499,10 +603,28 @@ export function* resolveDrillToCustomUrl(
         widgetRef,
     );
 
+    const dashboardMeasureValueFilterReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
+        getDashboardMeasureValueFilterReplacements,
+        customUrl,
+    );
+
+    const enableMeasureValueFilterKD: ReturnType<typeof selectEnableMeasureValueFilterKD> = yield select(
+        selectEnableMeasureValueFilterKD,
+    );
+    const insightMeasureValueFilterReplacements: IDrillToUrlPlaceholderReplacement[] =
+        enableMeasureValueFilterKD
+            ? yield call(getInsightMeasureValueFilterReplacements, customUrl, widgetRef)
+            : getInsightMeasureValueFilterPlaceholdersFromUrl(customUrl).map(({ placeholder }) => ({
+                  toBeReplaced: placeholder,
+                  replacement: undefined,
+              }));
+
     const missingReplacement = [
         ...attributeIdentifiersReplacements,
         ...dashboardAttributeFilterReplacements,
         ...insightAttributeFilterReplacements,
+        ...dashboardMeasureValueFilterReplacements,
+        ...insightMeasureValueFilterReplacements,
     ].find(({ replacement }) => replacement === undefined);
 
     if (missingReplacement) {
@@ -524,6 +646,8 @@ export function* resolveDrillToCustomUrl(
         ...attributeIdentifiersReplacements,
         ...dashboardAttributeFilterReplacements,
         ...insightAttributeFilterReplacements,
+        ...dashboardMeasureValueFilterReplacements,
+        ...insightMeasureValueFilterReplacements,
         ...insightIdentifiersReplacements,
     ];
 
@@ -558,4 +682,27 @@ function stringifyMatchFilterSelection(literal: string, operator: string, isNega
     const operatorStr = MATCH_OPERATOR_MAP[operator as MatchFilterOperator];
     const prefix = isNegative ? `NOT_${operatorStr}` : operatorStr;
     return `${prefix}${stringify([literal])}`;
+}
+
+/**
+ * @internal
+ */
+export function stringifyMeasureValueFilterCondition(
+    conditions: MeasureValueFilterCondition[] | undefined,
+): string {
+    if (!conditions || conditions.length === 0) {
+        return "ALL";
+    }
+
+    return conditions
+        .map((condition) => {
+            if (isComparisonCondition(condition)) {
+                return `${condition.comparison.operator}(${condition.comparison.value})`;
+            }
+            if (isRangeCondition(condition)) {
+                return `${condition.range.operator}(${condition.range.from},${condition.range.to})`;
+            }
+            return "ALL";
+        })
+        .join("|");
 }

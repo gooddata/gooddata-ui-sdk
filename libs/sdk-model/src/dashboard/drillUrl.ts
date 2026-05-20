@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { idRef } from "../objRef/factory.js";
 import { type IdentifierRef, isIdentifierRef } from "../objRef/index.js";
@@ -30,7 +30,9 @@ function matchAll(regex: RegExp, text: string): RegExpExecArray[] {
 const attributeIdentifierSplitRegexp = /(\{attribute_title\(.*?\)\})/;
 const attributeIdentifierMatchRegexp = /\{attribute_title\((.*?)\)\}/g;
 const dashboardAttributeFilterMatchRegexp = /\{dash_attribute_filter_selection\((.*?)\)\}/g;
+const dashboardMeasureValueFilterMatchRegexp = /\{dash_mvf_condition\((.*?)\)\}/g;
 const insightAttributeFilterMatchRegexp = /\{attribute_filter_selection\((.*?)\)\}/g;
+const insightMeasureValueFilterMatchRegexp = /\{mvf_condition\((.*?)\)\}/g;
 
 const attributeIdentifierToPlaceholder = (ref: IdentifierRef) => `{attribute_title(${ref.identifier})}`;
 
@@ -38,6 +40,13 @@ const matchToUrlPlaceholder = (match: any): IDrillToUrlPlaceholder => ({
     placeholder: match[0],
     identifier: match[1],
     ref: idRef(match[1], "displayForm"),
+    toBeEncoded: match.index !== 0,
+});
+
+const matchToMeasureUrlPlaceholder = (match: any): IDrillToUrlPlaceholder => ({
+    placeholder: match[0],
+    identifier: match[1],
+    ref: idRef(match[1], "measure"),
     toBeEncoded: match.index !== 0,
 });
 
@@ -92,5 +101,17 @@ export const getDashboardAttributeFilterPlaceholdersFromUrl = (url: string): IDr
 /**
  * @internal
  */
+export const getDashboardMeasureValueFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
+    matchAll(dashboardMeasureValueFilterMatchRegexp, url).map(matchToMeasureUrlPlaceholder);
+
+/**
+ * @internal
+ */
 export const getInsightAttributeFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
     matchAll(insightAttributeFilterMatchRegexp, url).map(matchToUrlPlaceholder);
+
+/**
+ * @internal
+ */
+export const getInsightMeasureValueFilterPlaceholdersFromUrl = (url: string): IDrillToUrlPlaceholder[] =>
+    matchAll(insightMeasureValueFilterMatchRegexp, url).map(matchToMeasureUrlPlaceholder);

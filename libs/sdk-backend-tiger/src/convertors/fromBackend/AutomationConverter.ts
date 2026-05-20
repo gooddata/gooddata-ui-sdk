@@ -200,7 +200,6 @@ const convertAutomationResult = (
 export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks | JsonApiWorkspaceAutomationOutWithLinks,
     included: JsonApiAutomationOutIncludes[],
-    enableAutomationFilterContext: boolean,
     enableNewScheduledExport: boolean,
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
@@ -236,19 +235,12 @@ export function convertAutomation(
 
     const exportDefinitions = [
         ...includedExportDefinitions.map((ed) =>
-            convertExportDefinitionMdObjectFromBackend(
-                ed as JsonApiExportDefinitionOutWithLinks,
-                undefined,
-                enableAutomationFilterContext,
-            ),
+            convertExportDefinitionMdObjectFromBackend(ed as JsonApiExportDefinitionOutWithLinks, undefined),
         ),
         ...(visualExports?.map((ve) =>
             enableNewScheduledExport
-                ? wrapExportDefinition(
-                      convertVisualExportRequest(ve, enableAutomationFilterContext),
-                      ve.requestPayload.metadata,
-                  )
-                : convertInlineExportDefinitionMdObject(ve, enableAutomationFilterContext),
+                ? wrapExportDefinition(convertVisualExportRequest(ve), ve.requestPayload.metadata)
+                : convertInlineExportDefinitionMdObject(ve),
         ) ?? []),
         ...(tabularExports?.map((te) =>
             enableNewScheduledExport
@@ -256,7 +248,7 @@ export function convertAutomation(
                       convertTabularExportRequest(te),
                       te.requestPayload.metadata ?? undefined,
                   )
-                : convertInlineExportDefinitionMdObject(te, enableAutomationFilterContext),
+                : convertInlineExportDefinitionMdObject(te),
         ) ?? []),
         ...(imageExports?.map((ie) =>
             wrapExportDefinition(convertImageExportRequest(ie), ie.requestPayload.metadata ?? undefined),
@@ -344,16 +336,10 @@ export function convertAutomation(
 
 export const convertAutomationListToAutomations = (
     automationList: JsonApiAutomationOutList,
-    enableAutomationFilterContext: boolean,
     enableNewScheduledExport: boolean,
 ): IAutomationMetadataObject[] => {
     return automationList.data.map((automationObject) =>
-        convertAutomation(
-            automationObject,
-            automationList.included ?? [],
-            enableAutomationFilterContext,
-            enableNewScheduledExport,
-        ),
+        convertAutomation(automationObject, automationList.included ?? [], enableNewScheduledExport),
     );
 };
 

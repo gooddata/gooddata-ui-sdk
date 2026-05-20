@@ -171,27 +171,12 @@ export type { IDashboardStoreProviderProps } from "./model/react/types.js";
 export { useDispatchDashboardCommand } from "./model/react/useDispatchDashboardCommand.js";
 export { useWidgetExecutionsHandler } from "./model/react/useWidgetExecutionsHandler.js";
 export { useDashboardScheduledEmails } from "./model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
-export { useDashboardAlertsOld } from "./model/react/useDashboardAlertsOld.js";
 export { useDashboardAlerts } from "./model/react/useDashboardAlerting/useDashboardAlerts.js";
 export { type IUseWidgetSelectionResult, useWidgetSelection } from "./model/react/useWidgetSelection.js";
 export { useWidgetFilters } from "./model/react/useWidgetFilters.js";
 export { useDashboardAutomations } from "./model/react/useDashboardAutomations/useDashboardAutomations.js";
 export { DEFAULT_MAX_AUTOMATIONS } from "./model/react/useDashboardAutomations/constants.js";
 export { useWorkspaceUsers } from "./model/react/useWorkspaceUsers.js";
-export {
-    type IUseWidgetAlertFiltersProps,
-    useWidgetAlertFilters,
-} from "./model/react/filtering/useWidgetAlertFilters.js";
-export { useEnableAlertingAutomationFilterContext } from "./model/react/useDashboardAlerting/useEnableAutomationFilterContext.js";
-export {
-    useScheduledExportFilters,
-    type IUseScheduledExportFiltersProps,
-} from "./model/react/filtering/useScheduledExportFilters.js";
-export {
-    useWidgetScheduledExportFilters,
-    type IUseWidgetScheduledExportFiltersProps,
-} from "./model/react/filtering/useWidgetScheduledExportFilters.js";
-export { useAutomationAvailableDashboardFilters } from "./model/react/filtering/useAutomationAvailableDashboardFilters.js";
 export {
     selectAutomationCommonDateFilterId,
     selectAutomationAvailableDashboardFilters,
@@ -1318,7 +1303,6 @@ export {
     selectEnableOrchestratedTabularExports,
     selectEnableDashboardTabularExport,
     selectEnableDashboardShareLink,
-    selectEnableAutomationFilterContext,
     selectEnableAlertsEvaluationFrequencySetup,
     selectEnableDateFilterIdentifiers,
     selectEnableKDEmptyDateValuesFilter,
@@ -1653,6 +1637,7 @@ export type {
     IAddParameterPayload,
     IRemoveParameterPayload,
     ISetParameterRuntimeValuePayload,
+    ISetParameterRuntimeValuesPayload,
 } from "./model/store/tabs/parameters/parametersReducers.js";
 export type {
     IDashboardParameterEntry,
@@ -2211,15 +2196,12 @@ export { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog
 export { ScheduledEmailDialog } from "./presentation/scheduledEmail/ScheduledEmailDialog.js";
 export { ScheduledEmailManagementDialog } from "./presentation/scheduledEmail/ScheduledEmailManagementDialog.js";
 export type {
-    IScheduledEmailDialogPropsContext,
     IScheduledEmailDialogProps,
     IScheduledEmailManagementDialogProps,
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
 } from "./presentation/scheduledEmail/types.js";
-export { DefaultAlertingDialogNew } from "./presentation/alerting/DefaultAlertingDialog/DefaultAlertingDialogNew.js";
-export { DefaultAlertingDialogOld } from "./presentation/alerting/DefaultAlertingDialog/DefaultAlertingDialogOld.js";
-export { DefaultAlertingManagementDialogOld } from "./presentation/alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogOld.js";
+export { DefaultAlertingDialog } from "./presentation/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
 export { DefaultAlertingManagementDialogNew } from "./presentation/alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
 export { AlertingDialog } from "./presentation/alerting/AlertingDialog.js";
 export { AlertingManagementDialog } from "./presentation/alerting/AlertingManagementDialog.js";
@@ -2228,8 +2210,6 @@ export type {
     CustomAlertingDialogComponent,
     IAlertingManagementDialogProps,
     IAlertingDialogProps,
-    IAlertingDialogOldProps,
-    IAlertingManagementDialogOldProps,
 } from "./presentation/alerting/types.js";
 export {
     DefaultSaveAsDialog,

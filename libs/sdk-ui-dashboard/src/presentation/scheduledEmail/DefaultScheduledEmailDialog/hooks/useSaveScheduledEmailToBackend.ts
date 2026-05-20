@@ -14,13 +14,9 @@ import {
     isAllValuesDashboardAttributeFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
-    isNoopAllTimeDashboardDateFilter,
-    isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectEnableAutomationFilterContext } from "../../../../model/store/config/configSelectors.js";
 import { type IScheduledEmailDialogProps } from "../../types.js";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
@@ -41,7 +37,6 @@ export function useSaveScheduledEmailToBackend(
     >,
 ) {
     const intl = useIntl();
-    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
     const [savingErrorMessage, setSavingErrorMessage] = useState<string | undefined>(undefined);
     const scheduledEmailCreator = useCreateScheduledEmail({
         onSuccess: (scheduledEmail: IAutomationMetadataObject) => {
@@ -65,14 +60,10 @@ export function useSaveScheduledEmailToBackend(
     });
     const handleCreateScheduledEmail = useCallback(
         (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAutomation = sanitizeAutomation(
-                scheduledEmail,
-                intl,
-                enableAutomationFilterContext,
-            );
+            const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl);
             scheduledEmailCreator.create(sanitizedAutomation as IAutomationMetadataObjectDefinition);
         },
-        [scheduledEmailCreator, enableAutomationFilterContext, intl],
+        [scheduledEmailCreator, intl],
     );
 
     const scheduledEmailUpdater = useUpdateScheduledEmail({
@@ -96,18 +87,14 @@ export function useSaveScheduledEmailToBackend(
 
     const handleUpdateScheduledEmail = useCallback(
         (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAutomation = sanitizeAutomation(
-                scheduledEmail,
-                intl,
-                enableAutomationFilterContext,
-            );
+            const sanitizedAutomation = sanitizeAutomation(scheduledEmail, intl);
             scheduledEmailUpdater.save(sanitizedAutomation as IAutomationMetadataObject);
         },
-        [scheduledEmailUpdater, enableAutomationFilterContext, intl],
+        [scheduledEmailUpdater, intl],
     );
 
     const handleSaveScheduledEmail = (): void => {
-        const sanitizedAutomation = sanitizeAutomation(automation, intl, enableAutomationFilterContext);
+        const sanitizedAutomation = sanitizeAutomation(automation, intl);
 
         if (sanitizedAutomation.id) {
             handleUpdateScheduledEmail(sanitizedAutomation);
@@ -126,7 +113,6 @@ export function useSaveScheduledEmailToBackend(
 function sanitizeAutomation(
     automationToSave: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     intl: IntlShape,
-    enableAutomationFilterContext: boolean,
 ) {
     const automation = {
         ...automationToSave,
@@ -150,10 +136,7 @@ function sanitizeAutomation(
      * - "All values" attribute filters have no effect on execution and should not appear in notifications.
      */
     if (automation.exportDefinitions) {
-        automation.exportDefinitions = removeNoopFiltersFromExportDefinitions(
-            automation.exportDefinitions,
-            enableAutomationFilterContext,
-        );
+        automation.exportDefinitions = removeNoopFiltersFromExportDefinitions(automation.exportDefinitions);
     }
 
     return automation;
@@ -161,12 +144,10 @@ function sanitizeAutomation(
 
 function removeNoopFiltersFromExportDefinitions<
     T extends IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition,
->(exportDefinitions: T[], enableAutomationFilterContext: boolean): T[] {
+>(exportDefinitions: T[]): T[] {
     return exportDefinitions.map((exportDefinition) => {
         if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
             const filters = exportDefinition.requestPayload.content.filters;
-            const format = exportDefinition.requestPayload.format;
-            const isTabularFormat = format === "XLSX" || format === "CSV";
             return {
                 ...exportDefinition,
                 requestPayload: {
@@ -175,19 +156,10 @@ function removeNoopFiltersFromExportDefinitions<
                         ...exportDefinition.requestPayload.content,
                         filters: filters?.filter((filter) => {
                             // Strip noop "All values" attribute filters (handles both IFilter and FilterContextItem formats).
-                            if (
-                                isAllValuesAttributeFilter(filter) ||
-                                isAllValuesDashboardAttributeFilter(filter)
-                            ) {
-                                return false;
-                            }
-                            // Strip noop "All time" date filters only for legacy path.
-                            if (!enableAutomationFilterContext) {
-                                return isTabularFormat
-                                    ? !isNoopAllTimeDateFilter(filter)
-                                    : !isNoopAllTimeDashboardDateFilter(filter);
-                            }
-                            return true;
+                            return (
+                                !isAllValuesAttributeFilter(filter) &&
+                                !isAllValuesDashboardAttributeFilter(filter)
+                            );
                         }),
                     },
                 },
@@ -201,14 +173,7 @@ function removeNoopFiltersFromExportDefinitions<
                         ...exportDefinition.requestPayload.content,
                         filters: exportDefinition.requestPayload.content.filters?.filter((filter) => {
                             // Strip noop "All values" attribute filters.
-                            if (isAllValuesDashboardAttributeFilter(filter)) {
-                                return false;
-                            }
-                            // Strip noop "All time" date filters only for legacy path.
-                            if (!enableAutomationFilterContext && isNoopAllTimeDashboardDateFilter(filter)) {
-                                return false;
-                            }
-                            return true;
+                            return !isAllValuesDashboardAttributeFilter(filter);
                         }),
                     },
                 },

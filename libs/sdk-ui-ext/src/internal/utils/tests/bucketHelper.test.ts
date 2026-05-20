@@ -153,11 +153,7 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            false,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
     });
@@ -170,11 +166,7 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            false,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(2);
     });
@@ -188,33 +180,12 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            false,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
     });
 
-    it("should remove all measure value filters when there is no attribute or date in buckets", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
-        newReferencePoint.buckets[2].items = [];
-        const extendedReferencePoint: IExtendedReferencePoint = {
-            ...newReferencePoint,
-            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
-        };
-
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            false,
-            extendedReferencePoint,
-        );
-
-        expect(newExtendedReferencePoint.filters.items).toHaveLength(0);
-    });
-
-    it("should keep measure value filters without dimensionality when there are no attributes when feature flag is enabled", () => {
+    it("should keep measure value filters without dimensionality when there are no attributes", () => {
         const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         // Remove attributes from old reference point
         oldReferencePoint.buckets[2].items = [];
@@ -225,7 +196,7 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, true, oldReferencePoint);
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, oldReferencePoint);
 
         // Filters without dimensionality don't require attributes, so they should be kept
         expect(newExtendedReferencePoint.filters.items).toHaveLength(3);
@@ -239,11 +210,7 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            false,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         expect(newExtendedReferencePoint.filters).toEqual({
             localIdentifier: "filters",
@@ -265,16 +232,12 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            false,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
     });
 
-    it("should keep measure value filter and resolve dimensionality local identifiers to ObjRefs using old reference point when attribute is removed from buckets (feature flag enabled)", () => {
+    it("should keep measure value filter and resolve dimensionality local identifiers to ObjRefs using old reference point when attribute is removed from buckets", () => {
         const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         const newReferencePoint = cloneDeep(oldReferencePoint);
 
@@ -292,7 +255,7 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, true, oldReferencePoint);
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, oldReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
         expect(newExtendedReferencePoint.filters.items[0].filters![0]).toMatchObject({
@@ -300,7 +263,7 @@ describe("sanitizeFilters", () => {
         });
     });
 
-    it("should transform only missing dimensionality local identifiers to ObjRefs and keep existing local identifiers (feature flag enabled)", () => {
+    it("should transform only missing dimensionality local identifiers to ObjRefs and keep existing local identifiers", () => {
         const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         const newReferencePoint = cloneDeep(oldReferencePoint);
 
@@ -318,7 +281,7 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, true, oldReferencePoint);
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, oldReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
         expect(newExtendedReferencePoint.filters.items[0].filters![0]).toMatchObject({
@@ -355,8 +318,8 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        // When feature flag is enabled, local IDs should be migrated to ObjRefs using old reference point
-        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, true, oldReferencePoint);
+        // Local IDs should be migrated to ObjRefs using old reference point
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, oldReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
         const transformedFilter = newExtendedReferencePoint.filters.items[0]
@@ -391,16 +354,12 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            false,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(0);
     });
 
-    it("should remove measure value filter with dimensionality ObjRefs when feature flag is disabled", () => {
+    it("should keep measure value filter with dimensionality ObjRefs", () => {
         const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
@@ -413,40 +372,12 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        // Feature flag disabled (default)
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            false,
-            extendedReferencePoint,
-        );
-
-        expect(newExtendedReferencePoint.filters.items).toHaveLength(0);
-    });
-
-    it("should keep measure value filter with dimensionality ObjRefs when feature flag is enabled", () => {
-        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
-        newReferencePoint.filters.items = [
-            {
-                localIdentifier: "fbv1",
-                filters: [measureValueFilterWithDimensionalityRefs],
-            },
-        ];
-        const extendedReferencePoint: IExtendedReferencePoint = {
-            ...newReferencePoint,
-            uiConfig: DEFAULT_BASE_CHART_UICONFIG,
-        };
-
-        // Pass enableImprovedAdFilters=true as second parameter
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            true,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
     });
 
-    it("should handle mixed dimensionality with valid local IDs and ObjRefs when feature flag is enabled", () => {
+    it("should handle mixed dimensionality with valid local IDs and ObjRefs", () => {
         const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
@@ -459,17 +390,12 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        // Pass enableImprovedAdFilters=true as second parameter
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            true,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
     });
 
-    it("should remove filter with mixed dimensionality when local ID is invalid (even with feature flag)", () => {
+    it("should remove filter with mixed dimensionality when local ID is invalid", () => {
         const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
@@ -491,12 +417,7 @@ describe("sanitizeFilters", () => {
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
-        // Pass enableImprovedAdFilters=true as second parameter
-        const newExtendedReferencePoint = sanitizeFilters(
-            extendedReferencePoint,
-            true,
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint = sanitizeFilters(extendedReferencePoint, extendedReferencePoint);
 
         // Should be removed because one of the local identifiers is invalid
         expect(newExtendedReferencePoint.filters.items).toHaveLength(0);

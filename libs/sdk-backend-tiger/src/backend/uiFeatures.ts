@@ -95,7 +95,6 @@ export enum TigerFeaturesNames {
     EnableDrilledTooltip = "enableDrilledTooltip",
     EnableVisualizationFilteringByTags = "enableVisualizationFilteringByTags",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
-    EnableImprovedAdFilters = "enableImprovedAdFilters",
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableSlideshowExports = "enableSlideshowExports",
@@ -110,7 +109,6 @@ export enum TigerFeaturesNames {
     EnableAnalyticalDesignerCatalogSideload = "enableAnalyticalDesignerCatalogSideload",
     EnableDashboardShareLink = "enableDashboardShareLink",
     EnableExecutionTimestamp = "enableExecutionTimestamp",
-    EnableAutomationFilterContext = "enableAutomationFilterContext",
     EnableDateFilterIdentifiersRollout = "enableDateFilterIdentifiersRollout",
     EnableAlertsEvaluationFrequencySetup = "enableAlertsEvaluationFrequencySetup",
     EnableLineChartTrendThreshold = "enableLineChartTrendThreshold",
@@ -151,6 +149,7 @@ export enum TigerFeaturesNames {
     EnableKDEmptyDateValuesFilter = "enableKDEmptyDateValuesFilter",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
+    EnableAnalyticalDashboardVersion3 = "enableAnalyticalDashboardVersion3",
     EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
     EnableAnomalyDetectionVisualization = "enableAnomalyDetectionVisualization",
     EnableAlertOncePerInterval = "enableAlertOncePerInterval",
@@ -175,6 +174,7 @@ export enum TigerFeaturesNames {
     EnableEnhancedInsightPicker = "enableEnhancedInsightPicker",
     EnableAiAgenticMultiConversations = "enableAiAgenticMultiConversations",
     EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
+    EnableRadarChart = "enableRadarChart",
 }
 
 export type ITigerFeatureFlags = {
@@ -185,6 +185,7 @@ export type ITigerFeatureFlags = {
     enableKPIDashboardExportPDF: (typeof FeatureFlagsValues)["enableKPIDashboardExportPDF"][number];
     enableSqlDatasets: (typeof FeatureFlagsValues)["enableSqlDatasets"][number];
     enableFunnelChart: (typeof FeatureFlagsValues)["enableFunnelChart"][number];
+    enableRadarChart: (typeof FeatureFlagsValues)["enableRadarChart"][number];
     enablePyramidChart: (typeof FeatureFlagsValues)["enablePyramidChart"][number];
     enableSankeyChart: (typeof FeatureFlagsValues)["enableSankeyChart"][number];
     enableDependencyWheelChart: (typeof FeatureFlagsValues)["enableDependencyWheelChart"][number];
@@ -259,7 +260,6 @@ export type ITigerFeatureFlags = {
     enableInPlatformNotifications: (typeof FeatureFlagsValues)["enableInPlatformNotifications"][number];
     enableVisualizationFilteringByTags: (typeof FeatureFlagsValues)["enableVisualizationFilteringByTags"][number];
     enableVisualizationFineTuning: (typeof FeatureFlagsValues)["enableVisualizationFineTuning"][number];
-    enableImprovedAdFilters: (typeof FeatureFlagsValues)["enableImprovedAdFilters"][number];
     enableExternalRecipients: (typeof FeatureFlagsValues)["enableExternalRecipients"][number];
     enableDashboardTabularExport: (typeof FeatureFlagsValues)["enableDashboardTabularExport"][number];
     enableOrchestratedTabularExports: (typeof FeatureFlagsValues)["enableOrchestratedTabularExports"][number];
@@ -278,7 +278,6 @@ export type ITigerFeatureFlags = {
     enableHighchartsAccessibility: (typeof FeatureFlagsValues)["enableHighchartsAccessibility"][number];
     enableAccessibleChartTooltip: (typeof FeatureFlagsValues)["enableAccessibleChartTooltip"][number];
     enableExecutionTimestamp: (typeof FeatureFlagsValues)["enableExecutionTimestamp"][number];
-    enableAutomationFilterContext: (typeof FeatureFlagsValues)["enableAutomationFilterContext"][number];
     enableDateFilterIdentifiersRollout: (typeof FeatureFlagsValues)["enableDateFilterIdentifiersRollout"][number];
     enableAlertsEvaluationFrequencySetup: (typeof FeatureFlagsValues)["enableAlertsEvaluationFrequencySetup"][number];
     enableLineChartTrendThreshold: (typeof FeatureFlagsValues)["enableLineChartTrendThreshold"][number];
@@ -317,6 +316,7 @@ export type ITigerFeatureFlags = {
     enableKDEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableKDEmptyDateValuesFilter"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
+    enableAnalyticalDashboardVersion3: (typeof FeatureFlagsValues)["enableAnalyticalDashboardVersion3"][number];
     enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
     enableAnomalyDetectionVisualization: (typeof FeatureFlagsValues)["enableAnomalyDetectionVisualization"][number];
     enableAlertOncePerInterval: (typeof FeatureFlagsValues)["enableAlertOncePerInterval"][number];
@@ -353,6 +353,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKPIDashboardExportPDF: true,
     enableSqlDatasets: false,
     enableFunnelChart: true,
+    enableRadarChart: false,
     enablePyramidChart: true,
     enableSankeyChart: true,
     enableDependencyWheelChart: true,
@@ -427,7 +428,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableInPlatformNotifications: true,
     enableVisualizationFilteringByTags: false,
     enableVisualizationFineTuning: false,
-    enableImprovedAdFilters: true,
     enableExternalRecipients: true,
     enableDashboardTabularExport: false,
     enableOrchestratedTabularExports: false,
@@ -446,7 +446,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableHighchartsAccessibility: true,
     enableAccessibleChartTooltip: false,
     enableExecutionTimestamp: true,
-    enableAutomationFilterContext: true,
     enableDateFilterIdentifiersRollout: true,
     enableAlertsEvaluationFrequencySetup: true,
     enableLineChartTrendThreshold: true,
@@ -485,6 +484,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDEmptyDateValuesFilter: true,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
+    enableAnalyticalDashboardVersion3: false,
     enableAnomalyDetectionAlert: false,
     enableAnomalyDetectionVisualization: false,
     enableAlertOncePerInterval: false,
@@ -521,6 +521,7 @@ export const FeatureFlagsValues = {
     enableKPIDashboardExportPDF: [true, false] as const,
     enableSqlDatasets: [true, false] as const,
     enableFunnelChart: [true, false] as const,
+    enableRadarChart: [true, false] as const,
     enablePyramidChart: [true, false] as const,
     enableSankeyChart: [true, false] as const,
     enableDependencyWheelChart: [true, false] as const,
@@ -596,7 +597,6 @@ export const FeatureFlagsValues = {
     enableInPlatformNotifications: [true, false] as const,
     enableVisualizationFilteringByTags: [true, false] as const,
     enableVisualizationFineTuning: [true, false] as const,
-    enableImprovedAdFilters: [true, false] as const,
     enableExternalRecipients: [true, false] as const,
     enableDashboardTabularExport: [true, false] as const,
     enableOrchestratedTabularExports: [true, false] as const,
@@ -615,7 +615,6 @@ export const FeatureFlagsValues = {
     enableAnalyticalDesignerCatalogSideload: [true, false] as const,
     enableDashboardShareLink: [true, false] as const,
     enableExecutionTimestamp: [true, false] as const,
-    enableAutomationFilterContext: [true, false] as const,
     enableDateFilterIdentifiersRollout: [true, false] as const,
     enableAlertsEvaluationFrequencySetup: [true, false] as const,
     enableLineChartTrendThreshold: [true, false] as const,
@@ -654,6 +653,7 @@ export const FeatureFlagsValues = {
     enableKDEmptyDateValuesFilter: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,
+    enableAnalyticalDashboardVersion3: [true, false] as const,
     enableAnomalyDetectionAlert: [true, false] as const,
     enableAnomalyDetectionVisualization: [true, false] as const,
     enableAlertOncePerInterval: [true, false] as const,

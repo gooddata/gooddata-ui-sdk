@@ -44,6 +44,7 @@ import { IAuditableUsers } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorPaletteDefinition } from '@gooddata/sdk-model';
 import { IContextStore } from '@gooddata/sdk-ui';
+import { IDashboardParameter } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
@@ -1793,6 +1794,9 @@ export function IconPyramid({ className, width, height, color, ariaHidden }: IIc
 
 // @internal (undocumented)
 export function IconQuestionMark({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export function IconRadar({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export function IconRefresh({ color, className, width, height }: IIconProps): JSX.Element;
@@ -5119,6 +5123,8 @@ export interface IShareDialogBaseProps {
     // (undocumented)
     dashboardFilters?: FilterContextItem[];
     // (undocumented)
+    dashboardParameters?: IDashboardParameter[];
+    // (undocumented)
     isCurrentUserWorkspaceManager: boolean;
     // (undocumented)
     isGranteeShareLoading?: boolean;
@@ -5179,6 +5185,8 @@ export interface IShareDialogProps {
     // (undocumented)
     dashboardFilters?: FilterContextItem[];
     // (undocumented)
+    dashboardParameters?: IDashboardParameter[];
+    // (undocumented)
     isCurrentUserWorkspaceManager: boolean;
     // (undocumented)
     isGranteeShareLoading?: boolean;
@@ -5222,6 +5230,8 @@ export interface IShareGranteeBaseProps {
     currentUserPermissions: CurrentUserPermissions;
     // (undocumented)
     dashboardFilters?: FilterContextItem[];
+    // (undocumented)
+    dashboardParameters?: IDashboardParameter[];
     // (undocumented)
     grantees: GranteeItem[];
     // (undocumented)
@@ -6228,6 +6238,7 @@ export interface IUiComboboxState {
 export interface IUiControlButtonProps {
     // (undocumented)
     "data-testid"?: string;
+    ariaLabel?: string;
     // (undocumented)
     buttonId?: string;
     // (undocumented)
@@ -7014,7 +7025,7 @@ export interface IUiPagedVirtualListProps<T> {
     // (undocumented)
     onScroll?: () => void;
     // (undocumented)
-    representAs?: "grid" | "listbox";
+    representAs?: "grid" | "listbox" | "list";
     // (undocumented)
     scrollbarHoverEffect?: boolean;
     // (undocumented)
@@ -8101,7 +8112,7 @@ export const separatorStaticItem: {
 export function SettingItem({ className, title, titleTooltipText, alignPointTitleTooltip, value, actionType, actionValue, hasDivider, isLoading, isDisableAction, actionTooltipText, alignPointActionTooltip, onAction, renderSubtitle, titleTooltipHideDelay }: ISettingItem): JSX.Element;
 
 // @internal (undocumented)
-export function ShareDialog({ backend, workspace, locale, sharedObject, currentUser, onApply, onCancel, onError, onInteraction, isLockingSupported, isCurrentUserWorkspaceManager, isGranteeShareLoading, labels, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, onShareLinkCopy }: IShareDialogProps): JSX.Element;
+export function ShareDialog({ backend, workspace, locale, sharedObject, currentUser, onApply, onCancel, onError, onInteraction, isLockingSupported, isCurrentUserWorkspaceManager, isGranteeShareLoading, labels, currentUserPermissions, dashboardFilters, dashboardParameters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, onShareLinkCopy }: IShareDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export function ShareDialogBase(props: IShareDialogBaseProps): JSX.Element;
@@ -8120,7 +8131,7 @@ export type ShareDialogInteractionGranteeData = {
 export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
 
 // @internal (undocumented)
-export function ShareGranteeBase({ isLoading, isLockedNow, isUnderLenientControlNow, grantees, sharedObject, isDirty, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onCancel, onSubmit, onGranteeDelete, onGranularGranteeChange, onAddGranteeButtonClick, onLockChange, onUnderLenientControlChange, isCurrentUserWorkspaceManager, onShareLinkCopy }: IShareGranteeBaseProps): JSX.Element;
+export function ShareGranteeBase({ isLoading, isLockedNow, isUnderLenientControlNow, grantees, sharedObject, isDirty, currentUserPermissions, dashboardFilters, dashboardParameters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onCancel, onSubmit, onGranteeDelete, onGranularGranteeChange, onAddGranteeButtonClick, onLockChange, onUnderLenientControlChange, isCurrentUserWorkspaceManager, onShareLinkCopy }: IShareGranteeBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export class ShortenedText extends PureComponent<IShortenedTextProps, IShortenedTextState> {
@@ -8434,7 +8445,7 @@ export function UiComboboxPopup({ style, className, children, ...htmlProps }: Ui
 export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
 
 // @internal
-export function UiControlButton({ title, titleClassName, subtitle, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isDragging, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId }: IUiControlButtonProps): JSX.Element;
+export function UiControlButton({ title, titleClassName, subtitle, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isDragging, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId, ariaLabel }: IUiControlButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiCopyButton({ label, clipboardContent, successMessage, successMessageOptions, errorMessage, errorMessageOptions }: IUiCopyButtonProps): JSX.Element;

@@ -273,3 +273,13 @@ export const fillDropdownItems: IDropdownItem[] = [
     { title: messages["fillPattern"].id, value: "pattern" },
     { title: messages["fillOutline"].id, value: "outline" },
 ];
+
+export const radarRenderAsDropdownItems: IDropdownItem[] = [
+    { title: messages["radarRenderAsFilled"].id, value: "filled" },
+    { title: messages["radarRenderAsOutline"].id, value: "outline" },
+];
+
+export const radarGridLineShapeDropdownItems: IDropdownItem[] = [
+    { title: messages["radarGridLineShapePolygon"].id, value: "polygon" },
+    { title: messages["radarGridLineShapeCircle"].id, value: "circle" },
+];
