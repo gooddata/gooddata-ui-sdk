@@ -24,6 +24,7 @@ export function DefaultShareDialog({
     isCurrentUserWorkspaceManager,
     currentUserPermissions,
     dashboardFilters,
+    dashboardParameters,
     isShareGrantHidden,
     applyShareGrantOnSelect,
     showDashboardShareLink,
@@ -71,6 +72,7 @@ export function DefaultShareDialog({
             isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
             currentUserPermissions={currentUserPermissions}
             dashboardFilters={dashboardFilters}
+            dashboardParameters={dashboardParameters}
             isShareGrantHidden={isShareGrantHidden}
             applyShareGrantOnSelect={applyShareGrantOnSelect}
             showDashboardShareLink={showDashboardShareLink}

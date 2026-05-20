@@ -27,11 +27,7 @@ import { BUCKETS } from "../../../constants/bucket.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { DEFAULT_CLUSTERING_THRESHOLD, DEFAULT_NUMBER_OF_CLUSTERS } from "../../../constants/scatter.js";
 import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
-import {
-    DEFAULT_BASE_CHART_UICONFIG,
-    MAX_CATEGORIES_COUNT,
-    defaultImprovedFilters,
-} from "../../../constants/uiConfig.js";
+import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT } from "../../../constants/uiConfig.js";
 import { type AxisType } from "../../../interfaces/AxisType.js";
 import { type IColorConfiguration } from "../../../interfaces/Colors.js";
 import { type IAvailableSortsGroup } from "../../../interfaces/SortConfig.js";
@@ -118,23 +114,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         this.unmountFun([this.getElement()!, this.getConfigPanelElement()!].filter(Boolean));
     }
 
-    /**
-     * Helper method to add METRIC to filter accepts when enableImprovedAdFilters feature flag is enabled.
-     * The order is important to match localization strings.
-     *
-     * Remove this helper when feature flag is removed and use the exact same array
-     * in uiConfig.ts \> defaultFilters \> accepts
-     */
-    protected addMetricToFiltersIfEnabled(config: IUiConfig): void {
-        if (this.featureFlags?.enableImprovedAdFilters && config.buckets?.["filters"]) {
-            config.buckets["filters"] = defaultImprovedFilters.filters;
-        }
-    }
-
     public getUiConfig(): IUiConfig {
-        const config = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
-        this.addMetricToFiltersIfEnabled(config);
-        return config;
+        return cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
     }
 
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
@@ -158,13 +139,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         this.referencePoint = newReferencePoint;
 
-        return Promise.resolve(
-            sanitizeFilters(
-                newReferencePoint,
-                this.featureFlags?.enableImprovedAdFilters,
-                clonedReferencePoint,
-            ),
-        );
+        return Promise.resolve(sanitizeFilters(newReferencePoint, clonedReferencePoint));
     }
 
     public override getInsightWithDrillDownApplied(

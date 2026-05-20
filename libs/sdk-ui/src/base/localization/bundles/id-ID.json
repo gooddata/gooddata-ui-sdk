@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "Pelajari tentang izin ruang kerja",
     "userManagement.workspace.granularPermission.view.description": "Memungkinkan pengguna untuk melihat dasbor yang telah dibagikan kepada mereka atau grup pengguna mereka.",
     "userManagement.workspace.granularPermission.analyze.description": "Memungkinkan pengguna untuk membuat, mengedit, atau menghapus dasbor dan visualisasi, serta melihat Model Data Logis (LDM) dan metrik.",
-    "userManagement.workspace.granularPermission.manage.description": "Memungkinkan pengguna untuk mengedit atau menghapus model data logis dan metrik, serta mengakses semua dasbor dan mengedit izin dasbor mereka tanpa batasan.",
     "userManagement.workspace.granularPermission.warning": "<b>Perhatian:</b> Tindakan ini akan menghapus kombinasi redundan apa pun.",
     "userManagement.workspace.permission.remove": "Hapus",
     "userManagement.workspace.permission.and": "dan",

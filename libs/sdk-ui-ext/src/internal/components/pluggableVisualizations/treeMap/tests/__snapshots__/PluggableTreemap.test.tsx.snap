@@ -106,6 +106,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -248,6 +249,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -434,6 +436,7 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -573,6 +576,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -728,6 +732,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -843,6 +848,7 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

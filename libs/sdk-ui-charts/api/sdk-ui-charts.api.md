@@ -386,6 +386,10 @@ export interface IChartConfig {
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
+    // @beta
+    radarGridLineShape?: "polygon" | "circle";
+    // @beta
+    radarRenderAs?: "outline" | "filled";
     respectLegendPosition?: boolean;
     // @beta
     rowHeight?: ChartRowHeight;
@@ -776,6 +780,20 @@ export interface IPyramidChartBucketProps {
 export interface IPyramidChartProps extends IBucketChartProps, IPyramidChartBucketProps {
 }
 
+// @alpha (undocumented)
+export interface IRadarChartBucketProps {
+    filters?: NullableFiltersOrPlaceholders;
+    measures: AttributesMeasuresOrPlaceholders;
+    placeholdersResolutionContext?: any;
+    segmentBy?: AttributeOrPlaceholder;
+    sortBy?: SortsOrPlaceholders;
+    trendBy?: AttributeOrPlaceholder;
+}
+
+// @alpha (undocumented)
+export interface IRadarChartProps extends IBucketChartProps, IRadarChartBucketProps {
+}
+
 // @public (undocumented)
 export interface IRepeaterAbsoluteColumnWidth {
     // (undocumented)
@@ -935,6 +953,9 @@ export const isPieOrDonutChart: (type: string | undefined) => boolean;
 export const isPyramid: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
+export const isRadarChart: (type: string | undefined) => boolean;
+
+// @internal (undocumented)
 export const isSankey: (type: string | undefined) => boolean;
 
 // @internal (undocumented)
@@ -1022,6 +1043,9 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
 export function PyramidChart(props: IPyramidChartProps): JSX.Element;
+
+// @alpha
+export function RadarChart(props: IRadarChartProps): JSX.Element;
 
 // @beta (undocumented)
 export function Repeater(props: IRepeaterProps): ReactElement;

@@ -1,11 +1,21 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useScheduledExportFilters } from "../../../model/react/filtering/useScheduledExportFilters.js";
+import {
+    getAutomationDashboardFilters,
+    getAutomationVisualizationFilters,
+} from "../../../_staging/automation/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
+import {
+    selectAutomationDefaultSelectedFilters,
+    selectDashboardHiddenFilters,
+} from "../../../model/store/filtering/dashboardFilterSelectors.js";
+import { useWidgetAutomationFilters } from "../../scheduledEmail/hooks/useWidgetAutomationFilters.js";
 import { ScheduledEmailDialog } from "../../scheduledEmail/ScheduledEmailDialog.js";
 import { ScheduledEmailManagementDialog } from "../../scheduledEmail/ScheduledEmailManagementDialog.js";
 import { type IScheduledEmailDialogProps } from "../../scheduledEmail/types.js";
+import { getAppliedDashboardFilters } from "../../scheduledEmail/utils/filters.js";
 
 export function ScheduledEmailDialogProvider() {
     const {
@@ -36,15 +46,27 @@ export function ScheduledEmailDialogProvider() {
         onScheduleEmailingManagementDeleteError,
     } = useDashboardScheduledEmails();
 
-    const { widgetFilters, dashboardFilters, widgetFiltersError, widgetFiltersLoading } =
-        useScheduledExportFilters({
-            scheduledExportToEdit,
-            widget,
-            insight,
-        });
+    const automationDefaultSelectedFilters = useDashboardSelector(selectAutomationDefaultSelectedFilters);
+    const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
+    const { executionFilters: savedWidgetFilters } = getAutomationVisualizationFilters(scheduledExportToEdit);
+    const savedDashboardFilters = getAutomationDashboardFilters(scheduledExportToEdit);
+    const {
+        result: liveWidgetFilters,
+        status: widgetFiltersStatus,
+        error: widgetFiltersError,
+    } = useWidgetAutomationFilters(widget, insight);
 
-    const isLoading = [widgetFiltersLoading, automationsLoading].some(Boolean);
-    const loadingError = [widgetFiltersError, automationsError].find(Boolean);
+    const widgetFilters = savedWidgetFilters ?? liveWidgetFilters;
+    const shouldLoadWidgetFilters = !!widget && !savedWidgetFilters;
+
+    const dashboardFilters =
+        savedDashboardFilters ??
+        getAppliedDashboardFilters(automationDefaultSelectedFilters, dashboardHiddenFilters, true);
+
+    const isLoading =
+        automationsLoading ||
+        (shouldLoadWidgetFilters && (widgetFiltersStatus === "pending" || widgetFiltersStatus === "running"));
+    const loadingError = (shouldLoadWidgetFilters ? widgetFiltersError : undefined) ?? automationsError;
 
     if (!isInitialized) {
         return null;

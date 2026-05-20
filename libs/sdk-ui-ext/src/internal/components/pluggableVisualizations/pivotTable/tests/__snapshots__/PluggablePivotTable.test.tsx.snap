@@ -42,6 +42,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given an empty refere
     "filters": {
       "accepts": [
         "attribute",
+        "metric",
         "date",
       ],
       "allowsReordering": false,
@@ -129,6 +130,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given multipleMetrics
     "filters": {
       "accepts": [
         "attribute",
+        "metric",
         "date",
       ],
       "allowsReordering": false,
@@ -216,6 +218,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
     "filters": {
       "accepts": [
         "attribute",
+        "metric",
         "date",
       ],
       "allowsReordering": false,
@@ -368,6 +371,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -847,6 +851,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1318,6 +1323,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1795,6 +1801,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > given simpleStackedRe
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1883,6 +1890,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > should return a new r
     "filters": {
       "accepts": [
         "attribute",
+        "metric",
         "date",
       ],
       "allowsReordering": false,
@@ -1970,6 +1978,7 @@ exports[`PluggablePivotTable > getExtendedReferencePoint > should return a new r
     "filters": {
       "accepts": [
         "attribute",
+        "metric",
         "date",
       ],
       "allowsReordering": false,

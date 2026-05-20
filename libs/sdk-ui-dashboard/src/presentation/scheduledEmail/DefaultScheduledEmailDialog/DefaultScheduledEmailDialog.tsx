@@ -7,7 +7,6 @@ import { defineMessage, useIntl } from "react-intl";
 
 import {
     type DashboardAttachmentType,
-    type FilterContextItem,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type WidgetAttachmentType,
@@ -35,7 +34,6 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import { useExportTemplates } from "../../../model/react/useExportTemplates.js";
 import {
     selectDateFormat,
-    selectEnableAutomationFilterContext,
     selectEnableAutomationManagement,
     selectEnableCustomizableCsvDelimiter,
     selectEnableNewScheduledExport,
@@ -57,11 +55,7 @@ import { getWidgetTitle } from "../../../model/utils/dashboardItemUtils.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
-import {
-    getAvailableFiltersFromFiltersByTab,
-    useAutomationFiltersSelect,
-} from "../../automationFilters/useAutomationFiltersSelect.js";
-import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
+import { useAutomationFiltersSelect } from "../../automationFilters/useAutomationFiltersSelect.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
@@ -74,8 +68,6 @@ import { TIMEZONE_DEFAULT } from "../utils/timezone.js";
 
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
-import { DashboardAttachments as DashboardAttachmentsOld } from "./components/AttachmentsOld/DashboardAttachments.js";
-import { WidgetAttachments as WidgetAttachmentsOld } from "./components/AttachmentsOld/WidgetAttachments.js";
 import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
 import { EvaluationModeCheckbox } from "./components/EvaluationModeCheckbox/EvaluationModeCheckbox.js";
 import { ScheduledEmailDialogHeader } from "./components/Header/ScheduleEmailDialogHeader.js";
@@ -85,7 +77,6 @@ import { SubjectForm } from "./components/SubjectForm/SubjectForm.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "./constants.js";
 import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
-import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
@@ -204,14 +195,10 @@ export function ScheduledMailDialogRenderer({
         allowHourlyRecurrence,
         isCrossFiltering,
         isExecutionTimestampMode,
-        enableAutomationFilterContext,
         enableNewScheduledExport,
         enableCustomizableCsvDelimiter,
         defaultPdfPageSize,
-    } = useDefaultScheduledEmailDialogData({
-        filters: availableFilters ?? [],
-        filtersByTab: getAvailableFiltersFromFiltersByTab(filtersByTab),
-    });
+    } = useDefaultScheduledEmailDialogData();
 
     const {
         defaultUser,
@@ -225,17 +212,11 @@ export function ScheduledMailDialogRenderer({
         startDate,
         allowExternalRecipients,
         allowOnlyLoggedUserRecipients,
-        isDashboardExportSelected,
-        isCsvExportSelected,
-        isXlsxExportSelected,
-        areDashboardFiltersChanged,
         validationErrorMessage,
         selectedAttachments,
         isParentValid,
         onDashboardAttachmentsChange,
-        onDashboardAttachmentsChangeOld,
         onWidgetAttachmentsChange,
-        onWidgetAttachmentsChangeOld,
         onXlsxSettingsChange,
         onPdfSettingsChange,
         onCsvSettingsChange,
@@ -267,7 +248,6 @@ export function ScheduledMailDialogRenderer({
         setEditedAutomationFilters,
         setStoreFilters,
         availableFiltersAsVisibleFilters,
-        enableAutomationFilterContext,
         filtersForNewAutomation,
         externalRecipientOverride,
         enableNewScheduledExport,
@@ -281,7 +261,6 @@ export function ScheduledMailDialogRenderer({
         automationToEdit: scheduledExportToEdit!,
         widget,
         insight,
-        enableAutomationFilterContext,
     });
     const [isApplyCurrentFiltersDialogOpen, setIsApplyCurrentFiltersDialogOpen] = useState(!isValid);
 
@@ -308,9 +287,6 @@ export function ScheduledMailDialogRenderer({
 
     const errorMessage = savingErrorMessage ?? validationErrorMessage ?? missingAttachmentsErrorMessage;
 
-    const dashboardScheduledExportFiltersInfo = useFiltersForDashboardScheduledExportInfo({
-        effectiveFilters: dashboardFilters,
-    });
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
@@ -363,39 +339,27 @@ export function ScheduledMailDialogRenderer({
         };
     }, [widget, dashboardTitle, intl]);
 
-    const tabs: IUiTab[] = useMemo(() => {
-        const tabsList: IUiTab[] = [
+    const tabs: IUiTab[] = useMemo(
+        () => [
             {
                 id: "general",
                 label: intl.formatMessage({ id: "dialogs.schedule.email.tabs.general" }),
             },
-        ];
-
-        // Only show Filters tab when automation filter context is enabled
-        if (enableAutomationFilterContext) {
-            tabsList.push({
+            {
                 id: "filters",
                 label: intl.formatMessage({ id: "dialogs.schedule.email.tabs.filters" }),
-            });
-        }
-
-        return tabsList;
-    }, [intl, enableAutomationFilterContext]);
+            },
+        ],
+        [intl],
+    );
 
     const handleTabSelect = useCallback((tab: IUiTab) => {
         setSelectedTabId(tab.id as "filters" | "general");
     }, []);
 
-    // Reset to General tab if Filters tab is not available
-    useEffect(() => {
-        if (!enableAutomationFilterContext && selectedTabId === "filters") {
-            setSelectedTabId("general");
-        }
-    }, [enableAutomationFilterContext, selectedTabId]);
-
     // Measure General tab content height to maintain consistent dialog size
     useEffect(() => {
-        if (enableAutomationFilterContext && generalTabContentRef.current && selectedTabId === "general") {
+        if (generalTabContentRef.current && selectedTabId === "general") {
             // Use requestAnimationFrame to ensure DOM is fully rendered
             requestAnimationFrame(() => {
                 if (generalTabContentRef.current) {
@@ -404,10 +368,9 @@ export function ScheduledMailDialogRenderer({
                 }
             });
         }
-    }, [enableAutomationFilterContext, selectedTabId]);
+    }, [selectedTabId]);
 
-    // This should be visible only when enableAutomationFilterContext is true
-    if (isApplyCurrentFiltersDialogOpen && enableAutomationFilterContext) {
+    if (isApplyCurrentFiltersDialogOpen) {
         return (
             <ApplyCurrentFiltersConfirmDialog
                 automationType="schedule"
@@ -522,13 +485,12 @@ export function ScheduledMailDialogRenderer({
                             ) : null}
                             <ScrollablePanel
                                 className={cx("gd-notifications-channel-dialog-content-wrapper", {
-                                    "gd-notification-channel-dialog-with-automation-filters":
-                                        enableAutomationFilterContext,
+                                    "gd-notification-channel-dialog-with-automation-filters": true,
                                     "gd-notification-channel-dialog-with-tabs": tabs.length > 1,
                                 })}
                             >
                                 <div className="gd-divider-with-margin" />
-                                {enableAutomationFilterContext && selectedTabId === "filters" ? (
+                                {selectedTabId === "filters" ? (
                                     <div
                                         ref={filtersTabContentRef}
                                         className="gd-schedule-dialog-tab-content"
@@ -544,7 +506,7 @@ export function ScheduledMailDialogRenderer({
                                             onFiltersChange={onFiltersChange}
                                             storeFilters={storeFilters}
                                             onStoreFiltersChange={onStoreFiltersChange}
-                                            isDashboardAutomation={isDashboardExportSelected}
+                                            isDashboardAutomation={!widget}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             hideTitle
                                             showAllFilters
@@ -558,16 +520,14 @@ export function ScheduledMailDialogRenderer({
                                         ref={generalTabContentRef}
                                         className="gd-schedule-dialog-tab-content"
                                     >
-                                        {enableAutomationFilterContext ? (
-                                            <Message
-                                                type="progress"
-                                                className="gd-schedule-dialog-tab-content-info"
-                                            >
-                                                {intl.formatMessage({
-                                                    id: "dialogs.schedule.email.tabs.info",
-                                                })}
-                                            </Message>
-                                        ) : null}
+                                        <Message
+                                            type="progress"
+                                            className="gd-schedule-dialog-tab-content-info"
+                                        >
+                                            {intl.formatMessage({
+                                                id: "dialogs.schedule.email.tabs.info",
+                                            })}
+                                        </Message>
                                         <RecurrenceForm
                                             startDate={startDate}
                                             cronExpression={
@@ -630,47 +590,26 @@ export function ScheduledMailDialogRenderer({
                                             </>
                                         )}
                                         {widget ? (
-                                            enableNewScheduledExport ? (
-                                                <WidgetAttachments
-                                                    selectedAttachments={
-                                                        selectedAttachments as WidgetAttachmentType[]
-                                                    }
-                                                    onWidgetAttachmentsChange={onWidgetAttachmentsChange}
-                                                    xlsxSettings={xlsxSettings}
-                                                    pdfSettings={pdfSettings}
-                                                    onXlsxSettingsChange={onXlsxSettingsChange}
-                                                    onPdfSettingsChange={onPdfSettingsChange}
-                                                    csvSettings={csvSettings}
-                                                    onCsvSettingsChange={onCsvSettingsChange}
-                                                    csvRawSettings={csvRawSettings}
-                                                    onCsvRawSettingsChange={onCsvRawSettingsChange}
-                                                    isCsvSettingsEnabled={enableCustomizableCsvDelimiter}
-                                                    defaultPdfPageSize={defaultPdfPageSize}
-                                                    exportTemplates={exportTemplates}
-                                                    slidesTemplateIds={slidesTemplateIds}
-                                                    onSlidesTemplateIdChange={onSlidesTemplateIdChange}
-                                                />
-                                            ) : (
-                                                <WidgetAttachmentsOld
-                                                    widgetFilters={widgetFilters}
-                                                    areDashboardFiltersChanged={areDashboardFiltersChanged}
-                                                    isCrossFiltering={isCrossFiltering}
-                                                    scheduledExportToEdit={scheduledExportToEdit}
-                                                    csvSelected={isCsvExportSelected}
-                                                    xlsxSelected={isXlsxExportSelected}
-                                                    settings={xlsxSettings}
-                                                    onWidgetAttachmentsSelectionChange={
-                                                        onWidgetAttachmentsChangeOld
-                                                    }
-                                                    onAttachmentsSettingsChange={onXlsxSettingsChange}
-                                                    enableAutomationFilterContext={
-                                                        enableAutomationFilterContext
-                                                    }
-                                                    closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
-                                                    overlayPositionType={OVERLAY_POSITION_TYPE}
-                                                />
-                                            )
-                                        ) : enableNewScheduledExport ? (
+                                            <WidgetAttachments
+                                                selectedAttachments={
+                                                    selectedAttachments as WidgetAttachmentType[]
+                                                }
+                                                onWidgetAttachmentsChange={onWidgetAttachmentsChange}
+                                                xlsxSettings={xlsxSettings}
+                                                pdfSettings={pdfSettings}
+                                                onXlsxSettingsChange={onXlsxSettingsChange}
+                                                onPdfSettingsChange={onPdfSettingsChange}
+                                                csvSettings={csvSettings}
+                                                onCsvSettingsChange={onCsvSettingsChange}
+                                                csvRawSettings={csvRawSettings}
+                                                onCsvRawSettingsChange={onCsvRawSettingsChange}
+                                                isCsvSettingsEnabled={enableCustomizableCsvDelimiter}
+                                                defaultPdfPageSize={defaultPdfPageSize}
+                                                exportTemplates={exportTemplates}
+                                                slidesTemplateIds={slidesTemplateIds}
+                                                onSlidesTemplateIdChange={onSlidesTemplateIdChange}
+                                            />
+                                        ) : (
                                             <DashboardAttachments
                                                 selectedAttachments={
                                                     selectedAttachments as DashboardAttachmentType[]
@@ -685,19 +624,6 @@ export function ScheduledMailDialogRenderer({
                                                 slidesTemplateIds={slidesTemplateIds}
                                                 onSlidesTemplateIdChange={onSlidesTemplateIdChange}
                                             />
-                                        ) : (
-                                            <DashboardAttachmentsOld
-                                                dashboardSelected={isDashboardExportSelected}
-                                                scheduledExportToEdit={scheduledExportToEdit}
-                                                areDashboardFiltersChanged={areDashboardFiltersChanged}
-                                                dashboardFilters={dashboardFilters}
-                                                isCrossFiltering={isCrossFiltering}
-                                                filtersToDisplayInfo={dashboardScheduledExportFiltersInfo}
-                                                onDashboardAttachmentsSelectionChange={
-                                                    onDashboardAttachmentsChangeOld
-                                                }
-                                                enableAutomationFilterContext={enableAutomationFilterContext}
-                                            />
                                         )}
                                         {enableAutomationEvaluationMode ? (
                                             <EvaluationModeCheckbox
@@ -709,8 +635,7 @@ export function ScheduledMailDialogRenderer({
                                             <Message
                                                 type="error"
                                                 className={cx("gd-notifications-channels-dialog-error", {
-                                                    "gd-notifications-channels-dialog-error-scrollable":
-                                                        enableAutomationFilterContext,
+                                                    "gd-notifications-channels-dialog-error-scrollable": true,
                                                 })}
                                             >
                                                 {errorMessage}
@@ -726,8 +651,7 @@ export function ScheduledMailDialogRenderer({
                                                     id={invalidDatapoint.id}
                                                     type="error"
                                                     className={cx("gd-notifications-channels-dialog-error", {
-                                                        "gd-notifications-channels-dialog-error-scrollable":
-                                                            enableAutomationFilterContext,
+                                                        "gd-notifications-channels-dialog-error-scrollable": true,
                                                     })}
                                                 >
                                                     {invalidDatapoint.message}
@@ -775,13 +699,7 @@ export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps) {
     );
 }
 
-function useDefaultScheduledEmailDialogData({
-    filters,
-    filtersByTab,
-}: {
-    filters: FilterContextItem[];
-    filtersByTab: Record<string, FilterContextItem[]>;
-}) {
+function useDefaultScheduledEmailDialogData() {
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dateFormat = useDashboardSelector(selectDateFormat);
@@ -797,18 +715,6 @@ function useDefaultScheduledEmailDialogData({
 
     const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
     const isExecutionTimestampMode = !!useDashboardSelector(selectExecutionTimestamp);
-    const enableAutomationFilterContextFlag = useDashboardSelector(selectEnableAutomationFilterContext);
-    const enableAutomationFilterContext = useMemo(() => {
-        const doAllDashboardFiltersHaveLocalIdentifiers = validateAllFilterLocalIdentifiers(filters);
-        const doAllDashboardFiltersByTabHaveLocalIdentifiers = Object.values(filtersByTab).every(
-            (tabFilters) => validateAllFilterLocalIdentifiers(tabFilters),
-        );
-        return (
-            enableAutomationFilterContextFlag &&
-            doAllDashboardFiltersHaveLocalIdentifiers &&
-            doAllDashboardFiltersByTabHaveLocalIdentifiers
-        );
-    }, [filters, filtersByTab, enableAutomationFilterContextFlag]);
     const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
     const enableCustomizableCsvDelimiter = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
 
@@ -823,7 +729,6 @@ function useDefaultScheduledEmailDialogData({
         allowHourlyRecurrence,
         isCrossFiltering,
         isExecutionTimestampMode,
-        enableAutomationFilterContext,
         enableNewScheduledExport,
         enableCustomizableCsvDelimiter,
         defaultPdfPageSize,

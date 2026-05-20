@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-theme-provider",
-    "version": "11.36.0-alpha.3",
+    "version": "11.36.0-alpha.6",
     "description": "GoodData SDK - Theme provider",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -47,7 +47,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/util": "workspace:*",
-        "chalk": "^4.1.1",
+        "chalk": "5.3.0",
         "glob": "13.0.2",
         "lodash-es": "^4.17.23",
         "polished": "^3.6.7",

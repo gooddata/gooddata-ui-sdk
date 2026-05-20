@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 import {
     AnalyticalDashboardModelV1,
     AnalyticalDashboardModelV2,
+    AnalyticalDashboardModelV3,
     type ITigerDashboardTab,
     type JsonApiAnalyticalDashboardOut,
     type JsonApiAnalyticalDashboardOutDocument,
@@ -53,9 +54,11 @@ export const convertAnalyticalDashboard = (
 
     // Use type guard for safer access to dashboard content
     const content = attributes?.content;
-    const tabs = AnalyticalDashboardModelV2.isAnalyticalDashboard(content)
-        ? cloneWithSanitizedIdsTyped<ITigerDashboardTab[], IDashboardTab[]>(content.tabs ?? [])
-        : [];
+    const tabs =
+        AnalyticalDashboardModelV2.isAnalyticalDashboard(content) ||
+        AnalyticalDashboardModelV3.isAnalyticalDashboard(content)
+            ? cloneWithSanitizedIdsTyped<ITigerDashboardTab[], IDashboardTab[]>(content.tabs ?? [])
+            : [];
     // NOTE: `summary` is present on the backend response, but may not be reflected in older generated API typings.
     const summary = (attributes as unknown as { summary?: unknown } | undefined)?.summary;
     const normalizedSummary = typeof summary === "string" ? summary : undefined;
@@ -104,7 +107,16 @@ export function convertDashboard(
         return convertDashboardV1(analyticalDashboard, filterContext);
     }
 
-    if (AnalyticalDashboardModelV2.isAnalyticalDashboard(content)) {
+    // V3 is a strict subset of V2 (tabs-only, no root content). It is routed through the V2
+    // fromBackend converter, which synthesizes root-level layout / filter configs from tabs[0]
+    // when the wire payload omits them. This is intentional: the in-memory `IDashboard` model
+    // still exposes root fields, so V3 documents present the same shape as legacy V2 documents
+    // to model consumers. The V3 distinction is re-applied on write — `convertAnalyticalDashboard`
+    // (toBackend) strips the root fields when `enableAnalyticalDashboardVersion3` is on.
+    if (
+        AnalyticalDashboardModelV2.isAnalyticalDashboard(content) ||
+        AnalyticalDashboardModelV3.isAnalyticalDashboard(content)
+    ) {
         return convertDashboardV2(analyticalDashboard, filterContext);
     }
 

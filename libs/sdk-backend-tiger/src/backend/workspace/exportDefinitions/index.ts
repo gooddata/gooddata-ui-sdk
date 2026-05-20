@@ -35,7 +35,6 @@ import {
 } from "../../../convertors/toBackend/ExportDefinitionsConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
-import { getSettingsForCurrentUser } from "../settings/index.js";
 
 import { exportDefinitionsListComparator } from "./comparator.js";
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
@@ -50,7 +49,6 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         options?: IExportDefinitionsQueryOptions,
     ): Promise<IExportDefinitionsQueryResult> => {
         const requestParameters = this.getExportDefinitionsRequestParameters(options);
-        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const allExportDefinitions = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
@@ -71,21 +69,9 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
 
                                 return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
                             })
-                            .map((ed) =>
-                                convertExportDefinitionMdObjectFromBackend(
-                                    ed,
-                                    res.included,
-                                    enableAutomationFilterContext,
-                                ),
-                            );
+                            .map((ed) => convertExportDefinitionMdObjectFromBackend(ed, res.included));
                     }
-                    return res.data.map((ep) =>
-                        convertExportDefinitionMdObjectFromBackend(
-                            ep,
-                            res.included,
-                            enableAutomationFilterContext,
-                        ),
-                    );
+                    return res.data.map((ep) => convertExportDefinitionMdObjectFromBackend(ep, res.included));
                 });
         });
 
@@ -130,7 +116,6 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         options: IGetExportDefinitionOptions = {},
     ): Promise<IExportDefinitionMetadataObject> => {
         const id = objRefToIdentifier(ref, this.authCall);
-        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const includeUser = options?.loadUserData
             ? { include: ["createdBy" as const, "modifiedBy" as const] }
@@ -147,33 +132,23 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             throw new UnexpectedError(`Export definition for ${objRefToString(ref)} not found!`);
         }
 
-        return convertExportDefinitionMdObjectFromBackend(
-            response.data.data,
-            response.data.included,
-            enableAutomationFilterContext,
-        );
+        return convertExportDefinitionMdObjectFromBackend(response.data.data, response.data.included);
     };
 
     public createExportDefinition = async (
         exportDefinition: IExportDefinitionMetadataObjectDefinition,
     ): Promise<IExportDefinitionMetadataObject> => {
-        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
-
         const createResponse = await this.authCall((client) => {
             return EntitiesApi_CreateEntityExportDefinitions(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 jsonApiExportDefinitionPostOptionalIdDocument:
-                    convertExportDefinitionMdObjectDefinitionToBackend(
-                        exportDefinition,
-                        enableAutomationFilterContext,
-                    ),
+                    convertExportDefinitionMdObjectDefinitionToBackend(exportDefinition),
             });
         });
 
         return convertExportDefinitionMdObjectFromBackend(
             createResponse.data.data,
             createResponse.data.included,
-            enableAutomationFilterContext,
         );
     };
 
@@ -182,7 +157,6 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         exportDefinition: IExportDefinitionMetadataObjectDefinition,
     ): Promise<IExportDefinitionMetadataObject> => {
         const id = objRefToIdentifier(ref, this.authCall);
-        const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const updateResponse = await this.authCall((client) => {
             return EntitiesApi_UpdateEntityExportDefinitions(client.axios, client.basePath, {
@@ -191,7 +165,6 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 jsonApiExportDefinitionInDocument: convertExportDefinitionMdObjectToBackend(
                     exportDefinition,
                     id,
-                    enableAutomationFilterContext,
                 ),
             });
         });
@@ -199,7 +172,6 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         return convertExportDefinitionMdObjectFromBackend(
             updateResponse.data.data,
             updateResponse.data.included,
-            enableAutomationFilterContext,
         );
     };
 
@@ -212,10 +184,5 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 workspaceId: this.workspace,
             }),
         );
-    };
-
-    private getEnableAutomationFilterContext = async (): Promise<boolean> => {
-        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        return userSettings.enableAutomationFilterContext ?? true;
     };
 }

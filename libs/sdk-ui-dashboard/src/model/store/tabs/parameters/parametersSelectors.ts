@@ -91,6 +91,25 @@ export const selectDashboardParameterEntries: DashboardSelector<IDashboardParame
 );
 
 /**
+ * Returns the active tab's parameters in the shape persisted by a filter view.
+ * Runtime overrides become persisted `value`; existing parameter values are kept when no runtime value exists.
+ *
+ * @internal
+ */
+export const selectFilterViewParameters: DashboardSelector<IDashboardParameter[] | undefined> =
+    createSelector(selectDashboardParameterEntries, (entries) => {
+        if (entries.length === 0) {
+            return undefined;
+        }
+        return entries.map((entry) => {
+            if (entry.runtimeOverride === undefined) {
+                return entry.parameter;
+            }
+            return { ...entry.parameter, value: entry.runtimeOverride };
+        });
+    });
+
+/**
  * Returns a selector that yields the entry held by the active tab for a given parameter ref,
  * or `undefined` if no such entry exists.
  *

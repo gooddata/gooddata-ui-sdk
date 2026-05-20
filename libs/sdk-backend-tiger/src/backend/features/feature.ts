@@ -61,6 +61,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableRadarChart,
+            "enableRadarChart",
+            "BOOLEAN",
+            FeatureFlagsValues.enableRadarChart,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnablePyramidChart,
             "enablePyramidChart",
             "BOOLEAN",
@@ -586,13 +593,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableImprovedAdFilters,
-            "enableImprovedAdFilters",
-            "BOOLEAN",
-            FeatureFlagsValues.enableImprovedAdFilters,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableExternalRecipients,
             "enableExternalRecipients",
             "BOOLEAN",
@@ -716,13 +716,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableExecutionTimestamp",
             "BOOLEAN",
             FeatureFlagsValues.enableExecutionTimestamp,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableAutomationFilterContext,
-            "enableAutomationFilterContext",
-            "BOOLEAN",
-            FeatureFlagsValues.enableAutomationFilterContext,
         ),
         ...loadFeature(
             features,
@@ -1017,6 +1010,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableDashboardSectionHeadersDateDataSet",
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardSectionHeadersDateDataSet,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAnalyticalDashboardVersion3,
+            "enableAnalyticalDashboardVersion3",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAnalyticalDashboardVersion3,
         ),
         ...loadFeature(
             features,

@@ -483,6 +483,7 @@ exports[`PluggableBulletChart > should return reference point with target and co
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -665,6 +666,7 @@ exports[`PluggableBulletChart > should return reference point with three measure
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -900,6 +902,7 @@ exports[`PluggableBulletChart > should return reference point with three measure
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

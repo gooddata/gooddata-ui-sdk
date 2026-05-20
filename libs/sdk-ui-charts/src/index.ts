@@ -122,6 +122,11 @@ export type {
 } from "./charts/headline/HeadlineProvider.js";
 export { type IHeatmapProps, type IHeatmapBucketProps, Heatmap } from "./charts/heatmap/Heatmap.js";
 export { type ILineChartProps, type ILineChartBucketProps, LineChart } from "./charts/lineChart/LineChart.js";
+export {
+    type IRadarChartProps,
+    type IRadarChartBucketProps,
+    RadarChart,
+} from "./charts/radarChart/RadarChart.js";
 export { type IPieChartProps, type IPieChartBucketProps, PieChart } from "./charts/pieChart/PieChart.js";
 export {
     type IScatterPlotProps,
@@ -188,6 +193,7 @@ export {
     isLineChart,
     isPieChart,
     isPieOrDonutChart,
+    isRadarChart,
     isScatterPlot,
     isTreemap,
     isSankey,

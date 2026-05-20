@@ -90,6 +90,7 @@ exports[`PluggableBubbleChart > should return reference point with secondary met
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -243,6 +244,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -429,6 +431,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

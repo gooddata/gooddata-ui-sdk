@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.36.0-alpha.3",
+    "version": "11.36.0-alpha.6",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -51,7 +51,7 @@
         "@gooddata/sdk-code-schemas": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "uuid": "11.1.0",
-        "yaml": "^2.2.2"
+        "yaml": "2.8.3"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",

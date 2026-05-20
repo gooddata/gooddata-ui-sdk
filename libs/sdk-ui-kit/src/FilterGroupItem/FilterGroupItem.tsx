@@ -158,12 +158,19 @@ export function FilterGroupItem({
     const tooltipId = useIdPrefixed("filter-group-item-locked-tooltip");
     const onKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>(
         (event: KeyboardEvent<HTMLDivElement>) => {
-            if (disabled && isActionKey(event)) {
-                event.preventDefault();
-                event.stopPropagation();
+            // <div role="button"> doesn't reliably fire click on Enter/Space across browsers and
+            // AT modes (ARIA APG requires manual handling). Dispatch onClick ourselves.
+            if (!isActionKey(event)) {
+                return;
             }
+            event.preventDefault();
+            event.stopPropagation();
+            if (disabled) {
+                return;
+            }
+            onClick?.();
         },
-        [disabled],
+        [disabled, onClick],
     );
     const handleButtonRef = useCallback(
         (element: HTMLDivElement | null) => {
@@ -206,7 +213,7 @@ export function FilterGroupItem({
             onKeyDown={onKeyDown}
             aria-controls={isOpen ? dropdownId : undefined}
             role="button"
-            tabIndex={-1} // let dropdown list handle virtual focus with arrows
+            tabIndex={0}
             ref={handleButtonRef}
             data-testid={`s-filter-group-item-${simplifyText(title ?? null)}`}
         >

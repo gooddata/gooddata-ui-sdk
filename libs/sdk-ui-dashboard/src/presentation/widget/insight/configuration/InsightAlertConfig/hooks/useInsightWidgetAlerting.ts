@@ -19,7 +19,6 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../../../model/react/DashboardStoreProvider.js";
-import { useWidgetAlertFilters } from "../../../../../../model/react/filtering/useWidgetAlertFilters.js";
 import { DEFAULT_MAX_AUTOMATIONS } from "../../../../../../model/react/useDashboardAutomations/constants.js";
 import { useDashboardUserInteraction } from "../../../../../../model/react/useDashboardUserInteraction.js";
 import { useWorkspaceUsers } from "../../../../../../model/react/useWorkspaceUsers.js";
@@ -65,6 +64,7 @@ import {
     getSupportedInsightAttributesByInsight,
     getSupportedInsightMeasuresByInsight,
 } from "../../../../../alerting/DefaultAlertingDialog/utils/items.js";
+import { useWidgetAutomationFilters } from "../../../../../scheduledEmail/hooks/useWidgetAutomationFilters.js";
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
 export interface IInsightWidgetAlertingProps {
@@ -152,10 +152,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             },
         });
 
-    const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetAlertFilters({
+    const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetAutomationFilters(
         widget,
         insight,
-    });
+    );
 
     const locale = useDashboardSelector(selectLocale);
     const settings = useDashboardSelector(selectSettings);
@@ -245,11 +245,11 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         defaultNotificationChannelId,
         supportedMeasures,
         widgetFilters,
-        widgetFiltersStatus,
         addError,
         currentUser,
         users,
         usersStatus,
+        widgetFiltersStatus,
         measureFormatMap,
     ]);
 

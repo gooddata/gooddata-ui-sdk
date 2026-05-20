@@ -283,6 +283,18 @@
         "text": "Segment by",
         "crowdinContext": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
     },
+    "dashboard.bucket.measures_title.radar": {
+        "text": "Metrics",
+        "crowdinContext": "Label for calculated indicators based on metric data that show performance in a radar chart (e.g., Revenue Growth, Profit Margin)"
+    },
+    "dashboard.bucket.trend_title.radar": {
+        "text": "View by",
+        "crowdinContext": "Label for a categorical attribute field that defines the radar chart spokes/axes (e.g., Product Category, Region). Dates are not supported in this bucket."
+    },
+    "dashboard.bucket.segment_title.radar": {
+        "text": "Segment by",
+        "crowdinContext": "Label for a categorical field used to create multiple polygons in a radar chart (e.g., Customer Segment, Time Period)"
+    },
     "dashboard.bucket.segment_title.treemap": {
         "text": "Segment by",
         "crowdinContext": "Label for a categorical field used to divide data into segments or categories (e.g., Product Type, Customer Status)"
@@ -878,6 +890,46 @@
     "properties.orientation.vertical": {
         "text": "Vertical",
         "crowdinContext": "The chart orientation configuration"
+    },
+    "properties.radar.grid.title": {
+        "text": "Grid",
+        "crowdinContext": "Section title for the radar chart grid configuration (axes and gridlines)"
+    },
+    "properties.radar.gridLineShape.label": {
+        "text": "Gridlines shape",
+        "crowdinContext": "Label for the radar chart gridlines shape option"
+    },
+    "properties.radar.gridLineShape.polygon": {
+        "text": "Spiderweb",
+        "crowdinContext": "Radar chart gridlines rendered as a polygon/spider web shape"
+    },
+    "properties.radar.gridLineShape.circle": {
+        "text": "Circle",
+        "crowdinContext": "Radar chart gridlines rendered as concentric circles"
+    },
+    "properties.radar.renderAs.label": {
+        "text": "Render as",
+        "crowdinContext": "Label for the radar chart rendering style option"
+    },
+    "properties.radar.renderAs.filled": {
+        "text": "Filled",
+        "crowdinContext": "Radar chart rendered as filled polygons with semi-transparent color"
+    },
+    "properties.radar.renderAs.outline": {
+        "text": "Outline",
+        "crowdinContext": "Radar chart rendered as polygon outlines only, without fill"
+    },
+    "properties.radar.labels.title": {
+        "text": "Labels",
+        "crowdinContext": "Subsection header for label visibility controls in the radar chart Grid configuration panel"
+    },
+    "properties.radar.spokeLabels": {
+        "text": "Spoke labels",
+        "crowdinContext": "Toggle for showing/hiding labels on the radar chart spokes (category axis)"
+    },
+    "properties.radar.radialLabels": {
+        "text": "Radial labels",
+        "crowdinContext": "Toggle for showing/hiding labels on the radar chart radial axis (value axis)"
     },
     "properties.points.title": {
         "text": "Points",

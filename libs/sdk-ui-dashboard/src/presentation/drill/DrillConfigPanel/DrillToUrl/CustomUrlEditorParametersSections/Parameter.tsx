@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ReactElement, useState } from "react";
+import { type ReactElement, type ReactNode, useState } from "react";
 
 import classNames from "classnames";
 import { type IntlShape } from "react-intl";
@@ -12,13 +12,22 @@ import { simplifyText } from "@gooddata/util";
 interface IParameterProps {
     name: string;
     description?: string;
-    detailContent: ReactElement;
+    detailContent?: ReactElement;
+    detailTrigger?: ReactNode;
     iconClassName: string;
     onAdd: () => void;
     intl: IntlShape;
 }
 
-export function Parameter({ name, description, detailContent, iconClassName, onAdd, intl }: IParameterProps) {
+export function Parameter({
+    name,
+    description,
+    detailContent,
+    detailTrigger,
+    iconClassName,
+    onAdd,
+    intl,
+}: IParameterProps) {
     const [displayHelp, setDisplayHelp] = useState(false);
     const theme = useTheme();
     const isDark = theme && isDarkTheme(theme);
@@ -34,22 +43,28 @@ export function Parameter({ name, description, detailContent, iconClassName, onA
             <span className="gd-parameter-title">{name}</span>
             {description ? <span className="addon s-parameter-description">({description})</span> : null}
             <Button className="gd-button gd-button-link s-parameter-add-button" value={addButtonLabel} />
-            <div className="gd-list-item-tooltip">
-                <span
-                    className="gd-icon-circle-question gd-list-item-tooltip-icon s-parameter-help-icon"
-                    onMouseEnter={() => setDisplayHelp(true)}
-                    onMouseLeave={() => setDisplayHelp(false)}
-                />
-                {displayHelp ? (
-                    <Bubble
-                        className={`themed-bubble ${isDark ? "bubble-primary" : "bubble-light"}`}
-                        alignTo={`#${id}`}
-                        alignPoints={[{ align: "cr tl" }]}
-                    >
-                        {detailContent}
-                    </Bubble>
-                ) : null}
-            </div>
+            {detailTrigger ? (
+                <div className="gd-list-item-tooltip" onClick={(event) => event.stopPropagation()}>
+                    {detailTrigger}
+                </div>
+            ) : detailContent ? (
+                <div className="gd-list-item-tooltip">
+                    <span
+                        className="gd-icon-circle-question gd-list-item-tooltip-icon s-parameter-help-icon"
+                        onMouseEnter={() => setDisplayHelp(true)}
+                        onMouseLeave={() => setDisplayHelp(false)}
+                    />
+                    {displayHelp ? (
+                        <Bubble
+                            className={`themed-bubble ${isDark ? "bubble-primary" : "bubble-light"}`}
+                            alignTo={`#${id}`}
+                            alignPoints={[{ align: "cr tl" }]}
+                        >
+                            {detailContent}
+                        </Bubble>
+                    ) : null}
+                </div>
+            ) : null}
         </div>
     );
 }

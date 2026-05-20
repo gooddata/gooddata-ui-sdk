@@ -139,6 +139,11 @@ export const isWaterfall = (type: string | undefined): boolean => type === Visua
 /**
  * @internal
  */
+export const isRadarChart = (type: string | undefined): boolean => type === VisualizationTypes.RADAR;
+
+/**
+ * @internal
+ */
 export const isSupportingJoinedAttributeAxisName = (type: string | undefined): boolean =>
     isBarChart(type) || isColumnChart(type) || isBulletChart(type);
 

@@ -293,13 +293,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return null;
         }
 
-        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? true;
-
-        const convertedExportMetadata = convertFromBackendExportMetadata(
-            metadata,
-            enableAutomationFilterContext,
-        );
+        const convertedExportMetadata = convertFromBackendExportMetadata(metadata);
 
         const filterContextFromFilters = convertedExportMetadata?.filters
             ? {
@@ -395,12 +389,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
         const enableDashboardSectionHeadersDateDataSet =
             userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
+        const enableAnalyticalDashboardVersion3 = userSettings.enableAnalyticalDashboardVersion3 ?? false;
 
         const dashboardContent = convertAnalyticalDashboard(
             dashboardWithTabFilterContexts,
             filterContext?.ref,
             isWidgetIdentifiersEnabled,
             enableDashboardSectionHeadersDateDataSet,
+            enableAnalyticalDashboardVersion3,
         );
         const result = await this.authCall((client) => {
             return DashboardsApi_CreateEntityAnalyticalDashboards(client.axios, client.basePath, {
@@ -482,11 +478,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
         const enableDashboardSectionHeadersDateDataSet =
             userSettings.enableDashboardSectionHeadersDateDataSet ?? false;
+        const enableAnalyticalDashboardVersion3 = userSettings.enableAnalyticalDashboardVersion3 ?? false;
         const dashboardContent = convertAnalyticalDashboard(
             updatedDashboardWithTabFilterContexts,
             filterContext?.ref,
             isWidgetIdentifiersEnabled,
             enableDashboardSectionHeadersDateDataSet,
+            enableAnalyticalDashboardVersion3,
         );
 
         const result = await this.authCall((client) => {
@@ -1224,7 +1222,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         filterView: IDashboardFilterViewSaveRequest,
     ): Promise<IDashboardFilterView> => {
         try {
-            const { name, dashboard, isDefault, filterContext, tabLocalIdentifier } = filterView;
+            const { name, dashboard, isDefault, filterContext, tabLocalIdentifier, parameters } = filterView;
 
             const dashboardId = objRefToIdentifier(dashboard, this.authCall);
             const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
@@ -1254,6 +1252,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                                     filterContext,
                                     useDateFilterLocalIdentifiers,
                                     tabLocalIdentifier,
+                                    parameters,
                                 ),
                             },
                             relationships: {
@@ -1285,6 +1284,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     name: title,
                     filterContext,
                     isDefault: persistedIsDefault ?? false,
+                    ...(parameters === undefined ? {} : { parameters }),
                 };
             });
         } catch (error: any) {

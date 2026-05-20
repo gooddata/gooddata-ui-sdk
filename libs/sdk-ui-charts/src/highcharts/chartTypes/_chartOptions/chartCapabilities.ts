@@ -1,4 +1,5 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const supportedDualAxesChartTypes = [
@@ -57,4 +58,5 @@ export const unsupportedStackingTypes = [
     VisualizationTypes.AREA,
     VisualizationTypes.SCATTER,
     VisualizationTypes.BUBBLE,
+    VisualizationTypes.RADAR,
 ];

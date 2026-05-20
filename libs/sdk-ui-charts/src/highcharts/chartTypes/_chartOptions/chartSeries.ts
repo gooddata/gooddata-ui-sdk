@@ -17,6 +17,7 @@ import {
     isBulletChart,
     isHeatmap,
     isOneOfTypes,
+    isRadarChart,
     isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
@@ -168,7 +169,7 @@ function getDefaultSeries(
 
             // apply pattern and outline fill only to the area body, not to its border
             const colors =
-                isAreaChart(type) && !isSolidFill(chartFill)
+                (isAreaChart(type) || isRadarChart(type)) && !isSolidFill(chartFill)
                     ? { ...colorProperties, color: baseColor, fillColor: colorProperties.color }
                     : colorProperties;
 

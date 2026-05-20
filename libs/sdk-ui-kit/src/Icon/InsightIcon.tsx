@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type FC } from "react";
 
@@ -25,6 +25,7 @@ const INSIGHT_ICON_MAP: Record<string, FC<IIconProps>> = {
     "local:dependencywheel": Icon["DependencyWheel"],
     "local:funnel": Icon["Funnel"],
     "local:pyramid": Icon["Pyramid"],
+    "local:radar": Icon["Radar"],
     "local:waterfall": Icon["Waterfall"],
     "local:repeater": Icon["Repeater"],
 };

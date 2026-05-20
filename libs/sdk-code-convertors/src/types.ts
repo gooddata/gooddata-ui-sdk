@@ -45,7 +45,13 @@ export type ExportEntities = Array<{
         | DeclarativeVisualizationObject
         | DeclarativeDashboardPlugin
         | DeclarativeAttributeHierarchy
-        | { dashboard: DeclarativeAnalyticalDashboard; filterContext: DeclarativeFilterContext };
+        | {
+              dashboard: DeclarativeAnalyticalDashboard;
+              // Undefined for V3 dashboards where tabs are the sole source and no
+              // root-level filter context exists.
+              filterContext?: DeclarativeFilterContext;
+              tabFilterContexts?: DeclarativeFilterContext[];
+          };
 }>;
 
 /** @public */

@@ -9,11 +9,7 @@ import {
     type IAutomationMetadataObjectDefinition,
     type IFilter,
     isAllValuesAttributeFilter,
-    isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
-
-import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
-import { selectEnableAutomationFilterContext } from "../../../../model/store/config/configSelectors.js";
 
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
@@ -48,7 +44,6 @@ export function useSaveAlertToBackend({
     onResumeSuccess?: (alert: IAutomationMetadataObject) => void;
     onResumeError?: (error: Error) => void;
 }) {
-    const enableAutomationFilterContext = useDashboardSelector(selectEnableAutomationFilterContext);
     const alertCreator = useCreateAlert({
         onSuccess: (alert: IAutomationMetadataObject) => onCreateSuccess?.(alert),
         onError: onCreateError,
@@ -56,13 +51,10 @@ export function useSaveAlertToBackend({
 
     const handleCreateAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAlert = sanitizeAutomation(
-                alert as IAutomationMetadataObject,
-                enableAutomationFilterContext,
-            );
+            const sanitizedAlert = sanitizeAutomation(alert as IAutomationMetadataObject);
             alertCreator.create(sanitizedAlert);
         },
-        [alertCreator, enableAutomationFilterContext],
+        [alertCreator],
     );
 
     const alertUpdater = useUpdateAlert({
@@ -72,13 +64,10 @@ export function useSaveAlertToBackend({
 
     const handleUpdateAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            const sanitizedAlert = sanitizeAutomation(
-                alert as IAutomationMetadataObject,
-                enableAutomationFilterContext,
-            );
+            const sanitizedAlert = sanitizeAutomation(alert as IAutomationMetadataObject);
             alertUpdater.save(sanitizedAlert);
         },
-        [alertUpdater, enableAutomationFilterContext],
+        [alertUpdater],
     );
 
     const alertPauser = useUpdateAlert({
@@ -88,11 +77,9 @@ export function useSaveAlertToBackend({
 
     const handlePauseAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            alertPauser.save(
-                sanitizeAutomation(alert as IAutomationMetadataObject, enableAutomationFilterContext),
-            );
+            alertPauser.save(sanitizeAutomation(alert as IAutomationMetadataObject));
         },
-        [alertPauser, enableAutomationFilterContext],
+        [alertPauser],
     );
 
     const alertResumer = useUpdateAlert({
@@ -102,11 +89,9 @@ export function useSaveAlertToBackend({
 
     const handleResumeAlert = useCallback(
         (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
-            alertResumer.save(
-                sanitizeAutomation(alert as IAutomationMetadataObject, enableAutomationFilterContext),
-            );
+            alertResumer.save(sanitizeAutomation(alert as IAutomationMetadataObject));
         },
-        [alertResumer, enableAutomationFilterContext],
+        [alertResumer],
     );
 
     const isSavingAlert =
@@ -118,10 +103,7 @@ export function useSaveAlertToBackend({
     return { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert, isSavingAlert };
 }
 
-function sanitizeAutomation(
-    automationToSave: IAutomationMetadataObject,
-    enableAutomationFilterContext: boolean,
-): IAutomationMetadataObject {
+function sanitizeAutomation(automationToSave: IAutomationMetadataObject): IAutomationMetadataObject {
     let automation = {
         ...automationToSave,
     };
@@ -138,10 +120,7 @@ function sanitizeAutomation(
                 ...automation.alert,
                 execution: {
                     ...automation.alert.execution,
-                    filters: removeNoopFiltersFromAlertFilters(
-                        automation.alert.execution.filters,
-                        enableAutomationFilterContext,
-                    ),
+                    filters: removeNoopFiltersFromAlertFilters(automation.alert.execution.filters),
                 },
             },
         };
@@ -153,19 +132,7 @@ function sanitizeAutomation(
 /**
  * Strip noop filters that have no effect on execution and should not appear in alert email notifications.
  * - "All values" attribute filters are always stripped.
- * - "All time" date filters are stripped only for the legacy path (new path handles this in getAppliedWidgetFilters).
  */
-function removeNoopFiltersFromAlertFilters(
-    filters: IFilter[],
-    enableAutomationFilterContext: boolean,
-): IFilter[] {
-    return filters.filter((filter) => {
-        if (isAllValuesAttributeFilter(filter)) {
-            return false;
-        }
-        if (!enableAutomationFilterContext && isNoopAllTimeDateFilter(filter)) {
-            return false;
-        }
-        return true;
-    });
+function removeNoopFiltersFromAlertFilters(filters: IFilter[]): IFilter[] {
+    return filters.filter((filter) => !isAllValuesAttributeFilter(filter));
 }

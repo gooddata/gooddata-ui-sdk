@@ -124,7 +124,6 @@ export type {
     CustomScheduledEmailManagementDialogComponent,
     IScheduledEmailDialogProps,
     IScheduledEmailManagementDialogProps,
-    IScheduledEmailDialogPropsContext,
 } from "./presentation/scheduledEmail/types.js";
 export { PLATFORM_DATE_FORMAT } from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 export { getBrokenAlertFiltersBasicInfo } from "./model/utils/alertsUtils.js";

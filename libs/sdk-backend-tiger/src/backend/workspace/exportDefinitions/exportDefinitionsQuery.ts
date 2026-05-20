@@ -18,7 +18,6 @@ import {
 
 import { convertExportDefinitionMdObject } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { getSettingsForCurrentUser } from "../settings/index.js";
 
 export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
     private size = 50;
@@ -100,12 +99,6 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                     ? { filter: `title=containsic=${this.filter.title}` } // contains + ignore case
                     : {};
 
-                const userSettings = await getSettingsForCurrentUser(
-                    this.authCall,
-                    this.requestParameters.workspaceId,
-                );
-                const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? true;
-
                 const items = await this.authCall((client) =>
                     EntitiesApi_GetAllEntitiesExportDefinitions(client.axios, client.basePath, {
                         ...this.requestParameters,
@@ -122,9 +115,7 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                         if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
-                        return data.data.map((ed) =>
-                            convertExportDefinitionMdObject(ed, data.included, enableAutomationFilterContext),
-                        );
+                        return data.data.map((ed) => convertExportDefinitionMdObject(ed, data.included));
                     });
 
                 return { items, totalCount: this.totalCount! };

@@ -182,12 +182,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                 newReferencePoint = configurePercent(newReferencePoint, true);
                 newReferencePoint = removeSort(newReferencePoint);
                 const updated = this.updateSupportedProperties(newReferencePoint);
-                const enableImprovedAdFilters = this.featureFlags?.enableImprovedAdFilters ?? true;
                 const sanitizedFilters = sanitizeGeoReferencePointFilters(
                     originalFilters,
                     referencePoint.buckets,
                     updated.buckets,
-                    enableImprovedAdFilters,
                 );
                 // Cache geo icon label availability for renderConfigurationPanel.
                 // The reference point carries displayForms metadata that the insight does not.
@@ -207,7 +205,6 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         if (!isGeoPushpinIconEnabled(this.featureFlags)) {
             delete config.buckets[BucketNames.MEASURES];
         }
-        this.addMetricToFiltersIfEnabled(config);
         return config;
     }
 

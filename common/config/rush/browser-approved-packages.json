@@ -1067,10 +1067,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "prettier",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "process",
       "allowedCategories": [ "examples", "tools" ]
     },

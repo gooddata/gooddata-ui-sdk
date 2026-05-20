@@ -833,6 +833,7 @@ exports[`PluggableHeadline > getExtendedReferencePoint > should correctly proces
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -945,6 +946,7 @@ exports[`PluggableHeadline > getExtendedReferencePoint > should return proper ex
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

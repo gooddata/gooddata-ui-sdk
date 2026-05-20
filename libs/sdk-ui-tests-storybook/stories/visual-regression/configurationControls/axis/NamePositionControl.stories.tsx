@@ -39,6 +39,7 @@ XAxis.parameters = {
             delay: {
                 postOperation: 200,
             },
+            misMatchThreshold: 0.05,
         },
         "select-option": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
@@ -46,6 +47,7 @@ XAxis.parameters = {
             delay: {
                 postOperation: 200,
             },
+            misMatchThreshold: 0.05,
         },
     } satisfies INeobackstopConfig,
 };
@@ -95,6 +97,7 @@ YAxisLocalized.parameters = {
             delay: {
                 postOperation: 200,
             },
+            misMatchThreshold: 0.05,
         },
         "select-option": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
@@ -102,6 +105,7 @@ YAxisLocalized.parameters = {
             delay: {
                 postOperation: 200,
             },
+            misMatchThreshold: 0.05,
         },
     } satisfies INeobackstopConfig,
 };

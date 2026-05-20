@@ -8,7 +8,6 @@ import {
     type IAutomationMetadataObject,
     type IDataSetMetadataObject,
     type IInsight,
-    type IInsightWidget,
     type IMeasure,
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
@@ -104,39 +103,6 @@ export interface IAlertingDialogProps {
 /**
  * @alpha
  */
-export interface IAlertingDialogOldProps {
-    /**
-     * Alert to be edited in the dialog.
-     */
-    editAlert?: IAutomationMetadataObject;
-
-    /**
-     * Callback to be called, when user save the existing alert.
-     */
-    onUpdate?: (alertingDefinition: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when user closes the alerting dialog.
-     */
-    onCancel?: () => void;
-
-    /**
-     * Widget to be edited in the dialog.
-     */
-    editWidget?: IInsightWidget;
-
-    /**
-     * Anchor element for the dialog.
-     */
-    anchorEl?: HTMLElement | null;
-}
-
-//
-//
-//
-/**
- * @alpha
- */
 export interface IAlertingManagementDialogProps {
     /**
      * Is loading alert data?
@@ -172,66 +138,6 @@ export interface IAlertingManagementDialogProps {
      * Callback to be called, when user closes the alert management dialog.
      */
     onClose?: () => void;
-
-    /**
-     * Callback to be called, when alert is deleted.
-     * @param alert - alert that was deleted
-     */
-    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when alert fails to delete.
-     */
-    onDeleteError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Callback to be called, when alert is paused.
-     * @param alert - alert that was paused
-     * @param pause - true if alert was paused, false if it was resumed
-     */
-    onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
-
-    /**
-     * Callback to be called, when alert fails to pause.
-     * @param error - error that occurred
-     * @param pause - true if alert was paused, false if it was resumed
-     */
-    onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
-}
-
-/**
- * @alpha
- */
-export interface IAlertingManagementDialogOldProps {
-    /**
-     * Callback to be called, when user clicks alert item for editing.
-     */
-    onEdit?: (
-        alertingDefinition: IAutomationMetadataObject,
-        widget: IInsightWidget | undefined,
-        anchor: HTMLElement | null,
-        onClosed: () => void,
-    ) => void;
-
-    /**
-     * Callback to be called, when user closes the alert management dialog.
-     */
-    onClose?: () => void;
-
-    /**
-     * Is loading alert data?
-     */
-    isLoadingAlertingData: boolean;
-
-    /**
-     * Error occurred while loading alert data?
-     */
-    alertingDataError?: GoodDataSdkError;
-
-    /**
-     * Automations in workspace
-     */
-    automations: IAutomationMetadataObject[];
 
     /**
      * Callback to be called, when alert is deleted.

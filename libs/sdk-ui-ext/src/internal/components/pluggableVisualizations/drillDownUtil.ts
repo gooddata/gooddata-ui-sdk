@@ -338,6 +338,7 @@ export const isInsightSupportedForImplicitDrillToUrl = (
         case "waterfall":
         case "dependencywheel":
         case "sankey":
+        case "radar":
             return true;
         default:
             return false;

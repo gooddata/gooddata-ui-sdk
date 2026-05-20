@@ -427,6 +427,11 @@
                         ]
                     },
                     "type": { "type": "string", "enum": ["dashboard"] },
+                    "version": {
+                        "type": "string",
+                        "enum": ["2", "3"],
+                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
+                    },
                     "title": {
                         "$ref": "#/$global/gaac/title",
                         "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
@@ -4508,6 +4513,11 @@
                     ]
                 },
                 "type": { "type": "string", "enum": ["dashboard"] },
+                "version": {
+                    "type": "string",
+                    "enum": ["2", "3"],
+                    "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
+                },
                 "title": {
                     "$ref": "#/$global/gaac/title",
                     "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."

@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type AccessGranularPermission,
@@ -6,6 +7,7 @@ import {
     type IAccessControlAware,
     type IAccessGrantee,
     type IAuditableUsers,
+    type IDashboardParameter,
     type IUser,
     type ObjRef,
     type ShareStatus,
@@ -70,6 +72,7 @@ export interface IShareDialogProps {
     labels: IShareDialogLabels;
     currentUserPermissions: CurrentUserPermissions;
     dashboardFilters?: FilterContextItem[];
+    dashboardParameters?: IDashboardParameter[];
     isGranteeShareLoading?: boolean;
     isShareGrantHidden?: boolean;
     applyShareGrantOnSelect?: boolean;

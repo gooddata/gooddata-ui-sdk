@@ -29,7 +29,6 @@ import {
 
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
-import { defaultImprovedFilters } from "../../../constants/uiConfig.js";
 import { type IColorConfiguration } from "../../../interfaces/Colors.js";
 import {
     type IBucketItem,
@@ -112,9 +111,6 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     ): Promise<IExtendedReferencePoint> => {
         const referencePointCloned = cloneDeep(referencePoint);
         const uiConfig = getDefaultRepeaterUiConfig();
-        if (this.featureFlags?.enableImprovedAdFilters && uiConfig.buckets?.["filters"]) {
-            uiConfig.buckets["filters"] = defaultImprovedFilters.filters;
-        }
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...referencePointCloned,
@@ -123,13 +119,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 
         newReferencePoint = configRepeaterBuckets(newReferencePoint);
         newReferencePoint = setRepeaterUiConfig(newReferencePoint, this.intl);
-        return Promise.resolve(
-            sanitizeFilters(
-                newReferencePoint,
-                this.featureFlags?.enableImprovedAdFilters,
-                referencePointCloned,
-            ),
-        );
+        return Promise.resolve(sanitizeFilters(newReferencePoint, referencePointCloned));
     };
 
     public getExecution(

@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "Več o dovoljenjih za delovni prostor",
     "userManagement.workspace.granularPermission.view.description": "Omogoča uporabnikom pregled nadzornih plošč, ki so bile z njimi ali njihovo skupino deljene.",
     "userManagement.workspace.granularPermission.analyze.description": "Omogoča uporabnikom ustvarjanje, urejanje ali brisanje nadzornih plošč in vizualizacij ter ogled logičnega modela podatkov (LDM) in metrik.",
-    "userManagement.workspace.granularPermission.manage.description": "Omogoča uporabnikom urejanje ali brisanje logičnega modela podatkov in metrik ter dostop do vseh nadzornih plošč in urejanje njihovih dovoljenj brez omejitev.",
     "userManagement.workspace.granularPermission.warning": "<b>Opozorilo:</b> To dejanje bo odstranilo vse odvečne kombinacije.",
     "userManagement.workspace.permission.remove": "Odstrani",
     "userManagement.workspace.permission.and": "in",

@@ -4,6 +4,7 @@ import { cloneDeep, omit, update } from "lodash-es";
 
 import {
     type AnalyticalDashboardModelV2,
+    type AnalyticalDashboardModelV3,
     type ITigerDashboardAttributeFilterConfig,
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
@@ -147,16 +148,61 @@ function convertDashboardTabToBackend(
  * @param filterContextRef - Optional filter context reference
  * @param useWidgetLocalIdentifiers - Whether to preserve widget local identifiers
  * @param enableDashboardSectionHeadersDateDataSet - Whether to include section headers date data set
- * @returns Tiger analytical dashboard (uses ITigerDashboardLayout, ITigerDashboardTab, etc.)
+ * @param enableAnalyticalDashboardVersion3 - When true and the dashboard has tabs, produce a V3 analytical
+ *   dashboard: tabs-only, no root-level layout / filter configs / parameters. V3 cannot be read
+ *   by SDK versions that only know V2 root-level properties. Opt-in.
+ * @returns Tiger analytical dashboard (V2 by default, V3 when the flag is on and tabs are present).
  */
 export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
     useWidgetLocalIdentifiers?: boolean,
     enableDashboardSectionHeadersDateDataSet?: boolean,
-): AnalyticalDashboardModelV2.IAnalyticalDashboard {
-    // For backward compatibility, if dashboard has tabs, fill root-level properties
-    // with active/first tab's content so older SDK versions can still read the dashboard
+    enableAnalyticalDashboardVersion3?: false,
+): AnalyticalDashboardModelV2.IAnalyticalDashboard;
+export function convertAnalyticalDashboard(
+    dashboard: IDashboardDefinition,
+    filterContextRef?: ObjRef,
+    useWidgetLocalIdentifiers?: boolean,
+    enableDashboardSectionHeadersDateDataSet?: boolean,
+    enableAnalyticalDashboardVersion3?: boolean,
+): AnalyticalDashboardModelV2.IAnalyticalDashboard | AnalyticalDashboardModelV3.IAnalyticalDashboard;
+
+export function convertAnalyticalDashboard(
+    dashboard: IDashboardDefinition,
+    filterContextRef?: ObjRef,
+    useWidgetLocalIdentifiers?: boolean,
+    enableDashboardSectionHeadersDateDataSet?: boolean,
+    enableAnalyticalDashboardVersion3?: boolean,
+): AnalyticalDashboardModelV2.IAnalyticalDashboard | AnalyticalDashboardModelV3.IAnalyticalDashboard {
+    const hasTabs = Boolean(dashboard.tabs && dashboard.tabs.length > 0);
+    const emitV3 = Boolean(enableAnalyticalDashboardVersion3 && hasTabs);
+
+    const convertedTabs = dashboard.tabs?.map((tab) =>
+        convertDashboardTabToBackend(tab, tab.filterContext?.ref, useWidgetLocalIdentifiers),
+    );
+
+    if (emitV3) {
+        const v3: AnalyticalDashboardModelV3.IAnalyticalDashboard = {
+            version: "3",
+            tabs: convertedTabs!,
+            plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
+            disableCrossFiltering: dashboard.disableCrossFiltering,
+            disableUserFilterReset: dashboard.disableUserFilterReset,
+            disableUserFilterSave: dashboard.disableUserFilterSave,
+            disableFilterViews: dashboard.disableFilterViews,
+            evaluationFrequency: dashboard.evaluationFrequency,
+        };
+
+        if (enableDashboardSectionHeadersDateDataSet) {
+            v3.sectionHeadersDateDataSet = cloneWithSanitizedIds(dashboard.sectionHeadersDateDataSet);
+        }
+
+        return v3;
+    }
+
+    // V2 path. For backward compatibility, when tabs are present, mirror tabs[0]'s content
+    // into root-level properties so older SDK versions can still read the dashboard.
     let effectiveLayout = dashboard.layout;
     let effectiveDateFilterConfig = dashboard.dateFilterConfig;
     let effectiveDateFilterConfigs = dashboard.dateFilterConfigs;
@@ -164,10 +210,8 @@ export function convertAnalyticalDashboard(
     let effectiveMeasureValueFilterConfigs = dashboard.measureValueFilterConfigs;
     let effectiveParameters = dashboard.parameters;
 
-    if (dashboard.tabs && dashboard.tabs.length > 0) {
-        const effectiveTab = dashboard.tabs[0];
-
-        // Use tab's properties for root-level (backward compatibility)
+    if (hasTabs) {
+        const effectiveTab = dashboard.tabs![0];
         effectiveLayout = effectiveTab.layout;
         effectiveDateFilterConfig = effectiveTab.dateFilterConfig;
         effectiveDateFilterConfigs = effectiveTab.dateFilterConfigs;
@@ -206,9 +250,7 @@ export function convertAnalyticalDashboard(
         disableUserFilterSave: dashboard.disableUserFilterSave,
         disableFilterViews: dashboard.disableFilterViews,
         evaluationFrequency: dashboard.evaluationFrequency,
-        tabs: dashboard.tabs?.map((tab) =>
-            convertDashboardTabToBackend(tab, tab.filterContext?.ref, useWidgetLocalIdentifiers),
-        ),
+        tabs: convertedTabs,
         version: "2",
     };
 
@@ -244,12 +286,16 @@ export function convertFilterViewContextToBackend(
     filterContext: IFilterContextDefinition,
     useDateFilterLocalIdentifiers?: boolean,
     tabLocalIdentifier?: string,
+    parameters?: IDashboardParameter[],
 ): AnalyticalDashboardModelV2.IFilterContextWithTab {
     const updatedFilterContext = convertFilterContextToBackend(filterContext, useDateFilterLocalIdentifiers);
 
     return {
         ...updatedFilterContext,
         tabLocalIdentifier,
+        ...(parameters === undefined
+            ? {}
+            : { parameters: parameters.map(convertDashboardParameterToBackend) }),
     };
 }
 

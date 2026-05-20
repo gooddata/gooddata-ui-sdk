@@ -115,6 +115,7 @@ exports[`PluggableDependencyWheelChart > dependency wheel should allow date attr
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -250,6 +251,7 @@ exports[`PluggableDependencyWheelChart > should return reference point with one 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -437,6 +439,7 @@ exports[`PluggableDependencyWheelChart > should reuse one measure and order attr
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

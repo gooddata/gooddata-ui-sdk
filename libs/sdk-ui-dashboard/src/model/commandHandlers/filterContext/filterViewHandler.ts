@@ -32,6 +32,7 @@ import {
     filterViewDeletionFailed,
     filterViewDeletionSucceeded,
 } from "../../events/filters.js";
+import { selectCatalogParameters } from "../../store/catalog/catalogSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../store/config/configSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
@@ -42,12 +43,14 @@ import {
     selectWorkingFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
+import { selectFilterViewParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { loadFilterViews } from "../dashboard/initializeDashboardHandler/loadFilterViews.js";
 
 import { resetCrossFiltering } from "./common.js";
+import { resolveFilterViewParameterValues } from "./filterViewParameters.js";
 
 function createFilterView(
     ctx: DashboardContext,
@@ -92,6 +95,9 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: ISaveFilterVi
         ),
     };
 
+    const parameters: ReturnType<typeof selectFilterViewParameters> =
+        yield select(selectFilterViewParameters);
+
     const filterView: IDashboardFilterViewSaveRequest = {
         name: cmd.payload.name,
         dashboard: ctx.dashboardRef,
@@ -99,6 +105,7 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: ISaveFilterVi
         isDefault: cmd.payload.isDefault,
         // Include tabId if there's an active tab
         ...(activeTabLocalIdentifier ? { tabLocalIdentifier: activeTabLocalIdentifier } : {}),
+        ...(parameters ? { parameters } : {}),
     };
 
     try {
@@ -168,6 +175,12 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: IApplyFilter
                 correlationId: cmd.correlationId,
             }),
         );
+        if (filterView.parameters && filterView.parameters.length > 0) {
+            const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
+                yield select(selectCatalogParameters);
+            const values = resolveFilterViewParameterValues(filterView.parameters, workspaceParameters);
+            yield put(tabsActions.setParameterRuntimeValues({ values }));
+        }
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
     } else {
         yield put(filterViewApplicationFailed(ctx));

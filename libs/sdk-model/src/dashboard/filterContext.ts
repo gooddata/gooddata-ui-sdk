@@ -15,6 +15,7 @@ import {
 import { type ObjRef, isObjRef } from "../objRef/index.js";
 
 import { type IDashboardObjectIdentity } from "./common.js";
+import { type IDashboardParameter } from "./parameter.js";
 
 /**
  * Date filter type - relative
@@ -1068,6 +1069,13 @@ export interface IDashboardFilterView {
     readonly filterContext: IFilterContextDefinition;
     readonly isDefault?: boolean;
     readonly tabLocalIdentifier?: string;
+    /**
+     * Dashboard parameter overrides captured at the time the view was saved.
+     * Absent when the view was saved before parameters were supported.
+     *
+     * @alpha
+     */
+    readonly parameters?: IDashboardParameter[];
 }
 /**
  * Interface that represents an entity provided to SPI function that creates a new dashboard filter view
@@ -1081,4 +1089,10 @@ export interface IDashboardFilterViewSaveRequest {
     readonly filterContext: IFilterContextDefinition;
     readonly isDefault?: boolean;
     readonly tabLocalIdentifier?: string;
+    /**
+     * Dashboard parameter overrides to capture in the filter view alongside the filter context.
+     *
+     * @alpha
+     */
+    readonly parameters?: IDashboardParameter[];
 }

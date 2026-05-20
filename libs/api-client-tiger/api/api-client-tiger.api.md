@@ -4992,6 +4992,7 @@ declare namespace AnalyticalDashboardModelV2 {
         isDashboardTab,
         IDashboardDateFilterConfigItem,
         IDashboardTab,
+        IAnalyticalDashboardCommonProps,
         IAnalyticalDashboard_2 as IAnalyticalDashboard,
         IFilterContext_2 as IFilterContext,
         IFilterContextWithTab,
@@ -5000,6 +5001,14 @@ declare namespace AnalyticalDashboardModelV2 {
     }
 }
 export { AnalyticalDashboardModelV2 }
+
+declare namespace AnalyticalDashboardModelV3 {
+    export {
+        isAnalyticalDashboard_3 as isAnalyticalDashboard,
+        IAnalyticalDashboard_3 as IAnalyticalDashboard
+    }
+}
+export { AnalyticalDashboardModelV3 }
 
 // @public
 export class AnalyticsModelApi extends MetadataBaseApi implements AnalyticsModelApiInterface {
@@ -19769,13 +19778,37 @@ interface IAnalyticalDashboard {
 }
 
 // @public (undocumented)
-interface IAnalyticalDashboard_2 {
+interface IAnalyticalDashboard_2 extends IAnalyticalDashboardCommonProps {
     // (undocumented)
     attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
     // (undocumented)
     dateFilterConfig?: ITigerDashboardDateFilterConfig;
     // (undocumented)
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
+    // (undocumented)
+    filterContextRef?: ObjRef;
+    // (undocumented)
+    layout?: ITigerDashboardLayout;
+    // (undocumented)
+    measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
+    // @alpha
+    parameters?: ITigerDashboardParameter[];
+    // @alpha
+    tabs?: ITigerDashboardTab[];
+    // (undocumented)
+    version: "2";
+}
+
+// @alpha
+interface IAnalyticalDashboard_3 extends IAnalyticalDashboardCommonProps {
+    // (undocumented)
+    tabs: ITigerDashboardTab[];
+    // (undocumented)
+    version: "3";
+}
+
+// @public
+interface IAnalyticalDashboardCommonProps {
     // (undocumented)
     disableCrossFiltering?: boolean;
     // (undocumented)
@@ -19787,21 +19820,9 @@ interface IAnalyticalDashboard_2 {
     // (undocumented)
     evaluationFrequency?: string;
     // (undocumented)
-    filterContextRef?: ObjRef;
-    // (undocumented)
-    layout?: ITigerDashboardLayout;
-    // (undocumented)
-    measureValueFilterConfigs?: ITigerDashboardMeasureValueFilterConfig[];
-    // @alpha
-    parameters?: ITigerDashboardParameter[];
-    // (undocumented)
     plugins?: IDashboardPluginLink[];
     // (undocumented)
     sectionHeadersDateDataSet?: ObjRef;
-    // @alpha
-    tabs?: ITigerDashboardTab[];
-    // (undocumented)
-    version: "2";
 }
 
 // @public @deprecated
@@ -20130,6 +20151,7 @@ interface IFilterContext_2 {
 
 // @alpha (undocumented)
 interface IFilterContextWithTab extends IFilterContext_2 {
+    parameters?: ITigerDashboardParameter[];
     // (undocumented)
     tabLocalIdentifier?: string;
 }
@@ -20385,6 +20407,9 @@ function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDash
 
 // @public (undocumented)
 function isAnalyticalDashboard_2(dashboard: unknown): dashboard is IAnalyticalDashboard_2;
+
+// @alpha (undocumented)
+function isAnalyticalDashboard_3(dashboard: unknown): dashboard is IAnalyticalDashboard_3;
 
 // @public (undocumented)
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader;

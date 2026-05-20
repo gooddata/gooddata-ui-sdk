@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type FC } from "react";
 
@@ -62,6 +62,7 @@ import { HeatMap } from "./icons/InsightIcons/HeatMap.js";
 import { Line } from "./icons/InsightIcons/Line.js";
 import { Pie } from "./icons/InsightIcons/Pie.js";
 import { Pyramid } from "./icons/InsightIcons/Pyramid.js";
+import { Radar } from "./icons/InsightIcons/Radar.js";
 import { Repeater } from "./icons/InsightIcons/Repeater.js";
 import { Sankey } from "./icons/InsightIcons/Sankey.js";
 import { ScatterPlot } from "./icons/InsightIcons/ScatterPlot.js";
@@ -190,6 +191,7 @@ export const Icon: Record<string, FC<IIconProps>> = {
     Run,
     Invite,
     Pyramid,
+    Radar,
     Funnel,
     RichText,
     VisualizationSwitcher,

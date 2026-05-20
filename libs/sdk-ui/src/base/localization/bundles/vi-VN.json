@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "Tìm hiểu về quyền không gian làm việc",
     "userManagement.workspace.granularPermission.view.description": "Cho phép người dùng xem các bảng điều khiển đã được chia sẻ với họ hoặc nhóm người dùng của họ.",
     "userManagement.workspace.granularPermission.analyze.description": "Cho phép người dùng tạo, chỉnh sửa hoặc xóa bảng điều khiển và trực quan hóa, đồng thời xem mô hình dữ liệu logic (LDM) và chỉ số.",
-    "userManagement.workspace.granularPermission.manage.description": "Cho phép người dùng tạo, chỉnh sửa hoặc xóa mô hình dữ liệu logic và chỉ số, và truy cập tất cả bảng điều khiển cũng như chỉnh sửa quyền bảng điều khiển của chúng mà không có giới hạn.",
     "userManagement.workspace.granularPermission.warning": "<b>Thận trọng:</b> Hành động này sẽ loại bỏ mọi tổ hợp trùng lặp.",
     "userManagement.workspace.permission.remove": "Xóa",
     "userManagement.workspace.permission.and": "và",

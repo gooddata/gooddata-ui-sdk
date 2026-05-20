@@ -23,6 +23,7 @@ export function ShareDialogBase(props: IShareDialogBaseProps) {
         currentUser,
         currentUserPermissions,
         dashboardFilters,
+        dashboardParameters,
         isCurrentUserWorkspaceManager,
         isShareGrantHidden,
         applyShareGrantOnSelect,
@@ -73,6 +74,7 @@ export function ShareDialogBase(props: IShareDialogBaseProps) {
                     <ShareGranteeBase
                         currentUserPermissions={currentUserPermissions}
                         dashboardFilters={dashboardFilters}
+                        dashboardParameters={dashboardParameters}
                         isShareGrantHidden={isShareGrantHidden}
                         applyShareGrantOnSelect={applyShareGrantOnSelect}
                         showDashboardShareLink={showDashboardShareLink}

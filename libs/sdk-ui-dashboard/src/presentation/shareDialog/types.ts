@@ -3,7 +3,7 @@
 import { type ComponentType } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type FilterContextItem, type IUser } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IDashboardParameter, type IUser } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
     type CurrentUserPermissions,
@@ -66,6 +66,11 @@ export interface IShareDialogProps {
      * Dashboard filters
      */
     dashboardFilters: FilterContextItem[];
+
+    /**
+     * Dashboard parameters
+     */
+    dashboardParameters?: IDashboardParameter[];
 
     /**
      * Is share grant hidden?

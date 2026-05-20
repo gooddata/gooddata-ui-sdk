@@ -130,6 +130,7 @@ export {
     VisualizationObjectModelV2,
     AnalyticalDashboardModelV1,
     AnalyticalDashboardModelV2,
+    AnalyticalDashboardModelV3,
 } from "./gd-tiger-model/index.js";
 
 export type {

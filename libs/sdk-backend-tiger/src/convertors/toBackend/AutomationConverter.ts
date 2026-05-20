@@ -42,7 +42,6 @@ import { toDateDataSetQualifier } from "./ObjRefConverter.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-    enableAutomationFilterContext: boolean,
     enableNewScheduledExport: boolean,
     widgetExecution?: IExecutionDefinition,
     overrides?: IRawExportCustomOverrides,
@@ -94,7 +93,7 @@ export function convertAutomation(
     const evaluationModeObj = evaluationMode ? { evaluationMode } : {};
     const alertObj = alert
         ? {
-              alert: convertAlert(alert, enableAutomationFilterContext),
+              alert: convertAlert(alert),
           }
         : {};
     const state = alert ? alert.trigger.state : undefined;
@@ -107,20 +106,12 @@ export function convertAutomation(
     const tabularExportsOld = exportDefinitions
         ?.filter((ed) => isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload))
         .map((ed) => ({
-            requestPayload: convertExportDefinitionRequestPayload(
-                ed.requestPayload,
-                enableAutomationFilterContext,
-                ed.title,
-            ),
+            requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload, ed.title),
         }));
     const visualExportsOld = exportDefinitions
         ?.filter((ed) => isExportDefinitionDashboardRequestPayload(ed.requestPayload))
         .map((ed) => ({
-            requestPayload: convertExportDefinitionRequestPayload(
-                ed.requestPayload,
-                enableAutomationFilterContext,
-                ed.title,
-            ),
+            requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload, ed.title),
         }));
 
     const {
@@ -281,17 +272,10 @@ export function convertAutomation(
     };
 }
 
-const convertAlert = (
-    alert: IAutomationAlert,
-    enableAutomationFilterContext: boolean,
-): JsonApiWorkspaceAutomationOutAttributesAlert => {
+const convertAlert = (alert: IAutomationAlert): JsonApiWorkspaceAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
-    const { filters: convertedFilters } = convertAfmFilters(
-        execution.measures,
-        execution.filters,
-        enableAutomationFilterContext,
-    );
+    const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters, true);
     const base = {
         execution: {
             filters: convertedFilters,

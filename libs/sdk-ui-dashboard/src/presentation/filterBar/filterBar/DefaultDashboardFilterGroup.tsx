@@ -195,7 +195,15 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
                     strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
                 },
             );
-            return <AttributeFilterDependencyTooltip tooltipContent={filterDependencyIconTooltip} />;
+            const filterDependencyIconAriaLabel = intl.formatMessage({
+                id: "filter.dependency.icon.aria.label",
+            });
+            return (
+                <AttributeFilterDependencyTooltip
+                    tooltipContent={filterDependencyIconTooltip}
+                    ariaLabel={filterDependencyIconAriaLabel}
+                />
+            );
         },
         [capabilities.supportsKeepingDependentFiltersSelection, filterDependenciesByLocalId, intl],
     );

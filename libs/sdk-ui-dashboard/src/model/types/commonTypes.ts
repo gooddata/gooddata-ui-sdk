@@ -6,6 +6,7 @@ import {
     type IColorPalette,
     type IDashboard,
     type IDashboardLayout,
+    type IDashboardParameter,
     type IDateFilterConfig,
     type IEntitlementDescriptor,
     type IInsight,
@@ -147,6 +148,16 @@ export type DashboardConfig = {
      * Incompatible overrides/conversions will lead to a toast message with warning.
      */
     overrideDefaultFilters?: FilterContextItem[];
+
+    /**
+     * Override runtime values of dashboard parameters on the active tab.
+     *
+     * @remarks
+     * Each entry's `value` is applied as the parameter's `runtimeOverride` when its `ref` matches
+     * a parameter on the loaded dashboard. Refs that don't match are silently ignored.
+     * The override applies only to the active tab — other tabs keep their hydrated defaults.
+     */
+    overrideDefaultParameters?: IDashboardParameter[];
 
     /**
      * Override dashboard title.
@@ -506,6 +517,7 @@ export type ResolvedDashboardConfig = Omit<
     | "initialContent"
     | "executionTimestamp"
     | "overrideDefaultFilters"
+    | "overrideDefaultParameters"
     | "overrideTitle"
     | "hideWidgetTitles"
     | "workspaceDescriptor"

@@ -324,6 +324,7 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -510,6 +511,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -688,6 +690,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -872,6 +875,7 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1011,6 +1015,7 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,
@@ -1140,6 +1145,7 @@ exports[`PluggableAreaChart > should return reference point when no categories a
       "filters": {
         "accepts": [
           "attribute",
+          "metric",
           "date",
         ],
         "allowsReordering": false,

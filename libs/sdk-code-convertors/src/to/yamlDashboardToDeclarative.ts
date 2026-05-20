@@ -62,6 +62,7 @@ import { VisualisationsTypes } from "../conts.js";
 import { type OverrideDashboardDefinition } from "../from/declarativeDashboardToYaml.js";
 import { type DashboardTab, type ExportEntities } from "../types.js";
 import { parseUrlTarget } from "../utils/customUrl.js";
+import { CoreErrorCode, newError } from "../utils/errors.js";
 import { yamlConditionToMatch } from "../utils/filterUtils.js";
 import { convertGranularity } from "../utils/granularityUtils.js";
 import { toDeclarativePermissions } from "../utils/permissionUtils.js";
@@ -192,14 +193,13 @@ function yamlTabsToDeclarative(
 }
 
 /**
- * Process dashboard with tabs - uses active tab or first tab as main dashboard for backwards compatibility
+ * V2 (legacy): tabs present in YAML — mirror tabs[0] content into root-level properties
+ * for backward compatibility with consumers that read root layout/filters.
  */
-function processDashboardWithTabs(entities: ExportEntities, input: Dashboard) {
+function processDashboardWithTabsV2(entities: ExportEntities, input: Dashboard) {
     const tabsResult = yamlTabsToDeclarative(entities, input.tabs!, input.enable_section_headers);
 
-    // Use first tab as default for backwards compatibility
     const defaultTabIndex = 0;
-
     const defaultTab = tabsResult.tabs[defaultTabIndex];
     return {
         layout: defaultTab.layout,
@@ -214,14 +214,16 @@ function processDashboardWithTabs(entities: ExportEntities, input: Dashboard) {
 }
 
 /**
- * Process traditional dashboard without tabs
+ * V2 (legacy): no tabs in YAML — wrap root content in a synthetic single tab AND keep
+ * the same content at root level. Produces the duplicated declarative shape the older
+ * SDK readers expect.
  */
-function processDashboardWithoutTabs(entities: ExportEntities, input: Dashboard) {
+function processDashboardWithoutTabsV2(entities: ExportEntities, input: Dashboard) {
     const {
         filterContext,
         tabFilterContexts: _tabFilterContexts,
         ...rest
-    } = processDashboardWithTabs(entities, {
+    } = processDashboardWithTabsV2(entities, {
         ...input,
         tabs: [
             {
@@ -250,16 +252,79 @@ function processDashboardWithoutTabs(entities: ExportEntities, input: Dashboard)
     };
 }
 
+/**
+ * V3 (clean): tabs present in YAML — tabs are the sole source of layout and filter content.
+ * No root-level mirroring. Root filter context reference is left empty; per-tab filter
+ * context refs are the only source.
+ */
+function processDashboardWithTabsV3(entities: ExportEntities, input: Dashboard) {
+    const tabsResult = yamlTabsToDeclarative(entities, input.tabs!, input.enable_section_headers);
+
+    return {
+        layout: undefined,
+        filterContext: undefined,
+        dateFilterConfig: undefined,
+        dateFilterConfigs: undefined,
+        attributeFilterConfigs: undefined,
+        measureValueFilterConfigs: undefined,
+        tabs: tabsResult.tabs,
+        tabFilterContexts: tabsResult.filterContexts,
+    };
+}
+
+/**
+ * V3 (clean): no tabs in YAML — wrap root content in a synthetic single tab. No content
+ * is left at root level in the resulting declarative model.
+ */
+function processDashboardWithoutTabsV3(entities: ExportEntities, input: Dashboard) {
+    const tabsResult = yamlTabsToDeclarative(
+        entities,
+        [
+            {
+                id: "defaultTabId",
+                title: "",
+                filters: input.filters,
+                sections: input.sections ?? [],
+            },
+        ],
+        input.enable_section_headers,
+    );
+
+    return {
+        layout: undefined,
+        filterContext: undefined,
+        dateFilterConfig: undefined,
+        dateFilterConfigs: undefined,
+        attributeFilterConfigs: undefined,
+        measureValueFilterConfigs: undefined,
+        tabs: tabsResult.tabs,
+        tabFilterContexts: tabsResult.filterContexts,
+    };
+}
+
 /** @public */
 export function yamlDashboardToDeclarative(
     entities: ExportEntities,
     input: Dashboard,
 ): {
     dashboard: DeclarativeAnalyticalDashboard;
-    filterContext: DeclarativeFilterContext;
+    filterContext?: DeclarativeFilterContext;
     tabFilterContexts?: DeclarativeFilterContext[];
 } {
-    // Process dashboard based on whether it has tabs
+    const hasTabs = Boolean(input.tabs && input.tabs.length > 0);
+    const hasRootContent = Boolean(
+        (input.sections && input.sections.length > 0) ||
+        (input.filters && Object.keys(input.filters).length > 0),
+    );
+
+    if (hasTabs && hasRootContent) {
+        throw newError(CoreErrorCode.TabsAndRootContentMutuallyExclusive, [input.id]);
+    }
+
+    const yamlVersion = input.version ?? "2";
+
+    // Process dashboard based on YAML version and whether it has tabs.
+    // V2 mirrors content into root for backward compat; V3 keeps content only inside tabs.
     const {
         layout,
         filterContext,
@@ -269,7 +334,14 @@ export function yamlDashboardToDeclarative(
         measureValueFilterConfigs,
         tabs,
         tabFilterContexts,
-    } = input.tabs ? processDashboardWithTabs(entities, input) : processDashboardWithoutTabs(entities, input);
+    } =
+        yamlVersion === "3"
+            ? hasTabs
+                ? processDashboardWithTabsV3(entities, input)
+                : processDashboardWithoutTabsV3(entities, input)
+            : hasTabs
+              ? processDashboardWithTabsV2(entities, input)
+              : processDashboardWithoutTabsV2(entities, input);
 
     const plugins = yamlPluginsToDeclarative(input.plugins);
     const [, permissions] = toDeclarativePermissions(input.permissions) as [
@@ -280,21 +352,34 @@ export function yamlDashboardToDeclarative(
         [],
     ];
 
-    const content: DashboardDefinition = {
-        version: "2",
-        layout,
-        plugins,
-        attributeFilterConfigs,
-        measureValueFilterConfigs,
-        dateFilterConfig,
-        dateFilterConfigs,
-        ...(tabs ? { tabs } : {}),
-        ...(input.cross_filtering === false ? { disableCrossFiltering: true } : {}),
-        ...(input.user_filters_save === false ? { disableUserFilterSave: true } : {}),
-        ...(input.user_filters_reset === false ? { disableUserFilterReset: true } : {}),
-        ...(input.filter_views === false ? { disableFilterViews: true } : {}),
-        filterContextRef: createIdentifier<any>(filterContext.id, { forceType: "filterContext" }),
-    };
+    const content: DashboardDefinition =
+        yamlVersion === "3"
+            ? {
+                  version: "2",
+                  plugins,
+                  tabs,
+                  ...(input.cross_filtering === false ? { disableCrossFiltering: true } : {}),
+                  ...(input.user_filters_save === false ? { disableUserFilterSave: true } : {}),
+                  ...(input.user_filters_reset === false ? { disableUserFilterReset: true } : {}),
+                  ...(input.filter_views === false ? { disableFilterViews: true } : {}),
+              }
+            : {
+                  version: "2",
+                  layout,
+                  plugins,
+                  attributeFilterConfigs,
+                  measureValueFilterConfigs,
+                  dateFilterConfig,
+                  dateFilterConfigs,
+                  ...(tabs ? { tabs } : {}),
+                  ...(input.cross_filtering === false ? { disableCrossFiltering: true } : {}),
+                  ...(input.user_filters_save === false ? { disableUserFilterSave: true } : {}),
+                  ...(input.user_filters_reset === false ? { disableUserFilterReset: true } : {}),
+                  ...(input.filter_views === false ? { disableFilterViews: true } : {}),
+                  filterContextRef: filterContext
+                      ? createIdentifier<any>(filterContext.id, { forceType: "filterContext" })
+                      : undefined,
+              };
 
     const dashboard = {
         id: input.id,
@@ -803,7 +888,7 @@ function yamlIgnoredFilterToDeclarative(input: string): IDashboardFilterReferenc
     if (ref?.type === "metric") {
         return {
             type: "measureValueFilterReference",
-            measure: createIdentifier<any>(input),
+            measure: createIdentifier<any>(input, { forceMetric: true }),
         };
     }
     return null;

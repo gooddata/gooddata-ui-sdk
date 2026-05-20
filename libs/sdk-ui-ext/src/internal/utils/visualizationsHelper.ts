@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 

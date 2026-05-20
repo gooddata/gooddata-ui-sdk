@@ -24,6 +24,7 @@ import { getHeatmapConfiguration } from "../heatmap/heatmapConfiguration.js";
 import { getLineConfiguration } from "../lineChart/lineConfiguration.js";
 import { getPieConfiguration } from "../pieChart/pieConfiguration.js";
 import { getPyramidConfiguration } from "../pyramidChart/pyramidConfiguration.js";
+import { getRadarConfiguration } from "../radarChart/radarConfiguration.js";
 import { getSankeyConfiguration } from "../sankeyChart/sankeyConfiguration.js";
 import { getScatterConfiguration } from "../scatterPlot/scatterConfiguration.js";
 import { getTreemapConfiguration } from "../treemap/treemapConfiguration.js";
@@ -62,6 +63,7 @@ const chartConfigurationMap: {
     [VisualizationTypes.SANKEY]: getSankeyConfiguration,
     [VisualizationTypes.DEPENDENCY_WHEEL]: getDependencyWheelConfiguration,
     [VisualizationTypes.WATERFALL]: getWaterfallConfiguration,
+    [VisualizationTypes.RADAR]: getRadarConfiguration,
 };
 
 export function getHighchartsOptions(

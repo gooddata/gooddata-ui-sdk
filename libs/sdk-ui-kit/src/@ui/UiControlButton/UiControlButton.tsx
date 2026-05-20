@@ -45,6 +45,10 @@ export interface IUiControlButtonProps {
     buttonRef?: Ref<HTMLDivElement>;
     buttonId?: string;
     dropdownId?: string;
+    /**
+     * Overrides the accessible name. When omitted, the name is derived from the rendered title.
+     */
+    ariaLabel?: string;
 }
 
 /**
@@ -76,6 +80,7 @@ export function UiControlButton({
     buttonRef,
     buttonId,
     dropdownId,
+    ariaLabel,
 }: IUiControlButtonProps) {
     const tooltipId = useIdPrefixed("gd-ui-kit-control-button-tooltip");
     const showDisabledTooltip = !!disabled && !!disabledTooltip;
@@ -113,6 +118,7 @@ export function UiControlButton({
             aria-disabled={disabled}
             aria-controls={isOpen ? dropdownId : undefined}
             aria-describedby={showDisabledTooltip ? tooltipId : undefined}
+            aria-label={ariaLabel}
             data-testid={dataTestId}
             onClick={disabled ? undefined : onClick}
             onKeyDown={onKeyDown}

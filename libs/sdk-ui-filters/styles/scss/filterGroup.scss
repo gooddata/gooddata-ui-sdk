@@ -19,7 +19,7 @@
     overscroll-behavior: contain;
     margin: 0;
 
-    & .fixedDataTableRowLayout_rowWrapper {
+    & .gd-ui-kit-paged-virtual-list__item {
         .gd-filter-group-item {
             border-bottom: 1px solid variables.$gd-border-color;
         }

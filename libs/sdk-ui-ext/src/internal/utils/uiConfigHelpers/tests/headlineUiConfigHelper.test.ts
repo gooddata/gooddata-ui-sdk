@@ -38,7 +38,7 @@ describe("headlineUiConfigHelper", () => {
         const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
 
         describe("'canAddItems' property", () => {
-            const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, undefined, intl);
+            const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, intl);
 
             it("should set 'canAddItems' bucket property falsy if it already contains a measure", () => {
                 expect(uiConfig.buckets["secondary_measures"].canAddItems).toBeTruthy();
@@ -51,7 +51,7 @@ describe("headlineUiConfigHelper", () => {
 
         describe("'icon' property", () => {
             it("should set 'icon' property in both 'measures' and 'secondary_measures' buckets", () => {
-                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, undefined, intl);
+                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, intl);
                 expect(uiConfig.buckets["measures"].icon).toBeDefined();
                 expect(uiConfig.buckets["secondary_measures"].icon).toBeDefined();
             });
@@ -59,20 +59,20 @@ describe("headlineUiConfigHelper", () => {
 
         describe("'customError' property", () => {
             it("should set 'customError' property if there is a measure in 'secondary_measures' bucket, but 'measures' bucket is empty", () => {
-                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInSecondaryBucket, undefined, intl);
+                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInSecondaryBucket, intl);
                 expect(uiConfig.customError).toHaveProperty("heading");
                 expect(uiConfig.customError).toHaveProperty("text");
             });
 
             it("should keep 'customError' property empty if one of buckets contains a measure", () => {
-                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, undefined, intl);
+                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, intl);
                 expect(uiConfig.customError).toBeUndefined();
             });
         });
 
         describe("measures bucket titles", () => {
             it("should set bucket titles", () => {
-                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, undefined, intl);
+                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, intl);
                 expect(uiConfig.buckets["measures"].title).toEqual("Metric");
                 expect(uiConfig.buckets["secondary_measures"].title).toEqual("Metric");
             });

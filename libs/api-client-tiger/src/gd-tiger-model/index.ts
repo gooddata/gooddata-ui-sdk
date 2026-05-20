@@ -2,6 +2,7 @@
 
 import * as AnalyticalDashboardModelV1 from "./AnalyticalDashboardModelV1.js";
 import * as AnalyticalDashboardModelV2 from "./AnalyticalDashboardModelV2.js";
+import * as AnalyticalDashboardModelV3 from "./AnalyticalDashboardModelV3.js";
 import * as VisualizationObjectModelV1 from "./VisualizationObjectModelV1.js";
 import * as VisualizationObjectModelV2 from "./VisualizationObjectModelV2.js";
 
@@ -16,6 +17,12 @@ export { AnalyticalDashboardModelV1 };
  */
 // oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { AnalyticalDashboardModelV2 };
+
+/**
+ * @alpha
+ */
+// oxlint-disable-next-line no-barrel-files/no-barrel-files
+export { AnalyticalDashboardModelV3 };
 
 /**
  * @public

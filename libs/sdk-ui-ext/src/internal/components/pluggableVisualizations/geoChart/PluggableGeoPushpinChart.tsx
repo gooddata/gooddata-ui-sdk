@@ -157,9 +157,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     }
 
     public override getUiConfig(): IUiConfig {
-        const config = cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
-        this.addMetricToFiltersIfEnabled(config);
-        return config;
+        return cloneDeep(GEO_PUSHPIN_CHART_UICONFIG);
     }
 
     public override getExecution(

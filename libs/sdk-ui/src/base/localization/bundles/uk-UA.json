@@ -868,7 +868,6 @@
     "userManagement.workspace.granularPermission.help": "Дізнатися про дозволи робочого простору",
     "userManagement.workspace.granularPermission.view.description": "Дозволяє користувачам переглядати дашборди, до яких надано спільний доступ їм або їхній групі користувачів.",
     "userManagement.workspace.granularPermission.analyze.description": "Дозволяє користувачам створювати, редагувати або видаляти дашборди та візуалізації, а також переглядати логічну модель даних (LDM) і метрики.",
-    "userManagement.workspace.granularPermission.manage.description": "Дозволяє користувачам редагувати або видаляти логічну модель даних і метрики, а також отримувати доступ до всіх дашбордів і редагувати їхні дозволи без обмежень.",
     "userManagement.workspace.granularPermission.warning": "<b>Увага:</b> Ця дія видалить усі зайві комбінації.",
     "userManagement.workspace.permission.remove": "Видалити",
     "userManagement.workspace.permission.and": "і",

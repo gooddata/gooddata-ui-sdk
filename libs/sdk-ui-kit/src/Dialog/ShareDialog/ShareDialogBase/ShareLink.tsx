@@ -16,20 +16,26 @@ import { SHARE_LINK_HEADLINE_ID, SHARE_LINK_HELPER_TEXT_ID } from "./utils.js";
  */
 export function ShareLink({
     dashboardFilters,
+    dashboardParameters,
     headline,
     helperText,
     buttonLabel,
     onShareLinkCopy,
 }: IShareLinkProps) {
     const shareLink = useMemo(() => {
-        const filters = { filters: compressForUrl(dashboardFilters ?? []) };
+        const queryParams: Record<string, string> = {
+            filters: compressForUrl(dashboardFilters ?? []),
+        };
+        if (dashboardParameters?.length) {
+            queryParams["parameters"] = compressForUrl(dashboardParameters);
+        }
         const url = window.location.origin;
         const hashLocation = window.location.hash.split("?")[0];
         return url
             .concat("/dashboards/")
             .concat(hashLocation)
-            .concat(`?${new URLSearchParams(filters).toString()}`);
-    }, [dashboardFilters]);
+            .concat(`?${new URLSearchParams(queryParams).toString()}`);
+    }, [dashboardFilters, dashboardParameters]);
 
     const onIconButtonClick = useCallback(() => {
         onShareLinkCopy?.(shareLink);

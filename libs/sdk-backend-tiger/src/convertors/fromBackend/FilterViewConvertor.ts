@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -9,7 +9,10 @@ import {
 } from "@gooddata/api-client-tiger";
 import { type IDashboardFilterView, idRef } from "@gooddata/sdk-model";
 
-import { convertFilterViewContextFilters } from "./analyticalDashboards/v2/AnalyticalDashboardConverter.js";
+import {
+    convertDashboardParameter,
+    convertFilterViewContextFilters,
+} from "./analyticalDashboards/v2/AnalyticalDashboardConverter.js";
 
 /**
  * Convert filter view from API response.
@@ -49,5 +52,8 @@ export function convertFilterView(
         },
         isDefault: isDefault ?? false,
         tabLocalIdentifier: content.tabLocalIdentifier,
+        ...(content.parameters === undefined
+            ? {}
+            : { parameters: content.parameters.map(convertDashboardParameter) }),
     };
 }

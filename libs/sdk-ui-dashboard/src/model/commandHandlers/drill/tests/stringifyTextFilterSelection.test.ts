@@ -5,12 +5,16 @@ import { describe, expect, it } from "vitest";
 import {
     type IDashboardArbitraryAttributeFilter,
     type IDashboardMatchAttributeFilter,
+    type MeasureValueFilterCondition,
     idRef,
     newArbitraryAttributeFilter,
     newMatchAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { stringifyTextFilterSelection } from "../resolveDrillToCustomUrl.js";
+import {
+    stringifyMeasureValueFilterCondition,
+    stringifyTextFilterSelection,
+} from "../resolveDrillToCustomUrl.js";
 
 describe("stringifyTextFilterSelection", () => {
     describe("dashboard arbitrary attribute filter", () => {
@@ -137,5 +141,58 @@ describe("stringifyTextFilterSelection", () => {
             const filter = newMatchAttributeFilter("df", "endsWith", "test");
             expect(stringifyTextFilterSelection(filter)).toBe('ENDS_WITH["test"]');
         });
+    });
+});
+
+describe("stringifyMeasureValueFilterCondition", () => {
+    it("should serialize empty conditions as ALL", () => {
+        expect(stringifyMeasureValueFilterCondition(undefined)).toBe("ALL");
+        expect(stringifyMeasureValueFilterCondition([])).toBe("ALL");
+    });
+
+    it("should serialize a single comparison condition", () => {
+        const conditions: MeasureValueFilterCondition[] = [
+            {
+                comparison: {
+                    operator: "GREATER_THAN",
+                    value: 100,
+                },
+            },
+        ];
+
+        expect(stringifyMeasureValueFilterCondition(conditions)).toBe("GREATER_THAN(100)");
+    });
+
+    it("should serialize a single range condition", () => {
+        const conditions: MeasureValueFilterCondition[] = [
+            {
+                range: {
+                    operator: "BETWEEN",
+                    from: 10,
+                    to: 100,
+                },
+            },
+        ];
+
+        expect(stringifyMeasureValueFilterCondition(conditions)).toBe("BETWEEN(10,100)");
+    });
+
+    it("should serialize multiple conditions as OR with pipe separator", () => {
+        const conditions: MeasureValueFilterCondition[] = [
+            {
+                comparison: {
+                    operator: "GREATER_THAN",
+                    value: 100,
+                },
+            },
+            {
+                comparison: {
+                    operator: "LESS_THAN",
+                    value: 10,
+                },
+            },
+        ];
+
+        expect(stringifyMeasureValueFilterCondition(conditions)).toBe("GREATER_THAN(100)|LESS_THAN(10)");
     });
 });

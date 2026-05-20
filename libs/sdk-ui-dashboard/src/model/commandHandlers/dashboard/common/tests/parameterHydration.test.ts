@@ -94,3 +94,43 @@ describe("distributeParametersToTabs (V1 → per-tab migration)", () => {
         expect(distributed["tab-B"]).toEqual([]);
     });
 });
+
+describe("distributeParametersToTabs — activeTabOverride", () => {
+    const override: IDashboardParameter = { ...topNParameter, value: 7 };
+
+    it("applies the override's value as runtimeOverride on the matching active tab", () => {
+        const tabs: IDashboardTab[] = [tab("tab-A", [topNParameter]), tab("tab-B", [topNParameter])];
+
+        const distributed = distributeParametersToTabs(tabs, undefined, [topNWorkspace], {
+            tabId: "tab-A",
+            overrides: [override],
+        });
+
+        expect(distributed["tab-A"]).toEqual([{ parameter: topNParameter, runtimeOverride: 7 }]);
+        expect(distributed["tab-B"]).toEqual([{ parameter: topNParameter, runtimeOverride: 10 }]);
+    });
+
+    it("override wins over the persisted parameter.value", () => {
+        const persisted: IDashboardParameter = { ...topNParameter, value: 3 };
+        const tabs: IDashboardTab[] = [tab("tab-A", [persisted])];
+
+        const distributed = distributeParametersToTabs(tabs, undefined, [topNWorkspace], {
+            tabId: "tab-A",
+            overrides: [override],
+        });
+
+        expect(distributed["tab-A"]).toEqual([{ parameter: persisted, runtimeOverride: 7 }]);
+    });
+
+    it("silently skips overrides for refs not present on the active tab", () => {
+        const stale: IDashboardParameter = { ...sampleParameter, value: 42 };
+        const tabs: IDashboardTab[] = [tab("tab-A", [topNParameter])];
+
+        const distributed = distributeParametersToTabs(tabs, undefined, [topNWorkspace], {
+            tabId: "tab-A",
+            overrides: [stale],
+        });
+
+        expect(distributed["tab-A"]).toEqual([{ parameter: topNParameter, runtimeOverride: 10 }]);
+    });
+});

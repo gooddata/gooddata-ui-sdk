@@ -642,6 +642,7 @@ export { HeatMap as IconHeatMap } from "./Icon/icons/InsightIcons/HeatMap.js";
 export { Line as IconLine } from "./Icon/icons/InsightIcons/Line.js";
 export { Pie as IconPie } from "./Icon/icons/InsightIcons/Pie.js";
 export { Pyramid as IconPyramid } from "./Icon/icons/InsightIcons/Pyramid.js";
+export { Radar as IconRadar } from "./Icon/icons/InsightIcons/Radar.js";
 export { Repeater as IconRepeater } from "./Icon/icons/InsightIcons/Repeater.js";
 export { Sankey as IconSankey } from "./Icon/icons/InsightIcons/Sankey.js";
 export { ScatterPlot as IconScatterPlot } from "./Icon/icons/InsightIcons/ScatterPlot.js";

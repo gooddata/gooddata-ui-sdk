@@ -8,7 +8,7 @@ import {
     type PointShapeSymbolType,
 } from "../../../interfaces/chartConfig.js";
 import { type ISeriesItem } from "../../typings/unsafe.js";
-import { isAreaChart, isComboChart, isLineChart } from "../_util/common.js";
+import { isAreaChart, isComboChart, isLineChart, isRadarChart } from "../_util/common.js";
 
 /**
  * Configuration for distinct point shapes with enhanced visibility using built-in Highcharts symbols
@@ -25,7 +25,9 @@ const POINT_SHAPES_CONFIGS: { symbol: PointShapeSymbolType }[] = [
  * Checks if the chart type supports distinct point shapes
  */
 function supportsDistinctPointShapes(chartType: string | undefined): boolean {
-    return isLineChart(chartType) || isAreaChart(chartType) || isComboChart(chartType);
+    return (
+        isLineChart(chartType) || isAreaChart(chartType) || isComboChart(chartType) || isRadarChart(chartType)
+    );
 }
 
 /**

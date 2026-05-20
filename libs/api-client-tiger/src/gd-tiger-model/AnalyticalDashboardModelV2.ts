@@ -33,9 +33,26 @@ export interface IDashboardDateFilterConfigItem {
 export type IDashboardTab = ITigerDashboardTab;
 
 /**
+ * Common analytical-dashboard properties shared across V2 and V3 model versions —
+ * plugins, dashboard-level toggles, evaluation frequency, and the section-headers
+ * date dataset. Version-specific shapes extend this interface.
+ *
  * @public
  */
-export interface IAnalyticalDashboard {
+export interface IAnalyticalDashboardCommonProps {
+    plugins?: IDashboardPluginLink[];
+    disableCrossFiltering?: boolean;
+    disableUserFilterReset?: boolean;
+    disableUserFilterSave?: boolean;
+    disableFilterViews?: boolean;
+    evaluationFrequency?: string;
+    sectionHeadersDateDataSet?: ObjRef;
+}
+
+/**
+ * @public
+ */
+export interface IAnalyticalDashboard extends IAnalyticalDashboardCommonProps {
     version: "2";
     layout?: ITigerDashboardLayout;
     filterContextRef?: ObjRef;
@@ -49,13 +66,6 @@ export interface IAnalyticalDashboard {
      * @alpha
      */
     parameters?: ITigerDashboardParameter[];
-    plugins?: IDashboardPluginLink[];
-    disableCrossFiltering?: boolean;
-    disableUserFilterReset?: boolean;
-    disableUserFilterSave?: boolean;
-    disableFilterViews?: boolean;
-    evaluationFrequency?: string;
-    sectionHeadersDateDataSet?: ObjRef;
 
     /**
      * Optional tabs configuration; when defined, the dashboard renders as a tabbed interface.
@@ -79,6 +89,12 @@ export interface IFilterContext {
  */
 export interface IFilterContextWithTab extends IFilterContext {
     tabLocalIdentifier?: string;
+    /**
+     * Dashboard parameter overrides captured alongside the filter context.
+     *
+     * @alpha
+     */
+    parameters?: ITigerDashboardParameter[];
 }
 
 /**

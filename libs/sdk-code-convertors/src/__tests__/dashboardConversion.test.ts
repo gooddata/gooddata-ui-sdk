@@ -150,7 +150,7 @@ describe("dashboard conversion", () => {
             expect(result.dashboard.title).toBe("My Dashboard");
             expect(result.dashboard.content).toBeDefined();
             expect(result.filterContext).toBeDefined();
-            expect((result.filterContext.content as any)?.filters).toEqual([]);
+            expect((result.filterContext?.content as any)?.filters).toEqual([]);
         });
 
         it("should handle dashboard settings flags", () => {
@@ -176,6 +176,109 @@ describe("dashboard conversion", () => {
             const result = yamlDashboardToDeclarative(emptyEntities, input);
             expect(result.dashboard.title).toBe("Sales Overview");
         });
+
+        describe("YAML version 2 (legacy / default)", () => {
+            it("root-only YAML: produces synthetic tab + root mirror (duplicated)", () => {
+                const input = makeDashboard({ id: "root_dash" });
+                // version omitted → defaults to "2"
+
+                const result = yamlDashboardToDeclarative(emptyEntities, input);
+                const content = result.dashboard.content as any;
+
+                // V2 legacy: root content present AND a synthetic single tab carries the same content.
+                expect(content.layout).toBeDefined();
+                expect(content.tabs).toHaveLength(1);
+                expect(content.tabs[0].title).toBe("");
+                expect(content.tabs[0].layout).toBeDefined();
+            });
+
+            it("tabs YAML: produces tabs AND root mirror from tabs[0]", () => {
+                const input = {
+                    type: "dashboard",
+                    id: "tabs_dash",
+                    tabs: [
+                        { id: "tab_a", title: "Tab A", sections: [] },
+                        { id: "tab_b", title: "Tab B", sections: [] },
+                    ],
+                } as Dashboard;
+
+                const result = yamlDashboardToDeclarative(emptyEntities, input);
+                const content = result.dashboard.content as any;
+
+                // V2 legacy: tabs present AND root mirrors tabs[0].
+                expect(content.tabs).toHaveLength(2);
+                expect(content.layout).toBeDefined();
+                expect(content.layout).toEqual(content.tabs[0].layout);
+            });
+        });
+
+        describe("YAML version 3 (clean — no duplication)", () => {
+            it("root-only YAML: produces synthetic single tab, no root content", () => {
+                const input = makeDashboard({ id: "root_dash", version: "3" });
+
+                const result = yamlDashboardToDeclarative(emptyEntities, input);
+                const content = result.dashboard.content as any;
+
+                // V3 clean: no root content; root YAML wraps into a single synthetic tab.
+                expect(content.layout).toBeUndefined();
+                expect(content.dateFilterConfig).toBeUndefined();
+                expect(content.attributeFilterConfigs).toBeUndefined();
+                expect(content.tabs).toHaveLength(1);
+                expect(content.tabs[0].title).toBe("");
+                expect(content.tabs[0].layout).toBeDefined();
+            });
+
+            it("tabs YAML: produces tabs only — no root layout/configs", () => {
+                const input = {
+                    type: "dashboard",
+                    id: "tabs_dash",
+                    version: "3",
+                    tabs: [
+                        { id: "tab_a", title: "Tab A", sections: [] },
+                        { id: "tab_b", title: "Tab B", sections: [] },
+                    ],
+                } as Dashboard;
+
+                const result = yamlDashboardToDeclarative(emptyEntities, input);
+                const content = result.dashboard.content as any;
+
+                expect(content.layout).toBeUndefined();
+                expect(content.dateFilterConfig).toBeUndefined();
+                expect(content.dateFilterConfigs).toBeUndefined();
+                expect(content.attributeFilterConfigs).toBeUndefined();
+                expect(content.measureValueFilterConfigs).toBeUndefined();
+                expect(content.filterContextRef).toBeUndefined();
+                expect(content.tabs).toHaveLength(2);
+                expect(result.tabFilterContexts).toHaveLength(2);
+            });
+        });
+
+        describe("tabs vs root content mutual exclusion", () => {
+            it("throws when YAML has both tabs and root sections (v2)", () => {
+                const input = {
+                    type: "dashboard",
+                    id: "conflict_dash",
+                    sections: [{ widgets: [] }],
+                    tabs: [{ id: "tab_a", title: "Tab A", sections: [] }],
+                } as Dashboard;
+
+                expect(() => yamlDashboardToDeclarative(emptyEntities, input)).toThrow(/mutually exclusive/i);
+            });
+
+            it("throws when YAML has both tabs and root filters (v3)", () => {
+                const input = {
+                    type: "dashboard",
+                    id: "conflict_dash",
+                    version: "3",
+                    filters: {
+                        region: { using: "label/region", type: "attribute_filter" },
+                    },
+                    tabs: [{ id: "tab_a", title: "Tab A", sections: [] }],
+                } as Dashboard;
+
+                expect(() => yamlDashboardToDeclarative(emptyEntities, input)).toThrow(/mutually exclusive/i);
+            });
+        });
     });
 
     describe("declarativeDashboardToYaml", () => {
@@ -188,9 +291,11 @@ describe("dashboard conversion", () => {
             });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json, content } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [
-                filterContext,
-            ]);
+            const { json, content } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.type).toBe("dashboard");
             expect(json.id).toBe("revenue_dashboard");
@@ -207,7 +312,11 @@ describe("dashboard conversion", () => {
             });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.id).toBe("analytics_dash");
             expect(json.title).toBe("Analytics Dashboard");
@@ -221,9 +330,72 @@ describe("dashboard conversion", () => {
             const input = makeDashboard({ cross_filtering: false });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.cross_filtering).toBe(false);
+        });
+
+        describe("YAML version round-trip", () => {
+            it('emits version "2" for declarative that carries root content (legacy shape)', () => {
+                // V2 root YAML produces declarative with synthetic tab + root mirror.
+                const input = makeDashboard({ id: "v2_root" }); // version omitted → defaults to "2"
+
+                const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+                const { json } = declarativeDashboardToYaml(
+                    emptyFromEntities,
+                    dashboard,
+                    filterContext ? [filterContext] : [],
+                );
+
+                expect(json.version).toBe("2");
+                expect(json.sections).toBeDefined();
+            });
+
+            it('emits version "3" for declarative with tabs only (no root content)', () => {
+                const input = makeDashboard({ id: "v3_root", version: "3" });
+
+                const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+                const { json } = declarativeDashboardToYaml(
+                    emptyFromEntities,
+                    dashboard,
+                    filterContext ? [filterContext] : [],
+                );
+
+                expect(json.version).toBe("3");
+                // Single untitled synthetic tab → flatten rule still produces root sections in YAML.
+                expect(json.sections).toBeDefined();
+            });
+
+            it('emits version "3" for declarative with explicit multi-tab structure', () => {
+                const input = {
+                    type: "dashboard",
+                    id: "v3_tabs",
+                    version: "3",
+                    tabs: [
+                        { id: "tab_a", title: "Tab A", sections: [] },
+                        { id: "tab_b", title: "Tab B", sections: [] },
+                    ],
+                } as Dashboard;
+
+                const { dashboard, filterContext, tabFilterContexts } = yamlDashboardToDeclarative(
+                    emptyEntities,
+                    input,
+                );
+                const { json } = declarativeDashboardToYaml(
+                    emptyFromEntities,
+                    dashboard,
+                    tabFilterContexts ?? (filterContext ? [filterContext] : []),
+                );
+
+                expect(json.version).toBe("3");
+                expect(json.tabs).toBeDefined();
+                expect(json.tabs).toHaveLength(2);
+                expect(json.sections).toBeUndefined();
+            });
         });
 
         it("should round-trip dashboard text filters", () => {
@@ -258,7 +430,11 @@ describe("dashboard conversion", () => {
             });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.filters?.["region_text"]).toEqual({
                 type: "text_filter",
@@ -426,7 +602,11 @@ describe("dashboard conversion", () => {
             });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.filters?.["mvf_orders"]).toEqual({
                 type: "metric_value_filter",
@@ -448,7 +628,11 @@ describe("dashboard conversion", () => {
             });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.filters?.["mvf_revenue"]).toEqual({
                 type: "metric_value_filter",
@@ -473,7 +657,11 @@ describe("dashboard conversion", () => {
             });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.filters?.["mvf_orders"]).toEqual({
                 type: "metric_value_filter",
@@ -496,7 +684,11 @@ describe("dashboard conversion", () => {
             });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.filters?.["mvf_orders"]).toEqual({
                 type: "metric_value_filter",
@@ -518,7 +710,11 @@ describe("dashboard conversion", () => {
             });
 
             const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
-            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext]);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
 
             expect(json.filters?.["mvf_orders"]).toEqual({
                 type: "metric_value_filter",

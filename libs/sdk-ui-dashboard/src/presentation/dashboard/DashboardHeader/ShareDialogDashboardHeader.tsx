@@ -15,6 +15,7 @@ import { selectDashboardPermissions } from "../../../model/store/dashboardPermis
 import { selectPersistedDashboard } from "../../../model/store/meta/metaSelectors.js";
 import { selectCanManageWorkspace } from "../../../model/store/permissions/permissionsSelectors.js";
 import { selectFilterContextFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterViewParameters } from "../../../model/store/tabs/parameters/parametersSelectors.js";
 import {
     selectIsDashboardShareLinkVisible,
     selectIsShareGrantVisible,
@@ -35,6 +36,7 @@ const useShareDialogDashboardHeader = () => {
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
     const dashboardPermissions = useDashboardSelector(selectDashboardPermissions);
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const dashboardParameters = useDashboardSelector(selectFilterViewParameters);
     const isShareGrantHidden = !useDashboardSelector(selectIsShareGrantVisible);
     const isDashboardShareDialogLinkEnabled = useDashboardSelector(selectEnableDashboardShareDialogLink);
     const showDashboardShareLink = useDashboardSelector(selectIsDashboardShareLinkVisible);
@@ -99,6 +101,7 @@ const useShareDialogDashboardHeader = () => {
         isCurrentUserWorkspaceManager: isWorkspaceManager,
         dashboardPermissions,
         dashboardFilters,
+        dashboardParameters,
         isShareGrantHidden,
         applyShareGrantOnSelect,
         showDashboardShareLink,
@@ -125,6 +128,7 @@ export function ShareDialogDashboardHeader(): ReactElement | null {
         isCurrentUserWorkspaceManager,
         dashboardPermissions,
         dashboardFilters,
+        dashboardParameters,
         isShareGrantHidden,
         applyShareGrantOnSelect,
         showDashboardShareLink,
@@ -158,6 +162,7 @@ export function ShareDialogDashboardHeader(): ReactElement | null {
             isCurrentUserWorkspaceManager={isCurrentUserWorkspaceManager}
             currentUserPermissions={currentUserPermissions}
             dashboardFilters={dashboardFilters}
+            dashboardParameters={dashboardParameters}
             onInteraction={onInteractionShareDialog}
             isShareGrantHidden={isShareGrantHidden}
             applyShareGrantOnSelect={applyShareGrantOnSelect}

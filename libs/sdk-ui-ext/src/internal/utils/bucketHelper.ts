@@ -212,18 +212,14 @@ function sanitizeMeasureValueFilter(
     filter: IMeasureValueFilter,
     attributeBucketItems: IBucketItem[],
     measureBucketItems: IBucketItem[],
-    enableImprovedAdFilters: boolean,
 ): boolean {
-    if (attributeBucketItems.length === 0 && !enableImprovedAdFilters) {
-        return false;
-    }
     // Validate dimensionality - each item based on its type
     const hasValidDimensionality =
         !filter.dimensionality ||
         filter.dimensionality.every((item) => {
             if (isObjRef(item)) {
-                // ObjRef (catalog attribute) - valid only when the feature flag is enabled
-                return enableImprovedAdFilters;
+                // ObjRef (catalog attribute)
+                return true;
             } else {
                 // Local identifier - must exist in attribute bucket items
                 return attributeBucketItems.some(
@@ -236,8 +232,8 @@ function sanitizeMeasureValueFilter(
         return false;
     }
 
-    // When enableImprovedAdFilters is true, allow measure filters even if measure is not in buckets
-    if (enableImprovedAdFilters && filter.measureRef !== undefined) {
+    // Allow measure filters even if measure is not in buckets
+    if (filter.measureRef !== undefined) {
         return true;
     }
     return measureBucketItems.some(
@@ -248,7 +244,6 @@ function sanitizeMeasureValueFilter(
 
 export function sanitizeFilters(
     newReferencePoint: IExtendedReferencePoint,
-    enableImprovedAdFilters = true,
     oldReferencePoint: Pick<IExtendedReferencePoint, "buckets">,
 ): IExtendedReferencePoint {
     const attributeBucketItems = getAllAttributeItems(newReferencePoint.buckets);
@@ -266,7 +261,7 @@ export function sanitizeFilters(
         (filterBucketItem: IFiltersBucketItem) => {
             const filter = filterBucketItem.filters?.[0];
 
-            if (isMeasureValueFilter(filter) && enableImprovedAdFilters) {
+            if (isMeasureValueFilter(filter)) {
                 // Transform measure ref: migrate from localId to ref when measure is removed from buckets
                 const filterWithTransformedMeasure = transformMeasureValueFilterMeasureToRef(
                     filter,
@@ -315,12 +310,7 @@ export function sanitizeFilters(
                 (attributeBucketItem: IBucketItem) => attributeBucketItem.attribute === filter.attribute,
             );
         } else if (isMeasureValueFilter(filter)) {
-            return sanitizeMeasureValueFilter(
-                filter,
-                attributeBucketItems,
-                measureBucketItems,
-                enableImprovedAdFilters,
-            );
+            return sanitizeMeasureValueFilter(filter, attributeBucketItems, measureBucketItems);
         } else if (isRankingFilter(filter)) {
             if (attributeBucketItems.length === 0) {
                 return false;

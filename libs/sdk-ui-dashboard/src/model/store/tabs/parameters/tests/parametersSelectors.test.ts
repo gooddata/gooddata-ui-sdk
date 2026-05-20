@@ -26,6 +26,7 @@ import {
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveParameterValuesForWidget,
+    selectFilterViewParameters,
     selectIsParametersChanged,
     selectParameterResetValueByRef,
     selectParameterRuntimeOverrideByRef,
@@ -209,6 +210,46 @@ describe("parameter selectors (per tab)", () => {
 
     it("selectDashboardParameterEntries returns full entries from active tab", () => {
         expect(selectDashboardParameterEntries(makeState([entry]))).toEqual([entry]);
+    });
+
+    describe("selectFilterViewParameters", () => {
+        it("returns undefined when there are no parameter entries", () => {
+            expect(selectFilterViewParameters(makeState([]))).toBeUndefined();
+        });
+
+        it("writes runtime overrides into values", () => {
+            expect(
+                selectFilterViewParameters(makeState([{ parameter: topNParameter, runtimeOverride: 42 }])),
+            ).toEqual([{ ...topNParameter, value: 42 }]);
+        });
+
+        it("preserves existing value when runtime override is undefined", () => {
+            const withValue: IDashboardParameter = { ...topNParameter, value: 25 };
+
+            expect(
+                selectFilterViewParameters(makeState([{ parameter: withValue, runtimeOverride: undefined }])),
+            ).toEqual([withValue]);
+        });
+
+        it("preserves multi-parameter ordering and per-entry runtime values", () => {
+            const sampleSize: IDashboardParameter = {
+                ref: otherRef,
+                parameterType: "NUMBER",
+                mode: "active",
+            };
+
+            expect(
+                selectFilterViewParameters(
+                    makeState([
+                        { parameter: topNParameter, runtimeOverride: 10 },
+                        { parameter: sampleSize, runtimeOverride: 200 },
+                    ]),
+                ),
+            ).toEqual([
+                { ...topNParameter, value: 10 },
+                { ...sampleSize, value: 200 },
+            ]);
+        });
     });
 
     it("selectParameterRuntimeOverrideByRef returns runtimeOverride for matching ref", () => {

@@ -4,12 +4,16 @@ import { describe, expect, it } from "vitest";
 
 import {
     type FilterContextItem,
+    type IDashboard,
+    type IDashboardFilterView,
+    type IDashboardParameter,
     type IFilterContext,
+    type ISettings,
     type MeasureValueFilterCondition,
     idRef,
 } from "@gooddata/sdk-model";
 
-import { changeFilterContextSelection } from "../filterViews.js";
+import { applyDefaultFilterView, changeFilterContextSelection } from "../filterViews.js";
 
 const buildFilterContext = (filters: FilterContextItem[]): IFilterContext => ({
     ref: { identifier: "1c07035a-d48c-48f9-97ac-ca6a146a1b17", type: "filterContext" },
@@ -20,7 +24,118 @@ const buildFilterContext = (filters: FilterContextItem[]): IFilterContext => ({
     filters,
 });
 
+const dashboardRef = idRef("dashboard-1", "analyticalDashboard");
+const topNParameter: IDashboardParameter = {
+    ref: idRef("topN", "parameter"),
+    parameterType: "NUMBER",
+    mode: "active",
+};
+const filterViewsSettings = { enableDashboardFilterViews: true } as ISettings;
+
+function buildDashboard(dashboard: Partial<IDashboard>): IDashboard {
+    return {
+        type: "IDashboard",
+        ref: dashboardRef,
+        identifier: "dashboard-1",
+        uri: "/dashboard-1",
+        title: "Dashboard",
+        description: "",
+        created: "",
+        updated: "",
+        shareStatus: "private",
+        isLocked: false,
+        isUnderStrictControl: true,
+        ...dashboard,
+    } as IDashboard;
+}
+
+function buildFilterView(filterView: Partial<IDashboardFilterView>): IDashboardFilterView {
+    return {
+        ref: idRef("filter-view-1", "filterView"),
+        name: "Default view",
+        dashboard: dashboardRef,
+        user: idRef("user-1", "user"),
+        filterContext: {
+            title: "",
+            description: "",
+            filters: [],
+        },
+        isDefault: true,
+        ...filterView,
+    };
+}
+
 describe("filterViews", () => {
+    describe("applyDefaultFilterView", () => {
+        it("applies default filter view parameter values to matching tab parameters", () => {
+            const dashboard = buildDashboard({
+                tabs: [
+                    {
+                        localIdentifier: "tab-A",
+                        title: "Tab A",
+                        filterContext: buildFilterContext([]),
+                        parameters: [topNParameter],
+                    },
+                ],
+            });
+            const filterView = buildFilterView({
+                tabLocalIdentifier: "tab-A",
+                parameters: [{ ...topNParameter, value: 99 }],
+            });
+
+            const updated = applyDefaultFilterView(dashboard, [filterView], filterViewsSettings);
+
+            expect(updated.tabs?.[0]?.parameters).toEqual([{ ...topNParameter, value: 99 }]);
+        });
+
+        it("clears parameter value when the default filter view captures the workspace default", () => {
+            const dashboard = buildDashboard({
+                tabs: [
+                    {
+                        localIdentifier: "tab-A",
+                        title: "Tab A",
+                        filterContext: buildFilterContext([]),
+                        parameters: [{ ...topNParameter, value: 25 }],
+                    },
+                ],
+            });
+            const filterView = buildFilterView({
+                tabLocalIdentifier: "tab-A",
+                parameters: [topNParameter],
+            });
+
+            const updated = applyDefaultFilterView(dashboard, [filterView], filterViewsSettings);
+
+            expect(updated.tabs?.[0]?.parameters).toEqual([topNParameter]);
+        });
+
+        it("does not materialize legacy root parameters for tabbed dashboards", () => {
+            const dashboard = buildDashboard({
+                parameters: [topNParameter],
+                tabs: [
+                    {
+                        localIdentifier: "tab-A",
+                        title: "Tab A",
+                        filterContext: buildFilterContext([]),
+                    },
+                    {
+                        localIdentifier: "tab-B",
+                        title: "Tab B",
+                        filterContext: buildFilterContext([]),
+                    },
+                ],
+            });
+            const filterView = buildFilterView({
+                parameters: [{ ...topNParameter, value: 99 }],
+            });
+
+            const updated = applyDefaultFilterView(dashboard, [filterView], filterViewsSettings);
+
+            expect(updated.tabs?.[0]?.parameters).toBeUndefined();
+            expect(updated.tabs?.[1]?.parameters).toBeUndefined();
+        });
+    });
+
     describe("changeFilterContextSelection", () => {
         describe("attribute filter", () => {
             it("should reset filter if it is not matched by local identifier", () => {

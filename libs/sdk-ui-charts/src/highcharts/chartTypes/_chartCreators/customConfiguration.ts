@@ -1206,6 +1206,7 @@ function getHoverStyles({ type }: any, config: any) {
         case VisualizationTypes.SCATTER:
         case VisualizationTypes.AREA:
         case VisualizationTypes.BUBBLE:
+        case VisualizationTypes.RADAR:
             seriesMapFn = lineSeriesMapFn;
             break;
 

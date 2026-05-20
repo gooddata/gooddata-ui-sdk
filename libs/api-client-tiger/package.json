@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.36.0-alpha.3",
+    "version": "11.36.0-alpha.6",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -65,7 +65,7 @@
     },
     "dependencies": {
         "@gooddata/sdk-model": "workspace:*",
-        "axios": "^1.9.0",
+        "axios": "1.13.5",
         "axios-cache-interceptor": "^1.8.0",
         "lodash-es": "^4.17.23",
         "tslib": "2.8.1"
@@ -80,7 +80,7 @@
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",
-        "commander": "^8.1.0",
+        "commander": "8.3.0",
         "dependency-cruiser": "17.3.10",
         "dotenv": "16.4.5",
         "eslint": "^9.39.2",

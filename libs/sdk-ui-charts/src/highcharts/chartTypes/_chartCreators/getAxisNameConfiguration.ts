@@ -7,7 +7,7 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { type IAxisNameConfig } from "../../../interfaces/chartConfig.js";
 import { ALIGN_LEFT, ALIGN_RIGHT, ROTATE_NEGATIVE_90_DEGREES } from "../../constants/axisLabel.js";
 import { type IAxis, type IChartOptions } from "../../typings/unsafe.js";
-import { isOneOfTypes } from "../_util/common.js";
+import { isOneOfTypes, isRadarChart } from "../_util/common.js";
 
 type HighchartsAxisTitle = XAxisTitleOptions | YAxisTitleOptions;
 
@@ -42,7 +42,8 @@ function getHighchartsAxisTitleConfiguration(
     }
 
     // config.visible should be true/undefined by default
-    if (axisNameConfig.visible === false) {
+    // Radar charts never show axis names — the spoke/radial labels serve that role
+    if (axisNameConfig.visible === false || isRadarChart(chartOptions.type)) {
         title.text = "";
     }
 

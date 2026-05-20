@@ -486,6 +486,11 @@ export interface IFeatureFlags {
     enableWaterfallChart?: boolean;
 
     /**
+     * Indicates whether the Radar Chart is available in AD.
+     */
+    enableRadarChart?: boolean;
+
+    /**
      * Indicates whether the Embed dashboard button is available in KPI dashboards.
      */
     enableEmbedButtonInKD?: boolean;
@@ -742,11 +747,6 @@ export interface IFeatureFlags {
     enableVisualizationFineTuning?: boolean;
 
     /**
-     * Enable improved attribute filters experience in Analytical Designer.
-     */
-    enableImprovedAdFilters?: boolean;
-
-    /**
      * Enable external recipients options
      */
     enableExternalRecipients?: boolean;
@@ -828,6 +828,15 @@ export interface IFeatureFlags {
     enableDashboardSectionHeadersDateDataSet?: boolean;
 
     /**
+     * When enabled, dashboards are stored using the V3 analytical-dashboard model — tabs-only,
+     * no root-level layout / filter configs / parameters. This reduces payload size for large
+     * dashboards but breaks readability for SDK versions that only know V2 root-level properties.
+     * Opt-in for customers who do not consume dashboards via legacy SDK readers.
+     * @alpha
+     */
+    enableAnalyticalDashboardVersion3?: boolean;
+
+    /**
      * Enable execution cancelling.
      */
     enableExecutionCancelling?: boolean;
@@ -846,11 +855,6 @@ export interface IFeatureFlags {
      * Enable using execution timestamp.
      */
     enableExecutionTimestamp?: boolean;
-
-    /**
-     * Enable automation filter context.
-     */
-    enableAutomationFilterContext?: boolean;
 
     /**
      * Enables storing date filter identifiers.

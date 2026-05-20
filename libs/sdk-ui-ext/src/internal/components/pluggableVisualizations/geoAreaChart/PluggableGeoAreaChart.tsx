@@ -134,12 +134,10 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                 newReferencePoint = configurePercent(newReferencePoint, true);
                 newReferencePoint = removeSort(newReferencePoint);
                 newReferencePoint = sanitizeGeoViewportProperties(newReferencePoint);
-                const enableImprovedAdFilters = this.featureFlags?.enableImprovedAdFilters ?? true;
                 const sanitizedFilters = sanitizeGeoReferencePointFilters(
                     originalFilters,
                     referencePoint.buckets,
                     newReferencePoint.buckets,
-                    enableImprovedAdFilters,
                 );
                 return { ...newReferencePoint, filters: sanitizedFilters };
             });
