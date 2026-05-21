@@ -1042,11 +1042,6 @@ export interface IFeatureFlags {
     enableDrillToUrlByDefault?: boolean;
 
     /**
-     * This feature flag enables automatic drill to url setting feature.
-     */
-    enableImplicitDrillToUrl?: boolean;
-
-    /**
      * Enable anomaly detection alert
      */
     enableAnomalyDetectionAlert?: boolean;

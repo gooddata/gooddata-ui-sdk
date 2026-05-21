@@ -1217,7 +1217,7 @@ export type DashboardQueryType = "GDC.DASH/QUERY.INSIGHT.DATE.DATASETS" | "GDC.D
 
 // @alpha (undocumented)
 export type DashboardRelatedFilter = {
-    type: "attributeFilter" | "dateFilter";
+    type: "attributeFilter" | "dateFilter" | "measureValueFilter";
     all: boolean;
     id: string;
     title: string;
@@ -9377,6 +9377,7 @@ export type MetaExportData = {
         rootData: (isLoading: boolean, isError: boolean) => MetaExportDataAttributes;
         dateFilter: MetaExportDataAttributes;
         attributeFilter: MetaExportDataAttributes;
+        measureValueFilter: MetaExportDataAttributes;
         filter: {
             name: MetaExportDataAttributes;
             value: MetaExportDataAttributes;
@@ -9388,7 +9389,7 @@ export type MetaExportData = {
 // @alpha
 export type MetaExportDataAttributes = {
     "data-export-meta-type"?: ExportMetaType;
-    "data-export-meta-filter-type"?: "date" | "attribute";
+    "data-export-meta-filter-type"?: "date" | "attribute" | "measureValue";
     "data-export-meta-filter-mode"?: "readonly" | "hidden" | "active";
     "data-export-meta-filter-status"?: "loading" | "loaded" | "error";
     "data-export-meta-filters-status"?: "loading" | "loaded" | "error";
@@ -10766,9 +10767,6 @@ export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: DashboardSelector<boolean>;
-
-// @alpha
-export const selectEnableImplicitDrillToUrl: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableInPlatformNotifications: DashboardSelector<boolean>;

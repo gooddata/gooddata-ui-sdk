@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-e2e-utils",
-    "version": "11.36.0-alpha.6",
+    "version": "11.36.0-alpha.7",
     "description": "GoodData utility functions for Playwright E2E tests",
     "license": "MIT",
     "author": "GoodData",
@@ -37,7 +37,7 @@
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {
-        "@playwright/test": "1.59.1"
+        "@playwright/test": "1.60.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",

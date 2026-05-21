@@ -173,15 +173,6 @@ describe("BaseChartConfigurationPanel", () => {
             expect(screen.queryByTestId("xaxis")).not.toBeInTheDocument();
         });
 
-        it("should not render interactions section in configuration panel", () => {
-            createComponent({
-                ...defaultProps,
-                insight: insightWithSingleAttribute,
-            });
-
-            expect(screen.queryByText("Interactions")).not.toBeInTheDocument();
-        });
-
         it("should render interactions section in configuration panel", () => {
             createComponent({
                 ...defaultProps,
@@ -194,13 +185,10 @@ describe("BaseChartConfigurationPanel", () => {
             expect(screen.queryByText("Interactions")).toBeInTheDocument();
         });
 
-        it("should render implicit drill to URL controls when enabled by feature flag", async () => {
+        it("should render implicit drill to URL controls", async () => {
             createComponent({
                 ...defaultProps,
                 insight: insightWithSingleAttribute,
-                featureFlags: {
-                    enableImplicitDrillToUrl: true,
-                },
             });
 
             expect(screen.queryByText("Interactions")).toBeInTheDocument();

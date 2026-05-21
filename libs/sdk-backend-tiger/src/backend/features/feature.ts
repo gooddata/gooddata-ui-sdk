@@ -1055,13 +1055,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableImplicitDrillToUrl,
-            "enableImplicitDrillToUrl",
-            "BOOLEAN",
-            FeatureFlagsValues.enableImplicitDrillToUrl,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableDashboardFilterGroups,
             "enableDashboardFilterGroups",
             "BOOLEAN",

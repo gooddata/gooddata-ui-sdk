@@ -6774,6 +6774,10 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     // (undocumented)
     onClose?: () => void;
     // (undocumented)
+    onEnterLevel?: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent_2 | KeyboardEvent_2) => boolean;
+    // (undocumented)
+    onLeaveLevel?: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent_2 | KeyboardEvent_2) => boolean;
+    // (undocumented)
     onSelect: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent_2 | KeyboardEvent_2) => void;
     // (undocumented)
     popShownSubview: () => void;
@@ -6907,6 +6911,10 @@ export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object> ex
     minWidth?: number;
     // (undocumented)
     onClose?: () => void;
+    // (undocumented)
+    onEnterLevel?: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent_2 | KeyboardEvent_2) => boolean;
+    // (undocumented)
+    onLeaveLevel?: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent_2 | KeyboardEvent_2) => boolean;
     // (undocumented)
     onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
     // (undocumented)

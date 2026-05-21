@@ -32,7 +32,8 @@ export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboar
     const conf = useDashboardSelector(selectConfig);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardDescriptor = useDashboardSelector(selectDashboardDescriptor);
-    const { dateFilters, attributeFilters, isError, isLoading } = useDashboardRelatedFilters(run);
+    const { dateFilters, attributeFilters, measureValueFilters, isError, isLoading } =
+        useDashboardRelatedFilters(run);
     const theme = useTheme();
 
     if (!run) {
@@ -56,7 +57,7 @@ export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboar
                 </div>
             ) : null}
             <div {...exportData?.filters?.root} {...exportData?.filters?.rootData(isLoading, isError)}>
-                {dateFilters.length > 0 || attributeFilters.length > 0 ? (
+                {dateFilters.length > 0 || attributeFilters.length > 0 || measureValueFilters.length > 0 ? (
                     <>
                         {dateFilters.map((filter, i: number) => (
                             <div
@@ -72,6 +73,16 @@ export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboar
                             <div
                                 key={i}
                                 {...exportData?.filters?.attributeFilter}
+                                {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
+                            >
+                                <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}
+                                <span {...exportData?.filters?.filter.value}>{filter?.subtitle}</span>
+                            </div>
+                        ))}
+                        {measureValueFilters.map((filter, i: number) => (
+                            <div
+                                key={i}
+                                {...exportData?.filters?.measureValueFilter}
                                 {...exportData?.filters?.filter.filterData(filter, isLoading, isError)}
                             >
                                 <span {...exportData?.filters?.filter.name}>{filter?.title}</span> -{" "}

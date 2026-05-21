@@ -195,6 +195,8 @@ export interface IUiMenuContext<
     pushShownSubview: (subview: IUiMenuSubview) => void;
     popShownSubview: () => void;
     onSelect: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent | KeyboardEvent) => void;
+    onEnterLevel?: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent | KeyboardEvent) => boolean;
+    onLeaveLevel?: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent | KeyboardEvent) => boolean;
     onClose?: () => void;
     setFocusedId: Dispatch<SetStateAction<string | undefined>>;
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
@@ -235,6 +237,8 @@ export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object> ex
     containerTopPadding?: "none" | "small" | "medium";
 
     onSelect?: (item: IUiMenuInteractiveItem<T>, event: MouseEvent | KeyboardEvent) => void;
+    onEnterLevel?: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent | KeyboardEvent) => boolean;
+    onLeaveLevel?: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent | KeyboardEvent) => boolean;
     onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;
     onClose?: () => void;
     onUnhandledKeyDown?: (event: KeyboardEvent, context: IUiMenuContext<T>) => void;

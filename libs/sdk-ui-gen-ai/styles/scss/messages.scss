@@ -1,5 +1,6 @@
 // (C) 2024-2025 GoodData Corporation
 
+@use "sass:color";
 @use "variables" as variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
@@ -434,7 +435,7 @@
 
 .gd-gen-ai-chat__messages__content--error {
     flex: unset;
-    padding: 4.5px 12px;
+    padding: 4px 10px;
     border-radius: 3px;
     background: kit-variables.$gd-palette-error-dimmed;
     color: kit-variables.$gd-palette-error-base;
@@ -1009,9 +1010,8 @@
         //Error group
         border-radius: 3px;
         flex: unset;
-        padding: 4.5px 12px;
+        padding: 4px 10px;
         background: kit-variables.$gd-palette-error-dimmed;
-        border: 1px solid kit-variables.$gd-palette-error-base;
         color: kit-variables.$gd-palette-error-base;
 
         p {
@@ -1248,18 +1248,20 @@
     &--error {
         display: flex;
         flex-direction: column;
+        padding: 0;
 
         .gd-gen-ai-chat__error-info {
             display: flex;
             flex-direction: row;
             align-items: stretch;
-            justify-content: space-between;
-            gap: 5px;
+            justify-content: flex-start;
+            gap: 7px;
         }
 
         .gd-gen-ai-chat__error-details {
-            border-top: 1px solid kit-variables.$gd-palette-error-base;
-            margin: 0 -12px;
+            border-top: 1px solid
+                color.mix(kit-variables.$gd-color-negative, kit-variables.$default-gd-color-text-light, 30%);
+            margin: 0 -10px;
             padding: 5px 12px 0 12px;
 
             pre {

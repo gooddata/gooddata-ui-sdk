@@ -64,6 +64,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         itemDataTestId,
 
         onSelect,
+        onLeaveLevel,
+        onEnterLevel,
         onLevelChange,
         onClose,
 
@@ -238,6 +240,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
             items,
             size,
             onSelect: handleSelectItem,
+            onLeaveLevel,
+            onEnterLevel,
             itemDataTestId,
             isItemFocusable,
             makeItemId,
@@ -284,6 +288,8 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
             shownCustomContentItemId,
             shownSubview,
             size,
+            onLeaveLevel,
+            onEnterLevel,
         ],
     );
 }
@@ -361,7 +367,11 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
                 onSelect(focusedItem, e);
             },
             onEnterLevel: (e) => {
-                const { onSelect, focusedItem } = menuContextRef.current;
+                const { onSelect, onEnterLevel, focusedItem } = menuContextRef.current;
+
+                if (onEnterLevel?.(focusedItem, e)) {
+                    return;
+                }
 
                 if (
                     (focusedItem?.type !== "interactive" && focusedItem?.type !== "content") ||
@@ -373,8 +383,12 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
 
                 onSelect(focusedItem, e);
             },
-            onLeaveLevel: () => {
-                const { setFocusedId, items } = menuContextRef.current;
+            onLeaveLevel: (e) => {
+                const { setFocusedId, onLeaveLevel, focusedItem, items } = menuContextRef.current;
+
+                if (onLeaveLevel?.(focusedItem, e)) {
+                    return;
+                }
 
                 setFocusedId((prevId) => {
                     if (prevId === undefined) {

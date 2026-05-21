@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Verborgen",
     "filter.configuration.mode.hidden.tooltip": "Dashboard-gebruikers kunnen het filter niet zien maar het wordt wel toegepast.",
     "filter.dependency.icon.tooltip": "Waarden voor <strong>{filterTitle}</strong> worden gefilterd door selectie in een ander filter.",
+    "filter.dependency.icon.aria.label": "Gekoppelde filter — beschikbare waarden zijn afhankelijk van een andere filterselectie.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Deze <strong>hiërarchie</strong> wordt al gebruikt voor <strong>dezelfde</strong> zoom.",
     "configurationPanel.respectCrossFiltering": "Cross-filtering respecteren",
     "configurationPanel.respectCrossFiltering.tooltip": "Schakel deze optie uit om cross-filtering van andere visualisaties te negeren.",

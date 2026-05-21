@@ -1319,7 +1319,6 @@ export {
     selectIsAddTabButtonHidden,
     selectExportResultPollingTimeout,
     selectEnableAnomalyDetectionAlert,
-    selectEnableImplicitDrillToUrl,
     selectEnableFiscalCalendars,
     selectActiveCalendars,
     selectEnableDashboardFilterGroups,

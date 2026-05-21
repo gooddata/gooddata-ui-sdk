@@ -30,6 +30,8 @@
     "gs.list.search.placeholder": "Search…",
     "gs.list.acessibility.search.label": "Search attribute values",
     "gs.list.notAvailableAbbreviation": "N/A",
+    "filterGroup.aria.label": "Filter group: {title}",
+    "filterGroup.aria.label.withState": "Filter group: {title}: {state}",
     "gs.list.searchResults": "search results",
     "gs.visualizationsList.loading": "Loading…",
     "gs.color-picker.inputPlaceholder": "#colour",

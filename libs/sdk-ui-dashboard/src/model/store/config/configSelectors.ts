@@ -1079,18 +1079,6 @@ export const selectEnableAccessibilityMode: DashboardSelector<boolean> = createS
 );
 
 /**
- * Returns whether implicit drill to url feature is enabled.
- *
- * @alpha
- */
-export const selectEnableImplicitDrillToUrl: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableImplicitDrillToUrl ?? true;
-    },
-);
-
-/**
  * Returns the timeout to use when polling for export results (in milliseconds).
  *
  * @alpha
@@ -1114,9 +1102,8 @@ export const selectExportResultPollingTimeout: DashboardSelector<number | undefi
  */
 export const selectEnableDrillToUrlByDefault: DashboardSelector<boolean> = createSelector(
     selectConfig,
-    selectEnableImplicitDrillToUrl,
-    (state, enableImplicitDrillToUrl) => {
-        return enableImplicitDrillToUrl ? (state.settings?.enableDrillToUrlByDefault ?? false) : false;
+    (state) => {
+        return state.settings?.enableDrillToUrlByDefault ?? false;
     },
 );
 

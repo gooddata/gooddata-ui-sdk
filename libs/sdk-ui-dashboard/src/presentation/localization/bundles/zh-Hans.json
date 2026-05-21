@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "隐藏",
     "filter.configuration.mode.hidden.tooltip": "仪表板用户无法看到筛选条件，但其已获应用。",
     "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong>的值由另一个筛选器的选择进行筛选。",
+    "filter.dependency.icon.aria.label": "关联筛选器 — 可用值取决于另一个筛选器的选择。",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "此<strong>层次结构</strong>已用于<strong>同一</strong>向下挖掘。",
     "configurationPanel.respectCrossFiltering": "尊重交叉过滤",
     "configurationPanel.respectCrossFiltering.tooltip": "禁用此选项可忽略来自其他可视化的交叉过滤。",

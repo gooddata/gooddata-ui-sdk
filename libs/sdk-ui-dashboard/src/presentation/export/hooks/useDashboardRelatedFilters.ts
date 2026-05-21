@@ -19,12 +19,13 @@ import { selectAttributeFilterConfigsOverrides } from "../../../model/store/tabs
 import { selectDateFilterConfigOverrides } from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import { selectFilterContextFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectMeasureValueFilterConfigsOverrides } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 
 /**
  * @alpha
  */
 export type DashboardRelatedFilter = {
-    type: "attributeFilter" | "dateFilter";
+    type: "attributeFilter" | "dateFilter" | "measureValueFilter";
     all: boolean;
     id: string;
     title: string;
@@ -36,6 +37,7 @@ export type DashboardRelatedFilter = {
 export function useDashboardRelatedFilters(run: boolean): {
     dateFilters: DashboardRelatedFilter[];
     attributeFilters: DashboardRelatedFilter[];
+    measureValueFilters: DashboardRelatedFilter[];
     isLoading: boolean;
     isError: boolean;
     isSuccess: boolean;
@@ -47,6 +49,7 @@ export function useDashboardRelatedFilters(run: boolean): {
     const dateFilterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
     const dateFiltersConfig = useDashboardSelector(selectDateFilterConfigsOverrides);
     const attributeFiltersConfig = useDashboardSelector(selectAttributeFilterConfigsOverrides);
+    const measureValueFiltersConfig = useDashboardSelector(selectMeasureValueFilterConfigsOverrides);
 
     const { result, status } = useCancelablePromise(
         {
@@ -76,6 +79,11 @@ export function useDashboardRelatedFilters(run: boolean): {
                 ...f,
                 mode: dateFiltersConfig.find((c) => areObjRefsEqual(c.dateDataSet, f?.dataSet))?.config?.mode,
             };
+        } else if (f?.type === "measureValueFilter") {
+            return {
+                ...f,
+                mode: measureValueFiltersConfig.find((c) => c.localIdentifier === f?.id)?.mode,
+            };
         }
 
         return {
@@ -90,6 +98,7 @@ export function useDashboardRelatedFilters(run: boolean): {
         isSuccess: status === "success",
         dateFilters: all.filter((f) => f?.type === "dateFilter"),
         attributeFilters: all.filter((f) => f?.type === "attributeFilter"),
+        measureValueFilters: all.filter((f) => f?.type === "measureValueFilter"),
     };
 }
 

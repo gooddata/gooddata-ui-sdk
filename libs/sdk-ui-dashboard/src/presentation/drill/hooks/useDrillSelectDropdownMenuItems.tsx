@@ -6,8 +6,6 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { type IUiMenuItem } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectEnableImplicitDrillToUrl } from "../../../model/store/config/configSelectors.js";
 import { type DashboardDrillDefinition } from "../../../types.js";
 import { DrillType, type IDrillSelectItem } from "../DrillSelect/types.js";
 
@@ -48,7 +46,6 @@ export const useDrillSelectDropdownMenuItems = ({
     onSelect: (item: DashboardDrillDefinition, context: unknown) => void;
 }): IMenuInteractiveItem[] => {
     const { formatMessage } = useIntl();
-    const enableImplicitDrillToUrl = useDashboardSelector(selectEnableImplicitDrillToUrl);
 
     return useMemo<IMenuInteractiveItem[]>(() => {
         const createMenuGroup = (
@@ -90,7 +87,7 @@ export const useDrillSelectDropdownMenuItems = ({
                 : [];
 
         const drillToUrlMenuItems =
-            enableImplicitDrillToUrl && drillToUrlItems.length > 0
+            drillToUrlItems.length > 0
                 ? [createMenuGroup(drillToUrlItems, "drill-to-url", groupMenuItemMessages.drillToUrl.id)]
                 : [];
 
@@ -130,6 +127,5 @@ export const useDrillSelectDropdownMenuItems = ({
         drillToUrlItems,
         formatMessage,
         onSelect,
-        enableImplicitDrillToUrl,
     ]);
 };

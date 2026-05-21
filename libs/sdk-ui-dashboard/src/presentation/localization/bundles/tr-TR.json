@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Gizli",
     "filter.configuration.mode.hidden.tooltip": "Gösterge paneli kullanıcıları filtreyi göremez ancak filtre uygulanır.",
     "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong> için değerler başka bir filtreden yapılan seçime göre filtrelenir.",
+    "filter.dependency.icon.aria.label": "Bağlı filtre — kullanılabilir değerler başka bir filtrenin seçimine bağlıdır.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Bu <strong>hiyerarşi</strong> zaten <strong>aynı</strong> detaylandırma için kullanılıyor.",
     "configurationPanel.respectCrossFiltering": "Çapraz filtrelemeye saygı göster",
     "configurationPanel.respectCrossFiltering.tooltip": "Diğer görselleştirmelerden gelen çapraz filtrelemeyi yok saymak için bu seçeneği devre dışı bırakın.",

@@ -278,6 +278,10 @@ export const useMetaExportData = (): MetaExportData | undefined => {
                 "data-export-meta-type": "dashboard-filter",
                 "data-export-meta-filter-type": "attribute",
             },
+            measureValueFilter: {
+                "data-export-meta-type": "dashboard-filter",
+                "data-export-meta-filter-type": "measureValue",
+            },
             filter: {
                 name: {
                     "data-export-meta-type": "dashboard-filter-name",

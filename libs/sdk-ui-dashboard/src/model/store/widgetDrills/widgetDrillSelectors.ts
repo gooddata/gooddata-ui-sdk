@@ -70,7 +70,6 @@ import {
 import {
     selectDisableDefaultDrills,
     selectEnableDrillToUrlByDefault,
-    selectEnableImplicitDrillToUrl,
     selectEnableKDCrossFiltering,
     selectEnableKda,
     selectIsDisabledCrossFiltering,
@@ -307,7 +306,6 @@ function getDrillToUrlDefinitionsWithPredicates(
     availableDrillAttributes: IAvailableDrillTargetAttribute[],
     attributesWithDisplayFormLink: Array<ICatalogAttribute>,
     ignoredDrillToUrlAttributes: ObjRef[],
-    enableImplicitDrillToUrl: boolean,
 ): IImplicitDrillWithPredicates[] {
     const matchingAvailableDrillAttributes = availableDrillAttributes.filter((candidate) => {
         return attributesWithDisplayFormLink.some((attr) =>
@@ -316,9 +314,6 @@ function getDrillToUrlDefinitionsWithPredicates(
     });
 
     const filterIgnoredDrillToUrlAttributes = (targetAttribute: IAvailableDrillTargetAttribute) => {
-        if (!enableImplicitDrillToUrl) {
-            return true;
-        }
         return !ignoredDrillToUrlAttributes?.some((ignoredAttributeRef) =>
             areObjRefsEqual(targetAttribute.attribute.attributeHeader.ref, ignoredAttributeRef),
         );
@@ -670,7 +665,6 @@ export const selectDrillsToUrlAttributeByWidgetRef: (
         selectAllCatalogDisplayFormsMap,
         selectAllCatalogAttributesMap,
         selectEnableDrillToUrlByDefault,
-        selectEnableImplicitDrillToUrl,
         (
             availableDrillTargets,
             ignoredDrillToUrlAttributes,
@@ -678,11 +672,7 @@ export const selectDrillsToUrlAttributeByWidgetRef: (
             allCatalogDisplayFormsMap,
             allCatalogAttributesMap,
             enableDrillToUrlByDefault,
-            enableImplicitDrillToUrl,
         ): IDrillToUrlAttributeDefinition[] => {
-            if (!enableImplicitDrillToUrl) {
-                return [];
-            }
             const disableDrillIntoURL =
                 widgetInsight?.insight?.properties?.["controls"]?.disableDrillIntoURL ??
                 !enableDrillToUrlByDefault;
@@ -738,19 +728,12 @@ export const selectImplicitDrillsToUrlByWidgetRef: (
         selectDrillTargetsByWidgetRef(ref),
         selectAttributesWithDisplayFormLink,
         selectIgnoredDrillToUrlAttributesByWidgetRef(ref),
-        selectEnableImplicitDrillToUrl,
-        (
-            availableDrillTargets,
-            attributesWithLink,
-            ignoredDrillToUrlAttributes,
-            enableImplicitDrillToUrl,
-        ) => {
+        (availableDrillTargets, attributesWithLink, ignoredDrillToUrlAttributes) => {
             const availableDrillAttributes = availableDrillTargets?.availableDrillTargets?.attributes ?? [];
             return getDrillToUrlDefinitionsWithPredicates(
                 availableDrillAttributes,
                 attributesWithLink,
                 ignoredDrillToUrlAttributes,
-                enableImplicitDrillToUrl,
             );
         },
     ),
@@ -911,7 +894,6 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
         selectKdaByWidgetRef(ref),
         selectInsightByWidgetRef(ref),
         selectEnableDrillToUrlByDefault,
-        selectEnableImplicitDrillToUrl,
         (
             catalogIsLoaded,
             accessibleDashboardsLoaded,
@@ -922,11 +904,10 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
             keyDriverAnalysis,
             insight,
             enableDrillToUrlByDefault,
-            enableImplicitDrillToUrl,
         ) => {
             const disableDrillIntoURL =
                 insight?.insight.properties["controls"]?.disableDrillIntoURL ?? !enableDrillToUrlByDefault;
-            const isDrillToUrlDisabled = !enableImplicitDrillToUrl || disableDrillIntoURL;
+            const isDrillToUrlDisabled = disableDrillIntoURL;
 
             // disable drilling until all necessary items are loaded (catalog, dash list, ...)
             const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
@@ -1007,7 +988,6 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
             selectAllCatalogAttributeHierarchies,
             selectBackendCapabilities,
             selectEnableDrillToUrlByDefault,
-            selectEnableImplicitDrillToUrl,
             (
                 attributesWithLink,
                 attributesWithHierarchyDescendants,
@@ -1016,7 +996,6 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                 allCatalogHierarchies,
                 backendCapabilities,
                 enableDrillToUrlByDefault,
-                enableImplicitDrillToUrl,
             ) => {
                 const isDrillToUrlDisabled = disableDrillIntoURL ?? !enableDrillToUrlByDefault;
                 const availableDrillAttributes = availableDrillTargets?.attributes ?? [];
@@ -1034,12 +1013,9 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                     availableDrillAttributes,
                     attributesWithLink,
                     [],
-                    enableImplicitDrillToUrl,
                 );
 
-                return !enableImplicitDrillToUrl || isDrillToUrlDisabled
-                    ? drillDownDrills
-                    : [...drillDownDrills, ...drillToUrlDrills];
+                return isDrillToUrlDisabled ? drillDownDrills : [...drillDownDrills, ...drillToUrlDrills];
             },
         ),
 );

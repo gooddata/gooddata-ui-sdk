@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Masqué",
     "filter.configuration.mode.hidden.tooltip": "Les utilisateurs du tableau de bord ne peuvent pas voir le filtre, mais il est appliqué.",
     "filter.dependency.icon.tooltip": "Les valeurs de <strong>{filterTitle}</strong> sont filtrées par sélection dans un autre filtre.",
+    "filter.dependency.icon.aria.label": "Filtre lié — les valeurs disponibles dépendent de la sélection d’un autre filtre.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Cette <strong>hiérarchie</strong> est déjà utilisée pour <strong>la même</strong> exploration descendante.",
     "configurationPanel.respectCrossFiltering": "Respecter le filtrage croisé",
     "configurationPanel.respectCrossFiltering.tooltip": "Désactivez cette option pour ignorer le filtrage croisé provenant d’autres visualisations.",

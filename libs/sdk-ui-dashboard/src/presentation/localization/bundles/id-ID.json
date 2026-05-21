@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Tersembunyi",
     "filter.configuration.mode.hidden.tooltip": "Pengguna dasbor tidak dapat melihat filter tetapi filter diterapkan.",
     "filter.dependency.icon.tooltip": "Nilai untuk <strong>{filterTitle}</strong> difilter oleh pilihan di filter lain.",
+    "filter.dependency.icon.aria.label": "Filter tertaut — nilai yang tersedia bergantung pada pilihan filter lain.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "<strong>Hierarki</strong> ini sudah digunakan untuk telusuri ke bawah <strong>yang sama</strong>.",
     "configurationPanel.respectCrossFiltering": "Hormati filter silang",
     "configurationPanel.respectCrossFiltering.tooltip": "Nonaktifkan opsi ini untuk mengabaikan filter silang dari visualisasi lain.",

@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-5-19
+Date generated: 2026-5-20
 
-Revision ID: e8feca49139df19ea79a50cc6d819cf8eeafeb2e
+Revision ID: b6d15371a966d44461e8af8bc123206c32e6cb20
 
 ================================================================================
 ================================================================================
@@ -232,7 +232,7 @@ Revision ID: e8feca49139df19ea79a50cc6d819cf8eeafeb2e
 - @nodelib/fs.walk (1.2.8) [MIT]
 - @oxc-project/runtime (0.115.0) [MIT]
 - @oxc-project/types (0.115.0) [MIT]
-- @playwright/test (1.59.1) [Apache-2.0]
+- @playwright/test (1.60.0) [Apache-2.0]
 - @polka/url (1.0.0-next.29) [MIT]
 - @react-aria/interactions (3.25.5) [Apache-2.0]
 - @react-aria/ssr (3.9.10) [Apache-2.0]
@@ -839,8 +839,8 @@ Revision ID: e8feca49139df19ea79a50cc6d819cf8eeafeb2e
 - picomatch (4.0.3) [MIT]
 - pify (4.0.1) [MIT]
 - pkg-dir (4.2.0) [MIT]
-- playwright (1.59.1) [Apache-2.0, CC-BY-4.0, MIT, ISC, BSD-3-Clause]
-- playwright-core (1.59.1) [Apache-2.0, mit-addition, IETF, BSD-2-Clause, MIT, BSD-3-Clause, ISC]
+- playwright (1.60.0) [Apache-2.0, MIT, ISC, CC-BY-4.0, BSD-3-Clause]
+- playwright-core (1.60.0) [Apache-2.0, MIT, BSD-2-Clause, ISC, BSD-3-Clause]
 - polished (3.7.2) [MIT, OFL-1.1]
 - possible-typed-array-names (1.1.0) [MIT]
 - postcss (8.5.6) [MIT]
@@ -3619,9 +3619,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @playwright/test (1.59.1)
+Package Title: @playwright/test (1.60.0)
 
-Package Locator: npm+@playwright/test$1.59.1
+Package Locator: npm+@playwright/test$1.60.0
 
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -10961,25 +10961,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: playwright (1.59.1)
+Package Title: playwright (1.60.0)
 
-Package Locator: npm+playwright$1.59.1
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-Apache-2.0
-
-
-* Other Licenses *
-CC-BY-4.0, MIT, ISC, BSD-3-Clause
-
-
---------------------------------------------------------------------------------
-Package Title: playwright-core (1.59.1)
-
-Package Locator: npm+playwright-core$1.59.1
+Package Locator: npm+playwright$1.60.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10989,7 +10973,23 @@ Apache-2.0
 
 
 * Other Licenses *
-mit-addition, IETF, BSD-2-Clause, MIT, BSD-3-Clause, ISC
+MIT, ISC, CC-BY-4.0, BSD-3-Clause
+
+
+--------------------------------------------------------------------------------
+Package Title: playwright-core (1.60.0)
+
+Package Locator: npm+playwright-core$1.60.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+Apache-2.0
+
+
+* Other Licenses *
+MIT, BSD-2-Clause, ISC, BSD-3-Clause
 
 
 --------------------------------------------------------------------------------
@@ -30356,14 +30356,6 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-* IETF *
-
-This repository relates to activities in the Internet Engineering Task Force (IETF). All material in this repository is considered Contributions to the IETF Standards Process, as defined in the intellectual property policies of IETF currently designated as BCP 78, BCP 79 and the IETF Trust Legal Provisions (TLP) Relating to IETF Documents.
-
-Any edit, commit, pull request, issue, comment or other change made to this repository constitutes Contributions to the IETF Standards Process (https://www.ietf.org/).
-
-You agree to comply with all applicable IETF policies and procedures, including, BCP 78, 79, the TLP, and the TLP rules regarding code components (e.g. being subject to a Simplified BSD License) in Contributions.
-
 * ISC *
 
 ISC License
@@ -38157,34 +38149,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-* mit-addition *
-
-Permission is hereby granted, free of charge, to any person obtaining a
-copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be included
-in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS-IS" AND WITHOUT WARRANTY OF ANY KIND,
-EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY
-WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
-
-IN NO EVENT SHALL TOM WU BE LIABLE FOR ANY SPECIAL, INCIDENTAL, INDIRECT
-OR CONSEQUENTIAL DAMAGES OF ANY KIND, OR ANY DAMAGES WHATSOEVER
-RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER OR NOT ADVISED OF
-THE POSSIBILITY OF DAMAGE, AND ON ANY THEORY OF LIABILITY, ARISING OUT
-OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-In addition, the following condition applies:
-
-All redistributions must retain an intact copy of this copyright notice
-and disclaimer.
-
 * public-domain *
 
 No license text available
@@ -38225,4 +38189,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-5-19
+Report Generated by FOSSA on 2026-5-20

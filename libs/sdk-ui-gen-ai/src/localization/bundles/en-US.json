@@ -24,11 +24,11 @@
         "crowdinContext": "Button label to show more detailed error information"
     },
     "gd.gen-ai.global-error.show-more": {
-        "text": "show more",
+        "text": "Show more",
         "crowdinContext": "Button label to show more detailed error information"
     },
     "gd.gen-ai.global-error.show-less": {
-        "text": "show less",
+        "text": "Show less",
         "crowdinContext": "Button label to show less detailed error information"
     },
     "gd.gen-ai.global-error.traceId.copy": {
