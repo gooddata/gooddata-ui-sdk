@@ -6313,6 +6313,8 @@ export interface IUiDrawerProps extends IUiAutofocusOptions {
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
+    closeButtonSize?: IUiIconButtonPublicProps["size"];
+    // (undocumented)
     closeLabel?: string;
     // (undocumented)
     dataTestId?: string;
@@ -8462,7 +8464,7 @@ export function UiCopyButton({ label, clipboardContent, successMessage, successM
 export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative }: IUiDateProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, showBackdrop, header, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig }: IUiDrawerProps): JSX.Element | null;
+export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, closeButtonSize, showBackdrop, header, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig }: IUiDrawerProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type UiDrawerTransitionProps = {

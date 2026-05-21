@@ -1,19 +1,20 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import { type IconType, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { type IconType, type TooltipArrowPlacement, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 type HeaderIconProps = {
     icon: IconType;
     tooltip?: string;
     onClick?: () => void;
     disabled?: boolean;
+    arrowPlacement?: TooltipArrowPlacement;
 };
 
-export function HeaderIcon({ tooltip, icon, onClick, disabled }: HeaderIconProps) {
+export function HeaderIcon({ tooltip, icon, onClick, disabled, arrowPlacement }: HeaderIconProps) {
     return (
         <div>
             <UiTooltip
-                arrowPlacement="bottom"
+                arrowPlacement={arrowPlacement ?? "top-start"}
                 hoverOpenDelay={100}
                 disabled={!tooltip}
                 triggerBy={["focus", "hover"]}

@@ -34,6 +34,7 @@ export function UiDrawer({
     onClickOutside,
     closeLabel = "Close",
     showCloseButton = true,
+    closeButtonSize,
     showBackdrop = true,
     header,
     onClickClose,
@@ -112,6 +113,7 @@ export function UiDrawer({
                                                         label={closeLabel}
                                                         icon="close"
                                                         variant="tertiary"
+                                                        size={closeButtonSize}
                                                         onClick={onClickClose}
                                                         ref={ref}
                                                     />

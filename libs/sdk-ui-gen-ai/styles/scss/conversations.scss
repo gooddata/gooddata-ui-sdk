@@ -3,11 +3,23 @@
 @use "variables" as variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
+.gd-gen-ai-chat__window__drawer {
+    .gd-ui-kit-drawer__close-button {
+        top: 3px;
+        right: 3px;
+    }
+
+    .gd-ui-kit-drawer__content {
+        background: kit-variables.$gd-color-white;
+    }
+}
+
 .gd-gen-ai-chat__window__conversations__header {
     display: flex;
     align-items: center;
     align-self: stretch;
     width: 100%;
+    height: 37px;
 
     padding: 5px 5px 5px 10px;
     color: kit-variables.$gd-color-text;
