@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Ausgeblendet",
     "filter.configuration.mode.hidden.tooltip": "Dashboard-Benutzer können den Filter nicht sehen, er ist jedoch angewendet.",
     "filter.dependency.icon.tooltip": "Werte für <strong>{filterTitle}</strong> werden durch Auswahl in einem anderen Filter gefiltert.",
+    "filter.dependency.icon.aria.label": "Verknüpfter Filter — verfügbare Werte hängen von der Auswahl eines anderen Filters ab.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Diese <strong>Hierarchie</strong> wird bereits für <strong>denselben</strong> Drilldown verwendet.",
     "configurationPanel.respectCrossFiltering": "Querfilterung berücksichtigen",
     "configurationPanel.respectCrossFiltering.tooltip": "Deaktivieren Sie diese Option, um Cross-Filtering von anderen Visualisierungen zu ignorieren.",

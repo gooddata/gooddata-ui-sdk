@@ -155,7 +155,6 @@ export enum TigerFeaturesNames {
     EnableAlertOncePerInterval = "enableAlertOncePerInterval",
     EnableFiscalCalendars = "enableFiscalCalendars",
     EnablePivotTablePagination = "enablePivotTablePagination",
-    EnableImplicitDrillToUrl = "enableImplicitDrillToUrl",
     EnableDashboardFilterGroups = "enableDashboardFilterGroups",
     EnableMatchFilterAD = "enableMatchFilterAD",
     EnableArbitraryFilterAD = "enableArbitraryFilterAD",
@@ -322,7 +321,6 @@ export type ITigerFeatureFlags = {
     enableAlertOncePerInterval: (typeof FeatureFlagsValues)["enableAlertOncePerInterval"][number];
     enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
     enablePivotTablePagination: (typeof FeatureFlagsValues)["enablePivotTablePagination"][number];
-    enableImplicitDrillToUrl: (typeof FeatureFlagsValues)["enableImplicitDrillToUrl"][number];
     enableDashboardFilterGroups: (typeof FeatureFlagsValues)["enableDashboardFilterGroups"][number];
     enableMatchFilterAD: (typeof FeatureFlagsValues)["enableMatchFilterAD"][number];
     enableArbitraryFilterAD: (typeof FeatureFlagsValues)["enableArbitraryFilterAD"][number];
@@ -490,7 +488,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAlertOncePerInterval: false,
     enableFiscalCalendars: true,
     enablePivotTablePagination: true,
-    enableImplicitDrillToUrl: true,
     enableDashboardFilterGroups: false,
     enableMatchFilterAD: true,
     enableArbitraryFilterAD: true,
@@ -659,7 +656,6 @@ export const FeatureFlagsValues = {
     enableAlertOncePerInterval: [true, false] as const,
     enableFiscalCalendars: [true, false] as const,
     enablePivotTablePagination: [true, false] as const,
-    enableImplicitDrillToUrl: [true, false] as const,
     enableDashboardFilterGroups: [true, false] as const,
     enableMatchFilterAD: [true, false] as const,
     enableArbitraryFilterAD: [true, false] as const,

@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "非表示",
     "filter.configuration.mode.hidden.tooltip": "ダッシュボードユーザーにはフィルタが表示されませんが、フィルタは適用されます。",
     "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong> の値は、別のフィルタでの選択によってフィルタリングされます。",
+    "filter.dependency.icon.aria.label": "リンクされたフィルター — 利用可能な値は別のフィルターの選択に依存します。",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "この<strong>階層</strong>は<strong>同じ</strong>ドリルダウンにすでに使用されています。",
     "configurationPanel.respectCrossFiltering": "クロスフィルタリングの尊重",
     "configurationPanel.respectCrossFiltering.tooltip": "他のビジュアライゼーションからのクロスフィルタリングを無視するには、このオプションを無効にしてください。",

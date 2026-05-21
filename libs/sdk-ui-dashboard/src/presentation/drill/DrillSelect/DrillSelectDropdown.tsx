@@ -34,7 +34,6 @@ import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectAccessibleDashboards } from "../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectCatalogAttributeDisplayFormsById } from "../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableImplicitDrillToUrl } from "../../../model/store/config/configSelectors.js";
 import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
 import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
 import { selectWidgetByRef } from "../../../model/store/tabs/layout/layoutSelectors.js";
@@ -77,7 +76,6 @@ export function DrillSelectDropdown({
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
-    const enableImplicitDrillToUrl = useDashboardSelector(selectEnableImplicitDrillToUrl);
 
     const stopPropagation = useCallback((e: UIEvent<HTMLDivElement>) => {
         e.stopPropagation();
@@ -161,7 +159,7 @@ export function DrillSelectDropdown({
         if (isDrillDownDefinition(item.drillDefinition)) {
             return "drillDown";
         }
-        if (isDrillToUrl(item.drillDefinition) && enableImplicitDrillToUrl) {
+        if (isDrillToUrl(item.drillDefinition)) {
             return "drillToUrl";
         }
         if (isCrossFiltering(item.drillDefinition)) {

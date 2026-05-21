@@ -166,8 +166,7 @@ export abstract class ConfigurationPanelContent<
 
         const isAlertingEnabled = featureFlags?.enableAlerting;
         const isScheduledExportsEnabled = featureFlags?.enableScheduling;
-        const showImplicitDrillToUrl =
-            featureFlags?.enableImplicitDrillToUrl && isInsightSupportedForImplicitDrillToUrl(insight);
+        const showImplicitDrillToUrl = isInsightSupportedForImplicitDrillToUrl(insight);
         const supportsKeyDriveAnalysis = featureFlags?.enableChangeAnalysis;
         const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);

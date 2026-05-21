@@ -4,6 +4,7 @@ import {
     type DragEvent,
     type FC,
     type KeyboardEvent,
+    type MouseEvent,
     type RefObject,
     useCallback,
     useMemo,
@@ -18,6 +19,7 @@ import { connect, useSelector } from "react-redux";
 import {
     DefaultUiMenuInteractiveItemWrapper,
     Dropdown,
+    type IUiMenuFocusableItem,
     type IUiMenuItem,
     UiDrawer,
     UiIcon,
@@ -74,6 +76,7 @@ function GenAIChatConversationsComponent({
     conversation: currentConversation,
 }: GenAIChatConversationsProps) {
     const ref = useRef<HTMLElement>(undefined);
+    const menuRef = useRef<HTMLElement>(undefined);
     const intl = useIntl();
 
     const { isFullscreen, isSmallScreen } = useFullscreenCheck();
@@ -106,6 +109,7 @@ function GenAIChatConversationsComponent({
                     iconRight: (
                         <div className="gd-gen-ai-chat__window__conversations__list__delete-button">
                             <Dropdown
+                                returnFocusTo={menuRef as RefObject<HTMLDivElement>}
                                 onToggle={() => {
                                     setOpenedId(openedId ? undefined : conversation.localId);
                                 }}
@@ -247,10 +251,12 @@ function GenAIChatConversationsComponent({
 
     const handleDeleteCancel = useCallback(() => {
         setConversationToDelete(undefined);
+        menuRef.current?.focus();
     }, []);
 
     const handleRenameCancel = useCallback(() => {
         setConversationToRename(undefined);
+        menuRef.current?.focus();
     }, []);
 
     const handleSelect = useCallback(
@@ -266,6 +272,7 @@ function GenAIChatConversationsComponent({
             deleteConversation({ conversationId: conversationToDelete.localId });
         }
         setConversationToDelete(undefined);
+        menuRef.current?.focus();
     }, [conversationToDelete, deleteConversation]);
 
     const handleRenameSubmit = useCallback(
@@ -277,6 +284,7 @@ function GenAIChatConversationsComponent({
                 });
             }
             setConversationToRename(undefined);
+            menuRef.current?.focus();
         },
         [conversationToRename, renameConversation],
     );
@@ -383,6 +391,7 @@ function GenAIChatConversationsComponent({
                 >
                     <DrawerContent
                         openedId={openedId}
+                        menuRef={menuRef}
                         menuItems={menuItems}
                         conversations={conversations ?? []}
                         handleSelect={handleSelect}
@@ -417,6 +426,7 @@ function GenAIChatConversationsComponent({
 
 interface IDrawerContentProps {
     openedId: string | undefined;
+    menuRef: RefObject<HTMLElement | undefined>;
     conversations: IChatConversationLocal[];
     menuItems: IUiMenuItem[];
     handleSelect: (conversation: IChatConversationLocal) => void;
@@ -432,6 +442,7 @@ interface IDrawerContentProps {
 
 function DrawerContent({
     openedId,
+    menuRef,
     conversations,
     menuItems,
     handleSelect,
@@ -491,6 +502,7 @@ function DrawerContent({
                         </div>
                         <ConversationsList
                             id="gd-gen-ai-conversations-pinned"
+                            menuRef={menuRef}
                             openedId={openedId}
                             listItems={pinnedItems}
                             onDragStart={onDragStart}
@@ -519,6 +531,7 @@ function DrawerContent({
                         </div>
                         <ConversationsList
                             id="gd-gen-ai-conversations-rest"
+                            menuRef={menuRef}
                             openedId={openedId}
                             listItems={restItems}
                             onDragStart={onDragStart}
@@ -542,6 +555,7 @@ function DrawerContent({
 
 interface IConversationListProps {
     id: string;
+    menuRef: RefObject<HTMLElement | undefined>;
     openedId: string | undefined;
     listItems: IUiMenuItem[];
     onDragStart: (conversationId: string, event: DragEvent<HTMLDivElement>) => void;
@@ -552,6 +566,7 @@ interface IConversationListProps {
 
 function ConversationsList({
     id,
+    menuRef,
     openedId,
     listItems,
     handleSelect,
@@ -580,6 +595,14 @@ function ConversationsList({
                     event.stopPropagation();
                     event.preventDefault();
                 }}
+                onEnterLevel={(item, event) => {
+                    toggleInConversationItems(menuRef, item, event);
+                    return true;
+                }}
+                onLeaveLevel={(item, event) => {
+                    toggleInConversationItems(menuRef, item, event);
+                    return true;
+                }}
                 shouldCloseOnSelect={false}
                 size="small"
                 ariaAttributes={{
@@ -588,7 +611,17 @@ function ConversationsList({
                 }}
             />
         );
-    }, [id, handleSelect, intl, listItems, onDragEnd, onDragStart, onMenuUnhandledKeyDown, openedId]);
+    }, [
+        id,
+        handleSelect,
+        intl,
+        listItems,
+        onDragEnd,
+        onDragStart,
+        onMenuUnhandledKeyDown,
+        openedId,
+        menuRef,
+    ]);
 }
 
 type DraggableConversationItemProps = Parameters<typeof DefaultUiMenuInteractiveItemWrapper>[0] & {
@@ -606,6 +639,7 @@ function DraggableConversationItem(props: DraggableConversationItemProps) {
         <div
             draggable
             title={itemTitle}
+            data-conversation-id={data.localId}
             className={cx("gd-gen-ai-chat__window__conversations__list__item", {
                 generatingTitle: data.generatingTitle,
                 inProgress: data.inProgress,
@@ -629,6 +663,26 @@ function DraggableConversationItem(props: DraggableConversationItemProps) {
             />
         </div>
     );
+}
+
+function toggleInConversationItems(
+    menuRef: RefObject<HTMLElement | undefined>,
+    item: IUiMenuFocusableItem | undefined,
+    event: MouseEvent | KeyboardEvent,
+) {
+    if (!item) {
+        return;
+    }
+    const conv = item.data as IChatConversationLocal;
+    const target = event.currentTarget as HTMLElement;
+    const element = target.querySelector(`[data-conversation-id="${conv.localId}"]`);
+    const button = element?.querySelector("button");
+    if (button && button !== document.activeElement) {
+        button.focus();
+    } else {
+        target.focus();
+    }
+    menuRef.current = target;
 }
 
 const mapStateToProps = (state: RootState): GenAIChatConversationsStateProps => ({

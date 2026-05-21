@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "隱藏",
     "filter.configuration.mode.hidden.tooltip": "儀錶板使用者無法看到篩選器，但它已應用。",
     "filter.dependency.icon.tooltip": "的值 <strong>{filterTitle}</strong> 在另一個篩選器中按選擇進行篩選。",
+    "filter.dependency.icon.aria.label": "已連結的篩選器 — 可用值取決於另一個篩選器的選取。",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "此 <strong>層次結構</strong> 已用于 <strong>相同嘅</strong> 向下切入。",
     "configurationPanel.respectCrossFiltering": "遵循交叉篩選",
     "configurationPanel.respectCrossFiltering.tooltip": "禁用此選項可忽略來自其他可視化嘅交叉篩選。",

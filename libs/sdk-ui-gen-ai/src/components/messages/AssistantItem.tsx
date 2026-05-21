@@ -47,7 +47,7 @@ export function AssistantItemComponent({ message, group, isLast }: AssistantItem
                 isLoading={messageState === "loading"}
                 isLast={isLast}
             />
-            <AssistantItemSuggestions type="followUp" content={message.content} showSuggestions={isLast} />
+            <AssistantItemSuggestions type="followUp" content={message.content} showSuggestions />
             <AssistantItemFeedback group={group} message={message} isLast={isLast} />
             <AssistantItemSuggestions type="actions" content={message.content} showSuggestions={isLast} />
         </div>

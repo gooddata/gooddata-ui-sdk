@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Nascosto",
     "filter.configuration.mode.hidden.tooltip": "Gli utenti del dashboard non possono vedere il filtro, ma questo viene applicato.",
     "filter.dependency.icon.tooltip": "I valori per <strong>{filterTitle}</strong> sono filtrati secondo la selezione in un altro filtro.",
+    "filter.dependency.icon.aria.label": "Filtro collegato — i valori disponibili dipendono dalla selezione di un altro filtro.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Questa <strong>gerarchia</strong> è già in uso per <strong>lo stesso</strong> drill-down.",
     "configurationPanel.respectCrossFiltering": "Rispettare il filtraggio incrociato",
     "configurationPanel.respectCrossFiltering.tooltip": "Disattivare questa opzione per ignorare il filtraggio incrociato in altre visualizzazioni.",

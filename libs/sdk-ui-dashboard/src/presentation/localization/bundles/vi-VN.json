@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Ẩn",
     "filter.configuration.mode.hidden.tooltip": "Người dùng bảng điều khiển không thể thấy bộ lọc nhưng nó được áp dụng.",
     "filter.dependency.icon.tooltip": "Các giá trị cho <strong>{filterTitle}</strong> được lọc theo lựa chọn trong một bộ lọc khác.",
+    "filter.dependency.icon.aria.label": "Bộ lọc được liên kết — các giá trị khả dụng phụ thuộc vào lựa chọn của bộ lọc khác.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "<strong>Phân cấp</strong> này đã được sử dụng cho <strong>cùng</strong> đi sâu xuống.",
     "configurationPanel.respectCrossFiltering": "Tôn trọng lọc chéo",
     "configurationPanel.respectCrossFiltering.tooltip": "Vô hiệu hóa tùy chọn này để bỏ qua lọc chéo từ các trực quan hóa khác.",

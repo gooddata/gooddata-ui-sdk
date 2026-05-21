@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Piilotettu",
     "filter.configuration.mode.hidden.tooltip": "Kojelaudan käyttäjät eivät voi nähdä suodatinta, mutta se sovelletaan.",
     "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong> arvot suodatetaan toisen suodattimen valinnan perusteella.",
+    "filter.dependency.icon.aria.label": "Linkitetty suodatin — käytettävissä olevat arvot riippuvat toisen suodattimen valinnasta.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Tämä <strong>hierarkia</strong> on jo käytössä <strong>samalle</strong> porautumiselle.",
     "configurationPanel.respectCrossFiltering": "Kunnioita ristiinsuodatusta",
     "configurationPanel.respectCrossFiltering.tooltip": "Poista tämä vaihtoehto käytöstä ohittaaksesi ristiinsuodatuksen muista visualisoinneista.",

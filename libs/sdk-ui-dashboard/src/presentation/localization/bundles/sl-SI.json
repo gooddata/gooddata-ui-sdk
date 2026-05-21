@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Skrito",
     "filter.configuration.mode.hidden.tooltip": "Uporabniki nadzorne plošče ne vidijo filtra, vendar je ta uporabljen.",
     "filter.dependency.icon.tooltip": "Vrednosti za <strong>{filterTitle}</strong> so filtrirane z izbiro v drugem filtru.",
+    "filter.dependency.icon.aria.label": "Povezani filter — razpoložljive vrednosti so odvisne od izbire drugega filtra.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Ta <strong>hierarhija</strong> se že uporablja za <strong>isti</strong> drill down.",
     "configurationPanel.respectCrossFiltering": "Spoštuj navzkrižno filtriranje",
     "configurationPanel.respectCrossFiltering.tooltip": "Onemogočite to možnost, da prezrete navzkrižno filtriranje iz drugih vizualizacij.",

@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Прихований",
     "filter.configuration.mode.hidden.tooltip": "Користувачі дашборда не можуть бачити фільтр, але він застосовується.",
     "filter.dependency.icon.tooltip": "Значення для <strong>{filterTitle}</strong> фільтруються вибором в іншому фільтрі.",
+    "filter.dependency.icon.aria.label": "Пов’язаний фільтр — доступні значення залежать від вибору в іншому фільтрі.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Ця <strong>ієрархія</strong> уже використовується для <strong>тієї самої</strong> деталізації вниз.",
     "configurationPanel.respectCrossFiltering": "Враховувати крос-фільтрацію",
     "configurationPanel.respectCrossFiltering.tooltip": "Вимкніть цей параметр, щоб ігнорувати крос-фільтрацію з інших візуалізацій.",

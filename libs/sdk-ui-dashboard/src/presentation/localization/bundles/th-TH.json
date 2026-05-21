@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "ซ่อน",
     "filter.configuration.mode.hidden.tooltip": "ผู้ใช้แดชบอร์ดไม่สามารถเห็นตัวกรองได้แต่ตัวกรองถูกนำไปใช้",
     "filter.dependency.icon.tooltip": "ค่าของ <strong>{filterTitle}</strong> ถูกกรองตามการเลือกในตัวกรองอื่น",
+    "filter.dependency.icon.aria.label": "ตัวกรองที่ลิงก์ — ค่าที่ใช้ได้ขึ้นอยู่กับการเลือกของตัวกรองอื่น",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "<strong>ลำดับชั้น</strong>นี้ถูกใช้สำหรับการเจาะลึกลง <strong>เดียวกัน</strong>อยู่แล้ว",
     "configurationPanel.respectCrossFiltering": "เคารพการกรองข้าม",
     "configurationPanel.respectCrossFiltering.tooltip": "ปิดใช้งานตัวเลือกนี้เพื่อเพิกเฉยต่อการกรองข้ามจากการแสดงภาพข้อมูลอื่น",

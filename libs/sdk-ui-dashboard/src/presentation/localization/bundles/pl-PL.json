@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Ukryty",
     "filter.configuration.mode.hidden.tooltip": "Użytkownicy pulpitu nawigacyjnego nie widzą filtra, ale jest on zastosowany.",
     "filter.dependency.icon.tooltip": "Wartości dla <strong>{filterTitle}</strong> są filtrowane przez wybór w innym filtrze.",
+    "filter.dependency.icon.aria.label": "Filtr powiązany — dostępne wartości zależą od wyboru w innym filtrze.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Ta <strong>hierarchia</strong> jest już używana do <strong>tego samego</strong> przewijania w dół.",
     "configurationPanel.respectCrossFiltering": "Respektuj filtrowanie krzyżowe",
     "configurationPanel.respectCrossFiltering.tooltip": "Wyłącz tę opcję, aby zignorować filtrowanie krzyżowe z innych wizualizacji.",

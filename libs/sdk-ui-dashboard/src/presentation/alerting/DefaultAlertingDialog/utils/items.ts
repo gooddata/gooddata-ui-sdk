@@ -55,7 +55,8 @@ type InsightType =
     | "funnel"
     | "pyramid"
     | "waterfall"
-    | "repeater";
+    | "repeater"
+    | "radar";
 
 const SortedGranularities: DateAttributeGranularity[] = [
     "GDC.time.year",
@@ -131,6 +132,7 @@ export function getSupportedInsightMeasuresByInsight(
 function getSupportedBucketsForComparison(insightType: InsightType | null) {
     switch (insightType) {
         case "line":
+        case "radar":
             return [BucketNames.TREND];
         case "column":
         case "bar":
@@ -264,7 +266,8 @@ function collectAllMetric(insight: IInsight | null | undefined): {
         case "waterfall":
         case "dependencywheel":
         case "sankey":
-        case "table": {
+        case "table":
+        case "radar": {
             return collectAllMetricsFrom(
                 insight,
                 [BucketNames.MEASURES],
@@ -312,7 +315,8 @@ function collectAllAttributes(insight: IInsight | null | undefined) {
         case "waterfall":
         case "dependencywheel":
         case "sankey":
-        case "table": {
+        case "table":
+        case "radar": {
             return collectAllAttributesFrom(insight, [
                 BucketNames.ATTRIBUTE,
                 BucketNames.ATTRIBUTES,

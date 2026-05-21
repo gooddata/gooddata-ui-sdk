@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "Скрытый",
     "filter.configuration.mode.hidden.tooltip": "Пользователи информационной панели не видят фильтр, но он применяется.",
     "filter.dependency.icon.tooltip": "Значения для <strong>{filterTitle}</strong> отфильтрованы выбором в другом фильтре.",
+    "filter.dependency.icon.aria.label": "Связанный фильтр — доступные значения зависят от выбора в другом фильтре.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "Эта <strong>иерархия</strong> уже используется для <strong>того же</strong> drill down.",
     "configurationPanel.respectCrossFiltering": "Учитывать перекрёстную фильтрацию",
     "configurationPanel.respectCrossFiltering.tooltip": "Отключите эту опцию, чтобы игнорировать перекрёстную фильтрацию из других визуализаций.",

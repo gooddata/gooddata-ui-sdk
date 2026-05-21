@@ -38,7 +38,6 @@ import {
     selectSupportsAttributeHierarchies,
 } from "../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectAllCatalogAttributeHierarchies } from "../../../../../model/store/catalog/catalogSelectors.js";
-import { selectEnableImplicitDrillToUrl } from "../../../../../model/store/config/configSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../../../model/store/drillTargets/drillTargetsSelectors.js";
 import { selectInsightByRef } from "../../../../../model/store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
@@ -76,7 +75,6 @@ const mergeDrillConfigItems = (
     globalDrillDownItems: IDrillConfigItem[],
     drillToUrlItems: IDrillConfigItem[],
     incompleteItems: IDrillConfigItem[],
-    enableImplicitDrillToUrl: boolean,
 ): IDrillConfigItem[] => {
     return incompleteItems.reduce(
         (acc: IDrillConfigItem[], incompleteItem: IDrillConfigItem) => {
@@ -90,11 +88,7 @@ const mergeDrillConfigItems = (
             }
             return acc;
         },
-        [
-            ...(globalDrillDownItems ?? []),
-            ...(enableImplicitDrillToUrl ? (drillToUrlItems ?? []) : []),
-            ...(drillConfigItems ?? []),
-        ],
+        [...(globalDrillDownItems ?? []), ...(drillToUrlItems ?? []), ...(drillConfigItems ?? [])],
     );
 };
 
@@ -150,7 +144,6 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     invariant(isInsightWidget(widget), "must be insight widget");
     const insight = useDashboardSelector(selectInsightByRef(widget.insight));
-    const enableImplicitDrillToUrl = useDashboardSelector(selectEnableImplicitDrillToUrl);
     const { drills: widgetDrills } = widget;
     const { incompleteItems, deleteIncompleteItem, onChangeItem, onOriginSelect, completeItem, isItemNew } =
         useIncompleteItems({ widgetDrills });
@@ -202,14 +195,8 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     }, [widgetDrillToUrls, availableDrillTargets, widget]);
 
     const mergedItems = useMemo(() => {
-        return mergeDrillConfigItems(
-            drillItems,
-            globalDrillDownItems,
-            drillToUrlItems,
-            incompleteItems,
-            enableImplicitDrillToUrl,
-        );
-    }, [drillItems, globalDrillDownItems, drillToUrlItems, incompleteItems, enableImplicitDrillToUrl]);
+        return mergeDrillConfigItems(drillItems, globalDrillDownItems, drillToUrlItems, incompleteItems);
+    }, [drillItems, globalDrillDownItems, drillToUrlItems, incompleteItems]);
     const { activeDrillItemLocalId } = useDrillFiltersSubview();
     const selectedDrillItem = useMemo(
         () => mergedItems.find((item) => item.localIdentifier === activeDrillItemLocalId),

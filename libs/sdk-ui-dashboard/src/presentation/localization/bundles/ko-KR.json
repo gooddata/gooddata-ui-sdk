@@ -573,6 +573,7 @@
     "filter.configuration.mode.hidden.title": "숨김",
     "filter.configuration.mode.hidden.tooltip": "대시보드 사용자는 필터를 볼 수 없지만 적용됩니다.",
     "filter.dependency.icon.tooltip": "<strong>{filterTitle}</strong>의 값은 다른 필터에서 선택에 의해 필터링됩니다.",
+    "filter.dependency.icon.aria.label": "연결된 필터 — 사용 가능한 값은 다른 필터 선택에 따라 달라집니다.",
     "configurationPanel.drillConfig.alreadyUsedTooltip": "이 <strong>계층 구조</strong>는 이미 <strong>동일한</strong> 드릴 다운에 사용되고 있습니다.",
     "configurationPanel.respectCrossFiltering": "교차 필터링 준수",
     "configurationPanel.respectCrossFiltering.tooltip": "이 옵션을 비활성화하여 다른 시각화에서의 교차 필터링을 무시합니다.",

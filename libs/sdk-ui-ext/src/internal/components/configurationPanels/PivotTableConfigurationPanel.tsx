@@ -29,11 +29,10 @@ import { type SectionName } from "./sectionName.js";
 
 export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
     protected override isControlDisabled(sectionName?: SectionName): boolean {
-        const enableImplicitDrillToUrl = this.props.featureFlags?.enableImplicitDrillToUrl;
         if (
             sectionName === "interactions.scheduled_exports" ||
             sectionName === "interactions.drill_down" ||
-            (sectionName === "interactions.drill_into_url" && enableImplicitDrillToUrl)
+            sectionName === "interactions.drill_into_url"
         ) {
             const { insight, isError, isLoading } = this.props;
             // enable if there is at least one attribute (metrics not required)

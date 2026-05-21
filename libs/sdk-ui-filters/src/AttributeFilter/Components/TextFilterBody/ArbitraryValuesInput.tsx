@@ -256,7 +256,10 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                                     isDisabled={disabled}
                                     dataTestId={`s-text-filter-value-tag-${index}`}
                                     tabIndex={-1}
-                                    onDelete={() => handleRemoveValue(value, index)}
+                                    onDelete={(e) => {
+                                        e.preventDefault();
+                                        handleRemoveValue(value, index);
+                                    }}
                                     onDeleteKeyDown={(event) => {
                                         if (event.key === "Enter" || event.key === " ") {
                                             event.preventDefault();
@@ -315,7 +318,10 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                                 aria-selected={index === activeAutocompleteIndex}
                                 // Prevent the input from blurring when clicking a suggestion.
                                 onMouseDown={(e) => e.preventDefault()}
-                                onClick={() => handleSelectSuggestion(suggestion)}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleSelectSuggestion(suggestion);
+                                }}
                             >
                                 {highlightMatch(suggestion, inputValue)}
                             </li>
