@@ -69,6 +69,7 @@ function GenAIChatHeaderComponent({
                     {settings?.enableAiAgenticMultiConversations ? (
                         <HeaderIcon
                             icon="edit"
+                            arrowPlacement="top-end"
                             tooltip={intl.formatMessage({
                                 id: "gd.gen-ai.header.new-conversation-tooltip",
                             })}
@@ -78,6 +79,7 @@ function GenAIChatHeaderComponent({
                     ) : null}
                     <HeaderIcon
                         icon={isFullscreen ? "minimize" : "expand"}
+                        arrowPlacement="top-end"
                         tooltip={
                             isFullscreen
                                 ? intl.formatMessage({ id: "gd.gen-ai.header.contract-tooltip" })
@@ -85,11 +87,11 @@ function GenAIChatHeaderComponent({
                         }
                         onClick={() => setFullscreen({ isFullscreen: !isFullscreen })}
                     />
-                    <div className="gd-gen-ai-chat__window__header__divider"></div>
                 </>
             )}
             <HeaderIcon
                 icon="cross"
+                arrowPlacement="top-end"
                 tooltip={intl.formatMessage({ id: "gd.gen-ai.header.close-tooltip" })}
                 onClick={onClose}
             />

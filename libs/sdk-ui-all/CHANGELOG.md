@@ -1,6 +1,43 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 14 May 2026 07:11:19 GMT and should not be manually modified.
+This log was last generated on Thu, 21 May 2026 06:58:44 GMT and should not be manually modified.
+
+## 11.36.0
+
+Thu, 21 May 2026 06:58:44 GMT
+
+### Updates
+
+- feat: introduce gd-dashboard-embed and gd-insight-embed as the primary web component tags for new property-first embeds, bringing plugin-capable dashboard embedding, command APIs such as refresh and runtime filter replacement, and better per-embed context isolation for scenarios with multiple components or different backends, while keeping gd-dashboard and gd-insight working as compatibility tags for existing integrations
+- feat: add insightIsHidden helper re-export from sdk-model
+- feat: enhance API with Anthropic support, update cleint based on server api spec
+- sdk-ui-dashboard: Add `selectParameterResetValueByRef` for mode-aware Reset link in parameter chip dropdown
+- sdk-ui-dashboard: Filter views now capture dashboard parameter values and restore them when applied.
+- sdk-ui-dashboard: Capture and apply runtime parameter overrides in dashboard share links
+- sdk-ui-catalog: Hide `Create > Parameter` for users without `canManageProject`
+- sdk-ui-ext: Removed `enableImprovedAdFilters` feature flag.
+- sdk-backend-tiger: Removed `enableEmptyDateValuesFilter` feature flag.
+- fix: update AI Assistant accessibility related issues
+- sdk-ui-gen-ai: repair thread clear logic without multiple conversations
+- sdk-ui-semantic-search: improve semantic search no-results and error presentation
+- sdk-ui-gen-ai: add conversation renaming support
+- sdk-ui-gen-ai: reimplement new version of suggestions
+- sdk-ui-gen-ai: adjust suggestions logic, styles, and error handling
+- sdk-ui-gen-ai: add level callbacks for menu navigation, accessibility repairs
+- sdk-ui-dashboard: Sanizite widget ignoreFilters after MVF removal.
+- sdk-ui-all: New version of AnalyticalDashboard object to remove redundant root props.
+- Remove legacy automation variants
+- sdk-backend: Batch reference lookup using `IdentifierRef`
+- sdk-ui-dashboard: Load metric parameter refs before widget execution
+- sdk-ui-all: add Radar Chart visualization with configuration panel
+- sdk-ui: typo in Manage workspace permission description
+- fix: Dashboard auto-derives isWhiteLabeled from org WHITE_LABELING setting
+- sdk-ui-dashboard: add radar chart support to alerting dialog bucket configuration
+- sdk-ui-all: Support measue value filters in drilling.
+- sdk-ui-all: Support Dashboard and Insight Measure value filters on Drill to url.
+- remove implicit drill to url feature flag
+- Fix a11y issues in filter groups, keyboard nav, aria attributes, roles
+- Add new feedback endpoint for new new agentic
 
 ## 11.35.0
 

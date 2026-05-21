@@ -2,6 +2,105 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.36.0",
+            "tag": "@gooddata/sdk-ui-all_v11.36.0",
+            "date": "Thu, 21 May 2026 06:58:44 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "feat: introduce gd-dashboard-embed and gd-insight-embed as the primary web component tags for new property-first embeds, bringing plugin-capable dashboard embedding, command APIs such as refresh and runtime filter replacement, and better per-embed context isolation for scenarios with multiple components or different backends, while keeping gd-dashboard and gd-insight working as compatibility tags for existing integrations"
+                    },
+                    {
+                        "comment": "feat: add insightIsHidden helper re-export from sdk-model"
+                    },
+                    {
+                        "comment": "feat: enhance API with Anthropic support, update cleint based on server api spec"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add `selectParameterResetValueByRef` for mode-aware Reset link in parameter chip dropdown"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Filter views now capture dashboard parameter values and restore them when applied."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Capture and apply runtime parameter overrides in dashboard share links"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Hide `Create > Parameter` for users without `canManageProject`"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Removed `enableImprovedAdFilters` feature flag."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Removed `enableEmptyDateValuesFilter` feature flag."
+                    },
+                    {
+                        "comment": "fix: update AI Assistant accessibility related issues"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: repair thread clear logic without multiple conversations"
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search: improve semantic search no-results and error presentation"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: add conversation renaming support"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: reimplement new version of suggestions"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: adjust suggestions logic, styles, and error handling"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: add level callbacks for menu navigation, accessibility repairs"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Sanizite widget ignoreFilters after MVF removal."
+                    },
+                    {
+                        "comment": "sdk-ui-all: New version of AnalyticalDashboard object to remove redundant root props."
+                    },
+                    {
+                        "comment": "Remove legacy automation variants"
+                    },
+                    {
+                        "comment": "sdk-backend: Batch reference lookup using `IdentifierRef`"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Load metric parameter refs before widget execution"
+                    },
+                    {
+                        "comment": "sdk-ui-all: add Radar Chart visualization with configuration panel"
+                    },
+                    {
+                        "comment": "sdk-ui: typo in Manage workspace permission description"
+                    },
+                    {
+                        "comment": "fix: Dashboard auto-derives isWhiteLabeled from org WHITE_LABELING setting"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: add radar chart support to alerting dialog bucket configuration"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Support measue value filters in drilling."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Support Dashboard and Insight Measure value filters on Drill to url."
+                    },
+                    {
+                        "comment": "remove implicit drill to url feature flag"
+                    },
+                    {
+                        "comment": "Fix a11y issues in filter groups, keyboard nav, aria attributes, roles"
+                    },
+                    {
+                        "comment": "Add new feedback endpoint for new new agentic"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.35.0",
             "tag": "@gooddata/sdk-ui-all_v11.35.0",
             "date": "Thu, 14 May 2026 07:11:19 GMT",

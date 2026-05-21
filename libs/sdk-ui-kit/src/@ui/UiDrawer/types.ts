@@ -4,6 +4,7 @@ import { type KeyboardEvent, type MouseEvent, type ReactNode, type RefObject } f
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { type IUiAutofocusOptions } from "../UiFocusManager/UiAutofocus.js";
+import { type IUiIconButtonPublicProps } from "../UiIconButton/UiIconButtonRenderer.js";
 
 /**
  * @internal
@@ -30,6 +31,7 @@ export interface IUiDrawerProps extends IUiAutofocusOptions {
     onEscapeKey?: (e: KeyboardEvent) => void;
     onClickOutside?: (e: MouseEvent) => void;
     closeLabel?: string;
+    closeButtonSize?: IUiIconButtonPublicProps["size"];
     showCloseButton?: boolean;
     showBackdrop?: boolean;
     onClickClose?: () => void;

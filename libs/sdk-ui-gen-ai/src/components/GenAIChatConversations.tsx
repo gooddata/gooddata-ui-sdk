@@ -221,6 +221,7 @@ function GenAIChatConversationsComponent({
                                             event.preventDefault();
                                             event.stopPropagation();
                                         }}
+                                        size="medium"
                                         onClose={closeDropdown}
                                         ariaAttributes={ariaAttributes}
                                     />
@@ -367,6 +368,7 @@ function GenAIChatConversationsComponent({
             <div className="gd-gen-ai-chat__window__drawer" ref={ref as RefObject<HTMLDivElement>}></div>
             <UiDrawer
                 anchor="left"
+                closeButtonSize="medium"
                 showCloseButton
                 open={isHistory}
                 node={ref.current}
@@ -604,7 +606,7 @@ function ConversationsList({
                     return true;
                 }}
                 shouldCloseOnSelect={false}
-                size="small"
+                size="medium"
                 ariaAttributes={{
                     id,
                     "aria-label": intl.formatMessage({ id: "gd.gen-ai.conversations.title" }),
