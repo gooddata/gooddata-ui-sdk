@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/applink",
-    "version": "1.0.0",
+    "version": "11.37.0-alpha.2",
     "description": "GoodData SDK Application Linking Tool",
     "license": "MIT",
     "author": "GoodData",

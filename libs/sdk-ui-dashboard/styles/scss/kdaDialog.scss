@@ -284,7 +284,7 @@
 
         &__metric {
             display: flex;
-            max-width: 300px;
+            max-width: 320px;
 
             svg.gd-ui-kit-icon {
                 fill: kit-variables.$gd-color-object-type-metric;
@@ -293,12 +293,12 @@
 
         &__date {
             display: flex;
-            max-width: 300px;
+            max-width: 320px;
         }
 
         &__attribute {
             display: flex;
-            max-width: 300px;
+            max-width: 320px;
         }
     }
 
@@ -946,9 +946,9 @@
     flex-direction: row;
     gap: 5px;
     padding: 5px 10px;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: calc(100% - 20px);
     height: 32px;
     cursor: pointer;
 
@@ -987,6 +987,24 @@
         .gd-kda-trend-item-text,
         .gd-kda-trend-item-drivers {
             color: var(--gd-palette-primary-base);
+        }
+    }
+
+    &.gd-kda-trend-item-disabled {
+        cursor: default;
+
+        .gd-kda-trend-item-text,
+        .gd-kda-trend-item-drivers {
+            color: var(--gd-palette-complementary-5);
+        }
+
+        &:hover {
+            background-color: transparent;
+
+            .gd-kda-trend-item-text,
+            .gd-kda-trend-item-drivers {
+                color: var(--gd-palette-complementary-5);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-web-components",
-    "version": "8.11.0-alpha.21",
+    "version": "11.37.0-alpha.2",
     "description": "GoodData Web Components wrapper for GoodData.UI",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",

@@ -15,13 +15,16 @@ export function TrendItem({
     isSelected,
     isFocused,
 }: IUiListboxInteractiveItemProps<{ trend: IKdaTrend; driver: number }>): ReactNode {
+    const isDisabled = !!item.isDisabled;
+
     return (
         <div
             className={cx("gd-kda-trend-item", {
                 "gd-kda-trend-item-selected": isSelected,
                 "gd-kda-trend-item-focused": isFocused,
+                "gd-kda-trend-item-disabled": isDisabled,
             })}
-            onClick={onSelect}
+            onClick={isDisabled ? undefined : onSelect}
         >
             <div className={cx("gd-kda-trend-item-text")}>{item.stringTitle}</div>
             <div className={cx("gd-kda-trend-item-drivers")}>

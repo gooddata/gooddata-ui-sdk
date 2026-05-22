@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/playground",
-    "version": "1.0.0-alpha.0",
+    "version": "11.37.0-alpha.2",
     "private": true,
     "description": "GoodData.UI SDK - Developer Playground",
     "license": "LicenseRef-LICENSE",

@@ -20,6 +20,15 @@ export function useSignificantDrives() {
         const list: IUiListboxInteractiveItem<{ trend: IKdaTrend; driver: number }>[] = [
             {
                 type: "interactive",
+                id: "all",
+                stringTitle: intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.button.trendAll" }),
+                data: {
+                    trend: "all",
+                    driver: trendUp.length + trendDown.length,
+                },
+            },
+            {
+                type: "interactive",
                 id: "up",
                 stringTitle: intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.button.trendUp" }),
                 data: {
@@ -37,15 +46,6 @@ export function useSignificantDrives() {
                     driver: trendDown.length,
                 },
                 isDisabled: trendDown.length === 0,
-            },
-            {
-                type: "interactive",
-                id: "all",
-                stringTitle: intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.button.trendAll" }),
-                data: {
-                    trend: "all",
-                    driver: trendUp.length + trendDown.length,
-                },
             },
         ];
         return list;

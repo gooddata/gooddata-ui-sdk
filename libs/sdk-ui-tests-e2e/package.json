@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-e2e",
-    "version": "1.0.0",
+    "version": "11.37.0-alpha.2",
     "private": true,
     "description": "GoodData SDK e2e tests",
     "license": "LicenseRef-LICENSE",
