@@ -19,6 +19,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger, UiIconButton } from "@gooddata/sdk-ui-kit";
 
 import { ConditionInputSection } from "./ConditionInputSection.js";
+import { MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS } from "./constants.js";
 import { DimensionalitySection, areDimensionalitySetsEqual } from "./DimensionalitySection.js";
 import { intervalIncludesZero } from "./helpers/intervalIncludesZero.js";
 import { MeasureValueFilterDropdownActions } from "./MeasureValueFilterDropdownActions.js";
@@ -768,7 +769,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
 
     return (
         <div
-            className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body"
+            className={`${MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS} gd-dialog gd-dropdown overlay s-mvf-dropdown-body`}
             data-testid="mvf-dropdown-body"
         >
             {props.isHeaderEnabled && props.measureTitle ? (

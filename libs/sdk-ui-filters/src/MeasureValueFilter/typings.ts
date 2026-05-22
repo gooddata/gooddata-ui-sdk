@@ -12,6 +12,7 @@ import {
     type ObjRefInScope,
 } from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
+import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { type IMeasureValueFilterDropdownButtonProps } from "./MeasureValueFilterButton.js";
 
@@ -298,6 +299,16 @@ export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCusto
      * @beta
      */
     isHeaderEnabled?: boolean;
+    /**
+     * Optional alignment points for the dropdown overlay.
+     *
+     * @remarks
+     * Mirrors the attribute filter alignment hook so hosts can position the MVF dropdown
+     * differently in nested surfaces, for example inside a dashboard filter group.
+     *
+     * @beta
+     */
+    alignPoints?: IAlignPoint[];
 }
 
 /**

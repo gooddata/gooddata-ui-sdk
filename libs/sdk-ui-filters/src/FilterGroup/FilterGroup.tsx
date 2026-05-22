@@ -46,6 +46,16 @@ import {
     ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS,
     ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS,
 } from "../AttributeFilter/constants.js";
+import {
+    MEASURE_VALUE_FILTER_DETAILS_BUBBLE_CLASS,
+    MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS,
+    MEASURE_VALUE_FILTER_OPERATOR_DROPDOWN_BODY_CLASS,
+} from "../MeasureValueFilter/constants.js";
+import {
+    type IMeasureValueFilterProps,
+    MeasureValueFilter,
+} from "../MeasureValueFilter/MeasureValueFilter.js";
+import { type IMeasureValueFilterDropdownButtonProps } from "../MeasureValueFilter/MeasureValueFilterButton.js";
 import { FilterButtonCustomIcon } from "../shared/components/internal/FilterButtonCustomIcon.js";
 
 import { useFilterGroupStatus } from "./useFilterGroupStatus.js";
@@ -57,11 +67,20 @@ export interface IFilterGroupProps<P> {
     title: string;
     filters: P[];
     getFilterIdentifier: (filter: P) => string;
-    hasSelectedElements: (filter: P) => boolean;
+    isFilterActive: (filter: P) => boolean;
+    /**
+     * @deprecated
+     * Use isFilterActive instead.
+     */
+    hasSelectedElements?: (filter: P) => boolean;
     getTitleExtension?: (filterIdentifier: string, filterTitle?: string) => ReactNode;
+    /**
+     * @beta
+     */
     renderFilter: (
         filter: P,
         AttributeFilterComponent?: ComponentType<IAttributeFilterProps>,
+        MeasureValueFilterComponent?: ComponentType<IMeasureValueFilterProps>,
     ) => ReactElement;
 }
 
@@ -89,9 +108,12 @@ const ITEM_ALIGN_POINTS: IAlignPoint[] = [
  * Closing the group dropdown must be prevented when interacting with the nested filter dropdown content.
  */
 const IGNORE_CLICKS_ON_BY_CLASS = [
-    ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS,
-    ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS,
-    ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS,
+    `.${ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS}`,
+    `.${ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS}`,
+    `.${ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS}`,
+    `.${MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS}`,
+    `.${MEASURE_VALUE_FILTER_OPERATOR_DROPDOWN_BODY_CLASS}`,
+    `.${MEASURE_VALUE_FILTER_DETAILS_BUBBLE_CLASS}`,
 ];
 
 function isEditableElement(target: EventTarget | null): boolean {
@@ -107,8 +129,16 @@ function isEditableElement(target: EventTarget | null): boolean {
  * @public
  */
 export function FilterGroup<P>(props: IFilterGroupProps<P>) {
-    const { title, filters, getFilterIdentifier, hasSelectedElements, getTitleExtension, renderFilter } =
-        props;
+    const {
+        title,
+        filters,
+        getFilterIdentifier,
+        isFilterActive: propsIsFilterActive,
+        hasSelectedElements,
+        getTitleExtension,
+        renderFilter,
+    } = props;
+    const isFilterActive = propsIsFilterActive ?? hasSelectedElements;
     const intl = useIntl();
     const [isOpen, setIsOpen] = useState(false);
     const filterItemRefs = useRef(new Map<string, HTMLElement | null>());
@@ -126,14 +156,14 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         if (isAnyFilterError) {
             return intl.formatMessage({ id: "gs.list.notAvailableAbbreviation" });
         }
-        const activeFilters = filters.filter((filter) => hasSelectedElements(filter));
+        const activeFilters = filters.filter((filter) => isFilterActive(filter));
         const activeFiltersCount = activeFilters.length;
         if (activeFiltersCount === 0) {
             return intl.formatMessage({ id: "gs.list.allAndCount" }, { count: filters.length });
         } else {
             return `(${activeFiltersCount}/${availableFilterIdentifiers.length})`;
         }
-    }, [filters, isAnyFilterError, hasSelectedElements, intl, availableFilterIdentifiers]);
+    }, [filters, isAnyFilterError, isFilterActive, intl, availableFilterIdentifiers]);
 
     const { selectedItemsCount, totalItemsCount } = useMemo((): {
         selectedItemsCount?: number;
@@ -142,14 +172,14 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         if (isAnyFilterError) {
             return {};
         }
-        const activeFilters = filters.filter((filter) => hasSelectedElements(filter));
+        const activeFilters = filters.filter((filter) => isFilterActive(filter));
         const activeFiltersCount = activeFilters.length;
         if (activeFiltersCount === 0) {
             return { totalItemsCount: filters.length };
         } else {
             return { selectedItemsCount: activeFiltersCount, totalItemsCount: filters.length };
         }
-    }, [filters, isAnyFilterError, hasSelectedElements]);
+    }, [filters, isAnyFilterError, isFilterActive]);
 
     const errorHandler = useCallback(
         (filterIdentifier: string) => (error: GoodDataSdkError) => {
@@ -279,13 +309,81 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         return result;
     }, [availableFilterIdentifiers, getTitleExtension, errorHandler, initLoadingChangedHandler]);
 
+    const measureValueFilterComponentsByIdentifier = useMemo(() => {
+        const result = new Map<string, ComponentType<IMeasureValueFilterProps>>();
+
+        availableFilterIdentifiers.forEach((filterIdentifier) => {
+            if (result.has(filterIdentifier)) {
+                return;
+            }
+
+            function MeasureValueFilterComponent(measureValueFilterProps: IMeasureValueFilterProps) {
+                const setFilterItemRef = useCallback((element: HTMLElement | null) => {
+                    filterItemRefs.current.set(filterIdentifier, element);
+                }, []);
+                const DropdownButtonComponent: NonNullable<
+                    IMeasureValueFilterProps["DropdownButtonComponent"]
+                > = useCallback(
+                    function DropdownButtonComponent({
+                        buttonTitle,
+                        buttonSubtitle,
+                        buttonTitleExtension,
+                        disabled,
+                        isActive,
+                        onClick,
+                    }: IMeasureValueFilterDropdownButtonProps) {
+                        const titleExtension = getTitleExtension?.(filterIdentifier, buttonTitle);
+                        return (
+                            <FilterGroupItem
+                                title={buttonTitle}
+                                subtitle={buttonSubtitle ?? undefined}
+                                isOpen={isActive}
+                                isLoaded
+                                disabled={disabled}
+                                titleExtension={
+                                    <>
+                                        {buttonTitleExtension}
+                                        {titleExtension}
+                                    </>
+                                }
+                                onClick={onClick}
+                                buttonRef={setFilterItemRef}
+                            />
+                        );
+                    },
+                    [setFilterItemRef],
+                );
+
+                return (
+                    <MeasureValueFilter
+                        {...measureValueFilterProps}
+                        alignPoints={ITEM_ALIGN_POINTS}
+                        DropdownButtonComponent={
+                            measureValueFilterProps.DropdownButtonComponent ?? DropdownButtonComponent
+                        }
+                    />
+                );
+            }
+
+            result.set(filterIdentifier, MeasureValueFilterComponent);
+        });
+
+        return result;
+    }, [availableFilterIdentifiers, getTitleExtension]);
+
     const renderItem = useCallback(
         ({ item }: IFilterGroupDropdownListItemProps<P>) => {
             const identifier = getFilterIdentifier(item);
             const AttributeFilterComponent = attributeFilterComponentsByIdentifier.get(identifier);
-            return renderFilter(item, AttributeFilterComponent);
+            const MeasureValueFilterComponent = measureValueFilterComponentsByIdentifier.get(identifier);
+            return renderFilter(item, AttributeFilterComponent, MeasureValueFilterComponent);
         },
-        [attributeFilterComponentsByIdentifier, getFilterIdentifier, renderFilter],
+        [
+            attributeFilterComponentsByIdentifier,
+            measureValueFilterComponentsByIdentifier,
+            getFilterIdentifier,
+            renderFilter,
+        ],
     );
 
     const handleKeyDownCapture = useCallback<KeyboardEventHandler<HTMLDivElement>>((e: KeyboardEvent) => {

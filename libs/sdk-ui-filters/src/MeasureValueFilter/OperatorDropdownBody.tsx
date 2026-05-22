@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 
 import { Overlay, Separator } from "@gooddata/sdk-ui-kit";
 
+import { MEASURE_VALUE_FILTER_OPERATOR_DROPDOWN_BODY_CLASS } from "./constants.js";
 import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
 import { type MeasureValueFilterOperator } from "./types.js";
 
@@ -34,7 +35,7 @@ export const OperatorDropdownBody = memo(function OperatorDropdownBody({
         <Overlay closeOnOutsideClick alignTo={alignTo} alignPoints={[{ align: "bl tl" }]} onClose={onClose}>
             <div className="gd-dropdown overlay">
                 <div
-                    className="gd-mvf-operator-dropdown-body s-mvf-operator-dropdown-body"
+                    className={`${MEASURE_VALUE_FILTER_OPERATOR_DROPDOWN_BODY_CLASS} s-mvf-operator-dropdown-body`}
                     data-testid="mvf-operator-dropdown-body"
                 >
                     <OperatorDropdownItem

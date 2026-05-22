@@ -7,10 +7,11 @@ import type {
     IDashboardAttributeFilter,
     IDashboardFilterGroup,
     IDashboardMatchAttributeFilter,
+    IDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
 import { groupFilterItems } from "../filterGroupUtils.js";
-import type { FilterBarAttributeFilterIndexed } from "../useFiltersWithAddedPlaceholder.js";
+import type { FilterBarAttributeFilterIndexed, FilterBarItem } from "../useFiltersWithAddedPlaceholder.js";
 
 describe("groupFilterItems", () => {
     it("Empty input with no config returns empty array", () => {
@@ -146,6 +147,23 @@ describe("groupFilterItems", () => {
             },
         ]);
     });
+    it("Measure value filter stays in its group", () => {
+        const items: FilterBarItem[] = [
+            { filter: FILTER_1, filterIndex: 0 },
+            { filter: MEASURE_VALUE_FILTER_2, filterIndex: 1 },
+            { filter: FILTER_3, filterIndex: 2 },
+        ];
+        const actualResult = groupFilterItems(items, { groups: [GROUP_CONFIG_1] });
+        expect(actualResult).toEqual([
+            { filter: FILTER_1, filterIndex: 0 },
+            {
+                groupConfig: GROUP_CONFIG_1,
+                filterIndex: 1,
+                filters: [{ filter: MEASURE_VALUE_FILTER_2, filterIndex: 0 }],
+            },
+            { filter: FILTER_3, filterIndex: 2 },
+        ]);
+    });
 });
 
 const UNRELATED_GROUP_CONFIG_1: IDashboardFilterGroup = {
@@ -261,6 +279,17 @@ const MATCH_FILTER_4: IDashboardMatchAttributeFilter = {
         literal: "value4",
         localIdentifier: "444",
         title: "Four",
+    },
+};
+
+const MEASURE_VALUE_FILTER_2: IDashboardMeasureValueFilter = {
+    dashboardMeasureValueFilter: {
+        measure: {
+            identifier: "measure.two",
+            type: "measure",
+        },
+        localIdentifier: "222",
+        title: "Measure Two",
     },
 };
 

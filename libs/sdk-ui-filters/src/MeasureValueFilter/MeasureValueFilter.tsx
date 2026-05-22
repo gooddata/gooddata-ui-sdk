@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { Fragment, memo, useCallback, useEffect, useRef, useState } from "react";
+import { Fragment, type ReactNode, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import { type IMeasureValueFilter } from "@gooddata/sdk-model";
 
@@ -17,6 +17,9 @@ import {
 export interface IMeasureValueFilterProps
     extends IMeasureValueFilterCommonProps, IMeasureValueFilterCustomComponentsProps {
     buttonTitle: string;
+    buttonSubtitle?: string;
+    buttonTitleExtension?: ReactNode;
+    buttonDisabled?: boolean;
     onCancel?: () => void;
     /**
      * When toggled from falsy to truthy, opens the dropdown once. A re-render with
@@ -42,6 +45,9 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     filter,
     measureIdentifier,
     buttonTitle,
+    buttonSubtitle,
+    buttonTitleExtension,
+    buttonDisabled,
     measureTitle,
     usePercentage,
     warningMessage,
@@ -71,6 +77,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     loadMetricDetails,
     isHeaderEnabled,
     onChange,
+    alignPoints,
 }: IMeasureValueFilterProps) {
     const [displayDropdown, setDisplayDropdown] = useState(false);
     const buttonRef = useRef<HTMLDivElement>(null);
@@ -109,6 +116,9 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     onClick={toggleDropdown}
                     isActive={displayDropdown}
                     buttonTitle={buttonTitle}
+                    buttonSubtitle={buttonSubtitle}
+                    buttonTitleExtension={buttonTitleExtension}
+                    disabled={buttonDisabled}
                 />
             </div>
             {displayDropdown ? (
@@ -144,6 +154,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     anchorEl={buttonRef.current ?? undefined}
                     loadMetricDetails={loadMetricDetails}
                     isHeaderEnabled={isHeaderEnabled}
+                    alignPoints={alignPoints}
                 />
             ) : null}
         </Fragment>

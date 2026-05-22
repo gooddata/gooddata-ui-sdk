@@ -88,6 +88,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     enableRankingWithMvf,
     loadMetricDetails,
     isHeaderEnabled,
+    alignPoints,
 }: IMeasureValueFilterDropdownProps) {
     const applyOnResult = filter?.measureValueFilter.applyOnResult;
 
@@ -231,6 +232,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             applyOnResult={applyOnResult}
             loadMetricDetails={loadMetricDetails}
             isHeaderEnabled={isHeaderEnabled}
+            alignPoints={alignPoints}
         />
     );
 });

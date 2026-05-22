@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ReactElement } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
 import cx from "classnames";
 
@@ -12,6 +12,9 @@ import cx from "classnames";
 export interface IMeasureValueFilterDropdownButtonProps {
     isActive: boolean;
     buttonTitle: string;
+    buttonSubtitle?: string;
+    buttonTitleExtension?: ReactNode;
+    disabled?: boolean;
     onClick: () => void;
 }
 

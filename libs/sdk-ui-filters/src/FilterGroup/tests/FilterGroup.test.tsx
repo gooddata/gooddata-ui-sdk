@@ -175,7 +175,7 @@ describe("FilterGroup", () => {
                     title="Filter group"
                     filters={filters}
                     getFilterIdentifier={(filter) => filter.id}
-                    hasSelectedElements={() => false}
+                    isFilterActive={() => false}
                     renderFilter={(filter, AttributeFilterComponent) => {
                         if (!AttributeFilterComponent) {
                             throw new Error("AttributeFilterComponent is required.");
@@ -206,7 +206,7 @@ describe("FilterGroup", () => {
                     title="Filter group"
                     filters={filters}
                     getFilterIdentifier={(filter) => filter.id}
-                    hasSelectedElements={() => false}
+                    isFilterActive={() => false}
                     renderFilter={(filter, AttributeFilterComponent) => {
                         if (!AttributeFilterComponent) {
                             throw new Error("AttributeFilterComponent is required.");
@@ -242,7 +242,7 @@ describe("FilterGroup", () => {
                     title="Filter group"
                     filters={filters}
                     getFilterIdentifier={(filter) => filter.id}
-                    hasSelectedElements={() => false}
+                    isFilterActive={() => false}
                     renderFilter={(filter, AttributeFilterComponent) => {
                         if (!AttributeFilterComponent) {
                             throw new Error("AttributeFilterComponent is required.");
@@ -269,7 +269,7 @@ describe("FilterGroup", () => {
         const filters = [{ id: "region", title: "Region" }];
 
         function Component(): ReactElement {
-            const [hasSelection, setHasSelection] = useState(false);
+            const [isFilterActive, setIsFilterActive] = useState(false);
 
             return (
                 <IntlWrapper locale="en-US">
@@ -277,7 +277,7 @@ describe("FilterGroup", () => {
                         title="Filter group"
                         filters={filters}
                         getFilterIdentifier={(filter) => filter.id}
-                        hasSelectedElements={() => hasSelection}
+                        isFilterActive={() => isFilterActive}
                         renderFilter={(filter, AttributeFilterComponent) => {
                             if (!AttributeFilterComponent) {
                                 throw new Error("AttributeFilterComponent is required.");
@@ -288,7 +288,7 @@ describe("FilterGroup", () => {
                                     {...({
                                         title: filter.title,
                                         onToggleSelection: () => {
-                                            setHasSelection((prev) => !prev);
+                                            setIsFilterActive((prev) => !prev);
                                         },
                                     } as IMockedAttributeFilterButtonProps)}
                                 />
@@ -345,7 +345,7 @@ describe("FilterGroup", () => {
                     title="Filter group"
                     filters={filters}
                     getFilterIdentifier={(filter) => filter.id}
-                    hasSelectedElements={() => false}
+                    isFilterActive={() => false}
                     renderFilter={(filter, AttributeFilterComponent) => {
                         if (!AttributeFilterComponent) {
                             throw new Error("AttributeFilterComponent is required.");
