@@ -854,6 +854,7 @@ export { UiIcon, type IUiIconProps } from "./@ui/UiIcon/UiIcon.js";
 export type { BackgroundType, BackgroundShape } from "./@ui/@types/background.js";
 export { iconPaths } from "./@ui/UiIcon/icons.js";
 export { UiSkeleton, type IUiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
+export { UiErrorPage, type IUiErrorPageProps } from "./@ui/UiErrorPage/UiErrorPage.js";
 export {
     UiPagedVirtualList,
     type IUiPagedVirtualListImperativeHandle,

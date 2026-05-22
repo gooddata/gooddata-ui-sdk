@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Видалити",
     "analyticsCatalog.error.unknown.message": "Невідома помилка",
     "analyticsCatalog.error.unknown.description": "Ми не зовсім впевнені, що пішло не так. Спробуйте ще раз пізніше.",
+    "analyticsCatalog.error.notFound.title": "Не вдається знайти цей елемент",
+    "analyticsCatalog.error.notFound.description": "Можливо, її було видалено або у вас немає доступу.",
     "analyticsCatalog.error.unauthorized.message": "Немає авторизації",
     "analyticsCatalog.error.unauthorized.description": "На жаль, у вас немає доступу до каталогу аналітики. Попросіть адміністратора надати вам дозволи.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Закрити",

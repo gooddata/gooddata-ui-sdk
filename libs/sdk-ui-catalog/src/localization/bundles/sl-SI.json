@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Odstrani",
     "analyticsCatalog.error.unknown.message": "Neznana napaka",
     "analyticsCatalog.error.unknown.description": "Nismo povsem prepričani, kaj je šlo narobe. Prosimo, poskusite znova kasneje.",
+    "analyticsCatalog.error.notFound.title": "Tega elementa ni mogoče najti",
+    "analyticsCatalog.error.notFound.description": "Morda je bila izbrisana ali pa nimate dostopa.",
     "analyticsCatalog.error.unauthorized.message": "Nepooblaščen",
     "analyticsCatalog.error.unauthorized.description": "Oprostite, nimajo dostopa do kataloga analitike. Prosite svojega skrbnika za dodelitev dovoljenj.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Zapri",

@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Verwijderen",
     "analyticsCatalog.error.unknown.message": "Onbekende fout",
     "analyticsCatalog.error.unknown.description": "We weten niet precies wat er misging. Probeer het later opnieuw.",
+    "analyticsCatalog.error.notFound.title": "We kunnen dit item niet vinden",
+    "analyticsCatalog.error.notFound.description": "Deze is mogelijk verwijderd of u hebt er geen toegang toe.",
     "analyticsCatalog.error.unauthorized.message": "Niet-geauthoriseerd",
     "analyticsCatalog.error.unauthorized.description": "U hebt helaas geen toegang tot de analyticscatalogus. Vraag uw beheerder om u de vereiste machtigingen te geven.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Sluiten",

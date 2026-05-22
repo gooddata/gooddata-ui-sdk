@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "นำออก",
     "analyticsCatalog.error.unknown.message": "ข้อผิดพลาดที่ไม่ทราบสาเหตุ",
     "analyticsCatalog.error.unknown.description": "เราไม่แน่ใจว่าเกิดข้อผิดพลาดอะไรขึ้น โปรดลองอีกครั้งในภายหลัง",
+    "analyticsCatalog.error.notFound.title": "เราไม่พบรายการนี้",
+    "analyticsCatalog.error.notFound.description": "อาจถูกลบไปแล้ว หรือคุณไม่มีสิทธิ์เข้าถึง",
     "analyticsCatalog.error.unauthorized.message": "ไม่ได้รับอนุญาต",
     "analyticsCatalog.error.unauthorized.description": "ขออภัย คุณไม่มีสิทธิ์เข้าถึงแค็ตตาล็อก Analytics โปรดขอให้ผู้ดูแลระบบมอบสิทธิ์ให้คุณ",
     "analyticsCatalog.catalogItem.closeButtonLabel": "ปิด",

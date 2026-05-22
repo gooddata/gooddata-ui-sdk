@@ -779,7 +779,7 @@
             top: 0;
             bottom: 0;
             width: 1px;
-            background-color: kit-variables.$gd-color-state-blank;
+            background-color: kit-variables.$gd-border-color;
             opacity: 0.3;
         }
     }
@@ -984,6 +984,8 @@
 }
 
 .gd-gen-ai-chat__messages__conversation-group {
+    $root: &;
+
     &--user {
         //User group
     }
@@ -1003,7 +1005,14 @@
     }
 
     &--reasoning {
-        //Reasoning group
+        margin-bottom: -15px;
+
+        p:not(:last-child) {
+            margin-bottom: 10px;
+        }
+    }
+    &--reasoning#{$root}--expanded {
+        margin-bottom: 0;
     }
 
     &--error {
@@ -1211,6 +1220,7 @@
 
     &--reasoning {
         word-break: break-word;
+        padding-bottom: 10px;
     }
 
     &--search {

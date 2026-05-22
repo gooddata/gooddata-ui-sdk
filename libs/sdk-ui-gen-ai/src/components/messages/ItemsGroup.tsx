@@ -52,6 +52,7 @@ function ReasoningItemsGroup({ classNames, group, previousGroup, children }: IRe
         <div
             className={cx(classNames, {
                 "gd-gen-ai-chat__messages__conversation-group--completed": isCompleted,
+                "gd-gen-ai-chat__messages__conversation-group--expanded": isExpanded,
             })}
         >
             <div

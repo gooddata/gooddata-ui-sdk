@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Remove",
     "analyticsCatalog.error.unknown.message": "Unknown error",
     "analyticsCatalog.error.unknown.description": "We’re not quite sure what went wrong. Please try again later.",
+    "analyticsCatalog.error.notFound.title": "We can’t find this item",
+    "analyticsCatalog.error.notFound.description": "It may have been deleted or you don't have access.",
     "analyticsCatalog.error.unauthorized.message": "Unauthorised",
     "analyticsCatalog.error.unauthorized.description": "Sorry you don't have access to the analytics catalogue. Ask your administrator to grant you permissions.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Close",

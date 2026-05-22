@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "删除",
     "analyticsCatalog.error.unknown.message": "未知错误",
     "analyticsCatalog.error.unknown.description": "我们不太确定出了什么问题。请稍后重试。",
+    "analyticsCatalog.error.notFound.title": "我们找不到此项",
+    "analyticsCatalog.error.notFound.description": "它可能已被删除，或者您没有访问权限。",
     "analyticsCatalog.error.unauthorized.message": "未授权",
     "analyticsCatalog.error.unauthorized.description": "抱歉，您无法访问分析目录。请联系管理员为您授予权限。",
     "analyticsCatalog.catalogItem.closeButtonLabel": "关闭",

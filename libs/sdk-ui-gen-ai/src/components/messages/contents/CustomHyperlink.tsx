@@ -1,20 +1,31 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent, useMemo } from "react";
 
+import { connect } from "react-redux";
+
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+
+import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+import { type RootState } from "../../../store/types.js";
 import { type LinkHandlerEvent, useConfig } from "../../ConfigContext.js";
 
-export type CustomHyperlinkProps = {
+export type CustomHyperlinkOwnProps = {
     href: string;
     text: string;
+};
+
+type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
+    settings?: IUserWorkspaceSettings;
 };
 
 /**
  * Similar to SDK Hyperlink, but can handle customer schemas
  * used for links management
  */
-export function CustomHyperlink({ href, text }: CustomHyperlinkProps) {
+export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperlinkProps) {
     const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
+    const enableShellApplication_metricEditor = Boolean(settings?.enableShellApplication_metricEditor);
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
 
@@ -37,7 +48,7 @@ export function CustomHyperlink({ href, text }: CustomHyperlinkProps) {
             return null;
         }
 
-        const itemUrl = getItemUrl(workspaceId, id, type);
+        const itemUrl = getItemUrl(workspaceId, id, type, enableShellApplication_metricEditor);
 
         if (!itemUrl) {
             return null;
@@ -49,7 +60,7 @@ export function CustomHyperlink({ href, text }: CustomHyperlinkProps) {
             id,
             itemUrl,
         };
-    }, [href]);
+    }, [href, enableShellApplication_metricEditor]);
 
     if (!parsedRef) {
         return text;
@@ -96,15 +107,26 @@ export function CustomHyperlink({ href, text }: CustomHyperlinkProps) {
     );
 }
 
-const getItemUrl = (workspaceId: string, id: string, objectType: string) => {
+const getItemUrl = (
+    workspaceId: string,
+    id: string,
+    objectType: string,
+    enableShellApplication_metricEditor?: boolean,
+) => {
     switch (objectType) {
         case "visualization":
             return `/analyze/#/${workspaceId}/${id}/edit`;
         case "dashboard":
             return `/dashboards/#/workspace/${workspaceId}/dashboard/${id}`;
         case "metric":
-            return `/metrics/#/${workspaceId}/metric/${id}`;
+            return enableShellApplication_metricEditor
+                ? `/workspace/${workspaceId}/metrics/metric/${id}`
+                : `/metrics/#/${workspaceId}/metric/${id}`;
         default:
             return null;
     }
 };
+
+export const CustomHyperlink = connect((state: RootState) => ({
+    settings: settingsSelector(state),
+}))(CustomHyperlinkComponent);

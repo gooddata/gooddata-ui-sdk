@@ -3,7 +3,13 @@
 import type { PropsWithChildren } from "react";
 import { useIntl } from "react-intl";
 
-import { ErrorComponent, LoadingComponent, type UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
+import {
+    ErrorComponent,
+    LoadingComponent,
+    type UseCancelablePromiseStatus,
+    isNotFound,
+} from "@gooddata/sdk-ui";
+import { UiErrorPage } from "@gooddata/sdk-ui-kit";
 
 type Props = PropsWithChildren<{
     status: UseCancelablePromiseStatus;
@@ -21,6 +27,18 @@ export function CatalogDetailStatus({ status, error, children }: Props) {
         );
     }
     if (status === "error") {
+        if (isNotFound(error)) {
+            return (
+                <div className="gd-analytics-catalog-detail__error">
+                    <UiErrorPage
+                        title={intl.formatMessage({ id: "analyticsCatalog.error.notFound.title" })}
+                        description={intl.formatMessage({
+                            id: "analyticsCatalog.error.notFound.description",
+                        })}
+                    />
+                </div>
+            );
+        }
         return (
             <div className="gd-analytics-catalog-detail__error">
                 <ErrorComponent

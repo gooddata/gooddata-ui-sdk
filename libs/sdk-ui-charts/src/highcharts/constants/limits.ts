@@ -1,4 +1,5 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 export const DEFAULT_SERIES_LIMIT = 10000;
 export const DEFAULT_CATEGORIES_LIMIT = 10000;
 export const DEFAULT_DATA_POINTS_LIMIT = 10000;
@@ -7,6 +8,9 @@ export const HEATMAP_DATA_POINTS_LIMIT = 10000;
 export const SANKEY_CHART_NODE_LIMIT = 10000;
 export const SANKEY_CHART_DATA_POINT_LIMIT = 10000;
 export const WATERFALL_CHART_DATA_POINT_LIMIT = 10000;
+// Stacked column/bar charts freeze the main thread well before the generic 10k series cap
+// (Highcharts can't draw more than ~1500 stacks), so they need a tighter limit than other chart types.
+export const STACKED_COLUMN_BAR_SERIES_LIMIT = 1000;
 
 /**
  * Soft limits are used for checking whether the chart should be recommended to be filtered out
@@ -22,3 +26,4 @@ export const SOFT_PIE_CHART_LIMIT = 20;
 export const SOFT_SANKEY_CHART_NODE_LIMIT = 50;
 export const SOFT_SANKEY_CHART_DATA_POINT_LIMIT = 500;
 export const SOFT_WATERFALL_CHART_DATA_POINT_LIMIT = 400;
+export const SOFT_STACKED_COLUMN_BAR_SERIES_LIMIT = 50;

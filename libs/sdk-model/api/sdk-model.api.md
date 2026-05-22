@@ -2670,6 +2670,7 @@ export interface IFeatureFlags {
     enableSemanticSearchRollout?: boolean;
     enableShellApplication?: boolean;
     enableShellApplication_catalog?: boolean;
+    enableShellApplication_metricEditor?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;

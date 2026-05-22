@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Kaldır",
     "analyticsCatalog.error.unknown.message": "Bilinmeyen hata",
     "analyticsCatalog.error.unknown.description": "Ne yazık ki neyin yanlış gittiğinden emin değiliz. Lütfen daha sonra tekrar deneyin.",
+    "analyticsCatalog.error.notFound.title": "Bu öğeyi bulamıyoruz",
+    "analyticsCatalog.error.notFound.description": "Silinmiş olabilir veya erişiminiz yok.",
     "analyticsCatalog.error.unauthorized.message": "Yetkisiz",
     "analyticsCatalog.error.unauthorized.description": "Üzgünüz, analitik kataloğuna erişiminiz yok. Yöneticinizden size izin vermesini isteyin.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Kapat",

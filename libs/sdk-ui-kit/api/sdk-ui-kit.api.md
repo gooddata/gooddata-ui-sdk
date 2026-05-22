@@ -6404,6 +6404,21 @@ export interface IUiDropdownProps {
     zIndex?: number;
 }
 
+// @internal (undocumented)
+export interface IUiErrorPageProps {
+    // (undocumented)
+    accessibilityConfig?: {
+        role?: HTMLAttributes<HTMLElement>["role"];
+        ariaLive?: AriaAttributes["aria-live"];
+    };
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    description?: ReactNode;
+    // (undocumented)
+    title: ReactNode;
+}
+
 // @internal
 export interface IUiFloatingElementProps {
     // (undocumented)
@@ -8478,6 +8493,9 @@ export function UiDropdown({ renderButton, renderBody, isOpen: isOpenProp, onOpe
 
 // @internal (undocumented)
 export const UiDropdownIconButton: ForwardRefExoticComponent<IUiDropdownIconButtonProps & RefAttributes<HTMLButtonElement>>;
+
+// @internal
+export function UiErrorPage({ title, description, dataTestId, accessibilityConfig }: IUiErrorPageProps): JSX.Element;
 
 // @internal
 export function UiFloatingElement({ children, anchor, isOpen, onClose, placement, alignPoints, strategy, offset, autoFlip, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOn, shouldCloseOnClick, zIndex: zIndexProp, className, contentClassName, style, width, maxWidth, maxHeight, accessibilityConfig, onPlacementChange }: IUiFloatingElementProps): JSX.Element | null;

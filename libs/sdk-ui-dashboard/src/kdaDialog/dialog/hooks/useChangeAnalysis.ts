@@ -93,8 +93,9 @@ function useChangeAnalysisResults(
 
     return useCancelablePromise<IChangeAnalysisResults | undefined>(
         {
+            enableAbortController: true,
             promise: shouldComputeChangeAnalysis
-                ? () => {
+                ? (signal) => {
                       const granularity = dateAttribute.granularity;
                       const attributes = attrs
                           .map((ref) => {
@@ -113,27 +114,35 @@ function useChangeAnalysisResults(
                           ...measureValueExecutionFilters,
                       ];
 
-                      return backend
-                          .workspace(workspace)
-                          .keyDriverAnalysis()
-                          .computeChangeAnalysis(
-                              {
-                                  measure: definition.metric as IMeasure,
-                                  auxMeasures: definition.metrics as IMeasure[],
-                                  attributes,
-                                  filters,
-                              },
-                              {
-                                  dateAttribute: newAttribute(dateAttribute.defaultDisplayForm.ref),
-                                  from: from ?? "",
-                                  to: to ?? "",
-                                  granularity,
-                              },
-                              {
-                                  includeTags,
-                                  excludeTags,
-                              },
-                          );
+                      const kda = backend.workspace(workspace).keyDriverAnalysis();
+
+                      signal.addEventListener(
+                          "abort",
+                          () => {
+                              kda.cancelChangeAnalysis();
+                          },
+                          { once: true },
+                      );
+
+                      return kda.computeChangeAnalysis(
+                          {
+                              measure: definition.metric as IMeasure,
+                              auxMeasures: definition.metrics as IMeasure[],
+                              attributes,
+                              filters,
+                          },
+                          {
+                              dateAttribute: newAttribute(dateAttribute.defaultDisplayForm.ref),
+                              from: from ?? "",
+                              to: to ?? "",
+                              granularity,
+                          },
+                          {
+                              includeTags,
+                              excludeTags,
+                          },
+                          signal,
+                      );
                   }
                 : undefined,
         },
