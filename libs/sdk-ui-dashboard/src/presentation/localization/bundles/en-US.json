@@ -3244,7 +3244,7 @@
         "crowdinContext": "Used to show the number of key drivers in the dialog. Example: '2 drivers'."
     },
     "kdaDialog.dialog.keyDrives.overview.summary.home": {
-        "text": "Summary",
+        "text": "Home",
         "crowdinContext": "Home button in the Key Driver Analysis dialog overview section"
     },
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": {

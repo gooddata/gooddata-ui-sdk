@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/dashboard-plugin-template",
-    "version": "1.0.0",
+    "version": "11.37.0-alpha.2",
     "private": true,
     "description": "GoodData Template for Dashboard Plugins",
     "license": "LicenseRef-LICENSE",
