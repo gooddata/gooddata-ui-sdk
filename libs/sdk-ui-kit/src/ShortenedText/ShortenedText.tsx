@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ElementType, PureComponent, type ReactNode, createRef } from "react";
 
@@ -175,16 +175,24 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
 
     renderText(): ReactNode {
         const TagName = this.props.tagName as ElementType;
+        const isShortened = this.state.customTitle;
         return (
             <TagName
                 ref={this.textRef}
                 className={cx(this.props.className, "shortened", {
-                    "is-shortened": this.state.customTitle,
-                    "is-whole": !this.state.customTitle,
+                    "is-shortened": isShortened,
+                    "is-whole": !isShortened,
                 })}
                 id={this.props.id}
             >
-                {this.state.title}
+                {isShortened ? (
+                    <>
+                        <span aria-hidden="true">{this.state.title}</span>
+                        <span className="sr-only">{this.props.children}</span>
+                    </>
+                ) : (
+                    this.state.title
+                )}
             </TagName>
         );
     }
