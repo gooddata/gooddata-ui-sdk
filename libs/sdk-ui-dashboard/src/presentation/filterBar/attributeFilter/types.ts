@@ -7,6 +7,8 @@ import {
     type ICatalogAttribute,
     type ICatalogDateDataset,
     type ICatalogMeasure,
+    type IDashboardMeasureValueFilter,
+    type MeasureValueFilterCondition,
     type ObjRef,
 } from "@gooddata/sdk-model";
 import type { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
@@ -16,6 +18,7 @@ import { type IDashboardAttributeFilterParentItem } from "../../../model/types/a
 import { type IDashboardDependentDateFilter } from "../../../model/types/dateFilterTypes.js";
 import type { IFilterBarFilterGroupItem } from "../filterBar/useFiltersWithAddedPlaceholder.js";
 import { type DashboardFilterSelectionType } from "../filterSelectionTypes.js";
+import type { CustomDashboardMeasureValueFilterComponent } from "../measureValueFilter/types.js";
 
 import { type IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
 
@@ -144,7 +147,13 @@ export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAt
 export interface IDashboardFilterGroupProps {
     groupItem: IFilterBarFilterGroupItem;
     onAttributeFilterChanged: (filter: DashboardAttributeFilterItem) => void;
+    onMeasureValueFilterChanged?: (
+        filter: IDashboardMeasureValueFilter,
+        conditions: MeasureValueFilterCondition[] | undefined,
+        isWorkingSelectionChange?: boolean,
+    ) => void;
     DashboardAttributeFilterComponent?: CustomDashboardAttributeFilterComponent;
+    DashboardMeasureValueFilterComponent?: CustomDashboardMeasureValueFilterComponent;
 }
 
 /**

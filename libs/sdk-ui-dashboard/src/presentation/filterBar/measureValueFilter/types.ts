@@ -3,6 +3,7 @@
 import { type ComponentType } from "react";
 
 import { type IDashboardMeasureValueFilter, type MeasureValueFilterCondition } from "@gooddata/sdk-model";
+import { type IMeasureValueFilterProps } from "@gooddata/sdk-ui-filters";
 
 /**
  * @alpha
@@ -53,6 +54,21 @@ export interface IDashboardMeasureValueFilterProps {
      * undefined, the active tab's state is used.
      */
     tabId?: string;
+
+    /**
+     * Optional custom measure value filter component to change or extend the default rendered one.
+     *
+     * @alpha
+     */
+    MeasureValueFilterComponent?: ComponentType<IMeasureValueFilterProps>;
+
+    /**
+     * Controls whether the internal dashboard dropdown button should be passed to the SDK component.
+     * When false, the SDK component can inject its own button, for example when rendered in a filter group.
+     *
+     * @alpha
+     */
+    passDropdownButton?: boolean;
 }
 
 /**

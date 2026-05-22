@@ -5,8 +5,10 @@ import {
     type IDashboardFilterGroup,
     type IDashboardFilterGroupsConfig,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
+    isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
 import {
@@ -26,6 +28,9 @@ function findGroupForFilter(
             }
             if (isDashboardDateFilter(item)) {
                 return filter.filterLocalIdentifier === item.dateFilter.localIdentifier;
+            }
+            if (isDashboardMeasureValueFilter(item)) {
+                return filter.filterLocalIdentifier === dashboardFilterLocalIdentifier(item);
             }
             return false;
         }),

@@ -12,14 +12,17 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
     getSelectedElementsCount,
+    isAllDashboardMeasureValueFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import {
     AttributeFilterDependencyTooltip,
     FilterGroup,
     type IAttributeFilterProps,
+    type IMeasureValueFilterProps,
     useDeepEqualRefStablizer,
 } from "@gooddata/sdk-ui-filters";
 
@@ -38,13 +41,20 @@ import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectEffectiveAttributeFiltersModeMap,
 } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectEffectiveMeasureValueFiltersModeMap } from "../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DefaultDashboardAttributeFilter } from "../attributeFilter/DefaultDashboardAttributeFilter.js";
 import type { IDashboardFilterGroupProps } from "../attributeFilter/types.js";
+import { DefaultDashboardMeasureValueFilter } from "../measureValueFilter/DefaultDashboardMeasureValueFilter.js";
 
 import {
     type FilterBarAttributeFilterIndexed,
+    type FilterBarMeasureValueFilterIndexed,
     isFilterBarAttributeFilter,
+    isFilterBarMeasureValueFilter,
 } from "./useFiltersWithAddedPlaceholder.js";
+
+type FilterBarGroupFilterIndexed = FilterBarAttributeFilterIndexed | FilterBarMeasureValueFilterIndexed;
 
 /**
  * @alpha
@@ -53,9 +63,12 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
     const {
         groupItem,
         onAttributeFilterChanged,
+        onMeasureValueFilterChanged,
         DashboardAttributeFilterComponent: CustomDashboardAttributeFilterComponent,
+        DashboardMeasureValueFilterComponent: CustomDashboardMeasureValueFilterComponent,
     } = props;
     const intl = useIntl();
+    const { DashboardMeasureValueFilterComponentProvider } = useDashboardComponentsContext();
 
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
@@ -64,34 +77,65 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
         selectAttributeFilterConfigsDisplayAsLabelMap,
     );
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
+    const measureValueFiltersModeMap = useDashboardSelector(selectEffectiveMeasureValueFiltersModeMap);
     const enableArbitraryFilter = useDashboardSelector(selectEnableArbitraryFilterKD);
     const enableMatchFilter = useDashboardSelector(selectEnableMatchFilterKD);
 
-    const getFilterIdentifier = useCallback((filter: FilterBarAttributeFilterIndexed) => {
-        return (
-            dashboardAttributeFilterItemLocalIdentifier(filter.filter) ??
-            dashboardFilterLocalIdentifier(filter.filter)!
-        );
+    const getFilterIdentifier = useCallback((filter: FilterBarGroupFilterIndexed) => {
+        if (isFilterBarAttributeFilter(filter)) {
+            return dashboardAttributeFilterItemLocalIdentifier(filter.filter)!;
+        }
+
+        return dashboardFilterLocalIdentifier(filter.filter)!;
     }, []);
 
-    const hasSelectedElements = useCallback((filter: FilterBarAttributeFilterIndexed) => {
-        if (isDashboardAttributeFilter(filter.filter)) {
-            return getSelectedElementsCount(filter.filter) > 0;
+    const isFilterActive = useCallback((filter: FilterBarGroupFilterIndexed) => {
+        if (isFilterBarMeasureValueFilter(filter)) {
+            return !isAllDashboardMeasureValueFilter(filter.filter);
         }
-        if (isDashboardArbitraryAttributeFilter(filter.filter)) {
-            return filter.filter.arbitraryAttributeFilter.values.length > 0;
+        const dashboardFilter = filter.filter;
+        if (isDashboardAttributeFilter(dashboardFilter)) {
+            return getSelectedElementsCount(dashboardFilter) > 0;
         }
-        if (isDashboardMatchAttributeFilter(filter.filter)) {
-            return filter.filter.matchAttributeFilter.literal.length > 0;
+        if (isDashboardArbitraryAttributeFilter(dashboardFilter)) {
+            return dashboardFilter.arbitraryAttributeFilter.values.length > 0;
+        }
+        if (isDashboardMatchAttributeFilter(dashboardFilter)) {
+            return dashboardFilter.matchAttributeFilter.literal.length > 0;
         }
         return true;
     }, []);
 
     const renderFilter = useCallback(
         (
-            filter: FilterBarAttributeFilterIndexed,
+            filter: FilterBarGroupFilterIndexed,
             AttributeFilterComponent?: ComponentType<IAttributeFilterProps>,
+            MeasureValueFilterComponent?: ComponentType<IMeasureValueFilterProps>,
         ): ReactElement => {
+            if (isFilterBarMeasureValueFilter(filter)) {
+                const localId = dashboardFilterLocalIdentifier(filter.filter)!;
+                const measureValueFilterMode =
+                    measureValueFiltersModeMap.get(localId) ??
+                    DashboardAttributeFilterConfigModeValues.ACTIVE;
+                const DashboardMeasureValueFilterComponent =
+                    CustomDashboardMeasureValueFilterComponent ??
+                    DashboardMeasureValueFilterComponentProvider(filter.filter) ??
+                    DefaultDashboardMeasureValueFilter;
+
+                return (
+                    <DashboardMeasureValueFilterComponent
+                        filter={filter.filter}
+                        filterIndex={filter.filterIndex}
+                        readonly={
+                            measureValueFilterMode === DashboardAttributeFilterConfigModeValues.READONLY
+                        }
+                        onMeasureValueFilterChanged={onMeasureValueFilterChanged!}
+                        MeasureValueFilterComponent={MeasureValueFilterComponent}
+                        passDropdownButton={false}
+                    />
+                );
+            }
+
             const localId = dashboardAttributeFilterItemLocalIdentifier(filter.filter)!;
             const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(localId);
             const attributeFilterMode = attributeFiltersModeMap.get(localId);
@@ -115,12 +159,19 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
             attributeFiltersDisplayAsLabelMap,
             attributeFiltersModeMap,
             CustomDashboardAttributeFilterComponent,
+            CustomDashboardMeasureValueFilterComponent,
+            DashboardMeasureValueFilterComponentProvider,
+            measureValueFiltersModeMap,
+            onMeasureValueFilterChanged,
         ],
     );
 
     const itemFilters = useMemo(() => {
         return groupItem.filters
-            .map((filter): FilterBarAttributeFilterIndexed | undefined => {
+            .map((filter): FilterBarGroupFilterIndexed | undefined => {
+                if (isFilterBarMeasureValueFilter(filter)) {
+                    return filter;
+                }
                 if (!isFilterBarAttributeFilter(filter)) {
                     return undefined;
                 }
@@ -136,8 +187,18 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
                     filter: convertDashboardAttributeFilterElementsUrisToValues(filter.filter),
                 };
             })
-            .filter((filter): filter is FilterBarAttributeFilterIndexed => filter !== undefined)
+            .filter((filter): filter is FilterBarGroupFilterIndexed => filter !== undefined)
             .filter((filter) => {
+                if (isDashboardMeasureValueFilter(filter.filter)) {
+                    if (!onMeasureValueFilterChanged) {
+                        return false;
+                    }
+                    const localId = dashboardFilterLocalIdentifier(filter.filter);
+                    return (
+                        measureValueFiltersModeMap.get(localId!) !==
+                        DashboardAttributeFilterConfigModeValues.HIDDEN
+                    );
+                }
                 const localId = dashboardAttributeFilterItemLocalIdentifier(filter.filter);
                 return (
                     attributeFiltersModeMap.get(localId!) !== DashboardAttributeFilterConfigModeValues.HIDDEN
@@ -157,13 +218,19 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
         groupItem.filters,
         supportElementUris,
         attributeFiltersModeMap,
+        measureValueFiltersModeMap,
         enableArbitraryFilter,
         enableMatchFilter,
+        onMeasureValueFilterChanged,
     ]);
 
     const filterDependenciesByLocalIdUnstable = useMemo(() => {
         return new Map<string, boolean>(
             itemFilters.map((filter) => {
+                if (isFilterBarMeasureValueFilter(filter)) {
+                    return [dashboardFilterLocalIdentifier(filter.filter)!, false];
+                }
+
                 const localId = dashboardAttributeFilterItemLocalIdentifier(filter.filter)!;
                 // Match filter type has no parent filter dependencies by design
                 if (isDashboardMatchAttributeFilter(filter.filter)) {
@@ -209,11 +276,11 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
     );
 
     return (
-        <FilterGroup<FilterBarAttributeFilterIndexed>
+        <FilterGroup<FilterBarGroupFilterIndexed>
             title={groupItem.groupConfig.title}
             filters={itemFilters}
             getFilterIdentifier={getFilterIdentifier}
-            hasSelectedElements={hasSelectedElements}
+            isFilterActive={isFilterActive}
             renderFilter={renderFilter}
             getTitleExtension={getTitleExtension}
         />

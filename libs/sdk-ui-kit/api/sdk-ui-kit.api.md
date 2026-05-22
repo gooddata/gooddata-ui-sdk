@@ -1543,7 +1543,9 @@ export function IconAttributeFilter({ color, className, width, height }: IIconPr
 export function IconBar({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconBoldHyperlink({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconBoldHyperlink({ color, className, width, height, ariaLabel }: IIconProps & {
+    ariaLabel?: string;
+}): JSX.Element;
 
 // @internal (undocumented)
 export function IconBook({ color, className, width, height }: IIconProps): JSX.Element;

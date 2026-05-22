@@ -9,6 +9,7 @@ import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../locales.js";
 
+import { MEASURE_VALUE_FILTER_DETAILS_BUBBLE_CLASS } from "./constants.js";
 import { useMeasureValueFilterDetails } from "./useMeasureValueFilterDetails.js";
 
 /**
@@ -46,7 +47,7 @@ export function MeasureValueFilterDetailsBubble({
     const handleClose = useCallback(() => setIsOpen(false), []);
 
     const tooltipContent = (
-        <div className="gd-mvf-details-bubble s-mvf-details-bubble">
+        <div className={`${MEASURE_VALUE_FILTER_DETAILS_BUBBLE_CLASS} s-mvf-details-bubble`}>
             <div className="gd-mvf-details-bubble__content">
                 <div className="gd-mvf-details-bubble__section">
                     <h3 className="gd-mvf-details-bubble__title">{details?.title ?? title}</h3>

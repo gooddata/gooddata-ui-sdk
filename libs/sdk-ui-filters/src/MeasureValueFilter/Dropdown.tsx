@@ -8,7 +8,7 @@ import {
     type ObjRefInScope,
 } from "@gooddata/sdk-model";
 import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
-import { Overlay, UiFocusManager } from "@gooddata/sdk-ui-kit";
+import { type IAlignPoint, Overlay, UiFocusManager } from "@gooddata/sdk-ui-kit";
 
 import { DropdownBody } from "./DropdownBody.js";
 import { type MeasureValueFilterOperator } from "./types.js";
@@ -58,6 +58,7 @@ interface IDropdownProps extends IMeasureValueFilterCustomComponentProps {
     isLoadingCatalogDimensionality?: boolean;
     loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
     isHeaderEnabled?: boolean;
+    alignPoints?: IAlignPoint[];
 }
 
 const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
@@ -94,6 +95,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         applyOnResult,
         loadMetricDetails,
         isHeaderEnabled,
+        alignPoints,
     } = props;
 
     const onApply: IMeasureValueFilterDropdownCallback = useCallback(
@@ -108,7 +110,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
     return (
         <Overlay
             alignTo={anchorEl}
-            alignPoints={DROPDOWN_ALIGNMENTS}
+            alignPoints={alignPoints ?? DROPDOWN_ALIGNMENTS}
             closeOnOutsideClick
             closeOnParentScroll
             closeOnMouseDrag

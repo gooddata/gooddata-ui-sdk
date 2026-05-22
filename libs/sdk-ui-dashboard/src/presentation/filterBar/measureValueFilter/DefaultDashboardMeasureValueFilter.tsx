@@ -84,7 +84,15 @@ function MeasureValueFilterVisibilityIcon({
 export function DefaultDashboardMeasureValueFilter(
     props: IDashboardMeasureValueFilterProps,
 ): ReactElement | null {
-    const { filter, readonly, autoOpen, onMeasureValueFilterChanged, onMeasureValueFilterClose } = props;
+    const {
+        filter,
+        readonly,
+        autoOpen,
+        onMeasureValueFilterChanged,
+        onMeasureValueFilterClose,
+        MeasureValueFilterComponent: CustomMeasureValueFilterComponent,
+        passDropdownButton = true,
+    } = props;
     const intl = useIntl();
 
     const isEditMode = useDashboardSelector(selectIsInEditMode);
@@ -256,6 +264,9 @@ export function DefaultDashboardMeasureValueFilter(
         function DashboardMeasureValueFilterDropdownButton({
             isActive,
             buttonTitle,
+            buttonSubtitle,
+            buttonTitleExtension,
+            disabled,
             onClick,
         }: IMeasureValueFilterDropdownButtonProps) {
             return (
@@ -264,18 +275,20 @@ export function DefaultDashboardMeasureValueFilter(
                     titleClassName="s-mvf-button-title"
                     subtitle={
                         <span className="gd-measure-value-filter-dropdown-button-selected-items__next s-mvf-button-subtitle">
-                            {conditionLabel}
+                            {buttonSubtitle ?? conditionLabel}
                         </span>
                     }
                     titleExtension={
-                        <MeasureValueFilterVisibilityIcon
-                            visibilityIcon={visibilityIcon}
-                            disabled={readonly}
-                        />
+                        buttonTitleExtension ?? (
+                            <MeasureValueFilterVisibilityIcon
+                                visibilityIcon={visibilityIcon}
+                                disabled={readonly}
+                            />
+                        )
                     }
                     isOpen={isActive}
                     isDraggable={isEditMode}
-                    disabled={readonly}
+                    disabled={disabled ?? readonly}
                     disabledTooltip={
                         readonly ? intl.formatMessage({ id: "filters.locked.filter.tooltip" }) : undefined
                     }
@@ -292,15 +305,22 @@ export function DefaultDashboardMeasureValueFilter(
         return DashboardMeasureValueFilterDropdownButton;
     }, [conditionLabel, intl, isEditMode, readonly, visibilityIcon]);
 
+    const MeasureValueFilterComponent = CustomMeasureValueFilterComponent ?? MeasureValueFilter;
+
     return (
-        <MeasureValueFilter
+        <MeasureValueFilterComponent
             {...getSharedDashboardMvfProps(mvfData)}
             onApply={handleApply}
+            buttonSubtitle={conditionLabel}
+            buttonTitleExtension={
+                <MeasureValueFilterVisibilityIcon visibilityIcon={visibilityIcon} disabled={readonly} />
+            }
+            buttonDisabled={readonly}
             onChange={isApplyAllAtOnceEnabledAndSet ? handleChange : undefined}
             withoutApply={isApplyAllAtOnceEnabledAndSet}
             BodyComponent={BodyComponent}
             DropdownActionsComponent={DropdownActionsComponent}
-            DropdownButtonComponent={DropdownButtonComponent}
+            DropdownButtonComponent={passDropdownButton ? DropdownButtonComponent : undefined}
             onCancel={handleClose}
             autoOpen={autoOpen}
         />

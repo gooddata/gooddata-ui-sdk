@@ -1101,10 +1101,12 @@ export interface IFilterGroupProps<P> {
     getFilterIdentifier: (filter: P) => string;
     // (undocumented)
     getTitleExtension?: (filterIdentifier: string, filterTitle?: string) => ReactNode;
+    // @deprecated (undocumented)
+    hasSelectedElements?: (filter: P) => boolean;
     // (undocumented)
-    hasSelectedElements: (filter: P) => boolean;
-    // (undocumented)
-    renderFilter: (filter: P, AttributeFilterComponent?: ComponentType<IAttributeFilterProps>) => ReactElement;
+    isFilterActive: (filter: P) => boolean;
+    // @beta (undocumented)
+    renderFilter: (filter: P, AttributeFilterComponent?: ComponentType<IAttributeFilterProps>, MeasureValueFilterComponent?: ComponentType<IMeasureValueFilterProps>) => ReactElement;
     // (undocumented)
     title: string;
 }
@@ -1218,6 +1220,7 @@ export interface IMeasureValueFilterBodyProps {
 
 // @beta (undocumented)
 export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCustomComponentProps {
+    alignPoints?: IAlignPoint[];
     catalogDimensionality?: IDimensionalityItem[];
     // (undocumented)
     dimensionality?: IDimensionalityItem[];
@@ -1291,7 +1294,13 @@ export interface IMeasureValueFilterDropdownActionsProps {
 // @beta
 export interface IMeasureValueFilterDropdownButtonProps {
     // (undocumented)
+    buttonSubtitle?: string;
+    // (undocumented)
     buttonTitle: string;
+    // (undocumented)
+    buttonTitleExtension?: ReactNode;
+    // (undocumented)
+    disabled?: boolean;
     // (undocumented)
     isActive: boolean;
     // (undocumented)
@@ -1310,7 +1319,13 @@ export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCom
 export interface IMeasureValueFilterProps extends IMeasureValueFilterCommonProps, IMeasureValueFilterCustomComponentsProps {
     autoOpen?: boolean;
     // (undocumented)
+    buttonDisabled?: boolean;
+    // (undocumented)
+    buttonSubtitle?: string;
+    // (undocumented)
     buttonTitle: string;
+    // (undocumented)
+    buttonTitleExtension?: ReactNode;
     // (undocumented)
     onCancel?: () => void;
 }

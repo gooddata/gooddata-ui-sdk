@@ -144,6 +144,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
             <CustomFilterGroupComponent
                 groupItem={item}
                 onAttributeFilterChanged={onAttributeFilterChanged}
+                onMeasureValueFilterChanged={onMeasureValueFilterChanged}
             />
         );
     }

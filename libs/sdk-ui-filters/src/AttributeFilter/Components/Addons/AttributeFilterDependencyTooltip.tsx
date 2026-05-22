@@ -24,9 +24,9 @@ export function AttributeFilterDependencyTooltip({
     ariaLabel,
 }: IAttributeFilterDependencyTooltipProps) {
     return (
-        <span className="gd-attribute-filter-dropdown-button-icon-tooltip" aria-label={ariaLabel}>
+        <span className="gd-attribute-filter-dropdown-button-icon-tooltip">
             <BubbleHoverTrigger>
-                <IconBoldHyperlink width={12} height={16} />
+                <IconBoldHyperlink width={12} height={16} ariaLabel={ariaLabel} />
                 <Bubble
                     arrowOffsets={{ "bc tl": [-12, 9], "bc tr": [12, 9] }}
                     alignPoints={[{ align: "bc tl" }, { align: "bc tr" }]}

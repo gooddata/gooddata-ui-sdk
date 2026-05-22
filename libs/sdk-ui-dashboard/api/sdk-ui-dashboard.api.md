@@ -150,6 +150,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
+import { IMeasureValueFilterProps } from '@gooddata/sdk-ui-filters';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { INotificationChannelIdentifier } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
@@ -3884,9 +3885,13 @@ export interface IDashboardFilterGroupProps {
     // (undocumented)
     DashboardAttributeFilterComponent?: CustomDashboardAttributeFilterComponent;
     // (undocumented)
+    DashboardMeasureValueFilterComponent?: CustomDashboardMeasureValueFilterComponent;
+    // (undocumented)
     groupItem: IFilterBarFilterGroupItem;
     // (undocumented)
     onAttributeFilterChanged: (filter: DashboardAttributeFilterItem) => void;
+    // (undocumented)
+    onMeasureValueFilterChanged?: (filter: IDashboardMeasureValueFilter, conditions: MeasureValueFilterCondition[] | undefined, isWorkingSelectionChange?: boolean) => void;
 }
 
 // @alpha
@@ -4723,8 +4728,10 @@ export interface IDashboardMeasureValueFilterProps {
     autoOpen?: boolean;
     filter: IDashboardMeasureValueFilter;
     filterIndex: number;
+    MeasureValueFilterComponent?: ComponentType<IMeasureValueFilterProps>;
     onMeasureValueFilterChanged: (filter: IDashboardMeasureValueFilter, conditions: MeasureValueFilterCondition[] | undefined, isWorkingSelectionChange?: boolean) => void;
     onMeasureValueFilterClose?: () => void;
+    passDropdownButton?: boolean;
     readonly?: boolean;
     tabId?: string;
 }
