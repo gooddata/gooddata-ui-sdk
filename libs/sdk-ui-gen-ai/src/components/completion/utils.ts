@@ -1,6 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type Completion } from "@codemirror/autocomplete";
+import { type EditorView } from "@codemirror/view";
 import { type IntlShape } from "react-intl";
 
 import {
@@ -103,10 +104,7 @@ export function getItems(
                     const type = "attribute" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.attribute.id}}`;
                     onCompletionSelected?.(completion as ICompletionItem);
-                    view.dispatch({
-                        changes: { from, to, insert },
-                        selection: { anchor: from + insert.length },
-                    });
+                    applyItem(view, insert, from, to);
                 },
             },
         ];
@@ -126,10 +124,7 @@ export function getItems(
                     const type = "fact" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.fact.id}}`;
                     onCompletionSelected?.(completion as ICompletionItem);
-                    view.dispatch({
-                        changes: { from, to, insert },
-                        selection: { anchor: from + insert.length },
-                    });
+                    applyItem(view, insert, from, to);
                 },
             },
         ];
@@ -148,10 +143,7 @@ export function getItems(
                     const type = "metric" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.measure.id}}`;
                     onCompletionSelected?.(completion as ICompletionItem);
-                    view.dispatch({
-                        changes: { from, to, insert },
-                        selection: { anchor: from + insert.length },
-                    });
+                    applyItem(view, insert, from, to);
                 },
             },
         ];
@@ -171,10 +163,7 @@ export function getItems(
                     const type = "attribute" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${attr.attribute.id}}`;
                     onCompletionSelected?.(completion as ICompletionItem);
-                    view.dispatch({
-                        changes: { from, to, insert },
-                        selection: { anchor: from + insert.length },
-                    });
+                    applyItem(view, insert, from, to);
                 },
             };
         });
@@ -193,16 +182,20 @@ export function getItems(
                     const type = "date" as (typeof SupportedReferenceTypes)[number];
                     const insert = `{${type}/${item.dataSet.id}}`;
                     onCompletionSelected?.(completion as ICompletionItem);
-                    view.dispatch({
-                        changes: { from, to, insert },
-                        selection: { anchor: from + insert.length },
-                    });
+                    applyItem(view, insert, from, to);
                 },
             },
             ...dateItems,
         ];
     }
     return [];
+}
+
+function applyItem(view: EditorView, insert: string, from: number, to: number) {
+    view.dispatch({
+        changes: { from: from - 1, to, insert },
+        selection: { anchor: from - 1 + insert.length },
+    });
 }
 
 // Utility: Get completion item ID

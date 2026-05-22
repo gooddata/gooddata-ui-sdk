@@ -384,12 +384,12 @@
         "crowdinContext": "Column header in autocomplete suggestions showing the date"
     },
     "gd.gen-ai.autocomplete.input-info.mac": {
-        "text": "<code>^+Space</code> or <code>⌘+I</code> for suggestions",
-        "crowdinContext": "Keyboard shortcut instructions for Mac users to trigger autocomplete suggestions"
+        "text": "Type <code>@</code> for suggestions",
+        "crowdinContext": "Instruction for Mac users describing that object suggestions appear after typing @"
     },
     "gd.gen-ai.autocomplete.input-info.win": {
-        "text": "<code>Ctrl+Space</code> or <code>Ctrl+I</code> for suggestions",
-        "crowdinContext": "Keyboard shortcut instructions for Windows users to trigger autocomplete suggestions"
+        "text": "Type <code>@</code> for suggestions",
+        "crowdinContext": "Instruction for Windows users describing that object suggestions appear after typing @"
     },
     "gd.gen-ai.visualisation.menu": {
         "text": "More actions",

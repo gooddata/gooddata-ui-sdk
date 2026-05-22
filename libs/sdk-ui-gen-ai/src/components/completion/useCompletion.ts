@@ -16,7 +16,7 @@ import { catalogItemsSelector } from "../../store/chatWindow/chatWindowSelectors
 
 import { type ICompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
 
-const WORD_REGEX = /\p{L}[\p{L}\p{N}_]*/u;
+const TRIGGER_REGEX = /@[\p{L}\p{N}_]*/u;
 
 export interface IUseCompletion {
     onCompletion: CompletionSource;
@@ -42,17 +42,16 @@ export function useCompletion(
 
     const onWordCompletion = useCallback(
         async (context: CompletionContext): Promise<CompletionResult | null> => {
-            // Match the word before the cursor
-            const word = context.matchBefore(WORD_REGEX);
+            // Match the @ trigger before the cursor
+            const trigger = context.matchBefore(TRIGGER_REGEX);
 
-            const search = word?.text ?? "";
-            const length = search.length >= 3;
-
-            // Word and min length
-            const isValidAutocomplete = word && length;
-            if (!isValidAutocomplete) {
+            // Trigger and min length
+            if (!trigger) {
                 return null;
             }
+
+            const search = trigger?.text.substring(1) ?? "";
+            const from = (trigger?.from ?? context.pos) + 1;
 
             const items = catalogItemsList;
             // If no items are found, do not show the completion
@@ -60,7 +59,13 @@ export function useCompletion(
                 return null;
             }
 
-            const options = getOptions(intl, { items, search, onCompletionSelected, canManage, canAnalyze });
+            const options = getOptions(intl, {
+                items,
+                search,
+                onCompletionSelected,
+                canManage,
+                canAnalyze,
+            });
             // No options were found at all
             if (options.length === 0) {
                 return null;
@@ -68,34 +73,7 @@ export function useCompletion(
 
             return {
                 options,
-                from: word?.from ?? context.pos,
-                validFor: (text) => {
-                    return !!options.find((opt) => opt.label.includes(text));
-                },
-            };
-        },
-        [catalogItemsList, intl, onCompletionSelected, canManage, canAnalyze],
-    );
-
-    const onExplicitCompletion = useCallback(
-        async (context: CompletionContext): Promise<CompletionResult | null> => {
-            // Match the word before the cursor
-            const word = context.matchBefore(WORD_REGEX);
-            const items = catalogItemsList;
-            // If no items are found, do not show the completion
-            if (!items) {
-                return null;
-            }
-
-            const options = getOptions(intl, { items, onCompletionSelected, canManage, canAnalyze });
-            // No options were found at all
-            if (options.length === 0) {
-                return null;
-            }
-
-            return {
-                options,
-                from: word?.from ?? context.pos,
+                from,
                 validFor: (text) => {
                     return !!options.find((opt) => opt.label.includes(text));
                 },
@@ -106,13 +84,9 @@ export function useCompletion(
 
     const onCompletion = useCallback(
         async (context: CompletionContext): Promise<CompletionResult | null> => {
-            if (context.explicit) {
-                return onExplicitCompletion(context);
-            } else {
-                return onWordCompletion(context);
-            }
+            return onWordCompletion(context);
         },
-        [onWordCompletion, onExplicitCompletion],
+        [onWordCompletion],
     );
 
     return {

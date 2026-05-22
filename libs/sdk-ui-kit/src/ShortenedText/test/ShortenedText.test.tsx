@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -51,6 +51,21 @@ describe("ShortenedText", () => {
             getElement: () => createElement(100, 200),
         });
         expect(screen.getByText("…", { exact: false })).toBeInTheDocument();
+    });
+
+    it("should expose the full text as the accessible name even when visually truncated", () => {
+        // Wrap in a labelled element so we can query the accessible-name computation.
+        render(
+            <button>
+                <ShortenedText tagName="div" getElement={() => createElement(100, 200)}>
+                    {longText}
+                </ShortenedText>
+            </button>,
+        );
+        // ARIA name computation must include the full (sr-only) text and exclude the
+        // visually-truncated text marked with aria-hidden. getByRole({name}) uses the
+        // real accessible-name algorithm so this guards the user-visible a11y behavior.
+        expect(screen.getByRole("button")).toHaveAccessibleName(longText);
     });
 
     it("should render shorten text first and than not render shorten text after resize", () => {
@@ -115,8 +130,12 @@ describe("ShortenedText", () => {
             displayTooltip: true,
         });
 
+        // Before hover: full text exists once, only in the sr-only a11y span.
+        expect(screen.getAllByText(longText)).toHaveLength(1);
+
         await userEvent.hover(screen.getByText("…", { exact: false }));
-        expect(screen.getByText(longText)).toBeInTheDocument();
+        // After hover: full text appears a second time inside the bubble.
+        expect(screen.getAllByText(longText)).toHaveLength(2);
     });
 
     it("should not render bubble if displayTooltip is false", async () => {
@@ -128,7 +147,8 @@ describe("ShortenedText", () => {
         });
 
         await userEvent.hover(screen.getByText("…", { exact: false }));
-        expect(screen.queryByText(longText)).not.toBeInTheDocument();
+        // Full text exists only in the sr-only a11y span; no bubble was added on hover.
+        expect(screen.getAllByText(longText)).toHaveLength(1);
     });
 
     describe("getShortenedTitle", () => {
