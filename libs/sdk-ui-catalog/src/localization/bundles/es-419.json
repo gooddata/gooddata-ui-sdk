@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Eliminar",
     "analyticsCatalog.error.unknown.message": "Error desconocido",
     "analyticsCatalog.error.unknown.description": "No estamos seguros de qué salió mal. Inténtelo más tarde.",
+    "analyticsCatalog.error.notFound.title": "No podemos encontrar este elemento",
+    "analyticsCatalog.error.notFound.description": "Es posible que se haya eliminado o que no tenga acceso.",
     "analyticsCatalog.error.unauthorized.message": "No autorizado",
     "analyticsCatalog.error.unauthorized.description": "No tiene acceso al catálogo de análisis. Pida a su administrador que le conceda permisos.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Cerrar",

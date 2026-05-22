@@ -17,6 +17,7 @@ export {
     type IApiTokenAuthCredentials,
     type IAuthCredentials,
     type IContextDeferredAuthCredentials,
+    type IEffectiveSettings,
     type IJwtAuthCredentials,
     type IOrganization,
     type IOrganizationPermissions,
@@ -25,6 +26,7 @@ export {
     type IPluggableApplicationNavigation,
     PantherTier,
     isPlatformContextV1,
+    isWorkspaceScopedSettings,
 } from "./platformContext.js";
 export { type ILocale } from "@gooddata/sdk-model";
 

@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Hapus",
     "analyticsCatalog.error.unknown.message": "Kesalahan tidak diketahui",
     "analyticsCatalog.error.unknown.description": "Kami tidak begitu yakin apa yang salah. Silakan coba lagi nanti.",
+    "analyticsCatalog.error.notFound.title": "Kami tidak dapat menemukan item ini",
+    "analyticsCatalog.error.notFound.description": "Mungkin telah dihapus atau Anda tidak memiliki akses.",
     "analyticsCatalog.error.unauthorized.message": "Tidak diizinkan",
     "analyticsCatalog.error.unauthorized.description": "Maaf, Anda tidak memiliki akses ke katalog analitik. Minta administrator Anda untuk memberikan izin kepada Anda.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Tutup",

@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "消除",
     "analyticsCatalog.error.unknown.message": "未知錯誤",
     "analyticsCatalog.error.unknown.description": "我們不太確定出了什麼問題。請稍後再試。",
+    "analyticsCatalog.error.notFound.title": "我們找不到此項目",
+    "analyticsCatalog.error.notFound.description": "它可能已被刪除，或您沒有存取權限。",
     "analyticsCatalog.error.unauthorized.message": "未經授權",
     "analyticsCatalog.error.unauthorized.description": "抱歉，您無權存取分析目錄。請要求系統管理員授予您權限。",
     "analyticsCatalog.catalogItem.closeButtonLabel": "關閉",

@@ -15,4 +15,6 @@ export {
     type ActionsApiChangeAnalysisResultRequest as ExecutionResultAPIChangeAnalysisResultRequest,
     type ActionsApiRetrieveResultBinaryRequest as ExecutionResultAPIRetrieveResultBinaryRequest,
     type ActionsApiRetrieveResultRequest as ExecutionResultAPIRetrieveResultRequest,
+    ActionsApi_CancelExecutions as ExecutionResultAPI_CancelExecutions,
+    type ActionsApiCancelExecutionsRequest as ExecutionResultAPICancelExecutionsRequest,
 } from "../../generated/afm-rest-api/index.js";

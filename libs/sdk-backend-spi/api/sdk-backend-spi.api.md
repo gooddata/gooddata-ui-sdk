@@ -2769,7 +2769,8 @@ export interface IWorkspaceInsightsService {
 
 // @internal
 export interface IWorkspaceKeyDriverAnalysisService {
-    computeChangeAnalysis(definition: IChangeAnalysisDefinition, period: IChangeAnalysisPeriod, options?: IChangeAnalysisOptions): Promise<IChangeAnalysisResults>;
+    cancelChangeAnalysis(): Promise<void>;
+    computeChangeAnalysis(definition: IChangeAnalysisDefinition, period: IChangeAnalysisPeriod, options?: IChangeAnalysisOptions, signal?: AbortSignal): Promise<IChangeAnalysisResults>;
 }
 
 // @internal

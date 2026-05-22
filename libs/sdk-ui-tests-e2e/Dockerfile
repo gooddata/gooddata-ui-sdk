@@ -6,7 +6,7 @@
 # Playwright image with pre-bundled e2e test code.
 # Built by the pre-build job so shard runners only need docker compose up.
 
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.60.0-noble
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.60.0-noble@sha256:9bd26ad900bb5e0f4dee75839e957a89ae89c2b7ab1e76050e559790e946b948
 
 WORKDIR /app
 

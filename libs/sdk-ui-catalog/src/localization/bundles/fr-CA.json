@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Supprimer",
     "analyticsCatalog.error.unknown.message": "Erreur inconnue",
     "analyticsCatalog.error.unknown.description": "Nous ne savons pas trop ce qui s’est mal passé. Veuillez réessayer ultérieurement.",
+    "analyticsCatalog.error.notFound.title": "Nous ne trouvons pas cet élément",
+    "analyticsCatalog.error.notFound.description": "Elle a peut-être été supprimée ou vous n’avez pas accès.",
     "analyticsCatalog.error.unauthorized.message": "Non autorisé",
     "analyticsCatalog.error.unauthorized.description": "Désolé, vous n’avez pas accès au catalogue d’analytique. Demandez à votre administrateur de vous accorder les autorisations.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Fermer",

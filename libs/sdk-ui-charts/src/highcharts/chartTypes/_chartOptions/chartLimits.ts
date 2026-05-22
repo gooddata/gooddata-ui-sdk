@@ -17,7 +17,9 @@ import {
     SOFT_PIE_CHART_LIMIT,
     SOFT_SANKEY_CHART_DATA_POINT_LIMIT,
     SOFT_SANKEY_CHART_NODE_LIMIT,
+    SOFT_STACKED_COLUMN_BAR_SERIES_LIMIT,
     SOFT_WATERFALL_CHART_DATA_POINT_LIMIT,
+    STACKED_COLUMN_BAR_SERIES_LIMIT,
     WATERFALL_CHART_DATA_POINT_LIMIT,
 } from "../../constants/limits.js";
 import { type ChartType } from "../../typings/chartType.js";
@@ -46,7 +48,8 @@ export function isNegativeValueIncluded(series: ISeriesItem[] | undefined): bool
     );
 }
 
-function getChartLimits(type: string | undefined): IChartLimits {
+function getChartLimits(type: string | undefined, chartOptions?: IChartOptions): IChartLimits {
+    const isStacked = !!chartOptions?.stacking;
     switch (type) {
         case VisualizationTypes.SCATTER:
             return {
@@ -87,6 +90,12 @@ function getChartLimits(type: string | undefined): IChartLimits {
                 categories: WATERFALL_CHART_DATA_POINT_LIMIT,
                 dataPoints: WATERFALL_CHART_DATA_POINT_LIMIT,
             };
+        case VisualizationTypes.COLUMN:
+        case VisualizationTypes.BAR:
+            return {
+                series: isStacked ? STACKED_COLUMN_BAR_SERIES_LIMIT : DEFAULT_SERIES_LIMIT,
+                categories: DEFAULT_CATEGORIES_LIMIT,
+            };
         default:
             return {
                 series: DEFAULT_SERIES_LIMIT,
@@ -95,7 +104,8 @@ function getChartLimits(type: string | undefined): IChartLimits {
     }
 }
 
-function getSoftChartLimits(type: ChartType): IChartLimits {
+function getSoftChartLimits(type: ChartType, chartOptions?: IChartOptions): IChartLimits {
+    const isStacked = !!chartOptions?.stacking;
     switch (type) {
         case VisualizationTypes.SCATTER:
             return {
@@ -136,6 +146,12 @@ function getSoftChartLimits(type: ChartType): IChartLimits {
                 categories: SOFT_WATERFALL_CHART_DATA_POINT_LIMIT,
                 dataPoints: SOFT_WATERFALL_CHART_DATA_POINT_LIMIT,
             };
+        case VisualizationTypes.COLUMN:
+        case VisualizationTypes.BAR:
+            return {
+                series: isStacked ? SOFT_STACKED_COLUMN_BAR_SERIES_LIMIT : SOFT_DEFAULT_SERIES_LIMIT,
+                categories: SOFT_DEFAULT_CATEGORIES_LIMIT,
+            };
         default:
             return {
                 series: SOFT_DEFAULT_SERIES_LIMIT,
@@ -165,7 +181,9 @@ export function validateData(
 ): IValidationResult {
     const type = chartOptions.type;
     const { isViewByTwoAttributes } = chartOptions;
-    const finalLimits = limits || getChartLimits(type);
+    // Consumer-supplied limits intentionally replace per-type defaults.
+    // The stacked column/bar series cap applies only when default limits are used.
+    const finalLimits = limits || getChartLimits(type, chartOptions);
     let dataToValidate = chartOptions.data;
     if (isTreemap(type)) {
         dataToValidate = getTreemapDataForValidation(chartOptions.data);
@@ -180,7 +198,7 @@ export function validateData(
 
 export function getIsFilteringRecommended(chartOptions: IChartOptions): boolean {
     const { type, isViewByTwoAttributes } = chartOptions;
-    const limits = getSoftChartLimits(type as ChartType);
+    const limits = getSoftChartLimits(type as ChartType, chartOptions);
     const dataToValidate = isTreemap(type)
         ? getTreemapDataForValidation(chartOptions.data)
         : chartOptions.data;
@@ -198,7 +216,7 @@ export function getDataTooLargeErrorMessage(limits: IChartLimits, chartOptions: 
         categories: categoriesLimit,
         nodes: nodesLimit,
         dataPoints: dataPointsLimit,
-    } = limits || getChartLimits(type);
+    } = limits || getChartLimits(type, chartOptions);
     const dataToValidate = isTreemap(type)
         ? getTreemapDataForValidation(chartOptions.data)
         : chartOptions.data;

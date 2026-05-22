@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Entfernen",
     "analyticsCatalog.error.unknown.message": "Unbekannter Fehler",
     "analyticsCatalog.error.unknown.description": "Wir sind uns nicht ganz sicher, was hier schiefgelaufen ist. Bitte später erneut versuchen.",
+    "analyticsCatalog.error.notFound.title": "Wir können dieses Element nicht finden",
+    "analyticsCatalog.error.notFound.description": "Sie wurde möglicherweise gelöscht oder Sie haben keinen Zugriff.",
     "analyticsCatalog.error.unauthorized.message": "Nicht autorisiert",
     "analyticsCatalog.error.unauthorized.description": "Sie haben leider keinen Zugriff auf den Analyse-Katalog. Bitten Sie Ihren Administrator, Ihnen die erforderlichen Berechtigungen zu erteilen.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Schließen",

@@ -69,6 +69,9 @@ export interface IContextDeferredAuthCredentials {
 }
 
 // @alpha
+export type IEffectiveSettings = IUserSettings | IUserWorkspaceSettings;
+
+// @alpha
 export interface IHostUiModule {
     // (undocumented)
     mount: HostUiMount;
@@ -162,11 +165,11 @@ export interface IPlatformContextV1 {
     pantherTier?: PantherTier;
     // (undocumented)
     preferredLocale?: ILocale;
+    settings: IEffectiveSettings;
     // (undocumented)
     theme?: ITheme;
     // (undocumented)
     user: IUser;
-    // (undocumented)
     userSettings: IUserSettings;
     // (undocumented)
     version: "1.0";
@@ -234,6 +237,9 @@ export function isPlatformContextV1(context: unknown): context is IPlatformConte
 
 // @alpha
 export function isReloadPlatformContextRequestedEvent(obj: unknown): obj is IReloadPlatformContextRequestedEvent;
+
+// @alpha
+export function isWorkspaceScopedSettings(settings: IEffectiveSettings): settings is IUserWorkspaceSettings;
 
 // @alpha
 export interface ITelemetryEventOptions {

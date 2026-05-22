@@ -5,7 +5,7 @@
     "gd.gen-ai.global-error.sync-in-progress": "仍在設定中 — 請稍後再試。",
     "gd.gen-ai.global-error.sync-failed": "同步失敗。請稍後再試。",
     "gd.gen-ai.global-error.traceId": "錯誤追蹤 ID",
-    "gd.gen-ai.global-error.show-more": "顯示更多",
+    "gd.gen-ai.global-error.show-more": "展示更多",
     "gd.gen-ai.global-error.show-less": "顯示較少",
     "gd.gen-ai.global-error.traceId.copy": "複製到剪貼簿",
     "gd.gen-ai.global-error.details.title": "原始錯誤回應",

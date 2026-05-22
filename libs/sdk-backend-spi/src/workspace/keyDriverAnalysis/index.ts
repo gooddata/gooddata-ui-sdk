@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type DateAttributeGranularity,
@@ -148,5 +148,11 @@ export interface IWorkspaceKeyDriverAnalysisService {
         definition: IChangeAnalysisDefinition,
         period: IChangeAnalysisPeriod,
         options?: IChangeAnalysisOptions,
+        signal?: AbortSignal,
     ): Promise<IChangeAnalysisResults>;
+
+    /**
+     * Cancel change analysis
+     */
+    cancelChangeAnalysis(): Promise<void>;
 }

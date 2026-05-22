@@ -1209,4 +1209,9 @@ export interface IFeatureFlags {
      * Enable Anthropic provider in LLM configuration.
      */
     enableAiLlmAnthropicProvider?: boolean;
+
+    /**
+     * Enables Metric Editor loading as a remote module in the host application.
+     */
+    enableShellApplication_metricEditor?: boolean;
 }

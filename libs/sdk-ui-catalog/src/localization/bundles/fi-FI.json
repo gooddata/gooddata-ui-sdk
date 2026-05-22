@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Poista",
     "analyticsCatalog.error.unknown.message": "Tuntematon virhe",
     "analyticsCatalog.error.unknown.description": "Emme ole aivan varmoja, mikä meni pieleen. Yritä myöhemmin uudelleen.",
+    "analyticsCatalog.error.notFound.title": "Emme löydä tätä kohdetta",
+    "analyticsCatalog.error.notFound.description": "Se on voitu poistaa tai sinulla ei ole käyttöoikeutta siihen.",
     "analyticsCatalog.error.unauthorized.message": "Luvaton",
     "analyticsCatalog.error.unauthorized.description": "Sinulla ei ole käyttöoikeutta analytiikkakatalogiin. Pyydä ylläpitäjääsi myöntämään sinulle käyttöoikeudet.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Sulje",

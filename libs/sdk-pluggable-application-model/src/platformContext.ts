@@ -132,6 +132,34 @@ export type IAuthCredentials =
 // ---------------------------------------------------------------------------
 
 /**
+ * Effective settings for the active application scope.
+ *
+ * @remarks
+ * - On workspace-scoped routes this is `IUserWorkspaceSettings`, which the backend
+ *   produces from the org → workspace → user cascade.
+ * - On organization-scoped routes this is `IUserSettings`, which the backend
+ *   produces from the org → user cascade.
+ *
+ * Prefer reading {@link IPlatformContextV1.settings} for feature flags, locale, theme keys
+ * and other values whose source can be overridden at the workspace level.
+ *
+ * Read the raw {@link IPlatformContextV1.userSettings} or {@link IPlatformContextV1.workspaceSettings}
+ * only when you specifically need a field from one shape (e.g. the workspace identifier).
+ *
+ * @alpha
+ */
+export type IEffectiveSettings = IUserSettings | IUserWorkspaceSettings;
+
+/**
+ * Narrows {@link IEffectiveSettings} to the workspace-scoped shape.
+ *
+ * @alpha
+ */
+export function isWorkspaceScopedSettings(settings: IEffectiveSettings): settings is IUserWorkspaceSettings {
+    return typeof (settings as IUserWorkspaceSettings).workspace === "string";
+}
+
+/**
  * Platform context contract version 1.0.
  *
  * @remarks
@@ -159,20 +187,38 @@ export interface IPlatformContextV1 {
 
     entitlements?: IEntitlementDescriptor[];
 
+    /**
+     * Raw user-level settings (org → user cascade).
+     *
+     * @remarks
+     * Prefer {@link IPlatformContextV1.settings} for reads that may be overridden at
+     * the workspace level (feature flags, locale, theme). Use this raw view only
+     * when you specifically need a user-scoped field such as `userId`.
+     */
     userSettings: IUserSettings;
 
     /**
-     * Effective workspace-scoped settings for the current user.
+     * Raw workspace-scoped settings for the current user (org → workspace → user cascade).
      *
      * @remarks
-     * Populated by the host when the active route is workspace-scoped.
-     * Merges workspace-level overrides with user-level defaults — use this
-     * for workspace feature flags (e.g. `enableAIKnowledge`) instead of
-     * `userSettings`, which only contains user-level values.
+     * Populated by the host when the active route is workspace-scoped, `undefined` otherwise.
      *
-     * `undefined` when no workspace is active (organization-scoped routes).
+     * Prefer {@link IPlatformContextV1.settings} for general reads. Use this raw view only
+     * when you specifically need a workspace-scoped field (e.g. the `workspace` identifier).
      */
     workspaceSettings?: IUserWorkspaceSettings;
+
+    /**
+     * Effective settings for the active application scope.
+     *
+     * @remarks
+     * - Workspace-scoped routes: equals `workspaceSettings` (org → workspace → user cascade).
+     * - Organization-scoped routes: equals `userSettings` (org → user cascade).
+     *
+     * This is the canonical read path for feature flags, locale, theme, and other
+     * values whose source can be overridden at the workspace level.
+     */
+    settings: IEffectiveSettings;
 
     whiteLabeling: IWhiteLabeling | undefined;
     preferredLocale?: ILocale;

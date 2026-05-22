@@ -133,7 +133,7 @@ function createInsightsItemsGroup(
         canShowAnalyzeItem(workspacePermissions),
     );
 
-    const measuresUrl = measuresItemUrl(baseUrl, workspaceId);
+    const measuresUrl = measuresItemUrl(baseUrl, workspaceId, featureFlags);
     pushConditionally(
         insightItemsGroup,
         createIHeaderMenuItem(HEADER_ITEM_ID_METRICS, "s-menu-metrics", measuresUrl),
@@ -218,7 +218,10 @@ function canShowCatalogItem(featureFlags: ISettings, workspacePermissions: IWork
 function manageItemUrl(workspaceId: string): string {
     return `/#s=/gdc/workspaces/${workspaceId}|dataPage|`;
 }
-function measuresItemUrl(baseUrl: string, workspaceId: string): string {
+function measuresItemUrl(baseUrl: string, workspaceId: string, featureFlags: ISettings): string {
+    if (featureFlags.enableShellApplication_metricEditor) {
+        return withBaseUrl(baseUrl, `/workspace/${workspaceId}/metrics`);
+    }
     return withBaseUrl(baseUrl, `/metrics/#/${workspaceId}`);
 }
 function canShowMetricsItem(hasMetrics: boolean, workspacePermissions: IWorkspacePermissions): boolean {

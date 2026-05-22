@@ -174,6 +174,7 @@ export enum TigerFeaturesNames {
     EnableAiAgenticMultiConversations = "enableAiAgenticMultiConversations",
     EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
     EnableRadarChart = "enableRadarChart",
+    EnableMetricEditorRemoteModule = "enableShellApplication_metricEditor",
 }
 
 export type ITigerFeatureFlags = {
@@ -341,6 +342,7 @@ export type ITigerFeatureFlags = {
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
     enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
+    enableShellApplication_metricEditor: (typeof FeatureFlagsValues)["enableShellApplication_metricEditor"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -508,6 +510,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableUserDataFiltersUi: false,
     enableEnhancedInsightPicker: false,
     enableAiLlmAnthropicProvider: false,
+    enableShellApplication_metricEditor: false,
 };
 
 export const FeatureFlagsValues = {
@@ -676,4 +679,5 @@ export const FeatureFlagsValues = {
     enableUserDataFiltersUi: [true, false] as const,
     enableEnhancedInsightPicker: [true, false] as const,
     enableAiLlmAnthropicProvider: [true, false] as const,
+    enableShellApplication_metricEditor: [true, false] as const,
 };

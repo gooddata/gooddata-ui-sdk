@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Xóa",
     "analyticsCatalog.error.unknown.message": "Lỗi không xác định",
     "analyticsCatalog.error.unknown.description": "Chúng tôi chưa thể xác định điều gì đã xảy ra. Vui lòng thử lại sau.",
+    "analyticsCatalog.error.notFound.title": "Chúng tôi không thể tìm thấy mục này",
+    "analyticsCatalog.error.notFound.description": "Nó có thể đã bị xóa hoặc bạn không có quyền truy cập.",
     "analyticsCatalog.error.unauthorized.message": "Không được phép",
     "analyticsCatalog.error.unauthorized.description": "Rất tiếc, bạn không có quyền truy cập vào danh mục phân tích. Hãy yêu cầu quản trị viên cấp quyền cho bạn.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Đóng",

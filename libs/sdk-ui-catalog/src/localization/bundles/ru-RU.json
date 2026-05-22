@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "Удалить",
     "analyticsCatalog.error.unknown.message": "Неизвестная ошибка",
     "analyticsCatalog.error.unknown.description": "Мы не совсем уверены, что пошло не так. Повторите попытку позже.",
+    "analyticsCatalog.error.notFound.title": "Мы не можем найти этот элемент",
+    "analyticsCatalog.error.notFound.description": "Возможно, она была удалена, или у вас нет доступа.",
     "analyticsCatalog.error.unauthorized.message": "Нет разрешения",
     "analyticsCatalog.error.unauthorized.description": "У вас нет доступа к каталогу аналитики. Обратитесь к администратору, чтобы он выдал вам права.",
     "analyticsCatalog.catalogItem.closeButtonLabel": "Закрыть",

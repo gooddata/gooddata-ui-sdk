@@ -359,6 +359,14 @@
         "text": "We’re not quite sure what went wrong. Please try again later.",
         "crowdinContext": "Instructions for users when encountering unknown errors"
     },
+    "analyticsCatalog.error.notFound.title": {
+        "text": "We can't find this item",
+        "crowdinContext": "Title shown when the requested catalog item cannot be found"
+    },
+    "analyticsCatalog.error.notFound.description": {
+        "text": "It may have been deleted or you don't have access.",
+        "crowdinContext": "Explanation shown when the requested catalog item cannot be found"
+    },
     "analyticsCatalog.error.unauthorized.message": {
         "text": "Unauthorized",
         "crowdinContext": "Error message shown when the user does not have permission to view the analytics catalog or its data."

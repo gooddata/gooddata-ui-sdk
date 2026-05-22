@@ -89,6 +89,8 @@
     "analyticsCatalog.tags.manager.label.removeLabel": "削除",
     "analyticsCatalog.error.unknown.message": "未知のエラー",
     "analyticsCatalog.error.unknown.description": "何が原因で問題が発生したのかはっきりしません。後で再試行してください。",
+    "analyticsCatalog.error.notFound.title": "この項目が見つかりませんでした",
+    "analyticsCatalog.error.notFound.description": "削除されたか、アクセスできない可能性があります。",
     "analyticsCatalog.error.unauthorized.message": "権限がありません",
     "analyticsCatalog.error.unauthorized.description": "申し訳ありませんが、アナリティクスカタログへのアクセス権がありません。管理者に依頼して、必要な権限を付与してもらってください。",
     "analyticsCatalog.catalogItem.closeButtonLabel": "閉じる",
