@@ -115,17 +115,17 @@ export { ThemedLoadingEqualizer } from "./presentation/presentationComponents/Th
 export {
     DefaultScheduledEmailDialog,
     ScheduledMailDialogRenderer,
-} from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
-export { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "./presentation/scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
-export { ScheduledEmailDialog } from "./presentation/scheduledEmail/ScheduledEmailDialog.js";
-export { ScheduledEmailManagementDialog } from "./presentation/scheduledEmail/ScheduledEmailManagementDialog.js";
+} from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
+export { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
+export { ScheduledEmailDialog } from "./presentation/automations/scheduledEmail/ScheduledEmailDialog.js";
+export { ScheduledEmailManagementDialog } from "./presentation/automations/scheduledEmail/ScheduledEmailManagementDialog.js";
 export type {
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
     IScheduledEmailDialogProps,
     IScheduledEmailManagementDialogProps,
-} from "./presentation/scheduledEmail/types.js";
-export { PLATFORM_DATE_FORMAT } from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/constants.js";
+} from "./presentation/automations/scheduledEmail/types.js";
+export { PLATFORM_DATE_FORMAT } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 export { getBrokenAlertFiltersBasicInfo } from "./model/utils/alertsUtils.js";
 export {
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,

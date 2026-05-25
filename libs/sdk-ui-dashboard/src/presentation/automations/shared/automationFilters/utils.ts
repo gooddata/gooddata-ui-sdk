@@ -1,0 +1,643 @@
+// (C) 2025-2026 GoodData Corporation
+
+import { compact, isEqual } from "lodash-es";
+import { type IntlShape } from "react-intl";
+
+import {
+    type FilterContextItem,
+    type IAutomationVisibleFilter,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
+    type ICatalogMeasure,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilterConfigItem,
+    type IDashboardMeasureValueFilterConfig,
+    type IDateFilter,
+    type IFilter,
+    type IInsight,
+    type ObjRef,
+    type ObjRefInScope,
+    absoluteDateFilterValues,
+    areObjRefsEqual,
+    attributeLocalId,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
+    filterAttributeElements,
+    filterLocalIdentifier,
+    filterObjRef,
+    getAttributeElementsItems,
+    hasMeasureValueFilterConditions,
+    insightAttributes,
+    isAbsoluteDateFilter,
+    isAllDashboardMeasureValueFilter,
+    isAllTimeDateFilter,
+    isAllValuesAttributeFilter,
+    isAllValuesDashboardAttributeFilter,
+    isArbitraryAttributeFilter,
+    isAttributeFilter,
+    isDashboardArbitraryAttributeFilter,
+    isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
+    isDashboardCommonDateFilter,
+    isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
+    isDateFilter,
+    isInsightWidget,
+    isLocalIdRef,
+    isMatchAttributeFilter,
+    isMeasureValueFilter,
+    isNegativeAttributeFilter,
+    isNoopAllTimeDashboardDateFilter,
+    isPositiveAttributeFilter,
+    isRelativeDateFilter,
+    mergeFilters,
+    relativeDateFilterValues,
+} from "@gooddata/sdk-model";
+
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/filterConverters.js";
+import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
+import { removeIgnoredWidgetFilters } from "../../../../model/utils/widgetFilters.js";
+
+export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {
+    return dashboardFilterLocalIdentifier(filter);
+};
+
+export const validateAllFilterLocalIdentifiers = (filters: FilterContextItem[]): boolean => {
+    return filters.every((filter) => getFilterLocalIdentifier(filter) !== undefined);
+};
+
+export const areFiltersMatchedByIdentifier = (
+    filter1: FilterContextItem,
+    filter2: FilterContextItem,
+): boolean => {
+    return getFilterLocalIdentifier(filter1) === getFilterLocalIdentifier(filter2);
+};
+
+export const getNonSelectedFilters = (
+    allFilters: FilterContextItem[],
+    selectedFilters: FilterContextItem[],
+) => {
+    return allFilters.filter((allFilter) => {
+        return !selectedFilters.some((selectedFilter) => {
+            return areFiltersMatchedByIdentifier(allFilter, selectedFilter);
+        });
+    });
+};
+
+export const getCatalogAttributesByFilters = (
+    filters: FilterContextItem[],
+    attributes: ICatalogAttribute[],
+    attributeConfigs: IDashboardAttributeFilterConfig[],
+): ICatalogAttribute[] => {
+    const ignoredLocalIdentifiers = attributeConfigs
+        .filter((config) => config.mode === "hidden")
+        .map((config) => config.localIdentifier);
+
+    return attributes.filter((attribute) => {
+        return filters.some((filter) => {
+            if (isDashboardAttributeFilterItem(filter)) {
+                const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+                const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
+                return (
+                    localIdentifier &&
+                    !ignoredLocalIdentifiers.includes(localIdentifier) &&
+                    attribute.displayForms.some((attributeDisplayForm) => {
+                        return areObjRefsEqual(attributeDisplayForm.ref, displayForm);
+                    })
+                );
+            }
+
+            return false;
+        });
+    });
+};
+
+export const getCatalogMeasuresByFilters = (
+    filters: FilterContextItem[],
+    measures: ICatalogMeasure[],
+    mvfConfigs: IDashboardMeasureValueFilterConfig[],
+): ICatalogMeasure[] => {
+    const ignoredLocalIdentifiers = mvfConfigs
+        .filter((config) => config.mode === "hidden")
+        .map((config) => config.localIdentifier);
+
+    return measures.filter((measure) => {
+        return filters.some((filter) => {
+            if (isDashboardMeasureValueFilter(filter)) {
+                const localIdentifier = filter.dashboardMeasureValueFilter.localIdentifier;
+                return (
+                    !ignoredLocalIdentifiers.includes(localIdentifier) &&
+                    areObjRefsEqual(filter.dashboardMeasureValueFilter.measure, measure.measure.ref)
+                );
+            }
+            return false;
+        });
+    });
+};
+
+export const getCatalogDateDatasetsByFilters = (
+    filters: FilterContextItem[],
+    dateDataset: ICatalogDateDataset[],
+    dateConfigs: IDashboardDateFilterConfigItem[],
+): ICatalogDateDataset[] => {
+    const ignoredDateDatasets = dateConfigs
+        .filter((config) => {
+            return config.config.mode === "hidden";
+        })
+        .map((config) => config.dateDataSet);
+
+    return dateDataset.filter((dateDataset) => {
+        return filters.some((filter) => {
+            if (isDashboardDateFilter(filter)) {
+                return (
+                    !ignoredDateDatasets.some((ignoredDataset) =>
+                        areObjRefsEqual(dateDataset.dataSet.ref, ignoredDataset),
+                    ) && areObjRefsEqual(dateDataset.dataSet.ref, filter.dateFilter.dataSet)
+                );
+            }
+
+            return false;
+        });
+    });
+};
+
+export const getFilterByCatalogItemRef = (
+    ref: ObjRef,
+    filters: FilterContextItem[],
+): FilterContextItem | undefined => {
+    return filters.find((filter) => {
+        if (isDashboardAttributeFilterItem(filter)) {
+            return areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(filter), ref);
+        } else if (isDashboardDateFilter(filter)) {
+            return areObjRefsEqual(filter.dateFilter.dataSet, ref);
+        } else if (isDashboardMeasureValueFilter(filter)) {
+            return areObjRefsEqual(filter.dashboardMeasureValueFilter.measure, ref);
+        }
+        return false;
+    });
+};
+
+export const getVisibleFiltersByFilters = (
+    selectedFilters: FilterContextItem[] | undefined,
+    visibleFiltersMetadata: IAutomationVisibleFilter[] | undefined,
+    storeFilters?: boolean,
+): IAutomationVisibleFilter[] | undefined => {
+    if (!storeFilters) {
+        return undefined;
+    }
+
+    const filters = (selectedFilters ?? [])
+        // Strip noop "All values" attribute filters and "All" measure value filters —
+        // they have no effect on execution and should not be stored in visible filters metadata.
+        .filter(
+            (filter) =>
+                !isAllValuesDashboardAttributeFilter(filter) && !isAllDashboardMeasureValueFilter(filter),
+        )
+        .map((selectedFilter) => {
+            const selectedLocalIdentifier = getFilterLocalIdentifier(selectedFilter);
+            const targetFilter = (visibleFiltersMetadata ?? []).find((visibleFilter) => {
+                return selectedLocalIdentifier === visibleFilter.localIdentifier;
+            });
+
+            if (targetFilter && isDashboardDateFilter(selectedFilter)) {
+                return {
+                    ...targetFilter,
+                    // NOTE: despite the name, this flag is used to mark *noop* "All time" filters (implicit default)
+                    // that are intentionally not stored in automation execution filters.
+                    isAllTimeDateFilter: isNoopAllTimeDashboardDateFilter(selectedFilter),
+                };
+            }
+
+            return targetFilter;
+        });
+
+    return compact(filters);
+};
+
+/**
+ * Get visible filters metadata structured by tab.
+ * Applies the same logic as getVisibleFiltersByFilters to each tab's filters.
+ */
+export const getVisibleFiltersByFiltersByTab = (
+    filtersByTab: Record<string, FilterContextItem[]> | undefined,
+    visibleFiltersMetadata: Record<string, IAutomationVisibleFilter[]> | undefined,
+    storeFilters?: boolean,
+): Record<string, IAutomationVisibleFilter[]> | undefined => {
+    if (!storeFilters || !filtersByTab) {
+        return undefined;
+    }
+
+    return Object.entries(filtersByTab).reduce<Record<string, IAutomationVisibleFilter[]>>(
+        (acc, [tabId, tabFilters]) => {
+            const visibleFilters = getVisibleFiltersByFilters(
+                tabFilters,
+                visibleFiltersMetadata?.[tabId],
+                true,
+            );
+            if (visibleFilters && visibleFilters.length > 0) {
+                acc[tabId] = visibleFilters;
+            }
+            return acc;
+        },
+        {},
+    );
+};
+
+/**
+ * Resolve MVF dimensionality localIdRefs to stable identifierRefs using the insight's attributes.
+ *
+ * Measure value filters may reference attributes in their dimensionality via localIdRef,
+ * which is only meaningful within the insight's own execution context. When these filters
+ * are used in an alert execution (which may not include the original attributes), the
+ * localIdRefs become dangling. This function resolves them to display form identifierRefs.
+ */
+export function resolveMvfDimensionalityLocalRefs(
+    filters: IFilter[],
+    insight: IInsight | undefined,
+): IFilter[] {
+    if (!insight) {
+        return filters;
+    }
+
+    const attributeLocalIdToDisplayForm = new Map<string, ObjRefInScope>();
+    insightAttributes(insight).forEach((attribute) => {
+        attributeLocalIdToDisplayForm.set(attributeLocalId(attribute), attribute.attribute.displayForm);
+    });
+
+    if (attributeLocalIdToDisplayForm.size === 0) {
+        return filters;
+    }
+
+    return filters.map((filter) => {
+        if (!isMeasureValueFilter(filter)) {
+            return filter;
+        }
+
+        const dimensionality = filter.measureValueFilter.dimensionality;
+        if (!dimensionality?.length) {
+            return filter;
+        }
+
+        const resolvedDimensionality = dimensionality.map((item) => {
+            if (!isLocalIdRef(item)) {
+                return item;
+            }
+            return attributeLocalIdToDisplayForm.get(item.localIdentifier) ?? item;
+        });
+
+        const changed = dimensionality.some((item, i) => item !== resolvedDimensionality[i]);
+        if (!changed) {
+            return filter;
+        }
+
+        return {
+            ...filter,
+            measureValueFilter: {
+                ...filter.measureValueFilter,
+                dimensionality: resolvedDimensionality,
+            },
+        };
+    });
+}
+
+/**
+ * Get final execution filters for the widget alert or scheduled export.
+ */
+export const getAppliedWidgetFilters = (
+    selectedAutomationFilters: FilterContextItem[],
+    dashboardHiddenFilters: FilterContextItem[],
+    widget: ExtendedDashboardWidget | undefined,
+    insight: IInsight | undefined,
+    commonDateFilterId: string | undefined,
+    mergeInsightFilters: boolean = false,
+) => {
+    // Hidden filters are never included in selectedAutomationFilters,
+    // but we need them to construct proper execution filters, so merge them.
+    const selectedFiltersWithHiddenFilters = [...selectedAutomationFilters, ...dashboardHiddenFilters];
+
+    // Now, remove ignored filters (some of the hidden filters might be ignored).
+    const selectedFiltersWithoutIgnoredFilters = removeIgnoredWidgetFilters(
+        selectedFiltersWithHiddenFilters,
+        widget,
+    );
+
+    // Now, convert sanitized selected filters to execution filters shape.
+    const selectedExecutionFilters = isInsightWidget(widget)
+        ? filterContextItemsToDashboardFiltersByWidget(selectedFiltersWithoutIgnoredFilters, widget)
+        : [];
+
+    const filtersToUse = mergeInsightFilters
+        ? mergeFilters(insight?.insight?.filters ?? [], selectedExecutionFilters, commonDateFilterId)
+        : selectedExecutionFilters;
+
+    // Resolve MVF dimensionality localIdRefs to stable identifierRefs so that
+    // alert executions (which have empty attributes) don't contain dangling refs.
+    const resolvedFilters = resolveMvfDimensionalityLocalRefs(filtersToUse, insight);
+
+    // Strip noop filters - they have no effect on execution.
+    return resolvedFilters.filter((filter) => {
+        // Strip noop "All time" date filters (implicit default with no extra configuration).
+        if (isDateFilter(filter)) {
+            return !isNoopAllTimeDateFilterFixed(filter);
+        }
+        // Strip noop "All" measure value filters (no conditions).
+        if (isMeasureValueFilter(filter)) {
+            return hasMeasureValueFilterConditions(filter);
+        }
+        // Strip noop "All values" attribute filters (negative filter with empty exclusion list).
+        return !isAllValuesAttributeFilter(filter);
+    });
+};
+
+/**
+ * Get final filters for the dashboard scheduled export.
+ */
+export const getAppliedDashboardFilters = (
+    selectedAutomationFilters: FilterContextItem[],
+    dashboardHiddenFilters: FilterContextItem[],
+    storeFilters?: boolean,
+) => {
+    if (!storeFilters) {
+        return undefined;
+    }
+    // Hidden filters are never included in selectedAutomationFilters,
+    // but we need them to construct proper execution filters, so merge them.
+    const selectedFiltersWithHiddenFilters = [...selectedAutomationFilters, ...dashboardHiddenFilters];
+
+    // Strip noop filters - they have no effect on execution.
+    return selectedFiltersWithHiddenFilters.filter((filter) => {
+        // Strip noop "All time" date filters (implicit default with no extra configuration).
+        if (isDashboardDateFilter(filter)) {
+            return !isNoopAllTimeDashboardDateFilter(filter);
+        }
+        // Strip noop "All" measure value filters (no/empty conditions).
+        if (isDashboardMeasureValueFilter(filter)) {
+            return !isAllDashboardMeasureValueFilter(filter);
+        }
+        // Strip noop "All values" attribute filters.
+        return !isAllValuesDashboardAttributeFilter(filter);
+    });
+};
+
+export const getNonHiddenFilters = (
+    filters: FilterContextItem[] | undefined,
+    attributeConfigs: IDashboardAttributeFilterConfig[],
+    dateConfigs: IDashboardDateFilterConfigItem[],
+    isCommonDateFilterHidden: boolean,
+    disableDateFilters: boolean,
+): FilterContextItem[] => {
+    return (filters ?? []).filter((filter) => {
+        if (isDashboardAttributeFilterItem(filter)) {
+            const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+            const config = attributeConfigs.find(
+                (attribute) => attribute.localIdentifier === localIdentifier,
+            );
+            return config?.mode !== "hidden";
+        } else if ((isDashboardCommonDateFilter as (filter: FilterContextItem) => boolean)(filter)) {
+            return !isCommonDateFilterHidden && !disableDateFilters;
+        } else if (isDashboardDateFilter(filter)) {
+            const config = dateConfigs.find((date) =>
+                areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
+            );
+            return config?.config.mode !== "hidden" && !disableDateFilters;
+        } else {
+            // New filter types (arbitrary, match) - show by default
+            return true;
+        }
+    });
+};
+
+export const getFilterByLocalIdentifier = (
+    localIdentifier: string | undefined,
+    filters: FilterContextItem[],
+): FilterContextItem | undefined => {
+    if (!localIdentifier) {
+        return undefined;
+    }
+
+    return filters.find((filter) => {
+        const filterLocalIdentifier = getFilterLocalIdentifier(filter);
+        return filterLocalIdentifier === localIdentifier;
+    });
+};
+
+/**
+ * Analytical Designer is storing all-time date filters inconsistently,
+ * it does not use ALL_TIME_GRANULARITY, but instead stores it as relative date filter without from / to values.
+ * This function is used to fix this inconsistency.
+ */
+export function isAllTimeDateFilterFixed(f: IFilter): boolean {
+    // Standard check for all-time date filter.
+    if (isAllTimeDateFilter(f)) {
+        return true;
+    }
+
+    // This is the case when all-time date filter is stored as relative date filter without from / to value from Analytical Designer.
+    if (isRelativeDateFilter(f)) {
+        return (
+            (f.relativeDateFilter.from === null || f.relativeDateFilter.from === undefined) &&
+            (f.relativeDateFilter.to === null || f.relativeDateFilter.to === undefined)
+        );
+    }
+
+    // This is not likely, just for sake of safety.
+    if (isAbsoluteDateFilter(f)) {
+        return (
+            (f.absoluteDateFilter.from === null || f.absoluteDateFilter.from === undefined) &&
+            (f.absoluteDateFilter.to === null || f.absoluteDateFilter.to === undefined)
+        );
+    }
+
+    return false;
+}
+
+/**
+ * Similar to {@link isAllTimeDateFilterFixed}, but only matches *noop* all-time filters.
+ *
+ * @remarks
+ * Noop all-time filters are implicit defaults and have no effect on execution. All-time filters with `emptyValueHandling`
+ * are considered meaningful (they carry extra configuration) and should not be treated as no-op.
+ */
+export function isNoopAllTimeDateFilterFixed(f: IFilter): boolean {
+    // Standard check for noop all-time date filter.
+    if (isAllTimeDateFilter(f)) {
+        return f.relativeDateFilter.emptyValueHandling === undefined;
+    }
+
+    // Analytical Designer may store "all-time" as a relative date filter without from/to.
+    // Treat it as no-op only when it does NOT carry extra configuration (e.g. emptyValueHandling).
+    if (isRelativeDateFilter(f)) {
+        return (
+            (f.relativeDateFilter.from === null || f.relativeDateFilter.from === undefined) &&
+            (f.relativeDateFilter.to === null || f.relativeDateFilter.to === undefined) &&
+            f.relativeDateFilter.emptyValueHandling === undefined
+        );
+    }
+
+    // Not expected, but keep the symmetric safety behavior for absolute filters.
+    if (isAbsoluteDateFilter(f)) {
+        return (
+            (f.absoluteDateFilter.from === null || f.absoluteDateFilter.from === undefined) &&
+            (f.absoluteDateFilter.to === null || f.absoluteDateFilter.to === undefined) &&
+            f.absoluteDateFilter.emptyValueHandling === undefined
+        );
+    }
+
+    return false;
+}
+
+export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
+    if (isAttributeFilter(filter1) && isAttributeFilter(filter2)) {
+        const filter1Ref = filterObjRef(filter1);
+        const filter2Ref = filterObjRef(filter2);
+
+        if (isArbitraryAttributeFilter(filter1) && isArbitraryAttributeFilter(filter2)) {
+            return (
+                areObjRefsEqual(filter1Ref, filter2Ref) &&
+                isEqual(filter1.arbitraryAttributeFilter.values, filter2.arbitraryAttributeFilter.values) &&
+                (filter1.arbitraryAttributeFilter.negativeSelection ?? false) ===
+                    (filter2.arbitraryAttributeFilter.negativeSelection ?? false)
+            );
+        }
+
+        if (isMatchAttributeFilter(filter1) && isMatchAttributeFilter(filter2)) {
+            const m1 = filter1.matchAttributeFilter;
+            const m2 = filter2.matchAttributeFilter;
+            return (
+                areObjRefsEqual(filter1Ref, filter2Ref) &&
+                m1.literal === m2.literal &&
+                m1.operator === m2.operator &&
+                (m1.caseSensitive ?? false) === (m2.caseSensitive ?? false) &&
+                (m1.negativeSelection ?? false) === (m2.negativeSelection ?? false)
+            );
+        }
+
+        if (
+            (isPositiveAttributeFilter(filter1) && isPositiveAttributeFilter(filter2)) ||
+            (isNegativeAttributeFilter(filter1) && isNegativeAttributeFilter(filter2))
+        ) {
+            const filter1Values = [...getAttributeElementsItems(filterAttributeElements(filter1))].sort();
+            const filter1Type = isPositiveAttributeFilter(filter1) ? "positive" : "negative";
+            const filter2Values = [...getAttributeElementsItems(filterAttributeElements(filter2))].sort();
+            const filter2Type = isPositiveAttributeFilter(filter2) ? "positive" : "negative";
+
+            return (
+                areObjRefsEqual(filter1Ref, filter2Ref) &&
+                isEqual(filter1Values, filter2Values) &&
+                filter1Type === filter2Type
+            );
+        }
+    } else if (isDateFilter(filter1) && isDateFilter(filter2)) {
+        return isEqual(dateFilterValues(filter1), dateFilterValues(filter2));
+    }
+
+    // Filter types are different
+    return isEqual(filter1, filter2);
+}
+
+export function dateFilterValues(filter: IDateFilter) {
+    if (isAbsoluteDateFilter(filter)) {
+        return absoluteDateFilterValues(filter);
+    }
+
+    return relativeDateFilterValues(filter);
+}
+
+export function isFilterIgnoredByWidget(filter: FilterContextItem, widget: ExtendedDashboardWidget): boolean {
+    if (!isInsightWidget(widget)) {
+        return false;
+    }
+
+    return isDashboardCommonDateFilter(filter)
+        ? !widget.dateDataSet
+        : widget.ignoreDashboardFilters.some((ignoredFilter) => {
+              if (isDashboardDateFilter(filter) && ignoredFilter.type === "dateFilterReference") {
+                  return areObjRefsEqual(ignoredFilter.dataSet, filter.dateFilter.dataSet);
+              }
+
+              if (
+                  isDashboardAttributeFilterItem(filter) &&
+                  ignoredFilter.type === "attributeFilterReference"
+              ) {
+                  return areObjRefsEqual(
+                      ignoredFilter.displayForm,
+                      dashboardAttributeFilterItemDisplayForm(filter),
+                  );
+              }
+
+              if (
+                  isDashboardMeasureValueFilter(filter) &&
+                  ignoredFilter.type === "measureValueFilterReference"
+              ) {
+                  return areObjRefsEqual(ignoredFilter.measure, dashboardFilterObjRef(filter));
+              }
+
+              return false;
+          });
+}
+
+export function isFilterMatch(filter1: IFilter, filter2: IFilter): boolean {
+    const localId1 = filterLocalIdentifier(filter1);
+    const localId2 = filterLocalIdentifier(filter2);
+
+    if (localId1 === localId2) {
+        return true;
+    }
+
+    if (isDateFilter(filter1) && isDateFilter(filter2)) {
+        return areObjRefsEqual(filterObjRef(filter1), filterObjRef(filter2));
+    }
+
+    return false;
+}
+
+export const getFilterTitle = (
+    filter: FilterContextItem,
+    allAttributes: ICatalogAttribute[],
+    allDateDatasets: ICatalogDateDataset[],
+    intl: IntlShape,
+): string => {
+    if (isDashboardAttributeFilter(filter)) {
+        const attribute = allAttributes.find((attr) =>
+            attr.displayForms.some((df) => areObjRefsEqual(df.ref, filter.attributeFilter.displayForm)),
+        );
+        return attribute?.attribute.title || "";
+    }
+
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        const attribute = allAttributes.find((attr) =>
+            attr.displayForms.some((df) =>
+                areObjRefsEqual(df.ref, filter.arbitraryAttributeFilter.displayForm),
+            ),
+        );
+        return filter.arbitraryAttributeFilter.title || attribute?.attribute.title || "";
+    }
+
+    if (isDashboardMatchAttributeFilter(filter)) {
+        const attribute = allAttributes.find((attr) =>
+            attr.displayForms.some((df) => areObjRefsEqual(df.ref, filter.matchAttributeFilter.displayForm)),
+        );
+        return filter.matchAttributeFilter.title || attribute?.attribute.title || "";
+    }
+
+    if (isDashboardDateFilter(filter)) {
+        // Handle common date filter (no specific dataSet)
+        if (!filter.dateFilter.dataSet) {
+            return intl.formatMessage({ id: "dateFilterDropdown.title" });
+        }
+
+        const dateDataset = allDateDatasets.find((ds) =>
+            areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
+        );
+        return dateDataset?.dataSet.title || "";
+    }
+
+    if (isDashboardMeasureValueFilter(filter)) {
+        return filter.dashboardMeasureValueFilter.title || "";
+    }
+
+    return "";
+};

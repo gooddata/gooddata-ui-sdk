@@ -4,6 +4,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { isEqual } from "lodash-es";
 
 import {
+    DashboardParameterModeValues,
     type IDashboardLayout,
     type IDashboardParameter,
     type IDashboardTab,
@@ -47,6 +48,7 @@ import {
 const EMPTY_PARAMETERS: IDashboardParameter[] = [];
 const EMPTY_PARAMETER_VALUES: IInsightParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
+const EMPTY_RESET_TARGETS: { ref: ObjRef; value: number | undefined }[] = [];
 
 const selectParametersState = createSelector(
     selectActiveTab,
@@ -152,18 +154,7 @@ export const selectParameterResetValueByRef: (ref: ObjRef) => DashboardSelector<
                 if (!entry) {
                     return undefined;
                 }
-                if (!workspaceParameter || !isNumberParameterDefinition(workspaceParameter.definition)) {
-                    return undefined;
-                }
-                const workspaceDefault = workspaceParameter.definition.defaultValue;
-                const dashboardOverride = entry.parameter.value;
-                if (isInEditMode) {
-                    if (dashboardOverride === undefined || dashboardOverride === workspaceDefault) {
-                        return undefined;
-                    }
-                    return workspaceDefault;
-                }
-                return dashboardOverride ?? workspaceDefault;
+                return computeParameterResetValue(entry, workspaceParameter, isInEditMode);
             },
         ),
     );
@@ -259,6 +250,39 @@ export const selectIsParametersChanged: DashboardSelector<boolean> = createSelec
         }
         return false;
     },
+);
+
+/**
+ * Reset targets for every active-tab parameter whose `runtimeOverride` differs from its computed
+ * reset value (per `computeParameterResetValue`).
+ *
+ * @internal
+ */
+export const selectActiveTabParameterResetTargets: DashboardSelector<
+    { ref: ObjRef; value: number | undefined }[]
+> = createSelector(
+    selectDashboardParameterEntries,
+    selectCatalogParameters,
+    selectIsInEditMode,
+    selectEnableParameters,
+    (entries, workspaceParameters, isInEditMode, isEnabled) => {
+        if (!isEnabled) {
+            return EMPTY_RESET_TARGETS;
+        }
+        const targets = computeParameterResetTargets(entries, workspaceParameters, isInEditMode);
+        return targets.length === 0 ? EMPTY_RESET_TARGETS : targets;
+    },
+);
+
+/**
+ * True when the active tab has at least one parameter whose `runtimeOverride` differs from
+ * the value it would be reset to (per `computeParameterResetValue`).
+ *
+ * @alpha
+ */
+export const selectHasAnyResettableParameterOnActiveTab: DashboardSelector<boolean> = createSelector(
+    selectActiveTabParameterResetTargets,
+    (targets) => targets.length > 0,
 );
 
 /**
@@ -447,4 +471,60 @@ function labelOverride(
         return { label: entry.parameter.label };
     }
     return {};
+}
+
+/**
+ * Returns `undefined` when reset would be a no-op: missing/non-number workspace parameter, or
+ * in edit mode when `parameter.value` is unset / already equals the workspace default.
+ *
+ * @internal
+ */
+export function computeParameterResetValue(
+    entry: IDashboardParameterEntry,
+    workspaceParameter: IParameterMetadataObject | undefined,
+    isInEditMode: boolean,
+): number | undefined {
+    if (!workspaceParameter || !isNumberParameterDefinition(workspaceParameter.definition)) {
+        return undefined;
+    }
+    const workspaceDefault = workspaceParameter.definition.defaultValue;
+    const dashboardOverride = entry.parameter.value;
+    if (isInEditMode) {
+        if (dashboardOverride === undefined || dashboardOverride === workspaceDefault) {
+            return undefined;
+        }
+        return workspaceDefault;
+    }
+    return dashboardOverride ?? workspaceDefault;
+}
+
+/**
+ * Only `mode: "active"` entries with a defined `runtimeOverride` are considered resettable;
+ * HIDDEN and READONLY entries are skipped, and entries with `runtimeOverride === undefined`
+ * (chip hidden, execution falls back to `insight.parameters`) are preserved as-is — symmetric
+ * with per-chip behavior in `DashboardParameterFilter`.
+ *
+ * @internal
+ */
+export function computeParameterResetTargets(
+    entries: IDashboardParameterEntry[],
+    workspaceParameters: IParameterMetadataObject[],
+    isInEditMode: boolean,
+): { ref: ObjRef; value: number | undefined }[] {
+    const workspaceByRef = new Map(workspaceParameters.map((wp) => [objRefToString(wp.ref), wp]));
+    const result: { ref: ObjRef; value: number | undefined }[] = [];
+    for (const entry of entries) {
+        if (entry.parameter.mode !== DashboardParameterModeValues.ACTIVE) {
+            continue;
+        }
+        if (entry.runtimeOverride === undefined) {
+            continue;
+        }
+        const workspaceParameter = workspaceByRef.get(objRefToString(entry.parameter.ref));
+        const resetValue = computeParameterResetValue(entry, workspaceParameter, isInEditMode);
+        if (resetValue !== undefined && resetValue !== entry.runtimeOverride) {
+            result.push({ ref: entry.parameter.ref, value: resetValue });
+        }
+    }
+    return result;
 }

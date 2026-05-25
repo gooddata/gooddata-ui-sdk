@@ -1,0 +1,229 @@
+// (C) 2025-2026 GoodData Corporation
+
+import { useMemo } from "react";
+
+import {
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationVisibleFilter,
+    dashboardFilterLocalIdentifier,
+    filterLocalIdentifier,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
+} from "@gooddata/sdk-model";
+
+import {
+    getAutomationAlertFilters,
+    getAutomationDashboardFilters,
+    getAutomationDashboardFiltersByTab,
+    getAutomationVisualizationFilters,
+} from "../../../../../_staging/automation/index.js";
+import { dashboardFilterToFilterContextItem } from "../../../../../_staging/dashboard/dashboardFilterContext.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import {
+    selectAutomationAvailableDashboardFilters,
+    selectAutomationCommonDateFilterId,
+} from "../../../../../model/store/filtering/dashboardFilterSelectors.js";
+import type { ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
+import { removeIgnoredWidgetFilters } from "../../../../../model/utils/widgetFilters.js";
+import { type IDashboardFilter, isDashboardFilter } from "../../../../../types.js";
+
+export function useDefaultSelectedFiltersForExistingAutomation(
+    automationToEdit?: IAutomationMetadataObject,
+    availableVisibleFilters?: IAutomationVisibleFilter[],
+    widget?: ExtendedDashboardWidget,
+) {
+    const availableDashboardFilters = useDashboardSelector(selectAutomationAvailableDashboardFilters);
+    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+
+    const savedWidgetAlertFilters = getAutomationAlertFilters(automationToEdit);
+    const {
+        executionFilters: savedWidgetScheduleFilters,
+        filterContextItems: savedWidgetScheduleFilterContextItems,
+    } = getAutomationVisualizationFilters(automationToEdit);
+    const savedDashboardScheduleFilters = getAutomationDashboardFilters(automationToEdit);
+
+    // Convert saved filters to FilterContextItem[] with correct titles
+    const savedFilterContextItems = useMemo(() => {
+        const savedAutomationWidgetFilters = savedWidgetAlertFilters ?? savedWidgetScheduleFilters;
+        const convertedSavedWidgetFilters = savedAutomationWidgetFilters
+            ?.filter(isDashboardFilter)
+            .map((filter) => convertAndSanitizeFilter(filter, availableVisibleFilters));
+
+        return (
+            savedDashboardScheduleFilters ??
+            savedWidgetScheduleFilterContextItems ??
+            convertedSavedWidgetFilters
+        );
+    }, [
+        savedWidgetAlertFilters,
+        savedWidgetScheduleFilters,
+        savedWidgetScheduleFilterContextItems,
+        savedDashboardScheduleFilters,
+        availableVisibleFilters,
+    ]);
+
+    const availableWidgetFilters = removeIgnoredWidgetFilters(availableDashboardFilters, widget);
+
+    const savedVisibleFilters = automationToEdit?.metadata?.visibleFilters ?? [];
+
+    return getDefaultSelectedFiltersByVisibleFilters(
+        savedVisibleFilters,
+        availableWidgetFilters,
+        savedFilterContextItems,
+        commonDateFilterId,
+    );
+}
+
+/**
+ * Reconstructs default filters selection for the AutomationFiltersSelect component from existing widget automation.
+ * This is done by mapping saved visible filters metadata, with relevant saved automation filters or dashboard filters.
+ * Unsuccessful mapping (eg if some filters are missing etc.) should be ok, in case of invalid filters (validated by useAutomationFiltersValidation),
+ * ApplyLatestFiltersConfirmDialog will be shown to the user, and editing will be available only after user confirms to apply current dashboard filters.
+ *
+ * @internal
+ */
+function getDefaultSelectedFiltersByVisibleFilters(
+    savedVisibleFilters: IAutomationVisibleFilter[],
+    availableWidgetFilters: FilterContextItem[],
+    savedAutomationFilters?: FilterContextItem[],
+    commonDateFilterId?: string,
+) {
+    return savedVisibleFilters.flatMap((visibleFilter): FilterContextItem | FilterContextItem[] => {
+        // Find relevant available widget filter by local identifier
+        const targetDashboardFilter = availableWidgetFilters?.find(
+            (f) => visibleFilter.localIdentifier === dashboardFilterLocalIdentifier(f),
+        );
+
+        // Find relevant saved automation filter by local identifier
+        const savedFilter = savedAutomationFilters?.find(
+            (f) => visibleFilter.localIdentifier === dashboardFilterLocalIdentifier(f),
+        );
+
+        if (
+            commonDateFilterId &&
+            visibleFilter.localIdentifier === commonDateFilterId &&
+            visibleFilter.isAllTimeDateFilter
+        ) {
+            // If the visible filter is the common date filter and it's all-time,
+            // return the all-time common date filter (all-time filters are not saved)
+            // Common date filter is recognized by missing dateDataSet, so we need to set it to undefined
+            return newAllTimeDashboardDateFilter(undefined, visibleFilter.localIdentifier);
+        } else if (
+            commonDateFilterId &&
+            visibleFilter.localIdentifier === commonDateFilterId &&
+            isDashboardDateFilter(savedFilter)
+        ) {
+            // If the visible filter is the common date filter and it's not all-time,
+            // return the saved common date filter.
+            // Common date filter is recognized by missing dateDataSet, so we need to set it to undefined
+            return {
+                ...savedFilter,
+                dateFilter: {
+                    ...savedFilter.dateFilter,
+                    dataSet: undefined,
+                },
+            };
+        } else if (visibleFilter.isAllTimeDateFilter && isDashboardDateFilter(targetDashboardFilter)) {
+            // If visible filter is all-time date filter, it's not saved, so we need to get it from the available widget filters.
+            // As it is not common date filter, we need to set the proper dateDataSet to it.
+            return newAllTimeDashboardDateFilter(
+                targetDashboardFilter.dateFilter.dataSet,
+                visibleFilter.localIdentifier,
+            );
+        }
+
+        // Rest of the filters should be saved, so match them by local identifier.
+        const matchedSavedFilter = savedAutomationFilters?.find(
+            (savedFilter) => visibleFilter.localIdentifier === dashboardFilterLocalIdentifier(savedFilter),
+        );
+        if (matchedSavedFilter) {
+            return matchedSavedFilter;
+        }
+
+        return [];
+    });
+}
+
+/**
+ * Reconstructs filters per tab from saved visibleFiltersByTab and filtersByTab.
+ * Applies the same matching logic as getDefaultSelectedFiltersByVisibleFilters to each tab.
+ *
+ * @internal
+ */
+export function getDefaultSelectedFiltersByTabForExistingAutomation(
+    automationToEdit: IAutomationMetadataObject | undefined,
+    availableDashboardFiltersByTab: Record<string, FilterContextItem[]> = {},
+    commonDateFilterId?: string,
+): Record<string, FilterContextItem[]> | undefined {
+    if (!automationToEdit) {
+        return undefined;
+    }
+
+    const savedVisibleFiltersByTab = automationToEdit.metadata?.visibleFiltersByTab;
+    const savedFiltersByTab = getAutomationDashboardFiltersByTab(automationToEdit);
+
+    if (!savedFiltersByTab) {
+        return undefined;
+    }
+
+    // If we have visibleFiltersByTab, use it to properly reconstruct filters
+    if (savedVisibleFiltersByTab) {
+        return Object.entries(savedVisibleFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
+            (acc, [tabId, savedVisibleFilters]) => {
+                const availableFiltersForTab = availableDashboardFiltersByTab[tabId] ?? [];
+                const savedFiltersForTab = savedFiltersByTab[tabId] ?? [];
+
+                const reconstructedFilters = getDefaultSelectedFiltersByVisibleFilters(
+                    savedVisibleFilters,
+                    availableFiltersForTab,
+                    savedFiltersForTab,
+                    commonDateFilterId,
+                );
+
+                if (reconstructedFilters.length > 0) {
+                    acc[tabId] = reconstructedFilters;
+                }
+
+                return acc;
+            },
+            {},
+        );
+    }
+    return undefined;
+}
+
+function convertAndSanitizeFilter(
+    filter: IDashboardFilter,
+    availableVisibleFilters?: IAutomationVisibleFilter[],
+) {
+    const convertedItem = dashboardFilterToFilterContextItem(filter, true);
+
+    // Because execution filters do not include titles, and they cannot be saved there,
+    // get them from the current available visible filters.
+    const titleToUse = availableVisibleFilters?.find(
+        (visibleFilter) => visibleFilter.localIdentifier === filterLocalIdentifier(filter),
+    );
+
+    if (isDashboardAttributeFilter(convertedItem)) {
+        return {
+            ...convertedItem,
+            attributeFilter: {
+                ...convertedItem.attributeFilter,
+                title: titleToUse?.title,
+            },
+        };
+    } else if (isDashboardDateFilter(convertedItem)) {
+        return {
+            ...convertedItem,
+            dateFilter: {
+                ...convertedItem.dateFilter,
+                title: titleToUse?.title,
+            },
+        };
+    }
+
+    // New filter types (arbitrary, match) - return as-is
+    return convertedItem;
+}

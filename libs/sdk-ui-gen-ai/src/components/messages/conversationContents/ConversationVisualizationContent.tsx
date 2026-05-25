@@ -168,6 +168,7 @@ function ConversationVisualizationContentCore({
                 setDrillState={setDrillState}
                 containerRef={containerRef}
                 setKeyDriverAnalysis={setKeyDriverAnalysis}
+                filters={visualization.insight.filters}
             >
                 <Wrapper containerRef={containerRef} visualization={visualization}>
                     <VisualisationMenu

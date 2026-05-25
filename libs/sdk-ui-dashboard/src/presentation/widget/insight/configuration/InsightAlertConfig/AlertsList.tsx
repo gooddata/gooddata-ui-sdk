@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -14,7 +14,7 @@ import {
     useListWithActionsKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 
-import { Alert } from "../../../../alerting/DefaultAlertingManagementDialog/components/Alert.js";
+import { Alert } from "../../../../automations/alerting/DefaultAlertingManagementDialog/components/Alert.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 
 interface IAlertsListProps {

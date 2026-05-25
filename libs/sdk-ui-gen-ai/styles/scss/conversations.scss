@@ -231,6 +231,12 @@
             background-color: kit-variables.$gd-palette-error-dimmed;
         }
     }
+
+    .gd-ui-kit-menu__items-container {
+        overflow-y: auto;
+        overflow-x: auto;
+        overscroll-behavior: auto;
+    }
 }
 
 .gd-gen-ai-chat__rename-dialog {

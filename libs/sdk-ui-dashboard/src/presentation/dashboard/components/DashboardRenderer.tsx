@@ -13,8 +13,10 @@ import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-k
 import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { DashboardStoreProvider } from "../../../model/react/DashboardStoreProvider.js";
-import { DefaultAlertingDialog } from "../../alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
-import { DefaultAlertingManagementDialogNew } from "../../alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
+import { DefaultAlertingDialog } from "../../automations/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
+import { DefaultAlertingManagementDialogNew } from "../../automations/alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
+import { DefaultScheduledEmailDialog } from "../../automations/scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
+import { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "../../automations/scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
 import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/zIndex.js";
 import { DashboardComponentsProvider } from "../../dashboardContexts/DashboardComponentsContext.js";
 import { DashboardConfigProvider } from "../../dashboardContexts/DashboardConfigContext.js";
@@ -30,8 +32,6 @@ import { LayoutResizeStateProvider } from "../../dragAndDrop/LayoutResizeContext
 import { RenderModeAwareFilterBar } from "../../filterBar/filterBar/RenderModeAwareFilterBar.js";
 import { DefaultDashboardLayout } from "../../flexibleLayout/DefaultDashboardLayout.js";
 import { DefaultSaveAsDialog } from "../../saveAs/DefaultSaveAsDialog/index.js";
-import { DefaultScheduledEmailDialog } from "../../scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
-import { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "../../scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
 import { DefaultShareDialog } from "../../shareDialog/DefaultShareDialog.js";
 import { HiddenToolbar } from "../../toolbar/HiddenToolbar.js";
 import { DefaultSaveButton } from "../../topBar/buttonBar/button/saveButton/DefaultSaveButton.js";

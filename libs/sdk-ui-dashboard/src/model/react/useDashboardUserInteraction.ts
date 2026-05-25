@@ -102,6 +102,10 @@ export const useDashboardUserInteraction = () => {
         eventDispatch(userInteractionTriggered("filterContextStateReset"));
     }, [eventDispatch]);
 
+    const parametersStateReset = useCallback(() => {
+        eventDispatch(userInteractionTriggered("parametersStateReset"));
+    }, [eventDispatch]);
+
     const interactionPanelOpened = useCallback(() => {
         eventDispatch(userInteractionTriggered("interactionPanelOpened"));
     }, [eventDispatch]);
@@ -134,6 +138,7 @@ export const useDashboardUserInteraction = () => {
         shareDialogInteraction,
         attributeFilterInteraction,
         filterContextStateReset,
+        parametersStateReset,
         interactionPanelOpened,
         addInteractionClicked,
         attributeHierarchiesInteraction,

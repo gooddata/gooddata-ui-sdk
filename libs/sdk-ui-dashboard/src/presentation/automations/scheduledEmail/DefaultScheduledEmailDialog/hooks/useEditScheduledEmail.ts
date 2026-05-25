@@ -1,0 +1,1221 @@
+// (C) 2019-2026 GoodData Corporation
+
+import { useCallback, useMemo, useState } from "react";
+
+import { useIntl } from "react-intl";
+import { invariant } from "ts-invariant";
+
+import {
+    type AutomationEvaluationMode,
+    DEFAULT_CSV_DELIMITER,
+    type DashboardAttachmentType,
+    type FilterContextItem,
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectBase,
+    type IAutomationMetadataObjectDefinition,
+    type IAutomationRecipient,
+    type IAutomationVisibleFilter,
+    type IExportDefinitionMetadataObjectDefinition,
+    type IExportDefinitionVisualizationObjectSettings,
+    type IFilter,
+    type IInsight,
+    type INotificationChannelIdentifier,
+    type INotificationChannelMetadataObject,
+    type WidgetAttachmentType,
+    insightProperties,
+    isAutomationExternalUserRecipient,
+    isAutomationUnknownUserRecipient,
+    isAutomationUserRecipient,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
+    isInsightWidget,
+    isWidget,
+} from "@gooddata/sdk-model";
+
+import {
+    areAutomationsEqual,
+    convertCurrentUserToAutomationRecipient,
+    convertCurrentUserToWorkspaceUser,
+    convertExternalRecipientToAutomationRecipient,
+} from "../../../../../_staging/automation/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import {
+    selectEnableAutomationEvaluationMode,
+    selectEnableExternalRecipients,
+    selectSettings,
+    selectTimezone,
+} from "../../../../../model/store/config/configSelectors.js";
+import {
+    type IAutomationFiltersTab,
+    selectAutomationCommonDateFilterId,
+    selectDashboardHiddenFilters,
+} from "../../../../../model/store/filtering/dashboardFilterSelectors.js";
+import { selectDashboardId, selectDashboardTitle } from "../../../../../model/store/meta/metaSelectors.js";
+import { selectWidgetLocalIdToTabIdMap } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectCurrentUser } from "../../../../../model/store/user/userSelectors.js";
+import { selectUsers } from "../../../../../model/store/users/usersSelectors.js";
+import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
+import { getDefaultSelectedFiltersFromFiltersByTab } from "../../../shared/automationFilters/useAutomationFiltersSelect.js";
+import {
+    getAppliedDashboardFilters,
+    getAppliedWidgetFilters,
+    getVisibleFiltersByFilters,
+    getVisibleFiltersByFiltersByTab,
+} from "../../../shared/automationFilters/utils.js";
+import {
+    toModifiedISOStringToTimezone,
+    toNormalizedFirstRunAndCron,
+    toNormalizedStartDate,
+} from "../../utils/date.js";
+import { getUserTimezone } from "../../utils/timezone.js";
+import { isEmail } from "../../utils/validate.js";
+
+import { useScheduleValidation } from "./useScheduleValidation.js";
+
+export interface IUseEditScheduledEmailProps {
+    scheduledExportToEdit?: IAutomationMetadataObject;
+    notificationChannels: INotificationChannelIdentifier[] | INotificationChannelMetadataObject[];
+    maxAutomationsRecipients: number;
+    widget?: ExtendedDashboardWidget;
+    insight?: IInsight;
+    widgetFilters?: IFilter[];
+    editedAutomationFilters?: FilterContextItem[];
+    dashboardFilters?: FilterContextItem[];
+    setEditedAutomationFilters: (filters: FilterContextItem[]) => void;
+
+    /**
+     * Edited filters structured by tab ID for dashboard automations with tabs enabled.
+     * When provided, these are used instead of dashboardFilters for per-tab filter storage.
+     */
+    editedAutomationFiltersByTab?: Record<string, FilterContextItem[]>;
+    /**
+     * Setter for editedFiltersByTab state.
+     * Used to update filters for a specific tab.
+     */
+    setEditedAutomationFiltersByTab?: (filters: Record<string, FilterContextItem[]>) => void;
+    filtersDataByTab?: IAutomationFiltersTab[] | undefined;
+    availableFiltersAsVisibleFilters?: IAutomationVisibleFilter[] | undefined;
+    availableFiltersAsVisibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
+    // Option to opt out of storing filters
+    storeFilters?: boolean;
+    setStoreFilters: (storeFilters: boolean) => void;
+    filtersForNewAutomation: FilterContextItem[];
+    externalRecipientOverride?: string;
+    enableNewScheduledExport: boolean;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
+}
+
+export function useEditScheduledEmail({
+    scheduledExportToEdit,
+    notificationChannels,
+    insight,
+    widget,
+    editedAutomationFilters,
+    dashboardFilters,
+    editedAutomationFiltersByTab,
+    maxAutomationsRecipients,
+    setEditedAutomationFilters,
+    setEditedAutomationFiltersByTab,
+    availableFiltersAsVisibleFilters,
+    storeFilters,
+    setStoreFilters,
+    filtersForNewAutomation,
+    externalRecipientOverride,
+    enableNewScheduledExport,
+    defaultPdfPageSize,
+    filtersDataByTab,
+    availableFiltersAsVisibleFiltersByTab,
+}: IUseEditScheduledEmailProps) {
+    const intl = useIntl();
+    const [isCronValid, setIsCronValid] = useState(true);
+    const [isTitleValid, setIsTitleValid] = useState(true);
+    const [isSubjectValid, setIsSubjectValid] = useState(true);
+    const [isOnMessageValid, setIsOnMessageValid] = useState(true);
+    const isWidget = !!widget && !!insight;
+
+    // Dashboard
+    const dashboardId = useDashboardSelector(selectDashboardId);
+    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const settings = useDashboardSelector(selectSettings);
+    const timezone = useDashboardSelector(selectTimezone);
+    const resolvedDefaultCsvDelimiter = settings?.exportCsvCustomDelimiter ?? DEFAULT_CSV_DELIMITER;
+
+    const areDashboardFiltersChanged = !!dashboardFilters;
+
+    const currentUser = useDashboardSelector(selectCurrentUser);
+    const users = useDashboardSelector(selectUsers);
+    const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
+
+    const defaultRecipient = externalRecipientOverride
+        ? convertExternalRecipientToAutomationRecipient(externalRecipientOverride)
+        : convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
+    const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
+    const enableAutomationEvaluationMode = useDashboardSelector(selectEnableAutomationEvaluationMode);
+
+    const firstChannel = notificationChannels[0]?.id;
+
+    const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
+    const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
+    const widgetTabMap = useDashboardSelector(selectWidgetLocalIdToTabIdMap);
+
+    // Determine target tab ID if widget is present
+    const targetTabId = widget?.localIdentifier ? widgetTabMap[widget.localIdentifier] : undefined;
+
+    const effectiveWidgetFilters = getAppliedWidgetFilters(
+        editedAutomationFilters ?? [],
+        dashboardHiddenFilters,
+        widget,
+        insight,
+        commonDateFilterId,
+        false,
+    );
+
+    const effectiveWidgetFiltersWithInsight = getAppliedWidgetFilters(
+        editedAutomationFilters ?? [],
+        dashboardHiddenFilters,
+        widget,
+        insight,
+        commonDateFilterId,
+        true,
+    );
+
+    const effectiveVisibleWidgetFilters = getVisibleFiltersByFilters(
+        editedAutomationFilters,
+        availableFiltersAsVisibleFilters,
+        true,
+    );
+
+    const effectiveDashboardFilters = getAppliedDashboardFilters(
+        editedAutomationFilters ?? [],
+        dashboardHiddenFilters,
+        isWidget ? true : storeFilters,
+    );
+
+    // Process filters per tab if provided (for dashboard automations with tabs enabled)
+    const effectiveDashboardFiltersByTab = useMemo((): Record<string, FilterContextItem[]> | undefined => {
+        if (!editedAutomationFiltersByTab || !storeFilters) {
+            return undefined;
+        }
+        // Apply the same processing as effectiveDashboardFilters to each tab's filters
+        return Object.entries(editedAutomationFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
+            (acc, [tabId, filters]) => {
+                const tabHiddenFilters =
+                    filtersDataByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
+                const appliedFilters = getAppliedDashboardFilters(
+                    filters ?? [],
+                    tabHiddenFilters,
+                    storeFilters,
+                );
+                // Only add if we got filters back (storeFilters is true)
+                if (appliedFilters) {
+                    acc[tabId] = appliedFilters;
+                }
+                return acc;
+            },
+            {},
+        );
+    }, [editedAutomationFiltersByTab, filtersDataByTab, storeFilters]);
+
+    const effectiveVisibleDashboardFilters = getVisibleFiltersByFilters(
+        editedAutomationFilters ?? [],
+        availableFiltersAsVisibleFilters,
+        storeFilters,
+    );
+
+    const effectiveVisibleDashboardFiltersByTab = getVisibleFiltersByFiltersByTab(
+        editedAutomationFiltersByTab,
+        availableFiltersAsVisibleFiltersByTab,
+        storeFilters,
+    );
+
+    const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition>(
+        scheduledExportToEdit ??
+            newAutomationMetadataObjectDefinition(
+                isWidget
+                    ? {
+                          timezone,
+                          dashboardId: dashboardId!,
+                          notificationChannel: firstChannel,
+                          insight,
+                          widget,
+                          recipient: defaultRecipient,
+                          widgetFilters: effectiveWidgetFilters,
+                          widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
+                          dashboardFilters: effectiveDashboardFilters,
+                          visibleFiltersMetadata: effectiveVisibleWidgetFilters,
+                          enableNewScheduledExport,
+                          defaultPdfPageSize,
+                          evaluationMode: "PER_RECIPIENT",
+                          targetTabId,
+                      }
+                    : {
+                          timezone,
+                          dashboardId: dashboardId!,
+                          notificationChannel: firstChannel,
+                          title: dashboardTitle,
+                          recipient: defaultRecipient,
+                          dashboardFilters: effectiveDashboardFilters,
+                          filtersByTab: effectiveDashboardFiltersByTab,
+                          visibleFiltersMetadata: effectiveVisibleDashboardFilters,
+                          visibleFiltersByTab: effectiveVisibleDashboardFiltersByTab,
+                          enableNewScheduledExport,
+                          defaultPdfPageSize,
+                          evaluationMode: "PER_RECIPIENT",
+                      },
+            ),
+    );
+
+    const [originalAutomation] = useState(editedAutomation);
+
+    const selectedAttachments = useMemo(() => {
+        return (
+            editedAutomation.exportDefinitions
+                ?.map((exportDefinition) => exportDefinition.requestPayload.format)
+                .filter(Boolean) ?? []
+        );
+    }, [editedAutomation.exportDefinitions]);
+
+    const onTitleChange = (value: string, isValid: boolean) => {
+        setIsTitleValid(isValid);
+        setEditedAutomation((s) => ({ ...s, title: value }));
+    };
+
+    const onRecurrenceChange = (cronExpression: string, startDate: Date | null, isValid: boolean) => {
+        setIsCronValid(isValid);
+        setEditedAutomation((s) => ({
+            ...s,
+            schedule: {
+                ...(s.schedule ?? {}),
+                cron: cronExpression,
+                firstRun: toModifiedISOStringToTimezone(startDate ?? new Date(), timezone).iso,
+            },
+        }));
+    };
+
+    const onEvaluationModeChange = (isShared: boolean) => {
+        setEditedAutomation((s) => ({
+            ...s,
+            evaluationMode: isShared ? "SHARED" : "PER_RECIPIENT",
+        }));
+    };
+
+    const onDestinationChange = (notificationChannelId: string): void => {
+        setEditedAutomation((s) => ({
+            ...s,
+            notificationChannel: notificationChannelId,
+        }));
+    };
+
+    const onRecipientsChange = (updatedRecipients: IAutomationRecipient[]): void => {
+        setEditedAutomation((s) => ({
+            ...s,
+            recipients: updatedRecipients,
+        }));
+    };
+
+    const onSubjectChange = (value: string | number, isValid: boolean): void => {
+        setIsSubjectValid(isValid);
+        setEditedAutomation((s) => ({
+            ...s,
+            details: {
+                ...(s.details ?? {}),
+                subject: value as string,
+            },
+        }));
+    };
+
+    const onMessageChange = (value: string, isValid: boolean): void => {
+        setIsOnMessageValid(isValid);
+        setEditedAutomation((s) => ({
+            ...s,
+            details: {
+                ...(s.details ?? {}),
+                message: value,
+            },
+        }));
+    };
+
+    const onDashboardAttachmentsChange = (formats: DashboardAttachmentType[]): void => {
+        setEditedAutomation((s) => {
+            const currentExportDefinitions = s.exportDefinitions || [];
+
+            const currentDashboardExportDefinitions = currentExportDefinitions.filter((exportDefinition) =>
+                isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
+            );
+
+            const currentFormats = currentDashboardExportDefinitions.map(
+                (exportDefinition) => exportDefinition.requestPayload.format,
+            );
+
+            const formatsToKeep = currentFormats.filter((format) =>
+                formats.includes(format as DashboardAttachmentType),
+            );
+            const formatsToAdd = formats.filter((format) => !currentFormats.includes(format));
+
+            const keptExportDefinitions = currentDashboardExportDefinitions.filter((exportDefinition) =>
+                formatsToKeep.includes(exportDefinition.requestPayload.format),
+            );
+
+            const newExportDefinitions = formatsToAdd.map((format) =>
+                newDashboardExportDefinitionMetadataObjectDefinition({
+                    dashboardId: dashboardId!,
+                    dashboardTitle,
+                    dashboardFilters: storeFilters ? effectiveDashboardFilters : undefined,
+                    filtersByTab: storeFilters ? effectiveDashboardFiltersByTab : undefined,
+                    format,
+                }),
+            );
+
+            const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
+
+            return {
+                ...s,
+                exportDefinitions: updatedExportDefinitions,
+            };
+        });
+    };
+
+    const onWidgetAttachmentsChange = (formats: WidgetAttachmentType[]): void => {
+        invariant(isWidget, "Widget or insight is missing in scheduling dialog context.");
+        setEditedAutomation((s) => {
+            const currentExportDefinitions = s.exportDefinitions || [];
+
+            const currentWidgetExportDefinitions = currentExportDefinitions.filter((exportDefinition) =>
+                isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
+            );
+
+            const currentFormats = currentWidgetExportDefinitions.map(
+                (exportDefinition) => exportDefinition.requestPayload.format,
+            );
+
+            const formatsToKeep = currentFormats.filter((format) =>
+                formats.includes(format as WidgetAttachmentType),
+            );
+            const formatsToAdd = formats.filter((format) => !currentFormats.includes(format));
+
+            const keptExportDefinitions = currentWidgetExportDefinitions.filter((exportDefinition) =>
+                formatsToKeep.includes(exportDefinition.requestPayload.format),
+            );
+
+            const newExportDefinitions = formatsToAdd.map((format) =>
+                newWidgetExportDefinitionMetadataObjectDefinition({
+                    insight,
+                    widget,
+                    dashboardId: dashboardId!,
+                    format,
+                    widgetFilters: effectiveWidgetFilters,
+                    widgetFiltersWithInsight: effectiveWidgetFiltersWithInsight,
+                    dashboardFilters: effectiveDashboardFilters,
+                    enableNewScheduledExport,
+                    defaultPdfPageSize,
+                }),
+            );
+
+            const updatedExportDefinitions = [...keptExportDefinitions, ...newExportDefinitions];
+
+            return {
+                ...s,
+                exportDefinitions: updatedExportDefinitions,
+            };
+        });
+    };
+
+    const onXlsxSettingsChange = useCallback(
+        (settings: IExportDefinitionVisualizationObjectSettings) => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (exportDefinition.requestPayload.format !== "XLSX") {
+                        return exportDefinition;
+                    }
+
+                    const nextSettings = {
+                        ...exportDefinition.requestPayload?.settings,
+                        mergeHeaders: settings.mergeHeaders,
+                        exportInfo: settings.exportInfo,
+                    };
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            settings: nextSettings,
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
+
+    const onPdfSettingsChange = useCallback(
+        (settings: IExportDefinitionVisualizationObjectSettings) => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (exportDefinition.requestPayload.format !== "PDF_TABULAR") {
+                        return exportDefinition;
+                    }
+
+                    const nextSettings = {
+                        ...exportDefinition.requestPayload?.settings,
+                        pageSize: settings.pageSize,
+                        orientation: settings.orientation ?? "portrait",
+                        exportInfo: settings.exportInfo,
+                    };
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            settings: nextSettings,
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
+
+    const onCsvSettingsChange = useCallback(
+        (settings: IExportDefinitionVisualizationObjectSettings) => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (exportDefinition.requestPayload.format !== "CSV") {
+                        return exportDefinition;
+                    }
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            settings: {
+                                ...exportDefinition.requestPayload.settings,
+                                delimiter: settings.delimiter,
+                            },
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
+
+    const onCsvRawSettingsChange = useCallback(
+        (settings: IExportDefinitionVisualizationObjectSettings) => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (exportDefinition.requestPayload.format !== "CSV_RAW") {
+                        return exportDefinition;
+                    }
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            settings: {
+                                ...exportDefinition.requestPayload.settings,
+                                delimiter: settings.delimiter,
+                            },
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
+
+    const onSlidesTemplateIdChange = useCallback(
+        (templateId: string | undefined, format: "PPTX" | "PDF_SLIDES" | "PDF") => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    const matchesFormat = exportDefinition.requestPayload.format === format;
+                    const matchesType = isWidget
+                        ? isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)
+                        : isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
+
+                    if (!matchesFormat || !matchesType) {
+                        return exportDefinition;
+                    }
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            templateId,
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation, isWidget],
+    );
+
+    const onFiltersChange = useCallback(
+        (filters: FilterContextItem[], enableNewScheduledExport: boolean, storeFiltersParam?: boolean) => {
+            setEditedAutomationFilters(filters);
+            const shouldStoreFilters = storeFiltersParam ?? storeFilters;
+
+            if (isWidget) {
+                if (!isInsightWidget(widget)) {
+                    return;
+                }
+
+                setEditedAutomation((s) => {
+                    const appliedDashboardFilters = getAppliedDashboardFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        true,
+                    );
+                    const appliedWidgetFiltersWithInsight = getAppliedWidgetFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        widget,
+                        insight,
+                        commonDateFilterId,
+                        true,
+                    );
+
+                    const appliedWidgetFiltersWithoutInsight = getAppliedWidgetFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        widget,
+                        insight,
+                        commonDateFilterId,
+                        false,
+                    );
+                    const visibleFilters = getVisibleFiltersByFilters(
+                        filters,
+                        availableFiltersAsVisibleFilters,
+                        true,
+                    );
+
+                    return {
+                        ...s,
+                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                            if (
+                                isExportDefinitionVisualizationObjectRequestPayload(
+                                    exportDefinition.requestPayload,
+                                )
+                            ) {
+                                const format = exportDefinition.requestPayload.format;
+                                const shouldUseWidgetFiltersWithInsight = enableNewScheduledExport
+                                    ? format === "CSV"
+                                    : format === "XLSX" || format === "CSV";
+                                const shouldUseWidgetFiltersWithoutInsight =
+                                    enableNewScheduledExport && format === "CSV_RAW";
+                                const appliedFilters = shouldUseWidgetFiltersWithInsight
+                                    ? appliedWidgetFiltersWithInsight
+                                    : shouldUseWidgetFiltersWithoutInsight
+                                      ? appliedWidgetFiltersWithoutInsight
+                                      : appliedDashboardFilters;
+                                return {
+                                    ...exportDefinition,
+                                    requestPayload: {
+                                        ...exportDefinition.requestPayload,
+                                        content: {
+                                            ...exportDefinition.requestPayload.content,
+                                            filters: appliedFilters,
+                                        },
+                                    },
+                                };
+                            } else {
+                                return exportDefinition;
+                            }
+                        }),
+                        metadata: {
+                            ...s.metadata,
+                            visibleFilters,
+                        },
+                    };
+                });
+            } else {
+                setEditedAutomation((s) => {
+                    const appliedFilters = getAppliedDashboardFilters(
+                        filters,
+                        dashboardHiddenFilters,
+                        shouldStoreFilters,
+                    );
+                    const visibleFilters = getVisibleFiltersByFilters(
+                        filters,
+                        availableFiltersAsVisibleFilters,
+                        shouldStoreFilters,
+                    );
+
+                    return {
+                        ...s,
+                        exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                            if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
+                                return {
+                                    ...exportDefinition,
+                                    requestPayload: {
+                                        ...exportDefinition.requestPayload,
+                                        content: {
+                                            ...exportDefinition.requestPayload.content,
+                                            filters: appliedFilters,
+                                        },
+                                    },
+                                };
+                            } else {
+                                return exportDefinition;
+                            }
+                        }),
+                        metadata: {
+                            ...s.metadata,
+                            visibleFilters,
+                        },
+                    };
+                });
+            }
+        },
+        [
+            setEditedAutomationFilters,
+            setEditedAutomation,
+            dashboardHiddenFilters,
+            availableFiltersAsVisibleFilters,
+            storeFilters,
+            widget,
+            insight,
+            isWidget,
+            commonDateFilterId,
+        ],
+    );
+
+    // Callback for per-tab filter changes - updates state AND syncs to export definitions
+    const onFiltersByTabChange = useCallback(
+        (newFiltersByTab: Record<string, FilterContextItem[]>, storeFiltersParam?: boolean) => {
+            // Update the editedFiltersByTab state
+            setEditedAutomationFiltersByTab?.(newFiltersByTab);
+            const shouldStoreFilters = storeFiltersParam ?? storeFilters;
+
+            const newEffectiveFiltersByTab = shouldStoreFilters
+                ? Object.entries(newFiltersByTab).reduce<Record<string, FilterContextItem[]>>(
+                      (acc, [tabId, filters]) => {
+                          const tabHiddenFilters =
+                              filtersDataByTab?.find((tab) => tab.tabId === tabId)?.hiddenFilters ?? [];
+                          const appliedFilters = getAppliedDashboardFilters(
+                              filters ?? [],
+                              tabHiddenFilters,
+                              true,
+                          );
+                          if (appliedFilters) {
+                              acc[tabId] = appliedFilters;
+                          }
+                          return acc;
+                      },
+                      {},
+                  )
+                : undefined;
+
+            const newVisibleFiltersByTab = getVisibleFiltersByFiltersByTab(
+                newFiltersByTab,
+                availableFiltersAsVisibleFiltersByTab,
+                shouldStoreFilters,
+            );
+
+            // Sync to export definitions AND metadata
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
+                        return {
+                            ...exportDefinition,
+                            requestPayload: {
+                                ...exportDefinition.requestPayload,
+                                content: {
+                                    ...exportDefinition.requestPayload.content,
+                                    filtersByTab: newEffectiveFiltersByTab,
+                                },
+                            },
+                        };
+                    }
+                    return exportDefinition;
+                }),
+                metadata: {
+                    ...s.metadata,
+                    visibleFiltersByTab: newVisibleFiltersByTab,
+                },
+            }));
+        },
+        [
+            setEditedAutomationFiltersByTab,
+            storeFilters,
+            setEditedAutomation,
+            availableFiltersAsVisibleFiltersByTab,
+            filtersDataByTab,
+        ],
+    );
+
+    const onApplyCurrentFilters = useCallback(() => {
+        // Widget schedules should never use per-tab filters, only dashboard schedules can have tabs
+        const filtersByTabForNewAutomation = widget
+            ? undefined
+            : getDefaultSelectedFiltersFromFiltersByTab(filtersDataByTab);
+        if (filtersByTabForNewAutomation) {
+            onFiltersByTabChange(filtersByTabForNewAutomation);
+        } else {
+            onFiltersChange(
+                filtersForNewAutomation ?? [],
+                enableNewScheduledExport,
+                widget ? true : storeFilters,
+            );
+        }
+    }, [
+        filtersForNewAutomation,
+        storeFilters,
+        onFiltersChange,
+        onFiltersByTabChange,
+        widget,
+        enableNewScheduledExport,
+        filtersDataByTab,
+    ]);
+
+    const onStoreFiltersChange = useCallback(
+        (
+            value: boolean,
+            filters?: FilterContextItem[],
+            filtersByTabParam?: Record<string, FilterContextItem[]>,
+        ) => {
+            setStoreFilters(value);
+
+            // If filtersByTab is provided, use onFiltersByTabChange, otherwise use onFiltersChange
+            if (filtersByTabParam) {
+                // Trigger filtersByTab change which handles the sync
+                onFiltersByTabChange(filtersByTabParam, value);
+            }
+            if (filters) {
+                // Use regular filters change
+                onFiltersChange(filters, enableNewScheduledExport, value);
+            }
+        },
+        [onFiltersChange, onFiltersByTabChange, setStoreFilters, enableNewScheduledExport],
+    );
+
+    const isDashboardExportSelected =
+        editedAutomation.exportDefinitions?.some((exportDefinition) =>
+            isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
+        ) ?? true;
+
+    const isCsvExportSelected =
+        editedAutomation.exportDefinitions?.some((exportDefinition) => {
+            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
+                return exportDefinition.requestPayload.format === "CSV";
+            }
+
+            return false;
+        }) ?? false;
+
+    const isXlsxExportSelected =
+        editedAutomation.exportDefinitions?.some((exportDefinition) => {
+            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
+                return exportDefinition.requestPayload.format === "XLSX";
+            }
+
+            return false;
+        }) ?? false;
+
+    const xlsxExportSettings = editedAutomation.exportDefinitions?.find(
+        (exportDefinition) => exportDefinition.requestPayload.format === "XLSX",
+    )?.requestPayload.settings;
+
+    const xlsxSettings = {
+        mergeHeaders: xlsxExportSettings?.mergeHeaders ?? true,
+        exportInfo: xlsxExportSettings?.exportInfo ?? true,
+    };
+
+    const pdfVisualizationSettings = editedAutomation.exportDefinitions?.find(
+        (exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+            exportDefinition.requestPayload.format === "PDF_TABULAR",
+    )?.requestPayload.settings;
+    const pdfTabularSettings =
+        pdfVisualizationSettings && "pageSize" in pdfVisualizationSettings
+            ? pdfVisualizationSettings
+            : undefined;
+    const pdfSettings = {
+        pageSize: pdfTabularSettings?.pageSize ?? defaultPdfPageSize ?? "A4",
+        orientation: pdfTabularSettings?.orientation ?? "portrait",
+        exportInfo: pdfTabularSettings?.exportInfo ?? true,
+    };
+
+    const csvExportDefinition = editedAutomation.exportDefinitions?.find(
+        (exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+            exportDefinition.requestPayload.format === "CSV",
+    );
+    const csvExportSettings =
+        csvExportDefinition &&
+        isExportDefinitionVisualizationObjectRequestPayload(csvExportDefinition.requestPayload)
+            ? csvExportDefinition.requestPayload.settings
+            : undefined;
+    const csvSettings = {
+        delimiter: csvExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
+    };
+
+    const csvRawExportDefinition = editedAutomation.exportDefinitions?.find(
+        (exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+            exportDefinition.requestPayload.format === "CSV_RAW",
+    );
+    const csvRawExportSettings =
+        csvRawExportDefinition &&
+        isExportDefinitionVisualizationObjectRequestPayload(csvRawExportDefinition.requestPayload)
+            ? csvRawExportDefinition.requestPayload.settings
+            : undefined;
+    const csvRawSettings = {
+        delimiter: csvRawExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
+    };
+
+    // Extract templateId per slides format, scoped to the current dialog mode
+    const getTemplateIdForFormat = (format: "PPTX" | "PDF_SLIDES" | "PDF") => {
+        const def = editedAutomation.exportDefinitions?.find(
+            (ed) =>
+                ed.requestPayload.format === format &&
+                (isWidget
+                    ? isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload)
+                    : isExportDefinitionDashboardRequestPayload(ed.requestPayload)),
+        );
+        return def?.requestPayload.templateId;
+    };
+    const slidesTemplateIds = {
+        PPTX: getTemplateIdForFormat("PPTX"),
+        PDF_SLIDES: getTemplateIdForFormat("PDF_SLIDES"),
+        PDF: getTemplateIdForFormat("PDF"),
+    };
+
+    const startDate = toNormalizedStartDate(
+        editedAutomation.schedule?.firstRun,
+        editedAutomation.schedule?.timezone,
+    );
+
+    const selectedNotificationChannel = notificationChannels.find(
+        (channel) => channel.id === editedAutomation.notificationChannel,
+    );
+    const allowExternalRecipients =
+        selectedNotificationChannel?.allowedRecipients === "external" && enabledExternalRecipients;
+    const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
+
+    const { isValid: isParentValid } = useScheduleValidation(originalAutomation);
+    const validationErrorMessage = isParentValid
+        ? undefined
+        : intl.formatMessage({ id: "dialogs.schedule.email.widgetError" });
+
+    const hasAttachments = !!editedAutomation.exportDefinitions?.length;
+    const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;
+    const hasValidExternalRecipients = allowExternalRecipients
+        ? true
+        : !editedAutomation.recipients?.some(isAutomationExternalUserRecipient);
+    const hasValidCreatorRecipient = allowOnlyLoggedUserRecipients
+        ? editedAutomation.recipients?.length === 1 &&
+          editedAutomation.recipients[0].id === defaultRecipient.id
+        : true;
+    const hasNoUnknownRecipients = !editedAutomation.recipients?.some(isAutomationUnknownUserRecipient);
+    const hasDestination = !!editedAutomation.notificationChannel;
+    const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
+    const hasFilledEmails =
+        selectedNotificationChannel?.destinationType === "smtp"
+            ? editedAutomation.recipients?.every((recipient) =>
+                  isAutomationUserRecipient(recipient) ? isEmail(recipient.email ?? "") : true,
+              )
+            : true;
+
+    const isValid =
+        isCronValid &&
+        hasRecipients &&
+        respectsRecipientsLimit &&
+        hasAttachments &&
+        hasDestination &&
+        hasValidExternalRecipients &&
+        hasValidCreatorRecipient &&
+        hasNoUnknownRecipients &&
+        hasFilledEmails &&
+        isOnMessageValid &&
+        isTitleValid &&
+        isSubjectValid;
+
+    const isSubmitDisabled =
+        !isValid || (scheduledExportToEdit && areAutomationsEqual(originalAutomation, editedAutomation));
+
+    return {
+        defaultUser,
+        areDashboardFiltersChanged,
+        originalAutomation,
+        editedAutomation,
+        isCronValid,
+        notificationChannels,
+        isDashboardExportSelected,
+        isCsvExportSelected,
+        isXlsxExportSelected,
+        xlsxSettings,
+        pdfSettings,
+        csvSettings,
+        csvRawSettings,
+        startDate,
+        allowOnlyLoggedUserRecipients,
+        allowExternalRecipients,
+        validationErrorMessage,
+        isSubmitDisabled,
+        storeFilters,
+        selectedAttachments,
+        isParentValid,
+        onTitleChange,
+        onRecurrenceChange,
+        onEvaluationModeChange,
+        onDestinationChange,
+        onRecipientsChange,
+        onSubjectChange,
+        onMessageChange,
+        onDashboardAttachmentsChange,
+        onWidgetAttachmentsChange,
+        onXlsxSettingsChange,
+        onPdfSettingsChange,
+        onCsvSettingsChange,
+        onCsvRawSettingsChange,
+        slidesTemplateIds,
+        onSlidesTemplateIdChange,
+        onFiltersChange,
+        onApplyCurrentFilters,
+        onStoreFiltersChange,
+        onFiltersByTabChange,
+        enableAutomationEvaluationMode,
+    };
+}
+
+function newDashboardExportDefinitionMetadataObjectDefinition({
+    dashboardId,
+    dashboardTitle,
+    dashboardFilters,
+    filtersByTab,
+    format,
+    templateId,
+}: {
+    dashboardId: string;
+    dashboardTitle: string;
+    dashboardFilters?: FilterContextItem[];
+    filtersByTab?: Record<string, FilterContextItem[]>;
+    format: DashboardAttachmentType;
+    templateId?: string;
+}): IExportDefinitionMetadataObjectDefinition {
+    // Use filtersByTab if provided, otherwise fall back to simple filters
+    const filtersObj = filtersByTab
+        ? { filtersByTab }
+        : dashboardFilters
+          ? { filters: dashboardFilters }
+          : {};
+
+    const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true, exportInfo: true } } : {};
+
+    return {
+        type: "exportDefinition",
+        title: dashboardTitle,
+        requestPayload: {
+            type: "dashboard",
+            fileName: dashboardTitle,
+            format,
+            content: {
+                dashboard: dashboardId,
+                ...filtersObj,
+            },
+            ...settingsObj,
+            ...(templateId ? { templateId } : {}),
+        },
+    };
+}
+
+function newWidgetExportDefinitionMetadataObjectDefinition({
+    insight,
+    widget,
+    dashboardId,
+    format,
+    widgetFilters,
+    widgetFiltersWithInsight,
+    dashboardFilters,
+    enableNewScheduledExport,
+    defaultPdfPageSize,
+    defaultCsvDelimiter,
+}: {
+    insight: IInsight;
+    widget: ExtendedDashboardWidget;
+    dashboardId: string;
+    format: WidgetAttachmentType;
+    widgetFilters?: IFilter[];
+    widgetFiltersWithInsight?: IFilter[];
+    dashboardFilters?: FilterContextItem[];
+    enableNewScheduledExport: boolean;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
+    defaultCsvDelimiter?: string;
+}): IExportDefinitionMetadataObjectDefinition {
+    const widgetTitle = isWidget(widget) ? widget?.title : widget?.identifier;
+
+    // Determine which filters to use based on format:
+    // - CSV: Use widgetFiltersWithInsight (insight filters merged on frontend)
+    // - CSV_RAW: Use widgetFilters (insight filters merged on backend)
+    // - Other formats: Use dashboardFilters (backend handles insight filter merging)
+    const shouldUseCsvFilters = enableNewScheduledExport
+        ? format === "CSV"
+        : format === "XLSX" || format === "CSV";
+    const shouldUseCsvRawFilters = enableNewScheduledExport && format === "CSV_RAW";
+
+    let filtersObj: { filters?: IFilter[] | FilterContextItem[] } = {};
+    if (shouldUseCsvFilters && (widgetFiltersWithInsight ?? []).length > 0) {
+        filtersObj = { filters: widgetFiltersWithInsight };
+    } else if (shouldUseCsvRawFilters && (widgetFilters ?? []).length > 0) {
+        filtersObj = { filters: widgetFilters };
+    } else if (!shouldUseCsvFilters && !shouldUseCsvRawFilters && (dashboardFilters ?? []).length > 0) {
+        filtersObj = { filters: dashboardFilters };
+    }
+
+    const grandTotalsPosition = insightProperties(insight)?.["controls"]?.["grandTotalsPosition"];
+
+    const pdfSettings: IExportDefinitionVisualizationObjectSettings = {
+        pageSize: defaultPdfPageSize ?? "A4",
+        orientation: "portrait",
+        exportInfo: true,
+        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
+    };
+
+    const xlsxSettings: IExportDefinitionVisualizationObjectSettings = {
+        mergeHeaders: true,
+        exportInfo: true,
+        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
+    };
+
+    const csvSettings: IExportDefinitionVisualizationObjectSettings = {
+        ...(defaultCsvDelimiter ? { delimiter: defaultCsvDelimiter } : {}),
+        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
+    };
+    const hasCsvSettings = Object.keys(csvSettings).length > 0;
+
+    const settingsObj =
+        format === "XLSX"
+            ? { settings: xlsxSettings }
+            : format === "PDF_TABULAR"
+              ? { settings: pdfSettings }
+              : (format === "CSV" || format === "CSV_RAW") && hasCsvSettings
+                ? { settings: csvSettings }
+                : {};
+
+    return {
+        type: "exportDefinition",
+        title: widgetTitle,
+        requestPayload: {
+            type: "visualizationObject",
+            fileName: widgetTitle,
+            format: format,
+            content: {
+                visualizationObject: insight.insight.identifier,
+                widget: widget.identifier,
+                dashboard: dashboardId,
+                ...filtersObj,
+            },
+            ...settingsObj,
+        },
+    };
+}
+
+function newAutomationMetadataObjectDefinition({
+    timezone,
+    dashboardId,
+    notificationChannel,
+    title,
+    insight,
+    widget,
+    recipient,
+    dashboardFilters,
+    filtersByTab,
+    widgetFilters,
+    widgetFiltersWithInsight,
+    visibleFiltersMetadata,
+    visibleFiltersByTab,
+    enableNewScheduledExport,
+    defaultPdfPageSize,
+    evaluationMode,
+    targetTabId,
+}: {
+    timezone?: string;
+    dashboardId: string;
+    notificationChannel: string;
+    title?: string;
+    insight?: IInsight;
+    widget?: ExtendedDashboardWidget;
+    recipient: IAutomationRecipient;
+    dashboardFilters?: FilterContextItem[];
+    filtersByTab?: Record<string, FilterContextItem[]>;
+    widgetFilters?: IFilter[];
+    widgetFiltersWithInsight?: IFilter[];
+    visibleFiltersMetadata?: IAutomationVisibleFilter[];
+    visibleFiltersByTab?: Record<string, IAutomationVisibleFilter[]>;
+    enableNewScheduledExport: boolean;
+    defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
+    evaluationMode: AutomationEvaluationMode;
+    targetTabId?: string;
+}): IAutomationMetadataObjectDefinition {
+    const { firstRun, cron } = toNormalizedFirstRunAndCron(timezone);
+    const exportDefinition =
+        widget && insight
+            ? newWidgetExportDefinitionMetadataObjectDefinition({
+                  insight,
+                  widget,
+                  dashboardId,
+                  format: enableNewScheduledExport ? "PNG" : "XLSX",
+                  widgetFilters,
+                  widgetFiltersWithInsight,
+                  dashboardFilters,
+                  enableNewScheduledExport,
+                  defaultPdfPageSize,
+              })
+            : newDashboardExportDefinitionMetadataObjectDefinition({
+                  dashboardId,
+                  dashboardTitle: title ?? "",
+                  dashboardFilters,
+                  filtersByTab,
+                  format: "PDF",
+              });
+
+    let metadataObj: { metadata?: IAutomationMetadataObjectBase["metadata"] } =
+        visibleFiltersMetadata || visibleFiltersByTab
+            ? {
+                  metadata: {
+                      ...(visibleFiltersMetadata ? { visibleFilters: visibleFiltersMetadata } : {}),
+                      ...(visibleFiltersByTab ? { visibleFiltersByTab } : {}),
+                  },
+              }
+            : {};
+
+    if (targetTabId) {
+        metadataObj = {
+            ...metadataObj,
+            metadata: {
+                ...metadataObj.metadata,
+                targetTabIdentifier: targetTabId,
+            },
+        };
+    }
+
+    const automation: IAutomationMetadataObjectDefinition = {
+        type: "automation",
+        title: undefined,
+        description: undefined,
+        tags: [],
+        schedule: {
+            timezone: timezone ?? getUserTimezone().identifier,
+            firstRun,
+            cron,
+        },
+        details: {
+            message: "",
+            subject: "",
+        },
+        exportDefinitions: [{ ...exportDefinition }],
+        recipients: [recipient],
+        evaluationMode,
+        notificationChannel,
+        dashboard: dashboardId ? { id: dashboardId } : undefined,
+        ...metadataObj,
+    };
+
+    return automation;
+}

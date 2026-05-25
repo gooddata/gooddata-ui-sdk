@@ -13,7 +13,11 @@ import {
 import {
     type CustomAlertingDialogComponent,
     type CustomAlertingManagementDialogComponent,
-} from "../alerting/types.js";
+} from "../automations/alerting/types.js";
+import {
+    type CustomScheduledEmailDialogComponent,
+    type CustomScheduledEmailManagementDialogComponent,
+} from "../automations/scheduledEmail/types.js";
 import {
     type AttributeFilterComponentSet,
     type DashboardLayoutWidgetComponentSet,
@@ -27,10 +31,6 @@ import { type CustomDashboardSettingsDialogComponent } from "../dashboardSetting
 import { type CustomFilterBarComponent } from "../filterBar/filterBar/types.js";
 import { type CustomEmptyLayoutDropZoneBodyComponent } from "../flexibleLayout/types.js";
 import { type CustomSaveAsDialogComponent } from "../saveAs/types.js";
-import {
-    type CustomScheduledEmailDialogComponent,
-    type CustomScheduledEmailManagementDialogComponent,
-} from "../scheduledEmail/types.js";
 import { type CustomShareDialogComponent } from "../shareDialog/types.js";
 import { type CustomToolbarComponent } from "../toolbar/types.js";
 import { type CustomSaveButtonComponent } from "../topBar/buttonBar/button/saveButton/types.js";
