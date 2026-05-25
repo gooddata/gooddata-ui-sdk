@@ -33,10 +33,9 @@ import {
     isFilterContextItem,
     isInsightWidget,
     isMeasureValueFilter,
-    isObjRef,
+    isRankingFilter,
     isRelativeDateFilter,
     isSingleSelectionFilter,
-    measureValueFilterMeasure,
 } from "@gooddata/sdk-model";
 import { convertError } from "@gooddata/sdk-ui";
 
@@ -231,8 +230,10 @@ export function* initializeAutomationsHandler(
                           )
                         : targetAlertFilters;
                 const keepDateFilterDataSets = !!ctx.backend.capabilities.supportsMultipleDateFilters;
-                const filtersToSetAsFilterContextItems = filtersToSet.map((filter) =>
-                    dashboardFilterToFilterContextItem(filter, keepDateFilterDataSets),
+                const filtersToSetAsFilterContextItems = compact(
+                    filtersToSet.map((filter) =>
+                        dashboardFilterToFilterContextItem(filter, keepDateFilterDataSets),
+                    ),
                 );
                 const compatibleFiltersToSet = filtersToSetAsFilterContextItems.filter((filter) =>
                     isFilterContextItemCompatibleWithSelectionType(
@@ -540,11 +541,11 @@ function getDashboardFiltersOnly(
     // Remove insight specific attribute filters from the list of filters.
     const withoutInsightAttributeFilters = removeInsightAttributeFilters(withoutAlertFilters, insight);
 
+    // Remove insight specific MVFs from the list of filters.
+    const withoutInsightMVFs = removeInsightMVFs(withoutInsightAttributeFilters, insight);
+
     // If widget has ignored date filter, remove date filter(s) - they originate from the insight, otherwise, it's the dashboard date filter, so keep it.
-    const withoutInsightDateFilters = removeDateFiltersIfDateFilterIsIgnored(
-        withoutInsightAttributeFilters,
-        widget,
-    );
+    const withoutInsightDateFilters = removeDateFiltersIfDateFilterIsIgnored(withoutInsightMVFs, widget);
 
     // Find common date filter by local id or by absence of dataset
     const dateFilters = withoutInsightDateFilters.filter(isDateFilter);
@@ -577,15 +578,14 @@ function getDashboardFiltersOnly(
 /**
  * Remove alert filters (these that are set during creation of the alert sliced by attribute) from the list of filters.
  * These filters can be recognized by the fact that they do not have filter objRef (they have localIdentifier only).
+ * MVFs and ranking filters are not the concern of this function — filterObjRef returns undefined for them,
+ * so they are passed through and filtered by later steps.
  * @internal
  */
 function removeAlertFilters(filters: IFilter[]) {
     return filters?.filter((f) => {
-        if (isMeasureValueFilter(f)) {
-            // Keep MVFs whose measure is an ObjRef —
-            // dashboard MVFs always store an ObjRef (catalog metric) and the downstream conversion
-            // in dashboardFilterToFilterContextItem requires it.
-            return isObjRef(measureValueFilterMeasure(f));
+        if (isMeasureValueFilter(f) || isRankingFilter(f)) {
+            return true;
         }
         const objRef = filterObjRef(f);
         return !!objRef;
@@ -602,6 +602,22 @@ function removeInsightAttributeFilters(filters: IFilter[], insight: IInsight) {
     // Remove insight specific filters from the list of filters (by matching insight filter localIdentifier)
     return filters.filter((f) => {
         const insightFilter = insightAttributeFilters.find((f2) => {
+            return filterLocalIdentifier(f) === filterLocalIdentifier(f2);
+        });
+
+        return !insightFilter;
+    });
+}
+
+/**
+ * Remove insight specific measure value filters from the list of filters.
+ * These filters can be recognized by matching them against insight filters and their local identifiers.
+ */
+function removeInsightMVFs(filters: IFilter[], insight: IInsight) {
+    const insightMVFs = insightFilters(insight).filter(isMeasureValueFilter);
+
+    return filters.filter((f) => {
+        const insightFilter = insightMVFs.find((f2) => {
             return filterLocalIdentifier(f) === filterLocalIdentifier(f2);
         });
 

@@ -2,6 +2,54 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.38.0",
+            "tag": "@gooddata/sdk-ui-all_v11.38.0",
+            "date": "Mon, 25 May 2026 12:28:55 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Unify reset button to also reset parameters"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add spacing for parameter chips in filter bar"
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Prevent browser freeze when stacked column or bar charts have too many series."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: add cancellation support for KDA change analysis"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: updated styles and design for reasoning"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: change autocomplete to trigger only using @"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Align automations filter types. Better handling of insight MVF."
+                    },
+                    {
+                        "comment": "move alerting, scheduledEmail, automationFilters under presentation/automations/"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add UiErrorPage component to render consistent 404 errors across all apps, integrate."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Add Dashboard Measure value filters into Filter Groups"
+                    },
+                    {
+                        "comment": "Fix closing of filter group on filter cancel btn and aria label on lined filters icon"
+                    },
+                    {
+                        "comment": "make screen reader read the full text in ShortenedText component"
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-application-model: use correct settings object based on workspace availability"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.36.0",
             "tag": "@gooddata/sdk-ui-all_v11.36.0",
             "date": "Thu, 21 May 2026 06:58:44 GMT",
