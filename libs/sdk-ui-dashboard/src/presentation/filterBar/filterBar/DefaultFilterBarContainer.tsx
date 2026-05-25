@@ -31,6 +31,7 @@ import {
     isDashboardFilterContextSelectionReset,
     isDashboardFilterContextWorkingSelectionApplied,
 } from "../../../model/events/filters.js";
+import { isDashboardParametersSelectionReset } from "../../../model/events/parameters.js";
 import { useDashboardEventsContext } from "../../../model/react/DashboardEventsContext.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
@@ -305,7 +306,8 @@ function MeasuredDiv({
         const handler = {
             eval: (event: any) =>
                 isDashboardFilterContextSelectionReset(event) ||
-                isDashboardFilterContextWorkingSelectionApplied(event),
+                isDashboardFilterContextWorkingSelectionApplied(event) ||
+                isDashboardParametersSelectionReset(event),
             handler: () => {
                 moveToFilterRegion();
             },

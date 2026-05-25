@@ -111,6 +111,7 @@ import {
     type IDashboardLayoutSectionMoved,
     type IDashboardLayoutSectionRemoved,
 } from "./layout.js";
+import { type IDashboardParametersSelectionReset } from "./parameters.js";
 import {
     type DashboardAsyncRenderRequested,
     type DashboardAsyncRenderResolved,
@@ -277,6 +278,7 @@ export type DashboardEvents =
     | IDashboardTabRenamingStarted
     | IDashboardTabRenamingCanceled
     | IDashboardTabRenamed
+    | IDashboardParametersSelectionReset
     // internal
     | ICreateInsightRequested
     | ICreateAttributeHierarchyRequested

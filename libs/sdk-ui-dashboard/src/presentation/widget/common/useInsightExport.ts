@@ -50,10 +50,10 @@ import {
     selectIsExportableToPngImage,
     selectIsExportableToXLSX,
 } from "../../../model/store/widgetExports/widgetExportsSelectors.js";
+import { getDefaultPdfPageSize } from "../../automations/scheduledEmail/utils/pdfPageSize.js";
 import { useExportCsvDialogContext } from "../../dashboardContexts/ExportCsvDialogContext.js";
 import { useExportTabularPdfDialogContext } from "../../dashboardContexts/ExportTabularPdfDialogContext.js";
 import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
-import { getDefaultPdfPageSize } from "../../scheduledEmail/utils/pdfPageSize.js";
 import { useExportToTabular } from "../../topBar/menuButton/useExportToTabular.js";
 import { useExportWithTemplateSelection } from "../../topBar/menuButton/useExportWithTemplateSelection.js";
 

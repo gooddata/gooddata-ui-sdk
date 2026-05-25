@@ -42,11 +42,11 @@ import { selectUsers } from "../../../../../../model/store/users/usersSelectors.
 import {
     type IMeasureFormatMap,
     getDescription,
-} from "../../../../../alerting/DefaultAlertingDialog/utils/getters.js";
+} from "../../../../../automations/alerting/DefaultAlertingDialog/utils/getters.js";
 import {
     isAlertRecipientsValid,
     isAlertValueDefined,
-} from "../../../../../alerting/DefaultAlertingDialog/utils/guards.js";
+} from "../../../../../automations/alerting/DefaultAlertingDialog/utils/guards.js";
 import {
     transformAlertByAnomalyDetection,
     transformAlertByAttribute,
@@ -58,13 +58,13 @@ import {
     transformAlertBySensitivity,
     transformAlertByTitle,
     transformAlertByValue,
-} from "../../../../../alerting/DefaultAlertingDialog/utils/transformation.js";
+} from "../../../../../automations/alerting/DefaultAlertingDialog/utils/transformation.js";
 import {
     type AlertAttribute,
     type AlertMetric,
     type AlertMetricComparatorType,
-} from "../../../../../alerting/types.js";
-import { isEmail } from "../../../../../scheduledEmail/utils/validate.js";
+} from "../../../../../automations/alerting/types.js";
+import { isEmail } from "../../../../../automations/scheduledEmail/utils/validate.js";
 
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 

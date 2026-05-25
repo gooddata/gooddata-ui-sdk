@@ -203,6 +203,7 @@ export interface IBareUserInteractionPayload {
         | "kpiAlertDialogClosed"
         | "poweredByGDLogoClicked"
         | "filterContextStateReset"
+        | "parametersStateReset"
         | "interactionPanelOpened"
         | "addInteractionClicked"
         | AttributeHierarchiesInteractionType

@@ -2236,15 +2236,15 @@
         "crowdinContext": "The tooltip helps users understand why they cannot change its value."
     },
     "filter.resetButton.tooltip": {
-        "text": "Reset all filters",
+        "text": "Reset all to defaults",
         "crowdinContext": "The tooltip of the reset button in the filter bar"
     },
     "filter.resetButton.success": {
-        "text": "Success: Filters reset to default values.",
+        "text": "Success: Reset to default values.",
         "crowdinContext": "Text shown after reset button in the filter bar is used."
     },
     "filter.resetButton.ariaLabel": {
-        "text": "Reset filters to default",
+        "text": "Reset all to defaults",
         "crowdinContext": "The aria-label of the reset button in the filter bar"
     },
     "filter.crossFilterResetButton.tooltip": {

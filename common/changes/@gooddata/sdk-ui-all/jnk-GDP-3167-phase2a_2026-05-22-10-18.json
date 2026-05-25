@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "move alerting, scheduledEmail, automationFilters under presentation/automations/",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.kruza@gooddata.com"
+}

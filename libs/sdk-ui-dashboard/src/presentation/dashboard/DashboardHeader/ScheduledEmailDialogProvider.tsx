@@ -11,11 +11,11 @@ import {
     selectAutomationDefaultSelectedFilters,
     selectDashboardHiddenFilters,
 } from "../../../model/store/filtering/dashboardFilterSelectors.js";
-import { useWidgetAutomationFilters } from "../../scheduledEmail/hooks/useWidgetAutomationFilters.js";
-import { ScheduledEmailDialog } from "../../scheduledEmail/ScheduledEmailDialog.js";
-import { ScheduledEmailManagementDialog } from "../../scheduledEmail/ScheduledEmailManagementDialog.js";
-import { type IScheduledEmailDialogProps } from "../../scheduledEmail/types.js";
-import { getAppliedDashboardFilters } from "../../scheduledEmail/utils/filters.js";
+import { useWidgetAutomationFilters } from "../../automations/scheduledEmail/hooks/useWidgetAutomationFilters.js";
+import { ScheduledEmailDialog } from "../../automations/scheduledEmail/ScheduledEmailDialog.js";
+import { ScheduledEmailManagementDialog } from "../../automations/scheduledEmail/ScheduledEmailManagementDialog.js";
+import { type IScheduledEmailDialogProps } from "../../automations/scheduledEmail/types.js";
+import { getAppliedDashboardFilters } from "../../automations/scheduledEmail/utils/filters.js";
 
 export function ScheduledEmailDialogProvider() {
     const {

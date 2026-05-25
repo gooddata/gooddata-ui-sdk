@@ -17,13 +17,16 @@ import {
     isNoopAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
+import { messages } from "../../../../locales.js";
 import {
     changeFilterContextSelection,
     removeAttributeFilters,
     resetFilterContextWorkingSelection,
 } from "../../../../model/commands/filters.js";
 import { filterContextSelectionReset } from "../../../../model/events/filters.js";
+import { parametersSelectionReset } from "../../../../model/events/parameters.js";
 import {
     useDashboardDispatch,
     useDashboardSelector,
@@ -49,6 +52,8 @@ import {
     selectIsWorkingFilterContextChanged,
     selectOriginalFilterContextFilters,
 } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { tabsActions } from "../../../../model/store/tabs/index.js";
+import { selectActiveTabParameterResetTargets } from "../../../../model/store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../../../model/store/tabs/tabsSelectors.js";
 
 const isNoopAllTimeCommonDateFilter = (filter: FilterContextItem): boolean => {
@@ -148,28 +153,34 @@ const getNewlyAddedFilterLocalIds = (
     return difference(currentFiltersLocalIds, originalAttributeFiltersLocalIds);
 };
 
-const computeCanReset = (
+interface IResetEligibility {
+    readonly canResetFilters: boolean;
+    readonly canResetWorkingContext: boolean;
+    readonly canResetParameters: boolean;
+}
+
+const computeResetEligibility = (
     isEditMode: boolean,
     normalizedCurrentFilters: FilterContextItem[],
     normalizedOriginalFilters: FilterContextItem[],
-    disableUserFilterReset: boolean,
-    disableUserFilterResetByConfig: boolean,
+    userFilterResetAllowed: boolean,
     newlyAddedFiltersCount: number,
     isWorkingFilterContextChanged: boolean | undefined,
     isApplyAllAtOnceEnabledAndSet: boolean,
-): boolean => {
+    hasResettableParameter: boolean,
+): IResetEligibility => {
     if (isEditMode) {
-        return false;
+        return { canResetFilters: false, canResetWorkingContext: false, canResetParameters: false };
     }
 
     const filtersChanged = !isEqual(normalizedCurrentFilters, normalizedOriginalFilters);
-    const userFilterResetAllowed = !disableUserFilterReset && !disableUserFilterResetByConfig;
     const hasCrossFilterAddedFilters = newlyAddedFiltersCount > 0;
     // If the cross filter add some filters, we should allow the reset
-    const canResetFromFilterChange = filtersChanged && (userFilterResetAllowed || hasCrossFilterAddedFilters);
-    const canResetFromWorkingContext = !!isWorkingFilterContextChanged && isApplyAllAtOnceEnabledAndSet;
-
-    return canResetFromFilterChange || canResetFromWorkingContext;
+    return {
+        canResetFilters: filtersChanged && (userFilterResetAllowed || hasCrossFilterAddedFilters),
+        canResetWorkingContext: !!isWorkingFilterContextChanged && isApplyAllAtOnceEnabledAndSet,
+        canResetParameters: hasResettableParameter && userFilterResetAllowed,
+    };
 };
 
 const isCrossFilteringEnabled = (
@@ -211,10 +222,14 @@ export const useResetFiltersButton = (): {
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const enableDateFilterIdentifiers = useDashboardSelector(selectEnableDateFilterIdentifiers);
     const activeTabId = useDashboardSelector(selectActiveTabLocalIdentifier);
+    const parameterResetTargets = useDashboardSelector(selectActiveTabParameterResetTargets);
+    const hasResettableParameter = parameterResetTargets.length > 0;
+    const userFilterResetAllowed = !disableUserFilterReset && !disableUserFilterResetByConfig;
 
     const dispatch = useDashboardDispatch();
     const dispatchEvent = useDashboardEventDispatch();
-    const { filterContextStateReset } = useDashboardUserInteraction();
+    const { filterContextStateReset, parametersStateReset } = useDashboardUserInteraction();
+    const { addSuccess } = useToastMessage();
 
     const newlyAddedFiltersLocalIds = useMemo(
         () => getNewlyAddedFilterLocalIds(currentFilters, originalFilters),
@@ -237,29 +252,30 @@ export const useResetFiltersButton = (): {
         [originalFilters],
     );
 
-    const canReset = useMemo(
+    const { canResetFilters, canResetWorkingContext, canResetParameters } = useMemo(
         () =>
-            computeCanReset(
+            computeResetEligibility(
                 isEditMode,
                 normalizedCurrentFilters,
                 normalizedOriginalFilters,
-                disableUserFilterReset,
-                disableUserFilterResetByConfig,
+                userFilterResetAllowed,
                 newlyAddedFiltersLocalIds.length,
                 isWorkingFilterContextChanged,
                 isApplyAllAtOnceEnabledAndSet,
+                hasResettableParameter,
             ),
         [
             isEditMode,
             normalizedCurrentFilters,
             normalizedOriginalFilters,
-            disableUserFilterReset,
-            disableUserFilterResetByConfig,
+            userFilterResetAllowed,
             newlyAddedFiltersLocalIds.length,
             isWorkingFilterContextChanged,
             isApplyAllAtOnceEnabledAndSet,
+            hasResettableParameter,
         ],
     );
+    const canReset = canResetFilters || canResetWorkingContext || canResetParameters;
 
     const crossFilteringEnabled = isCrossFilteringEnabled(
         enableKDCrossFiltering,
@@ -273,8 +289,11 @@ export const useResetFiltersButton = (): {
             return;
         }
 
-        // If the user filter reset is disabled, we should keep the filters that were added by the user
-        if (!disableUserFilterReset) {
+        const willResetFilterContext = canResetFilters || canResetWorkingContext;
+
+        // If the user filter reset is disabled (by dashboard prop OR workspace config),
+        // keep user-modified filters; only the cross-filter cleanup branch runs below.
+        if (willResetFilterContext && userFilterResetAllowed) {
             // Normalize filters to include "All time" date filter
             const [[commonDateFilter], otherFilters] = partition(
                 originalFilters,
@@ -300,29 +319,47 @@ export const useResetFiltersButton = (): {
         }
 
         // If cross filtering is enabled, we need to remove all attribute filters that were added by cross filtering
-        if (crossFilteringEnabled) {
+        if (willResetFilterContext && crossFilteringEnabled) {
             dispatch(removeAttributeFilters(newlyAddedFiltersLocalIds));
             dispatch(drillActions.resetCrossFiltering(activeTabId));
         }
-        dispatchEvent(filterContextSelectionReset());
-        // Report the reset as user interaction
-        filterContextStateReset();
+
+        if (canResetParameters) {
+            dispatch(tabsActions.setParameterRuntimeValues({ values: parameterResetTargets }));
+            dispatchEvent(parametersSelectionReset());
+            parametersStateReset();
+        }
+
+        // Filter-context event and telemetry must only fire when filter-side work actually ran,
+        // so plugins/analytics don't observe a filter reset on a parameter-only click.
+        if (willResetFilterContext) {
+            dispatchEvent(filterContextSelectionReset());
+            filterContextStateReset();
+        }
+
+        addSuccess(messages.filterResetButtonSuccess);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         canReset,
+        canResetFilters,
+        canResetWorkingContext,
+        canResetParameters,
+        parameterResetTargets,
         originalFilters,
         dispatch,
         crossFilteringEnabled,
         filterContextStateReset,
+        parametersStateReset,
         newlyAddedFiltersLocalIds,
-        disableUserFilterReset,
+        userFilterResetAllowed,
         enableDateFilterIdentifiers,
         isApplyAllAtOnceEnabledAndSet,
+        addSuccess,
     ]);
 
     return {
         canReset,
-        resetType: disableUserFilterReset ? "crossFilter" : "all",
+        resetType: userFilterResetAllowed ? "all" : "crossFilter",
         resetFilters,
     };
 };

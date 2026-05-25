@@ -765,6 +765,11 @@ export {
     isDashboardTabRenamed,
 } from "./model/events/tabs.js";
 export {
+    type IDashboardParametersSelectionReset,
+    parametersSelectionReset,
+    isDashboardParametersSelectionReset,
+} from "./model/events/parameters.js";
+export {
     type IDashboardCommandStarted,
     type IDashboardCommandStartedPayload,
     type IDashboardCommandRejected,
@@ -1646,6 +1651,7 @@ export {
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveParameterValuesForWidget,
+    selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
     selectParameterRuntimeOverrideByRef,
 } from "./model/store/tabs/parameters/parametersSelectors.js";
@@ -2190,26 +2196,26 @@ export type { IFilterBarProps, CustomFilterBarComponent } from "./presentation/f
 export { DefaultFlexibleDashboardLayout } from "./presentation/flexibleLayout/DefaultFlexibleDashboardLayout.js";
 export { DefaultDashboardLayout } from "./presentation/flexibleLayout/DefaultDashboardLayout.js";
 export type { CustomEmptyLayoutDropZoneBodyComponent } from "./presentation/flexibleLayout/types.js";
-export { DefaultScheduledEmailDialog } from "./presentation/scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
-export { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "./presentation/scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
-export { ScheduledEmailDialog } from "./presentation/scheduledEmail/ScheduledEmailDialog.js";
-export { ScheduledEmailManagementDialog } from "./presentation/scheduledEmail/ScheduledEmailManagementDialog.js";
+export { DefaultScheduledEmailDialog } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailDialog/DefaultScheduledEmailDialog.js";
+export { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "./presentation/automations/scheduledEmail/DefaultScheduledEmailManagementDialog/DefaultScheduledEmailManagementDialog.js";
+export { ScheduledEmailDialog } from "./presentation/automations/scheduledEmail/ScheduledEmailDialog.js";
+export { ScheduledEmailManagementDialog } from "./presentation/automations/scheduledEmail/ScheduledEmailManagementDialog.js";
 export type {
     IScheduledEmailDialogProps,
     IScheduledEmailManagementDialogProps,
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
-} from "./presentation/scheduledEmail/types.js";
-export { DefaultAlertingDialog } from "./presentation/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
-export { DefaultAlertingManagementDialogNew } from "./presentation/alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
-export { AlertingDialog } from "./presentation/alerting/AlertingDialog.js";
-export { AlertingManagementDialog } from "./presentation/alerting/AlertingManagementDialog.js";
+} from "./presentation/automations/scheduledEmail/types.js";
+export { DefaultAlertingDialog } from "./presentation/automations/alerting/DefaultAlertingDialog/DefaultAlertingDialog.js";
+export { DefaultAlertingManagementDialogNew } from "./presentation/automations/alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
+export { AlertingDialog } from "./presentation/automations/alerting/AlertingDialog.js";
+export { AlertingManagementDialog } from "./presentation/automations/alerting/AlertingManagementDialog.js";
 export type {
     CustomAlertingManagementDialogComponent,
     CustomAlertingDialogComponent,
     IAlertingManagementDialogProps,
     IAlertingDialogProps,
-} from "./presentation/alerting/types.js";
+} from "./presentation/automations/alerting/types.js";
 export {
     DefaultSaveAsDialog,
     useSaveAsDialogProps,

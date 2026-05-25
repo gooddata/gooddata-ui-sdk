@@ -22,11 +22,13 @@ import {
 import { insightsAdapter } from "../../../insights/insightsEntityAdapter.js";
 import { type DashboardState } from "../../../types.js";
 import {
+    computeParameterResetTargets,
     selectActiveParameterRefKeys,
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveParameterValuesForWidget,
     selectFilterViewParameters,
+    selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
     selectParameterResetValueByRef,
     selectParameterRuntimeOverrideByRef,
@@ -322,6 +324,130 @@ describe("parameter selectors (per tab)", () => {
                 workspaceParameters: [],
             });
             expect(selectParameterResetValueByRef(topNRef)(state)).toBeUndefined();
+        });
+    });
+
+    describe("selectHasAnyResettableParameterOnActiveTab", () => {
+        it("returns true when a parameter's runtimeOverride differs from its reset value", () => {
+            // view mode, parameter.value=50, runtimeOverride=99 → reset target=50, 99≠50 ⇒ resettable
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }],
+                workspaceParameters: [topNWorkspace],
+            });
+            expect(selectHasAnyResettableParameterOnActiveTab(state)).toBe(true);
+        });
+
+        it("returns false when enableParameters is off, even with otherwise-resettable params", () => {
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }],
+                workspaceParameters: [topNWorkspace],
+                enableParameters: false,
+            });
+            expect(selectHasAnyResettableParameterOnActiveTab(state)).toBe(false);
+        });
+
+        it("returns false when every parameter's runtimeOverride already equals its reset value", () => {
+            // view mode, parameter.value=50, runtimeOverride=50 → reset target=50, equal ⇒ no-op
+            const state = makeFullState({
+                entries: [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 50 }],
+                workspaceParameters: [topNWorkspace],
+            });
+            expect(selectHasAnyResettableParameterOnActiveTab(state)).toBe(false);
+        });
+
+        it("returns false when active tab has no parameter entries", () => {
+            const state = makeFullState({ entries: [], workspaceParameters: [topNWorkspace] });
+            expect(selectHasAnyResettableParameterOnActiveTab(state)).toBe(false);
+        });
+    });
+
+    describe("computeParameterResetTargets", () => {
+        it("returns one payload entry per resettable parameter with the computed reset value", () => {
+            // view mode: parameter.value=50 ⇒ reset target=50; runtimeOverride=99 (differs)
+            const entries = [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }];
+            expect(computeParameterResetTargets(entries, [topNWorkspace], false)).toEqual([
+                { ref: topNRef, value: 50 },
+            ]);
+        });
+
+        it("skips entries already at their reset value", () => {
+            // view mode: parameter.value=50 ⇒ reset target=50; runtimeOverride=50 (equal, no-op)
+            const entries = [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 50 }];
+            expect(computeParameterResetTargets(entries, [topNWorkspace], false)).toEqual([]);
+        });
+
+        it("skips entries where workspace parameter is unresolved", () => {
+            // No workspace catalog entry ⇒ reset value undefined ⇒ skip
+            const entries = [{ parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }];
+            expect(computeParameterResetTargets(entries, [], false)).toEqual([]);
+        });
+
+        it("includes only the resettable subset when some entries are no-ops", () => {
+            const sampleSize: IDashboardParameter = {
+                ref: otherRef,
+                parameterType: "NUMBER",
+                mode: "active",
+            };
+            const sampleWorkspace: IParameterMetadataObject = {
+                ...topNWorkspace,
+                id: "sampleSize",
+                uri: "/sampleSize",
+                ref: otherRef,
+                title: "Sample Size",
+                definition: { type: "NUMBER", defaultValue: 200 },
+            };
+            const entries = [
+                { parameter: { ...topNParameter, value: 50 }, runtimeOverride: 99 }, // resettable
+                { parameter: { ...sampleSize, value: 200 }, runtimeOverride: 200 }, // at reset value
+            ];
+            expect(computeParameterResetTargets(entries, [topNWorkspace, sampleWorkspace], false)).toEqual([
+                { ref: topNRef, value: 50 },
+            ]);
+        });
+
+        it("skips HIDDEN parameters even when otherwise resettable", () => {
+            const entries = [
+                { parameter: { ...topNParameter, mode: "hidden", value: 50 }, runtimeOverride: 99 },
+            ] satisfies IDashboardParameterEntry[];
+            expect(computeParameterResetTargets(entries, [topNWorkspace], false)).toEqual([]);
+        });
+
+        it("skips READONLY parameters even when otherwise resettable", () => {
+            const entries = [
+                { parameter: { ...topNParameter, mode: "readonly", value: 50 }, runtimeOverride: 99 },
+            ] satisfies IDashboardParameterEntry[];
+            expect(computeParameterResetTargets(entries, [topNWorkspace], false)).toEqual([]);
+        });
+
+        it("skips entries whose runtimeOverride is undefined (chip hidden, no execution change)", () => {
+            // overrideDefaultParameters / hydration can leave runtimeOverride === undefined; chip is
+            // then hidden and execution falls back to insight.parameters. Reset must not flip that.
+            const entries = [
+                { parameter: { ...topNParameter, value: 50 }, runtimeOverride: undefined },
+            ] satisfies IDashboardParameterEntry[];
+            expect(computeParameterResetTargets(entries, [topNWorkspace], false)).toEqual([]);
+        });
+    });
+
+    describe("selectHasAnyResettableParameterOnActiveTab — mode gating", () => {
+        it("returns false when the only resettable entry is HIDDEN", () => {
+            const state = makeFullState({
+                entries: [
+                    { parameter: { ...topNParameter, mode: "hidden", value: 50 }, runtimeOverride: 99 },
+                ],
+                workspaceParameters: [topNWorkspace],
+            });
+            expect(selectHasAnyResettableParameterOnActiveTab(state)).toBe(false);
+        });
+
+        it("returns false when the only resettable entry is READONLY", () => {
+            const state = makeFullState({
+                entries: [
+                    { parameter: { ...topNParameter, mode: "readonly", value: 50 }, runtimeOverride: 99 },
+                ],
+                workspaceParameters: [topNWorkspace],
+            });
+            expect(selectHasAnyResettableParameterOnActiveTab(state)).toBe(false);
         });
     });
 

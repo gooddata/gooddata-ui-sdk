@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { AlertTriggerModeSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertTriggerModeSelect.js";
+import { AlertTriggerModeSelect } from "../../../../automations/alerting/DefaultAlertingDialog/components/AlertTriggerModeSelect.js";
 import { gdColorStateBlank } from "../../../../constants/colors.js";
 
 const TOOLTIP_ALIGN_POINTS = [

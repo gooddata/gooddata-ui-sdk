@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/react-app-template",
-    "version": "11.37.0-alpha.4",
+    "version": "11.37.0-alpha.5",
     "private": true,
     "description": "GoodData Template for React App",
     "license": "LicenseRef-LICENSE",
