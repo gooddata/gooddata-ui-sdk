@@ -199,20 +199,21 @@ export function* changeFilterContextSelectionHandler(
     // Cross-filtering is always compatible with dashboard tabs now
     // (removed the check that prevented cross-filtering without tabs)
 
-    const normalizedFilters: FilterContextItem[] = filters.map((filter) => {
-        if (
-            isDashboardAttributeFilterItem(filter) ||
-            isDashboardDateFilter(filter) ||
-            isDashboardMeasureValueFilter(filter)
-        ) {
-            return filter;
-        } else {
+    const normalizedFilters: FilterContextItem[] = compact(
+        filters.map((filter): FilterContextItem | undefined => {
+            if (
+                isDashboardAttributeFilterItem(filter) ||
+                isDashboardDateFilter(filter) ||
+                isDashboardMeasureValueFilter(filter)
+            ) {
+                return filter;
+            }
             return dashboardFilterToFilterContextItem(
                 filter,
                 !!ctx.backend.capabilities.supportsMultipleDateFilters,
             );
-        }
-    });
+        }),
+    );
 
     // Separate text filter types (arbitrary, match) — they use whole-filter replacement
     const textAttributeFiltersRaw = normalizedFilters.filter(

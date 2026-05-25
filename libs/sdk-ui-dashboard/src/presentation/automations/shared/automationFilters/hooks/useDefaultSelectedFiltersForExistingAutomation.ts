@@ -8,8 +8,11 @@ import {
     type IAutomationVisibleFilter,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
+    isDashboardMeasureValueFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -49,7 +52,8 @@ export function useDefaultSelectedFiltersForExistingAutomation(
         const savedAutomationWidgetFilters = savedWidgetAlertFilters ?? savedWidgetScheduleFilters;
         const convertedSavedWidgetFilters = savedAutomationWidgetFilters
             ?.filter(isDashboardFilter)
-            .map((filter) => convertAndSanitizeFilter(filter, availableVisibleFilters));
+            .map((filter) => convertAndSanitizeFilter(filter, availableVisibleFilters))
+            .filter((item): item is FilterContextItem => item !== undefined);
 
         return (
             savedDashboardScheduleFilters ??
@@ -197,8 +201,11 @@ export function getDefaultSelectedFiltersByTabForExistingAutomation(
 function convertAndSanitizeFilter(
     filter: IDashboardFilter,
     availableVisibleFilters?: IAutomationVisibleFilter[],
-) {
+): FilterContextItem | undefined {
     const convertedItem = dashboardFilterToFilterContextItem(filter, true);
+    if (!convertedItem) {
+        return undefined;
+    }
 
     // Because execution filters do not include titles, and they cannot be saved there,
     // get them from the current available visible filters.
@@ -215,15 +222,42 @@ function convertAndSanitizeFilter(
             },
         };
     } else if (isDashboardDateFilter(convertedItem)) {
+        // IDashboardDateFilter has no `title` field on its current type, but downstream UI relies
+        // on the saved automation title carried alongside the filter. Preserved as pre-existing
+        // behavior via a structural assertion until the type is widened or the field is consumed
+        // from a different source.
         return {
             ...convertedItem,
             dateFilter: {
                 ...convertedItem.dateFilter,
                 title: titleToUse?.title,
             },
+        } as FilterContextItem;
+    } else if (isDashboardMeasureValueFilter(convertedItem)) {
+        return {
+            ...convertedItem,
+            dashboardMeasureValueFilter: {
+                ...convertedItem.dashboardMeasureValueFilter,
+                title: titleToUse?.title,
+            },
+        };
+    } else if (isDashboardArbitraryAttributeFilter(convertedItem)) {
+        return {
+            ...convertedItem,
+            arbitraryAttributeFilter: {
+                ...convertedItem.arbitraryAttributeFilter,
+                title: titleToUse?.title,
+            },
+        };
+    } else if (isDashboardMatchAttributeFilter(convertedItem)) {
+        return {
+            ...convertedItem,
+            matchAttributeFilter: {
+                ...convertedItem.matchAttributeFilter,
+                title: titleToUse?.title,
+            },
         };
     }
 
-    // New filter types (arbitrary, match) - return as-is
     return convertedItem;
 }

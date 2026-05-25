@@ -172,11 +172,16 @@ export function dashboardFilterContextSanitize(
 
 /**
  * Transform supported dashboard filter to filter context item.
+ *
+ * Returns undefined when the input has no honest representation in the dashboard filter context —
+ * specifically for insight-originated MVFs that reference the measure via LocalIdRef (bucket localId).
+ * Dashboard MVFs require an ObjRef measure; callers receiving alert/automation execution filters
+ * (which mix dashboard and insight filters) should drop the undefined entries.
  */
 export function dashboardFilterToFilterContextItem(
     filter: IDashboardFilter,
     keepDatasets: boolean,
-): FilterContextItem {
+): FilterContextItem | undefined {
     if (isAttributeFilterWithSelection(filter)) {
         return {
             attributeFilter: {
@@ -233,12 +238,12 @@ export function dashboardFilterToFilterContextItem(
         );
     } else if (isMeasureValueFilter(filter)) {
         const measure = measureValueFilterMeasure(filter);
-        // Dashboard MVF requires an ObjRef (catalog metric reference); LocalIdRef cannot
-        // survive the round-trip from execution to filter context.
+        // Dashboard MVFs always reference the measure by ObjRef. Insight MVFs use LocalIdRef
+        // (bucket localId) and have no honest representation in the dashboard filter context —
+        // they reach this converter only because automation execution filters mix dashboard and
+        // insight filters. Caller is responsible for dropping these undefined entries.
         if (!isObjRef(measure)) {
-            throw new NotSupported(
-                `Unsupported filter type! Please provide valid dashboard filter. Filter: ${JSON.stringify(filter)}`,
-            );
+            return undefined;
         }
         const conditions = measureValueFilterConditions(filter);
         return {

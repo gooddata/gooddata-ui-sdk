@@ -8,7 +8,6 @@ import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { GenericAbortSignal } from 'axios';
-import { MatchFilterOperator } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import type { RawAxiosRequestConfig } from 'axios';
 
@@ -20733,19 +20732,7 @@ export interface ITigerCompoundCondition {
 }
 
 // @public
-export interface ITigerDashboardArbitraryAttributeFilter {
-    // (undocumented)
-    arbitraryAttributeFilter: {
-        displayForm: ObjRef;
-        values: string[];
-        negativeSelection: boolean;
-        localIdentifier?: string;
-        filterElementsBy?: ITigerDashboardAttributeFilterParent[];
-        filterElementsByDate?: ITigerDashboardAttributeFilterByDate[];
-        validateElementsBy?: ObjRef[];
-        title?: string;
-    };
-}
+export type ITigerDashboardArbitraryAttributeFilter = DashboardArbitraryAttributeFilter;
 
 // @public
 export interface ITigerDashboardAttributeFilterByDate {
@@ -20907,28 +20894,17 @@ export interface ITigerDashboardLayoutSizeByScreenSize {
 }
 
 // @public
-export interface ITigerDashboardMatchAttributeFilter {
-    // (undocumented)
-    matchAttributeFilter: {
-        displayForm: ObjRef;
-        operator: MatchFilterOperator;
-        literal: string;
-        caseSensitive?: boolean;
-        negativeSelection?: boolean;
-        localIdentifier?: string;
-        title?: string;
-    };
-}
+export type ITigerDashboardMatchAttributeFilter = DashboardMatchAttributeFilter;
 
 // @public
 export interface ITigerDashboardMeasureValueFilter {
     // (undocumented)
     dashboardMeasureValueFilter: {
-        measure: ObjRef;
+        measure: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["measure"];
+        conditions: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["conditions"];
+        title?: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["title"];
         localIdentifier: string;
-        conditions?: Array<ITigerComparisonCondition | ITigerRangeCondition>;
         treatNullValuesAs?: number;
-        title?: string;
     };
 }
 
@@ -20985,7 +20961,7 @@ export interface ITigerDashboardTab {
 export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
 
 // @public
-export type ITigerFilterContextItem = DashboardFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter | ITigerDashboardMeasureValueFilter;
+export type ITigerFilterContextItem = Exclude<DashboardFilter, DashboardMeasureValueFilter> | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter | ITigerDashboardMeasureValueFilter;
 
 // @public
 export interface ITigerInsightLayerDefinition {

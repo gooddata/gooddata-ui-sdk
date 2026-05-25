@@ -47,7 +47,7 @@ describe("typeGuards", () => {
 
     const arbitraryAttributeDashboardFilter: ITigerFilterContextItem = {
         arbitraryAttributeFilter: {
-            displayForm: { identifier: "label.product.name", type: "displayForm" },
+            displayForm: { identifier: { id: "label.product.name", type: "label" } },
             values: ["North", "South"],
             negativeSelection: false,
         },
@@ -55,9 +55,11 @@ describe("typeGuards", () => {
 
     const matchAttributeDashboardFilter: ITigerFilterContextItem = {
         matchAttributeFilter: {
-            displayForm: { identifier: "label.product.name", type: "displayForm" },
+            displayForm: { identifier: { id: "label.product.name", type: "label" } },
             operator: "contains",
             literal: "North",
+            caseSensitive: false,
+            negativeSelection: false,
         },
     };
 
