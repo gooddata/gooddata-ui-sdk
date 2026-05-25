@@ -3,29 +3,31 @@
   {
     "definitionName": "lockStepVersion",
     "policyName": "sdk",
-    "version": "11.37.0-alpha.5",
+    "version": "11.37.0",
     "nextBump": "prerelease",
     "mainProject": "@gooddata/sdk-ui-all"
   },
   {
     "definitionName": "lockStepVersion",
     "policyName": "sdk-not-npm-publish",
-    "version": "11.37.0-alpha.5",
+    "version": "11.37.0",
     "nextBump": "prerelease",
     "mainProject": "@gooddata/sdk-ui-all"
   },
   {
     "definitionName": "lockStepVersion",
     "policyName": "aac",
-    "version": "0.32.0-alpha.5",
+    "version": "0.33.0",
     "nextBump": "prerelease",
-    "exemptFromRushChange": true
+    "exemptFromRushChange": true,
+    "mainProject": "@gooddata/code-cli"
   },
   {
     "definitionName": "lockStepVersion",
     "policyName": "aac-not-npm-publish",
-    "version": "0.32.0-alpha.5",
+    "version": "0.33.0",
     "nextBump": "prerelease",
-    "exemptFromRushChange": true
+    "exemptFromRushChange": true,
+    "mainProject": "@gooddata/vscode-extension"
   }
 ]

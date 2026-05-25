@@ -383,9 +383,7 @@ export const convertVisualizationToDashboardTabularExportRequest = (
         format: exportRequest.format === "PDF_TABULAR" ? "PDF" : "XLSX",
         dashboardId: dashboard,
         widgetIds: [widget],
-        dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(
-            isTigerFilterContextItem,
-        ) as unknown as DashboardTabularExportRequestV2["dashboardFiltersOverride"],
+        dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(isTigerFilterContextItem),
         settings,
     };
 };

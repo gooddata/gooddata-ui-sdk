@@ -28,9 +28,14 @@
  * @public
  */
 
-import { type DateFilterGranularity, type MatchFilterOperator, type ObjRef } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type ObjRef } from "@gooddata/sdk-model";
 
-import { type DashboardFilter } from "../generated/metadata-json-api/index.js";
+import {
+    type DashboardArbitraryAttributeFilter,
+    type DashboardFilter,
+    type DashboardMatchAttributeFilter,
+    type DashboardMeasureValueFilter,
+} from "../generated/metadata-json-api/index.js";
 
 //
 // =====================================================================================================================
@@ -815,56 +820,53 @@ export interface ITigerDashboardDateFilter {
  * Tiger-specific dashboard arbitrary attribute filter
  * @public
  */
-export interface ITigerDashboardArbitraryAttributeFilter {
-    arbitraryAttributeFilter: {
-        displayForm: ObjRef;
-        values: string[];
-        negativeSelection: boolean;
-        localIdentifier?: string;
-        filterElementsBy?: ITigerDashboardAttributeFilterParent[];
-        filterElementsByDate?: ITigerDashboardAttributeFilterByDate[];
-        validateElementsBy?: ObjRef[];
-        title?: string;
-    };
-}
+export type ITigerDashboardArbitraryAttributeFilter = DashboardArbitraryAttributeFilter;
 
 /**
  * Tiger-specific dashboard match attribute filter
  * @public
  */
-export interface ITigerDashboardMatchAttributeFilter {
-    matchAttributeFilter: {
-        displayForm: ObjRef;
-        operator: MatchFilterOperator;
-        literal: string;
-        caseSensitive?: boolean;
-        negativeSelection?: boolean;
-        localIdentifier?: string;
-        title?: string;
-    };
-}
+export type ITigerDashboardMatchAttributeFilter = DashboardMatchAttributeFilter;
 
 /**
  * Tiger-specific dashboard measure value filter (dashboard filter context level).
  * Conditions are OR-ed together; empty/undefined conditions mean "All" (no filtering).
+ *
+ * TODO INE: wait for BE type unification — once BE schema adds `treatNullValuesAs` to
+ * `DashboardMeasureValueFilter` body and requires `localIdentifier`, this interface collapses to
+ * `export type ITigerDashboardMeasureValueFilter = DashboardMeasureValueFilter` (matching how
+ * arbitrary/match attribute filters are aliased today).
+ *
  * @public
  */
 export interface ITigerDashboardMeasureValueFilter {
     dashboardMeasureValueFilter: {
-        measure: ObjRef;
+        measure: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["measure"];
+        conditions: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["conditions"];
+        title?: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["title"];
         localIdentifier: string;
-        conditions?: Array<ITigerComparisonCondition | ITigerRangeCondition>;
+        /**
+         * Substitute value for null metric values when evaluating conditions. Applies to the whole filter
+         * (OR-ed conditions). Extension on top of the generated BE type; not yet in the OpenAPI schema —
+         * once BE lands the field on `dashboardMeasureValueFilter`, this declaration matches it without
+         * further client changes.
+         */
         treatNullValuesAs?: number;
-        title?: string;
     };
 }
 
 /**
  * Tiger-specific filter context item
+ *
+ * TODO INE: wait for BE type unification — once `DashboardMeasureValueFilter` aligns with our manual
+ * type (`localIdentifier` required, `treatNullValuesAs` on body), drop the `Exclude<DashboardFilter,
+ * DashboardMeasureValueFilter>` and `ITigerDashboardMeasureValueFilter` members; the union becomes
+ * just `DashboardFilter`.
+ *
  * @public
  */
 export type ITigerFilterContextItem =
-    | DashboardFilter
+    | Exclude<DashboardFilter, DashboardMeasureValueFilter>
     | ITigerDashboardArbitraryAttributeFilter
     | ITigerDashboardMatchAttributeFilter
     | ITigerDashboardMeasureValueFilter;

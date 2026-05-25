@@ -1,6 +1,26 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 21 May 2026 06:58:44 GMT and should not be manually modified.
+This log was last generated on Mon, 25 May 2026 11:40:30 GMT and should not be manually modified.
+
+## 11.37.0
+
+Mon, 25 May 2026 11:40:30 GMT
+
+### Updates
+
+- sdk-ui-dashboard: Unify reset button to also reset parameters
+- sdk-ui-dashboard: Add spacing for parameter chips in filter bar
+- sdk-ui-charts: Prevent browser freeze when stacked column or bar charts have too many series.
+- sdk-ui-dashboard: add cancellation support for KDA change analysis
+- sdk-ui-dashboard: updated styles and design for reasoning
+- sdk-ui-gen-ai: change autocomplete to trigger only using @
+- sdk-ui-all: Align automations filter types. Better handling of insight MVF.
+- move alerting, scheduledEmail, automationFilters under presentation/automations/
+- sdk-ui-kit: Add UiErrorPage component to render consistent 404 errors across all apps, integrate.
+- sdk-ui-all: Add Dashboard Measure value filters into Filter Groups
+- Fix closing of filter group on filter cancel btn and aria label on lined filters icon
+- make screen reader read the full text in ShortenedText component
+- sdk-ui-pluggable-application-model: use correct settings object based on workspace availability
 
 ## 11.36.0
 
