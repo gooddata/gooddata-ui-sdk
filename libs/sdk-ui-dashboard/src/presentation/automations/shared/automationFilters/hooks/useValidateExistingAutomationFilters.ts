@@ -14,6 +14,7 @@ import {
     type IRelativeDateFilter,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
+    isAllDashboardMeasureValueFilter,
     isAllValuesAttributeFilter,
     isAllValuesDashboardAttributeFilter,
     isAttributeFilter,
@@ -675,6 +676,9 @@ function validateVisibleFilters(
                 (dashboardFilter) => dashboardFilterLocalIdentifier(dashboardFilter) === localIdentifier,
             );
             if (isAllValuesDashboardAttributeFilter(currentDashboardFilter)) {
+                continue;
+            }
+            if (isAllDashboardMeasureValueFilter(currentDashboardFilter)) {
                 continue;
             }
             visibleFilterIsMissingInSavedFilters = true;

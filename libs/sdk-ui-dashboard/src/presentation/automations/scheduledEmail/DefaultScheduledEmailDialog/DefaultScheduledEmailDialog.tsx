@@ -49,6 +49,7 @@ import {
     selectMaxAutomationRecipients,
 } from "../../../../model/store/entitlements/entitlementsSelectors.js";
 import { selectDashboardTitle } from "../../../../model/store/meta/metaSelectors.js";
+import { selectTabs } from "../../../../model/store/tabs/tabsSelectors.js";
 import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../../model/store/topBar/topBarSelectors.js";
 import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
 import { getWidgetTitle } from "../../../../model/utils/dashboardItemUtils.js";
@@ -161,6 +162,8 @@ export function ScheduledMailDialogRenderer({
     const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
     const isSecondaryTitleVisible = useDashboardSelector(selectIsAutomationDialogSecondaryTitleVisible);
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
+    const dashboardTabs = useDashboardSelector(selectTabs);
+    const hasMultipleTabs = (dashboardTabs?.length ?? 0) > 1;
     const exportTemplates = useExportTemplates();
 
     const handleScheduleDeleteSuccess = () => {
@@ -520,14 +523,16 @@ export function ScheduledMailDialogRenderer({
                                         ref={generalTabContentRef}
                                         className="gd-schedule-dialog-tab-content"
                                     >
-                                        <Message
-                                            type="progress"
-                                            className="gd-schedule-dialog-tab-content-info"
-                                        >
-                                            {intl.formatMessage({
-                                                id: "dialogs.schedule.email.tabs.info",
-                                            })}
-                                        </Message>
+                                        {!widget && hasMultipleTabs ? (
+                                            <Message
+                                                type="progress"
+                                                className="gd-schedule-dialog-tab-content-info"
+                                            >
+                                                {intl.formatMessage({
+                                                    id: "dialogs.schedule.email.tabs.info",
+                                                })}
+                                            </Message>
+                                        ) : null}
                                         <RecurrenceForm
                                             startDate={startDate}
                                             cronExpression={
