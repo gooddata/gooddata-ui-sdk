@@ -249,7 +249,7 @@ export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
 export type DateString = string;
 
 // @public (undocumented)
-export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
+export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter | IMeasureValueFilter;
 
 // @public
 export enum GdcAdCommandType {
@@ -838,6 +838,16 @@ export interface IMeasureContent {
     title?: string;
 }
 
+// @public
+export interface IMeasureValueFilter {
+    // (undocumented)
+    measureValueFilter: {
+        measure: IObjIdentifierQualifier;
+        localIdentifier?: string;
+        conditions?: MeasureValueFilterCondition[];
+    };
+}
+
 // @public (undocumented)
 export interface INegativeAttributeFilter extends IAttributeFilterConfig {
     // (undocumented)
@@ -961,6 +971,15 @@ export interface IRemoveDateFilterItem {
 export interface IRemoveFilterContextContent {
     // (undocumented)
     filters: RemoveFilterItem[];
+}
+
+// @public
+export interface IRemoveMeasureValueFilterItem {
+    // (undocumented)
+    removeMeasureValueFilter: {
+        measure: IObjIdentifierQualifier;
+        localIdentifier?: string;
+    };
 }
 
 // @public (undocumented)
@@ -1162,6 +1181,9 @@ export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILo
 export function isMatchAttributeFilterItem(filter: unknown): filter is IMatchAttributeFilterItem;
 
 // @public (undocumented)
+export function isMeasureValueFilter(filter: unknown): filter is IMeasureValueFilter;
+
+// @public (undocumented)
 export function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter;
 
 // @public (undocumented)
@@ -1184,6 +1206,9 @@ export function isRemoveAttributeFilter(filter: unknown): filter is IRemoveAttri
 
 // @public (undocumented)
 export function isRemoveDateFilter(filter: unknown): filter is IRemoveDateFilterItem;
+
+// @public (undocumented)
+export function isRemoveMeasureValueFilter(filter: unknown): filter is IRemoveMeasureValueFilterItem;
 
 // @public (undocumented)
 export function isRemoveRankingFilter(filter: unknown): filter is IRemoveRankingFilterItem;
@@ -1564,7 +1589,7 @@ export type RankingFilterOperator = "TOP" | "BOTTOM";
 export type RelativeType = "relative";
 
 // @public (undocumented)
-export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem | IRemoveRankingFilterItem;
+export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem | IRemoveRankingFilterItem | IRemoveMeasureValueFilterItem;
 
 // @public (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];

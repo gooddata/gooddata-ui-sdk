@@ -57,7 +57,7 @@ import {
     type IReloadFilterViews,
     type IRemoveAttributeFilters,
     type IRemoveDateFilters,
-    type IRemoveMeasureValueFilter,
+    type IRemoveMeasureValueFilters,
     type IResetFilterContextWorkingSelection,
     type ISaveFilterView,
     type ISetAttributeFilterDependentDateFilters,
@@ -255,7 +255,7 @@ export type DashboardCommands =
     | IAttributeHierarchyModified
     | IAddDateFilter
     | IAddMeasureValueFilter
-    | IRemoveMeasureValueFilter
+    | IRemoveMeasureValueFilters
     | IRemoveDateFilters
     | IMoveDateFilter
     | IChangeMeasureValueFilterCondition

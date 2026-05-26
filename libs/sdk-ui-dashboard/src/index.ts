@@ -273,7 +273,8 @@ export {
     type IAddMeasureValueFilterPayload,
     type IAddDateFilterPayload,
     type IRemoveMeasureValueFilter,
-    type IRemoveMeasureValueFilterPayload,
+    type IRemoveMeasureValueFilters,
+    type IRemoveMeasureValueFiltersPayload,
     type IRemoveDateFilters,
     type IRemoveDateFiltersPayload,
     type IMoveDateFilter,
@@ -324,6 +325,7 @@ export {
     addDateFilter,
     addMeasureValueFilter,
     removeMeasureValueFilter,
+    removeMeasureValueFilters,
     removeDateFilter,
     moveMeasureValueFilter,
     moveDateFilter,
@@ -1276,6 +1278,7 @@ export {
     selectIsKDDependentFiltersEnabled,
     selectEnableKDCrossFiltering,
     selectEnableMultipleDateFilters,
+    selectEnableMeasureValueFilterKD,
     selectEnableKDRichText,
     selectEnableKDAttributeFilterDatesValidation,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
@@ -1383,6 +1386,7 @@ export {
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextAttributeFilters,
     selectFilterContextAttributeFilterItems,
+    selectFilterContextMeasureValueFilters,
     selectWorkingFilterContextDefinition,
     selectWorkingFilterContextFilters,
     selectWorkingFilterContextAttributeFilters,
@@ -1434,6 +1438,7 @@ export {
     selectWorkingFilterContextDateFilterForTab,
 } from "./model/store/tabs/filterContext/filterContextSelectors.js";
 export { getFilterIdentifier } from "./model/store/tabs/filterContext/filterContextUtils.js";
+export { generateMeasureValueFilterLocalIdentifier } from "./model/store/_infra/generators.js";
 export {
     type IImplicitDrillWithPredicates,
     selectImplicitDrillsDownByWidgetRef,
