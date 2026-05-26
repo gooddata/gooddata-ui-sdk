@@ -9,6 +9,7 @@ import {
     type FilterItem,
     type IArbitraryAttributeFilterItem,
     type IMatchAttributeFilterItem,
+    type IMeasureValueFilter,
     type INegativeAttributeFilter,
     type IPositiveAttributeFilter,
     type IRankingFilter,
@@ -17,15 +18,18 @@ import {
     isAttributeFilter,
     isDateFilter,
     isMatchAttributeFilterItem,
+    isMeasureValueFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isRankingFilter,
     isRemoveAttributeFilter,
     isRemoveDateFilter,
+    isRemoveMeasureValueFilter,
     isRemoveRankingFilter,
 } from "../iframe/EmbeddedGdc.js";
 import {
     type ILocalIdentifierQualifier,
+    type MeasureValueFilterCondition,
     type ObjQualifier,
     type RankingFilterOperator,
     isLocalIdentifierQualifier,
@@ -55,6 +59,7 @@ export interface IExternalFiltersObject {
     rankingFilter?: ITransformedRankingFilter;
     arbitraryAttributeFilters?: ITransformedArbitraryAttributeFilter[];
     matchAttributeFilters?: ITransformedMatchAttributeFilter[];
+    measureValueFilters?: ITransformedMeasureValueFilter[];
 }
 
 export interface ITransformedRankingFilter {
@@ -62,6 +67,12 @@ export interface ITransformedRankingFilter {
     attributeLocalIdentifiers?: string[];
     operator: RankingFilterOperator;
     value: number;
+}
+
+export interface ITransformedMeasureValueFilter {
+    measureIdentifier: string;
+    localIdentifier?: string;
+    conditions?: MeasureValueFilterCondition[];
 }
 
 export interface ITransformedDateFilterItem {
@@ -201,6 +212,53 @@ function isValidRankingFilterFormat(rankingFilterItem: IRankingFilter): boolean 
     );
 }
 
+const VALID_COMPARISON_OPERATORS = [
+    "GREATER_THAN",
+    "GREATER_THAN_OR_EQUAL_TO",
+    "LESS_THAN",
+    "LESS_THAN_OR_EQUAL_TO",
+    "EQUAL_TO",
+    "NOT_EQUAL_TO",
+];
+
+const VALID_RANGE_OPERATORS = ["BETWEEN", "NOT_BETWEEN"];
+
+function isValidMeasureValueFilterCondition(condition: unknown): condition is MeasureValueFilterCondition {
+    if (isEmpty(condition)) {
+        return false;
+    }
+    const candidate = condition as Partial<MeasureValueFilterCondition>;
+    if ("comparison" in candidate && candidate.comparison) {
+        const { operator, value } = candidate.comparison;
+        return VALID_COMPARISON_OPERATORS.includes(operator) && typeof value === "number";
+    }
+    if ("range" in candidate && candidate.range) {
+        const { operator, from, to } = candidate.range;
+        return VALID_RANGE_OPERATORS.includes(operator) && typeof from === "number" && typeof to === "number";
+    }
+    return false;
+}
+
+function isValidMeasureValueFilterFormat(filterItem: IMeasureValueFilter): boolean {
+    const { measure, localIdentifier, conditions } = filterItem.measureValueFilter;
+    if (isEmpty(measure) || !isObjIdentifierQualifier(measure)) {
+        return false;
+    }
+    if (localIdentifier !== undefined && typeof localIdentifier !== "string") {
+        return false;
+    }
+    // Omitted or empty `conditions` clears the filter; otherwise every entry must be a valid condition.
+    if (conditions !== undefined) {
+        if (!Array.isArray(conditions)) {
+            return false;
+        }
+        if (conditions.length > 0 && !conditions.every(isValidMeasureValueFilterCondition)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 const VALID_MATCH_OPERATORS = ["contains", "startsWith", "endsWith"];
 
 function isValidArbitraryAttributeFilterFormat(filterItem: IArbitraryAttributeFilterItem): boolean {
@@ -240,6 +298,8 @@ function isValidFilterItemFormat(
         return isValidAttributeFilterFormat(filterItem);
     } else if (isRankingFilter(filterItem)) {
         return isValidRankingFilterFormat(filterItem);
+    } else if (isMeasureValueFilter(filterItem)) {
+        return isValidMeasureValueFilterFormat(filterItem);
     }
     return false;
 }
@@ -255,6 +315,12 @@ function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
         return typeof uri === "string" || typeof identifier === "string";
     } else if (isRemoveRankingFilter(filterItem)) {
         return true;
+    } else if (isRemoveMeasureValueFilter(filterItem)) {
+        const { measure, localIdentifier } = filterItem.removeMeasureValueFilter;
+        if (!isObjIdentifierQualifier(measure) || typeof measure.identifier !== "string") {
+            return false;
+        }
+        return localIdentifier === undefined || typeof localIdentifier === "string";
     }
 
     return false;
@@ -407,6 +473,17 @@ function transformRankingFilterItem(rankingFilterItem: IRankingFilter): ITransfo
     };
 }
 
+function transformMeasureValueFilterItem(
+    measureValueFilterItem: IMeasureValueFilter,
+): ITransformedMeasureValueFilter {
+    const { measure, localIdentifier, conditions } = measureValueFilterItem.measureValueFilter;
+    return {
+        measureIdentifier: measure.identifier,
+        ...(localIdentifier ? { localIdentifier } : {}),
+        ...(conditions && conditions.length > 0 ? { conditions } : {}),
+    };
+}
+
 export function transformFilterContext(filters: FilterItem[]): IExternalFiltersObject {
     const defaultFiltersObject: IExternalFiltersObject = {
         attributeFilters: [],
@@ -441,6 +518,12 @@ export function transformFilterContext(filters: FilterItem[]): IExternalFiltersO
             } else if (isRankingFilter(filterItem)) {
                 const rankingFilter = transformRankingFilterItem(filterItem);
                 externalFilters.rankingFilter = rankingFilter;
+            } else if (isMeasureValueFilter(filterItem)) {
+                const measureValueFilter = transformMeasureValueFilterItem(filterItem);
+                if (!externalFilters.measureValueFilters) {
+                    externalFilters.measureValueFilters = [];
+                }
+                externalFilters.measureValueFilters.push(measureValueFilter);
             }
 
             return externalFilters;

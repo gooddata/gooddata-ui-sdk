@@ -12,6 +12,7 @@ import {
 import {
     type ILocalIdentifierQualifier,
     type IObjIdentifierQualifier,
+    type MeasureValueFilterCondition,
     type ObjQualifier,
     type RankingFilterOperator,
 } from "./legacyTypes.js";
@@ -146,6 +147,28 @@ export interface IRankingFilter {
 }
 
 /**
+ * Measure value (numeric) filter exchanged via the postMessage embedding API.
+ *
+ * @remarks
+ * Used by KD/AD embedding to set, change or clear measure value filter conditions on a dashboard.
+ * Dashboards apply the condition only to an existing MVF — embedded clients cannot add new MVFs
+ * via postMessage. The measure is identified by a catalog identifier (Tiger backend; URI
+ * references are not supported). When the dashboard holds multiple MVFs for the same metric,
+ * `localIdentifier` disambiguates which one is targeted; without it the dashboard matches by
+ * metric only and silently ignores the change if more than one filter exists for that metric.
+ * Conditions are OR-ed; an empty array (or omitted property) clears the filter.
+ *
+ * @public
+ */
+export interface IMeasureValueFilter {
+    measureValueFilter: {
+        measure: IObjIdentifierQualifier;
+        localIdentifier?: string;
+        conditions?: MeasureValueFilterCondition[];
+    };
+}
+
+/**
  * @public
  */
 export type AttributeFilterItem =
@@ -162,7 +185,7 @@ export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
 /**
  * @public
  */
-export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
+export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter | IMeasureValueFilter;
 
 /**
  * @public
@@ -191,9 +214,27 @@ export interface IRemoveRankingFilterItem {
 }
 
 /**
+ * Removes the conditions of a measure value filter on the dashboard, identified by its target
+ * catalog metric identifier (Tiger backend; URI references are not supported). When the dashboard
+ * holds multiple MVFs for the same metric, `localIdentifier` disambiguates which one is targeted.
+ *
  * @public
  */
-export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem | IRemoveRankingFilterItem;
+export interface IRemoveMeasureValueFilterItem {
+    removeMeasureValueFilter: {
+        measure: IObjIdentifierQualifier;
+        localIdentifier?: string;
+    };
+}
+
+/**
+ * @public
+ */
+export type RemoveFilterItem =
+    | IRemoveDateFilterItem
+    | IRemoveAttributeFilterItem
+    | IRemoveRankingFilterItem
+    | IRemoveMeasureValueFilterItem;
 
 /**
  * @public
@@ -253,6 +294,13 @@ export function isRankingFilter(filter: unknown): filter is IRankingFilter {
 /**
  * @public
  */
+export function isMeasureValueFilter(filter: unknown): filter is IMeasureValueFilter {
+    return !isEmpty(filter) && (filter as IMeasureValueFilter).measureValueFilter !== undefined;
+}
+
+/**
+ * @public
+ */
 export function isArbitraryAttributeFilterItem(filter: unknown): filter is IArbitraryAttributeFilterItem {
     return (
         !isEmpty(filter) && (filter as IArbitraryAttributeFilterItem).arbitraryAttributeFilter !== undefined
@@ -305,6 +353,15 @@ export function isRemoveAttributeFilter(filter: unknown): filter is IRemoveAttri
  */
 export function isRemoveRankingFilter(filter: unknown): filter is IRemoveRankingFilterItem {
     return !isEmpty(filter) && (filter as IRemoveRankingFilterItem).removeRankingFilter !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isRemoveMeasureValueFilter(filter: unknown): filter is IRemoveMeasureValueFilterItem {
+    return (
+        !isEmpty(filter) && (filter as IRemoveMeasureValueFilterItem).removeMeasureValueFilter !== undefined
+    );
 }
 
 /**

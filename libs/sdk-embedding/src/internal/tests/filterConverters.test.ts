@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
     type FilterItem,
     type IAbsoluteDateFilter,
+    type IMeasureValueFilter,
     type INegativeAttributeFilter,
     type IPositiveAttributeFilter,
     type IRankingFilter,
@@ -252,6 +253,62 @@ describe("filter convertors", () => {
         expect(isValidFiltersFormat([positiveAttributeSingleSelectionFilterWithoutValue])).toBe(true);
     });
 
+    describe("measure value filter", () => {
+        function newMvf(measure?: any, conditions?: any, localIdentifier?: any): any {
+            return {
+                measureValueFilter: {
+                    ...(measure === undefined ? {} : { measure }),
+                    ...(localIdentifier === undefined ? {} : { localIdentifier }),
+                    ...(conditions === undefined ? {} : { conditions }),
+                },
+            };
+        }
+        const validComparison = { comparison: { operator: "GREATER_THAN", value: 10 } };
+        const validRange = { range: { operator: "BETWEEN", from: 0, to: 5 } };
+        const Scenarios: Array<[boolean, string, any]> = [
+            [false, "without measure", newMvf(undefined, [validComparison])],
+            [true, "with identifier measure and comparison", newMvf({ identifier: "m" }, [validComparison])],
+            [true, "with identifier measure and range conditions", newMvf({ identifier: "m" }, [validRange])],
+            [
+                false,
+                "with uri measure (Tiger does not support uri refs for MVF)",
+                newMvf({ uri: "/m" }, [validComparison]),
+            ],
+            [
+                false,
+                "with local-id measure (not supported for dashboard MVF)",
+                newMvf({ localIdentifier: "m1" }, [validComparison]),
+            ],
+            [true, "with no conditions (clear)", newMvf({ identifier: "m" })],
+            [true, "with empty conditions array (clear)", newMvf({ identifier: "m" }, [])],
+            [
+                true,
+                "with localIdentifier disambiguator",
+                newMvf({ identifier: "m" }, [validComparison], "mvf-1"),
+            ],
+            [false, "with non-string localIdentifier", newMvf({ identifier: "m" }, [validComparison], 42)],
+            [
+                false,
+                "with invalid comparison operator",
+                newMvf({ identifier: "m" }, [{ comparison: { operator: "AROUND", value: 1 } }]),
+            ],
+            [
+                false,
+                "with non-numeric comparison value",
+                newMvf({ identifier: "m" }, [{ comparison: { operator: "GREATER_THAN", value: "1" } }]),
+            ],
+            [false, "with non-array conditions", newMvf({ identifier: "m" }, "not-an-array")],
+            [
+                false,
+                "with malformed condition in conditions array",
+                newMvf({ identifier: "m" }, [{ comparison: { operator: "X", value: 1 } }]),
+            ],
+        ];
+        it.each(Scenarios)("should return %s when filter is %s", (expectedResult, _desc, input) => {
+            expect(isValidFiltersFormat([input])).toBe(expectedResult);
+        });
+    });
+
     describe("ranking filter", () => {
         function localId(id: any): any {
             return { localIdentifier: id };
@@ -317,12 +374,27 @@ describe("filter convertors", () => {
     });
 
     it("should transform filter context", () => {
+        const mvfByIdentifier: IMeasureValueFilter = {
+            measureValueFilter: {
+                measure: { identifier: "mid" },
+                conditions: [{ comparison: { operator: "GREATER_THAN", value: 5 } }],
+            },
+        };
+        const mvfWithLocalId: IMeasureValueFilter = {
+            measureValueFilter: {
+                measure: { identifier: "mid2" },
+                localIdentifier: "mvf-2",
+                conditions: [{ range: { operator: "BETWEEN", from: 0, to: 9 } }],
+            },
+        };
         const filters: FilterItem[] = [
             absoluteDateFilter,
             relativeDateFilter,
             negativeAttributeFilter,
             positiveAttributeFilter,
             rankingFilter,
+            mvfByIdentifier,
+            mvfWithLocalId,
         ];
         const expected: IExternalFiltersObject = {
             attributeFilters: [
@@ -360,6 +432,17 @@ describe("filter convertors", () => {
                 value: 3,
                 attributeLocalIdentifiers: ["a1", "a2"],
             },
+            measureValueFilters: [
+                {
+                    measureIdentifier: "mid",
+                    conditions: [{ comparison: { operator: "GREATER_THAN", value: 5 } }],
+                },
+                {
+                    measureIdentifier: "mid2",
+                    localIdentifier: "mvf-2",
+                    conditions: [{ range: { operator: "BETWEEN", from: 0, to: 9 } }],
+                },
+            ],
         };
         expect(transformFilterContext(filters)).toEqual(expected);
     });
@@ -383,6 +466,13 @@ describe("filter convertors", () => {
                 { dataSet: { uri: "/gdc/md/424" } },
                 { displayForm: { uri: "/gdc/md/424" } },
                 { removeRankingFilter: {} },
+                { removeMeasureValueFilter: { measure: { identifier: "m1" } } },
+                {
+                    removeMeasureValueFilter: {
+                        measure: { identifier: "m1" },
+                        localIdentifier: "mvf-1",
+                    },
+                },
             ];
             expect(isValidRemoveFiltersFormat(removeFilters)).toEqual(true);
         });
@@ -395,6 +485,14 @@ describe("filter convertors", () => {
                 { someOtherThing: false },
             ];
             expect(isValidRemoveFiltersFormat(removeFilters)).toEqual(false);
+        });
+
+        it("should reject remove MVF without identifier ref", () => {
+            const cases = [
+                { removeMeasureValueFilter: { measure: {} } },
+                { removeMeasureValueFilter: { measure: { uri: "/gdc/md/m1" } } },
+            ];
+            cases.forEach((c) => expect(isValidRemoveFiltersFormat([c])).toEqual(false));
         });
     });
 });

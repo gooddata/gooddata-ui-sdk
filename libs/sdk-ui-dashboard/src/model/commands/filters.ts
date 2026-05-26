@@ -1889,29 +1889,37 @@ export function addMeasureValueFilter(
 }
 
 /**
- * Payload of the {@link IRemoveMeasureValueFilter} command.
+ * Payload of the {@link IRemoveMeasureValueFilters} command.
  *
  * @alpha
  */
-export interface IRemoveMeasureValueFilterPayload {
+export interface IRemoveMeasureValueFiltersPayload {
     /**
-     * Local identifier of the measure value filter to remove.
+     * Local identifiers of the measure value filters to remove. The command processes them as a
+     * single batch — every entry must reference an existing dashboard MVF or the command fails.
      */
-    readonly localIdentifier: string;
+    readonly localIdentifiers: string[];
 }
 
 /**
- * Command for removing a measure value filter.
+ * Command for removing one or more measure value filters in a single batch.
  *
  * @alpha
  */
-export interface IRemoveMeasureValueFilter extends IDashboardCommand {
+export interface IRemoveMeasureValueFilters extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVE";
-    readonly payload: IRemoveMeasureValueFilterPayload;
+    readonly payload: IRemoveMeasureValueFiltersPayload;
 }
 
 /**
- * Creates the RemoveMeasureValueFilter command.
+ * Backwards-compatible alias for the batch command shape.
+ *
+ * @alpha
+ */
+export type IRemoveMeasureValueFilter = IRemoveMeasureValueFilters;
+
+/**
+ * Creates the RemoveMeasureValueFilters command for a single filter.
  *
  * @alpha
  * @param localIdentifier - local identifier of the measure value filter
@@ -1921,12 +1929,28 @@ export interface IRemoveMeasureValueFilter extends IDashboardCommand {
 export function removeMeasureValueFilter(
     localIdentifier: string,
     correlationId?: string,
-): IRemoveMeasureValueFilter {
+): IRemoveMeasureValueFilters {
+    return removeMeasureValueFilters([localIdentifier], correlationId);
+}
+
+/**
+ * Creates the RemoveMeasureValueFilters command for a batch of filters. The handler processes
+ * them in one pass — each removal emits its own `DashboardMeasureValueFilterRemoved` event and
+ * the whole batch settles with a single `DashboardFilterContextChanged`.
+ *
+ * @alpha
+ * @param localIdentifiers - local identifiers of the measure value filters to remove
+ * @param correlationId - correlation id propagated through emitted events
+ */
+export function removeMeasureValueFilters(
+    localIdentifiers: string[],
+    correlationId?: string,
+): IRemoveMeasureValueFilters {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.REMOVE",
         correlationId,
         payload: {
-            localIdentifier,
+            localIdentifiers,
         },
     };
 }
