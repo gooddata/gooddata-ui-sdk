@@ -10,7 +10,8 @@
  * - Unordered lists (- item or * item)
  * - Ordered lists (1. item)
  * - Images (![alt](url))
- * - Links ([text](url)) — rendered as plain styled text (not clickable in tooltips)
+ * - Links ([text](url)) — rendered as clickable anchors (target=_blank, rel=noopener noreferrer)
+ *   for `http(s):` URLs; unsafe URLs (javascript:, data:text/...) fall back to plain text
  * - Horizontal rules (--- or ***)
  * - Line breaks
  * - Backslash escapes (\*, \_, \[, \!, etc.) — render the metachar as literal text.
@@ -28,8 +29,16 @@ function escapeHtml(text: string): string {
     return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-function isSafeUrl(url: string): boolean {
+// http(s) navigation is the only safe scheme for clickable links. Data URLs are
+// fine inline for <img> sources, but allowing them on <a href> would let an
+// `[link](data:image/svg+xml,...)` target an SVG that may execute scripts on
+// navigation.
+function isSafeImageUrl(url: string): boolean {
     return /^https?:\/\//i.test(url) || /^data:image\//i.test(url);
+}
+
+function isSafeLinkUrl(url: string): boolean {
+    return /^https?:\/\//i.test(url);
 }
 
 // URL pattern allowing one level of balanced parens, e.g.
@@ -48,15 +57,20 @@ function processInlineMarkdown(text: string): string {
 
     // Inline style as fallback since the tooltip renders outside the normal DOM tree.
     result = result.replace(IMAGE_REGEX, (_match, alt, url) => {
-        if (!isSafeUrl(url)) {
+        if (!isSafeImageUrl(url)) {
             return `${alt}`;
         }
         return `<img src="${url}" alt="${alt}" style="max-width: 100%; display: block; margin: 4px 0;" />`;
     });
 
-    // Render as styled text — links are intentionally not clickable inside tooltips.
-    result = result.replace(LINK_REGEX, (_match, linkText) => {
-        return `<span class="gd-viz-tooltip-custom-link">${linkText}</span>`;
+    // Always emit a `target="_blank"` anchor for http(s) URLs; whether the user
+    // can practically reach it depends on the tooltip mode's lifecycle (the
+    // tooltip needs to stay open long enough to mouse over the link).
+    result = result.replace(LINK_REGEX, (_match, linkText, url) => {
+        if (!isSafeLinkUrl(url)) {
+            return linkText;
+        }
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
     });
 
     // Bold-italic: ***text*** — must run before bold and italic so the triple
@@ -166,6 +180,7 @@ function parseMarkdown(markdown: string): string {
 
         if (!trimmed) {
             closeList();
+            htmlParts.push("<br/>");
             continue;
         }
 

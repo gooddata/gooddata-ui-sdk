@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
+import type { IGeoLayerTooltipLookup } from "../../layers/common/customTooltipExecution.js";
 import type { IMapFacade, IPopupFacade, MapMouseEvent } from "../../layers/common/mapFacade.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoTooltipConfig } from "../../layers/registry/adapterTypes.js";
@@ -46,6 +47,11 @@ interface IUseLayerTooltipsParams {
      * Adapter context for tooltip registration.
      */
     adapterContext: IGeoAdapterContext;
+
+    /**
+     * Per-layer custom-tooltip lookups, keyed by layerId.
+     */
+    tooltipLookups: Map<string, IGeoLayerTooltipLookup>;
 }
 
 /**
@@ -57,6 +63,7 @@ function getLayerTooltipConfig(
     adapterContext: IGeoAdapterContext,
     tooltip: IPopupFacade,
     drillablePredicates: IHeaderPredicate[],
+    tooltipLookup: IGeoLayerTooltipLookup | undefined,
 ): IGeoTooltipConfig | null {
     const { layer } = layerExecution;
     const adapter = getLayerAdapter(layer);
@@ -70,6 +77,7 @@ function getLayerTooltipConfig(
         adapter.getTooltipConfig(layer, layerOutput, adapterContext, {
             tooltip,
             drillablePredicates,
+            tooltipLookup,
         }) ?? null
     );
 }
@@ -92,6 +100,7 @@ export function useLayerTooltips({
     layerExecutions,
     layers,
     adapterContext,
+    tooltipLookups,
 }: IUseLayerTooltipsParams): void {
     const currentTooltipConfigRef = useRef<IGeoTooltipConfig | null>(null);
 
@@ -114,6 +123,7 @@ export function useLayerTooltips({
                 adapterContext,
                 tooltip,
                 drillablePredicates,
+                tooltipLookups.get(layerExecution.layerId),
             );
 
             if (config) {
@@ -122,7 +132,7 @@ export function useLayerTooltips({
         }
 
         return configs;
-    }, [layerExecutions, layers, adapterContext, tooltip, drillablePredicates]);
+    }, [layerExecutions, layers, adapterContext, tooltip, drillablePredicates, tooltipLookups]);
 
     const layerIdToConfig = useMemo(() => {
         const lookup = new Map<string, IGeoTooltipConfig>();

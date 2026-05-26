@@ -45,7 +45,7 @@ interface IUseLayerSyncParams {
  */
 export function useSyncLayersToMap({ drillablePredicates, onDrill }: IUseLayerSyncParams): void {
     const { map, isMapReady, tooltip, adapterContext } = useMapRuntime();
-    const { layers, layerExecutions } = useGeoLayers();
+    const { layers, layerExecutions, tooltipLookups } = useGeoLayers();
     const { hiddenLayers, enabledItemsByLayer } = useGeoLegend();
     // Key capturing adapter-declared config changes that require a full re-sync.
     // Keeps this hook generic (no layer-specific config knowledge).
@@ -115,6 +115,7 @@ export function useSyncLayersToMap({ drillablePredicates, onDrill }: IUseLayerSy
         layerExecutions: visibleLayerExecutions,
         layers,
         adapterContext,
+        tooltipLookups,
     });
 
     useLayerClickEvent(map, isMapReady, layers, drillablePredicates, onDrill);

@@ -16,6 +16,7 @@ import {
     isLngLatTuple,
     isRecord,
 } from "../../../utils/guards.js";
+import { type IGeoLayerTooltipLookup } from "../../common/customTooltipExecution.js";
 import { buildCustomTooltipPieces, composeTooltipBody } from "../../common/customTooltipSection.js";
 import { type IPopupFacade } from "../../common/mapFacade.js";
 import {
@@ -171,6 +172,7 @@ export function getTooltipHtml(
     showStroke: boolean = true,
     customConfig?: ICustomTooltipConfig,
     referenceMaps?: ITooltipReferenceMaps,
+    tooltipLookup?: IGeoLayerTooltipLookup,
 ): string {
     const interactionMessage = getInteractionMessage(drillableItems, intl);
     const properties = getTooltipProperties(geoProperties);
@@ -198,13 +200,16 @@ export function getTooltipHtml(
         .filter((item): item is string => item !== null)
         .join("");
 
-    const fallbackText = `(${intl.formatMessage({ id: "richText.no_data" })})`;
+    const fallbackText = `(${intl.formatMessage({ id: "richText.no_fetch" })})`;
+    const noDataLabel = `(${intl.formatMessage({ id: "richText.no_data" })})`;
     const customPieces = buildCustomTooltipPieces(
         geoProperties,
         customConfig,
         referenceMaps,
         separators,
         fallbackText,
+        noDataLabel,
+        tooltipLookup,
     );
     const itemsBody = composeTooltipBody(tooltipItems, customPieces, customConfig?.placement);
 
@@ -249,6 +254,7 @@ export function createPushpinTooltipConfig(
     intl: IntlShape,
     layerIds: string[],
     referenceMaps?: ITooltipReferenceMaps,
+    tooltipLookup?: IGeoLayerTooltipLookup,
 ): IGeoTooltipConfig {
     const { separators } = config;
 
@@ -305,6 +311,7 @@ export function createPushpinTooltipConfig(
                 !isIconShape,
                 config.customTooltip,
                 referenceMaps,
+                tooltipLookup,
             );
 
             tooltip

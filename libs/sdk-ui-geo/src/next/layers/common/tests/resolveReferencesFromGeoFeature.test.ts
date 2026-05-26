@@ -5,13 +5,15 @@ import { describe, expect, it } from "vitest";
 import { type ITooltipReferenceMaps } from "../../registry/adapterTypes.js";
 import { resolveReferencesFromGeoFeature } from "../resolveReferencesFromGeoFeature.js";
 
+const NO_DATA = "(No data)";
+
 const measure = (title: string, value: number, localId: string) => JSON.stringify({ title, value, localId });
 
 const attribute = (title: string, value: string, attrId: string) => JSON.stringify({ title, value, attrId });
 
 describe("resolveReferencesFromGeoFeature", () => {
     it("returns an empty map when properties are missing", () => {
-        expect(resolveReferencesFromGeoFeature(null, undefined, undefined)).toEqual({});
+        expect(resolveReferencesFromGeoFeature(null, undefined, undefined, NO_DATA)).toEqual({});
     });
 
     it("registers a measure under its LDM identifier when localId maps to one", () => {
@@ -22,7 +24,7 @@ describe("resolveReferencesFromGeoFeature", () => {
             measures: { m_color: "ldm.sales" },
             attributes: {},
         };
-        expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
+        expect(resolveReferencesFromGeoFeature(props, maps, undefined, NO_DATA)).toEqual({
             "metric/ldm.sales": "100",
         });
     });
@@ -32,10 +34,10 @@ describe("resolveReferencesFromGeoFeature", () => {
             color: measure("Sales", 100, "m_color"),
         };
         const maps: ITooltipReferenceMaps = { measures: {}, attributes: {} };
-        expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({});
+        expect(resolveReferencesFromGeoFeature(props, maps, undefined, NO_DATA)).toEqual({});
     });
 
-    it("skips measures with non-finite values", () => {
+    it("emits the no-data sentinel for measures with non-finite values", () => {
         const props: GeoJSON.GeoJsonProperties = {
             color: JSON.stringify({ title: "Sales", value: Number.NaN, localId: "m" }),
             size: JSON.stringify({ title: "Size", value: "not a number", localId: "s" }),
@@ -44,7 +46,10 @@ describe("resolveReferencesFromGeoFeature", () => {
             measures: { m: "ldm.sales", s: "ldm.size" },
             attributes: {},
         };
-        expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({});
+        expect(resolveReferencesFromGeoFeature(props, maps, undefined, NO_DATA)).toEqual({
+            "metric/ldm.sales": NO_DATA,
+            "metric/ldm.size": NO_DATA,
+        });
     });
 
     it("first-wins precedence: size populates the metric key before color when both reference the same LDM id", () => {
@@ -57,7 +62,7 @@ describe("resolveReferencesFromGeoFeature", () => {
             measures: { m_size: "ldm.shared", m_color: "ldm.shared" },
             attributes: {},
         };
-        const values = resolveReferencesFromGeoFeature(props, maps, undefined);
+        const values = resolveReferencesFromGeoFeature(props, maps, undefined, NO_DATA);
         expect(values["metric/ldm.shared"]).toBe("1");
     });
 
@@ -69,7 +74,7 @@ describe("resolveReferencesFromGeoFeature", () => {
             measures: {},
             attributes: { "df.country": "attr.country" },
         };
-        expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
+        expect(resolveReferencesFromGeoFeature(props, maps, undefined, NO_DATA)).toEqual({
             "label/df.country": "Czechia",
             "label/attr.country": "Czechia",
         });
@@ -80,7 +85,7 @@ describe("resolveReferencesFromGeoFeature", () => {
             segment: attribute("Segment", "EU", "df.segment"),
         };
         const maps: ITooltipReferenceMaps = { measures: {}, attributes: {} };
-        expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
+        expect(resolveReferencesFromGeoFeature(props, maps, undefined, NO_DATA)).toEqual({
             "label/df.segment": "EU",
         });
     });
@@ -93,7 +98,7 @@ describe("resolveReferencesFromGeoFeature", () => {
             measures: {},
             attributes: { "df.region": "attr.region" },
         };
-        expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
+        expect(resolveReferencesFromGeoFeature(props, maps, undefined, NO_DATA)).toEqual({
             "label/df.region": "Bohemia",
             "label/attr.region": "Bohemia",
         });
@@ -107,7 +112,7 @@ describe("resolveReferencesFromGeoFeature", () => {
             measures: { a: "ldm.x", b: "ldm.y" },
             attributes: {},
         };
-        expect(resolveReferencesFromGeoFeature(props, maps, undefined)).toEqual({
+        expect(resolveReferencesFromGeoFeature(props, maps, undefined, NO_DATA)).toEqual({
             "metric/ldm.x": "10",
             "metric/ldm.y": "20",
         });
@@ -120,7 +125,7 @@ describe("resolveReferencesFromGeoFeature", () => {
         };
         // attribute display-form key is still registered (no parent lookup needed)
         // but no metric key — measures table is empty.
-        expect(resolveReferencesFromGeoFeature(props, undefined, undefined)).toEqual({
+        expect(resolveReferencesFromGeoFeature(props, undefined, undefined, NO_DATA)).toEqual({
             "label/df.country": "CZ",
         });
     });

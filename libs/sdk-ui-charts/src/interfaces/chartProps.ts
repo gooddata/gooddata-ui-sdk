@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import {
     type IAnalyticalBackend,
     type IClusteringConfig,
@@ -8,6 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type IExecutionConfig } from "@gooddata/sdk-model";
 import { type IVisualizationCallbacks, type IVisualizationProps } from "@gooddata/sdk-ui";
+import { type ITooltipExecutionBundle } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IChartConfig } from "./chartConfig.js";
 
@@ -138,4 +140,12 @@ export interface ICoreChartProps extends ICommonChartProps {
      * @beta
      */
     outliersConfig?: IOutliersConfig;
+
+    /**
+     * Prepared execution + meta for custom tooltip reference resolution.
+     * Pre-built by the pluggable visualization with referenced measures
+     * sliced by the chart's attributes.
+     * @internal
+     */
+    tooltipExecution?: ITooltipExecutionBundle;
 }

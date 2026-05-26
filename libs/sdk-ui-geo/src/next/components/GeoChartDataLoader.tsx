@@ -39,7 +39,7 @@ export function GeoChartDataLoader({
     const backend = useBackendStrict(props.backend, "GeoDataLoadingGate");
     const workspace = useWorkspaceStrict(props.workspace, "GeoDataLoadingGate");
 
-    const { layerOutputs, status, error } = useGeoChartData({
+    const { layerOutputs, tooltipLookups, status, error } = useGeoChartData({
         layerExecutions,
         backend,
         workspace,
@@ -134,7 +134,11 @@ export function GeoChartDataLoader({
     }
 
     return (
-        <GeoChartProviders layerExecutions={layerExecutions} layerOutputs={layerOutputs}>
+        <GeoChartProviders
+            layerExecutions={layerExecutions}
+            layerOutputs={layerOutputs}
+            tooltipLookups={tooltipLookups}
+        >
             <RenderGeoChart onMapError={setMapError} />
         </GeoChartProviders>
     );

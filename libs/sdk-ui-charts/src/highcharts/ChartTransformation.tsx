@@ -1,10 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ReactElement, memo, useEffect } from "react";
+import { type ReactElement, memo, useEffect, useMemo, useRef } from "react";
 
 import Highcharts from "highcharts/esm/highcharts.js";
 import { isEqual, omitBy } from "lodash-es";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 import { type ContentRect } from "react-measure";
 import { invariant } from "ts-invariant";
 
@@ -20,7 +20,11 @@ import {
     totalColumnTitleFromIntl,
 } from "@gooddata/sdk-ui";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { type ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
+import {
+    type ILegendOptions,
+    type ITooltipExecutionBundle,
+    useTooltipLookup,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { type IChartConfig } from "../interfaces/chartConfig.js";
 import { type OnLegendReady } from "../interfaces/chartProps.js";
@@ -43,7 +47,12 @@ import {
 } from "./chartTypes/_chartOptions/chartLimits.js";
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
-import { type IChartOptions } from "./typings/unsafe.js";
+import { type IChartOptions, type ICustomTooltipRuntime } from "./typings/unsafe.js";
+
+const customTooltipMessages = defineMessages({
+    noData: { id: "richText.no_data" },
+    multipleItems: { id: "richText.multiple_data" },
+});
 
 export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
     const childrenRenderer = (contentRect: ContentRect) => (
@@ -76,6 +85,8 @@ export interface IChartTransformationProps {
     theme?: ITheme;
     pushData?(data: any): void;
     renderer?(arg: IHighChartsRendererProps): ReactElement;
+
+    tooltipExecution?: ITooltipExecutionBundle;
 }
 
 function ChartTransformationImpl({
@@ -94,11 +105,28 @@ function ChartTransformationImpl({
     onDataTooLarge,
     onNegativeValues = null,
     pushData = () => {},
+    tooltipExecution,
 }: IChartTransformationProps) {
     const intl = useIntl();
 
     const visType = config.type;
     const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+
+    const tooltipLocalizedStrings = useMemo(
+        () => ({
+            noData: `(${intl.formatMessage(customTooltipMessages.noData)})`,
+            multipleItems: `(${intl.formatMessage(customTooltipMessages.multipleItems)})`,
+        }),
+        [intl],
+    );
+
+    // Execute the secondary tooltip execution and build the lookup table.
+    // `undefined` until the first result lands; `getCustomTooltipSection` treats
+    // it as "no external values" and falls back to in-chart drill intersection.
+    const tooltipLookup = useTooltipLookup(tooltipExecution, config.separators, tooltipLocalizedStrings);
+
+    const customTooltipRuntimeRef = useRef<ICustomTooltipRuntime>({});
+
     const chartOptions: IChartOptions = getChartOptions(
         dataView,
         config,
@@ -111,8 +139,16 @@ function ChartTransformationImpl({
     );
 
     if (config.customTooltip?.enabled) {
-        chartOptions.identifierMapping = buildIdentifierMapping(dataView.definition, config.type);
+        customTooltipRuntimeRef.current.identifierMapping = buildIdentifierMapping(
+            dataView.definition,
+            config.type,
+        );
+        customTooltipRuntimeRef.current.tooltipLookup = tooltipLookup;
+    } else {
+        customTooltipRuntimeRef.current.identifierMapping = undefined;
+        customTooltipRuntimeRef.current.tooltipLookup = undefined;
     }
+    chartOptions.customTooltipRuntime = customTooltipRuntimeRef.current;
 
     const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, theme, intl);
     const validationResult = validateData(config.limits, chartOptions);

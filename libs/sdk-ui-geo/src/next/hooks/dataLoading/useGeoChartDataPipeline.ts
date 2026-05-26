@@ -12,6 +12,7 @@ import {
     type UseCancelablePromiseStatus,
 } from "@gooddata/sdk-ui";
 
+import type { IGeoLayerTooltipLookup } from "../../layers/common/customTooltipExecution.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { getDataPointsLimit, validateLayersDataSize } from "../../utils/dataValidation.js";
@@ -21,9 +22,11 @@ import {
     type ILayersPrepareContext,
     useLayersPrepare,
 } from "../layers/useLayersPrepare.js";
+import { useLayersTooltipData } from "../layers/useLayersTooltipData.js";
 
 export interface IGeoChartDataResult {
     layerOutputs: Map<string, ILayerPreparedData>;
+    tooltipLookups: Map<string, IGeoLayerTooltipLookup>;
     status: UseCancelablePromiseStatus;
     error?: GoodDataSdkError;
 }
@@ -77,6 +80,16 @@ export function useGeoChartData(params: {
         error: prepareError,
     } = useLayersPrepare(layerExecutions, layerDataViews, dataStatus, prepareContext);
 
+    const { tooltipLookups } = useLayersTooltipData({
+        layerExecutions,
+        layerDataViews,
+        backend,
+        workspace,
+        config,
+        execConfig,
+        intl,
+    });
+
     const combinedStatus = combineStatus(dataStatus, prepareStatus);
     const pipelineError = dataError ?? prepareError;
 
@@ -102,6 +115,7 @@ export function useGeoChartData(params: {
 
     return {
         layerOutputs,
+        tooltipLookups,
         status,
         error,
     };

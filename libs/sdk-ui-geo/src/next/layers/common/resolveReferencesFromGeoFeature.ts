@@ -28,6 +28,7 @@ export function resolveReferencesFromGeoFeature(
     properties: GeoJSON.GeoJsonProperties,
     referenceMaps: ITooltipReferenceMaps | undefined,
     separators: ISeparators | undefined,
+    noDataLabel: string,
 ): IResolvedReferenceValues {
     const values: IResolvedReferenceValues = {};
 
@@ -74,6 +75,10 @@ export function resolveReferencesFromGeoFeature(
         }
         const rawValue = payload.value;
         if (typeof rawValue !== "number" || !Number.isFinite(rawValue)) {
+            // Null / undefined / NaN on the rendered feature — emit the no-data
+            // sentinel so the custom section reads "(No data)" instead of falling
+            // through to the resolution-failure fallback text.
+            values[key] = noDataLabel;
             return;
         }
         // Use the raw formatted value without HTML escaping. The resolved

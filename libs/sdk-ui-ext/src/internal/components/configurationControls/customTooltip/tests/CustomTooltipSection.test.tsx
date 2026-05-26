@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
@@ -63,7 +63,7 @@ describe("CustomTooltipSection", () => {
         expect(screen.getByRole("textbox")).toBeDisabled();
     });
 
-    it("calls pushData with updated content on textarea change", async () => {
+    it("calls pushData with updated content once the debounce settles", async () => {
         const pushDataSpy = vi.fn();
         const enabled = set({}, "controls.customTooltip.enabled", true);
         createComponent({
@@ -74,15 +74,114 @@ describe("CustomTooltipSection", () => {
 
         await userEvent.type(screen.getByRole("textbox"), "x");
 
-        expect(pushDataSpy).toHaveBeenCalledWith({
+        await waitFor(() => {
+            expect(pushDataSpy).toHaveBeenCalledWith({
+                properties: {
+                    controls: {
+                        customTooltip: {
+                            enabled: true,
+                            content: "x",
+                        },
+                    },
+                },
+            });
+        });
+    });
+
+    it("collapses rapid typing into a single trailing pushData call", async () => {
+        const pushDataSpy = vi.fn();
+        const enabled = set({}, "controls.customTooltip.enabled", true);
+        createComponent({
+            properties: enabled,
+            propertiesMeta: expanded,
+            pushData: pushDataSpy,
+        });
+
+        await userEvent.type(screen.getByRole("textbox"), "hello");
+
+        await waitFor(() => {
+            expect(pushDataSpy).toHaveBeenCalledTimes(1);
+        });
+        expect(pushDataSpy).toHaveBeenLastCalledWith({
             properties: {
                 controls: {
                     customTooltip: {
                         enabled: true,
-                        content: "x",
+                        content: "hello",
                     },
                 },
             },
         });
+    });
+
+    it("syncs the textarea when content changes externally (e.g., undo or viz switch)", async () => {
+        const pushDataSpy = vi.fn();
+        const initial = set({}, "controls.customTooltip.enabled", true);
+        set(initial, "controls.customTooltip.content", "original");
+
+        const { rerender } = render(
+            <InternalIntlWrapper>
+                <CustomTooltipSection
+                    controlsDisabled={false}
+                    properties={initial}
+                    propertiesMeta={expanded}
+                    pushData={pushDataSpy}
+                />
+            </InternalIntlWrapper>,
+        );
+
+        expect(screen.getByRole("textbox")).toHaveValue("original");
+
+        const updated = cloneDeep(initial);
+        set(updated, "controls.customTooltip.content", "restored");
+        rerender(
+            <InternalIntlWrapper>
+                <CustomTooltipSection
+                    controlsDisabled={false}
+                    properties={updated}
+                    propertiesMeta={expanded}
+                    pushData={pushDataSpy}
+                />
+            </InternalIntlWrapper>,
+        );
+
+        expect(screen.getByRole("textbox")).toHaveValue("restored");
+    });
+
+    it("cancels a pending push when content changes externally before the debounce settles", async () => {
+        const pushDataSpy = vi.fn();
+        const initial = set({}, "controls.customTooltip.enabled", true);
+
+        const { rerender } = render(
+            <InternalIntlWrapper>
+                <CustomTooltipSection
+                    controlsDisabled={false}
+                    properties={initial}
+                    propertiesMeta={expanded}
+                    pushData={pushDataSpy}
+                />
+            </InternalIntlWrapper>,
+        );
+
+        await userEvent.type(screen.getByRole("textbox"), "stale");
+
+        // External undo/load lands before our debounce fires.
+        const undone = set(cloneDeep(initial), "controls.customTooltip.content", "undone");
+        rerender(
+            <InternalIntlWrapper>
+                <CustomTooltipSection
+                    controlsDisabled={false}
+                    properties={undone}
+                    propertiesMeta={expanded}
+                    pushData={pushDataSpy}
+                />
+            </InternalIntlWrapper>,
+        );
+
+        expect(screen.getByRole("textbox")).toHaveValue("undone");
+
+        // The pending "stale" push must not arrive after the external update.
+        await new Promise((resolve) => setTimeout(resolve, 600));
+        expect(pushDataSpy).not.toHaveBeenCalled();
     });
 });

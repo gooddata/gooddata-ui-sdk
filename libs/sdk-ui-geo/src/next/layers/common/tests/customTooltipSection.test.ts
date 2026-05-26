@@ -8,6 +8,7 @@ import { type ITooltipReferenceMaps } from "../../registry/adapterTypes.js";
 import { buildCustomTooltipPieces, composeTooltipBody } from "../customTooltipSection.js";
 
 const FALLBACK = "(No data)";
+const NO_DATA = "(No data)";
 
 const enabledAbove: ICustomTooltipConfig = {
     enabled: true,
@@ -22,7 +23,7 @@ const emptyMaps: ITooltipReferenceMaps = { measures: {}, attributes: {} };
 
 describe("buildCustomTooltipPieces", () => {
     it("returns empty pieces when config is undefined", () => {
-        expect(buildCustomTooltipPieces({}, undefined, emptyMaps, undefined, FALLBACK)).toEqual({
+        expect(buildCustomTooltipPieces({}, undefined, emptyMaps, undefined, FALLBACK, NO_DATA)).toEqual({
             sectionHtml: "",
             separatorHtml: "",
         });
@@ -30,7 +31,7 @@ describe("buildCustomTooltipPieces", () => {
 
     it("returns empty pieces when config is disabled", () => {
         const cfg: ICustomTooltipConfig = { enabled: false, content: "x" };
-        expect(buildCustomTooltipPieces({}, cfg, emptyMaps, undefined, FALLBACK)).toEqual({
+        expect(buildCustomTooltipPieces({}, cfg, emptyMaps, undefined, FALLBACK, NO_DATA)).toEqual({
             sectionHtml: "",
             separatorHtml: "",
         });
@@ -38,26 +39,26 @@ describe("buildCustomTooltipPieces", () => {
 
     it("returns empty pieces when content is missing", () => {
         const cfg: ICustomTooltipConfig = { enabled: true };
-        expect(buildCustomTooltipPieces({}, cfg, emptyMaps, undefined, FALLBACK)).toEqual({
+        expect(buildCustomTooltipPieces({}, cfg, emptyMaps, undefined, FALLBACK, NO_DATA)).toEqual({
             sectionHtml: "",
             separatorHtml: "",
         });
     });
 
     it("wraps rendered HTML in the custom-section div for above placement", () => {
-        const result = buildCustomTooltipPieces({}, enabledAbove, emptyMaps, undefined, FALLBACK);
+        const result = buildCustomTooltipPieces({}, enabledAbove, emptyMaps, undefined, FALLBACK, NO_DATA);
         expect(result.sectionHtml).toContain('<div class="gd-viz-tooltip-custom-section">');
         expect(result.sectionHtml).toContain("<strong>hello</strong>");
         expect(result.separatorHtml).toBe('<div class="gd-viz-tooltip-custom-separator"></div>');
     });
 
     it("emits a separator for below placement", () => {
-        const result = buildCustomTooltipPieces({}, enabledBelow, emptyMaps, undefined, FALLBACK);
+        const result = buildCustomTooltipPieces({}, enabledBelow, emptyMaps, undefined, FALLBACK, NO_DATA);
         expect(result.separatorHtml).toBe('<div class="gd-viz-tooltip-custom-separator"></div>');
     });
 
     it("suppresses the separator for replace placement", () => {
-        const result = buildCustomTooltipPieces({}, enabledReplace, emptyMaps, undefined, FALLBACK);
+        const result = buildCustomTooltipPieces({}, enabledReplace, emptyMaps, undefined, FALLBACK, NO_DATA);
         expect(result.sectionHtml).not.toBe("");
         expect(result.separatorHtml).toBe("");
     });
@@ -74,7 +75,7 @@ describe("buildCustomTooltipPieces", () => {
             measures: { m1: "sales" },
             attributes: {},
         };
-        const result = buildCustomTooltipPieces(props, cfg, maps, undefined, FALLBACK);
+        const result = buildCustomTooltipPieces(props, cfg, maps, undefined, FALLBACK, NO_DATA);
         expect(result.sectionHtml).toContain("value: 42");
         expect(result.sectionHtml).toContain(`missing: ${FALLBACK}`);
     });

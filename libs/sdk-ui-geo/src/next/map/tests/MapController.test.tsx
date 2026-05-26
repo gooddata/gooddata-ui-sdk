@@ -89,6 +89,7 @@ const geoLayersContextMock: IGeoLayersContext = {
     layerExecutions: [],
     layers: new Map(),
     primaryLayer: null,
+    tooltipLookups: new Map(),
 };
 
 const adapterContextMock: IGeoAdapterContext = {

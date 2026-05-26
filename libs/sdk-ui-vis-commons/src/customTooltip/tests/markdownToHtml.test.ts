@@ -63,11 +63,33 @@ describe("markdownToHtml", () => {
         expect(result).toContain('alt="logo"');
     });
 
-    it("should render links as plain styled text", () => {
+    it("should render safe links as anchor tags with security attributes", () => {
         const result = markdownToHtml("[click here](https://example.com)");
-        expect(result).toContain("click here");
-        expect(result).toContain("gd-viz-tooltip-custom-link");
-        expect(result).not.toContain("<a ");
+        expect(result).toContain(
+            `<a href="https://example.com" target="_blank" rel="noopener noreferrer">click here</a>`,
+        );
+    });
+
+    it("should render http and https link URLs as anchor tags", () => {
+        expect(markdownToHtml("[https](https://example.com)")).toContain(`href="https://example.com"`);
+        expect(markdownToHtml("[http](http://example.com)")).toContain(`href="http://example.com"`);
+    });
+
+    it("should render unsafe link URLs as plain text", () => {
+        const jsResult = markdownToHtml("[xss](javascript:alert(1))");
+        expect(jsResult).not.toContain("<a ");
+        expect(jsResult).not.toContain("javascript:");
+        expect(jsResult).toContain("xss");
+
+        const dataResult = markdownToHtml("[bad](data:text/html,<script>1</script>)");
+        expect(dataResult).not.toContain("<a ");
+        expect(dataResult).toContain("bad");
+
+        // data:image/* is safe inside <img> but unsafe as a clickable link
+        // target — SVG payloads can execute scripts on navigation.
+        const dataImageResult = markdownToHtml("[bad](data:image/svg+xml,<svg onload=alert(1)/>)");
+        expect(dataImageResult).not.toContain("<a ");
+        expect(dataImageResult).toContain("bad");
     });
 
     it("should escape HTML in content", () => {
@@ -112,6 +134,18 @@ Region: East
         expect(result).toContain("<em>Updated daily</em>");
     });
 
+    it("should render a blank line between paragraphs as a line break", () => {
+        expect(markdownToHtml("First\n\nSecond")).toBe("<p>First</p><br/><p>Second</p>");
+    });
+
+    it("should preserve adjacent blank lines as adjacent line breaks", () => {
+        expect(markdownToHtml("First\n\n\nSecond")).toBe("<p>First</p><br/><br/><p>Second</p>");
+    });
+
+    it("should preserve a leading blank line", () => {
+        expect(markdownToHtml("\nFirst")).toBe("<br/><p>First</p>");
+    });
+
     it("should preserve {metric/id} references as plain text for later substitution", () => {
         const result = markdownToHtml("**Profit:** {metric/profit_margin}");
         expect(result).toContain("{metric/profit_margin}");
@@ -151,8 +185,8 @@ Region: East
 
         it("should match link URLs containing balanced parens", () => {
             const result = markdownToHtml("[wiki](https://en.wikipedia.org/wiki/Pie_chart_(disambiguation))");
-            expect(result).toContain("wiki");
-            expect(result).toContain("gd-viz-tooltip-custom-link");
+            expect(result).toContain(`href="https://en.wikipedia.org/wiki/Pie_chart_(disambiguation)"`);
+            expect(result).toContain(">wiki</a>");
         });
     });
 
@@ -171,7 +205,7 @@ Region: East
 
         it("renders \\[ and \\] so they cannot form a link", () => {
             const result = markdownToHtml("\\[fake\\](https://example.com)");
-            expect(result).not.toContain("gd-viz-tooltip-custom-link");
+            expect(result).not.toContain("<a ");
             expect(result).toContain("[fake](https://example.com)");
         });
 

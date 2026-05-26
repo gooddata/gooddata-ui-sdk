@@ -7,6 +7,7 @@ import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 import { type ICustomTooltipConfig } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoAreaChartConfig } from "../../../types/config/areaChart.js";
+import { type IGeoLayerTooltipLookup } from "../../common/customTooltipExecution.js";
 import { buildCustomTooltipPieces, composeTooltipBody } from "../../common/customTooltipSection.js";
 import type { IPopupFacade } from "../../common/mapFacade.js";
 import {
@@ -44,6 +45,7 @@ function buildAreaTooltipHtml(
     customConfig: ICustomTooltipConfig | undefined,
     referenceMaps: ITooltipReferenceMaps | undefined,
     intl: IntlShape,
+    tooltipLookup: IGeoLayerTooltipLookup | undefined,
 ): string | null {
     const attributeItems = dedupeAttributePayloadsByAttrId([locationName, segment])
         .map((payload) => formatAttributeHtml(payload, tooltipFormatConfig))
@@ -52,13 +54,16 @@ function buildAreaTooltipHtml(
     const items = [...attributeItems, ...(measureItem ? [measureItem] : [])];
     const defaultItemsHtml = items.join("");
 
-    const fallbackText = `(${intl.formatMessage({ id: "richText.no_data" })})`;
+    const fallbackText = `(${intl.formatMessage({ id: "richText.no_fetch" })})`;
+    const noDataLabel = `(${intl.formatMessage({ id: "richText.no_data" })})`;
     const customPieces = buildCustomTooltipPieces(
         rawProperties,
         customConfig,
         referenceMaps,
         separators,
         fallbackText,
+        noDataLabel,
+        tooltipLookup,
     );
 
     // Suppress the tooltip entirely only when there's nothing to show in
@@ -98,6 +103,7 @@ export function createAreaTooltipConfig(
     intl: IntlShape,
     layerIds: string[],
     referenceMaps?: ITooltipReferenceMaps,
+    tooltipLookup?: IGeoLayerTooltipLookup,
 ): IGeoTooltipConfig {
     const { separators } = config;
 
@@ -126,6 +132,7 @@ export function createAreaTooltipConfig(
                 config.customTooltip,
                 referenceMaps,
                 intl,
+                tooltipLookup,
             );
 
             if (tooltipHtml) {

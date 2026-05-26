@@ -65,6 +65,9 @@ YAxis.parameters = {
             delay: {
                 postOperation: 200,
             },
+            // Subpixel drift around the dropdown's bottom border (focus/blur residue
+            // after the click) produces ~0.013% mismatch with the 0% default.
+            misMatchThreshold: 0.05,
         },
     },
 } satisfies IStoryParameters;

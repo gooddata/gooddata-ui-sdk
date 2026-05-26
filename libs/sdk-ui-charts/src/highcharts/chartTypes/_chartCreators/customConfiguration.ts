@@ -3,16 +3,15 @@
 import cx from "classnames";
 import { type OptionsLandmarkVerbosityValue, type Point } from "highcharts";
 import { compact, isEmpty, merge, partial, pickBy } from "lodash-es";
-import { type IntlShape } from "react-intl";
+import { type IntlShape, defineMessages } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { type ChartType, type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
+    composeCustomTooltipSectionHtml,
     getLighterColor,
     isPatternObject,
-    markdownToHtml,
-    resolveReferences,
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
@@ -26,6 +25,7 @@ import {
     type IAxis,
     type IChartOptions,
     type IChartOptionsData,
+    type ICustomTooltipRuntime,
     type ISeriesItem,
     type ITooltipFactory,
     type IUnsafeHighchartsTooltipPoint,
@@ -55,8 +55,8 @@ import {
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
 
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
-import { type IIdentifierMapping } from "./customTooltip/identifierMapping.js";
 import { resolveReferencesFromPoint } from "./customTooltip/referenceResolver.js";
+import { buildPointKey } from "./customTooltip/tooltipLookup.js";
 import {
     formatAsPercent,
     getLabelsStyling,
@@ -139,6 +139,11 @@ const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 
 export const TOOLTIP_PADDING = 24; // padding of tooltip container - defined by CSS
 export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
+
+const customTooltipMessages = defineMessages({
+    noFetch: { id: "richText.no_fetch" },
+    noData: { id: "richText.no_data" },
+});
 
 const BAR_WIDTH_WHEN_TOTAL_LABELS_AVAILABLE = "90%";
 
@@ -465,18 +470,29 @@ function getColorFromHighchartsPointColor(color: Point["color"]): string {
 function getCustomTooltipSection(
     point: IUnsafeHighchartsTooltipPoint,
     fallbackText: string,
+    noDataLabel: string,
     chartConfig?: IChartConfig,
-    identifierMapping?: IIdentifierMapping,
+    customTooltipRuntime?: ICustomTooltipRuntime,
 ): string {
     const customTooltip = chartConfig?.customTooltip;
     if (!customTooltip?.enabled || !customTooltip.content) {
         return "";
     }
 
-    const resolvedValues = resolveReferencesFromPoint(point, chartConfig?.separators, identifierMapping);
-    const resolvedContent = resolveReferences(customTooltip.content, resolvedValues, fallbackText);
-    const htmlContent = markdownToHtml(resolvedContent);
-    return `<div class="gd-viz-tooltip-custom-section">${htmlContent}</div>`;
+    // External values from the precomputed lookup (refs not in the chart).
+    const intersection = point.drillIntersection ?? [];
+    const pointKey = buildPointKey(intersection);
+    const externalValues = customTooltipRuntime?.tooltipLookup?.get(pointKey) ?? {};
+
+    // In-chart values from the hovered point's drill intersection.
+    const pointLocal = resolveReferencesFromPoint(
+        point,
+        chartConfig?.separators,
+        customTooltipRuntime?.identifierMapping,
+        noDataLabel,
+    );
+
+    return composeCustomTooltipSectionHtml(customTooltip.content, pointLocal, externalValues, fallbackText);
 }
 
 function getCustomTooltipSeparator(chartConfig?: IChartConfig): string {
@@ -496,7 +512,7 @@ function formatTooltip(
     this: IExtendedPoint & { anomaly?: boolean },
     tooltipCallback: ITooltipFactory,
     chartConfig?: IChartConfig,
-    identifierMapping?: IIdentifierMapping,
+    customTooltipRuntime?: ICustomTooltipRuntime,
     intl?: IntlShape,
 ) {
     const { chart } = this.series;
@@ -529,15 +545,25 @@ function formatTooltip(
     const interactionMessage = getInteractionMessage(isDrillable, chartConfig, intl);
     const anomalyMessage = getAnomalyMessage(this.anomaly, intl);
 
-    const fallbackText = intl ? `(${intl.formatMessage({ id: "richText.no_data" })})` : "(No data)";
-    const customSection = getCustomTooltipSection(tooltipPoint, fallbackText, chartConfig, identifierMapping);
-    const customSeparator = getCustomTooltipSeparator(chartConfig);
+    const fallbackText = intl
+        ? `(${intl.formatMessage(customTooltipMessages.noFetch)})`
+        : "(Data could not be retrieved)";
+    const noDataLabel = intl ? `(${intl.formatMessage(customTooltipMessages.noData)})` : "(No data)";
+    const customSection = getCustomTooltipSection(
+        tooltipPoint,
+        fallbackText,
+        noDataLabel,
+        chartConfig,
+        customTooltipRuntime,
+    );
     const placement = chartConfig?.customTooltip?.placement ?? "above";
 
     const defaultContent = placement === "replace" ? "" : (tooltipContent ?? "");
     const defaultSectionWithInteraction = defaultContent
         ? `${defaultContent}${interactionMessage}`
         : interactionMessage;
+
+    const customSeparator = customSection && defaultContent ? getCustomTooltipSeparator(chartConfig) : "";
 
     let bodyContent: string;
     if (customSection) {
@@ -733,7 +759,7 @@ function getTooltipConfiguration(
                       formatTooltip,
                       tooltipAction,
                       chartConfig,
-                      chartOptions.identifierMapping,
+                      chartOptions.customTooltipRuntime,
                       intl,
                   ),
                   enabled: chartConfig?.tooltip?.enabled ?? true,

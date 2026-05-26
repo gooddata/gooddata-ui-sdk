@@ -48,7 +48,11 @@ const layerExecutions: ILayerExecutionRecord[] = [
 
 function wrapperWith(layerOutputs: Map<string, ILayerPreparedData>) {
     return ({ children }: { children: ReactNode }) => (
-        <GeoLayersProvider layerExecutions={layerExecutions} layerOutputs={layerOutputs}>
+        <GeoLayersProvider
+            layerExecutions={layerExecutions}
+            layerOutputs={layerOutputs}
+            tooltipLookups={new Map()}
+        >
             {children}
         </GeoLayersProvider>
     );

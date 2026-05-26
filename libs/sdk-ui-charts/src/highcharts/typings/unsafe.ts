@@ -2,7 +2,7 @@
 
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type IColorAssignment } from "@gooddata/sdk-ui";
-import { type IChartFillConfig } from "@gooddata/sdk-ui-vis-commons";
+import { type IChartFillConfig, type IResolvedReferenceValues } from "@gooddata/sdk-ui-vis-commons";
 
 import { type ChartAlignTypes, type IAxisConfig, type IGridConfig } from "../../interfaces/chartConfig.js";
 import { type IIdentifierMapping } from "../chartTypes/_chartCreators/customTooltip/identifierMapping.js";
@@ -197,12 +197,13 @@ export interface IChartOptions {
     verticalAlign?: ChartAlignTypes;
     legendLabel?: string;
     chartFill?: IChartFillConfig;
-    /**
-     * Mapping from execution localIdentifiers to LDM identifiers used by the
-     * custom tooltip reference resolver. Built from the dataView definition
-     * when customTooltip is enabled.
-     */
+    customTooltipRuntime?: ICustomTooltipRuntime;
+}
+
+// Mutated in place across renders; the Chart wrapper diffs ignoring functions, so the bound tooltip formatter must dereference live values.
+export interface ICustomTooltipRuntime {
     identifierMapping?: IIdentifierMapping;
+    tooltipLookup?: Map<string, IResolvedReferenceValues>;
 }
 
 export interface IPatternOptionsObject {
