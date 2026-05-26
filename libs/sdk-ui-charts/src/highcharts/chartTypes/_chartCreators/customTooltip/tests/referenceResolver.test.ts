@@ -5,6 +5,8 @@ import { describe, expect, it } from "vitest";
 import { type IUnsafeHighchartsTooltipPoint } from "../../../../typings/unsafe.js";
 import { resolveReferencesFromPoint } from "../referenceResolver.js";
 
+const NO_DATA = "(No data)";
+
 /**
  * Minimal mock builders for `IDrillEventIntersectionElement`. We construct only
  * the fields the resolver actually reads; any field not relevant is omitted.
@@ -57,7 +59,12 @@ function point(args: {
 
 describe("resolveReferencesFromPoint", () => {
     it("returns empty values when drill intersection is empty", () => {
-        const result = resolveReferencesFromPoint(point({ drillIntersection: [] }));
+        const result = resolveReferencesFromPoint(
+            point({ drillIntersection: [] }),
+            undefined,
+            undefined,
+            NO_DATA,
+        );
         expect(result).toEqual({});
     });
 
@@ -72,6 +79,9 @@ describe("resolveReferencesFromPoint", () => {
                     }),
                 ],
             }),
+            undefined,
+            undefined,
+            NO_DATA,
         );
         expect(result).toEqual({
             "label/region.display": "East",
@@ -91,6 +101,9 @@ describe("resolveReferencesFromPoint", () => {
                     }),
                 ],
             }),
+            undefined,
+            undefined,
+            NO_DATA,
         );
         expect(result["label/month"]).toBe("March 2026");
     });
@@ -107,6 +120,9 @@ describe("resolveReferencesFromPoint", () => {
                     }),
                 ],
             }),
+            undefined,
+            undefined,
+            NO_DATA,
         );
         expect(result["metric/revenue"]).toBe("1,234.50");
     });
@@ -121,6 +137,7 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             { measures: { revenuePoPm0: { ldmId: "revenue", pointField: "y" } } },
+            NO_DATA,
         );
         expect(result["metric/revenue"]).toBe("42");
     });
@@ -146,6 +163,7 @@ describe("resolveReferencesFromPoint", () => {
                     mz: { ldmId: "size", pointField: "z" },
                 },
             },
+            NO_DATA,
         );
         expect(result).toEqual({
             "metric/revenue": "10",
@@ -162,6 +180,7 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             { measures: { m: { ldmId: "intensity", pointField: "value" } } },
+            NO_DATA,
         );
         expect(result["metric/intensity"]).toBe("99");
     });
@@ -174,11 +193,12 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             { measures: { tgt: { ldmId: "target_metric", pointField: "target" } } },
+            NO_DATA,
         );
         expect(result["metric/target_metric"]).toBe("80");
     });
 
-    it("treats bullet null target as no value (target=0 + isNullTarget)", () => {
+    it("renders bullet null target (target=0 + isNullTarget) as no-data sentinel", () => {
         // Bullet encodes null targets as `target: 0` with an isNullTarget flag.
         // Without the flag check, the resolver would render the placeholder
         // zero as a real value.
@@ -190,8 +210,9 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             { measures: { tgt: { ldmId: "target_metric", pointField: "target" } } },
+            NO_DATA,
         );
-        expect(result["metric/target_metric"]).toBeUndefined();
+        expect(result["metric/target_metric"]).toBe(NO_DATA);
     });
 
     it("omits measure entry when no LDM identifier can be resolved", () => {
@@ -200,11 +221,14 @@ describe("resolveReferencesFromPoint", () => {
                 y: 1,
                 drillIntersection: [measureIntersection({ localIdentifier: "orphan" })],
             }),
+            undefined,
+            undefined,
+            NO_DATA,
         );
         expect(result).toEqual({});
     });
 
-    it("omits measure entry when point.y is null", () => {
+    it("emits no-data sentinel when point.y is null so it's distinguishable from an unresolved ref", () => {
         const result = resolveReferencesFromPoint(
             point({
                 y: undefined,
@@ -216,8 +240,11 @@ describe("resolveReferencesFromPoint", () => {
                     }),
                 ],
             }),
+            undefined,
+            undefined,
+            NO_DATA,
         );
-        expect(result).toEqual({});
+        expect(result["metric/revenue"]).toBe(NO_DATA);
     });
 
     it("uses String(rawValue) when no format is provided", () => {
@@ -226,6 +253,9 @@ describe("resolveReferencesFromPoint", () => {
                 y: 7,
                 drillIntersection: [measureIntersection({ localIdentifier: "m", identifier: "raw" })],
             }),
+            undefined,
+            undefined,
+            NO_DATA,
         );
         expect(result["metric/raw"]).toBe("7");
     });

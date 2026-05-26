@@ -31,8 +31,9 @@ import { type IIdentifierMapping } from "./identifierMapping.js";
  */
 export function resolveReferencesFromPoint(
     point: IUnsafeHighchartsTooltipPoint,
-    separators?: ISeparators,
-    identifierMapping?: IIdentifierMapping,
+    separators: ISeparators | undefined,
+    identifierMapping: IIdentifierMapping | undefined,
+    noDataLabel: string,
 ): IResolvedReferenceValues {
     const intersection: IDrillEventIntersectionElement[] = point.drillIntersection ?? [];
     const values: IResolvedReferenceValues = {};
@@ -69,10 +70,15 @@ export function resolveReferencesFromPoint(
             // rather than a formatted zero.
             const rawValue = pointField === "target" && point["isNullTarget"] ? null : point[pointField];
 
-            if (rawValue != null && format) {
+            if (rawValue == null) {
+                // In-chart point with a null value — emit the no-data sentinel
+                // so the custom section reads "(No data)" instead of falling
+                // through to the resolution-failure fallback text.
+                values[`metric/${ldmId}`] = noDataLabel;
+            } else if (format) {
                 const { formattedValue } = ClientFormatterFacade.formatValue(rawValue, format, separators);
                 values[`metric/${ldmId}`] = formattedValue;
-            } else if (rawValue != null) {
+            } else {
                 values[`metric/${ldmId}`] = String(rawValue);
             }
         }

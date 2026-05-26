@@ -1,14 +1,9 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import {
-    type IAttribute,
-    attributeDisplayFormRef,
-    isIdentifierRef,
-    isUriRef,
-    newBucket,
-} from "@gooddata/sdk-model";
+import { type IExecutionDefinition, attributeDisplayFormRef, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { buildKeySegment, buildTooltipExecution, joinKeySegments } from "@gooddata/sdk-ui-vis-commons";
 
 import { calculateViewport } from "../../map/viewport/viewportCalculation.js";
 import type { IGeoLngLat } from "../../types/common/coordinates.js";
@@ -19,6 +14,13 @@ import type { IMapViewport } from "../../types/map/provider.js";
 import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
 import { getHeaderPredicateFingerprint } from "../../utils/predicateFingerprint.js";
 import { computeLegend } from "../common/computeLegend.js";
+import {
+    type IGeoLayerCustomTooltipExecution,
+    getAttributeIdRefIdentifier,
+    getAttributeLocalIdsFromBuckets,
+    getAttributeRefId,
+    readAttrIdentity,
+} from "../common/customTooltipExecution.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
 import { buildTooltipReferenceMaps } from "../common/tooltipReferenceMaps.js";
@@ -30,6 +32,7 @@ import type { IGeoAdapterContext, IGeoLayerAdapter, IPushpinLayerOutput } from "
 
 import { isClusteringAllowed } from "./clustering/clustering.js";
 import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
+import { EMPTY_SEGMENT_VALUE } from "./constants.js";
 import { transformPushpinData } from "./data/transformation.js";
 import { UNCLUSTER_FILTER } from "./layers.js";
 import { getPushpinLayerIds, removePushpinLayer, syncPushpinLayerToMap } from "./operations.js";
@@ -136,21 +139,6 @@ function computeInitialViewport(geoData: IPushpinGeoData): Partial<IMapViewport>
     return calculateViewport(validLocations, dataViewportConfig);
 }
 
-function getDisplayFormId(attribute?: IAttribute): string | undefined {
-    if (!attribute) {
-        return undefined;
-    }
-
-    const ref = attributeDisplayFormRef(attribute);
-    if (isIdentifierRef(ref)) {
-        return ref.identifier;
-    }
-    if (isUriRef(ref)) {
-        return ref.uri;
-    }
-    return undefined;
-}
-
 function createPushpinConfig(context: IGeoAdapterContext): IGeoPushpinChartConfig {
     return {
         ...context.config,
@@ -163,8 +151,8 @@ function createPushpinTooltipAttrIds(layer: IGeoLayerPushpin): {
     segment?: string;
 } {
     return {
-        locationName: getDisplayFormId(layer.tooltipText),
-        segment: getDisplayFormId(layer.segmentBy),
+        locationName: getAttributeRefId(layer.tooltipText),
+        segment: getAttributeRefId(layer.segmentBy),
     };
 }
 
@@ -252,11 +240,83 @@ function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): 
     return execution;
 }
 
+function buildPushpinTooltipExecution(
+    layer: IGeoLayerPushpin,
+    context: IGeoAdapterContext,
+    mainDefinition: IExecutionDefinition,
+): IGeoLayerCustomTooltipExecution | null {
+    const customTooltip = context.config?.customTooltip;
+    if (!customTooltip?.enabled || !customTooltip.content) {
+        return null;
+    }
+
+    // Pushpin keys features by tooltipText; without it the feature has no
+    // stable display-form id to reconcile a tooltip row to.
+    if (!layer.tooltipText) {
+        return null;
+    }
+
+    const tooltipAttrId = getAttributeIdRefIdentifier(layer.tooltipText);
+    if (!tooltipAttrId) {
+        return null;
+    }
+    const segmentAttrId = layer.segmentBy ? getAttributeIdRefIdentifier(layer.segmentBy) : undefined;
+
+    const desiredBuckets: string[] = [BucketNames.TOOLTIP_TEXT];
+    // URI-backed segments are absent from buildFeatureKey; skip them from slicing too or keys won't match.
+    if (segmentAttrId) {
+        desiredBuckets.push(BucketNames.SEGMENT);
+    }
+    const slicingAttributeLocalIds = getAttributeLocalIdsFromBuckets(mainDefinition, desiredBuckets);
+    if (slicingAttributeLocalIds.length === 0) {
+        return null;
+    }
+
+    const factory = context.executionFactory ?? context.backend.workspace(context.workspace).execution();
+    const built = buildTooltipExecution(factory, mainDefinition, customTooltip.content, {
+        slicingAttributeLocalIds,
+    });
+    if (!built) {
+        return null;
+    }
+
+    const buildFeatureKey: IGeoLayerCustomTooltipExecution["buildFeatureKey"] = (properties) => {
+        if (!properties) {
+            return null;
+        }
+        const locationName = readAttrIdentity(properties["locationName"]);
+        if (locationName.attrId !== tooltipAttrId) {
+            return null;
+        }
+        const parts: string[] = [buildKeySegment(locationName.attrId, locationName.uri)];
+
+        if (segmentAttrId) {
+            const segment = readAttrIdentity(properties["segment"]);
+            if (segment.attrId !== segmentAttrId) {
+                return null;
+            }
+            // Pushpin payload writer substitutes EMPTY_SEGMENT_VALUE for null
+            // segment URIs (needed for MapLibre `in` filtering). The tooltip
+            // execution result preserves the original null/empty URI, so
+            // normalize back here or the key never matches.
+            const segmentUri = segment.uri === EMPTY_SEGMENT_VALUE ? "" : segment.uri;
+            parts.push(buildKeySegment(segment.attrId, segmentUri));
+        }
+        return joinKeySegments(parts);
+    };
+
+    return { ...built, buildFeatureKey };
+}
+
 export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOutput> = {
     type: "pushpin",
 
     buildExecution(layer, context): IPreparedExecution {
         return createExecution(layer, context);
+    },
+
+    buildTooltipExecution(layer, context, mainDefinition): IGeoLayerCustomTooltipExecution | null {
+        return buildPushpinTooltipExecution(layer, context, mainDefinition);
     },
 
     async prepareExecution(
@@ -383,7 +443,7 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
         removePushpinLayer(map, layer.id);
     },
 
-    getTooltipConfig(layer, output, context, { tooltip, drillablePredicates }) {
+    getTooltipConfig(layer, output, context, { tooltip, drillablePredicates, tooltipLookup }) {
         if (!tooltip || !context.intl) {
             return undefined;
         }
@@ -403,6 +463,7 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
             context.intl,
             layerIds,
             output.tooltipReferenceMaps,
+            tooltipLookup,
         );
     },
 

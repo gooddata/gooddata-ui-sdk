@@ -6,6 +6,7 @@ import { type DataViewFacade } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { ILayerPreparedData } from "../hooks/layers/useLayersPrepare.js";
+import type { IGeoLayerTooltipLookup } from "../layers/common/customTooltipExecution.js";
 import type { GeoJSONSourceSpecification } from "../layers/common/mapFacade.js";
 import type { ITooltipReferenceMaps } from "../layers/registry/adapterTypes.js";
 import { type IAvailableLegends, type IGeoLegendItem } from "../types/common/legends.js";
@@ -108,6 +109,11 @@ export interface IGeoLayersContext {
      * Primary (first) layer data - used for legend/tooltips.
      */
     primaryLayer: IGeoLayerData | null;
+
+    /**
+     * Per-layer custom-tooltip lookups (empty when nothing external is fetched).
+     */
+    tooltipLookups: Map<string, IGeoLayerTooltipLookup>;
 }
 
 const GeoLayersContext = createContext<IGeoLayersContext | undefined>(undefined);
@@ -125,10 +131,12 @@ export function GeoLayersProvider({
     children,
     layerExecutions,
     layerOutputs,
+    tooltipLookups,
 }: {
     children: ReactNode;
     layerExecutions: ILayerExecutionRecord[];
     layerOutputs: Map<string, ILayerPreparedData>;
+    tooltipLookups: Map<string, IGeoLayerTooltipLookup>;
 }) {
     const layersData = useMemo(() => {
         const map = new Map<string, IGeoLayerData>();
@@ -161,8 +169,9 @@ export function GeoLayersProvider({
             layerExecutions,
             layers: layersData,
             primaryLayer,
+            tooltipLookups,
         }),
-        [layerExecutions, layersData, primaryLayer],
+        [layerExecutions, layersData, primaryLayer, tooltipLookups],
     );
 
     return <GeoLayersContext.Provider value={value}>{children}</GeoLayersContext.Provider>;

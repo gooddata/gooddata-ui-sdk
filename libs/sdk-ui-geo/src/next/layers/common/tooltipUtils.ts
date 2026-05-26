@@ -10,6 +10,12 @@ export type TooltipPayload = {
     value?: string | number;
     format?: string;
     attrId?: string;
+    /**
+     * Attribute element URI. By convention only set by attribute payload
+     * writers (locationName, segment, tooltipText). Used by the custom-tooltip
+     * execution path to build per-feature lookup keys.
+     */
+    uri?: string;
     fill?: string;
     /**
      * Bucket `localIdentifier` of the underlying measure. By convention only
@@ -57,6 +63,7 @@ export function parseTooltipPayload(item: JsonValue): TooltipPayload | undefined
     const value = typeof rawValue === "string" || typeof rawValue === "number" ? rawValue : undefined;
     const format = typeof parsed["format"] === "string" ? parsed["format"] : undefined;
     const attrId = typeof parsed["attrId"] === "string" ? parsed["attrId"] : undefined;
+    const uri = typeof parsed["uri"] === "string" ? parsed["uri"] : undefined;
     const fill = typeof parsed["fill"] === "string" ? parsed["fill"] : undefined;
     const localId = typeof parsed["localId"] === "string" ? parsed["localId"] : undefined;
 
@@ -65,6 +72,7 @@ export function parseTooltipPayload(item: JsonValue): TooltipPayload | undefined
         value,
         format,
         attrId,
+        uri,
         fill,
         localId,
     };

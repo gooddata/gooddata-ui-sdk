@@ -1,10 +1,11 @@
 // (C) 2026 GoodData Corporation
 
 import { type ISeparators } from "@gooddata/sdk-model";
-import { type ICustomTooltipConfig, markdownToHtml, resolveReferences } from "@gooddata/sdk-ui-vis-commons";
+import { type ICustomTooltipConfig, composeCustomTooltipSectionHtml } from "@gooddata/sdk-ui-vis-commons";
 
 import { type ITooltipReferenceMaps } from "../registry/adapterTypes.js";
 
+import { type IGeoLayerTooltipLookup } from "./customTooltipExecution.js";
 import { resolveReferencesFromGeoFeature } from "./resolveReferencesFromGeoFeature.js";
 
 interface ICustomTooltipPieces {
@@ -28,15 +29,31 @@ export function buildCustomTooltipPieces(
     referenceMaps: ITooltipReferenceMaps | undefined,
     separators: ISeparators | undefined,
     fallbackText: string,
+    noDataLabel: string,
+    tooltipLookup?: IGeoLayerTooltipLookup,
 ): ICustomTooltipPieces {
     if (!customConfig?.enabled || !customConfig.content) {
         return { sectionHtml: "", separatorHtml: "" };
     }
 
-    const values = resolveReferencesFromGeoFeature(properties, referenceMaps, separators);
-    const resolvedContent = resolveReferences(customConfig.content, values, fallbackText);
-    const html = markdownToHtml(resolvedContent);
-    const sectionHtml = `<div class="gd-viz-tooltip-custom-section">${html}</div>`;
+    // In-chart values from the rendered feature's properties.
+    const pointLocal = resolveReferencesFromGeoFeature(properties, referenceMaps, separators, noDataLabel);
+
+    // External values from the precomputed lookup (refs not on the feature).
+    let externalValues: Record<string, string | undefined> = {};
+    if (tooltipLookup) {
+        const featureKey = tooltipLookup.buildFeatureKey(properties);
+        if (featureKey != null) {
+            externalValues = tooltipLookup.lookup.get(featureKey) ?? {};
+        }
+    }
+
+    const sectionHtml = composeCustomTooltipSectionHtml(
+        customConfig.content,
+        pointLocal,
+        externalValues,
+        fallbackText,
+    );
 
     // Replace mode shows only the custom section, so no separator is needed.
     const separatorHtml =

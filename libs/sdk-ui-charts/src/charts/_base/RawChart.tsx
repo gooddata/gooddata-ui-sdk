@@ -42,6 +42,7 @@ export function RawChart(props: IRawChartProps) {
         onDrill,
         onNegativeValues,
         onLegendReady = () => {},
+        tooltipExecution,
     } = props;
 
     const renderChartTransformation = useCallback(() => {
@@ -70,6 +71,7 @@ export function RawChart(props: IRawChartProps) {
                                     onLegendReady={onLegendReady}
                                     pushData={pushData}
                                     numericSymbols={translationProps.numericSymbols}
+                                    tooltipExecution={tooltipExecution}
                                 />
                             );
                         }}
@@ -90,6 +92,7 @@ export function RawChart(props: IRawChartProps) {
         onNegativeValues,
         pushData,
         theme,
+        tooltipExecution,
         type,
         width,
     ]);

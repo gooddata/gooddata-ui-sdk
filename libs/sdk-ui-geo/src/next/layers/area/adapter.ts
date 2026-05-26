@@ -3,13 +3,13 @@
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     type IAttribute,
+    type IExecutionDefinition,
     type IGeoJsonFeature,
     attributeDisplayFormRef,
-    isIdentifierRef,
-    isUriRef,
     newBucket,
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
+import { buildKeySegment, buildTooltipExecution } from "@gooddata/sdk-ui-vis-commons";
 
 import { bboxToViewport } from "../../map/viewport/viewportCalculation.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
@@ -18,6 +18,12 @@ import { type IGeoCollectionMetadata, getLocationCollectionMetadata } from "../.
 import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
 import { getHeaderPredicateFingerprint } from "../../utils/predicateFingerprint.js";
 import { computeLegend } from "../common/computeLegend.js";
+import {
+    type IGeoLayerCustomTooltipExecution,
+    getAttributeIdRefIdentifier,
+    getAttributeLocalIdsFromBuckets,
+    getAttributeRefId,
+} from "../common/customTooltipExecution.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
 import { buildTooltipReferenceMaps } from "../common/tooltipReferenceMaps.js";
@@ -44,21 +50,6 @@ import { createAreaTooltipConfig } from "./tooltip/tooltipManagement.js";
 const COLLECTION_OVERRIDES: Record<string, { collectionId?: string }> = {
     region: { collectionId: "regions" },
 };
-
-function getDisplayFormId(attribute?: IAttribute): string | undefined {
-    if (!attribute) {
-        return undefined;
-    }
-
-    const ref = attributeDisplayFormRef(attribute);
-    if (isIdentifierRef(ref)) {
-        return ref.identifier;
-    }
-    if (isUriRef(ref)) {
-        return ref.uri;
-    }
-    return undefined;
-}
 
 function normalizeCollectionId(collectionId: string): string {
     return COLLECTION_OVERRIDES[collectionId]?.collectionId ?? collectionId;
@@ -125,11 +116,63 @@ async function fetchAreaFeatures(
     return result?.features ?? [];
 }
 
+function buildAreaTooltipExecution(
+    layer: IGeoLayerArea,
+    context: IGeoAdapterContext,
+    mainDefinition: IExecutionDefinition,
+): IGeoLayerCustomTooltipExecution | null {
+    const customTooltip = context.config?.customTooltip;
+    if (!customTooltip?.enabled || !customTooltip.content) {
+        return null;
+    }
+
+    // idRef-only: `buildLookupTable` keys rows by the result descriptor's
+    // identifier. A uriRef-backed display form would produce a hover key the
+    // lookup can't match — skip the whole tooltip execution rather than fetch
+    // values that won't resolve at hover time.
+    const areaAttrId = getAttributeIdRefIdentifier(layer.area);
+    if (!areaAttrId) {
+        return null;
+    }
+
+    // Slice by AREA only — features are deduplicated by areaUri, so a tooltip
+    // execution sliced by AREA + SEGMENT would expand rows past one-per-feature.
+    const slicingAttributeLocalIds = getAttributeLocalIdsFromBuckets(mainDefinition, [BucketNames.AREA]);
+    if (slicingAttributeLocalIds.length === 0) {
+        return null;
+    }
+
+    const factory = context.executionFactory ?? context.backend.workspace(context.workspace).execution();
+    const built = buildTooltipExecution(factory, mainDefinition, customTooltip.content, {
+        slicingAttributeLocalIds,
+    });
+    if (!built) {
+        return null;
+    }
+
+    const buildFeatureKey: IGeoLayerCustomTooltipExecution["buildFeatureKey"] = (properties) => {
+        if (!properties) {
+            return null;
+        }
+        const areaUri = typeof properties["areaUri"] === "string" ? properties["areaUri"] : "";
+        if (!areaUri) {
+            return null;
+        }
+        return buildKeySegment(areaAttrId, areaUri);
+    };
+
+    return { ...built, buildFeatureKey };
+}
+
 export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
     type: "area",
 
     buildExecution(layer, context): IPreparedExecution {
         return createExecution(layer, context);
+    },
+
+    buildTooltipExecution(layer, context, mainDefinition): IGeoLayerCustomTooltipExecution | null {
+        return buildAreaTooltipExecution(layer, context, mainDefinition);
     },
 
     async prepareExecution(
@@ -183,8 +226,8 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
             config: areaConfig,
             features: boundaryFeatures,
             tooltipAttrIds: {
-                locationName: getDisplayFormId(layer.area),
-                segment: getDisplayFormId(layer.segmentBy),
+                locationName: getAttributeRefId(layer.area),
+                segment: getAttributeRefId(layer.segmentBy),
             },
         });
         const legend = computeLegend(geoData, colorStrategy, {
@@ -272,7 +315,7 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         removeAreaLayer(map, layer.id);
     },
 
-    getTooltipConfig(layer, output, context, { tooltip, drillablePredicates }) {
+    getTooltipConfig(layer, output, context, { tooltip, drillablePredicates, tooltipLookup }) {
         if (!tooltip || !context.intl) {
             return undefined;
         }
@@ -288,6 +331,7 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
             context.intl,
             layerIds,
             output.tooltipReferenceMaps,
+            tooltipLookup,
         );
     },
 

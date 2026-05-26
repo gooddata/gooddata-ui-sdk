@@ -31,7 +31,9 @@ export interface ICustomTooltipConfig {
      * - Bold (`**text**`), italic (`*text*`)
      * - Unordered lists (`- item`) and ordered lists (`1. item`) — not nested
      * - Images (`![alt](url)`) — `https:`, `http:`, and `data:image/...` URLs only
-     * - Links (`[text](url)`) — rendered as styled text, NOT clickable inside tooltips
+     * - Links (`[text](url)`) — `http(s)` URLs only; rendered as anchors opening in
+     *   a new tab. End-users can only reach them when the tooltip stays open long
+     *   enough to interact with (accessible/sticky Highcharts tooltips, geo popups).
      * - Horizontal rules (`---`)
      * - Backslash escapes (`\*`, `\_`, `\[`, `\!`, etc.) to render a metacharacter
      *   as literal text instead of formatting
@@ -42,6 +44,12 @@ export interface ICustomTooltipConfig {
      * that resolve dynamically per hovered data point. Resolved values are
      * automatically backslash-escaped, so data containing markdown metacharacters
      * renders as literal text — no manual escaping is required.
+     *
+     * Use display-form identifiers (NOT parent attribute identifiers) inside
+     * `{label/id}`. An attribute id renders correctly for attributes that are
+     * already in the chart, but it cannot be fetched as a label for external
+     * attributes — and a single such ref causes the secondary tooltip fetch
+     * to fail backend-side, dropping every other external ref alongside it.
      *
      * @see https://www.gooddata.com/docs/cloud/create-visualizations/custom-tooltips/
      */

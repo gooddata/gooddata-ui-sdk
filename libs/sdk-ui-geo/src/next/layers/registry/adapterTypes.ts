@@ -3,7 +3,12 @@
 import type { IntlShape } from "react-intl";
 
 import type { IAnalyticalBackend, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import type { IColorPalette, IExecutionConfig, INullableFilter } from "@gooddata/sdk-model";
+import type {
+    IColorPalette,
+    IExecutionConfig,
+    IExecutionDefinition,
+    INullableFilter,
+} from "@gooddata/sdk-model";
 import type { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
 import type { IColorMapping, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
@@ -13,6 +18,10 @@ import type { IAreaGeoData } from "../../types/geoData/area.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import type { GeoLayerType, IGeoLayer, IGeoLayerArea, IGeoLayerPushpin } from "../../types/layers/index.js";
 import type { IMapViewport } from "../../types/map/provider.js";
+import type {
+    IGeoLayerCustomTooltipExecution,
+    IGeoLayerTooltipLookup,
+} from "../common/customTooltipExecution.js";
 import type {
     FilterSpecification,
     GeoJSONSourceSpecification,
@@ -262,6 +271,7 @@ export type IGeoLayerAdapterByType<TType extends GeoLayerType> = IGeoLayerAdapte
 export interface IGeoLayerTooltipParams {
     tooltip: IPopupFacade;
     drillablePredicates: IHeaderPredicate[];
+    tooltipLookup?: IGeoLayerTooltipLookup;
 }
 
 /**
@@ -354,6 +364,25 @@ export interface IGeoLayerAdapter<
         context: IGeoAdapterContext,
         execution: IPreparedExecution,
     ): Promise<IPreparedExecution>;
+
+    /**
+     * Build a secondary execution that fetches external `{metric/id}` / `{label/id}`
+     * references for this layer, sliced so each row uniquely identifies one feature.
+     * The returned closure builds the matching key from feature properties at hover
+     * time. Return `null` when nothing external needs to be fetched.
+     *
+     * @param mainDefinition - The PREPARED layer execution definition (post
+     *                         `prepareExecution`, taken from the loaded
+     *                         dataView). Carries the TOOLTIP_TEXT / SEGMENT
+     *                         buckets that the unprepared definition can lack,
+     *                         plus filters / execConfig and the in-chart refs
+     *                         used for dedup.
+     */
+    buildTooltipExecution?(
+        layer: TLayer,
+        context: IGeoAdapterContext,
+        mainDefinition: IExecutionDefinition,
+    ): IGeoLayerCustomTooltipExecution | null;
 
     /**
      * Prepare layer output from execution result.
