@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 import { defineMessages } from "react-intl";
 
 //NOTE: Follow-up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -48,4 +48,9 @@ export const granularPermissionMessageTooltips = defineMessages({
     cannotGrantHigher: { id: "shareDialog.share.granular.grantee.tooltip.cannotGrantHigher" },
     cannotGrantLowerForUser: { id: "shareDialog.share.granular.granularUser.tooltip.cannotGrantLower" },
     cannotGrantLowerForGroup: { id: "shareDialog.share.granular.granularGroup.tooltip.cannotGrantLower" },
+});
+
+export const commonDialogMessages = defineMessages({
+    cancel: { id: "cancel" },
+    close: { id: "close" },
 });

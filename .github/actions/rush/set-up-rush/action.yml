@@ -35,7 +35,7 @@ runs:
 
     - name: Configure AWS credentials
       id: aws-credentials
-      uses: aws-actions/configure-aws-credentials@v6
+      uses: aws-actions/configure-aws-credentials@v6.1.1
       with:
         aws-region: ${{ env.AWS_REGION }}
         role-to-assume: ${{ env.AWS_ROLE_ARN }}

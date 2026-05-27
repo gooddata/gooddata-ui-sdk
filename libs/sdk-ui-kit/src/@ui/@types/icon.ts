@@ -105,6 +105,8 @@ export type IconType =
     | "metric"
     | "fact"
     | "ldmAttribute"
+    | "ldmKey"
+    | "ldmLabel"
     | "sharp"
     | "attribute"
     | "horn"
