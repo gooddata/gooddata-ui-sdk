@@ -1185,3 +1185,20 @@ export {
     ParameterControlDropdown,
     type IParameterControlDropdownProps,
 } from "./ParameterControl/ParameterControlDropdown.js";
+export { UiSectionHeading, type IUiSectionHeadingProps } from "./@ui/UiSectionHeading/UiSectionHeading.js";
+export {
+    UiDialogShell,
+    type IUiDialogShellProps,
+    type IUiDialogShellAccessibilityConfig,
+} from "./@ui/UiDialogShell/UiDialogShell.js";
+export {
+    UiDialogHeader,
+    type IUiDialogHeaderProps,
+    type DialogHeaderTitleSize,
+} from "./@ui/UiDialogShell/UiDialogHeader.js";
+export { UiDialogFooter, type IUiDialogFooterProps } from "./@ui/UiDialogShell/UiDialogFooter.js";
+export {
+    UiConfirmDialog,
+    type IUiConfirmDialogProps,
+    type ConfirmDialogVariant,
+} from "./@ui/UiConfirmDialog/UiConfirmDialog.js";

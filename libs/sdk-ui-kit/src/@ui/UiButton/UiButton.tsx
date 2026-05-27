@@ -60,6 +60,13 @@ export interface IUiButtonProps {
     accessibilityConfig?: IUiButtonAccessibilityConfig;
     maxWidth?: number;
     tabIndex?: number;
+    /**
+     * When true, the button is focused on mount via the native HTML
+     * <code>autofocus</code> attribute. Use sparingly — best fit is the safest
+     * action in a confirmation dialog so accidental Enter presses cancel
+     * rather than confirm a destructive action.
+     */
+    autoFocus?: boolean;
 }
 
 const { b, e } = bem("gd-ui-kit-button");
@@ -94,6 +101,7 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
             dataTestId,
             accessibilityConfig,
             maxWidth,
+            autoFocus,
         },
         ref,
     ) => {
@@ -118,6 +126,7 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
                 })}
                 disabled={isDisabled}
                 tabIndex={tabIndex}
+                autoFocus={autoFocus}
                 onClick={onClick}
                 onKeyDown={onKeyDown}
                 data-id={dataId}

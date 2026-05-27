@@ -295,6 +295,9 @@ export const ConfirmDialog: NamedExoticComponent<IConfirmDialogBaseProps>;
 // @internal (undocumented)
 export const ConfirmDialogBase: NamedExoticComponent<IConfirmDialogBaseProps>;
 
+// @internal
+export type ConfirmDialogVariant = VariantPrimary | VariantDanger;
+
 // @internal (undocumented)
 export function ContentDivider({ className }: {
     className?: string;
@@ -486,6 +489,9 @@ export const DialogBase: NamedExoticComponent<IDialogBaseProps>;
 
 // @internal (undocumented)
 export function DialogCloseButton(props: IDialogCloseButtonProps): JSX.Element;
+
+// @internal
+export type DialogHeaderTitleSize = "default" | "large";
 
 // @internal (undocumented)
 export function DialogList({ items, isLoading, className, emptyMessageElement, itemComponent, itemClassName, onItemClick, onItemDelete }: IDialogListProps): JSX.Element;
@@ -1867,7 +1873,7 @@ export function IconTrash({ color, className, width, height }: IIconProps): JSX.
 export function IconTreeMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin";
 
 // @internal (undocumented)
 export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
@@ -6028,6 +6034,7 @@ export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
 export interface IUiButtonProps {
     // (undocumented)
     accessibilityConfig?: IUiButtonAccessibilityConfig;
+    autoFocus?: boolean;
     // (undocumented)
     badgeAfter?: number | string;
     // (undocumented)
@@ -6237,6 +6244,18 @@ export interface IUiComboboxState {
 }
 
 // @internal (undocumented)
+export interface IUiConfirmDialogProps {
+    confirmLabel: string;
+    confirmVariant?: ConfirmDialogVariant;
+    dataTestId?: string;
+    description: ReactNode;
+    onCancel: () => void;
+    onClose: () => void;
+    onConfirm: () => void;
+    title: string;
+}
+
+// @internal (undocumented)
 export interface IUiControlButtonProps {
     // (undocumented)
     "data-testid"?: string;
@@ -6304,6 +6323,40 @@ export interface IUiDateProps {
     locale?: string;
     // (undocumented)
     relativeThresholdMs?: number;
+}
+
+// @internal (undocumented)
+export interface IUiDialogFooterProps {
+    children: ReactNode;
+    divider?: boolean;
+}
+
+// @internal (undocumented)
+export interface IUiDialogHeaderProps {
+    leading?: ReactNode;
+    onClose?: () => void;
+    title: string;
+    titleSize?: DialogHeaderTitleSize;
+}
+
+// @internal
+export interface IUiDialogShellAccessibilityConfig {
+    // (undocumented)
+    ariaDescribedBy?: string;
+    // (undocumented)
+    ariaLabel?: string;
+    // (undocumented)
+    ariaLabelledBy?: string;
+}
+
+// @internal (undocumented)
+export interface IUiDialogShellProps {
+    accessibilityConfig?: IUiDialogShellAccessibilityConfig;
+    children: ReactNode;
+    dataTestId?: string;
+    isModal?: boolean;
+    onClose?: () => void;
+    width?: number;
 }
 
 // @internal (undocumented)
@@ -7141,6 +7194,12 @@ export interface IUiReturnFocusOnUnmountOptions {
     focusVisible?: boolean;
     // (undocumented)
     returnFocusTo?: string | RefObject<HTMLElement | null> | (() => HTMLElement | null);
+}
+
+// @internal (undocumented)
+export interface IUiSectionHeadingProps {
+    action?: ReactNode;
+    label: string;
 }
 
 // @internal (undocumented)
@@ -8472,6 +8531,9 @@ export function UiComboboxPopup({ style, className, children, ...htmlProps }: Ui
 export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
 
 // @internal
+export function UiConfirmDialog({ title, description, confirmLabel, confirmVariant, onClose, onCancel, onConfirm, dataTestId }: IUiConfirmDialogProps): JSX.Element;
+
+// @internal
 export function UiControlButton({ title, titleClassName, subtitle, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isDragging, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId, ariaLabel }: IUiControlButtonProps): JSX.Element;
 
 // @internal (undocumented)
@@ -8479,6 +8541,15 @@ export function UiCopyButton({ label, clipboardContent, successMessage, successM
 
 // @internal (undocumented)
 export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative }: IUiDateProps): JSX.Element;
+
+// @internal
+export function UiDialogFooter({ children, divider }: IUiDialogFooterProps): JSX.Element;
+
+// @internal
+export function UiDialogHeader({ title, titleSize, onClose, leading }: IUiDialogHeaderProps): JSX.Element;
+
+// @internal
+export function UiDialogShell({ children, width, isModal, onClose, accessibilityConfig, dataTestId }: IUiDialogShellProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, closeButtonSize, showBackdrop, header, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig }: IUiDrawerProps): JSX.Element | null;
@@ -8572,6 +8643,9 @@ export function UiReturnFocusOnUnmount({ children, ...options }: IUiReturnFocusO
 
 // @internal
 export function UiSearchResultsAnnouncement({ totalResults, resultValues, announcementDelay }: ISearchResultsAnnouncementProps): JSX.Element;
+
+// @internal
+export function UiSectionHeading({ label, action }: IUiSectionHeadingProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, inline, itemsGap, direction, itemBorderRadius }: IUiSkeletonProps): JSX.Element;

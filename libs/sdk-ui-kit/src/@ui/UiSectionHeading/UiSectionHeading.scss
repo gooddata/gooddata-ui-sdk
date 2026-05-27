@@ -1,0 +1,29 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-section-heading {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-spacing-15px);
+    font-family: var(--gd-font-family);
+
+    &__label {
+        font-size: 11px;
+        line-height: 23px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--gd-palette-complementary-6);
+        flex-shrink: 0;
+    }
+
+    &__rule {
+        flex: 1 1 auto;
+        height: 1px;
+        background-color: var(--gd-palette-complementary-3);
+    }
+
+    &__action {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+    }
+}
