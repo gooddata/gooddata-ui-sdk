@@ -2,6 +2,48 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.39.0",
+            "tag": "@gooddata/sdk-ui-all_v11.39.0",
+            "date": "Thu, 28 May 2026 07:19:02 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Enhance alert configuration without insight"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Improve alert and conversation scrolling."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Custom tooltips support external metric and label references."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Extend postMessages via measure value filter handling."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Improve mobile view of measure value filter. "
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search: Respect new UI paths correctly."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Improve menu focus behavior and scrolling logic"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: add UiTextInput, UiRadio, UiRadioRow and UiAvatar @ui components."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: add UiGranteeAvatar, UiGranteeRow, UiObjectShareDialog, UiAddGranteeScreen and UiGeneralAccessRadio @ui components."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Allow to specify granularity on Dashboard Measure value filters."
+                    },
+                    {
+                        "comment": "fix filter group ui design issues"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.38.0",
             "tag": "@gooddata/sdk-ui-all_v11.38.0",
             "date": "Mon, 25 May 2026 12:28:55 GMT",

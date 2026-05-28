@@ -1,6 +1,24 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Mon, 25 May 2026 12:28:55 GMT and should not be manually modified.
+This log was last generated on Thu, 28 May 2026 07:19:02 GMT and should not be manually modified.
+
+## 11.39.0
+
+Thu, 28 May 2026 07:19:02 GMT
+
+### Updates
+
+- sdk-ui-dashboard: Enhance alert configuration without insight
+- sdk-ui-all: Improve alert and conversation scrolling.
+- sdk-ui-all: Custom tooltips support external metric and label references.
+- sdk-ui-all: Extend postMessages via measure value filter handling.
+- sdk-ui-filters: Improve mobile view of measure value filter.
+- sdk-ui-semantic-search: Respect new UI paths correctly.
+- sdk-ui-kit: Improve menu focus behavior and scrolling logic
+- sdk-ui-kit: add UiTextInput, UiRadio, UiRadioRow and UiAvatar @ui components.
+- sdk-ui-kit: add UiGranteeAvatar, UiGranteeRow, UiObjectShareDialog, UiAddGranteeScreen and UiGeneralAccessRadio @ui components.
+- sdk-ui-dashboard: Allow to specify granularity on Dashboard Measure value filters.
+- fix filter group ui design issues
 
 ## 11.38.0
 

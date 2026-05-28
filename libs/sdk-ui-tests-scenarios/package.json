@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-scenarios",
-    "version": "11.39.0-alpha.4",
+    "version": "11.40.0-alpha.0",
     "description": "GoodData React components scenarios project",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
