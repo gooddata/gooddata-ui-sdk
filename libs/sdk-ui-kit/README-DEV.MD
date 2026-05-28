@@ -251,6 +251,10 @@ All default theme CSS variable values can be found in [defaultTheme.scss](../sdk
 
 To add a new CSS variable, read more details in [`README-DEV.md`](../sdk-ui-theme-provider/README-DEV.md) in `@gooddata/sdk-ui-theme-provider`.
 
+### Font family
+
+`@ui/index.scss` sets `font-family` on every `gd-ui-kit-*` root, so there's no need to redeclare it per component.
+
 ## Layouting
 
 Component should care only about its own layout.

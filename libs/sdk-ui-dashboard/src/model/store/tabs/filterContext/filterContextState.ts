@@ -9,6 +9,7 @@ import {
     type IDashboardObjectIdentity,
     type IFilterContextDefinition,
     type MeasureValueFilterCondition,
+    type ObjRef,
 } from "@gooddata/sdk-model";
 
 /**
@@ -29,6 +30,7 @@ export type WorkingDashboardMeasureValueFilter = {
     dashboardMeasureValueFilter: {
         localIdentifier: string;
         conditions?: MeasureValueFilterCondition[];
+        dimensionality?: ObjRef[];
     };
 };
 

@@ -1,0 +1,12 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-object-share-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gd-spacing-10px);
+
+    &__grantees {
+        display: flex;
+        flex-direction: column;
+    }
+}

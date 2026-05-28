@@ -37,6 +37,7 @@ import { useSearchIds } from "../hooks/useSearchIds.js";
 import { useSemanticSearch } from "../hooks/useSemanticSearch.js";
 import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
+import { type UIPathOptions } from "../utils/getUIPath.js";
 
 import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "./allowedRelationshipTypes.js";
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
@@ -153,6 +154,10 @@ export type SearchOverlayProps = {
      */
     excludeTags?: string[];
     /**
+     * Options for building UI paths for search result links.
+     */
+    uiPathOptions?: UIPathOptions;
+    /**
      * A function to render the footer of the search overlay.
      */
     renderFooter?: (
@@ -183,6 +188,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         renderFooter,
         includeTags,
         excludeTags,
+        uiPathOptions,
     } = props;
 
     const canEdit = canFullControl || canManage || canAnalyze;
@@ -353,6 +359,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                         relationships,
                         threshold,
                         canEdit,
+                        uiPathOptions,
                     });
 
                     if (!items.length) {

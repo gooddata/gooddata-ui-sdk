@@ -14,7 +14,7 @@ export interface IUiDialogFooterProps {
     children: ReactNode;
     /**
      * When true, draws a 1px complementary-3 divider above the footer and adds
-     * matching top padding. ObjectShareDialog and AddGranteeScreen want this;
+     * matching top padding. ObjectShareDialog and AddGranteeDialog want this;
      * ConfirmDialog does not.
      */
     divider?: boolean;

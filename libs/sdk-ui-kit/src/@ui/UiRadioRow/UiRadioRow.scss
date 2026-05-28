@@ -1,0 +1,44 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-radio-row {
+    display: flex;
+    align-items: center;
+    gap: var(--gd-spacing-10px);
+    width: 100%;
+    min-height: 50px;
+    padding: var(--gd-spacing-5px) 0;
+    box-sizing: border-box;
+
+    &__text {
+        flex: 1 1 auto;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        line-height: 20px;
+    }
+
+    &__title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--gd-palette-complementary-8);
+        cursor: pointer;
+    }
+
+    &--disabled &__title {
+        cursor: not-allowed;
+    }
+
+    &__description {
+        font-size: 14px;
+        color: var(--gd-palette-complementary-6);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__trailing {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+    }
+}

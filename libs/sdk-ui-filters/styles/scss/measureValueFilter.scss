@@ -18,6 +18,84 @@ $mvf-condition-action-gap: 10px;
     // stylelint-disable-next-line declaration-no-important
     padding: 0 !important; // !important is necessary to ensure MVF doesn't have padding from predecessor styling
 
+    // Mobile fullscreen layout: fills the remaining height under the mobile header,
+    // with a scrollable content area and a footer pinned to the bottom.
+    &.gd-is-mobile {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border-radius: 0;
+        // stylelint-disable-next-line declaration-no-important
+        padding: 0 !important;
+
+        // Mobile design uses 32px-tall controls for the condition picker and value inputs.
+        // Typography per Figma: 14px Roman with the labels muted and the condition / input
+        // values in the darker text color.
+        .gd-mvf-operator-dropdown-label {
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--gd-palette-complementary-7, #6d7680);
+        }
+
+        .gd-mvf-operator-dropdown-button {
+            height: 32px;
+            font-size: 14px;
+            line-height: 14px;
+        }
+
+        .gd-input-field {
+            height: 32px;
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--gd-palette-complementary-8, #464e56);
+        }
+
+        // Filter summary line under the form ("is greater than 10K").
+        .gd-mvf-preview,
+        .gd-mvf-preview .gd-mvf-preview-content {
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--gd-palette-complementary-8, #464e56);
+        }
+
+        // Joiner label between stacked conditions ("or") + treat-null-values checkbox use
+        // the same 14px body text size as the rest of the form on mobile. The section path
+        // is needed so this beats the desktop `.gd-mvf-dropdown-section .gd-mvf-treat-null-values-as-zero`
+        // rule on specificity (otherwise cascade order picks the 12px desktop value).
+        .gd-mvf-conditions-joiner,
+        .gd-mvf-dropdown-section .gd-mvf-treat-null-values-as-zero {
+            font-size: 14px;
+        }
+
+        // The plus / cross buttons next to a condition are rendered at "medium" (32px) on
+        // mobile, so the action column and the inputs' right padding need to widen to match.
+        .gd-mvf-condition-action {
+            flex-basis: 32px;
+            width: 32px;
+        }
+
+        .gd-mvf-condition-section--multi .gd-mvf-condition-inputs {
+            padding-right: 32px + $mvf-condition-action-gap;
+        }
+
+        .gd-mvf-dropdown-content {
+            flex: 1 1 auto;
+            min-height: 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+
+        .gd-mvf-conditions-scroll-container {
+            max-height: none;
+            overflow-y: visible;
+        }
+
+        .gd-mvf-dropdown-footer {
+            flex: 0 0 auto;
+        }
+    }
+
     .gd-mvf-dropdown-section {
         padding: 10px 10px 0;
 
@@ -180,6 +258,173 @@ $mvf-condition-action-gap: 10px;
     .gd-list-item.is-disabled {
         opacity: 0.5;
         cursor: default;
+    }
+
+    // Mobile fullscreen variant: items become 40px-tall full-width rows with bottom dividers.
+    &.gd-is-mobile {
+        width: 100%;
+        padding: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+
+        .gd-list-item {
+            height: 40px;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 400;
+            color: var(--gd-palette-complementary-8, #464e56);
+        }
+
+        // Selected operator row uses primary color + heavier weight per Figma.
+        .gd-list-item.is-selected {
+            font-weight: 700;
+            color: var(--gd-palette-primary-base, #14b2e2);
+        }
+    }
+}
+
+// Shared shell for both the MVF dropdown and the operator dropdown when shown fullscreen on mobile.
+.gd-mvf-mobile-dropdown {
+    width: 100%;
+    height: 100%;
+    background: var(--gd-palette-complementary-0, #fff);
+}
+
+.gd-mvf-mobile-dropdown-header {
+    flex: 0 0 auto;
+
+    // When wrapping the host's dropdown button (UiControlButton from dashboard, or the default
+    // MVF chip), stretch it into a 47px full-width bar with a flat white background — matching
+    // the same treatment applied to attribute filter buttons inside the fullscreen overlay.
+    &.gd-is-mobile {
+        background: var(--gd-palette-complementary-0, #fff);
+        border-bottom: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+
+        // Dashboard MVF button (UiControlButton based).
+        // Mirrors `.gd-is-mobile .gd-attribute-filter-dropdown-button__next` so MVF and AF
+        // mobile headers look the same. The chevron lives in `__subtitle-row::after`; pinning
+        // it to `right: 0` plus padding the content makes the title/condition flow from the
+        // left edge and the arrow stick to the right edge.
+        .gd-ui-kit-control-button {
+            display: flex;
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            max-width: none;
+            height: 47px;
+            margin: 0;
+            padding: 0 10px;
+            border-radius: 0;
+            background-color: var(--gd-palette-complementary-0, #fff);
+            background-image: none;
+            font-size: 14px;
+
+            // Hide the open-state border + inset box-shadow that the chip uses on `::after` —
+            // they look like a rounded outline pasted over the flat header bar.
+            &::after {
+                display: none;
+            }
+
+            &__icon {
+                display: flex;
+                height: 100%;
+                align-items: center;
+            }
+
+            &__content {
+                position: relative;
+                padding-right: 20px;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 5px;
+                width: 100%;
+            }
+
+            &__title {
+                flex: 0 0 auto;
+            }
+
+            &__subtitle-row {
+                flex: 1 1 auto;
+                max-width: none;
+
+                &::after {
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    font-size: 18px;
+                    transform: translateY(-50%);
+                }
+            }
+        }
+
+        // Default MVF DropdownButton (button.gd-mvf-dropdown-button).
+        .gd-mvf-dropdown-button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            height: 47px;
+            margin: 0;
+            padding: 0 10px;
+            border: none;
+            border-radius: 0;
+            background: var(--gd-palette-complementary-0, #fff);
+            font-size: 14px;
+            text-align: left;
+        }
+    }
+}
+
+.gd-mvf-mobile-dropdown-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+// Mobile header rendered above the operator picker list — title + selected operator + chevron.
+.gd-mvf-operator-mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 47px;
+    padding: 0 10px;
+    background: var(--gd-palette-complementary-0, #fff);
+    border: none;
+    border-bottom: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+    box-shadow: 0 1px 1px 0 rgba(20, 57, 93, 0.05);
+    cursor: pointer;
+    font-family: variables.$gd-font-primary;
+    text-align: left;
+
+    &__label {
+        color: var(--gd-palette-complementary-7, #6d7680);
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+    }
+
+    &__value {
+        flex: 1 1 auto;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 700;
+        color: var(--gd-palette-complementary-8, #464e56);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__chevron {
+        flex: 0 0 auto;
+        color: var(--gd-palette-complementary-7, #6d7680);
+        font-size: 16px;
     }
 }
 

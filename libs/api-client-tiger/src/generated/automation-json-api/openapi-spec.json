@@ -1716,6 +1716,10 @@
                             "value": {
                                 "type": "number",
                                 "format": "double"
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number",
+                                "format": "double"
                             }
                         }
                     }
@@ -1758,6 +1762,10 @@
                                 "format": "double"
                             },
                             "to": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "treatNullValuesAs": {
                                 "type": "number",
                                 "format": "double"
                             }
@@ -1985,6 +1993,12 @@
                                 "type": "array",
                                 "items": {
                                     "$ref": "#/components/schemas/DashboardCompoundConditionItem"
+                                }
+                            },
+                            "dimensionality": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/IdentifierRef"
                                 }
                             },
                             "title": {
@@ -3631,15 +3645,7 @@
                 "description": "In-platform destination for notifications."
             },
             "NotificationChannelDestination": {
-                "required": [
-                    "type"
-                ],
                 "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string"
-                    }
-                },
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/Webhook"

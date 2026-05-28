@@ -848,6 +848,14 @@ function* getMeasureValueFiltersUpdateActions(
                 conditions: incoming.dashboardMeasureValueFilter.conditions,
             }),
         );
+        if ("dimensionality" in incoming.dashboardMeasureValueFilter) {
+            updateActions.push(
+                tabsActions.setMeasureValueFilterDimensionality({
+                    localIdentifier,
+                    dimensionality: incoming.dashboardMeasureValueFilter.dimensionality,
+                }),
+            );
+        }
     }
 
     if (resetOthers) {

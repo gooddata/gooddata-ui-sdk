@@ -1202,3 +1202,31 @@ export {
     type IUiConfirmDialogProps,
     type ConfirmDialogVariant,
 } from "./@ui/UiConfirmDialog/UiConfirmDialog.js";
+export {
+    UiTextInput,
+    type IUiTextInputProps,
+    type IUiTextInputIconAfterButton,
+} from "./@ui/UiTextInput/UiTextInput.js";
+export { UiRadio, type IUiRadioProps } from "./@ui/UiRadio/UiRadio.js";
+export { UiRadioRow, type IUiRadioRowProps } from "./@ui/UiRadioRow/UiRadioRow.js";
+export { UiAvatar, type IUiAvatarProps } from "./@ui/UiAvatar/UiAvatar.js";
+export {
+    UiGranteeAvatar,
+    type IUiGranteeAvatarProps,
+    type GranteeAvatarKind,
+} from "./@ui/UiGranteeAvatar/UiGranteeAvatar.js";
+export { UiGranteeRow, type IUiGranteeRowProps } from "./@ui/UiGranteeRow/UiGranteeRow.js";
+export {
+    UiObjectShareDialog,
+    type IUiObjectShareDialogProps,
+    type IUiObjectShareDialogGrantee,
+} from "./@ui/UiObjectShareDialog/UiObjectShareDialog.js";
+export {
+    UiAddGranteeDialog,
+    type IUiAddGranteeDialogProps,
+} from "./@ui/UiAddGranteeDialog/UiAddGranteeDialog.js";
+export {
+    UiGeneralAccessRadio,
+    type IUiGeneralAccessRadioProps,
+    type GeneralAccessValue,
+} from "./@ui/UiGeneralAccessRadio/UiGeneralAccessRadio.js";

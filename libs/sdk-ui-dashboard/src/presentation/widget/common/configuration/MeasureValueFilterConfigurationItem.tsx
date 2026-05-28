@@ -23,6 +23,7 @@ interface IMeasureValueFilterConfigurationItemProps {
     measureRef: ObjRef;
     title: string;
     isCompatible: boolean;
+    isBlockedByRankingFilter: boolean;
 }
 
 export function MeasureValueFilterConfigurationItem({
@@ -30,6 +31,7 @@ export function MeasureValueFilterConfigurationItem({
     measureRef,
     title,
     isCompatible,
+    isBlockedByRankingFilter,
 }: IMeasureValueFilterConfigurationItemProps) {
     const [isApplied, setIsApplied] = useState(
         () =>
@@ -49,8 +51,8 @@ export function MeasureValueFilterConfigurationItem({
 
     const isLoading = status === "loading";
     const isIncompatible = !isCompatible;
-    const isDisabled = isIncompatible;
-    const isChecked = isCompatible && isApplied;
+    const isDisabled = isIncompatible || isBlockedByRankingFilter;
+    const isChecked = !isDisabled && isApplied;
 
     const classNames = cx(
         `s-${simplifyText(title)}`,
@@ -59,7 +61,7 @@ export function MeasureValueFilterConfigurationItem({
         "attribute-filter-by-item",
         "measure-value-filter-by-item",
         {
-            "filter-by-item-incompatible": isIncompatible,
+            "filter-by-item-incompatible": isIncompatible || isBlockedByRankingFilter,
             disabled: isDisabled,
         },
     );
@@ -79,9 +81,17 @@ export function MeasureValueFilterConfigurationItem({
         />
     );
 
-    if (!isIncompatible) {
+    if (!isDisabled) {
         return <div>{checkbox}</div>;
     }
+
+    // isIncompatible takes precedence over isBlockedByRankingFilter — the catalog
+    // incompatibility message is more specific.
+    const tooltipContent = isIncompatible ? (
+        <FormattedMessage id="configurationPanel.vizCantBeFilteredByMeasureValueFilter" />
+    ) : (
+        <FormattedMessage id="configurationPanel.mvfBlockedByRankingFilter" />
+    );
 
     return (
         <div>
@@ -90,7 +100,7 @@ export function MeasureValueFilterConfigurationItem({
                 triggerBy={["hover", "focus"]}
                 optimalPlacement
                 anchor={checkbox}
-                content={<FormattedMessage id="configurationPanel.vizCantBeFilteredByMeasureValueFilter" />}
+                content={tooltipContent}
             />
         </div>
     );

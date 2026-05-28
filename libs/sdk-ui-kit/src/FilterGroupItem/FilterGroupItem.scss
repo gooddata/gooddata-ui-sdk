@@ -20,7 +20,6 @@
     }
 
     .gd-filter-group-item-chevron {
-        transition: transform 0.8s ease;
         padding-right: 4px;
         color: variables.$gd-color-state-blank;
     }
@@ -28,11 +27,10 @@
     &:not(.error, .gd-is-disabled):hover,
     &.gd-is-active {
         background-color: variables.$is-focused-background;
+    }
 
-        &::before {
-            transform: translateX(0) scaleX(1);
-            opacity: 1;
-        }
+    &.gd-is-active:not(.gd-is-disabled):hover {
+        background-color: variables.$gd-palette-primary-dimmed;
     }
 
     &::before {
@@ -43,30 +41,16 @@
         width: 4px;
         height: 100%;
         background-color: variables.$gd-palette-primary-base;
-        transform: translateX(-2px) scaleX(0);
         opacity: 0;
-        transition:
-            transform 0.2s ease,
-            opacity 0.2s ease;
     }
 
-    &:not(.error, .gd-is-disabled):hover .gd-filter-group-item-chevron,
-    &.gd-is-active .gd-filter-group-item-chevron {
-        transform: translateX(4px);
+    &.gd-is-active::before {
+        opacity: 1;
     }
 
-    &.gd-is-active:not(.error, .gd-is-disabled):hover {
-        background-color: variables.$gd-palette-primary-dimmed;
-
-        &::before {
-            transform: translateX(-2px) scaleX(0);
-            opacity: 0;
-        }
-
-        .gd-filter-group-item-chevron {
-            transform: translateX(0);
-            animation: none;
-        }
+    &:not(.error, .gd-is-active, .gd-is-disabled):hover::before {
+        background-color: var(--gd-palette-complementary-5-t40, rgba(176, 190, 202, 0.6));
+        opacity: 1;
     }
 
     &.error:not(.gd-is-active) {
@@ -74,6 +58,11 @@
 
         .gd-filter-group-item-icon {
             color: variables.$gd-palette-error-base;
+        }
+
+        &:not(.gd-is-disabled):hover::before {
+            background-color: var(--gd-palette-error-base-t85, rgba(229, 77, 66, 0.15));
+            opacity: 1;
         }
     }
 

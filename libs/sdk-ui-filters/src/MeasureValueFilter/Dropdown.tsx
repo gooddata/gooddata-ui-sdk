@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { memo, useCallback } from "react";
+import { type ReactNode, memo, useCallback } from "react";
 
 import {
     type IMeasureMetadataObject,
@@ -8,7 +8,13 @@ import {
     type ObjRefInScope,
 } from "@gooddata/sdk-model";
 import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
-import { type IAlignPoint, Overlay, UiFocusManager } from "@gooddata/sdk-ui-kit";
+import {
+    FullScreenOverlay,
+    type IAlignPoint,
+    Overlay,
+    UiFocusManager,
+    useMediaQuery,
+} from "@gooddata/sdk-ui-kit";
 
 import { DropdownBody } from "./DropdownBody.js";
 import { type MeasureValueFilterOperator } from "./types.js";
@@ -26,6 +32,7 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
  *  thin layer on top of goodstrap (?)
  */
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
+const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [{ align: "tl tl" }];
 
 interface IDropdownProps extends IMeasureValueFilterCustomComponentProps {
     onApply: IMeasureValueFilterDropdownCallback;
@@ -59,6 +66,8 @@ interface IDropdownProps extends IMeasureValueFilterCustomComponentProps {
     loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
     isHeaderEnabled?: boolean;
     alignPoints?: IAlignPoint[];
+    fullscreenOnMobile?: boolean;
+    mobileHeader?: ReactNode;
 }
 
 const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
@@ -96,7 +105,12 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         loadMetricDetails,
         isHeaderEnabled,
         alignPoints,
+        fullscreenOnMobile,
+        mobileHeader,
     } = props;
+
+    const isMobile = useMediaQuery("mobileDevice");
+    const useFullScreen = !!fullscreenOnMobile && isMobile;
 
     const onApply: IMeasureValueFilterDropdownCallback = useCallback(
         (conditions, newDimensionality, applyOnResult) => {
@@ -107,6 +121,62 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
 
     const selectedOperator: MeasureValueFilterOperator = operator === null ? "ALL" : operator;
 
+    const body = (
+        <UiFocusManager enableFocusTrap enableAutofocus enableReturnFocusOnUnmount>
+            <DropdownBody
+                operator={selectedOperator}
+                conditions={conditions}
+                enableMultipleConditions={enableMultipleConditions}
+                usePercentage={usePercentage}
+                warningMessage={warningMessage}
+                locale={locale}
+                onChange={onChangeProp}
+                withoutApply={withoutApply}
+                BodyComponent={BodyComponent}
+                DropdownActionsComponent={DropdownActionsComponent}
+                onCancel={onCancel}
+                onApply={onApply}
+                separators={separators}
+                format={format}
+                useShortFormat={useShortFormat}
+                measureTitle={measureTitle}
+                displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
+                treatNullAsZeroValue={treatNullAsZeroValue}
+                enableOperatorSelection={enableOperatorSelection}
+                dimensionality={dimensionality}
+                insightDimensionality={insightDimensionality}
+                isDimensionalityEnabled={isDimensionalityEnabled}
+                isFilterSummaryEnabled={isFilterSummaryEnabled}
+                catalogDimensionality={catalogDimensionality}
+                loadCatalogDimensionality={loadCatalogDimensionality}
+                onDimensionalityChange={onDimensionalityChange}
+                isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
+                enableRankingWithMvf={enableRankingWithMvf}
+                applyOnResult={applyOnResult}
+                loadMetricDetails={loadMetricDetails}
+                isHeaderEnabled={isHeaderEnabled}
+                isMobile={useFullScreen}
+            />
+        </UiFocusManager>
+    );
+
+    if (useFullScreen) {
+        return (
+            <FullScreenOverlay alignTo="body" alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS} onClose={onCancel}>
+                <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container gd-mvf-mobile-dropdown">
+                    {mobileHeader ? (
+                        <div className="gd-mobile-dropdown-header gd-flex-item gd-mvf-mobile-dropdown-header gd-is-mobile">
+                            {mobileHeader}
+                        </div>
+                    ) : null}
+                    <div className="gd-mobile-dropdown-content gd-flex-item-stretch gd-flex-row-container gd-mvf-mobile-dropdown-content">
+                        {body}
+                    </div>
+                </div>
+            </FullScreenOverlay>
+        );
+    }
+
     return (
         <Overlay
             alignTo={anchorEl}
@@ -116,41 +186,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
             closeOnMouseDrag
             onClose={onCancel}
         >
-            <UiFocusManager enableFocusTrap enableAutofocus enableReturnFocusOnUnmount>
-                <DropdownBody
-                    operator={selectedOperator}
-                    conditions={conditions}
-                    enableMultipleConditions={enableMultipleConditions}
-                    usePercentage={usePercentage}
-                    warningMessage={warningMessage}
-                    locale={locale}
-                    onChange={onChangeProp}
-                    withoutApply={withoutApply}
-                    BodyComponent={BodyComponent}
-                    DropdownActionsComponent={DropdownActionsComponent}
-                    onCancel={onCancel}
-                    onApply={onApply}
-                    separators={separators}
-                    format={format}
-                    useShortFormat={useShortFormat}
-                    measureTitle={measureTitle}
-                    displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
-                    treatNullAsZeroValue={treatNullAsZeroValue}
-                    enableOperatorSelection={enableOperatorSelection}
-                    dimensionality={dimensionality}
-                    insightDimensionality={insightDimensionality}
-                    isDimensionalityEnabled={isDimensionalityEnabled}
-                    isFilterSummaryEnabled={isFilterSummaryEnabled}
-                    catalogDimensionality={catalogDimensionality}
-                    loadCatalogDimensionality={loadCatalogDimensionality}
-                    onDimensionalityChange={onDimensionalityChange}
-                    isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
-                    enableRankingWithMvf={enableRankingWithMvf}
-                    applyOnResult={applyOnResult}
-                    loadMetricDetails={loadMetricDetails}
-                    isHeaderEnabled={isHeaderEnabled}
-                />
-            </UiFocusManager>
+            {body}
         </Overlay>
     );
 });

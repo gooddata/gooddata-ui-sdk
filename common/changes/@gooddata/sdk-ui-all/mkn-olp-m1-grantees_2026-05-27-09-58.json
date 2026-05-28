@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: add UiGranteeAvatar, UiGranteeRow, UiObjectShareDialog, UiAddGranteeScreen and UiGeneralAccessRadio @ui components.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

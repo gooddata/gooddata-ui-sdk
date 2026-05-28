@@ -33,3 +33,20 @@
 @use "./UiSectionHeading/UiSectionHeading.scss";
 @use "./UiDialogShell/UiDialogShell.scss";
 @use "./UiConfirmDialog/UiConfirmDialog.scss";
+@use "./UiTextInput/UiTextInput.scss";
+@use "./UiRadio/UiRadio.scss";
+@use "./UiRadioRow/UiRadioRow.scss";
+@use "./UiAvatar/UiAvatar.scss";
+@use "./UiGranteeRow/UiGranteeRow.scss";
+@use "./UiObjectShareDialog/UiObjectShareDialog.scss";
+@use "./UiAddGranteeDialog/UiAddGranteeDialog.scss";
+@use "./UiGeneralAccessRadio/UiGeneralAccessRadio.scss";
+
+// `--gd-font-family` is a `:root` variable only; there is no global `body` font
+// declaration. Apply it once to every kit root so standalone components don't
+// fall back to the browser default (e.g. Times New Roman), rather than each
+// component redeclaring it.
+[class^="gd-ui-kit-"],
+[class*=" gd-ui-kit-"] {
+    font-family: var(--gd-font-family);
+}

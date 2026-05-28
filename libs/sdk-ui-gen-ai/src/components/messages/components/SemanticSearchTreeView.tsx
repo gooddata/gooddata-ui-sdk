@@ -3,6 +3,7 @@
 import { type KeyboardEvent, type MouseEvent, useCallback, useId } from "react";
 
 import { useIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
 import { isSemanticSearchRelationship, isSemanticSearchResultItem } from "@gooddata/sdk-model";
 import {
@@ -13,6 +14,7 @@ import {
 } from "@gooddata/sdk-ui-semantic-search/internal";
 
 import { type SemanticSearchContents } from "../../../model.js";
+import { settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import { useConfig } from "../../ConfigContext.js";
 
 type SemanticSearchTreeViewProps = {
@@ -34,8 +36,10 @@ export function SemanticSearchTreeView(props: SemanticSearchTreeViewProps) {
 export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: SemanticSearchTreeViewProps) {
     const intl = useIntl();
     const { canFullControl, canManage, canAnalyze, linkHandler } = useConfig();
+    const settings = useSelector(settingsSelector);
 
     const canEdit = canFullControl || canManage || canAnalyze;
+    const useHostMetricEditor = Boolean(settings?.enableShellApplication_metricEditor);
 
     const items = buildSemanticSearchTreeViewItems({
         intl,
@@ -44,6 +48,7 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
         relationships: content.relationships,
         threshold: 0, // Keep all items for now
         canEdit,
+        uiPathOptions: { useHostedMetricEditor: useHostMetricEditor },
     });
     const id = useId();
     const treeViewId = `gen-ai-chat-${id}-treeview`;

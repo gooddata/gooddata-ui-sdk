@@ -6,6 +6,7 @@ import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
+    type DateAttributeGranularity,
     type IAlertAnomalyDetectionGranularity,
     type IAlertAnomalyDetectionSensitivity,
     type IAlertComparisonOperator,
@@ -241,6 +242,7 @@ export const useEditAlert = ({
             measure: AlertMetric | undefined,
             relativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined,
             comparisonType: AlertMetricComparatorType,
+            granularity?: DateAttributeGranularity,
         ) => {
             if (!measure || !relativeOperator || !relativeOperator) {
                 return;
@@ -255,6 +257,7 @@ export const useEditAlert = ({
                     arithmeticOperator,
                     measureFormatMap,
                     comparisonType,
+                    granularity,
                 ),
             );
         },

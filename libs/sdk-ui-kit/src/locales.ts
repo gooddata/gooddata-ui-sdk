@@ -1,4 +1,5 @@
 // (C) 2022-2026 GoodData Corporation
+
 import { defineMessages } from "react-intl";
 
 //NOTE: Follow-up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -53,4 +54,36 @@ export const granularPermissionMessageTooltips = defineMessages({
 export const commonDialogMessages = defineMessages({
     cancel: { id: "cancel" },
     close: { id: "close" },
+});
+
+export const olpGranteeAvatarMessages = defineMessages({
+    user: { id: "shareDialog.olp.granteeAvatar.user" },
+    group: { id: "shareDialog.olp.granteeAvatar.group" },
+});
+
+export const olpGranteeRowMessages = defineMessages({
+    ownerTag: { id: "shareDialog.olp.granteeRow.ownerTag" },
+});
+
+export const olpObjectShareDialogMessages = defineMessages({
+    title: { id: "shareDialog.olp.objectShareDialog.title" },
+    sharedWith: { id: "shareDialog.olp.objectShareDialog.sharedWith" },
+    add: { id: "shareDialog.olp.objectShareDialog.add" },
+    generalAccess: { id: "shareDialog.olp.objectShareDialog.generalAccess" },
+});
+
+export const olpAddGranteeDialogMessages = defineMessages({
+    back: { id: "shareDialog.olp.addGranteeDialog.back" },
+    userOrGroup: { id: "shareDialog.olp.addGranteeDialog.userOrGroup" },
+    searchPlaceholder: { id: "shareDialog.olp.addGranteeDialog.searchPlaceholder" },
+    emptyState: { id: "shareDialog.olp.addGranteeDialog.emptyState" },
+    add: { id: "shareDialog.olp.addGranteeDialog.add" },
+});
+
+export const olpGeneralAccessMessages = defineMessages({
+    groupLabel: { id: "shareDialog.olp.generalAccess.groupLabel" },
+    restrictedTitle: { id: "shareDialog.olp.generalAccess.restricted.title" },
+    restrictedDescription: { id: "shareDialog.olp.generalAccess.restricted.description" },
+    workspaceTitle: { id: "shareDialog.olp.generalAccess.workspace.title" },
+    workspaceDescription: { id: "shareDialog.olp.generalAccess.workspace.description" },
 });

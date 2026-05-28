@@ -1233,6 +1233,7 @@ export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCusto
     // (undocumented)
     filter?: IMeasureValueFilter;
     format?: string;
+    fullscreenOnMobile?: boolean;
     // (undocumented)
     insightDimensionality?: IDimensionalityItem[];
     // (undocumented)
@@ -1311,6 +1312,8 @@ export interface IMeasureValueFilterDropdownButtonProps {
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     // (undocumented)
     anchorEl?: HTMLElement | string;
+    // @internal
+    mobileHeader?: ReactNode;
     // (undocumented)
     onCancel: () => void;
 }

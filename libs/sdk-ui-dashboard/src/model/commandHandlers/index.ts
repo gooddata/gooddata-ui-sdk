@@ -71,6 +71,7 @@ import {
 } from "./filterContext/filterViewHandler.js";
 import { addMeasureValueFilterHandler } from "./filterContext/measureValueFilter/addMeasureValueFilterHandler.js";
 import { changeMeasureValueFilterConditionHandler } from "./filterContext/measureValueFilter/changeMeasureValueFilterConditionHandler.js";
+import { changeMeasureValueFilterDimensionalityHandler } from "./filterContext/measureValueFilter/changeMeasureValueFilterDimensionalityHandler.js";
 import { changeMeasureValueFilterTitleHandler } from "./filterContext/measureValueFilter/changeMeasureValueFilterTitleHandler.js";
 import { moveMeasureValueFilterHandler } from "./filterContext/measureValueFilter/moveMeasureValueFilterHandler.js";
 import { removeMeasureValueFilterHandler } from "./filterContext/measureValueFilter/removeMeasureValueFilterHandler.js";
@@ -186,6 +187,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.MOVE": moveMeasureValueFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.CHANGE_CONDITION":
         changeMeasureValueFilterConditionHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.SET_DIMENSIONALITY":
+        changeMeasureValueFilterDimensionalityHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.SET_TITLE": changeMeasureValueFilterTitleHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.APPLY_WORKING_SELECTION": applyWorkingSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.RESET_WORKING_SELECTION": resetWorkingSelectionHandler,

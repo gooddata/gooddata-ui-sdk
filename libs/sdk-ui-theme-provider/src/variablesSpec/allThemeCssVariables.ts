@@ -4,6 +4,7 @@
 import { chartThemeDeprecatedVariables } from "./deprecated/chart.js";
 import { paletteBaseThemeDeprecatedVariables } from "./deprecated/palette-base.js";
 import { inconsistentVariables } from "./inconsistent/inconsistent.js";
+import { internalAvatarThemeVariables } from "./internal/avatar.js";
 import { internalButtonThemeVariables } from "./internal/button.js";
 import { internalFontThemeVariables } from "./internal/font.js";
 import { internalGeoThemeVariables } from "./internal/geo.js";
@@ -79,6 +80,7 @@ export const themeInternalCssVariables: ThemeInternalCssVariable[] = [
     // Geo
     ...internalGeoThemeVariables,
     // Components
+    ...internalAvatarThemeVariables,
     ...internalButtonThemeVariables,
     ...internalIconThemeVariables,
     ...internalTabsThemeVariables,

@@ -4,6 +4,7 @@ import {
     type IAttribute,
     type IExecutionDefinition,
     attributeDisplayFormRef,
+    bucketAttribute,
     isAttribute,
     isIdentifierRef,
     isUriRef,
@@ -125,4 +126,22 @@ export function getAttributeRefId(attribute: IAttribute | undefined): string | u
         return ref.uri;
     }
     return undefined;
+}
+
+/**
+ * Returns the idRef identifier of the first attribute in `bucketName`, or
+ * `undefined` when the bucket is missing, has no attribute, or its display form
+ * is a uriRef (uriRefs can't form a tooltip lookup key, so callers skip them).
+ *
+ * @internal
+ */
+export function getBucketAttributeIdRefIdentifier(
+    definition: IExecutionDefinition,
+    bucketName: string,
+): string | undefined {
+    const bucket = definition.buckets.find((b) => b.localIdentifier === bucketName);
+    if (!bucket) {
+        return undefined;
+    }
+    return getAttributeIdRefIdentifier(bucketAttribute(bucket));
 }

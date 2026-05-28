@@ -1944,6 +1944,7 @@ export interface IDashboardMeasureValueFilter {
         measure: ObjRef;
         localIdentifier: string;
         conditions?: MeasureValueFilterCondition[];
+        dimensionality?: ObjRef[];
         title?: string;
     };
 }

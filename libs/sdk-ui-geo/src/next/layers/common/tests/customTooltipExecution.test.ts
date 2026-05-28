@@ -2,16 +2,31 @@
 
 import { describe, expect, it } from "vitest";
 
-import { idRef, newAttribute, uriRef } from "@gooddata/sdk-model";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import {
+    type IExecutionDefinition,
+    idRef,
+    newAttribute,
+    newBucket,
+    newMeasure,
+    uriRef,
+} from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
 
 import {
     getAttributeIdRefIdentifier,
     getAttributeRefId,
+    getBucketAttributeIdRefIdentifier,
     readAttrIdentity,
 } from "../customTooltipExecution.js";
 
 const idAttribute = newAttribute(idRef("df.country", "displayForm"), (a) => a.localId("country"));
 const uriAttribute = newAttribute(uriRef("/gdc/md/project/obj/123"), (a) => a.localId("country"));
+
+function buildDefinitionWithBuckets(buckets: IExecutionDefinition["buckets"]): IExecutionDefinition {
+    const factory = dummyBackend().workspace("ws").execution();
+    return factory.forBuckets(buckets).definition;
+}
 
 describe("readAttrIdentity", () => {
     it("reads identity from an object payload (raw callback path)", () => {
@@ -85,5 +100,28 @@ describe("display-form identity helpers", () => {
     it("returns undefined for missing attributes", () => {
         expect(getAttributeIdRefIdentifier(undefined)).toBeUndefined();
         expect(getAttributeRefId(undefined)).toBeUndefined();
+    });
+});
+
+describe("getBucketAttributeIdRefIdentifier", () => {
+    it("returns the display-form id of the first attribute in the named bucket", () => {
+        const definition = buildDefinitionWithBuckets([newBucket(BucketNames.TOOLTIP_TEXT, idAttribute)]);
+        expect(getBucketAttributeIdRefIdentifier(definition, BucketNames.TOOLTIP_TEXT)).toBe("df.country");
+    });
+
+    it("returns undefined when the bucket is missing", () => {
+        const definition = buildDefinitionWithBuckets([newBucket(BucketNames.SEGMENT, idAttribute)]);
+        expect(getBucketAttributeIdRefIdentifier(definition, BucketNames.TOOLTIP_TEXT)).toBeUndefined();
+    });
+
+    it("returns undefined for uriRef-backed display forms (lookup key can't include them)", () => {
+        const definition = buildDefinitionWithBuckets([newBucket(BucketNames.TOOLTIP_TEXT, uriAttribute)]);
+        expect(getBucketAttributeIdRefIdentifier(definition, BucketNames.TOOLTIP_TEXT)).toBeUndefined();
+    });
+
+    it("returns undefined when the bucket holds only a measure", () => {
+        const measure = newMeasure(idRef("m.revenue", "measure"));
+        const definition = buildDefinitionWithBuckets([newBucket(BucketNames.SIZE, measure)]);
+        expect(getBucketAttributeIdRefIdentifier(definition, BucketNames.SIZE)).toBeUndefined();
     });
 });

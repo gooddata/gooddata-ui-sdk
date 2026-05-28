@@ -1286,7 +1286,8 @@
                             "ATHENA",
                             "MONGODB",
                             "CRATEDB",
-                            "AILAKEHOUSE"
+                            "AILAKEHOUSE",
+                            "DENODO"
                         ]
                     },
                     "url": {

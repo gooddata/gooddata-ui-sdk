@@ -4,6 +4,7 @@ import { isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
 import {
+    type DateAttributeGranularity,
     type IAlertAnomalyDetectionGranularity,
     type IAlertAnomalyDetectionSensitivity,
     type IAlertComparisonOperator,
@@ -303,6 +304,7 @@ export function transformAlertByComparisonOperator(
  * @param arithmeticOperator - selected arithmetic operator
  * @param measureFormatMap - all available measures from catalog
  * @param comparatorType - selected comparator type
+ * @param granularity - selected granularity
  */
 export function transformAlertByRelativeOperator(
     metrics: AlertMetric[],
@@ -312,9 +314,12 @@ export function transformAlertByRelativeOperator(
     arithmeticOperator: IAlertRelativeArithmeticOperator,
     measureFormatMap?: IMeasureFormatMap,
     comparatorType?: AlertMetricComparatorType,
+    granularity?: DateAttributeGranularity,
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators.filter((c) =>
-        comparatorType === undefined ? true : c.comparator === comparatorType,
+        comparatorType === undefined
+            ? true
+            : c.comparator === comparatorType && (granularity ? c.granularity === granularity : true),
     );
 
     const cond = transformToRelativeCondition(alert.alert!.condition);

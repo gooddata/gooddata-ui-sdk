@@ -227,8 +227,9 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
  *
  * @remarks
  * Dashboard measure value filters always reference a catalog metric via `ObjRef`, which is a valid
- * `ObjRefInScope`. No dimensionality is set on the resulting execution filter — the backend derives
- * granularity from the widget automatically. Conditions are passed through unchanged.
+ * `ObjRefInScope`. When dashboard-level dimensionality is configured, it is passed through to the
+ * execution filter; otherwise the backend derives granularity from the widget automatically.
+ * Conditions are passed through unchanged.
  *
  * @param filter - dashboard measure value filter to convert
  * @public
@@ -236,12 +237,13 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
 export function dashboardMeasureValueFilterToMeasureValueFilter(
     filter: IDashboardMeasureValueFilter,
 ): IMeasureValueFilter {
-    const { measure, localIdentifier, conditions } = filter.dashboardMeasureValueFilter;
+    const { measure, localIdentifier, conditions, dimensionality } = filter.dashboardMeasureValueFilter;
     return {
         measureValueFilter: {
             measure,
             localIdentifier,
             ...(conditions && conditions.length > 0 ? { conditions } : {}),
+            ...(dimensionality && dimensionality.length > 0 ? { dimensionality } : {}),
         },
     };
 }

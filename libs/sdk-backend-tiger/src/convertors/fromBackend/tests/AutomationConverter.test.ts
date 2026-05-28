@@ -23,6 +23,7 @@ describe("convertExecutionFilterToFilterContextItem — MVF branch", () => {
         const filter = baseMvf({
             localIdentifier: "mvf1",
             conditions: [{ comparison: { operator: "GREATER_THAN", value: 100 } }],
+            dimensionality: [idRef("label.product")],
         });
 
         const result = convertExecutionFilterToFilterContextItem(filter, "fallback");
@@ -32,6 +33,7 @@ describe("convertExecutionFilterToFilterContextItem — MVF branch", () => {
                 measure: idRef("m1", "measure"),
                 localIdentifier: "mvf1",
                 conditions: [{ comparison: { operator: "GREATER_THAN", value: 100 } }],
+                dimensionality: [idRef("label.product")],
             },
         });
     });

@@ -1691,6 +1691,47 @@ type IChangeMeasureValueFilterTitleReducerPayload = {
     readonly title?: string;
 };
 
+type ISetMeasureValueFilterDimensionalityReducerPayload = {
+    readonly localIdentifier: string;
+    readonly dimensionality?: ObjRef[];
+};
+
+const setMeasureValueFilterDimensionality: FilterContextReducer<
+    PayloadAction<ISetMeasureValueFilterDimensionalityReducerPayload>
+> = (state, action) => {
+    const activeTab = getActiveTab(state);
+    if (!activeTab) {
+        return;
+    }
+    invariant(
+        activeTab.filterContext?.filterContextDefinition?.filters,
+        "Attempt to edit uninitialized filter context",
+    );
+
+    const filters = activeTab.filterContext.filterContextDefinition.filters;
+    const index = filters.findIndex(
+        (item) =>
+            isDashboardMeasureValueFilter(item) &&
+            dashboardFilterLocalIdentifier(item) === action.payload.localIdentifier,
+    );
+    invariant(
+        index >= 0,
+        `Attempt to change dimensionality of measure value filter ${action.payload.localIdentifier} that does not exist`,
+    );
+
+    const filter = filters[index] as IDashboardMeasureValueFilter;
+    const dimensionality =
+        action.payload.dimensionality && action.payload.dimensionality.length > 0
+            ? action.payload.dimensionality
+            : undefined;
+    filters[index] = {
+        dashboardMeasureValueFilter: {
+            ...filter.dashboardMeasureValueFilter,
+            dimensionality,
+        },
+    };
+};
+
 const changeMeasureValueFilterTitle: FilterContextReducer<
     PayloadAction<IChangeMeasureValueFilterTitleReducerPayload>
 > = (state, action) => {
@@ -1759,5 +1800,6 @@ export const filterContextReducers = {
     resetWorkingSelection,
     setDefaultFilterOverrides,
     changeMeasureValueFilterCondition,
+    setMeasureValueFilterDimensionality,
     changeMeasureValueFilterTitle,
 };

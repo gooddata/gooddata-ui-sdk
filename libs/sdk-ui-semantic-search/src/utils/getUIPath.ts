@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 /**
  * Types of objects that we can navigate to in UI.
@@ -15,6 +15,10 @@ export type UIPathObjectTypes =
     | "attribute"
     | "label";
 
+export type UIPathOptions = {
+    useHostedMetricEditor?: boolean;
+};
+
 /**
  * Get the UI path for the given object type, object ID, and workspace ID.
  * TODO - this logic should live in gdc-ui repo, would require refactoring of the sdk-ui-semantic-search
@@ -27,6 +31,7 @@ export const getUIPath = (
     objectId: string,
     workspaceId: string,
     visualizationId?: string,
+    options: UIPathOptions = {},
 ): string => {
     switch (objectType) {
         case "dashboard":
@@ -36,6 +41,9 @@ export const getUIPath = (
         case "visualization":
             return `/analyze/#/${workspaceId}/${objectId}/edit`;
         case "metric":
+            if (options.useHostedMetricEditor) {
+                return `/workspace/${workspaceId}/metrics/metric/${objectId}`;
+            }
             return `/metrics/#/${workspaceId}/metric/${objectId}`;
         case "dataset":
             return `/modeler/#/${workspaceId}`; // TODO - deep links

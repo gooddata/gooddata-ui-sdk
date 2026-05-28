@@ -73,12 +73,52 @@ $min-content-height: 110px;
 
 .gd-notifications-channels-dialog-overlay {
     border: 1px solid transparent;
-}
 
-.gd-notifications-channels-dialog-overlay.truncated {
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
+    // Flex column so the dialog pins its header/footer and scrolls only the
+    // body when taller than the viewport (height set inline by the Overlay's
+    // `ensureVisibility`). Descendant selectors, not `>`, because a
+    // `display: contents` wrapper (UiFocusManager) sits in between.
+    display: flex;
+    flex-direction: column;
+
+    [role="dialog"] {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+    }
+
+    .gd-dialog {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+    }
+
+    .gd-dialog-header-wrapper,
+    .gd-dialog-footer {
+        flex-shrink: 0;
+    }
+
+    // `overflow: visible` so the wrapper's full-bleed negative margins
+    // (`margin: 0 -20px`) aren't clipped; the wrapper bounds its own scroll.
+    .gd-dialog-content {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: visible;
+    }
+
+    // Scroll region; `max-height: none` drops the legacy 499px cap.
+    .gd-notifications-channel-dialog-content-wrapper {
+        flex: 1;
+        min-height: 0;
+        max-height: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior: contain;
+    }
 }
 
 .gd-dialog:not(.gd-dropdown).gd-notifications-channels-dialog {
@@ -965,6 +1005,7 @@ $min-content-height: 110px;
     overflow: auto;
     overscroll-behavior: contain;
     margin-bottom: $vertical-space;
+    flex-shrink: 0;
 }
 
 .gd-notifications-channels-dialog-error-scrollable {

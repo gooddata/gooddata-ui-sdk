@@ -18,6 +18,7 @@ interface IOperatorDropdownProps {
     operator: MeasureValueFilterOperator;
     isDisabled?: boolean;
     isAllOperatorDisabled?: boolean;
+    isMobile?: boolean;
 }
 
 export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorDropdownProps) {
@@ -85,6 +86,7 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
                     selectedOperator={props.operator}
                     onClose={closeOperatorDropdown}
                     isAllOperatorDisabled={props.isAllOperatorDisabled}
+                    isMobile={props.isMobile}
                 />
             ) : null}
         </>

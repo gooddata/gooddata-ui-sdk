@@ -66,6 +66,7 @@ import {
     type ISetAttributeFilterSelectionMode,
     type ISetAttributeFilterTitle,
     type ISetFilterViewAsDefault,
+    type ISetMeasureValueFilterDimensionality,
     type ISetMeasureValueFilterTitle,
     type ReplaceAttributeFilterItemSelection,
 } from "./filters.js";
@@ -226,6 +227,7 @@ export type DashboardCommands =
     | ISetAttributeFilterDisplayForm
     | ISetAttributeFilterTitle
     | ISetMeasureValueFilterTitle
+    | ISetMeasureValueFilterDimensionality
     | ISetAttributeFilterSelectionMode
     | IChangeRichTextWidgetContent
     | IChangeRichTextWidgetFilterSettings

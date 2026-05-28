@@ -446,6 +446,12 @@ export interface ActionsApiCancelExecutionsRequest {
 }
 
 // @public
+export interface ActionsApiCancelWorkflow1Request {
+    readonly runId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiCancelWorkflowRequest {
     readonly runId: string;
     readonly workspaceId: string;
@@ -591,6 +597,12 @@ export interface ActionsApiForecastResultRequest {
 }
 
 // @public
+export interface ActionsApiGenerateDashboardSummary1Request {
+    readonly dashboardSummaryRequestDto: DashboardSummaryRequestDto;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiGenerateDashboardSummaryRequest {
     readonly workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto;
     readonly workspaceId: string;
@@ -599,6 +611,12 @@ export interface ActionsApiGenerateDashboardSummaryRequest {
 // @public
 export interface ActionsApiGenerateDescriptionRequest {
     readonly generateDescriptionRequest: GenerateDescriptionRequest;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiGenerateKnowledgeRecommendationsRequest {
+    readonly knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto;
     readonly workspaceId: string;
 }
 
@@ -639,6 +657,12 @@ export { ActionsApiGetQualityIssuesRequest as GenAiApiGetQualityIssuesRequest }
 
 // @public
 export interface ActionsApiGetTranslationTagsRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiGetWorkflowStatus1Request {
+    readonly runId: string;
     readonly workspaceId: string;
 }
 
@@ -1012,6 +1036,13 @@ export interface ActionsApiUnsubscribeWorkspaceAutomationsRequest {
 }
 
 // @public
+export interface ActionsApiUserFeedbackRequest {
+    readonly feedbackRequestDto: FeedbackRequestDto;
+    readonly runId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 interface ActionsApiValidateLLMEndpointByIdRequest {
     readonly llmEndpointId: string;
 }
@@ -1369,6 +1400,10 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
+    // (undocumented)
+    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1384,12 +1419,18 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+    // (undocumented)
+    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+    // (undocumented)
+    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
+    // (undocumented)
+    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
@@ -1408,6 +1449,10 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     testLlmProviderById(requestParameters: GenAiApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
+    // (undocumented)
+    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     // @deprecated
     validateLLMEndpoint(options?: AxiosRequestConfig): AxiosPromise<void>;
     // @deprecated
@@ -1436,6 +1481,10 @@ export interface AfmActionsApiInterface {
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
+    // (undocumented)
+    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1451,12 +1500,18 @@ export interface AfmActionsApiInterface {
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+    // (undocumented)
+    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+    // (undocumented)
+    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
+    // (undocumented)
+    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listLlmProviderModels(requestParameters: ActionsApiListLlmProviderModelsRequest, options?: AxiosRequestConfig): AxiosPromise<ListLlmProviderModelsResponse>;
@@ -1475,6 +1530,10 @@ export interface AfmActionsApiInterface {
     testLlmProviderById(requestParameters: GenAiApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     trendingObjects(requestParameters: ActionsApiTrendingObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<TrendingObjectsResult>;
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
+    // (undocumented)
+    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     // @deprecated
     validateLLMEndpoint(options?: AxiosRequestConfig): AxiosPromise<void>;
     // @deprecated
@@ -6876,6 +6935,8 @@ export interface AutomationDashboardCompoundComparisonConditionComparison {
     // (undocumented)
     'operator': AutomationDashboardCompoundComparisonConditionComparisonOperatorEnum;
     // (undocumented)
+    'treatNullValuesAs'?: number;
+    // (undocumented)
     'value': number;
 }
 
@@ -6899,6 +6960,8 @@ export interface AutomationDashboardCompoundRangeConditionRange {
     'operator': AutomationDashboardCompoundRangeConditionRangeOperatorEnum;
     // (undocumented)
     'to': number;
+    // (undocumented)
+    'treatNullValuesAs'?: number;
 }
 
 // @public (undocumented)
@@ -6998,6 +7061,8 @@ export interface AutomationDashboardMeasureValueFilter {
 export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilter {
     // (undocumented)
     'conditions': Array<AutomationDashboardCompoundConditionItem>;
+    // (undocumented)
+    'dimensionality'?: Array<AutomationIdentifierRef>;
     // (undocumented)
     'localIdentifier'?: string;
     // (undocumented)
@@ -9685,6 +9750,8 @@ export interface DashboardCompoundComparisonConditionComparison {
     // (undocumented)
     'operator': DashboardCompoundComparisonConditionComparisonOperatorEnum;
     // (undocumented)
+    'treatNullValuesAs'?: number;
+    // (undocumented)
     'value': number;
 }
 
@@ -9708,6 +9775,8 @@ export interface DashboardCompoundRangeConditionRange {
     'operator': DashboardCompoundRangeConditionRangeOperatorEnum;
     // (undocumented)
     'to': number;
+    // (undocumented)
+    'treatNullValuesAs'?: number;
 }
 
 // @public (undocumented)
@@ -9813,6 +9882,8 @@ export interface DashboardMeasureValueFilter {
 export interface DashboardMeasureValueFilterDashboardMeasureValueFilter {
     // (undocumented)
     'conditions': Array<DashboardCompoundConditionItem>;
+    // (undocumented)
+    'dimensionality'?: Array<IdentifierRef>;
     // (undocumented)
     'localIdentifier'?: string;
     // (undocumented)
@@ -10106,6 +10177,38 @@ export interface DashboardSlidesTemplate {
 
 // @public (undocumented)
 export type DashboardSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+// @public (undocumented)
+export interface DashboardSummaryRequestDto {
+    // (undocumented)
+    'aiModel'?: string;
+    // (undocumented)
+    'customUserPrompt'?: string;
+    // (undocumented)
+    'dashboardId': string;
+    // (undocumented)
+    'dryRun'?: boolean;
+    // (undocumented)
+    'gooddataHost'?: string;
+    // (undocumented)
+    'gooddataToken'?: string;
+    // (undocumented)
+    'keyMetricIds'?: Array<string>;
+    // (undocumented)
+    'referenceQuarter'?: string;
+    // (undocumented)
+    'temperature'?: number;
+}
+
+// @public (undocumented)
+export interface DashboardSummaryResponseDto {
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'runId': string;
+    // (undocumented)
+    'status': string;
+}
 
 // @public
 export interface DashboardTabularExportRequestV2 {
@@ -16912,8 +17015,16 @@ export interface ExecutionResultGrandTotal {
 export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExecutionResultHeader | TotalExecutionResultHeader;
 
 // @public
+export interface ExecutionResultLimitBreak {
+    'limit': number;
+    'limitType': string;
+    'value'?: number;
+}
+
+// @public
 export interface ExecutionResultMetadata {
     'dataSourceMessages': Array<ExecutionResultDataSourceMessage>;
+    'limitBreaks'?: Array<ExecutionResultLimitBreak>;
 }
 
 // @public
@@ -17366,6 +17477,8 @@ export interface ExportDashboardCompoundComparisonConditionComparison {
     // (undocumented)
     'operator': ExportDashboardCompoundComparisonConditionComparisonOperatorEnum;
     // (undocumented)
+    'treatNullValuesAs'?: number;
+    // (undocumented)
     'value': number;
 }
 
@@ -17389,6 +17502,8 @@ export interface ExportDashboardCompoundRangeConditionRange {
     'operator': ExportDashboardCompoundRangeConditionRangeOperatorEnum;
     // (undocumented)
     'to': number;
+    // (undocumented)
+    'treatNullValuesAs'?: number;
 }
 
 // @public (undocumented)
@@ -17488,6 +17603,8 @@ export interface ExportDashboardMeasureValueFilter {
 export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
     // (undocumented)
     'conditions': Array<ExportDashboardCompoundConditionItem>;
+    // (undocumented)
+    'dimensionality'?: Array<ExportIdentifierRef>;
     // (undocumented)
     'localIdentifier'?: string;
     // (undocumented)
@@ -18677,6 +18794,15 @@ export type FeatureContext = {
     region?: string;
     dataCenter?: string;
 };
+
+// @public (undocumented)
+export interface FeedbackRequestDto {
+    // (undocumented)
+    'sentiment': FeedbackRequestDtoSentimentEnum;
+}
+
+// @public (undocumented)
+export type FeedbackRequestDtoSentimentEnum = 'POSITIVE' | 'NEGATIVE';
 
 // @public
 export interface FilterBy {
@@ -20897,14 +21023,10 @@ export interface ITigerDashboardLayoutSizeByScreenSize {
 export type ITigerDashboardMatchAttributeFilter = DashboardMatchAttributeFilter;
 
 // @public
-export interface ITigerDashboardMeasureValueFilter {
+export interface ITigerDashboardMeasureValueFilter extends DashboardMeasureValueFilter {
     // (undocumented)
-    dashboardMeasureValueFilter: {
-        measure: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["measure"];
-        conditions: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["conditions"];
-        title?: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["title"];
+    dashboardMeasureValueFilter: DashboardMeasureValueFilter["dashboardMeasureValueFilter"] & {
         localIdentifier: string;
-        treatNullValuesAs?: number;
     };
 }
 
@@ -20961,7 +21083,7 @@ export interface ITigerDashboardTab {
 export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
 
 // @public
-export type ITigerFilterContextItem = Exclude<DashboardFilter, DashboardMeasureValueFilter> | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter | ITigerDashboardMeasureValueFilter;
+export type ITigerFilterContextItem = DashboardFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter | ITigerDashboardMeasureValueFilter;
 
 // @public
 export interface ITigerInsightLayerDefinition {
@@ -28446,6 +28568,58 @@ export interface KnowledgeRecommendationControllerApiUpdateEntityKnowledgeRecomm
     readonly workspaceId: string;
 }
 
+// @public (undocumented)
+export interface KnowledgeRecommendationsRequestDto {
+    // (undocumented)
+    'aiModel'?: string;
+    // (undocumented)
+    'analyticalDashboardId'?: string;
+    // (undocumented)
+    'analyzedValue'?: number;
+    // (undocumented)
+    'comparisonType': KnowledgeRecommendationsRequestDtoComparisonTypeEnum;
+    // (undocumented)
+    'direction'?: KnowledgeRecommendationsRequestDtoDirectionEnum;
+    // (undocumented)
+    'dryRun'?: boolean;
+    // (undocumented)
+    'gooddataHost'?: string;
+    // (undocumented)
+    'gooddataToken'?: string;
+    // (undocumented)
+    'limit'?: number;
+    // (undocumented)
+    'maxTokens'?: number;
+    // (undocumented)
+    'metricId': string;
+    // (undocumented)
+    'minScore'?: number;
+    // (undocumented)
+    'referenceValue'?: number;
+    // (undocumented)
+    'temperature'?: number;
+    // (undocumented)
+    'widgetId'?: string;
+    // (undocumented)
+    'widgetName'?: string;
+}
+
+// @public (undocumented)
+export type KnowledgeRecommendationsRequestDtoComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+
+// @public (undocumented)
+export type KnowledgeRecommendationsRequestDtoDirectionEnum = 'INCREASED' | 'DECREASED';
+
+// @public (undocumented)
+export interface KnowledgeRecommendationsResponseDto {
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'runId': string;
+    // (undocumented)
+    'status': string;
+}
+
 // @public
 export class LabelControllerApi extends MetadataBaseApi implements LabelControllerApiInterface {
     getAllEntitiesLabels(requestParameters: LabelControllerApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutList>;
@@ -33517,7 +33691,7 @@ export interface TestDefinitionRequest {
 }
 
 // @public (undocumented)
-export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE';
+export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE' | 'DENODO';
 
 // @public (undocumented)
 export interface TestLlmProviderByIdRequest {

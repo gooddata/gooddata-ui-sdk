@@ -156,7 +156,13 @@ export interface IRankingFilter {
  * references are not supported). When the dashboard holds multiple MVFs for the same metric,
  * `localIdentifier` disambiguates which one is targeted; without it the dashboard matches by
  * metric only and silently ignores the change if more than one filter exists for that metric.
- * Conditions are OR-ed; an empty array (or omitted property) clears the filter.
+ * Conditions are OR-ed; an empty array (or omitted property) clears the filter. `dimensionality`
+ * can define the dashboard-level granularity for the MVF; an empty array clears it.
+ *
+ * `treatNullValuesAs` is a filter-level convenience: when set, NULL metric values are treated as
+ * the given number for every condition that does not define its own `treatNullValuesAs`. The
+ * underlying model represents this per condition, so the value is folded into the conditions when
+ * the command is translated.
  *
  * @public
  */
@@ -165,6 +171,8 @@ export interface IMeasureValueFilter {
         measure: IObjIdentifierQualifier;
         localIdentifier?: string;
         conditions?: MeasureValueFilterCondition[];
+        dimensionality?: ObjQualifier[];
+        treatNullValuesAs?: number;
     };
 }
 

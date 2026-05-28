@@ -36,6 +36,7 @@ import {
     getAlertSensitivity,
     getAlertThreshold,
     getDescription,
+    getSelectedCatalogAttributeValue,
     getSubtitle,
     getValueSuffix,
 } from "../utils/getters.js";
@@ -1006,6 +1007,55 @@ describe("alert transforms", () => {
                     },
                 },
             });
+        });
+
+        it("transformAlertByRelativeOperator, uses comparator matching selected granularity", () => {
+            const metricWithMultipleGranularities: AlertMetric = {
+                ...previousPeriodMetric,
+                comparators: [
+                    {
+                        ...previousPeriodMetric.comparators[0],
+                        measure: {
+                            ...previousPeriodMetric.comparators[0].measure,
+                            measure: {
+                                ...previousPeriodMetric.comparators[0].measure.measure,
+                                localIdentifier: "localMetric_pp_week",
+                            },
+                        },
+                        granularity: "GDC.time.week",
+                    },
+                    {
+                        ...previousPeriodMetric.comparators[0],
+                        measure: {
+                            ...previousPeriodMetric.comparators[0].measure,
+                            measure: {
+                                ...previousPeriodMetric.comparators[0].measure.measure,
+                                localIdentifier: "localMetric_pp_year",
+                            },
+                        },
+                        granularity: "GDC.time.year",
+                    },
+                ],
+            };
+
+            const res = transformAlertByRelativeOperator(
+                [metricWithMultipleGranularities],
+                baseRelative,
+                metricWithMultipleGranularities,
+                "CHANGES_BY",
+                "DIFFERENCE",
+                undefined,
+                AlertMetricComparatorType.PreviousPeriod,
+                "GDC.time.year",
+            );
+
+            expect((res.alert?.condition as IAutomationAlertRelativeCondition)?.measure.right.id).toBe(
+                "localMetric_pp_year",
+            );
+            expect(res.alert?.execution.measures.map((m) => m.measure.localIdentifier)).toEqual([
+                "localPPMetric1",
+                "localMetric_pp_year",
+            ]);
         });
 
         it("transformAlertByRelativeOperator, anomaly detection value", () => {
@@ -2195,6 +2245,66 @@ describe("alert transforms", () => {
         it("should handle null insight", () => {
             const measures = getSupportedInsightMeasuresByInsight(null, dateDatasets, true);
             expect(measures).toEqual([]);
+        });
+
+        it("should collect measures from relative alert without insight and generate granular comparators", () => {
+            const alert = {
+                ...baseRelative,
+                alert: {
+                    ...baseRelative.alert,
+                    condition: {
+                        type: "relative",
+                        operator: "INCREASES_BY",
+                        threshold: 10,
+                        measure: {
+                            operator: "CHANGE",
+                            left: {
+                                id: "leftMetric",
+                                format: "#,##0.00",
+                                title: "Left Metric",
+                            },
+                            right: {
+                                id: "rightMetric",
+                                format: "#,##0.00",
+                                title: "Right Metric",
+                            },
+                        },
+                    },
+                },
+            } as IAutomationMetadataObject;
+
+            const measures = getSupportedInsightMeasuresByInsight(null, dateDatasets, true, alert);
+            expect(measures).toHaveLength(2);
+            expect(measures.map((m) => m.measure.measure.localIdentifier)).toEqual([
+                "leftMetric",
+                "rightMetric",
+            ]);
+            measures.forEach((measure) => {
+                expect(measure.comparators).toHaveLength(2);
+                expect(measure.comparators[0].granularity).toBe("GDC.time.year");
+                expect(measure.comparators[1].granularity).toBe("GDC.time.year");
+            });
+        });
+    });
+
+    describe("getSelectedCatalogAttributeValue", () => {
+        it("should fallback to synthetic value object when selected value is missing", () => {
+            const values = [
+                { title: "Value A", value: "a", name: "A" },
+                { title: "Value B", value: "b", name: "B" },
+            ];
+
+            const selected = getSelectedCatalogAttributeValue(
+                { id: "attr" } as any,
+                () => values,
+                "custom-input",
+            );
+
+            expect(selected).toEqual({
+                title: "custom-input",
+                value: "custom-input",
+                name: "custom-input",
+            });
         });
     });
 });

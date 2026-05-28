@@ -663,6 +663,9 @@ export const GD_COLOR_STATE_HOVER = "#94a1ad";
 // @internal (undocumented)
 export const GD_COLOR_WHITE = "#fff";
 
+// @internal
+export type GeneralAccessValue = "RESTRICTED" | "WORKSPACE";
+
 // @internal (undocumented)
 export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, workspaceId?: string, featureFlags?: ISettings): IHeaderMenuItem[];
 
@@ -775,6 +778,9 @@ export const GOODSTRAP_DRAG_EVENT = "goodstrap.drag";
 
 // @internal
 export const GOODSTRAP_SCROLLED_EVENT = "goodstrap.scrolled";
+
+// @internal
+export type GranteeAvatarKind = "user" | "group";
 
 // @internal (undocumented)
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
@@ -1873,7 +1879,7 @@ export function IconTrash({ color, className, width, height }: IIconProps): JSX.
 export function IconTreeMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin";
 
 // @internal (undocumented)
 export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
@@ -5766,6 +5772,20 @@ export interface ITypographyProps {
 }
 
 // @internal (undocumented)
+export interface IUiAddGranteeDialogProps {
+    dataTestId?: string;
+    isAddDisabled?: boolean;
+    objectTitle: string;
+    onAdd: () => void;
+    onBack: () => void;
+    onCancel: () => void;
+    onClose: () => void;
+    onSearchQueryChange: (next: string) => void;
+    searchQuery: string;
+    selectedGrantee?: ReactNode;
+}
+
+// @internal (undocumented)
 export interface IUiAsyncTableAccessibilityConfig<T> {
     // (undocumented)
     checkboxAllAriaLabel?: string;
@@ -5982,6 +6002,20 @@ export interface IUiAutofocusOptions {
     initialFocus?: string | RefObject<HTMLElement | null>;
     // (undocumented)
     refocusKey?: unknown;
+}
+
+// @internal (undocumented)
+export interface IUiAvatarProps {
+    accessibilityConfig?: {
+        ariaLabel?: string;
+        ariaHidden?: boolean;
+    };
+    backgroundColor?: ThemeColor;
+    dataTestId?: string;
+    icon: IconType;
+    iconColor?: ThemeColor;
+    iconSize?: number;
+    size?: number;
 }
 
 // @internal (undocumented)
@@ -6545,6 +6579,31 @@ export type IUiFocusManagerProps = {
 };
 
 // @internal (undocumented)
+export interface IUiGeneralAccessRadioProps {
+    dataTestId?: string;
+    onChange: (value: GeneralAccessValue) => void;
+    value: GeneralAccessValue;
+    workspaceControls?: ReactNode;
+}
+
+// @internal (undocumented)
+export interface IUiGranteeAvatarProps {
+    dataTestId?: string;
+    decorative?: boolean;
+    kind: GranteeAvatarKind;
+}
+
+// @internal (undocumented)
+export interface IUiGranteeRowProps {
+    controls?: ReactNode;
+    dataTestId?: string;
+    email?: string;
+    isOwner?: boolean;
+    kind: GranteeAvatarKind;
+    name: string;
+}
+
+// @internal (undocumented)
 export interface IUiIconButtonPublicProps {
     // (undocumented)
     accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
@@ -7052,6 +7111,28 @@ export interface IUiNavigationItem {
     targetId: string;
 }
 
+// @internal
+export interface IUiObjectShareDialogGrantee {
+    controls?: ReactNode;
+    email?: string;
+    id: string;
+    isOwner?: boolean;
+    kind: GranteeAvatarKind;
+    name: string;
+}
+
+// @internal (undocumented)
+export interface IUiObjectShareDialogProps {
+    dataTestId?: string;
+    generalAccess: GeneralAccessValue;
+    grantees: IUiObjectShareDialogGrantee[];
+    objectTitle: string;
+    onAddClick: () => void;
+    onClose: () => void;
+    onGeneralAccessChange: (value: GeneralAccessValue) => void;
+    workspaceControls?: ReactNode;
+}
+
 // @internal (undocumented)
 export interface IUiPagedVirtualListImperativeHandle<T> {
     // (undocumented)
@@ -7186,6 +7267,38 @@ export interface IUiPopoverProps {
     triggerBy?: IUiTooltipProps["triggerBy"];
     // (undocumented)
     width?: "default" | number;
+}
+
+// @internal (undocumented)
+export interface IUiRadioProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    checked: boolean;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    disabled?: boolean;
+    id?: string;
+    label?: string;
+    name?: string;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    tabIndex?: number;
+    value?: string;
+}
+
+// @internal (undocumented)
+export interface IUiRadioRowProps {
+    checked: boolean;
+    dataTestId?: string;
+    description?: string;
+    // (undocumented)
+    disabled?: boolean;
+    name?: string;
+    onChange?: () => void;
+    title: string;
+    trailing?: ReactNode;
+    value?: string;
 }
 
 // @internal (undocumented)
@@ -7418,6 +7531,31 @@ export interface IUiTagsProps {
     tagOptions?: Array<IUiTagDef>;
     // (undocumented)
     tags: Array<IUiTagDef>;
+}
+
+// @internal
+export interface IUiTextInputIconAfterButton {
+    ariaLabel: string;
+    icon: IconType;
+    onClick: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiTextInputProps {
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    autoFocus?: boolean;
+    dataTestId?: string;
+    // (undocumented)
+    disabled?: boolean;
+    iconAfter?: IconType;
+    iconBefore?: IconType;
+    label?: string;
+    onChange: (next: string) => void;
+    onIconAfter?: IUiTextInputIconAfterButton;
+    placeholder?: string;
+    type?: "text" | "search" | "email" | "url";
+    value: string;
 }
 
 // @internal (undocumented)
@@ -8425,6 +8563,9 @@ export function Typography({ tagName: Tag, children, className, title, id, onCli
 // @internal (undocumented)
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
+// @internal
+export function UiAddGranteeDialog({ objectTitle, searchQuery, onSearchQueryChange, selectedGrantee, onBack, onClose, onCancel, onAdd, isAddDisabled, dataTestId }: IUiAddGranteeDialogProps): JSX.Element;
+
 // @internal (undocumented)
 export function UiAsyncTable<T extends {
     id: string;
@@ -8470,6 +8611,9 @@ export function UiAutofocus({ root, children, ...options }: {
     root?: ReactElement;
     children: ReactNode;
 } & IUiAutofocusOptions): FunctionComponentElement<any>;
+
+// @internal
+export function UiAvatar({ icon, size, backgroundColor, iconColor, iconSize, accessibilityConfig, dataTestId }: IUiAvatarProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiBadge({ label }: IUiBadgeProps): JSX.Element;
@@ -8583,6 +8727,15 @@ export function UiFocusTrap({ root, children, focusCheckFn }: {
     focusCheckFn?: (element: HTMLElement) => boolean;
 }): FunctionComponentElement<any>;
 
+// @internal
+export function UiGeneralAccessRadio({ value, onChange, workspaceControls, dataTestId }: IUiGeneralAccessRadioProps): JSX.Element;
+
+// @internal
+export function UiGranteeAvatar({ kind, decorative, dataTestId }: IUiGranteeAvatarProps): JSX.Element;
+
+// @internal
+export function UiGranteeRow({ kind, name, email, isOwner, controls, dataTestId }: IUiGranteeRowProps): JSX.Element;
+
 // @internal (undocumented)
 export function UiIcon({ type, color, layout, disableAnimation, accessibilityConfig, size, backgroundSize, backgroundColor, backgroundType, backgroundShape }: IUiIconProps): JSX.Element;
 
@@ -8618,6 +8771,9 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
 // @internal (undocumented)
 export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavigationBypassProps): JSX.Element;
 
+// @internal
+export function UiObjectShareDialog({ objectTitle, onClose, grantees, onAddClick, generalAccess, onGeneralAccessChange, workspaceControls, dataTestId }: IUiObjectShareDialogProps): JSX.Element;
+
 // @internal (undocumented)
 export const UiPagedVirtualList: <T>(props: IUiPagedVirtualListProps<T> & RefAttributes<IUiPagedVirtualListImperativeHandle<T>>) => ReactNode;
 
@@ -8632,6 +8788,12 @@ export type UiPaginationButtonSize = "small" | "large";
 
 // @internal (undocumented)
 export function UiPopover({ id, accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose }: IUiPopoverProps): JSX.Element;
+
+// @internal
+export function UiRadio({ checked, onChange, name, value, disabled, accessibilityConfig, tabIndex, label, id, dataTestId }: IUiRadioProps): JSX.Element;
+
+// @internal
+export function UiRadioRow({ checked, onChange, name, value, title, description, trailing, disabled, dataTestId }: IUiRadioRowProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiRefsTree = Record<string, HTMLDivElement | null>;
@@ -8696,6 +8858,9 @@ export type UiTagProps = {
 
 // @internal (undocumented)
 export function UiTags({ tags, tagOptions, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, creatableLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig }: IUiTagsProps): JSX.Element;
+
+// @internal
+export function UiTextInput({ type, value, onChange, label, placeholder, iconBefore, iconAfter, onIconAfter, accessibilityConfig, disabled, autoFocus, dataTestId }: IUiTextInputProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiTooltip({ id, anchor, content, behaviour, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, anchorWrapperStyles }: IUiTooltipProps): JSX.Element;

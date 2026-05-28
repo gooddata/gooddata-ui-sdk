@@ -1,0 +1,68 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-text-input {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gd-spacing-5px);
+
+    &__label {
+        font-size: 14px;
+        line-height: 21px;
+        color: var(--gd-palette-complementary-7);
+    }
+
+    &__field {
+        display: flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 var(--gd-spacing-7px);
+        border: 1px solid var(--gd-palette-complementary-4);
+        border-radius: 3px;
+        background-color: var(--gd-palette-complementary-0);
+        box-shadow: inset 0 1px 2px var(--gd-shadow-color);
+
+        &:focus-within {
+            border-color: var(--gd-palette-primary-base);
+        }
+
+        &--disabled {
+            background-color: var(--gd-palette-complementary-2);
+            cursor: not-allowed;
+        }
+    }
+
+    &__icon-before {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        margin-right: var(--gd-spacing-5px);
+    }
+
+    &__icon-after {
+        display: inline-flex;
+        align-items: center;
+        flex-shrink: 0;
+        margin-left: var(--gd-spacing-5px);
+    }
+
+    &__input {
+        flex: 1 1 auto;
+        min-width: 0;
+        height: 100%;
+        padding: 0;
+        border: none;
+        background: transparent;
+        font-family: inherit;
+        font-size: 14px;
+        color: var(--gd-palette-complementary-8);
+        outline: none;
+
+        &::placeholder {
+            color: var(--gd-palette-complementary-5);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+        }
+    }
+}

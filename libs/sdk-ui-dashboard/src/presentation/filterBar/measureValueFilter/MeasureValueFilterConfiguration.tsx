@@ -7,7 +7,11 @@ import { type IntlShape } from "react-intl";
 import {
     type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
+    type ObjRef,
+    type ObjRefInScope,
+    isObjRef,
 } from "@gooddata/sdk-model";
+import { DimensionalitySection, type IDimensionalityItem } from "@gooddata/sdk-ui-filters/internal";
 
 import { ConfigurationCategory } from "../attributeFilter/dashboardDropdownBody/configuration/ConfigurationCategory.js";
 import { ConfigurationPanelHeader } from "../attributeFilter/dashboardDropdownBody/configuration/ConfigurationPanelHeader.js";
@@ -22,10 +26,14 @@ interface IMeasureValueFilterConfigurationProps {
     title: string;
     defaultTitle: string;
     mode: DashboardAttributeFilterConfigMode;
+    dimensionality: IDimensionalityItem[];
+    catalogDimensionality: IDimensionalityItem[];
+    loadCatalogDimensionality: (dimensionality: ObjRef[]) => Promise<IDimensionalityItem[]>;
     showConfigModeSection: boolean;
     onTitleChange: (title: string) => void;
     onTitleReset: () => void;
     onModeChange: (mode: DashboardAttributeFilterConfigMode) => void;
+    onDimensionalityChange: (dimensionality: IDimensionalityItem[]) => void;
 }
 
 /**
@@ -39,16 +47,25 @@ export function MeasureValueFilterConfiguration({
     title,
     defaultTitle,
     mode,
+    dimensionality,
+    catalogDimensionality,
+    loadCatalogDimensionality,
     showConfigModeSection,
     onTitleChange,
     onTitleReset,
     onModeChange,
+    onDimensionalityChange,
 }: IMeasureValueFilterConfigurationProps) {
     const handleModeChanged = useCallback(
         (value: string) => {
             onModeChange(value as DashboardAttributeFilterConfigMode);
         },
         [onModeChange],
+    );
+    const handleLoadCatalogDimensionality = useCallback(
+        (currentDimensionality: ObjRefInScope[]) =>
+            loadCatalogDimensionality(currentDimensionality.filter(isObjRef)),
+        [loadCatalogDimensionality],
     );
 
     return (
@@ -61,6 +78,14 @@ export function MeasureValueFilterConfiguration({
                 onChange={onTitleChange}
                 showResetTitle={title !== defaultTitle}
                 attributeTitle={title}
+            />
+            <DimensionalitySection
+                dimensionality={dimensionality}
+                catalogDimensionality={catalogDimensionality}
+                loadCatalogDimensionality={handleLoadCatalogDimensionality}
+                onDimensionalityChange={onDimensionalityChange}
+                // Dashboard MVFs are newly configured with explicit ObjRef dimensionality.
+                isMigratedFilter
             />
             {showConfigModeSection ? (
                 <>

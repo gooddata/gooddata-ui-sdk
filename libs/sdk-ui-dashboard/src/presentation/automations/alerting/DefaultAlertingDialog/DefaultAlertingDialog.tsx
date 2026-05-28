@@ -147,6 +147,7 @@ export function AlertingDialogRenderer({
         onTriggerModeChange,
         onTriggerIntervalChange,
         selectedMeasure,
+        canChangeMeasure,
         supportedMeasures,
         canManageAttributes,
         selectedAttribute,
@@ -173,6 +174,7 @@ export function AlertingDialogRenderer({
         allowExternalRecipients,
         warningMessage,
         validationErrorMessage,
+        isInvalidConnectionToInsight,
         isSubmitDisabled,
         isParentValid,
         thresholdErrorMessage,
@@ -242,10 +244,14 @@ export function AlertingDialogRenderer({
 
     useEffect(() => {
         setInvalidDatapoints(() => [
-            !!validationErrorMessage && createInvalidDatapoint({ message: validationErrorMessage }),
+            !!validationErrorMessage &&
+                createInvalidDatapoint({
+                    message: validationErrorMessage,
+                    severity: isInvalidConnectionToInsight ? "error" : "warning",
+                }),
             !!thresholdErrorMessage && createInvalidDatapoint({ message: thresholdErrorMessage }),
         ]);
-    }, [validationErrorMessage, thresholdErrorMessage, setInvalidDatapoints]);
+    }, [validationErrorMessage, thresholdErrorMessage, isInvalidConnectionToInsight, setInvalidDatapoints]);
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.alerting.footer.title.short" }).id
@@ -386,6 +392,7 @@ export function AlertingDialogRenderer({
                                             selectedMeasure={selectedMeasure}
                                             onMeasureChange={onMeasureChange}
                                             measures={supportedMeasures}
+                                            disabled={!canChangeMeasure}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             id="alert.measure"
                                             closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
@@ -400,6 +407,7 @@ export function AlertingDialogRenderer({
                                             >
                                                 <AlertAttributeSelect
                                                     id="alert.attribute"
+                                                    disabled={!canChangeMeasure}
                                                     selectedAttribute={selectedAttribute}
                                                     selectedValue={selectedValue}
                                                     onAttributeChange={onAttributeChange}
@@ -458,11 +466,13 @@ export function AlertingDialogRenderer({
                                                 measure={selectedMeasure}
                                                 alert={editedAutomation as IAutomationMetadataObject}
                                                 selectedComparison={selectedComparator?.comparator}
-                                                onComparisonChange={(comparisonType) => {
+                                                selectedGranularity={selectedComparator?.granularity}
+                                                onComparisonChange={(comparisonType, granularity) => {
                                                     onComparisonTypeChange(
                                                         selectedMeasure,
                                                         selectedRelativeOperator,
                                                         comparisonType,
+                                                        granularity,
                                                     );
                                                 }}
                                                 overlayPositionType={OVERLAY_POSITION_TYPE}
@@ -640,8 +650,8 @@ export function AlertingDialogRenderer({
                                 {invalidDatapoints.map((datapoint) => (
                                     <Message
                                         key={datapoint.id}
-                                        type="error"
                                         id={datapoint.id}
+                                        type={datapoint.severity === "info" ? "progress" : datapoint.severity}
                                         className="gd-notifications-channels-dialog-error gd-notifications-channels-dialog-error-scrollable"
                                     >
                                         {datapoint.message}

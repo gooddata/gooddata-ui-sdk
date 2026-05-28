@@ -1743,6 +1743,10 @@
         "text": "Filter is not applicable to this visualization.",
         "crowdinContext": "Warning message when attempting to apply measure value filter to incompatible visualization"
     },
+    "configurationPanel.mvfBlockedByRankingFilter": {
+        "text": "This filter can't be applied because the visualization uses a Top/bottom values filter. Remove the Top/bottom values filter to apply this filter.",
+        "crowdinContext": "Warning message shown on a dashboard measure value filter row in widget configuration when the widget's visualization uses a ranking (Top/Bottom values) filter, which is incompatible with measure value filters"
+    },
     "configurationPanel.kpiCantBeFilteredByDate": {
         "text": "The kpi cannot be filtered by Date. Unselect the check box.",
         "crowdinContext": "Warning message when attempting to apply date filter to incompatible KPI"
@@ -3032,7 +3036,11 @@
         "crowdinContext": "Error message for alert configuration"
     },
     "insightAlert.config.invalidWidget": {
-        "text": "Error: Alert can't be sent — the source widget was deleted. Delete the alert or contact your administrator.",
+        "text": "Error: Alert can't be fully edited — the source widget was deleted. Delete the alert or contact your administrator.",
+        "crowdinContext": "Error message for alert configuration"
+    },
+    "insightAlert.config.unusedWidget": {
+        "text": "Alert can't be fully edited — the source widget is not available.",
         "crowdinContext": "Error message for alert configuration"
     },
     "insightAlert.config.missingThreshold": {

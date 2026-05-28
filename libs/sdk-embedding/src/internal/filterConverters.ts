@@ -73,6 +73,7 @@ export interface ITransformedMeasureValueFilter {
     measureIdentifier: string;
     localIdentifier?: string;
     conditions?: MeasureValueFilterCondition[];
+    dimensionality?: ObjQualifier[];
 }
 
 export interface ITransformedDateFilterItem {
@@ -239,12 +240,26 @@ function isValidMeasureValueFilterCondition(condition: unknown): condition is Me
     return false;
 }
 
+function isValidMeasureValueFilterDimensionality(dimensionality: unknown): dimensionality is ObjQualifier[] {
+    return (
+        Array.isArray(dimensionality) &&
+        dimensionality.every((item) => {
+            const { uri, identifier } = getObjectUriIdentifier(item as ObjQualifier);
+            return typeof uri === "string" || typeof identifier === "string";
+        })
+    );
+}
+
 function isValidMeasureValueFilterFormat(filterItem: IMeasureValueFilter): boolean {
-    const { measure, localIdentifier, conditions } = filterItem.measureValueFilter;
+    const { measure, localIdentifier, conditions, dimensionality, treatNullValuesAs } =
+        filterItem.measureValueFilter;
     if (isEmpty(measure) || !isObjIdentifierQualifier(measure)) {
         return false;
     }
     if (localIdentifier !== undefined && typeof localIdentifier !== "string") {
+        return false;
+    }
+    if (treatNullValuesAs !== undefined && typeof treatNullValuesAs !== "number") {
         return false;
     }
     // Omitted or empty `conditions` clears the filter; otherwise every entry must be a valid condition.
@@ -255,6 +270,9 @@ function isValidMeasureValueFilterFormat(filterItem: IMeasureValueFilter): boole
         if (conditions.length > 0 && !conditions.every(isValidMeasureValueFilterCondition)) {
             return false;
         }
+    }
+    if (dimensionality !== undefined && !isValidMeasureValueFilterDimensionality(dimensionality)) {
+        return false;
     }
     return true;
 }
@@ -476,11 +494,13 @@ function transformRankingFilterItem(rankingFilterItem: IRankingFilter): ITransfo
 function transformMeasureValueFilterItem(
     measureValueFilterItem: IMeasureValueFilter,
 ): ITransformedMeasureValueFilter {
-    const { measure, localIdentifier, conditions } = measureValueFilterItem.measureValueFilter;
+    const { measure, localIdentifier, conditions, dimensionality } =
+        measureValueFilterItem.measureValueFilter;
     return {
         measureIdentifier: measure.identifier,
         ...(localIdentifier ? { localIdentifier } : {}),
         ...(conditions && conditions.length > 0 ? { conditions } : {}),
+        ...(dimensionality && dimensionality.length > 0 ? { dimensionality } : {}),
     };
 }
 

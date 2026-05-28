@@ -25,7 +25,7 @@ export type DialogHeaderTitleSize = "default" | "large";
 export interface IUiDialogHeaderProps {
     /** Title shown in the header. */
     title: string;
-    /** Title size — <code>"default"</code> = 18/26, <code>"large"</code> = 20/26. */
+    /** Title size — `"default"` = 18/26, `"large"` = 20/26. */
     titleSize?: DialogHeaderTitleSize;
     /** Fires when the user clicks the X close button. Omit to hide the X. */
     onClose?: () => void;

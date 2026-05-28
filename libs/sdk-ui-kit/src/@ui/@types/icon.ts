@@ -75,6 +75,7 @@ export type IconType =
     | "ellipsis"
     | "pencil"
     | "folder"
+    | "folderSmall"
     | "folderPlus"
     | "trash"
     | "arrowUp"

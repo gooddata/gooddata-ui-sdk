@@ -341,11 +341,13 @@ export function EditAlert({
                                     measure={selectedMeasure}
                                     alert={updatedAlert}
                                     selectedComparison={selectedComparator?.comparator}
-                                    onComparisonChange={(comparisonType) => {
+                                    selectedGranularity={selectedComparator?.granularity}
+                                    onComparisonChange={(comparisonType, granularity) => {
                                         changeComparisonType(
                                             selectedMeasure,
                                             selectedRelativeOperator,
                                             comparisonType,
+                                            granularity,
                                         );
                                     }}
                                     overlayPositionType={overlayPositionType}

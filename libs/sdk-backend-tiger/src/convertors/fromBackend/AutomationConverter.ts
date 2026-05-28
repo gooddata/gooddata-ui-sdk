@@ -54,6 +54,7 @@ import {
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
     measureValueFilterConditions,
+    measureValueFilterDimensionality,
     measureValueFilterMeasure,
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
@@ -573,6 +574,7 @@ export function convertExecutionFilterToFilterContextItem(
         }
         const body = filter.measureValueFilter;
         const conditions = measureValueFilterConditions(filter);
+        const dimensionality = measureValueFilterDimensionality(filter)?.filter(isObjRef);
         // The SDK execution-side body does not declare `title`, but inputs may carry one at runtime
         // (e.g. exports coming from a richer source). Propagate it if present.
         const title = "title" in body ? (body as { title?: string }).title : undefined;
@@ -581,6 +583,7 @@ export function convertExecutionFilterToFilterContextItem(
                 measure,
                 localIdentifier: body.localIdentifier ?? fallbackLocalIdentifier,
                 ...(conditions ? { conditions } : {}),
+                ...(dimensionality && dimensionality.length > 0 ? { dimensionality } : {}),
                 ...(title ? { title } : {}),
             },
         };

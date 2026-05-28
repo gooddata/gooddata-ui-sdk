@@ -19,6 +19,7 @@ import {
     getAttributeIdRefIdentifier,
     getAttributeLocalIdsFromBuckets,
     getAttributeRefId,
+    getBucketAttributeIdRefIdentifier,
     readAttrIdentity,
 } from "../common/customTooltipExecution.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
@@ -250,13 +251,12 @@ function buildPushpinTooltipExecution(
         return null;
     }
 
-    // Pushpin keys features by tooltipText; without it the feature has no
-    // stable display-form id to reconcile a tooltip row to.
-    if (!layer.tooltipText) {
-        return null;
-    }
-
-    const tooltipAttrId = getAttributeIdRefIdentifier(layer.tooltipText);
+    // Key off the prepared TOOLTIP_TEXT bucket, not `layer.tooltipText`: when the
+    // layer has no explicit tooltip text, `prepareExecution` still adds the bucket
+    // from the location attribute and the feature's `locationName.attrId` is stamped
+    // from it, so hover key and lookup key match. Gating on `layer.tooltipText` would
+    // drop the execution for location-only charts.
+    const tooltipAttrId = getBucketAttributeIdRefIdentifier(mainDefinition, BucketNames.TOOLTIP_TEXT);
     if (!tooltipAttrId) {
         return null;
     }

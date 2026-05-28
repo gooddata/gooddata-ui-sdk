@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ChangeEvent, type ReactElement } from "react";
 
@@ -9,11 +9,13 @@ import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 interface ITreatNullValuesAsZeroCheckboxProps {
     checked?: boolean;
     onChange: (checked: boolean) => void;
+    isMobile?: boolean;
 }
 
 export function TreatNullValuesAsZeroCheckbox({
     checked = false,
     onChange,
+    isMobile = false,
     intl,
 }: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps): ReactElement {
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
@@ -32,12 +34,14 @@ export function TreatNullValuesAsZeroCheckbox({
             />
             <span className="input-label-text">
                 {intl.formatMessage({ id: "mvf.treatNullValuesAsZeroLabel" })}
-                <BubbleHoverTrigger showDelay={400} hideDelay={200}>
-                    <span className={"inlineBubbleHelp"} />
-                    <Bubble className="bubble-primary" alignPoints={[{ align: "tc bl" }]}>
-                        {intl.formatMessage({ id: "mvf.treatNullValuesAsZeroTooltip" })}
-                    </Bubble>
-                </BubbleHoverTrigger>
+                {isMobile ? null : (
+                    <BubbleHoverTrigger showDelay={400} hideDelay={200}>
+                        <span className={"inlineBubbleHelp"} />
+                        <Bubble className="bubble-primary" alignPoints={[{ align: "tc bl" }]}>
+                            {intl.formatMessage({ id: "mvf.treatNullValuesAsZeroTooltip" })}
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                )}
             </span>
         </label>
     );

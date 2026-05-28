@@ -1186,6 +1186,24 @@ export interface DashboardContext {
     'widgets': Array<WidgetDescriptor>;
 }
 
+export interface DashboardSummaryRequestDto {
+    'dashboardId': string;
+    'customUserPrompt'?: string;
+    'gooddataHost'?: string;
+    'gooddataToken'?: string;
+    'keyMetricIds'?: Array<string>;
+    'referenceQuarter'?: string;
+    'dryRun'?: boolean;
+    'temperature'?: number;
+    'aiModel'?: string;
+}
+
+export interface DashboardSummaryResponseDto {
+    'runId': string;
+    'status': string;
+    'message': string;
+}
+
 /**
  * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
  */
@@ -1568,6 +1586,24 @@ export interface ExecutionResultGrandTotal {
 export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExecutionResultHeader | TotalExecutionResultHeader;
 
 /**
+ * Describes a limit that was broken, resulting in partial data being returned.
+ */
+export interface ExecutionResultLimitBreak {
+    /**
+     * Type of the limit that was broken, e.g. \"rowCount\".
+     */
+    'limitType': string;
+    /**
+     * The configured threshold value.
+     */
+    'limit': number;
+    /**
+     * The actual value that triggered the limit; null when it cannot be determined exactly.
+     */
+    'value'?: number;
+}
+
+/**
  * Additional metadata for the particular execution result.
  */
 export interface ExecutionResultMetadata {
@@ -1575,6 +1611,10 @@ export interface ExecutionResultMetadata {
      * Additional information sent by the underlying data source.
      */
     'dataSourceMessages': Array<ExecutionResultDataSourceMessage>;
+    /**
+     * Limits that were broken during result computation, causing the result to be partial. Absent when the result is complete.
+     */
+    'limitBreaks'?: Array<ExecutionResultLimitBreak>;
 }
 
 /**
@@ -1616,6 +1656,12 @@ export interface FailedOperation extends Operation {
     'error': OperationError;
 }
 
+
+export interface FeedbackRequestDto {
+    'sentiment': FeedbackRequestDtoSentimentEnum;
+}
+
+export type FeedbackRequestDtoSentimentEnum = 'POSITIVE' | 'NEGATIVE';
 
 /**
  * Specifies what is used for filtering.
@@ -1877,6 +1923,211 @@ export interface InsightWidgetDescriptor {
 }
 
 /**
+ * JSON:API-compatible single-resource response envelope
+ */
+export interface JsonApiDocumentDatabaseInstance {
+    'data': JsonApiItemDatabaseInstance;
+    'links': JsonApiListLinks;
+}
+
+/**
+ * JSON:API-compatible single-resource response envelope
+ */
+export interface JsonApiDocumentPipeTable {
+    'data': JsonApiItemPipeTable;
+    'links': JsonApiListLinks;
+}
+
+/**
+ * A single JSON:API resource item
+ */
+export interface JsonApiItemDataSourceInfo {
+    /**
+     * Resource identifier
+     */
+    'id': string;
+    /**
+     * Resource type
+     */
+    'type': string;
+    'attributes': DataSourceInfo;
+}
+
+/**
+ * A single JSON:API resource item
+ */
+export interface JsonApiItemDatabaseInstance {
+    /**
+     * Resource identifier
+     */
+    'id': string;
+    /**
+     * Resource type
+     */
+    'type': string;
+    'attributes': DatabaseInstance;
+}
+
+/**
+ * A single JSON:API resource item
+ */
+export interface JsonApiItemObjectStorageInfo {
+    /**
+     * Resource identifier
+     */
+    'id': string;
+    /**
+     * Resource type
+     */
+    'type': string;
+    'attributes': ObjectStorageInfo;
+}
+
+/**
+ * A single JSON:API resource item
+ */
+export interface JsonApiItemPipeTable {
+    /**
+     * Resource identifier
+     */
+    'id': string;
+    /**
+     * Resource type
+     */
+    'type': string;
+    'attributes': PipeTable;
+}
+
+/**
+ * A single JSON:API resource item
+ */
+export interface JsonApiItemPipeTableSummary {
+    /**
+     * Resource identifier
+     */
+    'id': string;
+    /**
+     * Resource type
+     */
+    'type': string;
+    'attributes': PipeTableSummary;
+}
+
+/**
+ * A single JSON:API resource item
+ */
+export interface JsonApiItemServiceInfo {
+    /**
+     * Resource identifier
+     */
+    'id': string;
+    /**
+     * Resource type
+     */
+    'type': string;
+    'attributes': ServiceInfo;
+}
+
+/**
+ * JSON:API-compatible list response envelope
+ */
+export interface JsonApiListDocumentDataSourceInfo {
+    /**
+     * Array of resource items
+     */
+    'data': Array<JsonApiItemDataSourceInfo>;
+    'links': JsonApiListLinks;
+    'meta'?: JsonApiListMeta;
+}
+
+/**
+ * JSON:API-compatible list response envelope
+ */
+export interface JsonApiListDocumentDatabaseInstance {
+    /**
+     * Array of resource items
+     */
+    'data': Array<JsonApiItemDatabaseInstance>;
+    'links': JsonApiListLinks;
+    'meta'?: JsonApiListMeta;
+}
+
+/**
+ * JSON:API-compatible list response envelope
+ */
+export interface JsonApiListDocumentObjectStorageInfo {
+    /**
+     * Array of resource items
+     */
+    'data': Array<JsonApiItemObjectStorageInfo>;
+    'links': JsonApiListLinks;
+    'meta'?: JsonApiListMeta;
+}
+
+/**
+ * JSON:API-compatible list response envelope
+ */
+export interface JsonApiListDocumentPipeTableSummary {
+    /**
+     * Array of resource items
+     */
+    'data': Array<JsonApiItemPipeTableSummary>;
+    'links': JsonApiListLinks;
+    'meta'?: JsonApiListMeta;
+}
+
+/**
+ * JSON:API-compatible list response envelope
+ */
+export interface JsonApiListDocumentServiceInfo {
+    /**
+     * Array of resource items
+     */
+    'data': Array<JsonApiItemServiceInfo>;
+    'links': JsonApiListLinks;
+    'meta'?: JsonApiListMeta;
+}
+
+/**
+ * Links object for a list response
+ */
+export interface JsonApiListLinks {
+    /**
+     * The URL of this response
+     */
+    'self': string;
+}
+
+/**
+ * Metadata for a paginated list response
+ */
+export interface JsonApiListMeta {
+    'page': JsonApiPageInfo;
+}
+
+/**
+ * Pagination information
+ */
+export interface JsonApiPageInfo {
+    /**
+     * Zero-based page number
+     */
+    'number': number;
+    /**
+     * Page size
+     */
+    'size': number;
+    /**
+     * Total number of elements; only present when metaInclude=page was requested
+     */
+    'totalElements'?: number;
+    /**
+     * Total number of pages; only present when metaInclude=page was requested
+     */
+    'totalPages'?: number;
+}
+
+/**
  * Key configuration for the table data model.
  */
 export interface KeyConfig {
@@ -1919,28 +2170,32 @@ export interface KeyDriversResult {
     'data': object;
 }
 
-/**
- * All data source associations for an AI Lake Database instance
- */
-export interface ListDatabaseDataSourcesResponse {
-    /**
-     * List of data source associations.
-     */
-    'dataSources': Array<DataSourceInfo>;
+export interface KnowledgeRecommendationsRequestDto {
+    'metricId': string;
+    'direction'?: KnowledgeRecommendationsRequestDtoDirectionEnum;
+    'comparisonType': KnowledgeRecommendationsRequestDtoComparisonTypeEnum;
+    'limit'?: number;
+    'minScore'?: number;
+    'aiModel'?: string;
+    'temperature'?: number;
+    'maxTokens'?: number;
+    'gooddataHost'?: string;
+    'gooddataToken'?: string;
+    'analyticalDashboardId'?: string;
+    'widgetId'?: string;
+    'widgetName'?: string;
+    'dryRun'?: boolean;
+    'referenceValue'?: number;
+    'analyzedValue'?: number;
 }
 
-/**
- * Paged response for listing AI Lake database instances
- */
-export interface ListDatabaseInstancesResponse {
-    /**
-     * List of database instances
-     */
-    'databases': Array<DatabaseInstance>;
-    /**
-     * Total count of items (only set when metaInclude=page)
-     */
-    'totalCount'?: number;
+export type KnowledgeRecommendationsRequestDtoDirectionEnum = 'INCREASED' | 'DECREASED';
+export type KnowledgeRecommendationsRequestDtoComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+
+export interface KnowledgeRecommendationsResponseDto {
+    'runId': string;
+    'status': string;
+    'message': string;
 }
 
 export interface ListLlmProviderModelsRequest {
@@ -1960,40 +2215,6 @@ export interface ListLlmProviderModelsResponse {
      * Available models on the provider.
      */
     'models': Array<LlmModel>;
-}
-
-/**
- * Response for listing ObjectStorages registered for the organization.
- */
-export interface ListObjectStoragesResponse {
-    /**
-     * Registered storages, ordered by name.
-     */
-    'storages': Array<ObjectStorageInfo>;
-}
-
-/**
- * List of pipe tables for a database instance
- */
-export interface ListPipeTablesResponse {
-    /**
-     * Pipe tables in the requested database
-     */
-    'pipeTables': Array<PipeTableSummary>;
-}
-
-/**
- * Paged response for listing AI Lake services
- */
-export interface ListServicesResponse {
-    /**
-     * List of services
-     */
-    'services': Array<ServiceInfo>;
-    /**
-     * Total count of items (only set when metaInclude=page)
-     */
-    'totalCount'?: number;
 }
 
 /**
@@ -2348,13 +2569,13 @@ export interface Operation {
      */
     'id': string;
     /**
-     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `create-pipe-table` — Creating a pipe table backed by an S3 data source. * `delete-pipe-table` — Deleting a pipe table. * `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection. 
+     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service. * `create-pipe-table` — Creating a pipe table backed by an S3 data source. * `delete-pipe-table` — Deleting a pipe table. * `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection. * `refresh-partition` — Refreshing a specific Hive partition (delete + re-load from S3). 
      */
     'kind': OperationKindEnum;
     'status': string;
 }
 
-export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'create-pipe-table' | 'delete-pipe-table' | 'analyze-statistics';
+export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command' | 'create-pipe-table' | 'delete-pipe-table' | 'analyze-statistics' | 'refresh-partition';
 
 /**
  * Error information for a failed operation
@@ -2831,6 +3052,16 @@ export interface ReasoningStep {
      * Detailed thoughts/messages within this step.
      */
     'thoughts': Array<Thought>;
+}
+
+/**
+ * Request to refresh a specific Hive partition in a pipe-backed OLAP table
+ */
+export interface RefreshPartitionRequest {
+    /**
+     * Partition column values identifying the partition to refresh. Keys must match the table\'s partition_columns exactly. Example: {\"date\": \"2026-01-01\"}
+     */
+    'partitionSpec': { [key: string]: string; };
 }
 
 /**
@@ -4199,15 +4430,18 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeServiceStatus(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
- * (BETA) Returns all data source associations for the specified AI Lake database instance.
+ * (BETA) Returns data source associations for the specified AI Lake database instance.
  * @summary (BETA) List data sources of an AILake Database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
+ * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
-    instanceId: string, 
+    instanceId: string, page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4224,6 +4458,18 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
 
 
     
@@ -4244,17 +4490,17 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
- * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * (BETA) Lists database instances in the organization\'s AI Lake.
  * @summary (BETA) List AI Lake Database instances
- * @param {number} [size] 
- * @param {number} [offset] 
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
-    size?: number, offset?: number, metaInclude?: Array<string>, 
+    page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4269,12 +4515,12 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
     }
 
-    if (offset !== undefined) {
-        localVarQueryParameter['offset'] = offset;
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
     }
 
     if (metaInclude) {
@@ -4302,12 +4548,15 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
 /**
  * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
  * @summary (BETA) List registered AI Lake ObjectStorages
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
+ * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
-    
+    page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4321,6 +4570,18 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
 
 
     
@@ -4341,15 +4602,18 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
- * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+ * (BETA) Lists active pipe tables in the given AI Lake database instance.
  * @summary (BETA) List AI Lake pipe tables
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
+ * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakePipeTables(
-    instanceId: string, 
+    instanceId: string, page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4367,6 +4631,18 @@ export async function AILakeApiAxiosParamCreator_ListAiLakePipeTables(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
+
 
     
     setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -4386,17 +4662,17 @@ export async function AILakeApiAxiosParamCreator_ListAiLakePipeTables(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
- * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
  * @summary (BETA) List AI Lake services
- * @param {number} [size] 
- * @param {number} [offset] 
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeServices(
-    size?: number, offset?: number, metaInclude?: Array<string>, 
+    page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -4411,12 +4687,12 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeServices(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
     }
 
-    if (offset !== undefined) {
-        localVarQueryParameter['offset'] = offset;
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
     }
 
     if (metaInclude) {
@@ -4495,6 +4771,77 @@ export async function AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(provisionDatabaseInstanceRequest !== undefined ? provisionDatabaseInstanceRequest : {})
         : provisionDatabaseInstanceRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Refresh a pipe table partition
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} tableName Pipe table name.
+ * @param {RefreshPartitionRequest} refreshPartitionRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
+    instanceId: string, tableName: string, refreshPartitionRequest: RefreshPartitionRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('refreshAiLakePipeTablePartition', 'instanceId', instanceId)
+    // verify required parameter 'tableName' is not null or undefined
+    assertParamExists('refreshAiLakePipeTablePartition', 'tableName', tableName)
+    // verify required parameter 'refreshPartitionRequest' is not null or undefined
+    assertParamExists('refreshAiLakePipeTablePartition', 'refreshPartitionRequest', refreshPartitionRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}/refresh`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof refreshPartitionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(refreshPartitionRequest !== undefined ? refreshPartitionRequest : {})
+        : refreshPartitionRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -4832,7 +5179,7 @@ export async function AILakeApi_GetAiLakeDatabaseInstance(
     requestParameters: AILakeApiGetAiLakeDatabaseInstanceRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<DatabaseInstance> {
+): AxiosPromise<JsonApiDocumentDatabaseInstance> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_GetAiLakeDatabaseInstance(
         requestParameters.instanceId, 
         options || {},
@@ -4884,7 +5231,7 @@ export async function AILakeApi_GetAiLakePipeTable(
     requestParameters: AILakeApiGetAiLakePipeTableRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<PipeTable> {
+): AxiosPromise<JsonApiDocumentPipeTable> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_GetAiLakePipeTable(
         requestParameters.instanceId, requestParameters.tableName, 
         options || {},
@@ -4922,7 +5269,7 @@ export async function AILakeApi_GetAiLakeServiceStatus(
 
 // AILakeApi Api FP
 /**
- * (BETA) Returns all data source associations for the specified AI Lake database instance.
+ * (BETA) Returns data source associations for the specified AI Lake database instance.
  * @summary (BETA) List data sources of an AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -4936,9 +5283,9 @@ export async function AILakeApi_ListAiLakeDatabaseDataSources(
     requestParameters: AILakeApiListAiLakeDatabaseDataSourcesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListDatabaseDataSourcesResponse> {
+): AxiosPromise<JsonApiListDocumentDataSourceInfo> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
-        requestParameters.instanceId, 
+        requestParameters.instanceId, requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -4948,7 +5295,7 @@ export async function AILakeApi_ListAiLakeDatabaseDataSources(
 
 // AILakeApi Api FP
 /**
- * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * (BETA) Lists database instances in the organization\'s AI Lake.
  * @summary (BETA) List AI Lake Database instances
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -4962,9 +5309,9 @@ export async function AILakeApi_ListAiLakeDatabaseInstances(
     requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListDatabaseInstancesResponse> {
+): AxiosPromise<JsonApiListDocumentDatabaseInstance> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
-        requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -4978,18 +5325,19 @@ export async function AILakeApi_ListAiLakeDatabaseInstances(
  * @summary (BETA) List registered AI Lake ObjectStorages
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
+ * @param {AILakeApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApi_ListAiLakeObjectStorages(
     axios: AxiosInstance, basePath: string,
-    
+    requestParameters: AILakeApiListAiLakeObjectStoragesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListObjectStoragesResponse> {
+): AxiosPromise<JsonApiListDocumentObjectStorageInfo> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeObjectStorages(
-        
+        requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -4999,7 +5347,7 @@ export async function AILakeApi_ListAiLakeObjectStorages(
 
 // AILakeApi Api FP
 /**
- * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+ * (BETA) Lists active pipe tables in the given AI Lake database instance.
  * @summary (BETA) List AI Lake pipe tables
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -5013,9 +5361,9 @@ export async function AILakeApi_ListAiLakePipeTables(
     requestParameters: AILakeApiListAiLakePipeTablesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListPipeTablesResponse> {
+): AxiosPromise<JsonApiListDocumentPipeTableSummary> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakePipeTables(
-        requestParameters.instanceId, 
+        requestParameters.instanceId, requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -5025,7 +5373,7 @@ export async function AILakeApi_ListAiLakePipeTables(
 
 // AILakeApi Api FP
 /**
- * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
  * @summary (BETA) List AI Lake services
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -5039,9 +5387,9 @@ export async function AILakeApi_ListAiLakeServices(
     requestParameters: AILakeApiListAiLakeServicesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListServicesResponse> {
+): AxiosPromise<JsonApiListDocumentServiceInfo> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeServices(
-        requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -5068,6 +5416,32 @@ export async function AILakeApi_ProvisionAiLakeDatabaseInstance(
 ): AxiosPromise<object> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance(
         requestParameters.provisionDatabaseInstanceRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
+ * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Refresh a pipe table partition
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_RefreshAiLakePipeTablePartition(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
+        requestParameters.instanceId, requestParameters.tableName, requestParameters.refreshPartitionRequest, requestParameters.operationId, 
         options || {},
         configuration,
     );
@@ -5217,7 +5591,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    getAiLakeDatabaseInstance(requestParameters: AILakeApiGetAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<DatabaseInstance>;
+    getAiLakeDatabaseInstance(requestParameters: AILakeApiGetAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDocumentDatabaseInstance>;
 
     /**
      * (BETA) Retrieves details of a Long Running Operation specified by the operation-id.
@@ -5237,7 +5611,7 @@ export interface AILakeApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    getAiLakePipeTable(requestParameters: AILakeApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<PipeTable>;
+    getAiLakePipeTable(requestParameters: AILakeApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDocumentPipeTable>;
 
     /**
      * (BETA) Returns the status of a service in the organization\'s AI Lake. The status is controller-specific (e.g., available commands, readiness).
@@ -5250,53 +5624,54 @@ export interface AILakeApiInterface {
     getAiLakeServiceStatus(requestParameters: AILakeApiGetAiLakeServiceStatusRequest, options?: AxiosRequestConfig): AxiosPromise<GetServiceStatusResponse>;
 
     /**
-     * (BETA) Returns all data source associations for the specified AI Lake database instance.
+     * (BETA) Returns data source associations for the specified AI Lake database instance.
      * @summary (BETA) List data sources of an AILake Database instance
      * @param {AILakeApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    listAiLakeDatabaseDataSources(requestParameters: AILakeApiListAiLakeDatabaseDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseDataSourcesResponse>;
+    listAiLakeDatabaseDataSources(requestParameters: AILakeApiListAiLakeDatabaseDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentDataSourceInfo>;
 
     /**
-     * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * (BETA) Lists database instances in the organization\'s AI Lake.
      * @summary (BETA) List AI Lake Database instances
      * @param {AILakeApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseInstancesResponse>;
+    listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentDatabaseInstance>;
 
     /**
      * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
      * @summary (BETA) List registered AI Lake ObjectStorages
+     * @param {AILakeApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    listAiLakeObjectStorages(options?: AxiosRequestConfig): AxiosPromise<ListObjectStoragesResponse>;
+    listAiLakeObjectStorages(requestParameters: AILakeApiListAiLakeObjectStoragesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentObjectStorageInfo>;
 
     /**
-     * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+     * (BETA) Lists active pipe tables in the given AI Lake database instance.
      * @summary (BETA) List AI Lake pipe tables
      * @param {AILakeApiListAiLakePipeTablesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    listAiLakePipeTables(requestParameters: AILakeApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<ListPipeTablesResponse>;
+    listAiLakePipeTables(requestParameters: AILakeApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentPipeTableSummary>;
 
     /**
-     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
      * @summary (BETA) List AI Lake services
      * @param {AILakeApiListAiLakeServicesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    listAiLakeServices(requestParameters: AILakeApiListAiLakeServicesRequest, options?: AxiosRequestConfig): AxiosPromise<ListServicesResponse>;
+    listAiLakeServices(requestParameters: AILakeApiListAiLakeServicesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentServiceInfo>;
 
     /**
      * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
@@ -5307,6 +5682,16 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
+     * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Refresh a pipe table partition
+     * @param {AILakeApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    refreshAiLakePipeTablePartition(requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
 
     /**
      * (BETA) Removes a data source association from an AI Lake database instance and deletes the corresponding data source from metadata-api. Fails if removing the data source would leave the instance with no data sources.
@@ -5541,6 +5926,27 @@ export interface AILakeApiListAiLakeDatabaseDataSourcesRequest {
      * @memberof AILakeApiListAiLakeDatabaseDataSources
      */
     readonly instanceId: string
+
+    /**
+     * Zero-based page number.
+     * @type {string}
+     * @memberof AILakeApiListAiLakeDatabaseDataSources
+     */
+    readonly page?: string
+
+    /**
+     * Number of items per page.
+     * @type {string}
+     * @memberof AILakeApiListAiLakeDatabaseDataSources
+     */
+    readonly size?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AILakeApiListAiLakeDatabaseDataSources
+     */
+    readonly metaInclude?: Array<string>
 }
 
 /**
@@ -5550,23 +5956,51 @@ export interface AILakeApiListAiLakeDatabaseDataSourcesRequest {
  */
 export interface AILakeApiListAiLakeDatabaseInstancesRequest {
     /**
-     * 
-     * @type {number}
+     * Zero-based page number.
+     * @type {string}
      * @memberof AILakeApiListAiLakeDatabaseInstances
      */
-    readonly size?: number
+    readonly page?: string
 
     /**
-     * 
-     * @type {number}
+     * Number of items per page.
+     * @type {string}
      * @memberof AILakeApiListAiLakeDatabaseInstances
      */
-    readonly offset?: number
+    readonly size?: string
 
     /**
      * 
      * @type {Array<string>}
      * @memberof AILakeApiListAiLakeDatabaseInstances
+     */
+    readonly metaInclude?: Array<string>
+}
+
+/**
+ * Request parameters for listAiLakeObjectStorages operation in AILakeApi.
+ * @export
+ * @interface AILakeApiListAiLakeObjectStoragesRequest
+ */
+export interface AILakeApiListAiLakeObjectStoragesRequest {
+    /**
+     * Zero-based page number.
+     * @type {string}
+     * @memberof AILakeApiListAiLakeObjectStorages
+     */
+    readonly page?: string
+
+    /**
+     * Number of items per page.
+     * @type {string}
+     * @memberof AILakeApiListAiLakeObjectStorages
+     */
+    readonly size?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AILakeApiListAiLakeObjectStorages
      */
     readonly metaInclude?: Array<string>
 }
@@ -5583,6 +6017,27 @@ export interface AILakeApiListAiLakePipeTablesRequest {
      * @memberof AILakeApiListAiLakePipeTables
      */
     readonly instanceId: string
+
+    /**
+     * Zero-based page number.
+     * @type {string}
+     * @memberof AILakeApiListAiLakePipeTables
+     */
+    readonly page?: string
+
+    /**
+     * Number of items per page.
+     * @type {string}
+     * @memberof AILakeApiListAiLakePipeTables
+     */
+    readonly size?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AILakeApiListAiLakePipeTables
+     */
+    readonly metaInclude?: Array<string>
 }
 
 /**
@@ -5592,18 +6047,18 @@ export interface AILakeApiListAiLakePipeTablesRequest {
  */
 export interface AILakeApiListAiLakeServicesRequest {
     /**
-     * 
-     * @type {number}
+     * Zero-based page number.
+     * @type {string}
      * @memberof AILakeApiListAiLakeServices
      */
-    readonly size?: number
+    readonly page?: string
 
     /**
-     * 
-     * @type {number}
+     * Number of items per page.
+     * @type {string}
      * @memberof AILakeApiListAiLakeServices
      */
-    readonly offset?: number
+    readonly size?: string
 
     /**
      * 
@@ -5630,6 +6085,41 @@ export interface AILakeApiProvisionAiLakeDatabaseInstanceRequest {
      * 
      * @type {string}
      * @memberof AILakeApiProvisionAiLakeDatabaseInstance
+     */
+    readonly operationId?: string
+}
+
+/**
+ * Request parameters for refreshAiLakePipeTablePartition operation in AILakeApi.
+ * @export
+ * @interface AILakeApiRefreshAiLakePipeTablePartitionRequest
+ */
+export interface AILakeApiRefreshAiLakePipeTablePartitionRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakeApiRefreshAiLakePipeTablePartition
+     */
+    readonly instanceId: string
+
+    /**
+     * Pipe table name.
+     * @type {string}
+     * @memberof AILakeApiRefreshAiLakePipeTablePartition
+     */
+    readonly tableName: string
+
+    /**
+     * 
+     * @type {RefreshPartitionRequest}
+     * @memberof AILakeApiRefreshAiLakePipeTablePartition
+     */
+    readonly refreshPartitionRequest: RefreshPartitionRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakeApiRefreshAiLakePipeTablePartition
      */
     readonly operationId?: string
 }
@@ -5827,7 +6317,7 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
-     * (BETA) Returns all data source associations for the specified AI Lake database instance.
+     * (BETA) Returns data source associations for the specified AI Lake database instance.
      * @summary (BETA) List data sources of an AILake Database instance
      * @param {AILakeApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5839,7 +6329,7 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
-     * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * (BETA) Lists database instances in the organization\'s AI Lake.
      * @summary (BETA) List AI Lake Database instances
      * @param {AILakeApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5853,16 +6343,17 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     /**
      * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
      * @summary (BETA) List registered AI Lake ObjectStorages
+     * @param {AILakeApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeApi
      */
-    public listAiLakeObjectStorages(options?: AxiosRequestConfig) {
-        return AILakeApi_ListAiLakeObjectStorages(this.axios, this.basePath, options, this.configuration);
+    public listAiLakeObjectStorages(requestParameters: AILakeApiListAiLakeObjectStoragesRequest = {}, options?: AxiosRequestConfig) {
+        return AILakeApi_ListAiLakeObjectStorages(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
-     * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+     * (BETA) Lists active pipe tables in the given AI Lake database instance.
      * @summary (BETA) List AI Lake pipe tables
      * @param {AILakeApiListAiLakePipeTablesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5874,7 +6365,7 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
-     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
      * @summary (BETA) List AI Lake services
      * @param {AILakeApiListAiLakeServicesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5895,6 +6386,18 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
         return AILakeApi_ProvisionAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Refresh a pipe table partition
+     * @param {AILakeApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public refreshAiLakePipeTablePartition(requestParameters: AILakeApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_RefreshAiLakePipeTablePartition(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -6094,15 +6597,18 @@ export async function AILakeDatabasesApiAxiosParamCreator_GetAiLakeDatabaseInsta
 
 // AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
 /**
- * (BETA) Returns all data source associations for the specified AI Lake database instance.
+ * (BETA) Returns data source associations for the specified AI Lake database instance.
  * @summary (BETA) List data sources of an AILake Database instance
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
+ * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
-    instanceId: string, 
+    instanceId: string, page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -6119,6 +6625,18 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseData
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
 
 
     
@@ -6139,17 +6657,17 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseData
 
 // AILakeDatabasesApi FP - AILakeDatabasesApiAxiosParamCreator
 /**
- * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * (BETA) Lists database instances in the organization\'s AI Lake.
  * @summary (BETA) List AI Lake Database instances
- * @param {number} [size] 
- * @param {number} [offset] 
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInstances(
-    size?: number, offset?: number, metaInclude?: Array<string>, 
+    page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -6164,12 +6682,12 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInst
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
     }
 
-    if (offset !== undefined) {
-        localVarQueryParameter['offset'] = offset;
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
     }
 
     if (metaInclude) {
@@ -6197,12 +6715,15 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInst
 /**
  * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
  * @summary (BETA) List registered AI Lake ObjectStorages
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
+ * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeObjectStorages(
-    
+    page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -6216,6 +6737,18 @@ export async function AILakeDatabasesApiAxiosParamCreator_ListAiLakeObjectStorag
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
 
 
     
@@ -6477,7 +7010,7 @@ export async function AILakeDatabasesApi_GetAiLakeDatabaseInstance(
     requestParameters: AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<DatabaseInstance> {
+): AxiosPromise<JsonApiDocumentDatabaseInstance> {
     const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_GetAiLakeDatabaseInstance(
         requestParameters.instanceId, 
         options || {},
@@ -6489,7 +7022,7 @@ export async function AILakeDatabasesApi_GetAiLakeDatabaseInstance(
 
 // AILakeDatabasesApi Api FP
 /**
- * (BETA) Returns all data source associations for the specified AI Lake database instance.
+ * (BETA) Returns data source associations for the specified AI Lake database instance.
  * @summary (BETA) List data sources of an AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -6503,9 +7036,9 @@ export async function AILakeDatabasesApi_ListAiLakeDatabaseDataSources(
     requestParameters: AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListDatabaseDataSourcesResponse> {
+): AxiosPromise<JsonApiListDocumentDataSourceInfo> {
     const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseDataSources(
-        requestParameters.instanceId, 
+        requestParameters.instanceId, requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -6515,7 +7048,7 @@ export async function AILakeDatabasesApi_ListAiLakeDatabaseDataSources(
 
 // AILakeDatabasesApi Api FP
 /**
- * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * (BETA) Lists database instances in the organization\'s AI Lake.
  * @summary (BETA) List AI Lake Database instances
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -6529,9 +7062,9 @@ export async function AILakeDatabasesApi_ListAiLakeDatabaseInstances(
     requestParameters: AILakeDatabasesApiListAiLakeDatabaseInstancesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListDatabaseInstancesResponse> {
+): AxiosPromise<JsonApiListDocumentDatabaseInstance> {
     const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ListAiLakeDatabaseInstances(
-        requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -6545,18 +7078,19 @@ export async function AILakeDatabasesApi_ListAiLakeDatabaseInstances(
  * @summary (BETA) List registered AI Lake ObjectStorages
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
+ * @param {AILakeDatabasesApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeDatabasesApi_ListAiLakeObjectStorages(
     axios: AxiosInstance, basePath: string,
-    
+    requestParameters: AILakeDatabasesApiListAiLakeObjectStoragesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListObjectStoragesResponse> {
+): AxiosPromise<JsonApiListDocumentObjectStorageInfo> {
     const localVarAxiosArgs = await AILakeDatabasesApiAxiosParamCreator_ListAiLakeObjectStorages(
-        
+        requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -6676,36 +7210,37 @@ export interface AILakeDatabasesApiInterface {
      * @throws {RequiredError}
      * @memberof AILakeDatabasesApiInterface
      */
-    getAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<DatabaseInstance>;
+    getAiLakeDatabaseInstance(requestParameters: AILakeDatabasesApiGetAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDocumentDatabaseInstance>;
 
     /**
-     * (BETA) Returns all data source associations for the specified AI Lake database instance.
+     * (BETA) Returns data source associations for the specified AI Lake database instance.
      * @summary (BETA) List data sources of an AILake Database instance
      * @param {AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeDatabasesApiInterface
      */
-    listAiLakeDatabaseDataSources(requestParameters: AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseDataSourcesResponse>;
+    listAiLakeDatabaseDataSources(requestParameters: AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentDataSourceInfo>;
 
     /**
-     * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * (BETA) Lists database instances in the organization\'s AI Lake.
      * @summary (BETA) List AI Lake Database instances
      * @param {AILakeDatabasesApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeDatabasesApiInterface
      */
-    listAiLakeDatabaseInstances(requestParameters: AILakeDatabasesApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseInstancesResponse>;
+    listAiLakeDatabaseInstances(requestParameters: AILakeDatabasesApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentDatabaseInstance>;
 
     /**
      * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
      * @summary (BETA) List registered AI Lake ObjectStorages
+     * @param {AILakeDatabasesApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeDatabasesApiInterface
      */
-    listAiLakeObjectStorages(options?: AxiosRequestConfig): AxiosPromise<ListObjectStoragesResponse>;
+    listAiLakeObjectStorages(requestParameters: AILakeDatabasesApiListAiLakeObjectStoragesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentObjectStorageInfo>;
 
     /**
      * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
@@ -6807,6 +7342,27 @@ export interface AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest {
      * @memberof AILakeDatabasesApiListAiLakeDatabaseDataSources
      */
     readonly instanceId: string
+
+    /**
+     * Zero-based page number.
+     * @type {string}
+     * @memberof AILakeDatabasesApiListAiLakeDatabaseDataSources
+     */
+    readonly page?: string
+
+    /**
+     * Number of items per page.
+     * @type {string}
+     * @memberof AILakeDatabasesApiListAiLakeDatabaseDataSources
+     */
+    readonly size?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AILakeDatabasesApiListAiLakeDatabaseDataSources
+     */
+    readonly metaInclude?: Array<string>
 }
 
 /**
@@ -6816,23 +7372,51 @@ export interface AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest {
  */
 export interface AILakeDatabasesApiListAiLakeDatabaseInstancesRequest {
     /**
-     * 
-     * @type {number}
+     * Zero-based page number.
+     * @type {string}
      * @memberof AILakeDatabasesApiListAiLakeDatabaseInstances
      */
-    readonly size?: number
+    readonly page?: string
 
     /**
-     * 
-     * @type {number}
+     * Number of items per page.
+     * @type {string}
      * @memberof AILakeDatabasesApiListAiLakeDatabaseInstances
      */
-    readonly offset?: number
+    readonly size?: string
 
     /**
      * 
      * @type {Array<string>}
      * @memberof AILakeDatabasesApiListAiLakeDatabaseInstances
+     */
+    readonly metaInclude?: Array<string>
+}
+
+/**
+ * Request parameters for listAiLakeObjectStorages operation in AILakeDatabasesApi.
+ * @export
+ * @interface AILakeDatabasesApiListAiLakeObjectStoragesRequest
+ */
+export interface AILakeDatabasesApiListAiLakeObjectStoragesRequest {
+    /**
+     * Zero-based page number.
+     * @type {string}
+     * @memberof AILakeDatabasesApiListAiLakeObjectStorages
+     */
+    readonly page?: string
+
+    /**
+     * Number of items per page.
+     * @type {string}
+     * @memberof AILakeDatabasesApiListAiLakeObjectStorages
+     */
+    readonly size?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AILakeDatabasesApiListAiLakeObjectStorages
      */
     readonly metaInclude?: Array<string>
 }
@@ -6944,7 +7528,7 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
     }
 
     /**
-     * (BETA) Returns all data source associations for the specified AI Lake database instance.
+     * (BETA) Returns data source associations for the specified AI Lake database instance.
      * @summary (BETA) List data sources of an AILake Database instance
      * @param {AILakeDatabasesApiListAiLakeDatabaseDataSourcesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6956,7 +7540,7 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
     }
 
     /**
-     * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * (BETA) Lists database instances in the organization\'s AI Lake.
      * @summary (BETA) List AI Lake Database instances
      * @param {AILakeDatabasesApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -6970,12 +7554,13 @@ export class AILakeDatabasesApi extends BaseAPI implements AILakeDatabasesApiInt
     /**
      * (BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.
      * @summary (BETA) List registered AI Lake ObjectStorages
+     * @param {AILakeDatabasesApiListAiLakeObjectStoragesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeDatabasesApi
      */
-    public listAiLakeObjectStorages(options?: AxiosRequestConfig) {
-        return AILakeDatabasesApi_ListAiLakeObjectStorages(this.axios, this.basePath, options, this.configuration);
+    public listAiLakeObjectStorages(requestParameters: AILakeDatabasesApiListAiLakeObjectStoragesRequest = {}, options?: AxiosRequestConfig) {
+        return AILakeDatabasesApi_ListAiLakeObjectStorages(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -7255,15 +7840,18 @@ export async function AILakePipeTablesApiAxiosParamCreator_GetAiLakePipeTable(
 
 // AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
 /**
- * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+ * (BETA) Lists active pipe tables in the given AI Lake database instance.
  * @summary (BETA) List AI Lake pipe tables
  * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
+ * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
-    instanceId: string, 
+    instanceId: string, page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -7281,6 +7869,18 @@ export async function AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
+
 
     
     setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -7290,6 +7890,77 @@ export async function AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
         ...headersFromBaseOptions,
         ...options.headers,
     };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakePipeTablesApi FP - AILakePipeTablesApiAxiosParamCreator
+/**
+ * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Refresh a pipe table partition
+ * @param {string} instanceId Database instance identifier. Accepts the database name (preferred) or UUID.
+ * @param {string} tableName Pipe table name.
+ * @param {RefreshPartitionRequest} refreshPartitionRequest 
+ * @param {string} [operationId] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
+    instanceId: string, tableName: string, refreshPartitionRequest: RefreshPartitionRequest, operationId?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'instanceId' is not null or undefined
+    assertParamExists('refreshAiLakePipeTablePartition', 'instanceId', instanceId)
+    // verify required parameter 'tableName' is not null or undefined
+    assertParamExists('refreshAiLakePipeTablePartition', 'tableName', tableName)
+    // verify required parameter 'refreshPartitionRequest' is not null or undefined
+    assertParamExists('refreshAiLakePipeTablePartition', 'refreshPartitionRequest', refreshPartitionRequest)
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}/refresh`
+        .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)))
+        .replace(`{${"tableName"}}`, encodeURIComponent(String(tableName)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof refreshPartitionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(refreshPartitionRequest !== undefined ? refreshPartitionRequest : {})
+        : refreshPartitionRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -7393,7 +8064,7 @@ export async function AILakePipeTablesApi_GetAiLakePipeTable(
     requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<PipeTable> {
+): AxiosPromise<JsonApiDocumentPipeTable> {
     const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_GetAiLakePipeTable(
         requestParameters.instanceId, requestParameters.tableName, 
         options || {},
@@ -7405,7 +8076,7 @@ export async function AILakePipeTablesApi_GetAiLakePipeTable(
 
 // AILakePipeTablesApi Api FP
 /**
- * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+ * (BETA) Lists active pipe tables in the given AI Lake database instance.
  * @summary (BETA) List AI Lake pipe tables
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -7419,9 +8090,35 @@ export async function AILakePipeTablesApi_ListAiLakePipeTables(
     requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListPipeTablesResponse> {
+): AxiosPromise<JsonApiListDocumentPipeTableSummary> {
     const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_ListAiLakePipeTables(
-        requestParameters.instanceId, 
+        requestParameters.instanceId, requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakePipeTablesApi Api FP
+/**
+ * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
+ * @summary (BETA) Refresh a pipe table partition
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakePipeTablesApi_RefreshAiLakePipeTablePartition(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakePipeTablesApiAxiosParamCreator_RefreshAiLakePipeTablePartition(
+        requestParameters.instanceId, requestParameters.tableName, requestParameters.refreshPartitionRequest, requestParameters.operationId, 
         options || {},
         configuration,
     );
@@ -7473,17 +8170,27 @@ export interface AILakePipeTablesApiInterface {
      * @throws {RequiredError}
      * @memberof AILakePipeTablesApiInterface
      */
-    getAiLakePipeTable(requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<PipeTable>;
+    getAiLakePipeTable(requestParameters: AILakePipeTablesApiGetAiLakePipeTableRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDocumentPipeTable>;
 
     /**
-     * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+     * (BETA) Lists active pipe tables in the given AI Lake database instance.
      * @summary (BETA) List AI Lake pipe tables
      * @param {AILakePipeTablesApiListAiLakePipeTablesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakePipeTablesApiInterface
      */
-    listAiLakePipeTables(requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<ListPipeTablesResponse>;
+    listAiLakePipeTables(requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentPipeTableSummary>;
+
+    /**
+     * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Refresh a pipe table partition
+     * @param {AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApiInterface
+     */
+    refreshAiLakePipeTablePartition(requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
 
 }
 
@@ -7604,6 +8311,62 @@ export interface AILakePipeTablesApiListAiLakePipeTablesRequest {
      * @memberof AILakePipeTablesApiListAiLakePipeTables
      */
     readonly instanceId: string
+
+    /**
+     * Zero-based page number.
+     * @type {string}
+     * @memberof AILakePipeTablesApiListAiLakePipeTables
+     */
+    readonly page?: string
+
+    /**
+     * Number of items per page.
+     * @type {string}
+     * @memberof AILakePipeTablesApiListAiLakePipeTables
+     */
+    readonly size?: string
+
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AILakePipeTablesApiListAiLakePipeTables
+     */
+    readonly metaInclude?: Array<string>
+}
+
+/**
+ * Request parameters for refreshAiLakePipeTablePartition operation in AILakePipeTablesApi.
+ * @export
+ * @interface AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest
+ */
+export interface AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest {
+    /**
+     * Database instance identifier. Accepts the database name (preferred) or UUID.
+     * @type {string}
+     * @memberof AILakePipeTablesApiRefreshAiLakePipeTablePartition
+     */
+    readonly instanceId: string
+
+    /**
+     * Pipe table name.
+     * @type {string}
+     * @memberof AILakePipeTablesApiRefreshAiLakePipeTablePartition
+     */
+    readonly tableName: string
+
+    /**
+     * 
+     * @type {RefreshPartitionRequest}
+     * @memberof AILakePipeTablesApiRefreshAiLakePipeTablePartition
+     */
+    readonly refreshPartitionRequest: RefreshPartitionRequest
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AILakePipeTablesApiRefreshAiLakePipeTablePartition
+     */
+    readonly operationId?: string
 }
 
 /**
@@ -7662,7 +8425,7 @@ export class AILakePipeTablesApi extends BaseAPI implements AILakePipeTablesApiI
     }
 
     /**
-     * (BETA) Lists all active pipe tables in the given AI Lake database instance.
+     * (BETA) Lists active pipe tables in the given AI Lake database instance.
      * @summary (BETA) List AI Lake pipe tables
      * @param {AILakePipeTablesApiListAiLakePipeTablesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7671,6 +8434,18 @@ export class AILakePipeTablesApi extends BaseAPI implements AILakePipeTablesApiI
      */
     public listAiLakePipeTables(requestParameters: AILakePipeTablesApiListAiLakePipeTablesRequest, options?: AxiosRequestConfig) {
         return AILakePipeTablesApi_ListAiLakePipeTables(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.
+     * @summary (BETA) Refresh a pipe table partition
+     * @param {AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakePipeTablesApi
+     */
+    public refreshAiLakePipeTablePartition(requestParameters: AILakePipeTablesApiRefreshAiLakePipeTablePartitionRequest, options?: AxiosRequestConfig) {
+        return AILakePipeTablesApi_RefreshAiLakePipeTablePartition(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -7767,17 +8542,17 @@ export async function AILakeServicesOperationsApiAxiosParamCreator_GetAiLakeServ
 
 // AILakeServicesOperationsApi FP - AILakeServicesOperationsApiAxiosParamCreator
 /**
- * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
  * @summary (BETA) List AI Lake services
- * @param {number} [size] 
- * @param {number} [offset] 
+ * @param {string} [page] Zero-based page number.
+ * @param {string} [size] Number of items per page.
  * @param {Array<string>} [metaInclude] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeServicesOperationsApiAxiosParamCreator_ListAiLakeServices(
-    size?: number, offset?: number, metaInclude?: Array<string>, 
+    page?: string, size?: string, metaInclude?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -7792,12 +8567,12 @@ export async function AILakeServicesOperationsApiAxiosParamCreator_ListAiLakeSer
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    if (size !== undefined) {
-        localVarQueryParameter['size'] = size;
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
     }
 
-    if (offset !== undefined) {
-        localVarQueryParameter['offset'] = offset;
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
     }
 
     if (metaInclude) {
@@ -7947,7 +8722,7 @@ export async function AILakeServicesOperationsApi_GetAiLakeServiceStatus(
 
 // AILakeServicesOperationsApi Api FP
 /**
- * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
  * @summary (BETA) List AI Lake services
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -7961,9 +8736,9 @@ export async function AILakeServicesOperationsApi_ListAiLakeServices(
     requestParameters: AILakeServicesOperationsApiListAiLakeServicesRequest, 
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<ListServicesResponse> {
+): AxiosPromise<JsonApiListDocumentServiceInfo> {
     const localVarAxiosArgs = await AILakeServicesOperationsApiAxiosParamCreator_ListAiLakeServices(
-        requestParameters.size, requestParameters.offset, requestParameters.metaInclude, 
+        requestParameters.page, requestParameters.size, requestParameters.metaInclude, 
         options || {},
         configuration,
     );
@@ -8024,14 +8799,14 @@ export interface AILakeServicesOperationsApiInterface {
     getAiLakeServiceStatus(requestParameters: AILakeServicesOperationsApiGetAiLakeServiceStatusRequest, options?: AxiosRequestConfig): AxiosPromise<GetServiceStatusResponse>;
 
     /**
-     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
      * @summary (BETA) List AI Lake services
      * @param {AILakeServicesOperationsApiListAiLakeServicesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeServicesOperationsApiInterface
      */
-    listAiLakeServices(requestParameters: AILakeServicesOperationsApiListAiLakeServicesRequest, options?: AxiosRequestConfig): AxiosPromise<ListServicesResponse>;
+    listAiLakeServices(requestParameters: AILakeServicesOperationsApiListAiLakeServicesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiListDocumentServiceInfo>;
 
     /**
      * (BETA) Runs a specific AI Lake service command.
@@ -8080,18 +8855,18 @@ export interface AILakeServicesOperationsApiGetAiLakeServiceStatusRequest {
  */
 export interface AILakeServicesOperationsApiListAiLakeServicesRequest {
     /**
-     * 
-     * @type {number}
+     * Zero-based page number.
+     * @type {string}
      * @memberof AILakeServicesOperationsApiListAiLakeServices
      */
-    readonly size?: number
+    readonly page?: string
 
     /**
-     * 
-     * @type {number}
+     * Number of items per page.
+     * @type {string}
      * @memberof AILakeServicesOperationsApiListAiLakeServices
      */
-    readonly offset?: number
+    readonly size?: string
 
     /**
      * 
@@ -8168,7 +8943,7 @@ export class AILakeServicesOperationsApi extends BaseAPI implements AILakeServic
     }
 
     /**
-     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
      * @summary (BETA) List AI Lake services
      * @param {AILakeServicesOperationsApiListAiLakeServicesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -8697,6 +9472,54 @@ export async function ActionsApiAxiosParamCreator_CancelWorkflow(
     // verify required parameter 'runId' is not null or undefined
     assertParamExists('cancelWorkflow', 'runId', runId)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/cancel`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} runId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_CancelWorkflow1(
+    workspaceId: string, runId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('cancelWorkflow1', 'workspaceId', workspaceId)
+    // verify required parameter 'runId' is not null or undefined
+    assertParamExists('cancelWorkflow1', 'runId', runId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/cancel`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -9614,6 +10437,67 @@ export async function ActionsApiAxiosParamCreator_GenerateDashboardSummary(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {DashboardSummaryRequestDto} dashboardSummaryRequestDto 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GenerateDashboardSummary1(
+    workspaceId: string, dashboardSummaryRequestDto: DashboardSummaryRequestDto, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateDashboardSummary1', 'workspaceId', workspaceId)
+    // verify required parameter 'dashboardSummaryRequestDto' is not null or undefined
+    assertParamExists('generateDashboardSummary1', 'dashboardSummaryRequestDto', dashboardSummaryRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/dashboardSummary`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof dashboardSummaryRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(dashboardSummaryRequestDto !== undefined ? dashboardSummaryRequestDto : {})
+        : dashboardSummaryRequestDto || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
  * @summary Generate Description for Analytics Object
  * @param {string} workspaceId Workspace identifier
@@ -9666,6 +10550,67 @@ export async function ActionsApiAxiosParamCreator_GenerateDescription(
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(generateDescriptionRequest !== undefined ? generateDescriptionRequest : {})
         : generateDescriptionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {KnowledgeRecommendationsRequestDto} knowledgeRecommendationsRequestDto 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GenerateKnowledgeRecommendations(
+    workspaceId: string, knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateKnowledgeRecommendations', 'workspaceId', workspaceId)
+    // verify required parameter 'knowledgeRecommendationsRequestDto' is not null or undefined
+    assertParamExists('generateKnowledgeRecommendations', 'knowledgeRecommendationsRequestDto', knowledgeRecommendationsRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/knowledgeRecommendations`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof knowledgeRecommendationsRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(knowledgeRecommendationsRequestDto !== undefined ? knowledgeRecommendationsRequestDto : {})
+        : knowledgeRecommendationsRequestDto || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -9849,6 +10794,54 @@ export async function ActionsApiAxiosParamCreator_GetWorkflowStatus(
     // verify required parameter 'runId' is not null or undefined
     assertParamExists('getWorkflowStatus', 'runId', runId)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/status`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} runId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GetWorkflowStatus1(
+    workspaceId: string, runId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getWorkflowStatus1', 'workspaceId', workspaceId)
+    // verify required parameter 'runId' is not null or undefined
+    assertParamExists('getWorkflowStatus1', 'runId', runId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/status`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
         .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -10795,6 +11788,71 @@ export async function ActionsApiAxiosParamCreator_TriggerQualityIssuesCalculatio
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * 
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} runId 
+ * @param {FeedbackRequestDto} feedbackRequestDto 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_UserFeedback(
+    workspaceId: string, runId: string, feedbackRequestDto: FeedbackRequestDto, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('userFeedback', 'workspaceId', workspaceId)
+    // verify required parameter 'runId' is not null or undefined
+    assertParamExists('userFeedback', 'runId', runId)
+    // verify required parameter 'feedbackRequestDto' is not null or undefined
+    assertParamExists('userFeedback', 'feedbackRequestDto', feedbackRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/feedback`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"runId"}}`, encodeURIComponent(String(runId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof feedbackRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(feedbackRequestDto !== undefined ? feedbackRequestDto : {})
+        : feedbackRequestDto || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
  * @summary Validate LLM Endpoint (Removed)
  * @param {*} [options] Override http request option.
@@ -11105,6 +12163,31 @@ export async function ActionsApi_CancelWorkflow(
     configuration?: Configuration,
 ): AxiosPromise<{ [key: string]: string; }> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelWorkflow(
+        requestParameters.workspaceId, requestParameters.runId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_CancelWorkflow1(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiCancelWorkflow1Request, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<{ [key: string]: string; }> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CancelWorkflow1(
         requestParameters.workspaceId, requestParameters.runId, 
         options || {},
         configuration,
@@ -11478,6 +12561,31 @@ export async function ActionsApi_GenerateDashboardSummary(
 
 // ActionsApi Api FP
 /**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GenerateDashboardSummary1(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGenerateDashboardSummary1Request, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<DashboardSummaryResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDashboardSummary1(
+        requestParameters.workspaceId, requestParameters.dashboardSummaryRequestDto, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
  * @summary Generate Description for Analytics Object
  * @param {AxiosInstance} axios Axios instance.
@@ -11495,6 +12603,31 @@ export async function ActionsApi_GenerateDescription(
 ): AxiosPromise<GenerateDescriptionResponse> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDescription(
         requestParameters.workspaceId, requestParameters.generateDescriptionRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GenerateKnowledgeRecommendations(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<KnowledgeRecommendationsResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateKnowledgeRecommendations(
+        requestParameters.workspaceId, requestParameters.knowledgeRecommendationsRequestDto, 
         options || {},
         configuration,
     );
@@ -11597,6 +12730,31 @@ export async function ActionsApi_GetWorkflowStatus(
     configuration?: Configuration,
 ): AxiosPromise<WorkflowStatusResponseDto> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetWorkflowStatus(
+        requestParameters.workspaceId, requestParameters.runId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GetWorkflowStatus1(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGetWorkflowStatus1Request, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<WorkflowStatusResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetWorkflowStatus1(
         requestParameters.workspaceId, requestParameters.runId, 
         options || {},
         configuration,
@@ -12049,6 +13207,31 @@ export async function ActionsApi_TriggerQualityIssuesCalculation(
 
 // ActionsApi Api FP
 /**
+ * 
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_UserFeedback(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiUserFeedbackRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<{ [key: string]: string; }> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_UserFeedback(
+        requestParameters.workspaceId, requestParameters.runId, requestParameters.feedbackRequestDto, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
  * @summary Validate LLM Endpoint (Removed)
  * @param {AxiosInstance} axios Axios instance.
@@ -12196,6 +13379,15 @@ export interface ActionsApiInterface {
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
 
     /**
+     * 
+     * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
+
+    /**
      * Computes change analysis for the provided execution definition.
      * @summary Compute change analysis
      * @param {ActionsApiChangeAnalysisRequest} requestParameters Request parameters.
@@ -12335,6 +13527,15 @@ export interface ActionsApiInterface {
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
 
     /**
+     * 
+     * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
+
+    /**
      * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
      * @summary Generate Description for Analytics Object
      * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
@@ -12343,6 +13544,15 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+
+    /**
+     * 
+     * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
 
     /**
      * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
@@ -12382,6 +13592,15 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
+
+    /**
+     * 
+     * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
 
     /**
      * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
@@ -12553,6 +13772,15 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
+
+    /**
+     * 
+     * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{ [key: string]: string; }>;
 
     /**
      * Permanently removed. Use POST /api/v1/actions/ai/llmProvider/test instead. Always returns 410 Gone.
@@ -12783,6 +14011,27 @@ export interface ActionsApiCancelWorkflowRequest {
      * 
      * @type {string}
      * @memberof ActionsApiCancelWorkflow
+     */
+    readonly runId: string
+}
+
+/**
+ * Request parameters for cancelWorkflow1 operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCancelWorkflow1Request
+ */
+export interface ActionsApiCancelWorkflow1Request {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCancelWorkflow1
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiCancelWorkflow1
      */
     readonly runId: string
 }
@@ -13187,6 +14436,27 @@ export interface ActionsApiGenerateDashboardSummaryRequest {
 }
 
 /**
+ * Request parameters for generateDashboardSummary1 operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGenerateDashboardSummary1Request
+ */
+export interface ActionsApiGenerateDashboardSummary1Request {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGenerateDashboardSummary1
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {DashboardSummaryRequestDto}
+     * @memberof ActionsApiGenerateDashboardSummary1
+     */
+    readonly dashboardSummaryRequestDto: DashboardSummaryRequestDto
+}
+
+/**
  * Request parameters for generateDescription operation in ActionsApi.
  * @export
  * @interface ActionsApiGenerateDescriptionRequest
@@ -13205,6 +14475,27 @@ export interface ActionsApiGenerateDescriptionRequest {
      * @memberof ActionsApiGenerateDescription
      */
     readonly generateDescriptionRequest: GenerateDescriptionRequest
+}
+
+/**
+ * Request parameters for generateKnowledgeRecommendations operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGenerateKnowledgeRecommendationsRequest
+ */
+export interface ActionsApiGenerateKnowledgeRecommendationsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGenerateKnowledgeRecommendations
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {KnowledgeRecommendationsRequestDto}
+     * @memberof ActionsApiGenerateKnowledgeRecommendations
+     */
+    readonly knowledgeRecommendationsRequestDto: KnowledgeRecommendationsRequestDto
 }
 
 /**
@@ -13280,6 +14571,27 @@ export interface ActionsApiGetWorkflowStatusRequest {
      * 
      * @type {string}
      * @memberof ActionsApiGetWorkflowStatus
+     */
+    readonly runId: string
+}
+
+/**
+ * Request parameters for getWorkflowStatus1 operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetWorkflowStatus1Request
+ */
+export interface ActionsApiGetWorkflowStatus1Request {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetWorkflowStatus1
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiGetWorkflowStatus1
      */
     readonly runId: string
 }
@@ -13656,6 +14968,34 @@ export interface ActionsApiTriggerQualityIssuesCalculationRequest {
 }
 
 /**
+ * Request parameters for userFeedback operation in ActionsApi.
+ * @export
+ * @interface ActionsApiUserFeedbackRequest
+ */
+export interface ActionsApiUserFeedbackRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiUserFeedback
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiUserFeedback
+     */
+    readonly runId: string
+
+    /**
+     * 
+     * @type {FeedbackRequestDto}
+     * @memberof ActionsApiUserFeedback
+     */
+    readonly feedbackRequestDto: FeedbackRequestDto
+}
+
+/**
  * Request parameters for validateLLMEndpointById operation in ActionsApi.
  * @export
  * @interface ActionsApiValidateLLMEndpointByIdRequest
@@ -13783,6 +15123,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig) {
         return ActionsApi_CancelWorkflow(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiCancelWorkflow1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig) {
+        return ActionsApi_CancelWorkflow1(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -13953,6 +15304,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * 
+     * @param {ActionsApiGenerateDashboardSummary1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig) {
+        return ActionsApi_GenerateDashboardSummary1(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
      * @summary Generate Description for Analytics Object
      * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
@@ -13962,6 +15324,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig) {
         return ActionsApi_GenerateDescription(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiGenerateKnowledgeRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_GenerateKnowledgeRecommendations(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -14009,6 +15382,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig) {
         return ActionsApi_GetWorkflowStatus(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiGetWorkflowStatus1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig) {
+        return ActionsApi_GetWorkflowStatus1(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -14214,6 +15598,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig) {
         return ActionsApi_TriggerQualityIssuesCalculation(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @param {ActionsApiUserFeedbackRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_UserFeedback(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
