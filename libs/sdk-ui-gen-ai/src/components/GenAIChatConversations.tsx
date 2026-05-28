@@ -7,6 +7,7 @@ import {
     type MouseEvent,
     type RefObject,
     useCallback,
+    useEffect,
     useMemo,
     useRef,
     useState,
@@ -392,7 +393,9 @@ function GenAIChatConversationsComponent({
                     })}
                 >
                     <DrawerContent
+                        isOpen={isHistory}
                         openedId={openedId}
+                        selectedId={currentConversation?.localId}
                         menuRef={menuRef}
                         menuItems={menuItems}
                         conversations={conversations ?? []}
@@ -427,7 +430,9 @@ function GenAIChatConversationsComponent({
 }
 
 interface IDrawerContentProps {
+    isOpen: boolean;
     openedId: string | undefined;
+    selectedId: string | undefined;
     menuRef: RefObject<HTMLElement | undefined>;
     conversations: IChatConversationLocal[];
     menuItems: IUiMenuItem[];
@@ -443,7 +448,9 @@ interface IDrawerContentProps {
 }
 
 function DrawerContent({
+    isOpen,
     openedId,
+    selectedId,
     menuRef,
     conversations,
     menuItems,
@@ -458,6 +465,7 @@ function DrawerContent({
     onMenuUnhandledKeyDown,
 }: IDrawerContentProps) {
     const intl = useIntl();
+    const conversationsListRef = useRef<HTMLDivElement>(null);
 
     const pinnedItems = useMemo(() => {
         return menuItems.filter((item) => item.id === ConversationDateGroup.PINNED);
@@ -466,6 +474,17 @@ function DrawerContent({
     const restItems = useMemo(() => {
         return menuItems.filter((item) => item.id !== ConversationDateGroup.PINNED);
     }, [menuItems]);
+
+    useEffect(() => {
+        if (!isOpen || !selectedId) {
+            return;
+        }
+
+        const selectedItem = conversationsListRef.current?.querySelector<HTMLElement>(
+            `[data-conversation-id="${selectedId}"]`,
+        );
+        selectedItem?.scrollIntoView({ block: "nearest" });
+    }, [isOpen, selectedId, menuItems]);
 
     return (
         <>
@@ -482,7 +501,7 @@ function DrawerContent({
                     </div>
                 </div>
             ) : (
-                <div className="gd-gen-ai-chat__window__conversations__list">
+                <div className="gd-gen-ai-chat__window__conversations__list" ref={conversationsListRef}>
                     <div
                         className="gd-gen-ai-chat__window__conversations__drop-group"
                         onDragLeave={onDropZoneDragLeave}

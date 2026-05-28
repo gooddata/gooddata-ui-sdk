@@ -845,6 +845,8 @@ export interface IMeasureValueFilter {
         measure: IObjIdentifierQualifier;
         localIdentifier?: string;
         conditions?: MeasureValueFilterCondition[];
+        dimensionality?: ObjQualifier[];
+        treatNullValuesAs?: number;
     };
 }
 

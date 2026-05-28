@@ -309,6 +309,18 @@ export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCusto
      * @beta
      */
     alignPoints?: IAlignPoint[];
+    /**
+     * When `true`, the dropdown takes the entire screen on mobile devices.
+     *
+     * @remarks
+     * Hosts that render the MVF inside responsive surfaces (e.g. dashboards) opt in to
+     * switch the overlay to a full-screen presentation on mobile viewports.
+     *
+     * Defaults to `false`.
+     *
+     * @beta
+     */
+    fullscreenOnMobile?: boolean;
 }
 
 /**

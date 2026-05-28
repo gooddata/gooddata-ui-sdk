@@ -6,6 +6,7 @@ import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import {
+    type DateAttributeGranularity,
     type FilterContextItem,
     type IAlertAnomalyDetectionGranularity,
     type IAlertAnomalyDetectionSensitivity,
@@ -153,6 +154,8 @@ export function useEditAlert({
     const weekStart = useDashboardSelector(selectWeekStart);
     const timezone = useDashboardSelector(selectTimezone);
 
+    const isInvalidConnectionToInsight = alertToEdit?.metadata?.widget && !insight;
+
     const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
         selectEntitlementMinimumRecurrenceMinutes,
     );
@@ -181,13 +184,24 @@ export function useEditAlert({
 
     const supportedMeasures = useMemo(
         () =>
-            getSupportedInsightMeasuresByInsight(effectiveInsight, catalogDateDatasets, canManageComparison),
-        [effectiveInsight, catalogDateDatasets, canManageComparison],
+            getSupportedInsightMeasuresByInsight(
+                effectiveInsight,
+                catalogDateDatasets,
+                canManageComparison,
+                alertToEdit,
+            ),
+        [effectiveInsight, catalogDateDatasets, canManageComparison, alertToEdit],
     );
 
     const supportedAttributes = useMemo(
-        () => getSupportedInsightAttributesByInsight(insight, catalogDateDatasets),
-        [insight, catalogDateDatasets],
+        () =>
+            getSupportedInsightAttributesByInsight(
+                insight,
+                catalogAttributes,
+                catalogDateDatasets,
+                alertToEdit,
+            ),
+        [insight, catalogDateDatasets, catalogAttributes, alertToEdit],
     );
 
     const { isResultLoading, getAttributeValues, getMetricValue } =
@@ -408,6 +422,7 @@ export function useEditAlert({
             measure: AlertMetric | undefined,
             relativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined,
             comparisonType: AlertMetricComparatorType,
+            granularity?: DateAttributeGranularity,
         ) => {
             if (!measure || !relativeOperator || !relativeOperator) {
                 return;
@@ -423,6 +438,7 @@ export function useEditAlert({
                           arithmeticOperator,
                           measureFormatMap,
                           comparisonType,
+                          granularity,
                       )
                     : undefined,
             );
@@ -638,7 +654,9 @@ export function useEditAlert({
 
     const validationErrorMessage = isOriginalAutomationValid
         ? undefined
-        : intl.formatMessage({ id: "insightAlert.config.invalidWidget" });
+        : isInvalidConnectionToInsight
+          ? intl.formatMessage({ id: "insightAlert.config.invalidWidget" })
+          : intl.formatMessage({ id: "insightAlert.config.unusedWidget" });
 
     const hasRecipients = (editedAutomation?.recipients?.length ?? 0) > 0;
     const hasValidExternalRecipients = allowExternalRecipients
@@ -694,6 +712,7 @@ export function useEditAlert({
         onTriggerModeChange,
         onTriggerIntervalChange,
         selectedMeasure,
+        canChangeMeasure: !!insight,
         supportedMeasures,
         canManageAttributes,
         selectedAttribute,
@@ -702,6 +721,7 @@ export function useEditAlert({
         catalogAttributes,
         catalogDateDatasets,
         isResultLoading,
+        isInvalidConnectionToInsight,
         selectedAiOperator,
         selectedSensitivity,
         selectedGranularity,

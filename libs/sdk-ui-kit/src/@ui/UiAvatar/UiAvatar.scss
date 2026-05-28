@@ -1,0 +1,22 @@
+// (C) 2026 GoodData Corporation
+
+@use "../themeColorsMap" as themeColorsMap;
+
+.gd-ui-kit-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    width: var(--gd-avatar-size);
+    height: var(--gd-avatar-size);
+    background-color: var(--gd-avatar-background-color);
+
+    &--background {
+        @each $key, $value in themeColorsMap.$theme-colors-map {
+            &-#{$key} {
+                --gd-avatar-background-color: var(--gd-palette-#{$value});
+            }
+        }
+    }
+}

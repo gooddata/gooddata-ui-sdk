@@ -9,10 +9,10 @@ const { b } = bem("gd-ui-kit-dialog-shell");
 
 /**
  * Accessibility config for a dialog. By default the shell wires
- * <code>aria-labelledby</code> to the <code>UiDialogHeader</code> title via
+ * `aria-labelledby` to the `UiDialogHeader` title via
  * context — no config is needed when a header is present. For headerless
- * dialogs, pass <code>ariaLabel</code>; to point at an external title
- * element, pass <code>ariaLabelledBy</code>.
+ * dialogs, pass `ariaLabel`; to point at an external title
+ * element, pass `ariaLabelledBy`.
  *
  * @internal
  */
@@ -32,16 +32,16 @@ export interface IUiDialogShellProps {
     width?: number;
     /**
      * When true, the dialog acts as a modal: focus is trapped inside,
-     * autofocus + return-focus-on-unmount apply, ESC fires <code>onClose</code>,
-     * and <code>aria-modal="true"</code> is set. Leave off for inline
+     * autofocus + return-focus-on-unmount apply, ESC fires `onClose`,
+     * and `aria-modal="true"` is set. Leave off for inline
      * non-blocking dialog cards.
      */
     isModal?: boolean;
-    /** Fires when the user dismisses via ESC. Only active when <code>isModal</code>. */
+    /** Fires when the user dismisses via ESC. Only active when `isModal`. */
     onClose?: () => void;
     /**
-     * Accessibility config. Usually unnecessary — when <code>UiDialogHeader</code>
-     * is used as a child the shell auto-wires <code>aria-labelledby</code> to
+     * Accessibility config. Usually unnecessary — when `UiDialogHeader`
+     * is used as a child the shell auto-wires `aria-labelledby` to
      * the header's title.
      */
     accessibilityConfig?: IUiDialogShellAccessibilityConfig;
@@ -65,8 +65,8 @@ export function useUiDialogContext(): IUiDialogContext | null {
 /**
  * Plain dialog card chrome — 4px radius, soft shadow, complementary-0 fill,
  * 20px padding. Holds whatever the caller composes inside. Set
- * <code>isModal</code> for blocking dialogs (adds focus trap, autofocus,
- * return-focus, ESC handling and <code>aria-modal</code>).
+ * `isModal` for blocking dialogs (adds focus trap, autofocus,
+ * return-focus, ESC handling and `aria-modal`).
  *
  * @internal
  */

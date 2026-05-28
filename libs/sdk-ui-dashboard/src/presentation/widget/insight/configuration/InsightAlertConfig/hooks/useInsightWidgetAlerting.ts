@@ -161,8 +161,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const settings = useDashboardSelector(selectSettings);
 
     const supportedAttributes = useMemo(
-        () => getSupportedInsightAttributesByInsight(insight, catalogDateDatasets),
-        [insight, catalogDateDatasets],
+        () => getSupportedInsightAttributesByInsight(insight, catalogAttributes, catalogDateDatasets),
+        [insight, catalogAttributes, catalogDateDatasets],
     );
 
     const [effectiveInsight, setEffectiveInsight] = useState<IInsight | undefined>(insight);

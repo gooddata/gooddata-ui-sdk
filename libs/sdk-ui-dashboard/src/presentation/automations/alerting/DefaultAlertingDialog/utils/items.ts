@@ -4,7 +4,9 @@ import {
     type DateAttributeGranularity,
     DateGranularity,
     type IAttribute,
+    type IAutomationMetadataObject,
     type IBucket,
+    type ICatalogAttribute,
     type ICatalogDateAttribute,
     type ICatalogDateDataset,
     type IFilter,
@@ -25,6 +27,8 @@ import {
     isPreviousPeriodMeasureDefinition,
     isRelativeDateFilter,
     isSimpleMeasure,
+    newAttribute,
+    newMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
 } from "@gooddata/sdk-model";
@@ -83,20 +87,33 @@ const SortedGranularities: DateAttributeGranularity[] = [
     "GDC.time.minute_in_hour",
 ];
 
+const ValidGranularities: DateAttributeGranularity[] = [
+    "GDC.time.year",
+    "GDC.time.quarter",
+    "GDC.time.month",
+    "GDC.time.week_us",
+    "GDC.time.week",
+    "GDC.time.date",
+    "GDC.time.hour",
+    "GDC.time.minute",
+];
+
 /**
  * Get supported insight measures by insight
  * @param insight - insight to get supported measures for
  * @param dateDatasets - date datasets to filter out date attributes
  * @param canManageComparison - flag if user can manage comparison
+ * @param alert - alert to get supported measures for
  */
 export function getSupportedInsightMeasuresByInsight(
     insight: IInsight | null | undefined,
     dateDatasets: ICatalogDateDataset[] = [],
     canManageComparison: boolean = false,
+    alert?: IAutomationMetadataObject,
 ): AlertMetric[] {
     const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
 
-    const { primaries, others } = collectAllMetric(insight);
+    const { primaries, others } = collectAllMetric(insight, alert);
 
     const simpleMetrics = [
         ...(primaries.map<AlertMetric | undefined>(mapMeasure(true)).filter(Boolean) as AlertMetric[]),
@@ -104,10 +121,10 @@ export function getSupportedInsightMeasuresByInsight(
     ];
 
     const validComparisonBuckets = canManageComparison ? getSupportedBucketsForComparison(insightType) : null;
-    const validComparisonType = insightType === "headline" || validComparisonBuckets;
+    const validComparisonType = insightType === "headline" || validComparisonBuckets || !insight;
 
     // If insight is supported for comparison, we need to add comparators
-    if (insight && insightType && validComparisonType) {
+    if (validComparisonType) {
         mapPreviousPeriodMeasure(primaries, simpleMetrics, true);
         mapPreviousPeriodMeasure(others, simpleMetrics, false);
         mapPoPMeasure(primaries, simpleMetrics, true);
@@ -116,13 +133,15 @@ export function getSupportedInsightMeasuresByInsight(
 
     // If insight is supported for comparison, we need to add comparators that
     // are generated from date attributes used in insight buckets
-    if (insight && insightType && validComparisonType) {
+    if (validComparisonType) {
+        const filters = insight ? insightFilters(insight) : [];
         transformGranularities(
             insight,
-            insightFilters(insight),
+            filters,
             validComparisonBuckets,
             simpleMetrics,
             dateDatasets,
+            !insight,
         );
     }
 
@@ -158,13 +177,17 @@ function getSupportedBucketsForComparison(insightType: InsightType | null) {
 /**
  * Get supported insight attributes by insight
  * @param insight - insight to get supported attributes for
+ * @param attributes - attributes to filter out date attributes
  * @param dateDatasets - date datasets to filter out date attributes
+ * @param alert - alert metadata object
  */
 export function getSupportedInsightAttributesByInsight(
     insight: IInsight | null | undefined,
+    attributes: ICatalogAttribute[],
     dateDatasets: ICatalogDateDataset[] = [],
+    alert?: IAutomationMetadataObject,
 ): AlertAttribute[] {
-    const attrs = collectAllAttributes(insight);
+    const attrs = collectAllAttributes(insight, attributes, alert);
 
     return attrs
         .map<AlertAttribute | undefined>(mapAttribute(dateDatasets))
@@ -234,114 +257,196 @@ function mapPoPMeasure(metrics: IMeasure[], simpleMetrics: AlertMetric[], isPrim
     });
 }
 
-function collectAllMetric(insight: IInsight | null | undefined): {
+function collectAllMetric(
+    insight: IInsight | null | undefined,
+    alert: IAutomationMetadataObject | null | undefined,
+): {
     primaries: IMeasure[];
     others: IMeasure[];
 } {
-    const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
-
-    if (!insight) {
-        return {
-            primaries: [],
-            others: [],
-        };
+    if (insight) {
+        const insightType = insightVisualizationType(insight) as InsightType;
+        switch (insightType) {
+            case "headline":
+            case "bar":
+            case "column":
+            case "line":
+            case "area":
+            case "combo2":
+            case "scatter":
+            case "bubble":
+            case "bullet":
+            case "pie":
+            case "donut":
+            case "treemap":
+            case "funnel":
+            case "pyramid":
+            case "heatmap":
+            case "waterfall":
+            case "dependencywheel":
+            case "sankey":
+            case "table":
+            case "radar": {
+                return collectAllMetricsFrom(
+                    insight,
+                    [BucketNames.MEASURES],
+                    [BucketNames.SECONDARY_MEASURES, BucketNames.TERTIARY_MEASURES],
+                );
+            }
+            case "pushpin": {
+                return collectAllMetricsFrom(insight, [BucketNames.SIZE, BucketNames.COLOR]);
+            }
+            case "repeater": {
+                return collectAllMetricsFrom(insight, [BucketNames.COLUMNS]);
+            }
+            default: {
+                return {
+                    primaries: [],
+                    others: [],
+                };
+            }
+        }
     }
-
-    switch (insightType) {
-        case "headline":
-        case "bar":
-        case "column":
-        case "line":
-        case "area":
-        case "combo2":
-        case "scatter":
-        case "bubble":
-        case "bullet":
-        case "pie":
-        case "donut":
-        case "treemap":
-        case "funnel":
-        case "pyramid":
-        case "heatmap":
-        case "waterfall":
-        case "dependencywheel":
-        case "sankey":
-        case "table":
-        case "radar": {
-            return collectAllMetricsFrom(
-                insight,
-                [BucketNames.MEASURES],
-                [BucketNames.SECONDARY_MEASURES, BucketNames.TERTIARY_MEASURES],
-            );
-        }
-        case "pushpin": {
-            return collectAllMetricsFrom(insight, [BucketNames.SIZE, BucketNames.COLOR]);
-        }
-        case "repeater": {
-            return collectAllMetricsFrom(insight, [BucketNames.COLUMNS]);
-        }
-        default: {
+    if (alert) {
+        if (alert.alert?.condition.type === "relative") {
+            const left = alert.alert?.condition.measure.left;
+            const right = alert.alert?.condition.measure.right;
             return {
-                primaries: [],
+                primaries: [
+                    ...(left
+                        ? [
+                              newMeasure(left.id, (a) =>
+                                  a.format(left.format).title(left.title).localId(left.id),
+                              ),
+                          ]
+                        : []),
+                    ...(right
+                        ? [
+                              newMeasure(right.id, (a) =>
+                                  a.format(right.format).title(right.title).localId(right.id),
+                              ),
+                          ]
+                        : []),
+                ],
+                others: [],
+            };
+        }
+        if (alert.alert?.condition.type === "comparison") {
+            const left = alert.alert?.condition.left;
+            return {
+                primaries: [
+                    ...(left
+                        ? [
+                              newMeasure(left.id, (a) =>
+                                  a.format(left.format).title(left.title).localId(left.id),
+                              ),
+                          ]
+                        : []),
+                ],
+                others: [],
+            };
+        }
+        if (alert.alert?.condition.type === "anomalyDetection") {
+            const measure = alert.alert?.condition.measure;
+            return {
+                primaries: [
+                    ...(measure
+                        ? [
+                              newMeasure(measure.id, (a) =>
+                                  a.format(measure.format).title(measure.title).localId(measure.id),
+                              ),
+                          ]
+                        : []),
+                ],
                 others: [],
             };
         }
     }
+
+    return {
+        primaries: [],
+        others: [],
+    };
 }
 
-function collectAllAttributes(insight: IInsight | null | undefined) {
-    const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
-
-    if (!insight) {
-        return [];
+function collectAllAttributes(
+    insight: IInsight | null | undefined,
+    attributes: ICatalogAttribute[],
+    alert: IAutomationMetadataObject | null | undefined,
+) {
+    if (insight) {
+        const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
+        switch (insightType) {
+            case "headline":
+            case "bar":
+            case "column":
+            case "line":
+            case "area":
+            case "combo2":
+            case "scatter":
+            case "bubble":
+            case "bullet":
+            case "pie":
+            case "donut":
+            case "treemap":
+            case "funnel":
+            case "pyramid":
+            case "heatmap":
+            case "waterfall":
+            case "dependencywheel":
+            case "sankey":
+            case "table":
+            case "radar": {
+                return collectAllAttributesFrom(insight, [
+                    BucketNames.ATTRIBUTE,
+                    BucketNames.ATTRIBUTES,
+                    BucketNames.TREND,
+                    BucketNames.SEGMENT,
+                    BucketNames.COLUMNS,
+                    BucketNames.VIEW,
+                    BucketNames.STACK,
+                    BucketNames.ATTRIBUTE_FROM,
+                    BucketNames.ATTRIBUTE_TO,
+                ]);
+            }
+            case "repeater": {
+                return collectAllAttributesFrom(insight, [BucketNames.ATTRIBUTE]);
+            }
+            case "pushpin": {
+                //NOTE: For now we want to disable attributes for pushpin insight
+                // at all because ofg bug https://gooddata.atlassian.net/browse/F1-889
+                //return collectAllAttributesFrom(insight, [BucketNames.LOCATION]);
+                return [];
+            }
+            default: {
+                return [];
+            }
+        }
     }
+    if (alert?.alert?.execution.attributes) {
+        return alert.alert.execution.attributes
+            .map((attr) => {
+                const found = attributes.find((a) => {
+                    return (
+                        areObjRefsEqual(attr.attribute.displayForm, a.defaultDisplayForm.ref) ||
+                        a.displayForms.some((df) => areObjRefsEqual(attr.attribute.displayForm, df))
+                    );
+                });
 
-    switch (insightType) {
-        case "headline":
-        case "bar":
-        case "column":
-        case "line":
-        case "area":
-        case "combo2":
-        case "scatter":
-        case "bubble":
-        case "bullet":
-        case "pie":
-        case "donut":
-        case "treemap":
-        case "funnel":
-        case "pyramid":
-        case "heatmap":
-        case "waterfall":
-        case "dependencywheel":
-        case "sankey":
-        case "table":
-        case "radar": {
-            return collectAllAttributesFrom(insight, [
-                BucketNames.ATTRIBUTE,
-                BucketNames.ATTRIBUTES,
-                BucketNames.TREND,
-                BucketNames.SEGMENT,
-                BucketNames.COLUMNS,
-                BucketNames.VIEW,
-                BucketNames.STACK,
-                BucketNames.ATTRIBUTE_FROM,
-                BucketNames.ATTRIBUTE_TO,
-            ]);
-        }
-        case "repeater": {
-            return collectAllAttributesFrom(insight, [BucketNames.ATTRIBUTE]);
-        }
-        case "pushpin": {
-            //NOTE: For now we want to disable attributes for pushpin insight
-            // at all because ofg bug https://gooddata.atlassian.net/browse/F1-889
-            //return collectAllAttributesFrom(insight, [BucketNames.LOCATION]);
-            return [];
-        }
-        default: {
-            return [];
-        }
+                if (found) {
+                    return newAttribute(found.defaultDisplayForm.attribute, (m) => {
+                        return m
+                            .displayForm(found.defaultDisplayForm.ref)
+                            .localId(attr.attribute.localIdentifier)
+                            .showAllValues(attr.attribute.showAllValues)
+                            .alias(attr.attribute.alias);
+                    });
+                }
+                return null;
+            })
+            .filter(Boolean) as IAttribute[];
     }
+    return [];
 }
 
 function collectAllAttributesFrom(insight: IInsight, buckets: string[]) {
@@ -376,10 +481,11 @@ function transformGranularities(
     buckets: string[] | null | undefined,
     simpleMetrics: AlertMetric[],
     datasets: ICatalogDateDataset[],
+    allowAllGranularity: boolean,
 ) {
     const usedDatasets = collectAllDateDatasets(insight, insightFilters, buckets, datasets);
 
-    fillComparators(simpleMetrics, usedDatasets);
+    fillComparators(simpleMetrics, usedDatasets, allowAllGranularity);
     fillGranularity(simpleMetrics, usedDatasets);
     removeInvalidComparators(simpleMetrics, insightFilters);
 }
@@ -415,7 +521,9 @@ function collectAllDateDatasets(
             const dateAttributesFromBuckets = attributes
                 .map((a) => getCatalogAttribute(dataset.dateAttributes, a))
                 .filter(Boolean) as ICatalogDateAttribute[];
-            const dateAttributesFromFilters = getFiltersAttribute(datasetsWithGranularity, dataset);
+            const dateAttributesFromFilters = insight
+                ? getFiltersAttribute(datasetsWithGranularity, dataset)
+                : getValidDateAttributes(dataset.dateAttributes);
 
             return {
                 ...dataset,
@@ -430,6 +538,7 @@ function collectAllDateDatasets(
 function fillComparators(
     simpleMetrics: AlertMetric[],
     datasets: ICatalogDateDatasetWithAllowedGranularity[],
+    allowAllGranularity: boolean,
 ) {
     if (datasets.length === 0) {
         return;
@@ -441,26 +550,16 @@ function fillComparators(
         );
         if (!previousPeriod) {
             //PP
-            metric.comparators.push({
-                measure: newPreviousPeriodMeasure(
-                    metric.measure.measure.localIdentifier,
-                    [
-                        {
-                            dataSet: datasets[0].dataSet.ref,
-                            periodsAgo: 1,
-                        },
-                    ],
-                    (a) => {
-                        a.format(metric.measure.measure.format);
-                        a.localId(`${metric.measure.measure.localIdentifier}_previous_period`);
-                        return a;
-                    },
-                ),
-                isPrimary: false,
-                comparator: AlertMetricComparatorType.PreviousPeriod,
-                dataset: undefined,
-                granularity: undefined,
-            });
+            const dataset = datasets[0];
+            if (allowAllGranularity) {
+                dataset.dateAttributesUsed.forEach((dateAttr) => {
+                    metric.comparators.push(
+                        createPP(metric, dataset, dateAttr.granularity, dateAttr.granularity),
+                    );
+                });
+            } else {
+                metric.comparators.push(createPP(metric, dataset, "pp"));
+            }
         }
 
         const samePeriodPrevYear = metric.comparators.find(
@@ -472,24 +571,70 @@ function fillComparators(
             );
             if (yearAttr) {
                 //PoP
-                metric.comparators.push({
-                    measure: newPopMeasure(
-                        metric.measure.measure.localIdentifier,
-                        yearAttr.attribute.ref,
-                        (a) => {
-                            a.format(metric.measure.measure.format);
-                            a.localId(`${metric.measure.measure.localIdentifier}_pop`);
-                            return a;
-                        },
-                    ),
-                    isPrimary: false,
-                    comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
-                    dataset: undefined,
-                    granularity: undefined,
-                });
+                const dataset = datasets[0];
+                if (allowAllGranularity) {
+                    dataset.dateAttributesUsed.forEach((dateAttr) => {
+                        metric.comparators.push(
+                            createSP(metric, yearAttr, dateAttr.granularity, dateAttr.granularity),
+                        );
+                    });
+                } else {
+                    metric.comparators.push(createSP(metric, yearAttr, "pop"));
+                }
             }
         }
     });
+}
+
+function createPP(
+    metric: AlertMetric,
+    dataset: ICatalogDateDatasetWithAllowedGranularity,
+    suffix: string,
+    granularity?: DateAttributeGranularity,
+) {
+    return {
+        measure: newPreviousPeriodMeasure(
+            metric.measure.measure.localIdentifier,
+            [
+                {
+                    dataSet: dataset.dataSet.ref,
+                    periodsAgo: 1,
+                },
+            ],
+            (a) => {
+                a.format(metric.measure.measure.format);
+                a.localId(`${metric.measure.measure.localIdentifier}_previous_period_${suffix}`);
+                return a;
+            },
+        ),
+        isPrimary: false,
+        comparator: AlertMetricComparatorType.PreviousPeriod,
+        granularity: granularity ?? undefined,
+        dataset: undefined,
+    };
+}
+
+function createSP(
+    metric: AlertMetric,
+    yearAttr: ICatalogDateAttribute,
+    suffix: string,
+    granularity?: DateAttributeGranularity,
+) {
+    return {
+        measure: newPopMeasure(metric.measure.measure.localIdentifier, yearAttr.attribute.ref, (a) => {
+            a.format(metric.measure.measure.format);
+            a.localId(`${metric.measure.measure.localIdentifier}_pop_${suffix}`);
+            return a;
+        }),
+        isPrimary: false,
+        comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
+        granularity: granularity ?? undefined,
+        dataset: undefined,
+    };
+}
+
+function getValidDateAttributes(attributes: ICatalogDateAttribute[]) {
+    return attributes.filter((attr) => ValidGranularities.includes(attr.granularity));
 }
 
 function fillGranularity(
@@ -509,7 +654,7 @@ function fillGranularity(
                 if (dataset) {
                     const lowest = sortDateAttributes(dataset)[0];
                     comparator.dataset = dataset.dataSet;
-                    comparator.granularity = lowest?.granularity;
+                    comparator.granularity = comparator.granularity ?? lowest?.granularity;
                 }
             }
             if (isPreviousPeriodMeasureDefinition(def)) {
@@ -522,7 +667,7 @@ function fillGranularity(
                 if (dataset) {
                     const lowest = sortDateAttributes(dataset)[0];
                     comparator.dataset = dataset.dataSet;
-                    comparator.granularity = lowest?.granularity;
+                    comparator.granularity = comparator.granularity ?? lowest?.granularity;
                 }
             }
         });

@@ -3,6 +3,7 @@
 import { Fragment, type ReactNode, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import { type IMeasureValueFilter } from "@gooddata/sdk-model";
+import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { DropdownButton } from "./MeasureValueFilterButton.js";
 import { MeasureValueFilterDropdown } from "./MeasureValueFilterDropdown.js";
@@ -78,10 +79,13 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     isHeaderEnabled,
     onChange,
     alignPoints,
+    fullscreenOnMobile,
 }: IMeasureValueFilterProps) {
     const [displayDropdown, setDisplayDropdown] = useState(false);
     const buttonRef = useRef<HTMLDivElement>(null);
     const autoOpenedRef = useRef<boolean>(false);
+    const isMobile = useMediaQuery("mobileDevice");
+    const useFullScreen = !!fullscreenOnMobile && isMobile;
 
     useEffect(() => {
         if (autoOpen && !autoOpenedRef.current) {
@@ -109,18 +113,31 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
         setDisplayDropdown((state) => !state);
     }, []);
 
+    const renderDropdownButton = useCallback(
+        (onClickHandler: () => void) => (
+            <DropdownButtonComponent
+                onClick={onClickHandler}
+                isActive={displayDropdown}
+                buttonTitle={buttonTitle}
+                buttonSubtitle={buttonSubtitle}
+                buttonTitleExtension={buttonTitleExtension}
+                disabled={buttonDisabled}
+            />
+        ),
+        [
+            DropdownButtonComponent,
+            buttonDisabled,
+            buttonSubtitle,
+            buttonTitle,
+            buttonTitleExtension,
+            displayDropdown,
+        ],
+    );
+
     return (
         <Fragment>
-            <div ref={buttonRef}>
-                <DropdownButtonComponent
-                    onClick={toggleDropdown}
-                    isActive={displayDropdown}
-                    buttonTitle={buttonTitle}
-                    buttonSubtitle={buttonSubtitle}
-                    buttonTitleExtension={buttonTitleExtension}
-                    disabled={buttonDisabled}
-                />
-            </div>
+            {/* External trigger toggles open/close on click. */}
+            <div ref={buttonRef}>{renderDropdownButton(toggleDropdown)}</div>
             {displayDropdown ? (
                 <MeasureValueFilterDropdown
                     onApply={handleApply}
@@ -155,6 +172,11 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     loadMetricDetails={loadMetricDetails}
                     isHeaderEnabled={isHeaderEnabled}
                     alignPoints={alignPoints}
+                    fullscreenOnMobile={fullscreenOnMobile}
+                    // Mobile header is the same visual button but dismisses via handleCancel
+                    // so host onCancel cleanup (e.g. closing the configuration panel,
+                    // clearing autoOpen) runs — toggleDropdown would skip that path.
+                    mobileHeader={useFullScreen ? renderDropdownButton(handleCancel) : undefined}
                 />
             ) : null}
         </Fragment>

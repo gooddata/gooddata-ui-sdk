@@ -1,10 +1,14 @@
 // (C) 2026 GoodData Corporation
 
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { type IntlShape, useIntl } from "react-intl";
 
 import {
+    type DateAttributeGranularity,
+    type IAttributeOrMeasure,
+    type ICatalogAttribute,
+    type ICatalogDateDataset,
     type ICatalogMeasure,
     type IDashboardMeasureValueFilter,
     type IMeasureValueFilter,
@@ -12,15 +16,41 @@ import {
     type MeasureValueFilterCondition,
     type ObjRef,
     areObjRefsEqual,
+    idRef,
+    newAttribute,
+    newMeasure,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { getMeasureValueFilterConditionLabel } from "@gooddata/sdk-ui-filters";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { type IDimensionalityItem, getMeasureValueFilterConditionLabel } from "@gooddata/sdk-ui-filters";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
-import { selectCatalogMeasures } from "../../../model/store/catalog/catalogSelectors.js";
-import { selectLocale, selectSeparators } from "../../../model/store/config/configSelectors.js";
+import {
+    selectCatalogAttributes,
+    selectCatalogDateDatasets,
+    selectCatalogMeasures,
+} from "../../../model/store/catalog/catalogSelectors.js";
+import {
+    selectLocale,
+    selectObjectAvailabilityConfig,
+    selectSeparators,
+} from "../../../model/store/config/configSelectors.js";
 
 const PERCENT_FORMAT_REGEX = /%/;
+const SupportedCatalogGranularity: DateAttributeGranularity[] = [
+    "GDC.time.day_in_week",
+    "GDC.time.day_in_month",
+    "GDC.time.day_in_quarter",
+    "GDC.time.day_in_year",
+    "GDC.time.week_in_quarter",
+    "GDC.time.week_in_year",
+    "GDC.time.month_in_quarter",
+    "GDC.time.month_in_year",
+    "GDC.time.quarter_in_year",
+    "GDC.time.fiscal_year",
+    "GDC.time.fiscal_quarter",
+    "GDC.time.fiscal_month",
+];
 
 function isPercentageFormat(format: string | undefined): boolean {
     return !!format && PERCENT_FORMAT_REGEX.test(format);
@@ -51,6 +81,143 @@ function findCatalogMetric(measure: ObjRef, measures: ICatalogMeasure[]): ICatal
     return measures.find((m) => areObjRefsEqual(m.measure.ref, measure));
 }
 
+function catalogAttributeToDimensionalityItem(attribute: ICatalogAttribute): IDimensionalityItem {
+    return {
+        identifier: attribute.defaultDisplayForm.ref,
+        title: attribute.attribute.title,
+        type: "attribute",
+        ref: attribute.defaultDisplayForm.ref,
+        dataset: attribute.dataSet
+            ? {
+                  identifier: attribute.dataSet.ref,
+                  title: attribute.dataSet.title,
+              }
+            : undefined,
+    };
+}
+
+function catalogDateDatasetToDimensionalityItems(dataset: ICatalogDateDataset): IDimensionalityItem[] {
+    return dataset.dateAttributes.map((dateAttribute): IDimensionalityItem => {
+        return {
+            identifier: dateAttribute.defaultDisplayForm.ref,
+            title: dateAttribute.attribute.title,
+            type: "chronologicalDate",
+            ref: dateAttribute.defaultDisplayForm.ref,
+            dataset: {
+                identifier: dataset.dataSet.ref,
+                title: dataset.dataSet.title,
+            },
+        };
+    });
+}
+
+function getDimensionalityItem(
+    ref: ObjRef,
+    catalogDimensionality: IDimensionalityItem[],
+): IDimensionalityItem {
+    return (
+        catalogDimensionality.find((item) => areObjRefsEqual(item.identifier, ref)) ?? {
+            identifier: ref,
+            title: objRefToString(ref),
+            type: "attribute",
+            ref,
+        }
+    );
+}
+
+function buildMeasureValueFilterAvailabilityItems(
+    measure: ObjRef,
+    dimensionality: ObjRef[],
+): IAttributeOrMeasure[] {
+    const dimensionalityAttributes = dimensionality.map((ref) => newAttribute(ref));
+
+    return [newMeasure(measure), ...dimensionalityAttributes];
+}
+
+async function loadValidDimensionalityAttributes(
+    backend: ReturnType<typeof useBackendStrict>,
+    workspace: string,
+    items: IAttributeOrMeasure[],
+    includeObjectsWithTags: string[] | undefined,
+    excludeObjectsWithTags: string[] | undefined,
+): Promise<ICatalogAttribute[]> {
+    const catalog = await backend
+        .workspace(workspace)
+        .catalog()
+        .withOptions({
+            types: ["attribute"],
+            includeTags: (includeObjectsWithTags ?? []).map((tag) => idRef(tag)),
+            excludeTags: (excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),
+            loadGroups: false,
+        })
+        .load();
+
+    const availableCatalog = await catalog.availableItems().withOptions({ items }).load();
+    return availableCatalog.availableAttributes();
+}
+
+async function loadAvailableDateDatasets(
+    backend: ReturnType<typeof useBackendStrict>,
+    workspace: string,
+    items: IAttributeOrMeasure[],
+    includeObjectsWithTags: string[] | undefined,
+    excludeObjectsWithTags: string[] | undefined,
+): Promise<ICatalogDateDataset[]> {
+    const catalog = await backend
+        .workspace(workspace)
+        .catalog()
+        .withOptions({
+            types: ["dateDataset"],
+            includeTags: (includeObjectsWithTags ?? []).map((tag) => idRef(tag)),
+            excludeTags: (excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),
+            includeDateGranularities: SupportedCatalogGranularity,
+            loadGroups: false,
+        })
+        .load();
+
+    const availableCatalog = await catalog.availableItems().withOptions({ items }).load();
+    return availableCatalog.availableDateDatasets();
+}
+
+async function loadCatalogDimensionalityItems(
+    backend: ReturnType<typeof useBackendStrict>,
+    workspace: string,
+    measure: ObjRef,
+    dimensionality: ObjRef[],
+    allCatalogDimensionality: IDimensionalityItem[],
+    includeObjectsWithTags: string[] | undefined,
+    excludeObjectsWithTags: string[] | undefined,
+): Promise<IDimensionalityItem[]> {
+    const availabilityItems = buildMeasureValueFilterAvailabilityItems(measure, dimensionality);
+    const [attributes, dateDatasets] = await Promise.all([
+        loadValidDimensionalityAttributes(
+            backend,
+            workspace,
+            availabilityItems,
+            includeObjectsWithTags,
+            excludeObjectsWithTags,
+        ),
+        loadAvailableDateDatasets(
+            backend,
+            workspace,
+            availabilityItems,
+            includeObjectsWithTags,
+            excludeObjectsWithTags,
+        ),
+    ]);
+
+    const availableItems = [
+        ...attributes.map(catalogAttributeToDimensionalityItem),
+        ...dateDatasets.flatMap(catalogDateDatasetToDimensionalityItems),
+    ];
+
+    return availableItems.filter((item) =>
+        allCatalogDimensionality.some((catalogItem) =>
+            areObjRefsEqual(catalogItem.identifier, item.identifier),
+        ),
+    );
+}
+
 /**
  * Derived data shared by every dashboard MVF host (filter bar, automation/scheduling dialog,
  * any future location). Resolves the catalog metric, computes title/format/percentage/conditions,
@@ -76,6 +243,14 @@ export interface IDashboardMeasureValueFilterData {
     usePercentage: boolean;
     /** Conditions from the (possibly working) filter the UI should reflect. */
     conditions: MeasureValueFilterCondition[] | undefined;
+    /** Dashboard-level dimensionality refs from the persisted filter. */
+    dimensionality: ObjRef[] | undefined;
+    /** Dashboard-level dimensionality items selected in the configuration panel. */
+    dimensionalityItems: IDimensionalityItem[];
+    /** Catalog dimensionality candidates shown in the configuration panel picker. */
+    catalogDimensionality: IDimensionalityItem[];
+    /** Loader for catalog dimensionality items shown in the configuration panel picker. */
+    loadCatalogDimensionality: (dimensionality: ObjRef[]) => Promise<IDimensionalityItem[]>;
     /** Human-readable condition summary shown on the chip ("> 100 OR ≥ 50%"). */
     conditionLabel: string;
     /** Execution-level MVF that the SDK <MeasureValueFilter /> takes as `filter`. */
@@ -98,12 +273,22 @@ export function useDashboardMeasureValueFilterData(
     filter: IDashboardMeasureValueFilter,
     filterToDisplay?: IDashboardMeasureValueFilter,
 ): IDashboardMeasureValueFilterData {
+    const backend = useBackendStrict();
+    const workspace = useWorkspaceStrict();
     const measures = useDashboardSelector(selectCatalogMeasures);
+    const attributes = useDashboardSelector(selectCatalogAttributes);
+    const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
     const separators = useDashboardSelector(selectSeparators);
     const locale = useDashboardSelector(selectLocale);
     const intl = useIntl();
 
-    const { measure, localIdentifier, title: customTitle } = filter.dashboardMeasureValueFilter;
+    const {
+        measure,
+        localIdentifier,
+        title: customTitle,
+        dimensionality,
+    } = filter.dashboardMeasureValueFilter;
     const effective = filterToDisplay ?? filter;
     const conditions = effective.dashboardMeasureValueFilter.conditions;
 
@@ -112,6 +297,38 @@ export function useDashboardMeasureValueFilterData(
     const metricTitle = customTitle ?? defaultMetricTitle;
     const format = catalogMetric?.measure.format;
     const usePercentage = isPercentageFormat(format);
+    const allCatalogDimensionality = useMemo(
+        () => [
+            ...attributes.map(catalogAttributeToDimensionalityItem),
+            ...dateDatasets.flatMap(catalogDateDatasetToDimensionalityItems),
+        ],
+        [attributes, dateDatasets],
+    );
+
+    const dimensionalityItems = useMemo(
+        () => (dimensionality ?? []).map((ref) => getDimensionalityItem(ref, allCatalogDimensionality)),
+        [dimensionality, allCatalogDimensionality],
+    );
+    const loadCatalogDimensionality = useCallback(
+        (currentDimensionality: ObjRef[]) =>
+            loadCatalogDimensionalityItems(
+                backend,
+                workspace,
+                measure,
+                currentDimensionality,
+                allCatalogDimensionality,
+                objectAvailability?.includeObjectsWithTags,
+                objectAvailability?.excludeObjectsWithTags,
+            ),
+        [
+            allCatalogDimensionality,
+            backend,
+            measure,
+            objectAvailability?.excludeObjectsWithTags,
+            objectAvailability?.includeObjectsWithTags,
+            workspace,
+        ],
+    );
 
     const conditionLabel = useMemo(
         () => getMeasureValueFilterConditionLabel(intl, conditions, { usePercentage, separators }),
@@ -124,9 +341,10 @@ export function useDashboardMeasureValueFilterData(
                 measure,
                 localIdentifier,
                 ...(conditions && conditions.length > 0 ? { conditions } : {}),
+                ...(dimensionality && dimensionality.length > 0 ? { dimensionality } : {}),
             },
         }),
-        [measure, localIdentifier, conditions],
+        [measure, localIdentifier, conditions, dimensionality],
     );
 
     return {
@@ -139,6 +357,10 @@ export function useDashboardMeasureValueFilterData(
         format,
         usePercentage,
         conditions,
+        dimensionality,
+        dimensionalityItems,
+        catalogDimensionality: allCatalogDimensionality,
+        loadCatalogDimensionality,
         conditionLabel,
         dropdownFilter,
         separators,

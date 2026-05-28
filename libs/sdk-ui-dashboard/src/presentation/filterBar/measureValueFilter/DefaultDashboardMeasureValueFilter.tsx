@@ -8,9 +8,14 @@ import { useIntl } from "react-intl";
 import {
     type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
+    type IMeasureMetadataObject,
     type IMeasureValueFilter,
+    type ObjRef,
+    areObjRefsEqual,
+    isObjRef,
 } from "@gooddata/sdk-model";
 import {
+    type IDimensionalityItem,
     type IFilterButtonCustomIcon,
     type IMeasureValueFilterBodyProps,
     type IMeasureValueFilterDropdownActionsProps,
@@ -20,7 +25,10 @@ import {
 import { Bubble, BubbleHoverTrigger, type IAlignPoint, UiControlButton } from "@gooddata/sdk-ui-kit";
 
 import { setDashboardMeasureValueFilterConfigMode } from "../../../model/commands/dashboard.js";
-import { setMeasureValueFilterTitle } from "../../../model/commands/filters.js";
+import {
+    setMeasureValueFilterDimensionality,
+    setMeasureValueFilterTitle,
+} from "../../../model/commands/filters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -44,6 +52,18 @@ import {
 } from "./useDashboardMeasureValueFilterData.js";
 
 const DEFAULT_VISIBILITY_BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "bc tl", offset: { x: 0, y: 5 } }];
+
+function areDimensionalityRefsEqual(a: ObjRef[] | undefined, b: ObjRef[] | undefined): boolean {
+    const aRefs = a ?? [];
+    const bRefs = b ?? [];
+
+    return aRefs.length === bRefs.length && aRefs.every((aRef, index) => areObjRefsEqual(aRef, bRefs[index]));
+}
+
+function dimensionalityItemsToObjRefs(items: IDimensionalityItem[]): ObjRef[] | undefined {
+    const refs = items.map((item) => item.identifier).filter(isObjRef);
+    return refs.length > 0 ? refs : undefined;
+}
 
 function MeasureValueFilterVisibilityIcon({
     visibilityIcon,
@@ -109,7 +129,18 @@ export function DefaultDashboardMeasureValueFilter(
     );
     const filterToDisplay = isApplyAllAtOnceEnabledAndSet ? (workingFilter ?? filter) : filter;
     const mvfData = useDashboardMeasureValueFilterData(filter, filterToDisplay);
-    const { localIdentifier, customTitle, defaultMetricTitle, metricTitle, conditionLabel } = mvfData;
+    const {
+        localIdentifier,
+        customTitle,
+        defaultMetricTitle,
+        catalogMetric,
+        metricTitle,
+        conditionLabel,
+        dimensionality,
+        dimensionalityItems,
+        catalogDimensionality,
+        loadCatalogDimensionality,
+    } = mvfData;
 
     const mode =
         measureValueFilterConfigsModeMap.get(localIdentifier) ??
@@ -124,6 +155,7 @@ export function DefaultDashboardMeasureValueFilter(
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
     const [draftTitle, setDraftTitle] = useState(metricTitle);
     const [draftMode, setDraftMode] = useState<DashboardAttributeFilterConfigMode>(mode);
+    const [draftDimensionalityItems, setDraftDimensionalityItems] = useState(dimensionalityItems);
 
     const { run: changeMeasureValueFilterTitle } = useDashboardCommandProcessing({
         commandCreator: setMeasureValueFilterTitle,
@@ -134,6 +166,12 @@ export function DefaultDashboardMeasureValueFilter(
     const { run: changeMeasureValueFilterMode } = useDashboardCommandProcessing({
         commandCreator: setDashboardMeasureValueFilterConfigMode,
         successEvent: "GDC.DASH/EVT.MEASURE_VALUE_FILTER_CONFIG.MODE_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+    });
+
+    const { run: changeMeasureValueFilterDimensionality } = useDashboardCommandProcessing({
+        commandCreator: setMeasureValueFilterDimensionality,
+        successEvent: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.DIMENSIONALITY_CHANGED",
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
     });
 
@@ -158,21 +196,29 @@ export function DefaultDashboardMeasureValueFilter(
         [filter, onMeasureValueFilterChanged],
     );
 
+    const loadMetricDetails = useCallback(
+        async (): Promise<IMeasureMetadataObject | undefined> => catalogMetric?.measure,
+        [catalogMetric],
+    );
+
     const openConfiguration = useCallback(() => {
         setDraftTitle(metricTitle);
         setDraftMode(mode);
+        setDraftDimensionalityItems(dimensionalityItems);
         setIsConfigurationOpen(true);
-    }, [metricTitle, mode]);
+    }, [dimensionalityItems, metricTitle, mode]);
 
     const closeConfiguration = useCallback(() => {
         setDraftTitle(metricTitle);
         setDraftMode(mode);
+        setDraftDimensionalityItems(dimensionalityItems);
         setIsConfigurationOpen(false);
-    }, [metricTitle, mode]);
+    }, [dimensionalityItems, metricTitle, mode]);
 
     const saveConfiguration = useCallback(() => {
         const normalizedTitle = draftTitle.trim();
         const titleToSave = normalizedTitle === defaultMetricTitle ? undefined : normalizedTitle;
+        const dimensionalityToSave = dimensionalityItemsToObjRefs(draftDimensionalityItems);
 
         if (titleToSave !== customTitle) {
             changeMeasureValueFilterTitle(localIdentifier, titleToSave);
@@ -180,20 +226,33 @@ export function DefaultDashboardMeasureValueFilter(
         if (draftMode !== mode) {
             changeMeasureValueFilterMode(localIdentifier, draftMode);
         }
+        if (!areDimensionalityRefsEqual(dimensionalityToSave, dimensionality)) {
+            changeMeasureValueFilterDimensionality(localIdentifier, dimensionalityToSave);
+        }
         setIsConfigurationOpen(false);
     }, [
+        changeMeasureValueFilterDimensionality,
         changeMeasureValueFilterMode,
         changeMeasureValueFilterTitle,
         customTitle,
         defaultMetricTitle,
+        dimensionality,
+        draftDimensionalityItems,
         draftMode,
         draftTitle,
         localIdentifier,
         mode,
     ]);
 
+    const draftDimensionality = useMemo(
+        () => dimensionalityItemsToObjRefs(draftDimensionalityItems),
+        [draftDimensionalityItems],
+    );
     const isConfigurationSaveDisabled =
-        draftTitle.trim().length === 0 || (draftTitle === metricTitle && draftMode === mode);
+        draftTitle.trim().length === 0 ||
+        (draftTitle === metricTitle &&
+            draftMode === mode &&
+            areDimensionalityRefsEqual(draftDimensionality, dimensionality));
 
     const configurationBodyPropsRef = useRef<ComponentProps<typeof MeasureValueFilterConfiguration> | null>(
         null,
@@ -206,10 +265,14 @@ export function DefaultDashboardMeasureValueFilter(
         title: draftTitle,
         defaultTitle: defaultMetricTitle,
         mode: draftMode,
+        dimensionality: draftDimensionalityItems,
+        catalogDimensionality,
+        loadCatalogDimensionality,
         showConfigModeSection: !!capabilities.supportsHiddenAndLockedFiltersOnUI,
         onTitleChange: setDraftTitle,
         onTitleReset: () => setDraftTitle(defaultMetricTitle),
         onModeChange: setDraftMode,
+        onDimensionalityChange: setDraftDimensionalityItems,
     };
 
     const DropdownActionsComponent = useMemo(() => {
@@ -312,6 +375,8 @@ export function DefaultDashboardMeasureValueFilter(
             {...getSharedDashboardMvfProps(mvfData)}
             onApply={handleApply}
             buttonSubtitle={conditionLabel}
+            loadMetricDetails={isEditMode ? loadMetricDetails : undefined}
+            isHeaderEnabled={!isConfigurationOpen}
             buttonTitleExtension={
                 <MeasureValueFilterVisibilityIcon visibilityIcon={visibilityIcon} disabled={readonly} />
             }
@@ -323,6 +388,7 @@ export function DefaultDashboardMeasureValueFilter(
             DropdownButtonComponent={passDropdownButton ? DropdownButtonComponent : undefined}
             onCancel={handleClose}
             autoOpen={autoOpen}
+            fullscreenOnMobile
         />
     );
 }

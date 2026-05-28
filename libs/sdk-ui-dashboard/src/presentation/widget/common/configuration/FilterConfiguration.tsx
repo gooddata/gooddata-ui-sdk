@@ -9,11 +9,13 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
+    insightFilters,
     isAttributeMetadataObject,
     isDashboardAttributeFilterItem,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
     isInsightWidget,
+    isRankingFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -75,6 +77,13 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
     );
 
     const { isCompatible } = useMeasureValueFilterCompatibility(insight, measureValueFilters);
+
+    // Backend rejects executions that combine MVFs with ranking filters. When the widget's
+    // insight already has a ranking filter, disable every dashboard MVF row and explain why.
+    const isBlockedByRankingFilter = useMemo(
+        () => (insight ? insightFilters(insight).some(isRankingFilter) : false),
+        [insight],
+    );
 
     if (attributesLoading) {
         return <span className={"gd-spinner small s-attribute-filter-configuration-loading"} />;
@@ -140,6 +149,7 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
                             title={measureTitle}
                             widget={widget}
                             isCompatible={isCompatible(measure)}
+                            isBlockedByRankingFilter={isBlockedByRankingFilter}
                         />
                     );
                 } else {

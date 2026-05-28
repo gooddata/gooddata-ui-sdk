@@ -4,6 +4,7 @@ import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogDateDatasets } from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectEnableComparisonInAlerting } from "../../../../../model/store/config/configSelectors.js";
 import { selectInsightByWidgetRef } from "../../../../../model/store/insights/insightsSelectors.js";
 import { selectWidgetByRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 import { getAlertMeasure } from "../utils/getters.js";
@@ -18,10 +19,16 @@ export const useAlertValidation = (
     const widgetLocalId = alert?.metadata?.widget;
     const widgetRef = widgetLocalId ? { identifier: widgetLocalId } : undefined;
 
+    const canManageComparison = useDashboardSelector(selectEnableComparisonInAlerting);
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
-    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight, dateDatasets);
+    const supportedMeasures = getSupportedInsightMeasuresByInsight(
+        insight,
+        dateDatasets,
+        canManageComparison,
+        alert,
+    );
     const selectedMeasureExists = alert ? getAlertMeasure(supportedMeasures, alert.alert) : undefined;
 
     const isValid = isNewAlert || Boolean(!!widget && selectedMeasureExists);

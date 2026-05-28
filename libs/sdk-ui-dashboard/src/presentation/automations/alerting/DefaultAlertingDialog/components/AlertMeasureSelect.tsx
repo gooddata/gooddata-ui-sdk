@@ -18,6 +18,7 @@ import { getMeasureTitle } from "../utils/getters.js";
 
 export interface IAlertMetricSelectProps {
     id?: string;
+    disabled?: boolean;
     selectedMeasure: AlertMetric | undefined;
     onMeasureChange: (measure: AlertMetric) => void;
     measures: AlertMetric[];
@@ -29,6 +30,7 @@ const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric
 
 export function AlertMeasureSelect({
     id,
+    disabled,
     selectedMeasure,
     onMeasureChange,
     measures,
@@ -55,6 +57,7 @@ export function AlertMeasureSelect({
                     >
                         <DropdownButton
                             id={id}
+                            disabled={disabled}
                             className={cx("gd-alert-measure-select__button s-alert-measure-select")}
                             value={selectedMeasureTitle}
                             iconLeft={selectedMeasure ? "gd-icon-metric" : undefined}

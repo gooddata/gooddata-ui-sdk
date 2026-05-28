@@ -458,7 +458,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     selectedItemsCount={selectedItemsCount}
                     totalItemsCount={totalItemsCount}
                     showSelectionCount={selectedItemsCount !== undefined || totalItemsCount !== undefined}
-                    icon={<UiIcon type="folder" size={12} color="currentColor" />}
+                    icon={<UiIcon type="folderSmall" size={12} color="complementary-6" />}
                     dropdownId={dropdownId}
                     buttonRef={buttonRef}
                     onClick={toggleDropdown}

@@ -42,7 +42,7 @@ function LargeTitleExample() {
                 }
             />
             <p style={{ margin: "0 0 20px", color: "var(--gd-palette-complementary-7)" }}>
-                Large title (20/26) + leading back button. Used by AddGranteeScreen.
+                Large title (20/26) + leading back button. Used by AddGranteeDialog.
             </p>
             <UiDialogFooter divider>
                 <UiButton label="Cancel" variant="secondary" size="medium" onClick={action("cancel")} />

@@ -607,6 +607,15 @@ export interface IDashboardMeasureValueFilter {
          * OR-ed conditions (comparison or range). Empty or undefined means "All" (no filtering).
          */
         conditions?: MeasureValueFilterCondition[];
+
+        /**
+         * Attributes or date dimensions used as the fixed granularity for this filter.
+         *
+         * @remarks
+         * When omitted, the backend derives the granularity from each affected widget.
+         */
+        dimensionality?: ObjRef[];
+
         /**
          * Custom title of the filter. If specified has priority over the default metric title.
          */

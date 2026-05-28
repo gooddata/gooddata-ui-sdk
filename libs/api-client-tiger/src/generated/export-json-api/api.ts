@@ -430,6 +430,7 @@ export interface ExportDashboardCompoundComparisonCondition {
 export interface ExportDashboardCompoundComparisonConditionComparison {
     'operator': ExportDashboardCompoundComparisonConditionComparisonOperatorEnum;
     'value': number;
+    'treatNullValuesAs'?: number;
 }
 
 export type ExportDashboardCompoundComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -447,6 +448,7 @@ export interface ExportDashboardCompoundRangeConditionRange {
     'operator': ExportDashboardCompoundRangeConditionRangeOperatorEnum;
     'from': number;
     'to': number;
+    'treatNullValuesAs'?: number;
 }
 
 export type ExportDashboardCompoundRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
@@ -529,6 +531,7 @@ export interface ExportDashboardMeasureValueFilter {
 export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
     'measure': ExportIdentifierRef;
     'conditions': Array<ExportDashboardCompoundConditionItem>;
+    'dimensionality'?: Array<ExportIdentifierRef>;
     'title'?: string;
     'localIdentifier'?: string;
 }

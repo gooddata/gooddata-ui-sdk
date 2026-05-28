@@ -62,7 +62,7 @@ export interface IUiButtonProps {
     tabIndex?: number;
     /**
      * When true, the button is focused on mount via the native HTML
-     * <code>autofocus</code> attribute. Use sparingly — best fit is the safest
+     * `autofocus` attribute. Use sparingly — best fit is the safest
      * action in a confirmation dialog so accidental Enter presses cancel
      * rather than confirm a destructive action.
      */

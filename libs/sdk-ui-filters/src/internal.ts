@@ -11,4 +11,6 @@ export { CalendarTypeTabs } from "./DateFilter/DateFilterBody/CalendarTypeTabs.j
 export { normalizeSelectedFilterOption } from "./DateFilter/utils/FilterOptionNormalization.js";
 export { ListItem } from "./DateFilter/ListItem/ListItem.js";
 export { ListItemTooltip } from "./DateFilter/ListItemTooltip/ListItemTooltip.js";
+export { DimensionalitySection } from "./MeasureValueFilter/DimensionalitySection.js";
 export { MeasureValueFilterDetailsBubble } from "./MeasureValueFilter/MeasureValueFilterDetailsBubble.js";
+export type { IDimensionalityItem } from "./MeasureValueFilter/typings.js";

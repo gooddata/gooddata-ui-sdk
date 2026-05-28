@@ -5,7 +5,7 @@ import type { IntlShape } from "react-intl";
 import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 import { thresholdFilter } from "../filters/items.filters.js";
-import { getUIPath } from "../utils/getUIPath.js";
+import { type UIPathOptions, getUIPath } from "../utils/getUIPath.js";
 import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
 
 import { type SearchTreeViewItem } from "./LeveledSearchTreeView.js";
@@ -17,6 +17,7 @@ type BuildSearchOverlayItemsProps = {
     workspace?: string;
     threshold?: number;
     canEdit?: boolean;
+    uiPathOptions?: UIPathOptions;
 };
 
 export function buildSemanticSearchTreeViewItems({
@@ -26,6 +27,7 @@ export function buildSemanticSearchTreeViewItems({
     relationships,
     threshold = 0.8,
     canEdit = false,
+    uiPathOptions,
 }: BuildSearchOverlayItemsProps): SearchTreeViewItem[] {
     return searchResults
         .filter(thresholdFilter(threshold))
@@ -34,7 +36,7 @@ export function buildSemanticSearchTreeViewItems({
             // Items are not actually disabled, but we need to display the lock icon for locked items,
             // so this API is used for that purpose as a convenience.
             const isDisabled = isItemLocked(item, workspace);
-            const url = getUIPath(item.type, item.id, workspace);
+            const url = getUIPath(item.type, item.id, workspace, undefined, uiPathOptions);
 
             // Do not show relationships for dashboard items
             if (item.type === "dashboard") {
@@ -57,6 +59,7 @@ export function buildSemanticSearchTreeViewItems({
                     relationship.sourceObjectId,
                     workspace,
                     item.id,
+                    uiPathOptions,
                 );
                 return {
                     item: {

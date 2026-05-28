@@ -228,6 +228,32 @@ describe("dashboard conversion", () => {
                 expect(content.tabs[0].layout).toBeDefined();
             });
 
+            it("declarative content carries version 3 so the backend stores it correctly", () => {
+                const input = makeDashboard({ id: "v3_version_check", version: "3" });
+
+                const result = yamlDashboardToDeclarative(emptyEntities, input);
+                const content = result.dashboard.content as any;
+
+                expect(content.version).toBe("3");
+            });
+
+            it("tabs YAML: declarative content carries version 3", () => {
+                const input = {
+                    type: "dashboard",
+                    id: "v3_tabs_version_check",
+                    version: "3",
+                    tabs: [
+                        { id: "tab_a", title: "Tab A", sections: [] },
+                        { id: "tab_b", title: "Tab B", sections: [] },
+                    ],
+                } as Dashboard;
+
+                const result = yamlDashboardToDeclarative(emptyEntities, input);
+                const content = result.dashboard.content as any;
+
+                expect(content.version).toBe("3");
+            });
+
             it("tabs YAML: produces tabs only — no root layout/configs", () => {
                 const input = {
                     type: "dashboard",

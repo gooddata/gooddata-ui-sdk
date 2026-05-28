@@ -2655,6 +2655,74 @@
         "text": "Permission",
         "crowdinContext": "Label for permissions selector"
     },
+    "shareDialog.olp.granteeAvatar.user": {
+        "text": "User",
+        "crowdinContext": "Accessibility label for the circular avatar shown on a grantee row in the OLP share dialog when the grantee is an individual user."
+    },
+    "shareDialog.olp.granteeAvatar.group": {
+        "text": "User group",
+        "crowdinContext": "Accessibility label for the circular avatar shown on a grantee row in the OLP share dialog when the grantee is a group of users."
+    },
+    "shareDialog.olp.granteeRow.ownerTag": {
+        "text": "Owner",
+        "crowdinContext": "Small tag rendered next to the grantee's name on the OLP share dialog when that grantee owns the shared object. Sentence case."
+    },
+    "shareDialog.olp.generalAccess.groupLabel": {
+        "text": "General access",
+        "crowdinContext": "Accessibility label announcing the General-access radio group on the OLP share dialog. Used by screen readers so users know they are entering a radio group. Sentence case."
+    },
+    "shareDialog.olp.generalAccess.restricted.title": {
+        "text": "Restricted",
+        "crowdinContext": "Title of the first option in the General access radio on the OLP share dialog. Choosing it limits access to the grantees explicitly listed above."
+    },
+    "shareDialog.olp.generalAccess.restricted.description": {
+        "text": "Only people and groups added above can access this object.",
+        "crowdinContext": "Description of the Restricted general-access option on the OLP share dialog. Explains that access is limited to explicitly listed grantees."
+    },
+    "shareDialog.olp.generalAccess.workspace.title": {
+        "text": "All workspace members",
+        "crowdinContext": "Title of the second option in the General access radio on the OLP share dialog. Choosing it grants access to every member of the current workspace."
+    },
+    "shareDialog.olp.generalAccess.workspace.description": {
+        "text": "Everyone in this workspace can view this object.",
+        "crowdinContext": "Description of the All-workspace-members general-access option on the OLP share dialog. Explains the resulting access for the whole workspace."
+    },
+    "shareDialog.olp.objectShareDialog.title": {
+        "text": "Share \"{title}\"",
+        "crowdinContext": "Title of the OLP share dialog. {title} is the human-readable name of the shared object (e.g. an attribute or dataset). Sentence case."
+    },
+    "shareDialog.olp.objectShareDialog.sharedWith": {
+        "text": "Shared with",
+        "crowdinContext": "Section heading above the list of grantees inside the OLP share dialog. Rendered in upper case by the UI."
+    },
+    "shareDialog.olp.objectShareDialog.add": {
+        "text": "Add",
+        "crowdinContext": "Link in the SHARED WITH section heading of the OLP share dialog that opens the screen for adding new grantees. Sentence case."
+    },
+    "shareDialog.olp.objectShareDialog.generalAccess": {
+        "text": "General access",
+        "crowdinContext": "Section heading above the general-access radio inside the OLP share dialog. Rendered in upper case by the UI."
+    },
+    "shareDialog.olp.addGranteeDialog.back": {
+        "text": "Back",
+        "crowdinContext": "Accessibility label for the back-arrow button on the OLP share dialog's add-grantee screen. Returns the user to the main share dialog."
+    },
+    "shareDialog.olp.addGranteeDialog.userOrGroup": {
+        "text": "User or group",
+        "crowdinContext": "Label of the search input on the OLP add-grantee screen. The author types a user or group name to grant access to."
+    },
+    "shareDialog.olp.addGranteeDialog.searchPlaceholder": {
+        "text": "Search",
+        "crowdinContext": "Placeholder text shown inside the search input on the OLP add-grantee screen when no query has been entered yet."
+    },
+    "shareDialog.olp.addGranteeDialog.emptyState": {
+        "text": "No user or group selected",
+        "crowdinContext": "Placeholder shown below the search input on the OLP add-grantee screen when the author has not yet picked anyone from the search dropdown."
+    },
+    "shareDialog.olp.addGranteeDialog.add": {
+        "text": "Add",
+        "crowdinContext": "Primary button at the bottom of the OLP add-grantee screen. Confirms granting access to the selected user or group and returns to the main share dialog."
+    },
     "dialogs.closeLabel": {
         "text": "Close dialog",
         "crowdinContext": "Label of a close button"

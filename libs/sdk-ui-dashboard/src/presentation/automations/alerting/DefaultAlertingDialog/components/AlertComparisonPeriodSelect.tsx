@@ -5,7 +5,11 @@ import { type MutableRefObject, useMemo } from "react";
 import cx from "classnames";
 import { type IntlShape, useIntl } from "react-intl";
 
-import { DateGranularity, type IAutomationMetadataObject } from "@gooddata/sdk-model";
+import {
+    type DateAttributeGranularity,
+    DateGranularity,
+    type IAutomationMetadataObject,
+} from "@gooddata/sdk-model";
 import {
     Dropdown,
     DropdownButton,
@@ -23,7 +27,11 @@ export interface IAlertComparisonPeriodSelectProps {
     measure: AlertMetric | undefined;
     overlayPositionType?: OverlayPositionType;
     selectedComparison?: AlertMetricComparatorType;
-    onComparisonChange: (comparison: AlertMetricComparatorType) => void;
+    selectedGranularity?: DateAttributeGranularity;
+    onComparisonChange: (
+        comparison: AlertMetricComparatorType,
+        granularity?: DateAttributeGranularity,
+    ) => void;
     canManageComparison: boolean;
     id: string;
     closeOnParentScroll?: boolean;
@@ -34,6 +42,7 @@ export function AlertComparisonPeriodSelect({
     measure,
     overlayPositionType,
     selectedComparison,
+    selectedGranularity,
     canManageComparison,
     onComparisonChange,
     id,
@@ -42,47 +51,83 @@ export function AlertComparisonPeriodSelect({
     const intl = useIntl();
 
     const selectedOperator = useMemo(() => {
-        return measure?.comparators.find((a) => a.comparator === selectedComparison);
-    }, [measure?.comparators, selectedComparison]);
+        return measure?.comparators.find(
+            (a) =>
+                a.comparator === selectedComparison &&
+                (selectedGranularity ? selectedGranularity === a.granularity : true),
+        );
+    }, [measure?.comparators, selectedComparison, selectedGranularity]);
 
     const comparisons = useMemo(() => {
-        const sp = measure?.comparators.find(
-            (a) => a.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
-        );
-        const pp = measure?.comparators.find(
-            (a) => a.comparator === AlertMetricComparatorType.PreviousPeriod,
-        );
+        const sps =
+            measure?.comparators.filter(
+                (a) => a.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+            ) ?? [];
+        const pps =
+            measure?.comparators.filter((a) => a.comparator === AlertMetricComparatorType.PreviousPeriod) ??
+            [];
 
-        return [
-            sp?.granularity && pp?.granularity !== DateGranularity["year"]
-                ? {
-                      title: intl.formatMessage(
-                          { id: "insightAlert.config.compare_with_sp_granularity" },
-                          {
-                              period: translateGranularity(intl, sp.granularity),
-                          },
-                      ),
-                      type: AlertMetricComparatorType.SamePeriodPreviousYear,
-                  }
-                : {
-                      title: intl.formatMessage({ id: "insightAlert.config.compare_with_sp" }),
-                      type: AlertMetricComparatorType.SamePeriodPreviousYear,
-                  },
-            pp?.granularity
-                ? {
-                      title: intl.formatMessage(
-                          { id: "insightAlert.config.compare_with_pp_granularity" },
-                          {
-                              period: translateGranularity(intl, pp.granularity),
-                          },
-                      ),
-                      type: AlertMetricComparatorType.PreviousPeriod,
-                  }
-                : {
-                      title: intl.formatMessage({ id: "insightAlert.config.compare_with_pp" }),
-                      type: AlertMetricComparatorType.PreviousPeriod,
-                  },
-        ];
+        const items: {
+            title: string;
+            type: AlertMetricComparatorType;
+            granularity?: DateAttributeGranularity;
+        }[] = [];
+
+        // Iterate over SamePeriodPreviousYear comparators
+        sps.forEach((sp) => {
+            const pp = pps.find((pp) => pp.granularity === sp.granularity);
+            // Has granularity set and previous period is not year
+            if (sp.granularity) {
+                if (pp?.granularity === DateGranularity["year"]) {
+                    items.push({
+                        title: intl.formatMessage({ id: "insightAlert.config.compare_with_sp" }),
+                        type: AlertMetricComparatorType.SamePeriodPreviousYear,
+                        granularity: sp.granularity,
+                    });
+                } else {
+                    items.push({
+                        title: intl.formatMessage(
+                            { id: "insightAlert.config.compare_with_sp_granularity" },
+                            {
+                                period: translateGranularity(intl, sp.granularity),
+                            },
+                        ),
+                        type: AlertMetricComparatorType.SamePeriodPreviousYear,
+                        granularity: sp.granularity,
+                    });
+                }
+            } else {
+                items.push({
+                    title: intl.formatMessage({ id: "insightAlert.config.compare_with_sp" }),
+                    type: AlertMetricComparatorType.SamePeriodPreviousYear,
+                    granularity: undefined,
+                });
+            }
+        });
+        // Iterate over PreviousPeriod comparators
+        pps.forEach((pp) => {
+            // Previous period has granularity set
+            if (pp.granularity) {
+                items.push({
+                    title: intl.formatMessage(
+                        { id: "insightAlert.config.compare_with_pp_granularity" },
+                        {
+                            period: translateGranularity(intl, pp.granularity),
+                        },
+                    ),
+                    type: AlertMetricComparatorType.PreviousPeriod,
+                    granularity: pp.granularity,
+                });
+            } else {
+                items.push({
+                    title: intl.formatMessage({ id: "insightAlert.config.compare_with_pp" }),
+                    type: AlertMetricComparatorType.PreviousPeriod,
+                    granularity: undefined,
+                });
+            }
+        });
+
+        return items;
     }, [intl, measure?.comparators]);
 
     // If alert is not defined or the measure does not have any comparators, return null
@@ -130,7 +175,7 @@ export function AlertComparisonPeriodSelect({
             renderBody={({ closeDropdown, ariaAttributes }) => {
                 const listboxItems = comparisons.map((comparison) => ({
                     type: "interactive" as const,
-                    id: comparison.type.toString(),
+                    id: `${comparison.type}-${comparison.granularity ?? "none"}`,
                     stringTitle: comparison.title,
                     data: comparison,
                 }));
@@ -141,10 +186,13 @@ export function AlertComparisonPeriodSelect({
                         shouldKeyboardActionPreventDefault
                         dataTestId="s-alert-comparison-select-list"
                         items={listboxItems}
-                        selectedItemId={selectedComparison?.toString()}
+                        selectedItemId={`${selectedComparison ?? "none"}-${selectedGranularity ?? "none"}`}
                         onSelect={(item) => {
-                            if (item.data.type !== selectedComparison) {
-                                onComparisonChange(item.data.type);
+                            if (
+                                item.data.type !== selectedComparison ||
+                                item.data.granularity !== selectedGranularity
+                            ) {
+                                onComparisonChange(item.data.type, item.data.granularity);
                             }
                         }}
                         onClose={closeDropdown}

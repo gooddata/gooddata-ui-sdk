@@ -131,7 +131,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         (...args) => {
             setFocusedId_internal(...args);
             // Focus is lost when clicking on an item that opens a submenu. We need to refocus the menu.
-            menuComponentRef.current?.focus();
+            menuComponentRef.current?.focus({ preventScroll: true });
         },
         [menuComponentRef],
     );
@@ -214,11 +214,7 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
                 return;
             }
 
-            if (
-                controlType === "keyboard" &&
-                itemsContainerRef.current &&
-                itemsContainerRef.current.scrollHeight > itemsContainerRef.current.clientHeight
-            ) {
+            if (controlType === "keyboard" && itemsContainerRef.current) {
                 element.scrollIntoView({ block: "nearest", behavior: "smooth" });
             }
         },

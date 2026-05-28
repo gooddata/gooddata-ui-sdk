@@ -630,6 +630,7 @@ export interface AutomationDashboardCompoundComparisonCondition {
 export interface AutomationDashboardCompoundComparisonConditionComparison {
     'operator': AutomationDashboardCompoundComparisonConditionComparisonOperatorEnum;
     'value': number;
+    'treatNullValuesAs'?: number;
 }
 
 export type AutomationDashboardCompoundComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
@@ -647,6 +648,7 @@ export interface AutomationDashboardCompoundRangeConditionRange {
     'operator': AutomationDashboardCompoundRangeConditionRangeOperatorEnum;
     'from': number;
     'to': number;
+    'treatNullValuesAs'?: number;
 }
 
 export type AutomationDashboardCompoundRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
@@ -729,6 +731,7 @@ export interface AutomationDashboardMeasureValueFilter {
 export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilter {
     'measure': AutomationIdentifierRef;
     'conditions': Array<AutomationDashboardCompoundConditionItem>;
+    'dimensionality'?: Array<AutomationIdentifierRef>;
     'title'?: string;
     'localIdentifier'?: string;
 }

@@ -355,7 +355,7 @@ export function yamlDashboardToDeclarative(
     const content: DashboardDefinition =
         yamlVersion === "3"
             ? {
-                  version: "2",
+                  version: "3",
                   plugins,
                   tabs,
                   ...(input.cross_filtering === false ? { disableCrossFiltering: true } : {}),

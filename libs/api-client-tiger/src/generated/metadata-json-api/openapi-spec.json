@@ -33576,6 +33576,10 @@
                             "value": {
                                 "type": "number",
                                 "format": "double"
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number",
+                                "format": "double"
                             }
                         }
                     }
@@ -33618,6 +33622,10 @@
                                 "format": "double"
                             },
                             "to": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "treatNullValuesAs": {
                                 "type": "number",
                                 "format": "double"
                             }
@@ -33845,6 +33853,12 @@
                                 "type": "array",
                                 "items": {
                                     "$ref": "#/components/schemas/DashboardCompoundConditionItem"
+                                }
+                            },
+                            "dimensionality": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/IdentifierRef"
                                 }
                             },
                             "title": {

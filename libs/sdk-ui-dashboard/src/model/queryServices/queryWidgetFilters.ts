@@ -335,10 +335,19 @@ export function* queryWithInsight(
         ),
     ]);
 
-    const dashboardMeasureValueFilters = resolveDashboardMeasureValueFilters(
-        widget,
-        widgetAwareDashboardOtherFilters.filter(isMeasureValueFilter),
-    );
+    const insightRankingFilters = effectiveInsightFilters.filter(isRankingFilter);
+    const insightHasRankingFilter = insightRankingFilters.length > 0;
+
+    // The backend rejects executions that combine MVFs with ranking filters with
+    // "Measure value filters with ranking filters unsupported.". AD prevents this in
+    // insights at authoring time, so when the insight has a ranking filter we drop
+    // all dashboard-level MVFs from this widget's execution to avoid the 400.
+    const dashboardMeasureValueFilters = insightHasRankingFilter
+        ? []
+        : resolveDashboardMeasureValueFilters(
+              widget,
+              widgetAwareDashboardOtherFilters.filter(isMeasureValueFilter),
+          );
 
     return [
         ...dateFilters,
@@ -359,7 +368,7 @@ export function* queryWithInsight(
         ...dashboardMeasureValueFilters,
         ...effectiveInsightFilters.filter(isMeasureValueFilter),
         // nothing to resolve for ranking filters
-        ...effectiveInsightFilters.filter(isRankingFilter),
+        ...insightRankingFilters,
     ];
 }
 

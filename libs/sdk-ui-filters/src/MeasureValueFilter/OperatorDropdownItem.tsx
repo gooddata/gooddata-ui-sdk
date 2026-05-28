@@ -21,6 +21,7 @@ interface IOperatorDropdownItemOwnProps {
     isDisabled?: boolean;
     disabledTooltip?: string;
     onClick: (identifier: MeasureValueFilterOperator) => void;
+    isMobile?: boolean;
 }
 
 export const OperatorDropdownItem = memo(function OperatorDropdownItem({
@@ -30,6 +31,7 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
     isDisabled = false,
     disabledTooltip,
     onClick = () => {},
+    isMobile = false,
 }: IOperatorDropdownItemOwnProps) {
     const intl = useIntl();
 
@@ -76,9 +78,9 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
             aria-disabled={isDisabled}
             data-testid={`mvf-operator-${simplifyText(operator)}`}
         >
-            <div className={`gd-icon-${getOperatorIcon(operator)}`} title={title} />
+            {isMobile ? null : <div className={`gd-icon-${getOperatorIcon(operator)}`} title={title} />}
             <span title={title}>{capitalize(title)}</span>
-            {bubbleText ? renderBubble(bubbleText) : null}
+            {bubbleText && !isMobile ? renderBubble(bubbleText) : null}
         </div>
     );
 

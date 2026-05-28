@@ -1722,6 +1722,68 @@ export const isDashboardMeasureValueFilterConditionChanged =
     );
 
 /**
+ * Payload of the {@link IDashboardMeasureValueFilterDimensionalityChanged} event.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterDimensionalityChangedPayload {
+    /**
+     * Local identifier of the measure value filter whose dimensionality was changed.
+     */
+    readonly localIdentifier: string;
+
+    /**
+     * Updated definition of the filter.
+     */
+    readonly filter: IDashboardMeasureValueFilter;
+
+    /**
+     * The new dashboard-level dimensionality. Empty or undefined means per-widget inheritance.
+     */
+    readonly dimensionality?: ObjRef[];
+}
+
+/**
+ * This event is emitted after the dashboard-level dimensionality of a measure value filter changes.
+ *
+ * @alpha
+ */
+export interface IDashboardMeasureValueFilterDimensionalityChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.DIMENSIONALITY_CHANGED";
+    readonly payload: IDashboardMeasureValueFilterDimensionalityChangedPayload;
+}
+
+export function measureValueFilterDimensionalityChanged(
+    ctx: DashboardContext,
+    localIdentifier: string,
+    filter: IDashboardMeasureValueFilter,
+    dimensionality: ObjRef[] | undefined,
+    correlationId?: string,
+): IDashboardMeasureValueFilterDimensionalityChanged {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.DIMENSIONALITY_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            localIdentifier,
+            filter,
+            dimensionality,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardMeasureValueFilterDimensionalityChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardMeasureValueFilterDimensionalityChanged =
+    eventGuard<IDashboardMeasureValueFilterDimensionalityChanged>(
+        "GDC.DASH/EVT.FILTER_CONTEXT.MEASURE_VALUE_FILTER.DIMENSIONALITY_CHANGED",
+    );
+
+/**
  * Payload of the {@link IDashboardMeasureValueFilterTitleChanged} event.
  *
  * @alpha

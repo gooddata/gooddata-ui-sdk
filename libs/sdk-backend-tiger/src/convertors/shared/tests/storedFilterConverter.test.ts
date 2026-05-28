@@ -325,9 +325,10 @@ describe("storedFilterConverter", () => {
                 dashboardMeasureValueFilter: {
                     measure: idRef("m1", "measure"),
                     localIdentifier: "mvf1",
+                    dimensionality: [idRef("label.product", "displayForm")],
                     conditions: [
-                        { comparison: { operator: "GREATER_THAN", value: 10 } },
-                        { range: { operator: "BETWEEN", from: 1, to: 5 } },
+                        { comparison: { operator: "GREATER_THAN", value: 10, treatNullValuesAs: 0 } },
+                        { range: { operator: "BETWEEN", from: 1, to: 5, treatNullValuesAs: -1 } },
                     ],
                     title: "Revenue > 10",
                 },
@@ -342,11 +343,15 @@ describe("storedFilterConverter", () => {
                 expect(tigerItem.dashboardMeasureValueFilter.measure).toEqual({
                     identifier: { id: "m1", type: "metric" },
                 });
+                expect(tigerItem.dashboardMeasureValueFilter.dimensionality).toEqual([
+                    { identifier: { id: "label.product", type: "label" } },
+                ]);
                 // Wrapped condition shape is preserved through the converter.
                 expect(tigerItem.dashboardMeasureValueFilter.conditions).toEqual([
-                    { comparison: { operator: "GREATER_THAN", value: 10 } },
-                    { range: { operator: "BETWEEN", from: 1, to: 5 } },
+                    { comparison: { operator: "GREATER_THAN", value: 10, treatNullValuesAs: 0 } },
+                    { range: { operator: "BETWEEN", from: 1, to: 5, treatNullValuesAs: -1 } },
                 ]);
+                expect(tigerItem.dashboardMeasureValueFilter).not.toHaveProperty("treatNullValuesAs");
                 expect(tigerItem.dashboardMeasureValueFilter.title).toBe("Revenue > 10");
             }
 
@@ -357,8 +362,11 @@ describe("storedFilterConverter", () => {
             if ("dashboardMeasureValueFilter" in result) {
                 expect(result.dashboardMeasureValueFilter.localIdentifier).toBe("mvf1");
                 expect(result.dashboardMeasureValueFilter.conditions).toEqual([
-                    { comparison: { operator: "GREATER_THAN", value: 10 } },
-                    { range: { operator: "BETWEEN", from: 1, to: 5 } },
+                    { comparison: { operator: "GREATER_THAN", value: 10, treatNullValuesAs: 0 } },
+                    { range: { operator: "BETWEEN", from: 1, to: 5, treatNullValuesAs: -1 } },
+                ]);
+                expect(result.dashboardMeasureValueFilter.dimensionality).toEqual([
+                    idRef("label.product", "displayForm"),
                 ]);
                 expect(result.dashboardMeasureValueFilter.title).toBe("Revenue > 10");
             }

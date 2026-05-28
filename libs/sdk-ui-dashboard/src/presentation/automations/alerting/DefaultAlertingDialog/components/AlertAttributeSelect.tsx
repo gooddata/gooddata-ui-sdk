@@ -29,6 +29,7 @@ import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from ".
 
 export interface IAlertAttributeSelectProps {
     id: string;
+    disabled?: boolean;
     selectedAttribute: AlertAttribute | undefined;
     selectedValue: string | null | undefined;
     onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
@@ -168,6 +169,7 @@ function AttributeValuesSearchContent({
 
 export function AlertAttributeSelect({
     id,
+    disabled,
     selectedAttribute: selectedAttributeProp,
     getAttributeValues,
     isResultLoading,
@@ -351,11 +353,11 @@ export function AlertAttributeSelect({
                                 value={buttonValue}
                                 iconLeft="gd-icon-attribute"
                                 onClick={() => {
-                                    if (!isResultLoading) {
+                                    if (!isResultLoading && !disabled) {
                                         toggleDropdown();
                                     }
                                 }}
-                                disabled={isResultLoading}
+                                disabled={isResultLoading || disabled}
                                 buttonRef={buttonRef as MutableRefObject<HTMLElement>}
                                 dropdownId={dropdownId}
                                 isOpen={isOpen}

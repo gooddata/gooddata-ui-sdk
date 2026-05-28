@@ -9,7 +9,6 @@ import {
     type AutomationAutomationTabularExport,
     type AutomationAutomationVisualExport,
     type AutomationDashboardExportSettings,
-    type DashboardFilter,
     type ITigerFilter,
     type ITigerFilterContextItem,
     type JsonApiExportDefinitionOutIncludes,
@@ -79,14 +78,9 @@ type MetadataObjectDefinition<T extends ITigerFilter | ITigerFilterContextItem =
 // Accepts either ITigerFilterContextItem (our manual wire shape, used in the toBackend direction
 // where we control the localIdentifier) or the BE-generated DashboardFilter (which allows a missing
 // localIdentifier on the MVF). The runtime helper matches structurally so the wider input works.
-//
-// TODO INE: wait for BE type unification — once `DashboardMeasureValueFilter` aligns with our
-// manual type (`localIdentifier` required), drop the `| DashboardFilter[]` branch and the cast;
-// `ITigerFilterContextItem[] | undefined` will accept BE-shaped data again.
 const convertTigerToDashboardFilters = (
-    filters: ITigerFilterContextItem[] | DashboardFilter[] | undefined,
-): FilterContextItem[] | undefined =>
-    convertTigerToSdkFilters(filters as ITigerFilterContextItem[] | undefined);
+    filters: ITigerFilterContextItem[] | undefined,
+): FilterContextItem[] | undefined => convertTigerToSdkFilters(filters);
 
 export const wrapExportDefinition = (
     requestPayload: IExportDefinitionRequestPayload,

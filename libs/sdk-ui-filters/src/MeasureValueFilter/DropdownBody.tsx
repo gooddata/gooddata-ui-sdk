@@ -68,6 +68,7 @@ interface IDropdownBodyProps extends IMeasureValueFilterCustomComponentProps {
     isLoadingCatalogDimensionality?: boolean;
     loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
     isHeaderEnabled?: boolean;
+    isMobile?: boolean;
 }
 
 interface IDropdownBodyState {
@@ -86,6 +87,57 @@ interface IDropdownBodyState {
 
 const DefaultValuePrecision = 6;
 const ALIGN_POINTS = [{ align: "cr cl" }];
+
+interface IConditionActionButtonProps {
+    icon: "plus" | "cross";
+    isMobile?: boolean;
+    isDisabled?: boolean;
+    isDestructive?: boolean;
+    onClick: () => void;
+    dataTestId: string;
+    label: string;
+    tooltip: string;
+}
+
+/**
+ * Plus / cross button next to a condition row. On mobile, skip the hover tooltip wrapper —
+ * tooltips aren't usable on touch and the Bubble's internal Overlay caused a re-positioning
+ * feedback loop when a new condition row was inserted into the fullscreen overlay.
+ */
+function ConditionActionButton({
+    icon,
+    isMobile,
+    isDisabled,
+    isDestructive,
+    onClick,
+    dataTestId,
+    label,
+    tooltip,
+}: IConditionActionButtonProps) {
+    const button = (
+        <UiIconButton
+            icon={icon}
+            size={isMobile ? "medium" : "small"}
+            variant="tertiary"
+            isDisabled={isDisabled}
+            isDesctructive={isDestructive}
+            onClick={onClick}
+            dataTestId={dataTestId}
+            label={label}
+        />
+    );
+
+    if (isMobile) {
+        return button;
+    }
+
+    return (
+        <BubbleHoverTrigger>
+            {button}
+            <Bubble alignPoints={ALIGN_POINTS}>{tooltip}</Bubble>
+        </BubbleHoverTrigger>
+    );
+}
 
 const toFormCondition = (
     condition: MeasureValueFilterCondition,
@@ -769,10 +821,14 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
 
     return (
         <div
-            className={`${MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS} gd-dialog gd-dropdown overlay s-mvf-dropdown-body`}
+            className={cx(
+                MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS,
+                "gd-dialog gd-dropdown overlay s-mvf-dropdown-body",
+                { "gd-is-mobile": props.isMobile },
+            )}
             data-testid="mvf-dropdown-body"
         >
-            {props.isHeaderEnabled && props.measureTitle ? (
+            {props.isHeaderEnabled && props.measureTitle && !props.isMobile ? (
                 <MeasureValueFilterDropdownHeader
                     title={props.measureTitle}
                     loadMetricDetails={props.loadMetricDetails}
@@ -810,43 +866,36 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                                                     operator={c.operator}
                                                     isDisabled={!enableOperatorSelection}
                                                     isAllOperatorDisabled={isAllOperatorDisabled}
+                                                    isMobile={props.isMobile}
                                                 />
                                             </div>
 
                                             {enableMultipleConditions ? (
                                                 <div className="gd-mvf-condition-action">
                                                     {idx === 0 ? (
-                                                        <BubbleHoverTrigger>
-                                                            <UiIconButton
-                                                                icon="plus"
-                                                                size="small"
-                                                                variant="tertiary"
-                                                                isDisabled={isAddConditionDisabled}
-                                                                onClick={handleAddCondition}
-                                                                dataTestId="mvf-add-condition"
-                                                                label={addConditionTooltip}
-                                                            />
-                                                            <Bubble alignPoints={ALIGN_POINTS}>
-                                                                {isAddConditionDisabled
+                                                        <ConditionActionButton
+                                                            icon="plus"
+                                                            isMobile={props.isMobile}
+                                                            isDisabled={isAddConditionDisabled}
+                                                            onClick={handleAddCondition}
+                                                            dataTestId="mvf-add-condition"
+                                                            label={addConditionTooltip}
+                                                            tooltip={
+                                                                isAddConditionDisabled
                                                                     ? addConditionDisabledTooltip
-                                                                    : addConditionTooltip}
-                                                            </Bubble>
-                                                        </BubbleHoverTrigger>
+                                                                    : addConditionTooltip
+                                                            }
+                                                        />
                                                     ) : (
-                                                        <BubbleHoverTrigger>
-                                                            <UiIconButton
-                                                                icon="cross"
-                                                                size="small"
-                                                                variant="tertiary"
-                                                                isDesctructive
-                                                                onClick={() => handleRemoveCondition(idx)}
-                                                                dataTestId={`mvf-remove-condition-${idx}`}
-                                                                label={removeConditionTooltip}
-                                                            />
-                                                            <Bubble alignPoints={ALIGN_POINTS}>
-                                                                {removeConditionTooltip}
-                                                            </Bubble>
-                                                        </BubbleHoverTrigger>
+                                                        <ConditionActionButton
+                                                            icon="cross"
+                                                            isMobile={props.isMobile}
+                                                            isDestructive
+                                                            onClick={() => handleRemoveCondition(idx)}
+                                                            dataTestId={`mvf-remove-condition-${idx}`}
+                                                            label={removeConditionTooltip}
+                                                            tooltip={removeConditionTooltip}
+                                                        />
                                                     )}
                                                 </div>
                                             ) : null}
@@ -875,6 +924,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                                                     <TreatNullValuesAsZeroCheckbox
                                                         onChange={handleTreatNullAsZeroClicked}
                                                         checked={enabledTreatNullValuesAsZero}
+                                                        isMobile={props.isMobile}
                                                         intl={intl}
                                                     />
                                                 ) : null}

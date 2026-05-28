@@ -106,6 +106,95 @@
                 }
             }
         },
+        "/api/v1/ailake/database/instances/{instanceId}/pipeTables/{tableName}/refresh": {
+            "post": {
+                "tags": [
+                    "AI Lake",
+                    "AI Lake - Pipe Tables"
+                ],
+                "summary": "(BETA) Refresh a pipe table partition",
+                "description": "(BETA) Deletes all rows for the specified Hive partition and re-loads them from S3. Use after overwriting a partition file in object storage with corrected data. Returns an operation-id header the client can use to poll for progress.",
+                "operationId": "refreshAiLakePipeTablePartition",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
+                        }
+                    },
+                    {
+                        "name": "tableName",
+                        "in": "path",
+                        "description": "Pipe table name.",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "description": "Pipe table name."
+                        }
+                    },
+                    {
+                        "name": "operation-id",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RefreshPartitionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "headers": {
+                            "operation-location": {
+                                "description": "Operation location URL.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            },
+                            "operation-id": {
+                                "description": "Operation ID to use for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to refresh an AI Lake pipe table partition."
+                }
+            }
+        },
         "/api/v1/ailake/database/instances/{instanceId}/pipeTables": {
             "get": {
                 "tags": [
@@ -113,7 +202,7 @@
                     "AI Lake - Pipe Tables"
                 ],
                 "summary": "(BETA) List AI Lake pipe tables",
-                "description": "(BETA) Lists all active pipe tables in the given AI Lake database instance.",
+                "description": "(BETA) Lists active pipe tables in the given AI Lake database instance.",
                 "operationId": "listAiLakePipeTables",
                 "parameters": [
                     {
@@ -125,6 +214,43 @@
                             "type": "string",
                             "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page number.",
+                        "required": false,
+                        "schema": {
+                            "minimum": 0,
+                            "type": "string",
+                            "description": "Zero-based page number.",
+                            "default": "0"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Number of items per page.",
+                        "required": false,
+                        "schema": {
+                            "maximum": 500,
+                            "minimum": 1,
+                            "type": "string",
+                            "description": "Number of items per page.",
+                            "default": "50"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 ],
                 "responses": {
@@ -133,7 +259,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ListPipeTablesResponse"
+                                    "$ref": "#/components/schemas/JsonApiListDocumentPipeTableSummary"
                                 }
                             }
                         }
@@ -231,7 +357,7 @@
                     "AI Lake"
                 ],
                 "summary": "(BETA) List data sources of an AILake Database instance",
-                "description": "(BETA) Returns all data source associations for the specified AI Lake database instance.",
+                "description": "(BETA) Returns data source associations for the specified AI Lake database instance.",
                 "operationId": "listAiLakeDatabaseDataSources",
                 "parameters": [
                     {
@@ -243,6 +369,43 @@
                             "type": "string",
                             "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
                         }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page number.",
+                        "required": false,
+                        "schema": {
+                            "minimum": 0,
+                            "type": "string",
+                            "description": "Zero-based page number.",
+                            "default": "0"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Number of items per page.",
+                        "required": false,
+                        "schema": {
+                            "maximum": 500,
+                            "minimum": 1,
+                            "type": "string",
+                            "description": "Number of items per page.",
+                            "default": "50"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 ],
                 "responses": {
@@ -251,7 +414,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ListDatabaseDataSourcesResponse"
+                                    "$ref": "#/components/schemas/JsonApiListDocumentDataSourceInfo"
                                 }
                             }
                         }
@@ -389,27 +552,32 @@
                     "AI Lake"
                 ],
                 "summary": "(BETA) List AI Lake Database instances",
-                "description": "(BETA) Lists database instances in the organization's AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.",
+                "description": "(BETA) Lists database instances in the organization's AI Lake.",
                 "operationId": "listAiLakeDatabaseInstances",
                 "parameters": [
                     {
-                        "name": "size",
+                        "name": "page",
                         "in": "query",
+                        "description": "Zero-based page number.",
                         "required": false,
                         "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 50
+                            "minimum": 0,
+                            "type": "string",
+                            "description": "Zero-based page number.",
+                            "default": "0"
                         }
                     },
                     {
-                        "name": "offset",
+                        "name": "size",
                         "in": "query",
+                        "description": "Number of items per page.",
                         "required": false,
                         "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 0
+                            "maximum": 500,
+                            "minimum": 1,
+                            "type": "string",
+                            "description": "Number of items per page.",
+                            "default": "50"
                         }
                     },
                     {
@@ -431,7 +599,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ListDatabaseInstancesResponse"
+                                    "$ref": "#/components/schemas/JsonApiListDocumentDatabaseInstance"
                                 }
                             }
                         }
@@ -1735,6 +1903,186 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/feedback": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "userFeedback",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FeedbackRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/cancel": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "cancelWorkflow_1",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/knowledgeRecommendations": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "generateKnowledgeRecommendations",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/KnowledgeRecommendationsRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KnowledgeRecommendationsResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/dashboardSummary": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "generateDashboardSummary_1",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DashboardSummaryRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DashboardSummaryResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/ai/llmProvider/{llmProviderId}/test": {
             "post": {
                 "tags": [
@@ -2017,27 +2365,32 @@
                     "AI Lake"
                 ],
                 "summary": "(BETA) List AI Lake services",
-                "description": "(BETA) Lists services configured for the organization's AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.",
+                "description": "(BETA) Lists services configured for the organization's AI Lake. Returns only non-sensitive fields (id, name).",
                 "operationId": "listAiLakeServices",
                 "parameters": [
                     {
-                        "name": "size",
+                        "name": "page",
                         "in": "query",
+                        "description": "Zero-based page number.",
                         "required": false,
                         "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 50
+                            "minimum": 0,
+                            "type": "string",
+                            "description": "Zero-based page number.",
+                            "default": "0"
                         }
                     },
                     {
-                        "name": "offset",
+                        "name": "size",
                         "in": "query",
+                        "description": "Number of items per page.",
                         "required": false,
                         "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 0
+                            "maximum": 500,
+                            "minimum": 1,
+                            "type": "string",
+                            "description": "Number of items per page.",
+                            "default": "50"
                         }
                     },
                     {
@@ -2059,7 +2412,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ListServicesResponse"
+                                    "$ref": "#/components/schemas/JsonApiListDocumentServiceInfo"
                                 }
                             }
                         }
@@ -2133,13 +2486,52 @@
                 "summary": "(BETA) List registered AI Lake ObjectStorages",
                 "description": "(BETA) Lists ObjectStorages registered for the organization. Use the returned `name` as `sourceStorageName` in CreatePipeTable, or pass `storageId` to the ProvisionDatabase `storageIds` list. Provider credentials are stripped — only safe descriptors (id, name, type, bucket, region, endpoint, …) are returned.",
                 "operationId": "listAiLakeObjectStorages",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page number.",
+                        "required": false,
+                        "schema": {
+                            "minimum": 0,
+                            "type": "string",
+                            "description": "Zero-based page number.",
+                            "default": "0"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "Number of items per page.",
+                        "required": false,
+                        "schema": {
+                            "maximum": 500,
+                            "minimum": 1,
+                            "type": "string",
+                            "description": "Number of items per page.",
+                            "default": "50"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "AI Lake ObjectStorages successfully retrieved",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/ListObjectStoragesResponse"
+                                    "$ref": "#/components/schemas/JsonApiListDocumentObjectStorageInfo"
                                 }
                             }
                         }
@@ -2190,7 +2582,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/PipeTable"
+                                    "$ref": "#/components/schemas/JsonApiDocumentPipeTable"
                                 }
                             }
                         }
@@ -2308,7 +2700,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/DatabaseInstance"
+                                    "$ref": "#/components/schemas/JsonApiDocumentDatabaseInstance"
                                 }
                             }
                         }
@@ -3333,6 +3725,46 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/status": {
+            "get": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "getWorkflowStatus_1",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WorkflowStatusResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/ailake/database/instances/{instanceId}/dataSources/{dataSourceId}": {
             "delete": {
                 "tags": [
@@ -3413,6 +3845,23 @@
             },
             "Unit": {
                 "type": "object"
+            },
+            "RefreshPartitionRequest": {
+                "required": [
+                    "partitionSpec"
+                ],
+                "type": "object",
+                "properties": {
+                    "partitionSpec": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Partition column values identifying the partition to refresh. Keys must match the table's partition_columns exactly. Example: {\"date\": \"2026-01-01\"}"
+                        },
+                        "description": "Partition column values identifying the partition to refresh. Keys must match the table's partition_columns exactly. Example: {\"date\": \"2026-01-01\"}"
+                    }
+                },
+                "description": "Request to refresh a specific Hive partition in a pipe-backed OLAP table"
             },
             "AggregateKeyConfig": {
                 "type": "object",
@@ -5905,7 +6354,7 @@
                     "next": {
                         "type": "string",
                         "description": "Link to next page, or null if this is last page.",
-                        "example": "https://sample.gooddata.com/api/v1/actions/workspaces/sampleWorkspace/execution/collectLabelElements?label=sample.price&limit=5&offset=10"
+                        "example": "https://sample.gooddata.ai/api/v1/actions/workspaces/sampleWorkspace/execution/collectLabelElements?label=sample.price&limit=5&offset=10"
                     }
                 },
                 "description": "Current page description."
@@ -8281,6 +8730,170 @@
                     }
                 }
             },
+            "FeedbackRequestDto": {
+                "required": [
+                    "sentiment"
+                ],
+                "type": "object",
+                "properties": {
+                    "sentiment": {
+                        "type": "string",
+                        "enum": [
+                            "POSITIVE",
+                            "NEGATIVE"
+                        ]
+                    }
+                }
+            },
+            "KnowledgeRecommendationsRequestDto": {
+                "required": [
+                    "comparisonType",
+                    "metricId"
+                ],
+                "type": "object",
+                "properties": {
+                    "metricId": {
+                        "type": "string"
+                    },
+                    "direction": {
+                        "type": "string",
+                        "enum": [
+                            "INCREASED",
+                            "DECREASED"
+                        ]
+                    },
+                    "comparisonType": {
+                        "type": "string",
+                        "enum": [
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR"
+                        ]
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "minScore": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "aiModel": {
+                        "type": "string"
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "maxTokens": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gooddataHost": {
+                        "type": "string"
+                    },
+                    "gooddataToken": {
+                        "type": "string"
+                    },
+                    "analyticalDashboardId": {
+                        "type": "string"
+                    },
+                    "widgetId": {
+                        "type": "string"
+                    },
+                    "widgetName": {
+                        "type": "string"
+                    },
+                    "dryRun": {
+                        "type": "boolean"
+                    },
+                    "referenceValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "analyzedValue": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "KnowledgeRecommendationsResponseDto": {
+                "required": [
+                    "message",
+                    "runId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "runId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DashboardSummaryRequestDto": {
+                "required": [
+                    "dashboardId"
+                ],
+                "type": "object",
+                "properties": {
+                    "dashboardId": {
+                        "type": "string"
+                    },
+                    "customUserPrompt": {
+                        "type": "string"
+                    },
+                    "gooddataHost": {
+                        "type": "string"
+                    },
+                    "gooddataToken": {
+                        "type": "string"
+                    },
+                    "keyMetricIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "referenceQuarter": {
+                        "type": "string"
+                    },
+                    "dryRun": {
+                        "type": "boolean"
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "aiModel": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DashboardSummaryResponseDto": {
+                "required": [
+                    "message",
+                    "runId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "runId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
             "AnthropicApiKeyAuth": {
                 "required": [
                     "type"
@@ -8805,26 +9418,105 @@
                 },
                 "description": "Status of an AI Lake service"
             },
-            "ListServicesResponse": {
+            "JsonApiItemServiceInfo": {
                 "required": [
-                    "services"
+                    "attributes",
+                    "id",
+                    "type"
                 ],
                 "type": "object",
                 "properties": {
-                    "services": {
+                    "id": {
+                        "type": "string",
+                        "description": "Resource identifier"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Resource type"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/ServiceInfo"
+                    }
+                },
+                "description": "A single JSON:API resource item"
+            },
+            "JsonApiListDocumentServiceInfo": {
+                "required": [
+                    "data",
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
                         "type": "array",
-                        "description": "List of services",
+                        "description": "Array of resource items",
                         "items": {
-                            "$ref": "#/components/schemas/ServiceInfo"
+                            "$ref": "#/components/schemas/JsonApiItemServiceInfo"
                         }
                     },
-                    "totalCount": {
+                    "links": {
+                        "$ref": "#/components/schemas/JsonApiListLinks"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/JsonApiListMeta"
+                    }
+                },
+                "description": "JSON:API-compatible list response envelope"
+            },
+            "JsonApiListLinks": {
+                "required": [
+                    "self"
+                ],
+                "type": "object",
+                "properties": {
+                    "self": {
+                        "type": "string",
+                        "description": "The URL of this response"
+                    }
+                },
+                "description": "Links object for a list response"
+            },
+            "JsonApiListMeta": {
+                "required": [
+                    "page"
+                ],
+                "type": "object",
+                "properties": {
+                    "page": {
+                        "$ref": "#/components/schemas/JsonApiPageInfo"
+                    }
+                },
+                "description": "Metadata for a paginated list response"
+            },
+            "JsonApiPageInfo": {
+                "required": [
+                    "number",
+                    "size"
+                ],
+                "type": "object",
+                "properties": {
+                    "number": {
                         "type": "integer",
-                        "description": "Total count of items (only set when metaInclude=page)",
+                        "description": "Zero-based page number",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "description": "Page size",
+                        "format": "int32"
+                    },
+                    "totalElements": {
+                        "type": "integer",
+                        "description": "Total number of elements; only present when metaInclude=page was requested",
+                        "format": "int32"
+                    },
+                    "totalPages": {
+                        "type": "integer",
+                        "description": "Total number of pages; only present when metaInclude=page was requested",
                         "format": "int32"
                     }
                 },
-                "description": "Paged response for listing AI Lake services"
+                "description": "Pagination information"
             },
             "ServiceInfo": {
                 "required": [
@@ -8880,14 +9572,15 @@
                     },
                     "kind": {
                         "type": "string",
-                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `create-pipe-table` — Creating a pipe table backed by an S3 data source.\n* `delete-pipe-table` — Deleting a pipe table.\n* `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection.\n",
+                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n* `create-pipe-table` — Creating a pipe table backed by an S3 data source.\n* `delete-pipe-table` — Deleting a pipe table.\n* `analyze-statistics` — Running ANALYZE TABLE for CBO statistics collection.\n* `refresh-partition` — Refreshing a specific Hive partition (delete + re-load from S3).\n",
                         "enum": [
                             "provision-database",
                             "deprovision-database",
                             "run-service-command",
                             "create-pipe-table",
                             "delete-pipe-table",
-                            "analyze-statistics"
+                            "analyze-statistics",
+                            "refresh-partition"
                         ]
                     },
                     "status": {
@@ -8963,21 +9656,50 @@
                     }
                 ]
             },
-            "ListObjectStoragesResponse": {
+            "JsonApiItemObjectStorageInfo": {
                 "required": [
-                    "storages"
+                    "attributes",
+                    "id",
+                    "type"
                 ],
                 "type": "object",
                 "properties": {
-                    "storages": {
-                        "type": "array",
-                        "description": "Registered storages, ordered by name.",
-                        "items": {
-                            "$ref": "#/components/schemas/ObjectStorageInfo"
-                        }
+                    "id": {
+                        "type": "string",
+                        "description": "Resource identifier"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Resource type"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/ObjectStorageInfo"
                     }
                 },
-                "description": "Response for listing ObjectStorages registered for the organization."
+                "description": "A single JSON:API resource item"
+            },
+            "JsonApiListDocumentObjectStorageInfo": {
+                "required": [
+                    "data",
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "description": "Array of resource items",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiItemObjectStorageInfo"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/JsonApiListLinks"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/JsonApiListMeta"
+                    }
+                },
+                "description": "JSON:API-compatible list response envelope"
             },
             "ObjectStorageInfo": {
                 "required": [
@@ -9030,6 +9752,44 @@
                     }
                 },
                 "description": "A single column definition inferred from the parquet schema"
+            },
+            "JsonApiDocumentPipeTable": {
+                "required": [
+                    "data",
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiItemPipeTable"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/JsonApiListLinks"
+                    }
+                },
+                "description": "JSON:API-compatible single-resource response envelope"
+            },
+            "JsonApiItemPipeTable": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Resource identifier"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Resource type"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/PipeTable"
+                    }
+                },
+                "description": "A single JSON:API resource item"
             },
             "PipeTable": {
                 "required": [
@@ -9137,21 +9897,50 @@
                 },
                 "description": "Full details of a pipe-backed OLAP table"
             },
-            "ListPipeTablesResponse": {
+            "JsonApiItemPipeTableSummary": {
                 "required": [
-                    "pipeTables"
+                    "attributes",
+                    "id",
+                    "type"
                 ],
                 "type": "object",
                 "properties": {
-                    "pipeTables": {
-                        "type": "array",
-                        "description": "Pipe tables in the requested database",
-                        "items": {
-                            "$ref": "#/components/schemas/PipeTableSummary"
-                        }
+                    "id": {
+                        "type": "string",
+                        "description": "Resource identifier"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Resource type"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/PipeTableSummary"
                     }
                 },
-                "description": "List of pipe tables for a database instance"
+                "description": "A single JSON:API resource item"
+            },
+            "JsonApiListDocumentPipeTableSummary": {
+                "required": [
+                    "data",
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "description": "Array of resource items",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiItemPipeTableSummary"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/JsonApiListLinks"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/JsonApiListMeta"
+                    }
+                },
+                "description": "JSON:API-compatible list response envelope"
             },
             "PipeTableSummary": {
                 "required": [
@@ -9184,21 +9973,50 @@
                 },
                 "description": "Lightweight pipe table entry used in list responses"
             },
-            "ListDatabaseDataSourcesResponse": {
+            "JsonApiItemDataSourceInfo": {
                 "required": [
-                    "dataSources"
+                    "attributes",
+                    "id",
+                    "type"
                 ],
                 "type": "object",
                 "properties": {
-                    "dataSources": {
-                        "type": "array",
-                        "description": "List of data source associations.",
-                        "items": {
-                            "$ref": "#/components/schemas/DataSourceInfo"
-                        }
+                    "id": {
+                        "type": "string",
+                        "description": "Resource identifier"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Resource type"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/DataSourceInfo"
                     }
                 },
-                "description": "All data source associations for an AI Lake Database instance"
+                "description": "A single JSON:API resource item"
+            },
+            "JsonApiListDocumentDataSourceInfo": {
+                "required": [
+                    "data",
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "description": "Array of resource items",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiItemDataSourceInfo"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/JsonApiListLinks"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/JsonApiListMeta"
+                    }
+                },
+                "description": "JSON:API-compatible list response envelope"
             },
             "DatabaseInstance": {
                 "required": [
@@ -9236,26 +10054,66 @@
                 },
                 "description": "A single AI Lake Database instance"
             },
-            "ListDatabaseInstancesResponse": {
+            "JsonApiDocumentDatabaseInstance": {
                 "required": [
-                    "databases"
+                    "data",
+                    "links"
                 ],
                 "type": "object",
                 "properties": {
-                    "databases": {
-                        "type": "array",
-                        "description": "List of database instances",
-                        "items": {
-                            "$ref": "#/components/schemas/DatabaseInstance"
-                        }
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiItemDatabaseInstance"
                     },
-                    "totalCount": {
-                        "type": "integer",
-                        "description": "Total count of items (only set when metaInclude=page)",
-                        "format": "int32"
+                    "links": {
+                        "$ref": "#/components/schemas/JsonApiListLinks"
                     }
                 },
-                "description": "Paged response for listing AI Lake database instances"
+                "description": "JSON:API-compatible single-resource response envelope"
+            },
+            "JsonApiItemDatabaseInstance": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Resource identifier"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Resource type"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/DatabaseInstance"
+                    }
+                },
+                "description": "A single JSON:API resource item"
+            },
+            "JsonApiListDocumentDatabaseInstance": {
+                "required": [
+                    "data",
+                    "links"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "description": "Array of resource items",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiItemDatabaseInstance"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/JsonApiListLinks"
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/JsonApiListMeta"
+                    }
+                },
+                "description": "JSON:API-compatible list response envelope"
             },
             "ForecastResult": {
                 "required": [
@@ -9722,6 +10580,30 @@
                     }
                 ]
             },
+            "ExecutionResultLimitBreak": {
+                "required": [
+                    "limit",
+                    "limitType"
+                ],
+                "type": "object",
+                "properties": {
+                    "limitType": {
+                        "type": "string",
+                        "description": "Type of the limit that was broken, e.g. \"rowCount\"."
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "The configured threshold value.",
+                        "format": "int64"
+                    },
+                    "value": {
+                        "type": "integer",
+                        "description": "The actual value that triggered the limit; null when it cannot be determined exactly.",
+                        "format": "int64"
+                    }
+                },
+                "description": "Describes a limit that was broken, resulting in partial data being returned."
+            },
             "ExecutionResultMetadata": {
                 "required": [
                     "dataSourceMessages"
@@ -9733,6 +10615,13 @@
                         "description": "Additional information sent by the underlying data source.",
                         "items": {
                             "$ref": "#/components/schemas/ExecutionResultDataSourceMessage"
+                        }
+                    },
+                    "limitBreaks": {
+                        "type": "array",
+                        "description": "Limits that were broken during result computation, causing the result to be partial. Absent when the result is complete.",
+                        "items": {
+                            "$ref": "#/components/schemas/ExecutionResultLimitBreak"
                         }
                     }
                 },

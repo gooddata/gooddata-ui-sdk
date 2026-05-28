@@ -831,42 +831,21 @@ export type ITigerDashboardMatchAttributeFilter = DashboardMatchAttributeFilter;
 /**
  * Tiger-specific dashboard measure value filter (dashboard filter context level).
  * Conditions are OR-ed together; empty/undefined conditions mean "All" (no filtering).
- *
- * TODO INE: wait for BE type unification — once BE schema adds `treatNullValuesAs` to
- * `DashboardMeasureValueFilter` body and requires `localIdentifier`, this interface collapses to
- * `export type ITigerDashboardMeasureValueFilter = DashboardMeasureValueFilter` (matching how
- * arbitrary/match attribute filters are aliased today).
- *
  * @public
  */
-export interface ITigerDashboardMeasureValueFilter {
-    dashboardMeasureValueFilter: {
-        measure: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["measure"];
-        conditions: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["conditions"];
-        title?: DashboardMeasureValueFilter["dashboardMeasureValueFilter"]["title"];
+export interface ITigerDashboardMeasureValueFilter extends DashboardMeasureValueFilter {
+    dashboardMeasureValueFilter: DashboardMeasureValueFilter["dashboardMeasureValueFilter"] & {
         localIdentifier: string;
-        /**
-         * Substitute value for null metric values when evaluating conditions. Applies to the whole filter
-         * (OR-ed conditions). Extension on top of the generated BE type; not yet in the OpenAPI schema —
-         * once BE lands the field on `dashboardMeasureValueFilter`, this declaration matches it without
-         * further client changes.
-         */
-        treatNullValuesAs?: number;
     };
 }
 
 /**
- * Tiger-specific filter context item
- *
- * TODO INE: wait for BE type unification — once `DashboardMeasureValueFilter` aligns with our manual
- * type (`localIdentifier` required, `treatNullValuesAs` on body), drop the `Exclude<DashboardFilter,
- * DashboardMeasureValueFilter>` and `ITigerDashboardMeasureValueFilter` members; the union becomes
- * just `DashboardFilter`.
+ * Tiger-specific filter context item.
  *
  * @public
  */
 export type ITigerFilterContextItem =
-    | Exclude<DashboardFilter, DashboardMeasureValueFilter>
+    | DashboardFilter
     | ITigerDashboardArbitraryAttributeFilter
     | ITigerDashboardMatchAttributeFilter
     | ITigerDashboardMeasureValueFilter;

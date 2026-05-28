@@ -254,17 +254,26 @@ describe("filter convertors", () => {
     });
 
     describe("measure value filter", () => {
-        function newMvf(measure?: any, conditions?: any, localIdentifier?: any): any {
+        function newMvf(
+            measure?: any,
+            conditions?: any,
+            localIdentifier?: any,
+            treatNullValuesAs?: any,
+            dimensionality?: any,
+        ): any {
             return {
                 measureValueFilter: {
                     ...(measure === undefined ? {} : { measure }),
                     ...(localIdentifier === undefined ? {} : { localIdentifier }),
                     ...(conditions === undefined ? {} : { conditions }),
+                    ...(treatNullValuesAs === undefined ? {} : { treatNullValuesAs }),
+                    ...(dimensionality === undefined ? {} : { dimensionality }),
                 },
             };
         }
         const validComparison = { comparison: { operator: "GREATER_THAN", value: 10 } };
         const validRange = { range: { operator: "BETWEEN", from: 0, to: 5 } };
+        const validDimensionality = [{ identifier: "label.product" }];
         const Scenarios: Array<[boolean, string, any]> = [
             [false, "without measure", newMvf(undefined, [validComparison])],
             [true, "with identifier measure and comparison", newMvf({ identifier: "m" }, [validComparison])],
@@ -286,6 +295,23 @@ describe("filter convertors", () => {
                 "with localIdentifier disambiguator",
                 newMvf({ identifier: "m" }, [validComparison], "mvf-1"),
             ],
+            [
+                true,
+                "with dimensionality",
+                newMvf({ identifier: "m" }, [validComparison], undefined, undefined, validDimensionality),
+            ],
+            [
+                false,
+                "with non-array dimensionality",
+                newMvf({ identifier: "m" }, [validComparison], undefined, undefined, "not-an-array"),
+            ],
+            [
+                false,
+                "with invalid dimensionality item",
+                newMvf({ identifier: "m" }, [validComparison], undefined, undefined, [
+                    { localIdentifier: "a1" },
+                ]),
+            ],
             [false, "with non-string localIdentifier", newMvf({ identifier: "m" }, [validComparison], 42)],
             [
                 false,
@@ -302,6 +328,16 @@ describe("filter convertors", () => {
                 false,
                 "with malformed condition in conditions array",
                 newMvf({ identifier: "m" }, [{ comparison: { operator: "X", value: 1 } }]),
+            ],
+            [
+                true,
+                "with filter-level treatNullValuesAs",
+                newMvf({ identifier: "m" }, [validComparison], undefined, 0),
+            ],
+            [
+                false,
+                "with non-numeric filter-level treatNullValuesAs",
+                newMvf({ identifier: "m" }, [validComparison], undefined, "0"),
             ],
         ];
         it.each(Scenarios)("should return %s when filter is %s", (expectedResult, _desc, input) => {
@@ -385,6 +421,7 @@ describe("filter convertors", () => {
                 measure: { identifier: "mid2" },
                 localIdentifier: "mvf-2",
                 conditions: [{ range: { operator: "BETWEEN", from: 0, to: 9 } }],
+                dimensionality: [{ identifier: "label.product" }],
             },
         };
         const filters: FilterItem[] = [
@@ -441,6 +478,7 @@ describe("filter convertors", () => {
                     measureIdentifier: "mid2",
                     localIdentifier: "mvf-2",
                     conditions: [{ range: { operator: "BETWEEN", from: 0, to: 9 } }],
+                    dimensionality: [{ identifier: "label.product" }],
                 },
             ],
         };

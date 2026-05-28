@@ -2092,6 +2092,58 @@ export function changeWorkingMeasureValueFilterCondition(
 }
 
 /**
+ * Payload of the {@link ISetMeasureValueFilterDimensionality} command.
+ *
+ * @alpha
+ */
+export interface ISetMeasureValueFilterDimensionalityPayload {
+    /**
+     * Local identifier of the measure value filter to update.
+     */
+    readonly localIdentifier: string;
+
+    /**
+     * Fixed dashboard-level dimensionality to apply. When empty or undefined, the filter
+     * falls back to widget-level granularity inheritance.
+     */
+    readonly dimensionality?: ObjRef[];
+}
+
+/**
+ * Command for changing the dashboard-level dimensionality of an existing measure value filter.
+ *
+ * @alpha
+ */
+export interface ISetMeasureValueFilterDimensionality extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.SET_DIMENSIONALITY";
+    readonly payload: ISetMeasureValueFilterDimensionalityPayload;
+}
+
+/**
+ * Creates the {@link ISetMeasureValueFilterDimensionality} command.
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the measure value filter to update
+ * @param dimensionality - fixed dashboard-level dimensionality, or undefined to inherit per-widget granularity
+ * @param correlationId - correlation id propagated through emitted events
+ * @returns set measure value filter dimensionality command
+ */
+export function setMeasureValueFilterDimensionality(
+    localIdentifier: string,
+    dimensionality?: ObjRef[],
+    correlationId?: string,
+): ISetMeasureValueFilterDimensionality {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.MEASURE_VALUE_FILTER.SET_DIMENSIONALITY",
+        correlationId,
+        payload: {
+            localIdentifier,
+            dimensionality,
+        },
+    };
+}
+
+/**
  * Payload of the {@link ISetMeasureValueFilterTitle} command.
  *
  * @alpha

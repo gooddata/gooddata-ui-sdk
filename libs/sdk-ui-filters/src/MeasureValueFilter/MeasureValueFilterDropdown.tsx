@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { memo, useCallback } from "react";
+import { type ReactNode, memo, useCallback } from "react";
 
 import {
     type IMeasureValueFilter,
@@ -23,6 +23,16 @@ import { type IMeasureValueFilterCommonProps } from "./typings.js";
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     onCancel: () => void;
     anchorEl?: HTMLElement | string;
+    /**
+     * Element rendered at the top of the dropdown overlay when displayed in fullscreen mobile mode.
+     *
+     * @remarks
+     * Typically the host's dropdown button — composed by the parent {@link MeasureValueFilter}
+     * so the trigger appears as the overlay header on small viewports.
+     *
+     * @internal
+     */
+    mobileHeader?: ReactNode;
 }
 
 const getConditionsFromFilter = (
@@ -89,6 +99,8 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     loadMetricDetails,
     isHeaderEnabled,
     alignPoints,
+    fullscreenOnMobile,
+    mobileHeader,
 }: IMeasureValueFilterDropdownProps) {
     const applyOnResult = filter?.measureValueFilter.applyOnResult;
 
@@ -233,6 +245,8 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             loadMetricDetails={loadMetricDetails}
             isHeaderEnabled={isHeaderEnabled}
             alignPoints={alignPoints}
+            fullscreenOnMobile={fullscreenOnMobile}
+            mobileHeader={mobileHeader}
         />
     );
 });
