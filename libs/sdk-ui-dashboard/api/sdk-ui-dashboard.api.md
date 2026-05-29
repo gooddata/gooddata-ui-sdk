@@ -94,6 +94,7 @@ import { IDashboardMeasureValueFilter } from '@gooddata/sdk-model';
 import { IDashboardMeasureValueFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardParameter } from '@gooddata/sdk-model';
+import { IDashboardParameterValueOverride } from '@gooddata/sdk-backend-spi';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-model';
@@ -10926,6 +10927,9 @@ export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardS
 
 // @internal (undocumented)
 export const selectExecutionTimestamp: DashboardSelector<string | undefined>;
+
+// @alpha
+export const selectExportEffectiveParameters: (widgetIds: string[] | undefined) => DashboardSelector<Record<string, IDashboardParameterValueOverride[]>>;
 
 // @beta
 export const selectExportMetadata: DashboardSelector<Record<string, string> | undefined>;

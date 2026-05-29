@@ -9892,6 +9892,13 @@ export interface DashboardMeasureValueFilterDashboardMeasureValueFilter {
     'title'?: string;
 }
 
+// @public
+export interface DashboardParameterValue {
+    'id': string;
+    'title': string;
+    'value': string;
+}
+
 // @public (undocumented)
 export interface DashboardPermissions {
     'rules': Array<RulePermission>;
@@ -10214,8 +10221,12 @@ export interface DashboardSummaryResponseDto {
 export interface DashboardTabularExportRequestV2 {
     'dashboardFiltersOverride'?: Array<DashboardFilter>;
     'dashboardId': string;
+    'dashboardParametersOverride'?: Array<DashboardParameterValue>;
     'dashboardTabsFiltersOverrides'?: {
         [key: string]: Array<DashboardFilter>;
+    };
+    'dashboardTabsParametersOverrides'?: {
+        [key: string]: Array<DashboardParameterValue>;
     };
     'fileName': string;
     'format': DashboardTabularExportRequestV2FormatEnum;
@@ -17614,10 +17625,21 @@ export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
 }
 
 // @public
+export interface ExportDashboardParameterValue {
+    'id': string;
+    'title': string;
+    'value': string;
+}
+
+// @public
 export interface ExportDashboardTabularExportRequest {
     'dashboardFiltersOverride'?: Array<ExportDashboardFilter>;
+    'dashboardParametersOverride'?: Array<ExportDashboardParameterValue>;
     'dashboardTabsFiltersOverrides'?: {
         [key: string]: Array<ExportDashboardFilter>;
+    };
+    'dashboardTabsParametersOverrides'?: {
+        [key: string]: Array<ExportDashboardParameterValue>;
     };
     'fileName': string;
     'format': ExportDashboardTabularExportRequestFormatEnum;

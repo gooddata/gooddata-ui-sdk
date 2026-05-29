@@ -63,7 +63,7 @@ const GEN_AI_INPUT_ANCHOR_ID = "gd-gen-ai-input";
  * UI component that renders the Gen AI chat.
  * @internal
  */
-export function GenAIChatWrapperComponent({
+function GenAIChatWrapperComponent({
     loadThread,
     clearThread,
     cancelLoading,

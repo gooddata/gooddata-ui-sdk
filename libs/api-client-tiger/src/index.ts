@@ -1216,6 +1216,7 @@ export {
     type DashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum,
     type DashboardMeasureValueFilter,
     type DashboardMeasureValueFilterDashboardMeasureValueFilter,
+    type DashboardParameterValue,
     type DashboardPermissions,
     type DashboardPermissionsAssignment,
     type DashboardPermissionsAssignmentPermissionsEnum,

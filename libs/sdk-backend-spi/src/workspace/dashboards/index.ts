@@ -233,6 +233,28 @@ export interface IRawExportCustomOverrides {
 }
 
 /**
+ * Backend-neutral parameter value override sent on dashboard tabular export.
+ *
+ * @alpha
+ */
+export interface IDashboardParameterValueOverride {
+    /**
+     * Parameter identifier; drives AFM execution. Matches the workspace catalog parameter's id.
+     */
+    id: string;
+    /**
+     * Value to apply for the parameter, encoded as a string (numeric values are stringified).
+     * Drives AFM execution.
+     */
+    value: string;
+    /**
+     * Display title rendered into the export's info sheet. Presentation-only; not consumed by
+     * execution.
+     */
+    title: string;
+}
+
+/**
  * Options for exporting dashboard to tabular format.
  *
  * @alpha
@@ -272,6 +294,12 @@ export interface IDashboardExportTabularOptions {
      * Override stored dashboard filters per tab with custom filters
      */
     dashboardTabsFiltersOverrides?: FiltersByTab;
+
+    /**
+     * Per-tab parameter overrides. Key is tabId; values drive AFM execution and info-sheet rendering
+     * for that tab's sub-export. Mirrors `dashboardTabsFiltersOverrides`.
+     */
+    dashboardTabsParametersOverrides?: Record<string, IDashboardParameterValueOverride[]>;
 
     /**
      * PDF-specific configuration options. Only applicable when format is "PDF".

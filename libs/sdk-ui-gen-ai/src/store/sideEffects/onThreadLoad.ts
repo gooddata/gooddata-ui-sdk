@@ -23,7 +23,11 @@ import {
 } from "../../model.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import { loadMessages } from "../localStorage.js";
-import { conversationSelector, conversationsSelector } from "../messages/messagesSelectors.js";
+import {
+    conversationSelector,
+    conversationsLoadedSelector,
+    conversationsSelector,
+} from "../messages/messagesSelectors.js";
 import {
     cancelAsyncAction,
     loadConversationSuccessAction,
@@ -165,10 +169,10 @@ function* fetchAllConversations() {
     const workspace: string = yield getContext("workspace");
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
-    const conversations: IChatConversationLocal[] | undefined = yield select(conversationsSelector);
+    const conversationsLoaded: boolean | undefined = yield select(conversationsLoadedSelector);
 
     // Already loaded
-    if (conversations) {
+    if (conversationsLoaded) {
         return;
     }
 
@@ -212,7 +216,6 @@ function* fetchCurrentConversation() {
         yield put(
             loadConversationSuccessAction({
                 currentConversation: conversation,
-                conversationItems: [],
             }),
         );
         return;

@@ -251,6 +251,13 @@ export type IChatConversationErrorContent = {
 };
 
 // @public
+export type IChatConversationLocal = IChatConversation & {
+    localId: string;
+    generatingTitle?: boolean;
+    inProgress?: boolean;
+};
+
+// @public
 export type IChatConversationLocalContent = IChatConversationContent & {
     objects?: TextContentObject[];
     parts?: IChatConversationMultipartPart[];
@@ -438,9 +445,17 @@ export type SemanticSearchContents = {
 };
 
 // @public (undocumented)
+export const setCurrentConversationAction: ActionCreatorWithPayload<    {
+conversation: IChatConversationLocal;
+}, "messages/setCurrentConversationAction">;
+
+// @public (undocumented)
+export const startNewConversationAction: ActionCreatorWithoutPayload<"messages/startNewConversationAction">;
+
+// @public (undocumented)
 export type TextContentObject = {
     id: string;
-    type: "metric" | "attribute" | "fact" | "date";
+    type: "metric" | "attribute" | "fact" | "date" | "label";
     title: string;
 };
 

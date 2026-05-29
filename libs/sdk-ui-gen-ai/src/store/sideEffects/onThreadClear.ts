@@ -15,6 +15,7 @@ import {
     clearConversationSuccessAction,
     clearThreadErrorAction,
     clearThreadSuccessAction,
+    startNewConversationAction,
 } from "../messages/messagesSlice.js";
 
 /**
@@ -25,7 +26,11 @@ export function* onThreadClear() {
     try {
         const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
         if (settings?.enableAiAgenticConversations) {
-            yield resetConversation();
+            if (settings.enableAiAgenticMultiConversations) {
+                yield createConversation();
+            } else {
+                yield resetConversation();
+            }
         } else {
             yield resetThread();
         }
@@ -87,4 +92,8 @@ function* resetConversation() {
             }),
         );
     }
+}
+
+function* createConversation() {
+    yield put(startNewConversationAction());
 }

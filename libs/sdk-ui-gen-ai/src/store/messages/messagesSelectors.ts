@@ -16,7 +16,7 @@ export const messagesSelector: (state: RootState) => Message[] = createSelector(
 
 export const loadedSelector: (state: RootState) => boolean = createSelector(
     messagesSliceSelector,
-    (state) => state.loaded,
+    (state) => state.loaded && state.conversationsLoaded,
 );
 
 export const isVerboseSelector: (state: RootState) => boolean = createSelector(
@@ -100,3 +100,8 @@ export const conversationByIdSelector: (
 
 export const conversationsSelector: (state: RootState) => IChatConversationLocal[] | undefined =
     createSelector(messagesSliceSelector, (state) => state.conversations);
+
+export const conversationsLoadedSelector: (state: RootState) => boolean = createSelector(
+    messagesSliceSelector,
+    (state) => state.conversationsLoaded,
+);

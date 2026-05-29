@@ -258,6 +258,7 @@ import {
     newMessageAction,
     makeUserMessage,
     makeTextContents,
+    makeUserItem,
 } from "@gooddata/sdk-ui-gen-ai";
 
 type ChatDispatcher = (action: unknown) => void;
@@ -278,7 +279,10 @@ const MyCustomSearchComponentWithAiAssistant = () => {
         }
 
         chatDispatcher(clearThreadAction());
+        // For case with single conversation only
         chatDispatcher(newMessageAction(makeUserMessage([makeTextContents(askedQuestion, [])])));
+        // or for case with multiple conversations
+        chatDispatcher(newMessageAction(makeUserItem({ type: "text", text: askedQuestion })));
     }, [chatDispatcher, askedQuestion]);
 
     return (

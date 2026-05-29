@@ -971,6 +971,7 @@ export interface IDashboardExportRawOptions {
 export interface IDashboardExportTabularOptions {
     dashboardFiltersOverride?: FilterContextItem[];
     dashboardTabsFiltersOverrides?: FiltersByTab;
+    dashboardTabsParametersOverrides?: Record<string, IDashboardParameterValueOverride[]>;
     exportInfo?: boolean;
     format?: "XLSX" | "PDF";
     mergeHeaders?: boolean;
@@ -982,6 +983,13 @@ export interface IDashboardExportTabularOptions {
     timeout?: number;
     title?: string;
     widgetIds?: string[];
+}
+
+// @alpha
+export interface IDashboardParameterValueOverride {
+    id: string;
+    title: string;
+    value: string;
 }
 
 // @alpha

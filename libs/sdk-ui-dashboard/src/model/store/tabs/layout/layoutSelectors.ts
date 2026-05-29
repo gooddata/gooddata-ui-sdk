@@ -51,7 +51,7 @@ import { getWidgetCoordinates, isItemWithBaseWidget } from "../../tabs/layout/la
 import { type DashboardSelector } from "../../types.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
-import { DEFAULT_TAB_ID } from "../tabsState.js";
+import { DEFAULT_TAB_ID, type ITabState } from "../tabsState.js";
 
 import { type ILayoutState, type LayoutStash, layoutInitialState } from "./layoutState.js";
 
@@ -658,6 +658,71 @@ export const selectWidgetIgnoreCrossFiltering: (ref: ObjRef) => DashboardSelecto
             return widget?.ignoreCrossFiltering ?? false;
         }),
     );
+
+/**
+ * Per-tab widget contexts. Each entry pairs a widget with its owning tab; nested layout widgets
+ * and visualization switcher children are flattened in. Used by cross-tab widget lookups.
+ *
+ * @internal
+ */
+export interface IWidgetTabContext {
+    tab: ITabState;
+    widget: ExtendedDashboardWidget;
+}
+
+/**
+ * `IWidgetTabContext` narrowed to its insight-widget shape.
+ *
+ * @internal
+ */
+export interface IInsightWidgetTabContext extends IWidgetTabContext {
+    widget: IInsightWidget;
+}
+
+/**
+ * Cross-tab widget contexts. Walks every tab's layout (including nested layouts and visualization
+ * switcher children) once and pairs each widget with its owning tab. Consumers needing to resolve
+ * a widget's owning tab by ref or identifier should `.find()` against this array.
+ *
+ * @internal
+ */
+export const selectAllTabsWidgetContexts: DashboardSelector<IWidgetTabContext[]> = createSelector(
+    selectTabs,
+    (tabs) => {
+        if (!tabs) {
+            return [];
+        }
+        const result: IWidgetTabContext[] = [];
+        for (const tab of tabs) {
+            const layout = tab.layout?.layout;
+            if (!layout) {
+                continue;
+            }
+            for (const widget of getLayoutWidgets(layout)) {
+                result.push({ tab, widget });
+            }
+        }
+        return result;
+    },
+);
+
+/**
+ * `selectAllTabsWidgetContexts` pre-filtered to insight-widget contexts so consumers can `.find()`
+ * against an already-narrowed array.
+ *
+ * @internal
+ */
+export const selectAllTabsInsightWidgetContexts: DashboardSelector<IInsightWidgetTabContext[]> =
+    createSelector(selectAllTabsWidgetContexts, (contexts) => contexts.filter(isInsightWidgetTabContext));
+
+/**
+ * Type guard for narrowing an `IWidgetTabContext` to `IInsightWidgetTabContext`.
+ *
+ * @internal
+ */
+export function isInsightWidgetTabContext(context: IWidgetTabContext): context is IInsightWidgetTabContext {
+    return isInsightWidget(context.widget);
+}
 
 /**
  * Selects the local identifier of the tab that contains the specified widget.

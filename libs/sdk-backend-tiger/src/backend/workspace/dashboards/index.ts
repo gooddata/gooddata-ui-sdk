@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { differenceBy, isEmpty, isEqual } from "lodash-es";
+import { isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
@@ -143,8 +143,19 @@ import { type TigerDashboardPermissionType, buildDashboardPermissions } from "./
 import { DashboardsQuery } from "./dashboardsQuery.js";
 import { resolveWidgetFilters, resolveWidgetFiltersWithMultipleDateFilters } from "./widgetFilters.js";
 
-export function getDeletedDashboardTabs(originalTabs: IDashboardTab[], updatedTabs: IDashboardTab[]) {
-    return differenceBy(originalTabs, updatedTabs, "localIdentifier");
+export function getOrphanedTabFilterContexts(
+    originalTabs: IDashboardTab[],
+    currentTabs: IDashboardTab[],
+): IFilterContext[] {
+    const currentRefs = currentTabs
+        .map(({ filterContext }) => filterContext)
+        .filter(isFilterContext)
+        .map(({ ref }) => ref);
+
+    return originalTabs
+        .map(({ filterContext }) => filterContext)
+        .filter(isFilterContext)
+        .filter((filterContext) => !currentRefs.some((ref) => areObjRefsEqual(ref, filterContext.ref)));
 }
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
@@ -527,14 +538,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
          *
          * The following code prevents the creation of new filter-context orphans.
          */
-        getDeletedDashboardTabs(originalDashboard.tabs ?? [], dashboard.tabs ?? [])
-            .map(({ filterContext }) => filterContext)
-            .filter(isFilterContext)
-            .forEach((filterContext) => {
-                this.deleteFilterContext(filterContext).catch((error) => {
-                    console.warn(`Failed to cleanup orphaned filter context`, filterContext.ref, error);
-                });
-            });
+        await this.cleanupOrphanedTabFilterContexts(originalDashboard.tabs ?? [], dashboard.tabs ?? []);
 
         return dashboard;
     };
@@ -803,6 +807,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                       }
                     : {};
 
+            const dashboardTabsParametersOverridesObj =
+                options?.dashboardTabsParametersOverrides &&
+                Object.keys(options.dashboardTabsParametersOverrides).length > 0
+                    ? {
+                          dashboardTabsParametersOverrides: options.dashboardTabsParametersOverrides,
+                      }
+                    : {};
+
             const format = options?.format || "XLSX";
             const tabularExport = await ExportApi_CreateDashboardExportRequest(
                 client.axios,
@@ -827,6 +839,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                         widgetIds: options?.widgetIds,
                         ...dashboardFiltersOverrideObj,
                         ...dashboardTabsFiltersOverridesObj,
+                        ...dashboardTabsParametersOverridesObj,
                     },
                     workspaceId: this.workspace,
                     dashboardId,
@@ -1553,6 +1566,19 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         return convertFilterContextFromBackend(result.data);
+    };
+
+    private cleanupOrphanedTabFilterContexts = async (
+        originalTabs: IDashboardTab[],
+        currentTabs: IDashboardTab[],
+    ): Promise<void> => {
+        await Promise.all(
+            getOrphanedTabFilterContexts(originalTabs, currentTabs).map((filterContext) =>
+                this.deleteFilterContext(filterContext).catch((error) => {
+                    console.warn(`Failed to cleanup orphaned filter context`, filterContext.ref, error);
+                }),
+            ),
+        );
     };
 
     private deleteFilterContext = async (filterContext: IFilterContext): Promise<void> => {

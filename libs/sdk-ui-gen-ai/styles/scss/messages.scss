@@ -129,7 +129,8 @@
             }
         }
 
-        &.attribute {
+        &.attribute,
+        &.label {
             @if $type == "user" {
                 color: kit-variables.$gd-color-white;
             } @else {
@@ -171,7 +172,8 @@
             @include variables.gd-svg-mask("metric");
         }
 
-        &.attribute .gd-gen-ai-chat__message-icon {
+        &.attribute .gd-gen-ai-chat__message-icon,
+        &.label .gd-gen-ai-chat__message-icon {
             @include variables.gd-svg-mask("attribute");
         }
 

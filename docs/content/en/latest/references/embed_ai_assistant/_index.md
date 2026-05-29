@@ -74,20 +74,20 @@ const App = () => {
 
 ### Props
 
-| Name                           | Type                                          | Default | Description                                                                                                          |
-| ------------------------------ | --------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| locale                         | ILocale                                       | "en-US" | Specifies the locale for internationalization                                                                        |
-| backend                        | IAnalyticalBackend                            | -       | Backend instance. Falls back to BackendProvider context if not specified                                             |
-| workspace                      | string                                        | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                                               |
-| colorPalette                   | IColorPalette                                 | -       | Color palette used for rendering the visualizations. If not provided, the default color palette will be used         |
-| catalogItems                   | CatalogItem[]                                 | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                             |
-| eventHandlers                  | ChatEventHandler[]                            | -       | Event handlers for user interactions with the chat UI                                                                |
-| onLinkClick                    | (LinkHandlerEvent) => void                    | -       | Handle user clicks on the catalog items mentioned in chat.                                                           |
-| allowNativeLinks               | boolean                                       | false   | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links |
-| disableManage                  | boolean                                       | false   | This will disable manage permissions for the user even if the user has them defined.                                 |
-| disableAnalyze                 | boolean                                       | false   | This will disable analyze permissions for the user even if the user has them defined.                                |
-| disableFullControl             | boolean                                       | false   | This will disable full control permissions for the user even if the user has them defined.                           |
-| onDispatcher                   | (dispatch: (action: unknown) => void) => void | -       | Dispatcher for sending messages in the chat.                                                                         |
+| Name                           | Type                                          | Default | Description                                                                                                                                        |
+| ------------------------------ | --------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| locale                         | ILocale                                       | "en-US" | Specifies the locale for internationalization                                                                                                      |
+| backend                        | IAnalyticalBackend                            | -       | Backend instance. Falls back to BackendProvider context if not specified                                                                           |
+| workspace                      | string                                        | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                                                                             |
+| colorPalette                   | IColorPalette                                 | -       | Color palette used for rendering the visualizations. If not provided, the default color palette will be used                                       |
+| catalogItems                   | CatalogItem[]                                 | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                                                           |
+| eventHandlers                  | ChatEventHandler[]                            | -       | Event handlers for user interactions with the chat UI                                                                                              |
+| onLinkClick                    | (LinkHandlerEvent) => void                    | -       | Handle user clicks on the catalog items mentioned in chat.                                                                                         |
+| allowNativeLinks               | boolean                                       | false   | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links                               |
+| disableManage                  | boolean                                       | false   | This will disable manage permissions for the user even if the user has them defined.                                                               |
+| disableAnalyze                 | boolean                                       | false   | This will disable analyze permissions for the user even if the user has them defined.                                                              |
+| disableFullControl             | boolean                                       | false   | This will disable full control permissions for the user even if the user has them defined.                                                         |
+| onDispatcher                   | (dispatch: (action: unknown) => void) => void | -       | Dispatcher for sending messages in the chat.                                                                                                       |
 | LandingScreenComponentProvider | () => ComponentType                           | -       | Factory for providing a custom initial assistant experience component. When omitted, the default landing screen with quick questions is displayed. |
 
 #### eventHandlers
@@ -118,7 +118,7 @@ Here is a list of the relevant events:
 | `ChatAssistantMessageEvent`         | `isChatAssistantMessageEvent`         | Assistant responded with a message    |
 | `ChatFeedbackEvent`                 | `isChatFeedbackEvent`                 | User gave a feedback                  |
 | `ChatVisualizationErrorEvent`       | `isChatVisualizationErrorEvent`       | Visualization failed to render        |
-| `ChatSaveVisualizationErrorEvent`   | `isChatSaveVisualizationErrorEvent`   | Chat failed to save visualisation    |
+| `ChatSaveVisualizationErrorEvent`   | `isChatSaveVisualizationErrorEvent`   | Chat failed to save visualisation     |
 | `ChatSaveVisualizationSuccessEvent` | `isChatSaveVisualizationSuccessEvent` | Chat successfully saved visualisation |
 | `ChatCopyToClipboardEvent`          | `isChatCopyToClipboardEvent`          | Chat copy to clipboard event          |
 
@@ -140,7 +140,7 @@ Each event contains the following properties:
 
 ## Initial Assistant Experience
 
-The initial assistant experience defines what users see before they send their first message to the AI Assistant. It is used to introduce the assistant, provide guidance, and offer suggested questions to help users get started. Once a user submits a question the assistant switches to the standard chat interface. By default, the AI Assistant displays a built-in initial experience with a title and quick questions, which you can fully replace or customize to match your application’s branding and guidance needs. 
+The initial assistant experience defines what users see before they send their first message to the AI Assistant. It is used to introduce the assistant, provide guidance, and offer suggested questions to help users get started. Once a user submits a question the assistant switches to the standard chat interface. By default, the AI Assistant displays a built-in initial experience with a title and quick questions, which you can fully replace or customize to match your application’s branding and guidance needs.
 
 ### Customizing the initial assistant experience
 
@@ -252,6 +252,8 @@ dispatcher(clearThreadAction());
 ## Actions that are now available
 
 - `clearThreadAction` - reset the chat thread
+- `startNewConversationAction` - start a new conversation
+- `setCurrentConversationAction` - set active conversation in the chat
 - `newMessageAction` - add message to the stack and get response from the assistant
 
 ### Example usage:
@@ -259,14 +261,24 @@ dispatcher(clearThreadAction());
 ```tsx
 import {
     clearThreadAction,
+    startNewConversationAction,
+    setCurrentConversationAction,
     newMessageAction,
+    makeUserItem,
     makeUserMessage,
     makeTextContents,
 } from "@gooddata/sdk-ui-gen-ai";
 
-// Retreve dispatcher from chat UI
+// Retrieve dispatcher from chat UI
+
+// Clear thread action
 dispatcher(clearThreadAction());
+// For case with single conversation only
 dispatcher(newMessageAction(makeUserMessage([makeTextContents("Hello", [])])));
+// For case with multiple conversations
+dispatcher(startNewConversationAction());
+dispatcher(setCurrentConversationAction({ conversation }));
+dispatcher(newMessageAction(makeUserItem({ type: "text", text: "Hello" })));
 ```
 
 [ai assistant]: https://www.gooddata.ai/platform/artificial-intelligence/

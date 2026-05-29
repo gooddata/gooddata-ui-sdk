@@ -3,27 +3,17 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { isEqual } from "lodash-es";
 
+import { type IDashboardParameterValueOverride } from "@gooddata/sdk-backend-spi";
 import {
-    DashboardParameterModeValues,
-    type IDashboardLayout,
     type IDashboardParameter,
     type IDashboardTab,
     type IInsightParameterValue,
-    type IInsightWidget,
-    type IParameterMetadataObject,
     type ObjRef,
     areObjRefsEqual,
-    insightMeasures,
     insightParameters,
-    isDashboardLayout,
-    isInsightWidget,
-    isMeasureDefinition,
-    isNumberParameterDefinition,
-    isVisualizationSwitcherWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import { type ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import {
     selectCatalogMeasureParameters,
@@ -36,9 +26,20 @@ import { selectEnableParameters } from "../../config/configSelectors.js";
 import { selectInsightsMap } from "../../insights/insightsSelectors.js";
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { type DashboardSelector } from "../../types.js";
+import { selectAllTabsInsightWidgetContexts } from "../layout/layoutSelectors.js";
 import { selectActiveTab, selectTabs } from "../tabsSelectors.js";
-import { DEFAULT_TAB_ID, type ITabState } from "../tabsState.js";
+import { DEFAULT_TAB_ID } from "../tabsState.js";
 
+import {
+    EMPTY_EXPORT_PARAMETERS,
+    buildPersistedByTabAndRef,
+    buildWidgetScopeTabRefSelections,
+    collectExportOverrides,
+    collectReferencedParameterRefs,
+    computeParameterResetTargets,
+    computeParameterResetValue,
+    smartPersistResolvedEntry,
+} from "./parametersHelpers.js";
 import {
     type IDashboardParameterEntry,
     parametersInitialState,
@@ -306,30 +307,26 @@ export const selectEffectiveParameterValuesForWidget: (
     ref: ObjRef | undefined,
 ) => DashboardSelector<IInsightParameterValue[]> = createMemoizedSelector((ref: ObjRef | undefined) =>
     createSelector(
-        selectParameterExecutionContextByWidgetRef(ref),
+        selectAllTabsInsightWidgetContexts,
         selectInsightsMap,
         selectEnableParameters,
         selectCatalogMeasureParameters,
         selectCatalogMeasureParametersStatus,
-        (context, insights, isEnabled, measureParameters, measureParametersStatus) => {
-            if (!isEnabled || !context || measureParametersStatus !== "loaded") {
+        (contexts, insights, isEnabled, measureParameters, measureParametersStatus) => {
+            if (!isEnabled || !ref || measureParametersStatus !== "loaded") {
+                return EMPTY_PARAMETER_VALUES;
+            }
+            const context = contexts.find((ctx) => areObjRefsEqual(ctx.widget.ref, ref));
+            if (!context) {
                 return EMPTY_PARAMETER_VALUES;
             }
             const insight = insights.get(context.widget.insight);
             if (!insight) {
                 return EMPTY_PARAMETER_VALUES;
             }
-            const referencedRefs = new Set<string>();
-            for (const measure of insightMeasures(insight)) {
-                const def = measure.measure.definition;
-                if (!isMeasureDefinition(def)) {
-                    continue;
-                }
-                const parameterRefs = measureParameters[objRefToString(def.measureDefinition.item)] ?? [];
-                for (const parameterRef of parameterRefs) {
-                    referencedRefs.add(objRefToString(parameterRef));
-                }
-            }
+            const referencedRefs = new Set(
+                collectReferencedParameterRefs(insight, measureParameters).map(objRefToString),
+            );
             const entries = context.tab.parameters?.parameters ?? parametersInitialState.parameters;
             const result: IInsightParameterValue[] = [];
             const seen = new Set<string>();
@@ -357,174 +354,90 @@ export const selectEffectiveParameterValuesForWidget: (
     ),
 );
 
-interface IParameterExecutionContext {
-    tab: ITabState;
-    widget: IInsightWidget;
-}
+/**
+ * Returns the per-tab parameter overrides to send on dashboard tabular export, keyed by
+ * tab `localIdentifier`. The shape matches the backend's `dashboardTabsParametersOverrides`
+ * field directly.
+ *
+ * @remarks
+ * Scope rules:
+ * - When `widgetIds` is empty/undefined (whole-dashboard export), every tab in scope contributes
+ *   parameter entries with a `runtimeOverride`.
+ * - When `widgetIds` is non-empty, each widget's owning tab contributes only entries with a
+ *   `runtimeOverride` whose ref is referenced by the widget's insight metrics via the dashboard-wide
+ *   metric → parameter dependency map. Multi-widget across distinct owning tabs yields one
+ *   map entry per owning tab; entries for the same tab are unioned and deduplicated by ref.
+ *
+ * Returns `{}` (signalling "omit the field on the wire") when:
+ * - `enableParameters` is off,
+ * - the workspace catalog parameters are not loaded,
+ * - (widget scope only) the `measureParameters` dependency map is not loaded,
+ * - or no in-scope parameter has a `runtimeOverride`.
+ *
+ * @alpha
+ */
+export const selectExportEffectiveParameters: (
+    widgetIds: string[] | undefined,
+) => DashboardSelector<Record<string, IDashboardParameterValueOverride[]>> = (widgetIds) =>
+    widgetIds?.length
+        ? selectExportEffectiveParametersForWidgets(widgetIds)
+        : selectExportEffectiveParametersDashboardScope;
 
-const selectParameterExecutionContextByWidgetRef: (
-    ref: ObjRef | undefined,
-) => DashboardSelector<IParameterExecutionContext | undefined> = createMemoizedSelector(
-    (ref: ObjRef | undefined) =>
-        createSelector(selectTabs, (tabs) => findParameterExecutionContext(tabs, ref)),
+const selectExportEffectiveParametersDashboardScope: DashboardSelector<
+    Record<string, IDashboardParameterValueOverride[]>
+> = createSelector(
+    selectTabs,
+    selectEnableParameters,
+    selectCatalogParameters,
+    selectCatalogParametersIsLoaded,
+    (tabs, isEnabled, catalogParameters, isCatalogLoaded) => {
+        if (!isEnabled || !isCatalogLoaded || !tabs?.length) {
+            return EMPTY_EXPORT_PARAMETERS;
+        }
+        const workspaceByRef = new Map(
+            catalogParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
+        );
+        return collectExportOverrides(
+            tabs.map((tab) => ({ tab })),
+            workspaceByRef,
+        );
+    },
 );
 
-function findParameterExecutionContext(
-    tabs: ITabState[] | undefined,
-    ref: ObjRef | undefined,
-): IParameterExecutionContext | undefined {
-    if (!ref || !tabs) {
-        return undefined;
-    }
-
-    for (const tab of tabs) {
-        const layout = tab.layout?.layout;
-        if (!layout) {
-            continue;
-        }
-
-        const widget = findInsightWidgetInLayout(layout, ref);
-        if (widget) {
-            return { tab, widget };
-        }
-    }
-
-    return undefined;
-}
-
-function findInsightWidgetInLayout(
-    layout: IDashboardLayout<ExtendedDashboardWidget>,
-    ref: ObjRef,
-): IInsightWidget | undefined {
-    for (const section of layout.sections) {
-        for (const item of section.items) {
-            const widget = item.widget;
-            if (!widget) {
-                continue;
-            }
-
-            if (isInsightWidget(widget) && areObjRefsEqual(widget.ref, ref)) {
-                return widget;
-            }
-
-            if (isDashboardLayout(widget)) {
-                const nestedWidget = findInsightWidgetInLayout(widget, ref);
-                if (nestedWidget) {
-                    return nestedWidget;
+const selectExportEffectiveParametersForWidgets: (
+    widgetIds: ReadonlyArray<string>,
+) => DashboardSelector<Record<string, IDashboardParameterValueOverride[]>> = createMemoizedSelector(
+    (widgetIds: ReadonlyArray<string>) =>
+        createSelector(
+            selectAllTabsInsightWidgetContexts,
+            selectInsightsMap,
+            selectEnableParameters,
+            selectCatalogParameters,
+            selectCatalogParametersIsLoaded,
+            selectCatalogMeasureParameters,
+            selectCatalogMeasureParametersStatus,
+            (
+                widgetContexts,
+                insights,
+                isEnabled,
+                catalogParameters,
+                isCatalogLoaded,
+                measureParameters,
+                measureParametersStatus,
+            ) => {
+                if (!isEnabled || !isCatalogLoaded || measureParametersStatus !== "loaded") {
+                    return EMPTY_EXPORT_PARAMETERS;
                 }
-            }
-
-            if (isVisualizationSwitcherWidget(widget)) {
-                const visualization = widget.visualizations.find((visualization) =>
-                    areObjRefsEqual(visualization.ref, ref),
+                const workspaceByRef = new Map(
+                    catalogParameters.map((parameter) => [objRefToString(parameter.ref), parameter]),
                 );
-                if (visualization) {
-                    return visualization;
-                }
-            }
-        }
-    }
-
-    return undefined;
-}
-
-function buildPersistedByTabAndRef(
-    persistedTabs: ReadonlyArray<IDashboardTab>,
-    rootPersistedParameters: IDashboardParameter[],
-): Map<string, Map<string, IDashboardParameter>> {
-    const result = new Map<string, Map<string, IDashboardParameter>>();
-    for (const tab of persistedTabs) {
-        const sourceParameters =
-            pickTabParametersSource(tab, persistedTabs, rootPersistedParameters) ?? EMPTY_PARAMETERS;
-        result.set(
-            tab.localIdentifier,
-            new Map(sourceParameters.map((parameter) => [objRefToString(parameter.ref), parameter])),
-        );
-    }
-    return result;
-}
-
-function smartPersistResolvedEntry(
-    entry: IDashboardParameterEntry,
-    workspaceParameter: IParameterMetadataObject,
-): IDashboardParameter {
-    const workspaceDefault = isNumberParameterDefinition(workspaceParameter.definition)
-        ? workspaceParameter.definition.defaultValue
-        : undefined;
-    const result: IDashboardParameter = {
-        ref: entry.parameter.ref,
-        parameterType: entry.parameter.parameterType,
-        mode: entry.parameter.mode,
-        ...labelOverride(entry, workspaceParameter),
-    };
-    if (entry.runtimeOverride === undefined || entry.runtimeOverride === workspaceDefault) {
-        return result;
-    }
-    return { ...result, value: entry.runtimeOverride };
-}
-
-function labelOverride(
-    entry: IDashboardParameterEntry,
-    workspaceParameter: IParameterMetadataObject,
-): { label?: string } {
-    if (entry.parameter.label && entry.parameter.label !== workspaceParameter.title) {
-        return { label: entry.parameter.label };
-    }
-    return {};
-}
-
-/**
- * Returns `undefined` when reset would be a no-op: missing/non-number workspace parameter, or
- * in edit mode when `parameter.value` is unset / already equals the workspace default.
- *
- * @internal
- */
-export function computeParameterResetValue(
-    entry: IDashboardParameterEntry,
-    workspaceParameter: IParameterMetadataObject | undefined,
-    isInEditMode: boolean,
-): number | undefined {
-    if (!workspaceParameter || !isNumberParameterDefinition(workspaceParameter.definition)) {
-        return undefined;
-    }
-    const workspaceDefault = workspaceParameter.definition.defaultValue;
-    const dashboardOverride = entry.parameter.value;
-    if (isInEditMode) {
-        if (dashboardOverride === undefined || dashboardOverride === workspaceDefault) {
-            return undefined;
-        }
-        return workspaceDefault;
-    }
-    return dashboardOverride ?? workspaceDefault;
-}
-
-/**
- * Only `mode: "active"` entries with a defined `runtimeOverride` are considered resettable;
- * HIDDEN and READONLY entries are skipped, and entries with `runtimeOverride === undefined`
- * (chip hidden, execution falls back to `insight.parameters`) are preserved as-is — symmetric
- * with per-chip behavior in `DashboardParameterFilter`.
- *
- * @internal
- */
-export function computeParameterResetTargets(
-    entries: IDashboardParameterEntry[],
-    workspaceParameters: IParameterMetadataObject[],
-    isInEditMode: boolean,
-): { ref: ObjRef; value: number | undefined }[] {
-    const workspaceByRef = new Map(workspaceParameters.map((wp) => [objRefToString(wp.ref), wp]));
-    const result: { ref: ObjRef; value: number | undefined }[] = [];
-    for (const entry of entries) {
-        if (entry.parameter.mode !== DashboardParameterModeValues.ACTIVE) {
-            continue;
-        }
-        if (entry.runtimeOverride === undefined) {
-            continue;
-        }
-        const workspaceParameter = workspaceByRef.get(objRefToString(entry.parameter.ref));
-        const resetValue = computeParameterResetValue(entry, workspaceParameter, isInEditMode);
-        if (resetValue !== undefined && resetValue !== entry.runtimeOverride) {
-            result.push({ ref: entry.parameter.ref, value: resetValue });
-        }
-    }
-    return result;
-}
+                const tabRefSelections = buildWidgetScopeTabRefSelections(
+                    widgetContexts,
+                    widgetIds,
+                    insights,
+                    measureParameters,
+                );
+                return collectExportOverrides(tabRefSelections, workspaceByRef);
+            },
+        ),
+);

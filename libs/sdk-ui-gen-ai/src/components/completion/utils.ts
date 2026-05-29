@@ -6,7 +6,9 @@ import { type IntlShape } from "react-intl";
 
 import {
     type CatalogItem,
+    type IAttributeDisplayFormMetadataObject,
     type ICatalogDateAttribute,
+    isAttributeDisplayFormMetadataObject,
     isCatalogAttribute,
     isCatalogDateAttribute,
     isCatalogDateDataset,
@@ -65,7 +67,7 @@ export function getOptions(
     });
 }
 
-const SupportedReferenceTypes = ["fact", "metric", "date", "attribute"] as const;
+const SupportedReferenceTypes = ["fact", "metric", "date", "attribute", "label"] as const;
 
 // Utility: Get regex for references
 export function getReferenceRegex(split?: boolean) {
@@ -204,7 +206,9 @@ export function getCompletionItemId(data: ICompletionItem) {
 }
 
 // Utility: Get catalog item ID
-export function getCatalogItemId(item: CatalogItem | ICatalogDateAttribute): string | null {
+export function getCatalogItemId(
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
+): string | null {
     if (isCatalogFact(item)) {
         return item.fact.id;
     }
@@ -220,11 +224,16 @@ export function getCatalogItemId(item: CatalogItem | ICatalogDateAttribute): str
     if (isCatalogDateAttribute(item)) {
         return item.attribute.id;
     }
+    if (isAttributeDisplayFormMetadataObject(item)) {
+        return item.id;
+    }
     return null;
 }
 
 // Utility: Get catalog item ID
-export function getCatalogItemTitle(item: CatalogItem | ICatalogDateAttribute) {
+export function getCatalogItemTitle(
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
+) {
     if (isCatalogFact(item)) {
         return item.fact.title ?? item.fact.id;
     }
@@ -240,12 +249,15 @@ export function getCatalogItemTitle(item: CatalogItem | ICatalogDateAttribute) {
     if (isCatalogDateAttribute(item)) {
         return item.attribute.title ?? item.attribute.id;
     }
+    if (isAttributeDisplayFormMetadataObject(item)) {
+        return item.title ?? item.id;
+    }
     return "Unknown Item";
 }
 
 // Utility: Get a catalog item type
 export function getCatalogItemType(
-    item: CatalogItem | ICatalogDateAttribute,
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
 ): (typeof SupportedReferenceTypes)[number] | null {
     if (isCatalogFact(item)) {
         return "fact";
@@ -261,6 +273,9 @@ export function getCatalogItemType(
     }
     if (isCatalogDateAttribute(item)) {
         return "attribute";
+    }
+    if (isAttributeDisplayFormMetadataObject(item)) {
+        return "label";
     }
     return null;
 }

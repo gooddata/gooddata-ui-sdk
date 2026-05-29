@@ -26,7 +26,7 @@ import type {
  */
 export type TextContentObject = {
     id: string;
-    type: "metric" | "attribute" | "fact" | "date";
+    type: "metric" | "attribute" | "fact" | "date" | "label";
     title: string;
 };
 
@@ -351,6 +351,7 @@ export type Message = UserMessage | AssistantMessage;
 /**
  * Represents a local chat conversation that extends the base `IChatConversation` type.
  * Includes additional optional properties specific to the local context.
+ * @public
  */
 export type IChatConversationLocal = IChatConversation & {
     localId: string;

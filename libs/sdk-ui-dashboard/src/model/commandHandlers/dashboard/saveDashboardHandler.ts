@@ -16,6 +16,7 @@ import {
     type IDashboardParameter,
     type IDashboardTab,
     type IFilterContext,
+    type IFilterContextDefinition,
     type ITempFilterContext,
     isTempFilterContext,
 } from "@gooddata/sdk-model";
@@ -40,16 +41,13 @@ import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
 import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
 import { savingActions } from "../../store/saving/index.js";
-import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectDateFilterConfigOverrides } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
-import { selectDateFilterConfigsOverrides } from "../../store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import {
-    selectFilterContextDefinition,
-    selectFilterContextIdentity,
-} from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectAttributeFilterConfigsOverridesByTab } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectDateFilterConfigOverridesByTab } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverridesByTab } from "../../store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { selectFilterContextStatesByTab } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
-import { selectMeasureValueFilterConfigsOverrides } from "../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
+import { filterOutCustomWidgets, selectBasicLayoutByTab } from "../../store/tabs/layout/layoutSelectors.js";
+import { selectMeasureValueFilterConfigsOverridesByTab } from "../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { selectSmartPersistedTabsParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
 import { type ITabState } from "../../store/tabs/tabsState.js";
@@ -282,24 +280,34 @@ function* createDashboardSaveContext(
         yield select(selectPersistedDashboard);
     const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> =
         yield select(selectDashboardDescriptor);
-    const filterContextDefinition: ReturnType<typeof selectFilterContextDefinition> = yield select(
-        selectFilterContextDefinition,
-    );
-    const filterContextIdentity: ReturnType<typeof selectFilterContextIdentity> =
-        yield select(selectFilterContextIdentity);
-    const layout: ReturnType<typeof selectBasicLayout> = yield select(selectBasicLayout);
-    const dateFilterConfig: ReturnType<typeof selectDateFilterConfigOverrides> = yield select(
-        selectDateFilterConfigOverrides,
-    );
-    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
-        selectAttributeFilterConfigsOverrides,
-    );
-    const dateFilterConfigs: ReturnType<typeof selectDateFilterConfigsOverrides> = yield select(
-        selectDateFilterConfigsOverrides,
-    );
-    const measureValueFilterConfigs: ReturnType<typeof selectMeasureValueFilterConfigsOverrides> =
-        yield select(selectMeasureValueFilterConfigsOverrides);
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+
+    // Root-level properties must always reflect the first tab, regardless of which tab is active.
+    // Using active-tab selectors here would persist the wrong data when saving from a non-first tab.
+    const firstTabId = tabs?.[0]?.localIdentifier;
+    const filterContextStatesByTab: ReturnType<typeof selectFilterContextStatesByTab> = yield select(
+        selectFilterContextStatesByTab,
+    );
+    const basicLayoutByTab: ReturnType<typeof selectBasicLayoutByTab> = yield select(selectBasicLayoutByTab);
+    const dateFilterConfigByTab: ReturnType<typeof selectDateFilterConfigOverridesByTab> = yield select(
+        selectDateFilterConfigOverridesByTab,
+    );
+    const attributeFilterConfigsByTab: ReturnType<typeof selectAttributeFilterConfigsOverridesByTab> =
+        yield select(selectAttributeFilterConfigsOverridesByTab);
+    const dateFilterConfigsByTab: ReturnType<typeof selectDateFilterConfigsOverridesByTab> = yield select(
+        selectDateFilterConfigsOverridesByTab,
+    );
+    const measureValueFilterConfigsByTab: ReturnType<typeof selectMeasureValueFilterConfigsOverridesByTab> =
+        yield select(selectMeasureValueFilterConfigsOverridesByTab);
+
+    const firstTabFilterContextState = firstTabId ? filterContextStatesByTab[firstTabId] : undefined;
+    const filterContextDefinition = firstTabFilterContextState?.filterContextDefinition;
+    const filterContextIdentity = firstTabFilterContextState?.filterContextIdentity;
+    const layout = firstTabId ? basicLayoutByTab[firstTabId] : undefined;
+    const dateFilterConfig = firstTabId ? dateFilterConfigByTab[firstTabId] : undefined;
+    const attributeFilterConfigs = firstTabId ? attributeFilterConfigsByTab[firstTabId] : undefined;
+    const dateFilterConfigs = firstTabId ? dateFilterConfigsByTab[firstTabId] : undefined;
+    const measureValueFilterConfigs = firstTabId ? measureValueFilterConfigsByTab[firstTabId] : undefined;
     const parametersByTab: ReturnType<typeof selectSmartPersistedTabsParameters> = yield select(
         selectSmartPersistedTabsParameters,
     );
@@ -349,10 +357,12 @@ function* createDashboardSaveContext(
         ...dashboardDescriptor,
         title,
         ...dashboardIdentity,
-        filterContext: {
-            ...filterContextIdentity,
-            ...filterContextDefinition,
-        },
+        filterContext: filterContextDefinition
+            ? ({
+                  ...filterContextIdentity,
+                  ...filterContextDefinition,
+              } as IFilterContext | IFilterContextDefinition)
+            : undefined,
         layout,
         dateFilterConfig,
         ...buildOptionalFilterConfigsProps(
@@ -366,7 +376,7 @@ function* createDashboardSaveContext(
 
     const dashboardToSave: IDashboardDefinition = {
         ...dashboardFromState,
-        layout: dashboardLayoutRemoveIdentity(layout, isTemporaryIdentity),
+        layout: layout ? dashboardLayoutRemoveIdentity(layout, isTemporaryIdentity) : undefined,
     };
 
     return {
