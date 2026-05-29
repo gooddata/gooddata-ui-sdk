@@ -3,7 +3,11 @@
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import { type FiltersByTab, type IExportResult } from "@gooddata/sdk-backend-spi";
+import {
+    type FiltersByTab,
+    type IDashboardParameterValueOverride,
+    type IExportResult,
+} from "@gooddata/sdk-backend-spi";
 import { type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
 
 import { type IExportDashboardToExcel } from "../../commands/dashboard.js";
@@ -20,6 +24,7 @@ import {
     selectFilterContextFilters,
     selectFiltersByTab,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectExportEffectiveParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 
@@ -32,6 +37,7 @@ function exportDashboardToTabular(
     widgetIds?: string[],
     dashboardFiltersOverride?: FilterContextItem[],
     filtersByTab?: FiltersByTab,
+    dashboardTabsParametersOverrides?: Record<string, IDashboardParameterValueOverride[]>,
     format?: "XLSX" | "PDF",
     pdfConfiguration?: {
         pageSize?: "A3" | "A4" | "LETTER";
@@ -48,6 +54,7 @@ function exportDashboardToTabular(
         exportInfo,
         dashboardFiltersOverride,
         dashboardTabsFiltersOverrides: filtersByTab,
+        dashboardTabsParametersOverrides,
         widgetIds,
         pdfConfiguration,
         timeout,
@@ -77,6 +84,9 @@ export function* exportToTabularHandler(
     const filterContextFilters: SagaReturnType<typeof selectFilterContextFilters> =
         yield select(selectFilterContextFilters);
     const filtersByTab: ReturnType<typeof selectFiltersByTab> = yield select(selectFiltersByTab);
+    const parametersByTab: Record<string, IDashboardParameterValueOverride[]> = yield select(
+        selectExportEffectiveParameters(widgetIds),
+    );
 
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
@@ -91,6 +101,7 @@ export function* exportToTabularHandler(
         widgetIds,
         isFilterContextChanged || hasDefaultFilterViewApplied ? filterContextFilters : undefined,
         isFilterContextChanged || hasDefaultFilterViewApplied ? filtersByTab : undefined,
+        parametersByTab,
         format,
         pdfConfiguration,
         timeout,

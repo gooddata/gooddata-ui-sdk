@@ -9,7 +9,6 @@ import {
     type IInsightParameterValue,
     type IParameterMetadataObject,
     type IdentifierRef,
-    type ObjRef,
     idRef,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -21,12 +20,13 @@ import {
 } from "../../../catalog/catalogState.js";
 import { insightsAdapter } from "../../../insights/insightsEntityAdapter.js";
 import { type DashboardState } from "../../../types.js";
+import { computeParameterResetTargets } from "../parametersHelpers.js";
 import {
-    computeParameterResetTargets,
     selectActiveParameterRefKeys,
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveParameterValuesForWidget,
+    selectExportEffectiveParameters,
     selectFilterViewParameters,
     selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
@@ -37,11 +37,11 @@ import {
 import { type IDashboardParameterEntry } from "../parametersState.js";
 
 function makeInsightWithMetric(
-    insightRef: ObjRef,
-    metricRefOrRefs: ObjRef | ObjRef[],
+    insightRef: IdentifierRef,
+    metricRefOrRefs: IdentifierRef | IdentifierRef[],
     parameters: IInsightParameterValue[] = [],
 ): IInsight {
-    const identifier = (insightRef as { identifier?: string }).identifier ?? "insight";
+    const identifier = insightRef.identifier;
     const metricRefs = Array.isArray(metricRefOrRefs) ? metricRefOrRefs : [metricRefOrRefs];
     return {
         insight: {
@@ -65,7 +65,7 @@ function makeInsightWithMetric(
             properties: {},
             parameters,
         },
-    } as unknown as IInsight;
+    };
 }
 
 function makeInsightsSliceState(insights: IInsight[]) {
@@ -1184,6 +1184,397 @@ describe("parameter selectors (per tab)", () => {
             } as unknown as DashboardState;
             const tabBKeys = selectActiveParameterRefKeys(stateActiveOnB);
             expect(tabBKeys.has(objRefToString(topNRef))).toBe(false);
+        });
+    });
+
+    describe("selectExportEffectiveParameters", () => {
+        const exportSampleSizeRef = idRef("sampleSize", "parameter");
+        const exportSampleSizeWorkspace: IParameterMetadataObject = {
+            ...topNWorkspace,
+            id: "sampleSize",
+            uri: "/sampleSize",
+            ref: exportSampleSizeRef,
+            title: "Sample Size",
+        };
+        const insightWithTopN = makeInsightWithMetric(W1_INSIGHT_REF, idRef("metric-A", "measure"));
+        const depMapTopN: Record<string, IdentifierRef[]> = { "metric-A": [topNRef] };
+
+        describe("dashboard scope (widgetIds empty/undefined)", () => {
+            it("emits map keyed by tab.localIdentifier with formatted rows", () => {
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    workspaceParameters: [topNWorkspace],
+                    insights: [insightWithTopN],
+                    measureParameters: depMapTopN,
+                });
+                expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
+                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                });
+            });
+
+            it("includes HIDDEN-mode entries because mode only controls chip visibility", () => {
+                const hiddenParam: IDashboardParameter = {
+                    ref: exportSampleSizeRef,
+                    parameterType: "NUMBER",
+                    mode: "hidden",
+                };
+                const state = makeFullState({
+                    entries: [
+                        { parameter: topNParameter, runtimeOverride: 25 },
+                        { parameter: hiddenParam, runtimeOverride: 99 },
+                    ],
+                    workspaceParameters: [topNWorkspace, exportSampleSizeWorkspace],
+                });
+                expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
+                    [TAB_ID]: [
+                        { id: "topN", value: "25", title: "Top N" },
+                        { id: "sampleSize", value: "99", title: "Sample Size" },
+                    ],
+                });
+            });
+
+            it("emits HIDDEN-mode entries when they have runtimeOverride", () => {
+                const hiddenParam: IDashboardParameter = {
+                    ref: exportSampleSizeRef,
+                    parameterType: "NUMBER",
+                    mode: "hidden",
+                };
+                const state = makeFullState({
+                    entries: [{ parameter: hiddenParam, runtimeOverride: 99 }],
+                    workspaceParameters: [exportSampleSizeWorkspace],
+                });
+                expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
+                    [TAB_ID]: [{ id: "sampleSize", value: "99", title: "Sample Size" }],
+                });
+            });
+
+            it("returns {} when no tab has any entry at all", () => {
+                const state = makeFullState({ entries: [] });
+                expect(selectExportEffectiveParameters(undefined)(state)).toEqual({});
+            });
+
+            it("skips entries without runtimeOverride so the backend keeps its own resolution", () => {
+                const state = makeFullState({
+                    entries: [
+                        { parameter: topNParameter, runtimeOverride: undefined },
+                        { parameter: { ...topNParameter, value: 50 }, runtimeOverride: undefined },
+                    ],
+                    workspaceParameters: [topNWorkspace],
+                });
+                expect(selectExportEffectiveParameters(undefined)(state)).toEqual({});
+            });
+
+            it("treats widgetIds=[] as dashboard scope (whole-dashboard export)", () => {
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    workspaceParameters: [topNWorkspace],
+                });
+                expect(selectExportEffectiveParameters([])(state)).toEqual({
+                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                });
+            });
+
+            it("V1 root-fallback collapses to one synthetic tab entry under the loaded tab id", () => {
+                // V1 reducers populate the synthetic single tab's parameters from the root array;
+                // the selector reads `tab.parameters` directly so the test fixture mimics that
+                // post-population state. The map carries exactly one entry, keyed by that tab id.
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 7 }],
+                    workspaceParameters: [topNWorkspace],
+                });
+                const result = selectExportEffectiveParameters(undefined)(state);
+                expect(Object.keys(result)).toEqual([TAB_ID]);
+                expect(result[TAB_ID]).toEqual([{ id: "topN", value: "7", title: "Top N" }]);
+            });
+        });
+
+        describe("widget scope (widgetIds non-empty)", () => {
+            it("intersects with widget's metric-referenced refs, keyed by owning tabId", () => {
+                const sampleSizeParam: IDashboardParameter = {
+                    ref: exportSampleSizeRef,
+                    parameterType: "NUMBER",
+                    mode: "active",
+                };
+                const state = makeFullState({
+                    entries: [
+                        { parameter: topNParameter, runtimeOverride: 25 },
+                        { parameter: sampleSizeParam, runtimeOverride: 99 },
+                    ],
+                    workspaceParameters: [topNWorkspace, exportSampleSizeWorkspace],
+                    insights: [insightWithTopN],
+                    measureParameters: depMapTopN,
+                });
+                // Insight references only topN, so sampleSize is excluded.
+                expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({
+                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                });
+            });
+
+            it("omits owning tab when widget references no parameters", () => {
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    workspaceParameters: [topNWorkspace],
+                    insights: [insightWithTopN],
+                    measureParameters: {}, // no parameter dep for any metric
+                });
+                expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({});
+            });
+
+            it("returns {} when the requested widgetId is not found in the layout", () => {
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    workspaceParameters: [topNWorkspace],
+                    insights: [insightWithTopN],
+                    measureParameters: depMapTopN,
+                });
+                expect(selectExportEffectiveParameters(["does-not-exist"])(state)).toEqual({});
+            });
+
+            it("returns {} when the insight referenced by the widget is missing", () => {
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    workspaceParameters: [topNWorkspace],
+                    insights: [], // widget points at W1_INSIGHT_REF which is absent
+                    measureParameters: depMapTopN,
+                });
+                expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({});
+            });
+
+            it("widget on non-active tab → key = owning tabId, not active tabId", () => {
+                const widgetA = { identifier: "w-A", type: "insight" } as const;
+                const widgetB = { identifier: "w-B", type: "insight" } as const;
+                const insightARef = idRef("insight-A", "insight");
+                const insightBRef = idRef("insight-B", "insight");
+                const insightA = makeInsightWithMetric(insightARef, idRef("metric-A", "measure"));
+                const insightB = makeInsightWithMetric(insightBRef, idRef("metric-B", "measure"));
+                const state = {
+                    tabs: {
+                        tabs: [
+                            {
+                                localIdentifier: "tab-A",
+                                title: "Tab A",
+                                parameters: {
+                                    parameters: [{ parameter: topNParameter, runtimeOverride: 10 }],
+                                },
+                                layout: {
+                                    layout: {
+                                        type: "IDashboardLayout",
+                                        sections: [
+                                            {
+                                                type: "IDashboardLayoutSection",
+                                                items: [
+                                                    {
+                                                        type: "IDashboardLayoutItem",
+                                                        size: { xl: { gridWidth: 12 } },
+                                                        widget: {
+                                                            type: "insight",
+                                                            identifier: "w-A",
+                                                            ref: widgetA,
+                                                            insight: insightARef,
+                                                        },
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                            {
+                                localIdentifier: "tab-B",
+                                title: "Tab B",
+                                parameters: {
+                                    parameters: [{ parameter: topNParameter, runtimeOverride: 99 }],
+                                },
+                                layout: {
+                                    layout: {
+                                        type: "IDashboardLayout",
+                                        sections: [
+                                            {
+                                                type: "IDashboardLayoutSection",
+                                                items: [
+                                                    {
+                                                        type: "IDashboardLayoutItem",
+                                                        size: { xl: { gridWidth: 12 } },
+                                                        widget: {
+                                                            type: "insight",
+                                                            identifier: "w-B",
+                                                            ref: widgetB,
+                                                            insight: insightBRef,
+                                                        },
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        ],
+                        activeTabLocalIdentifier: "tab-A",
+                    },
+                    insights: makeInsightsSliceState([insightA, insightB]),
+                    backendCapabilities: BACKEND_CAPABILITIES,
+                    catalog: {
+                        parameters: { status: "loaded", parameters: [topNWorkspace] },
+                        measureParameters: {
+                            status: "loaded",
+                            byMetric: {
+                                "metric-A": [topNRef],
+                                "metric-B": [topNRef],
+                            },
+                        },
+                    },
+                    meta: { persistedDashboard: undefined },
+                    config: { config: { settings: { enableParameters: true } } },
+                } as unknown as DashboardState;
+
+                // Exporting widget B from active tab A → result must key on tab B (B's owning tab).
+                expect(selectExportEffectiveParameters(["w-B"])(state)).toEqual({
+                    "tab-B": [{ id: "topN", value: "99", title: "Top N" }],
+                });
+            });
+
+            it("multi-widget on the same tab → unions referenced refs, keyed by that one tab", () => {
+                const m1 = idRef("m1", "measure");
+                const m2 = idRef("m2", "measure");
+                const insightM1 = makeInsightWithMetric(W1_INSIGHT_REF, m1);
+                const widgetTwoRef = { identifier: "w-2", type: "insight" } as const;
+                const insightW2Ref = idRef("insight-2", "insight");
+                const insightM2 = makeInsightWithMetric(insightW2Ref, m2);
+                const sampleSizeParam: IDashboardParameter = {
+                    ref: exportSampleSizeRef,
+                    parameterType: "NUMBER",
+                    mode: "active",
+                };
+                const state = {
+                    tabs: {
+                        tabs: [
+                            {
+                                localIdentifier: TAB_ID,
+                                title: "Tab 1",
+                                parameters: {
+                                    parameters: [
+                                        { parameter: topNParameter, runtimeOverride: 25 },
+                                        { parameter: sampleSizeParam, runtimeOverride: 99 },
+                                    ],
+                                },
+                                layout: {
+                                    layout: {
+                                        type: "IDashboardLayout",
+                                        sections: [
+                                            {
+                                                type: "IDashboardLayoutSection",
+                                                items: [
+                                                    {
+                                                        type: "IDashboardLayoutItem",
+                                                        size: { xl: { gridWidth: 12 } },
+                                                        widget: {
+                                                            type: "insight",
+                                                            identifier: "w-1",
+                                                            ref: W1_REF,
+                                                            insight: W1_INSIGHT_REF,
+                                                        },
+                                                    },
+                                                    {
+                                                        type: "IDashboardLayoutItem",
+                                                        size: { xl: { gridWidth: 12 } },
+                                                        widget: {
+                                                            type: "insight",
+                                                            identifier: "w-2",
+                                                            ref: widgetTwoRef,
+                                                            insight: insightW2Ref,
+                                                        },
+                                                    },
+                                                ],
+                                            },
+                                        ],
+                                    },
+                                },
+                            },
+                        ],
+                        activeTabLocalIdentifier: TAB_ID,
+                    },
+                    insights: makeInsightsSliceState([insightM1, insightM2]),
+                    backendCapabilities: BACKEND_CAPABILITIES,
+                    catalog: {
+                        parameters: {
+                            status: "loaded",
+                            parameters: [topNWorkspace, exportSampleSizeWorkspace],
+                        },
+                        measureParameters: {
+                            status: "loaded",
+                            byMetric: { m1: [topNRef], m2: [exportSampleSizeRef] },
+                        },
+                    },
+                    meta: { persistedDashboard: undefined },
+                    config: { config: { settings: { enableParameters: true } } },
+                } as unknown as DashboardState;
+
+                expect(selectExportEffectiveParameters(["w-1", "w-2"])(state)).toEqual({
+                    [TAB_ID]: [
+                        { id: "topN", value: "25", title: "Top N" },
+                        { id: "sampleSize", value: "99", title: "Sample Size" },
+                    ],
+                });
+            });
+        });
+
+        describe("gating", () => {
+            it("returns {} when enableParameters is off (dashboard scope)", () => {
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    workspaceParameters: [topNWorkspace],
+                    enableParameters: false,
+                });
+                expect(selectExportEffectiveParameters(undefined)(state)).toEqual({});
+            });
+
+            it("returns {} when enableParameters is off (widget scope)", () => {
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    workspaceParameters: [topNWorkspace],
+                    enableParameters: false,
+                    insights: [insightWithTopN],
+                    measureParameters: depMapTopN,
+                });
+                expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({});
+            });
+
+            it.each(["uninitialized", "loading", "failed"] as const)(
+                "returns {} when catalog parameters status is %s",
+                (status) => {
+                    const state = makeFullState({
+                        entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                        workspaceParameters: [topNWorkspace],
+                        catalogStatus: status,
+                    });
+                    expect(selectExportEffectiveParameters(undefined)(state)).toEqual({});
+                },
+            );
+
+            it.each(["uninitialized", "loading", "failed"] as const)(
+                "returns {} on widget scope when measure-parameter status is %s",
+                (status) => {
+                    const state = makeFullState({
+                        entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                        workspaceParameters: [topNWorkspace],
+                        insights: [insightWithTopN],
+                        measureParameters: depMapTopN,
+                        measureParametersStatus: status,
+                    });
+                    expect(selectExportEffectiveParameters(["w-1"])(state)).toEqual({});
+                },
+            );
+
+            it("dashboard scope ignores measure-parameter status (not required for whole-dashboard)", () => {
+                const state = makeFullState({
+                    entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                    workspaceParameters: [topNWorkspace],
+                    measureParametersStatus: "uninitialized",
+                });
+                expect(selectExportEffectiveParameters(undefined)(state)).toEqual({
+                    [TAB_ID]: [{ id: "topN", value: "25", title: "Top N" }],
+                });
+            });
         });
     });
 });

@@ -1,6 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type CatalogItem, type ICatalogDateAttribute, isCatalogDateDataset } from "@gooddata/sdk-model";
+import {
+    type CatalogItem,
+    type IAttributeDisplayFormMetadataObject,
+    type ICatalogDateAttribute,
+    isCatalogAttribute,
+    isCatalogDateDataset,
+} from "@gooddata/sdk-model";
 
 import {
     type IChatConversationLocalItem,
@@ -25,6 +31,11 @@ export function collectReferences(
                 collectReference(items, text, dateAttribute);
             });
         }
+        if (isCatalogAttribute(item)) {
+            item.displayForms.forEach((displayForm) => {
+                collectReference(items, text, displayForm);
+            });
+        }
     });
 
     return items;
@@ -33,7 +44,7 @@ export function collectReferences(
 function collectReference(
     items: TextContentObject[],
     text: string,
-    item: CatalogItem | ICatalogDateAttribute,
+    item: CatalogItem | ICatalogDateAttribute | IAttributeDisplayFormMetadataObject,
 ): void {
     const id = getCatalogItemId(item);
     const type = getCatalogItemType(item);

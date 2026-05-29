@@ -119,6 +119,11 @@ function processExistingTabsForSaveAs(
         const measureValueFilterConfigsProp = measureValueFilterConfigs?.length
             ? { measureValueFilterConfigs }
             : {};
+        const filterGroupsConfigProp = tab.filterGroupsConfig
+            ? {
+                  filterGroupsConfig: tab.filterGroupsConfig,
+              }
+            : {};
         // Get this tab's specific layout, filter out custom widgets, then process
         const tabLayout = tab.layout?.layout
             ? processLayout(filterOutCustomWidgets(tab.layout.layout))
@@ -145,6 +150,7 @@ function processExistingTabsForSaveAs(
             ...dateFilterConfigsProp,
             ...attributeFilterConfigsProp,
             ...measureValueFilterConfigsProp,
+            ...filterGroupsConfigProp,
             // Always persist `parameters` (incl. `[]`) so V1 root fallback never re-hydrates stale
             // root parameters when every tab has been emptied.
             parameters: tabParameters,

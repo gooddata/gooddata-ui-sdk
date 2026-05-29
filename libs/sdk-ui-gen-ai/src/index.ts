@@ -39,6 +39,7 @@ export {
     type IChatConversationLocalItem,
     type IChatConversationErrorContent,
     type IChatConversationMultipartLocalPart,
+    type IChatConversationLocal,
 } from "./model.js";
 export {
     type ChatEventHandler,
@@ -80,7 +81,12 @@ export {
     isChatConversationRenamedErrorEvent,
 } from "./store/events.js";
 
-export { clearThreadAction, newMessageAction } from "./store/messages/messagesSlice.js";
+export {
+    clearThreadAction,
+    newMessageAction,
+    startNewConversationAction,
+    setCurrentConversationAction,
+} from "./store/messages/messagesSlice.js";
 export { type LinkHandlerEvent } from "./components/ConfigContext.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 

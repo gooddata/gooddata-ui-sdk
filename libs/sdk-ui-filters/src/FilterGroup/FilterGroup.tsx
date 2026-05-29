@@ -90,17 +90,17 @@ export interface IFilterGroupProps<P> {
 export type IFilterGroupDropdownListItemProps<P> = Pick<IRenderDropdownListItemProps<P>, "item" | "rowIndex">;
 
 const GROUP_ALIGN_POINTS: IAlignPoint[] = [
-    { align: "bl tl", offset: { x: 0, y: 0 } },
-    { align: "br tr", offset: { x: 0, y: 0 } },
-    { align: "tr tl", offset: { x: 0, y: 0 } },
-    { align: "tl tr", offset: { x: 0, y: 0 } },
+    { align: "bl tl", offset: { x: 3, y: -7 } },
+    { align: "br tr", offset: { x: -10, y: -7 } },
+    { align: "tr tl", offset: { x: -11, y: 7 } },
+    { align: "tl tr", offset: { x: 3, y: 7 } },
 ];
 
 const ITEM_ALIGN_POINTS: IAlignPoint[] = [
-    { align: "tr tl", offset: { x: -1, y: -1 } },
-    { align: "br bl", offset: { x: -1, y: 0 } },
+    { align: "tr tl", offset: { x: 1, y: -1 } },
+    { align: "br bl", offset: { x: 1, y: 0 } },
     { align: "bl tl", offset: { x: 0, y: 0 } },
-    { align: "tl bl", offset: { x: 0, y: 0 } },
+    { align: "tl bl", offset: { x: 0, y: -2 } },
 ];
 
 /**

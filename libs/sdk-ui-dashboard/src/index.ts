@@ -1662,6 +1662,7 @@ export {
     selectDashboardParameterEntries,
     selectDashboardParameters,
     selectEffectiveParameterValuesForWidget,
+    selectExportEffectiveParameters,
     selectHasAnyResettableParameterOnActiveTab,
     selectIsParametersChanged,
     selectParameterRuntimeOverrideByRef,

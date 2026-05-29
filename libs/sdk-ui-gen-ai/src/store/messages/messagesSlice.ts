@@ -64,6 +64,10 @@ type MessagesSliceState = {
      */
     conversations: IChatConversationLocal[] | undefined;
     /**
+     * Indicates whether the conversations data has been successfully loaded.
+     */
+    conversationsLoaded: boolean;
+    /**
      * The current conversation.
      *  - undefined: no conversation is selected
      */
@@ -112,6 +116,7 @@ const initialState: MessagesSliceState = {
     //conversations
     conversations: undefined,
     currentConversation: undefined,
+    conversationsLoaded: false,
     conversationsData: {},
 };
 
@@ -128,18 +133,34 @@ const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) =
 };
 
 const setNormalizedConversations = (state: MessagesSliceState, conversations: IChatConversationLocal[]) => {
-    state.conversations = conversations;
+    const originalConversations = state.conversations ?? [];
+
+    // Iterate new conversations and try to find existing conversation by id
+    // Load localId from existing conversation if available
+    state.conversations = conversations.map((conv) => {
+        const orig = originalConversations.find((c) => c.id === conv.id);
+        if (orig) {
+            return {
+                ...conv,
+                localId: orig.localId,
+            };
+        }
+        return conv;
+    });
+    state.conversationsLoaded = true;
 };
 
 const setNormalizedConversation = (
     state: MessagesSliceState,
     conversation: IChatConversationLocal,
-    items: IChatConversationLocalItem[] = [],
+    conversationItems: IChatConversationLocalItem[] | undefined,
 ) => {
     state.currentConversation = conversation;
     state.loaded = true;
 
     const data = getConversationData(state.conversationsData, conversation.localId);
+    const items = conversationItems ?? Object.values(data?.items ?? {});
+
     const normalizedItems = items.reduce(
         (acc, message) => {
             acc[message.localId] = message;
@@ -147,7 +168,9 @@ const setNormalizedConversation = (
         },
         {} as Record<string, IChatConversationLocalItem>,
     );
-    const normalizedOrder = items.map((message) => message.localId);
+
+    const normalizedOrder = conversationItems?.map((message) => message.localId) ?? data?.order ?? [];
+
     if (data) {
         data.order = normalizedOrder;
         data.items = normalizedItems;
@@ -302,6 +325,7 @@ const messagesSlice = createSlice({
                 delete data?.asyncProcess;
             } else {
                 delete state.messageAsyncProcess;
+                state.conversationsLoaded = true;
             }
         },
         /**
@@ -342,7 +366,7 @@ const messagesSlice = createSlice({
                 payload: { currentConversation, conversationItems, threadId },
             }: PayloadAction<{
                 currentConversation: IChatConversationLocal;
-                conversationItems: IChatConversationLocalItem[];
+                conversationItems?: IChatConversationLocalItem[];
                 threadId?: string;
             }>,
         ) => {
@@ -411,8 +435,9 @@ const messagesSlice = createSlice({
             }
 
             if (isChatConversationLocalItem(message)) {
+                // keep list of conversations, but clear current conversation data in the view
                 if (!state.currentConversation) {
-                    throw new Error("Working with conversation message but thread mode is active.");
+                    state.currentConversation = createEmptyConversation();
                 }
                 const currentConversation = state.currentConversation;
                 currentConversation.updatedAt = new Date().toISOString();
@@ -1177,8 +1202,6 @@ export const {
     saveVisualisationRenderStatusAction,
     saveVisualisationRenderStatusSuccessAction,
     visualizationErrorAction,
-    startNewConversationAction,
-    setCurrentConversationAction,
     pinConversationAction,
     pinConversationSuccessAction,
     pinConversationFailureAction,
@@ -1189,7 +1212,14 @@ export const {
     deleteConversationStartAction,
     deleteConversationSuccessAction,
     deleteConversationFailureAction,
-
+    /**
+     * @public
+     */
+    setCurrentConversationAction,
+    /**
+     * @public
+     */
+    startNewConversationAction,
     /**
      * @public
      */

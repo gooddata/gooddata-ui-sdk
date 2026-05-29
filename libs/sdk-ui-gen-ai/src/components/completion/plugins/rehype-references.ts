@@ -22,6 +22,7 @@ export function rehypeReferences(references: TextContentObject[]) {
                                 className: cx("gd-gen-ai-chat__message__object", {
                                     metric: obj.type === "metric",
                                     attribute: obj.type === "attribute",
+                                    label: obj.type === "label",
                                     fact: obj.type === "fact",
                                     date: obj.type === "date",
                                 }),

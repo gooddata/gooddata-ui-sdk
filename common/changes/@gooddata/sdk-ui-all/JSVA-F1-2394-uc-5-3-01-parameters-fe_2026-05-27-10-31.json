@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "dashboards: Send per-tab parameter overrides on tabular export",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}
