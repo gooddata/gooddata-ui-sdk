@@ -1,0 +1,33 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["dist"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:test",
+            "outputFolderNames": []
+        },
+        {
+            // `pack-build:remote` (in package.json) copies `../module/gdc-app-template-name-pluggable.tgz`
+            // into the harness build context. The harness depends on its sibling module as a
+            // workspace dep, so Rush's phase machinery runs the module's _phase:pack-build first.
+            // If that dep edge is ever removed, this script will fail with ENOENT — fix the dep,
+            // not the script.
+            "operationName": "_phase:pack-build",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:publish-test-docker-images",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        }
+    ]
+}

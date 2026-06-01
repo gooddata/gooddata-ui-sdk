@@ -95,7 +95,6 @@ import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import type { IListedDashboard } from '@gooddata/sdk-model';
-import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { ILlmProvider } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-model';
@@ -114,6 +113,7 @@ import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { INotificationChannelTestResponse } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IObjectAccessList } from '@gooddata/sdk-model';
 import type { IObjectCertificationWrite } from '@gooddata/sdk-model';
 import { IOpenAiConfig } from '@gooddata/sdk-model';
 import { IOrganizationAssignee } from '@gooddata/sdk-model';
@@ -157,13 +157,13 @@ import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceSettings } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
-import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
 import { LlmProviderListModelsResults } from '@gooddata/sdk-model';
 import { LlmProviderPatch } from '@gooddata/sdk-model';
 import { LlmProviderTestResults } from '@gooddata/sdk-model';
 import type { MemoryItemStrategy } from '@gooddata/sdk-model';
 import { NotificationChannelDestinationType } from '@gooddata/sdk-model';
 import { ObjectOrigin } from '@gooddata/sdk-model';
+import { ObjectPermissionsObjectKind } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
@@ -351,6 +351,8 @@ export interface IAnalyticalWorkspace {
     // @internal
     logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
+    // @alpha
+    objectPermissions(): IWorkspaceObjectPermissionsService;
     parameters(): IWorkspaceParametersService;
     permissions(): IWorkspacePermissionsService;
     references(): IReferencesService;
@@ -1753,18 +1755,6 @@ export interface IListKnowledgeDocumentsOptions {
 }
 
 // @alpha
-export interface ILlmEndpointsQuery {
-    query(): Promise<ILlmEndpointsQueryResult>;
-    queryAll(): Promise<ILlmEndpointOpenAI[]>;
-    withPage(page: number): ILlmEndpointsQuery;
-    withSize(size: number): ILlmEndpointsQuery;
-    withSorting(sort: string[]): ILlmEndpointsQuery;
-}
-
-// @alpha
-export type ILlmEndpointsQueryResult = IPagedResource<ILlmEndpointOpenAI>;
-
-// @alpha
 export interface ILlmProvidersQuery {
     query(): Promise<ILlmProvidersQueryResult>;
     queryAll(): Promise<ILlmProvider[]>;
@@ -1896,6 +1886,14 @@ export interface IObjectExpressionToken {
     value: string;
 }
 
+// @alpha
+export interface IObjectPermissionsObject {
+    // (undocumented)
+    readonly kind: ObjectPermissionsObjectKind;
+    // (undocumented)
+    readonly ref: ObjRef;
+}
+
 // @public
 export interface IOrganization {
     // @alpha
@@ -1907,7 +1905,6 @@ export interface IOrganization {
     // @alpha
     genAI(): IOrganizationGenAIService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
-    llmEndpoints(): IOrganizationLlmEndpointsService;
     llmProviders(): IOrganizationLlmProvidersService;
     notificationChannels(): IOrganizationNotificationChannelService;
     notifications(): IOrganizationNotificationService;
@@ -1999,17 +1996,6 @@ export interface IOrganizationGeoCollectionsService {
     importGeoCollectionFile(collectionId: string, location: string): Promise<void>;
     updateGeoCollection(geoCollection: IGeoCollection): Promise<IGeoCollection>;
     uploadGeoCollectionFile(file: File): Promise<IGeoCollectionFileUploadResult>;
-}
-
-// @alpha
-export interface IOrganizationLlmEndpointsService {
-    createLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
-    deleteLlmEndpoint(id: string): Promise<void>;
-    getCount(): Promise<number>;
-    getEndpointsQuery(): ILlmEndpointsQuery;
-    getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined>;
-    patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
-    updateLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
 }
 
 // @alpha
@@ -2802,6 +2788,13 @@ export interface IWorkspaceMeasuresService {
     setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
     updateMeasureMeta(measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IMeasureMetadataObject>;
+}
+
+// @alpha
+export interface IWorkspaceObjectPermissionsService {
+    getAccessList(target: IObjectPermissionsObject): Promise<IObjectAccessList>;
+    getAvailableAssignees(target: IObjectPermissionsObject): Promise<IAvailableAccessGrantee[]>;
+    manageObjectPermissions(target: IObjectPermissionsObject, grantees: IGranularAccessGrantee[]): Promise<void>;
 }
 
 // @public

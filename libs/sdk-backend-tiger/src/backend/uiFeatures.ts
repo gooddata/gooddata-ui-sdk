@@ -176,6 +176,7 @@ export enum TigerFeaturesNames {
     EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
     EnableRadarChart = "enableRadarChart",
     EnableMetricEditorRemoteModule = "enableShellApplication_metricEditor",
+    EnableDashboardSidebarResize = "enableDashboardSidebarResize",
 }
 
 export type ITigerFeatureFlags = {
@@ -345,6 +346,7 @@ export type ITigerFeatureFlags = {
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
     enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
     enableShellApplication_metricEditor: (typeof FeatureFlagsValues)["enableShellApplication_metricEditor"][number];
+    enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -514,6 +516,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableEnhancedInsightPicker: false,
     enableAiLlmAnthropicProvider: false,
     enableShellApplication_metricEditor: false,
+    enableDashboardSidebarResize: false,
 };
 
 export const FeatureFlagsValues = {
@@ -684,4 +687,5 @@ export const FeatureFlagsValues = {
     enableEnhancedInsightPicker: [true, false] as const,
     enableAiLlmAnthropicProvider: [true, false] as const,
     enableShellApplication_metricEditor: [true, false] as const,
+    enableDashboardSidebarResize: [true, false] as const,
 };

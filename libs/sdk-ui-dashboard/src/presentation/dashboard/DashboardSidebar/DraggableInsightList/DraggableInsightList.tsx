@@ -32,7 +32,7 @@ export function DraggableInsightList({
             <FlexDimensions
                 ref={flexRef}
                 measureHeight
-                measureWidth={false}
+                measureWidth
                 className="visualizations-flex-dimensions"
             >
                 <DraggableInsightListCore

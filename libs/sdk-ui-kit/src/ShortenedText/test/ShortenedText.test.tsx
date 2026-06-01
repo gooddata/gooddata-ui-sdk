@@ -1,6 +1,8 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
+import { createRef } from "react";
+
+import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
@@ -120,6 +122,36 @@ describe("ShortenedText", () => {
         );
 
         expect(screen.getByText("…", { exact: false })).toBeInTheDocument();
+    });
+
+    it("should restore the full text when recomputeShortening is called after the container grows", () => {
+        // start narrow — forces shortening on mount
+        let elementWidth = 100;
+        let scrollWidth = 200;
+        const ref = createRef<ShortenedText>();
+
+        render(
+            <ShortenedText
+                ref={ref}
+                tagName="div"
+                getElement={() => createElement(elementWidth, scrollWidth)}
+            >
+                {longText}
+            </ShortenedText>,
+        );
+        expect(screen.getByText("…", { exact: false })).toBeInTheDocument();
+
+        // container grows so the full text now fits — emulates the width-prop change driven by
+        // InsightListItem's useEffect, which calls recomputeShortening() on the ref.
+        elementWidth = 300;
+        scrollWidth = 250;
+
+        act(() => {
+            ref.current?.recomputeShortening();
+        });
+
+        expect(screen.getByText(longText)).toBeInTheDocument();
+        expect(screen.queryByText("…", { exact: false })).not.toBeInTheDocument();
     });
 
     it("should render bubble if displayTooltip is true", async () => {

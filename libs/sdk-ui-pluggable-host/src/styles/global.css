@@ -1,0 +1,16 @@
+/* (C) 2026 GoodData Corporation */
+
+/*
+ * Base typography for the host app. Portaled components (GenAIChat, dialogs)
+ * render at document.body level and inherit these rules. Without them, browser
+ * defaults (16px / normal) apply, causing buttons and text to be oversized.
+ */
+html,
+body {
+    font-family: var(--gd-font-family), gdcustomfont, Avenir, "Helvetica Neue", arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4rem;
+    color: var(--gd-palette-complementary-8, #464e56);
+    margin: 0;
+    padding: 0;
+}

@@ -452,7 +452,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "DENODO" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT" | "AILAKEHOUSE";
 
 // @public
 export type DataValue = null | string | number;
@@ -2580,6 +2580,7 @@ export interface IFeatureFlags {
     enableDashboardSectionHeadersDateDataSet?: boolean;
     enableDashboardShareDialogLink?: boolean;
     enableDashboardShareLink?: boolean;
+    enableDashboardSidebarResize?: boolean;
     enableDashboardsSearch?: boolean;
     enableDashboardTabularExport?: boolean;
     // (undocumented)
@@ -2948,6 +2949,8 @@ export type IGeoJsonFeature = Feature<Geometry, GeoJsonProperties>;
 export interface IGranteeGranularity {
     inheritedPermissions: AccessGranularPermission[];
     permissions: AccessGranularPermission[];
+    // @alpha
+    permissionSources?: PermissionSource[];
 }
 
 // @public
@@ -3832,6 +3835,12 @@ export interface INumberParameterDefinition {
     defaultValue: number;
     // (undocumented)
     type: "NUMBER";
+}
+
+// @alpha
+export interface IObjectAccessList {
+    // (undocumented)
+    grants: AccessGranteeDetail[];
 }
 
 // @internal
@@ -4993,6 +5002,9 @@ export function isNotificationChannelMetadataObjectDefinition(obj: unknown): obj
 
 // @alpha
 export function isNumberParameterDefinition(def: IParameterDefinition): def is INumberParameterDefinition;
+
+// @alpha
+export const isObjectPermissionsObjectKind: (k: unknown) => k is ObjectPermissionsObjectKind;
 
 // @public
 export function isObjRef(obj: unknown): obj is ObjRef;
@@ -6396,6 +6408,9 @@ export type NotificationType = "alertNotification" | "scheduleNotification" | "t
 // @internal
 export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 
+// @alpha
+export type ObjectPermissionsObjectKind = "attribute" | "fact" | "label";
+
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem" | "parameter";
 
@@ -6420,6 +6435,9 @@ export const OrganizationPermissionAssignmentValue: {
     readonly SELF_CREATE_TOKEN: "SELF_CREATE_TOKEN";
     readonly BASE_UI_ACCESS: "BASE_UI_ACCESS";
 };
+
+// @alpha
+export type PermissionSource = "direct" | "indirect";
 
 // @public
 export type PlatformEdition = "free" | "growth" | "enterprise";

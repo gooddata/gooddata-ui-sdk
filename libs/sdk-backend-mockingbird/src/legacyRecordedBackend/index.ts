@@ -52,6 +52,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettingsService,
@@ -282,6 +283,10 @@ function recordedWorkspace(
         },
 
         accessControl(): IWorkspaceAccessControlService {
+            throw new NotSupported("not supported");
+        },
+
+        objectPermissions(): IWorkspaceObjectPermissionsService {
             throw new NotSupported("not supported");
         },
 

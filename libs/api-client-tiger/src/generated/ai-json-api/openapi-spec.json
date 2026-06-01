@@ -3921,7 +3921,8 @@
                     "label",
                     "visualization",
                     "dashboard",
-                    "filter_context"
+                    "filter_context",
+                    "parameter"
                 ],
                 "title": "ObjectType"
             },
@@ -5276,6 +5277,18 @@
                         "minLength": 1,
                         "title": "Dashboardid"
                     },
+                    "tabId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "TabId",
+                        "description": "Local identifier of the dashboard tab to summarize. When the dashboard has tabs and `tabId` is omitted, the first tab is used (matching the UI's default tab). A `tabId` that does not match any tab's `localIdentifier` returns 404. Supplying `tabId` for a dashboard without tabs returns 400. When `tabId` is combined with `visualizations`, every supplied visualization must belong to the selected tab; otherwise the request returns 400."
+                    },
                     "formatHint": {
                         "anyOf": [
                             {
@@ -5359,6 +5372,17 @@
                         "type": "string",
                         "format": "date-time",
                         "title": "Generatedat"
+                    },
+                    "tabId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "TabId"
                     }
                 },
                 "type": "object",
@@ -5740,6 +5764,17 @@
                         "type": "string",
                         "const": "richText",
                         "title": "Widgettype"
+                    },
+                    "content": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Content"
                     }
                 },
                 "type": "object",

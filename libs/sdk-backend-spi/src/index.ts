@@ -362,6 +362,10 @@ export type {
 } from "./workspace/userGroups/index.js";
 
 export type { IWorkspaceAccessControlService } from "./workspace/accessControl/index.js";
+export type {
+    IObjectPermissionsObject,
+    IWorkspaceObjectPermissionsService,
+} from "./workspace/objectPermissions/index.js";
 
 export type {
     IOrganizationUserService,
@@ -420,11 +424,6 @@ export type {
     IChangeAnalysisDefinition,
 } from "./workspace/keyDriverAnalysis/index.js";
 
-export type {
-    IOrganizationLlmEndpointsService,
-    ILlmEndpointsQuery,
-    ILlmEndpointsQueryResult,
-} from "./organization/llmEndpoints/index.js";
 export type {
     IOrganizationLlmProvidersService,
     ILlmProvidersQuery,

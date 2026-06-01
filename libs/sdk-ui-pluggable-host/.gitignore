@@ -1,0 +1,10 @@
+node_modules
+build
+dist
+esm
+rush-logs
+.rush
+.idea
+.vscode
+.DS_Store
+.env

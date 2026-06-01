@@ -147,15 +147,16 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
 
         if (elementWidth > 0 && elementWidth < element.scrollWidth) {
             this.setState({ title: getShortenedTitle(title, element, ellipsisPosition), customTitle: true });
+        } else {
+            this.setState({
+                title: this.props.children,
+                customTitle: false,
+            });
         }
     }
 
     recomputeShortening(): void {
-        // causes repaint & checkTitle to be called
-        this.setState({
-            title: this.props.children,
-            customTitle: false,
-        });
+        this.checkTitle();
     }
 
     renderTextWithBubble(): ReactNode {

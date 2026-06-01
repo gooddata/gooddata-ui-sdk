@@ -1,0 +1,38 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "exactOptionalPropertyTypes": false,
+        "useUnknownInCatchVariables": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "lib": ["ES2022", "dom", "dom.iterable"],
+        "target": "ES2022",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+
+        "jsx": "react-jsx",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+
+        "allowJs": true,
+        "outDir": "dist",
+        "resolveJsonModule": true,
+        "typeRoots": ["node_modules/@types", "typings.d.ts"],
+        "paths": {
+            "react": ["./node_modules/@types/react"]
+        }
+    },
+    "include": ["src", "./*", "typings.d.ts"],
+    "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
+}

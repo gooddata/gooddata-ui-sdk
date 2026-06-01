@@ -25,6 +25,7 @@ export type DataSourceType =
     | "MARIADB"
     | "ORACLE"
     | "PINOT"
+    | "DENODO"
     | "STARROCKS"
     | "ATHENA"
     | "SINGLESTORE"

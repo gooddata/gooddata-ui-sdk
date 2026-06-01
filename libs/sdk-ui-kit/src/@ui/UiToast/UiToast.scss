@@ -1,0 +1,114 @@
+// (C) 2026 GoodData Corporation
+
+// `UiToast` reuses the existing `--gd-toastMessage-{variant}-*` theme variables
+// (registered in sdk-ui-theme-provider, defaulted in defaultTheme.scss) so it
+// matches the look of the legacy `<Message>` overlay and any theme overrides
+// without introducing new theme tokens. Each kind maps to one of the four
+// theme variants — note that `info` maps to the legacy `information` set.
+
+@mixin kind-vars($variant) {
+    --local-text-color: var(--gd-toastMessage-#{$variant}-textColor);
+    --local-background-color: var(--gd-toastMessage-#{$variant}-backgroundColor);
+    --local-border-color: var(--gd-toastMessage-#{$variant}-borderColor);
+    --local-border-width: var(--gd-toastMessage-#{$variant}-borderWidth);
+    --local-border-radius: var(--gd-toastMessage-#{$variant}-borderRadius);
+    --local-close-color: var(--gd-toastMessage-#{$variant}-closeButtonColor);
+    --local-link-color: var(--gd-toastMessage-#{$variant}-linkButtonColor);
+}
+
+.gd-ui-kit-toast {
+    position: fixed;
+    left: 50%;
+    top: var(--gd-spacing-20px);
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gd-spacing-10px);
+    z-index: 9000;
+    pointer-events: none;
+    max-width: 620px;
+    width: 90%;
+
+    &__item {
+        pointer-events: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--gd-spacing-10px);
+        padding: var(--gd-spacing-5px) var(--gd-spacing-10px);
+        max-width: 100%;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: left;
+        color: var(--local-text-color);
+        background-color: var(--local-background-color);
+        border-style: solid;
+        border-color: var(--local-border-color);
+        border-width: var(--local-border-width);
+        border-radius: var(--local-border-radius);
+        box-shadow: 0 4px 4px 0 var(--gd-shadow-color);
+
+        &--kind-success {
+            @include kind-vars(success);
+        }
+
+        &--kind-info {
+            @include kind-vars(information);
+        }
+
+        &--kind-warning {
+            @include kind-vars(warning);
+        }
+
+        &--kind-error {
+            @include kind-vars(error);
+        }
+    }
+
+    &__body {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    &__action {
+        flex-shrink: 0;
+        border: none;
+        background: transparent;
+        padding: 0;
+        font: inherit;
+        color: var(--local-link-color);
+        cursor: pointer;
+        text-decoration: underline;
+        opacity: 0.85;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--gd-palette-primary-focus);
+            outline-offset: 2px;
+        }
+    }
+
+    &__close {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        padding: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        color: var(--local-close-color);
+        opacity: 0.85;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--gd-palette-primary-focus);
+            outline-offset: 2px;
+        }
+    }
+}

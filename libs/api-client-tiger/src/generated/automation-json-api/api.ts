@@ -737,6 +737,24 @@ export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilte
 }
 
 /**
+ * Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display.
+ */
+export interface AutomationDashboardParameterValue {
+    /**
+     * Identifier of the workspace parameter (matches the parameter entity id).
+     */
+    'id': string;
+    /**
+     * Value to use for this parameter when executing the export.
+     */
+    'value': string;
+    /**
+     * Display title of the parameter as the client wants it rendered on the info sheet.
+     */
+    'title': string;
+}
+
+/**
  * Export request object describing the export properties for dashboard tabular exports (v2 with dashboardId).
  */
 export interface AutomationDashboardTabularExportRequestV2 {
@@ -765,6 +783,14 @@ export interface AutomationDashboardTabularExportRequestV2 {
      */
     'widgetIds'?: Array<string>;
     'settings'?: AutomationDashboardExportSettings;
+    /**
+     * Parameter value overrides applied to the export\'s executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.
+     */
+    'dashboardParametersOverride'?: Array<AutomationDashboardParameterValue>;
+    /**
+     * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
+     */
+    'dashboardTabsParametersOverrides'?: { [key: string]: Array<AutomationDashboardParameterValue>; };
 }
 
 export type AutomationDashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF';

@@ -491,6 +491,7 @@ export type CustomDashboardInsightListItemComponentProps = {
     useRichText?: boolean;
     useReferences?: boolean;
     LoadingComponent?: ComponentType;
+    width?: number;
 };
 
 /**

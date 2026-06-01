@@ -1,9 +1,10 @@
 // (C) 2026 GoodData Corporation
 
+import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
 import readline from "readline";
+
 import validateNpmPackageName from "validate-npm-package-name";
 
 import { EXAMPLE_CODESANDBOX_PATH_TEMPLATE } from "./constants.mjs";
@@ -111,8 +112,7 @@ rl.question('Enter example directory name (should have prefix "example-"): ', (n
                 "packageName":  "${EXAMPLE_PACKAGE_NAME_PREFIX}${exampleName}",
                 "projectFolder": "examples/sdk-interactive-examples/examples/${exampleName}",
                 "reviewCategory": "examples",
-                "versionPolicyName": "sdk-examples",
-                "shouldPublish": false
+                "versionPolicyName": "sdk-not-npm-publish",
             },`;
 
             const rushJsonContent = fs.readFileSync(RUSH_JSON_PATH, "utf-8");

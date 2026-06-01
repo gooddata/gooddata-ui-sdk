@@ -22,6 +22,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettingsService,
@@ -151,6 +152,10 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public accessControl(): IWorkspaceAccessControlService {
         return this.decorated.accessControl();
+    }
+
+    public objectPermissions(): IWorkspaceObjectPermissionsService {
+        return this.decorated.objectPermissions();
     }
 
     public attributeHierarchies(): IAttributeHierarchiesService {

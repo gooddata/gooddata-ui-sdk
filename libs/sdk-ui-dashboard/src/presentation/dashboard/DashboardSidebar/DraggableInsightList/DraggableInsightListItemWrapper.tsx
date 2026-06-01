@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IInsight } from "@gooddata/sdk-model";
 import { type IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
@@ -40,6 +40,7 @@ export function DraggableInsightListItemWrapper({
     useReferences,
     LoadingComponent,
     filters,
+    width,
 }: IDraggableInsightListItemWrapperProps) {
     return (
         <DraggableInsightListItem
@@ -59,6 +60,7 @@ export function DraggableInsightListItemWrapper({
                 useReferences,
                 LoadingComponent,
                 filters,
+                width,
             }}
             insight={insight}
         />

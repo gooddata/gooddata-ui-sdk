@@ -571,22 +571,22 @@ export interface ExportDashboardTabularExportRequest {
      */
     'dashboardFiltersOverride'?: Array<ExportDashboardFilter>;
     /**
-     * Parameter value overrides applied to the export\'s executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.
-     */
-    'dashboardParametersOverride'?: Array<ExportDashboardParameterValue>;
-    /**
      * Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab.
      */
     'dashboardTabsFiltersOverrides'?: { [key: string]: Array<ExportDashboardFilter>; };
-    /**
-     * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
-     */
-    'dashboardTabsParametersOverrides'?: { [key: string]: Array<ExportDashboardParameterValue>; };
     /**
      * List of widget identifiers to be exported. Note that only one widget is currently supported.
      */
     'widgetIds'?: Array<string>;
     'settings'?: ExportDashboardExportSettings;
+    /**
+     * Parameter value overrides applied to the export\'s executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.
+     */
+    'dashboardParametersOverride'?: Array<ExportDashboardParameterValue>;
+    /**
+     * Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab\'s executions and info-sheet display.
+     */
+    'dashboardTabsParametersOverrides'?: { [key: string]: Array<ExportDashboardParameterValue>; };
 }
 
 export type ExportDashboardTabularExportRequestFormatEnum = 'XLSX' | 'PDF';
