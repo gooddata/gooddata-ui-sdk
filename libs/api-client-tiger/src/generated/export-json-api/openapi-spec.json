@@ -3470,13 +3470,6 @@
                             "$ref": "#/components/schemas/DashboardFilter"
                         }
                     },
-                    "dashboardParametersOverride": {
-                        "type": "array",
-                        "description": "Parameter value overrides applied to the export's executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.",
-                        "items": {
-                            "$ref": "#/components/schemas/DashboardParameterValue"
-                        }
-                    },
                     "dashboardTabsFiltersOverrides": {
                         "type": "object",
                         "additionalProperties": {
@@ -3486,16 +3479,6 @@
                             }
                         },
                         "description": "Map of tab-specific filter overrides. Key is tabId, value is list of filters for that tab."
-                    },
-                    "dashboardTabsParametersOverrides": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/DashboardParameterValue"
-                            }
-                        },
-                        "description": "Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab's executions and info-sheet display."
                     },
                     "widgetIds": {
                         "maxItems": 1,
@@ -3508,6 +3491,23 @@
                     },
                     "settings": {
                         "$ref": "#/components/schemas/DashboardExportSettings"
+                    },
+                    "dashboardParametersOverride": {
+                        "type": "array",
+                        "description": "Parameter value overrides applied to the export's executions. Each entry carries the parameter id (used as an AFM execution override) plus the FE-supplied title for the info sheet. Applied uniformly across all tabs; use dashboardTabsParametersOverrides for tab-scoped overrides.",
+                        "items": {
+                            "$ref": "#/components/schemas/DashboardParameterValue"
+                        }
+                    },
+                    "dashboardTabsParametersOverrides": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/DashboardParameterValue"
+                            }
+                        },
+                        "description": "Map of tab-specific parameter overrides. Key is tabId, value is a list of (id, value, title) entries that override the dashboard-level parameters for that tab only. Mirrors dashboardTabsFiltersOverrides. When a tab is present in this map, its entries take precedence over dashboardParametersOverride for that tab's executions and info-sheet display."
                     }
                 },
                 "description": "Export request object describing the export properties for dashboard tabular exports."

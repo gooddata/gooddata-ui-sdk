@@ -29,6 +29,7 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
     };
     private wrapperRef: RefObject<HTMLDivElement | null> = createRef();
     private readonly throttledUpdateSize: ReturnType<typeof throttle>;
+    private readonly resizeObserver: ResizeObserver;
 
     constructor(props: IFlexDimensionsProps) {
         super(props);
@@ -39,16 +40,20 @@ export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensi
         };
 
         this.throttledUpdateSize = throttle(this.updateSize, 250, { leading: false });
+        this.resizeObserver = new ResizeObserver(this.throttledUpdateSize);
     }
 
     override componentDidMount(): void {
-        window.addEventListener("resize", this.throttledUpdateSize);
+        if (this.wrapperRef.current) {
+            this.resizeObserver.observe(this.wrapperRef.current);
+        }
+
         this.throttledUpdateSize();
     }
 
     override componentWillUnmount(): void {
         this.throttledUpdateSize.cancel();
-        window.removeEventListener("resize", this.throttledUpdateSize);
+        this.resizeObserver.disconnect();
     }
 
     getChildrenDimensions(): Partial<IFlexDimensionsState> {

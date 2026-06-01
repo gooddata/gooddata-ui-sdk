@@ -19,6 +19,7 @@ import { type IWorkspaceCatalogFactory } from "./ldm/catalog.js";
 import { type IWorkspaceDatasetsService } from "./ldm/datasets.js";
 import { type IWorkspaceLogicalModelService } from "./ldm/model.js";
 import { type IWorkspaceMeasuresService } from "./measures/index.js";
+import { type IWorkspaceObjectPermissionsService } from "./objectPermissions/index.js";
 import { type IWorkspaceParametersService } from "./parameters/index.js";
 import { type IWorkspacePermissionsService } from "./permissions/index.js";
 import { type IReferencesService } from "./references/index.js";
@@ -153,6 +154,12 @@ export interface IAnalyticalWorkspace {
      * Returns service that can be used to manage access control records for the workspace.
      */
     accessControl(): IWorkspaceAccessControlService;
+
+    /**
+     * Returns service that manages per-object access for catalog attributes, facts and labels.
+     * @alpha
+     */
+    objectPermissions(): IWorkspaceObjectPermissionsService;
 
     /**
      * Returns service that operates over attribute hierarchies

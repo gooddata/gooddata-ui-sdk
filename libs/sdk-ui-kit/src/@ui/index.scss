@@ -46,6 +46,7 @@
 @use "./UiLabelsPicker/UiLabelsPicker.scss";
 @use "./UiPermissionMenu/UiPermissionMenu.scss";
 @use "./UiGranteeRowControls/UiGranteeRowControls.scss";
+@use "./UiToast/UiToast.scss";
 
 // `--gd-font-family` is a `:root` variable only; there is no global `body` font
 // declaration. Apply it once to every kit root so standalone components don't

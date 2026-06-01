@@ -805,7 +805,8 @@ export const AiObjectType = {
     LABEL: 'label',
     VISUALIZATION: 'visualization',
     DASHBOARD: 'dashboard',
-    FILTER_CONTEXT: 'filter_context'
+    FILTER_CONTEXT: 'filter_context',
+    PARAMETER: 'parameter'
 } as const;
 
 export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
@@ -1165,6 +1166,7 @@ export interface AiSummarizeRequest {
     'visualizations'?: Array<string> | null;
     'filterContext'?: Array<AiSummarizeRequestFilterContextInner> | null;
     'dashboardId': string;
+    'tabId'?: string | null;
     'formatHint'?: string | null;
 }
 
@@ -1179,6 +1181,7 @@ export interface AiSummarizeResponse {
     'visualizationsIncluded': Array<AiVisualizationIncludedResponse>;
     'visualizationsExcluded': Array<AiVisualizationExcludedResponse>;
     'generatedAt': string;
+    'tabId'?: string | null;
 }
 
 /**
@@ -1289,6 +1292,7 @@ export interface AiUserContextRichTextWidgetDescriptor {
     'title': string;
     'filters'?: Array<AiVisualizationFilter> | null;
     'widgetType': AiUserContextRichTextWidgetDescriptorWidgetTypeEnum;
+    'content'?: string | null;
 }
 
 export type AiUserContextRichTextWidgetDescriptorWidgetTypeEnum = 'richText';
@@ -1316,6 +1320,7 @@ export interface AiUserContextWidgetDescriptor {
     'widgetType': AiUserContextWidgetDescriptorWidgetTypeEnum;
     'resultId'?: string;
     'visualizationId': string;
+    'content'?: string;
     'activeVisualizationId': string;
     'visualizationIds'?: Array<string>;
 }

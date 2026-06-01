@@ -57,6 +57,23 @@ export {
     type ActionsApiAvailableAssigneesRequest,
     ActionsApi_WorkspaceResolveSettings,
     type ActionsApiWorkspaceResolveSettingsRequest,
+    ActionsApi_ListWorkspaceUserGroups,
+    type ActionsApiListWorkspaceUserGroupsRequest,
+    // Per-object access for catalog attributes, facts and labels.
+    type LdmObjectPermissions,
+    type ManageLabelPermissionsRequestInner,
+    ActionsApi_AttributePermissions,
+    type ActionsApiAttributePermissionsRequest,
+    ActionsApi_FactPermissions,
+    type ActionsApiFactPermissionsRequest,
+    ActionsApi_LabelPermissions,
+    type ActionsApiLabelPermissionsRequest,
+    ActionsApi_ManageAttributePermissions,
+    type ActionsApiManageAttributePermissionsRequest,
+    ActionsApi_ManageFactPermissions,
+    type ActionsApiManageFactPermissionsRequest,
+    ActionsApi_ManageLabelPermissions,
+    type ActionsApiManageLabelPermissionsRequest,
 } from "../../generated/metadata-json-api/index.js";
 
 // Execution Result API

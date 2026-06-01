@@ -95,6 +95,14 @@ export function CustomTooltipSection({
         debouncedPushContent(event.target.value);
     };
 
+    // Commit any pending content immediately when the textarea loses focus
+    // (e.g. clicking the placement dropdown or Save). Without this, content
+    // typed within the debounce window right before saving is dropped, and the
+    // trailing push lands after the save and re-dirties the just-saved insight.
+    const onContentBlur = () => {
+        debouncedPushContent.flush();
+    };
+
     const placementItems = getTranslatedDropdownItems(customTooltipPlacementDropdownItems, intl);
 
     return (
@@ -129,6 +137,7 @@ export function CustomTooltipSection({
                     className="gd-input-field gd-custom-tooltip-textarea s-custom-tooltip-textarea"
                     value={localContent}
                     onChange={onContentChange}
+                    onBlur={onContentBlur}
                     disabled={contentDisabled}
                     placeholder={intl.formatMessage({ id: messages.customTooltipPlaceholder.id })}
                     rows={8}

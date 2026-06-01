@@ -27,6 +27,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettingsService,
@@ -63,6 +64,7 @@ import { TigerWorkspaceInsights } from "./insights/index.js";
 import { TigerWorkspaceKeyDriverAnalysis } from "./keyDriverAnalysis/index.js";
 import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
 import { TigerWorkspaceMeasures } from "./measures/index.js";
+import { TigerWorkspaceObjectPermissionsService } from "./objectPermissions/index.js";
 import { TigerWorkspaceParameters } from "./parameters/index.js";
 import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
 import { TigerReferencesService } from "./references/index.js";
@@ -194,6 +196,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public accessControl(): IWorkspaceAccessControlService {
         return new TigerWorkspaceAccessControlService(this.authCall, this.workspace);
+    }
+
+    public objectPermissions(): IWorkspaceObjectPermissionsService {
+        return new TigerWorkspaceObjectPermissionsService(this.authCall, this.workspace);
     }
 
     public dateFilterConfigs(): IDateFilterConfigsQuery {

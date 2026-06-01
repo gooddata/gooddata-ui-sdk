@@ -8,6 +8,7 @@ import { selectSettings } from "../../../model/store/config/configSelectors.js";
 
 import { CreationPanel } from "./CreationPanel.js";
 import { FloatingToolbar } from "./FloatingToolbar.js";
+import { SidebarResizeChrome } from "./SidebarResizeChrome.js";
 import { type ISidebarProps } from "./types.js";
 
 /**
@@ -28,13 +29,15 @@ export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSid
     const DeleteDropZoneComponent = props.DeleteDropZoneComponent!;
     const settings = useDashboardSelector(selectSettings);
     const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
+    // const enableDashboardSidebarResize = settings?.enableDashboardSidebarResize ?? false;
+    const enableDashboardSidebarResize = true;
 
     if (enableEnhancedInsightPicker) {
         return <FloatingToolbar />;
     }
 
-    return (
-        <div className="col gd-flex-item gd-sidebar-container" onClick={deselectWidgets}>
+    const content = (
+        <>
             <div className="flex-panel-full-height">
                 <CreationPanel
                     className={configurationPanelClassName}
@@ -48,6 +51,16 @@ export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSid
                 />
             </div>
             <DeleteDropZoneComponent />
+        </>
+    );
+
+    if (enableDashboardSidebarResize) {
+        return <SidebarResizeChrome onContainerClick={deselectWidgets}>{content}</SidebarResizeChrome>;
+    }
+
+    return (
+        <div className="col gd-flex-item gd-sidebar-container" onClick={deselectWidgets}>
+            {content}
         </div>
     );
 }

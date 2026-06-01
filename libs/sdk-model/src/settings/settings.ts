@@ -1219,4 +1219,9 @@ export interface IFeatureFlags {
      * Enables Metric Editor loading as a remote module in the host application.
      */
     enableShellApplication_metricEditor?: boolean;
+
+    /**
+     * Enables Resizable Dashboard sidebar in edit mode.
+     */
+    enableDashboardSidebarResize?: boolean;
 }

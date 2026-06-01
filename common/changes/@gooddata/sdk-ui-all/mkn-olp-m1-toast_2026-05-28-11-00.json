@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: add UiToast @ui component family — UiToastProvider + UiToastsContainer + useUiToast — matching the new @ui conventions (BEM, dataTestId, accessibilityConfig).",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

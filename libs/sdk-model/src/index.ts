@@ -1112,6 +1112,7 @@ export {
     type IUserGroupAccessGrantee,
     type IGranularAccessGrantee,
     type AccessGranularPermission,
+    type PermissionSource,
     type IGranteeGranularity,
     type IAvailableAccessGrantee,
     type IAvailableUserAccessGrantee,
@@ -1142,6 +1143,12 @@ export {
     isUserWorkspaceAccessGrantee,
     isUserGroupWorkspaceAccessGrantee,
 } from "./accessControl/index.js";
+
+export {
+    type ObjectPermissionsObjectKind,
+    isObjectPermissionsObjectKind,
+    type IObjectAccessList,
+} from "./accessControl/objectPermissions.js";
 
 export {
     type IOrganizationDescriptor,

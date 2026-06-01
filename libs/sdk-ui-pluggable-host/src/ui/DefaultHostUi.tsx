@@ -1,0 +1,181 @@
+// (C) 2026 GoodData Corporation
+
+import { useLayoutEffect, useRef, useState } from "react";
+
+import { flushSync } from "react-dom";
+import { type Root, createRoot } from "react-dom/client";
+
+import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
+import {
+    type IAppHeaderOptions,
+    type IHostUiModule,
+    type IHostUiMountHandle,
+    type IHostUiMountOptions,
+    type IHostUiNotification,
+    type IPlatformContext,
+} from "@gooddata/sdk-pluggable-application-model";
+
+import { HostChrome } from "./HostChrome.js";
+import { e } from "./hostChromeBem.js";
+import "./DefaultHostUi.scss";
+
+// ---------------------------------------------------------------------------
+// Bridge component that exposes React state setters to the imperative handle
+// ---------------------------------------------------------------------------
+
+interface IHostUiBridgeProps {
+    initialCtx: IPlatformContext;
+    initialApps: PluggableApplicationRegistryItem[];
+    initialPathname: string;
+    navigate: (url: string) => void;
+    replace: (url: string) => void;
+    onAppContainerReady: (el: HTMLElement) => void;
+    onReady: (
+        setCtx: (ctx: IPlatformContext) => void,
+        setApps: (apps: PluggableApplicationRegistryItem[]) => void,
+        setPathname: (pathname: string) => void,
+        setHeaderOptions: (header: IAppHeaderOptions | undefined) => void,
+        setNotification: (notification: IHostUiNotification | null) => void,
+    ) => void;
+}
+
+function HostUiBridge({
+    initialCtx,
+    initialApps,
+    initialPathname,
+    navigate,
+    replace,
+    onAppContainerReady,
+    onReady,
+}: IHostUiBridgeProps) {
+    const [ctx, setCtx] = useState(initialCtx);
+    const [apps, setApps] = useState(initialApps);
+    const [pathname, setPathname] = useState(initialPathname);
+    const [headerOptions, setHeaderOptions] = useState<IAppHeaderOptions | undefined>(undefined);
+    const [notification, setNotification] = useState<IHostUiNotification | null>(null);
+    const appContainerRef = useRef<HTMLDivElement>(null);
+
+    // Layout effect runs in the same synchronous commit as flushSync.
+    useLayoutEffect(() => {
+        onReady(setCtx, setApps, setPathname, setHeaderOptions, setNotification);
+        if (appContainerRef.current) {
+            onAppContainerReady(appContainerRef.current);
+        }
+        // Only call once on mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+        <HostChrome
+            ctx={ctx}
+            resolvedApplications={apps}
+            pathname={pathname}
+            onNavigate={navigate}
+            onReplace={replace}
+            headerOptions={headerOptions}
+            notification={notification}
+        >
+            <div ref={appContainerRef} className={e("app-container")} />
+        </HostChrome>
+    );
+}
+
+// ---------------------------------------------------------------------------
+// Imperative mount function conforming to IHostUiModule
+// ---------------------------------------------------------------------------
+
+function mountDefaultHostUi(options: IHostUiMountOptions): IHostUiMountHandle {
+    const { container, ctx, resolvedApplications, pathname, navigate, replace } = options;
+
+    let reactRoot: Root | null = createRoot(container);
+    let appContainer: HTMLElement | null = null;
+
+    let updateCtxFn: ((ctx: IPlatformContext) => void) | null = null;
+    let updateAppsFn: ((apps: PluggableApplicationRegistryItem[]) => void) | null = null;
+    let updatePathnameFn: ((pathname: string) => void) | null = null;
+    let updateHeaderFn: ((header: IAppHeaderOptions | undefined) => void) | null = null;
+    let updateNotificationFn: ((notification: IHostUiNotification | null) => void) | null = null;
+
+    // Use flushSync so that the DOM is ready synchronously after mount() returns,
+    // making getAppContainer() safe to call immediately.
+    flushSync(() => {
+        reactRoot?.render(
+            <HostUiBridge
+                initialCtx={ctx}
+                initialApps={resolvedApplications}
+                initialPathname={pathname}
+                navigate={navigate}
+                replace={replace}
+                onAppContainerReady={(el) => {
+                    appContainer = el;
+                }}
+                onReady={(setCtx, setApps, setPathname, setHeaderOptions, setNotification) => {
+                    updateCtxFn = setCtx;
+                    updateAppsFn = setApps;
+                    updatePathnameFn = setPathname;
+                    updateHeaderFn = setHeaderOptions;
+                    updateNotificationFn = setNotification;
+                }}
+            />,
+        );
+    });
+
+    return {
+        unmount() {
+            if (reactRoot) {
+                const root = reactRoot;
+                reactRoot = null;
+                appContainer = null;
+                updateCtxFn = null;
+                updateAppsFn = null;
+                updatePathnameFn = null;
+                updateHeaderFn = null;
+                updateNotificationFn = null;
+                root.unmount();
+            }
+        },
+
+        updateContext(newCtx) {
+            updateCtxFn?.(newCtx);
+        },
+
+        updateApplications(apps: PluggableApplicationRegistryItem[]) {
+            updateAppsFn?.(apps);
+        },
+
+        updatePathname(newPathname: string) {
+            updatePathnameFn?.(newPathname);
+        },
+
+        updateHeader(header: IAppHeaderOptions | undefined) {
+            updateHeaderFn?.(header);
+        },
+
+        getAppContainer(): HTMLElement {
+            if (!appContainer) {
+                throw new Error(
+                    "Host UI app container is not available. " +
+                        "Ensure the host UI has finished mounting before calling getAppContainer().",
+                );
+            }
+            return appContainer;
+        },
+
+        notify(notification: IHostUiNotification) {
+            updateNotificationFn?.(notification);
+        },
+    };
+}
+
+/**
+ * Default host UI module.
+ *
+ * Renders the GoodData application host with the standard AppHeader (branding, navigation,
+ * user menu, help menu) and provides a container element for the active pluggable application.
+ *
+ * Navigation is handled via the host-provided `navigate` callback, keeping the host UI
+ * framework-agnostic and ensuring consistent behavior for both local and remote UI modules.
+ */
+export const defaultHostUiModule: IHostUiModule = {
+    mount: mountDefaultHostUi,
+};

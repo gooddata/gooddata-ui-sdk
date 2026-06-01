@@ -11,6 +11,100 @@
     width: 230px;
     height: 100vh;
     border-right: variables.$nav-border;
+
+    &--resizable {
+        min-width: 230px;
+        width: 100%;
+    }
+}
+
+.gd-resizable-sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+
+    // Lift the wrapper above sibling main-content during drag so the indicator
+    // rail isn't covered by widgets/charts with their own stacking context.
+    &--dragging,
+    &:has(.gd-resizable-sidebar__handle:focus) {
+        z-index: 9999;
+    }
+
+    &__handle {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        transform: translateX(calc(var(--drag-x, 0) - 50%));
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 6px;
+        background: transparent;
+        border: 0;
+        cursor: col-resize;
+        // Prevent the browser from claiming the first touchmove for panning
+        // before pointer capture engages on pointerdown.
+        touch-action: none;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:disabled {
+            cursor: initial;
+        }
+
+        &--dragging {
+            opacity: 1;
+        }
+
+        .gd-resizable-sidebar--resizable:hover &,
+        .gd-resizable-sidebar--resizable:focus-within & {
+            opacity: 1;
+        }
+    }
+
+    &__handle-grip {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        height: 25px;
+        padding: 5px 3px;
+        background: var(--gd-palette-complementary-0);
+        border: 1px solid var(--gd-palette-complementary-5);
+        border-radius: 2px;
+
+        .gd-resizable-sidebar--dragging &,
+        .gd-resizable-sidebar__handle:focus & {
+            border: 2px solid kit-variables.$gd-color-highlight;
+            border-radius: 3px;
+        }
+
+        .gd-resizable-sidebar--dragging &::after,
+        .gd-resizable-sidebar__handle:focus &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            width: 2px;
+            background: kit-variables.$gd-color-highlight;
+            box-shadow: 0 0 0 4px variables.$gd-palette-primary-base-t85;
+        }
+    }
+}
+
+// Preserve the col-resize cursor across the whole page while a sidebar drag is in
+// progress. The handle itself is only 6 px wide, so without this the cursor would
+// revert to default the moment it leaves the hit area during a drag.
+body:has(.gd-resizable-sidebar--dragging),
+body:has(.gd-resizable-sidebar--dragging) * {
+    cursor: col-resize;
 }
 
 .add-item-panel {

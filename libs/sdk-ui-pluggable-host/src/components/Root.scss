@@ -1,0 +1,14 @@
+// (C) 2026 GoodData Corporation
+
+.gd-host-root {
+    &__loading {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__error {
+        padding: 2rem;
+    }
+}

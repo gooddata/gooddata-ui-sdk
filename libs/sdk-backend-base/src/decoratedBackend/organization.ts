@@ -6,7 +6,6 @@ import {
     type IOrganizationAutomationService,
     type IOrganizationExportTemplatesService,
     type IOrganizationGenAIService,
-    type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
@@ -67,10 +66,6 @@ export class OrganizationDecorator implements IOrganization {
 
     public notificationChannels(): IOrganizationNotificationChannelService {
         return this.decorated.notificationChannels();
-    }
-
-    public llmEndpoints(): IOrganizationLlmEndpointsService {
-        return this.decorated.llmEndpoints();
     }
 
     public llmProviders(): IOrganizationLlmProvidersService {

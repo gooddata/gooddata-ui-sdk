@@ -1,0 +1,1275 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`snapshot: client profile end-to-end scaffold > produces a deterministic scaffold (client profile, fresh non-rush dir) 1`] = `
+{
+  "harness/.env.template": "BACKEND_URL=
+TIGER_API_TOKEN=
+
+# Optional: URL of this module's Module Federation remote entry for local development.
+# When set, the harness loads the pluggable app from the federation remote instead of
+# importing the module's source directly via the workspace.
+# Run \`npm run dev\` in modules/gdc-snap-test/module and set this to the
+# remoteEntry.js URL (typically https://localhost:8550/remoteEntry.js).
+# SNAP_TEST_REMOTE_URL=
+",
+  "harness/.gitignore": "node_modules
+dist
+.vite
+rush-logs
+.rush
+.idea
+.vscode
+.DS_Store
+.env
+*.tgz
+",
+  "harness/.goodchangesrc.json": "{
+    "targets": [],
+    "ignores": [
+        "README.md",
+        "readme.txt",
+        ".oxlintrc.json",
+        "eslint.config.ts",
+        ".env.template",
+        ".gitignore",
+        ".dockerignore"
+    ]
+}
+",
+  "harness/README.md": "# gdc-snap-test-harness
+
+Standalone development harness for **gdc-snap-test-module**.
+
+This is a template. Run \`rush init-pluggable-app\` to scaffold a new application from it.
+
+## What this does
+
+The harness runs the pluggable application module outside of the full host shell. It provides:
+
+- A Vite dev server with backend API proxying
+- Local application registration (the module is lazy-loaded the same way the host would load it)
+- GoodData UI Kit CSS and Indigo font
+- HTTPS support via local certificates (optional)
+
+## Development
+
+\`\`\`bash
+# Copy environment template and fill in your API token
+cp .env.template .env
+
+# Start dev server
+rushx dev
+\`\`\`
+
+The server starts at \`https://localhost:<port>\`. Navigate to the appropriate scope URL:
+
+- **Organization-scoped apps**: \`https://localhost:<port>/organization/<route>\`
+- **Workspace-scoped apps**: \`https://localhost:<port>/workspace/<workspaceId>/<route>\`
+
+## Configuration
+
+| Variable          | Default       | Description                            |
+| ----------------- | ------------- | -------------------------------------- |
+| \`BACKEND_URL\`     | _(required)_  | GoodData backend to proxy API calls to |
+| \`TIGER_API_TOKEN\` | _(required)_  | API token for authentication           |
+| \`PORT\`            | 8450 | Dev server port                        |
+
+## Build
+
+\`\`\`bash
+rushx build
+\`\`\`
+
+Produces a production bundle in \`dist/\`.
+",
+  "harness/config/rush-project.json": "{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["dist"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:test",
+            "outputFolderNames": []
+        },
+        {
+            // \`pack-build:remote\` (in package.json) copies \`../module/gdc-snap-test-pluggable.tgz\`
+            // into the harness build context. The harness depends on its sibling module as a
+            // workspace dep, so Rush's phase machinery runs the module's _phase:pack-build first.
+            // If that dep edge is ever removed, this script will fail with ENOENT — fix the dep,
+            // not the script.
+            "operationName": "_phase:pack-build",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:publish-test-docker-images",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        }
+    ]
+}
+",
+  "harness/eslint.config.ts": "// (C) 2026 GoodData Corporation
+
+export { default } from "@gooddata/eslint-config/oxlint-esm-react-vitest";
+",
+  "harness/index.html": "<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Snapshot Test — Harness</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <script type="module" src="/src/app.tsx"></script>
+    </body>
+</html>
+",
+  "harness/package.json": "{
+    "name": "gdc-snap-test-harness",
+    "version": "<VERSION>",
+    "private": true,
+    "description": "Standalone harness for gdc-snap-test module",
+    "license": "UNLICENSED",
+    "author": {
+        "name": "Stellar",
+        "email": "stellar@gooddata.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gdc-ui/",
+        "directory": "modules/gdc-snap-test/harness"
+    },
+    "type": "module",
+    "exports": {
+        "./tsconfig.json": "./tsconfig.json"
+    },
+    "scripts": {
+        "build": "rm -rf dist && npm-run-all -p dist build-check",
+        "build-check": "tsgo",
+        "clean": "rm -rf dist *.tgz *.log tsconfig.tsbuildinfo",
+        "dev": "vite --force",
+        "dist": "vite build",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "validate": "npm run lint && npm run format-check"
+    },
+    "dependencies": {
+        "@gooddata/sdk-model": "<VERSION>",
+        "@gooddata/sdk-ui-kit": "<VERSION>",
+        "@gooddata/sdk-ui-pluggable-host": "<VERSION>",
+        "gdc-snap-test-module": "<VERSION>",
+        "react": "<VERSION>",
+        "react-dom": "<VERSION>",
+        "react-intl": "<VERSION>",
+        "react-router": "<VERSION>"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "<VERSION>",
+        "@gooddata/oxlint-config": "<VERSION>",
+        "@types/node": "<VERSION>",
+        "@types/react": "<VERSION>",
+        "@types/react-dom": "<VERSION>",
+        "@typescript-eslint/eslint-plugin": "<VERSION>",
+        "@typescript-eslint/parser": "<VERSION>",
+        "@typescript/native-preview": "<VERSION>",
+        "@vitejs/plugin-react": "<VERSION>",
+        "eslint": "<VERSION>",
+        "eslint-import-resolver-typescript": "<VERSION>",
+        "eslint-plugin-headers": "<VERSION>",
+        "eslint-plugin-import-x": "<VERSION>",
+        "eslint-plugin-jsdoc": "<VERSION>",
+        "eslint-plugin-no-barrel-files": "<VERSION>",
+        "eslint-plugin-no-only-tests": "<VERSION>",
+        "eslint-plugin-react": "<VERSION>",
+        "eslint-plugin-react-hooks": "<VERSION>",
+        "eslint-plugin-sonarjs": "<VERSION>",
+        "jiti": "<VERSION>",
+        "npm-run-all": "<VERSION>",
+        "oxfmt": "<VERSION>",
+        "oxlint": "<VERSION>",
+        "oxlint-tsgolint": "<VERSION>",
+        "rolldown": "<VERSION>",
+        "sass": "<VERSION>",
+        "typescript": "<VERSION>",
+        "vite": "<VERSION>"
+    }
+}
+",
+  "harness/src/app.tsx": "// (C) 2026 GoodData Corporation
+
+import "@gooddata/sdk-ui-kit/styles/css/main.css";
+import "@gooddata/sdk-ui-kit/styles/css/indigoFont.css";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router";
+
+import { type ApplicationScope, type ILocalPluggableApplicationsRegistryV1 } from "@gooddata/sdk-model";
+import {
+    Root,
+    registerLocalApplicationLoaders,
+    registerLocalApplications,
+} from "@gooddata/sdk-ui-pluggable-host";
+
+// The scope placeholder is replaced by \`rush init-pluggable-app\` with the chosen scope.
+const APP_SCOPE = "workspace" as ApplicationScope;
+
+// Harness-local app registry. Registers only this module so it can be developed and
+// tested in isolation against a real backend without the full host app.
+//
+// Production: load via Module Federation (matches gdc-host-application).
+//             The module's MF artifacts are served from the same nginx container under
+//             /workspace/remotes/gdc-snap-test/. Relative path keeps
+//             the same-origin security guard happy.
+// Dev:        fall back to a local binding so the module's source resolves through
+//             the workspace graph without a second dev server. Override with
+//             SNAP_TEST_REMOTE_URL to point at a running module dev server instead.
+const localApplications: ILocalPluggableApplicationsRegistryV1 = {
+    apiVersion: "1.0",
+    applications: [
+        {
+            apiVersion: "1.0",
+            id: "gdc-snap-test",
+            applicationScope: APP_SCOPE,
+            menuOrder: 1,
+            title: "Snapshot Test",
+            ...(PRODUCTION || SNAP_TEST_REMOTE_URL
+                ? {
+                      remote: {
+                          url: PRODUCTION
+                              ? "/workspace/remotes/gdc-snap-test/remoteEntry.js"
+                              : (SNAP_TEST_REMOTE_URL as string),
+                          scope: "gdc_snap_test",
+                          module: "./pluggableApp",
+                          routeBase: "/snap-test",
+                      },
+                  }
+                : {
+                      local: { routeBase: "/snap-test" },
+                  }),
+        },
+    ],
+};
+
+registerLocalApplications(localApplications);
+if (!PRODUCTION && !SNAP_TEST_REMOTE_URL) {
+    registerLocalApplicationLoaders({
+        "gdc-snap-test": () => import("gdc-snap-test-module"),
+    });
+}
+
+// When the harness boots at "/", the host runtime's redirect heuristic prefers
+// "/organization" for users with canManageOrganization permission — which lands a
+// workspace-scoped app on the wrong scope (and renders the wrong header chrome).
+// Force the initial URL into the app's chosen scope before Root mounts.
+if (window.location.pathname === "/" || window.location.pathname === "") {
+    const scopeRoot = APP_SCOPE === "workspace" ? "/workspace" : "/organization";
+    window.history.replaceState({}, "", scopeRoot + window.location.search + window.location.hash);
+}
+
+const rootElement = document.getElementById("root");
+
+if (!rootElement) {
+    throw new Error("Missing #root element in HTML document.");
+}
+
+createRoot(rootElement).render(
+    <BrowserRouter>
+        <Root />
+    </BrowserRouter>,
+);
+",
+  "harness/tsconfig.json": "{
+    "compilerOptions": {
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "exactOptionalPropertyTypes": false,
+        "useUnknownInCatchVariables": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "lib": ["ES2022", "dom", "dom.iterable"],
+        "target": "ES2022",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+
+        "jsx": "react-jsx",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+
+        "allowJs": true,
+        "outDir": "dist",
+        "resolveJsonModule": true,
+        "typeRoots": ["node_modules/@types", "typings.d.ts"],
+        "paths": {
+            "react": ["./node_modules/@types/react"]
+        }
+    },
+    "include": ["src", "./*", "typings.d.ts"],
+    "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
+}
+",
+  "harness/typings.d.ts": "// (C) 2026 GoodData Corporation
+
+export declare global {
+    export const SDK_BACKEND: "tiger";
+    export const PRODUCTION: boolean;
+    export const TIGER_API_TOKEN: string | undefined;
+
+    /**
+     * URL of this module's Module Federation remote entry. Injected at build time in dev;
+     * in production the harness loads the remote from a relative path on the same origin.
+     */
+    export const SNAP_TEST_REMOTE_URL: string | undefined;
+}
+",
+  "harness/vite.config.ts": "// (C) 2026 GoodData Corporation
+
+import { readFileSync } from "fs";
+import type { ClientRequest } from "http";
+import { join, resolve } from "path";
+
+import react from "@vitejs/plugin-react";
+import { type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
+
+// Strip \`origin\` (Tiger backend rejects cross-origin) and force identity
+// encoding (so the vite proxy can read the response without decompressing).
+function applyProxyRequestHeaders(proxyReq: ClientRequest): void {
+    proxyReq.removeHeader("origin");
+    proxyReq.setHeader("accept-encoding", "identity");
+}
+
+const certDir = join(process.env["HOME"] || process.env["USERPROFILE"] || "", ".gooddata", "certs");
+let httpsConfig: import("vite").ServerOptions["https"] | undefined;
+
+try {
+    httpsConfig = {
+        ca: readFileSync(join(certDir, "rootCA.pem")),
+        key: readFileSync(join(certDir, "localhost-key.pem")),
+        cert: readFileSync(join(certDir, "localhost-cert.pem")),
+    };
+    // oxlint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
+    // eslint-disable-next-line no-console
+    console.info(\`No certificates found in \${certDir}, skipping HTTPS configuration\`);
+    httpsConfig = undefined;
+}
+
+// eslint-disable-next-line no-restricted-exports
+export default defineConfig(({ mode }): UserConfig => {
+    const env = loadEnv(mode, process.cwd(), "");
+    const isProduction = mode === "production";
+    // NOTE: @gooddata/create-pluggable-module's computeDevPort() regex-matches
+    // this line shape (\`env["PORT"] || "NNNN"\`) when scanning existing harnesses
+    // to pick a port for the next scaffolded app. If you refactor it, update
+    // sdk/tools/create-pluggable-module/src/engine/derived.ts to match.
+    const port = parseInt(env["PORT"] || "8450");
+    const backend = env["BACKEND_URL"];
+    if (!isProduction && !backend) {
+        throw new Error(
+            "BACKEND_URL is required for the dev server. Copy .env.template to .env and set BACKEND_URL " +
+                "to the URL of your GoodData Cloud instance (e.g. https://yourorg.gooddata.com).",
+        );
+    }
+
+    return {
+        root: ".",
+        base: isProduction ? "/workspace/" : "/",
+        publicDir: false,
+        define: {
+            SDK_BACKEND: JSON.stringify("tiger"),
+            TIGER_API_TOKEN: isProduction ? undefined : JSON.stringify(env["TIGER_API_TOKEN"]),
+            PRODUCTION: JSON.stringify(isProduction),
+            SNAP_TEST_REMOTE_URL: isProduction
+                ? "undefined"
+                : env["SNAP_TEST_REMOTE_URL"]
+                  ? JSON.stringify(env["SNAP_TEST_REMOTE_URL"])
+                  : "undefined",
+            "process.env": JSON.stringify({}),
+            REACT_APP_SDK_BACKEND: JSON.stringify("TIGER"),
+            REACT_APP_API_TOKEN: isProduction ? undefined : JSON.stringify(env["TIGER_API_TOKEN"]),
+            REACT_APP_IN_AIO: JSON.stringify(false),
+        },
+        plugins: [react()],
+        resolve: {
+            // resolve.conditions REPLACES Vite's defaults rather than extending them
+            // (Vite 8's mergeWithDefaultsRecursively assigns arrays directly), so we must
+            // spread defaultClientConditions to keep "browser" / "module" / dev-prod
+            // resolution. Without "browser", packages like react-textarea-autosize fall
+            // through to their node-targeted default export (a stub that ignores
+            // minRows/maxRows).
+            conditions: [...defaultClientConditions, "source"],
+            dedupe: ["react", "react-dom"],
+        },
+        server: {
+            port,
+            https: httpsConfig,
+            proxy: {
+                "/api": {
+                    changeOrigin: true,
+                    cookieDomainRewrite: "localhost",
+                    secure: false,
+                    target: backend,
+                    headers: {
+                        host: backend,
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                    configure: (proxy) => {
+                        proxy.on("proxyReq", applyProxyRequestHeaders);
+                    },
+                },
+            },
+            fs: {
+                allow: ["../../../"],
+            },
+        },
+        build: {
+            outDir: "dist",
+            sourcemap: !isProduction,
+            target: "es2022",
+            chunkSizeWarningLimit: 10000,
+            rolldownOptions: {
+                input: resolve(__dirname, "index.html"),
+            },
+        },
+    };
+});
+",
+  "module/.gitignore": "node_modules
+esm
+dist
+*.tgz
+rush-logs
+.rush
+.idea
+.vscode
+.DS_Store
+.env
+.__mf__temp
+",
+  "module/.goodchangesrc.json": "{
+    "targets": [
+        {
+            "targetName": "gdc-snap-test-module-unit-tests",
+            "changeDirs": [
+                {
+                    "glob": "**/*",
+                    "type": "fine-grained",
+                    "filter": "**/*.test.ts*"
+                }
+            ]
+        }
+    ],
+    "ignores": [
+        "README.md",
+        "readme.txt",
+        ".oxlintrc.json",
+        "eslint.config.ts",
+        ".env.template",
+        ".gitignore",
+        ".dockerignore"
+    ]
+}
+",
+  "module/README.md": "# gdc-snap-test-module
+
+Pluggable application module for **gdc-snap-test**.
+
+This is a template. Run \`rush init-pluggable-app\` to scaffold a new application from it.
+
+## Structure
+
+- \`src/pluggableApp.tsx\` — mount/unmount lifecycle, forwards \`onEvent\` and \`onTelemetryEvent\` callbacks
+- \`src/AppProviders.tsx\` — thin wrapper around \`AppProviders\` from \`@gooddata/sdk-ui-pluggable-application\` that binds the app's translation bundle
+- \`src/App.tsx\` — main React component, consumes platform context, workspace, and localization
+- \`src/translations/\` — locale JSON files and async loader (\`translations.ts\`) using \`Record<ILocale, ...>\` for compile-time enforcement
+
+## Development
+
+\`\`\`bash
+# Run tests in watch mode
+rushx dev
+
+# Run tests once
+rushx test-once
+
+# Build
+rushx build
+\`\`\`
+
+## Adding translations
+
+1. Add keys to \`src/translations/en-US.json\` with \`{ "text": "...", "crowdinContext": "..." }\` format.
+2. Copy the new keys to all other locale JSON files (they start as en-US copies; translators update them later).
+3. The \`translations.ts\` async loader and \`Record<ILocale, ...>\` type ensure every locale is covered at build time.
+
+## Localization enforcement
+
+The \`asyncComponentTranslations\` map is typed as \`Record<ILocale, ...>\`. If a new locale is added to \`ILocale\` in \`@gooddata/sdk-model\`, the build will fail until a matching JSON file and map entry are added here.
+",
+  "module/config/rush-project.json": "{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["dist"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:test",
+            "outputFolderNames": []
+        },
+        {
+            "operationName": "_phase:pack-build",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        },
+        {
+            "operationName": "_phase:publish-docker-images",
+            "outputFolderNames": [],
+            "disableBuildCacheForOperation": true
+        }
+    ]
+}
+",
+  "module/eslint.config.ts": "// (C) 2026 GoodData Corporation
+
+export { default } from "@gooddata/eslint-config/oxlint-esm-react-vitest";
+",
+  "module/package.json": "{
+    "name": "gdc-snap-test-module",
+    "version": "<VERSION>",
+    "private": true,
+    "description": "Snapshot Test pluggable application module",
+    "license": "UNLICENSED",
+    "author": {
+        "name": "Stellar",
+        "email": "stellar@gooddata.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gdc-ui/",
+        "directory": "modules/gdc-snap-test/module"
+    },
+    "type": "module",
+    "sideEffects": false,
+    "types": "./src/index.ts",
+    "exports": {
+        ".": {
+            "types": "./src/index.ts",
+            "source": "./src/index.ts",
+            "default": "./src/index.ts"
+        },
+        "./tsconfig.json": "./tsconfig.json"
+    },
+    "scripts": {
+        "build": "npm-run-all -p build-check dist",
+        "build-check": "tsgo",
+        "clean": "rm -rf esm dist *.tgz *.log tsconfig.tsbuildinfo",
+        "dev": "vite build && npm-run-all --parallel dev:build dev:serve",
+        "dev:build": "vite build --watch",
+        "dev:serve": "vite preview",
+        "dist": "vite build",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "validate": "npm run lint && npm run format-check"
+    },
+    "dependencies": {
+        "@gooddata/sdk-model": "<VERSION>",
+        "@gooddata/sdk-pluggable-application-model": "<VERSION>",
+        "@gooddata/sdk-ui": "<VERSION>",
+        "@gooddata/sdk-ui-pluggable-application": "<VERSION>",
+        "@gooddata/util": "<VERSION>",
+        "lodash-es": "<VERSION>",
+        "react-intl": "<VERSION>"
+    },
+    "devDependencies": {
+        "@gooddata/eslint-config": "<VERSION>",
+        "@gooddata/oxlint-config": "<VERSION>",
+        "@module-federation/vite": "<VERSION>",
+        "@testing-library/dom": "<VERSION>",
+        "@testing-library/react": "<VERSION>",
+        "@types/lodash-es": "<VERSION>",
+        "@types/node": "<VERSION>",
+        "@types/react": "<VERSION>",
+        "@types/react-dom": "<VERSION>",
+        "@typescript-eslint/eslint-plugin": "<VERSION>",
+        "@typescript-eslint/parser": "<VERSION>",
+        "@typescript/native-preview": "<VERSION>",
+        "@vitejs/plugin-react": "<VERSION>",
+        "eslint": "<VERSION>",
+        "eslint-import-resolver-typescript": "<VERSION>",
+        "eslint-plugin-headers": "<VERSION>",
+        "eslint-plugin-import-x": "<VERSION>",
+        "eslint-plugin-jsdoc": "<VERSION>",
+        "eslint-plugin-no-barrel-files": "<VERSION>",
+        "eslint-plugin-no-only-tests": "<VERSION>",
+        "eslint-plugin-react": "<VERSION>",
+        "eslint-plugin-react-hooks": "<VERSION>",
+        "eslint-plugin-sonarjs": "<VERSION>",
+        "happy-dom": "<VERSION>",
+        "jiti": "<VERSION>",
+        "npm-run-all": "<VERSION>",
+        "oxfmt": "<VERSION>",
+        "oxlint": "<VERSION>",
+        "oxlint-tsgolint": "<VERSION>",
+        "react": "<VERSION>",
+        "react-dom": "<VERSION>",
+        "rolldown": "<VERSION>",
+        "sass": "<VERSION>",
+        "typescript": "<VERSION>",
+        "vite": "<VERSION>",
+        "vitest": "<VERSION>"
+    }
+}
+",
+  "module/src/App.test.tsx": "// (C) 2026 GoodData Corporation
+
+import { render, screen } from "@testing-library/react";
+import { IntlProvider } from "react-intl";
+import { describe, expect, it } from "vitest";
+
+import { BackendProvider } from "@gooddata/sdk-ui";
+import { PlatformContextProvider, type IClientPlatformContext } from "@gooddata/sdk-ui-pluggable-application";
+
+import { App } from "./App.js";
+
+function createMockCtx(): IClientPlatformContext {
+    return {
+        version: "1.0",
+        auth: { type: "contextDeferred" },
+        user: { login: "test@example.com" },
+        organization: { id: "org-1", title: "Test Org" },
+        userSettings: {} as IClientPlatformContext["userSettings"],
+        whiteLabeling: undefined,
+        embeddingMode: "none",
+        backend: {
+            // Minimal mock — extend as needed for your tests
+        } as IClientPlatformContext["backend"],
+    } as IClientPlatformContext;
+}
+
+function renderWithProviders(ui: React.ReactElement) {
+    const ctx = createMockCtx();
+    return render(
+        <PlatformContextProvider value={ctx}>
+            <BackendProvider backend={ctx.backend}>
+                <IntlProvider
+                    locale="en-US"
+                    messages={{ "gdc-snap-test.title": "Snapshot Test" }}
+                >
+                    {ui}
+                </IntlProvider>
+            </BackendProvider>
+        </PlatformContextProvider>,
+    );
+}
+
+describe("App", () => {
+    it("renders the application title", () => {
+        renderWithProviders(<App />);
+        expect(screen.getByText("Snapshot Test")).toBeTruthy();
+    });
+
+    it("renders user information from context", () => {
+        renderWithProviders(<App />);
+        expect(screen.getByText(/test@example.com/)).toBeTruthy();
+    });
+});
+",
+  "module/src/App.tsx": "// (C) 2026 GoodData Corporation
+
+import { FormattedMessage } from "react-intl";
+
+import {
+    type IPluggableAppEvent,
+    type IPluggableAppTelemetryCallbacks,
+} from "@gooddata/sdk-pluggable-application-model";
+import { useWorkspace } from "@gooddata/sdk-ui";
+import { usePlatformContextStrict } from "@gooddata/sdk-ui-pluggable-application";
+
+interface IAppProps {
+    onEvent?: (e: IPluggableAppEvent) => void;
+    onTelemetryEvent?: IPluggableAppTelemetryCallbacks;
+}
+
+export function App({ onEvent: _onEvent, onTelemetryEvent: _onTelemetryEvent }: IAppProps) {
+    const ctx = usePlatformContextStrict();
+    const workspaceId = useWorkspace();
+
+    return (
+        <div>
+            <h1>
+                <FormattedMessage id="gdc-snap-test.title" />
+            </h1>
+            <p>Your pluggable application is running.</p>
+            <ul>
+                <li>User: {ctx.user.login}</li>
+                <li>Organization: {ctx.organization?.title ?? ctx.organization?.id ?? "n/a"}</li>
+                {workspaceId ? <li>Workspace: {workspaceId}</li> : null}
+            </ul>
+        </div>
+    );
+}
+",
+  "module/src/AppProviders.tsx": "// (C) 2026 GoodData Corporation
+
+import { type PropsWithChildren } from "react";
+
+import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model";
+import { AppProviders as SdkAppProviders } from "@gooddata/sdk-ui-pluggable-application";
+
+import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES, resolveMessages } from "./translations/translations.js";
+
+interface IAppProvidersProps {
+    ctx: IPlatformContext;
+}
+
+export function AppProviders({ ctx, children }: PropsWithChildren<IAppProvidersProps>) {
+    return (
+        <SdkAppProviders
+            ctx={ctx}
+            packageName="gdc-snap-test-module"
+            resolveMessages={resolveMessages}
+            defaultMessages={DEFAULT_MESSAGES}
+            defaultLanguage={DEFAULT_LANGUAGE}
+        >
+            {children}
+        </SdkAppProviders>
+    );
+}
+",
+  "module/src/index.ts": "// (C) 2026 GoodData Corporation
+
+export { pluggableApp } from "./pluggableApp.js";
+",
+  "module/src/pluggableApp.tsx": "// (C) 2026 GoodData Corporation
+
+import { createRoot, type Root } from "react-dom/client";
+
+import {
+    type IPluggableApp,
+    type IPluggableApplicationMountHandle,
+    type IPluggableApplicationMountOptions,
+    type IPluggableAppEvent,
+    type IPluggableAppTelemetryCallbacks,
+    type IPlatformContext,
+} from "@gooddata/sdk-pluggable-application-model";
+
+import { App } from "./App.js";
+import { AppProviders } from "./AppProviders.js";
+
+function renderApp(
+    root: Root,
+    ctx: IPlatformContext,
+    _basePath: string,
+    onEvent: ((e: IPluggableAppEvent) => void) | undefined,
+    onTelemetryEvent: IPluggableAppTelemetryCallbacks | undefined,
+) {
+    root.render(
+        <AppProviders ctx={ctx}>
+            <App onEvent={onEvent} onTelemetryEvent={onTelemetryEvent} />
+        </AppProviders>,
+    );
+}
+
+export const pluggableApp: IPluggableApp = {
+    mount({
+        container,
+        ctx,
+        basePath,
+        onEvent,
+        onTelemetryEvent,
+    }: IPluggableApplicationMountOptions): IPluggableApplicationMountHandle {
+        // To customize the host header (e.g. add app-specific help menu items),
+        // destructure \`onHeaderChange\` from the mount options and call:
+        //   onHeaderChange?.({ helpMenuItems: [...] });
+        // See modules/gdc-catalog/module/src/pluggableApp.tsx for a working example.
+        const root = createRoot(container);
+
+        renderApp(root, ctx, basePath, onEvent, onTelemetryEvent);
+
+        return {
+            unmount() {
+                root.unmount();
+            },
+            updateContext(nextCtx: IPlatformContext) {
+                renderApp(root, nextCtx, basePath, onEvent, onTelemetryEvent);
+            },
+        };
+    },
+};
+",
+  "module/src/translations/de-DE.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/en-AU.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/en-GB.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/en-US.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/es-419.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/es-ES.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/fi-FI.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/fr-CA.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/fr-FR.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/id-ID.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/it-IT.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/ja-JP.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/ko-KR.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/nl-NL.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/pl-PL.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/pt-BR.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/pt-PT.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/ru-RU.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/sl-SI.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/th-TH.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/tr-TR.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/translations.ts": "// (C) 2026 GoodData Corporation
+
+import { memoize } from "lodash-es";
+
+import {
+    type ILocale,
+    type ITranslations,
+    DEFAULT_MESSAGES as SDK_DEFAULT_MESSAGES,
+    resolveMessages as resolveSdkMessages,
+} from "@gooddata/sdk-ui";
+import { removeMetadata } from "@gooddata/util";
+
+import en_US from "./en-US.json" with { type: "json" };
+
+export const DEFAULT_LANGUAGE: ILocale = "en-US";
+export const DEFAULT_MESSAGES: Record<string, ITranslations> = {
+    [DEFAULT_LANGUAGE]: {
+        ...SDK_DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+        ...removeMetadata(en_US),
+    },
+};
+
+const loadLocale = (importFn: () => Promise<{ default: unknown }>): (() => Promise<ITranslations>) => {
+    return () => importFn().then((module) => removeMetadata(module.default || module));
+};
+
+type LocaleOptions = Record<ILocale, () => Promise<ITranslations>>;
+
+const asyncComponentTranslations: LocaleOptions = {
+    "en-US": () => Promise.resolve(removeMetadata(en_US)),
+    "en-US-x-24h": () => Promise.resolve(removeMetadata(en_US)),
+    "de-DE": loadLocale(() => import("./de-DE.json")),
+    "en-AU": loadLocale(() => import("./en-AU.json")),
+    "en-GB": loadLocale(() => import("./en-GB.json")),
+    "es-419": loadLocale(() => import("./es-419.json")),
+    "es-ES": loadLocale(() => import("./es-ES.json")),
+    "fi-FI": loadLocale(() => import("./fi-FI.json")),
+    "fr-CA": loadLocale(() => import("./fr-CA.json")),
+    "fr-FR": loadLocale(() => import("./fr-FR.json")),
+    "id-ID": loadLocale(() => import("./id-ID.json")),
+    "it-IT": loadLocale(() => import("./it-IT.json")),
+    "ja-JP": loadLocale(() => import("./ja-JP.json")),
+    "ko-KR": loadLocale(() => import("./ko-KR.json")),
+    "nl-NL": loadLocale(() => import("./nl-NL.json")),
+    "pl-PL": loadLocale(() => import("./pl-PL.json")),
+    "pt-BR": loadLocale(() => import("./pt-BR.json")),
+    "pt-PT": loadLocale(() => import("./pt-PT.json")),
+    "ru-RU": loadLocale(() => import("./ru-RU.json")),
+    "sl-SI": loadLocale(() => import("./sl-SI.json")),
+    "th-TH": loadLocale(() => import("./th-TH.json")),
+    "tr-TR": loadLocale(() => import("./tr-TR.json")),
+    "vi-VN": loadLocale(() => import("./vi-VN.json")),
+    "zh-Hans": loadLocale(() => import("./zh-Hans.json")),
+    "zh-Hant": loadLocale(() => import("./zh-Hant.json")),
+    "uk-UA": loadLocale(() => import("./uk-UA.json")),
+    "zh-HK": loadLocale(() => import("./zh-HK.json")),
+};
+
+const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
+    const componentLoader =
+        asyncComponentTranslations[locale as ILocale] || asyncComponentTranslations[DEFAULT_LANGUAGE];
+
+    const [componentMessages, sdkMessages] = await Promise.all([
+        componentLoader(),
+        resolveSdkMessages(locale),
+    ]);
+
+    return { ...sdkMessages, ...componentMessages };
+};
+
+export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
+",
+  "module/src/translations/uk-UA.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/vi-VN.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/zh-HK.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/zh-Hans.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/src/translations/zh-Hant.json": "{
+    "gdc-snap-test.title": {
+        "text": "Snapshot Test",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}
+",
+  "module/tsconfig.json": "{
+    "compilerOptions": {
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "exactOptionalPropertyTypes": false,
+        "useUnknownInCatchVariables": true,
+        "noUncheckedIndexedAccess": false,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "noImplicitReturns": true,
+        "alwaysStrict": true,
+        "forceConsistentCasingInFileNames": true,
+
+        "lib": ["ES2022", "dom", "dom.iterable"],
+        "target": "ES2022",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "importHelpers": true,
+        "incremental": false,
+        "resolveJsonModule": true,
+        "declaration": true,
+
+        "jsx": "react-jsx",
+        "allowJs": true,
+
+        "noEmit": true,
+        "outDir": "dist"
+    },
+    "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
+}
+",
+  "module/vite.config.ts": "// (C) 2026 GoodData Corporation
+
+//
+// Pluggable-only build: produces the Module Federation artifacts
+// (remoteEntry.js + pluggableApp chunks) needed by the host app.
+//
+// One artifact, two publish targets: with \`base: "./"\` the same dist/
+// works whether served from host nginx (/organization/remotes/<app>/)
+// or from S3 (https://<bucket>/<prefix>/<app>/).
+//
+// Local dev (module federation):
+//   \`vite build --watch\`   (terminal 1)
+//   \`vite preview\`         (terminal 2)
+// Note: day-to-day development is faster via the sibling harness/,
+// which imports the module source directly without federation.
+//
+// Build:
+//   \`vite build\` → dist/
+//
+
+import { execSync } from "child_process";
+import { readFileSync } from "fs";
+import { join, resolve } from "path";
+
+import { federation } from "@module-federation/vite";
+import react from "@vitejs/plugin-react";
+import { type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
+
+function tryExecSync(command: string, fallback: string): string {
+    try {
+        return execSync(command, { encoding: "utf8", stdio: ["pipe", "pipe", "pipe"] }).trim() || fallback;
+    } catch {
+        return fallback;
+    }
+}
+
+function gitRevisionPlugin() {
+    const commitHash = tryExecSync("git rev-parse HEAD --quiet", process.env["GIT_COMMIT"] ?? "dev");
+
+    return {
+        name: "git-revision",
+        config() {
+            return {
+                define: {
+                    "window.COMMITHASH": JSON.stringify(commitHash),
+                },
+            };
+        },
+    };
+}
+
+const certDir = join(process.env["HOME"] || process.env["USERPROFILE"] || "", ".gooddata", "certs");
+let httpsConfig: import("vite").ServerOptions["https"] | undefined;
+
+try {
+    httpsConfig = {
+        ca: readFileSync(join(certDir, "rootCA.pem")),
+        key: readFileSync(join(certDir, "localhost-key.pem")),
+        cert: readFileSync(join(certDir, "localhost-cert.pem")),
+    };
+    // oxlint-disable-next-line @typescript-eslint/no-unused-vars
+} catch (e) {
+    // eslint-disable-next-line no-console
+    console.info(\`No certificates found in \${certDir}, skipping HTTPS configuration\`);
+    httpsConfig = undefined;
+}
+
+// eslint-disable-next-line no-restricted-exports
+export default defineConfig(({ mode, command }): UserConfig => {
+    const env = loadEnv(mode, process.cwd(), "");
+    const port = parseInt(env["PORT"] || "8550");
+    const isDev = command === "serve"; // dev server only
+
+    return {
+        root: ".",
+        // Relative base so asset URLs resolve via import.meta.url at runtime,
+        // allowing the remote to be served from any path (nginx, S3, CDN)
+        // without coupling to a specific host URL.
+        base: "./",
+        publicDir: false,
+        resolve: {
+            // resolve.conditions REPLACES Vite's defaults rather than extending them
+            // (Vite 8's mergeWithDefaultsRecursively assigns arrays directly), so we must
+            // spread defaultClientConditions to keep "browser" / "module" / dev-prod
+            // resolution. Without "browser", packages like react-textarea-autosize fall
+            // through to their node-targeted default export (a stub that ignores
+            // minRows/maxRows).
+            // \`source\` is added only in dev so production builds use the published
+            // artifacts of workspace deps, not their TS source.
+            conditions: [...defaultClientConditions, ...(isDev ? ["source"] : [])],
+            dedupe: [
+                "@gooddata/sdk-ui",
+                "@gooddata/sdk-ui-kit",
+                "@gooddata/sdk-ui-ext",
+                "react",
+                "react-dom",
+            ],
+        },
+        define: {
+            REACT_APP_SDK_BACKEND: JSON.stringify("TIGER"),
+            PRODUCTION: JSON.stringify(mode === "production"),
+            "process.env": JSON.stringify({}),
+        },
+        // \`vite preview\` serves dist/ for local dev against the host app.
+        preview: {
+            port,
+            https: httpsConfig,
+            cors: true,
+        },
+        build: {
+            outDir: "dist",
+            sourcemap: mode !== "production",
+            target: "es2022",
+            chunkSizeWarningLimit: 10000,
+            rolldownOptions: {
+                input: resolve(__dirname, "src/pluggableApp.tsx"),
+                output: {
+                    entryFileNames: "static/js/[name].[hash].js",
+                    chunkFileNames: "static/js/[name].[hash].chunk.js",
+                    assetFileNames: "static/[hash][extname]",
+                },
+            },
+        },
+        plugins: [
+            federation({
+                name: "gdc_snap_test",
+                filename: "remoteEntry.js",
+                dts: false,
+                exposes: {
+                    "./pluggableApp": "./src/pluggableApp.tsx",
+                },
+                // Use idle-based timeout instead of the default 10s absolute deadline,
+                // which flakes on loaded CI runners when the transform is slow but progressing.
+                moduleParseIdleTimeout: 60,
+            }),
+            react(),
+            gitRevisionPlugin(),
+        ],
+    };
+});
+",
+  "module/vitest.config.ts": "// (C) 2026 GoodData Corporation
+
+import { defineConfig } from "vitest/config";
+
+// eslint-disable-next-line no-restricted-exports
+export default defineConfig({
+    test: {
+        environment: "happy-dom",
+        include: ["src/**/*.test.{ts,tsx}"],
+        globals: true,
+    },
+});
+",
+}
+`;

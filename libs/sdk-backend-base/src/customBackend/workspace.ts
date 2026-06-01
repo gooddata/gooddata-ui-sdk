@@ -21,6 +21,7 @@ import {
     type IWorkspaceKeyDriverAnalysisService,
     type IWorkspaceLogicalModelService,
     type IWorkspaceMeasuresService,
+    type IWorkspaceObjectPermissionsService,
     type IWorkspaceParametersService,
     type IWorkspacePermissionsService,
     type IWorkspaceSettingsService,
@@ -131,6 +132,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public accessControl(): IWorkspaceAccessControlService {
         throw new NotSupported("access control is not supported");
+    }
+
+    public objectPermissions(): IWorkspaceObjectPermissionsService {
+        throw new NotSupported("object-level permissions are not supported");
     }
 
     public attributeHierarchies(): IAttributeHierarchiesService {

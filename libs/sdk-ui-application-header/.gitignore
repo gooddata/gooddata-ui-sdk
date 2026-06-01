@@ -1,0 +1,41 @@
+# (C) 2019-2021 GoodData Corporation
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# ci
+/ci
+# react scripts issues with placing jest & coverage
+junit.xml
+/coverage
+
+# misc
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+
+.idea
+
+# tiger build
+/src/tiger/dist
+/src/tiger/build
+/src/tiger/node_modules
+
+
+esm
+build
+node_modules

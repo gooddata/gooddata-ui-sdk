@@ -50,7 +50,6 @@ const TYPE_TO_KEY_MAP = {
     organizationSetting: "organizationSetting",
     DATE_FILTER_CONFIG: "dateFilterConfig",
     AI_RATE_LIMIT: "aiRateLimit",
-    ACTIVE_LLM_ENDPOINT: "llmEndpoint",
     ATTACHMENT_SIZE_LIMIT: "attachmentSizeLimit",
     ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS: "allowUnsafeFlexConnectEndpoints",
     ENABLE_AUTOMATION_EVALUATION_MODE: "enableAutomationEvaluationMode",

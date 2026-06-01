@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { type ObjRef } from "../objRef/index.js";
@@ -203,6 +204,14 @@ export const isUserGroupAccessGrantee = (obj: unknown): obj is IUserGroupAccessG
 export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
 /**
+ * Provenance of a granted permission — granted directly to the grantee,
+ * or inherited from a group or rule.
+ *
+ * @alpha
+ */
+export type PermissionSource = "direct" | "indirect";
+
+/**
  * Access grantee specification with granular permissions.
  *
  * @public
@@ -216,6 +225,15 @@ export interface IGranteeGranularity {
      * Permissions granted by inheritance
      */
     inheritedPermissions: AccessGranularPermission[];
+    /**
+     * Optional per-permission provenance, positionally aligned with
+     * {@link IGranteeGranularity.permissions}. When present, entry `i` describes
+     * how `permissions[i]` was granted. Backends that don't track this omit
+     * the field.
+     *
+     * @alpha
+     */
+    permissionSources?: PermissionSource[];
 }
 
 /**

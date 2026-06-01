@@ -1,0 +1,29 @@
+// (C) 2026 GoodData Corporation
+
+.gd-pluggable-application-renderer {
+    height: 100%;
+
+    &__loading {
+        min-height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__error {
+        min-height: 240px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    &__container {
+        display: none;
+    }
+
+    &__container--visible {
+        display: block;
+        height: 100%;
+    }
+}

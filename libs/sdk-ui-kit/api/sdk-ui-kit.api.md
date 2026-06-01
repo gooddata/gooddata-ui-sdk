@@ -79,6 +79,7 @@ import { OffsetOptions } from '@floating-ui/react';
 import { OnError } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
 import { Placement } from '@floating-ui/react';
+import { PrimitiveType } from 'react-intl';
 import { PropsWithChildren } from 'react';
 import { PropsWithoutRef } from 'react';
 import { Provider } from 'react';
@@ -7642,6 +7643,61 @@ export interface IUiTextInputProps {
     value: string;
 }
 
+// @internal
+export interface IUiToast {
+    // (undocumented)
+    accessibilityConfig?: IUiToastAccessibilityConfig;
+    // (undocumented)
+    action?: IUiToastAction;
+    // (undocumented)
+    durationMs: number;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    kind: UiToastKind;
+    // (undocumented)
+    onDismiss?: () => void;
+    // (undocumented)
+    sticky: boolean;
+    text: string;
+}
+
+// @internal
+export interface IUiToastAccessibilityConfig extends Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "ariaDescribedBy" | "role"> {
+    // (undocumented)
+    ariaLive?: "off" | "polite" | "assertive";
+    closeButtonLabel?: string;
+}
+
+// @internal
+export interface IUiToastAction {
+    label: string;
+    onClick: () => void;
+}
+
+// @internal (undocumented)
+export interface IUiToastItemProps {
+    onClose: (id: string) => void;
+    // (undocumented)
+    toast: IUiToast;
+}
+
+// @internal
+export interface IUiToastOptions {
+    accessibilityConfig?: IUiToastAccessibilityConfig;
+    action?: IUiToastAction;
+    durationMs?: number;
+    id?: string;
+    onDismiss?: () => void;
+    sticky?: boolean;
+    values?: UiToastIntlValues;
+}
+
+// @internal (undocumented)
+export interface IUiToastsContainerProps {
+    dataTestId?: string;
+}
+
 // @internal (undocumented)
 export interface IUiTooltipProps {
     accessibilityConfig?: IAccessibilityConfigBase;
@@ -7956,6 +8012,21 @@ export interface IUseToastMessageType {
     removeAllMessages: () => void;
     // (undocumented)
     removeMessage: (id: string) => void;
+}
+
+// @internal
+export interface IUseUiToastResult {
+    add: (kind: UiToastKind, message: UiToastMessage, options?: IUiToastOptions) => string;
+    // (undocumented)
+    addError: (message: UiToastMessage, options?: IUiToastOptions) => string;
+    // (undocumented)
+    addInfo: (message: UiToastMessage, options?: IUiToastOptions) => string;
+    // (undocumented)
+    addSuccess: (message: UiToastMessage, options?: IUiToastOptions) => string;
+    // (undocumented)
+    addWarning: (message: UiToastMessage, options?: IUiToastOptions) => string;
+    remove: (id: string) => void;
+    removeAll: () => void;
 }
 
 // @internal (undocumented)
@@ -8970,6 +9041,29 @@ export function UiTags({ tags, tagOptions, addLabel, nameLabel, cancelLabel, clo
 // @internal
 export function UiTextInput({ type, value, onChange, label, placeholder, iconBefore, iconAfter, onIconAfter, accessibilityConfig, disabled, autoFocus, dataTestId }: IUiTextInputProps): JSX.Element;
 
+// @internal
+export type UiToastIntlValues = Record<string, PrimitiveType>;
+
+// @internal
+export function UiToastItem({ toast, onClose }: IUiToastItemProps): ReactNode;
+
+// @internal
+export type UiToastKind = "success" | "info" | "warning" | "error";
+
+// @internal
+export type UiToastMessage = string | {
+    descriptor: MessageDescriptor;
+    values?: UiToastIntlValues;
+};
+
+// @internal
+export function UiToastProvider({ children }: {
+    children: ReactNode;
+}): JSX.Element;
+
+// @internal
+export function UiToastsContainer({ dataTestId }: IUiToastsContainerProps): ReactNode;
+
 // @internal (undocumented)
 export function UiTooltip({ id, anchor, content, behaviour, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, anchorWrapperStyles }: IUiTooltipProps): JSX.Element;
 
@@ -9222,6 +9316,9 @@ export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>
 
 // @internal (undocumented)
 export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, onTabDoubleClick, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, disableBottomBorder, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
+
+// @internal
+export function useUiToast(): IUseUiToastResult;
 
 // @internal (undocumented)
 export function useUiTreeViewEventPublisher<T extends UiTreeViewEventType>(eventType: T): (event: UiTreeViewEvents[T]) => void;
