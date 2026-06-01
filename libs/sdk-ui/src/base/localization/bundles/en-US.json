@@ -2655,6 +2655,22 @@
         "text": "Permission",
         "crowdinContext": "Label for permissions selector"
     },
+    "shareDialog.olp.label.suffix.primary": {
+        "text": "(Primary)",
+        "crowdinContext": "Suffix shown next to a primary-key label name in the object-level permissions share dialog. Identifies the label as the primary key of its parent attribute."
+    },
+    "shareDialog.olp.label.suffix.default": {
+        "text": "(Default)",
+        "crowdinContext": "Suffix shown next to the default display-form label name in the object-level permissions share dialog. Identifies which label is shown by default in visualizations."
+    },
+    "shareDialog.olp.labels.heading": {
+        "text": "LABELS",
+        "crowdinContext": "Uppercase heading above the read-only list of an attribute's labels in the catalog detail view. Plain noun in capital letters."
+    },
+    "shareDialog.olp.labels.popoverTitle": {
+        "text": "Labels",
+        "crowdinContext": "Title of the popover dialog that lets the user choose which of an attribute's labels are included in a share. Sentence case."
+    },
     "shareDialog.olp.granteeAvatar.user": {
         "text": "User",
         "crowdinContext": "Accessibility label for the circular avatar shown on a grantee row in the OLP share dialog when the grantee is an individual user."
@@ -2722,6 +2738,42 @@
     "shareDialog.olp.addGranteeDialog.add": {
         "text": "Add",
         "crowdinContext": "Primary button at the bottom of the OLP add-grantee screen. Confirms granting access to the selected user or group and returns to the main share dialog."
+    },
+    "shareDialog.olp.granteeControls.allLabels": {
+        "text": "All labels",
+        "crowdinContext": "Label of the trigger button that opens the labels picker on a grantee row in the OLP share dialog when every available label is selected."
+    },
+    "shareDialog.olp.granteeControls.labelsCount": {
+        "text": "{selected} of {total}",
+        "crowdinContext": "Label of the trigger button that opens the labels picker on a grantee row when a subset of labels is selected. {selected} is the number of selected labels, {total} is the total available."
+    },
+    "shareDialog.olp.permission.transferOwnership": {
+        "text": "Transfer ownership",
+        "crowdinContext": "Menu item that promotes the selected grantee to the owner of the shared object. The current user loses ownership and becomes a regular grantee."
+    },
+    "shareDialog.olp.permission.labels": {
+        "text": "Labels",
+        "crowdinContext": "Menu item that opens the labels picker for the selected grantee — lets the author choose which of the attribute's labels this grantee can access."
+    },
+    "shareDialog.olp.permission.removeAccess": {
+        "text": "Remove access",
+        "crowdinContext": "Menu item that revokes the selected grantee's access to the shared object entirely."
+    },
+    "shareDialog.olp.permission.menuLabel": {
+        "text": "Permissions",
+        "crowdinContext": "Accessibility label for the per-grantee permission menu on the OLP share dialog. Used by screen readers when entering the menu. Sentence case."
+    },
+    "shareDialog.olp.permission.moreInfoAriaLabel": {
+        "text": "More information about {label}",
+        "crowdinContext": "Accessibility label for the info-circle next to a permission level row in the OLP permission menu. {label} is the permission level name (e.g. 'Can view'). Sentence case."
+    },
+    "shareDialog.olp.permission.tooltip.share": {
+        "text": "Grantee can view this object and re-share it with others.",
+        "crowdinContext": "Tooltip explaining the 'Can view & share' permission level in the object-level permissions menu."
+    },
+    "shareDialog.olp.permission.tooltip.view": {
+        "text": "Grantee can view this object.",
+        "crowdinContext": "Tooltip explaining the 'Can view' permission level in the object-level permissions menu."
     },
     "dialogs.closeLabel": {
         "text": "Close dialog",
@@ -3606,6 +3658,14 @@
     "userManagement.detail.orgPermission.member.tooltip": {
         "text": "Organization member. This user has access to action or resource to which he has permission to.",
         "crowdinContext": "Tooltip that explains what does it mean if user is organization member. Displayed over option called 'Member'"
+    },
+    "userManagement.userDetail.systemAccount.label": {
+        "text": "System user",
+        "crowdinContext": "Label of a checkbox marking a user as a system account."
+    },
+    "userManagement.userDetail.systemAccount.tooltip": {
+        "text": "System users are not visible to end users in any list or search when sharing or choosing recipients.",
+        "crowdinContext": "Tooltip explaining what the 'System user' checkbox does, shown when hovering the help icon next to the label."
     },
     "userManagement.userDetail.id.label": {
         "text": "ID",

@@ -3,14 +3,28 @@
 .gd-ui-kit-checkbox {
     display: inline-flex;
     align-items: center;
-    cursor: pointer;
     user-select: none;
+
+    &__control {
+        position: relative;
+        display: inline-flex;
+        flex-shrink: 0;
+        width: 14px;
+        height: 14px;
+    }
 
     &__input {
         position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
         opacity: 0;
-        width: 0;
-        height: 0;
+        cursor: pointer;
+
+        &:disabled {
+            cursor: not-allowed;
+        }
     }
 
     &__box {
@@ -20,15 +34,11 @@
         border: 1px solid var(--gd-palette-complementary-5);
         border-radius: 2px;
         position: relative;
+        pointer-events: none;
         transition:
             background-color 0.2s,
             border-color 0.2s;
         background-color: var(--gd-palette-complementary-0);
-
-        &:hover:not(&--disabled) {
-            border-color: var(--gd-palette-complementary-6);
-            box-shadow: 0 1px 2px 0 rgba(31, 53, 74, 0.15) inset;
-        }
 
         &::after {
             box-sizing: border-box;
@@ -66,6 +76,16 @@
         &--disabled {
             border-color: var(--gd-palette-complementary-3);
         }
+
+        &--checked#{&}--disabled {
+            background-color: var(--gd-palette-complementary-4);
+            border-color: var(--gd-palette-complementary-4);
+        }
+    }
+
+    &__input:hover:not(:disabled) + &__box {
+        border-color: var(--gd-palette-complementary-6);
+        box-shadow: 0 1px 2px 0 rgba(31, 53, 74, 0.15) inset;
     }
 
     &__input:focus-visible + &__box {
@@ -75,5 +95,6 @@
     &__label {
         margin-left: 8px;
         user-select: none;
+        cursor: pointer;
     }
 }

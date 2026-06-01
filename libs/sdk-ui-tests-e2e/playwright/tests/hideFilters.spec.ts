@@ -25,7 +25,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Hide Filters",
     "hideFilters",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test("Hide hidden date filter on view mode", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-hide-filters");

@@ -16,7 +16,7 @@ const DATA_LABELS_SELECTOR = ".highcharts-data-labels .highcharts-label text";
 test.topLevelDescribe(
     "Funnel Chart",
     "funnelChart",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             "check default sort of funnel chart",

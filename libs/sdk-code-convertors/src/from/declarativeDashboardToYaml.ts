@@ -1401,6 +1401,22 @@ function declarativeMeasureValueFilterToYaml(
         measureValueFilter.add(new Pair("conditions", conditionsSeq));
     }
 
+    if (filter.dashboardMeasureValueFilter.dimensionality?.length) {
+        const dimensionalitySeq = new YAMLSeq();
+        filter.dashboardMeasureValueFilter.dimensionality.forEach((item, i) => {
+            dimensionalitySeq.add(
+                getIdentifier(
+                    item,
+                    undefined,
+                    updateErrorContext(errorContext, {
+                        path: ["dashboardMeasureValueFilter", "dimensionality", i.toString()],
+                    }),
+                ),
+            );
+        });
+        measureValueFilter.add(new Pair("dimensionality", dimensionalitySeq));
+    }
+
     // Aggregate per-condition `treatNullValuesAs` into a single top-level YAML flag
     // (mirrors the insight MVF YAML representation).
     const treatNullValuesAsZero = conditions.some(conditionHasTreatNullValuesAs);

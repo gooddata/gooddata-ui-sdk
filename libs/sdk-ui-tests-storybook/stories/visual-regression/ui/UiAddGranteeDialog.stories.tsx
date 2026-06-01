@@ -6,10 +6,22 @@ import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
-import { UiAddGranteeDialog, UiGranteeRow } from "@gooddata/sdk-ui-kit";
+import {
+    type IUiLabelsPickerItem,
+    UiAddGranteeDialog,
+    UiGranteeRow,
+    UiGranteeRowControls,
+} from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
+
+const LABELS: IUiLabelsPickerItem[] = [
+    { id: "id", label: "Customer ID", kind: "primary", locked: true },
+    { id: "name", label: "Customer Name", kind: "default" },
+    { id: "email", label: "Customer Email" },
+    { id: "ssn", label: "Customer SSN" },
+];
 
 function EmptyExample() {
     const [searchQuery, setSearchQuery] = useState("");
@@ -56,7 +68,13 @@ function WithGranteeExample() {
                             name="Julie Better"
                             email="julie.better@company.com"
                             controls={
-                                <span style={{ color: "var(--gd-palette-complementary-6)" }}>Can view</span>
+                                <UiGranteeRowControls
+                                    labels={LABELS}
+                                    selectedLabelIds={["id", "name", "email", "ssn"]}
+                                    permissionLevel="VIEW"
+                                    onLabelsChange={action("Julie → labels change")}
+                                    onPermissionChange={action("Julie → permission change")}
+                                />
                             }
                         />
                     }

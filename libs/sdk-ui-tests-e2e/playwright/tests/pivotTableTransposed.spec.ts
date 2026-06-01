@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Pivot table transposed",
     "pivotTableTransposed",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("Table Component", () => {
             test(

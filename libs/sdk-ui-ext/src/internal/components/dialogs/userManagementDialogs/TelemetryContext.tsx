@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ComponentType, type ReactNode, createContext, useContext } from "react";
 
@@ -46,7 +46,9 @@ export type TelemetryEvent =
     | "user-data-source-permission-changed-to-manage"
     | "group-data-source-permission-changed-to-manage"
     | "user-role-changed-to-admin"
-    | "user-role-changed-to-member";
+    | "user-role-changed-to-member"
+    | "user-marked-system-account"
+    | "user-unmarked-system-account";
 
 /**
  * @internal

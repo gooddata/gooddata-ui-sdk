@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 93b86453ec9f096fb04bd2fc1d77a6268752e83f8fd9e3badaf3d4c8ee70ee84
+# schema-hash: ed0646266e83cf5cb5977a044b91885c2ec801774ae239b4813e6953f4a993b5
 
 from __future__ import annotations
 
@@ -834,6 +834,7 @@ class DashboardFilters15(TypedDict):
     title: NotRequired[str]
     using: MetricIdentifier
     conditions: NotRequired[list[MvfCondition]]
+    dimensionality: NotRequired[list[LabelIdentifier]]
     null_values_as_zero: NotRequired[bool]
     mode: NotRequired[Literal['readonly', 'hidden', 'active']]
 
@@ -882,6 +883,7 @@ class DashboardFilters6(TypedDict):
     title: NotRequired[str]
     using: MetricIdentifier
     conditions: NotRequired[list[MvfCondition]]
+    dimensionality: NotRequired[list[LabelIdentifier]]
     null_values_as_zero: NotRequired[bool]
     mode: NotRequired[Literal['readonly', 'hidden', 'active']]
 
@@ -921,6 +923,7 @@ class DashboardMetricValueFilter(TypedDict):
     title: NotRequired[str]
     using: MetricIdentifier
     conditions: NotRequired[list[MvfCondition]]
+    dimensionality: NotRequired[list[LabelIdentifier]]
     null_values_as_zero: NotRequired[bool]
     mode: NotRequired[Literal['readonly', 'hidden', 'active']]
 

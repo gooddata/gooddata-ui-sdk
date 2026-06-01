@@ -45,7 +45,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Available value filter",
     "availableValueFilter",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test("should add metric filter by", { tag: ["@pre-merge-integrated"] }, async ({ page }) => {
             const headlineSelector = ".s-dash-item.viz-type-headline";

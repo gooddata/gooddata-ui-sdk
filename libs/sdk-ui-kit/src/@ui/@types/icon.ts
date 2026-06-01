@@ -34,6 +34,7 @@ export type IconType =
     | "slack"
     | "expand"
     | "exclamationCircle"
+    | "infoCircle"
     | "book"
     | "visible"
     | "invisible"

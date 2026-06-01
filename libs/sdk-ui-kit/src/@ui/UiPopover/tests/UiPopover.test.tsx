@@ -45,6 +45,29 @@ describe("UiPopover", () => {
         expect(screen.queryByText("Popover footer")).not.toBeInTheDocument();
     });
 
+    it("does not set aria-labelledby on a titleless popover", () => {
+        renderPopover({ closeVisible: false });
+        fireEvent.click(screen.getByText("Anchor"));
+        const dialog = screen.getByRole("dialog");
+        expect(dialog).not.toHaveAttribute("aria-labelledby");
+    });
+
+    it("points aria-labelledby at the rendered title when one is supplied", () => {
+        renderPopover({ title: "My title", closeVisible: false });
+        fireEvent.click(screen.getByText("Anchor"));
+        const dialog = screen.getByRole("dialog");
+        const labelledBy = dialog.getAttribute("aria-labelledby");
+        expect(labelledBy).toBeTruthy();
+        expect(document.getElementById(labelledBy!)).toHaveTextContent("My title");
+    });
+
+    it("lets a caller's aria-labelledby win over the auto-wired title id", () => {
+        const ariaLabelledBy = "external-title-id";
+        renderPopover({ title: "Internal", accessibilityConfig: { ariaLabelledBy } });
+        fireEvent.click(screen.getByText("Anchor"));
+        expect(screen.getByRole("dialog")).toHaveAttribute("aria-labelledby", ariaLabelledBy);
+    });
+
     it("should render simple popover, open content on click, tests events", () => {
         const onOpen = vi.fn();
         const onClose = vi.fn();

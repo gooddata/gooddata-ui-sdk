@@ -509,6 +509,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSystemAccountFiltering,
+            "enableSystemAccountFiltering",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSystemAccountFiltering,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableCustomizedDashboardsWithoutPluginOverlay,
             "enableCustomizedDashboardsWithoutPluginOverlay",
             "BOOLEAN",

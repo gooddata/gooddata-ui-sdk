@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -77,6 +78,11 @@ export interface IUser {
      * In which deployment the user was requested
      */
     deployment?: string;
+
+    /**
+     * When true, the user is marked as a system account.
+     */
+    systemAccount?: boolean;
 }
 
 /**

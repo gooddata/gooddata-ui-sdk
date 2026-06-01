@@ -1163,6 +1163,7 @@ export function yamlFilterContextToDeclarative(
                     title?: string;
                     mode?: DashboardDateFilterConfigMode;
                     null_values_as_zero?: boolean;
+                    dimensionality?: string[];
                     conditions?: Array<{
                         condition?: string;
                         value?: number;
@@ -1212,12 +1213,16 @@ export function yamlFilterContextToDeclarative(
                 const measureRef =
                     createIdentifier<any>(mvf.using ?? "", { forceMetric: true }) ??
                     createLocalIdentifier(mvf.using ?? "");
+                const dimensionality = mvf.dimensionality
+                    ?.map((item) => createIdentifier<any>(item))
+                    .filter((item) => item !== null);
 
                 return {
                     dashboardMeasureValueFilter: {
                         measure: measureRef,
                         localIdentifier: key,
                         ...(conditions && conditions.length > 0 ? { conditions } : {}),
+                        ...(dimensionality && dimensionality.length > 0 ? { dimensionality } : {}),
                         ...(mvf.title ? { title: mvf.title } : {}),
                     },
                 };

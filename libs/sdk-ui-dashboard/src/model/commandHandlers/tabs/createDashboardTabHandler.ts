@@ -2,7 +2,6 @@
 
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-import { v4 as uuid } from "uuid";
 
 import {
     type IDashboardAttributeFilterConfig,
@@ -27,6 +26,7 @@ import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tab
 import { type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { generateTabLocalIdentifier } from "../../utils/tabLocalIdentifier.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
 
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
@@ -107,7 +107,7 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: ICreateDa
             ? { ...dateFilterConfig, selectedOption: DEFAULT_FISCAL_DATE_FILTER_PRESET }
             : dateFilterConfig;
 
-    const newTabId = uuid();
+    const newTabId = generateTabLocalIdentifier();
     const newTabFilterContext = createDefaultFilterContext(effectiveDateFilterConfig, true);
 
     const newTab: ITabState = getTabState({

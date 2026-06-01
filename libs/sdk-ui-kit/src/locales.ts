@@ -52,6 +52,7 @@ export const granularPermissionMessageTooltips = defineMessages({
 });
 
 export const commonDialogMessages = defineMessages({
+    apply: { id: "apply" },
     cancel: { id: "cancel" },
     close: { id: "close" },
 });
@@ -86,4 +87,28 @@ export const olpGeneralAccessMessages = defineMessages({
     restrictedDescription: { id: "shareDialog.olp.generalAccess.restricted.description" },
     workspaceTitle: { id: "shareDialog.olp.generalAccess.workspace.title" },
     workspaceDescription: { id: "shareDialog.olp.generalAccess.workspace.description" },
+});
+
+export const olpLabelMessages = defineMessages({
+    suffixPrimary: { id: "shareDialog.olp.label.suffix.primary" },
+    suffixDefault: { id: "shareDialog.olp.label.suffix.default" },
+    listHeading: { id: "shareDialog.olp.labels.heading" },
+    popoverTitle: { id: "shareDialog.olp.labels.popoverTitle" },
+});
+
+export const olpPermissionMessages = defineMessages({
+    canViewAndShare: { id: "shareDialog.share.granular.grantee.permission.share" },
+    canView: { id: "shareDialog.share.granular.grantee.permission.view" },
+    canViewAndShareTooltip: { id: "shareDialog.olp.permission.tooltip.share" },
+    canViewTooltip: { id: "shareDialog.olp.permission.tooltip.view" },
+    transferOwnership: { id: "shareDialog.olp.permission.transferOwnership" },
+    labels: { id: "shareDialog.olp.permission.labels" },
+    removeAccess: { id: "shareDialog.olp.permission.removeAccess" },
+    menuLabel: { id: "shareDialog.olp.permission.menuLabel" },
+    moreInfoAriaLabel: { id: "shareDialog.olp.permission.moreInfoAriaLabel" },
+});
+
+export const olpGranteeControlsMessages = defineMessages({
+    allLabels: { id: "shareDialog.olp.granteeControls.allLabels" },
+    labelsCount: { id: "shareDialog.olp.granteeControls.labelsCount" },
 });

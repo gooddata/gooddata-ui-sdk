@@ -60,7 +60,7 @@
                             }
                         ],
                         "links": {
-                            "executionResult": "3039d3c09c5d960e8a03a967f1f0e517742fcaed:99f87a66bf97565cf50604b76a376c39c053c7c890c8c44b1ba5bc38cb2c34f7"
+                            "executionResult": "6108f4cf8bb78c514ed4b88bfa92c1ed76e83d5d:a24dae02582e73a8d27b1197a97dba869803761598e1630e3b9d5b3e058051e0"
                         }
                     }
                 },
@@ -142,7 +142,7 @@
                             }
                         ],
                         "links": {
-                            "executionResult": "c0b72f9c40debc8408b479b6bd471e157d110583:2cabc0ceebb749e9ab54cddedd48f6d1d36b2f08d00d62268e0cb99debc21fb9"
+                            "executionResult": "eadd14802647ab5cffaaff1ed056e8cebc8502af:57ab8346048c6bfa5e0a118d3c6f1520923aef630bb6bc85bf4873a95829b881"
                         }
                     }
                 },
@@ -165,9 +165,9 @@
             }
         },
         {
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_3039d3c09c5d960e8a03a967f1f0e517742fcaed99f87a66bf97565cf50604b76a376c39c053c7c890c8c44b1ba5bc38cb2c34f7",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_6108f4cf8bb78c514ed4b88bfa92c1ed76e83d5da24dae02582e73a8d27b1197a97dba869803761598e1630e3b9d5b3e058051e0",
             "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/3039d3c09c5d960e8a03a967f1f0e517742fcaed%3A99f87a66bf97565cf50604b76a376c39c053c7c890c8c44b1ba5bc38cb2c34f7",
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/6108f4cf8bb78c514ed4b88bfa92c1ed76e83d5d%3Aa24dae02582e73a8d27b1197a97dba869803761598e1630e3b9d5b3e058051e0",
                 "method": "GET"
             },
             "response": {
@@ -219,9 +219,9 @@
             }
         },
         {
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_c0b72f9c40debc8408b479b6bd471e157d1105832cabc0ceebb749e9ab54cddedd48f6d1d36b2f08d00d62268e0cb99debc21fb9",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_eadd14802647ab5cffaaff1ed056e8cebc8502af57ab8346048c6bfa5e0a118d3c6f1520923aef630bb6bc85bf4873a95829b881",
             "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/c0b72f9c40debc8408b479b6bd471e157d110583%3A2cabc0ceebb749e9ab54cddedd48f6d1d36b2f08d00d62268e0cb99debc21fb9",
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/eadd14802647ab5cffaaff1ed056e8cebc8502af%3A57ab8346048c6bfa5e0a118d3c6f1520923aef630bb6bc85bf4873a95829b881",
                 "method": "GET"
             },
             "response": {
@@ -303,14 +303,6 @@
                         },
                         "id": "activeColorPalette",
                         "type": "ACTIVE_COLOR_PALETTE"
-                    },
-                    {
-                        "content": {
-                            "id": "",
-                            "type": "llmEndpoint"
-                        },
-                        "id": "activeLlmEndpoint",
-                        "type": "ACTIVE_LLM_ENDPOINT"
                     },
                     {
                         "content": {
@@ -925,7 +917,7 @@
                 "jsonBody": {
                     "data": {
                         "attributes": {
-                            "name": "E2E_SDK_cypress_test_1779194035111"
+                            "name": "E2E_SDK_cypress_test_1780049585644"
                         },
                         "id": "c76e0537d0614abb0027f7c992656b964922506f",
                         "meta": {
@@ -1297,7 +1289,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Dashboard column chart has not hyperlink",
                                 "title": "Dashboard column chart has not hyperlink"
                             },
@@ -1958,7 +1950,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Dashboard column chart has hyperlinks",
                                 "title": "Dashboard column chart has hyperlinks"
                             },
@@ -2453,7 +2445,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "KD has null value"
                             },
@@ -2794,7 +2786,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "KD with No data"
                             },
@@ -3010,7 +3002,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Dashboard column chart only measures"
                             },
@@ -3079,7 +3071,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "KD with big insight"
                             },
@@ -3296,7 +3288,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "KD using long name metric"
                             },
@@ -3688,7 +3680,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Target KD has null value"
                             },
@@ -4521,7 +4513,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Parent Dashboard"
                             },
@@ -4801,7 +4793,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "KD with merge and unmerge insights"
                             },
@@ -4870,7 +4862,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "KD with many data insight"
                             },
@@ -5007,7 +4999,7 @@
                                     },
                                     "version": "2"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "KD with invalid insight"
                             },
@@ -5171,7 +5163,7 @@
                                             ],
                                             "type": "IDashboardLayout"
                                         },
-                                        "localIdentifier": "defaultTabId",
+                                        "localIdentifier": "test_tab_local_identifier_0",
                                         "parameters": [],
                                         "title": ""
                                     }
@@ -5180,7 +5172,7 @@
                             },
                             "createdAt": "2024-01-02 11:50",
                             "description": "",
-                            "modifiedAt": "2026-05-19 12:35",
+                            "modifiedAt": "2026-05-29 10:14",
                             "title": "Insight on dashboard"
                         },
                         "id": "46dbb7b3-468c-436f-a2ff-85fbf4e8d5ad",
@@ -5512,7 +5504,7 @@
                 "method": "PUT",
                 "bodyPatterns": [
                     {
-                        "equalToJson": "{\"data\":{\"attributes\":{\"content\":{\"filterContextRef\":{\"identifier\":{\"id\":\"882c3455-5c89-4577-a9c2-aa60ca875d19\",\"type\":\"filterContext\"}},\"layout\":{\"sections\":[{\"items\":[{\"size\":{\"xl\":{\"gridWidth\":6}},\"type\":\"IDashboardLayoutItem\",\"widget\":{\"dateDataSet\":{\"identifier\":{\"id\":\"dt_closedate_timestamp\",\"type\":\"dataset\"}},\"description\":\"\",\"drills\":[],\"ignoreDashboardFilters\":[],\"insight\":{\"identifier\":{\"id\":\"a40866ab-5272-4f2c-9b5a-dd255b1e5d42\",\"type\":\"visualizationObject\"}},\"localIdentifier\":\"test_widget_local_identifier_1\",\"properties\":{},\"title\":\"\\u003cbutton\\u003ehello\\u003c/button\\u003e\",\"type\":\"insight\"}}],\"type\":\"IDashboardLayoutSection\"}],\"type\":\"IDashboardLayout\"},\"parameters\":[],\"tabs\":[{\"filterContextRef\":{\"identifier\":{\"id\":\"882c3455-5c89-4577-a9c2-aa60ca875d19\",\"type\":\"filterContext\"}},\"layout\":{\"sections\":[{\"items\":[{\"size\":{\"xl\":{\"gridWidth\":6}},\"type\":\"IDashboardLayoutItem\",\"widget\":{\"dateDataSet\":{\"identifier\":{\"id\":\"dt_closedate_timestamp\",\"type\":\"dataset\"}},\"description\":\"\",\"drills\":[],\"ignoreDashboardFilters\":[],\"insight\":{\"identifier\":{\"id\":\"a40866ab-5272-4f2c-9b5a-dd255b1e5d42\",\"type\":\"visualizationObject\"}},\"localIdentifier\":\"test_widget_local_identifier_0\",\"properties\":{},\"title\":\"\\u003cbutton\\u003ehello\\u003c/button\\u003e\",\"type\":\"insight\"}}],\"type\":\"IDashboardLayoutSection\"}],\"type\":\"IDashboardLayout\"},\"localIdentifier\":\"defaultTabId\",\"parameters\":[],\"title\":\"\"}],\"version\":\"2\"},\"description\":\"\",\"tags\":[],\"title\":\"Insight on dashboard\"},\"id\":\"46dbb7b3-468c-436f-a2ff-85fbf4e8d5ad\",\"type\":\"analyticalDashboard\"}}",
+                        "equalToJson": "{\"data\":{\"attributes\":{\"content\":{\"filterContextRef\":{\"identifier\":{\"id\":\"882c3455-5c89-4577-a9c2-aa60ca875d19\",\"type\":\"filterContext\"}},\"layout\":{\"sections\":[{\"items\":[{\"size\":{\"xl\":{\"gridWidth\":6}},\"type\":\"IDashboardLayoutItem\",\"widget\":{\"dateDataSet\":{\"identifier\":{\"id\":\"dt_closedate_timestamp\",\"type\":\"dataset\"}},\"description\":\"\",\"drills\":[],\"ignoreDashboardFilters\":[],\"insight\":{\"identifier\":{\"id\":\"a40866ab-5272-4f2c-9b5a-dd255b1e5d42\",\"type\":\"visualizationObject\"}},\"localIdentifier\":\"test_widget_local_identifier_1\",\"properties\":{},\"title\":\"\\u003cbutton\\u003ehello\\u003c/button\\u003e\",\"type\":\"insight\"}}],\"type\":\"IDashboardLayoutSection\"}],\"type\":\"IDashboardLayout\"},\"parameters\":[],\"tabs\":[{\"filterContextRef\":{\"identifier\":{\"id\":\"882c3455-5c89-4577-a9c2-aa60ca875d19\",\"type\":\"filterContext\"}},\"layout\":{\"sections\":[{\"items\":[{\"size\":{\"xl\":{\"gridWidth\":6}},\"type\":\"IDashboardLayoutItem\",\"widget\":{\"dateDataSet\":{\"identifier\":{\"id\":\"dt_closedate_timestamp\",\"type\":\"dataset\"}},\"description\":\"\",\"drills\":[],\"ignoreDashboardFilters\":[],\"insight\":{\"identifier\":{\"id\":\"a40866ab-5272-4f2c-9b5a-dd255b1e5d42\",\"type\":\"visualizationObject\"}},\"localIdentifier\":\"test_widget_local_identifier_0\",\"properties\":{},\"title\":\"\\u003cbutton\\u003ehello\\u003c/button\\u003e\",\"type\":\"insight\"}}],\"type\":\"IDashboardLayoutSection\"}],\"type\":\"IDashboardLayout\"},\"localIdentifier\":\"test_tab_local_identifier_0\",\"parameters\":[],\"title\":\"\"}],\"version\":\"2\"},\"description\":\"\",\"tags\":[],\"title\":\"Insight on dashboard\"},\"id\":\"46dbb7b3-468c-436f-a2ff-85fbf4e8d5ad\",\"type\":\"analyticalDashboard\"}}",
                         "ignoreArrayOrder": false,
                         "ignoreExtraElements": false
                     }
@@ -5617,7 +5609,7 @@
                                             ],
                                             "type": "IDashboardLayout"
                                         },
-                                        "localIdentifier": "defaultTabId",
+                                        "localIdentifier": "test_tab_local_identifier_0",
                                         "parameters": [],
                                         "title": ""
                                     }
@@ -5626,7 +5618,7 @@
                             },
                             "createdAt": "2024-01-02 11:50",
                             "description": "",
-                            "modifiedAt": "2026-05-19 12:35",
+                            "modifiedAt": "2026-05-29 10:14",
                             "title": "Insight on dashboard"
                         },
                         "id": "46dbb7b3-468c-436f-a2ff-85fbf4e8d5ad",
@@ -5722,11 +5714,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_account.account",
+                                            "id": "label.f_account.account.name",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "label.f_account.account.name",
+                                            "id": "attr.f_account.account",
                                             "type": "label"
                                         }
                                     ]
@@ -5790,11 +5782,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "label.f_opportunity.opportunity.sfdcurl",
+                                            "id": "attr.f_opportunity.opportunity",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "attr.f_opportunity.opportunity",
+                                            "id": "label.f_opportunity.opportunity.sfdcurl",
                                             "type": "label"
                                         },
                                         {
@@ -5892,15 +5884,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_product.product",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "label.f_product.product.name",
                                             "type": "label"
                                         },
                                         {
                                             "id": "label.f_product.product.link",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "attr.f_product.product",
                                             "type": "label"
                                         },
                                         {
@@ -5966,15 +5958,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "label.f_stage.stagename.order",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "label.f_stage.stagename.stagename",
                                             "type": "label"
                                         },
                                         {
                                             "id": "attr.f_stage.stagename",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "label.f_stage.stagename.order",
                                             "type": "label"
                                         }
                                     ]
@@ -8772,15 +8764,23 @@
                                 "labels": {
                                     "data": [
                                         {
+                                            "id": "f_city.id.cityasciiname",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.cityshortname",
+                                            "type": "label"
+                                        },
+                                        {
                                             "id": "f_city.id.location",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "f_city.id.custom_icon",
+                                            "id": "f_city.id.longitude",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "f_city.id.cityasciiname",
+                                            "id": "f_city.id.custom_icon",
                                             "type": "label"
                                         },
                                         {
@@ -8793,14 +8793,6 @@
                                         },
                                         {
                                             "id": "f_city.id.cityname",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.longitude",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.cityshortname",
                                             "type": "label"
                                         }
                                     ]
@@ -9258,11 +9250,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+                                            "id": "productthatisrenamedtotestthelongattributename",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "productthatisrenamedtotestthelongattributename",
+                                            "id": "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
                                             "type": "label"
                                         }
                                     ]
@@ -9292,6 +9284,14 @@
                                 "labels": {
                                     "data": [
                                         {
+                                            "id": "state_id.custom_region_join_key",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "state_id.statename",
+                                            "type": "label"
+                                        },
+                                        {
                                             "id": "state_id.stateid",
                                             "type": "label"
                                         },
@@ -9301,14 +9301,6 @@
                                         },
                                         {
                                             "id": "state_id",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "state_id.custom_region_join_key",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "state_id.statename",
                                             "type": "label"
                                         }
                                     ]
@@ -9338,15 +9330,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "user_id.username",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "user_id",
                                             "type": "label"
                                         },
                                         {
                                             "id": "user_id.useremail",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "user_id.username",
                                             "type": "label"
                                         }
                                     ]
@@ -11714,11 +11706,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_activity.activity",
+                                            "id": "label.f_activity.subject",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "label.f_activity.subject",
+                                            "id": "attr.f_activity.activity",
                                             "type": "label"
                                         }
                                     ]
@@ -11760,7 +11752,7 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_opportunity.opportunity",
+                                            "id": "label.f_opportunity.opportunity.name",
                                             "type": "label"
                                         },
                                         {
@@ -11768,7 +11760,7 @@
                                             "type": "label"
                                         },
                                         {
-                                            "id": "label.f_opportunity.opportunity.name",
+                                            "id": "attr.f_opportunity.opportunity",
                                             "type": "label"
                                         }
                                     ]
@@ -11846,11 +11838,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "attr.f_owner.salesrep",
+                                            "id": "label.f_owner.salesrep.ownername",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "label.f_owner.salesrep.ownername",
+                                            "id": "attr.f_owner.salesrep",
                                             "type": "label"
                                         }
                                     ]
@@ -11892,11 +11884,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "label.f_product.product.image",
+                                            "id": "label.f_product.product.link",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "label.f_product.product.link",
+                                            "id": "label.f_product.product.name",
                                             "type": "label"
                                         },
                                         {
@@ -11904,7 +11896,7 @@
                                             "type": "label"
                                         },
                                         {
-                                            "id": "label.f_product.product.name",
+                                            "id": "label.f_product.product.image",
                                             "type": "label"
                                         }
                                     ]
@@ -12034,11 +12026,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "country.country_code",
+                                            "id": "country",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "country",
+                                            "id": "country.country_code",
                                             "type": "label"
                                         }
                                     ]
@@ -15378,23 +15370,7 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "f_city.id.longitude",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.cityasciiname",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.cityshortname",
-                                            "type": "label"
-                                        },
-                                        {
-                                            "id": "f_city.id.location",
+                                            "id": "f_city.id.latitude",
                                             "type": "label"
                                         },
                                         {
@@ -15402,11 +15378,27 @@
                                             "type": "label"
                                         },
                                         {
-                                            "id": "f_city.id.latitude",
+                                            "id": "f_city.id",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.location",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.cityshortname",
                                             "type": "label"
                                         },
                                         {
                                             "id": "f_city.id.custom_icon",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.cityasciiname",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "f_city.id.longitude",
                                             "type": "label"
                                         }
                                     ]
@@ -16018,11 +16010,11 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "state_id.custom_region_join_key",
+                                            "id": "state_id",
                                             "type": "label"
                                         },
                                         {
-                                            "id": "state_id.stateid",
+                                            "id": "state_id.custom_region_join_key",
                                             "type": "label"
                                         },
                                         {
@@ -16030,7 +16022,7 @@
                                             "type": "label"
                                         },
                                         {
-                                            "id": "state_id",
+                                            "id": "state_id.stateid",
                                             "type": "label"
                                         },
                                         {
@@ -16076,15 +16068,15 @@
                                 "labels": {
                                     "data": [
                                         {
-                                            "id": "user_id",
-                                            "type": "label"
-                                        },
-                                        {
                                             "id": "user_id.useremail",
                                             "type": "label"
                                         },
                                         {
                                             "id": "user_id.username",
+                                            "type": "label"
+                                        },
+                                        {
+                                            "id": "user_id",
                                             "type": "label"
                                         }
                                     ]
@@ -16140,27 +16132,6 @@
                                 "referenceProperties": [
                                     {
                                         "identifier": {
-                                            "id": "f_opportunity",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "opportunityid_id",
-                                                "dataType": "INT",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "f_opportunity.id",
-                                                    "type": "attribute"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
                                             "id": "f_account",
                                             "type": "dataset"
                                         },
@@ -16175,6 +16146,27 @@
                                                 "nullValue": null,
                                                 "target": {
                                                     "id": "f_account.id",
+                                                    "type": "attribute"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "identifier": {
+                                            "id": "f_opportunity",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "opportunityid_id",
+                                                "dataType": "INT",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "f_opportunity.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -18334,7 +18326,7 @@
                                 "referenceProperties": [
                                     {
                                         "identifier": {
-                                            "id": "f_opportunity",
+                                            "id": "dt_snapshotdate_timestamp",
                                             "type": "dataset"
                                         },
                                         "multivalue": false,
@@ -18342,34 +18334,13 @@
                                         "sourceColumns": null,
                                         "sources": [
                                             {
-                                                "column": "opportunityid_id",
-                                                "dataType": "INT",
+                                                "column": "dt_snapshotdate_timestamp",
+                                                "dataType": "TIMESTAMP",
                                                 "isNullable": null,
                                                 "nullValue": null,
                                                 "target": {
-                                                    "id": "f_opportunity.id",
-                                                    "type": "attribute"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
-                                            "id": "f_product",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "productid_id",
-                                                "dataType": "INT",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "f_product.id",
-                                                    "type": "attribute"
+                                                    "id": "dt_snapshotdate_timestamp",
+                                                    "type": "date"
                                                 }
                                             }
                                         ]
@@ -18418,7 +18389,7 @@
                                     },
                                     {
                                         "identifier": {
-                                            "id": "dt_snapshotdate_timestamp",
+                                            "id": "f_opportunity",
                                             "type": "dataset"
                                         },
                                         "multivalue": false,
@@ -18426,33 +18397,12 @@
                                         "sourceColumns": null,
                                         "sources": [
                                             {
-                                                "column": "dt_snapshotdate_timestamp",
-                                                "dataType": "TIMESTAMP",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "dt_snapshotdate_timestamp",
-                                                    "type": "date"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
-                                            "id": "f_stage",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "stage_id",
+                                                "column": "opportunityid_id",
                                                 "dataType": "INT",
                                                 "isNullable": null,
                                                 "nullValue": null,
                                                 "target": {
-                                                    "id": "f_stage.id",
+                                                    "id": "f_opportunity.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -18474,6 +18424,48 @@
                                                 "nullValue": null,
                                                 "target": {
                                                     "id": "f_owner.id",
+                                                    "type": "attribute"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "identifier": {
+                                            "id": "f_product",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "productid_id",
+                                                "dataType": "INT",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "f_product.id",
+                                                    "type": "attribute"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "identifier": {
+                                            "id": "f_stage",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "stage_id",
+                                                "dataType": "INT",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "f_stage.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -18595,27 +18587,6 @@
                                 "referenceProperties": [
                                     {
                                         "identifier": {
-                                            "id": "f_opportunity",
-                                            "type": "dataset"
-                                        },
-                                        "multivalue": false,
-                                        "sourceColumnDataTypes": null,
-                                        "sourceColumns": null,
-                                        "sources": [
-                                            {
-                                                "column": "opportunityid_id",
-                                                "dataType": "INT",
-                                                "isNullable": null,
-                                                "nullValue": null,
-                                                "target": {
-                                                    "id": "f_opportunity.id",
-                                                    "type": "attribute"
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "identifier": {
                                             "id": "f_account",
                                             "type": "dataset"
                                         },
@@ -18637,7 +18608,7 @@
                                     },
                                     {
                                         "identifier": {
-                                            "id": "f_stage",
+                                            "id": "f_opportunity",
                                             "type": "dataset"
                                         },
                                         "multivalue": false,
@@ -18645,12 +18616,12 @@
                                         "sourceColumns": null,
                                         "sources": [
                                             {
-                                                "column": "stage_id",
+                                                "column": "opportunityid_id",
                                                 "dataType": "INT",
                                                 "isNullable": null,
                                                 "nullValue": null,
                                                 "target": {
-                                                    "id": "f_stage.id",
+                                                    "id": "f_opportunity.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -18672,6 +18643,27 @@
                                                 "nullValue": null,
                                                 "target": {
                                                     "id": "f_product.id",
+                                                    "type": "attribute"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "identifier": {
+                                            "id": "f_stage",
+                                            "type": "dataset"
+                                        },
+                                        "multivalue": false,
+                                        "sourceColumnDataTypes": null,
+                                        "sourceColumns": null,
+                                        "sources": [
+                                            {
+                                                "column": "stage_id",
+                                                "dataType": "INT",
+                                                "isNullable": null,
+                                                "nullValue": null,
+                                                "target": {
+                                                    "id": "f_stage.id",
                                                     "type": "attribute"
                                                 }
                                             }
@@ -19616,7 +19608,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT MAX({fact/fact.f_timeline.timelinedate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "_Timeline [EOP]"
                             },
@@ -19639,7 +19631,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT COUNT({attribute/f_opportunity.id}, {label/f_opportunitysnapshot.id}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "# Of Opportunities"
                             },
@@ -19662,7 +19654,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Amount metric description",
                                 "tags": ["custom_column", "summary"],
                                 "title": "Amount"
@@ -19686,7 +19678,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} WHERE {label/f_stage.status_id} = \"Won\""
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "# Of Opportunities Won"
                             },
@@ -19709,7 +19701,7 @@
                                     "format": "#,##0.0%",
                                     "maql": "SELECT {metric/8d33a0b1-cfdf-4074-a26a-4c4357774967} / {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Win Rate"
                             },
@@ -19732,7 +19724,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Amount [BOP]"
                             },
@@ -19755,7 +19747,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_amount})\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Avg. Amount"
                             },
@@ -19778,7 +19770,7 @@
                                     "format": "#,##0.0%",
                                     "maql": "SELECT AVG({fact/f_opportunitysnapshot.f_probability}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Probability"
                             },
@@ -19801,7 +19793,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT SUM(\n    SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}\n      WHERE {label/f_stage.status_id} = \"Open\")"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Best Case"
                             },
@@ -19824,7 +19816,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day} WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} <= {metric/6b1411d5-e253-418e-8fd3-137a9f56ea92}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "_Snapshot [EOP]"
                             },
@@ -19847,7 +19839,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate})\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/snapshot_bop}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "_Close [BOP]"
                             },
@@ -19870,7 +19862,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT MAX({fact/fact.f_opportunitysnapshot.oppclosedate}) where {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "_Close [EOP]"
                             },
@@ -19893,7 +19885,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Parent metric"
                             },
@@ -19916,7 +19908,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT {metric/87a053b0-3947-49f3-b0c5-de53fd01f050}\n  WHERE {label/f_stage.status_id} = \"Won\""
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Won"
                             },
@@ -19939,7 +19931,7 @@
                                     "format": "$#,##0.00",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} = {metric/c5ee7836-126c-41aa-bd69-1873d379a065}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Metric with long name",
                                 "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i"
                             },
@@ -19962,7 +19954,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount}) where {label/f_owner.region_id} IN (\"\", NULL, \"East Coast\", \"West Coast\" )"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Metric has null value",
                                 "title": "Metric has null value"
                             },
@@ -19985,7 +19977,7 @@
                                     "format": "#,##0.00",
                                     "maql": "SELECT SUM({metric/amount_bop} * -1 )"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Negative Metric"
                             },
@@ -20008,7 +20000,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT COUNT({label/f_activity.id})"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "# of Activities"
                             },
@@ -20031,7 +20023,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76}\n  WHERE {label/f_stage.status_id} = \"Lost\""
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "# of Lost Opps."
                             },
@@ -20054,7 +20046,7 @@
                                     "format": "#,##0",
                                     "maql": "select {metric/768414e1-4bbe-4f01-b125-0cdc6305dc76} where {label/f_stage.status_id} = \"Won\""
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "# of Won Opps."
                             },
@@ -20077,7 +20069,7 @@
                                     "format": "#,##0.00",
                                     "maql": "select min({fact/fact.f_opportunitysnapshot.oppsnapshotdate}) by all in all other dimensions except {attribute/f_opportunity.id}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "_Opp. First Snapshot"
                             },
@@ -20100,7 +20092,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT MIN({fact/fact.f_opportunitysnapshot.oppsnapshotdate})\n  BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_snapshotdate_timestamp.day}\n  WHERE {fact/fact.f_opportunitysnapshot.oppsnapshotdate} >= {metric/timeline_bop}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "_Snapshot [BOP]"
                             },
@@ -20123,7 +20115,7 @@
                                     "format": "#,##0",
                                     "maql": "SELECT MIN({fact/fact.f_timeline.timelinedate})\n  BY ALL IN ALL OTHER DIMENSIONS EXCEPT {attribute/dt_timeline_timestamp.day}"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "_Timeline [BOP]"
                             },
@@ -20266,7 +20258,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Column chart with Department attribute",
                                 "title": "Column chart with Department attribute"
                             },
@@ -20356,7 +20348,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Column chart long attribute has hyperlink",
                                 "title": "Column chart long attribute has hyperlink"
                             },
@@ -20457,7 +20449,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Column chart has many hyperlinks",
                                 "title": "Column chart has many hyperlinks"
                             },
@@ -20530,7 +20522,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Column chart has hyperlink",
                                 "title": "Column chart has hyperlink"
                             },
@@ -20631,7 +20623,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Column chart has not hyperlink",
                                 "title": "Column chart has not hyperlink"
                             },
@@ -20705,7 +20697,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Column chart only measures",
                                 "title": "Column chart only measures"
                             },
@@ -20809,7 +20801,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Insight using long name metric"
                             },
@@ -20866,7 +20858,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Table using long name metric"
                             },
@@ -20971,7 +20963,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "unmerge cells insight"
                             },
@@ -21064,7 +21056,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "No data"
                             },
@@ -21150,7 +21142,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:column"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "many data"
                             },
@@ -21230,7 +21222,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "Parent Insight",
                                 "title": "Parent Insight"
                             },
@@ -21411,7 +21403,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "AD has null value",
                                 "title": "AD has null value"
                             },
@@ -21503,7 +21495,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "invalid insight"
                             },
@@ -21583,7 +21575,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "big insight"
                             },
@@ -21688,7 +21680,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "merge cells insight"
                             },
@@ -21745,7 +21737,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:pyramid"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Negative Insight"
                             },
@@ -21923,7 +21915,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:pyramid"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Combine with all filter types"
                             },
@@ -22332,7 +22324,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Table has multi metrics and multi formats"
                             },
@@ -22589,7 +22581,7 @@
                                     "version": "2",
                                     "visualizationUrl": "local:table"
                                 },
-                                "createdAt": "2026-05-19 12:33",
+                                "createdAt": "2026-05-29 10:13",
                                 "description": "",
                                 "title": "Table has AM metric"
                             },
@@ -25464,30 +25456,30 @@
                             "name": "Contract"
                         },
                         {
-                            "name": "ScheduledActionMinimumRecurrenceMinutes",
-                            "value": "60"
-                        },
-                        {
                             "name": "Tier",
                             "value": "Professional"
                         },
                         {
-                            "name": "UnlimitedAutomationRecipients"
-                        },
-                        {
-                            "name": "UnlimitedAutomations"
-                        },
-                        {
-                            "name": "UnlimitedDailyAlertActions"
-                        },
-                        {
-                            "name": "UnlimitedDailyScheduledActions"
+                            "name": "UnlimitedWorkspaces"
                         },
                         {
                             "name": "UnlimitedUsers"
                         },
                         {
-                            "name": "UnlimitedWorkspaces"
+                            "name": "UnlimitedAutomations"
+                        },
+                        {
+                            "name": "UnlimitedAutomationRecipients"
+                        },
+                        {
+                            "name": "UnlimitedDailyScheduledActions"
+                        },
+                        {
+                            "name": "UnlimitedDailyAlertActions"
+                        },
+                        {
+                            "name": "ScheduledActionMinimumRecurrenceMinutes",
+                            "value": "60"
                         },
                         {
                             "name": "UserTelemetryDisabled"
@@ -25518,18 +25510,18 @@
                         }
                     },
                     "links": {
-                        "organization": "http://gooddata-ui-sdk-scenarios:9500/api/v1/entities/admin/organizations/ephemeral-staging-automation-8d8c5c83",
+                        "organization": "http://gooddata-ui-sdk-scenarios:9500/api/v1/entities/admin/organizations/ephemeral-staging-automation-098067f4",
                         "self": "http://gooddata-ui-sdk-scenarios:9500/api/v1/profile",
                         "user": "http://gooddata-ui-sdk-scenarios:9500/api/v1/entities/users/admin"
                     },
-                    "organizationId": "ephemeral-staging-automation-8d8c5c83",
-                    "organizationName": "ephemeral-staging-automation-8d8c5c83",
+                    "organizationId": "ephemeral-staging-automation-098067f4",
+                    "organizationName": "ephemeral-staging-automation-098067f4",
                     "permissions": ["MANAGE", "SELF_CREATE_TOKEN", "BASE_UI_ACCESS"],
                     "telemetryConfig": {
                         "context": {
                             "deploymentId": "deploymentId",
-                            "organizationHash": "07f17cba64fc66b03f75a285cb447a26a7accaed",
-                            "userHash": "2794cfd5dda18270b5a8a9132b298fe2bb1035df"
+                            "organizationHash": "28c7ae16b84916134a38a9826982ae1fcaa63b57",
+                            "userHash": "dc8e26758a3cedded0ff27e4eed882fc1372b00b"
                         },
                         "services": {
                             "openTelemetry": {

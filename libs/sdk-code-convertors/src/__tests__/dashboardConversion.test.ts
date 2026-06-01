@@ -509,6 +509,34 @@ describe("dashboard conversion", () => {
             expect(result.measureValueFilterConfigs).toBeUndefined();
         });
 
+        it("should convert measure value filter with dimensionality", () => {
+            const filters = {
+                mvf_orders: {
+                    type: "metric_value_filter",
+                    using: "metric/order_amount",
+                    conditions: [{ condition: "GREATER_THAN", value: 10000 }],
+                    dimensionality: ["label/product.category", "label/region"],
+                },
+            } as Dashboard["filters"];
+
+            const result = yamlFilterContextToDeclarative("dash1", filters);
+            const convertedFilters = (result.filterContext.content as any).filters;
+
+            expect(convertedFilters).toEqual([
+                {
+                    dashboardMeasureValueFilter: {
+                        measure: { identifier: { id: "order_amount", type: "metric" } },
+                        localIdentifier: "mvf_orders",
+                        conditions: [{ comparison: { operator: "GREATER_THAN", value: 10000 } }],
+                        dimensionality: [
+                            { identifier: { id: "product.category", type: "label" } },
+                            { identifier: { id: "region", type: "label" } },
+                        ],
+                    },
+                },
+            ]);
+        });
+
         it("should convert measure value filter with range condition (null flag fanned out per condition)", () => {
             const filters = {
                 mvf_revenue: {
@@ -638,6 +666,33 @@ describe("dashboard conversion", () => {
                 type: "metric_value_filter",
                 using: "metric/order_amount",
                 conditions: [{ condition: "GREATER_THAN", value: 10000 }],
+            });
+        });
+
+        it("should round-trip measure value filter with dimensionality", () => {
+            const input = makeDashboard({
+                filters: {
+                    mvf_orders: {
+                        type: "metric_value_filter",
+                        using: "metric/order_amount",
+                        conditions: [{ condition: "GREATER_THAN", value: 10000 }],
+                        dimensionality: ["label/product.category", "label/region"],
+                    },
+                } as any,
+            });
+
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const { json } = declarativeDashboardToYaml(
+                emptyFromEntities,
+                dashboard,
+                filterContext ? [filterContext] : [],
+            );
+
+            expect(json.filters?.["mvf_orders"]).toEqual({
+                type: "metric_value_filter",
+                using: "metric/order_amount",
+                conditions: [{ condition: "GREATER_THAN", value: 10000 }],
+                dimensionality: ["label/product.category", "label/region"],
             });
         });
 

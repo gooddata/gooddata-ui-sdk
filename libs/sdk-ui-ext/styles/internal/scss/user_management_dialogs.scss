@@ -76,6 +76,17 @@
     color: kit-variables.$default-gd-color-label;
 }
 
+.gd-user-management-dialog-detail-label-with-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .gd-bubble-trigger {
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
 .gd-user-management-dialog-detail-value {
     flex: 1 0;
     overflow: hidden;

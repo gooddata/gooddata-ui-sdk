@@ -80,6 +80,7 @@ export enum TigerFeaturesNames {
     EnableCertification = "enableCertification",
     EnableAIDataSetting = "enableAIDataSetting",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
+    EnableSystemAccountFiltering = "enableSystemAccountFiltering",
     EnableCustomizedDashboardsWithoutPluginOverlay = "enableCustomizedDashboardsWithoutPluginOverlay",
     EnableAlertingRollout = "enableAlertingRollout",
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
@@ -247,6 +248,7 @@ export type ITigerFeatureFlags = {
     enableAIDataSetting: (typeof FeatureFlagsValues)["enableAIDataSetting"][number];
     enableAlertingRollout: (typeof FeatureFlagsValues)["enableAlertingRollout"][number];
     enableDashboardFilterViews: (typeof FeatureFlagsValues)["enableDashboardFilterViews"][number];
+    enableSystemAccountFiltering: (typeof FeatureFlagsValues)["enableSystemAccountFiltering"][number];
     enableCustomizedDashboardsWithoutPluginOverlay: (typeof FeatureFlagsValues)["enableCustomizedDashboardsWithoutPluginOverlay"][number];
     enableNewInsightChangedPostMessageEvent: (typeof FeatureFlagsValues)["enableNewInsightChangedPostMessageEvent"][number];
     enableKDVisualizationSwitcher: (typeof FeatureFlagsValues)["enableKDVisualizationSwitcher"][number];
@@ -415,6 +417,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAIDataSetting: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
+    enableSystemAccountFiltering: false,
     enableCustomizedDashboardsWithoutPluginOverlay: true,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: true,
@@ -583,6 +586,7 @@ export const FeatureFlagsValues = {
     enableAIDataSetting: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
+    enableSystemAccountFiltering: [true, false] as const,
     enableCustomizedDashboardsWithoutPluginOverlay: [true, false] as const,
     enableNewInsightChangedPostMessageEvent: [true, false] as const,
     enableKDVisualizationSwitcher: [true, false] as const,

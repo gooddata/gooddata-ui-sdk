@@ -132,7 +132,6 @@ import {
 import { type ISetShowWidgetAsTable } from "./showWidgetAsTable.js";
 import {
     type ICancelRenamingDashboardTab,
-    type IConvertDashboardTabFromDefault,
     type ICreateDashboardTab,
     type IDeleteDashboardTab,
     type IRenameDashboardTab,
@@ -278,7 +277,6 @@ export type DashboardCommands =
     | IResetFilterContextWorkingSelection
     | IChangeIgnoreExecutionTimestamp
     | ISwitchDashboardTab
-    | IConvertDashboardTabFromDefault
     | ICreateDashboardTab
     | IRepositionDashboardTab
     | IDeleteDashboardTab

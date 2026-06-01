@@ -32,7 +32,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Dashboard",
     "permissions",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("Basic case", () => {
             test(

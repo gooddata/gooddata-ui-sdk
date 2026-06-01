@@ -34,7 +34,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Interaction",
     "drilling",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         //Cover ticket: RAIL-4559
         test(

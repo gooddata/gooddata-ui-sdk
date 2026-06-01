@@ -14,7 +14,7 @@ const WIDGET = ".s-dash-item-1_0";
 test.topLevelDescribe(
     "Pivot Table with multi format metrics",
     "pivotTableHasTotalAndSubtotalsOnDashboard",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             "should render insight with multi format metrics correctly",

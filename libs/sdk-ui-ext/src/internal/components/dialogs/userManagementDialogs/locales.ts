@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { defineMessages } from "react-intl";
 
@@ -101,6 +101,8 @@ export const messages = defineMessages({
     userGroupName: { id: "userManagement.groupDetail.name.label" },
     userGroupId: { id: "userManagement.groupDetail.id.label" },
     userMembership: { id: "userManagement.userDetail.orgPermission.label" },
+    userSystemAccount: { id: "userManagement.userDetail.systemAccount.label" },
+    userSystemAccountTooltip: { id: "userManagement.userDetail.systemAccount.tooltip" },
     addUserGroupDialogTitle: { id: "userManagement.userGroups.title" },
     addUserGroupDialogCloseButton: { id: "userManagement.userGroups.cancelButton" },
     addUserGroupDialogSaveButton: { id: "userManagement.userGroups.addButton" },

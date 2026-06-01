@@ -6,10 +6,22 @@ import { IntlProvider } from "react-intl";
 import { action } from "storybook/actions";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
-import { type GeneralAccessValue, UiGeneralAccessRadio } from "@gooddata/sdk-ui-kit";
+import {
+    type GeneralAccessValue,
+    type IUiLabelsPickerItem,
+    UiGeneralAccessRadio,
+    UiGranteeRowControls,
+} from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
+
+const LABELS: IUiLabelsPickerItem[] = [
+    { id: "id", label: "Customer ID", kind: "primary", locked: true },
+    { id: "name", label: "Customer Name", kind: "default" },
+    { id: "email", label: "Customer Email" },
+    { id: "ssn", label: "Customer SSN" },
+];
 
 function UiGeneralAccessRadioExample() {
     const [value, setValue] = useState<GeneralAccessValue>("RESTRICTED");
@@ -23,7 +35,13 @@ function UiGeneralAccessRadioExample() {
                         setValue(next);
                     }}
                     workspaceControls={
-                        <span style={{ color: "var(--gd-palette-complementary-6)" }}>Can view</span>
+                        <UiGranteeRowControls
+                            labels={LABELS}
+                            selectedLabelIds={["id", "name", "email", "ssn"]}
+                            permissionLevel="VIEW"
+                            onLabelsChange={action("workspace → labels change")}
+                            onPermissionChange={action("workspace → permission change")}
+                        />
                     }
                 />
             </div>

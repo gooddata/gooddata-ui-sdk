@@ -34,7 +34,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Drag Drop and Move Widget",
     "dragDropAndMoveWidget",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("Insight on dashboard", () => {
             test(

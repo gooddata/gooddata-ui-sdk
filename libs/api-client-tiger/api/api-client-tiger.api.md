@@ -26895,6 +26895,8 @@ export interface JsonApiUserOutAttributes {
     'firstname'?: string;
     // (undocumented)
     'lastname'?: string;
+    // (undocumented)
+    'systemAccount'?: boolean;
 }
 
 // @public (undocumented)

@@ -132,7 +132,6 @@ import {
 } from "./scheduledEmail.js";
 import { type IShowWidgetAsTableSet } from "./showWidgetAsTable.js";
 import {
-    type IDashboardTabConvertedFromDefault,
     type IDashboardTabCreated,
     type IDashboardTabDeleted,
     type IDashboardTabRenamed,
@@ -276,7 +275,6 @@ export type DashboardEvents =
     | IDashboardDrillableItemsChanged
     | IDashboardIgnoreExecutionTimestampChanged
     | IDashboardTabSwitched
-    | IDashboardTabConvertedFromDefault
     | IDashboardTabCreated
     | IDashboardTabDeleted
     | IDashboardTabRenamingStarted

@@ -100,7 +100,6 @@ import { refreshAutomationsHandlers } from "./scheduledEmail/refreshAutomationsH
 import { saveScheduledEmailHandler } from "./scheduledEmail/saveScheduledEmailHandler.js";
 import { handleSetWidgetToShowAsTable } from "./showWidgetAsTable/showWidgetAsTableHandler.js";
 import { cancelRenamingDashboardTabHandler } from "./tabs/cancelRenamingDashboardTabHandler.js";
-import { convertDashboardTabFromDefaultHandler } from "./tabs/convertDashboardTabFromDefaultHandler.js";
 import { createDashboardTabHandler } from "./tabs/createDashboardTabHandler.js";
 import { deleteDashboardTabHandler } from "./tabs/deleteDashboardTabHandler.js";
 import { renameDashboardTabHandler } from "./tabs/renameDashboardTabHandler.js";
@@ -279,7 +278,6 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.CHANGE_IGNORE_EXECUTION_TIMESTAMP": changeIgnoreExecutionTimestampHandler,
     "GDC.DASH/CMD.SHOW_WIDGET_AS_TABLE.SET": handleSetWidgetToShowAsTable,
     "GDC.DASH/CMD.TAB.CREATE": createDashboardTabHandler,
-    "GDC.DASH/CMD.TAB.CONVERT_FROM_DEFAULT": convertDashboardTabFromDefaultHandler,
     "GDC.DASH/CMD.TAB.SWITCH": switchDashboardTabHandler,
     "GDC.DASH/CMD.TAB.REPOSITION": repositionDashboardTabHandler,
     "GDC.DASH/CMD.TAB.DELETE": deleteDashboardTabHandler,

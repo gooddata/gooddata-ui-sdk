@@ -76,6 +76,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                             email: user.email,
                             firstname: user.firstName,
                             lastname: user.lastName,
+                            systemAccount: user.systemAccount,
                         },
                     },
                 },
@@ -95,7 +96,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
 
     public updateUser = async (user: IUser): Promise<void> => {
         return this.authCall(async (client) => {
-            const { login, firstName, lastName, email } = user;
+            const { login, firstName, lastName, email, systemAccount } = user;
             await EntitiesApi_PatchEntityUsers(client.axios, client.basePath, {
                 id: login,
                 jsonApiUserPatchDocument: {
@@ -106,6 +107,7 @@ export class OrganizationUsersService implements IOrganizationUserService {
                             firstname: firstName,
                             lastname: lastName,
                             email: email,
+                            systemAccount,
                         },
                     },
                 },

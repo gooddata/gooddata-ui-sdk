@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: add UiLabelRow, UiLabelChecklistRow, UiLabelsList, UiLabelsPicker, UiPermissionMenu and UiGranteeRowControls @ui components.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

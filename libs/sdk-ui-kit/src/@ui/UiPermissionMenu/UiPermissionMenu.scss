@@ -1,0 +1,66 @@
+// (C) 2026 GoodData Corporation
+
+// Rendered inside UiPopover.__content (which adds 10px padding all around).
+// Pull the padding back so rows span the popover edge-to-edge.
+
+.gd-ui-kit-permission-menu {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    margin: calc(-1 * var(--gd-spacing-10px));
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+        padding: var(--gd-spacing-5px) 0;
+    }
+
+    &__divider {
+        height: 1px;
+        margin: var(--gd-spacing-5px) 0;
+        background: var(--gd-palette-complementary-3);
+    }
+
+    &__item-row {
+        display: flex;
+        align-items: stretch;
+    }
+
+    &__item {
+        flex: 1 1 auto;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: var(--gd-spacing-5px);
+        padding: var(--gd-spacing-5px) var(--gd-spacing-10px);
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        text-align: left;
+        font: inherit;
+        color: var(--gd-palette-complementary-8);
+
+        &:hover,
+        &:focus-visible {
+            background: var(--gd-palette-complementary-2);
+            outline: none;
+        }
+    }
+
+    &__item-label {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 12px;
+        line-height: 18px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__item-counter {
+        flex-shrink: 0;
+        font-size: 12px;
+        line-height: 18px;
+        color: var(--gd-palette-complementary-6);
+    }
+}

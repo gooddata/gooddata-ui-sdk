@@ -3477,6 +3477,11 @@
                     "description": "OR-ed list of conditions. Empty or omitted means \"All\" (no filtering).",
                     "items": { "$ref": "#/$defs/mvfCondition" }
                 },
+                "dimensionality": {
+                    "type": "array",
+                    "description": "Optional array of label references to apply dimensionality to the filter.",
+                    "items": { "$ref": "#/$defs/labelIdentifier" }
+                },
                 "null_values_as_zero": {
                     "type": "boolean",
                     "description": "Null values will be treated as zero during comparisons."

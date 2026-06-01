@@ -30,7 +30,6 @@ import {
 
 import {
     cancelRenamingDashboardTab,
-    convertDashboardTabFromDefault,
     createDashboardTab,
     deleteDashboardTab,
     renameDashboardTab,
@@ -42,7 +41,7 @@ import { useDashboardDispatch, useDashboardSelector } from "../../../model/react
 import { selectIsAddTabButtonHidden } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../../model/store/tabs/tabsSelectors.js";
-import { DEFAULT_TAB_ID, type ITabState } from "../../../model/store/tabs/tabsState.js";
+import { type ITabState } from "../../../model/store/tabs/tabsState.js";
 
 const EMPTY_TABS: ITabState[] = [];
 
@@ -235,14 +234,10 @@ export function DashboardTabs({
     );
 
     const isCreateEnabled = isEditMode && !hideAddTabButton;
-    const hasDefaultTab = uiTabs.some((tab) => tab.id === DEFAULT_TAB_ID);
 
     const handleCreateTab = useCallback(() => {
-        if (hasDefaultTab) {
-            dispatch(convertDashboardTabFromDefault());
-        }
         dispatch(createDashboardTab());
-    }, [dispatch, hasDefaultTab]);
+    }, [dispatch]);
 
     const shouldHideTabs = useMemo(() => {
         if (!uiTabs || activeTabLocalIdentifier === undefined) {
@@ -310,10 +305,6 @@ function RenamableTabValue(props: IUiTabComponentProps<"TabValue", IDashboardUiT
     const handleRename = useCallback(
         (newName: string) => {
             dispatch(renameDashboardTab(newName, tab.id));
-
-            if (tab.id === DEFAULT_TAB_ID) {
-                dispatch(convertDashboardTabFromDefault(newName));
-            }
         },
         [dispatch, tab.id],
     );

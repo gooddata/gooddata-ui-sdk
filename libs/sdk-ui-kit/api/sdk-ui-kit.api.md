@@ -1879,7 +1879,7 @@ export function IconTrash({ color, className, width, height }: IIconProps): JSX.
 export function IconTreeMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin";
 
 // @internal (undocumented)
 export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
@@ -5418,6 +5418,9 @@ export interface ISingleSelectListItemProps {
     variant?: "default" | "delete";
 }
 
+// @internal
+export const isLabelsPickerItemChecked: (item: IUiLabelsPickerItem, selectedIds: readonly string[]) => boolean;
+
 // @internal (undocumented)
 export interface ISnapPoints {
     // (undocumented)
@@ -6129,6 +6132,7 @@ export interface IUiCheckboxProps {
     checked: boolean;
     // (undocumented)
     disabled?: boolean;
+    id?: string;
     // (undocumented)
     indeterminate?: boolean;
     // (undocumented)
@@ -6594,6 +6598,18 @@ export interface IUiGranteeAvatarProps {
 }
 
 // @internal (undocumented)
+export interface IUiGranteeRowControlsProps {
+    dataTestId?: string;
+    labels: ReadonlyArray<IUiLabelsPickerItem>;
+    onLabelsChange: (selectedIds: string[]) => void;
+    onPermissionChange: (level: PermissionMenuLevel) => void;
+    onRemoveAccess?: () => void;
+    onTransferOwnership?: () => void;
+    permissionLevel: PermissionMenuLevel;
+    selectedLabelIds: ReadonlyArray<string>;
+}
+
+// @internal (undocumented)
 export interface IUiGranteeRowProps {
     controls?: ReactNode;
     dataTestId?: string;
@@ -6698,6 +6714,58 @@ export interface IUiInlineTextGeneratorProps extends Omit<IEditableLabelProps, "
 export interface IUiInlineTextGeneratorResult {
     // (undocumented)
     text: string;
+}
+
+// @internal (undocumented)
+export interface IUiLabelChecklistRowProps {
+    checked: boolean;
+    dataTestId?: string;
+    disabled?: boolean;
+    kind?: LabelRowKind;
+    label: string;
+    onChange?: (checked: boolean) => void;
+    suffix?: string;
+}
+
+// @internal (undocumented)
+export interface IUiLabelRowProps {
+    dataTestId?: string;
+    kind?: LabelRowKind;
+    label: string;
+    labelId?: string;
+    leading?: ReactNode;
+    onClick?: () => void;
+    suffix?: string;
+}
+
+// @internal
+export interface IUiLabelsListItem {
+    id: string;
+    kind?: LabelRowKind;
+    label: string;
+}
+
+// @internal (undocumented)
+export interface IUiLabelsListProps {
+    dataTestId?: string;
+    items: ReadonlyArray<IUiLabelsListItem>;
+}
+
+// @internal
+export interface IUiLabelsPickerItem {
+    id: string;
+    kind?: LabelRowKind;
+    label: string;
+    locked?: boolean;
+}
+
+// @internal (undocumented)
+export interface IUiLabelsPickerProps {
+    anchor: ReactElement<any>;
+    dataTestId?: string;
+    defaultSelectedIds: ReadonlyArray<string>;
+    items: ReadonlyArray<IUiLabelsPickerItem>;
+    onApply: (selectedIds: string[]) => void;
 }
 
 // @internal (undocumented)
@@ -7226,11 +7294,27 @@ export interface IUiPaginationButtonProps {
 }
 
 // @internal (undocumented)
+export interface IUiPermissionMenuProps {
+    anchor: ReactElement<any>;
+    dataTestId?: string;
+    labelsCounter?: string;
+    onLabelsClick?: () => void;
+    onPermissionChange: (level: PermissionMenuLevel) => void;
+    onRemoveAccess?: () => void;
+    onTransferOwnership?: () => void;
+    selectedLevel?: PermissionMenuLevel;
+}
+
+// @internal (undocumented)
 export interface IUiPopoverProps {
     // (undocumented)
     accessibilityConfig?: IAccessibilityConfigBase;
     // (undocumented)
     anchor: ReactElement<any>;
+    anchorAccessibilityConfig?: {
+        ariaHaspopup?: "dialog" | "menu" | "listbox" | "tree" | "grid" | false;
+        ariaControls?: AriaAttributes["aria-controls"];
+    };
     // (undocumented)
     closeText?: string;
     // (undocumented)
@@ -7965,6 +8049,9 @@ export interface IZoomContextState {
     zoomLevel: number;
 }
 
+// @internal
+export type LabelRowKind = "primary" | "default";
+
 // @internal (undocumented)
 export type LabelSize = "small" | "normal";
 
@@ -8205,6 +8292,9 @@ export function ParameterControlDropdown({ name, value, resetValue, constraints,
 
 // @internal
 export function ParameterPicker({ parameters, excludedKeys, isLoading, maxListHeight, onAdd, onCancel }: IParameterPickerProps): JSX.Element;
+
+// @internal
+export type PermissionMenuLevel = "VIEW" | "SHARE";
 
 // @internal (undocumented)
 export type PositionPoint = `${VerticalPosition}-${HorizontalPosition}`;
@@ -8635,8 +8725,8 @@ export type UiButtonSegmentedControlProps = Omit<ComponentPropsWithRef<"div">, "
 // @internal (undocumented)
 export const UiCard: ForwardRefExoticComponent<IUiCardProps & RefAttributes<HTMLDivElement>>;
 
-// @internal (undocumented)
-export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label }: IUiCheckboxProps): JSX.Element;
+// @internal
+export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label, id }: IUiCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, iconAfter, iconColor, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton }: IUiChipProps): JSX.Element;
@@ -8736,6 +8826,9 @@ export function UiGranteeAvatar({ kind, decorative, dataTestId }: IUiGranteeAvat
 // @internal
 export function UiGranteeRow({ kind, name, email, isOwner, controls, dataTestId }: IUiGranteeRowProps): JSX.Element;
 
+// @internal
+export function UiGranteeRowControls({ labels, selectedLabelIds, permissionLevel, onLabelsChange, onPermissionChange, onTransferOwnership, onRemoveAccess, dataTestId }: IUiGranteeRowControlsProps): JSX.Element;
+
 // @internal (undocumented)
 export function UiIcon({ type, color, layout, disableAnimation, accessibilityConfig, size, backgroundSize, backgroundColor, backgroundType, backgroundShape }: IUiIconProps): JSX.Element;
 
@@ -8747,6 +8840,18 @@ export type UiIconButtonProps = IUiIconButtonPublicProps;
 
 // @internal (undocumented)
 export const UiInlineTextGenerator: ForwardRefExoticComponent<IUiInlineTextGeneratorProps & RefAttributes<HTMLDivElement>>;
+
+// @internal
+export function UiLabelChecklistRow({ label, kind, suffix, checked, disabled, onChange, dataTestId }: IUiLabelChecklistRowProps): JSX.Element;
+
+// @internal
+export function UiLabelRow({ label, kind, suffix, leading, labelId, onClick, dataTestId }: IUiLabelRowProps): JSX.Element;
+
+// @internal
+export function UiLabelsList({ items, dataTestId }: IUiLabelsListProps): JSX.Element;
+
+// @internal
+export function UiLabelsPicker({ anchor, items, defaultSelectedIds, onApply, dataTestId }: IUiLabelsPickerProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>;
@@ -8786,8 +8891,11 @@ export type UiPaginationButtonDirection = "previous" | "next";
 // @internal
 export type UiPaginationButtonSize = "small" | "large";
 
+// @internal
+export function UiPermissionMenu({ anchor, selectedLevel, onPermissionChange, onTransferOwnership, onLabelsClick, labelsCounter, onRemoveAccess, dataTestId }: IUiPermissionMenuProps): JSX.Element;
+
 // @internal (undocumented)
-export function UiPopover({ id, accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose }: IUiPopoverProps): JSX.Element;
+export function UiPopover({ id, accessibilityConfig, anchor, anchorAccessibilityConfig, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose }: IUiPopoverProps): JSX.Element;
 
 // @internal
 export function UiRadio({ checked, onChange, name, value, disabled, accessibilityConfig, tabIndex, label, id, dataTestId }: IUiRadioProps): JSX.Element;

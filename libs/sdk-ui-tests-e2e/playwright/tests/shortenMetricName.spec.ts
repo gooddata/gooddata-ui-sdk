@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Shorten Metric Name",
     "shortenMetricName",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             `check shorten in legend and tooltip in chart`,
