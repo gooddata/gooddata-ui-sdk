@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -18,6 +18,7 @@ export const useUserDetails = (
     onSubmit: (user: IUser, isAdmin: boolean) => void,
     onCancel: () => void,
     removeAdminGroup: () => void,
+    isSystemAccountFilteringEnabled = false,
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const [updatedUser, setUpdatedUser] = useState(user);
@@ -46,6 +47,7 @@ export const useUserDetails = (
         const sanitizedUser: IUser = {
             ...updatedUser,
             fullName: firstName && lastName ? `${firstName} ${lastName}` : undefined,
+            ...(isSystemAccountFilteringEnabled ? {} : { systemAccount: undefined }),
         };
 
         setIsProcessing(true);

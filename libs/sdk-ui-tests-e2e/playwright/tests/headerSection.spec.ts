@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Header section",
     "headerSection",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("Default language", () => {
             test(

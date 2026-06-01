@@ -17,7 +17,7 @@ const ORDER_DISPLAY_FORM_VALUE = ".gd-list-item.s-attribute-display-form-name-or
 test.topLevelDescribe(
     "Attribute filter",
     "attributeFilterConfig",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         //Cover ticket: RAIL-4671
         test.describe("Config attribute filter", () => {

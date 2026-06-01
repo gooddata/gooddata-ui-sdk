@@ -435,6 +435,7 @@
     "configurationPanel.kpiCantBeFilteredByAttribute": "Não é possível filtrar o kpi por {attributeName}. Desmarque a caixa de verificação.",
     "configurationPanel.vizCantBeFilteredByDate": "A visualização não pode ser filtrada por Data. Desmarque a caixa de seleção.",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "O filtro não é aplicável a esta visualização.",
+    "configurationPanel.mvfBlockedByRankingFilter": "Este filtro não pode ser aplicado porque a visualização utiliza um filtro de Valores superiores/inferiores. Remova o filtro de Valores superiores/inferiores para aplicar este filtro.",
     "configurationPanel.kpiCantBeFilteredByDate": "Não é possível filtrar o kpi por Data. Desmarque a caixa de verificação.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" não pode mais ser aplicado à visualização. Selecione uma dimensão diferente ou edite a visualização.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" já não pode ser aplicado ao kpi. Selecione uma dimensão diferente ou edite o kpi.",

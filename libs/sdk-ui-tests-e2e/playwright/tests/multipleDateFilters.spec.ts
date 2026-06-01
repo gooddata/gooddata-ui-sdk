@@ -26,7 +26,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Multitple date filters basic cases",
     "multipleDateFilters",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test("can add multiple date filters", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {
             await visit(page, "dashboard/multiple-date-filters");

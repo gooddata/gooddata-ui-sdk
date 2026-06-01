@@ -5307,6 +5307,13 @@ export const metadata_v1: {
                         $ref: string;
                     };
                 };
+                dimensionality: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
                 null_values_as_zero: {
                     type: string;
                     description: string;

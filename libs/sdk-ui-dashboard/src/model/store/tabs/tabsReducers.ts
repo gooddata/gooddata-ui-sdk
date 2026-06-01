@@ -5,7 +5,7 @@ import { type Action, type CaseReducer, type PayloadAction } from "@reduxjs/tool
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import { initializeFilterContext } from "./filterContext/filterContextUtils.js";
-import { type ITabState, type ITabsState } from "./tabsState.js";
+import { DEFAULT_TAB_ID, type ITabState, type ITabsState } from "./tabsState.js";
 
 /**
  * @alpha
@@ -160,6 +160,21 @@ const renameTab: TabsReducer<PayloadAction<{ tabId: string; title: string }>> = 
     tab.title = title;
 };
 
+/**
+ * Renames the placeholder DEFAULT_TAB_ID to a real UUID after the first backend save.
+ * Also updates activeTabLocalIdentifier when the active tab was the placeholder.
+ */
+const resolveDefaultTab: TabsReducer<PayloadAction<{ newLocalIdentifier: string }>> = (state, action) => {
+    const { newLocalIdentifier } = action.payload;
+    const tab = state.tabs?.find((t) => t.localIdentifier === DEFAULT_TAB_ID);
+    if (tab) {
+        tab.localIdentifier = newLocalIdentifier;
+    }
+    if (state.activeTabLocalIdentifier === DEFAULT_TAB_ID) {
+        state.activeTabLocalIdentifier = newLocalIdentifier;
+    }
+};
+
 export const tabsReducers = {
     setTabs,
     setActiveTabLocalIdentifier,
@@ -168,4 +183,5 @@ export const tabsReducers = {
     clearTabs,
     setTabIsRenaming,
     renameTab,
+    resolveDefaultTab,
 };

@@ -29,7 +29,14 @@ export function UiAsyncTableDropdownItem({
             >
                 {isMultiSelect ? (
                     <div className={e("dropdown-item-checkbox")}>
-                        <UiCheckbox preventDefault checked={isSelected ?? false} tabIndex={-1} />
+                        {/* Don't pass `preventDefault` — the new @ui/UiCheckbox overlays the
+                         * native input on the visible 14×14 control, so a click on the box
+                         * always lands on the input. With `preventDefault` the input would
+                         * call `e.stopPropagation()` and the parent `dropdown-item` div's
+                         * onClick (which owns selection here) would never fire. The
+                         * checkbox itself stays read-only (no `onChange` prop given) — the
+                         * row's click handler is the source of truth. */}
+                        <UiCheckbox checked={isSelected ?? false} tabIndex={-1} />
                     </div>
                 ) : null}
                 <div className={e("dropdown-item-label-primary")}>{label}</div>

@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Insights on dashboard",
     "insightOnDashboard",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             "should disable save button if having no change",

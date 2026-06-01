@@ -2683,6 +2683,7 @@ export interface IFeatureFlags {
     enableSnowflakeKeyPairAuthentication?: boolean;
     // (undocumented)
     enableStarrocksDataSource?: boolean;
+    enableSystemAccountFiltering?: boolean;
     enableToDateFilters?: boolean;
     enableUserDataFiltersUi?: boolean;
     enableUserManagement?: boolean;
@@ -5680,6 +5681,7 @@ export interface IUser {
     organizationName?: string;
     permissions?: string[];
     ref: ObjRef;
+    systemAccount?: boolean;
 }
 
 // @alpha

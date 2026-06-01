@@ -41,6 +41,7 @@ export const convertUser = (user: JsonApiUserOutDocument): IUser => {
         fullName: constructFullName(firstName, lastName),
         firstName,
         lastName,
+        systemAccount: user.data.attributes?.systemAccount,
     };
 };
 
@@ -86,6 +87,7 @@ export const convertIncludedUser = (user: JsonApiUserOutWithLinks): IUser => {
         fullName: constructFullName(firstName, lastName),
         firstName,
         lastName,
+        systemAccount: user.attributes?.systemAccount,
     };
 };
 

@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Date filtering",
     "dateFiltering",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             "verify date filter default state",

@@ -1230,3 +1230,28 @@ export {
     type IUiGeneralAccessRadioProps,
     type GeneralAccessValue,
 } from "./@ui/UiGeneralAccessRadio/UiGeneralAccessRadio.js";
+export { UiLabelRow, type IUiLabelRowProps, type LabelRowKind } from "./@ui/UiLabelRow/UiLabelRow.js";
+export {
+    UiLabelChecklistRow,
+    type IUiLabelChecklistRowProps,
+} from "./@ui/UiLabelChecklistRow/UiLabelChecklistRow.js";
+export {
+    UiLabelsList,
+    type IUiLabelsListProps,
+    type IUiLabelsListItem,
+} from "./@ui/UiLabelsList/UiLabelsList.js";
+export {
+    UiLabelsPicker,
+    isLabelsPickerItemChecked,
+    type IUiLabelsPickerProps,
+    type IUiLabelsPickerItem,
+} from "./@ui/UiLabelsPicker/UiLabelsPicker.js";
+export {
+    UiPermissionMenu,
+    type IUiPermissionMenuProps,
+    type PermissionMenuLevel,
+} from "./@ui/UiPermissionMenu/UiPermissionMenu.js";
+export {
+    UiGranteeRowControls,
+    type IUiGranteeRowControlsProps,
+} from "./@ui/UiGranteeRowControls/UiGranteeRowControls.js";

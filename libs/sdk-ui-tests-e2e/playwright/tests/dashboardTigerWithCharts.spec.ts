@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Dashboard with charts",
     "dashboardTigerWithCharts",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("rendering", () => {
             test("should render charts", { tag: ["@pre-merge-isolated"] }, async ({ page }) => {

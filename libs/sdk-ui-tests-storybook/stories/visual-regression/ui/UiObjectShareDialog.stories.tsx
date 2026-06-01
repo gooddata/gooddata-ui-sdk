@@ -8,16 +8,21 @@ import { action } from "storybook/actions";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 import {
     type GeneralAccessValue,
+    type IUiLabelsPickerItem,
     type IUiObjectShareDialogGrantee,
+    UiGranteeRowControls,
     UiObjectShareDialog,
 } from "@gooddata/sdk-ui-kit";
 
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";
 
-function controls(label: string) {
-    return <span style={{ color: "var(--gd-palette-complementary-6)" }}>{label}</span>;
-}
+const LABELS: IUiLabelsPickerItem[] = [
+    { id: "id", label: "Customer ID", kind: "primary", locked: true },
+    { id: "name", label: "Customer Name", kind: "default" },
+    { id: "email", label: "Customer Email" },
+    { id: "ssn", label: "Customer SSN" },
+];
 
 function buildGrantees(): IUiObjectShareDialogGrantee[] {
     return [
@@ -32,14 +37,32 @@ function buildGrantees(): IUiObjectShareDialogGrantee[] {
             id: "group",
             kind: "group",
             name: "User group",
-            controls: controls("Can share"),
+            controls: (
+                <UiGranteeRowControls
+                    labels={LABELS}
+                    selectedLabelIds={["id", "name", "email", "ssn"]}
+                    permissionLevel="SHARE"
+                    onLabelsChange={action("Group → labels change")}
+                    onPermissionChange={action("Group → permission change")}
+                    onRemoveAccess={action("Group → remove")}
+                />
+            ),
         },
         {
             id: "jane",
             kind: "user",
             name: "Jane Good",
             email: "jane.good@company.com",
-            controls: controls("Can view"),
+            controls: (
+                <UiGranteeRowControls
+                    labels={LABELS}
+                    selectedLabelIds={["id", "name", "email", "ssn"]}
+                    permissionLevel="VIEW"
+                    onLabelsChange={action("Jane → labels change")}
+                    onPermissionChange={action("Jane → permission change")}
+                    onRemoveAccess={action("Jane → remove")}
+                />
+            ),
         },
     ];
 }
@@ -59,7 +82,15 @@ function UiObjectShareDialogExample() {
                         action("general access change")(value);
                         setGeneralAccess(value);
                     }}
-                    workspaceControls={controls("Can view")}
+                    workspaceControls={
+                        <UiGranteeRowControls
+                            labels={LABELS}
+                            selectedLabelIds={["id", "name", "email", "ssn"]}
+                            permissionLevel="VIEW"
+                            onLabelsChange={action("Workspace → labels change")}
+                            onPermissionChange={action("Workspace → permission change")}
+                        />
+                    }
                 />
             </div>
         </IntlProvider>

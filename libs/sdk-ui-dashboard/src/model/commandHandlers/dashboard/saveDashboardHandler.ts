@@ -5,7 +5,6 @@ import { type BatchAction, batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
-import { v4 as uuid } from "uuid";
 
 import {
     type IAccessControlAware,
@@ -50,11 +49,12 @@ import { filterOutCustomWidgets, selectBasicLayoutByTab } from "../../store/tabs
 import { selectMeasureValueFilterConfigsOverridesByTab } from "../../store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import { selectSmartPersistedTabsParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
-import { type ITabState } from "../../store/tabs/tabsState.js";
+import { DEFAULT_TAB_ID, type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
+import { generateTabLocalIdentifier } from "../../utils/tabLocalIdentifier.js";
 import { changeRenderModeHandler } from "../renderMode/changeRenderModeHandler.js";
 import { switchDashboardTabHandler } from "../tabs/switchDashboardTabHandler.js";
 
@@ -79,6 +79,13 @@ type DashboardSaveContext = {
      * This will be undefined if a dashboard is not yet saved.
      */
     persistedDashboard?: IDashboard;
+
+    /**
+     * When the placeholder tab (DEFAULT_TAB_ID) is saved for the first time, a real UUID is generated
+     * here and used in the persisted tabs. After save, state is updated to replace DEFAULT_TAB_ID with
+     * this UUID so the identifier is stable for all future references (filter views, drills, etc.).
+     */
+    defaultTabNewLocalIdentifier?: string;
 };
 
 type DashboardSaveResult = {
@@ -136,6 +143,7 @@ export function getDashboardWithSharing(
 function processExistingTabs(
     tabs: ITabState[],
     parametersByTab: Record<string, IDashboardParameter[]>,
+    defaultTabNewLocalIdentifier?: string,
 ): IDashboardTab[] {
     return tabs.map((tab) => {
         const dateFilterConfig = tab.dateFilterConfig?.dateFilterConfig;
@@ -175,7 +183,10 @@ function processExistingTabs(
 
         const result: IDashboardTab = {
             // explicitly type the result to avoid type errors caused by spread operators
-            localIdentifier: tab.localIdentifier,
+            localIdentifier:
+                tab.localIdentifier === DEFAULT_TAB_ID && defaultTabNewLocalIdentifier
+                    ? defaultTabNewLocalIdentifier
+                    : tab.localIdentifier,
             title: tab.title ?? "",
             // Use each tab's own layout, filter out custom widgets, then process
             layout: tabLayout ? processLayout(filterOutCustomWidgets(tabLayout)) : undefined,
@@ -221,7 +232,7 @@ function createDefaultTab(
 ): IDashboardTab[] {
     return [
         {
-            localIdentifier: uuid(),
+            localIdentifier: generateTabLocalIdentifier(),
             title: "",
             layout: layout ? processLayout(layout) : undefined,
             filterContext: rootFilterContext,
@@ -244,6 +255,7 @@ function resolveProcessedTabs(
     dateFilterConfigs: IDashboardDefinition["dateFilterConfigs"],
     measureValueFilterConfigs: IDashboardDefinition["measureValueFilterConfigs"],
     parametersByTab: Record<string, IDashboardParameter[]>,
+    defaultTabNewLocalIdentifier?: string,
 ): IDashboardTab[] | undefined {
     // If no tabs exist, create a default tab with root-level properties
     const shouldCreateDefaultTab = !tabs || tabs.length === 0;
@@ -260,7 +272,7 @@ function resolveProcessedTabs(
     }
 
     if (tabs) {
-        return processExistingTabs(tabs, parametersByTab);
+        return processExistingTabs(tabs, parametersByTab, defaultTabNewLocalIdentifier);
     }
 
     return undefined;
@@ -281,6 +293,17 @@ function* createDashboardSaveContext(
     const dashboardDescriptor: ReturnType<typeof selectDashboardDescriptor> =
         yield select(selectDashboardDescriptor);
     const tabs: ReturnType<typeof selectTabs> = yield select(selectTabs);
+
+    // Generate a real UUID for the UI placeholder tab (DEFAULT_TAB_ID) only when it has never
+    // been persisted. If the backend already owns a tab with that identifier (e.g. set intentionally
+    // via API or as-code definition) we must leave it unchanged.
+    const hasPersistedDefaultTab = persistedDashboard?.tabs?.some(
+        (t) => t.localIdentifier === DEFAULT_TAB_ID,
+    );
+    const defaultTabNewLocalIdentifier =
+        !hasPersistedDefaultTab && tabs?.some((t) => t.localIdentifier === DEFAULT_TAB_ID)
+            ? generateTabLocalIdentifier()
+            : undefined;
 
     // Root-level properties must always reflect the first tab, regardless of which tab is active.
     // Using active-tab selectors here would persist the wrong data when saving from a non-first tab.
@@ -344,6 +367,7 @@ function* createDashboardSaveContext(
         dateFilterConfigs,
         measureValueFilterConfigs,
         parametersByTab,
+        defaultTabNewLocalIdentifier,
     );
 
     const locale: ReturnType<typeof selectLocale> = yield select(selectLocale);
@@ -388,6 +412,7 @@ function* createDashboardSaveContext(
             capabilities.supportsAccessControl,
             isNewDashboard,
         ),
+        defaultTabNewLocalIdentifier,
     };
 }
 
@@ -419,10 +444,16 @@ function* save(
 
         // For each tab in the saved dashboard, update its widget identities and filter context identity
         dashboard.tabs.forEach((savedTab) => {
-            const stateTab = stateTabs?.find((t) => t.localIdentifier === savedTab.localIdentifier);
+            // If this tab was the DEFAULT_TAB_ID placeholder being saved for the first time,
+            // find the state tab by DEFAULT_TAB_ID (its current state ID) and use it as the tabId
+            // for identity updates. resolveDefaultTab (pushed below) will rename it afterwards.
+            const isDefaultTabBeingSaved = savedTab.localIdentifier === saveCtx.defaultTabNewLocalIdentifier;
+            const stateTab = isDefaultTabBeingSaved
+                ? stateTabs?.find((t) => t.localIdentifier === DEFAULT_TAB_ID)
+                : stateTabs?.find((t) => t.localIdentifier === savedTab.localIdentifier);
+            const tabIdForUpdate = stateTab?.localIdentifier ?? savedTab.localIdentifier;
 
             // Update filter context identity for this tab
-            // Extract identity directly from the filter context
             const filterContext = savedTab.filterContext;
             const filterContextIdentity =
                 filterContext && !isTempFilterContext(filterContext) && filterContext.ref
@@ -435,14 +466,13 @@ function* save(
 
             actions.push(
                 tabsActions.updateFilterContextIdentityForTab({
-                    tabId: savedTab.localIdentifier,
+                    tabId: tabIdForUpdate,
                     filterContextIdentity,
                 }),
             );
 
             // Update widget identities for this tab if both layouts exist
             if (stateTab?.layout?.layout && savedTab.layout) {
-                // Filter out custom widgets from state layout to match the saved layout structure
                 const stateLayoutWithoutCustomWidgets = filterOutCustomWidgets(stateTab.layout.layout);
                 const mapping = dashboardLayoutWidgetIdentityMap(
                     stateLayoutWithoutCustomWidgets,
@@ -450,12 +480,22 @@ function* save(
                 );
                 actions.push(
                     tabsActions.updateWidgetIdentitiesForTab({
-                        tabId: savedTab.localIdentifier,
+                        tabId: tabIdForUpdate,
                         mapping,
                     }),
                 );
             }
         });
+
+        // After all identity updates, rename DEFAULT_TAB_ID to its real UUID in state.
+        // This makes the identifier stable for filter views, drill targets, and future saves.
+        if (saveCtx.defaultTabNewLocalIdentifier) {
+            actions.push(
+                tabsActions.resolveDefaultTab({
+                    newLocalIdentifier: saveCtx.defaultTabNewLocalIdentifier,
+                }),
+            );
+        }
     } else {
         // For dashboards without tabs, use the original approach with active tab actions
         const identityMapping = dashboardLayoutWidgetIdentityMap(

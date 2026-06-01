@@ -435,6 +435,7 @@
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI nie może być filtrowany przez {attributeName}. Odznacz pole wyboru.",
     "configurationPanel.vizCantBeFilteredByDate": "Wizualizacja nie może być filtrowana wg daty. Odznacz pole wyboru.",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filtr nie ma zastosowania do tej wizualizacji.",
+    "configurationPanel.mvfBlockedByRankingFilter": "Tego filtra nie można zastosować, ponieważ wizualizacja używa filtra Top/bottom values. Usuń filtr Top/bottom values, aby zastosować ten filtr.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI nie może być filtrowane wg daty. Odznacz pole wyboru.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" nie może być już zastosowany do wizualizacji. Wybierz inny wymiar lub edytuj wizualizację.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" nie może być już zastosowany do KPI. Wybierz inny wymiar lub edytuj KPI.",

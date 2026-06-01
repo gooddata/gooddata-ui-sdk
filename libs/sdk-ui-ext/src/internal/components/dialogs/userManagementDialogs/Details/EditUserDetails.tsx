@@ -19,6 +19,7 @@ export interface IEditUserDetailsProps {
     user: IUser | undefined;
     enableBackButton?: boolean;
     changeUserMembership?: boolean;
+    isSystemAccountFilteringEnabled?: boolean;
     onSubmit: (user: IUser, isAdmin: boolean) => void;
     onCancel: () => void;
     onClose: () => void;
@@ -31,6 +32,7 @@ export function EditUserDetails({
     isAdmin,
     enableBackButton,
     changeUserMembership,
+    isSystemAccountFilteringEnabled,
     onSubmit,
     onCancel,
     onClose,
@@ -43,6 +45,7 @@ export function EditUserDetails({
         onSubmit,
         onCancel,
         removeAdminGroup,
+        isSystemAccountFilteringEnabled,
     );
 
     // change user membership if dialog was opened for that reason, enable Save button, do it just once
@@ -77,6 +80,7 @@ export function EditUserDetails({
                 isAdmin={isUpdatedAdmin}
                 isBootstrapUser={isBootstrapUser}
                 mode="EDIT"
+                isSystemAccountFilteringEnabled={isSystemAccountFilteringEnabled}
                 onChange={onChange}
             />
         </ConfirmDialogBase>

@@ -1,0 +1,21 @@
+// (C) 2026 GoodData Corporation
+
+.gd-ui-kit-labels-list {
+    display: flex;
+    flex-direction: column;
+
+    &__heading {
+        padding: var(--gd-spacing-10px) var(--gd-spacing-10px) var(--gd-spacing-5px);
+        font-size: 10px;
+        font-weight: 700;
+        line-height: 14px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--gd-palette-complementary-6);
+    }
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+    }
+}

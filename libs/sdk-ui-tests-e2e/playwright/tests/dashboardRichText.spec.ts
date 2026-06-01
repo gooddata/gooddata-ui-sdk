@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "RichText",
     "dashboardRichText",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("Isolated", () => {
             test.beforeEach(async ({ page }) => {

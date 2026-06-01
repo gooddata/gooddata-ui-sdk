@@ -45,7 +45,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Dependent filter",
     "dependentFilters",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             "should test parent - child interaction in view mode",

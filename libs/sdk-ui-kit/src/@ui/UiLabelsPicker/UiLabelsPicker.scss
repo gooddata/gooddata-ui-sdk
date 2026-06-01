@@ -1,0 +1,29 @@
+// (C) 2026 GoodData Corporation
+
+// Rendered inside UiPopover.__content (which adds 10px padding + 20px gap).
+// Pull the padding back so the rows stretch edge-to-edge of the popover and
+// disable the gap. The actions strip sits flush at the bottom with its own
+// top border.
+
+.gd-ui-kit-labels-picker {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    // UiPopover's __content adds 10px padding all around. Pull it back so rows
+    // reach edge-to-edge of the popover; the popover sets its own width.
+    margin: calc(-1 * var(--gd-spacing-10px));
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+        padding: var(--gd-spacing-10px) 0;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--gd-spacing-10px);
+        padding: var(--gd-spacing-10px);
+        border-top: 1px solid var(--gd-palette-complementary-3);
+    }
+}

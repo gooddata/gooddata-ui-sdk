@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Repeater",
     "repeater",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             "Should render apply full customize configurations",

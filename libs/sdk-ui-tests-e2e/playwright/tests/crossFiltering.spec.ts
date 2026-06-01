@@ -29,7 +29,7 @@ const SECOND_WIDGET = widgetSelector(0, 1);
 test.topLevelDescribe(
     "Cross filtering",
     "crossFiltering",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             "should add virtual filter when cross-filtering in view mode",

@@ -14,7 +14,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Dashboard with Table Transpose",
     "tableTranspose",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test(
             "rendering",

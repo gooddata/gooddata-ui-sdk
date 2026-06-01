@@ -435,6 +435,7 @@
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI-ja ni mogoče filtrirati glede na {attributeName}. Odznačite potrditveno polje.",
     "configurationPanel.vizCantBeFilteredByDate": "Vizualizacije ni mogoče filtrirati po datumu. Odznačite potrditveno polje.",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filter ni uporaben za to vizualizacijo.",
+    "configurationPanel.mvfBlockedByRankingFilter": "Tega filtra ni mogoče uporabiti, ker vizualizacija uporablja filter Najvišje/najnižje vrednosti. Odstranite filter Najvišje/najnižje vrednosti, da uporabite ta filter.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI-ja ni mogoče filtrirati po datumu. Odznačite potrditveno polje.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" se ne more več uporabljati pri vizualizaciji. Izberite drugo dimenzijo ali uredite vizualizacijo.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" se ne more več uporabljati pri KPI-ju. Izberite drugo dimenzijo ali uredite KPI.",

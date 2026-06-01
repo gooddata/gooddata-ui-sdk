@@ -27,7 +27,7 @@ test.beforeEach(async ({ page }) => {
 test.topLevelDescribe(
     "Share Dashboard To Everyone",
     "shareDashboardToEveryone",
-    { additionalWindowProperties: { useSafeWidgetLocalIdentifiersForE2e: true } },
+    { additionalWindowProperties: { useSafeLocalIdentifiersForE2e: true } },
     () => {
         test.describe("Basic cases", () => {
             test.beforeEach(async ({ request }) => {

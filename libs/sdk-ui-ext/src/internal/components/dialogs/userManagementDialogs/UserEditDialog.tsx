@@ -55,6 +55,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => ReactElement;
     areFilterViewsEnabled?: boolean;
+    isSystemAccountFilteringEnabled?: boolean;
     selectedTab?: UserTabId;
 }
 
@@ -68,6 +69,7 @@ function UserEditDialogComponent({
     changeUserMembership = false,
     renderDataSourceIcon,
     areFilterViewsEnabled = false,
+    isSystemAccountFilteringEnabled = false,
     selectedTab = undefined,
 }: IUserEditDialogProps) {
     const intl = useIntl();
@@ -253,6 +255,7 @@ function UserEditDialogComponent({
                                             isAdmin={isCurrentlyAdmin}
                                             isBootstrapUser={isBootstrapUser(user)}
                                             mode="VIEW"
+                                            isSystemAccountFilteringEnabled={isSystemAccountFilteringEnabled}
                                         />
                                     )}
                                     {selectedTabId.id === userDialogTabsMessages.dataSources.id && (
@@ -309,6 +312,7 @@ function UserEditDialogComponent({
                                     isBootstrapUser={isBootstrapUser(user)}
                                     enableBackButton={!isOpenedInEditMode}
                                     changeUserMembership={changeUserMembership}
+                                    isSystemAccountFilteringEnabled={isSystemAccountFilteringEnabled}
                                     onSubmit={onUserDetailsChanged}
                                     onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                                     onClose={onClose}
