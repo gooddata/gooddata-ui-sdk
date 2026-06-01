@@ -1,0 +1,130 @@
+{
+    "gs.header.help": {
+        "text": "Help",
+        "crowdinContext": "Label for the help button in the global application header. Clicking this opens the help menu or documentation."
+    },
+    "gs.header.help.label": {
+        "text": "Help links",
+        "crowdinContext": "ARIA label for the help links section in the help menu. Used for accessibility purposes to describe the collection of help-related links."
+    },
+    "gs.header.logout": {
+        "text": "Logout",
+        "crowdinContext": "Label for the logout button in the user menu. Clicking this signs the user out of their current session."
+    },
+    "gs.header.menu": {
+        "text": "Menu",
+        "crowdinContext": "Label for the menu title in vertical mobile menu."
+    },
+    "gs.header.accessibility.label": {
+        "text": "Global application header",
+        "crowdinContext": "ARIA label for the main header section of the application. Used by screen readers to identify the header area."
+    },
+    "gs.header.href.accessibility": {
+        "text": "Go to homepage",
+        "crowdinContext": "Accessibility text describing the action of clicking the application logo in the header, which navigates to the homepage."
+    },
+    "gs.header.logo.title.accessibility": {
+        "text": "{organizationName} logo",
+        "crowdinContext": "Accessibility text for the application logo in the header. Used by screen readers to identify the logo element."
+    },
+    "gs.header.mainMenu.ariaLabel": {
+        "text": "Main menu",
+        "crowdinContext": "Accessibility label for the main menu button in the header, used by screen readers"
+    },
+    "gs.header.menu.accessibility.label": {
+        "text": "Global navigation",
+        "crowdinContext": "ARIA label for the primary navigation menu in the header. Used by screen readers to identify the main navigation area."
+    },
+    "gs.header.account.title": {
+        "text": "Account",
+        "crowdinContext": "Title for the user account menu in the header. Displays user-related options like profile settings and logout."
+    },
+    "gs.header.slack": {
+        "text": "Slack",
+        "crowdinContext": "Link to Slack community channel"
+    },
+    "gs.header.community": {
+        "text": "Community",
+        "crowdinContext": "Link to community forum"
+    },
+    "gs.header.university": {
+        "text": "University",
+        "crowdinContext": "Link to GoodData University training resources"
+    },
+    "gs.header.documentation": {
+        "text": "Documentation",
+        "crowdinContext": "Link to product documentation"
+    },
+    "gs.host.error.applicationFailedToLoad": {
+        "text": "Application failed to load",
+        "crowdinContext": "Heading displayed when a pluggable application module fails to mount or load."
+    },
+    "gs.host.error.failedToLoad": {
+        "text": "Failed to load",
+        "crowdinContext": "Heading displayed when the application platform context fails to load during startup."
+    },
+    "gs.host.error.pageNotFound": {
+        "text": "Page not found",
+        "crowdinContext": "Heading displayed when the user navigates to a URL that does not match any known application or route."
+    },
+    "gs.host.error.pageNotFoundDescription": {
+        "text": "The page you are looking for does not exist or you do not have access to it.",
+        "crowdinContext": "Description shown below the 'Page not found' heading, explaining that the requested page is either missing or inaccessible."
+    },
+    "gs.host.error.somethingWentWrong": {
+        "text": "Something went wrong",
+        "crowdinContext": "Heading displayed when an unexpected error occurs during application redirect resolution."
+    },
+    "gs.host.notification.newDeployment.message": {
+        "text": "A new version of GoodData is available.",
+        "crowdinContext": "Toast message shown when the host detects that a newer build of the application has been deployed while the user's tab was open. Followed by a reload link."
+    },
+    "gs.host.notification.newDeployment.reloadLink": {
+        "text": "Reload",
+        "crowdinContext": "Clickable text inside the new-deployment toast that triggers a full page reload to load the latest application version."
+    },
+    "gs.header.helpMenu.gettingStarted": {
+        "text": "Getting started",
+        "crowdinContext": "Link to getting started guide in help menu"
+    },
+    "gs.header.helpMenu.connectData": {
+        "text": "Connecting data",
+        "crowdinContext": "Link to data connection guide in help menu"
+    },
+    "gs.header.helpMenu.manage.ws": {
+        "text": "Managing workspaces and workspace hierarchy",
+        "crowdinContext": "Link to workspace management documentation in help menu"
+    },
+    "gs.header.helpMenu.manage.user": {
+        "text": "Managing users and user groups",
+        "crowdinContext": "Link to user management documentation in help menu"
+    },
+    "messages.genAi.visualisation.saved.success": {
+        "text": "Great! We saved your visualization.",
+        "crowdinContext": "Success message when generative AI visualization is saved"
+    },
+    "messages.genAi.visualisation.saved.error": {
+        "text": "Oops, there was an issue when saving your visualization.",
+        "crowdinContext": "Error message when generative AI visualization save fails"
+    },
+    "messages.genAi.visualisation.saved.error.detail": {
+        "text": "{errorType}: {errorMessage}",
+        "crowdinContext": "Detailed error message format. {errorType} and {errorMessage} are replaced with specific error details."
+    },
+    "messages.genAi.visualisation.link.copied": {
+        "text": "The visualization link has been copied to your clipboard.",
+        "crowdinContext": "Confirmation message."
+    },
+    "messages.showMore": {
+        "text": "Show more",
+        "crowdinContext": "Button text to expand and show more message content"
+    },
+    "messages.showLess": {
+        "text": "Show less",
+        "crowdinContext": "Button text to collapse and show less message content"
+    },
+    "gen-ai.ask-assistant.search": {
+        "text": "Build new visualization based on: {question}",
+        "crowdinContext": "This is used as prefix for the search term when the user starts a new conversation related to a requested term. For example: \"I want to show more about: <term>\"."
+    }
+}

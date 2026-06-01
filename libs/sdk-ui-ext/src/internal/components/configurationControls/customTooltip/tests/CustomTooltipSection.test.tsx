@@ -114,6 +114,34 @@ describe("CustomTooltipSection", () => {
         });
     });
 
+    it("flushes pending content immediately on blur instead of waiting for the debounce", async () => {
+        const pushDataSpy = vi.fn();
+        const enabled = set({}, "controls.customTooltip.enabled", true);
+        createComponent({
+            properties: enabled,
+            propertiesMeta: expanded,
+            pushData: pushDataSpy,
+        });
+
+        const textbox = screen.getByRole("textbox");
+        await userEvent.type(textbox, "fast");
+        // Blur before the 500ms debounce would have settled.
+        await userEvent.tab();
+
+        await waitFor(() => {
+            expect(pushDataSpy).toHaveBeenCalledWith({
+                properties: {
+                    controls: {
+                        customTooltip: {
+                            enabled: true,
+                            content: "fast",
+                        },
+                    },
+                },
+            });
+        });
+    });
+
     it("syncs the textarea when content changes externally (e.g., undo or viz switch)", async () => {
         const pushDataSpy = vi.fn();
         const initial = set({}, "controls.customTooltip.enabled", true);

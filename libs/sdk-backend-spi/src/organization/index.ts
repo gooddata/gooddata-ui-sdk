@@ -6,7 +6,6 @@ import { type IOrganizationAgentsService } from "./agents/index.js";
 import { type IOrganizationAutomationService } from "./automations/index.js";
 import { type IOrganizationExportTemplatesService } from "./exportTemplates/index.js";
 import { type IOrganizationGenAIService } from "./genAI/index.js";
-import { type IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
 import { type IOrganizationLlmProvidersService } from "./llmProviders/index.js";
 import { type IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
 import { type IOrganizationNotificationService } from "./notifications/index.js";
@@ -70,11 +69,6 @@ export interface IOrganization {
      * Returns service that can be used to query and manage organization notification channels.
      */
     notificationChannels(): IOrganizationNotificationChannelService;
-
-    /**
-     * Returns service that can be used to query and manage organization LLM endpoints.
-     */
-    llmEndpoints(): IOrganizationLlmEndpointsService;
 
     /**
      * Returns service that can be used to query and manage organization LLM providers.

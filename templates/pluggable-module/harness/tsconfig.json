@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig.harness.json",
+    "compilerOptions": {
+        "allowJs": true,
+        "outDir": "dist",
+        "resolveJsonModule": true,
+        "typeRoots": ["node_modules/@types", "typings.d.ts"],
+        "paths": {
+            "react": ["./node_modules/@types/react"]
+        }
+    },
+    "include": ["src", "./*", "typings.d.ts"],
+    "exclude": ["**/node_modules", "**/esm", "**/temp", "**/dist"]
+}
