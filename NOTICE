@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-5-27
+Date generated: 2026-6-1
 
-Revision ID: cca91b63bcb24d8939c88b56da17c29f0346e9e2
+Revision ID: 18e17a83de165c5692feed665b992e2839aefbf0
 
 ================================================================================
 ================================================================================
@@ -227,6 +227,10 @@ Revision ID: cca91b63bcb24d8939c88b56da17c29f0346e9e2
 - @mapbox/whoots-js (3.1.0) [ISC]
 - @maplibre/maplibre-gl-style-spec (20.4.0) [MIT, BSD-3-Clause, ISC]
 - @marijn/find-cluster-break (1.0.2) [MIT]
+- @module-federation/error-codes (2.3.1) [MIT]
+- @module-federation/runtime (2.3.1) [MIT]
+- @module-federation/runtime-core (2.3.1) [MIT]
+- @module-federation/sdk (2.3.1) [MIT]
 - @nodelib/fs.scandir (2.1.5) [MIT]
 - @nodelib/fs.stat (2.0.5) [MIT]
 - @nodelib/fs.walk (1.2.8) [MIT]
@@ -439,6 +443,7 @@ Revision ID: cca91b63bcb24d8939c88b56da17c29f0346e9e2
 - convert-source-map (1.9.0) [MIT]
 - convert-source-map (2.0.0) [MIT]
 - cookie (0.7.1) [MIT]
+- cookie (1.1.1) [MIT]
 - cookie-signature (1.0.6) [MIT]
 - copy-to-clipboard (3.3.3) [MIT]
 - core-js-compat (3.45.1) [MIT]
@@ -669,6 +674,7 @@ Revision ID: cca91b63bcb24d8939c88b56da17c29f0346e9e2
 - isobject (3.0.1) [MIT]
 - jackspeak (4.1.1) [blueoak-1.0.0]
 - jest-worker (27.5.1) [MIT]
+- jiti (2.6.1) [MIT]
 - js-tokens (4.0.0) [MIT]
 - js-yaml (4.1.1) [MIT]
 - jsesc (3.0.2) [MIT]
@@ -837,6 +843,7 @@ Revision ID: cca91b63bcb24d8939c88b56da17c29f0346e9e2
 - picocolors (1.1.1) [ISC]
 - picomatch (2.3.1) [MIT]
 - picomatch (4.0.3) [MIT]
+- picomatch (4.0.4) [MIT]
 - pify (4.0.1) [MIT]
 - pkg-dir (4.2.0) [MIT]
 - playwright (1.60.0) [Apache-2.0, MIT, ISC, CC-BY-4.0, BSD-3-Clause]
@@ -887,6 +894,7 @@ Revision ID: cca91b63bcb24d8939c88b56da17c29f0346e9e2
 - react-portal (4.3.0) [MIT]
 - react-redux (9.2.0) [MIT]
 - react-responsive (10.0.1) [MIT, BSD-3-Clause]
+- react-router (7.13.1) [MIT]
 - react-select (5.10.2) [MIT]
 - react-select-async-paginate (0.7.11) [MIT]
 - react-textarea-autosize (8.5.6) [MIT]
@@ -946,6 +954,7 @@ Revision ID: cca91b63bcb24d8939c88b56da17c29f0346e9e2
 - serialize-javascript (6.0.2) [BSD-3-Clause]
 - serve-index (1.9.1) [MIT]
 - serve-static (1.16.2) [MIT]
+- set-cookie-parser (2.7.2) [MIT]
 - set-function-length (1.2.2) [MIT]
 - setprototypeof (1.1.0) [ISC]
 - setprototypeof (1.2.0) [ISC]
@@ -3559,6 +3568,54 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: @module-federation/error-codes (2.3.1)
+
+Package Locator: npm+@module-federation/error-codes$2.3.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @module-federation/runtime (2.3.1)
+
+Package Locator: npm+@module-federation/runtime$2.3.1
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @module-federation/runtime-core (2.3.1)
+
+Package Locator: npm+@module-federation/runtime-core$2.3.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @module-federation/sdk (2.3.1)
+
+Package Locator: npm+@module-federation/sdk$2.3.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: @nodelib/fs.scandir (2.1.5)
 
 Package Locator: npm+@nodelib/fs.scandir$2.1.5
@@ -6114,6 +6171,18 @@ MIT
 Package Title: cookie (0.7.1)
 
 Package Locator: npm+cookie$0.7.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: cookie (1.1.1)
+
+Package Locator: npm+cookie$1.1.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -8899,6 +8968,18 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: jiti (2.6.1)
+
+Package Locator: npm+jiti$2.6.1
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: js-tokens (4.0.0)
 
 Package Locator: npm+js-tokens$4.0.0
@@ -10937,6 +11018,18 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: picomatch (4.0.4)
+
+Package Locator: npm+picomatch$4.0.4
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: pify (4.0.1)
 
 Package Locator: npm+pify$4.0.1
@@ -11558,6 +11651,18 @@ MIT
 
 * Other Licenses *
 BSD-3-Clause
+
+
+--------------------------------------------------------------------------------
+Package Title: react-router (7.13.1)
+
+Package Locator: npm+react-router$7.13.1
+
+Package Depth: Direct
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
 
 
 --------------------------------------------------------------------------------
@@ -12272,6 +12377,18 @@ MIT
 Package Title: serve-static (1.16.2)
 
 Package Locator: npm+serve-static$1.16.2
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: set-cookie-parser (2.7.2)
+
+Package Locator: npm+set-cookie-parser$2.7.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -32222,6 +32339,31 @@ SOFTWARE.
 
 MIT License
 
+Copyright (c) 2020 ScriptedAlchemy LLC (Zack Jackson) Zhou Shaw (zhouxiao)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* MIT *
+
+MIT License
+
 Copyright (c) 2020 Vadim @streamich Dalecky
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -32756,6 +32898,56 @@ SOFTWARE.
 
 MIT License
 
+Copyright (c) 2023-present zhanghang(2heal1)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* MIT *
+
+MIT License
+
+Copyright (c) 2023-present zhouxiao(zhoushaw)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* MIT *
+
+MIT License
+
 Copyright (c) 2024 Colin McDonnell
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33235,6 +33427,31 @@ SOFTWARE.
 MIT License
 
 Copyright (c) Meta Platforms, Inc. and affiliates.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* MIT *
+
+MIT License
+
+Copyright (c) Pooya Parsa <pooya@pi0.io>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -35500,6 +35717,31 @@ THE SOFTWARE.
 The MIT License (MIT)
 
 Copyright (c) 2015 Mathias Buus
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+* MIT *
+
+The MIT License (MIT)
+
+Copyright (c) 2015 Nathan Friedly <nathan@nfriedly.com> (http://nfriedly.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -38189,4 +38431,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-5-27
+Report Generated by FOSSA on 2026-6-1

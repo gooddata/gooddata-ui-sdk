@@ -421,11 +421,6 @@ export type {
 } from "./workspace/keyDriverAnalysis/index.js";
 
 export type {
-    IOrganizationLlmEndpointsService,
-    ILlmEndpointsQuery,
-    ILlmEndpointsQueryResult,
-} from "./organization/llmEndpoints/index.js";
-export type {
     IOrganizationLlmProvidersService,
     ILlmProvidersQuery,
     ILlmProvidersQueryResult,

@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.build.json",
+    "exclude": ["node_modules", "esm", "src/templates", "../../common/temp"],
+    "include": ["src/**/*", "*.{ts,tsx}"],
+    "compilerOptions": {
+        "rootDir": "./",
+        "noEmit": true,
+        "skipLibCheck": true
+    }
+}

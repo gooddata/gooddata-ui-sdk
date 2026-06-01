@@ -95,7 +95,6 @@ import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import type { IListedDashboard } from '@gooddata/sdk-model';
-import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { ILlmProvider } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-model';
@@ -157,7 +156,6 @@ import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceSettings } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
-import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
 import { LlmProviderListModelsResults } from '@gooddata/sdk-model';
 import { LlmProviderPatch } from '@gooddata/sdk-model';
 import { LlmProviderTestResults } from '@gooddata/sdk-model';
@@ -1753,18 +1751,6 @@ export interface IListKnowledgeDocumentsOptions {
 }
 
 // @alpha
-export interface ILlmEndpointsQuery {
-    query(): Promise<ILlmEndpointsQueryResult>;
-    queryAll(): Promise<ILlmEndpointOpenAI[]>;
-    withPage(page: number): ILlmEndpointsQuery;
-    withSize(size: number): ILlmEndpointsQuery;
-    withSorting(sort: string[]): ILlmEndpointsQuery;
-}
-
-// @alpha
-export type ILlmEndpointsQueryResult = IPagedResource<ILlmEndpointOpenAI>;
-
-// @alpha
 export interface ILlmProvidersQuery {
     query(): Promise<ILlmProvidersQueryResult>;
     queryAll(): Promise<ILlmProvider[]>;
@@ -1907,7 +1893,6 @@ export interface IOrganization {
     // @alpha
     genAI(): IOrganizationGenAIService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
-    llmEndpoints(): IOrganizationLlmEndpointsService;
     llmProviders(): IOrganizationLlmProvidersService;
     notificationChannels(): IOrganizationNotificationChannelService;
     notifications(): IOrganizationNotificationService;
@@ -1999,17 +1984,6 @@ export interface IOrganizationGeoCollectionsService {
     importGeoCollectionFile(collectionId: string, location: string): Promise<void>;
     updateGeoCollection(geoCollection: IGeoCollection): Promise<IGeoCollection>;
     uploadGeoCollectionFile(file: File): Promise<IGeoCollectionFileUploadResult>;
-}
-
-// @alpha
-export interface IOrganizationLlmEndpointsService {
-    createLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
-    deleteLlmEndpoint(id: string): Promise<void>;
-    getCount(): Promise<number>;
-    getEndpointsQuery(): ILlmEndpointsQuery;
-    getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined>;
-    patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
-    updateLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
 }
 
 // @alpha

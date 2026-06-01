@@ -1,0 +1,6 @@
+{
+    "gdc-app-template-name.title": {
+        "text": "{applicationTemplateTitle}",
+        "crowdinContext": "Application title displayed in the navigation menu"
+    }
+}

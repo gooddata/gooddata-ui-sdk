@@ -81,8 +81,8 @@ export class TigerWorkspaceSettings
         return this.setSetting("SEPARATORS", separators);
     }
 
-    public async setActiveLlmEndpoint(endpoint: string): Promise<void> {
-        return this.setSetting("ACTIVE_LLM_ENDPOINT", { id: endpoint, type: "llmEndpoint" });
+    public async setActiveLlmEndpoint(): Promise<void> {
+        throw new Error("Deprecated endpoint");
     }
 
     public async setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void> {

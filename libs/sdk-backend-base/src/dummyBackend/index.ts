@@ -68,8 +68,6 @@ import {
     type IGetScheduledMailOptions,
     type IInsightsQuery,
     type IInsightsQueryResult,
-    type ILlmEndpointsQuery,
-    type ILlmEndpointsQueryResult,
     type ILlmProvidersQuery,
     type ILlmProvidersQueryResult,
     type IMeasureExpressionToken,
@@ -82,7 +80,6 @@ import {
     type IOrganizationAutomationService,
     type IOrganizationExportTemplatesService,
     type IOrganizationGenAIService,
-    type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
@@ -190,7 +187,6 @@ import {
     type IInsight,
     type IInsightDefinition,
     type IListedDashboard,
-    type ILlmEndpointOpenAI,
     type ILlmProvider,
     type IMeasure,
     type IMeasureDefinitionType,
@@ -955,28 +951,6 @@ class DummyWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAv
     }
 }
 
-class DummyLlmEndpointsQuery implements ILlmEndpointsQuery {
-    public withSize(_size: number): ILlmEndpointsQuery {
-        return this;
-    }
-
-    public withPage(_page: number): ILlmEndpointsQuery {
-        return this;
-    }
-
-    public withSorting(_sort: string[]): ILlmEndpointsQuery {
-        return this;
-    }
-
-    public query(): Promise<ILlmEndpointsQueryResult> {
-        return Promise.resolve(createEmptyPagedResource());
-    }
-
-    public queryAll(): Promise<ILlmEndpointOpenAI[]> {
-        return Promise.resolve([]);
-    }
-}
-
 class DummyLlmProvidersQuery implements ILlmProvidersQuery {
     public withSize(_size: number): ILlmProvidersQuery {
         return this;
@@ -1175,37 +1149,6 @@ class DummyOrganization implements IOrganization {
             getNotificationChannelsQuery: () => {
                 throw new NotSupported("not supported");
             },
-        };
-    }
-
-    llmEndpoints(): IOrganizationLlmEndpointsService {
-        const dummyEndpoint: ILlmEndpointOpenAI = {
-            id: "dummyLlmEndpoint",
-            title: "Dummy Llm Endpoint",
-            provider: "OPENAI",
-            model: "gpt-4o-mini",
-        };
-
-        return {
-            getCount: () => Promise.resolve(0),
-            getEndpointsQuery: () => new DummyLlmEndpointsQuery(),
-            deleteLlmEndpoint: () => Promise.resolve(),
-            getLlmEndpoint: () =>
-                Promise.resolve({
-                    ...dummyEndpoint,
-                }),
-            createLlmEndpoint: () =>
-                Promise.resolve({
-                    ...dummyEndpoint,
-                }),
-            updateLlmEndpoint: () =>
-                Promise.resolve({
-                    ...dummyEndpoint,
-                }),
-            patchLlmEndpoint: () =>
-                Promise.resolve({
-                    ...dummyEndpoint,
-                }),
         };
     }
 

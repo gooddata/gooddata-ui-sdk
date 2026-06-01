@@ -395,6 +395,20 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/sdk-ui-pluggable-host",
+            "projectFolder": "libs/sdk-ui-pluggable-host",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-application-header",
+            "projectFolder": "libs/sdk-ui-application-header",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-tests-reference-workspace",
             "projectFolder": "libs/sdk-ui-tests-reference-workspace",
             "reviewCategory": "production",
@@ -453,6 +467,25 @@
             "reviewCategory": "tools",
             "versionPolicyName": "sdk",
             "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/create-pluggable-module",
+            "projectFolder": "tools/create-pluggable-module",
+            "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "gdc-app-template-name-module",
+            "projectFolder": "templates/pluggable-module/module",
+            "versionPolicyName": "sdk-not-npm-publish",
+            "shouldPublish": false
+        },
+        {
+            "packageName": "gdc-app-template-name-harness",
+            "projectFolder": "templates/pluggable-module/harness",
+            "versionPolicyName": "sdk-not-npm-publish",
+            "shouldPublish": false
         },
         {
             "packageName": "@gooddata/sdk-ui-theme-provider",
