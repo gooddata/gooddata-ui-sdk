@@ -13,6 +13,7 @@ import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/css/main.css";
 import "@gooddata/sdk-ui-dashboard/styles/css/main.css";
+
 import "./index.css";
 
 const rootDOMNode = document.getElementById("root");

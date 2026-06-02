@@ -5,6 +5,7 @@
 ```ts
 
 import { ApplicationScope } from '@gooddata/sdk-model';
+import { IColorPalette } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -149,6 +150,8 @@ export type IPlatformContext = IPlatformContextV1;
 // @alpha
 export interface IPlatformContextV1 {
     auth: IAuthCredentials;
+    // (undocumented)
+    colorPalette?: IColorPalette;
     // (undocumented)
     currentApplicationScope?: ApplicationScope;
     // (undocumented)

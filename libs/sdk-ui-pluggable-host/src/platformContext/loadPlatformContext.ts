@@ -78,6 +78,6 @@ export async function loadPlatformContext(
         whiteLabeling: bootstrap.whiteLabeling,
         pantherTier: bootstrap.pantherTier,
         theme: bootstrap.theme,
-        embeddingMode: "none",
+        embeddingMode: window.location.pathname.startsWith("/embedded/") ? "iframe" : "none",
     };
 }

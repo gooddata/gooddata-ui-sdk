@@ -12,7 +12,7 @@ export const typescript: IConfiguration = {
     packages: [
         {
             name: "oxlint-tsgolint",
-            version: "0.11.4",
+            version: "0.15.0",
         },
     ],
     plugins: ["typescript"],

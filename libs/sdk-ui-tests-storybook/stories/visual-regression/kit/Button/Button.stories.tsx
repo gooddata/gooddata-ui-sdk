@@ -7,6 +7,7 @@ import { Button } from "@gooddata/sdk-ui-kit";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-kit/styles/css/button.css";
+
 import "./styles.scss";
 
 const types = [

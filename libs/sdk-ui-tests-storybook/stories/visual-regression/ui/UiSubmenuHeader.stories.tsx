@@ -4,6 +4,7 @@ import { action } from "storybook/actions";
 
 import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+
 import { type IStoryParameters, State } from "../../_infra/backstopScenario.js";
 
 export default {

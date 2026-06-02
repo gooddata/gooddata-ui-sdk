@@ -4,6 +4,7 @@ import { action } from "storybook/actions";
 
 import { type ChatEvent, GenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+
 import { ReferenceWorkspaceId, StorybookBackend } from "../../_infra/backend.js";
 import { type IStoryParameters } from "../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../themeWrapper.js";

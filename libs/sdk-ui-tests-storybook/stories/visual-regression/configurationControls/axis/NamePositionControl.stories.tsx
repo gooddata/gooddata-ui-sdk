@@ -4,6 +4,7 @@ import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, NamePositionControl } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
+
 import "../controlStyles.css";
 import { type INeobackstopConfig, State } from "../../../_infra/backstopScenario.js";
 

@@ -21,6 +21,7 @@ type RoutePlatformContextFields =
     | "currentApplicationScope"
     | "workspacePermissions"
     | "workspaceSettings"
+    | "colorPalette"
     | "settings"
     | "preferredLocale";
 

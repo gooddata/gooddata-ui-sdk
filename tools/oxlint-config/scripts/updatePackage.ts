@@ -31,7 +31,7 @@ const devDeps: Record<string, string> = {
     "eslint-plugin-sonarjs": packageJson.devDependencies["eslint-plugin-sonarjs"],
     globals: packageJson.devDependencies["globals"],
 };
-const peers: Record<string, string> = { oxlint: devDeps.oxlint };
+const peers: Record<string, string> = { oxlint: `^${devDeps.oxlint}` };
 
 for (const configuration of common) {
     for (const pkg of configuration.packages ?? []) {

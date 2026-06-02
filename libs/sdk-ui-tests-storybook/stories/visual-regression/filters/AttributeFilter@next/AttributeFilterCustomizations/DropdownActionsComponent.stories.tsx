@@ -6,6 +6,7 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter, type IAttributeFilterDropdownActionsProps } from "@gooddata/sdk-ui-filters";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
+
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../../_infra/backend.js";
 import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 

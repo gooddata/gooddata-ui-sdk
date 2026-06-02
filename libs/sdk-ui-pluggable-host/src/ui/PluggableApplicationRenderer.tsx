@@ -44,7 +44,8 @@ export function PluggableApplicationRenderer({
     const containerRef = useRef<HTMLDivElement>(null);
     const mountHandleRef = useRef<IPluggableApplicationMountHandle | undefined>(undefined);
     const [viewState, setViewState] = useState<RendererViewState>({ state: "loading" });
-    const appBasePath = getApplicationHref(app, ctx, pathname);
+    const baseHref = getApplicationHref(app, ctx, pathname);
+    const appBasePath = ctx.embeddingMode === "iframe" ? `/embedded${baseHref}` : baseHref;
 
     const lifecycle = getAppLifecycleCallbacks();
     const onTelemetryEvent = useMemo(

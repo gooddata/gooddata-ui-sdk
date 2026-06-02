@@ -1221,6 +1221,14 @@ export interface IFeatureFlags {
     enableShellApplication_metricEditor?: boolean;
 
     /**
+     * Per-app sub-flag under enableShellApplication. When true (and
+     * enableShellApplication is also true), Analytical Designer runs as a
+     * pluggable app inside the host. When false, the legacy standalone AD
+     * served at the /analyze hash route is rendered instead.
+     */
+    enableShellApplication_analyticalDesigner?: boolean;
+
+    /**
      * Enables Resizable Dashboard sidebar in edit mode.
      */
     enableDashboardSidebarResize?: boolean;

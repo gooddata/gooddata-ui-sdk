@@ -5,6 +5,7 @@ import { type ReactElement } from "react";
 import { action } from "storybook/actions";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+
 import "../styles/goodstrap.scss";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";

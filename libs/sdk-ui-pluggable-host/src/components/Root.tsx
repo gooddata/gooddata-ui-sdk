@@ -18,6 +18,7 @@ import { HostUiContainer } from "./HostUiContainer.js";
 import { useRedirectNavigation } from "./useRedirectNavigation.js";
 import { useRedirectTarget } from "./useRedirectTarget.js";
 import "../styles/global.css";
+
 import "./Root.scss";
 
 const { e } = bemFactory("gd-host-root");

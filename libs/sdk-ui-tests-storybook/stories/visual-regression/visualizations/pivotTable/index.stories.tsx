@@ -17,6 +17,7 @@ import {
 } from "@gooddata/sdk-ui-tests-scenarios";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
+
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend.js";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import {

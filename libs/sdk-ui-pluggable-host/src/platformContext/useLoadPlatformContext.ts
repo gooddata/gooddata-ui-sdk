@@ -21,8 +21,11 @@ import {
     type IPlatformContextLoadResult,
     type IRoutePlatformContext,
 } from "./types.js";
+import { useWorkspaceColorPalette } from "./useWorkspaceColorPalette.js";
 import { useWorkspacePermissions } from "./useWorkspacePermissions.js";
 import { useWorkspaceSettings } from "./useWorkspaceSettings.js";
+import { useWorkspaceTheme } from "./useWorkspaceTheme.js";
+import { shouldWaitForInjectedApiToken, waitForInjectedApiToken } from "./waitForInjectedApiToken.js";
 
 function redirectToAppRoot(): void {
     const rootUrl = new URL("/", window.location.origin).toString();
@@ -50,6 +53,8 @@ export function useLoadPlatformContext(): IPlatformContextLoadResult<IPlatformCo
     const backend = backendContext.state === "ready" ? getBackend() : undefined;
     const workspacePermissionsState = useWorkspacePermissions(backend, workspaceId);
     const workspaceSettingsState = useWorkspaceSettings(backend, workspaceId);
+    const workspaceColorPaletteState = useWorkspaceColorPalette(backend, workspaceId);
+    const workspaceThemeState = useWorkspaceTheme(backend, workspaceId);
 
     return useMemo(() => {
         if (backendContext.state !== "ready") {
@@ -78,6 +83,12 @@ export function useLoadPlatformContext(): IPlatformContextLoadResult<IPlatformCo
             workspacePermissionsState.state === "ready" ? workspacePermissionsState.permissions : undefined;
         const workspaceSettings =
             workspaceSettingsState.state === "ready" ? workspaceSettingsState.settings : undefined;
+        const colorPalette =
+            workspaceColorPaletteState.state === "ready"
+                ? workspaceColorPaletteState.colorPalette
+                : undefined;
+        const workspaceTheme = workspaceThemeState.state === "ready" ? workspaceThemeState.theme : undefined;
+        const effectiveTheme = workspaceTheme ?? backendContext.ctx.theme;
 
         const settings: IEffectiveSettings = workspaceSettings ?? backendContext.ctx.userSettings;
 
@@ -88,12 +99,21 @@ export function useLoadPlatformContext(): IPlatformContextLoadResult<IPlatformCo
             currentWorkspaceId: workspaceId,
             workspacePermissions,
             workspaceSettings,
+            colorPalette,
             settings,
             preferredLocale,
         };
 
-        return { state: "ready", ctx: { ...backendContext.ctx, ...routeCtx } };
-    }, [backendContext, applicationScope, workspaceId, workspacePermissionsState, workspaceSettingsState]);
+        return { state: "ready", ctx: { ...backendContext.ctx, ...routeCtx, theme: effectiveTheme } };
+    }, [
+        backendContext,
+        applicationScope,
+        workspaceId,
+        workspacePermissionsState,
+        workspaceSettingsState,
+        workspaceColorPaletteState,
+        workspaceThemeState,
+    ]);
 }
 
 /**
@@ -141,6 +161,9 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
         this._abortController = new AbortController();
 
         try {
+            if (shouldWaitForInjectedApiToken()) {
+                await waitForInjectedApiToken(this._abortController.signal);
+            }
             const ctx = await loadPlatformContext({
                 signal: this._abortController.signal,
                 callbacks: this._callbacks,

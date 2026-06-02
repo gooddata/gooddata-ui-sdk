@@ -191,52 +191,57 @@ export function HostChrome({
     const headerTextColor = ctx.theme?.header?.color ?? defaultHeaderTheme.color;
     const activeColor = ctx.theme?.header?.activeColor ?? defaultHeaderTheme.activeColor;
 
+    const isEmbedded = ctx.embeddingMode === "iframe";
+
     return (
         <HostIntlProvider locale={locale} additionalMessages={appMessages}>
             <BackendProvider backend={getBackend()}>
                 <ToastsCenterContextProvider>
                     <div className={b()}>
-                        <div className={e("header")} onMouseOver={handleHeaderMouseOver}>
-                            <AppHeader
-                                logoUrl={ctx.whiteLabeling?.logoUrl || defaultLogoUrl}
-                                logoHref="/organization" // switch the host scope to organization, the first org app will be chosen
-                                logoTitle={logoTitle}
-                                headerColor={headerColor}
-                                headerTextColor={headerTextColor}
-                                activeColor={activeColor}
-                                userName={userName}
-                                organizationName={ctx.organization?.title}
-                                isAccessibilityCompliant
-                                workspacePicker={workspacePicker}
-                                menuItemsGroups={menuItemsGroups}
-                                helpMenuItems={helpMenuItems}
-                                accountMenuItems={accountMenuItems}
-                                onMenuItemClick={handleMenuItemClick}
-                                showUpsellButton={pricing.isTrial}
-                                onUpsellButtonClick={pricing.onUpsellButtonClick}
-                                expiredDate={pricing.isTrial ? pricing.expiredDate : undefined}
-                                search={search.element}
-                                showChatItem={chat.showChatItem}
-                                onChatItemClick={chat.open}
-                                notificationsPanel={
-                                    ctx.userSettings.enableInPlatformNotifications
-                                        ? ({ isMobile, closeNotificationsOverlay }) => (
-                                              <AppHeaderNotifications
-                                                  locale={locale}
-                                                  isMobile={isMobile}
-                                                  closeNotificationsOverlay={closeNotificationsOverlay}
-                                                  useAsOfDateParam={
-                                                      ctx.userSettings.enableExecutionTimestamp ?? false
-                                                  }
-                                                  enableExportToDocumentStorage={
-                                                      ctx.userSettings.enableExportToDocumentStorage ?? false
-                                                  }
-                                              />
-                                          )
-                                        : undefined
-                                }
-                            />
-                        </div>
+                        {isEmbedded ? null : (
+                            <div className={e("header")} onMouseOver={handleHeaderMouseOver}>
+                                <AppHeader
+                                    logoUrl={ctx.whiteLabeling?.logoUrl || defaultLogoUrl}
+                                    logoHref="/organization" // switch the host scope to organization, the first org app will be chosen
+                                    logoTitle={logoTitle}
+                                    headerColor={headerColor}
+                                    headerTextColor={headerTextColor}
+                                    activeColor={activeColor}
+                                    userName={userName}
+                                    organizationName={ctx.organization?.title}
+                                    isAccessibilityCompliant
+                                    workspacePicker={workspacePicker}
+                                    menuItemsGroups={menuItemsGroups}
+                                    helpMenuItems={helpMenuItems}
+                                    accountMenuItems={accountMenuItems}
+                                    onMenuItemClick={handleMenuItemClick}
+                                    showUpsellButton={pricing.isTrial}
+                                    onUpsellButtonClick={pricing.onUpsellButtonClick}
+                                    expiredDate={pricing.isTrial ? pricing.expiredDate : undefined}
+                                    search={search.element}
+                                    showChatItem={chat.showChatItem}
+                                    onChatItemClick={chat.open}
+                                    notificationsPanel={
+                                        ctx.userSettings.enableInPlatformNotifications
+                                            ? ({ isMobile, closeNotificationsOverlay }) => (
+                                                  <AppHeaderNotifications
+                                                      locale={locale}
+                                                      isMobile={isMobile}
+                                                      closeNotificationsOverlay={closeNotificationsOverlay}
+                                                      useAsOfDateParam={
+                                                          ctx.userSettings.enableExecutionTimestamp ?? false
+                                                      }
+                                                      enableExportToDocumentStorage={
+                                                          ctx.userSettings.enableExportToDocumentStorage ??
+                                                          false
+                                                      }
+                                                  />
+                                              )
+                                            : undefined
+                                    }
+                                />
+                            </div>
+                        )}
                         <main className={e("content")}>{children}</main>
                         {chat.element}
                         {pricing.element}

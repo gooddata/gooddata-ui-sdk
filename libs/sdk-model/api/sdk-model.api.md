@@ -2671,6 +2671,7 @@ export interface IFeatureFlags {
     enableSemanticSearch?: boolean;
     enableSemanticSearchRollout?: boolean;
     enableShellApplication?: boolean;
+    enableShellApplication_analyticalDesigner?: boolean;
     enableShellApplication_catalog?: boolean;
     enableShellApplication_metricEditor?: boolean;
     // (undocumented)

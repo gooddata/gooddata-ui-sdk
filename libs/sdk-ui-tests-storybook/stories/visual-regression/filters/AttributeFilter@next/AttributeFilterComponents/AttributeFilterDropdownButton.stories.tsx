@@ -8,6 +8,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { AttributeFilterDropdownButton } from "@gooddata/sdk-ui-filters";
 import { Button, IconAttribute } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
+
 import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 

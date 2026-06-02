@@ -14,7 +14,6 @@ import { jsdoc } from "./configurations/jsdoc.js";
 import { noBarrelFiles } from "./configurations/no-barrel-files.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
 import { playwright } from "./configurations/playwright.js";
-import { reactHooks } from "./configurations/react-hooks.js";
 import { react } from "./configurations/react.js";
 import { regexp } from "./configurations/regexp.js";
 import { security } from "./configurations/security.js";
@@ -47,32 +46,14 @@ export const commonVariants: Record<string, IDualConfiguration[]> = {
     // vitest: [vitest, noOnlyTests],
     esm: [esm, importEsm], // used for this lib
     "esm-vitest": [esm, importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
-    react: [browserEnv, esm, react, reactHooks], // for skel tsx
-    "react-vitest": [browserEnv, esm, react, reactHooks, vitest, noOnlyTests], // for gdc-ui libs
-    "react-playwright": [browserEnv, esm, react, reactHooks, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
+    react: [browserEnv, esm, react], // for skel tsx
+    "react-vitest": [browserEnv, esm, react, vitest, noOnlyTests], // for gdc-ui libs
+    "react-playwright": [browserEnv, esm, react, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
     "esm-playwright": [browserEnv, esm, importEsm, playwright, chaiFriendly, noOnlyTests], // for e2e-utils
-    "esm-react": [browserEnv, esm, react, reactHooks, importEsm], // for most react libs
-    "esm-react-playwright": [
-        browserEnv,
-        esm,
-        react,
-        reactHooks,
-        importEsm,
-        playwright,
-        chaiFriendly,
-        noOnlyTests,
-    ], // for gdc e2e libs with react
-    "esm-react-vitest": [browserEnv, esm, react, reactHooks, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
-    "esm-react-vitest-storybook": [
-        browserEnv,
-        esm,
-        react,
-        reactHooks,
-        importEsm,
-        vitest,
-        noOnlyTests,
-        storybook,
-    ], // for sdk-ui-tests-storybook
+    "esm-react": [browserEnv, esm, react, importEsm], // for most react libs
+    "esm-react-playwright": [browserEnv, esm, react, importEsm, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
+    "esm-react-vitest": [browserEnv, esm, react, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
+    "esm-react-vitest-storybook": [browserEnv, esm, react, importEsm, vitest, noOnlyTests, storybook], // for sdk-ui-tests-storybook
 };
 
 export const v8Variants = { ...commonVariants };
