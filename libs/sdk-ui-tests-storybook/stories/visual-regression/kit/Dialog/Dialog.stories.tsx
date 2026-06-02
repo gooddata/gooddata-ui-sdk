@@ -12,6 +12,7 @@ import {
     StylingEditorDialog,
 } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+
 import {
     //    INeobackstopConfig,
     //    INeobackstopScenarioConfig,

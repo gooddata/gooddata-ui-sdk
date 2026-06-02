@@ -5,7 +5,7 @@
     "dependencies": {
         "@gooddata/frontend-npm-scripts": "^1.4.0",
         "lint-staged": "^10.5.4",
-        "oxfmt": "0.45.0",
-        "oxlint": "1.43.0"
+        "oxfmt": "0.52.0",
+        "oxlint": "1.51.0"
     }
 }

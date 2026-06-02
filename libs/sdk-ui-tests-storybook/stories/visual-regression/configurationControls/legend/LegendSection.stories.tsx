@@ -8,6 +8,7 @@ import { action } from "storybook/actions";
 
 import { InternalIntlWrapper, LegendSection } from "@gooddata/sdk-ui-ext/internal";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
+
 import "../controlStyles.css";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 

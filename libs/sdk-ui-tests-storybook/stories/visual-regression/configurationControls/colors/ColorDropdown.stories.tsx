@@ -8,6 +8,7 @@ import { ColorDropdown, ColoredItemContent, InternalIntlWrapper } from "@gooddat
 import { type INeobackstopConfig, type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { getLargePalette } from "../mocks/testColorHelper.js";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
+
 import "../controlStyles.css";
 
 const wrapperStyle = {

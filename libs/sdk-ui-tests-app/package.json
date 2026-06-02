@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-app",
-    "version": "11.40.0-alpha.3",
+    "version": "11.40.0-alpha.4",
     "private": true,
     "description": "GoodData SDK e2e tests",
     "license": "LicenseRef-LICENSE",
@@ -66,15 +66,15 @@
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
-        "oxfmt": "0.45.0",
-        "oxlint": "^1.43.0",
-        "oxlint-tsgolint": "0.11.4",
+        "oxfmt": "0.52.0",
+        "oxlint": "1.51.0",
+        "oxlint-tsgolint": "0.15.0",
         "react": "19.1.1",
         "react-dom": "19.1.1",
-        "rolldown": "1.0.0-rc.9",
+        "rolldown": "1.0.3",
         "sass": "1.70.0",
         "typescript": "5.9.3",
-        "vite": "8.0.0"
+        "vite": "8.0.16"
     },
     "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
 }

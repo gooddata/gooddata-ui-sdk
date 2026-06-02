@@ -2,6 +2,7 @@
 
 import {
     type ApplicationScope,
+    type IColorPalette,
     type IEntitlementDescriptor,
     type ILocale,
     type ITheme,
@@ -224,6 +225,7 @@ export interface IPlatformContextV1 {
     preferredLocale?: ILocale;
     pantherTier?: PantherTier;
     theme?: ITheme;
+    colorPalette?: IColorPalette;
 
     currentWorkspaceId?: string;
     currentApplicationScope?: ApplicationScope;

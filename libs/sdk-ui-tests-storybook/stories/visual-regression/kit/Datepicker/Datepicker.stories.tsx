@@ -12,6 +12,7 @@ import {
 } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+
 import "./styles.scss";
 
 const defaultDateFormat = "MM/dd/yyyy";

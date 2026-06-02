@@ -53,11 +53,7 @@ function readPackage(packageJson, context) {
         packageJson.peerDependencies["vite"]
     ) {
         //context.log("Fixed up dependencies for " + packageJson.name);
-        packageJson.peerDependencies["vite"] = "^8.0.0";
-    }
-
-    if (packageJson.name === "vitest" && packageJson.dependencies["vite"]) {
-        packageJson.dependencies["vite"] = "8.0.0";
+        packageJson.peerDependencies["vite"] = "^8.0.16";
     }
 
     if (packageJson.dependencies && packageJson.dependencies["baseline-browser-mapping"]) {

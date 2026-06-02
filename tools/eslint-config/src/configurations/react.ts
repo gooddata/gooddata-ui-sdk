@@ -9,8 +9,13 @@ const reactPlugin: IPackage = {
     version: "7.37.5",
 };
 
+const reactHooksPlugin: IPackage = {
+    name: "eslint-plugin-react-hooks",
+    version: "5.2.0",
+};
+
 const commonConfiguration = {
-    packages: [reactPlugin],
+    packages: [reactPlugin, reactHooksPlugin],
     rules: {
         "react/no-danger": "error",
         "react/prop-types": "off",
@@ -32,6 +37,9 @@ const commonConfiguration = {
 
         // no longer needed with new react transform
         "react/react-in-jsx-scope": "off",
+
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
     },
     settings: {
         react: {
@@ -42,13 +50,13 @@ const commonConfiguration = {
 
 const v9 = {
     ...commonConfiguration,
-    plugins: { react: reactPlugin },
+    plugins: { react: reactPlugin, "react-hooks": reactHooksPlugin },
 };
 
-export const react: IDualConfiguration<"react"> = {
+export const react: IDualConfiguration = {
     v8: {
         ...commonConfiguration,
-        plugins: ["react"],
+        plugins: ["react", "react-hooks"],
     },
     v9,
     ox: v9,

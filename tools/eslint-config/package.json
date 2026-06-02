@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.40.0-alpha.3",
+    "version": "11.40.0-alpha.4",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -138,7 +138,7 @@
         "eslint-plugin-storybook": "10.1.11",
         "globals": "17.2.0",
         "jiti": "2.6.1",
-        "oxfmt": "0.45.0",
+        "oxfmt": "0.52.0",
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "storybook": "^10.1.11",

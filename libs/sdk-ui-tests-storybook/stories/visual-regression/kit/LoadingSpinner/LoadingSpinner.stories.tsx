@@ -2,6 +2,7 @@
 
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+
 import "./styles.scss";
 import { type IStoryParameters } from "../../../_infra/backstopScenario.js";
 

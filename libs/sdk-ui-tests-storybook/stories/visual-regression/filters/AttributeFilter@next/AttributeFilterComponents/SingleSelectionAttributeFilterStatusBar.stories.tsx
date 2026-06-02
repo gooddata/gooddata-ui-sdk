@@ -5,6 +5,7 @@ import { type ReactElement } from "react";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { SingleSelectionAttributeFilterStatusBar } from "@gooddata/sdk-ui-filters";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
+
 import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 
 const elements = [

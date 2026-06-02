@@ -11,13 +11,18 @@ import { type IPlatformContext } from "@gooddata/sdk-pluggable-application-model
 
 const WORKSPACE_PATH_PATTERN = /^\/workspace\/(?<workspaceId>[^/]+)(?:\/|$)/;
 
+function stripEmbedPrefix(pathname: string): string {
+    return pathname.startsWith("/embedded/") ? pathname.slice("/embedded".length) : pathname;
+}
+
 /**
  * Returns the application scope for the given URL path, or undefined if the path
  * does not match a known scope.
  */
 export function getApplicationScopeFromPath(path: string): ApplicationScope | undefined {
+    const stripped = stripEmbedPrefix(path);
     const isPathMatching = (definitionPath: `/${string}`) =>
-        path === definitionPath || path.startsWith(definitionPath + "/");
+        stripped === definitionPath || stripped.startsWith(definitionPath + "/");
 
     if (isPathMatching("/organization")) {
         return "organization";
@@ -33,7 +38,7 @@ export function getApplicationScopeFromPath(path: string): ApplicationScope | un
  * does not contain a workspace id.
  */
 export function getWorkspaceIdFromPath(pathname: string | undefined): string | undefined {
-    return WORKSPACE_PATH_PATTERN.exec(pathname ?? "")?.groups?.["workspaceId"];
+    return WORKSPACE_PATH_PATTERN.exec(stripEmbedPrefix(pathname ?? ""))?.groups?.["workspaceId"];
 }
 
 function ensureLeadingSlash(path: string): string {
@@ -123,7 +128,7 @@ export function isInternalAppRouteActive(
     }
 
     const basePath = normalizePath(getApplicationHref(app, ctx, pathname));
-    const normalizedPathname = normalizePath(pathname);
+    const normalizedPathname = normalizePath(stripEmbedPrefix(pathname));
     return normalizedPathname === basePath || normalizedPathname.startsWith(`${basePath}/`);
 }
 

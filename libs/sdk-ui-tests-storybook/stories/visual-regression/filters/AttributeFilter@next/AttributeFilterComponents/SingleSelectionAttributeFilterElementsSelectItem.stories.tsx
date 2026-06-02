@@ -8,6 +8,7 @@ import { type IAttributeElement } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { SingleSelectionAttributeFilterElementsSelectItem } from "@gooddata/sdk-ui-filters";
 import "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext.css";
+
 import { type IStoryParameters, State } from "../../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../../themeWrapper.js";
 

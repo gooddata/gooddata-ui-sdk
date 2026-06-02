@@ -7,6 +7,7 @@ import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { BackendProvider, IntlWrapper, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { RichText } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
+
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 

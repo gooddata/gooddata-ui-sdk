@@ -6,6 +6,7 @@ import { InternalIntlWrapper, LabelRotationControl } from "@gooddata/sdk-ui-ext/
 
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
+
 import "../controlStyles.css";
 
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };

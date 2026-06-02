@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-e2e",
-    "version": "11.40.0-alpha.3",
+    "version": "11.40.0-alpha.4",
     "private": true,
     "description": "GoodData SDK e2e tests",
     "license": "LicenseRef-LICENSE",
@@ -66,10 +66,10 @@
         "eslint-plugin-sonarjs": "3.0.6",
         "lodash-es": "^4.17.23",
         "npm-run-all": "^4.1.5",
-        "oxfmt": "0.45.0",
-        "oxlint": "^1.43.0",
-        "oxlint-tsgolint": "0.11.4",
-        "rolldown": "1.0.0-rc.9",
+        "oxfmt": "0.52.0",
+        "oxlint": "1.51.0",
+        "oxlint-tsgolint": "0.15.0",
+        "rolldown": "1.0.3",
         "typescript": "5.9.3"
     },
     "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
