@@ -14,7 +14,7 @@ import {
 import cx from "classnames";
 import copy from "copy-to-clipboard";
 import { useIntl } from "react-intl";
-import { connect, useDispatch } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 
 import {
     type IAttribute,
@@ -150,6 +150,9 @@ function VisualizationContentsComponentCore({
     const visualization = content.createdVisualizations?.[0];
     const { metrics, dimensions, filters, sorts } = useExecution(visualization);
     const config = useConfig();
+    const useHostedAnalyticalDesigner = Boolean(
+        useSelector(settingsSelector)?.enableShellApplication_analyticalDesigner,
+    );
     const [saveDialogOpen, setSaveDialogOpen] = useState<"save" | "explore" | null>(null);
     const [hasVisError, setHasVisError] = useState(false);
     const [visLoading, setVisLoading] = useState(true);
@@ -254,7 +257,7 @@ function VisualizationContentsComponentCore({
             workspaceId,
             newTab: e.metaKey,
             preventDefault: e.preventDefault.bind(e),
-            itemUrl: getVisualizationHref(workspaceId, vis.savedVisualizationId),
+            itemUrl: getVisualizationHref(workspaceId, vis.savedVisualizationId, useHostedAnalyticalDesigner),
         });
         e.stopPropagation();
     };
@@ -271,6 +274,7 @@ function VisualizationContentsComponentCore({
                         window.location.href = getVisualizationHref(
                             workspaceId,
                             visualization.savedVisualizationId,
+                            useHostedAnalyticalDesigner,
                         );
                     } else {
                         handleOpen(e, visualization);
@@ -285,6 +289,7 @@ function VisualizationContentsComponentCore({
                     const link = getAbsoluteVisualizationHref(
                         workspaceId,
                         visualization.savedVisualizationId,
+                        useHostedAnalyticalDesigner,
                     );
                     copy(link);
                     onCopyToClipboard?.({ content: link });

@@ -230,6 +230,7 @@ export function createTest<T extends Record<string, unknown> = {}, W extends Rec
                         await route.fulfill({
                             status: 200,
                             contentType: "application/json",
+                            headers: { "access-control-allow-origin": "*" },
                             body,
                         });
                     });

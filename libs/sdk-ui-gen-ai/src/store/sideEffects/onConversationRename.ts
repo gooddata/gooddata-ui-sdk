@@ -15,14 +15,16 @@ import {
 
 export function* onConversationRename({
     payload,
-}: ReturnType<typeof renameConversationAction> | PayloadAction<{ conversationId: string; title: string }>) {
+}:
+    | ReturnType<typeof renameConversationAction>
+    | PayloadAction<{ conversation: IChatConversationLocal; title: string }>) {
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
     const conversation: IChatConversationLocal | undefined = yield select(
         conversationByIdSelector,
-        payload.conversationId,
+        payload.conversation.localId,
     );
 
     if (!conversation) {
@@ -32,7 +34,7 @@ export function* onConversationRename({
     try {
         yield put(
             renameConversationSuccessAction({
-                conversationId: payload.conversationId,
+                conversation: payload.conversation,
                 title: payload.title,
             }),
         );
@@ -44,7 +46,7 @@ export function* onConversationRename({
         console.error("Failed to rename conversation", e);
         yield put(
             renameConversationFailureAction({
-                conversationId: payload.conversationId,
+                conversation: payload.conversation,
                 error: e as Error,
                 title: conversation.title,
             }),

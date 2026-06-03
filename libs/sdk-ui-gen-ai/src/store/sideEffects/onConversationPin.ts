@@ -15,14 +15,16 @@ import {
 
 export function* onConversationPin({
     payload,
-}: ReturnType<typeof pinConversationAction> | PayloadAction<{ conversationId: string; pinned: boolean }>) {
+}:
+    | ReturnType<typeof pinConversationAction>
+    | PayloadAction<{ conversation: IChatConversationLocal; pinned: boolean }>) {
     const backend: IAnalyticalBackend = yield getContext("backend");
     const workspace: string = yield getContext("workspace");
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
     const conversation: IChatConversationLocal | undefined = yield select(
         conversationByIdSelector,
-        payload.conversationId,
+        payload.conversation.localId,
     );
 
     if (!conversation) {
@@ -32,19 +34,19 @@ export function* onConversationPin({
     try {
         yield put(
             pinConversationSuccessAction({
-                conversationId: payload.conversationId,
+                conversation: payload.conversation,
                 pinned: payload.pinned,
             }),
         );
 
         const chatConversations = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
         const updateConversationCall = chatConversations.update.bind(chatConversations);
-        yield call(updateConversationCall, payload.conversationId, { pinned: payload.pinned });
+        yield call(updateConversationCall, payload.conversation.id, { pinned: payload.pinned });
     } catch (e) {
         console.error("Failed to update pinned state of conversation", e);
         yield put(
             pinConversationFailureAction({
-                conversationId: payload.conversationId,
+                conversation: payload.conversation,
                 error: e as Error,
                 pinned: conversation.pinned,
             }),

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/dashboard-plugin-template",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "private": true,
     "description": "GoodData Template for Dashboard Plugins",
     "license": "LicenseRef-LICENSE",
@@ -38,8 +38,8 @@
         "format-write": "oxfmt .",
         "gdc-plugins": "gdc-plugins",
         "link-plugin": "gdc-plugins dashboard-plugin link",
-        "lint": "oxlint . --type-aware --quiet && eslint src",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix",
+        "lint": "oxlint . --quiet && eslint src",
+        "lint-fix": "oxlint . --quiet --fix && eslint src --fix",
         "refresh-md": "node ./scripts/refresh-md.js",
         "remove-plugin-params": "gdc-plugins dashboard-plugin remove-params",
         "start": "webpack-cli serve --config-name harness",

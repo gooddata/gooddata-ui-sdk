@@ -695,7 +695,9 @@ const messagesSlice = createSlice({
             state,
             { payload }: PayloadAction<{ conversation: IChatConversationLocal }>,
         ) => {
-            const existing = state.conversations?.find((c) => c.localId === payload.conversation.localId);
+            const existing = state.conversations?.find(
+                (c) => c.localId === payload.conversation.localId || c.id === payload.conversation.id,
+            );
 
             if (existing) {
                 const data = getConversationData(state.conversationsData, existing.localId);
@@ -1053,16 +1055,16 @@ const messagesSlice = createSlice({
         pinConversationAction: (
             state,
             _action: PayloadAction<{
-                conversationId: string;
+                conversation: IChatConversationLocal;
                 pinned: boolean;
             }>,
         ) => state,
         pinConversationSuccessAction: (
             state,
-            { payload }: PayloadAction<{ conversationId: string; pinned: boolean }>,
+            { payload }: PayloadAction<{ conversation: IChatConversationLocal; pinned: boolean }>,
         ) => {
             state.conversations = state.conversations?.map((conversation) =>
-                conversation.localId === payload.conversationId
+                conversation.localId === payload.conversation.localId
                     ? {
                           ...conversation,
                           pinned: payload.pinned,
@@ -1070,7 +1072,7 @@ const messagesSlice = createSlice({
                     : conversation,
             );
 
-            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
+            if (isConversationWithLocalId(state.currentConversation, payload.conversation.localId)) {
                 state.currentConversation = {
                     ...state.currentConversation,
                     pinned: payload.pinned,
@@ -1079,10 +1081,12 @@ const messagesSlice = createSlice({
         },
         pinConversationFailureAction: (
             state,
-            { payload }: PayloadAction<{ conversationId: string; error: Error; pinned?: boolean }>,
+            {
+                payload,
+            }: PayloadAction<{ conversation: IChatConversationLocal; error: Error; pinned?: boolean }>,
         ) => {
             state.conversations = state.conversations?.map((conversation) =>
-                conversation.localId === payload.conversationId
+                conversation.localId === payload.conversation.localId
                     ? {
                           ...conversation,
                           pinned: payload.pinned,
@@ -1090,7 +1094,7 @@ const messagesSlice = createSlice({
                     : conversation,
             );
 
-            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
+            if (isConversationWithLocalId(state.currentConversation, payload.conversation.localId)) {
                 state.currentConversation = {
                     ...state.currentConversation,
                     pinned: payload.pinned,
@@ -1100,16 +1104,16 @@ const messagesSlice = createSlice({
         renameConversationAction: (
             state,
             _action: PayloadAction<{
-                conversationId: string;
+                conversation: IChatConversationLocal;
                 title: string;
             }>,
         ) => state,
         renameConversationSuccessAction: (
             state,
-            { payload }: PayloadAction<{ conversationId: string; title: string }>,
+            { payload }: PayloadAction<{ conversation: IChatConversationLocal; title: string }>,
         ) => {
             state.conversations = state.conversations?.map((conversation) =>
-                conversation.localId === payload.conversationId
+                conversation.localId === payload.conversation.localId
                     ? {
                           ...conversation,
                           title: payload.title,
@@ -1117,7 +1121,7 @@ const messagesSlice = createSlice({
                     : conversation,
             );
 
-            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
+            if (isConversationWithLocalId(state.currentConversation, payload.conversation.localId)) {
                 state.currentConversation = {
                     ...state.currentConversation,
                     title: payload.title,
@@ -1126,10 +1130,12 @@ const messagesSlice = createSlice({
         },
         renameConversationFailureAction: (
             state,
-            { payload }: PayloadAction<{ conversationId: string; error: Error; title?: string }>,
+            {
+                payload,
+            }: PayloadAction<{ conversation: IChatConversationLocal; error: Error; title?: string }>,
         ) => {
             state.conversations = state.conversations?.map((conversation) =>
-                conversation.localId === payload.conversationId
+                conversation.localId === payload.conversation.localId
                     ? {
                           ...conversation,
                           title: payload.title,
@@ -1137,22 +1143,26 @@ const messagesSlice = createSlice({
                     : conversation,
             );
 
-            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
+            if (isConversationWithLocalId(state.currentConversation, payload.conversation.localId)) {
                 state.currentConversation = {
                     ...state.currentConversation,
                     title: payload.title,
                 };
             }
         },
-        deleteConversationAction: (state, _action: PayloadAction<{ conversationId: string }>) => state,
-        deleteConversationStartAction: (state, { payload }: PayloadAction<{ conversationId: string }>) => {
-            if (isConversationWithLocalId(state.currentConversation, payload.conversationId)) {
+        deleteConversationAction: (state, _action: PayloadAction<{ conversation: IChatConversationLocal }>) =>
+            state,
+        deleteConversationStartAction: (
+            state,
+            { payload }: PayloadAction<{ conversation: IChatConversationLocal }>,
+        ) => {
+            if (isConversationWithLocalId(state.currentConversation, payload.conversation.localId)) {
                 // keep list of conversations, but clear current conversation data in the view
                 state.currentConversation = createEmptyConversation();
             }
-            delete state.conversationsData[payload.conversationId];
+            delete state.conversationsData[payload.conversation.localId];
             state.conversations = state.conversations?.filter(
-                (conversation) => conversation.localId !== payload.conversationId,
+                (conversation) => conversation.localId !== payload.conversation.localId,
             );
         },
         deleteConversationSuccessAction: (

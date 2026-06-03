@@ -711,6 +711,9 @@ interface IUseHandlersProps {
 function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IUseHandlersProps) {
     const config = useConfig();
     const workspaceId = useWorkspaceStrict();
+    const useHostedAnalyticalDesigner = Boolean(
+        useSelector(settingsSelector)?.enableShellApplication_analyticalDesigner,
+    );
 
     const onSave = useCallback(() => {
         setSaveDialogOpen("save");
@@ -727,6 +730,7 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
                     window.location.href = getVisualizationHref(
                         workspaceId,
                         visualization.insight.identifier,
+                        useHostedAnalyticalDesigner,
                     );
                 } else {
                     config.linkHandler?.({
@@ -735,7 +739,11 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
                         workspaceId,
                         newTab: e.metaKey,
                         preventDefault: e.preventDefault.bind(e),
-                        itemUrl: getVisualizationHref(workspaceId, visualization.insight.identifier),
+                        itemUrl: getVisualizationHref(
+                            workspaceId,
+                            visualization.insight.identifier,
+                            useHostedAnalyticalDesigner,
+                        ),
                     });
                     e.stopPropagation();
                 }
@@ -743,17 +751,21 @@ function useHandlers({ visualization, setSaveDialogOpen, onCopyToClipboard }: IU
                 setSaveDialogOpen("explore");
             }
         },
-        [config, setSaveDialogOpen, visualization, workspaceId],
+        [config, setSaveDialogOpen, visualization, workspaceId, useHostedAnalyticalDesigner],
     );
 
     const onCopy = useCallback(() => {
         if (!visualization) {
             return;
         }
-        const link = getAbsoluteVisualizationHref(workspaceId, visualization.insight.identifier);
+        const link = getAbsoluteVisualizationHref(
+            workspaceId,
+            visualization.insight.identifier,
+            useHostedAnalyticalDesigner,
+        );
         copy(link);
         onCopyToClipboard?.({ content: link });
-    }, [onCopyToClipboard, visualization, workspaceId]);
+    }, [onCopyToClipboard, visualization, workspaceId, useHostedAnalyticalDesigner]);
 
     return {
         onSave,

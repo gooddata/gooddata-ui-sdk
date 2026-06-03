@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-web-components",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "description": "GoodData Web Components wrapper for GoodData.UI",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -46,8 +46,8 @@
         "dev": "vite",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "proxy": "node ./scripts/proxy.js",
         "test": "vitest watch",
         "test-once": "vitest run",

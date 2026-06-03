@@ -1,56 +1,27 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ComponentType, useEffect } from "react";
+import { type ComponentType } from "react";
 
-import { Provider as StoreProvider } from "react-redux";
-
-import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { PermissionsProvider } from "../permissions/PermissionsContext.js";
 import { usePermissions } from "../permissions/usePermissions.js";
-import { type ChatEventHandler } from "../store/events.js";
 
 import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
+import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 
 /**
  * Properties for the GenAIAssistant component.
  * @public
  */
-export type GenAIAssistantProps = {
-    /**
-     * Analytical backend to use for server communication.
-     */
-    backend?: IAnalyticalBackend;
-    /**
-     * The workspace ID the user is working with.
-     */
-    workspace?: string;
+export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     /**
      * The locale to use for the chat UI.
      */
     locale?: string;
-    /**
-     * Color palette to use for the chat UI.
-     */
-    colorPalette?: IColorPalette;
-    /**
-     * Catalog items for autocomplete.
-     */
-    catalogItems?: CatalogItem[];
-    /**
-     * User settings to use for the chat UI.
-     */
-    settings?: IUserWorkspaceSettings;
-    /**
-     * Event handlers to subscribe to chat events.
-     */
-    eventHandlers?: ChatEventHandler[];
     /**
      * When provided, references to the metadata objects will be rendered as clickable links.
      * Otherwise, the metadata objects will be rendered as plain text (using object title).
@@ -80,25 +51,6 @@ export type GenAIAssistantProps = {
     disableFullControl?: boolean;
 
     /**
-     * A list of object types to search for.
-     */
-    objectTypes?: GenAIObjectType[];
-    /**
-     * Only objects with these tags will be included
-     */
-    includeTags?: string[];
-    /**
-     * Objects with these tags will be excluded
-     */
-    excludeTags?: string[];
-
-    /**
-     * When provided, the function will be called with the store dispatch function
-     * after the store has been initialized.
-     */
-    onDispatcher?: (dispatch: (action: unknown) => void) => void;
-
-    /**
      * Custom React node rendered when no conversation exists yet.
      */
     LandingScreenComponentProvider?: () => ComponentType;
@@ -112,21 +64,6 @@ export type GenAIAssistantProps = {
      * Additional class name applied to the root element.
      */
     className?: string;
-
-    /**
-     * When `true`, the assistant operates against the caller's preview agent
-     * for this workspace (backend agent id: `{userId}-{workspaceId}-preview`).
-     * New conversations are created as preview conversations and the
-     * conversation list is filtered to preview conversations only.
-     *
-     * The preview agent must already exist and be enabled; otherwise
-     * conversation creation will fail.
-     *
-     * Note: toggling this prop rebuilds the chat state from scratch.
-     *
-     * @internal
-     */
-    isPreview?: boolean;
 };
 
 /**
@@ -152,29 +89,27 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         catalogItems,
         includeTags,
         excludeTags,
-        onDispatcher,
         isPreview,
+        onDispatcher,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
-    const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
-        colorPalette,
-        eventHandlers,
-        settings,
-        objectTypes,
-        includeTags,
-        excludeTags,
-        catalogItems,
-        isPreview,
-    });
-
-    useEffect(() => {
-        onDispatcher?.(genAIStore.dispatch as (action: unknown) => void);
-    }, [genAIStore, onDispatcher]);
 
     return (
         <IntlWrapper locale={locale}>
-            <StoreProvider store={genAIStore}>
+            <GenAiStore
+                backend={effectiveBackend}
+                workspace={effectiveWorkspace}
+                onDispatcher={onDispatcher}
+                colorPalette={colorPalette}
+                eventHandlers={eventHandlers}
+                settings={settings}
+                objectTypes={objectTypes}
+                includeTags={includeTags}
+                excludeTags={excludeTags}
+                catalogItems={catalogItems}
+                isPreview={isPreview}
+            >
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>
                         <PermissionsProvider>
@@ -182,7 +117,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
                         </PermissionsProvider>
                     </WorkspaceProvider>
                 </BackendProvider>
-            </StoreProvider>
+            </GenAiStore>
         </IntlWrapper>
     );
 }

@@ -52,7 +52,6 @@ function getStackBy(
     let stackByAttributeDescriptor: IAttributeDescriptor | null = null;
 
     if (stackByAttribute) {
-        // stackBy item index is always equal to seriesIndex
         stackByHeader = stackByAttribute.items[stackByIndex];
         stackByItem = {
             ...unwrap(stackByHeader),
@@ -116,7 +115,13 @@ export function getDrillableSeries(
             }
 
             const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
-            const stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
+            // Scatter renders a single series, so the segment is resolved per point, not by seriesIndex (always 0).
+            const stackByIndex =
+                isHeatmap(type) || isStackedTreemap
+                    ? pointData.y
+                    : isScatterPlot(type)
+                      ? pointIndex
+                      : seriesIndex;
 
             const { stackByHeader, stackByAttributeDescriptor } = getStackBy(stackByAttribute, stackByIndex);
 

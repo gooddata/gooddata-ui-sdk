@@ -16,7 +16,7 @@ import {
 export function* onConversationDelete({
     payload,
 }: PayloadAction<{
-    conversationId: string;
+    conversation: IChatConversationLocal;
 }>) {
     // Retrieve backend from context
     const backend: IAnalyticalBackend = yield getContext("backend");
@@ -24,7 +24,7 @@ export function* onConversationDelete({
 
     const conversation: IChatConversationLocal | undefined = yield select(
         conversationByIdSelector,
-        payload.conversationId,
+        payload.conversation.localId,
     );
 
     if (!conversation) {
@@ -33,14 +33,14 @@ export function* onConversationDelete({
 
     yield put(
         deleteConversationStartAction({
-            conversationId: payload.conversationId,
+            conversation: payload.conversation,
         }),
     );
 
     try {
         const chatConversations = backend.workspace(workspace).genAI().getChatConversations();
         const deleteConversationCall = chatConversations.delete.bind(chatConversations);
-        yield call(deleteConversationCall, payload.conversationId);
+        yield call(deleteConversationCall, payload.conversation.id);
 
         yield put(
             deleteConversationSuccessAction({

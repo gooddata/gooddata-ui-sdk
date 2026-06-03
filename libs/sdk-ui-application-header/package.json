@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-application-header",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "description": "GoodData SDK application header components — workspace picker, notifications dropdown",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -31,8 +31,8 @@
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf esm *.log",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "test": "vitest",
         "test-once": "vitest run",
         "validate": "npm run lint && npm run format-check",

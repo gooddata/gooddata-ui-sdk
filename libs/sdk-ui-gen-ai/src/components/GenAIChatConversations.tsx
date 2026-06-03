@@ -5,7 +5,10 @@ import {
     type FC,
     type KeyboardEvent,
     type MouseEvent,
+    type ReactElement,
+    type ReactNode,
     type RefObject,
+    cloneElement,
     useCallback,
     useEffect,
     useMemo,
@@ -26,17 +29,20 @@ import {
     UiIcon,
     UiIconButton,
     UiMenu,
+    UiSkeleton,
 } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocal } from "../model.js";
 import { catalogItemsSelector } from "../store/chatWindow/chatWindowSelectors.js";
-import { setHistoryAction } from "../store/chatWindow/chatWindowSlice.js";
-import { conversationSelector, conversationsSelector } from "../store/messages/messagesSelectors.js";
+import {
+    conversationSelector,
+    conversationsLoadedSelector,
+    conversationsSelector,
+} from "../store/messages/messagesSelectors.js";
 import {
     deleteConversationAction,
     pinConversationAction,
     renameConversationAction,
-    setCurrentConversationAction,
 } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
 import { isConversationWithLocalId } from "../store/utils.js";
@@ -55,28 +61,33 @@ type GenAIChatConversationsStateProps = {
 };
 
 type GenAIChatConversationsDispatchProps = {
-    setHistory: typeof setHistoryAction;
-    loadConversation: typeof setCurrentConversationAction;
     deleteConversation: typeof deleteConversationAction;
     pinConversation: typeof pinConversationAction;
     renameConversation: typeof renameConversationAction;
 };
 
+type GenAIChatConversationsExternalProps = {
+    wrapper?: ReactElement;
+    onClose?: () => void;
+    onSelect: (conversation: IChatConversationLocal) => void;
+};
+
 export type GenAIChatConversationsProps = GenAIChatConversationsStateProps &
-    GenAIChatConversationsDispatchProps;
+    GenAIChatConversationsDispatchProps &
+    GenAIChatConversationsExternalProps;
 
 type ConversationDropZone = "pin" | "unpin" | "body";
 
 function GenAIChatConversationsComponent({
-    setHistory,
+    onClose,
+    onSelect,
+    wrapper,
     deleteConversation,
     pinConversation,
     renameConversation,
-    loadConversation,
     conversations,
     conversation: currentConversation,
 }: GenAIChatConversationsProps) {
-    const ref = useRef<HTMLElement>(undefined);
     const menuRef = useRef<HTMLElement>(undefined);
     const intl = useIntl();
 
@@ -89,6 +100,7 @@ function GenAIChatConversationsComponent({
     const [activeDropZone, setActiveDropZone] = useState<ConversationDropZone | undefined>();
 
     const catalogItems = useSelector(catalogItemsSelector);
+    const conversationLoaded = useSelector(conversationsLoadedSelector);
 
     const groupedConversations = useMemo(() => groupConversationsByDate(conversations), [conversations]);
 
@@ -215,7 +227,7 @@ function GenAIChatConversationsComponent({
                                                 setConversationToRename(conversation);
                                             } else {
                                                 pinConversation({
-                                                    conversationId: selectedConversation.localId,
+                                                    conversation: selectedConversation,
                                                     pinned: !selectedConversation.pinned,
                                                 });
                                             }
@@ -263,15 +275,15 @@ function GenAIChatConversationsComponent({
 
     const handleSelect = useCallback(
         (conversation: IChatConversationLocal) => {
-            loadConversation({ conversation });
-            setHistory({ isHistory: false });
+            onSelect(conversation);
+            onClose?.();
         },
-        [loadConversation, setHistory],
+        [onSelect, onClose],
     );
 
     const handleDeleteSubmit = useCallback(() => {
         if (conversationToDelete) {
-            deleteConversation({ conversationId: conversationToDelete.localId });
+            deleteConversation({ conversation: conversationToDelete });
         }
         setConversationToDelete(undefined);
         menuRef.current?.focus();
@@ -281,7 +293,7 @@ function GenAIChatConversationsComponent({
         (title: string) => {
             if (conversationToRename) {
                 renameConversation({
-                    conversationId: conversationToRename.localId,
+                    conversation: conversationToRename,
                     title,
                 });
             }
@@ -342,7 +354,7 @@ function GenAIChatConversationsComponent({
             const shouldBePinned = dropZone === "pin";
             if (draggedConversation.pinned !== shouldBePinned) {
                 pinConversation({
-                    conversationId: draggedConversation.localId,
+                    conversation: draggedConversation,
                     pinned: shouldBePinned,
                 });
             }
@@ -364,6 +376,67 @@ function GenAIChatConversationsComponent({
         [],
     );
 
+    const Component = wrapper ?? <DrawerComponent onClose={onClose} />;
+
+    return (
+        <>
+            {cloneElement(
+                Component,
+                {},
+                <div
+                    className={cx("gd-gen-ai-chat__window__conversations", {
+                        "gd-gen-ai-chat__window__conversations--isFullscreen": isFullscreen,
+                        "gd-gen-ai-chat__window__conversations--isSmallScreen": isSmallScreen,
+                    })}
+                >
+                    <DrawerContent
+                        isOpen={isHistory}
+                        openedId={openedId}
+                        conversationLoaded={conversationLoaded}
+                        selectedId={currentConversation?.localId}
+                        menuRef={menuRef}
+                        menuItems={menuItems}
+                        conversations={conversations ?? []}
+                        handleSelect={handleSelect}
+                        draggedConversation={draggedConversation}
+                        activeDropZone={activeDropZone}
+                        onDragStart={handleDragStart}
+                        onDragEnd={handleDragEnd}
+                        onDropZoneDragOver={handleDropZoneDragOver}
+                        onDropZoneDragLeave={handleDropZoneDragLeave}
+                        onDropZoneDrop={handleDropZoneDrop}
+                        onMenuUnhandledKeyDown={handleMenuUnhandledKeyDown}
+                    />
+                </div>,
+            )}
+            {conversationToDelete ? (
+                <ConversationDeleteDialog
+                    conversation={conversationToDelete}
+                    onClose={handleDeleteCancel}
+                    onDelete={handleDeleteSubmit}
+                />
+            ) : null}
+            {conversationToRename ? (
+                <ConversationRenameDialog
+                    conversation={conversationToRename}
+                    onClose={handleRenameCancel}
+                    onRename={handleRenameSubmit}
+                />
+            ) : null}
+        </>
+    );
+}
+
+interface IDrawerComponentProps {
+    onClose?: () => void;
+    children?: ReactNode;
+}
+
+function DrawerComponent({ onClose, children }: IDrawerComponentProps) {
+    const ref = useRef<HTMLElement>(undefined);
+    const { isHistory } = useHistoryCheck();
+    const intl = useIntl();
+
     return (
         <>
             <div className="gd-gen-ai-chat__window__drawer" ref={ref as RefObject<HTMLDivElement>}></div>
@@ -383,54 +456,18 @@ function GenAIChatConversationsComponent({
                     </div>
                 }
                 closeLabel={intl.formatMessage({ id: "gd.gen-ai.conversations.close-label" })}
-                onClickClose={() => setHistory({ isHistory: false })}
-                onClickOutside={() => setHistory({ isHistory: false })}
+                onClickClose={onClose}
+                onClickOutside={onClose}
             >
-                <div
-                    className={cx("gd-gen-ai-chat__window__conversations", {
-                        "gd-gen-ai-chat__window__conversations--isFullscreen": isFullscreen,
-                        "gd-gen-ai-chat__window__conversations--isSmallScreen": isSmallScreen,
-                    })}
-                >
-                    <DrawerContent
-                        isOpen={isHistory}
-                        openedId={openedId}
-                        selectedId={currentConversation?.localId}
-                        menuRef={menuRef}
-                        menuItems={menuItems}
-                        conversations={conversations ?? []}
-                        handleSelect={handleSelect}
-                        draggedConversation={draggedConversation}
-                        activeDropZone={activeDropZone}
-                        onDragStart={handleDragStart}
-                        onDragEnd={handleDragEnd}
-                        onDropZoneDragOver={handleDropZoneDragOver}
-                        onDropZoneDragLeave={handleDropZoneDragLeave}
-                        onDropZoneDrop={handleDropZoneDrop}
-                        onMenuUnhandledKeyDown={handleMenuUnhandledKeyDown}
-                    />
-                </div>
+                {children}
             </UiDrawer>
-            {conversationToDelete ? (
-                <ConversationDeleteDialog
-                    conversation={conversationToDelete}
-                    onClose={handleDeleteCancel}
-                    onDelete={handleDeleteSubmit}
-                />
-            ) : null}
-            {conversationToRename ? (
-                <ConversationRenameDialog
-                    conversation={conversationToRename}
-                    onClose={handleRenameCancel}
-                    onRename={handleRenameSubmit}
-                />
-            ) : null}
         </>
     );
 }
 
 interface IDrawerContentProps {
     isOpen: boolean;
+    conversationLoaded: boolean;
     openedId: string | undefined;
     selectedId: string | undefined;
     menuRef: RefObject<HTMLElement | undefined>;
@@ -456,6 +493,7 @@ function DrawerContent({
     menuItems,
     handleSelect,
     draggedConversation,
+    conversationLoaded,
     activeDropZone,
     onDragStart,
     onDragEnd,
@@ -476,7 +514,7 @@ function DrawerContent({
     }, [menuItems]);
 
     useEffect(() => {
-        if (!isOpen || !selectedId) {
+        if (!isOpen || !selectedId || !conversationLoaded) {
             return;
         }
 
@@ -484,7 +522,11 @@ function DrawerContent({
             `[data-conversation-id="${selectedId}"]`,
         );
         selectedItem?.scrollIntoView({ block: "nearest" });
-    }, [isOpen, selectedId, menuItems]);
+    }, [isOpen, selectedId, menuItems, conversationLoaded]);
+
+    if (!conversationLoaded) {
+        return <UiSkeleton itemsCount={3} itemWidth="auto" itemHeight={20} itemsGap={8} />;
+    }
 
     return (
         <>
@@ -712,14 +754,12 @@ const mapStateToProps = (state: RootState): GenAIChatConversationsStateProps => 
 });
 
 const mapDispatchToProps: GenAIChatConversationsDispatchProps = {
-    setHistory: setHistoryAction,
     deleteConversation: deleteConversationAction,
     pinConversation: pinConversationAction,
     renameConversation: renameConversationAction,
-    loadConversation: setCurrentConversationAction,
 };
 
-export const GenAIChatConversations: FC = connect(
+export const GenAIChatConversations: FC<GenAIChatConversationsExternalProps> = connect(
     mapStateToProps,
     mapDispatchToProps,
 )(GenAIChatConversationsComponent);

@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-module",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "private": true,
     "description": "{applicationTemplateTitle} pluggable application module",
     "license": "UNLICENSED",
@@ -36,8 +36,8 @@
         "dist": "vite build",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {

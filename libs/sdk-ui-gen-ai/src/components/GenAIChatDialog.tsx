@@ -3,44 +3,32 @@
 import { type ComponentType, type RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
 import { type EnhancedStore } from "@reduxjs/toolkit";
-import { Provider as StoreProvider } from "react-redux";
 
-import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type CatalogItem } from "@gooddata/sdk-model";
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { OverlayController, OverlayControllerProvider, useOverlayController } from "@gooddata/sdk-ui-kit";
 
-import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { isOpenSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { setOpenAction } from "../store/chatWindow/chatWindowSlice.js";
-import { type ChatEventHandler } from "../store/events.js";
 import { getIsOpened } from "../store/localStorage.js";
 
 import { ConfigProvider, type LinkHandlerEvent } from "./ConfigContext.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
+import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 
-export type GenAIChatDialogProps = {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
+export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     isOpen: boolean;
     locale?: string;
     canManage?: boolean;
     canAnalyze?: boolean;
     canFullControl?: boolean;
-    objectTypes?: GenAIObjectType[];
-    includeTags?: string[];
-    excludeTags?: string[];
-    settings?: IUserWorkspaceSettings;
     onOpen: () => void;
     onClose: () => void;
-    eventHandlers?: ChatEventHandler[];
-    colorPalette?: IColorPalette;
-    catalogItems?: CatalogItem[];
     returnFocusTo?: RefObject<HTMLElement | null> | string;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
-    onDispatcher?: (dispatch: EnhancedStore["dispatch"]) => void;
     LandingScreenComponentProvider?: () => ComponentType;
 };
 
@@ -73,16 +61,74 @@ export function GenAIChatDialog({
 }: GenAIChatDialogProps) {
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
-    const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, {
-        eventHandlers,
-        colorPalette,
-        settings,
-        objectTypes,
-        includeTags,
-        excludeTags,
-        catalogItems,
-    });
 
+    return (
+        <IntlWrapper locale={locale}>
+            <GenAiStore
+                backend={effectiveBackend}
+                workspace={effectiveWorkspace}
+                onDispatcher={onDispatcher}
+                eventHandlers={eventHandlers}
+                colorPalette={colorPalette}
+                settings={settings}
+                objectTypes={objectTypes}
+                includeTags={includeTags}
+                excludeTags={excludeTags}
+                catalogItems={catalogItems}
+            >
+                {(genAIStore) => (
+                    <GenAIChatDialogContent
+                        genAIStore={genAIStore}
+                        backend={effectiveBackend}
+                        workspace={effectiveWorkspace}
+                        isOpen={isOpen}
+                        onOpen={onOpen}
+                        onClose={onClose}
+                        returnFocusTo={returnFocusTo}
+                        onLinkClick={onLinkClick}
+                        catalogItems={catalogItems}
+                        canManage={canManage}
+                        canAnalyze={canAnalyze}
+                        canFullControl={canFullControl}
+                        LandingScreenComponentProvider={LandingScreenComponentProvider}
+                    />
+                )}
+            </GenAiStore>
+        </IntlWrapper>
+    );
+}
+
+type GenAIChatDialogContentProps = {
+    genAIStore: EnhancedStore;
+    backend: IAnalyticalBackend;
+    workspace: string;
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
+    returnFocusTo?: RefObject<HTMLElement | null> | string;
+    onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
+    catalogItems?: CatalogItem[];
+    canManage: boolean;
+    canAnalyze: boolean;
+    canFullControl: boolean;
+    LandingScreenComponentProvider?: () => ComponentType;
+};
+
+function GenAIChatDialogContent({
+    genAIStore,
+    backend,
+    workspace,
+    isOpen,
+    onOpen,
+    onClose,
+    returnFocusTo,
+    onLinkClick,
+    catalogItems,
+    canManage,
+    canAnalyze,
+    canFullControl,
+    LandingScreenComponentProvider,
+}: GenAIChatDialogContentProps) {
     const open = useRef(onOpen);
     open.current = onOpen;
     const close = useRef(onClose);
@@ -119,10 +165,6 @@ export function GenAIChatDialog({
         close.current();
     }, [genAIStore]);
 
-    useEffect(() => {
-        onDispatcher?.(genAIStore.dispatch);
-    }, [genAIStore, onDispatcher]);
-
     // Some apps, like Dashboards, already have an overlay controller, so we need to use that one
     const parentOverlayController = useOverlayController();
     const chatOverlayController = useMemo(
@@ -133,32 +175,25 @@ export function GenAIChatDialog({
     if (!isOpen) return null;
 
     return (
-        <IntlWrapper locale={locale}>
-            <StoreProvider store={genAIStore}>
-                <BackendProvider backend={effectiveBackend}>
-                    <WorkspaceProvider workspace={effectiveWorkspace}>
-                        <OverlayControllerProvider overlayController={chatOverlayController}>
-                            <ConfigProvider
-                                allowNativeLinks
-                                linkHandler={onLinkClick}
-                                catalogItems={catalogItems}
-                                canManage={canManage}
-                                canAnalyze={canAnalyze}
-                                canFullControl={canFullControl}
-                            >
-                                <CustomizationProvider
-                                    landingScreenComponentProvider={LandingScreenComponentProvider}
-                                >
-                                    <GenAIChatOverlay
-                                        returnFocusTo={returnFocusTo}
-                                        onClose={onCloseHandler}
-                                    />
-                                </CustomizationProvider>
-                            </ConfigProvider>
-                        </OverlayControllerProvider>
-                    </WorkspaceProvider>
-                </BackendProvider>
-            </StoreProvider>
-        </IntlWrapper>
+        <BackendProvider backend={backend}>
+            <WorkspaceProvider workspace={workspace}>
+                <OverlayControllerProvider overlayController={chatOverlayController}>
+                    <ConfigProvider
+                        allowNativeLinks
+                        linkHandler={onLinkClick}
+                        catalogItems={catalogItems}
+                        canManage={canManage}
+                        canAnalyze={canAnalyze}
+                        canFullControl={canFullControl}
+                    >
+                        <CustomizationProvider
+                            landingScreenComponentProvider={LandingScreenComponentProvider}
+                        >
+                            <GenAIChatOverlay returnFocusTo={returnFocusTo} onClose={onCloseHandler} />
+                        </CustomizationProvider>
+                    </ConfigProvider>
+                </OverlayControllerProvider>
+            </WorkspaceProvider>
+        </BackendProvider>
     );
 }

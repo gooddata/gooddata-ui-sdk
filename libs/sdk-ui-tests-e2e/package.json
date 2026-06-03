@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-e2e",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "private": true,
     "description": "GoodData SDK e2e tests",
     "license": "LicenseRef-LICENSE",
@@ -34,8 +34,8 @@
         "e2e:isolated:local:replay": "./scripts/local/run.sh isolated local replay",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {

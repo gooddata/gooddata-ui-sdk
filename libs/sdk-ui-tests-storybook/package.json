@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-storybook",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "description": "GoodData React components storybook",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -25,8 +25,8 @@
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf dist coverage *.log tsconfig.tsbuildinfo",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "neobackstop-approve-docker": "npm run neobackstop-prepare-docker && bash neobackstop/run-neobackstop-compose.sh approve",
         "neobackstop-approve-local": "npm run neobackstop-prepare-local && bash neobackstop/run-neobackstop-compose.sh approve",
         "neobackstop-prepare-docker": "npm run scenario-extractor-docker",

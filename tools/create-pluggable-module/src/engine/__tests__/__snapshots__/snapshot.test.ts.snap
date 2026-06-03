@@ -161,8 +161,8 @@ export { default } from "@gooddata/eslint-config/oxlint-esm-react-vitest";
         "dist": "vite build",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {
@@ -595,8 +595,8 @@ export { default } from "@gooddata/eslint-config/oxlint-esm-react-vitest";
         "dist": "vite build",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {

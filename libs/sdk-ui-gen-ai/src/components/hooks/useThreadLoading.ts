@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { useSelector } from "react-redux";
 
+import { settingsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { loadedSelector } from "../../store/messages/messagesSelectors.js";
 import { type cancelAsyncAction, type loadThreadAction } from "../../store/messages/messagesSlice.js";
 
@@ -15,15 +16,17 @@ type ThreadLoadingProps = {
 
 export function useThreadLoading({ initializing, cancelLoading, loadThread }: ThreadLoadingProps) {
     const loaded = useSelector(loadedSelector);
+    const settings = useSelector(settingsSelector);
 
     useEffect(() => {
         if (initializing || loaded) {
             return () => {};
         }
-
-        loadThread();
+        if (settings) {
+            loadThread();
+        }
         return () => {
             cancelLoading();
         };
-    }, [loadThread, cancelLoading, initializing, loaded]);
+    }, [loadThread, cancelLoading, initializing, loaded, settings]);
 }

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-examples-template",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "private": false,
     "description": "GoodData interactive example template",
     "license": "LicenseRef-LICENSE",
@@ -16,8 +16,8 @@
         "clean": "rm -rf esm dist *.log",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint src",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix",
+        "lint": "oxlint . --quiet && eslint src",
+        "lint-fix": "oxlint . --quiet --fix && eslint src --fix",
         "preview": "vite preview",
         "refresh-md": "gdc-catalog-export && npm run format-write",
         "start": "vite serve",

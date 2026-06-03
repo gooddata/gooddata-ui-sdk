@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-code-convertors",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "description": "GoodData AAC declarative converters",
     "license": "MIT",
     "author": "GoodData",
@@ -39,8 +39,8 @@
         "format-write": "oxfmt .",
         "generate-python-types": "uv run python/scripts/generate_types.py",
         "generate-python-types-check": "uv run python/scripts/generate_types.py --check",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-wasm": "bash wasm/test.sh",

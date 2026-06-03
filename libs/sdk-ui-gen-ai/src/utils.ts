@@ -7,12 +7,18 @@ import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 import { REFERENCE_REGEX } from "./components/completion/references.js";
 import { type IChatConversationLocal } from "./model.js";
 
-export function getVisualizationHref(wsId: string, visId: string) {
-    return `/analyze/#/${wsId}/${visId}/edit`;
+export function getVisualizationHref(wsId: string, visId: string, useHostedAnalyticalDesigner?: boolean) {
+    return useHostedAnalyticalDesigner
+        ? `/workspace/${wsId}/analyze/#/${visId}/edit`
+        : `/analyze/#/${wsId}/${visId}/edit`;
 }
 
-export function getAbsoluteVisualizationHref(wsId: string, visId: string) {
-    return `${window.location.origin}${getVisualizationHref(wsId, visId)}`;
+export function getAbsoluteVisualizationHref(
+    wsId: string,
+    visId: string,
+    useHostedAnalyticalDesigner?: boolean,
+) {
+    return `${window.location.origin}${getVisualizationHref(wsId, visId, useHostedAnalyticalDesigner)}`;
 }
 
 export function getSettingHref(section: string, action?: string) {

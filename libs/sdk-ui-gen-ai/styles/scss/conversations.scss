@@ -239,6 +239,18 @@
     }
 }
 
+.gd-gen-ai-chat__embed__conversations {
+    padding: 5px 10px;
+
+    .gd-gen-ai-chat__window__conversations {
+        width: auto;
+        min-width: 220px;
+        position: relative;
+        margin: 0;
+        height: calc(100%);
+    }
+}
+
 .gd-gen-ai-chat__rename-dialog {
     min-width: 440px;
 
