@@ -582,9 +582,6 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                 }
 
                 // construct predicates for all available attributes and measures
-                const attributePredicates = [
-                    HeaderPredicates.localIdentifierMatch(date.attribute.attributeHeader.localIdentifier),
-                ];
                 const measurePredicates = compact(
                     availableDrillTargets?.availableDrillTargets?.measures?.map((drillMeasure) => {
                         const isMetricDisabled = getMetricDisabled(
@@ -610,7 +607,7 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                         transition: "in-place",
                         origin: {} as DrillOrigin,
                     },
-                    predicates: [...attributePredicates, ...measurePredicates],
+                    predicates: [...measurePredicates],
                 };
             },
         ),

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -55,8 +55,8 @@
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "generate-client": "npm run openapi-generate && fix-esm-import-path ./src && npm run format-write",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "openapi-generate": "./scripts/generate.js",
         "test": "vitest watch",
         "test-once": "vitest run",

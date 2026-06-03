@@ -27,6 +27,7 @@ import {
 } from "../messages/messagesSelectors.js";
 import {
     clearThreadAction,
+    deleteConversationAction,
     deleteConversationFailureAction,
     deleteConversationSuccessAction,
     evaluateMessageCompleteAction,
@@ -35,10 +36,12 @@ import {
     newMessageAction,
     pinConversationFailureAction,
     pinConversationSuccessAction,
+    renameConversationAction,
     renameConversationFailureAction,
     renameConversationSuccessAction,
     saveVisualizationErrorAction,
     saveVisualizationSuccessAction,
+    setCurrentConversationAction,
     setUserFeedback,
     setUserFeedbackError,
     visualizationErrorAction,
@@ -59,14 +62,18 @@ export function* onEvent() {
     yield takeEvery(copyToClipboardAction.type, onCopyToClipboard);
     yield takeEvery(pinConversationSuccessAction.type, onConversationPinUpdated);
     yield takeEvery(pinConversationFailureAction.type, onConversationPinError);
+    yield takeEvery(deleteConversationAction.type, onConversationDelete);
     yield takeEvery(deleteConversationSuccessAction.type, onConversationDeletedSuccess);
     yield takeEvery(deleteConversationFailureAction.type, onConversationDeletedError);
+    yield takeEvery(renameConversationAction.type, onConversationRename);
     yield takeEvery(renameConversationSuccessAction.type, onConversationRenamedSuccess);
     yield takeEvery(renameConversationFailureAction.type, onConversationRenamedError);
+    yield takeEvery(setCurrentConversationAction.type, onConversationChanged);
+    yield takeEvery(loadConversationSuccessAction.type, onConversationLoaded);
 }
 
 function* onConversationPinUpdated({
-    payload: { conversationId, pinned },
+    payload: { conversation, pinned },
 }: ReturnType<typeof pinConversationSuccessAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
     const threadId: string | undefined = yield select(threadIdSelector);
@@ -74,13 +81,13 @@ function* onConversationPinUpdated({
     eventDispatcher.dispatch({
         type: "chatConversationPinned",
         threadId,
-        conversationId,
+        conversation,
         pinned,
     });
 }
 
 function* onConversationPinError({
-    payload: { conversationId, error },
+    payload: { conversation, error },
 }: ReturnType<typeof pinConversationFailureAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
     const threadId: string | undefined = yield select(threadIdSelector);
@@ -88,8 +95,19 @@ function* onConversationPinError({
     eventDispatcher.dispatch({
         type: "chatConversationPinError",
         threadId,
-        conversationId,
+        conversation,
         error,
+    });
+}
+
+function* onConversationDelete({ payload: { conversation } }: ReturnType<typeof deleteConversationAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationDelete",
+        threadId,
+        conversation,
     });
 }
 
@@ -100,7 +118,7 @@ function* onConversationDeletedSuccess({
     const threadId: string | undefined = yield select(threadIdSelector);
 
     eventDispatcher.dispatch({
-        type: "chatConversationDeleted",
+        type: "chatConversationDeletedSuccess",
         threadId,
         conversation,
     });
@@ -120,22 +138,36 @@ function* onConversationDeletedError({
     });
 }
 
+function* onConversationRename({
+    payload: { conversation, title },
+}: ReturnType<typeof renameConversationAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationRename",
+        threadId,
+        conversation,
+        title,
+    });
+}
+
 function* onConversationRenamedSuccess({
-    payload: { conversationId, title },
+    payload: { conversation, title },
 }: ReturnType<typeof renameConversationSuccessAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
     const threadId: string | undefined = yield select(threadIdSelector);
 
     eventDispatcher.dispatch({
-        type: "chatConversationRenamed",
+        type: "chatConversationRenamedSuccess",
         threadId,
-        conversationId,
+        conversation,
         title,
     });
 }
 
 function* onConversationRenamedError({
-    payload: { conversationId, title, error },
+    payload: { conversation, title, error },
 }: ReturnType<typeof renameConversationFailureAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
     const threadId: string | undefined = yield select(threadIdSelector);
@@ -144,8 +176,34 @@ function* onConversationRenamedError({
         type: "chatConversationRenamedError",
         title: title ?? "",
         threadId,
-        conversationId,
+        conversation,
         error,
+    });
+}
+
+function* onConversationChanged({
+    payload: { conversation },
+}: ReturnType<typeof setCurrentConversationAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationChanged",
+        threadId,
+        conversation,
+    });
+}
+
+function* onConversationLoaded({
+    payload: { currentConversation },
+}: ReturnType<typeof loadConversationSuccessAction>) {
+    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+    const threadId: string | undefined = yield select(threadIdSelector);
+
+    eventDispatcher.dispatch({
+        type: "chatConversationChanged",
+        threadId,
+        conversation: currentConversation,
     });
 }
 

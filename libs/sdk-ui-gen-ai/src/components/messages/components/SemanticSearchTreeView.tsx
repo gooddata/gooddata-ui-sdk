@@ -40,6 +40,7 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
 
     const canEdit = canFullControl || canManage || canAnalyze;
     const useHostMetricEditor = Boolean(settings?.enableShellApplication_metricEditor);
+    const useHostAnalyticalDesigner = Boolean(settings?.enableShellApplication_analyticalDesigner);
 
     const items = buildSemanticSearchTreeViewItems({
         intl,
@@ -48,7 +49,10 @@ export function SemanticSearchTreeViewImpl({ workspace, content, maxHeight }: Se
         relationships: content.relationships,
         threshold: 0, // Keep all items for now
         canEdit,
-        uiPathOptions: { useHostedMetricEditor: useHostMetricEditor },
+        uiPathOptions: {
+            useHostedMetricEditor: useHostMetricEditor,
+            useHostedAnalyticalDesigner: useHostAnalyticalDesigner,
+        },
     });
     const id = useId();
     const treeViewId = `gen-ai-chat-${id}-treeview`;

@@ -17,6 +17,7 @@ export type UIPathObjectTypes =
 
 export type UIPathOptions = {
     useHostedMetricEditor?: boolean;
+    useHostedAnalyticalDesigner?: boolean;
 };
 
 /**
@@ -39,6 +40,9 @@ export const getUIPath = (
         case "dashboardVisualization":
             return `/dashboards/#/workspace/${workspaceId}/dashboard/${objectId}?visualizationId=${visualizationId}`;
         case "visualization":
+            if (options.useHostedAnalyticalDesigner) {
+                return `/workspace/${workspaceId}/analyze/#/${objectId}/edit`;
+            }
             return `/analyze/#/${workspaceId}/${objectId}/edit`;
         case "metric":
             if (options.useHostedMetricEditor) {

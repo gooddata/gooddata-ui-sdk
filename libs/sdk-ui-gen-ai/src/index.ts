@@ -14,6 +14,8 @@ export {
     type GenAIChatProps,
     type GenAIAssistantProps,
 } from "./components/GenAIChat.js";
+export { GenAIConversations, type GenAIConversationsProps } from "./components/GenAiConversations.js";
+export { GenAiStore, type GenAiStoreProps } from "./components/GenAiStore.js";
 export {
     makeUserMessage,
     makeTextContents,
@@ -57,11 +59,14 @@ export {
     type ChatSaveVisualizationSuccessEvent,
     type ChatCopyToClipboardEvent,
     type ChatConversationPinnedEvent,
-    type ChatConversationDeletedEvent,
     type ChatConversationPinErrorEvent,
+    type ChatConversationDeleteEvent,
+    type ChatConversationDeletedSuccessEvent,
     type ChatConversationDeletedErrorEvent,
-    type ChatConversationRenamedEvent,
+    type ChatConversationRenameEvent,
+    type ChatConversationRenamedSuccessEvent,
     type ChatConversationRenamedErrorEvent,
+    type ChatConversationChangedEvent,
     isChatAssistantMessageEvent,
     isChatUserMessageEvent,
     isChatClosedEvent,
@@ -73,12 +78,15 @@ export {
     isChatSaveVisualizationErrorEvent,
     isChatSaveVisualizationSuccessEvent,
     isChatCopyToClipboardEvent,
-    isChatConversationDeletedEvent,
     isChatConversationPinnedEvent,
     isChatConversationPinErrorEvent,
+    isChatConversationDeleteEvent,
     isChatConversationDeletedErrorEvent,
-    isChatConversationRenamedEvent,
+    isChatConversationDeletedSuccessEvent,
+    isChatConversationRenameEvent,
+    isChatConversationRenamedSuccessEvent,
     isChatConversationRenamedErrorEvent,
+    isChatConversationChangedEvent,
 } from "./store/events.js";
 
 export {

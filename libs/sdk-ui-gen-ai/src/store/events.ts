@@ -3,7 +3,7 @@
 import { type IChatConversation } from "@gooddata/sdk-backend-spi";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
-import { type TextContentObject } from "../model.js";
+import { type IChatConversationLocal, type TextContentObject } from "../model.js";
 
 /**
  * A common event definition for the Chat component.
@@ -67,7 +67,7 @@ export const isChatResetEvent = (event: ChatEvent): event is ChatResetEvent => {
  */
 export type ChatConversationPinnedEvent = BaseEvent & {
     type: "chatConversationPinned";
-    conversationId: string;
+    conversation: IChatConversationLocal;
     pinned: boolean;
 };
 
@@ -85,7 +85,7 @@ export const isChatConversationPinnedEvent = (event: ChatEvent): event is ChatCo
  */
 export type ChatConversationPinErrorEvent = BaseEvent & {
     type: "chatConversationPinError";
-    conversationId: string;
+    conversation: IChatConversationLocal;
     error: Error;
 };
 
@@ -101,8 +101,8 @@ export const isChatConversationPinErrorEvent = (event: ChatEvent): event is Chat
  * A chat conversation deleted event.
  * @public
  */
-export type ChatConversationDeletedEvent = BaseEvent & {
-    type: "chatConversationDeleted";
+export type ChatConversationDeleteEvent = BaseEvent & {
+    type: "chatConversationDelete";
     conversation: IChatConversation;
 };
 
@@ -110,8 +110,27 @@ export type ChatConversationDeletedEvent = BaseEvent & {
  * Type guard for the ChatConversationDeletedEvent.
  * @public
  */
-export const isChatConversationDeletedEvent = (event: ChatEvent): event is ChatConversationDeletedEvent => {
-    return event.type === "chatConversationDeleted";
+export const isChatConversationDeleteEvent = (event: ChatEvent): event is ChatConversationDeleteEvent => {
+    return event.type === "chatConversationDelete";
+};
+
+/**
+ * A chat conversation deleted success event.
+ * @public
+ */
+export type ChatConversationDeletedSuccessEvent = BaseEvent & {
+    type: "chatConversationDeletedSuccess";
+    conversation: IChatConversation;
+};
+
+/**
+ * Type guard for the ChatConversationDeletedEvent.
+ * @public
+ */
+export const isChatConversationDeletedSuccessEvent = (
+    event: ChatEvent,
+): event is ChatConversationDeletedSuccessEvent => {
+    return event.type === "chatConversationDeletedSuccess";
 };
 
 /**
@@ -135,21 +154,41 @@ export const isChatConversationDeletedErrorEvent = (
 };
 
 /**
- * A chat conversation renamed event.
+ * A chat conversation rename event.
  * @public
  */
-export type ChatConversationRenamedEvent = BaseEvent & {
-    type: "chatConversationRenamed";
-    conversationId: string;
+export type ChatConversationRenameEvent = BaseEvent & {
+    type: "chatConversationRename";
+    conversation: IChatConversationLocal;
     title: string;
 };
 
 /**
- * Type guard for the ChatConversationRenamedEvent.
+ * Type guard for the ChatConversationRenameEvent.
  * @public
  */
-export const isChatConversationRenamedEvent = (event: ChatEvent): event is ChatConversationRenamedEvent => {
-    return event.type === "chatConversationRenamed";
+export const isChatConversationRenameEvent = (event: ChatEvent): event is ChatConversationRenameEvent => {
+    return event.type === "chatConversationRename";
+};
+
+/**
+ * A chat conversation renamed success event.
+ * @public
+ */
+export type ChatConversationRenamedSuccessEvent = BaseEvent & {
+    type: "chatConversationRenamedSuccess";
+    conversation: IChatConversationLocal;
+    title: string;
+};
+
+/**
+ * Type guard for the ChatConversationRenamedSuccessEvent.
+ * @public
+ */
+export const isChatConversationRenamedSuccessEvent = (
+    event: ChatEvent,
+): event is ChatConversationRenamedSuccessEvent => {
+    return event.type === "chatConversationRenamedSuccess";
 };
 
 /**
@@ -158,7 +197,7 @@ export const isChatConversationRenamedEvent = (event: ChatEvent): event is ChatC
  */
 export type ChatConversationRenamedErrorEvent = BaseEvent & {
     type: "chatConversationRenamedError";
-    conversationId: string;
+    conversation: IChatConversationLocal;
     title: string;
     error: Error;
 };
@@ -321,6 +360,23 @@ export const isChatCopyToClipboardEvent = (event: ChatEvent): event is ChatCopyT
 };
 
 /**
+ * A chat copy to clipboard event.
+ * @public
+ */
+export type ChatConversationChangedEvent = BaseEvent & {
+    type: "chatConversationChanged";
+    conversation: IChatConversationLocal;
+};
+
+/**
+ * Type guard for the ChatCopyToClipboardEvent.
+ * @public
+ */
+export const isChatConversationChangedEvent = (event: ChatEvent): event is ChatConversationChangedEvent => {
+    return event.type === "chatConversationChanged";
+};
+
+/**
  * A union type for all chat events.
  * @public
  */
@@ -330,9 +386,11 @@ export type ChatEvent =
     | ChatResetEvent
     | ChatConversationPinnedEvent
     | ChatConversationPinErrorEvent
-    | ChatConversationDeletedEvent
+    | ChatConversationDeleteEvent
+    | ChatConversationDeletedSuccessEvent
     | ChatConversationDeletedErrorEvent
-    | ChatConversationRenamedEvent
+    | ChatConversationRenameEvent
+    | ChatConversationRenamedSuccessEvent
     | ChatConversationRenamedErrorEvent
     | ChatUserMessageEvent
     | ChatAssistantMessageEvent
@@ -341,7 +399,8 @@ export type ChatEvent =
     | ChatCopyToClipboardEvent
     | ChatVisualizationErrorEvent
     | ChatSaveVisualizationErrorEvent
-    | ChatSaveVisualizationSuccessEvent;
+    | ChatSaveVisualizationSuccessEvent
+    | ChatConversationChangedEvent;
 
 /**
  * An event handler for the Chat component.

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-model",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "description": "GoodData Model definitions used by UI components and Backend SPI",
     "license": "MIT",
     "author": "GoodData",
@@ -36,8 +36,8 @@
         "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "test": "vitest watch",
         "test-once": "vitest run",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check",

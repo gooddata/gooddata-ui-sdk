@@ -6,7 +6,14 @@ import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording, dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { type IColorPaletteItem, emptyDef, idRef } from "@gooddata/sdk-model";
-import { DataViewFacade, DefaultColorPalette, HeaderPredicates, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    DataViewFacade,
+    DefaultColorPalette,
+    HeaderPredicates,
+    type IDrillEventIntersectionElement,
+    VisualizationTypes,
+    isDrillIntersectionAttributeItem,
+} from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
     type ChartFillType,
@@ -3656,4 +3663,37 @@ describe("chartOptionsBuilder", () => {
             });
         },
     );
+});
+
+describe("getDrillableSeries for scatter plot with segmentation (F1-2516)", () => {
+    function getScatterSegments(): { city: string | null; segment: string | null }[] {
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.ScatterPlot
+                .XAndYAxisMeasuresAttributeAndSegmentation as ScenarioRecording,
+        );
+        // customTooltip.enabled forces a drill intersection onto every point
+        const chartOptions = generateChartOptions(dv, { type: "scatter", customTooltip: { enabled: true } });
+        const points: IUnsafeHighchartsTooltipPoint[] = chartOptions.data?.series?.[0]?.data ?? [];
+        return points.map((point) => {
+            const intersection: IDrillEventIntersectionElement[] = point.drillIntersection ?? [];
+            const names = intersection
+                .map((element) => element.header)
+                .filter(isDrillIntersectionAttributeItem)
+                .map((header) => header.attributeHeaderItem.name);
+            return { city: names[0], segment: names[1] };
+        });
+    }
+
+    it("resolves the segment per data point instead of pinning every point to the first segment", () => {
+        // before the fix every point inherited the first row's segment, collapsing this to one value
+        const distinctSegments = new Set(getScatterSegments().map((p) => p.segment));
+        expect(distinctSegments.size).toBeGreaterThan(1);
+    });
+
+    it("matches each point's segment to its own attribute item", () => {
+        const segmentByCity = Object.fromEntries(getScatterSegments().map((p) => [p.city, p.segment]));
+        expect(segmentByCity["Eugene"]).toBe("Oregon");
+        expect(segmentByCity["San Francisco"]).toBe("California");
+        expect(segmentByCity["Seattle"]).toBe("Washington");
+    });
 });

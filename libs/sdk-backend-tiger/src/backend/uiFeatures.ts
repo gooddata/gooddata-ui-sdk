@@ -146,6 +146,7 @@ export enum TigerFeaturesNames {
     EnableAiAgenticConversations = "enableAiAgenticConversations",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
+    EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableKDEmptyDateValuesFilter = "enableKDEmptyDateValuesFilter",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
@@ -176,6 +177,7 @@ export enum TigerFeaturesNames {
     EnableAiLlmAnthropicProvider = "enableAiLlmAnthropicProvider",
     EnableRadarChart = "enableRadarChart",
     EnableMetricEditorRemoteModule = "enableShellApplication_metricEditor",
+    EnableAnalyticalDesignerRemoteModule = "enableShellApplication_analyticalDesigner",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
 }
 
@@ -341,11 +343,13 @@ export type ITigerFeatureFlags = {
     enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
     enableGenAiAgenticDataShareOptOut: (typeof FeatureFlagsValues)["enableGenAiAgenticDataShareOptOut"][number];
     enableGenAiVisualizationSummarySkill: (typeof FeatureFlagsValues)["enableGenAiVisualizationSummarySkill"][number];
+    enableGenAiDashboardSummarySkill: (typeof FeatureFlagsValues)["enableGenAiDashboardSummarySkill"][number];
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
     enableEnhancedInsightPicker: (typeof FeatureFlagsValues)["enableEnhancedInsightPicker"][number];
     enableAiLlmAnthropicProvider: (typeof FeatureFlagsValues)["enableAiLlmAnthropicProvider"][number];
     enableShellApplication_metricEditor: (typeof FeatureFlagsValues)["enableShellApplication_metricEditor"][number];
+    enableShellApplication_analyticalDesigner: (typeof FeatureFlagsValues)["enableShellApplication_analyticalDesigner"][number];
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
 };
 
@@ -511,11 +515,13 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAiAgenticConversations: false,
     enableGenAiAgenticDataShareOptOut: false,
     enableGenAiVisualizationSummarySkill: false,
+    enableGenAiDashboardSummarySkill: false,
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
     enableEnhancedInsightPicker: false,
     enableAiLlmAnthropicProvider: false,
     enableShellApplication_metricEditor: false,
+    enableShellApplication_analyticalDesigner: false,
     enableDashboardSidebarResize: false,
 };
 
@@ -682,10 +688,12 @@ export const FeatureFlagsValues = {
     enableAiAgenticConversations: [true, false] as const,
     enableGenAiAgenticDataShareOptOut: [true, false] as const,
     enableGenAiVisualizationSummarySkill: [false, true] as const,
+    enableGenAiDashboardSummarySkill: [false, true] as const,
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,
     enableEnhancedInsightPicker: [true, false] as const,
     enableAiLlmAnthropicProvider: [true, false] as const,
     enableShellApplication_metricEditor: [true, false] as const,
+    enableShellApplication_analyticalDesigner: [true, false] as const,
     enableDashboardSidebarResize: [true, false] as const,
 };

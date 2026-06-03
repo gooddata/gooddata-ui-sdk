@@ -52,6 +52,9 @@ export function useHostChromeSearch({
                 isTrial={isTrial}
                 enableUseGenAIChat={features.showChat}
                 useHostedMetricEditor={Boolean(features.settings.enableShellApplication_metricEditor)}
+                useHostedAnalyticalDesigner={Boolean(
+                    features.settings.enableShellApplication_analyticalDesigner,
+                )}
                 onAskAiAssistant={onAskAiAssistant}
                 onEvent={handleSearchEvent}
             />

@@ -89,22 +89,31 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
         return dashboardFilterLocalIdentifier(filter.filter)!;
     }, []);
 
-    const isFilterActive = useCallback((filter: FilterBarGroupFilterIndexed) => {
-        if (isFilterBarMeasureValueFilter(filter)) {
-            return !isAllDashboardMeasureValueFilter(filter.filter);
-        }
-        const dashboardFilter = filter.filter;
-        if (isDashboardAttributeFilter(dashboardFilter)) {
-            return getSelectedElementsCount(dashboardFilter) > 0;
-        }
-        if (isDashboardArbitraryAttributeFilter(dashboardFilter)) {
-            return dashboardFilter.arbitraryAttributeFilter.values.length > 0;
-        }
-        if (isDashboardMatchAttributeFilter(dashboardFilter)) {
-            return dashboardFilter.matchAttributeFilter.literal.length > 0;
-        }
-        return true;
-    }, []);
+    const isFilterActive = useCallback(
+        (filter: FilterBarGroupFilterIndexed) => {
+            if (isFilterBarMeasureValueFilter(filter)) {
+                // Measure value filters have no working selection, so they always reflect the
+                // committed filter regardless of the apply mode.
+                return !isAllDashboardMeasureValueFilter(filter.filter);
+            }
+            // In apply-all-at-once mode the uncommitted (working) selection should be reflected in
+            // the group button subtitle immediately, without waiting for the Apply button. Fall back
+            // to the committed filter when there is no working selection.
+            const dashboardFilter =
+                isApplyAllAtOnceEnabledAndSet && filter.workingFilter ? filter.workingFilter : filter.filter;
+            if (isDashboardAttributeFilter(dashboardFilter)) {
+                return getSelectedElementsCount(dashboardFilter) > 0;
+            }
+            if (isDashboardArbitraryAttributeFilter(dashboardFilter)) {
+                return dashboardFilter.arbitraryAttributeFilter.values.length > 0;
+            }
+            if (isDashboardMatchAttributeFilter(dashboardFilter)) {
+                return dashboardFilter.matchAttributeFilter.literal.length > 0;
+            }
+            return true;
+        },
+        [isApplyAllAtOnceEnabledAndSet],
+    );
 
     const renderFilter = useCallback(
         (

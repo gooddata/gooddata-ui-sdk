@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace-mgmt",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "description": "Command line tools for reference workspace management",
     "license": "MIT",
     "author": "GoodData",
@@ -29,8 +29,8 @@
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "import-ref-workspace": "node ./bin/import_ref_workspace.js",
-        "lint": "oxlint . --type-aware --quiet && eslint src",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix",
+        "lint": "oxlint . --quiet && eslint src",
+        "lint-fix": "oxlint . --quiet --fix && eslint src --fix",
         "test": "vitest watch --passWithNoTests",
         "test-once": "vitest run --passWithNoTests",
         "validate": "npm run dep-cruiser && npm run lint && npm run format-check"

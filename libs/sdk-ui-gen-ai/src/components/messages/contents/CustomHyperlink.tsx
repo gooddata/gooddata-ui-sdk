@@ -26,6 +26,9 @@ type CustomHyperlinkProps = CustomHyperlinkOwnProps & {
 export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperlinkProps) {
     const { linkHandler, allowNativeLinks, canManage, canAnalyze } = useConfig();
     const enableShellApplication_metricEditor = Boolean(settings?.enableShellApplication_metricEditor);
+    const enableShellApplication_analyticalDesigner = Boolean(
+        settings?.enableShellApplication_analyticalDesigner,
+    );
     const canManageMetrics = canManage || canAnalyze;
     const canManageVisualisations = canManage || canAnalyze;
 
@@ -48,7 +51,13 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             return null;
         }
 
-        const itemUrl = getItemUrl(workspaceId, id, type, enableShellApplication_metricEditor);
+        const itemUrl = getItemUrl(
+            workspaceId,
+            id,
+            type,
+            enableShellApplication_metricEditor,
+            enableShellApplication_analyticalDesigner,
+        );
 
         if (!itemUrl) {
             return null;
@@ -60,7 +69,7 @@ export function CustomHyperlinkComponent({ href, text, settings }: CustomHyperli
             id,
             itemUrl,
         };
-    }, [href, enableShellApplication_metricEditor]);
+    }, [href, enableShellApplication_metricEditor, enableShellApplication_analyticalDesigner]);
 
     if (!parsedRef) {
         return text;
@@ -112,10 +121,13 @@ const getItemUrl = (
     id: string,
     objectType: string,
     enableShellApplication_metricEditor?: boolean,
+    enableShellApplication_analyticalDesigner?: boolean,
 ) => {
     switch (objectType) {
         case "visualization":
-            return `/analyze/#/${workspaceId}/${id}/edit`;
+            return enableShellApplication_analyticalDesigner
+                ? `/workspace/${workspaceId}/analyze/#/${id}/edit`
+                : `/analyze/#/${workspaceId}/${id}/edit`;
         case "dashboard":
             return `/dashboards/#/workspace/${workspaceId}/dashboard/${id}`;
         case "metric":

@@ -8,6 +8,7 @@ import { ActionCreatorWithoutPayload } from '@reduxjs/toolkit';
 import { ActionCreatorWithPayload } from '@reduxjs/toolkit';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
+import { EnhancedStore } from '@reduxjs/toolkit';
 import { FC } from 'react';
 import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
@@ -70,6 +71,12 @@ export type ChatClosedEvent = BaseEvent & {
 };
 
 // @public
+export type ChatConversationChangedEvent = BaseEvent & {
+    type: "chatConversationChanged";
+    conversation: IChatConversationLocal;
+};
+
+// @public
 export type ChatConversationDeletedErrorEvent = BaseEvent & {
     type: "chatConversationDeletedError";
     conversation: IChatConversation;
@@ -77,37 +84,50 @@ export type ChatConversationDeletedErrorEvent = BaseEvent & {
 };
 
 // @public
-export type ChatConversationDeletedEvent = BaseEvent & {
-    type: "chatConversationDeleted";
+export type ChatConversationDeletedSuccessEvent = BaseEvent & {
+    type: "chatConversationDeletedSuccess";
+    conversation: IChatConversation;
+};
+
+// @public
+export type ChatConversationDeleteEvent = BaseEvent & {
+    type: "chatConversationDelete";
     conversation: IChatConversation;
 };
 
 // @public
 export type ChatConversationPinErrorEvent = BaseEvent & {
     type: "chatConversationPinError";
-    conversationId: string;
+    conversation: IChatConversationLocal;
     error: Error;
 };
 
 // @public
 export type ChatConversationPinnedEvent = BaseEvent & {
     type: "chatConversationPinned";
-    conversationId: string;
+    conversation: IChatConversationLocal;
     pinned: boolean;
 };
 
 // @public
 export type ChatConversationRenamedErrorEvent = BaseEvent & {
     type: "chatConversationRenamedError";
-    conversationId: string;
+    conversation: IChatConversationLocal;
     title: string;
     error: Error;
 };
 
 // @public
-export type ChatConversationRenamedEvent = BaseEvent & {
-    type: "chatConversationRenamed";
-    conversationId: string;
+export type ChatConversationRenamedSuccessEvent = BaseEvent & {
+    type: "chatConversationRenamedSuccess";
+    conversation: IChatConversationLocal;
+    title: string;
+};
+
+// @public
+export type ChatConversationRenameEvent = BaseEvent & {
+    type: "chatConversationRename";
+    conversation: IChatConversationLocal;
     title: string;
 };
 
@@ -118,7 +138,7 @@ export type ChatCopyToClipboardEvent = BaseEvent & {
 };
 
 // @public
-export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeletedEvent | ChatConversationDeletedErrorEvent | ChatConversationRenamedEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent;
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatConversationPinnedEvent | ChatConversationPinErrorEvent | ChatConversationDeleteEvent | ChatConversationDeletedSuccessEvent | ChatConversationDeletedErrorEvent | ChatConversationRenameEvent | ChatConversationRenamedSuccessEvent | ChatConversationRenamedErrorEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent | ChatFeedbackErrorEvent | ChatCopyToClipboardEvent | ChatVisualizationErrorEvent | ChatSaveVisualizationErrorEvent | ChatSaveVisualizationSuccessEvent | ChatConversationChangedEvent;
 
 // @public
 export type ChatEventHandler<TEvent extends ChatEvent = any> = {
@@ -212,27 +232,16 @@ export type ErrorContents = {
 export function GenAIAssistant(props: GenAIAssistantProps): JSX.Element;
 
 // @public
-export type GenAIAssistantProps = {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
+export type GenAIAssistantProps = Omit<GenAiStoreProps, "children"> & {
     locale?: string;
-    colorPalette?: IColorPalette;
-    catalogItems?: CatalogItem[];
-    settings?: IUserWorkspaceSettings;
-    eventHandlers?: ChatEventHandler[];
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => void;
     allowNativeLinks?: boolean;
     disableManage?: boolean;
     disableAnalyze?: boolean;
     disableFullControl?: boolean;
-    objectTypes?: GenAIObjectType[];
-    includeTags?: string[];
-    excludeTags?: string[];
-    onDispatcher?: (dispatch: (action: unknown) => void) => void;
     LandingScreenComponentProvider?: () => ComponentType;
     DisclaimerComponentProvider?: () => ComponentType | null;
     className?: string;
-    isPreview?: boolean;
 };
 
 // @public @deprecated
@@ -240,6 +249,35 @@ export const GenAIChat: typeof GenAIAssistant;
 
 // @public @deprecated
 export type GenAIChatProps = GenAIAssistantProps;
+
+// @public
+export function GenAIConversations(props: GenAIConversationsProps): JSX.Element;
+
+// @public
+export type GenAIConversationsProps = Omit<GenAiStoreProps, "children"> & {
+    locale?: string;
+    onConversationSelect?: (conversation: IChatConversationLocal) => void;
+    className?: string;
+};
+
+// @public
+export function GenAiStore(props: GenAiStoreProps): JSX.Element;
+
+// @public
+export type GenAiStoreProps = {
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    catalogItems?: CatalogItem[];
+    settings?: IUserWorkspaceSettings;
+    eventHandlers?: ChatEventHandler[];
+    objectTypes?: GenAIObjectType[];
+    includeTags?: string[];
+    excludeTags?: string[];
+    colorPalette?: IColorPalette;
+    onDispatcher?: (dispatch: EnhancedStore["dispatch"]) => void;
+    children: ReactNode | ((genAIStore: EnhancedStore) => ReactNode);
+    isPreview?: boolean;
+};
 
 // @public
 export type IChatConversationErrorContent = {
@@ -324,10 +362,16 @@ export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAss
 export const isChatClosedEvent: (event: ChatEvent) => event is ChatClosedEvent;
 
 // @public
+export const isChatConversationChangedEvent: (event: ChatEvent) => event is ChatConversationChangedEvent;
+
+// @public
 export const isChatConversationDeletedErrorEvent: (event: ChatEvent) => event is ChatConversationDeletedErrorEvent;
 
 // @public
-export const isChatConversationDeletedEvent: (event: ChatEvent) => event is ChatConversationDeletedEvent;
+export const isChatConversationDeletedSuccessEvent: (event: ChatEvent) => event is ChatConversationDeletedSuccessEvent;
+
+// @public
+export const isChatConversationDeleteEvent: (event: ChatEvent) => event is ChatConversationDeleteEvent;
 
 // @public
 export const isChatConversationPinErrorEvent: (event: ChatEvent) => event is ChatConversationPinErrorEvent;
@@ -339,7 +383,10 @@ export const isChatConversationPinnedEvent: (event: ChatEvent) => event is ChatC
 export const isChatConversationRenamedErrorEvent: (event: ChatEvent) => event is ChatConversationRenamedErrorEvent;
 
 // @public
-export const isChatConversationRenamedEvent: (event: ChatEvent) => event is ChatConversationRenamedEvent;
+export const isChatConversationRenamedSuccessEvent: (event: ChatEvent) => event is ChatConversationRenamedSuccessEvent;
+
+// @public
+export const isChatConversationRenameEvent: (event: ChatEvent) => event is ChatConversationRenameEvent;
 
 // @public
 export const isChatCopyToClipboardEvent: (event: ChatEvent) => event is ChatCopyToClipboardEvent;

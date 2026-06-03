@@ -24,6 +24,8 @@ If you are using GoodData.CN, some additional configuration may be required. For
 - Handle links in chat messages.
 - Theming is supported out of the box through [Theme Provider].
 - Customization of the initial assistant experience (welcome content and suggested questions).
+- Dedicated conversations list component for split-layout integrations.
+- Shared `GenAiStore` wrapper for synchronizing `GenAIAssistant` and `GenAIConversations` in one Redux store.
 
 ## Basic integration example
 
@@ -81,14 +83,96 @@ const App = () => {
 | workspace                      | string                                        | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                                                                             |
 | colorPalette                   | IColorPalette                                 | -       | Color palette used for rendering the visualizations. If not provided, the default color palette will be used                                       |
 | catalogItems                   | CatalogItem[]                                 | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed                                                           |
+| settings                       | IUserWorkspaceSettings                        | -       | Workspace settings used by the assistant UI                                                                                                        |
 | eventHandlers                  | ChatEventHandler[]                            | -       | Event handlers for user interactions with the chat UI                                                                                              |
 | onLinkClick                    | (LinkHandlerEvent) => void                    | -       | Handle user clicks on the catalog items mentioned in chat.                                                                                         |
 | allowNativeLinks               | boolean                                       | false   | Whether to allow native links in chat messages. If false, `onLinkClick` handler will be fired when clicking on links                               |
 | disableManage                  | boolean                                       | false   | This will disable manage permissions for the user even if the user has them defined.                                                               |
 | disableAnalyze                 | boolean                                       | false   | This will disable analyze permissions for the user even if the user has them defined.                                                              |
 | disableFullControl             | boolean                                       | false   | This will disable full control permissions for the user even if the user has them defined.                                                         |
-| onDispatcher                   | (dispatch: (action: unknown) => void) => void | -       | Dispatcher for sending messages in the chat.                                                                                                       |
+| objectTypes                    | GenAIObjectType[]                             | -       | Restricts object types used by assistant search and suggestions.                                                                                   |
+| includeTags                    | string[]                                      | -       | Includes only tagged metadata objects when assistant resolves relevant content.                                                                    |
+| excludeTags                    | string[]                                      | -       | Excludes tagged metadata objects when assistant resolves relevant content.                                                                         |
+| onDispatcher                   | (dispatch: EnhancedStore["dispatch"]) => void | -       | Dispatcher callback for assistant actions and state changes.                                                                                       |
 | LandingScreenComponentProvider | () => ComponentType                           | -       | Factory for providing a custom initial assistant experience component. When omitted, the default landing screen with quick questions is displayed. |
+| DisclaimerComponentProvider    | () => ComponentType \| null                   | -       | Factory for providing a custom disclaimer component shown in the assistant UI. Return `null` to hide disclaimer rendering.                         |
+| className                      | string                                        | -       | Additional class name applied to the root assistant element.                                                                                       |
+| isPreview                      | boolean                                       | false   | Internal preview mode. Uses workspace preview agent and preview conversations. Toggling resets assistant state.                                    |
+
+## Conversations list component
+
+Use `GenAIConversations` when you want to render conversation history and management UI separately from the assistant message pane (for example, in side-by-side layouts).
+
+For a full split-layout wiring example that synchronizes both components (including conversation change/delete handling), see [Assistant + Conversations integration](./assistant_conversations_integration/).
+
+```tsx
+import {
+    GenAiStore,
+    GenAIConversations,
+    GenAIAssistant,
+    setCurrentConversationAction,
+    startNewConversationAction,
+} from "@gooddata/sdk-ui-gen-ai";
+
+import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
+
+const App = () => {
+    let dispatcher: (action: unknown) => void = () => undefined;
+
+    return (
+        <GenAiStore onDispatcher={(storeDispatch) => (dispatcher = storeDispatch)}>
+            <GenAIConversations
+                onConversationSelect={(conversation) => {
+                    dispatcher(setCurrentConversationAction({ conversation }));
+                }}
+            />
+            <GenAIAssistant />
+            <button onClick={() => dispatcher(startNewConversationAction())}>New conversation</button>
+        </GenAiStore>
+    );
+};
+```
+
+### GenAIConversations props
+
+| Name                 | Type                                           | Default | Description                                                                              |
+| -------------------- | ---------------------------------------------- | ------- | ---------------------------------------------------------------------------------------- |
+| locale               | ILocale                                        | "en-US" | Specifies the locale for internationalization                                            |
+| backend              | IAnalyticalBackend                             | -       | Backend instance. Falls back to BackendProvider context if not specified                 |
+| workspace            | string                                         | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                   |
+| colorPalette         | IColorPalette                                  | -       | Color palette used for rendering the visualizations                                      |
+| catalogItems         | CatalogItem[]                                  | -       | Catalog items used for autocompletion. If not provided - will be lazy-loaded when needed |
+| settings             | IUserWorkspaceSettings                         | -       | Workspace settings used for conversation list behavior                                   |
+| eventHandlers        | ChatEventHandler[]                             | -       | Event handlers for user interactions with the conversations UI                           |
+| objectTypes          | GenAIObjectType[]                              | -       | Restricts object types used by assistant search and suggestions                          |
+| includeTags          | string[]                                       | -       | Includes only tagged metadata objects when assistant resolves relevant content           |
+| excludeTags          | string[]                                       | -       | Excludes tagged metadata objects when assistant resolves relevant content                |
+| onDispatcher         | (dispatch: EnhancedStore["dispatch"]) => void  | -       | Dispatcher for conversation-level actions                                                |
+| onConversationSelect | (conversation: IChatConversationLocal) => void | -       | Called when the user selects a conversation                                              |
+| className            | string                                         | -       | Additional class name applied to the root conversations element                          |
+| isPreview            | boolean                                        | false   | Internal preview mode. Uses workspace preview agent and preview conversations only       |
+
+## Shared Store component
+
+Use `GenAiStore` when you need to render multiple Gen AI UI components (`GenAIAssistant`,
+`GenAIConversations`, or custom wrappers) with a single synchronized state and dispatcher.
+
+### GenAiStore props
+
+| Name          | Type                                                    | Default | Description                                                                                          |
+| ------------- | ------------------------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| backend       | IAnalyticalBackend                                      | -       | Backend instance. Falls back to BackendProvider context if not specified                             |
+| workspace     | string                                                  | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified                               |
+| colorPalette  | IColorPalette                                           | -       | Color palette used for rendering the visualizations                                                  |
+| catalogItems  | CatalogItem[]                                           | -       | Catalog items used for autocompletion                                                                |
+| settings      | IUserWorkspaceSettings                                  | -       | Workspace settings used by assistant and conversations components                                    |
+| eventHandlers | ChatEventHandler[]                                      | -       | Event handlers for user interactions emitted by child Gen AI components                              |
+| objectTypes   | GenAIObjectType[]                                       | -       | Restricts object types used by assistant search and suggestions                                      |
+| includeTags   | string[]                                                | -       | Includes only tagged metadata objects when assistant resolves relevant content                       |
+| excludeTags   | string[]                                                | -       | Excludes tagged metadata objects when assistant resolves relevant content                            |
+| onDispatcher  | (dispatch: EnhancedStore["dispatch"]) => void           | -       | Callback called after initialization with dispatcher for the active Gen AI store                     |
+| children      | ReactNode \| ((genAIStore: EnhancedStore) => ReactNode) | -       | Child component(s) or render function wrapped by the shared store                                    |
+| isPreview     | boolean                                                 | false   | Internal preview mode. Uses workspace preview agent and preview conversations; toggling resets state |
 
 #### eventHandlers
 
@@ -111,16 +195,25 @@ export interface ChatEventHandler<TEvent extends ChatEvent = any> {
 
 Here is a list of the relevant events:
 
-| Event name                          | Guard name                            | Description                           |
-| ----------------------------------- | ------------------------------------- | ------------------------------------- |
-| `ChatResetEvent`                    | `isChatResetEvent`                    | Chat history was reset                |
-| `ChatUserMessageEvent`              | `isChatUserMessageEvent`              | User sent a message                   |
-| `ChatAssistantMessageEvent`         | `isChatAssistantMessageEvent`         | Assistant responded with a message    |
-| `ChatFeedbackEvent`                 | `isChatFeedbackEvent`                 | User gave a feedback                  |
-| `ChatVisualizationErrorEvent`       | `isChatVisualizationErrorEvent`       | Visualization failed to render        |
-| `ChatSaveVisualizationErrorEvent`   | `isChatSaveVisualizationErrorEvent`   | Chat failed to save visualisation     |
-| `ChatSaveVisualizationSuccessEvent` | `isChatSaveVisualizationSuccessEvent` | Chat successfully saved visualisation |
-| `ChatCopyToClipboardEvent`          | `isChatCopyToClipboardEvent`          | Chat copy to clipboard event          |
+| Event name                            | Guard name                              | Description                           |
+| ------------------------------------- | --------------------------------------- | ------------------------------------- |
+| `ChatResetEvent`                      | `isChatResetEvent`                      | Chat history was reset                |
+| `ChatUserMessageEvent`                | `isChatUserMessageEvent`                | User sent a message                   |
+| `ChatAssistantMessageEvent`           | `isChatAssistantMessageEvent`           | Assistant responded with a message    |
+| `ChatFeedbackEvent`                   | `isChatFeedbackEvent`                   | User gave a feedback                  |
+| `ChatVisualizationErrorEvent`         | `isChatVisualizationErrorEvent`         | Visualization failed to render        |
+| `ChatSaveVisualizationErrorEvent`     | `isChatSaveVisualizationErrorEvent`     | Chat failed to save visualisation     |
+| `ChatSaveVisualizationSuccessEvent`   | `isChatSaveVisualizationSuccessEvent`   | Chat successfully saved visualisation |
+| `ChatCopyToClipboardEvent`            | `isChatCopyToClipboardEvent`            | Chat copy to clipboard event          |
+| `ChatConversationPinnedEvent`         | `isChatConversationPinnedEvent`         | Conversation pinned state changed     |
+| `ChatConversationPinErrorEvent`       | `isChatConversationPinErrorEvent`       | Conversation pin/unpin failed         |
+| `ChatConversationDeleteEvent`         | `isChatConversationDeleteEvent`         | Conversation delete requested         |
+| `ChatConversationDeletedSuccessEvent` | `isChatConversationDeletedSuccessEvent` | Conversation deleted successfully     |
+| `ChatConversationDeletedErrorEvent`   | `isChatConversationDeletedErrorEvent`   | Conversation delete failed            |
+| `ChatConversationRenameEvent`         | `isChatConversationRenameEvent`         | Conversation rename requested         |
+| `ChatConversationRenamedSuccessEvent` | `isChatConversationRenamedSuccessEvent` | Conversation renamed successfully     |
+| `ChatConversationRenamedErrorEvent`   | `isChatConversationRenamedErrorEvent`   | Conversation rename failed            |
+| `ChatConversationChangedEvent`        | `isChatConversationChangedEvent`        | Active conversation changed           |
 
 #### onLinkClick
 
@@ -135,7 +228,7 @@ Each event contains the following properties:
 | newTab         | boolean    | Whether the link should be opened in a new tab                                           |
 | preventDefault | () => void | Prevent default behavior of the link click                                               |
 
-> Note: If `allowNativeLinks` is set to `false` or keep default, in must implement `onLinkClick` handler to handle
+> Note: If `allowNativeLinks` is set to `false` (default), you must implement the `onLinkClick` handler to handle
 > the links in chat messages. Otherwise, the links will not be clickable and do not have any effect.
 
 ## Initial Assistant Experience
@@ -255,6 +348,9 @@ dispatcher(clearThreadAction());
 - `startNewConversationAction` - start a new conversation
 - `setCurrentConversationAction` - set active conversation in the chat
 - `newMessageAction` - add message to the stack and get response from the assistant
+- `pinConversationAction` - pin or unpin a conversation
+- `renameConversationAction` - rename an existing conversation
+- `deleteConversationAction` - delete a conversation
 
 ### Example usage:
 
@@ -264,6 +360,9 @@ import {
     startNewConversationAction,
     setCurrentConversationAction,
     newMessageAction,
+    pinConversationAction,
+    renameConversationAction,
+    deleteConversationAction,
     makeUserItem,
     makeUserMessage,
     makeTextContents,
@@ -279,6 +378,15 @@ dispatcher(newMessageAction(makeUserMessage([makeTextContents("Hello", [])])));
 dispatcher(startNewConversationAction());
 dispatcher(setCurrentConversationAction({ conversation }));
 dispatcher(newMessageAction(makeUserItem({ type: "text", text: "Hello" })));
+
+// Pin/unpin conversation
+dispatcher(pinConversationAction({ conversation, pinned: true }));
+
+// Rename conversation
+dispatcher(renameConversationAction({ conversation, title: "Weekly performance review" }));
+
+// Delete conversation
+dispatcher(deleteConversationAction({ conversation }));
 ```
 
 [ai assistant]: https://www.gooddata.ai/platform/artificial-intelligence/

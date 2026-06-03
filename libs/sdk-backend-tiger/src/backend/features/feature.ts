@@ -985,6 +985,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiDashboardSummarySkill,
+            "enableGenAiDashboardSummarySkill",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiDashboardSummarySkill,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAiAgenticDataShareOptOut,
             "enableGenAiAgenticDataShareOptOut",
             "BOOLEAN",
@@ -1178,6 +1185,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableShellApplication_metricEditor",
             "BOOLEAN",
             FeatureFlagsValues.enableShellApplication_metricEditor,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAnalyticalDesignerRemoteModule,
+            "enableShellApplication_analyticalDesigner",
+            "BOOLEAN",
+            FeatureFlagsValues.enableShellApplication_analyticalDesigner,
         ),
         ...loadFeature(
             features,

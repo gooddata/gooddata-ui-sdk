@@ -1,6 +1,9 @@
 {
     "$schema": "./node_modules/oxlint/configuration_schema.json",
     "extends": ["node_modules/@gooddata/oxlint-config/dist/esm-react.json"],
+    "options": {
+        "typeAware": true
+    },
     "rules": {
         "no-undef": "warn",
         "import/no-unassigned-import": "warn"

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.40.0-alpha.4",
+    "version": "11.40.0-alpha.5",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -41,8 +41,8 @@
         "isolated-test-rec": "GD_TIGER_REC=true vitest --config vitest.integrated.config.ts run",
         "isolated-test-rec-snapshots": "GD_TIGER_REC=true vitest -u --config vitest.integrated.config.ts run",
         "isolated-test-run": "vitest --config vitest.integrated.config.ts run",
-        "lint": "oxlint . --type-aware --quiet && eslint .",
-        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
+        "lint": "oxlint . --quiet && eslint .",
+        "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
         "refresh-md": "./scripts/refresh-md.sh && npm run build",
         "test": "vitest watch",
         "test-isolated-ci": "./scripts/isolated-test.sh",
