@@ -29,6 +29,7 @@ import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
 import { SdkErrorType } from '@gooddata/sdk-ui';
+import { Store } from '@reduxjs/toolkit';
 
 // @public (undocumented)
 export type AssistantMessage = BaseMessage & {
@@ -261,10 +262,11 @@ export type GenAIConversationsProps = Omit<GenAiStoreProps, "children"> & {
 };
 
 // @public
-export function GenAiStore(props: GenAiStoreProps): JSX.Element;
+export function GenAiStore(props: GenAiStoreProps): JSX.Element | null;
 
 // @public
 export type GenAiStoreProps = {
+    providedStore?: Promise<Store>;
     backend?: IAnalyticalBackend;
     workspace?: string;
     catalogItems?: CatalogItem[];

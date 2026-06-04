@@ -16,6 +16,14 @@ export type CustomElementContext = {
     agGridToken?: string;
 };
 
+/**
+ * @public
+ */
+export type Stores = {
+    stores?: Record<string, Promise<any>>;
+};
+
+const stores: Stores = {};
 let contextPromiseResolve: (context: CustomElementContext) => void;
 let currentContext: CustomElementContext | undefined;
 const contextPromise: Promise<CustomElementContext> = new Promise((resolve) => {
@@ -28,7 +36,7 @@ const contextPromise: Promise<CustomElementContext> = new Promise((resolve) => {
  * @public
  */
 export const setContext = (context: CustomElementContext) => {
-    currentContext = context;
+    currentContext = { ...currentContext, ...context };
     contextPromiseResolve(context);
 };
 
@@ -51,4 +59,29 @@ export const getContextSnapshot = (): CustomElementContext | undefined => {
  */
 export const getContext = (): Promise<CustomElementContext> => {
     return currentContext ? Promise.resolve(currentContext) : contextPromise;
+};
+
+/**
+ * @public
+ */
+export interface IPromiseWithResolver<T> extends Promise<T> {
+    resolve: (value: T) => void;
+}
+
+/**
+ * A setter function for setting a store in the context.
+ *
+ * @public
+ */
+export const setStore = <T>(store: string, data: IPromiseWithResolver<T>) => {
+    stores.stores = { ...stores.stores, [store]: data };
+};
+
+/**
+ * A getter for a store in the context.
+ *
+ * @public
+ */
+export const getStore = <T>(store: string): IPromiseWithResolver<T> | undefined => {
+    return stores?.stores?.[store] as IPromiseWithResolver<T> | undefined;
 };

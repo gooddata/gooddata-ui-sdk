@@ -1,6 +1,7 @@
 @import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 
 gd-ai-chat,
-gd-ai-assistant {
+gd-ai-assistant,
+gd-ai-conversations {
     display: block;
 }

@@ -1,8 +1,8 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ReactNode, useContext, useEffect } from "react";
+import { type ReactNode, useContext, useEffect, useState } from "react";
 
-import { type EnhancedStore } from "@reduxjs/toolkit";
+import { type EnhancedStore, type Store } from "@reduxjs/toolkit";
 import { ReactReduxContext, Provider as StoreProvider } from "react-redux";
 
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -19,6 +19,10 @@ import { messagesSliceName } from "../store/messages/messagesSlice.js";
  * @public
  */
 export type GenAiStoreProps = {
+    /**
+     * Store to use for the GenAiStore component.
+     */
+    providedStore?: Promise<Store>;
     /**
      * Analytical backend to use for server communication.
      */
@@ -86,34 +90,74 @@ export type GenAiStoreProps = {
  * @public
  */
 export function GenAiStore(props: GenAiStoreProps) {
-    const { children } = props;
+    const [externalStore, setExternalStore] = useState<EnhancedStore | null | undefined>(undefined);
+    const [injectedStore, setInjectedStore] = useState<EnhancedStore | null | undefined>(undefined);
+    const { children, providedStore } = props;
 
     const reduxContext = useContext(ReactReduxContext);
-    const contextStore = reduxContext?.store as EnhancedStore | undefined;
-    const hasGenAiContextStore = contextStore ? isGenAiStore(contextStore) : false;
 
-    if (hasGenAiContextStore) {
-        return <ExternalStore {...props}>{children}</ExternalStore>;
+    useEffect(() => {
+        async function handler() {
+            if (providedStore) {
+                setInjectedStore(await providedStore);
+                setExternalStore(null);
+            } else if (reduxContext?.store && isGenAiStore(reduxContext.store)) {
+                setExternalStore(reduxContext.store);
+                setInjectedStore(null);
+            } else {
+                setExternalStore(null);
+                setInjectedStore(null);
+            }
+        }
+        void handler();
+    }, [reduxContext?.store, providedStore]);
+
+    //Stores aren't evaluated yet
+    if (externalStore === undefined || injectedStore === undefined) {
+        return null;
+    }
+
+    if (externalStore) {
+        return (
+            <ExternalStore {...props} currentStore={externalStore}>
+                {children}
+            </ExternalStore>
+        );
+    }
+    if (injectedStore) {
+        return (
+            <InjectedStore {...props} currentStore={injectedStore}>
+                {children}
+            </InjectedStore>
+        );
     }
     return <InternalStore {...props}>{children}</InternalStore>;
 }
 
-function ExternalStore({ onDispatcher, children }: GenAiStoreProps) {
-    const reduxContext = useContext(ReactReduxContext);
-    const contextStore = reduxContext?.store as EnhancedStore | undefined;
-
+function ExternalStore({
+    onDispatcher,
+    children,
+    currentStore,
+}: GenAiStoreProps & { currentStore: EnhancedStore }) {
     useEffect(() => {
-        if (contextStore) {
-            onDispatcher?.(contextStore.dispatch);
-        }
-    }, [contextStore, onDispatcher]);
+        onDispatcher?.(currentStore.dispatch);
+    }, [currentStore, onDispatcher]);
 
-    if (!contextStore) {
-        return null;
-    }
-
-    const content = typeof children === "function" ? children(contextStore) : children;
+    const content = typeof children === "function" ? children(currentStore) : children;
     return <>{content}</>;
+}
+
+function InjectedStore({
+    onDispatcher,
+    children,
+    currentStore,
+}: GenAiStoreProps & { currentStore: EnhancedStore }) {
+    useEffect(() => {
+        onDispatcher?.(currentStore.dispatch);
+    }, [currentStore, onDispatcher]);
+
+    const content = typeof children === "function" ? children(currentStore) : children;
+    return <StoreProvider store={currentStore}>{content}</StoreProvider>;
 }
 
 function InternalStore({

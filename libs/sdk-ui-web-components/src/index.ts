@@ -26,6 +26,9 @@ if (window && typeof w.__GD_ASSET_PATH__ === "string") {
 import "./autoAuth.js";
 import { type CustomElementContext, getContext, setContext } from "./context.js";
 import { GenAIAssistant } from "./gen-ai/GenAiAssistant.js";
+import { GenAIConversations } from "./gen-ai/GenAiConversations.js";
+import { GenAiProvider } from "./gen-ai/GenAiProvider.js";
+import { defineCustomElement } from "./utils.js";
 import { Dashboard } from "./visualizations/Dashboard.js";
 import { DashboardEmbed } from "./visualizations/DashboardEmbed.js";
 import { Insight } from "./visualizations/Insight.js";
@@ -37,14 +40,6 @@ import "./visualizations/components.css";
 import "./gen-ai/components.css";
 
 const GEN_AI_CHAT_CONSTRUCTOR = Symbol.for("gd.sdk-ui-web-components.genAiChatConstructor");
-
-function defineCustomElement(name: string, constructor: CustomElementConstructor) {
-    const existingConstructor = window.customElements.get(name);
-
-    if (!existingConstructor) {
-        window.customElements.define(name, constructor);
-    }
-}
 
 function getGenAIChatConstructor() {
     const globalWindow = window as typeof window & {
@@ -66,6 +61,8 @@ defineCustomElement("gd-insight-embed", InsightEmbed);
 defineCustomElement("gd-dashboard-embed", DashboardEmbed);
 defineCustomElement("gd-ai-assistant", GenAIAssistant);
 defineCustomElement("gd-ai-chat", getGenAIChatConstructor());
+defineCustomElement("gd-ai-conversations", GenAIConversations);
+defineCustomElement("gd-ai-provider", GenAiProvider);
 
 // Expose context accessors in case user wants to configure custom
 //  authentication flow
