@@ -1,6 +1,36 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 28 May 2026 07:19:02 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Jun 2026 07:12:00 GMT and should not be manually modified.
+
+## 11.40.0
+
+Thu, 04 Jun 2026 07:12:00 GMT
+
+### Updates
+
+- sdk-ui-all: Add systemAccount flag to user management dialogs.
+- sdk-ui-dashboard: Remove enableSlideshowExports gating from renderModeAware component, allowing export mode to work regardless of setting.
+- dashboards: Send per-tab parameter overrides on tabular export
+- sdk-ui-dashboard: Drill overlay inherits the dashboard's parameter override.
+- sdk-ui-gen-ai: Improve multi-conversation and improve message handling logic
+- sdk-ui-gen-ai: Add label support for catalog items and references-
+- sdk-ui-gen-ai: Document and export new conversation related actions.
+- sdk-ui-gen-ai: Refactor GenAI store and components for unified state management.
+- sdk-ui-gen-ai: Fix of loading existing conversation messages in onThreadLoad.
+- sdk-ui-dashboard: Allow resizing the editor sidebar by dragging its right edge; width persists and can be adjusted via keyboard.
+- sdk-ui-all: Improve styles and look of measure value filter.
+- sdk-ui-all: extend date filter config to cover empty values option.
+- sdk-ui-all: Handle missing metric used in measure filter.
+- sdk-ui-all: Fix filter context sanitization after tabs localIdentifier change.
+- sdk-ui-dashboard: Change way how default tab id is handled to keep it stable
+- sdk-ui-all: Send rich text widget content in the GenAI dashboard summary user context.
+- sdk-ui-kit: add UiLabelRow, UiLabelChecklistRow, UiLabelsList, UiLabelsPicker, UiPermissionMenu and UiGranteeRowControls @ui components.
+- sdk-backend-spi, sdk-backend-tiger, sdk-model: per-object access management for catalog attributes, facts and labels.
+- sdk-ui-kit: narrow UiToastIntlValues to Record<string, PrimitiveType> — toast text is plain by contract, so ReactNode interpolation values are rejected at compile time instead of being silently stringified to '[object Object]'.
+- sdk-ui-kit: add UiToast @ui component family — UiToastProvider + UiToastsContainer + useUiToast — matching the new @ui conventions (BEM, dataTestId, accessibilityConfig).
+- preserve filter groups when duplicating a dashboard via Save As
+- propagate current active filter into filter group button when apply all at once mode is active
+- fix shifted filter group dropdown position
 
 ## 11.39.0
 
