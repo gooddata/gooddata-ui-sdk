@@ -123,13 +123,22 @@ export default {
             plugins: [
                 viteStaticCopy({
                     targets: [
+                        // vite-plugin-static-copy v4 always preserves the source directory
+                        // structure, so the source path prefix must be stripped to keep the
+                        // assets directly under the configured dest (e.g. /geo-assets/glyphs/...,
+                        // /web-components/*.js) as before. stripBase counts the number of leading
+                        // source directory segments to remove.
                         {
                             src: "./stories/geo-assets/**/*",
                             dest: "geo-assets",
+                            // strips "stories/geo-assets"
+                            rename: { stripBase: 2 },
                         },
                         {
                             src: "./node_modules/@gooddata/sdk-ui-web-components/esm/**/*",
                             dest: "web-components",
+                            // strips "node_modules/@gooddata/sdk-ui-web-components/esm"
+                            rename: { stripBase: 4 },
                         },
                     ],
                     hook: "buildStart",

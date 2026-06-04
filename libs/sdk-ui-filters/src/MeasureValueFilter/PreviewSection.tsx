@@ -163,6 +163,11 @@ const getConditionPreviewParts = (
 
 interface IPreviewSectionProps {
     measureTitle?: string;
+    /**
+     * When true, renders a simplified summary: the "Preview:" header and the metric title are
+     * omitted, so only the conditions (and dimensionality, if any) are shown.
+     */
+    showSimplifiedSummary?: boolean;
     usePercentage?: boolean;
     separators?: ISeparators;
     format?: string;
@@ -185,6 +190,7 @@ interface IPreviewSectionProps {
 
 export const PreviewSection = memo(function PreviewSection({
     measureTitle,
+    showSimplifiedSummary = false,
     usePercentage,
     separators,
     format,
@@ -233,7 +239,7 @@ export const PreviewSection = memo(function PreviewSection({
         if (conditionParts.length === 0) {
             return null;
         }
-        if (!measureTitle && !isAllOperatorSelected) {
+        if (!measureTitle && !isAllOperatorSelected && !showSimplifiedSummary) {
             return null;
         }
 
@@ -365,6 +371,38 @@ export const PreviewSection = memo(function PreviewSection({
             };
         }
 
+        // Simplified summary keeps the leading "is" but omits the metric title. The metric is shown
+        // elsewhere (e.g. the dashboard filter header), so only "is <condition>" — plus the
+        // dimensionality, if any — is rendered here.
+        if (showSimplifiedSummary) {
+            if (dimensionality.length > 0 && shortenedText) {
+                const contentMessageDescriptor =
+                    additionalCount === undefined
+                        ? messages["mvfPreviewFilterSimplifiedWithDimensionality"]
+                        : messages["mvfPreviewFilterSimplifiedWithDimensionalityShortened"];
+                const tooltipMessageId = messages["mvfPreviewFilterSimplifiedWithDimensionalityTooltip"].id!;
+                return {
+                    content: intl.formatMessage(contentMessageDescriptor, placeholderValues),
+                    tooltipDescriptor: shouldTruncateConditions
+                        ? buildTooltipDescriptor(tooltipMessageId)
+                        : undefined,
+                    tooltipText: shouldTruncateConditions ? undefined : fullText,
+                    shouldTruncate: shouldTruncateConditions,
+                };
+            }
+
+            const messageDescriptor = messages["mvfPreviewFilterSimplified"];
+            const tooltipMessageId = messages["mvfPreviewFilterSimplifiedTooltip"].id!;
+            return {
+                content: intl.formatMessage(messageDescriptor, placeholderValues),
+                tooltipDescriptor: shouldTruncateConditions
+                    ? buildTooltipDescriptor(tooltipMessageId)
+                    : undefined,
+                tooltipText: undefined,
+                shouldTruncate: shouldTruncateConditions,
+            };
+        }
+
         if (dimensionality.length > 0 && shortenedText) {
             // Use shortened variant when there are hidden items
             const contentMessageDescriptor =
@@ -399,6 +437,7 @@ export const PreviewSection = memo(function PreviewSection({
         format,
         useShortFormat,
         measureTitle,
+        showSimplifiedSummary,
         intl,
         conditions,
         showAllPreview,
@@ -418,7 +457,11 @@ export const PreviewSection = memo(function PreviewSection({
 
     return (
         <div className="gd-mvf-preview">
-            <div className="gd-mvf-preview-header">{intl.formatMessage(sdkMessages["mvfPreviewTitle"])}</div>
+            {showSimplifiedSummary ? null : (
+                <div className="gd-mvf-preview-header">
+                    {intl.formatMessage(sdkMessages["mvfPreviewTitle"])}
+                </div>
+            )}
             {tooltipText ? (
                 <UiTooltip
                     anchor={

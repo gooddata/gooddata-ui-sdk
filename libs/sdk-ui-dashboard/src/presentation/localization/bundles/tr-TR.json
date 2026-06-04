@@ -436,6 +436,8 @@
     "configurationPanel.vizCantBeFilteredByDate": "Görselleştirme Tarihe göre filtrelenemez. Onay kutusunun işaretini kaldırın.",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filtre bu görselleştirme için uygulanamaz.",
     "configurationPanel.mvfBlockedByRankingFilter": "Bu filtre, görselleştirme bir En üst/En alt değerler filtresi kullandığı için uygulanamaz. Bu filtreyi uygulamak için En üst/En alt değerler filtresini kaldırın.",
+    "configurationPanel.mvfMissingMeasure": "Bu filtrede kullanılan metrik artık çalışma alanında mevcut değil.",
+    "filters.mvf.missingMetric.tooltip": "Bu filtrede kullanılan metrik artık çalışma alanında mevcut değil.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI, Tarihe göre filtrelenemez. Onay kutusunun işaretini kaldırın.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" artık görselleştirmeye uygulanamaz. Farklı bir boyut seçin veya görselleştirmeyi düzenleyin.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" artık KPI'ya uygulanamaz. Farklı bir boyut seçin veya KPI'yı düzenleyin.",

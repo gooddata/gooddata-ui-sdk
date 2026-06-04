@@ -144,6 +144,8 @@ export enum TigerFeaturesNames {
     EnableAiAgenticSuggestions = "enableAiAgenticSuggestions",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     EnableAiAgenticConversations = "enableAiAgenticConversations",
+    EnableGenAiAgentSwitching = "enableGenAiAgentSwitching",
+    EnableGenAiObservability = "enableGenAiObservability",
     EnableGenAiAgenticDataShareOptOut = "enableGenAiAgenticDataShareOptOut",
     EnableGenAiVisualizationSummarySkill = "enableGenAiVisualizationSummarySkill",
     EnableGenAiDashboardSummarySkill = "enableGenAiDashboardSummarySkill",
@@ -316,6 +318,8 @@ export type ITigerFeatureFlags = {
     enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
     enableAiAgenticSuggestions: (typeof FeatureFlagsValues)["enableAiAgenticSuggestions"][number];
     enableAiAgenticMultiConversations: (typeof FeatureFlagsValues)["enableAiAgenticMultiConversations"][number];
+    enableGenAiAgentSwitching: (typeof FeatureFlagsValues)["enableGenAiAgentSwitching"][number];
+    enableGenAiObservability: (typeof FeatureFlagsValues)["enableGenAiObservability"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableKDEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableKDEmptyDateValuesFilter"][number];
@@ -488,6 +492,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAIKnowledge: false,
     enableAiAgenticSuggestions: false,
     enableAiAgenticMultiConversations: false,
+    enableGenAiAgentSwitching: false,
+    enableGenAiObservability: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableKDEmptyDateValuesFilter: true,
@@ -661,6 +667,8 @@ export const FeatureFlagsValues = {
     enableAIKnowledge: [false, true] as const,
     enableAiAgenticSuggestions: [true, false] as const,
     enableAiAgenticMultiConversations: [true, false] as const,
+    enableGenAiAgentSwitching: [true, false] as const,
+    enableGenAiObservability: [true, false] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableKDEmptyDateValuesFilter: [true, false] as const,

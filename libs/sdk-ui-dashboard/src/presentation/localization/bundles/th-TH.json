@@ -436,6 +436,8 @@
     "configurationPanel.vizCantBeFilteredByDate": "การแสดงภาพข้อมูลไม่สามารถถูกกรองตามวันที่ได้ ยกเลิกการเลือกช่องทำเครื่องหมาย",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "ตัวกรองไม่สามารถใช้ได้กับการแสดงภาพข้อมูลนี้",
     "configurationPanel.mvfBlockedByRankingFilter": "ไม่สามารถใช้ตัวกรองนี้ได้ เนื่องจากการแสดงภาพข้อมูลใช้ตัวกรองค่าบนสุด/ล่างสุด นำตัวกรองค่าบนสุด/ล่างสุดออกเพื่อใช้ตัวกรองนี้",
+    "configurationPanel.mvfMissingMeasure": "เมตริกที่ใช้ในตัวกรองนี้ไม่มีอยู่ในพื้นที่ทำงานอีกต่อไป",
+    "filters.mvf.missingMetric.tooltip": "เมตริกที่ใช้ในตัวกรองนี้ไม่มีอยู่ในพื้นที่ทำงานอีกต่อไป",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI ไม่สามารถถูกกรองตามวันที่ได้ ยกเลิกการเลือกช่องทำเครื่องหมาย",
     "configurationPanel.unrelatedVizDateInfo": "ไม่สามารถนำ \"{dateDataSet}\" ไปใช้กับการแสดงภาพข้อมูลได้อีกต่อไป เลือกมิติอื่นหรือแก้ไขการแสดงภาพข้อมูล",
     "configurationPanel.unrelatedKpiDateInfo": "ไม่สามารถนำ \"{dateDataSet}\" ไปใช้กับ kpi ได้อีกต่อไป เลือกมิติอื่นหรือแก้ไข kpi",

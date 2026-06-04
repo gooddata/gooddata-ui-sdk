@@ -6143,6 +6143,8 @@ export interface IUiCheckboxProps {
     // (undocumented)
     preventDefault?: boolean;
     // (undocumented)
+    stopPropagation?: boolean;
+    // (undocumented)
     tabIndex?: number;
 }
 
@@ -6324,6 +6326,8 @@ export interface IUiControlButtonProps {
     onClick?: () => void;
     // (undocumented)
     subtitle?: ReactNode;
+    // (undocumented)
+    subtitleClassName?: string;
     // (undocumented)
     subtitleExtension?: ReactNode;
     // (undocumented)
@@ -8797,7 +8801,7 @@ export type UiButtonSegmentedControlProps = Omit<ComponentPropsWithRef<"div">, "
 export const UiCard: ForwardRefExoticComponent<IUiCardProps & RefAttributes<HTMLDivElement>>;
 
 // @internal
-export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label, id }: IUiCheckboxProps): JSX.Element;
+export function UiCheckbox({ checked, onChange, preventDefault, stopPropagation, indeterminate, disabled, accessibilityConfig, tabIndex, label, id }: IUiCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, iconAfter, iconColor, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton }: IUiChipProps): JSX.Element;
@@ -8839,7 +8843,7 @@ export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
 export function UiConfirmDialog({ title, description, confirmLabel, confirmVariant, onClose, onCancel, onConfirm, dataTestId }: IUiConfirmDialogProps): JSX.Element;
 
 // @internal
-export function UiControlButton({ title, titleClassName, subtitle, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isDragging, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId, ariaLabel }: IUiControlButtonProps): JSX.Element;
+export function UiControlButton({ title, titleClassName, subtitle, subtitleClassName, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isDragging, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId, ariaLabel }: IUiControlButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiCopyButton({ label, clipboardContent, successMessage, successMessageOptions, errorMessage, errorMessageOptions }: IUiCopyButtonProps): JSX.Element;

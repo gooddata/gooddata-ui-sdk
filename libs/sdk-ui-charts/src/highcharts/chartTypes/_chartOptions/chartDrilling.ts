@@ -75,6 +75,7 @@ export function getDrillableSeries(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined | null,
     type: VisType | undefined,
     forceDrillIntersection: boolean = false,
+    isSingleSeriesBubble: boolean = false,
 ): any {
     const [viewByChildAttribute, viewByParentAttribute] = viewByAttributes;
 
@@ -115,11 +116,11 @@ export function getDrillableSeries(
             }
 
             const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
-            // Scatter renders a single series, so the segment is resolved per point, not by seriesIndex (always 0).
+            // Scatter and single-series bubble render one series, so the segment is resolved per point, not by seriesIndex (always 0).
             const stackByIndex =
                 isHeatmap(type) || isStackedTreemap
                     ? pointData.y
-                    : isScatterPlot(type)
+                    : isScatterPlot(type) || isSingleSeriesBubble
                       ? pointIndex
                       : seriesIndex;
 

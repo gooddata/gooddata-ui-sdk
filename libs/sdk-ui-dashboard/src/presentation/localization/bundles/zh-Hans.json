@@ -436,6 +436,8 @@
     "configurationPanel.vizCantBeFilteredByDate": "可视化无法按日期筛选。请取消选中该复选框。",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "筛选器不适用于此可视化。",
     "configurationPanel.mvfBlockedByRankingFilter": "无法应用此筛选器，因为该可视化使用了 Top/bottom values 筛选器。请移除 Top/bottom values 筛选器以应用此筛选器。",
+    "configurationPanel.mvfMissingMeasure": "此筛选器中使用的指标在工作区中已不存在。",
+    "filters.mvf.missingMetric.tooltip": "此筛选器中使用的指标在工作区中已不存在。",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI 无法按日期筛选。请取消选中该复选框。",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\"无法再应用于该可视化。请选择其他范围或编辑该可视化。",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"无法再应用于该 KPI。请选择其他范围或编辑该 KPI。",

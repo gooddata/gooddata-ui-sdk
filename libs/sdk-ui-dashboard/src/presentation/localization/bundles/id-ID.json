@@ -436,6 +436,8 @@
     "configurationPanel.vizCantBeFilteredByDate": "Visualisasi tidak dapat difilter oleh Tanggal. Batalkan pilihan kotak centang.",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filter tidak dapat diterapkan pada visualisasi ini.",
     "configurationPanel.mvfBlockedByRankingFilter": "Filter ini tidak dapat diterapkan karena visualisasi menggunakan filter nilai Teratas/Terbawah. Hapus filter nilai Teratas/Terbawah untuk menerapkan filter ini.",
+    "configurationPanel.mvfMissingMeasure": "Metrik yang digunakan dalam filter ini tidak lagi ada di ruang kerja.",
+    "filters.mvf.missingMetric.tooltip": "Metrik yang digunakan dalam filter ini tidak lagi ada di ruang kerja.",
     "configurationPanel.kpiCantBeFilteredByDate": "kpi tidak dapat difilter oleh Tanggal. Batalkan pilihan kotak centang.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" tidak dapat lagi diterapkan pada visualisasi. Pilih dimensi lain atau edit visualisasi.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" tidak dapat lagi diterapkan pada kpi. Pilih dimensi lain atau edit kpi.",

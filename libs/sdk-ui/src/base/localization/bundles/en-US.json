@@ -1807,6 +1807,22 @@
         "text": "Condition",
         "crowdinContext": "Measure value filter dropdown label"
     },
+    "mvf.comparisonInput.ariaLabel": {
+        "text": "Filter value",
+        "crowdinContext": "Accessible label for the value input of a comparison condition (e.g. greater than) in the Measure Value Filter dropdown."
+    },
+    "mvf.rangeInput.from.ariaLabel": {
+        "text": "Filter range from value",
+        "crowdinContext": "Accessible label for the 'from' input of a range condition (e.g. between) in the Measure Value Filter dropdown."
+    },
+    "mvf.rangeInput.to.ariaLabel": {
+        "text": "Filter range to value",
+        "crowdinContext": "Accessible label for the 'to' input of a range condition (e.g. between) in the Measure Value Filter dropdown."
+    },
+    "mvf.input.ariaLabel.withCondition": {
+        "text": "{label}, condition {number}",
+        "crowdinContext": "Accessible label for a Measure Value Filter value input when the filter has multiple conditions, disambiguating which condition the input belongs to. {label} is the base input label (e.g. 'Filter value'); {number} is the 1-based condition position. Example: 'Filter value, condition 2'."
+    },
     "mvf.addConditionTooltip": {
         "text": "Add another condition",
         "crowdinContext": "Tooltip for the button that adds another condition in the Measure Value Filter dropdown."
@@ -1918,6 +1934,26 @@
     "mvf.preview.filterWithoutDimensionalityNoMetric": {
         "text": "<b>{condition}</b>",
         "crowdinContext": "Template for preview of the measure value filter for the 'All' operator without dimensionality and without the metric title. Example: 'All'. Do not translate the {condition} placeholder. <b> is used to bold the condition."
+    },
+    "mvf.preview.filterSimplified": {
+        "text": "is <b>{condition}</b>",
+        "crowdinContext": "Template for a simplified preview of the measure value filter, where the metric title is shown elsewhere and only the condition is shown here. Example: 'is greater than 1000'. Do not translate the {condition} placeholder. <b> is used to bold the condition."
+    },
+    "mvf.preview.filterSimplified.tooltip": {
+        "text": "is {condition}",
+        "crowdinContext": "Tooltip text for the simplified measure value filter preview. Plain text version without bold formatting. Example: 'is greater than 1000'. Do not translate the {condition} placeholder."
+    },
+    "mvf.preview.filterSimplifiedWithDimensionality": {
+        "text": "is <b>{condition}</b> for each <b>{dimensionality}</b>",
+        "crowdinContext": "Template for a simplified preview of the measure value filter with dimensionality, where the metric title is shown elsewhere. Example: 'is greater than 1000 for each Product, Brand'. Do not translate the {condition} and {dimensionality} placeholders. <b> is used to bold the condition and the dimensionality."
+    },
+    "mvf.preview.filterSimplifiedWithDimensionalityShortened": {
+        "text": "is <b>{condition}</b> for each <b>{dimensionality}</b> ({count})",
+        "crowdinContext": "Template for a simplified preview of the measure value filter with truncated dimensionality, where the metric title is shown elsewhere. {count} is the number of additional, not-shown dimensionality items. Example: 'is greater than 1000 for each Product (+2)'. Do not translate the {condition}, {dimensionality}, and {count} placeholders. <b> is used to bold the condition and the dimensionality."
+    },
+    "mvf.preview.filterSimplifiedWithDimensionality.tooltip": {
+        "text": "is {condition} for each {dimensionality}",
+        "crowdinContext": "Tooltip text for the simplified measure value filter preview with dimensionality. Plain text version without bold formatting. Example: 'is greater than 1000 for each Product, Brand'. Do not translate the {condition} and {dimensionality} placeholders."
     },
     "mvf.preview.filterWithDimensionality": {
         "text": "{metric} is <b>{condition}</b> for each <b>{dimensionality}</b>",

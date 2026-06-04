@@ -243,6 +243,15 @@ export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCusto
      */
     isFilterSummaryEnabled?: boolean;
     /**
+     * When true, renders a simplified filter summary: the "Preview:" header and the metric title
+     * are omitted, so only the conditions (and dimensionality, if any) are shown.
+     *
+     * Defaults to `false`.
+     *
+     * @beta
+     */
+    showSimplifiedSummary?: boolean;
+    /**
      * Catalog items available for dimensionality
      */
     catalogDimensionality?: IDimensionalityItem[];
@@ -279,6 +288,13 @@ export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCusto
      * @beta
      */
     enableRankingWithMvf?: boolean;
+    /**
+     * When true, hides explanatory help tooltips (question marks) inside the dropdown.
+     * Intended for read-only / view-mode contexts where the educational UI is not needed.
+     *
+     * @beta
+     */
+    isViewMode?: boolean;
     /**
      * Loader for the metric details shown in the dropdown header tooltip.
      *

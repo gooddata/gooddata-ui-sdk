@@ -191,7 +191,7 @@ function CatalogItemPickerItemComponent<TPayload>({
                 <UiCheckbox
                     checked={isSelected}
                     tabIndex={-1}
-                    preventDefault
+                    stopPropagation
                     onChange={(event) => {
                         onSelect(event as unknown as MouseEvent);
                     }}

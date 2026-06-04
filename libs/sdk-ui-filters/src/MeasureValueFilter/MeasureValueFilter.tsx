@@ -3,7 +3,7 @@
 import { Fragment, type ReactNode, memo, useCallback, useEffect, useRef, useState } from "react";
 
 import { type IMeasureValueFilter } from "@gooddata/sdk-model";
-import { useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { useIdPrefixed, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { DropdownButton } from "./MeasureValueFilterButton.js";
 import { MeasureValueFilterDropdown } from "./MeasureValueFilterDropdown.js";
@@ -63,6 +63,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     insightDimensionality,
     isDimensionalityEnabled,
     isFilterSummaryEnabled,
+    showSimplifiedSummary,
     catalogDimensionality,
     loadCatalogDimensionality,
     onDimensionalityChange,
@@ -80,8 +81,10 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     onChange,
     alignPoints,
     fullscreenOnMobile,
+    isViewMode,
 }: IMeasureValueFilterProps) {
     const [displayDropdown, setDisplayDropdown] = useState(false);
+    const dialogId = useIdPrefixed("mvf-dialog");
     const buttonRef = useRef<HTMLDivElement>(null);
     const autoOpenedRef = useRef<boolean>(false);
     const isMobile = useMediaQuery("mobileDevice");
@@ -122,6 +125,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                 buttonSubtitle={buttonSubtitle}
                 buttonTitleExtension={buttonTitleExtension}
                 disabled={buttonDisabled}
+                dropdownId={dialogId}
             />
         ),
         [
@@ -130,6 +134,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
             buttonSubtitle,
             buttonTitle,
             buttonTitleExtension,
+            dialogId,
             displayDropdown,
         ],
     );
@@ -162,6 +167,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     insightDimensionality={insightDimensionality}
                     isDimensionalityEnabled={isDimensionalityEnabled}
                     isFilterSummaryEnabled={isFilterSummaryEnabled}
+                    showSimplifiedSummary={showSimplifiedSummary}
                     catalogDimensionality={catalogDimensionality}
                     loadCatalogDimensionality={loadCatalogDimensionality}
                     onDimensionalityChange={onDimensionalityChange}
@@ -173,6 +179,8 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     isHeaderEnabled={isHeaderEnabled}
                     alignPoints={alignPoints}
                     fullscreenOnMobile={fullscreenOnMobile}
+                    isViewMode={isViewMode}
+                    dialogId={dialogId}
                     // Mobile header is the same visual button but dismisses via handleCancel
                     // so host onCancel cleanup (e.g. closing the configuration panel,
                     // clearing autoOpen) runs — toggleDropdown would skip that path.

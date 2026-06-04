@@ -17,6 +17,12 @@ InMemoryPaging {
         "type": "allTime",
         "visible": true,
       },
+      "emptyValues": {
+        "localIdentifier": "EMPTY_VALUES",
+        "name": "",
+        "type": "emptyValues",
+        "visible": true,
+      },
       "ref": {
         "identifier": "defaultDateFilterProjectConfig",
       },
@@ -321,6 +327,12 @@ InMemoryPaging {
         "localIdentifier": "ALL_TIME",
         "name": "",
         "type": "allTime",
+        "visible": true,
+      },
+      "emptyValues": {
+        "localIdentifier": "EMPTY_VALUES",
+        "name": "",
+        "type": "emptyValues",
         "visible": true,
       },
       "ref": {
@@ -635,6 +647,12 @@ InMemoryPaging {
         "localIdentifier": "ALL_TIME",
         "name": "",
         "type": "allTime",
+        "visible": true,
+      },
+      "emptyValues": {
+        "localIdentifier": "EMPTY_VALUES",
+        "name": "",
+        "type": "emptyValues",
         "visible": true,
       },
       "ref": {

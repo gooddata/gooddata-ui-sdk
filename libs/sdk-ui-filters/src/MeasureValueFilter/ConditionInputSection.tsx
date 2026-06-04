@@ -16,6 +16,11 @@ import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "
 
 export interface IConditionInputSectionProps {
     index: number;
+    /**
+     * 1-based condition position, passed to the value inputs to disambiguate their accessible
+     * names when a filter has multiple conditions (WCAG 2.4.6). Undefined for a single condition.
+     */
+    conditionNumber?: number;
     condition:
         | {
               operator: MeasureValueFilterOperator;
@@ -44,6 +49,7 @@ export const ConditionInputSection = memo(function ConditionInputSection(props: 
 
     const {
         index,
+        conditionNumber,
         condition,
         usePercentage,
         baseDisableAutofocus,
@@ -90,6 +96,7 @@ export const ConditionInputSection = memo(function ConditionInputSection(props: 
                     ariaDescribedBy={shouldShowError ? errorId : undefined}
                     disableAutofocus={disableAutofocus}
                     separators={separators}
+                    conditionNumber={conditionNumber}
                 />
                 {shouldShowError ? (
                     <div
@@ -140,6 +147,7 @@ export const ConditionInputSection = memo(function ConditionInputSection(props: 
                 }}
                 disableAutofocus={disableAutofocus}
                 separators={separators}
+                conditionNumber={conditionNumber}
             />
         );
     }

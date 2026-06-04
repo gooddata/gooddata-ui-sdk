@@ -23,7 +23,7 @@ export function UiAsyncTableCheckbox({
 }: UiAsyncTableCheckboxProps) {
     // The native input is now overlaid on the visible 14×14 control (kit
     // convention for @ui/UiCheckbox), so the input itself is the click
-    // target and `preventDefault` stops the click from bubbling to the
+    // target and `stopPropagation` stops the click from bubbling to the
     // cell. Wire `onChange` through `UiCheckbox` so the toggle fires.
     // The cell-div retains keyboard handling (gridcell Space/Enter) and
     // bubbled clicks from any non-input area of the cell.
@@ -46,7 +46,7 @@ export function UiAsyncTableCheckbox({
         >
             <UiCheckbox
                 checked={checked ?? false}
-                preventDefault
+                stopPropagation
                 onChange={onChange}
                 indeterminate={indeterminate}
                 disabled={disabled}

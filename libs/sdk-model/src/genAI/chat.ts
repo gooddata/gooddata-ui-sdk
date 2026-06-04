@@ -180,6 +180,10 @@ export interface IGenAIWidgetDescriptor {
      * Signed result ID for this widget's cached execution result.
      */
     resultId?: string;
+    /**
+     * Textual content of the widget (set for richText widgets — the markdown body).
+     */
+    content?: string;
 }
 
 /**

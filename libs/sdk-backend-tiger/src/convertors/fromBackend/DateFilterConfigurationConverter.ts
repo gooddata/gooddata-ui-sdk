@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type DateFilterGranularity,
@@ -7,6 +7,7 @@ import {
     type IAbsoluteDateFilterPreset,
     type IAllTimeDateFilterOption,
     type IDateFilterConfig,
+    type IEmptyValuesDateFilterOption,
     type IRelativeDateFilterForm,
     type IRelativeDateFilterPreset,
     idRef,
@@ -19,6 +20,12 @@ export const DefaultDateFilterConfig: IDateFilterConfig = {
     allTime: {
         localIdentifier: "ALL_TIME",
         type: "allTime",
+        name: "",
+        visible: true,
+    },
+    emptyValues: {
+        localIdentifier: "EMPTY_VALUES",
+        type: "emptyValues",
         name: "",
         visible: true,
     },
@@ -320,6 +327,7 @@ export const DefaultDateFilterConfig: IDateFilterConfig = {
 export interface IWrappedDateFilterConfig {
     selectedOption: string;
     allTime?: IDateFilterBase;
+    emptyValues?: IDateFilterBase;
     absoluteForm?: IDateFilterBase;
     relativeForm?: IDateFilterRelativeForm;
     absolutePresets?: IDateFilterAbsolutePreset[];
@@ -351,6 +359,13 @@ const convertAllTime = (allTime: IDateFilterBase): IAllTimeDateFilterOption => {
     return {
         type: "allTime",
         ...allTime,
+    };
+};
+
+const convertEmptyValues = (emptyValues: IDateFilterBase): IEmptyValuesDateFilterOption => {
+    return {
+        type: "emptyValues",
+        ...emptyValues,
     };
 };
 
@@ -399,13 +414,21 @@ export const convertDateFilterConfig = (
         return DefaultDateFilterConfig;
     }
 
-    const { selectedOption, allTime, absoluteForm, relativeForm, absolutePresets, relativePresets } =
-        dateFilterConfig;
+    const {
+        selectedOption,
+        allTime,
+        emptyValues,
+        absoluteForm,
+        relativeForm,
+        absolutePresets,
+        relativePresets,
+    } = dateFilterConfig;
 
     return {
         ref: idRef("defaultDateFilterProjectConfig"),
         selectedOption,
         allTime: allTime && convertAllTime(allTime),
+        emptyValues: emptyValues && convertEmptyValues(emptyValues),
         absoluteForm: absoluteForm && convertAbsoluteForm(absoluteForm),
         relativeForm: relativeForm && convertRelativeForm(relativeForm),
         absolutePresets: absolutePresets?.map(convertAbsolutePreset),

@@ -3,7 +3,6 @@
 import { type ComponentPropsWithRef, type ComponentType } from "react";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
-import { selectEnableSlideshowExports } from "../../model/store/config/configSelectors.js";
 import { selectRenderMode } from "../../model/store/renderMode/renderModeSelectors.js";
 import { type RenderMode } from "../../types.js";
 
@@ -19,10 +18,8 @@ export function renderModeAware<T extends ComponentType<any>>(
 ): ComponentType<ComponentPropsWithRef<T>> {
     function RenderModeAware(props: ComponentPropsWithRef<T>) {
         const renderMode = useDashboardSelector(selectRenderMode);
-        const isExportModeEnabled = useDashboardSelector(selectEnableSlideshowExports);
-        const sanitizedRenderMode = isExportModeEnabled || renderMode !== "export" ? renderMode : "view";
 
-        const Component = components[sanitizedRenderMode] ?? components["view"];
+        const Component = components[renderMode] ?? components["view"];
 
         return <Component {...props} />;
     }

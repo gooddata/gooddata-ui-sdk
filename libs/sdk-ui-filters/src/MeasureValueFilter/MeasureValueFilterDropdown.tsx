@@ -33,6 +33,13 @@ export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCom
      * @internal
      */
     mobileHeader?: ReactNode;
+    /**
+     * Stable id assigned to the dropdown dialog so the trigger button can reference it via
+     * `aria-controls`.
+     *
+     * @internal
+     */
+    dialogId?: string;
 }
 
 const getConditionsFromFilter = (
@@ -90,6 +97,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     insightDimensionality,
     isDimensionalityEnabled,
     isFilterSummaryEnabled,
+    showSimplifiedSummary,
     catalogDimensionality,
     loadCatalogDimensionality,
     onDimensionalityChange,
@@ -101,6 +109,8 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     alignPoints,
     fullscreenOnMobile,
     mobileHeader,
+    dialogId,
+    isViewMode,
 }: IMeasureValueFilterDropdownProps) {
     const applyOnResult = filter?.measureValueFilter.applyOnResult;
 
@@ -235,6 +245,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             insightDimensionality={insightDimensionality}
             isDimensionalityEnabled={isDimensionalityEnabled}
             isFilterSummaryEnabled={isFilterSummaryEnabled}
+            showSimplifiedSummary={showSimplifiedSummary}
             catalogDimensionality={catalogDimensionality}
             loadCatalogDimensionality={loadCatalogDimensionality}
             onDimensionalityChange={onDimensionalityChange}
@@ -247,6 +258,8 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             alignPoints={alignPoints}
             fullscreenOnMobile={fullscreenOnMobile}
             mobileHeader={mobileHeader}
+            dialogId={dialogId}
+            isViewMode={isViewMode}
         />
     );
 });

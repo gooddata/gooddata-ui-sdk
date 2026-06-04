@@ -62,6 +62,7 @@ interface IDropdownBodyProps extends IMeasureValueFilterCustomComponentProps {
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
     isFilterSummaryEnabled?: boolean;
+    showSimplifiedSummary?: boolean;
     catalogDimensionality?: IDimensionalityItem[];
     loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
     onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
@@ -69,6 +70,9 @@ interface IDropdownBodyProps extends IMeasureValueFilterCustomComponentProps {
     loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
     isHeaderEnabled?: boolean;
     isMobile?: boolean;
+    isViewMode?: boolean;
+    /** Stable id of the dialog, referenced by the trigger button's aria-controls. */
+    dialogId?: string;
 }
 
 interface IDropdownBodyState {
@@ -206,6 +210,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         valuePrecision = DefaultValuePrecision,
         isDimensionalityEnabled = true,
         isFilterSummaryEnabled = true,
+        showSimplifiedSummary = false,
         insightDimensionality,
         separators,
         catalogDimensionality,
@@ -821,6 +826,10 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
 
     return (
         <div
+            id={props.dialogId}
+            role="dialog"
+            aria-modal
+            aria-label={props.measureTitle}
             className={cx(
                 MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS,
                 "gd-dialog gd-dropdown overlay s-mvf-dropdown-body",
@@ -867,6 +876,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                                                     isDisabled={!enableOperatorSelection}
                                                     isAllOperatorDisabled={isAllOperatorDisabled}
                                                     isMobile={props.isMobile}
+                                                    isViewMode={props.isViewMode}
                                                 />
                                             </div>
 
@@ -905,6 +915,13 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                                             <div className="gd-mvf-condition-inputs">
                                                 <ConditionInputSection
                                                     index={idx}
+                                                    conditionNumber={
+                                                        (enableMultipleConditions
+                                                            ? state.conditions.length
+                                                            : 1) > 1
+                                                            ? idx + 1
+                                                            : undefined
+                                                    }
                                                     condition={c}
                                                     usePercentage={props.usePercentage ?? false}
                                                     baseDisableAutofocus={props.disableAutofocus}
@@ -925,6 +942,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                                                         onChange={handleTreatNullAsZeroClicked}
                                                         checked={enabledTreatNullValuesAsZero}
                                                         isMobile={props.isMobile}
+                                                        isViewMode={props.isViewMode}
                                                         intl={intl}
                                                     />
                                                 ) : null}
@@ -977,6 +995,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                         {isFilterSummaryEnabled ? (
                             <PreviewSection
                                 measureTitle={props.measureTitle}
+                                showSimplifiedSummary={showSimplifiedSummary}
                                 usePercentage={props.usePercentage}
                                 separators={separators}
                                 format={props.format}

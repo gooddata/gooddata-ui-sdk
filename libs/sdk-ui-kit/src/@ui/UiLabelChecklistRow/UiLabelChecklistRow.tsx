@@ -53,7 +53,7 @@ export function UiLabelChecklistRow({
     };
     // Row click delegates to the checkbox toggle. The native input also
     // receives the click directly when the user clicks the checkbox itself —
-    // `preventDefault` on the input stops the row handler from re-toggling.
+    // `stopPropagation` on the input stops the row handler from re-toggling.
     const handleRowClick = disabled ? undefined : () => onChange?.(!checked);
 
     return (
@@ -70,7 +70,7 @@ export function UiLabelChecklistRow({
                     checked={checked}
                     disabled={disabled}
                     onChange={handleChange}
-                    preventDefault
+                    stopPropagation
                     accessibilityConfig={{ ariaLabelledBy: labelId }}
                 />
             }

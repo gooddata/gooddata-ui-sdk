@@ -130,6 +130,10 @@ $mvf-condition-action-gap: 10px;
             margin-top: 8px;
             font-size: 12px;
 
+            .input-label-text {
+                white-space: nowrap;
+            }
+
             .inlineBubbleHelp {
                 margin: 0 0 2px 5px;
                 font-size: 12px;
@@ -240,8 +244,9 @@ $mvf-condition-action-gap: 10px;
 
 .gd-mvf-operator-dropdown-body {
     width: $dialog_width - 20px;
-    padding: 5px 0;
-
+    .gd-ui-kit-listbox {
+        padding: 5px 0;
+    }
     .gd-list-item {
         padding: 5px 10px;
 

@@ -6,7 +6,7 @@ id: webcomponents_insight
 ---
 
 For new integrations, embed a single visualization using the `gd-insight-embed` custom element.
-The legacy `gd-insight` tag remains available as a compatibility wrapper that hosts `gd-insight-embed` under the hood.
+The legacy `gd-insight` tag remains available for existing integrations that depend on the original attribute-driven behavior.
 
 ```html
 <!-- minimal setup -->

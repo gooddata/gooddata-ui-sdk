@@ -59,6 +59,7 @@ interface IDropdownProps extends IMeasureValueFilterCustomComponentProps {
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
     isFilterSummaryEnabled?: boolean;
+    showSimplifiedSummary?: boolean;
     catalogDimensionality?: IDimensionalityItem[];
     loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
     onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
@@ -68,6 +69,8 @@ interface IDropdownProps extends IMeasureValueFilterCustomComponentProps {
     alignPoints?: IAlignPoint[];
     fullscreenOnMobile?: boolean;
     mobileHeader?: ReactNode;
+    dialogId?: string;
+    isViewMode?: boolean;
 }
 
 const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
@@ -94,6 +97,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         insightDimensionality,
         isDimensionalityEnabled,
         isFilterSummaryEnabled = true,
+        showSimplifiedSummary = false,
         catalogDimensionality,
         loadCatalogDimensionality,
         onDimensionalityChange,
@@ -107,6 +111,8 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         alignPoints,
         fullscreenOnMobile,
         mobileHeader,
+        dialogId,
+        isViewMode,
     } = props;
 
     const isMobile = useMediaQuery("mobileDevice");
@@ -147,6 +153,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                 insightDimensionality={insightDimensionality}
                 isDimensionalityEnabled={isDimensionalityEnabled}
                 isFilterSummaryEnabled={isFilterSummaryEnabled}
+                showSimplifiedSummary={showSimplifiedSummary}
                 catalogDimensionality={catalogDimensionality}
                 loadCatalogDimensionality={loadCatalogDimensionality}
                 onDimensionalityChange={onDimensionalityChange}
@@ -156,6 +163,8 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                 loadMetricDetails={loadMetricDetails}
                 isHeaderEnabled={isHeaderEnabled}
                 isMobile={useFullScreen}
+                isViewMode={isViewMode}
+                dialogId={dialogId}
             />
         </UiFocusManager>
     );

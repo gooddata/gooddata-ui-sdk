@@ -28,6 +28,7 @@ import { useDashboardSelector } from "../../../model/react/DashboardStoreProvide
 import {
     selectCatalogAttributes,
     selectCatalogDateDatasets,
+    selectCatalogIsLoaded,
     selectCatalogMeasures,
 } from "../../../model/store/catalog/catalogSelectors.js";
 import {
@@ -233,6 +234,8 @@ export interface IDashboardMeasureValueFilterData {
     customTitle: string | undefined;
     /** Catalog metric the filter references; undefined if not in the catalog. */
     catalogMetric: ICatalogMeasure | undefined;
+    /** True when the catalog has loaded and the referenced metric no longer exists in the workspace. */
+    isMissingMetric: boolean;
     /** Title fallback when no custom title is set. */
     defaultMetricTitle: string;
     /** Effective title — custom title or catalog title or stringified objRef. */
@@ -278,6 +281,7 @@ export function useDashboardMeasureValueFilterData(
     const measures = useDashboardSelector(selectCatalogMeasures);
     const attributes = useDashboardSelector(selectCatalogAttributes);
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
     const separators = useDashboardSelector(selectSeparators);
     const locale = useDashboardSelector(selectLocale);
@@ -293,6 +297,7 @@ export function useDashboardMeasureValueFilterData(
     const conditions = effective.dashboardMeasureValueFilter.conditions;
 
     const catalogMetric = useMemo(() => findCatalogMetric(measure, measures), [measure, measures]);
+    const isMissingMetric = isCatalogLoaded && !catalogMetric;
     const defaultMetricTitle = catalogMetric?.measure.title ?? objRefToString(measure);
     const metricTitle = customTitle ?? defaultMetricTitle;
     const format = catalogMetric?.measure.format;
@@ -352,6 +357,7 @@ export function useDashboardMeasureValueFilterData(
         localIdentifier,
         customTitle,
         catalogMetric,
+        isMissingMetric,
         defaultMetricTitle,
         metricTitle,
         format,
@@ -392,6 +398,7 @@ export interface ISharedDashboardMvfProps {
     enableMultipleConditions: true;
     isDimensionalityEnabled: false;
     isFilterSummaryEnabled: true;
+    showSimplifiedSummary: true;
     isHeaderEnabled: true;
 }
 
@@ -417,6 +424,7 @@ export function getSharedDashboardMvfProps(data: IDashboardMeasureValueFilterDat
         enableMultipleConditions: true,
         isDimensionalityEnabled: false,
         isFilterSummaryEnabled: true,
+        showSimplifiedSummary: true,
         isHeaderEnabled: true,
     };
 }

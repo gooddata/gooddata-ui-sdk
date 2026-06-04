@@ -16,13 +16,7 @@ import stringify from "json-stable-stringify";
 import { FormattedMessage } from "react-intl";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import {
-    type IExecutionConfig,
-    insightProperties,
-    insightSetFilters,
-    objRefToString,
-    widgetRef,
-} from "@gooddata/sdk-model";
+import { insightProperties, insightSetFilters, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import {
     type GoodDataSdkError,
     type IPushData,
@@ -35,6 +29,7 @@ import { IconInsight } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useDashboardAsyncRender } from "../../../../../model/react/useDashboardAsyncRender.js";
+import { useWidgetExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
 import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
 import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
 import {
@@ -58,8 +53,6 @@ import {
     selectIsInEditMode,
     selectIsInExportMode,
 } from "../../../../../model/store/renderMode/renderModeSelectors.js";
-import { selectEffectiveParameterValuesForWidget } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
-import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
 import { useMinimalSizeValidation } from "../../../../export/hooks/useMinimalSizeValidation.js";
 import { useVisualizationExportData } from "../../../../export/useExportData.js";
@@ -309,15 +302,7 @@ export function DashboardInsight({
         !!effectiveError,
     );
 
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
-    const parameterValues = useDashboardSelector(selectEffectiveParameterValuesForWidget(ref));
-    const execConfig: IExecutionConfig = useMemo(
-        () => ({
-            timestamp: executionTimestamp,
-            ...(parameterValues.length > 0 ? { parameterValues } : {}),
-        }),
-        [executionTimestamp, parameterValues],
-    );
+    const execConfig = useWidgetExecConfig(ref);
 
     const { setContent, isTooSmall, fontSize } = useMinimalSizeValidation(
         minimalWidth,

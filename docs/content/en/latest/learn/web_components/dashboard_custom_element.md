@@ -35,14 +35,14 @@ dashboardEl.config = { isReadOnly: true };
 
 > Always assign a **new object reference**. Mutating an existing object in place will not trigger a re-render.
 
-| Property                      | Type                                                    | Notes                                                  |
-| ----------------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
-| `context`                     | `{ backend, workspaceId?, mapboxToken?, agGridToken? }` | Live — replaces the previous context snapshot          |
-| `config`                      | `IDashboardProps["config"]`                             | Live — replaces the previous config snapshot           |
-| `dashboard`                   | string                                                  | Identity — immutable after the first successful render |
-| `extraPlugins`                | `IEmbeddedPlugin \| IEmbeddedPlugin[]`                  | Loader-backed plugin injection                         |
-| `pluginMode`                  | `"all" \| "local" \| "url"`                             | Controls which plugins are activated                   |
-| `moduleFederationIntegration` | object                                                  | Module Federation host setup                           |
+| Property                      | Type                                                     | Notes                                                   |
+| ----------------------------- | -------------------------------------------------------- | ------------------------------------------------------- |
+| `context`                     | `{ backend, workspaceId?, mapboxToken?, agGridToken? }`  | Live — replaces the previous context snapshot           |
+| `config`                      | `IDashboardProps["config"]`                              | Live — replaces the previous config snapshot            |
+| `dashboard`                   | string                                                   | Identity — immutable after the first successful render  |
+| `extraPlugins`                | `IEmbeddedPlugin \| IEmbeddedPlugin[]`                   | Loader-backed plugin injection                          |
+| `pluginMode`                  | `"all" \| "embeddedOnly" \| "backendOnly" \| "disabled"` | Controls which plugins are activated (default: `"all"`) |
+| `moduleFederationIntegration` | object                                                   | Module Federation host setup                            |
 
 ## Supported attributes
 
@@ -87,6 +87,84 @@ await dashboardEl.replaceFilters([
 Concurrent calls to the same method coalesce onto the same in-flight promise. Both methods reject if the
 dashboard has not yet emitted `gd-ready`.
 
+## Dashboard plugins
+
+`gd-dashboard-embed` supports loading dashboard plugins through three cooperating properties: `pluginMode`,
+`extraPlugins`, and `moduleFederationIntegration`.
+
+### Plugin modes
+
+`pluginMode` controls which plugin sources are active. The default is `"all"`.
+
+| Value             | Loads backend-linked plugins | Loads `extraPlugins` | Requires MF integration |
+| ----------------- | ---------------------------- | -------------------- | ----------------------- |
+| `"all"` (default) | yes                          | yes                  | yes                     |
+| `"embeddedOnly"`  | no                           | yes                  | no                      |
+| `"backendOnly"`   | yes                          | no                   | yes                     |
+| `"disabled"`      | no                           | no                   | no                      |
+
+Setting `pluginMode` to a value that ignores a supplied source (`"backendOnly"` when `extraPlugins` is
+set, or `"disabled"` when either source is present) causes the element to emit a `gd-warning` event
+rather than failing silently.
+
+### Embedded plugins
+
+Embedded plugins are built and bundled with your host application. Pass them via the `extraPlugins`
+property — no Module Federation required.
+
+```js
+import { myPlugin } from "./my-plugin.js";
+
+const el = document.querySelector("gd-dashboard-embed");
+el.pluginMode = "embeddedOnly"; // or "all" to combine with backend plugins
+el.extraPlugins = [
+    {
+        factory: () => myPlugin(),
+        parameters: "param1=value1;param2=value2",
+    },
+];
+```
+
+Each entry in the array has the shape:
+
+| Field        | Type                                | Notes                                                     |
+| ------------ | ----------------------------------- | --------------------------------------------------------- |
+| `factory`    | `() => IDashboardPluginContract_V1` | Returns a plugin instance                                 |
+| `parameters` | string (optional)                   | Semicolon-delimited key=value string passed to the plugin |
+
+### Backend-linked plugins and Module Federation
+
+Backend-linked plugins are stored in GoodData and loaded at runtime via [Module Federation][4].
+To load them, your host application must be built with Webpack's `ModuleFederationPlugin` and expose
+its sharing runtime to the element:
+
+```js
+const el = document.querySelector("gd-dashboard-embed");
+el.pluginMode = "all"; // or "backendOnly"
+el.moduleFederationIntegration = {
+    __webpack_init_sharing__: __webpack_init_sharing__,
+    __webpack_share_scopes__: __webpack_share_scopes__,
+};
+```
+
+A minimal Webpack configuration for the host application:
+
+```js
+const { ModuleFederationPlugin } = require("webpack").container;
+
+module.exports = {
+    plugins: [
+        new ModuleFederationPlugin({
+            name: "myHostApp",
+            shared: {
+                "react/jsx-runtime": { singleton: true, requiredVersion: false },
+                "react-intl": { singleton: true, requiredVersion: false },
+            },
+        }),
+    ],
+};
+```
+
 ## Supported events
 
 `gd-dashboard-embed` emits [the same events as the Dashboard component][3] and also emits `gd-ready` and `gd-error`.
@@ -121,6 +199,18 @@ The `gd-error` event detail has the following shape:
 | `phase`   | string  | When the error occurred: `"init"`, `"update"`, `"refresh"`, `"replaceFilters"`, or `"invalidUsage"` |
 | `message` | string  | Human-readable error description                                                                    |
 | `cause`   | unknown | The underlying error object, if available                                                           |
+
+`gd-dashboard-embed` also emits `gd-warning` when a plugin mode conflict is detected — for example,
+when `extraPlugins` are provided but `pluginMode` is set to `"backendOnly"` or `"disabled"`.
+
+```js
+dashboardEl.addEventListener("gd-warning", (event) => {
+    const { phase, pluginMode, ignoredSource, message } = event.detail;
+    // phase: "pluginMode"
+    // ignoredSource: "extraPlugins" | "backendPlugins"
+    console.warn(phase, pluginMode, ignoredSource, message);
+});
+```
 
 ## Legacy compatibility tag
 
@@ -175,3 +265,4 @@ These capabilities are available only on `gd-dashboard-embed`.
 [1]: https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui/src/base/localization/Locale.ts
 [2]: ../authentication/
 [3]: https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.dashboardeventtype.html
+[4]: https://webpack.js.org/concepts/module-federation/

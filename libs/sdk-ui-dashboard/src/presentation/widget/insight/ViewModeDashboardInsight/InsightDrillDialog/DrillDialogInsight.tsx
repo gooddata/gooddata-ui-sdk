@@ -13,7 +13,7 @@ import {
 import { createSelector } from "@reduxjs/toolkit";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type IExecutionConfig, insightSetFilters } from "@gooddata/sdk-model";
+import { insightSetFilters } from "@gooddata/sdk-model";
 import {
     type GoodDataSdkError,
     type OnError,
@@ -23,6 +23,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useWidgetExecConfig } from "../../../../../model/react/useWidgetExecConfig.js";
 import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
 import { selectCatalogAttributes } from "../../../../../model/store/catalog/catalogSelectors.js";
 import {
@@ -37,7 +38,6 @@ import {
 import { selectDrillableItems } from "../../../../../model/store/drill/drillSelectors.js";
 import { selectPermissions } from "../../../../../model/store/permissions/permissionsSelectors.js";
 import { selectPreloadedAttributesWithReferences } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
-import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 import { getGeoDefaultDisplayFormRefs } from "../../geoDefaultDisplayFormRefs.js";
 import { InsightBody } from "../../InsightBody.js";
@@ -196,11 +196,7 @@ export function DrillDialogInsight({
         onWidgetFiltersReady?.(filtersForInsight);
     }, [filtersForInsight, onWidgetFiltersReady]);
 
-    const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
-    const execConfig: IExecutionConfig = useMemo(
-        () => ({ timestamp: executionTimestamp }),
-        [executionTimestamp],
-    );
+    const execConfig = useWidgetExecConfig(widget.ref);
 
     return (
         <div style={insightStyle}>

@@ -16,12 +16,20 @@ export interface IMeasureValueFilterDropdownButtonProps {
     buttonTitleExtension?: ReactNode;
     disabled?: boolean;
     onClick: () => void;
+    /**
+     * Id of the dropdown dialog this button opens. Wired to `aria-controls` while open.
+     *
+     * @beta
+     */
+    dropdownId?: string;
 }
 
 export function DropdownButton({
     isActive,
     buttonTitle,
     onClick,
+    disabled,
+    dropdownId,
 }: IMeasureValueFilterDropdownButtonProps): ReactElement {
     const className = cx(
         "gd-mvf-dropdown-button",
@@ -34,7 +42,14 @@ export function DropdownButton({
     );
 
     return (
-        <button className={className} onClick={onClick}>
+        <button
+            className={className}
+            onClick={onClick}
+            disabled={disabled}
+            aria-haspopup="dialog"
+            aria-expanded={isActive}
+            aria-controls={isActive ? dropdownId : undefined}
+        >
             {buttonTitle}
         </button>
     );

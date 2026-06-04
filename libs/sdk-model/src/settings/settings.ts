@@ -1211,6 +1211,16 @@ export interface IFeatureFlags {
     enableAiAgenticMultiConversations?: boolean;
 
     /**
+     * Enable agent switching in AI Assistant.
+     */
+    enableGenAiAgentSwitching?: boolean;
+
+    /**
+     * Enable observability in AI Assistant.
+     */
+    enableGenAiObservability?: boolean;
+
+    /**
      * Enable Anthropic provider in LLM configuration.
      */
     enableAiLlmAnthropicProvider?: boolean;

@@ -1747,6 +1747,14 @@
         "text": "This filter can't be applied because the visualization uses a Top/bottom values filter. Remove the Top/bottom values filter to apply this filter.",
         "crowdinContext": "Warning message shown on a dashboard measure value filter row in widget configuration when the widget's visualization uses a ranking (Top/Bottom values) filter, which is incompatible with measure value filters"
     },
+    "configurationPanel.mvfMissingMeasure": {
+        "text": "The metric used in this filter no longer exists in the workspace.",
+        "crowdinContext": "Warning message shown on a dashboard measure value filter row in widget configuration when the referenced metric has been deleted from the workspace"
+    },
+    "filters.mvf.missingMetric.tooltip": {
+        "text": "Error: The metric used in this filter no longer exists in the workspace.",
+        "crowdinContext": "Tooltip shown on a measure value filter button in the dashboard filter bar when the referenced metric has been deleted from the workspace"
+    },
     "configurationPanel.kpiCantBeFilteredByDate": {
         "text": "The kpi cannot be filtered by Date. Unselect the check box.",
         "crowdinContext": "Warning message when attempting to apply date filter to incompatible KPI"

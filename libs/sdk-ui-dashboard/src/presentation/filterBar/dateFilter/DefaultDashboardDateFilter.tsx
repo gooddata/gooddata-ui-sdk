@@ -62,7 +62,12 @@ export function DefaultDashboardDateFilter({
     const weekStart = useDashboardSelector(selectWeekStart);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const activeCalendars = useDashboardSelector(selectActiveCalendars);
-    const enableEmptyDateValues = useDashboardSelector(selectEnableKDEmptyDateValuesFilter);
+    const isEmptyDateValuesFilterEnabled = useDashboardSelector(selectEnableKDEmptyDateValuesFilter);
+    // The empty-values feature (the "Empty values" preset and the include/exclude toggle) is shown only when
+    // the feature flag is on AND the date filter config marks the option as visible. Hiding it via the config
+    // does not strip an already-set emptyValueHandling - that value is still applied to executions.
+    const enableEmptyDateValues =
+        isEmptyDateValuesFilterEnabled && (config.dateFilterOptions.emptyValues?.visible ?? true);
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;

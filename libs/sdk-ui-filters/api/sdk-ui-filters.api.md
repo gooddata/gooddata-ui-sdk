@@ -1241,6 +1241,7 @@ export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCusto
     isFilterSummaryEnabled?: boolean;
     isHeaderEnabled?: boolean;
     isLoadingCatalogDimensionality?: boolean;
+    isViewMode?: boolean;
     loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
     loadMetricDetails?: () => Promise<IMeasureMetadataObject | undefined>;
     // (undocumented)
@@ -1254,6 +1255,7 @@ export interface IMeasureValueFilterCommonProps extends IMeasureValueFilterCusto
     onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
     // (undocumented)
     separators?: ISeparators;
+    showSimplifiedSummary?: boolean;
     // (undocumented)
     treatNullAsZeroDefaultValue?: boolean;
     // (undocumented)
@@ -1302,6 +1304,7 @@ export interface IMeasureValueFilterDropdownButtonProps {
     buttonTitleExtension?: ReactNode;
     // (undocumented)
     disabled?: boolean;
+    dropdownId?: string;
     // (undocumented)
     isActive: boolean;
     // (undocumented)
@@ -1312,6 +1315,8 @@ export interface IMeasureValueFilterDropdownButtonProps {
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     // (undocumented)
     anchorEl?: HTMLElement | string;
+    // @internal
+    dialogId?: string;
     // @internal
     mobileHeader?: ReactNode;
     // (undocumented)

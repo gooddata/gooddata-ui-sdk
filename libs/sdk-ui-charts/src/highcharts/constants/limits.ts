@@ -11,6 +11,9 @@ export const WATERFALL_CHART_DATA_POINT_LIMIT = 10000;
 // Stacked column/bar charts freeze the main thread well before the generic 10k series cap
 // (Highcharts can't draw more than ~1500 stacks), so they need a tighter limit than other chart types.
 export const STACKED_COLUMN_BAR_SERIES_LIMIT = 1000;
+// Column/bar charts render one SVG element per data point, and the point count is categories x series.
+// That total can hang the browser even when neither dimension alone hits its cap, so cap the total too.
+export const COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT = 6000;
 
 /**
  * Soft limits are used for checking whether the chart should be recommended to be filtered out
@@ -27,3 +30,4 @@ export const SOFT_SANKEY_CHART_NODE_LIMIT = 50;
 export const SOFT_SANKEY_CHART_DATA_POINT_LIMIT = 500;
 export const SOFT_WATERFALL_CHART_DATA_POINT_LIMIT = 400;
 export const SOFT_STACKED_COLUMN_BAR_SERIES_LIMIT = 50;
+export const SOFT_COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT = 2000;

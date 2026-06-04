@@ -2,12 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
+import { type IDateFilterConfig, type ISettings, idRef } from "@gooddata/sdk-model";
 import { suppressConsole } from "@gooddata/util";
 
-import { validateDateFilterConfig } from "../validation.js";
+import { getValidDateFilterConfig, validateDateFilterConfig } from "../validation.js";
 
-import { absoluteForm, allTime, lastMonth, relativeForm, year2019 } from "./fixtures.js";
+import { absoluteForm, allTime, emptyValues, lastMonth, relativeForm, year2019 } from "./fixtures.js";
 
 describe("validateDateFilterConfig", () => {
     it("should validate valid config", () => {
@@ -156,5 +156,44 @@ describe("validateDateFilterConfig", () => {
 
         const actual = validateDateFilterConfig(projectConfig);
         expect(actual).toEqual("SelectedOptionInvalid");
+    });
+});
+
+describe("getValidDateFilterConfig empty values handling", () => {
+    const baseConfig: IDateFilterConfig = {
+        ref: idRef("emptyValuesConfig"),
+        allTime,
+        absoluteForm,
+        relativePresets: [lastMonth],
+        selectedOption: allTime.localIdentifier,
+    };
+
+    it("should inject the default empty values option when the feature is enabled and config omits it", () => {
+        const [config] = getValidDateFilterConfig(baseConfig, {
+            enableKDEmptyDateValuesFilter: true,
+        } as ISettings);
+
+        expect(config.emptyValues).toMatchObject({
+            localIdentifier: "EMPTY_VALUES",
+            type: "emptyValues",
+            visible: true,
+        });
+    });
+
+    it("should preserve an explicitly hidden empty values option (admin set visible:false)", () => {
+        const hiddenEmptyValues = { ...emptyValues, visible: false };
+        const [config] = getValidDateFilterConfig({ ...baseConfig, emptyValues: hiddenEmptyValues }, {
+            enableKDEmptyDateValuesFilter: true,
+        } as ISettings);
+
+        expect(config.emptyValues).toEqual(hiddenEmptyValues);
+    });
+
+    it("should not inject the empty values option when the feature flag is disabled", () => {
+        const [config] = getValidDateFilterConfig(baseConfig, {
+            enableKDEmptyDateValuesFilter: false,
+        } as ISettings);
+
+        expect(config.emptyValues).toBeUndefined();
     });
 });

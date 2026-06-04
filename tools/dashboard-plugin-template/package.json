@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/dashboard-plugin-template",
-    "version": "11.40.0-alpha.5",
+    "version": "11.40.0-alpha.6",
     "private": true,
     "description": "GoodData Template for Dashboard Plugins",
     "license": "LicenseRef-LICENSE",
@@ -56,7 +56,7 @@
     },
     "devDependencies": {
         "@babel/core": "7.28.4",
-        "@babel/preset-env": "7.24.7",
+        "@babel/preset-env": "7.29.7",
         "@babel/preset-react": "^7.23.3",
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
