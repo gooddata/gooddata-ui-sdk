@@ -2602,10 +2602,12 @@ export interface IFeatureFlags {
     enableFilterControlInDrillingConfiguration?: boolean;
     enableFiscalCalendars?: boolean;
     enableGenAiAgenticDataShareOptOut?: boolean;
+    enableGenAiAgentSwitching?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableGenAIMemory?: boolean;
+    enableGenAiObservability?: boolean;
     enableGenAIReasoningVisibility?: boolean;
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
@@ -2918,6 +2920,7 @@ export interface IGenAIWhatIfScenario {
 
 // @internal
 export interface IGenAIWidgetDescriptor {
+    content?: string;
     insightRef?: ObjRef;
     resultId?: string;
     title: string;

@@ -337,6 +337,24 @@ describe("Measure value filter dropdown", () => {
         expect(preview!.textContent).toContain("# of Returned is greater than 300");
     });
 
+    it("should render a simplified summary without the header and metric title when showSimplifiedSummary is set", () => {
+        renderComponent({
+            measureTitle: "# of Returned",
+            showSimplifiedSummary: true,
+        });
+
+        component.openOperatorDropdown().selectOperator("GREATER_THAN");
+        component.setComparisonValue("300");
+
+        const preview = component.getPreview();
+        expect(preview).toBeInTheDocument();
+        // Keeps the leading "is" but omits the metric title.
+        expect(preview!.textContent).toBe("is greater than 300");
+        expect(preview!.textContent).not.toContain("# of Returned");
+        // The "Preview:" header is omitted in the simplified summary.
+        expect(document.querySelector(".gd-mvf-preview-header")).not.toBeInTheDocument();
+    });
+
     it("should not render preview when measureTitle is not provided", () => {
         renderComponent();
 

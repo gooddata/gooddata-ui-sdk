@@ -1,16 +1,28 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { Fragment, memo } from "react";
+import { memo, useMemo } from "react";
 
 import cx from "classnames";
 import { capitalize } from "lodash-es";
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
-import { FullScreenOverlay, type IAlignPoint, Overlay, Separator } from "@gooddata/sdk-ui-kit";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    FullScreenOverlay,
+    type IAlignPoint,
+    type IUiListboxInteractiveItemProps,
+    type IUiListboxItem,
+    Overlay,
+    SingleSelectListItem,
+    UiFocusManager,
+    UiListbox,
+    type UiListboxAriaAttributes,
+} from "@gooddata/sdk-ui-kit";
+import { simplifyText } from "@gooddata/util";
 
 import { MEASURE_VALUE_FILTER_OPERATOR_DROPDOWN_BODY_CLASS } from "./constants.js";
-import { getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
-import { OperatorDropdownItem } from "./OperatorDropdownItem.js";
+import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
 import { type MeasureValueFilterOperator } from "./types.js";
 
 interface IOperatorDropdownBodyProps {
@@ -18,13 +30,21 @@ interface IOperatorDropdownBodyProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;
     onClose: () => void;
     alignTo: string;
+    /** id of the listbox, referenced by the trigger button's aria-controls. */
+    listboxId: string;
+    /** id of the visible "Condition" label, used as the listbox accessible name. */
+    labelId?: string;
     isAllOperatorDisabled?: boolean;
     isMobile?: boolean;
+    isViewMode?: boolean;
 }
 
 const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [{ align: "tl tl" }];
+const DISABLED_BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "cr cl" }, { align: "cl cr" }];
 
-// Operators grouped as they appear in the picker; a Separator is rendered between groups
+const DESKTOP_LISTBOX_MAX_HEIGHT = 350;
+
+// Operators grouped as they appear in the picker; a separator is rendered between groups
 // (desktop only — mobile rows already carry a bottom divider).
 const OPERATOR_GROUPS: MeasureValueFilterOperator[][] = [
     ["ALL"],
@@ -48,13 +68,71 @@ const OPERATOR_BUBBLE_MESSAGES: Partial<Record<MeasureValueFilterOperator, Messa
     NOT_BETWEEN: bubbleMessages.NOT_BETWEEN,
 };
 
+interface IOperatorItemData {
+    operator: MeasureValueFilterOperator;
+    iconClass?: string;
+    bubbleText?: string;
+    disabledTooltip?: string;
+}
+
+/**
+ * Renders a single operator as an accessible listbox option (role="option" is supplied by
+ * the enclosing {@link UiListbox}). Preserves the legacy `s-mvf-operator-*` hooks, the operator
+ * icon, the explanatory bubble for range operators and the disabled-state tooltip. The icon and
+ * info bubble are handled by SingleSelectListItem's built-in renderers (which also apply
+ * `aria-hidden` to the decorative icon).
+ */
+function OperatorListItem({
+    item,
+    isSelected,
+    isFocused,
+    onSelect,
+}: IUiListboxInteractiveItemProps<IOperatorItemData>) {
+    const { operator, iconClass, bubbleText, disabledTooltip } = item.data;
+    const isDisabled = !!item.isDisabled;
+
+    const listItem = (
+        <SingleSelectListItem
+            className={cx("gd-list-item-shortened", `s-mvf-operator-${simplifyText(operator)}`, {
+                "is-disabled": isDisabled,
+            })}
+            title={item.stringTitle}
+            icon={iconClass}
+            info={bubbleText}
+            isSelected={isSelected}
+            isFocused={isFocused}
+            onClick={isDisabled ? undefined : onSelect}
+        />
+    );
+
+    if (isDisabled && disabledTooltip) {
+        return (
+            <BubbleHoverTrigger tagName={"div"} showDelay={400} hideDelay={200}>
+                {listItem}
+                <Bubble className="bubble-primary" alignPoints={DISABLED_BUBBLE_ALIGN_POINTS}>
+                    {disabledTooltip}
+                </Bubble>
+            </BubbleHoverTrigger>
+        );
+    }
+
+    return listItem;
+}
+
+function OperatorSeparatorItem() {
+    return <SingleSelectListItem type="separator" accessibilityConfig={{ role: "separator" }} />;
+}
+
 export const OperatorDropdownBody = memo(function OperatorDropdownBody({
     onSelect,
     onClose,
     selectedOperator,
     alignTo,
+    listboxId,
+    labelId,
     isAllOperatorDisabled = false,
     isMobile = false,
+    isViewMode = false,
 }: IOperatorDropdownBodyProps) {
     const intl = useIntl();
 
@@ -69,34 +147,86 @@ export const OperatorDropdownBody = memo(function OperatorDropdownBody({
             : intl.formatMessage({ id: selectedOperatorTranslationKey }),
     );
 
-    const items = (
-        <div
-            className={cx(MEASURE_VALUE_FILTER_OPERATOR_DROPDOWN_BODY_CLASS, "s-mvf-operator-dropdown-body", {
-                "gd-is-mobile": isMobile,
-            })}
-            data-testid="mvf-operator-dropdown-body"
-        >
-            {OPERATOR_GROUPS.map((group, groupIdx) => (
-                <Fragment key={groupIdx}>
-                    {groupIdx > 0 && !isMobile ? <Separator /> : null}
-                    {group.map((operator) => {
-                        const bubbleMessage = OPERATOR_BUBBLE_MESSAGES[operator];
-                        return (
-                            <OperatorDropdownItem
-                                key={operator}
-                                operator={operator}
-                                selectedOperator={selectedOperator}
-                                onClick={onSelect}
-                                bubbleText={bubbleMessage ? intl.formatMessage(bubbleMessage) : undefined}
-                                isDisabled={operator === "ALL" ? isAllOperatorDisabled : undefined}
-                                disabledTooltip={operator === "ALL" ? allOperatorDisabledTooltip : undefined}
-                                isMobile={isMobile}
-                            />
-                        );
-                    })}
-                </Fragment>
-            ))}
-        </div>
+    const items = useMemo<IUiListboxItem<IOperatorItemData, null>[]>(() => {
+        const result: IUiListboxItem<IOperatorItemData, null>[] = [];
+
+        OPERATOR_GROUPS.forEach((group, groupIdx) => {
+            if (groupIdx > 0 && !isMobile) {
+                result.push({
+                    type: "static",
+                    id: `mvf-operator-separator-${groupIdx}`,
+                    data: null,
+                });
+            }
+
+            group.forEach((operator) => {
+                const translationKey = getOperatorTranslationKey(operator);
+                const title =
+                    translationKey === undefined ? operator : intl.formatMessage({ id: translationKey });
+                const bubbleMessage = OPERATOR_BUBBLE_MESSAGES[operator];
+                const isDisabled = operator === "ALL" ? isAllOperatorDisabled : false;
+
+                result.push({
+                    type: "interactive",
+                    id: operator,
+                    stringTitle: capitalize(title),
+                    isDisabled,
+                    data: {
+                        operator,
+                        iconClass: isMobile ? undefined : `gd-icon-${getOperatorIcon(operator)}`,
+                        bubbleText:
+                            bubbleMessage && !isMobile && !isViewMode
+                                ? intl.formatMessage(bubbleMessage)
+                                : undefined,
+                        disabledTooltip: isDisabled ? allOperatorDisabledTooltip : undefined,
+                    },
+                });
+            });
+        });
+
+        return result;
+    }, [allOperatorDisabledTooltip, intl, isAllOperatorDisabled, isMobile, isViewMode]);
+
+    const ariaAttributes: UiListboxAriaAttributes = {
+        id: listboxId,
+        "aria-labelledby": labelId,
+    };
+
+    const body = (
+        // Focus moves into the listbox on open and returns to the trigger on close, while Tab
+        // stays inside the popup — matching the listbox APG pattern used by the text filter.
+        <UiFocusManager enableFocusTrap enableAutofocus enableReturnFocusOnUnmount>
+            <div
+                className={cx(
+                    MEASURE_VALUE_FILTER_OPERATOR_DROPDOWN_BODY_CLASS,
+                    "s-mvf-operator-dropdown-body",
+                    { "gd-is-mobile": isMobile },
+                )}
+            >
+                <UiListbox<IOperatorItemData, null>
+                    shouldKeyboardActionPreventDefault
+                    shouldKeyboardActionStopPropagation
+                    isDisabledFocusable
+                    maxHeight={isMobile ? undefined : DESKTOP_LISTBOX_MAX_HEIGHT}
+                    dataTestId="mvf-operator-dropdown-body"
+                    // Put the per-operator testid on the role="option" <li> (which carries
+                    // aria-disabled) rather than the inner item, so disabled-state assertions read
+                    // the attribute off the element that actually exposes it.
+                    itemDataTestId={(item) =>
+                        item.type === "interactive"
+                            ? `mvf-operator-${simplifyText(item.data.operator)}`
+                            : undefined
+                    }
+                    items={items}
+                    selectedItemId={selectedOperator}
+                    onSelect={(item) => onSelect(item.data.operator)}
+                    onClose={onClose}
+                    ariaAttributes={ariaAttributes}
+                    InteractiveItemComponent={OperatorListItem}
+                    StaticItemComponent={OperatorSeparatorItem}
+                />
+            </div>
+        </UiFocusManager>
     );
 
     if (isMobile) {
@@ -119,7 +249,7 @@ export const OperatorDropdownBody = memo(function OperatorDropdownBody({
                         </button>
                     </div>
                     <div className="gd-mobile-dropdown-content gd-flex-item-stretch gd-mvf-mobile-dropdown-content">
-                        {items}
+                        {body}
                     </div>
                 </div>
             </FullScreenOverlay>
@@ -128,7 +258,7 @@ export const OperatorDropdownBody = memo(function OperatorDropdownBody({
 
     return (
         <Overlay closeOnOutsideClick alignTo={alignTo} alignPoints={[{ align: "bl tl" }]} onClose={onClose}>
-            <div className="gd-dropdown overlay">{items}</div>
+            <div className="gd-dropdown overlay">{body}</div>
         </Overlay>
     );
 });

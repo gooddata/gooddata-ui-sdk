@@ -3697,3 +3697,38 @@ describe("getDrillableSeries for scatter plot with segmentation (F1-2516)", () =
         expect(segmentByCity["Seattle"]).toBe("Washington");
     });
 });
+
+describe("getDrillableSeries for single-series bubble chart with segmentation (F1-2516)", () => {
+    // Single-series mode (auto-enabled by accessibility) renders one series like scatter, so the
+    // segment must be resolved per point rather than by seriesIndex (always 0).
+    function getBubbleSegments(enableSingleBubbleSeries: boolean): (string | null)[] {
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.BubbleChart.XAndYAxisAndSizeMeasuresWithViewBy as ScenarioRecording,
+        );
+        const chartOptions = generateChartOptions(dv, {
+            type: "bubble",
+            customTooltip: { enabled: true },
+            enableSingleBubbleSeries,
+        });
+        const points: IUnsafeHighchartsTooltipPoint[] = (chartOptions.data?.series ?? []).flatMap(
+            (series) => series.data ?? [],
+        );
+        return points.map((point) => {
+            const intersection: IDrillEventIntersectionElement[] = point.drillIntersection ?? [];
+            const names = intersection
+                .map((element) => element.header)
+                .filter(isDrillIntersectionAttributeItem)
+                .map((header) => header.attributeHeaderItem.name);
+            return names[0] ?? null;
+        });
+    }
+
+    it("resolves the segment per data point instead of pinning every point to the first segment", () => {
+        // before the fix every bubble inherited the first row's segment, collapsing this to one value
+        expect(new Set(getBubbleSegments(true)).size).toBeGreaterThan(1);
+    });
+
+    it("produces the same per-point segments as the default multi-series mode", () => {
+        expect(getBubbleSegments(true)).toEqual(getBubbleSegments(false));
+    });
+});

@@ -6,7 +6,7 @@ import cx from "classnames";
 import { capitalize } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { Button } from "@gooddata/sdk-ui-kit";
+import { DropdownButton, useId } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
 import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
@@ -19,12 +19,18 @@ interface IOperatorDropdownProps {
     isDisabled?: boolean;
     isAllOperatorDisabled?: boolean;
     isMobile?: boolean;
+    isViewMode?: boolean;
 }
 
 export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorDropdownProps) {
     const intl = useIntl();
 
     const [opened, setOpened] = useState(false);
+
+    const id = useId();
+    const buttonId = `mvf-operator-button-${id}`;
+    const listboxId = `mvf-operator-listbox-${id}`;
+    const labelId = `mvf-operator-label-${id}`;
 
     const renderDropdownButton = () => {
         const { operator, isDisabled } = props;
@@ -40,24 +46,30 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
             "gd-mvf-operator-dropdown-button",
             "s-mvf-operator-dropdown-button",
             `s-mvf-operator-dropdown-button-${simplifyText(operator)}`,
-            "gd-button-primary",
-            "gd-button-small",
-            {
-                "button-dropdown": true,
-                "is-dropdown-open": opened,
-                "is-active": opened,
-            },
         );
 
         return (
-            <Button
+            <DropdownButton
+                id={buttonId}
                 title={title}
-                className={buttonClasses}
                 value={title}
+                className={buttonClasses}
                 onClick={handleOperatorDropdownButtonClick}
                 iconLeft={`gd-icon-${getOperatorIcon(operator)}`}
-                iconRight={opened ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                 disabled={isDisabled}
+                isOpen={opened}
+                dropdownId={listboxId}
+                accessibilityConfig={{
+                    // A plain button that toggles a listbox popup. Using role="button" (rather
+                    // than the DropdownButton default of "combobox") avoids the WCAG 4.1.2
+                    // requirement that a combobox always expose aria-controls — our listbox only
+                    // exists in the DOM while open.
+                    role: "button",
+                    popupType: "listbox",
+                    // Compose the accessible name from the visible "Condition" label and the
+                    // current operator value rendered inside the button.
+                    ariaLabelledBy: `${labelId} ${buttonId}`,
+                }}
             />
         );
     };
@@ -74,19 +86,22 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
     return (
         <>
             <div className="gd-mvf-operator-dropdown" data-testid="mvf-operator-section">
-                <div className="gd-mvf-operator-dropdown-label">
+                <div className="gd-mvf-operator-dropdown-label" id={labelId}>
                     {intl.formatMessage({ id: "mvf.condition" })}
                 </div>
                 {renderDropdownButton()}
             </div>
             {opened ? (
                 <OperatorDropdownBody
-                    alignTo={".gd-mvf-operator-dropdown-button"}
+                    alignTo={`#${buttonId}`}
                     onSelect={handleOperatorSelected}
                     selectedOperator={props.operator}
                     onClose={closeOperatorDropdown}
+                    listboxId={listboxId}
+                    labelId={labelId}
                     isAllOperatorDisabled={props.isAllOperatorDisabled}
                     isMobile={props.isMobile}
+                    isViewMode={props.isViewMode}
                 />
             ) : null}
         </>

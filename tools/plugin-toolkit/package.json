@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/plugin-toolkit",
-    "version": "11.40.0-alpha.5",
+    "version": "11.40.0-alpha.6",
     "description": "GoodData Set of Tools for working with Plugins",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -46,12 +46,12 @@
     "dependencies": {
         "@babel/cli": "^7.23.4",
         "@babel/core": "7.28.4",
-        "@babel/preset-env": "7.24.7",
+        "@babel/preset-env": "7.29.7",
         "@babel/preset-typescript": "^7.23.3",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
-        "axios": "1.13.5",
+        "axios": "1.16.1",
         "chalk": "5.3.0",
         "columnify": "^1.5.4",
         "commander": "8.3.0",

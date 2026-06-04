@@ -4,6 +4,7 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IChartLimits } from "../../../interfaces/chartConfig.js";
 import {
+    COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT,
     DEFAULT_CATEGORIES_LIMIT,
     DEFAULT_DATA_POINTS_LIMIT,
     DEFAULT_SERIES_LIMIT,
@@ -11,6 +12,7 @@ import {
     PIE_CHART_LIMIT,
     SANKEY_CHART_DATA_POINT_LIMIT,
     SANKEY_CHART_NODE_LIMIT,
+    SOFT_COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT,
     SOFT_DEFAULT_CATEGORIES_LIMIT,
     SOFT_DEFAULT_DATA_POINTS_LIMIT,
     SOFT_DEFAULT_SERIES_LIMIT,
@@ -23,7 +25,12 @@ import {
     WATERFALL_CHART_DATA_POINT_LIMIT,
 } from "../../constants/limits.js";
 import { type ChartType } from "../../typings/chartType.js";
-import { type IChartOptions, type ISeriesDataItem, type ISeriesItem } from "../../typings/unsafe.js";
+import {
+    type IChartOptions,
+    type IChartOptionsData,
+    type ISeriesDataItem,
+    type ISeriesItem,
+} from "../../typings/unsafe.js";
 import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
 import { isOneOfTypes, isTreemap } from "../_util/common.js";
 
@@ -175,6 +182,27 @@ function getTreemapDataForValidation(data: any) {
     };
 }
 
+function isColumnOrBar(type: string | undefined): boolean {
+    return type === VisualizationTypes.COLUMN || type === VisualizationTypes.BAR;
+}
+
+function getTotalDataPoints(data: IChartOptionsData | undefined): number {
+    const series = data?.series;
+    if (!Array.isArray(series)) {
+        return 0;
+    }
+    return series.reduce((sum: number, serie: ISeriesItem) => sum + (serie.data?.length ?? 0), 0);
+}
+
+// Total rendered-points cap for column/bar, kept out of IChartLimits and checked alongside isDataOfReasonableSize.
+function exceedsColumnBarTotalDataPoints(
+    type: string | undefined,
+    data: IChartOptionsData | undefined,
+    limit: number,
+): boolean {
+    return isColumnOrBar(type) && getTotalDataPoints(data) > limit;
+}
+
 export function validateData(
     limits: IChartLimits | undefined,
     chartOptions: IChartOptions,
@@ -189,8 +217,12 @@ export function validateData(
         dataToValidate = getTreemapDataForValidation(chartOptions.data);
     }
 
+    const totalDataTooLarge =
+        !limits && exceedsColumnBarTotalDataPoints(type, dataToValidate, COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT);
+
     return {
-        dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits, isViewByTwoAttributes),
+        dataTooLarge:
+            totalDataTooLarge || !isDataOfReasonableSize(dataToValidate, finalLimits, isViewByTwoAttributes),
         hasNegativeValue:
             cannotShowNegativeValues(type) && isNegativeValueIncluded(chartOptions.data?.series),
     };
@@ -203,7 +235,10 @@ export function getIsFilteringRecommended(chartOptions: IChartOptions): boolean 
         ? getTreemapDataForValidation(chartOptions.data)
         : chartOptions.data;
 
-    return !isDataOfReasonableSize(dataToValidate, limits, isViewByTwoAttributes);
+    return (
+        exceedsColumnBarTotalDataPoints(type, dataToValidate, SOFT_COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT) ||
+        !isDataOfReasonableSize(dataToValidate, limits, isViewByTwoAttributes)
+    );
 }
 
 /**
@@ -217,6 +252,8 @@ export function getDataTooLargeErrorMessage(limits: IChartLimits, chartOptions: 
         nodes: nodesLimit,
         dataPoints: dataPointsLimit,
     } = limits || getChartLimits(type, chartOptions);
+    const totalDataPointsLimit =
+        !limits && isColumnOrBar(type) ? COLUMN_BAR_TOTAL_DATA_POINTS_LIMIT : undefined;
     const dataToValidate = isTreemap(type)
         ? getTreemapDataForValidation(chartOptions.data)
         : chartOptions.data;
@@ -258,6 +295,10 @@ export function getDataTooLargeErrorMessage(limits: IChartLimits, chartOptions: 
             }),
         );
         result.push(limitLog("DataPointsMax", dataPointsLimit, dataPointsMax));
+    }
+
+    if (totalDataPointsLimit !== undefined) {
+        result.push(limitLog("TotalDataPoints", totalDataPointsLimit, getTotalDataPoints(dataToValidate)));
     }
 
     return result

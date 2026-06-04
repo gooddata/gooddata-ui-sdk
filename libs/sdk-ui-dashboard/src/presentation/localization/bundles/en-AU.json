@@ -436,6 +436,8 @@
     "configurationPanel.vizCantBeFilteredByDate": "The visualization cannot be filtered by Date. Unselect the check box.",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filter is not applicable to this visualisation.",
     "configurationPanel.mvfBlockedByRankingFilter": "This filter can't be applied because the visualisation uses a Top/bottom values filter. Remove the Top/bottom values filter to apply this filter.",
+    "configurationPanel.mvfMissingMeasure": "The metric used in this filter no longer exists in the workspace.",
+    "filters.mvf.missingMetric.tooltip": "The metric used in this filter no longer exists in the workspace.",
     "configurationPanel.kpiCantBeFilteredByDate": "The kpi can't be filtered by Date. Unselect the check box.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" can no longer be applied to the visualisation. Select a different dimension or edit the visualisation.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" can no longer be applied to the KPI. Select a different dimension or edit the KPI.",

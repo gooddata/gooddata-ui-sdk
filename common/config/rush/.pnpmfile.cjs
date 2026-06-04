@@ -34,28 +34,7 @@ module.exports = {
  * The `context` parameter provides a log() function.
  * The return value is the updated object.
  */
-function readPackage(packageJson, context) {
-    // // The karma types have a missing dependency on typings from the log4js package.
-    // if (packageJson.name === '@types/karma') {
-    //  context.log('Fixed up dependencies for @types/karma');
-    //  packageJson.dependencies['log4js'] = '0.6.38';
-    // }
-
-    if (
-        [
-            "@vitejs/plugin-react",
-            "@storybook/builder-vite",
-            "@vitest/mocker",
-            "@storybook/react-vite",
-            "@joshwooding/vite-plugin-react-docgen-typescript",
-            "vite-plugin-static-copy",
-        ].includes(packageJson.name) &&
-        packageJson.peerDependencies["vite"]
-    ) {
-        //context.log("Fixed up dependencies for " + packageJson.name);
-        packageJson.peerDependencies["vite"] = "^8.0.16";
-    }
-
+function readPackage(packageJson, _context) {
     if (packageJson.dependencies && packageJson.dependencies["baseline-browser-mapping"]) {
         //context.log("Fixed up dependencies for baseline-browser-mapping");
         packageJson.dependencies["baseline-browser-mapping"] = baselineBrowserMappingVersion;

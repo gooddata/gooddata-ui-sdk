@@ -24,6 +24,7 @@ interface IMeasureValueFilterConfigurationItemProps {
     title: string;
     isCompatible: boolean;
     isBlockedByRankingFilter: boolean;
+    isMissingMeasure?: boolean;
 }
 
 export function MeasureValueFilterConfigurationItem({
@@ -32,6 +33,7 @@ export function MeasureValueFilterConfigurationItem({
     title,
     isCompatible,
     isBlockedByRankingFilter,
+    isMissingMeasure = false,
 }: IMeasureValueFilterConfigurationItemProps) {
     const [isApplied, setIsApplied] = useState(
         () =>
@@ -51,7 +53,7 @@ export function MeasureValueFilterConfigurationItem({
 
     const isLoading = status === "loading";
     const isIncompatible = !isCompatible;
-    const isDisabled = isIncompatible || isBlockedByRankingFilter;
+    const isDisabled = isIncompatible || isBlockedByRankingFilter || isMissingMeasure;
     const isChecked = !isDisabled && isApplied;
 
     const classNames = cx(
@@ -62,6 +64,7 @@ export function MeasureValueFilterConfigurationItem({
         "measure-value-filter-by-item",
         {
             "filter-by-item-incompatible": isIncompatible || isBlockedByRankingFilter,
+            "filter-by-item-missing-measure": isMissingMeasure,
             disabled: isDisabled,
         },
     );
@@ -85,9 +88,10 @@ export function MeasureValueFilterConfigurationItem({
         return <div>{checkbox}</div>;
     }
 
-    // isIncompatible takes precedence over isBlockedByRankingFilter — the catalog
-    // incompatibility message is more specific.
-    const tooltipContent = isIncompatible ? (
+    // Priority: missing measure > incompatible > blocked by ranking filter
+    const tooltipContent = isMissingMeasure ? (
+        <FormattedMessage id="configurationPanel.mvfMissingMeasure" />
+    ) : isIncompatible ? (
         <FormattedMessage id="configurationPanel.vizCantBeFilteredByMeasureValueFilter" />
     ) : (
         <FormattedMessage id="configurationPanel.mvfBlockedByRankingFilter" />

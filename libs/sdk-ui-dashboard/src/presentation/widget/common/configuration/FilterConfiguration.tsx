@@ -26,6 +26,7 @@ import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDateDatasetsMap,
     selectAllCatalogMeasuresMap,
+    selectCatalogIsLoaded,
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectInsightByRef } from "../../../../model/store/insights/insightsSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
@@ -47,6 +48,7 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const ddsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
     const measureMap = useDashboardSelector(selectAllCatalogMeasuresMap);
+    const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const displayAsLabelMap = useDashboardSelector(selectAttributeFilterConfigsDisplayAsLabelMap);
 
     const draggableFilters = useMemo(() => {
@@ -140,7 +142,9 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
                     );
                 } else if (isDashboardMeasureValueFilter(filter)) {
                     const { measure, localIdentifier, title } = filter.dashboardMeasureValueFilter;
-                    const measureTitle = title ?? measureMap.get(measure)?.measure.title ?? "";
+                    const catalogMeasure = measureMap.get(measure);
+                    const isMissingMeasure = isCatalogLoaded && !catalogMeasure;
+                    const measureTitle = title ?? catalogMeasure?.measure.title ?? objRefToString(measure);
 
                     return (
                         <MeasureValueFilterConfigurationItem
@@ -150,6 +154,7 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
                             widget={widget}
                             isCompatible={isCompatible(measure)}
                             isBlockedByRankingFilter={isBlockedByRankingFilter}
+                            isMissingMeasure={isMissingMeasure}
                         />
                     );
                 } else {

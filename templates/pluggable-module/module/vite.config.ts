@@ -129,6 +129,8 @@ export default defineConfig(({ mode, command }): UserConfig => {
                 exposes: {
                     "./pluggableApp": "./src/pluggableApp.tsx",
                 },
+                // vite shared all dependencies by default, so we need to explicitly share nothing
+                shared: [],
                 // Use idle-based timeout instead of the default 10s absolute deadline,
                 // which flakes on loaded CI runners when the transform is slow but progressing.
                 moduleParseIdleTimeout: 60,

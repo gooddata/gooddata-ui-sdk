@@ -34,7 +34,7 @@
     },
     "devDependencies": {
         "@babel/core": "7.26.7",
-        "@babel/preset-env": "7.24.7",
+        "@babel/preset-env": "7.29.7",
         "@babel/preset-react": "^7.23.3",
         "@gooddata/catalog-export": "11.1.0",
         "@gooddata/plugin-toolkit": "11.1.0",

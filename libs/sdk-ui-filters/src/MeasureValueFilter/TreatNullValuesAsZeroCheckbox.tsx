@@ -4,21 +4,26 @@ import { type ChangeEvent, type ReactElement } from "react";
 
 import { type WrappedComponentProps } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 interface ITreatNullValuesAsZeroCheckboxProps {
     checked?: boolean;
     onChange: (checked: boolean) => void;
     isMobile?: boolean;
+    isViewMode?: boolean;
 }
 
 export function TreatNullValuesAsZeroCheckbox({
     checked = false,
     onChange,
     isMobile = false,
+    isViewMode = false,
     intl,
 }: ITreatNullValuesAsZeroCheckboxProps & WrappedComponentProps): ReactElement {
     const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => onChange(e.target.checked);
+    const tooltipText = intl.formatMessage({ id: "mvf.treatNullValuesAsZeroTooltip" });
+    const tooltipId = useIdPrefixed("mvf-treat-null-values-as-zero-tooltip");
+    const showTooltip = !isMobile && !isViewMode;
 
     return (
         <label
@@ -31,17 +36,23 @@ export function TreatNullValuesAsZeroCheckbox({
                 className={"input-checkbox"}
                 checked={checked}
                 onChange={handleOnChange}
+                aria-describedby={tooltipId}
             />
             <span className="input-label-text">
                 {intl.formatMessage({ id: "mvf.treatNullValuesAsZeroLabel" })}
-                {isMobile ? null : (
+                {showTooltip ? (
                     <BubbleHoverTrigger showDelay={400} hideDelay={200}>
-                        <span className={"inlineBubbleHelp"} />
+                        <span className={"inlineBubbleHelp"} aria-hidden="true" />
                         <Bubble className="bubble-primary" alignPoints={[{ align: "tc bl" }]}>
-                            {intl.formatMessage({ id: "mvf.treatNullValuesAsZeroTooltip" })}
+                            {tooltipText}
                         </Bubble>
                     </BubbleHoverTrigger>
-                )}
+                ) : null}
+            </span>
+            {/* Always-present, screen-reader-only copy of the help text so the checkbox has a
+                stable description (the hover bubble is only mounted while hovered/focused). */}
+            <span className="sr-only" id={tooltipId}>
+                {tooltipText}
             </span>
         </label>
     );

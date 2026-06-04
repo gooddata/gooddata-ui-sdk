@@ -40,7 +40,7 @@ export class MeasureValueFilterFragment {
         document.querySelector(`.s-mvf-operator-${simplifyText(operator)}`);
 
     public getOperatorBubbles = (operator: string) =>
-        document.querySelectorAll(`.s-mvf-operator-${simplifyText(operator)} .tooltip-bubble`);
+        document.querySelectorAll(`.s-mvf-operator-${simplifyText(operator)} .s-list-item-info`);
 
     public selectOperator = (operator: string) => {
         fireEvent.click(this.getOperator(operator)!);

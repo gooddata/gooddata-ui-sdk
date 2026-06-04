@@ -4,6 +4,7 @@ import { type AxiosProgressEvent, type AxiosPromise } from "axios";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { GenAiApi_PostMessages } from "@gooddata/api-client-tiger/endpoints/genAI";
+import { idRef } from "@gooddata/sdk-model";
 
 import type { DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import type { TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -71,5 +72,87 @@ describe("ChatConversationThreadQuery.stream", () => {
 
         const end = await reader.read();
         expect(end.done).toBe(true);
+    });
+});
+
+describe("ChatConversationThreadQuery userContext conversion", () => {
+    const dateNormalizer: DateNormalizer = (value) => value ?? "";
+    const authCall = vi.fn(async (callback) =>
+        callback({
+            axios: {},
+            basePath: "",
+        }),
+    ) as TigerAuthenticatedCallGuard;
+
+    beforeEach(() => {
+        vi.clearAllMocks();
+        vi.mocked(GenAiApi_PostMessages).mockResolvedValue({
+            data: { items: [] },
+        } as unknown as Awaited<AxiosPromise>);
+    });
+
+    it("should send richText widget content in the dashboard view context", async () => {
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [
+                            {
+                                title: "Notes",
+                                widgetRef: idRef("rt-1", "analyticalDashboard"),
+                                widgetType: "richText",
+                                content: "## Heading\nSome notes.",
+                            },
+                        ],
+                    },
+                },
+            },
+        });
+
+        await query.query();
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const widgets = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets;
+        expect(widgets).toEqual([
+            {
+                title: "Notes",
+                widgetId: "rt-1",
+                widgetType: "richText",
+                content: "## Heading\nSome notes.",
+            },
+        ]);
+    });
+
+    it("should preserve empty-string richText content rather than dropping it", async () => {
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [
+                            {
+                                title: "Empty",
+                                widgetRef: idRef("rt-2", "analyticalDashboard"),
+                                widgetType: "richText",
+                                content: "",
+                            },
+                        ],
+                    },
+                },
+            },
+        });
+
+        await query.query();
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const widget = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets?.[0];
+        expect(widget).toHaveProperty("content", "");
     });
 });

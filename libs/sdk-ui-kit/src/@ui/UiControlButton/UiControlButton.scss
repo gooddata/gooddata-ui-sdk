@@ -98,6 +98,7 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
     &--isError {
         font-size: 12px;
         color: var(--gd-palette-error-base, #e54d42);
+        background: var(--gd-palette-error-base-t85, rgba(229, 77, 66, 0.15));
     }
 
     &--disabled {
@@ -184,9 +185,18 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
         display: inline-block;
         flex: 0 1 auto;
         min-width: 0;
-        max-width: 120px;
+        max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
         vertical-align: bottom;
+
+        .gd-bubble-trigger,
+        .shortened {
+            display: inline-flex;
+        }
+
+        .shortened {
+            max-width: 100%;
+        }
     }
 }

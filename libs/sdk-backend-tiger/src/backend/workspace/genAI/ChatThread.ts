@@ -619,6 +619,7 @@ function convertUserContext(userContext: IGenAIUserContext | undefined): UserCon
                                       : { visualizationId: objRefToString(w.insightRef) }
                                   : {}),
                               ...(w.resultId ? { resultId: w.resultId } : {}),
+                              ...(w.content === undefined ? {} : { content: w.content }),
                           })),
                       },
                   },

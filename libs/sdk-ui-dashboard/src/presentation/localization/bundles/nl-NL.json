@@ -436,6 +436,8 @@
     "configurationPanel.vizCantBeFilteredByDate": "De visualisatie kan niet worden gefilterd op Datum. Schakel het selectievakje uit.",
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filter is niet van toepassing op deze visualisatie.",
     "configurationPanel.mvfBlockedByRankingFilter": "Dit filter kan niet worden toegepast omdat de visualisatie een filter voor Top-/onderste waarden gebruikt. Verwijder het filter voor Top-/onderste waarden om dit filter toe te passen.",
+    "configurationPanel.mvfMissingMeasure": "De metriek die in dit filter wordt gebruikt, bestaat niet meer in de werkruimte.",
+    "filters.mvf.missingMetric.tooltip": "De metriek die in dit filter wordt gebruikt, bestaat niet meer in de werkruimte.",
     "configurationPanel.kpiCantBeFilteredByDate": "De KPI kan niet worden gefilterd op Datum. Vink het selectievakje af.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" kan niet langer worden toegepast op de visualisatie. Selecteer een andere dimensie of bewerk de visualisatie.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" kan niet langer op de KPI worden toegepast. Selecteer een andere dimensie of bewerk de KPI.",

@@ -134,6 +134,7 @@ export function DefaultDashboardMeasureValueFilter(
         customTitle,
         defaultMetricTitle,
         catalogMetric,
+        isMissingMetric,
         metricTitle,
         conditionLabel,
         dimensionality,
@@ -331,11 +332,15 @@ export function DefaultDashboardMeasureValueFilter(
             buttonTitleExtension,
             disabled,
             onClick,
+            dropdownId,
         }: IMeasureValueFilterDropdownButtonProps) {
-            return (
+            const button = (
                 <UiControlButton
                     title={buttonTitle}
                     titleClassName="s-mvf-button-title"
+                    dropdownId={dropdownId}
+                    subtitleClassName="gd-measure-value-filter-dropdown-button-selected-items__next s-mvf-button-subtitle"
+                    icon={isMissingMetric ? <i className="gd-icon gd-icon-circle-cross" /> : undefined}
                     subtitle={
                         <span className="gd-measure-value-filter-dropdown-button-selected-items__next s-mvf-button-subtitle">
                             {buttonSubtitle ?? conditionLabel}
@@ -351,6 +356,7 @@ export function DefaultDashboardMeasureValueFilter(
                     }
                     isOpen={isActive}
                     isDraggable={isEditMode}
+                    isError={isMissingMetric}
                     disabled={disabled ?? readonly}
                     disabledTooltip={
                         readonly ? intl.formatMessage({ id: "filters.locked.filter.tooltip" }) : undefined
@@ -360,13 +366,27 @@ export function DefaultDashboardMeasureValueFilter(
                         "gd-is-active": isActive,
                         "gd-is-draggable": isEditMode,
                         disabled: readonly,
+                        "s-mvf-missing-metric": isMissingMetric,
                     })}
                 />
             );
+
+            if (isMissingMetric && !isActive) {
+                return (
+                    <BubbleHoverTrigger tagName="div" showDelay={200} hideDelay={0}>
+                        {button}
+                        <Bubble className="bubble-negative" alignPoints={[{ align: "bc tc" }]}>
+                            {intl.formatMessage({ id: "filters.mvf.missingMetric.tooltip" })}
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                );
+            }
+
+            return button;
         }
 
         return DashboardMeasureValueFilterDropdownButton;
-    }, [conditionLabel, intl, isEditMode, readonly, visibilityIcon]);
+    }, [conditionLabel, intl, isEditMode, isMissingMetric, readonly, visibilityIcon]);
 
     const MeasureValueFilterComponent = CustomMeasureValueFilterComponent ?? MeasureValueFilter;
 
@@ -389,6 +409,7 @@ export function DefaultDashboardMeasureValueFilter(
             onCancel={handleClose}
             autoOpen={autoOpen}
             fullscreenOnMobile
+            isViewMode={!isEditMode}
         />
     );
 }

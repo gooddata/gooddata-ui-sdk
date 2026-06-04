@@ -457,6 +457,7 @@ export function getChartOptions(
         stackByAttribute,
         type,
         config.customTooltip?.enabled ?? false,
+        isBubbleChart(type) && (chartConfig?.enableSingleBubbleSeries ?? false),
     );
 
     let initialSeries = assignYAxes(drillableSeries, yAxes);

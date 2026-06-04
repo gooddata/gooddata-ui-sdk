@@ -107,6 +107,8 @@ function AutomationMeasureValueFilterButton({
     onClick,
     conditionLabel,
     readonly,
+    disabled,
+    dropdownId,
 }: IAutomationMeasureValueFilterButtonProps) {
     const { isLocked, onDelete, filter, deleteAriaLabel, deleteTooltipContent, lockedTooltipContent } =
         useAutomationMeasureValueFilterContext();
@@ -132,6 +134,7 @@ function AutomationMeasureValueFilterButton({
             iconBefore="metric"
             isActive={isActive}
             isLocked={isLocked}
+            isDisabled={disabled}
             isDeletable={isDeletable}
             onClick={onClick}
             onDelete={() => onDelete?.(filter)}
@@ -150,6 +153,7 @@ function AutomationMeasureValueFilterButton({
             }}
             accessibilityConfig={{
                 isExpanded: isActive,
+                popupId: dropdownId,
                 popupType: "dialog",
                 ariaDescribedBy: mvfTooltipId,
                 deleteAriaLabel: buttonTitle ? `${deleteAriaLabel} ${buttonTitle}` : deleteAriaLabel,

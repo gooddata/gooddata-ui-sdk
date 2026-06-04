@@ -13,6 +13,7 @@ export interface IUiCheckboxProps {
     checked: boolean;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     preventDefault?: boolean;
+    stopPropagation?: boolean;
     indeterminate?: boolean;
     disabled?: boolean;
     accessibilityConfig?: IAccessibilityConfigBase;
@@ -41,6 +42,7 @@ export function UiCheckbox({
     checked,
     onChange = () => {},
     preventDefault = false,
+    stopPropagation = false,
     indeterminate = false,
     disabled = false,
     accessibilityConfig,
@@ -69,7 +71,14 @@ export function UiCheckbox({
                     checked={checked}
                     onChange={onChange}
                     disabled={disabled}
-                    onClick={(e) => preventDefault && e.stopPropagation()}
+                    onClick={(e) => {
+                        if (preventDefault) {
+                            e.preventDefault();
+                        }
+                        if (stopPropagation) {
+                            e.stopPropagation();
+                        }
+                    }}
                     tabIndex={tabIndex}
                     {...accessibilityConfigToAttributes(accessibilityConfig)}
                 />

@@ -705,10 +705,11 @@ const messagesSlice = createSlice({
                 state.loaded = !!data?.order.length;
                 state.threadId = payload.conversation.id;
                 existing.id = payload.conversation.id;
+                existing.localId = payload.conversation.localId;
             } else {
                 state.conversations = [payload.conversation, ...(state.conversations ?? [])];
                 state.currentConversation = payload.conversation;
-                state.threadId = payload.conversation.localId;
+                state.threadId = payload.conversation.id;
                 state.loaded = true;
             }
         },

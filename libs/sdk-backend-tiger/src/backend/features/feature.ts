@@ -971,6 +971,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiAgentSwitching,
+            "enableGenAiAgentSwitching",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiAgentSwitching,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableGenAiObservability,
+            "enableGenAiObservability",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiObservability,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAiLlmAnthropicProvider,
             "enableAiLlmAnthropicProvider",
             "BOOLEAN",

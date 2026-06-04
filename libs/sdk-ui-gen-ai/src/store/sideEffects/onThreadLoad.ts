@@ -16,6 +16,7 @@ import {
     type AssistantMessage,
     type Contents,
     type IChatConversationLocal,
+    type IChatConversationLocalItem,
     type Message,
     isAssistantMessage,
     isSemanticSearchContents,
@@ -24,6 +25,7 @@ import {
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import { loadMessages } from "../localStorage.js";
 import {
+    conversationMessagesByIdSelector,
     conversationSelector,
     conversationsLoadedSelector,
     conversationsSelector,
@@ -241,15 +243,24 @@ function* fetchCurrentConversation() {
             return;
         }
 
+        //Load previously created messages
+        const messages: IChatConversationLocalItem[] = yield select(
+            conversationMessagesByIdSelector,
+            selectedConversation.localId,
+        );
+
         yield put(
             loadConversationSuccessAction({
                 currentConversation: selectedConversation,
-                conversationItems: resultsItems.map((item) => {
-                    return makeConversationItem({
-                        ...item,
-                        content: convertToLocalContent(item.content),
-                    });
-                }),
+                conversationItems: [
+                    ...messages,
+                    ...resultsItems.map((item) => {
+                        return makeConversationItem({
+                            ...item,
+                            content: convertToLocalContent(item.content),
+                        });
+                    }),
+                ],
                 threadId: selectedConversation.id,
             }),
         );

@@ -26,6 +26,7 @@ export interface IUiControlButtonProps {
     title: string;
     titleClassName?: string;
     subtitle?: ReactNode;
+    subtitleClassName?: string;
     icon?: ReactNode;
     titleExtension?: ReactNode;
     subtitleExtension?: ReactNode;
@@ -65,6 +66,7 @@ export function UiControlButton({
     title,
     titleClassName,
     subtitle,
+    subtitleClassName,
     icon,
     titleExtension,
     subtitleExtension,
@@ -139,7 +141,14 @@ export function UiControlButton({
                 {subtitle === undefined && subtitleExtension === undefined ? null : (
                     <div className={e("subtitle-row")}>
                         {typeof subtitle === "string" ? (
-                            <span className={e("subtitle")}>{subtitle}</span>
+                            <div className={e("subtitle")}>
+                                <ShortenedText
+                                    tooltipAlignPoints={TITLE_TOOLTIP_ALIGN_POINTS}
+                                    className={subtitleClassName}
+                                >
+                                    {subtitle}
+                                </ShortenedText>
+                            </div>
                         ) : (
                             subtitle
                         )}
