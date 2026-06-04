@@ -90,6 +90,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         includeTags,
         excludeTags,
         isPreview,
+        providedStore,
         onDispatcher,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
@@ -109,6 +110,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
                 excludeTags={excludeTags}
                 catalogItems={catalogItems}
                 isPreview={isPreview}
+                providedStore={providedStore}
             >
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>

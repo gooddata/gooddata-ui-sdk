@@ -65,6 +65,7 @@ export function GenAIConversations(props: GenAIConversationsProps) {
         includeTags,
         excludeTags,
         colorPalette,
+        providedStore,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -72,6 +73,7 @@ export function GenAIConversations(props: GenAIConversationsProps) {
     return (
         <IntlWrapper locale={locale}>
             <GenAiStore
+                providedStore={providedStore}
                 backend={effectiveBackend}
                 workspace={effectiveWorkspace}
                 onDispatcher={onDispatcher}

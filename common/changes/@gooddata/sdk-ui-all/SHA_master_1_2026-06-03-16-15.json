@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-kit: add UiLabelRow, UiLabelChecklistRow, UiLabelsList, UiLabelsPicker, UiPermissionMenu and UiGranteeRowControls @ui components.",
+            "comment": "sdk-ui-gen-ai: Enhanced web components and new ai store to support multiple conversations.",
             "type": "none"
         }
     ],

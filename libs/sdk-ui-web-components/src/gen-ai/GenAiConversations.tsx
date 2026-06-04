@@ -2,19 +2,15 @@
 
 import { type ComponentProps } from "react";
 
-import { omit } from "lodash-es";
-
 import { resolveLocale } from "@gooddata/sdk-ui";
 import type {
     ChatEvent,
     GenAIConversationsProps,
-    LinkHandlerEvent,
-    GenAIAssistant as OriginalGenAIAssistant,
+    GenAIConversations as OriginalGenAIConversations,
 } from "@gooddata/sdk-ui-gen-ai";
 
 import {
     CustomElementAdapter,
-    EVENT_BUILDER,
     EVENT_HANDLER,
     GET_COMPONENT,
     LOAD_COMPONENT,
@@ -23,26 +19,22 @@ import { stringToObjectTypes } from "../common/typeGuards/stringToObjectTypes.js
 import { type CustomElementContext, getStore } from "../context.js";
 import { findParentWithAttribute } from "../utils.js";
 
-type IGenAIAssistant = typeof OriginalGenAIAssistant;
-type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
+type IGenAIConversations = typeof OriginalGenAIConversations;
 
-export class GenAIAssistant extends CustomElementAdapter<IGenAIAssistant> {
+export class GenAIConversations extends CustomElementAdapter<IGenAIConversations> {
     static get observedAttributes() {
         return ["workspace", "locale", "objectTypes"];
     }
 
     override async [LOAD_COMPONENT]() {
-        return (await import("@gooddata/sdk-ui-gen-ai")).GenAIAssistant;
+        return (await import("@gooddata/sdk-ui-gen-ai")).GenAIConversations;
     }
 
-    onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
-
-    override [GET_COMPONENT](Component: IGenAIAssistant, { backend, workspaceId }: CustomElementContext) {
+    override [GET_COMPONENT](Component: IGenAIConversations, { backend, workspaceId }: CustomElementContext) {
         const storeId = findParentWithAttribute(this, "store");
         const store = storeId ? getStore(storeId) : undefined;
 
-        // Collect the rest of the props
-        const extraProps: Partial<ComponentProps<IGenAIAssistant>> = {};
+        const extraProps: Partial<ComponentProps<IGenAIConversations>> = {};
 
         if (this.hasAttribute("locale")) {
             extraProps.locale = resolveLocale(this.getAttribute("locale"));
@@ -55,27 +47,13 @@ export class GenAIAssistant extends CustomElementAdapter<IGenAIAssistant> {
                     extraProps.objectTypes = stringToObjectTypes(stringifiedObjectTypes);
                 } catch (e) {
                     console.error(
-                        "Invalid object types not used in <gd-ai-assistant> component",
+                        "Invalid object types not used in <gd-ai-conversations> component",
                         e,
                         stringifiedObjectTypes,
                     );
                 }
             }
         }
-
-        // Emit custom DOM event when link is clicked
-        extraProps.onLinkClick = (e) => {
-            const type = "linkClick";
-            const detail = omit(e, ["preventDefault"]) as IGenAIAssistantLinkClick;
-
-            this[EVENT_HANDLER](type)(detail);
-            if (typeof this.onLinkClick === "function") {
-                this.onLinkClick(this[EVENT_BUILDER](type, detail));
-            }
-            // Prevent default behavior of the link click, we created
-            // the custom event to handle it in the application
-            e.preventDefault();
-        };
 
         return (
             <Component

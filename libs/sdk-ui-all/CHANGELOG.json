@@ -2,6 +2,84 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.40.0",
+            "tag": "@gooddata/sdk-ui-all_v11.40.0",
+            "date": "Thu, 04 Jun 2026 07:12:00 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-all: Add systemAccount flag to user management dialogs."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Remove enableSlideshowExports gating from renderModeAware component, allowing export mode to work regardless of setting."
+                    },
+                    {
+                        "comment": "dashboards: Send per-tab parameter overrides on tabular export"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Drill overlay inherits the dashboard's parameter override."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Improve multi-conversation and improve message handling logic"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add label support for catalog items and references-"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Document and export new conversation related actions."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Refactor GenAI store and components for unified state management."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Fix of loading existing conversation messages in onThreadLoad."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Allow resizing the editor sidebar by dragging its right edge; width persists and can be adjusted via keyboard."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Improve styles and look of measure value filter."
+                    },
+                    {
+                        "comment": "sdk-ui-all: extend date filter config to cover empty values option."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Handle missing metric used in measure filter."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Fix filter context sanitization after tabs localIdentifier change."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Change way how default tab id is handled to keep it stable"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Send rich text widget content in the GenAI dashboard summary user context."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: add UiLabelRow, UiLabelChecklistRow, UiLabelsList, UiLabelsPicker, UiPermissionMenu and UiGranteeRowControls @ui components."
+                    },
+                    {
+                        "comment": "sdk-backend-spi, sdk-backend-tiger, sdk-model: per-object access management for catalog attributes, facts and labels."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: narrow UiToastIntlValues to Record<string, PrimitiveType> — toast text is plain by contract, so ReactNode interpolation values are rejected at compile time instead of being silently stringified to '[object Object]'."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: add UiToast @ui component family — UiToastProvider + UiToastsContainer + useUiToast — matching the new @ui conventions (BEM, dataTestId, accessibilityConfig)."
+                    },
+                    {
+                        "comment": "preserve filter groups when duplicating a dashboard via Save As"
+                    },
+                    {
+                        "comment": "propagate current active filter into filter group button when apply all at once mode is active"
+                    },
+                    {
+                        "comment": "fix shifted filter group dropdown position"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.39.0",
             "tag": "@gooddata/sdk-ui-all_v11.39.0",
             "date": "Thu, 28 May 2026 07:19:02 GMT",

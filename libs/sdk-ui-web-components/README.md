@@ -222,12 +222,13 @@ InsightView component](https://www.gooddata.com/docs/gooddata-ui/latest/learn/vi
 </script>
 ```
 
-### AI Assistant Custom Element
+### AI Assistant and Gen AI composition Custom Elements
 
 `gd-ai-assistant` supports the following attributes:
 
 - `workspace` - optional, an ID of the workspace for this dashboard. By default, it's taken from the context (e.g. from the script URL).
 - `locale` - the localization of the visualization. For available languages, see [the full list of available localizations](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui/src/base/localization/Locale.ts).
+- `objectTypes` - optional comma-separated list of metadata object types available to assistant search and suggestions.
 
 ```html
 <!-- override currently used workspace -->
@@ -235,6 +236,24 @@ InsightView component](https://www.gooddata.com/docs/gooddata-ui/latest/learn/vi
 
 <!-- override locale used in chat -->
 <gd-ai-assistant locale="cs-CZ"></gd-ai-assistant>
+
+<!-- restrict object types used by assistant -->
+<gd-ai-assistant objectTypes="dashboard,insight"></gd-ai-assistant>
+```
+
+`gd-ai-conversations` supports the same attributes as `gd-ai-assistant` and renders just the conversations panel:
+
+```html
+<gd-ai-conversations workspace="my-workspace"></gd-ai-conversations>
+```
+
+Use `gd-ai-provider` when composing `gd-ai-conversations` and `gd-ai-assistant` on the same page so both share one store:
+
+```html
+<gd-ai-provider workspace="my-workspace">
+    <div><gd-ai-conversations></gd-ai-conversations></div>
+    <div><gd-ai-assistant></gd-ai-assistant></div>
+</gd-ai-provider>
 ```
 
 `gd-ai-assistant` emits the following events:
@@ -246,9 +265,25 @@ InsightView component](https://www.gooddata.com/docs/gooddata-ui/latest/learn/vi
 - `chatUserMessage` - when user message is added to the chat.
 - `chatAssistantMessage` - when assistant message is added to the chat.
 - `chatFeedback` - when user provides feedback on the assistant message.
+- `chatFeedbackError` - when feedback submission fails.
 - `chatVisualizationError` - when an error occurs while rendering the visualization in the chat.
+- `chatSaveVisualizationError` - when saving a visualization fails.
+- `chatSaveVisualizationSuccess` - when a visualization is saved successfully.
+- `chatCopyToClipboard` - when user copies content to clipboard.
+- `chatConversationPinned` - when a conversation is pinned.
+- `chatConversationPinError` - when pinning a conversation fails.
+- `chatConversationDelete` - when user requests conversation deletion.
+- `chatConversationDeletedSuccess` - when conversation deletion succeeds.
+- `chatConversationDeletedError` - when conversation deletion fails.
+- `chatConversationRename` - when user requests conversation rename.
+- `chatConversationRenamedSuccess` - when conversation rename succeeds.
+- `chatConversationRenamedError` - when conversation rename fails.
+- `chatConversationChanged` - when current conversation changes.
 
 All events are not cancelable and do not bubble.
+
+`gd-ai-conversations` emit the same chat event payloads via `event.type`
+(for example `chatConversationChanged`, `chatConversationDelete`, `chatConversationDeletedSuccess`, etc.).
 
 ```html
 <gd-ai-assistant id="some-dom-id"></gd-ai-assistant>

@@ -29,7 +29,7 @@ describe("context", () => {
         setContext(mockContext);
         const contextPromise = getContext();
 
-        await expect(contextPromise).resolves.toBe(mockContext);
+        await expect(contextPromise).resolves.toEqual(mockContext);
     });
 
     it("should expose the latest context snapshot after replacement", async () => {
@@ -38,7 +38,7 @@ describe("context", () => {
         setContext(mockContext);
         setContext(replacementContext);
 
-        expect(getContextSnapshot()).toBe(replacementContext);
+        expect(getContextSnapshot()).toEqual(replacementContext);
     });
 
     it("should resolve getContext to the latest context for later subscribers", async () => {
@@ -47,6 +47,6 @@ describe("context", () => {
         setContext(mockContext);
         setContext(replacementContext);
 
-        await expect(getContext()).resolves.toBe(replacementContext);
+        await expect(getContext()).resolves.toEqual(replacementContext);
     });
 });
