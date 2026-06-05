@@ -1,8 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ISeparators } from "@gooddata/sdk-model";
-import { type IResolvedReferenceValues } from "@gooddata/sdk-ui-vis-commons";
+import {
+    type IResolvedReferenceValues,
+    labelKey,
+    labelReference,
+    measureReference,
+    metricKey,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { type ITooltipReferenceMaps } from "../registry/adapterTypes.js";
 
@@ -28,7 +33,6 @@ export function resolveReferencesFromGeoFeature(
     properties: GeoJSON.GeoJsonProperties,
     referenceMaps: ITooltipReferenceMaps | undefined,
     separators: ISeparators | undefined,
-    noDataLabel: string,
 ): IResolvedReferenceValues {
     const values: IResolvedReferenceValues = {};
 
@@ -44,19 +48,19 @@ export function resolveReferencesFromGeoFeature(
         if (!payload?.attrId || payload.value === undefined) {
             return;
         }
-        const text = String(payload.value);
-        const displayFormKey = `label/${payload.attrId}`;
+        const status = labelReference(String(payload.value));
+        const displayFormKey = labelKey(payload.attrId);
         if (values[displayFormKey] === undefined) {
-            values[displayFormKey] = text;
+            values[displayFormKey] = status;
         }
         // When `attrId` and the parent attribute id are equal, `attributeKey`
         // collapses onto `displayFormKey` and the second write is a no-op
         // under first-wins — no self-equality check needed.
         const attributeId = attributeIdByDisplayFormId[payload.attrId];
         if (attributeId) {
-            const attributeKey = `label/${attributeId}`;
+            const attributeKey = labelKey(attributeId);
             if (values[attributeKey] === undefined) {
-                values[attributeKey] = text;
+                values[attributeKey] = status;
             }
         }
     };
@@ -69,32 +73,14 @@ export function resolveReferencesFromGeoFeature(
         if (!ldmId) {
             return;
         }
-        const key = `metric/${ldmId}`;
+        const key = metricKey(ldmId);
         if (values[key] !== undefined) {
             return; // first-wins precedence
         }
+        // Geo payloads (via JSON) can be non-numeric/NaN; normalize to null (→ "No data") first.
         const rawValue = payload.value;
-        if (typeof rawValue !== "number" || !Number.isFinite(rawValue)) {
-            // Null / undefined / NaN on the rendered feature — emit the no-data
-            // sentinel so the custom section reads "(No data)" instead of falling
-            // through to the resolution-failure fallback text.
-            values[key] = noDataLabel;
-            return;
-        }
-        // Use the raw formatted value without HTML escaping. The resolved
-        // content goes through `markdownToHtml`, which escapes once at render
-        // time — pre-escaping here would produce double-escaped output (`&` →
-        // `&amp;amp;`). Matches Highcharts' `resolveReferencesFromPoint`.
-        if (payload.format) {
-            const { formattedValue } = ClientFormatterFacade.formatValue(
-                rawValue,
-                payload.format,
-                separators,
-            );
-            values[key] = formattedValue;
-        } else {
-            values[key] = String(rawValue);
-        }
+        const numeric = typeof rawValue === "number" && Number.isFinite(rawValue) ? rawValue : null;
+        values[key] = measureReference(numeric, payload.format, separators);
     };
 
     // Walk in default-tooltip render order so `{metric/foo}` resolves to the

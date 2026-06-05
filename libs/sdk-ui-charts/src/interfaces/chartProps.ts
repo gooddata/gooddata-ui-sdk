@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type IExecutionConfig } from "@gooddata/sdk-model";
 import { type IVisualizationCallbacks, type IVisualizationProps } from "@gooddata/sdk-ui";
-import { type ITooltipExecutionBundle } from "@gooddata/sdk-ui-vis-commons";
+import { type ITooltipExecution } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IChartConfig } from "./chartConfig.js";
 
@@ -147,5 +147,5 @@ export interface ICoreChartProps extends ICommonChartProps {
      * sliced by the chart's attributes.
      * @internal
      */
-    tooltipExecution?: ITooltipExecutionBundle;
+    tooltipExecution?: ITooltipExecution;
 }

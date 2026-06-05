@@ -4,10 +4,13 @@ import {
     type IDashboardParameter,
     type IDashboardTab,
     type IParameterMetadataObject,
-    isNumberParameterDefinition,
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import {
+    computeHydratedRuntimeOverride,
+    workspaceParametersByRef,
+} from "../../../store/tabs/parameters/parametersHelpers.js";
 import {
     type IDashboardParameterEntry,
     pickTabParametersSource,
@@ -30,20 +33,14 @@ export function hydrateParameterEntries(
     if (!dashboardParameters || dashboardParameters.length === 0) {
         return [];
     }
-    const workspaceByRef = new Map<string, IParameterMetadataObject>(
-        workspaceParameters.map((wp) => [objRefToString(wp.ref), wp]),
-    );
-    return dashboardParameters.map((parameter) => {
-        if (parameter.value !== undefined) {
-            return { parameter, runtimeOverride: parameter.value };
-        }
-        const workspaceParameter = workspaceByRef.get(objRefToString(parameter.ref));
-        const workspaceDefault =
-            workspaceParameter && isNumberParameterDefinition(workspaceParameter.definition)
-                ? workspaceParameter.definition.defaultValue
-                : undefined;
-        return { parameter, runtimeOverride: workspaceDefault };
-    });
+    const workspaceByRef = workspaceParametersByRef(workspaceParameters);
+    return dashboardParameters.map((parameter) => ({
+        parameter,
+        runtimeOverride: computeHydratedRuntimeOverride(
+            parameter,
+            workspaceByRef.get(objRefToString(parameter.ref)),
+        ),
+    }));
 }
 
 /**

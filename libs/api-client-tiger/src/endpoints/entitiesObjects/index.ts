@@ -227,6 +227,15 @@ export {
     type EntitiesApiUpdateEntityCustomGeoCollectionsRequest,
     type EntitiesApiPatchEntityCustomGeoCollectionsRequest,
     type EntitiesApiDeleteEntityCustomGeoCollectionsRequest,
+    // EntitiesApi - IpAllowlistPolicies
+    EntitiesApi_CreateEntityIpAllowlistPolicies,
+    EntitiesApi_DeleteEntityIpAllowlistPolicies,
+    EntitiesApi_GetAllEntitiesIpAllowlistPolicies,
+    EntitiesApi_UpdateEntityIpAllowlistPolicies,
+    type EntitiesApiCreateEntityIpAllowlistPoliciesRequest,
+    type EntitiesApiDeleteEntityIpAllowlistPoliciesRequest,
+    type EntitiesApiGetAllEntitiesIpAllowlistPoliciesRequest,
+    type EntitiesApiUpdateEntityIpAllowlistPoliciesRequest,
     // EntitiesApi - Users
     EntitiesApi_GetAllEntitiesUsers,
     EntitiesApi_GetEntityUsers,

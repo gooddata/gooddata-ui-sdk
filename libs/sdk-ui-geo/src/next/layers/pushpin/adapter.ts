@@ -305,7 +305,8 @@ function buildPushpinTooltipExecution(
         return joinKeySegments(parts);
     };
 
-    return { ...built, buildFeatureKey };
+    // Geo resolves per layer (no fan-out yet) — use the batched bundle.
+    return { ...built.batch, buildFeatureKey };
 }
 
 export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOutput> = {

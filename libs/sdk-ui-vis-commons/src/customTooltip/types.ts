@@ -63,10 +63,57 @@ export interface ICustomTooltipConfig {
 }
 
 /**
- * Lookup of resolved reference values keyed by `metric/id` or `label/id`.
+ * Resolution outcome for a single `{metric/id}` / `{label/id}` reference at a
+ * data point. A discriminated union so the renderer maps each state to its own
+ * localized message instead of collapsing every "missing" case into one
+ * fallback: `empty` → "(No data)", `multiple` → "(Multiple items)", `error` →
+ * "(Data could not be retrieved)". `error` is emitted only when a value was
+ * genuinely unretrievable (e.g. a reference whose fetch failed); it is never a
+ * default for an unclassified value.
+ *
+ * @internal
+ */
+export type ResolvedReference =
+    | { readonly kind: "value"; readonly text: string }
+    | { readonly kind: "empty" }
+    | { readonly kind: "multiple" }
+    | { readonly kind: "error" };
+
+/**
+ * Lookup of resolved reference statuses keyed by `metric/id` or `label/id`.
  *
  * @internal
  */
 export interface IResolvedReferenceValues {
-    [referenceKey: string]: string | undefined;
+    [referenceKey: string]: ResolvedReference | undefined;
+}
+
+/**
+ * Builds the `metric/<id>` lookup key for a metric reference. A reference key
+ * has exactly two shapes ({@link metricKey}, {@link labelKey}); keeping the
+ * convention here is the single source for every write site. The read side
+ * parses references via `REFERENCE_REGEX_MATCH` in `resolveReferences`.
+ *
+ * @internal
+ */
+export const metricKey = (id: string): string => `metric/${id}`;
+
+/**
+ * Builds the `label/<id>` lookup key for a label reference. See {@link metricKey}.
+ *
+ * @internal
+ */
+export const labelKey = (id: string): string => `label/${id}`;
+
+/**
+ * Localized placeholder strings for the non-value reference states. Built once
+ * at the render site (where `intl` is available) and threaded into
+ * `resolveReferences`, so reference resolution stays free of i18n concerns.
+ *
+ * @internal
+ */
+export interface ITooltipLocalizedStrings {
+    readonly noData: string;
+    readonly multipleItems: string;
+    readonly noFetch: string;
 }

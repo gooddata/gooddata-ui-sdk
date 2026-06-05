@@ -181,6 +181,8 @@ export enum TigerFeaturesNames {
     EnableMetricEditorRemoteModule = "enableShellApplication_metricEditor",
     EnableAnalyticalDesignerRemoteModule = "enableShellApplication_analyticalDesigner",
     EnableDashboardSidebarResize = "enableDashboardSidebarResize",
+    EnableIpAllowlistsUi = "enableIpAllowlistsUi",
+    EnableLdmModelerRemoteModule = "enableShellApplication_ldmModeler",
 }
 
 export type ITigerFeatureFlags = {
@@ -355,6 +357,8 @@ export type ITigerFeatureFlags = {
     enableShellApplication_metricEditor: (typeof FeatureFlagsValues)["enableShellApplication_metricEditor"][number];
     enableShellApplication_analyticalDesigner: (typeof FeatureFlagsValues)["enableShellApplication_analyticalDesigner"][number];
     enableDashboardSidebarResize: (typeof FeatureFlagsValues)["enableDashboardSidebarResize"][number];
+    enableIpAllowlistsUi: (typeof FeatureFlagsValues)["enableIpAllowlistsUi"][number];
+    enableShellApplication_ldmModeler: (typeof FeatureFlagsValues)["enableShellApplication_ldmModeler"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -427,7 +431,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAIDataSetting: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
-    enableSystemAccountFiltering: false,
+    enableSystemAccountFiltering: true,
     enableCustomizedDashboardsWithoutPluginOverlay: true,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: true,
@@ -529,6 +533,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableShellApplication_metricEditor: false,
     enableShellApplication_analyticalDesigner: false,
     enableDashboardSidebarResize: false,
+    enableIpAllowlistsUi: false,
+    enableShellApplication_ldmModeler: false,
 };
 
 export const FeatureFlagsValues = {
@@ -704,4 +710,6 @@ export const FeatureFlagsValues = {
     enableShellApplication_metricEditor: [true, false] as const,
     enableShellApplication_analyticalDesigner: [true, false] as const,
     enableDashboardSidebarResize: [true, false] as const,
+    enableIpAllowlistsUi: [false, true] as const,
+    enableShellApplication_ldmModeler: [true, false] as const,
 };

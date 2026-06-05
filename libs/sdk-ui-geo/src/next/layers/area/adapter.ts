@@ -161,7 +161,8 @@ function buildAreaTooltipExecution(
         return buildKeySegment(areaAttrId, areaUri);
     };
 
-    return { ...built, buildFeatureKey };
+    // Geo resolves per layer (no fan-out yet) — use the batched bundle.
+    return { ...built.batch, buildFeatureKey };
 }
 
 export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {

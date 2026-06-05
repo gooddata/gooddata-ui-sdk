@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type FunctionComponent, type ReactElement } from "react";
 
@@ -21,6 +21,7 @@ export interface IDialogListItem extends IDialogListItemBase {
     isDeletable?: boolean;
     deleteTooltipText?: string;
     action?: ReactElement;
+    badgeAfter?: ReactElement;
 }
 
 /**

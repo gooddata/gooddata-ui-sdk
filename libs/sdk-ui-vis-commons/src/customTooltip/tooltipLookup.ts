@@ -1,33 +1,19 @@
 // (C) 2026 GoodData Corporation
 
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type IDataView } from "@gooddata/sdk-backend-spi";
 import { type ISeparators, isResultAttributeHeader } from "@gooddata/sdk-model";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 
+import { labelReference, measureReference } from "./referenceStatus.js";
 import { type ITooltipExecutionMeta } from "./tooltipExecution.js";
 import { buildKeySegment, joinKeySegments } from "./tooltipKey.js";
-import { type IResolvedReferenceValues } from "./types.js";
-
-/**
- * Localized placeholders for unresolved reference values. Mirrors the RichText
- * widget's `richText.no_data` / `richText.multiple_data` messages.
- *
- * @internal
- */
-export interface ITooltipLookupLocalizedStrings {
-    noData: string;
-    multipleItems: string;
-}
-
-const DEFAULT_LOCALIZED_STRINGS: ITooltipLookupLocalizedStrings = {
-    noData: "(No data)",
-    multipleItems: "(Multiple items)",
-};
+import { type IResolvedReferenceValues, labelKey, metricKey } from "./types.js";
 
 /**
  * Build a per-data-point lookup keyed by `${displayFormId}:${uri}` segments
  * (joined by `|`, sorted). Iteration is orientation-agnostic via slices/series.
+ * Each reference is tagged with a {@link ResolvedReference} status; localized
+ * placeholder strings are applied later, at the render site.
  *
  * @internal
  */
@@ -35,7 +21,6 @@ export function buildLookupTable(
     dataView: IDataView,
     meta: ITooltipExecutionMeta,
     separators?: ISeparators,
-    localizedStrings: ITooltipLookupLocalizedStrings = DEFAULT_LOCALIZED_STRINGS,
 ): Map<string, IResolvedReferenceValues> {
     const lookup = new Map<string, IResolvedReferenceValues>();
 
@@ -89,31 +74,15 @@ export function buildLookupTable(
                     ? Number(countSeries.dataPoints()[sliceIdx]?.rawValue ?? 0)
                     : 1;
 
-                if (countValue > 1) {
-                    values[`label/${labelId}`] = localizedStrings.multipleItems;
-                } else if (rawValue == null || rawValue === "") {
-                    values[`label/${labelId}`] = localizedStrings.noData;
-                } else {
-                    values[`label/${labelId}`] = String(rawValue);
-                }
+                // count > 1 → "(Multiple items)"; else empty/value via the shared helper.
+                values[labelKey(labelId)] = countValue > 1 ? { kind: "multiple" } : labelReference(rawValue);
                 continue;
             }
 
             const metricId = meta.measureIdMap[localId];
             if (metricId) {
                 const format = measureDesc.measureHeaderItem.format;
-                if (rawValue == null) {
-                    values[`metric/${metricId}`] = localizedStrings.noData;
-                } else if (format) {
-                    const { formattedValue } = ClientFormatterFacade.formatValue(
-                        Number(rawValue),
-                        format,
-                        separators,
-                    );
-                    values[`metric/${metricId}`] = formattedValue;
-                } else {
-                    values[`metric/${metricId}`] = String(rawValue);
-                }
+                values[metricKey(metricId)] = measureReference(rawValue, format, separators);
             }
         }
 

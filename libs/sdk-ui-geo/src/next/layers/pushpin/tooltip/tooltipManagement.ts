@@ -5,7 +5,7 @@ import { type IntlShape } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
-import { type ICustomTooltipConfig } from "@gooddata/sdk-ui-vis-commons";
+import { type ICustomTooltipConfig, buildTooltipLocalizedStrings } from "@gooddata/sdk-ui-vis-commons";
 
 import { getTooltipContentWidth } from "../../../map/style/tooltipFormatting.js";
 import { type IGeoPushpinChartConfig } from "../../../types/config/pushpinChart.js";
@@ -200,15 +200,12 @@ export function getTooltipHtml(
         .filter((item): item is string => item !== null)
         .join("");
 
-    const fallbackText = `(${intl.formatMessage({ id: "richText.no_fetch" })})`;
-    const noDataLabel = `(${intl.formatMessage({ id: "richText.no_data" })})`;
     const customPieces = buildCustomTooltipPieces(
         geoProperties,
         customConfig,
         referenceMaps,
         separators,
-        fallbackText,
-        noDataLabel,
+        buildTooltipLocalizedStrings(intl),
         tooltipLookup,
     );
     const itemsBody = composeTooltipBody(tooltipItems, customPieces, customConfig?.placement);

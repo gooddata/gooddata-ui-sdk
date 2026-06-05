@@ -2,10 +2,16 @@
 
 import { describe, expect, it } from "vitest";
 
+import { type ResolvedReference } from "@gooddata/sdk-ui-vis-commons";
+
 import { type IUnsafeHighchartsTooltipPoint } from "../../../../typings/unsafe.js";
 import { resolveReferencesFromPoint } from "../referenceResolver.js";
 
-const NO_DATA = "(No data)";
+function value(text: string): ResolvedReference {
+    return { kind: "value", text };
+}
+
+const EMPTY: ResolvedReference = { kind: "empty" };
 
 /**
  * Minimal mock builders for `IDrillEventIntersectionElement`. We construct only
@@ -59,12 +65,7 @@ function point(args: {
 
 describe("resolveReferencesFromPoint", () => {
     it("returns empty values when drill intersection is empty", () => {
-        const result = resolveReferencesFromPoint(
-            point({ drillIntersection: [] }),
-            undefined,
-            undefined,
-            NO_DATA,
-        );
+        const result = resolveReferencesFromPoint(point({ drillIntersection: [] }), undefined, undefined);
         expect(result).toEqual({});
     });
 
@@ -81,11 +82,10 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             undefined,
-            NO_DATA,
         );
         expect(result).toEqual({
-            "label/region.display": "East",
-            "label/region": "East",
+            "label/region.display": value("East"),
+            "label/region": value("East"),
         });
     });
 
@@ -103,9 +103,25 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             undefined,
-            NO_DATA,
         );
-        expect(result["label/month"]).toBe("March 2026");
+        expect(result["label/month"]).toEqual(value("March 2026"));
+    });
+
+    it("treats an empty attribute display value as the empty status (consistent with the lookup builder)", () => {
+        const result = resolveReferencesFromPoint(
+            point({
+                drillIntersection: [
+                    attributeIntersection({
+                        displayFormId: "region.display",
+                        attributeId: "region",
+                        name: "",
+                    }),
+                ],
+            }),
+            undefined,
+            undefined,
+        );
+        expect(result["label/region.display"]).toEqual(EMPTY);
     });
 
     it("formats measure values using the provided format", () => {
@@ -122,9 +138,8 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             undefined,
-            NO_DATA,
         );
-        expect(result["metric/revenue"]).toBe("1,234.50");
+        expect(result["metric/revenue"]).toEqual(value("1,234.50"));
     });
 
     it("falls back to identifierMapping when measure header has no identifier", () => {
@@ -137,9 +152,8 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             { measures: { revenuePoPm0: { ldmId: "revenue", pointField: "y" } } },
-            NO_DATA,
         );
-        expect(result["metric/revenue"]).toBe("42");
+        expect(result["metric/revenue"]).toEqual(value("42"));
     });
 
     it("reads each measure from the point field declared in identifierMapping", () => {
@@ -163,12 +177,11 @@ describe("resolveReferencesFromPoint", () => {
                     mz: { ldmId: "size", pointField: "z" },
                 },
             },
-            NO_DATA,
         );
         expect(result).toEqual({
-            "metric/revenue": "10",
-            "metric/profit": "20",
-            "metric/size": "30",
+            "metric/revenue": value("10"),
+            "metric/profit": value("20"),
+            "metric/size": value("30"),
         });
     });
 
@@ -180,9 +193,8 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             { measures: { m: { ldmId: "intensity", pointField: "value" } } },
-            NO_DATA,
         );
-        expect(result["metric/intensity"]).toBe("99");
+        expect(result["metric/intensity"]).toEqual(value("99"));
     });
 
     it("reads bullet target measure from point.target", () => {
@@ -193,12 +205,11 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             { measures: { tgt: { ldmId: "target_metric", pointField: "target" } } },
-            NO_DATA,
         );
-        expect(result["metric/target_metric"]).toBe("80");
+        expect(result["metric/target_metric"]).toEqual(value("80"));
     });
 
-    it("renders bullet null target (target=0 + isNullTarget) as no-data sentinel", () => {
+    it("renders bullet null target (target=0 + isNullTarget) as the empty status", () => {
         // Bullet encodes null targets as `target: 0` with an isNullTarget flag.
         // Without the flag check, the resolver would render the placeholder
         // zero as a real value.
@@ -210,9 +221,8 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             { measures: { tgt: { ldmId: "target_metric", pointField: "target" } } },
-            NO_DATA,
         );
-        expect(result["metric/target_metric"]).toBe(NO_DATA);
+        expect(result["metric/target_metric"]).toEqual(EMPTY);
     });
 
     it("omits measure entry when no LDM identifier can be resolved", () => {
@@ -223,12 +233,11 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             undefined,
-            NO_DATA,
         );
         expect(result).toEqual({});
     });
 
-    it("emits no-data sentinel when point.y is null so it's distinguishable from an unresolved ref", () => {
+    it("emits the empty status when point.y is null so it's distinguishable from an unresolved ref", () => {
         const result = resolveReferencesFromPoint(
             point({
                 y: undefined,
@@ -242,9 +251,8 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             undefined,
-            NO_DATA,
         );
-        expect(result["metric/revenue"]).toBe(NO_DATA);
+        expect(result["metric/revenue"]).toEqual(EMPTY);
     });
 
     it("uses String(rawValue) when no format is provided", () => {
@@ -255,8 +263,30 @@ describe("resolveReferencesFromPoint", () => {
             }),
             undefined,
             undefined,
-            NO_DATA,
         );
-        expect(result["metric/raw"]).toBe("7");
+        expect(result["metric/raw"]).toEqual(value("7"));
+    });
+
+    it("leaves a sibling measure unresolved on a multi-series point (WS3 / F1-2510 premise)", () => {
+        // Bar chart with viewBy=month and two measures [customers, returns],
+        // tooltip referencing both. Hovering the *customers* bar produces a drill
+        // intersection with only the customers measure — returns lives on another
+        // series. So {metric/returns} has no entry here → undefined → downstream
+        // the tooltip renders "(Data could not be retrieved)". This documents the
+        // gap WS3 fixes; flip the `returns` expectation once sibling resolution
+        // lands.
+        const result = resolveReferencesFromPoint(
+            point({
+                y: 1234,
+                drillIntersection: [
+                    attributeIntersection({ displayFormId: "month", attributeId: "month", name: "2026-03" }),
+                    measureIntersection({ localIdentifier: "mc", identifier: "customers", format: "#,##0" }),
+                ],
+            }),
+            undefined,
+            undefined,
+        );
+        expect(result["metric/customers"]).toEqual(value("1,234"));
+        expect(result["metric/returns"]).toBeUndefined();
     });
 });

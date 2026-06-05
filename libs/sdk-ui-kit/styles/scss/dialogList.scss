@@ -120,9 +120,13 @@
         }
 
         .gd-dialog-list-item-title {
-            display: inline-block;
+            display: inline-flex;
             width: 100%;
             white-space: nowrap;
+        }
+
+        .gd-dialog-list-item-badge-after {
+            margin-left: 5px;
         }
 
         .gd-dialog-list-item-subtitle {

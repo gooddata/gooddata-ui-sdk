@@ -91,6 +91,7 @@ import { setScreenSizeHandler } from "./layout/setScreenSizeHandler.js";
 import { toggleLayoutDirectionHandler } from "./layout/toggleLayoutDirectionHandler.js";
 import { toggleLayoutSectionHeadersHandler } from "./layout/toggleLayoutSectionHeadersHandler.js";
 import { undoLayoutChangesHandler } from "./layout/undoLayoutChangesHandler.js";
+import { changeParameterValuesHandler } from "./parameters/changeParameterValuesHandler.js";
 import { requestAsyncRenderHandler } from "./render/requestAsyncRenderHandler.js";
 import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler.js";
 import { changeRenderModeHandler } from "./renderMode/changeRenderModeHandler.js";
@@ -284,4 +285,5 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.TAB.RENAME_MODE.START": startRenamingDashboardTabHandler,
     "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL": cancelRenamingDashboardTabHandler,
     "GDC.DASH/CMD.TAB.RENAME": renameDashboardTabHandler,
+    "GDC.DASH/CMD.PARAMETERS.CHANGE_VALUES": changeParameterValuesHandler,
 };

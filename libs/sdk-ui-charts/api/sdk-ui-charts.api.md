@@ -47,7 +47,7 @@ import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
-import { ITooltipExecutionBundle } from '@gooddata/sdk-ui-vis-commons';
+import { ITooltipExecution } from '@gooddata/sdk-ui-vis-commons';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { JSX } from 'react/jsx-runtime';
@@ -508,7 +508,7 @@ export interface ICoreChartProps extends ICommonChartProps {
     forecastConfig?: IForecastConfig;
     // @beta
     outliersConfig?: IOutliersConfig;
-    tooltipExecution?: ITooltipExecutionBundle;
+    tooltipExecution?: ITooltipExecution;
 }
 
 // @internal (undocumented)

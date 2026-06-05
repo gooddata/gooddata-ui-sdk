@@ -5,7 +5,7 @@ import type { ClientRequest } from "http";
 import { join, resolve } from "path";
 
 import react from "@vitejs/plugin-react";
-import { type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
+import { type ServerOptions, type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
 
 // Strip `origin` (Tiger backend rejects cross-origin) and force identity
 // encoding (so the vite proxy can read the response without decompressing).
@@ -15,7 +15,7 @@ function applyProxyRequestHeaders(proxyReq: ClientRequest): void {
 }
 
 const certDir = join(process.env["HOME"] || process.env["USERPROFILE"] || "", ".gooddata", "certs");
-let httpsConfig: import("vite").ServerOptions["https"] | undefined;
+let httpsConfig: ServerOptions["https"] | undefined;
 
 try {
     httpsConfig = {
@@ -73,7 +73,9 @@ export default defineConfig(({ mode }): UserConfig => {
             // resolution. Without "browser", packages like react-textarea-autosize fall
             // through to their node-targeted default export (a stub that ignores
             // minRows/maxRows).
-            conditions: [...defaultClientConditions, "source"],
+            // `source` is added only in dev so production builds use the published
+            // artifacts of workspace deps, not their TS source.
+            conditions: [...defaultClientConditions, ...(isProduction ? [] : ["source"])],
             dedupe: ["react", "react-dom"],
         },
         server: {

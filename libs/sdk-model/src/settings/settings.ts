@@ -622,6 +622,11 @@ export interface IFeatureFlags {
     enableSmtp?: boolean;
 
     /**
+     * Enables IP allowlists management in organization settings.
+     */
+    enableIpAllowlistsUi?: boolean;
+
+    /**
      * Enables storing widget identifiers.
      */
     enableWidgetIdentifiersRollout?: boolean;
@@ -1242,4 +1247,9 @@ export interface IFeatureFlags {
      * Enables Resizable Dashboard sidebar in edit mode.
      */
     enableDashboardSidebarResize?: boolean;
+
+    /**
+     * Enables LDM Modeler loading as a remote module in the host application.
+     */
+    enableShellApplication_ldmModeler?: boolean;
 }

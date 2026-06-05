@@ -2183,6 +2183,8 @@ export interface IDialogListItem extends IDialogListItemBase {
     // (undocumented)
     action?: ReactElement;
     // (undocumented)
+    badgeAfter?: ReactElement;
+    // (undocumented)
     deleteTooltipText?: string;
     // (undocumented)
     icon?: ReactElement;

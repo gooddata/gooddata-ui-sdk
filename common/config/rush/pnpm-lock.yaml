@@ -7606,9 +7606,6 @@ importers:
       eslint-plugin-no-barrel-files:
         specifier: 1.2.2
         version: 1.2.2(eslint@9.39.2)(typescript@5.9.3)
-      eslint-plugin-no-only-tests:
-        specifier: 3.3.0
-        version: 3.3.0
       eslint-plugin-react:
         specifier: 7.37.5
         version: 7.37.5(eslint@9.39.2)

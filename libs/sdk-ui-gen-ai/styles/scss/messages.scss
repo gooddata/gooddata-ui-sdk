@@ -1028,6 +1028,11 @@
 
         p {
             color: kit-variables.$gd-palette-error-base;
+            margin: 0 0 5px 0;
+            padding: 0;
+        }
+        p:last-child {
+            margin-bottom: 0;
         }
 
         &:last-child {
@@ -1288,8 +1293,7 @@
         }
 
         .gd-gen-ai-chat__show-more {
-            display: flex;
-            align-items: flex-start;
+            margin-left: 5px;
         }
 
         .gd-gen-ai-chat__content {

@@ -1214,6 +1214,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardSidebarResize,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableIpAllowlistsUi,
+            "enableIpAllowlistsUi",
+            "BOOLEAN",
+            FeatureFlagsValues.enableIpAllowlistsUi,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableLdmModelerRemoteModule,
+            "enableShellApplication_ldmModeler",
+            "BOOLEAN",
+            FeatureFlagsValues.enableShellApplication_ldmModeler,
+        ),
     };
 }
 

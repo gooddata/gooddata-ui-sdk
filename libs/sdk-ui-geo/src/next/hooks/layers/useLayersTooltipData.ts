@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import { type IntlShape, defineMessages } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { type IExecutionConfig } from "@gooddata/sdk-model";
@@ -18,11 +18,6 @@ import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import { type IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
-
-const customTooltipMessages = defineMessages({
-    noData: { id: "richText.no_data" },
-    multipleItems: { id: "richText.multiple_data" },
-});
 
 /**
  * @internal
@@ -138,15 +133,7 @@ export function useLayersTooltipData(params: IUseLayersTooltipDataParams): IGeoT
 
     const separators = config?.separators;
 
-    const localizedStrings = useMemo(
-        () => ({
-            noData: `(${intl.formatMessage(customTooltipMessages.noData)})`,
-            multipleItems: `(${intl.formatMessage(customTooltipMessages.multipleItems)})`,
-        }),
-        [intl],
-    );
-
-    const lookupResults = useTooltipLookupExecutions(planned, separators, localizedStrings);
+    const lookupResults = useTooltipLookupExecutions(planned, separators);
 
     // Lookup-table construction is downstream of the cancelable promise so a
     // separators-only change rebuilds the cached strings without a backend call.

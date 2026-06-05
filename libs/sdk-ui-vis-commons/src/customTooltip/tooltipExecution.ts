@@ -103,18 +103,15 @@ function getFilterDependencyMeasures(
 }
 
 /**
- * Build tooltip-only measures for refs not already in the chart.
- * Labels get a max+count pair (mirrors the RichText widget pattern) so the
- * lookup can render "(Multiple items)" when a label resolves to >1 value per row.
+ * Build tooltip-only measures for the given references (already filtered to
+ * those not in the chart). Labels get a max+count pair (mirrors the RichText
+ * widget pattern) so the lookup can render "(Multiple items)" when a label
+ * resolves to >1 value per row.
  *
  * LocalId prefixes `tt_m_`, `tt_lv_`, `tt_lc_` are reserved — collision with
  * chart-side measure localIds would break filter-dependency reuse.
  */
-function buildTooltipItems(
-    refs: IParsedReference[],
-    chartMetricIds: Set<string>,
-    chartLabelIds: Set<string>,
-): {
+function buildTooltipItems(refs: readonly IParsedReference[]): {
     measures: IMeasure[];
     labelCountMap: Record<string, string>;
     labelIdMap: Record<string, string>;
@@ -127,11 +124,11 @@ function buildTooltipItems(
     let idx = 0;
 
     for (const ref of refs) {
-        if (ref.type === "metric" && !chartMetricIds.has(ref.id)) {
+        if (ref.type === "metric") {
             const localId = `tt_m_${idx++}`;
             measures.push(newMeasure(idRef(ref.id, "measure"), (m) => m.localId(localId)));
             measureIdMap[localId] = ref.id;
-        } else if (ref.type === "label" && !chartLabelIds.has(ref.id)) {
+        } else {
             const valueLocalId = `tt_lv_${idx}`;
             const countLocalId = `tt_lc_${idx}`;
             idx++;
@@ -206,6 +203,21 @@ export interface ITooltipExecutionBundle {
 }
 
 /**
+ * A tooltip execution plan: one batched execution for all external references,
+ * plus per-reference bundles used as an isolation fallback. When the batch
+ * rejects (e.g. a single invalid reference 400s the whole AFM), the consumer
+ * re-runs the per-reference bundles so one bad reference can't suppress the
+ * rest. `perRef` is a thunk: the bundles are built lazily, only when the batch
+ * fails, so consumers that never fan out (e.g. geo) pay nothing for it.
+ *
+ * @internal
+ */
+export interface ITooltipExecution {
+    batch: ITooltipExecutionBundle;
+    perRef: () => readonly ITooltipExecutionBundle[];
+}
+
+/**
  * @internal
  */
 export interface IBuildTooltipExecutionOptions {
@@ -218,29 +230,17 @@ export interface IBuildTooltipExecutionOptions {
 }
 
 /**
- * Returns `null` when the content has no references or all references are
- * already in the chart (resolvable from drill data without a secondary call).
- *
- * @internal
+ * Builds a single execution bundle for the given external references (slicing
+ * attributes + tooltip measures + filter-dependency measures). Returns `null`
+ * when there are no measures to fetch.
  */
-export function buildTooltipExecution(
+function buildBundle(
     executionFactory: IExecutionFactory,
     chartDefinition: IExecutionDefinition,
-    tooltipContent: string,
+    externalRefs: readonly IParsedReference[],
     options?: IBuildTooltipExecutionOptions,
 ): ITooltipExecutionBundle | null {
-    const refs = parseReferences(tooltipContent);
-    if (refs.length === 0) {
-        return null;
-    }
-
-    const chartMetricIds = getChartMetricIds(chartDefinition);
-    const chartLabelIds = getChartLabelIds(chartDefinition);
-    const { measures, labelCountMap, labelIdMap, measureIdMap } = buildTooltipItems(
-        refs,
-        chartMetricIds,
-        chartLabelIds,
-    );
+    const { measures, labelCountMap, labelIdMap, measureIdMap } = buildTooltipItems(externalRefs);
 
     if (measures.length === 0) {
         return null;
@@ -265,4 +265,47 @@ export function buildTooltipExecution(
         execution,
         meta: { labelCountMap, measureIdMap, labelIdMap },
     };
+}
+
+/**
+ * Returns `null` when the content has no references or all references are
+ * already in the chart (resolvable from drill data without a secondary call).
+ * Otherwise returns the batched execution plus per-reference bundles for the
+ * fan-out fallback (see {@link ITooltipExecution}).
+ *
+ * @internal
+ */
+export function buildTooltipExecution(
+    executionFactory: IExecutionFactory,
+    chartDefinition: IExecutionDefinition,
+    tooltipContent: string,
+    options?: IBuildTooltipExecutionOptions,
+): ITooltipExecution | null {
+    const refs = parseReferences(tooltipContent);
+    if (refs.length === 0) {
+        return null;
+    }
+
+    const chartMetricIds = getChartMetricIds(chartDefinition);
+    const chartLabelIds = getChartLabelIds(chartDefinition);
+
+    // References not already resolvable from the chart's own drill data.
+    const externalRefs = refs.filter(
+        (ref) =>
+            (ref.type === "metric" && !chartMetricIds.has(ref.id)) ||
+            (ref.type === "label" && !chartLabelIds.has(ref.id)),
+    );
+
+    const batch = buildBundle(executionFactory, chartDefinition, externalRefs, options);
+    if (!batch) {
+        return null;
+    }
+
+    // Lazy: built only on batch failure (the Highcharts fan-out); geo never calls it.
+    const perRef = () =>
+        externalRefs
+            .map((ref) => buildBundle(executionFactory, chartDefinition, [ref], options))
+            .filter((bundle): bundle is ITooltipExecutionBundle => bundle !== null);
+
+    return { batch, perRef };
 }

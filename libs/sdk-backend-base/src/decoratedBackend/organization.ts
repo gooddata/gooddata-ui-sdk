@@ -6,6 +6,7 @@ import {
     type IOrganizationAutomationService,
     type IOrganizationExportTemplatesService,
     type IOrganizationGenAIService,
+    type IOrganizationIpAllowlistService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
@@ -96,5 +97,9 @@ export class OrganizationDecorator implements IOrganization {
         }
 
         return this.decorated.exportTemplates();
+    }
+
+    public ipAllowlists(): IOrganizationIpAllowlistService {
+        return this.decorated.ipAllowlists();
     }
 }

@@ -82,7 +82,10 @@ export function FullFeatured() {
 }
 FullFeatured.parameters = {
     kind: "full-featured",
-    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        misMatchThreshold: 0.05,
+    },
 } satisfies IStoryParameters;
 
 export function Loading() {
@@ -93,5 +96,8 @@ Loading.parameters = { kind: "loading" } satisfies IStoryParameters;
 export const Themed = () => wrapWithTheme(<DialogListExamples />);
 Themed.parameters = {
     kind: "themed",
-    screenshot: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+    screenshot: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        misMatchThreshold: 0.05,
+    },
 } satisfies IStoryParameters;

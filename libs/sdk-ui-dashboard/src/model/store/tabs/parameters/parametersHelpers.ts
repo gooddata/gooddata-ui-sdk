@@ -7,6 +7,7 @@ import {
     type IDashboardTab,
     type IInsight,
     type IInsightDefinition,
+    type IInsightParameterValue,
     type IParameterMetadataObject,
     type IdentifierRef,
     insightMeasures,
@@ -59,6 +60,63 @@ export function collectReferencedParameterRefs(
         }
     }
     return result;
+}
+
+/**
+ * Returns the entries whose `runtimeOverride` deviates from the hydrated baseline
+ * ({@link computeHydratedRuntimeOverride}). Entries still at their default are dropped, so callers never
+ * propagate a value the user did not explicitly set.
+ *
+ * @internal
+ */
+export function collectChangedParameterValues(
+    entries: IDashboardParameterEntry[],
+    workspaceParameters: IParameterMetadataObject[],
+): IInsightParameterValue[] {
+    const workspaceByRef = workspaceParametersByRef(workspaceParameters);
+    const result: IInsightParameterValue[] = [];
+    for (const entry of entries) {
+        const { runtimeOverride } = entry;
+        if (runtimeOverride === undefined) {
+            continue;
+        }
+        const workspaceParameter = workspaceByRef.get(objRefToString(entry.parameter.ref));
+        if (runtimeOverride === computeHydratedRuntimeOverride(entry.parameter, workspaceParameter)) {
+            continue;
+        }
+        result.push({ ref: entry.parameter.ref, value: runtimeOverride });
+    }
+    return result;
+}
+
+/**
+ * The value hydration seeds into `runtimeOverride`: the persisted dashboard `value`, else the
+ * workspace number default, else `undefined`. Single source of truth for the hydrated baseline so
+ * override detection here and in `hydrateParameterEntries` cannot drift apart.
+ *
+ * @internal
+ */
+export function computeHydratedRuntimeOverride(
+    parameter: IDashboardParameter,
+    workspaceParameter: IParameterMetadataObject | undefined,
+): number | undefined {
+    if (parameter.value !== undefined) {
+        return parameter.value;
+    }
+    return workspaceParameter && isNumberParameterDefinition(workspaceParameter.definition)
+        ? workspaceParameter.definition.defaultValue
+        : undefined;
+}
+
+/**
+ * Indexes the workspace parameter catalog by ref string for O(1) lookup.
+ *
+ * @internal
+ */
+export function workspaceParametersByRef(
+    workspaceParameters: IParameterMetadataObject[],
+): Map<string, IParameterMetadataObject> {
+    return new Map(workspaceParameters.map((parameter) => [objRefToString(parameter.ref), parameter]));
 }
 
 /**
@@ -183,7 +241,7 @@ export function computeParameterResetTargets(
     workspaceParameters: IParameterMetadataObject[],
     isInEditMode: boolean,
 ): { ref: IDashboardParameterEntry["parameter"]["ref"]; value: number | undefined }[] {
-    const workspaceByRef = new Map(workspaceParameters.map((wp) => [objRefToString(wp.ref), wp]));
+    const workspaceByRef = workspaceParametersByRef(workspaceParameters);
     const result: { ref: IDashboardParameterEntry["parameter"]["ref"]; value: number | undefined }[] = [];
     for (const entry of entries) {
         if (entry.parameter.mode !== DashboardParameterModeValues.ACTIVE) {

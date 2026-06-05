@@ -910,6 +910,11 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
 .gd-header-menu-overlay {
     border: 1px solid transparent;
 
+    .gd-menu-wrapper {
+        min-width: 170px;
+        max-width: 300px;
+    }
+
     .configuration-panel-header-back-button {
         cursor: pointer;
         border: none;

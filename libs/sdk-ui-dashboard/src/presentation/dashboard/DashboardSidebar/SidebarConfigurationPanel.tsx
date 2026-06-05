@@ -29,8 +29,7 @@ export function SidebarConfigurationPanel(props: Omit<ISidebarProps, "DefaultSid
     const DeleteDropZoneComponent = props.DeleteDropZoneComponent!;
     const settings = useDashboardSelector(selectSettings);
     const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
-    // const enableDashboardSidebarResize = settings?.enableDashboardSidebarResize ?? false;
-    const enableDashboardSidebarResize = true;
+    const enableDashboardSidebarResize = settings?.enableDashboardSidebarResize ?? false;
 
     if (enableEnhancedInsightPicker) {
         return <FloatingToolbar />;

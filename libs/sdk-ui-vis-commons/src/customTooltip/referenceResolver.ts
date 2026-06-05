@@ -2,7 +2,11 @@
 
 import { REFERENCE_REGEX_MATCH } from "@gooddata/sdk-ui-kit";
 
-import { type IResolvedReferenceValues } from "./types.js";
+import {
+    type IResolvedReferenceValues,
+    type ITooltipLocalizedStrings,
+    type ResolvedReference,
+} from "./types.js";
 
 // Markdown metacharacters that, if present in a substituted value, would be
 // reinterpreted as formatting by `markdownToHtml`. Backslash-escape them so the
@@ -16,6 +20,25 @@ function escapeMarkdownMetachars(value: string): string {
 }
 
 /**
+ * Renders a single resolved reference status to its display string. A reference
+ * with no status at this point (e.g. an in-chart sibling not present on the
+ * hovered series) is surfaced as unretrievable rather than masked as "no data".
+ */
+function renderReference(ref: ResolvedReference | undefined, strings: ITooltipLocalizedStrings): string {
+    switch (ref?.kind) {
+        case "value":
+            return ref.text;
+        case "empty":
+            return strings.noData;
+        case "multiple":
+            return strings.multipleItems;
+        case "error":
+        default:
+            return strings.noFetch;
+    }
+}
+
+/**
  * Substitutes `{metric/id}` and `{label/id}` references in markdown content
  * with resolved values from the lookup table.
  *
@@ -25,17 +48,17 @@ function escapeMarkdownMetachars(value: string): string {
  * unintended formatting. `markdownToHtml` understands the backslash escapes.
  *
  * @param content - Markdown content with reference placeholders
- * @param values - Lookup of `metric/id` and `label/id` keys to formatted values.
+ * @param values - Lookup of `metric/id` and `label/id` keys to resolved statuses.
  *   Keys must use a lowercase prefix; LDM identifiers are case-sensitive.
- * @param fallbackText - Localized text shown when a reference is recognized
- *   but no value is available (unknown identifier, point with no value, etc.).
+ * @param strings - Localized placeholders for the non-value states (no data,
+ *   multiple items, could-not-retrieve).
  *
  * @internal
  */
 export function resolveReferences(
     content: string,
     values: IResolvedReferenceValues,
-    fallbackText: string,
+    strings: ITooltipLocalizedStrings,
 ): string {
     if (!content) {
         return "";
@@ -45,7 +68,7 @@ export function resolveReferences(
         // The regex matches the prefix case-insensitively; storage uses
         // lowercase prefixes so users can write either `{metric/foo}` or
         // `{Metric/foo}`. LDM identifiers stay as-is — they are case-sensitive.
-        const value = values[`${prefix.toLowerCase()}/${identifier}`];
-        return escapeMarkdownMetachars(value === undefined ? fallbackText : value);
+        const ref = values[`${prefix.toLowerCase()}/${identifier}`];
+        return escapeMarkdownMetachars(renderReference(ref, strings));
     });
 }
