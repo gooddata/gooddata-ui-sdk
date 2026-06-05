@@ -2622,6 +2622,7 @@ export interface IFeatureFlags {
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableInPlatformNotifications?: boolean;
+    enableIpAllowlistsUi?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDEmptyDateValuesFilter?: boolean;
@@ -2675,6 +2676,7 @@ export interface IFeatureFlags {
     enableShellApplication?: boolean;
     enableShellApplication_analyticalDesigner?: boolean;
     enableShellApplication_catalog?: boolean;
+    enableShellApplication_ldmModeler?: boolean;
     enableShellApplication_metricEditor?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
@@ -3102,6 +3104,39 @@ export interface IInsightWidgetDescriptionConfiguration {
     includeMetrics: boolean;
     source: InsightWidgetDescriptionSourceType;
     visible: boolean;
+}
+
+// @alpha
+export interface IIpAllowlist extends IIpAllowlistDefinition {
+    // (undocumented)
+    userGroups: IIpAllowlistAssignedUserGroup[];
+    // (undocumented)
+    users: IIpAllowlistAssignedUser[];
+}
+
+// @alpha
+export interface IIpAllowlistAssignedUser {
+    // (undocumented)
+    email?: string;
+    fullName?: string;
+    // (undocumented)
+    id: string;
+}
+
+// @alpha
+export interface IIpAllowlistAssignedUserGroup {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
+}
+
+// @alpha
+export interface IIpAllowlistDefinition {
+    allowedSources: string[];
+    id: string;
+    userGroupIds: string[];
+    userIds: string[];
 }
 
 // @public
@@ -3964,6 +3999,8 @@ export interface IOrganizationUser {
     id: string;
     // (undocumented)
     isOrganizationAdmin: boolean;
+    // (undocumented)
+    isSystemAccount: boolean;
     // (undocumented)
     ref: ObjRef;
 }

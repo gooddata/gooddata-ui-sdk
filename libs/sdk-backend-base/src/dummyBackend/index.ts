@@ -80,6 +80,7 @@ import {
     type IOrganizationAutomationService,
     type IOrganizationExportTemplatesService,
     type IOrganizationGenAIService,
+    type IOrganizationIpAllowlistService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
@@ -187,6 +188,7 @@ import {
     type IFiscalYear,
     type IInsight,
     type IInsightDefinition,
+    type IIpAllowlistDefinition,
     type IListedDashboard,
     type ILlmProvider,
     type IMeasure,
@@ -1243,6 +1245,23 @@ class DummyOrganization implements IOrganization {
     public exportTemplates(): IOrganizationExportTemplatesService {
         return {
             getExportTemplates: () => Promise.resolve([]),
+        };
+    }
+
+    public ipAllowlists(): IOrganizationIpAllowlistService {
+        const echo = (definition: IIpAllowlistDefinition) => ({
+            id: definition.id,
+            allowedSources: definition.allowedSources,
+            userIds: definition.userIds,
+            userGroupIds: definition.userGroupIds,
+            users: definition.userIds.map((id) => ({ id })),
+            userGroups: definition.userGroupIds.map((id) => ({ id })),
+        });
+        return {
+            getAll: () => Promise.resolve([]),
+            create: (definition) => Promise.resolve(echo(definition)),
+            update: (definition) => Promise.resolve(echo(definition)),
+            delete: () => Promise.resolve(),
         };
     }
 }

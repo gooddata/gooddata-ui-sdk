@@ -123,22 +123,30 @@ export {
     type ICustomTooltipConfig,
     type CustomTooltipPlacement,
     type IResolvedReferenceValues,
+    type ResolvedReference,
+    type ITooltipLocalizedStrings,
+    metricKey,
+    labelKey,
 } from "./customTooltip/types.js";
 export { markdownToHtml } from "./customTooltip/markdownToHtml.js";
 export { resolveReferences } from "./customTooltip/referenceResolver.js";
+export { measureReference, labelReference } from "./customTooltip/referenceStatus.js";
+export { buildTooltipLocalizedStrings } from "./customTooltip/localizedStrings.js";
 export { resolveMeasureLdmIdentifier } from "./customTooltip/measureLdmIdentifier.js";
 export {
     buildTooltipExecution,
     type IBuildTooltipExecutionOptions,
+    type ITooltipExecution,
     type ITooltipExecutionBundle,
     type ITooltipExecutionMeta,
 } from "./customTooltip/tooltipExecution.js";
-export { buildLookupTable, type ITooltipLookupLocalizedStrings } from "./customTooltip/tooltipLookup.js";
+export { buildLookupTable } from "./customTooltip/tooltipLookup.js";
 export { buildKeySegment, joinKeySegments } from "./customTooltip/tooltipKey.js";
 export { composeCustomTooltipSectionHtml } from "./customTooltip/composeSectionHtml.js";
 export {
     useTooltipLookup,
     useTooltipLookupExecutions,
+    type ITooltipLookupResult,
     type ITooltipLookupExecutionEntry,
     type ITooltipLookupExecutionResult,
 } from "./customTooltip/useTooltipLookupExecutions.js";

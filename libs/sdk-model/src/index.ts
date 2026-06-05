@@ -1323,6 +1323,13 @@ export type {
     IGeoCollectionFileUploadResult,
 } from "./geoCollections/index.js";
 
+export type {
+    IIpAllowlist,
+    IIpAllowlistAssignedUser,
+    IIpAllowlistAssignedUserGroup,
+    IIpAllowlistDefinition,
+} from "./ipAllowlists/index.js";
+
 export type { ILlmEndpointBase, ILlmEndpointOpenAI, LlmEndpointOpenAIPatch } from "./llmEndpoints/index.js";
 
 export type {

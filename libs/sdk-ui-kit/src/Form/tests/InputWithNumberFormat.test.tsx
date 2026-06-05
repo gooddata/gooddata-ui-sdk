@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -65,6 +65,29 @@ describe("InputWithNumberFormat", () => {
         input.simulateChange("1000").simulateBlur();
 
         expect(screen.getByDisplayValue("1,000")).toBeInTheDocument();
+    });
+
+    it("should remove thousand separators on focus so the value can be edited as plain digits", () => {
+        const input = new InputWithNumberFormatFragment({ value: 1000000 });
+
+        expect(input.inputValue()).toEqual("1,000,000");
+
+        input.simulateFocus();
+
+        expect(input.inputValue()).toEqual("1000000");
+    });
+
+    it("should keep the decimal separator when removing thousand separators on focus", () => {
+        const input = new InputWithNumberFormatFragment({
+            value: 1234.5,
+            separators: { thousand: " ", decimal: "," },
+        });
+
+        expect(input.inputValue()).toEqual("1 234,5");
+
+        input.simulateFocus();
+
+        expect(input.inputValue()).toEqual("1234,5");
     });
 
     it("should display empty string when empty value is typed", () => {

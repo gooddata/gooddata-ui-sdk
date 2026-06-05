@@ -2,7 +2,7 @@
 
 import { markdownToHtml } from "./markdownToHtml.js";
 import { resolveReferences } from "./referenceResolver.js";
-import { type IResolvedReferenceValues } from "./types.js";
+import { type IResolvedReferenceValues, type ITooltipLocalizedStrings } from "./types.js";
 
 /**
  * Merge order matters: in-chart values override external ones, because the
@@ -16,9 +16,9 @@ export function composeCustomTooltipSectionHtml(
     content: string,
     inChartValues: IResolvedReferenceValues,
     externalValues: IResolvedReferenceValues,
-    fallbackText: string,
+    localizedStrings: ITooltipLocalizedStrings,
 ): string {
     const merged = { ...externalValues, ...inChartValues };
-    const resolved = resolveReferences(content, merged, fallbackText);
+    const resolved = resolveReferences(content, merged, localizedStrings);
     return `<div class="gd-viz-tooltip-custom-section">${markdownToHtml(resolved)}</div>`;
 }

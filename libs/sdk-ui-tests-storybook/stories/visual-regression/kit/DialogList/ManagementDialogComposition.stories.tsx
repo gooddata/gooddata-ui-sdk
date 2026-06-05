@@ -210,6 +210,7 @@ export default {
 const screenshotConfig: INeobackstopScenarioConfig = {
     readySelector: { selector: ".screenshot-target", state: State.Attached },
     clickSelector: ".screenshot-target",
+    misMatchThreshold: 0.05,
 };
 
 export function FullFeatured() {

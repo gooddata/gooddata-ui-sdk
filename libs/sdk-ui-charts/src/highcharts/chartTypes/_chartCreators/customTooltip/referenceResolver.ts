@@ -8,10 +8,15 @@
  * file builds the lookup from a hovered Highcharts point's drill intersection.
  */
 
-import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ISeparators, isMeasureDescriptor } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-import { type IResolvedReferenceValues } from "@gooddata/sdk-ui-vis-commons";
+import {
+    type IResolvedReferenceValues,
+    labelKey,
+    labelReference,
+    measureReference,
+    metricKey,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { type IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
 
@@ -33,7 +38,6 @@ export function resolveReferencesFromPoint(
     point: IUnsafeHighchartsTooltipPoint,
     separators: ISeparators | undefined,
     identifierMapping: IIdentifierMapping | undefined,
-    noDataLabel: string,
 ): IResolvedReferenceValues {
     const intersection: IDrillEventIntersectionElement[] = point.drillIntersection ?? [];
     const values: IResolvedReferenceValues = {};
@@ -48,11 +52,12 @@ export function resolveReferencesFromPoint(
             const attributeId = header.attributeHeader.formOf.identifier;
             const displayValue =
                 header.attributeHeaderItem.formattedName ?? header.attributeHeaderItem.name ?? undefined;
+            const status = labelReference(displayValue);
 
             // Register under both display form and attribute identifiers
-            values[`label/${displayFormId}`] = displayValue;
+            values[labelKey(displayFormId)] = status;
             if (attributeId !== displayFormId) {
-                values[`label/${attributeId}`] = displayValue;
+                values[labelKey(attributeId)] = status;
             }
         } else if (isMeasureDescriptor(header)) {
             const localId = header.measureHeaderItem.localIdentifier;
@@ -70,17 +75,7 @@ export function resolveReferencesFromPoint(
             // rather than a formatted zero.
             const rawValue = pointField === "target" && point["isNullTarget"] ? null : point[pointField];
 
-            if (rawValue == null) {
-                // In-chart point with a null value — emit the no-data sentinel
-                // so the custom section reads "(No data)" instead of falling
-                // through to the resolution-failure fallback text.
-                values[`metric/${ldmId}`] = noDataLabel;
-            } else if (format) {
-                const { formattedValue } = ClientFormatterFacade.formatValue(rawValue, format, separators);
-                values[`metric/${ldmId}`] = formattedValue;
-            } else {
-                values[`metric/${ldmId}`] = String(rawValue);
-            }
+            values[metricKey(ldmId)] = measureReference(rawValue, format, separators);
         }
     }
 

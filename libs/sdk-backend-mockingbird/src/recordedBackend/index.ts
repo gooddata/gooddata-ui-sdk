@@ -68,6 +68,7 @@ import {
     type IColorPalette,
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
+    type IIpAllowlistDefinition,
     type ILlmProvider,
     type IMetricFormatOverrideSetting,
     type INotificationChannelMetadataObject,
@@ -766,6 +767,22 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         exportTemplates() {
             return {
                 getExportTemplates: () => Promise.resolve([]),
+            };
+        },
+        ipAllowlists() {
+            const echo = (definition: IIpAllowlistDefinition) => ({
+                id: definition.id,
+                allowedSources: definition.allowedSources,
+                userIds: definition.userIds,
+                userGroupIds: definition.userGroupIds,
+                users: definition.userIds.map((id) => ({ id })),
+                userGroups: definition.userGroupIds.map((id) => ({ id })),
+            });
+            return {
+                getAll: () => Promise.resolve([]),
+                create: (definition) => Promise.resolve(echo(definition)),
+                update: (definition) => Promise.resolve(echo(definition)),
+                delete: () => Promise.resolve(),
             };
         },
     };

@@ -24,7 +24,7 @@ import { join, resolve } from "path";
 
 import { federation } from "@module-federation/vite";
 import react from "@vitejs/plugin-react";
-import { type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
+import { type ServerOptions, type UserConfig, defaultClientConditions, defineConfig, loadEnv } from "vite";
 
 function tryExecSync(command: string, fallback: string): string {
     try {
@@ -50,7 +50,7 @@ function gitRevisionPlugin() {
 }
 
 const certDir = join(process.env["HOME"] || process.env["USERPROFILE"] || "", ".gooddata", "certs");
-let httpsConfig: import("vite").ServerOptions["https"] | undefined;
+let httpsConfig: ServerOptions["https"] | undefined;
 
 try {
     httpsConfig = {

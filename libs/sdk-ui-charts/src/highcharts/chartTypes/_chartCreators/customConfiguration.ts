@@ -3,16 +3,12 @@
 import cx from "classnames";
 import { type OptionsLandmarkVerbosityValue, type Point } from "highcharts";
 import { compact, isEmpty, merge, partial, pickBy } from "lodash-es";
-import { type IntlShape, defineMessages } from "react-intl";
+import { type IntlShape } from "react-intl";
 
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ITheme, isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { type ChartType, type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    composeCustomTooltipSectionHtml,
-    getLighterColor,
-    isPatternObject,
-} from "@gooddata/sdk-ui-vis-commons";
+import { buildTooltipLocalizedStrings, getLighterColor, isPatternObject } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IAxisConfig, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
@@ -55,8 +51,7 @@ import {
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions.js";
 
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration.js";
-import { resolveReferencesFromPoint } from "./customTooltip/referenceResolver.js";
-import { buildPointKey } from "./customTooltip/tooltipLookup.js";
+import { getCustomTooltipSection, getCustomTooltipSeparator } from "./customTooltip/section.js";
 import {
     formatAsPercent,
     getLabelsStyling,
@@ -139,11 +134,6 @@ const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
 
 export const TOOLTIP_PADDING = 24; // padding of tooltip container - defined by CSS
 export const TOOLTIP_VIEWPORT_MARGIN_TOP = 20;
-
-const customTooltipMessages = defineMessages({
-    noFetch: { id: "richText.no_fetch" },
-    noData: { id: "richText.no_data" },
-});
 
 const BAR_WIDTH_WHEN_TOTAL_LABELS_AVAILABLE = "90%";
 
@@ -467,47 +457,6 @@ function getColorFromHighchartsPointColor(color: Point["color"]): string {
     return defaultColor;
 }
 
-function getCustomTooltipSection(
-    point: IUnsafeHighchartsTooltipPoint,
-    fallbackText: string,
-    noDataLabel: string,
-    chartConfig?: IChartConfig,
-    customTooltipRuntime?: ICustomTooltipRuntime,
-): string {
-    const customTooltip = chartConfig?.customTooltip;
-    if (!customTooltip?.enabled || !customTooltip.content) {
-        return "";
-    }
-
-    // External values from the precomputed lookup (refs not in the chart).
-    const intersection = point.drillIntersection ?? [];
-    const pointKey = buildPointKey(intersection);
-    const externalValues = customTooltipRuntime?.tooltipLookup?.get(pointKey) ?? {};
-
-    // In-chart values from the hovered point's drill intersection.
-    const pointLocal = resolveReferencesFromPoint(
-        point,
-        chartConfig?.separators,
-        customTooltipRuntime?.identifierMapping,
-        noDataLabel,
-    );
-
-    return composeCustomTooltipSectionHtml(customTooltip.content, pointLocal, externalValues, fallbackText);
-}
-
-function getCustomTooltipSeparator(chartConfig?: IChartConfig): string {
-    const customTooltip = chartConfig?.customTooltip;
-    if (!customTooltip?.enabled || !customTooltip.content) {
-        return "";
-    }
-
-    if (customTooltip.placement === "replace") {
-        return "";
-    }
-
-    return `<div class="gd-viz-tooltip-custom-separator"></div>`;
-}
-
 function formatTooltip(
     this: IExtendedPoint & { anomaly?: boolean },
     tooltipCallback: ITooltipFactory,
@@ -545,14 +494,10 @@ function formatTooltip(
     const interactionMessage = getInteractionMessage(isDrillable, chartConfig, intl);
     const anomalyMessage = getAnomalyMessage(this.anomaly, intl);
 
-    const fallbackText = intl
-        ? `(${intl.formatMessage(customTooltipMessages.noFetch)})`
-        : "(Data could not be retrieved)";
-    const noDataLabel = intl ? `(${intl.formatMessage(customTooltipMessages.noData)})` : "(No data)";
+    const localizedStrings = buildTooltipLocalizedStrings(intl);
     const customSection = getCustomTooltipSection(
         tooltipPoint,
-        fallbackText,
-        noDataLabel,
+        localizedStrings,
         chartConfig,
         customTooltipRuntime,
     );

@@ -1,7 +1,12 @@
 // (C) 2026 GoodData Corporation
 
 import { type ISeparators } from "@gooddata/sdk-model";
-import { type ICustomTooltipConfig, composeCustomTooltipSectionHtml } from "@gooddata/sdk-ui-vis-commons";
+import {
+    type ICustomTooltipConfig,
+    type IResolvedReferenceValues,
+    type ITooltipLocalizedStrings,
+    composeCustomTooltipSectionHtml,
+} from "@gooddata/sdk-ui-vis-commons";
 
 import { type ITooltipReferenceMaps } from "../registry/adapterTypes.js";
 
@@ -28,8 +33,7 @@ export function buildCustomTooltipPieces(
     customConfig: ICustomTooltipConfig | undefined,
     referenceMaps: ITooltipReferenceMaps | undefined,
     separators: ISeparators | undefined,
-    fallbackText: string,
-    noDataLabel: string,
+    localizedStrings: ITooltipLocalizedStrings,
     tooltipLookup?: IGeoLayerTooltipLookup,
 ): ICustomTooltipPieces {
     if (!customConfig?.enabled || !customConfig.content) {
@@ -37,10 +41,10 @@ export function buildCustomTooltipPieces(
     }
 
     // In-chart values from the rendered feature's properties.
-    const pointLocal = resolveReferencesFromGeoFeature(properties, referenceMaps, separators, noDataLabel);
+    const pointLocal = resolveReferencesFromGeoFeature(properties, referenceMaps, separators);
 
     // External values from the precomputed lookup (refs not on the feature).
-    let externalValues: Record<string, string | undefined> = {};
+    let externalValues: IResolvedReferenceValues = {};
     if (tooltipLookup) {
         const featureKey = tooltipLookup.buildFeatureKey(properties);
         if (featureKey != null) {
@@ -52,7 +56,7 @@ export function buildCustomTooltipPieces(
         customConfig.content,
         pointLocal,
         externalValues,
-        fallbackText,
+        localizedStrings,
     );
 
     // Replace mode shows only the custom section, so no separator is needed.

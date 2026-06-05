@@ -39,6 +39,7 @@ import {
     computeParameterResetTargets,
     computeParameterResetValue,
     smartPersistResolvedEntry,
+    workspaceParametersByRef,
 } from "./parametersHelpers.js";
 import {
     type IDashboardParameterEntry,
@@ -186,7 +187,7 @@ export const selectSmartPersistedTabsParameters: DashboardSelector<Record<string
             if (!tabs) {
                 return result;
             }
-            const workspaceByRef = new Map(workspaceParameters.map((wp) => [objRefToString(wp.ref), wp]));
+            const workspaceByRef = workspaceParametersByRef(workspaceParameters);
             const persistedByTabAndRef = buildPersistedByTabAndRef(persistedTabs, rootPersistedParameters);
             for (const tab of tabs) {
                 const entries = tab.parameters?.parameters ?? [];

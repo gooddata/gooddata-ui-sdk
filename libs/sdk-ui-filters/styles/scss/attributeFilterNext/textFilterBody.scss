@@ -167,7 +167,7 @@
         padding: 8px;
         font-size: 12px;
         border: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
-        border-radius: var(--gd-button-borderRadius, 3px);
+        border-radius: 3px;
         box-sizing: border-box;
         background-color: variables.$gd-color-white;
         text-align: left;
@@ -311,7 +311,7 @@
 
     &__container {
         border: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
-        border-radius: var(--gd-button-borderRadius, 3px);
+        border-radius: 3px;
         background-color: variables.$gd-color-white;
         min-height: 38px;
 
@@ -331,7 +331,7 @@
                 overflow-y: auto;
                 overscroll-behavior: contain;
                 border-bottom: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
-                border-radius: var(--gd-button-borderRadius, 3px) var(--gd-button-borderRadius, 3px) 0 0;
+                border-radius: 3px 3px 0 0;
             }
 
             .gd-chips-input__input-frame {
@@ -461,7 +461,7 @@
         padding: 6px 0;
         background-color: #fcfcfd;
         border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
-        border-radius: var(--gd-button-borderRadius, 3px);
+        border-radius: 3px;
         box-shadow: 0 2px 20px 0 rgb(20 56 93 / 20%);
         max-height: 200px;
         overflow: hidden;

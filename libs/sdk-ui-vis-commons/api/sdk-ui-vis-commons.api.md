@@ -17,6 +17,7 @@ import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IntlShape } from 'react-intl';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -37,10 +38,13 @@ export class AttributeColorStrategy extends ColorStrategy {
 export function buildKeySegment(displayFormId: string, uri: string): string;
 
 // @internal
-export function buildLookupTable(dataView: IDataView, meta: ITooltipExecutionMeta, separators?: ISeparators, localizedStrings?: ITooltipLookupLocalizedStrings): Map<string, IResolvedReferenceValues>;
+export function buildLookupTable(dataView: IDataView, meta: ITooltipExecutionMeta, separators?: ISeparators): Map<string, IResolvedReferenceValues>;
 
 // @internal
-export function buildTooltipExecution(executionFactory: IExecutionFactory, chartDefinition: IExecutionDefinition, tooltipContent: string, options?: IBuildTooltipExecutionOptions): ITooltipExecutionBundle | null;
+export function buildTooltipExecution(executionFactory: IExecutionFactory, chartDefinition: IExecutionDefinition, tooltipContent: string, options?: IBuildTooltipExecutionOptions): ITooltipExecution | null;
+
+// @internal
+export function buildTooltipLocalizedStrings(intl?: IntlShape): ITooltipLocalizedStrings;
 
 // @internal (undocumented)
 export type ButtonsOrientationType = "upDown" | "leftRight";
@@ -89,7 +93,7 @@ export const ColorUtils: {
 };
 
 // @internal
-export function composeCustomTooltipSectionHtml(content: string, inChartValues: IResolvedReferenceValues, externalValues: IResolvedReferenceValues, fallbackText: string): string;
+export function composeCustomTooltipSectionHtml(content: string, inChartValues: IResolvedReferenceValues, externalValues: IResolvedReferenceValues, localizedStrings: ITooltipLocalizedStrings): string;
 
 // @alpha
 export type CustomTooltipPlacement = "above" | "below" | "replace";
@@ -502,7 +506,7 @@ export interface IRange {
 // @internal
 export interface IResolvedReferenceValues {
     // (undocumented)
-    [referenceKey: string]: string | undefined;
+    [referenceKey: string]: ResolvedReference | undefined;
 }
 
 // @internal (undocumented)
@@ -587,6 +591,14 @@ export function isValidMappedColor(colorItem: IColor | null | undefined, colorPa
 export type ItemBorderRadiusPredicate = (item: any) => boolean;
 
 // @internal
+export interface ITooltipExecution {
+    // (undocumented)
+    batch: ITooltipExecutionBundle;
+    // (undocumented)
+    perRef: () => readonly ITooltipExecutionBundle[];
+}
+
+// @internal
 export interface ITooltipExecutionBundle {
     // (undocumented)
     execution: IPreparedExecution;
@@ -599,6 +611,16 @@ export interface ITooltipExecutionMeta {
     labelCountMap: Record<string, string>;
     labelIdMap: Record<string, string>;
     measureIdMap: Record<string, string>;
+}
+
+// @internal
+export interface ITooltipLocalizedStrings {
+    // (undocumented)
+    readonly multipleItems: string;
+    // (undocumented)
+    readonly noData: string;
+    // (undocumented)
+    readonly noFetch: string;
 }
 
 // @internal
@@ -622,15 +644,21 @@ export interface ITooltipLookupExecutionResult<TContext> {
 }
 
 // @internal
-export interface ITooltipLookupLocalizedStrings {
+export interface ITooltipLookupResult {
     // (undocumented)
-    multipleItems: string;
+    erroredRefs: ReadonlySet<string>;
     // (undocumented)
-    noData: string;
+    lookup: Map<string, IResolvedReferenceValues>;
 }
 
 // @internal (undocumented)
 export function joinKeySegments(parts: readonly string[]): string;
+
+// @internal
+export const labelKey: (id: string) => string;
+
+// @internal
+export function labelReference(value: string | number | null | undefined): ResolvedReference;
 
 // @internal (undocumented)
 export const Legend: NamedExoticComponent<ILegendProps>;
@@ -654,6 +682,12 @@ export const LegendPosition: {
 
 // @internal (undocumented)
 export function markdownToHtml(markdown: string): string;
+
+// @internal
+export function measureReference(rawValue: number | string | null | undefined, format: string | undefined, separators?: ISeparators): ResolvedReference;
+
+// @internal
+export const metricKey: (id: string) => string;
 
 // @internal (undocumented)
 export function normalizeColorToRGB(color: string): string;
@@ -690,10 +724,22 @@ export function PopUpLegend({ name, maxRows, enableBorderRadius, series, onLegen
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @internal
+export type ResolvedReference = {
+    readonly kind: "value";
+    readonly text: string;
+} | {
+    readonly kind: "empty";
+} | {
+    readonly kind: "multiple";
+} | {
+    readonly kind: "error";
+};
+
+// @internal
 export function resolveMeasureLdmIdentifier(measure: IMeasure, allMeasures: IMeasure[]): string | undefined;
 
 // @internal
-export function resolveReferences(content: string, values: IResolvedReferenceValues, fallbackText: string): string;
+export function resolveReferences(content: string, values: IResolvedReferenceValues, strings: ITooltipLocalizedStrings): string;
 
 // @internal
 export const shouldRenderPagination: (enableCompactSize: boolean, width: number, height: number) => boolean;
@@ -708,10 +754,10 @@ export const StaticLegend: NamedExoticComponent<IStaticLegendProps>;
 export const SupportedLegendPositions: PositionType[];
 
 // @internal
-export function useTooltipLookup(bundle: ITooltipExecutionBundle | undefined, separators?: ISeparators, localizedStrings?: ITooltipLookupLocalizedStrings): Map<string, IResolvedReferenceValues> | undefined;
+export function useTooltipLookup(execution: ITooltipExecution | undefined, separators?: ISeparators): ITooltipLookupResult | undefined;
 
 // @internal
-export function useTooltipLookupExecutions<TContext>(entries: readonly ITooltipLookupExecutionEntry<TContext>[], separators?: ISeparators, localizedStrings?: ITooltipLookupLocalizedStrings): Map<string, ITooltipLookupExecutionResult<TContext>>;
+export function useTooltipLookupExecutions<TContext>(entries: readonly ITooltipLookupExecutionEntry<TContext>[], separators?: ISeparators): Map<string, ITooltipLookupExecutionResult<TContext>>;
 
 // @internal
 export function valueWithEmptyHandling(value: string | undefined | null, emptyValueText: string): string;

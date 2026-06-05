@@ -11,13 +11,5 @@
             ]
         }
     ],
-    "ignores": [
-        "README.md",
-        "readme.txt",
-        ".oxlintrc.json",
-        "eslint.config.ts",
-        ".env.template",
-        ".gitignore",
-        ".dockerignore"
-    ]
+    "ignores": ["README.md", ".oxlintrc.json", "eslint.config.ts", ".env.template", ".gitignore"]
 }

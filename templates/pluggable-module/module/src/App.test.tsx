@@ -5,7 +5,7 @@ import { IntlProvider } from "react-intl";
 import { describe, expect, it } from "vitest";
 
 import { BackendProvider } from "@gooddata/sdk-ui";
-import { PlatformContextProvider, type IClientPlatformContext } from "@gooddata/sdk-ui-pluggable-application";
+import { type IClientPlatformContext, PlatformContextProvider } from "@gooddata/sdk-ui-pluggable-application";
 
 import { App } from "./App.js";
 

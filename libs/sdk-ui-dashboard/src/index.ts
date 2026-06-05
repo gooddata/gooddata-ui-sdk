@@ -668,6 +668,12 @@ export {
     cancelRenamingDashboardTab,
     renameDashboardTab,
 } from "./model/commands/tabs.js";
+export {
+    type IChangeParameterValues,
+    type IChangeParameterValuesPayload,
+    type ChangeParameterValuesParams,
+    changeParameterValues,
+} from "./model/commands/parameters.js";
 
 // Re-export from events
 export {

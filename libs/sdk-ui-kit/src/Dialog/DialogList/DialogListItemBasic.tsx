@@ -36,6 +36,7 @@ export function DialogListItemBasic({ item, className, onClick, onDelete }: IDia
         icon,
         action,
         deleteTooltipText,
+        badgeAfter,
     } = item;
 
     const rootClassNames = useMemo(
@@ -104,6 +105,9 @@ export function DialogListItemBasic({ item, className, onClick, onDelete }: IDia
                         >
                             {title}
                         </ShortenedText>
+                        {badgeAfter ? (
+                            <div className="gd-dialog-list-item-badge-after">{badgeAfter}</div>
+                        ) : null}
                     </div>
                     {subtitle ? (
                         <div className="gd-dialog-list-item-subtitle s-dialog-list-item-subtitle">

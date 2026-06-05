@@ -12,6 +12,7 @@ import {
     type IOrganizationAutomationService,
     type IOrganizationExportTemplatesService,
     type IOrganizationGenAIService,
+    type IOrganizationIpAllowlistService,
     type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
@@ -30,6 +31,7 @@ import { OrganizationAgentsService } from "./agents.js";
 import { TigerOrganizationAutomationService } from "./automations/index.js";
 import { OrganizationExportTemplatesService } from "./exportTemplates.js";
 import { TigerOrganizationGenAIService } from "./genAI/index.js";
+import { OrganizationIpAllowlistService } from "./ipAllowlists.js";
 import { OrganizationLlmProvidersService } from "./llmProviders.js";
 import { OrganizationNotificationChannelService } from "./notificationChannels.js";
 import { OrganizationNotificationService } from "./notifications.js";
@@ -194,6 +196,10 @@ export class TigerOrganization implements IOrganization {
 
     public exportTemplates(): IOrganizationExportTemplatesService {
         return new OrganizationExportTemplatesService(this.authCall);
+    }
+
+    public ipAllowlists(): IOrganizationIpAllowlistService {
+        return new OrganizationIpAllowlistService(this.authCall);
     }
 }
 

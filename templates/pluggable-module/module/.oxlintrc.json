@@ -1,0 +1,25 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/react-vitest.json"],
+    "options": {
+        "typeAware": true
+    },
+    "ignorePatterns": ["typings.d.ts", "dist/**", "esm/**"],
+    "rules": {
+        "import/no-unassigned-import": "warn"
+    },
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": "warn",
+                "@typescript-eslint/no-unsafe-argument": "warn",
+                "@typescript-eslint/no-unsafe-assignment": "warn",
+                "@typescript-eslint/no-unsafe-call": "warn",
+                "@typescript-eslint/no-unsafe-member-access": "warn",
+                "@typescript-eslint/no-unsafe-return": "warn",
+                "@typescript-eslint/restrict-template-expressions": "warn"
+            }
+        }
+    ]
+}

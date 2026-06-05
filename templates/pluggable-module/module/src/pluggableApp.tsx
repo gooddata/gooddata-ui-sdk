@@ -1,14 +1,14 @@
 // (C) 2026 GoodData Corporation
 
-import { createRoot, type Root } from "react-dom/client";
+import { type Root, createRoot } from "react-dom/client";
 
 import {
+    type IPlatformContext,
     type IPluggableApp,
-    type IPluggableApplicationMountHandle,
-    type IPluggableApplicationMountOptions,
     type IPluggableAppEvent,
     type IPluggableAppTelemetryCallbacks,
-    type IPlatformContext,
+    type IPluggableApplicationMountHandle,
+    type IPluggableApplicationMountOptions,
 } from "@gooddata/sdk-pluggable-application-model";
 
 import { App } from "./App.js";

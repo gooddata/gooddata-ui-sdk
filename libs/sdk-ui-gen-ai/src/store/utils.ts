@@ -39,3 +39,16 @@ export function getConversationData(data: Record<string, StoredConversation>, lo
     };
     return data[localId];
 }
+
+export function checkConversationData(data: Record<string, StoredConversation>, localId?: string) {
+    if (!localId) {
+        return undefined;
+    }
+    if (data[localId]) {
+        return data[localId];
+    }
+    return {
+        order: [],
+        items: {},
+    };
+}

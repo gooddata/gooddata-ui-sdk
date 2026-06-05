@@ -380,6 +380,7 @@ export type {
 } from "./organization/permissions/index.js";
 export type { IOrganizationNotificationChannelService } from "./organization/notificationChannels/index.js";
 export type { IOrganizationGeoCollectionsService } from "./organization/geoCollections/index.js";
+export type { IOrganizationIpAllowlistService } from "./organization/ipAllowlists/index.js";
 export type {
     INotificationChannelsQuery,
     INotificationChannelsQueryResult,

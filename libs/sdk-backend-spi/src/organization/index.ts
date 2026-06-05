@@ -6,6 +6,7 @@ import { type IOrganizationAgentsService } from "./agents/index.js";
 import { type IOrganizationAutomationService } from "./automations/index.js";
 import { type IOrganizationExportTemplatesService } from "./exportTemplates/index.js";
 import { type IOrganizationGenAIService } from "./genAI/index.js";
+import { type IOrganizationIpAllowlistService } from "./ipAllowlists/index.js";
 import { type IOrganizationLlmProvidersService } from "./llmProviders/index.js";
 import { type IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
 import { type IOrganizationNotificationService } from "./notifications/index.js";
@@ -108,6 +109,13 @@ export interface IOrganization {
      * @beta
      */
     exportTemplates(): IOrganizationExportTemplatesService;
+
+    /**
+     * Returns service that can be used to manage organization-level IP allowlist policies.
+     *
+     * @alpha
+     */
+    ipAllowlists(): IOrganizationIpAllowlistService;
 }
 
 /**

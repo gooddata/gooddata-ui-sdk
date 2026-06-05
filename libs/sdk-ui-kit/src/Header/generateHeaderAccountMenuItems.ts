@@ -30,10 +30,16 @@ export function generateHeaderAccountMenuItems(
     const { canManageProject } = workspacePermissions;
     const accountMenuItems: IHeaderMenuItem[] = [];
 
+    // When the shell (host) application is enabled, workspace settings are served by the
+    // org-scoped home-ui module mounted under "/organization/settings"; its router maps
+    // ".../workspaces/:workspaceId/settings" onto the configuration page. In legacy standalone
+    // mode the same path is served directly from the root. This mirrors the logoHref convention
+    // used by the app runtimes (enableShellApplication ? "/organization/settings" : "/").
+    const workspaceSettingsBasePath = featureFlags?.enableShellApplication ? "/organization/settings" : "";
     const workspaceSettingsItem = {
         key: WORKSPACE_SETTINGS_MENU_ITEM_ID,
         className: "s-workspace-settings",
-        href: `/workspaces/${workspaceId}/settings`,
+        href: `${workspaceSettingsBasePath}/workspaces/${workspaceId}/settings`,
     };
     const logoutItem = {
         key: LOGOUT_MENU_ITEM_ID,

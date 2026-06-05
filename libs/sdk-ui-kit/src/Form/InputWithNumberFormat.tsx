@@ -33,6 +33,11 @@ const parseStandardNumberString = (numberString: string) => {
     return number === 0 ? 0 : number;
 };
 
+// Removes thousand separators while keeping the decimal separator intact, so the value can be
+// edited as plain digits (no separators popping in/out) while the input is focused.
+const removeThousandSeparators = (value: string, { thousand }: Separators = DEFAULT_SEPARATORS): string =>
+    value.split(thousand).join("");
+
 const convertFormattedStringToStandard = (formattedString: string, { thousand, decimal }: Separators) => {
     const withoutThousandSeparators = formattedString.toString().split(thousand).join("");
 
@@ -143,6 +148,9 @@ export const InputWithNumberFormat = memo(function InputWithNumberFormat({
     };
 
     const handleFocus = (e: FocusEvent<HTMLInputElement>): void => {
+        // Strip thousand separators on focus so the user edits plain digits instead of having to
+        // navigate/delete through baked-in separators. They are re-applied on blur.
+        setValue(removeThousandSeparators(value, separators));
         setIsFocused(true);
         onFocus?.(e);
     };

@@ -59,6 +59,18 @@
         "text": "Configure provider",
         "crowdinContext": "Button label to configure a provider for the AI chatbot"
     },
+    "gd.gen-ai.global-model-not-compatible": {
+        "text": "<b>Model not compatible</b>",
+        "crowdinContext": "Error title shown when the configured LLM model is not compatible with the AI assistant"
+    },
+    "gd.gen-ai.global-model-not-compatible.detail": {
+        "text": "The AI Assistant encountered an error with the configured model. Contact your administrator to verify the model is compatible",
+        "crowdinContext": "Error title shown when the configured LLM model is not compatible with the AI assistant"
+    },
+    "gd.gen-ai.global-model-not-compatible.button-open-settings": {
+        "text": "Open AI Settings",
+        "crowdinContext": "Button label to open AI settings when the configured model is not compatible"
+    },
     "gd.gen-ai.global-unsupported-model": {
         "text": "Model not supported",
         "crowdinContext": "Error title when configured OpenAI model is below minimum supported version for the AI assistant"

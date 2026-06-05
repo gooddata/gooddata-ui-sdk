@@ -120,6 +120,7 @@ import {
     type IToggleLayoutSectionHeaders,
     type IUndoLayoutChanges,
 } from "./layout.js";
+import { type IChangeParameterValues } from "./parameters.js";
 import { type RequestAsyncRender, type ResolveAsyncRender } from "./render.js";
 import { type IChangeRenderMode } from "./renderMode.js";
 import { type IChangeRichTextWidgetContent, type IChangeRichTextWidgetFilterSettings } from "./richText.js";
@@ -289,4 +290,5 @@ export type DashboardCommands =
     | IExportRawInsightWidget
     | IExportSlidesInsightWidget
     | IExportImageInsightWidget
-    | ISetShowWidgetAsTable;
+    | ISetShowWidgetAsTable
+    | IChangeParameterValues;

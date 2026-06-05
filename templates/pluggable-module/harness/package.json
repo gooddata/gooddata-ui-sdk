@@ -1,6 +1,6 @@
 {
     "name": "gdc-app-template-name-harness",
-    "version": "11.41.0-alpha.0",
+    "version": "11.41.0-alpha.1",
     "private": true,
     "description": "Standalone harness for gdc-app-template-name module",
     "license": "UNLICENSED",
@@ -57,7 +57,6 @@
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-react": "7.37.5",
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",

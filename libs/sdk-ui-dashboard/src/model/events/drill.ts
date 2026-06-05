@@ -12,6 +12,7 @@ import {
     type IDrillToInsight,
     type IDrillToLegacyDashboard,
     type IInsight,
+    type IInsightParameterValue,
     type IKeyDriveAnalysis,
     type IMeasureDescriptor,
 } from "@gooddata/sdk-model";
@@ -503,6 +504,10 @@ export interface IDashboardDrillToDashboardResolvedPayload {
      */
     readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
     /**
+     * Source dashboard's active parameter overrides, applied to the target where parameter refs match.
+     */
+    readonly parameters: IInsightParameterValue[];
+    /**
      * Original drill event, that triggered this particular drill interaction.
      */
     readonly drillEvent: IDashboardDrillEvent;
@@ -532,6 +537,7 @@ export function drillToDashboardResolved(
     ctx: DashboardContext,
     filters: (IDashboardFilter | FilterContextItem)[],
     attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    parameters: IInsightParameterValue[],
     drillDefinition: IDrillToDashboard,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
@@ -543,6 +549,7 @@ export function drillToDashboardResolved(
         payload: {
             filters,
             attributeFilterConfigs,
+            parameters,
             drillDefinition,
             drillEvent,
         },

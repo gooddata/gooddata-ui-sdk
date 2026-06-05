@@ -23,6 +23,22 @@ describe("generateHeaderAccountMenuItems", () => {
         ]);
     });
 
+    it("should prefix the workspace settings link with the host base path when the shell application is enabled", () => {
+        const items = generateHeaderAccountMenuItems(
+            getWorkspacePermissionsMock(true, true, true),
+            "TestWorkspaceId",
+            { enableWorkspaceSettingsAppHeaderMenuItem: true, enableShellApplication: true },
+        );
+        expect(items).toEqual([
+            {
+                className: "s-workspace-settings",
+                key: "gs.header.workspaceSettings",
+                href: "/organization/settings/workspaces/TestWorkspaceId/settings",
+            },
+            { className: "s-logout", key: "gs.header.logout" },
+        ]);
+    });
+
     it("should return only logout item when workspace settings feature flag is on but permission is not available", () => {
         const items = generateHeaderAccountMenuItems(
             getWorkspacePermissionsMock(true, true, false),

@@ -94,6 +94,8 @@ import { IGeoJsonFeature } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IIpAllowlist } from '@gooddata/sdk-model';
+import { IIpAllowlistDefinition } from '@gooddata/sdk-model';
 import type { IListedDashboard } from '@gooddata/sdk-model';
 import { ILlmProvider } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
@@ -671,7 +673,7 @@ export type IChatConversationError = {
     code: number;
     message: string;
     traceId?: string;
-    reason?: (string & {}) | "METADATA_SYNC_IN_PROGRESS" | "METADATA_SYNC_REQUEST_ERROR";
+    reason?: (string & {}) | "METADATA_SYNC_IN_PROGRESS" | "METADATA_SYNC_REQUEST_ERROR" | "MODEL_NOT_COMPATIBLE";
 };
 
 // @internal
@@ -1905,6 +1907,8 @@ export interface IOrganization {
     // @alpha
     genAI(): IOrganizationGenAIService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
+    // @alpha
+    ipAllowlists(): IOrganizationIpAllowlistService;
     llmProviders(): IOrganizationLlmProvidersService;
     notificationChannels(): IOrganizationNotificationChannelService;
     notifications(): IOrganizationNotificationService;
@@ -1996,6 +2000,14 @@ export interface IOrganizationGeoCollectionsService {
     importGeoCollectionFile(collectionId: string, location: string): Promise<void>;
     updateGeoCollection(geoCollection: IGeoCollection): Promise<IGeoCollection>;
     uploadGeoCollectionFile(file: File): Promise<IGeoCollectionFileUploadResult>;
+}
+
+// @alpha
+export interface IOrganizationIpAllowlistService {
+    create(definition: IIpAllowlistDefinition): Promise<IIpAllowlist>;
+    delete(id: string): Promise<void>;
+    getAll(): Promise<IIpAllowlist[]>;
+    update(definition: IIpAllowlistDefinition): Promise<IIpAllowlist>;
 }
 
 // @alpha

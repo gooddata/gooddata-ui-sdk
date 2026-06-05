@@ -100,6 +100,7 @@ export const convertEntityUserToOrganizationUser = (user: JsonApiUserOutWithLink
         email: user.attributes?.email,
         fullName: constructFullName(firstName, lastName),
         isOrganizationAdmin: false,
+        isSystemAccount: user.attributes?.systemAccount ?? false,
         assignedUserGroups: [],
         assignedWorkspaces: [],
         assignedDataSources: [],
@@ -112,6 +113,7 @@ export const convertOrganizationUser = (user: UserManagementUsersItem): IOrganiz
     email: user.email,
     fullName: user.name,
     isOrganizationAdmin: user.organizationAdmin,
+    isSystemAccount: user.systemAccount ?? false,
     assignedUserGroups: user.userGroups.map(convertUserGroupIdentifier),
     assignedWorkspaces: user.workspaces.map((ws) =>
         convertWorkspacePermissionsAssignment(user.id, "user", ws),

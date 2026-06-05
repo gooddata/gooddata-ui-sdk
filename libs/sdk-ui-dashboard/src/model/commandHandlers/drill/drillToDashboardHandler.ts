@@ -45,7 +45,10 @@ import {
 } from "../../events/drill.js";
 import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
+import {
+    selectCatalogDateAttributes,
+    selectCatalogParameters,
+} from "../../store/catalog/catalogSelectors.js";
 import { selectEnableMultipleDateFilters } from "../../store/config/configSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import {
@@ -59,6 +62,8 @@ import {
     selectFilterContextMeasureValueFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import { collectChangedParameterValues } from "../../store/tabs/parameters/parametersHelpers.js";
+import { selectDashboardParameterEntries } from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardState } from "../../store/types.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
@@ -178,6 +183,14 @@ export function* drillToDashboardHandler(
     // Order matters: intersection > common date > merged dashboard+source.
     const resultingFilters = compact([...intersectionFilters, commonDateFilter, ...mergedFilters]);
 
+    // Read before the tab switch: overrides are tab-scoped, so reading after would pick up the target tab.
+    const parameterEntries: ReturnType<typeof selectDashboardParameterEntries> = yield select(
+        selectDashboardParameterEntries,
+    );
+    const workspaceParameters: ReturnType<typeof selectCatalogParameters> =
+        yield select(selectCatalogParameters);
+    const parameters = collectChangedParameterValues(parameterEntries, workspaceParameters);
+
     const targetTabLocalIdentifier = cmd.payload.drillDefinition.targetTabLocalIdentifier;
     if (targetTabLocalIdentifier && isDrillingToSelf) {
         yield put(switchDashboardTab(targetTabLocalIdentifier));
@@ -188,6 +201,7 @@ export function* drillToDashboardHandler(
         ctx,
         resultingFilters,
         attributeFilterConfigs,
+        parameters,
         cmd.payload.drillDefinition,
         cmd.payload.drillEvent,
         cmd.correlationId,

@@ -4,7 +4,7 @@ import { type IntlShape } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
-import { type ICustomTooltipConfig } from "@gooddata/sdk-ui-vis-commons";
+import { type ICustomTooltipConfig, buildTooltipLocalizedStrings } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoAreaChartConfig } from "../../../types/config/areaChart.js";
 import { type IGeoLayerTooltipLookup } from "../../common/customTooltipExecution.js";
@@ -54,15 +54,12 @@ function buildAreaTooltipHtml(
     const items = [...attributeItems, ...(measureItem ? [measureItem] : [])];
     const defaultItemsHtml = items.join("");
 
-    const fallbackText = `(${intl.formatMessage({ id: "richText.no_fetch" })})`;
-    const noDataLabel = `(${intl.formatMessage({ id: "richText.no_data" })})`;
     const customPieces = buildCustomTooltipPieces(
         rawProperties,
         customConfig,
         referenceMaps,
         separators,
-        fallbackText,
-        noDataLabel,
+        buildTooltipLocalizedStrings(intl),
         tooltipLookup,
     );
 
