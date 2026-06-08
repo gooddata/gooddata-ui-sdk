@@ -2926,6 +2926,7 @@ export interface IGenAIWidgetDescriptor {
     insightRef?: ObjRef;
     resultId?: string;
     title: string;
+    visualizationRefs?: ObjRef[];
     widgetRef: ObjRef;
     widgetType: string;
 }

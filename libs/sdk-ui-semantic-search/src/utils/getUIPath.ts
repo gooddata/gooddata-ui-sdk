@@ -18,6 +18,7 @@ export type UIPathObjectTypes =
 export type UIPathOptions = {
     useHostedMetricEditor?: boolean;
     useHostedAnalyticalDesigner?: boolean;
+    useHostedLdmModeler?: boolean;
 };
 
 /**
@@ -49,16 +50,16 @@ export const getUIPath = (
                 return `/workspace/${workspaceId}/metrics/metric/${objectId}`;
             }
             return `/metrics/#/${workspaceId}/metric/${objectId}`;
+        // TODO - deep links into the modeler (no pluggable deep-route support yet)
         case "dataset":
-            return `/modeler/#/${workspaceId}`; // TODO - deep links
         case "attribute":
-            return `/modeler/#/${workspaceId}`; // TODO - deep links
         case "label":
-            return `/modeler/#/${workspaceId}`; // TODO - deep links
         case "fact":
-            return `/modeler/#/${workspaceId}`; // TODO - deep links
         case "date":
-            return `/modeler/#/${workspaceId}`; // TODO - deep links
+            if (options.useHostedLdmModeler) {
+                return `/workspace/${workspaceId}/modeler`;
+            }
+            return `/modeler/#/${workspaceId}`;
         default:
             return exhaustiveCheck(objectType);
     }

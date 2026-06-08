@@ -3,6 +3,20 @@
 import { type IDashboardCommand } from "./base.js";
 
 /**
+ * What triggered a {@link ISwitchDashboardTab} command.
+ *
+ * Open-ended set of values that may grow over time; treat unknown values defensively. When
+ * omitted, the switch is a regular user-initiated tab switch.
+ *
+ * - `"drillToSelf"` - the switch is part of a drill to the same dashboard targeting a different
+ *   tab. The drill owns the target tab's filter context, so consumers that restore per-tab filter
+ *   state on switches (e.g. "Auto-save last state") should skip their restore for it.
+ *
+ * @alpha
+ */
+export type DashboardTabSwitchSource = "drillToSelf";
+
+/**
  * Payload of the {@link ISwitchDashboardTab} command.
  * @alpha
  */
@@ -11,6 +25,15 @@ export interface ISwitchDashboardTabPayload {
      * Identifier of the tab to switch to.
      */
     readonly tabId: string;
+
+    /**
+     * What triggered this tab switch.
+     *
+     * @remarks
+     * Omit for a regular user-initiated tab switch. See {@link DashboardTabSwitchSource} for the
+     * recognized values and their effect.
+     */
+    readonly source?: DashboardTabSwitchSource;
 }
 
 /**
@@ -34,16 +57,23 @@ export interface ISwitchDashboardTab extends IDashboardCommand {
  *
  * @param tabId - identifier of the tab to switch to
  * @param correlationId - specify correlation id to use for this command
+ * @param source - what triggered the switch; omit for a regular user-initiated tab switch.
+ *  See {@link DashboardTabSwitchSource}.
  * @returns switch dashboard tab command
  *
  * @alpha
  */
-export function switchDashboardTab(tabId: string, correlationId?: string): ISwitchDashboardTab {
+export function switchDashboardTab(
+    tabId: string,
+    correlationId?: string,
+    source?: DashboardTabSwitchSource,
+): ISwitchDashboardTab {
     return {
         type: "GDC.DASH/CMD.TAB.SWITCH",
         correlationId,
         payload: {
             tabId,
+            source,
         },
     };
 }

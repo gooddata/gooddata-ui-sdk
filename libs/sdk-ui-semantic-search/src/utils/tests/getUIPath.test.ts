@@ -18,4 +18,18 @@ describe("getUIPath", () => {
             }),
         ).toBe("/workspace/workspace-id/metrics/metric/metric-id");
     });
+
+    it("returns legacy modeler path for data objects by default", () => {
+        expect(getUIPath("dataset", "ds-id", "workspace-id")).toBe("/modeler/#/workspace-id");
+        expect(getUIPath("attribute", "attr-id", "workspace-id")).toBe("/modeler/#/workspace-id");
+    });
+
+    it("returns hosted modeler path for data objects when enabled", () => {
+        expect(getUIPath("dataset", "ds-id", "workspace-id", undefined, { useHostedLdmModeler: true })).toBe(
+            "/workspace/workspace-id/modeler",
+        );
+        expect(getUIPath("fact", "fact-id", "workspace-id", undefined, { useHostedLdmModeler: true })).toBe(
+            "/workspace/workspace-id/modeler",
+        );
+    });
 });

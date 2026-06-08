@@ -645,16 +645,16 @@ const renderTable = (
     },
 ) => {
     const TableComponent = props.enableNewPivotTable ? PivotTableNext : PivotTable;
-    const { metrics, attribute, columns } = buckets;
+    const { metrics, attribute, trend, view, stack, segment, columns } = buckets;
 
     return (
         <TableComponent
             locale={locale}
             measures={metrics}
-            rows={attribute}
-            columns={columns}
             filters={filters}
             sortBy={sortBy}
+            columns={[...columns, ...stack, ...segment].filter(Boolean)}
+            rows={[...attribute, ...trend, ...view].filter(Boolean)}
             config={props.enableNewPivotTable ? { agGridToken: props.agGridToken } : undefined}
             drillableItems={props.drillableItems}
             onDrill={onDrill}

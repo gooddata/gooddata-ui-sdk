@@ -1373,7 +1373,10 @@ export function dashboardTabRenamingCanceled(ctx: DashboardContext, tabId: strin
 export function dashboardTabRenamingStarted(ctx: DashboardContext, tabId: string, correlationId?: string): IDashboardTabRenamingStarted;
 
 // @alpha
-export function dashboardTabSwitched(ctx: DashboardContext, previousTabId: string | undefined, newTabId: string, correlationId?: string): IDashboardTabSwitched;
+export function dashboardTabSwitched(ctx: DashboardContext, previousTabId: string | undefined, newTabId: string, correlationId?: string, source?: DashboardTabSwitchSource): IDashboardTabSwitched;
+
+// @alpha
+export type DashboardTabSwitchSource = "drillToSelf";
 
 // @public (undocumented)
 export type DashboardTransformFn = (dashboard: IDashboard<ExtendedDashboardWidget>) => IDashboard<ExtendedDashboardWidget> | undefined;
@@ -5157,6 +5160,7 @@ export interface IDashboardTabSwitched extends IDashboardEvent {
 export interface IDashboardTabSwitchedPayload {
     readonly newTabId: string;
     readonly previousTabId: string | undefined;
+    readonly source?: DashboardTabSwitchSource;
 }
 
 // @public (undocumented)
@@ -8592,6 +8596,7 @@ export interface ISwitchDashboardTab extends IDashboardCommand {
 
 // @alpha
 export interface ISwitchDashboardTabPayload {
+    readonly source?: DashboardTabSwitchSource;
     readonly tabId: string;
 }
 
@@ -11935,7 +11940,7 @@ export function startRenamingDashboardTab(tabId?: string, correlationId?: string
 export type StashedDashboardItemsId = string;
 
 // @alpha
-export function switchDashboardTab(tabId: string, correlationId?: string): ISwitchDashboardTab;
+export function switchDashboardTab(tabId: string, correlationId?: string, source?: DashboardTabSwitchSource): ISwitchDashboardTab;
 
 // @beta
 export function switchToEditRenderMode(correlationId?: string): IChangeRenderMode;

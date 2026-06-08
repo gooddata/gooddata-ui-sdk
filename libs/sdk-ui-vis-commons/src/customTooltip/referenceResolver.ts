@@ -6,6 +6,8 @@ import {
     type IResolvedReferenceValues,
     type ITooltipLocalizedStrings,
     type ResolvedReference,
+    labelKey,
+    metricKey,
 } from "./types.js";
 
 // Markdown metacharacters that, if present in a substituted value, would be
@@ -32,8 +34,8 @@ function renderReference(ref: ResolvedReference | undefined, strings: ITooltipLo
             return strings.noData;
         case "multiple":
             return strings.multipleItems;
-        case "error":
-        default:
+        case undefined:
+            // Absent reference → couldn't be resolved at this point.
             return strings.noFetch;
     }
 }
@@ -65,10 +67,10 @@ export function resolveReferences(
     }
 
     return content.replace(REFERENCE_REGEX_MATCH, (_fullMatch, _wrapped, _key, prefix, identifier) => {
-        // The regex matches the prefix case-insensitively; storage uses
-        // lowercase prefixes so users can write either `{metric/foo}` or
-        // `{Metric/foo}`. LDM identifiers stay as-is — they are case-sensitive.
-        const ref = values[`${prefix.toLowerCase()}/${identifier}`];
-        return escapeMarkdownMetachars(renderReference(ref, strings));
+        // The regex captures the prefix case-insensitively (`metric` | `label`);
+        // route through the key helpers so the lookup format stays single-sourced
+        // with the write sites. LDM identifiers stay as-is — they are case-sensitive.
+        const key = prefix.toLowerCase() === "metric" ? metricKey(identifier) : labelKey(identifier);
+        return escapeMarkdownMetachars(renderReference(values[key], strings));
     });
 }

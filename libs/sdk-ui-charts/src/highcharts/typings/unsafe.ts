@@ -204,9 +204,6 @@ export interface IChartOptions {
 export interface ICustomTooltipRuntime {
     identifierMapping?: IIdentifierMapping;
     tooltipLookup?: Map<string, IResolvedReferenceValues>;
-    // References that could not be retrieved at all (their fetch rejected even in
-    // the per-reference fallback). Rendered as "(Data could not be retrieved)".
-    erroredRefs?: ReadonlySet<string>;
 }
 
 export interface IPatternOptionsObject {

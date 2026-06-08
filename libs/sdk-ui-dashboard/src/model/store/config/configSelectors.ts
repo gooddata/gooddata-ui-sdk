@@ -579,7 +579,7 @@ export const selectEnableMatchFilterKD: DashboardSelector<boolean> = createSelec
 export const selectEnableMeasureValueFilterKD: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableMeasureValueFilterKD ?? false;
+        return state.settings?.enableMeasureValueFilterKD ?? true;
     },
 );
 

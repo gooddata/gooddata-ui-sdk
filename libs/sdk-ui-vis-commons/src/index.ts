@@ -140,13 +140,11 @@ export {
     type ITooltipExecutionBundle,
     type ITooltipExecutionMeta,
 } from "./customTooltip/tooltipExecution.js";
-export { buildLookupTable } from "./customTooltip/tooltipLookup.js";
 export { buildKeySegment, joinKeySegments } from "./customTooltip/tooltipKey.js";
 export { composeCustomTooltipSectionHtml } from "./customTooltip/composeSectionHtml.js";
 export {
     useTooltipLookup,
     useTooltipLookupExecutions,
-    type ITooltipLookupResult,
     type ITooltipLookupExecutionEntry,
     type ITooltipLookupExecutionResult,
 } from "./customTooltip/useTooltipLookupExecutions.js";

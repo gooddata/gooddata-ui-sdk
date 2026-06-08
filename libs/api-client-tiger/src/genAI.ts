@@ -1,15 +1,14 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance } from "axios";
 
 import { ActionsApi, type ActionsApiInterface } from "./generated/afm-rest-api/index.js";
+import { AIObservabilityAi, type AIObservabilityAiInterface } from "./generated/ai-json-api/index.js";
 
 /**
  * Tiger GenAI client factory
  */
-export const tigerGenAIClientFactory = (
-    axios: AxiosInstance,
-): Pick<
+export type TigerGenAIClient = Pick<
     ActionsApiInterface,
     | "aiSearch"
     | "aiChat"
@@ -23,4 +22,26 @@ export const tigerGenAIClientFactory = (
     | "tags"
     | "createdBy"
     | "memoryCreatedByUsers"
-> => new ActionsApi(undefined, "", axios);
+> &
+    Pick<AIObservabilityAiInterface, "getObservabilityOverview">;
+
+export const tigerGenAIClientFactory = (axios: AxiosInstance): TigerGenAIClient => {
+    const actionsApi = new ActionsApi(undefined, "", axios);
+    const observabilityApi = new AIObservabilityAi(undefined, "", axios);
+
+    return {
+        aiSearch: actionsApi.aiSearch.bind(actionsApi),
+        aiChat: actionsApi.aiChat.bind(actionsApi),
+        aiChatStream: actionsApi.aiChatStream.bind(actionsApi),
+        aiChatHistory: actionsApi.aiChatHistory.bind(actionsApi),
+        validateLLMEndpoint: actionsApi.validateLLMEndpoint.bind(actionsApi),
+        validateLLMEndpointById: actionsApi.validateLLMEndpointById.bind(actionsApi),
+        getQualityIssues: actionsApi.getQualityIssues.bind(actionsApi),
+        getQualityIssuesCalculationStatus: actionsApi.getQualityIssuesCalculationStatus.bind(actionsApi),
+        triggerQualityIssuesCalculation: actionsApi.triggerQualityIssuesCalculation.bind(actionsApi),
+        tags: actionsApi.tags.bind(actionsApi),
+        createdBy: actionsApi.createdBy.bind(actionsApi),
+        memoryCreatedByUsers: actionsApi.memoryCreatedByUsers.bind(actionsApi),
+        getObservabilityOverview: observabilityApi.getObservabilityOverview.bind(observabilityApi),
+    };
+};

@@ -173,9 +173,16 @@ export interface IGenAIWidgetDescriptor {
      */
     widgetType: string;
     /**
-     * Insight reference (required for insight widgets).
+     * Insight reference (required for insight widgets). For a visualization switcher this is
+     * the active (rendered) child's insight reference.
      */
     insightRef?: ObjRef;
+    /**
+     * All child insight references of a visualization switcher (set only for switcher widgets).
+     * Lets the backend summarize the whole switcher by executing the non-active children, which
+     * carry no cached result.
+     */
+    visualizationRefs?: ObjRef[];
     /**
      * Signed result ID for this widget's cached execution result.
      */

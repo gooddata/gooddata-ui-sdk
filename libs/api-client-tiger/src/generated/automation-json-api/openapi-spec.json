@@ -818,6 +818,13 @@
                         "items": {
                             "$ref": "#/components/schemas/MeasureItem"
                         }
+                    },
+                    "parameters": {
+                        "type": "array",
+                        "description": "Parameters to be used in the computation.",
+                        "items": {
+                            "$ref": "#/components/schemas/ParameterItem"
+                        }
                     }
                 }
             },

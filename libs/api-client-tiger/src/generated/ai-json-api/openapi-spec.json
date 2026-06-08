@@ -776,6 +776,28 @@
                 }
             }
         },
+        "/api/v1/ai/organization/observability": {
+            "get": {
+                "tags": [
+                    "AI Observability"
+                ],
+                "summary": "(EXPERIMENTAL) AI observability overview for the caller's organization",
+                "description": "Returns AI usage stats for the caller's organization for the current calendar month, alongside the previous month's value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.",
+                "operationId": "getObservabilityOverview",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ObservabilityOverviewResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents": {
             "post": {
                 "tags": [
@@ -3175,6 +3197,15 @@
                 "title": "DeleteDocumentResponse",
                 "description": "Response for DELETE /documents/{documentId}."
             },
+            "Direction": {
+                "type": "string",
+                "enum": [
+                    "INCREASED",
+                    "DECREASED",
+                    "NO_CHANGE"
+                ],
+                "title": "Direction"
+            },
             "DocumentMetadataResponse": {
                 "properties": {
                     "id": {
@@ -3756,6 +3787,37 @@
                 ],
                 "title": "MetricSortLocatorItem"
             },
+            "MetricUsageResponse": {
+                "properties": {
+                    "type": {
+                        "$ref": "#/components/schemas/ObservabilityMetricType"
+                    },
+                    "currentValue": {
+                        "type": "integer",
+                        "title": "Currentvalue"
+                    },
+                    "previousValue": {
+                        "type": "integer",
+                        "title": "Previousvalue"
+                    },
+                    "direction": {
+                        "$ref": "#/components/schemas/Direction"
+                    },
+                    "changePercentage": {
+                        "type": "number",
+                        "title": "Changepercentage"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "currentValue",
+                    "previousValue",
+                    "direction",
+                    "changePercentage"
+                ],
+                "title": "MetricUsageResponse"
+            },
             "MetricValueFilterConditionComparison": {
                 "type": "string",
                 "enum": [
@@ -3925,6 +3987,30 @@
                     "parameter"
                 ],
                 "title": "ObjectType"
+            },
+            "ObservabilityMetricType": {
+                "type": "string",
+                "enum": [
+                    "AI_QUERIES"
+                ],
+                "title": "ObservabilityMetricType",
+                "description": "Metrics exposed by the AI observability endpoint."
+            },
+            "ObservabilityOverviewResponse": {
+                "properties": {
+                    "metrics": {
+                        "items": {
+                            "$ref": "#/components/schemas/MetricUsageResponse"
+                        },
+                        "type": "array",
+                        "title": "Metrics"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "metrics"
+                ],
+                "title": "ObservabilityOverviewResponse"
             },
             "PatchDocumentRequest": {
                 "properties": {
@@ -5623,6 +5709,20 @@
                         },
                         "type": "array",
                         "title": "Widgets"
+                    },
+                    "filters": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/VisualizationFilter"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Filters"
                     }
                 },
                 "type": "object",

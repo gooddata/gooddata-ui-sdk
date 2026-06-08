@@ -90,15 +90,6 @@ describe("resolveReferences", () => {
             expect(result).toBe("\\(Multiple items\\)");
         });
 
-        it("renders an error status as the could-not-retrieve string", () => {
-            const result = resolveReferences(
-                "{metric/x}",
-                { "metric/x": { kind: "error" } },
-                strings({ noFetch: "(Data could not be retrieved)" }),
-            );
-            expect(result).toBe("\\(Data could not be retrieved\\)");
-        });
-
         it("renders an unknown reference (no status at this point) as could-not-retrieve, not no-data", () => {
             // A reference recognized in content but absent from the values map
             // must surface as unretrievable rather than be masked as "no data".

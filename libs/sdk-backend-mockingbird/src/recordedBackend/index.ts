@@ -762,6 +762,9 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getKnowledgeDocuments: () => {
                     throw new NotSupported("not supported");
                 },
+                getObservability: () => {
+                    throw new NotSupported("not supported");
+                },
             };
         },
         exportTemplates() {

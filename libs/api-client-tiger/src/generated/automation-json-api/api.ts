@@ -217,6 +217,10 @@ export interface AutomationAlertAfm {
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
      */
     'auxMeasures'?: Array<AutomationMeasureItem>;
+    /**
+     * Parameters to be used in the computation.
+     */
+    'parameters'?: Array<AutomationParameterItem>;
 }
 
 /**

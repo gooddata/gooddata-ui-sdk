@@ -65,19 +65,17 @@ export interface ICustomTooltipConfig {
 /**
  * Resolution outcome for a single `{metric/id}` / `{label/id}` reference at a
  * data point. A discriminated union so the renderer maps each state to its own
- * localized message instead of collapsing every "missing" case into one
- * fallback: `empty` → "(No data)", `multiple` → "(Multiple items)", `error` →
- * "(Data could not be retrieved)". `error` is emitted only when a value was
- * genuinely unretrievable (e.g. a reference whose fetch failed); it is never a
- * default for an unclassified value.
+ * localized message instead of collapsing them: `empty` → "(No data)",
+ * `multiple` → "(Multiple items)". A reference that couldn't be resolved at all
+ * is represented by *absence* from the lookup (`undefined`), which the renderer
+ * maps to "(Data could not be retrieved)" — there is no explicit error variant.
  *
  * @internal
  */
 export type ResolvedReference =
     | { readonly kind: "value"; readonly text: string }
     | { readonly kind: "empty" }
-    | { readonly kind: "multiple" }
-    | { readonly kind: "error" };
+    | { readonly kind: "multiple" };
 
 /**
  * Lookup of resolved reference statuses keyed by `metric/id` or `label/id`.
@@ -91,8 +89,9 @@ export interface IResolvedReferenceValues {
 /**
  * Builds the `metric/<id>` lookup key for a metric reference. A reference key
  * has exactly two shapes ({@link metricKey}, {@link labelKey}); keeping the
- * convention here is the single source for every write site. The read side
- * parses references via `REFERENCE_REGEX_MATCH` in `resolveReferences`.
+ * convention here makes it the single source for both the write sites and the
+ * read in `resolveReferences` (which routes the parsed prefix through these
+ * helpers rather than rebuilding the key).
  *
  * @internal
  */

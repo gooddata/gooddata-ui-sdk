@@ -38,6 +38,10 @@ import {
     type TrendingObjectsResult,
 } from "../../generated/afm-rest-api/index.js";
 import {
+    AIObservabilityAi_GetObservabilityOverview,
+    type AiMetricUsageResponse,
+    AiObservabilityMetricType,
+    type AiObservabilityOverviewResponse,
     type AiPatchDocumentRequest,
     type AiSummarizeRequest,
     type AiSummarizeResponse,
@@ -99,6 +103,10 @@ import {
 
 // GenAI API - Export GenAI-related ActionsApi functions with GenAiApi_ prefix
 export {
+    AIObservabilityAi_GetObservabilityOverview as GenAiApi_GetObservabilityOverview,
+    type AiMetricUsageResponse as GenAiApiMetricUsageResponse,
+    AiObservabilityMetricType as GenAiApiObservabilityMetricType,
+    type AiObservabilityOverviewResponse as GenAiApiObservabilityOverviewResponse,
     ActionsApi_AiSearch as GenAiApi_AiSearch,
     type ActionsApiAiSearchRequest as GenAiApiAiSearchRequest,
     ActionsApi_AiChat as GenAiApi_AiChat,

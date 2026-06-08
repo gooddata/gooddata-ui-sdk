@@ -9,7 +9,7 @@ import {
     isIdentifierRef,
     isUriRef,
 } from "@gooddata/sdk-model";
-import { type IResolvedReferenceValues, type ITooltipExecutionBundle } from "@gooddata/sdk-ui-vis-commons";
+import { type IResolvedReferenceValues, type ITooltipExecution } from "@gooddata/sdk-ui-vis-commons";
 
 import { type JsonValue } from "../../utils/guards.js";
 
@@ -27,7 +27,8 @@ export type BuildFeatureKey = (properties: GeoJSON.GeoJsonProperties) => string 
 /**
  * @internal
  */
-export interface IGeoLayerCustomTooltipExecution extends ITooltipExecutionBundle {
+export interface IGeoLayerCustomTooltipExecution {
+    execution: ITooltipExecution;
     buildFeatureKey: BuildFeatureKey;
 }
 

@@ -95,7 +95,6 @@ function planTooltipExecutions(
         planned.push({
             key: record.layerId,
             execution: built.execution,
-            meta: built.meta,
             context: built.buildFeatureKey,
         });
     }

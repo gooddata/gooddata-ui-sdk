@@ -99,14 +99,6 @@
     }
 }
 
-// Preserve the col-resize cursor across the whole page while a sidebar drag is in
-// progress. The handle itself is only 6 px wide, so without this the cursor would
-// revert to default the moment it leaves the hit area during a drag.
-body:has(.gd-resizable-sidebar--dragging),
-body:has(.gd-resizable-sidebar--dragging) * {
-    cursor: col-resize;
-}
-
 .add-item-panel {
     padding: 0 7px;
 }

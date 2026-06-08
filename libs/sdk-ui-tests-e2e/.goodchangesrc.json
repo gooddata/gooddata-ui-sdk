@@ -1,7 +1,6 @@
 {
     "targets": [
         {
-            "app": "@gooddata/sdk-ui-tests-app",
             "changeDirs": [
                 {
                     "glob": "*"
