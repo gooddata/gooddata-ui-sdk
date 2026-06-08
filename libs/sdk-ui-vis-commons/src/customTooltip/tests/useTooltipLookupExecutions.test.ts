@@ -71,7 +71,7 @@ function makeEntry<TContext>(
     execution: IPreparedExecution,
     context: TContext,
 ): ITooltipLookupExecutionEntry<TContext> {
-    return { key, execution, meta: META, context };
+    return { key, execution: makeTooltipExecution(makeBundle(execution)), context };
 }
 
 describe("useTooltipLookup", () => {
@@ -86,21 +86,20 @@ describe("useTooltipLookup", () => {
 
         expect(result.current).toBeUndefined();
         await waitFor(() => expect(result.current).toBeDefined());
-        expect(result.current?.lookup.get("lookup-for-fp1")).toEqual({
+        expect(result.current?.get("lookup-for-fp1")).toEqual({
             "metric/x": { kind: "value", text: "fp1" },
         });
-        expect(result.current?.erroredRefs.size).toBe(0);
     });
 
     it("re-executes when the batch fingerprint changes", async () => {
         const { result, rerender } = renderHook(({ e }: { e: ITooltipExecution }) => useTooltipLookup(e), {
             initialProps: { e: makeTooltipExecution(makeBundle(makeExecution("fp-a"))) },
         });
-        await waitFor(() => expect(result.current?.lookup.get("lookup-for-fp-a")).toBeDefined());
+        await waitFor(() => expect(result.current?.get("lookup-for-fp-a")).toBeDefined());
 
         rerender({ e: makeTooltipExecution(makeBundle(makeExecution("fp-b"))) });
-        await waitFor(() => expect(result.current?.lookup.get("lookup-for-fp-b")).toBeDefined());
-        expect(result.current?.lookup.get("lookup-for-fp-a")).toBeUndefined();
+        await waitFor(() => expect(result.current?.get("lookup-for-fp-b")).toBeDefined());
+        expect(result.current?.get("lookup-for-fp-a")).toBeUndefined();
     });
 
     it("does not re-execute when only the execution identity changes (same fingerprint)", async () => {
@@ -143,10 +142,10 @@ describe("useTooltipLookup", () => {
         await waitFor(() => expect(result.current).toBeUndefined());
     });
 
-    it("isolates a failed reference via fan-out: others resolve, the bad one is errored", async () => {
+    it("isolates a failed reference via fan-out: the good one resolves, the bad one is absent", async () => {
         // Batch fails (e.g. one invalid ref 400s the whole AFM). Fan-out runs
-        // each reference alone: the good one resolves into the lookup, the bad
-        // one is recorded as errored — no parsing of the backend error needed.
+        // each reference alone: the good one resolves into the lookup; the bad
+        // one is left out — no parsing of the backend error needed.
         const execution = makeTooltipExecution(makeBundle(makeRejectingExecution("batch-fp")), [
             makeBundle(makeExecution("good"), metaWith({ tt_m_0: "good" })),
             makeBundle(makeRejectingExecution("bad-fp"), metaWith({ tt_m_0: "bad" })),
@@ -154,14 +153,15 @@ describe("useTooltipLookup", () => {
         const { result } = renderHook(() => useTooltipLookup(execution));
 
         await waitFor(() => expect(result.current).toBeDefined());
-        expect(result.current?.lookup.get("lookup-for-good")).toEqual({
+        expect(result.current?.get("lookup-for-good")).toEqual({
             "metric/x": { kind: "value", text: "good" },
         });
-        expect(result.current?.erroredRefs.has("metric/bad")).toBe(true);
-        expect(result.current?.erroredRefs.has("metric/good")).toBe(false);
+        // The bad ref's bundle rejected, so it never enters the lookup; at render
+        // it falls to the unresolved default ("(Data could not be retrieved)").
+        expect(result.current?.get("lookup-for-bad")).toBeUndefined();
     });
 
-    it("errors every reference when the batch and all fan-out executions fail", async () => {
+    it("produces an empty lookup when the batch and all fan-out executions fail", async () => {
         const execution = makeTooltipExecution(makeBundle(makeRejectingExecution("batch-fp")), [
             makeBundle(makeRejectingExecution("f1"), metaWith({ tt_m_0: "a" })),
             makeBundle(makeRejectingExecution("f2"), metaWith({ tt_m_0: "b" })),
@@ -169,9 +169,8 @@ describe("useTooltipLookup", () => {
         const { result } = renderHook(() => useTooltipLookup(execution));
 
         await waitFor(() => expect(result.current).toBeDefined());
-        expect(result.current?.lookup.size).toBe(0);
-        expect(result.current?.erroredRefs.has("metric/a")).toBe(true);
-        expect(result.current?.erroredRefs.has("metric/b")).toBe(true);
+        // Nothing resolved → empty lookup; every ref renders the unresolved default.
+        expect(result.current?.size).toBe(0);
     });
 
     it("merges per-reference lookups that resolve to the same point key on fan-out", async () => {
@@ -195,11 +194,10 @@ describe("useTooltipLookup", () => {
         const { result } = renderHook(() => useTooltipLookup(execution));
 
         await waitFor(() => expect(result.current).toBeDefined());
-        expect(result.current?.lookup.get("pt-1")).toEqual({
+        expect(result.current?.get("pt-1")).toEqual({
             "metric/a": { kind: "value", text: "a" },
             "metric/b": { kind: "value", text: "b" },
         });
-        expect(result.current?.erroredRefs.size).toBe(0);
     });
 });
 
@@ -240,16 +238,49 @@ describe("useTooltipLookupExecutions", () => {
         expect(result.current.get("layer-1")?.context).toBe(fnCtx);
     });
 
-    it("drops failed entries silently (Promise.allSettled), keeps successful ones", async () => {
-        const entries = [
-            makeEntry("ok", makeExecution("fp-ok"), "ctx-ok"),
-            makeEntry("fail", makeRejectingExecution("fp-fail"), "ctx-fail"),
+    it("fans out per reference within an entry when its batch fails", async () => {
+        // Per-layer isolation: a layer whose batch fails no longer drops out —
+        // it fans out per reference, so the good ref resolves and the bad one is
+        // left out, just like the single-execution variant.
+        const entries: ITooltipLookupExecutionEntry<string>[] = [
+            {
+                key: "layer-1",
+                execution: makeTooltipExecution(makeBundle(makeRejectingExecution("batch")), [
+                    makeBundle(makeExecution("good"), metaWith({ tt_m_0: "good" })),
+                    makeBundle(makeRejectingExecution("bad"), metaWith({ tt_m_0: "bad" })),
+                ]),
+                context: "ctx",
+            },
         ];
         const { result } = renderHook(() => useTooltipLookupExecutions(entries));
 
         await waitFor(() => expect(result.current.size).toBe(1));
-        expect(result.current.get("ok")).toBeDefined();
-        expect(result.current.get("fail")).toBeUndefined();
+        const entry = result.current.get("layer-1");
+        expect(entry?.lookup.get("lookup-for-good")).toEqual({ "metric/x": { kind: "value", text: "good" } });
+        expect(entry?.lookup.get("lookup-for-bad")).toBeUndefined();
+    });
+
+    it("isolates fan-out per layer: one layer fans out while another resolves cleanly", async () => {
+        const entries: ITooltipLookupExecutionEntry<string>[] = [
+            {
+                key: "layer-a",
+                execution: makeTooltipExecution(makeBundle(makeRejectingExecution("a-batch")), [
+                    makeBundle(makeRejectingExecution("a-bad"), metaWith({ tt_m_0: "a-bad" })),
+                ]),
+                context: "ctx-a",
+            },
+            {
+                key: "layer-b",
+                execution: makeTooltipExecution(makeBundle(makeExecution("b"))),
+                context: "ctx-b",
+            },
+        ];
+        const { result } = renderHook(() => useTooltipLookupExecutions(entries));
+
+        await waitFor(() => expect(result.current.size).toBe(2));
+        // Layer A's batch failed and its only ref is bad → empty lookup; layer B is untouched.
+        expect(result.current.get("layer-a")?.lookup.size).toBe(0);
+        expect(result.current.get("layer-b")?.lookup.get("lookup-for-b")).toBeDefined();
     });
 
     it("re-fires when any entry's fingerprint changes", async () => {

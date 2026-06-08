@@ -127,6 +127,45 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
         ]);
     });
 
+    it("should send the active id and all child ids for a visualization switcher", async () => {
+        const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
+            workspaceId: "workspace",
+            conversationId: "conversation",
+            userQuestion: "Summarize",
+            userContext: {
+                view: {
+                    dashboard: {
+                        ref: idRef("dashboard-1", "analyticalDashboard"),
+                        widgets: [
+                            {
+                                title: "Sales",
+                                widgetRef: idRef("switcher-1", "analyticalDashboard"),
+                                widgetType: "visualizationSwitcher",
+                                insightRef: idRef("vis-active", "insight"),
+                                visualizationRefs: [
+                                    idRef("vis-active", "insight"),
+                                    idRef("vis-other", "insight"),
+                                ],
+                                resultId: "result-active",
+                            },
+                        ],
+                    },
+                },
+            },
+        });
+
+        await query.query();
+
+        const request = vi.mocked(GenAiApi_PostMessages).mock.calls[0][2];
+        const widget = request.aiSendMessageRequest.userContext?.view?.dashboard?.widgets?.[0];
+        expect(widget).toMatchObject({
+            widgetType: "visualizationSwitcher",
+            activeVisualizationId: "vis-active",
+            visualizationIds: ["vis-active", "vis-other"],
+            resultId: "result-active",
+        });
+    });
+
     it("should preserve empty-string richText content rather than dropping it", async () => {
         const query = new ChatConversationThreadQuery(authCall, dateNormalizer, {
             workspaceId: "workspace",

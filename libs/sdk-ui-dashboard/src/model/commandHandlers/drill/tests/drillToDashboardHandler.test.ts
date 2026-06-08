@@ -72,4 +72,21 @@ describe("drillToDashboardHandler parameter inheritance", () => {
 
         expect(event.payload.parameters).toEqual([{ ref: topNRef, value: 3 }]);
     });
+
+    it("marks the tab switch as drill-originated so saved filter state is not restored over the drill", async () => {
+        const sourceTabId = Tester.select(selectActiveTabLocalIdentifier)!;
+
+        await Tester.dispatchAndWaitFor(createDashboardTab("Tab 2"), "GDC.DASH/EVT.TAB.SWITCHED");
+        const targetTabId = Tester.select(selectActiveTabLocalIdentifier)!;
+
+        await Tester.dispatchAndWaitFor(switchDashboardTab(sourceTabId), "GDC.DASH/EVT.TAB.SWITCHED");
+
+        const tabSwitched = await Tester.dispatchAndWaitFor(
+            drillToDashboard({ ...selfDrillDefinition, targetTabLocalIdentifier: targetTabId }, drillEvent),
+            "GDC.DASH/EVT.TAB.SWITCHED",
+        );
+
+        expect(tabSwitched.payload.newTabId).toEqual(targetTabId);
+        expect(tabSwitched.payload.source).toEqual("drillToSelf");
+    });
 });

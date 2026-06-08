@@ -125,12 +125,10 @@ function ChartTransformationImpl({
             dataView.definition,
             config.type,
         );
-        customTooltipRuntimeRef.current.tooltipLookup = tooltipLookup?.lookup;
-        customTooltipRuntimeRef.current.erroredRefs = tooltipLookup?.erroredRefs;
+        customTooltipRuntimeRef.current.tooltipLookup = tooltipLookup;
     } else {
         customTooltipRuntimeRef.current.identifierMapping = undefined;
         customTooltipRuntimeRef.current.tooltipLookup = undefined;
-        customTooltipRuntimeRef.current.erroredRefs = undefined;
     }
     chartOptions.customTooltipRuntime = customTooltipRuntimeRef.current;
 

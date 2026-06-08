@@ -17,7 +17,7 @@ export function* switchDashboardTabHandler(
     ctx: DashboardContext,
     cmd: ISwitchDashboardTab,
 ): SagaIterator<IDashboardTabSwitched> {
-    const { tabId } = cmd.payload;
+    const { tabId, source } = cmd.payload;
 
     const currentActiveTabId: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
         selectActiveTabLocalIdentifier,
@@ -37,5 +37,5 @@ export function* switchDashboardTabHandler(
 
     yield put(batchActions(actions));
 
-    return dashboardTabSwitched(ctx, currentActiveTabId, tabId, cmd.correlationId);
+    return dashboardTabSwitched(ctx, currentActiveTabId, tabId, cmd.correlationId, source);
 }

@@ -1239,6 +1239,9 @@ class DummyOrganization implements IOrganization {
             getKnowledgeDocuments: () => {
                 throw new NotSupported("not supported");
             },
+            getObservability: () => {
+                throw new NotSupported("not supported");
+            },
         };
     }
 

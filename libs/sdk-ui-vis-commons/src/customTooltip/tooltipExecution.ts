@@ -207,8 +207,9 @@ export interface ITooltipExecutionBundle {
  * plus per-reference bundles used as an isolation fallback. When the batch
  * rejects (e.g. a single invalid reference 400s the whole AFM), the consumer
  * re-runs the per-reference bundles so one bad reference can't suppress the
- * rest. `perRef` is a thunk: the bundles are built lazily, only when the batch
- * fails, so consumers that never fan out (e.g. geo) pay nothing for it.
+ * rest. Both Highcharts and geo fan out this way. `perRef` is a thunk: the
+ * bundles are built lazily, only when the batch fails, so the success path
+ * pays nothing for it.
  *
  * @internal
  */
@@ -301,7 +302,8 @@ export function buildTooltipExecution(
         return null;
     }
 
-    // Lazy: built only on batch failure (the Highcharts fan-out); geo never calls it.
+    // Lazy: built only on batch failure (Highcharts and geo both fan out); the
+    // success path never invokes it.
     const perRef = () =>
         externalRefs
             .map((ref) => buildBundle(executionFactory, chartDefinition, [ref], options))

@@ -469,6 +469,16 @@ export interface AiDeleteDocumentResponse {
     'message': string;
 }
 
+
+export const AiDirection = {
+    INCREASED: 'INCREASED',
+    DECREASED: 'DECREASED',
+    NO_CHANGE: 'NO_CHANGE'
+} as const;
+
+export type AiDirection = typeof AiDirection[keyof typeof AiDirection];
+
+
 /**
  * Document metadata returned by GET /documents/{document_id} and list.
  */
@@ -739,6 +749,15 @@ export interface AiMetricSortLocatorItem {
     'function'?: string;
 }
 
+export interface AiMetricUsageResponse {
+    'type': AiObservabilityMetricType;
+    'currentValue': number;
+    'previousValue': number;
+    'direction': AiDirection;
+    'changePercentage': number;
+}
+
+
 
 export const AiMetricValueFilterConditionComparison = {
     GREATER_THAN: 'GREATER_THAN',
@@ -811,6 +830,21 @@ export const AiObjectType = {
 
 export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
 
+
+/**
+ * Metrics exposed by the AI observability endpoint.
+ */
+
+export const AiObservabilityMetricType = {
+    AI_QUERIES: 'AI_QUERIES'
+} as const;
+
+export type AiObservabilityMetricType = typeof AiObservabilityMetricType[keyof typeof AiObservabilityMetricType];
+
+
+export interface AiObservabilityOverviewResponse {
+    'metrics': Array<AiMetricUsageResponse>;
+}
 
 /**
  * Request body for PATCH /documents/{documentId}.
@@ -1262,6 +1296,7 @@ export interface AiUserContext {
 export interface AiUserContextDashboard {
     'id': string;
     'widgets'?: Array<AiUserContextWidgetDescriptor>;
+    'filters'?: Array<AiVisualizationFilter> | null;
 }
 
 export interface AiUserContextInsightWidgetDescriptor {
@@ -1530,6 +1565,110 @@ export interface AiWhatIfScenarioVariant {
     'adjustments': Array<AiWhatIfMeasureAdjustment>;
 }
 
+
+
+// AIObservabilityAi FP - AIObservabilityAiAxiosParamCreator
+/**
+ * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.
+ * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AIObservabilityAiAxiosParamCreator_GetObservabilityOverview(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ai/organization/observability`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AIObservabilityAi Api FP
+/**
+ * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.
+ * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AIObservabilityAi_GetObservabilityOverview(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiObservabilityOverviewResponse> {
+    const localVarAxiosArgs = await AIObservabilityAiAxiosParamCreator_GetObservabilityOverview(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * AIObservabilityAi - interface
+ * @export
+ * @interface AIObservabilityAi
+ */
+export interface AIObservabilityAiInterface {
+    /**
+     * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.
+     * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AIObservabilityAiInterface
+     */
+    getObservabilityOverview(options?: AxiosRequestConfig): AxiosPromise<AiObservabilityOverviewResponse>;
+
+}
+
+/**
+ * AIObservabilityAi - object-oriented interface
+ * @export
+ * @class AIObservabilityAi
+ * @extends {BaseAPI}
+ */
+export class AIObservabilityAi extends BaseAPI implements AIObservabilityAiInterface {
+    /**
+     * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.
+     * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AIObservabilityAi
+     */
+    public getObservabilityOverview(options?: AxiosRequestConfig) {
+        return AIObservabilityAi_GetObservabilityOverview(this.axios, this.basePath, options, this.configuration);
+    }
+}
 
 
 // AgentAi FP - AgentAiAxiosParamCreator

@@ -32,6 +32,7 @@ export interface ISemanticSearchProps {
     enableUseGenAIChat?: boolean;
     useHostedMetricEditor?: boolean;
     useHostedAnalyticalDesigner?: boolean;
+    useHostedLdmModeler?: boolean;
     onAskAiAssistant?: (question: string) => void;
     onEvent?: (event: SemanticSearchEvent) => void;
 }
@@ -47,6 +48,7 @@ export function SemanticSearch({
     enableUseGenAIChat = false,
     useHostedMetricEditor = false,
     useHostedAnalyticalDesigner = false,
+    useHostedLdmModeler = false,
     onAskAiAssistant,
     onEvent,
 }: ISemanticSearchProps) {
@@ -122,7 +124,7 @@ export function SemanticSearch({
             canAnalyze={canAnalyze}
             canFullControl={canFullControl}
             metadataTimezone={metadataTimeZone}
-            uiPathOptions={{ useHostedMetricEditor, useHostedAnalyticalDesigner }}
+            uiPathOptions={{ useHostedMetricEditor, useHostedAnalyticalDesigner, useHostedLdmModeler }}
             renderFooter={renderFooter}
         />
     );

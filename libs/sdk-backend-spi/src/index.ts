@@ -193,7 +193,13 @@ export {
     isChatConversationSearchContent,
 } from "./workspace/genAI/index.js";
 
-export type { IOrganizationGenAIService } from "./organization/genAI/index.js";
+export type {
+    IOrganizationAIObservabilityMetric,
+    IOrganizationAIObservabilityMetricType,
+    IOrganizationAIObservabilityOverview,
+    IOrganizationAIObservabilityService,
+    IOrganizationGenAIService,
+} from "./organization/genAI/index.js";
 
 export type {
     IReferencesResult,

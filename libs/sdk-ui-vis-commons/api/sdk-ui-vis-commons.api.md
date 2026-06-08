@@ -38,9 +38,6 @@ export class AttributeColorStrategy extends ColorStrategy {
 export function buildKeySegment(displayFormId: string, uri: string): string;
 
 // @internal
-export function buildLookupTable(dataView: IDataView, meta: ITooltipExecutionMeta, separators?: ISeparators): Map<string, IResolvedReferenceValues>;
-
-// @internal
 export function buildTooltipExecution(executionFactory: IExecutionFactory, chartDefinition: IExecutionDefinition, tooltipContent: string, options?: IBuildTooltipExecutionOptions): ITooltipExecution | null;
 
 // @internal
@@ -628,25 +625,15 @@ export interface ITooltipLookupExecutionEntry<TContext> {
     // (undocumented)
     context: TContext;
     // (undocumented)
-    execution: IPreparedExecution;
+    execution: ITooltipExecution;
     // (undocumented)
     key: string;
-    // (undocumented)
-    meta: ITooltipExecutionMeta;
 }
 
 // @internal
 export interface ITooltipLookupExecutionResult<TContext> {
     // (undocumented)
     context: TContext;
-    // (undocumented)
-    lookup: Map<string, IResolvedReferenceValues>;
-}
-
-// @internal
-export interface ITooltipLookupResult {
-    // (undocumented)
-    erroredRefs: ReadonlySet<string>;
     // (undocumented)
     lookup: Map<string, IResolvedReferenceValues>;
 }
@@ -731,8 +718,6 @@ export type ResolvedReference = {
     readonly kind: "empty";
 } | {
     readonly kind: "multiple";
-} | {
-    readonly kind: "error";
 };
 
 // @internal
@@ -754,7 +739,7 @@ export const StaticLegend: NamedExoticComponent<IStaticLegendProps>;
 export const SupportedLegendPositions: PositionType[];
 
 // @internal
-export function useTooltipLookup(execution: ITooltipExecution | undefined, separators?: ISeparators): ITooltipLookupResult | undefined;
+export function useTooltipLookup(execution: ITooltipExecution | undefined, separators?: ISeparators): Map<string, IResolvedReferenceValues> | undefined;
 
 // @internal
 export function useTooltipLookupExecutions<TContext>(entries: readonly ITooltipLookupExecutionEntry<TContext>[], separators?: ISeparators): Map<string, ITooltipLookupExecutionResult<TContext>>;

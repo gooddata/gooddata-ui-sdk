@@ -193,7 +193,9 @@ export function* drillToDashboardHandler(
 
     const targetTabLocalIdentifier = cmd.payload.drillDefinition.targetTabLocalIdentifier;
     if (targetTabLocalIdentifier && isDrillingToSelf) {
-        yield put(switchDashboardTab(targetTabLocalIdentifier));
+        // Mark the switch as drill-originated so saved filter state is not restored over the
+        // drill filters on the target tab.
+        yield put(switchDashboardTab(targetTabLocalIdentifier, cmd.correlationId, "drillToSelf"));
     }
 
     // put end event

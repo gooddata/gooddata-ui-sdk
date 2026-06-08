@@ -8,83 +8,63 @@ import { type GoodDataSdkError, useCancelablePromise } from "@gooddata/sdk-ui";
 
 import { type ITooltipExecution, type ITooltipExecutionMeta } from "./tooltipExecution.js";
 import { buildLookupTable } from "./tooltipLookup.js";
-import { type IResolvedReferenceValues, labelKey, metricKey } from "./types.js";
+import { type IResolvedReferenceValues } from "./types.js";
 
 async function executeOne(execution: IPreparedExecution): Promise<IDataView> {
     const result = await execution.execute();
     return result.readAll();
 }
 
-/**
- * Reference keys (`metric/id`, `label/id`) a bundle's meta covers. Used to mark
- * a failed per-reference bundle's references as errored.
- */
-function refKeysOfMeta(meta: ITooltipExecutionMeta): string[] {
-    return [
-        ...Object.values(meta.measureIdMap).map(metricKey),
-        ...Object.values(meta.labelIdMap).map(labelKey),
-    ];
-}
-
-/**
- * Built lookup plus references that could not be retrieved at all (their fetch
- * rejected even in the per-reference fallback). Errored references render as
- * "(Data could not be retrieved)" at every point.
- *
- * @internal
- */
-export interface ITooltipLookupResult {
-    lookup: Map<string, IResolvedReferenceValues>;
-    erroredRefs: ReadonlySet<string>;
-}
-
-// Successful (dataView, meta) pairs + failed ref keys; built into the lookup in a memo so separators changes don't re-execute.
-interface IExecutionOutcome {
-    inputs: Array<{ dataView: IDataView; meta: ITooltipExecutionMeta }>;
-    erroredRefs: Set<string>;
+/** A successfully-executed bundle: its dataView paired with the meta to read it. */
+interface IExecutionInput {
+    dataView: IDataView;
+    meta: ITooltipExecutionMeta;
 }
 
 /**
  * Execute the batch; on failure, fan out to per-reference bundles so a single
- * bad reference (e.g. one that 400s the batched AFM) only errors itself while
- * the rest still resolve. No reliance on parsing the backend error — failure is
- * isolated structurally by which per-reference execution rejects.
+ * bad reference (e.g. one that 400s the batched AFM) only takes itself down
+ * while the rest still resolve. Isolation is structural — a failed reference is
+ * left out of the returned inputs and renders the unresolved default, with no
+ * parsing of the backend error. Fan-out fires on *any* batch rejection (a
+ * transient 5xx/timeout too, not just a bad-ref 400), so a flaky backend can
+ * produce N follow-up executions per plan.
  */
-async function runWithFallback(execution: ITooltipExecution): Promise<IExecutionOutcome> {
+async function runWithFallback(execution: ITooltipExecution): Promise<IExecutionInput[]> {
     try {
         const dataView = await executeOne(execution.batch.execution);
-        return { inputs: [{ dataView, meta: execution.batch.meta }], erroredRefs: new Set() };
+        return [{ dataView, meta: execution.batch.meta }];
     } catch {
-        // Build the per-reference bundles now (lazy) and isolate each.
+        // Build the per-reference bundles now (lazy) and keep the ones that resolve.
         const perRef = execution.perRef();
         const settled = await Promise.allSettled(perRef.map((bundle) => executeOne(bundle.execution)));
-        const inputs: IExecutionOutcome["inputs"] = [];
-        const erroredRefs = new Set<string>();
+        const inputs: IExecutionInput[] = [];
         settled.forEach((result, index) => {
-            const bundle = perRef[index];
             if (result.status === "fulfilled") {
-                inputs.push({ dataView: result.value, meta: bundle.meta });
-            } else {
-                refKeysOfMeta(bundle.meta).forEach((key) => erroredRefs.add(key));
+                inputs.push({ dataView: result.value, meta: perRef[index].meta });
             }
         });
-        return { inputs, erroredRefs };
+        return inputs;
     }
 }
 
 /**
  * Merge per-execution lookups into one map (by point key, shallow-merging the
- * per-point reference statuses) and pair it with the errored references.
+ * per-point reference statuses). Built in a memo so a separators change rebuilds
+ * without re-executing.
  */
-function buildResult(outcome: IExecutionOutcome, separators?: ISeparators): ITooltipLookupResult {
+function buildLookup(
+    inputs: IExecutionInput[],
+    separators?: ISeparators,
+): Map<string, IResolvedReferenceValues> {
     const lookup = new Map<string, IResolvedReferenceValues>();
-    for (const { dataView, meta } of outcome.inputs) {
+    for (const { dataView, meta } of inputs) {
         for (const [pointKey, values] of buildLookupTable(dataView, meta, separators)) {
             const existing = lookup.get(pointKey);
             lookup.set(pointKey, existing ? { ...existing, ...values } : values);
         }
     }
-    return { lookup, erroredRefs: outcome.erroredRefs };
+    return lookup;
 }
 
 /**
@@ -98,34 +78,34 @@ function buildResult(outcome: IExecutionOutcome, separators?: ISeparators): IToo
 export function useTooltipLookup(
     execution: ITooltipExecution | undefined,
     separators?: ISeparators,
-): ITooltipLookupResult | undefined {
+): Map<string, IResolvedReferenceValues> | undefined {
     const fingerprint = execution?.batch.execution.fingerprint();
 
-    const { result } = useCancelablePromise<IExecutionOutcome, GoodDataSdkError>(
+    const { result } = useCancelablePromise<IExecutionInput[], GoodDataSdkError>(
         {
             promise: execution ? () => runWithFallback(execution) : undefined,
         },
         [fingerprint],
     );
 
-    return useMemo(() => (result ? buildResult(result, separators) : undefined), [result, separators]);
+    return useMemo(() => (result ? buildLookup(result, separators) : undefined), [result, separators]);
 }
 
 /**
- * One prepared tooltip execution paired with a caller-owned key and the
- * context that travels with the built lookup.
+ * One tooltip execution plan paired with a caller-owned key and the context
+ * that travels with the built lookup.
  *
  * @internal
  */
 export interface ITooltipLookupExecutionEntry<TContext> {
     key: string;
-    execution: IPreparedExecution;
-    meta: ITooltipExecutionMeta;
+    execution: ITooltipExecution;
     context: TContext;
 }
 
 /**
- * Built lookup for one tooltip execution entry.
+ * Built lookup for one tooltip execution entry (per-entry fan-out, mirroring
+ * the single-execution variant).
  *
  * @internal
  */
@@ -134,31 +114,41 @@ export interface ITooltipLookupExecutionResult<TContext> {
     context: TContext;
 }
 
-interface IExecutedEntry<TContext> extends ITooltipLookupExecutionEntry<TContext> {
-    dataView: IDataView;
+interface IExecutedEntry<TContext> {
+    key: string;
+    inputs: IExecutionInput[];
+    context: TContext;
 }
 
 const EMPTY_LOOKUPS = new Map<string, ITooltipLookupExecutionResult<unknown>>();
 
 function getEntriesFingerprint<TContext>(entries: readonly ITooltipLookupExecutionEntry<TContext>[]): string {
-    return entries.map((entry) => `${entry.key}::${entry.execution.fingerprint()}`).join("||");
+    return entries
+        .map((entry) => `${entry.key}::${entry.execution.batch.execution.fingerprint()}`)
+        .join("||");
 }
 
 async function executeAll<TContext>(
     entries: readonly ITooltipLookupExecutionEntry<TContext>[],
 ): Promise<Array<IExecutedEntry<TContext>>> {
+    // runWithFallback resolves for any execution failure (a failed reference is
+    // just omitted), so allSettled only guards a stray throw — one layer can't
+    // drop the rest.
     const settled = await Promise.allSettled(
-        entries.map(async (entry) => ({ ...entry, dataView: await executeOne(entry.execution) })),
+        entries.map(async (entry) => ({
+            key: entry.key,
+            inputs: await runWithFallback(entry.execution),
+            context: entry.context,
+        })),
     );
-    // Failed entries drop out silently; callers fall back when a lookup is missing.
     return settled.flatMap((result) => (result.status === "fulfilled" ? [result.value] : []));
 }
 
 /**
  * Multi-execution variant for chart families that key tooltip executions per
- * sub-target (e.g. geo per-layer). `context` is required so the produced
- * lookup carries whatever the caller needs to interpret the result —
- * downstream code does not have to defensively check for missing context.
+ * sub-target (e.g. geo per-layer). Each entry runs through the same batch →
+ * per-reference fan-out as the single-execution variant. `context` travels with
+ * the built lookup so downstream code needn't defensively check for it.
  *
  * @internal
  */
@@ -182,10 +172,8 @@ export function useTooltipLookupExecutions<TContext>(
 
         const lookups = new Map<string, ITooltipLookupExecutionResult<TContext>>();
         for (const entry of result) {
-            lookups.set(entry.key, {
-                lookup: buildLookupTable(entry.dataView, entry.meta, separators),
-                context: entry.context,
-            });
+            const lookup = buildLookup(entry.inputs, separators);
+            lookups.set(entry.key, { lookup, context: entry.context });
         }
         return lookups;
     }, [result, separators]);

@@ -1,5 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type DashboardTabSwitchSource } from "../commands/tabs.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 import { type IDashboardEvent } from "./base.js";
@@ -18,6 +19,15 @@ export interface IDashboardTabSwitchedPayload {
      * Identifier of the newly active tab.
      */
     readonly newTabId: string;
+
+    /**
+     * What triggered this tab switch.
+     *
+     * @remarks
+     * Omit for a regular user-initiated tab switch. See {@link DashboardTabSwitchSource} for the
+     * recognized values and their effect.
+     */
+    readonly source?: DashboardTabSwitchSource;
 }
 
 /**
@@ -37,6 +47,8 @@ export interface IDashboardTabSwitched extends IDashboardEvent {
  * @param previousTabId - identifier of the previously active tab
  * @param newTabId - identifier of the newly active tab
  * @param correlationId - correlation id to use for this event
+ * @param source - what triggered the switch; omit for a regular user-initiated tab switch.
+ *  See {@link DashboardTabSwitchSource}.
  * @returns dashboard tab switched event
  *
  * @alpha
@@ -46,6 +58,7 @@ export function dashboardTabSwitched(
     previousTabId: string | undefined,
     newTabId: string,
     correlationId?: string,
+    source?: DashboardTabSwitchSource,
 ): IDashboardTabSwitched {
     return {
         type: "GDC.DASH/EVT.TAB.SWITCHED",
@@ -54,6 +67,7 @@ export function dashboardTabSwitched(
         payload: {
             previousTabId,
             newTabId,
+            source,
         },
     };
 }

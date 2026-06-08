@@ -2,16 +2,13 @@
 
 /**
  * Assembles the custom-tooltip section / separator HTML for a hovered Highcharts
- * point: external values from the precomputed lookup (with errored references
- * overlaid), merged with in-chart values from the point's drill intersection.
- * Lives in the customTooltip module rather than the general chart-config file.
+ * point: external values from the precomputed lookup, merged with in-chart values
+ * from the point's drill intersection. A reference absent from the lookup renders
+ * as unretrievable. Lives in the customTooltip module rather than the general
+ * chart-config file.
  */
 
-import {
-    type IResolvedReferenceValues,
-    type ITooltipLocalizedStrings,
-    composeCustomTooltipSectionHtml,
-} from "@gooddata/sdk-ui-vis-commons";
+import { type ITooltipLocalizedStrings, composeCustomTooltipSectionHtml } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { type ICustomTooltipRuntime, type IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe.js";
@@ -33,15 +30,10 @@ export function getCustomTooltipSection(
         return "";
     }
 
-    // External values from the lookup, with errored references overlaid as errors.
+    // External values from the precomputed lookup (refs not in the chart).
     const intersection = point.drillIntersection ?? [];
     const pointKey = buildPointKey(intersection);
-    const externalValues: IResolvedReferenceValues = {
-        ...(customTooltipRuntime?.tooltipLookup?.get(pointKey) ?? {}),
-    };
-    for (const key of customTooltipRuntime?.erroredRefs ?? []) {
-        externalValues[key] = { kind: "error" };
-    }
+    const externalValues = customTooltipRuntime?.tooltipLookup?.get(pointKey) ?? {};
 
     // In-chart values from the hovered point's drill intersection.
     const pointLocal = resolveReferencesFromPoint(

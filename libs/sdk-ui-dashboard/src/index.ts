@@ -648,6 +648,7 @@ export {
 export {
     type ISwitchDashboardTab,
     type ISwitchDashboardTabPayload,
+    type DashboardTabSwitchSource,
     type ICreateDashboardTab,
     type ICreateDashboardTabPayload,
     type IRepositionDashboardTab,

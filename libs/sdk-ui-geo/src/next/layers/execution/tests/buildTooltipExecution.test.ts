@@ -4,10 +4,12 @@ import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { idRef, newAttribute } from "@gooddata/sdk-model";
+import { buildKeySegment, joinKeySegments } from "@gooddata/sdk-ui-vis-commons";
 
 import { areaAdapter } from "../../area/adapter.js";
 import { createAreaLayer } from "../../area/layerFactory.js";
 import { pushpinAdapter } from "../../pushpin/adapter.js";
+import { EMPTY_SEGMENT_VALUE } from "../../pushpin/constants.js";
 import { createPushpinLayer } from "../../pushpin/layerFactory.js";
 import { type IGeoAdapterContext } from "../../registry/adapterTypes.js";
 
@@ -17,6 +19,7 @@ const workspace = "test-workspace";
 const latitudeAttribute = newAttribute(idRef("attr.lat"), (a) => a.localId("lat"));
 const longitudeAttribute = newAttribute(idRef("attr.lng"), (a) => a.localId("lng"));
 const areaAttribute = newAttribute(idRef("attr.city"), (a) => a.localId("area"));
+const segmentByAttribute = newAttribute(idRef("attr.region"), (a) => a.localId("seg"));
 
 const customTooltipConfig = {
     enabled: true,
@@ -135,6 +138,85 @@ describe("pushpinAdapter.buildTooltipExecution", () => {
                 locationName: { title: "Region", attrId: "attr.lat", uri: "/region/bohemia" },
             }),
         ).toBeNull();
+    });
+
+    it("includes the segment in the feature key, matching buildLookupTable's key format", async () => {
+        const layer = createPushpinLayer({
+            latitude: latitudeAttribute,
+            longitude: longitudeAttribute,
+            segmentBy: segmentByAttribute,
+        });
+        const { definition } = await getPreparedPushpinDefinition(layer);
+        const context: IGeoAdapterContext = {
+            backend,
+            workspace,
+            config: { customTooltip: customTooltipConfig },
+        };
+
+        const built = pushpinAdapter.buildTooltipExecution!(layer, context, definition);
+        const key = built?.buildFeatureKey({
+            locationName: { title: "City", attrId: "attr.lat", uri: "/city/cz" },
+            segment: { title: "Bohemia", attrId: "attr.region", uri: "/region/bohemia" },
+        });
+
+        // buildLookupTable keys a row as joinKeySegments over per-attribute
+        // buildKeySegment(dfId, uri). The hover key must use the SAME primitives
+        // so the two sides meet — joinKeySegments sorts, so segment order can't drift.
+        expect(key).toBe(
+            joinKeySegments([
+                buildKeySegment("attr.lat", "/city/cz"),
+                buildKeySegment("attr.region", "/region/bohemia"),
+            ]),
+        );
+    });
+
+    it("normalizes the EMPTY_SEGMENT_VALUE sentinel to an empty uri so null-segment keys match", async () => {
+        const layer = createPushpinLayer({
+            latitude: latitudeAttribute,
+            longitude: longitudeAttribute,
+            segmentBy: segmentByAttribute,
+        });
+        const { definition } = await getPreparedPushpinDefinition(layer);
+        const context: IGeoAdapterContext = {
+            backend,
+            workspace,
+            config: { customTooltip: customTooltipConfig },
+        };
+
+        const built = pushpinAdapter.buildTooltipExecution!(layer, context, definition);
+        // The pushpin payload writer substitutes EMPTY_SEGMENT_VALUE for a null
+        // segment uri (MapLibre `in` filtering); the execution result keeps the
+        // original empty uri, so the hover key must normalize the sentinel back to "".
+        const key = built?.buildFeatureKey({
+            locationName: { title: "City", attrId: "attr.lat", uri: "/city/cz" },
+            segment: { title: "(empty value)", attrId: "attr.region", uri: EMPTY_SEGMENT_VALUE },
+        });
+
+        expect(key).toBe(
+            joinKeySegments([buildKeySegment("attr.lat", "/city/cz"), buildKeySegment("attr.region", "")]),
+        );
+    });
+
+    it("returns null when a segmented feature's segment df does not match the layer", async () => {
+        const layer = createPushpinLayer({
+            latitude: latitudeAttribute,
+            longitude: longitudeAttribute,
+            segmentBy: segmentByAttribute,
+        });
+        const { definition } = await getPreparedPushpinDefinition(layer);
+        const context: IGeoAdapterContext = {
+            backend,
+            workspace,
+            config: { customTooltip: customTooltipConfig },
+        };
+
+        const built = pushpinAdapter.buildTooltipExecution!(layer, context, definition);
+        const key = built?.buildFeatureKey({
+            locationName: { title: "City", attrId: "attr.lat", uri: "/city/cz" },
+            segment: { title: "Bohemia", attrId: "attr.WRONG", uri: "/region/bohemia" },
+        });
+
+        expect(key).toBeNull();
     });
 });
 

@@ -1933,6 +1933,27 @@ export interface IOrganizationAgentsService {
 }
 
 // @alpha
+export interface IOrganizationAIObservabilityMetric {
+    currentValue: number;
+    previousValue: number;
+    type: IOrganizationAIObservabilityMetricType;
+}
+
+// @alpha
+export type IOrganizationAIObservabilityMetricType = "AI_WORKSPACES" | "AI_USERS" | "AI_QUERIES";
+
+// @alpha
+export interface IOrganizationAIObservabilityOverview {
+    // (undocumented)
+    metrics: IOrganizationAIObservabilityMetric[];
+}
+
+// @alpha
+export interface IOrganizationAIObservabilityService {
+    getOverview(): Promise<IOrganizationAIObservabilityOverview>;
+}
+
+// @alpha
 export interface IOrganizationAutomationService {
     deleteAutomation(id: string, workspaceId: string): Promise<void>;
     deleteAutomations(automations: Array<{
@@ -1988,6 +2009,7 @@ export interface IOrganizationExportTemplatesService {
 // @alpha
 export interface IOrganizationGenAIService {
     getKnowledgeDocuments(): IKnowledgeDocumentsService;
+    getObservability(): IOrganizationAIObservabilityService;
 }
 
 // @alpha
