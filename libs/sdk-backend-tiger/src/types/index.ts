@@ -6,7 +6,7 @@ import {
     type JsonApiOrganizationSettingOutWithLinksTypeEnum,
 } from "@gooddata/api-client-tiger";
 import { type AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
-import { type FilterContextItem } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IDashboardExportParameter } from "@gooddata/sdk-model";
 
 /**
  * Tiger authenticated call guard
@@ -54,6 +54,7 @@ export type FiltersByTab = {
 export interface IExportMetadata {
     filters?: FilterContextItem[];
     filtersByTab?: FiltersByTab;
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
     title?: string;
     hideWidgetTitles?: boolean;
     exportMetadata?: Record<string, string>;

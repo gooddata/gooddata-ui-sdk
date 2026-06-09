@@ -10,8 +10,6 @@
 .gd-mobile-dropdown-content .gd-infinite-list.gd-filter-group-body {
     display: flex;
     flex-direction: column;
-    border: 1px solid variables.$gd-border-color;
-    border-radius: 3px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     min-width: 150px;
@@ -45,4 +43,24 @@
 
 .dropdown-body .gd-infinite-list.gd-filter-group-body {
     max-width: 300px;
+    border: 1px solid variables.$gd-border-color;
+    border-radius: 3px;
+}
+
+.gd-mobile-dropdown-content .gd-infinite-list.gd-filter-group-body {
+    & .gd-ui-kit-paged-virtual-list__item {
+        & .gd-attribute-filter-dropdown-button__next {
+            &::after {
+                border: none;
+                border-bottom: 1px solid var(--gd-palette-complementary-3);
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+        & .gd-ui-kit-control-button__subtitle-row {
+            &::after {
+                display: none;
+            }
+        }
+    }
 }

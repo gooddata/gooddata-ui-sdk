@@ -97,13 +97,13 @@ export const ARITHMETIC_OPERATORS: {
 };
 
 // @internal (undocumented)
-export function AttributeHierarchyDetailBubble({ children, className }: IAttributeHierarchyDetailBubbleProps): JSX.Element;
+export function AttributeHierarchyDetailBubble(input: IAttributeHierarchyDetailBubbleProps): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeHierarchyDetailPanel({ title, description, attributes, onEdit }: IAttributeHierarchyDetailPanelProps): JSX.Element;
+export function AttributeHierarchyDetailPanel(input: IAttributeHierarchyDetailPanelProps): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeHierarchyDialog({ initialAttributeRef, editingAttributeHierarchy, onClose, onSaveOrUpdateSuccess, onDeleteSuccess, onAddAttributeClicked, onCreateHierarchyClicked }: IAttributeHierarchyDialogProps): JSX.Element;
+export function AttributeHierarchyDialog(input: IAttributeHierarchyDialogProps): JSX.Element;
 
 // @internal
 export type AutomationColumnDefinition = {
@@ -116,7 +116,7 @@ export type AutomationColumnDefinition = {
 export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, tableVariant, isMobileView, enableBulkActions, externalInvalidationId, renderToolbarCustomElement, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad }: IAutomationsProps): JSX.Element;
+export function Automations(input: IAutomationsProps): JSX.Element;
 
 // @internal
 export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
@@ -183,28 +183,28 @@ export type DataSourcePermission = "USE" | "MANAGE";
 export type DataSourcePermissionSubject = "user" | "userGroup";
 
 // @public
-export function DefaultNotification({ notification, markNotificationAsRead, onNotificationClick, closeNotificationsPanel }: INotificationComponentProps): JSX.Element;
+export function DefaultNotification(input: INotificationComponentProps): JSX.Element;
 
 // @public
 export const DefaultNotificationSkeletonItem: typeof UiSkeleton;
 
 // @public
-export function DefaultNotificationsList({ Notification, NotificationsListEmptyState, NotificationsListErrorState, NotificationSkeletonItem, activeView, status, error, activeNotifications, markNotificationAsRead, onNotificationClick, hasNextPage, loadNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, closeNotificationsPanel }: INotificationsListComponentProps): JSX.Element;
+export function DefaultNotificationsList(input: INotificationsListComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsListEmptyState({ activeView }: INotificationsListEmptyStateComponentProps): JSX.Element;
+export function DefaultNotificationsListEmptyState(input: INotificationsListEmptyStateComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsListErrorState({ error }: INotificationsListErrorStateComponentProps): JSX.Element;
+export function DefaultNotificationsListErrorState(input: INotificationsListErrorStateComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsPanel({ NotificationsPanelHeader, NotificationsList, NotificationsListEmptyState, NotificationsListErrorState, Notification, NotificationSkeletonItem, activeView, changeActiveView, markNotificationAsRead, markAllNotificationsAsRead, unreadNotificationsCount, hasUnreadNotifications, activeNotifications, onNotificationClick, closeNotificationsPanel, status, error, loadNextPage, hasNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight }: INotificationsPanelComponentProps): JSX.Element;
+export function DefaultNotificationsPanel(input: INotificationsPanelComponentProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultNotificationsPanelButton({ buttonRef, isNotificationPanelOpen, toggleNotificationPanel, hasUnreadNotifications }: INotificationsPanelButtonComponentProps): JSX.Element;
+export function DefaultNotificationsPanelButton(input: INotificationsPanelButtonComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsPanelHeader({ activeView, changeActiveView, markAllNotificationsAsRead, hasUnreadNotifications, unreadNotificationsCount }: INotificationsPanelHeaderComponentProps): JSX.Element;
+export function DefaultNotificationsPanelHeader(input: INotificationsPanelHeaderComponentProps): JSX.Element;
 
 // @internal (undocumented)
 export const DeleteUserDialog: {
@@ -858,7 +858,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export function InsightError({ error, ErrorComponent, height, clientHeight }: IInsightErrorProps): JSX.Element;
+export function InsightError(input: IInsightErrorProps): JSX.Element;
 
 // @internal
 export type InsightListSortBy = "lastModified" | "name";
@@ -1122,7 +1122,7 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 export type TrackEventCallback = (event: TelemetryEvent) => void;
 
 // @internal
-export function useInsightPagedList({ backend, workspaceId, author, tabsIds, tags, excludeTags, sortBy, sortDirection, createdByFilter, includeAuthorInfo }: IUsePagedDropdownConfig): IUsePagedDropdownResult;
+export function useInsightPagedList(input: IUsePagedDropdownConfig): IUsePagedDropdownResult;
 
 // @internal
 export function useInsightPickerState(author?: string): {

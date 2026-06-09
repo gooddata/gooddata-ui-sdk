@@ -3,7 +3,7 @@
 "use strict";
 
 // baseline-browser-mapping needs to be updated to the latest version every 14 days
-const baselineBrowserMappingVersion = "2.10.33";
+const baselineBrowserMappingVersion = "2.10.34";
 
 // browserslist needs to be updated every 6 months
 const browserslistVersion = "4.28.2";
@@ -53,12 +53,6 @@ function readPackage(packageJson, _context) {
     if (packageJson.devDependencies && packageJson.devDependencies["browserslist"]) {
         //context.log("Fixed up dependencies for browserslist");
         packageJson.devDependencies["browserslist"] = browserslistVersion;
-    }
-
-    // remove after eslint-plugin-sonarjs is updated to > 3.0.7
-    if (packageJson.dependencies && packageJson.dependencies["minimatch"]) {
-        //context.log("Fixed up dependencies for minimatch");
-        packageJson.dependencies["minimatch"] = "10.1.2";
     }
 
     return packageJson;

@@ -2,7 +2,7 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
-import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { type IExecutionResultLimitBreak, type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
 import {
     isNonExportableError,
@@ -63,6 +63,38 @@ export const selectExecutionResultByRef: (
                 return executionResults[key];
             },
         ),
+);
+
+/**
+ * Selects the execution result limit breaks for the widget with the given ref.
+ *
+ * @remarks
+ * Limit breaks indicate that the widget's execution hit a row/column/cell limit and only partial
+ * data was returned. Returns an empty array when there are no limit breaks or the result is not available.
+ *
+ * @alpha
+ */
+export const selectExecutionResultLimitBreaksByRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IExecutionResultLimitBreak[]> = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(
+        selectExecutionResultByRef(ref),
+        (widgetExecution): IExecutionResultLimitBreak[] => widgetExecution?.limitBreaks ?? [],
+    ),
+);
+
+/**
+ * Selects whether the widget with the given ref returned partial data because an execution limit was reached.
+ *
+ * @alpha
+ */
+export const selectHasExecutionResultLimitBreaksByRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<boolean> = createMemoizedSelector((ref: ObjRef | undefined) =>
+    createSelector(
+        selectExecutionResultLimitBreaksByRef(ref),
+        (limitBreaks): boolean => limitBreaks.length > 0,
+    ),
 );
 
 /**

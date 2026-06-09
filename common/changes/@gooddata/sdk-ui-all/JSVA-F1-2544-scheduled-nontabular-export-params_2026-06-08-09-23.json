@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model: Add `parametersByTab` to `IExportDefinitionDashboardContent` and `IExportDefinitionVisualizationObjectContent`",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-tiger: Carry `content.parametersByTab` on scheduled non-tabular exports (visual/slides/image) as `metadata.parametersByTab` and restore it when reopening",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

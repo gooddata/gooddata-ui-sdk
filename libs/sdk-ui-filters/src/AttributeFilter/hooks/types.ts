@@ -454,6 +454,14 @@ export type SelectionTypeControllerCallbacks = {
      * @internal
      */
     resetForModeSwitch?: (newFilter: IAttributeFilter, newDisplayAsLabel?: ObjRef) => void;
+
+    /**
+     * Imperatively read the current working (not yet applied) elements selection as a filter.
+     * Used to snapshot the List selection before a mode switch so it can be restored later.
+     *
+     * @internal
+     */
+    getWorkingElementsFilter?: () => IAttributeFilter | undefined;
 };
 
 /**
@@ -482,7 +490,10 @@ export type ElementsFilterController = CommonFilterControllerData &
     ElementsFilterControllerData &
     CommonFilterControllerCallbacks &
     ElementsFilterControllerCallbacks &
-    Pick<SelectionTypeControllerCallbacks, "setDisplayForm" | "resetForModeSwitch">;
+    Pick<
+        SelectionTypeControllerCallbacks,
+        "setDisplayForm" | "resetForModeSwitch" | "getWorkingElementsFilter"
+    >;
 
 /**
  * Text mode controller return type.

@@ -59,6 +59,25 @@ export interface AiAfmObjectIdentifierBody {
     'type': string;
 }
 
+/**
+ * A single agent visible to the calling user in the workspace.
+ */
+export interface AiAgentListItemResponse {
+    'id': string;
+    'name': string;
+    'description'?: string | null;
+    'isAvailableToAll': boolean;
+    'modifiedAt'?: string | null;
+    'lastUsedAt'?: string | null;
+}
+
+/**
+ * List of agents accessible to the calling user.
+ */
+export interface AiAgentListResponse {
+    'agents': Array<AiAgentListItemResponse>;
+}
+
 export interface AiAllTimeDateFilterBodyInput {
     'dataset': AiAfmObjectIdentifier;
     'granularity'?: AiDateGranularityInput | null;
@@ -295,9 +314,15 @@ export interface AiConversationItemResponse {
     'responseId'?: string | null;
     'replyTo'?: string | null;
     'taskId'?: string | null;
+    'agentId'?: string | null;
+    'oldAgentId'?: string | null;
+    'newAgentId'?: string | null;
+    'actorUserId'?: string | null;
+    'trigger'?: AiConversationItemResponseTriggerEnum | null;
 }
 
-export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool';
+export type AiConversationItemResponseRoleEnum = 'user' | 'assistant' | 'tool' | 'system';
+export type AiConversationItemResponseTriggerEnum = 'agent_switched' | 'agent_updated';
 
 export interface AiConversationListMeta {
     'page': AiConversationListPageMeta;
@@ -394,6 +419,13 @@ export interface AiConversationUpdateRequest {
     'pinned'?: boolean | null;
 }
 
+/**
+ * POST /conversations body.
+ */
+export interface AiCreateConversationRequest {
+    'agentId'?: string | null;
+}
+
 export interface AiDateFilterAbsolute {
     'type': AiDateFilterAbsoluteTypeEnum;
     'using': string;
@@ -468,16 +500,6 @@ export interface AiDeleteDocumentResponse {
     'success': boolean;
     'message': string;
 }
-
-
-export const AiDirection = {
-    INCREASED: 'INCREASED',
-    DECREASED: 'DECREASED',
-    NO_CHANGE: 'NO_CHANGE'
-} as const;
-
-export type AiDirection = typeof AiDirection[keyof typeof AiDirection];
-
 
 /**
  * Document metadata returned by GET /documents/{document_id} and list.
@@ -753,8 +775,7 @@ export interface AiMetricUsageResponse {
     'type': AiObservabilityMetricType;
     'currentValue': number;
     'previousValue': number;
-    'direction': AiDirection;
-    'changePercentage': number;
+    'total'?: number | null;
 }
 
 
@@ -836,7 +857,9 @@ export type AiObjectType = typeof AiObjectType[keyof typeof AiObjectType];
  */
 
 export const AiObservabilityMetricType = {
-    AI_QUERIES: 'AI_QUERIES'
+    AI_QUERIES: 'AI_QUERIES',
+    AI_WORKSPACES: 'AI_WORKSPACES',
+    AI_USERS: 'AI_USERS'
 } as const;
 
 export type AiObservabilityMetricType = typeof AiObservabilityMetricType[keyof typeof AiObservabilityMetricType];
@@ -1223,6 +1246,13 @@ export interface AiSummarizeResponse {
  */
 export type AiSummarizeResponseFilterContextInner = AiAbsoluteDateFilter | AiAllTimeDateFilterOutput | AiAppApplicationDtosAfmFilterDefinitionRankingFilter | AiComparisonMeasureValueFilter | AiCompoundMeasureValueFilter | AiInlineFilterDefinition | AiMatchAttributeFilter | AiNegativeAttributeFilter | AiPositiveAttributeFilter | AiRangeMeasureValueFilter | AiRelativeDateFilterOutput;
 
+/**
+ * POST /conversations/{conversationId}/switchAgent body.
+ */
+export interface AiSwitchAgentRequest {
+    'agentId': string;
+}
+
 export interface AiTextFilterValue {
     'type': AiTextFilterValueTypeEnum;
     'using': string;
@@ -1569,7 +1599,7 @@ export interface AiWhatIfScenarioVariant {
 
 // AIObservabilityAi FP - AIObservabilityAiAxiosParamCreator
 /**
- * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.
+ * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
  * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -1611,7 +1641,7 @@ export async function AIObservabilityAiAxiosParamCreator_GetObservabilityOvervie
 
 // AIObservabilityAi Api FP
 /**
- * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.
+ * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
  * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -1641,7 +1671,7 @@ export async function AIObservabilityAi_GetObservabilityOverview(
  */
 export interface AIObservabilityAiInterface {
     /**
-     * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.
+     * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
      * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1659,7 +1689,7 @@ export interface AIObservabilityAiInterface {
  */
 export class AIObservabilityAi extends BaseAPI implements AIObservabilityAiInterface {
     /**
-     * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.
+     * Returns AI usage stats for the caller\'s organization for the current calendar month, alongside the previous month\'s value. Backed by the ai_usage_counters table populated by the metering pipeline.
      * @summary (EXPERIMENTAL) AI observability overview for the caller\'s organization
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1771,6 +1801,131 @@ export class AgentAi extends BaseAPI implements AgentAiInterface {
      */
     public listAvailableSkills(options?: AxiosRequestConfig) {
         return AgentAi_ListAvailableSkills(this.axios, this.basePath, options, this.configuration);
+    }
+}
+
+
+// AgentsAi FP - AgentsAiAxiosParamCreator
+/**
+ * List agents the calling user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the caller, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
+ * @summary List agents available to the current user in a workspace
+ * @param {string} workspaceId 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsAiAxiosParamCreator_ListAgents(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('listAgents', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/agents`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+
+// AgentsAi Api FP
+/**
+ * List agents the calling user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the caller, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
+ * @summary List agents available to the current user in a workspace
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AgentsAiListAgentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AgentsAi_ListAgents(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AgentsAiListAgentsRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiAgentListResponse> {
+    const localVarAxiosArgs = await AgentsAiAxiosParamCreator_ListAgents(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+/**
+ * AgentsAi - interface
+ * @export
+ * @interface AgentsAi
+ */
+export interface AgentsAiInterface {
+    /**
+     * List agents the calling user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the caller, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
+     * @summary List agents available to the current user in a workspace
+     * @param {AgentsAiListAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsAiInterface
+     */
+    listAgents(requestParameters: AgentsAiListAgentsRequest, options?: AxiosRequestConfig): AxiosPromise<AiAgentListResponse>;
+
+}
+
+/**
+ * Request parameters for listAgents operation in AgentsAi.
+ * @export
+ * @interface AgentsAiListAgentsRequest
+ */
+export interface AgentsAiListAgentsRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AgentsAiListAgents
+     */
+    readonly workspaceId: string
+}
+
+/**
+ * AgentsAi - object-oriented interface
+ * @export
+ * @class AgentsAi
+ * @extends {BaseAPI}
+ */
+export class AgentsAi extends BaseAPI implements AgentsAiInterface {
+    /**
+     * List agents the calling user can use in this workspace, sorted A-Z.  This is the personalized \"usable here\" view for the agent switcher -- access-filtered to the caller, enabled, non-preview, with per-agent lastUsedAt. For agent CRUD/management use the metadata entity endpoint GET /api/v1/entities/agents instead.
+     * @summary List agents available to the current user in a workspace
+     * @param {AgentsAiListAgentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AgentsAi
+     */
+    public listAgents(requestParameters: AgentsAiListAgentsRequest, options?: AxiosRequestConfig) {
+        return AgentsAi_ListAgents(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -2005,12 +2160,13 @@ export async function ConversationsAiAxiosParamCreator_PatchConversationApiV1AiW
  * @summary Post Conversations
  * @param {string} workspaceId 
  * @param {boolean} [isPreview] 
+ * @param {AiCreateConversationRequest} [aiCreateConversationRequest] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(
-    workspaceId: string, isPreview?: boolean, 
+    workspaceId: string, isPreview?: boolean, aiCreateConversationRequest?: AiCreateConversationRequest, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -2034,6 +2190,14 @@ export async function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiW
 
 
     
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -2041,6 +2205,12 @@ export async function ConversationsAiAxiosParamCreator_PostConversationsApiV1AiW
         ...headersFromBaseOptions,
         ...options.headers,
     };
+    const needsSerialization =
+        typeof aiCreateConversationRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiCreateConversationRequest !== undefined ? aiCreateConversationRequest : {})
+        : aiCreateConversationRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -2090,6 +2260,72 @@ export async function ConversationsAiAxiosParamCreator_PostGenerateConversationT
         ...headersFromBaseOptions,
         ...options.headers,
     };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ConversationsAi FP - ConversationsAiAxiosParamCreator
+/**
+ * 
+ * @summary Switch the active agent on an existing conversation
+ * @param {string} workspaceId 
+ * @param {string} conversationId 
+ * @param {AiSwitchAgentRequest} aiSwitchAgentRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAiAxiosParamCreator_SwitchAgent(
+    workspaceId: string, conversationId: string, aiSwitchAgentRequest: AiSwitchAgentRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('switchAgent', 'workspaceId', workspaceId)
+    // verify required parameter 'conversationId' is not null or undefined
+    assertParamExists('switchAgent', 'conversationId', conversationId)
+    // verify required parameter 'aiSwitchAgentRequest' is not null or undefined
+    assertParamExists('switchAgent', 'aiSwitchAgentRequest', aiSwitchAgentRequest)
+    const localVarPath = `/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/switchAgent`
+        .replace(`{${"workspace_id"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"conversation_id"}}`, encodeURIComponent(String(conversationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof aiSwitchAgentRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(aiSwitchAgentRequest !== undefined ? aiSwitchAgentRequest : {})
+        : aiSwitchAgentRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -2221,7 +2457,7 @@ export async function ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspac
     configuration?: Configuration,
 ): AxiosPromise<AiConversationResponse> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost(
-        requestParameters.workspaceId, requestParameters.isPreview, 
+        requestParameters.workspaceId, requestParameters.isPreview, requestParameters.aiCreateConversationRequest, 
         options || {},
         configuration,
     );
@@ -2248,6 +2484,32 @@ export async function ConversationsAi_PostGenerateConversationTitleApiV1AiWorksp
 ): AxiosPromise<AiConversationResponse> {
     const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(
         requestParameters.workspaceId, requestParameters.conversationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ConversationsAi Api FP
+/**
+ * 
+ * @summary Switch the active agent on an existing conversation
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ConversationsAiSwitchAgentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ConversationsAi_SwitchAgent(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ConversationsAiSwitchAgentRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AiConversationResponse> {
+    const localVarAxiosArgs = await ConversationsAiAxiosParamCreator_SwitchAgent(
+        requestParameters.workspaceId, requestParameters.conversationId, requestParameters.aiSwitchAgentRequest, 
         options || {},
         configuration,
     );
@@ -2320,6 +2582,16 @@ export interface ConversationsAiInterface {
      * @memberof ConversationsAiInterface
      */
     postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
+
+    /**
+     * 
+     * @summary Switch the active agent on an existing conversation
+     * @param {ConversationsAiSwitchAgentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAiInterface
+     */
+    switchAgent(requestParameters: ConversationsAiSwitchAgentRequest, options?: AxiosRequestConfig): AxiosPromise<AiConversationResponse>;
 
 }
 
@@ -2447,6 +2719,13 @@ export interface ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdCha
      * @memberof ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost
      */
     readonly isPreview?: boolean
+
+    /**
+     * 
+     * @type {AiCreateConversationRequest}
+     * @memberof ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost
+     */
+    readonly aiCreateConversationRequest?: AiCreateConversationRequest
 }
 
 /**
@@ -2468,6 +2747,34 @@ export interface ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWo
      * @memberof ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost
      */
     readonly conversationId: string
+}
+
+/**
+ * Request parameters for switchAgent operation in ConversationsAi.
+ * @export
+ * @interface ConversationsAiSwitchAgentRequest
+ */
+export interface ConversationsAiSwitchAgentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiSwitchAgent
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ConversationsAiSwitchAgent
+     */
+    readonly conversationId: string
+
+    /**
+     * 
+     * @type {AiSwitchAgentRequest}
+     * @memberof ConversationsAiSwitchAgent
+     */
+    readonly aiSwitchAgentRequest: AiSwitchAgentRequest
 }
 
 /**
@@ -2547,6 +2854,18 @@ export class ConversationsAi extends BaseAPI implements ConversationsAiInterface
      */
     public postGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(requestParameters: ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest, options?: AxiosRequestConfig) {
         return ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * 
+     * @summary Switch the active agent on an existing conversation
+     * @param {ConversationsAiSwitchAgentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConversationsAi
+     */
+    public switchAgent(requestParameters: ConversationsAiSwitchAgentRequest, options?: AxiosRequestConfig) {
+        return ConversationsAi_SwitchAgent(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 

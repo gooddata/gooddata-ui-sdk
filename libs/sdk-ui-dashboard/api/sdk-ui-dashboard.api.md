@@ -35,6 +35,7 @@ import { DrillDefinition } from '@gooddata/sdk-model';
 import { EmptyValues } from '@gooddata/sdk-model';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
+import { ExecutionResultLimitType } from '@gooddata/sdk-model';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
@@ -78,6 +79,7 @@ import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
+import { IDashboardExportParameter } from '@gooddata/sdk-model';
 import { IDashboardExportPresentationOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardExportRawOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterGroup } from '@gooddata/sdk-model';
@@ -94,7 +96,6 @@ import { IDashboardMeasureValueFilter } from '@gooddata/sdk-model';
 import { IDashboardMeasureValueFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardParameter } from '@gooddata/sdk-model';
-import { IDashboardParameterValueOverride } from '@gooddata/sdk-backend-spi';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
 import { IDashboardWidget } from '@gooddata/sdk-model';
@@ -122,6 +123,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionConfiguration } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
+import { IExecutionResultLimitBreak } from '@gooddata/sdk-model';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
@@ -233,7 +235,7 @@ export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): IAddAttributeFilter;
 
 // @internal (undocumented)
-export function AddAttributeFilterButton({ id, className, isOpen, title, buttonRef, onClick }: IAddAttributeFilterButtonProps): JSX.Element;
+export function AddAttributeFilterButton(input: IAddAttributeFilterButtonProps): JSX.Element;
 
 // @beta
 export type AddAttributeFilterPayload = {
@@ -250,7 +252,7 @@ export type AddAttributeFilterPayload = {
 };
 
 // @internal (undocumented)
-export function AddAttributeFilterPlaceholder({ disabled }: IAddAttributeFilterPlaceholderProps): JSX.Element;
+export function AddAttributeFilterPlaceholder(input: IAddAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha
 export function addDateFilter(dateDataset: ObjRef, index: number, correlationId?: string): IAddDateFilter;
@@ -356,7 +358,7 @@ export type AttributeHierarchiesInteractionType = "attributeHierarchyDrillDownSe
 export function attributeHierarchyModified(correlationId?: string): IAttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, measures, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, getCustomItemTitle, accessibilityConfig, returnFocusTo }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
+export function AttributesDropdown(input: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -502,7 +504,7 @@ export type ChangeFilterContextSelection = IDashboardCommand & {
 export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
 // @internal
-export function changeFilterContextSelectionByParams({ filters, attributeFilterConfigs, resetOthers, correlationId, tabLocalIdentifier }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
+export function changeFilterContextSelectionByParams(input: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
 
 // @public
 export type ChangeFilterContextSelectionParams = {
@@ -595,7 +597,7 @@ export function changeMigratedAttributeFilterSelection(filterLocalId: string, el
 export function changeNestedLayoutSectionHeader(index: ILayoutSectionPath, header: IDashboardLayoutSectionHeader, merge?: boolean, correlationId?: string): ChangeLayoutSectionHeader;
 
 // @internal
-export function changeParameterValues({ parameters, correlationId }: ChangeParameterValuesParams): IChangeParameterValues;
+export function changeParameterValues(input: ChangeParameterValuesParams): IChangeParameterValues;
 
 // @internal
 export type ChangeParameterValuesParams = {
@@ -655,7 +657,7 @@ export type ConfigurableWidget<TWidget> = {
 };
 
 // @internal (undocumented)
-export function CreatableAttributeFilter({ WrapCreatePanelItemWithDragComponent }: ICreatePanelItemComponentProps): JSX.Element;
+export function CreatableAttributeFilter(input: ICreatePanelItemComponentProps): JSX.Element;
 
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
@@ -1461,13 +1463,13 @@ export const DEFAULT_TAB_ID = "defaultTabId";
 export function DefaultAlertingDialog(props: IAlertingDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultAlertingManagementDialogNew({ onPauseSuccess, onPauseError, onEdit, onAdd, onDeleteSuccess, onDeleteError, onClose, isLoadingAlertingData, automations }: IAlertingManagementDialogProps): JSX.Element;
+export function DefaultAlertingManagementDialogNew(input: IAlertingManagementDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultButtonBar({ children, cancelButtonProps, saveButtonProps, settingButtonProps, editButtonProps, saveAsNewButtonProps, shareButtonProps, childContentPosition }: IButtonBarProps): ReactElement;
+export function DefaultButtonBar(input: IButtonBarProps): ReactElement;
 
 // @internal (undocumented)
-export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): JSX.Element | null;
+export function DefaultCancelButton(input: ICancelButtonProps): JSX.Element | null;
 
 // @internal (undocumented)
 export function DefaultCancelEditDialog(props: ICancelEditDialogProps): JSX.Element | null;
@@ -1479,13 +1481,13 @@ export function DefaultDashboardAttributeFilter(props: IDashboardAttributeFilter
 export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider: AttributeFilterComponentProvider): AttributeFilterComponentSet;
 
 // @alpha
-export function DefaultDashboardDateFilter({ filter, workingFilter, onFilterChanged, config, readonly, autoOpen, ButtonComponent, overlayPositionType, tabId }: IDashboardDateFilterProps): ReactElement;
+export function DefaultDashboardDateFilter(input: IDashboardDateFilterProps): ReactElement;
 
 // @internal (undocumented)
 export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider: DateFilterComponentProvider): DateFilterComponentSet;
 
 // @alpha (undocumented)
-export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboardExportVariablesProps): JSX.Element | null;
+export function DefaultDashboardExportVariables(input: IDefaultDashboardExportVariablesProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): ReactNode;
@@ -1533,19 +1535,19 @@ export function DefaultDashboardRichTextMenu(props: IDashboardRichTextMenuProps)
 export function DefaultDashboardRichTextMenuTitle(_props: IDashboardRichTextMenuTitleProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultDashboardSettingsDialog({ isVisible, onApply, onCancel }: IDashboardSettingsDialogProps): ReactElement | null;
+export function DefaultDashboardSettingsDialog(input: IDashboardSettingsDialogProps): ReactElement | null;
 
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @internal (undocumented)
-export function DefaultDashboardToolbar({ children }: IToolbarProps): JSX.Element;
+export function DefaultDashboardToolbar(input: IToolbarProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultDashboardToolbarButton({ tooltip, disabled, icon, onClick, isActive }: IDefaultDashboardToolbarButtonProps): JSX.Element;
+export function DefaultDashboardToolbarButton(input: IDefaultDashboardToolbarButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultDashboardToolbarGroup({ children, title }: IDefaultDashboardToolbarGroupProps): JSX.Element;
+export function DefaultDashboardToolbarGroup(input: IDefaultDashboardToolbarGroupProps): JSX.Element;
 
 // @public
 export const DefaultDashboardVisualizationSwitcher: ComponentType<IDashboardVisualizationSwitcherProps>;
@@ -1560,13 +1562,13 @@ export const DefaultDashboardWidget: NamedExoticComponent<IDashboardWidgetProps>
 export function DefaultDrillDialogExportDropdown(props: IDrillDialogExportDropdownProps): ReactElement;
 
 // @internal (undocumented)
-export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps): JSX.Element | null;
+export function DefaultEditButton(input: IEditButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultFilterBar(props: IFilterBarProps): ReactElement;
 
 // @alpha (undocumented)
-export function DefaultFlexibleDashboardLayout({ layout: providedLayout, onFiltersChange, onDrill, onError, dashboardItemClasses }: IDashboardLayoutProps): ReactElement;
+export function DefaultFlexibleDashboardLayout(input: IDashboardLayoutProps): ReactElement;
 
 // @alpha
 export function DefaultInsightBody(props: IInsightBodyProps): JSX.Element;
@@ -1575,31 +1577,31 @@ export function DefaultInsightBody(props: IInsightBodyProps): JSX.Element;
 export function DefaultLockedStatus(props: ILockedStatusProps): ReactElement | null;
 
 // @alpha (undocumented)
-export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement | null;
+export function DefaultMenuButton(input: IMenuButtonProps): ReactElement | null;
 
 // @alpha (undocumented)
-export function DefaultSaveAsDialog({ onSubmit, onCancel, onError, isVisible, onSuccess }: ISaveAsDialogProps): ReactElement | null;
+export function DefaultSaveAsDialog(input: ISaveAsDialogProps): ReactElement | null;
 
 // @internal (undocumented)
-export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsNewButtonProps): JSX.Element | null;
+export function DefaultSaveAsNewButton(input: ISaveAsNewButtonProps): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, onSaveClick }: ISaveButtonProps): JSX.Element | null;
+export function DefaultSaveButton(input: ISaveButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultScheduledEmailManagementDialog({ onAdd, onEdit, onDeleteSuccess: onDelete, onClose, onDeleteError, isLoadingScheduleData, automations, notificationChannels }: IScheduledEmailManagementDialogProps): JSX.Element;
+export function DefaultScheduledEmailManagementDialog(input: IScheduledEmailManagementDialogProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, onSettingClick }: ISettingButtonProps): JSX.Element | null;
+export function DefaultSettingButton(input: ISettingButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
-export function DefaultShareButton({ isVisible, onShareButtonClick }: IShareButtonProps): ReactElement | null;
+export function DefaultShareButton(input: IShareButtonProps): ReactElement | null;
 
 // @alpha (undocumented)
-export function DefaultShareDialog({ workspace, backend, isVisible, sharedObject, currentUser, isLockingSupported, isCurrentUserWorkspaceManager, currentUserPermissions, dashboardFilters, dashboardParameters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onApply, onCancel, onError, onInteraction, onShareLinkCopy }: IShareDialogProps): ReactElement | null;
+export function DefaultShareDialog(input: IShareDialogProps): ReactElement | null;
 
 // @alpha (undocumented)
 export function DefaultShareStatus(props: IShareStatusProps): ReactElement | null;
@@ -1608,7 +1610,7 @@ export function DefaultShareStatus(props: IShareStatusProps): ReactElement | nul
 export function DefaultShowAsTableButton(props: IShowAsTableButtonProps): ReactElement;
 
 // @alpha (undocumented)
-export function DefaultTitle({ title }: ITitleProps): JSX.Element;
+export function DefaultTitle(input: ITitleProps): JSX.Element;
 
 // @alpha (undocumented)
 export function DefaultTopBar(props: ITopBarProps): ReactElement;
@@ -1805,7 +1807,7 @@ export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, 
 export function eagerRemoveSectionItemByWidgetRef(widgetRef: ObjRef, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): IRemoveSectionItemByWidgetRef;
 
 // @alpha (undocumented)
-export function EditableTitle({ title, onTitleChanged }: ITitleProps): JSX.Element;
+export function EditableTitle(input: ITitleProps): JSX.Element;
 
 // @internal (undocumented)
 export function EditButton(props: IEditButtonProps): ReactElement;
@@ -1871,7 +1873,7 @@ export function exportRawInsightWidget(ref: ObjRef, widget: IInsightWidget, insi
 export function exportSlidesInsightWidget(ref: ObjRef, filename: string, exportType: "pdf" | "pptx", correlationId?: string, templateId?: string): IExportSlidesInsightWidget;
 
 // @alpha (undocumented)
-export function ExportThemeProvider({ children }: IExportThemeProviderProps): JSX.Element;
+export function ExportThemeProvider(input: IExportThemeProviderProps): JSX.Element;
 
 // @public
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
@@ -2004,13 +2006,13 @@ export function getAttributeFilters(filters: FilterContextItem[]): DashboardAttr
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, includeConfigurations, useWidgetDeleteDialog }: InsightMenuItemDependencies): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(widget: IInsightWidget, input: InsightMenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: IUseInsightMenuConfig, execution?: IExecutionResultEnvelope): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDefaultRichTextEditMode(widget: IRichTextWidget, { intl, dispatch, enableRichTextWidgetFilterConfiguration }: RichTextMenuItemDependencies): IRichTextMenuItem[];
+export function getDefaultRichTextEditMode(widget: IRichTextWidget, input: RichTextMenuItemDependencies): IRichTextMenuItem[];
 
 // @internal (undocumented)
 export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEvent: IDrillEvent, drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[], drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject): string | null;
@@ -5700,6 +5702,8 @@ export interface IExecutionResultEnvelope {
     id: string;
     // (undocumented)
     isLoading: boolean;
+    // @alpha
+    limitBreaks?: IExecutionResultLimitBreak[];
     // (undocumented)
     warnings?: IResultWarning[];
 }
@@ -6775,7 +6779,7 @@ export type InsightDraggableListItem = BaseDraggableLayoutItem & {
 export type InsightDraggingComponent = ComponentType<IInsightDraggingComponentProps>;
 
 // @internal (undocumented)
-export function InsightList({ height, width, searchAutofocus, renderItem, selectedRef, onSelect }: IInsightListProps): JSX.Element;
+export function InsightList(input: IInsightListProps): JSX.Element;
 
 // @alpha (undocumented)
 export type InsightMenuButtonComponentProvider = (insight: IInsight | undefined, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent;
@@ -6805,7 +6809,7 @@ export type InsightPlaceholderDraggableItem = BaseDraggableLayoutItem & {
 };
 
 // @alpha
-export function insightSelectDateDataset({ mostImportantFromInsight, dateDatasetsOrdered }: IInsightDateDatasets): ICatalogDateDataset | undefined;
+export function insightSelectDateDataset(input: IInsightDateDatasets): ICatalogDateDataset | undefined;
 
 // @internal
 export class InsightWidgetBuilder {
@@ -10914,16 +10918,20 @@ export const selectExecutionResult: (state: DashboardState, id: EntityId) => {
     executionResult?: IExecutionResult | undefined;
     error?: GoodDataSdkError | undefined;
     warnings?: IResultWarning[] | undefined;
+    limitBreaks?: IExecutionResultLimitBreak<ExecutionResultLimitType | (string & {})>[] | undefined;
 };
 
 // @alpha (undocumented)
 export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardSelector<IExecutionResultEnvelope | undefined>;
 
+// @alpha
+export const selectExecutionResultLimitBreaksByRef: (ref: ObjRef | undefined) => DashboardSelector<IExecutionResultLimitBreak[]>;
+
 // @internal (undocumented)
 export const selectExecutionTimestamp: DashboardSelector<string | undefined>;
 
 // @alpha
-export const selectExportEffectiveParameters: (widgetIds: string[] | undefined) => DashboardSelector<Record<string, IDashboardParameterValueOverride[]>>;
+export const selectExportEffectiveParameters: (widgetIds: string[] | undefined) => DashboardSelector<Record<string, IDashboardExportParameter[]>>;
 
 // @beta
 export const selectExportMetadata: DashboardSelector<Record<string, string> | undefined>;
@@ -11145,6 +11153,9 @@ export const selectHasCatalogFacts: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectHasCatalogMeasures: DashboardSelector<boolean>;
+
+// @alpha
+export const selectHasExecutionResultLimitBreaksByRef: (ref: ObjRef | undefined) => DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectHasSomeExecutionResult: DashboardSelector<boolean>;
@@ -11852,7 +11863,7 @@ export function setDateFilterConfigTitle(dataSet?: ObjRef, title?: string, corre
 export function setDrillForKpiWidget(ref: ObjRef, legacyDashboardRef: ObjRef, legacyDashboardTabIdentifier: string, correlationId?: string): ISetDrillForKpiWidget;
 
 // @beta
-export function setExecutionResultData(id: ObjRef | string, executionResult: IExecutionResult, executionWarnings: IResultWarning[] | undefined, correlationId?: string): IUpsertExecutionResult;
+export function setExecutionResultData(id: ObjRef | string, executionResult: IExecutionResult, executionWarnings: IResultWarning[] | undefined, limitBreaks: IExecutionResultLimitBreak[] | undefined, correlationId?: string): IUpsertExecutionResult;
 
 // @beta
 export function setExecutionResultError(id: ObjRef | string, error: GoodDataSdkError, correlationId?: string): IUpsertExecutionResult;
@@ -11907,7 +11918,7 @@ export type ShareDialogInteractionPayload = IUserInteractionPayloadWithDataBase<
 export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
 
 // @alpha (undocumented)
-export function ShareStatusIndicator({ shareStatus, isUnderStrictControl }: IShareStatusProps): ReactElement | null;
+export function ShareStatusIndicator(input: IShareStatusProps): ReactElement | null;
 
 // @internal (undocumented)
 export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement;
@@ -12694,13 +12705,13 @@ export const useCancelEditDialog: () => {
 };
 
 // @public
-export function useCustomWidgetExecutionDataView({ enableExecutionCancelling, widget, execution, onCancel, onError, onLoading, onPending, onSuccess }: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useCustomWidgetExecutionDataView(input: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseCustomWidgetExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 // @public
-export function useCustomWidgetInsightDataView({ widget, insight, enableExecutionCancelling, onCancel, onError, onLoading, onPending, onSuccess }: IUseCustomWidgetInsightDataViewConfig & UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useCustomWidgetInsightDataView(input: IUseCustomWidgetInsightDataViewConfig & UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
@@ -12757,7 +12768,7 @@ export const useDashboardAutomations: () => {
 };
 
 // @internal (undocumented)
-export const useDashboardCommandProcessing: <TCommand extends DashboardCommands, TCommandCreatorArgs extends any[], TSuccessEventType extends DashboardEventType, TErrorEventType extends DashboardEventType>({ commandCreator, successEvent, errorEvent, onSuccess, onError, onBeforeRun, }: {
+export const useDashboardCommandProcessing: <TCommand extends DashboardCommands, TCommandCreatorArgs extends any[], TSuccessEventType extends DashboardEventType, TErrorEventType extends DashboardEventType>(input: {
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
     successEvent: TSuccessEventType;
     errorEvent: TErrorEventType;
@@ -13262,7 +13273,7 @@ export const useDashboardEventsContext: () => IDashboardEventsContext;
 export const useDashboardExportData: (renderMode: RenderMode | undefined, status: "empty" | "loaded", type: "nested" | "root") => CommonExportDataAttributes | undefined;
 
 // @internal (undocumented)
-export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryResult, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
+export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryResult, TQueryCreatorArgs extends any[]>(input: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
     onSuccess?: ((result: TQueryResult) => void) | undefined;
     onError?: ((event: IDashboardQueryFailed) => void) | undefined;
@@ -13339,43 +13350,43 @@ export function useDefaultMenuItems(): IMenuButtonItem[];
 export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
 
 // @internal (undocumented)
-export const useDrill: ({ onSuccess, onError, onBeforeRun }?: IUseDrillProps) => {
+export const useDrill: (input?: IUseDrillProps) => {
     run: (drillEvent: IDashboardDrillEvent, drillContext: IDashboardDrillContext, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
-export const useDrillDown: ({ onSuccess, onError, onBeforeRun }?: IUseDrillDownProps) => {
+export const useDrillDown: (input?: IUseDrillDownProps) => {
     run: (insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
-export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun, }?: IUseDrillToAttributeUrlProps) => {
+export const useDrillToAttributeUrl: (input?: IUseDrillToAttributeUrlProps) => {
     run: (drillDefinition: IDrillToAttributeUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
-export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToCustomUrlProps) => {
+export const useDrillToCustomUrl: (input?: IUseDrillToCustomUrlProps) => {
     run: (drillDefinition: IDrillToCustomUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
-export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToDashboardProps) => {
+export const useDrillToDashboard: (input?: IUseDrillToDashboardProps) => {
     run: (drillDefinition: IDrillToDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
-export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToInsightProps) => {
+export const useDrillToInsight: (input?: IUseDrillToInsightProps) => {
     run: (drillDefinition: IDrillToInsight_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
-export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: IUseDrillToLegacyDashboardProps) => {
+export const useDrillToLegacyDashboard: (input?: IUseDrillToLegacyDashboardProps) => {
     run: (drillDefinition: IDrillToLegacyDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
     status?: CommandProcessingStatus | undefined;
 };
@@ -13387,7 +13398,7 @@ export function useEditButtonProps(): IEditButtonProps;
 export const useFilterBarProps: () => IFilterBarProps;
 
 // @public
-export function useInsightWidgetDataView({ insightWidget, onCancel, onError, onLoading, onPending, onSuccess }: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useInsightWidgetDataView(input: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
@@ -13471,7 +13482,7 @@ export function useWidgetDragEndHandler(): () => void;
 export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onLoadingChanged: OnLoadingChanged;
     onError: OnError;
-    onSuccess: (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined) => void;
+    onSuccess: (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined, limitBreaks?: IExecutionResultLimitBreak<ExecutionResultLimitType | (string & {})>[] | undefined) => void;
     onPushData: (data: IPushData) => void;
 };
 
@@ -13556,7 +13567,7 @@ export type WidgetExportDimensionsAttributes = {
 export type WidgetsOverlayFn = (dashboard: IDashboard<ExtendedDashboardWidget>) => Record<string, IDashboardWidgetOverlay>;
 
 // @internal (undocumented)
-export function WithDrillSelect({ widgetRef, children, insight, returnFocusToInsight, onDrillStart, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onKeyDriverAnalysisSuccess, onError }: IWithDrillSelectProps): ReactElement;
+export function WithDrillSelect(input: IWithDrillSelectProps): ReactElement;
 
 // @alpha
 export type WorkingDashboardAttributeFilter = {

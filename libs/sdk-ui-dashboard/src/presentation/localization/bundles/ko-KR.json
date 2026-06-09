@@ -437,7 +437,7 @@
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "이 시각화에는 필터를 적용할 수 없습니다.",
     "configurationPanel.mvfBlockedByRankingFilter": "이 필터는 시각화에서 상위/하위 값 필터를 사용하므로 적용할 수 없습니다. 이 필터를 적용하려면 상위/하위 값 필터를 제거하세요.",
     "configurationPanel.mvfMissingMeasure": "이 필터에 사용된 메트릭이 더 이상 작업 공간에 존재하지 않습니다.",
-    "filters.mvf.missingMetric.tooltip": "이 필터에 사용된 메트릭이 더 이상 작업 공간에 존재하지 않습니다.",
+    "filters.mvf.missingMetric.tooltip": "오류: 이 필터에 사용된 메트릭이 더 이상 작업 공간에 존재하지 않습니다.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI는 날짜로 필터링할 수 없습니다. 체크박스를 선택 해제하세요.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\"을/를 더 이상 시각화에 적용할 수 없습니다. 다른 차원을 선택하거나 시각화를 편집하세요.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\"은/는 더 이상 KPI에 적용할 수 없습니다. 다른 차원을 선택하거나 KPI를 편집하세요.",

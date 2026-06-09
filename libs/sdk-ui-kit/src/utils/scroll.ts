@@ -1,5 +1,6 @@
-// (C) 2022-2025 GoodData Corporation
-import { throttle } from "lodash-es";
+// (C) 2022-2026 GoodData Corporation
+
+import { type DebouncedFunc, throttle } from "lodash-es";
 
 /**
  * Custom event name for goodstrap scroll events.
@@ -28,7 +29,7 @@ const fireGoodstrapScrollEvent = (
  * This event is throttled by default
  * @internal
  */
-export const handleOnScrollEvent = throttle(
+export const handleOnScrollEvent: DebouncedFunc<(node: HTMLElement) => void> = throttle(
     (node: HTMLElement) => fireGoodstrapScrollEvent(node, window),
     500,
 );

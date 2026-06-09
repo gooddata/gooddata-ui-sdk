@@ -120,7 +120,10 @@ function OperatorListItem({
 }
 
 function OperatorSeparatorItem() {
-    return <SingleSelectListItem type="separator" accessibilityConfig={{ role: "separator" }} />;
+    // The divider between operator groups is purely visual. `role="presentation"` keeps it out of
+    // the a11y tree — a bare `separator` is not a valid child of `role="listbox"` (which permits
+    // only `option`/`group`), and the enclosing <li> is likewise presentational in UiListbox.
+    return <SingleSelectListItem type="separator" accessibilityConfig={{ role: "presentation" }} />;
 }
 
 export const OperatorDropdownBody = memo(function OperatorDropdownBody({

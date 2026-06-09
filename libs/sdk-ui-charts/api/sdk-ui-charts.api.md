@@ -1083,12 +1083,12 @@ export function Treemap(props: ITreemapProps): JSX.Element;
 export function updateConfigWithSettings(config: IChartConfig | undefined, settings: ISettings | undefined): IChartConfig;
 
 // @internal (undocumented)
-export function updateForecastWithSettings(config: IChartConfig, settings: ISettings, { enabled }: {
+export function updateForecastWithSettings(config: IChartConfig, settings: ISettings, input: {
     enabled: boolean;
 }): IForecastConfig | undefined;
 
 // @internal (undocumented)
-export function updateOutliersWithSettings(config: IChartConfig, settings: ISettings, { enabled }: {
+export function updateOutliersWithSettings(config: IChartConfig, settings: ISettings, input: {
     enabled: boolean;
 }): IOutliersConfig | undefined;
 

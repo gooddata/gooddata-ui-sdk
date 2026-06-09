@@ -2,8 +2,8 @@
 
 import { useCallback } from "react";
 
-import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { type IResultWarning, type ObjRef } from "@gooddata/sdk-model";
+import { type IDataView, type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { type IExecutionResultLimitBreak, type IResultWarning, type ObjRef } from "@gooddata/sdk-model";
 import { type IPushData, type OnError, type OnLoadingChanged } from "@gooddata/sdk-ui";
 
 import {
@@ -13,6 +13,11 @@ import {
 } from "../commands/executionResults.js";
 
 import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
+
+function getLimitBreaks(dataView: IDataView): IExecutionResultLimitBreak[] | undefined {
+    const limitBreaks = dataView.metadata?.limitBreaks;
+    return limitBreaks && limitBreaks.length > 0 ? [...limitBreaks] : undefined;
+}
 
 /**
  * Provides callbacks to integrate with the executionResults slice.
@@ -31,8 +36,12 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
     );
 
     const onSuccess = useCallback(
-        (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined) => {
-            setData(widgetRef, executionResult, warnings);
+        (
+            executionResult: IExecutionResult,
+            warnings: IResultWarning[] | undefined,
+            limitBreaks?: IExecutionResultLimitBreak[],
+        ) => {
+            setData(widgetRef, executionResult, warnings, limitBreaks);
         },
         [setData, widgetRef],
     );
@@ -40,7 +49,8 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef) {
     const onPushData = useCallback(
         (data: IPushData): void => {
             if (data.dataView) {
-                onSuccess(data.dataView.result, data.dataView.warnings);
+                const limitBreaks = getLimitBreaks(data.dataView);
+                onSuccess(data.dataView.result, data.dataView.warnings, limitBreaks);
             }
         },
         [onSuccess],

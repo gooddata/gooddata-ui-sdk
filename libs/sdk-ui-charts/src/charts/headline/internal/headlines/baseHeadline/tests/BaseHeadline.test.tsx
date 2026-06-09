@@ -5,10 +5,9 @@ import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
-import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
+import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
-import { BaseHeadline } from "../BaseHeadline.js";
+import { BaseHeadline, type IHeadlineProps } from "../BaseHeadline.js";
 import { CompareSection } from "../CompareSection.js";
 import { PrimarySection } from "../PrimarySection.js";
 
@@ -35,36 +34,36 @@ describe("BaseHeadline", () => {
     const primaryItem = TEST_BASE_HEADLINE_ITEM;
     const secondaryItem = {
         ...TEST_BASE_HEADLINE_ITEM,
-        elementType: "secondaryValue" as const,
+        elementType: "secondaryValue",
         data: {
             ...TEST_BASE_HEADLINE_ITEM.data,
             localIdentifier: "secondary_local_identifier",
         },
-    } as IBaseHeadlineItem<IHeadlineDataItem>;
+    } satisfies IBaseHeadlineItem;
     const tertiaryItem = {
         ...TEST_BASE_HEADLINE_ITEM,
         data: {
             ...TEST_BASE_HEADLINE_ITEM.data,
             localIdentifier: "tertiary_local_identifier",
         },
-    } as IBaseHeadlineItem<IHeadlineDataItem>;
+    } satisfies IBaseHeadlineItem;
 
     const renderBaseHeadline = (params: {
-        primaryItem: IBaseHeadlineItem<IHeadlineDataItem>;
-        secondaryItem?: IBaseHeadlineItem<IHeadlineDataItem>;
-        tertiaryItem?: IBaseHeadlineItem<IHeadlineDataItem>;
+        primaryItem: IBaseHeadlineItem;
+        secondaryItem?: IBaseHeadlineItem;
+        tertiaryItem?: IBaseHeadlineItem;
         onAfterRender?: () => void;
     }) => {
         const props = {
             data: {
-                primaryItem: params.primaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
-                secondaryItem: params.secondaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
-                tertiaryItem: params.tertiaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
+                primaryItem: params.primaryItem,
+                secondaryItem: params.secondaryItem,
+                tertiaryItem: params.tertiaryItem,
             },
             config: {},
             onDrill: vi.fn(),
             onAfterRender: params.onAfterRender || vi.fn(),
-        };
+        } satisfies IHeadlineProps;
 
         const WrappedBaseHeadline = withIntl(BaseHeadline);
         return render(<WrappedBaseHeadline {...props} />);

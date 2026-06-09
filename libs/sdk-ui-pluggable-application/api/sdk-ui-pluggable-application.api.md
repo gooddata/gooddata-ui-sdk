@@ -14,7 +14,7 @@ import { JSX } from 'react/jsx-runtime';
 import { PropsWithChildren } from 'react';
 
 // @alpha
-export function AppProviders({ ctx, packageName, resolveMessages: resolveMessagesFn, defaultMessages, defaultLanguage, children }: PropsWithChildren<IAppProvidersProps>): JSX.Element;
+export function AppProviders(input: PropsWithChildren<IAppProvidersProps>): JSX.Element;
 
 // @alpha
 export function createBackendForModule(auth: IAuthCredentials, options: ICreateBackendForModuleOptions): IAnalyticalBackend;
@@ -56,10 +56,10 @@ export interface IPluggableAppEventsProviderProps extends PropsWithChildren {
 }
 
 // @alpha
-export function PlatformContextProvider({ value, children }: IPlatformContextProviderProps): JSX.Element;
+export function PlatformContextProvider(input: IPlatformContextProviderProps): JSX.Element;
 
 // @alpha
-export function PluggableAppEventsProvider({ onEvent, children }: IPluggableAppEventsProviderProps): JSX.Element;
+export function PluggableAppEventsProvider(input: IPluggableAppEventsProviderProps): JSX.Element;
 
 // @alpha
 export function usePlatformContext(): IClientPlatformContext | undefined;

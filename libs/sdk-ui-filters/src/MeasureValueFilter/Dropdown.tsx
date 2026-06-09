@@ -193,6 +193,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
             closeOnOutsideClick
             closeOnParentScroll
             closeOnMouseDrag
+            closeOnEscape
             onClose={onCancel}
         >
             {body}

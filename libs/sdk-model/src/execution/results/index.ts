@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import type { Feature, GeoJsonProperties, Geometry } from "geojson";
 import { isEmpty } from "lodash-es";
@@ -488,6 +488,116 @@ export interface IResultWarning {
      * Execution warning parameters (e.g. when filter was not applied - its ObjRef)
      */
     parameters?: (ObjRef | string)[];
+}
+
+/**
+ * Known row-oriented execution result limit types.
+ *
+ * @alpha
+ */
+export const ExecutionResultRowLimitTypes = ["rowCount", "rows", "xtab-rows"] as const;
+
+/**
+ * Known column-oriented execution result limit types.
+ *
+ * @alpha
+ */
+export const ExecutionResultColumnLimitTypes = ["columnCount", "columns", "xtab-columns"] as const;
+
+/**
+ * Known cell-oriented execution result limit types.
+ *
+ * @alpha
+ */
+export const ExecutionResultCellLimitTypes = ["cellCount", "cells", "xtab-cells"] as const;
+
+/**
+ * Known execution result limit types grouped by semantic kind.
+ *
+ * @alpha
+ */
+export const ExecutionResultLimitTypes = {
+    rows: ExecutionResultRowLimitTypes,
+    columns: ExecutionResultColumnLimitTypes,
+    cells: ExecutionResultCellLimitTypes,
+} as const;
+
+/**
+ * All known row-oriented execution result limit types.
+ *
+ * @alpha
+ */
+export type ExecutionResultRowLimitType = (typeof ExecutionResultRowLimitTypes)[number];
+
+/**
+ * All known column-oriented execution result limit types.
+ *
+ * @alpha
+ */
+export type ExecutionResultColumnLimitType = (typeof ExecutionResultColumnLimitTypes)[number];
+
+/**
+ * All known cell-oriented execution result limit types.
+ *
+ * @alpha
+ */
+export type ExecutionResultCellLimitType = (typeof ExecutionResultCellLimitTypes)[number];
+
+/**
+ * Semantic kind of a known execution result limit type.
+ *
+ * @alpha
+ */
+export type ExecutionResultLimitKind = keyof typeof ExecutionResultLimitTypes;
+
+/**
+ * All known execution result limit types.
+ *
+ * @alpha
+ */
+export type ExecutionResultLimitType =
+    | ExecutionResultRowLimitType
+    | ExecutionResultColumnLimitType
+    | ExecutionResultCellLimitType;
+
+/**
+ * Describes a limit broken during result computation, resulting in partial data being returned.
+ *
+ * @alpha
+ */
+export interface IExecutionResultLimitBreak<
+    TLimitType extends string = ExecutionResultLimitType | (string & {}),
+> {
+    /**
+     * Type of the limit that was broken.
+     */
+    readonly limitType: TLimitType;
+    /**
+     * The configured limit value.
+     */
+    readonly limit: number;
+    /**
+     * The actual value that triggered the limit. It is omitted when the value cannot be determined exactly.
+     */
+    readonly value?: number;
+}
+
+/**
+ * Returns semantic kind for a known execution result limit type.
+ *
+ * @alpha
+ */
+export function executionResultLimitTypeToKind(limitType: string): ExecutionResultLimitKind | "unknown" {
+    if (ExecutionResultRowLimitTypes.includes(limitType as ExecutionResultRowLimitType)) {
+        return "rows";
+    }
+    if (ExecutionResultColumnLimitTypes.includes(limitType as ExecutionResultColumnLimitType)) {
+        return "columns";
+    }
+    if (ExecutionResultCellLimitTypes.includes(limitType as ExecutionResultCellLimitType)) {
+        return "cells";
+    }
+    return "unknown";
 }
 
 //

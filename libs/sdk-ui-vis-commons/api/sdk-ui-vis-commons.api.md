@@ -165,7 +165,7 @@ export function getRgbStringFromRGB(color: IRgbColorValue): string;
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette;
 
 // @internal (undocumented)
-export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, accessibilityConfig }: IHeadlinePaginationProps): JSX.Element;
+export function HeadlinePagination(input: IHeadlinePaginationProps): JSX.Element;
 
 // @internal (undocumented)
 export const HeatmapLegend: NamedExoticComponent<IHeatmapLegendProps>;
@@ -680,7 +680,7 @@ export const metricKey: (id: string) => string;
 export function normalizeColorToRGB(color: string): string;
 
 // @internal (undocumented)
-export function Paging({ page, pagesCount, buttonsOrientation, showNextPage, showPrevPage }: IPagingProps): ReactElement;
+export function Paging(input: IPagingProps): ReactElement;
 
 // @internal (undocumented)
 export function parseRGBColorCode(color: string): {
@@ -699,13 +699,13 @@ export const PATTERN_FILLS: {
 }[];
 
 // @internal (undocumented)
-export function PatternFill({ patternFill }: IPatternFillProps): JSX.Element;
+export function PatternFill(input: IPatternFillProps): JSX.Element;
 
 // @internal (undocumented)
 export type PatternFillName = (typeof PATTERN_FILLS)[number]["name"];
 
 // @internal (undocumented)
-export function PopUpLegend({ name, maxRows, enableBorderRadius, series, onLegendItemClick, containerId, customComponent, customComponentName, chartFill }: IPopUpLegendProps): JSX.Element;
+export function PopUpLegend(input: IPopUpLegendProps): JSX.Element;
 
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";

@@ -4,7 +4,10 @@ import cx from "classnames";
 
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
-import { type IBaseHeadlineDataItemProps } from "../../../interfaces/BaseHeadlines.js";
+import {
+    type DataItemComponent,
+    type IBaseHeadlineDataItemProps,
+} from "../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
@@ -46,4 +49,6 @@ function BaseHeadlineDataItemComponent({
     );
 }
 
-export const BaseHeadlineDataItem = withDrillable(withTitle(BaseHeadlineDataItemComponent));
+export const BaseHeadlineDataItem: DataItemComponent<IHeadlineDataItem> = withDrillable(
+    withTitle(BaseHeadlineDataItemComponent),
+);

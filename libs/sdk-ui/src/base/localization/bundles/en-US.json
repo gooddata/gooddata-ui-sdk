@@ -1835,6 +1835,18 @@
         "text": "Remove condition",
         "crowdinContext": "Tooltip for the button that removes a condition in the Measure Value Filter dropdown."
     },
+    "mvf.removeConditionTooltip.ariaLabel": {
+        "text": "Remove condition {number}",
+        "crowdinContext": "Accessible label for the button that removes a condition in the Measure Value Filter dropdown. {number} is the 1-based condition position, disambiguating multiple remove buttons. Example: 'Remove condition 2'."
+    },
+    "mvf.condition.announcement.added": {
+        "text": "Condition {number} added.",
+        "crowdinContext": "Screen reader announcement when a condition is added in the Measure Value Filter dropdown. {number} is the 1-based position of the new condition. Example: 'Condition 2 added.'"
+    },
+    "mvf.condition.announcement.removed": {
+        "text": "Condition {number} removed.",
+        "crowdinContext": "Screen reader announcement when a condition is removed in the Measure Value Filter dropdown. {number} is the 1-based position of the removed condition. Example: 'Condition 2 removed.'"
+    },
     "mvf.conditionsJoiner.or": {
         "text": "or",
         "crowdinContext": "Text displayed between multiple conditions in the Measure Value Filter dropdown to indicate logical OR operation."

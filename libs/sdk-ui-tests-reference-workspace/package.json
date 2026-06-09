@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-tests-reference-workspace",
-    "version": "11.41.0-alpha.2",
+    "version": "11.41.0-alpha.3",
     "private": true,
     "description": "GoodData SDK reference workspace",
     "license": "LicenseRef-LICENSE",
@@ -59,7 +59,7 @@
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/fixtures": "3.3.12",
+        "@gooddata/fixtures": "3.7.0",
         "@gooddata/oxlint-config": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@typescript-eslint/eslint-plugin": "8.58.0",

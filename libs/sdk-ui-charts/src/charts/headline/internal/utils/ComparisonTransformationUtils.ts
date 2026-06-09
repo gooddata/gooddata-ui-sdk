@@ -26,13 +26,10 @@ import {
 import { ComparisonDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataItem.js";
 import { ComparisonDataWithSubItem } from "../headlines/baseHeadline/baseHeadlineDataItems/comparisonItems/ComparisonDataWithSubItem.js";
 import {
-    type BaseHeadlineDataItemComponentType,
-    type BaseHeadlineItemAccepted,
     EvaluationType,
     type IBaseHeadlineData,
     type IBaseHeadlineItem,
     type IComparisonDataItem,
-    type ComparisonDataItem as IComparisonDataItemType,
     type IComparisonDataWithSubItem,
 } from "../interfaces/BaseHeadlines.js";
 
@@ -56,7 +53,7 @@ export function getComparisonBaseHeadlineData(
         primaryItemData,
         isSomeHeaderPredicateMatched(drillablePredicates, primaryItemHeader, dv),
         "primaryValue",
-    );
+    )!;
 
     const secondaryItem = createBaseHeadlineItem(
         secondaryItemData,
@@ -73,9 +70,9 @@ export function getComparisonBaseHeadlineData(
     );
 
     const baseHeadlineData: IBaseHeadlineData = {
-        primaryItem: primaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
-        secondaryItem: secondaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
-        tertiaryItem: comparisonItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
+        primaryItem,
+        secondaryItem,
+        tertiaryItem: comparisonItem,
     };
 
     return positionBaseHeadlineItems(baseHeadlineData, comparison);
@@ -113,7 +110,7 @@ function createComparisonItem(
     inheritFormat: string | null | undefined,
     comparison: IComparison,
     intl: IntlShape,
-): IBaseHeadlineItem<IComparisonDataItem | IComparisonDataWithSubItem> {
+): Extract<IBaseHeadlineItem, { data: IComparisonDataItem } | { data: IComparisonDataWithSubItem }> {
     const [, , , quaternaryItem] = executionData;
     const evaluationType = getComparisonEvaluationType(executionData);
     if (quaternaryItem) {
@@ -125,8 +122,7 @@ function createComparisonItem(
                 comparison,
                 intl,
             ),
-            baseHeadlineDataItemComponent:
-                ComparisonDataWithSubItem as BaseHeadlineDataItemComponentType<IComparisonDataItemType>,
+            baseHeadlineDataItemComponent: ComparisonDataWithSubItem,
             evaluationType: evaluationType,
         };
     } else {
@@ -139,8 +135,7 @@ function createComparisonItem(
                 comparison,
                 intl,
             ),
-            baseHeadlineDataItemComponent:
-                ComparisonDataItem as BaseHeadlineDataItemComponentType<IComparisonDataItemType>,
+            baseHeadlineDataItemComponent: ComparisonDataItem,
             evaluationType: evaluationType,
         };
     }

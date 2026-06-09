@@ -938,7 +938,7 @@ export const CoreErrorMessages: Record<CoreErrorCode, string>;
 export const CoreErrorTypes: Record<CoreErrorCode, string>;
 
 // @public (undocumented)
-export function createIdentifier<T = AfmObjectIdentifier>(data: string, { forceMetric, forceType }?: {
+export function createIdentifier<T = AfmObjectIdentifier>(data: string, input?: {
     forceMetric?: boolean;
     forceType?: "user" | "userGroup" | "dataset" | "date" | "attribute" | "label" | "measure" | "workspaceDataFilter" | "visualizationObject" | "analyticalDashboard" | "dashboardPlugin" | "filterContext";
 }): T | null;

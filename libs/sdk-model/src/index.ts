@@ -973,6 +973,7 @@ export {
 
 export {
     type IDashboardParameter,
+    type IDashboardExportParameter,
     type DashboardParameterMode,
     DashboardParameterModeValues,
     isDashboardParameter,
@@ -1067,6 +1068,12 @@ export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/i
 export {
     type DataValue,
     type ForecastDataValue,
+    type ExecutionResultCellLimitType,
+    type ExecutionResultColumnLimitType,
+    type ExecutionResultLimitKind,
+    type ExecutionResultLimitType,
+    type ExecutionResultRowLimitType,
+    type IExecutionResultLimitBreak,
     type IGeoJsonFeature,
     type IMeasureDescriptor,
     type IMeasureDescriptorObject,
@@ -1089,6 +1096,10 @@ export {
     type IResultWarning,
     type IColorDescriptor,
     type IColorDescriptorItem,
+    ExecutionResultCellLimitTypes,
+    ExecutionResultColumnLimitTypes,
+    ExecutionResultLimitTypes,
+    ExecutionResultRowLimitTypes,
     isColorDescriptor,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
@@ -1100,6 +1111,7 @@ export {
     resultHeaderName,
     attributeDescriptorLocalId,
     attributeDescriptorName,
+    executionResultLimitTypeToKind,
     geoFeatureId,
 } from "./execution/results/index.js";
 

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-model: Add `IDashboardExportParameter`, relocated from `@gooddata/sdk-backend-spi` `IDashboardParameterValueOverride`",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

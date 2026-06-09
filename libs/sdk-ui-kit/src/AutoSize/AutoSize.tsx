@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import { throttle } from "lodash-es";
 
@@ -46,11 +46,33 @@ export function AutoSize({ children }: IAutoSizeProps) {
 
     const throttledUpdateSize = useMemo(() => throttle(updateSize, 250, { leading: false }), [updateSize]);
 
+    // Measure synchronously before paint so the first committed frame already has a real width
+    // instead of 0 (which made children shrink-wrap). This handles the initial render.
+    useLayoutEffect(() => {
+        updateSize();
+    }, [updateSize]);
+
     useEffect(() => {
-        window.addEventListener("resize", throttledUpdateSize);
-        throttledUpdateSize();
+        const node = wrapperRef.current;
+
+        // Re-measure whenever the wrapper actually resizes. This catches the post-mount layout
+        // settle (e.g. a fullscreen overlay finishing its alignment a few frames later, where the
+        // synchronous measure above read a not-yet-final width - such as before a scrollbar
+        // disappears) as well as any later container or window resize - precisely, instead of
+        // guessing with a fixed timeout. Throttled to coalesce bursts during continuous resizing.
+        let observer: ResizeObserver | undefined;
+        if (node && typeof ResizeObserver !== "undefined") {
+            observer = new ResizeObserver(() => {
+                throttledUpdateSize();
+            });
+            observer.observe(node);
+        } else {
+            // Fallback for environments without ResizeObserver.
+            window.addEventListener("resize", throttledUpdateSize);
+        }
 
         return () => {
+            observer?.disconnect();
             throttledUpdateSize.cancel();
             window.removeEventListener("resize", throttledUpdateSize);
         };

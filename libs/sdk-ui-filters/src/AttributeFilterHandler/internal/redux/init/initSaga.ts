@@ -30,7 +30,7 @@ export function* initWorker(): SagaIterator<void> {
 }
 
 function* initSaga({
-    payload: { correlation, skipElementsLoading = false },
+    payload: { correlation, skipElementsLoading = false, preserveWorkingSelection = false },
 }: ReturnType<typeof actions.init>): SagaIterator<void> {
     try {
         yield put(actions.initStart({ correlation }));
@@ -62,7 +62,14 @@ function* initSaga({
             limitingValidationItems.length > 0 ||
             limitingDateFilters.length > 0;
 
-        const sagas = [initSelectionSaga, initAttributeElementsPageSaga];
+        // When switching back to elements mode from text mode, the working/committed selection has
+        // already been restored by resetForModeSwitch and its elements are still cached. Re-running
+        // initSelectionSaga would re-derive the selection from the (stale, last-applied) filter prop
+        // and clobber a pending working selection, so skip it. The element options list is
+        // still populated by initAttributeElementsPageSaga.
+        const sagas = preserveWorkingSelection
+            ? [initAttributeElementsPageSaga]
+            : [initSelectionSaga, initAttributeElementsPageSaga];
         if (hiddenElements?.length > 0) {
             // the rest need the attribute already loaded for the hiddenElements to work
             yield call(initAttributeSaga, correlation);

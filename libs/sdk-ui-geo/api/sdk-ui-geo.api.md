@@ -680,7 +680,7 @@ export type LegacyGeoLegendPosition = "top" | "right" | "bottom" | "left";
 export function LegacyGeoPushpinChart(props: ILegacyGeoPushpinChartProps | ILegacyGeoPushpinChartLatitudeLongitudeProps): JSX.Element;
 
 // @public @deprecated (undocumented)
-export function MapboxTokenProvider({ token, children }: {
+export function MapboxTokenProvider(input: {
     token: string;
     children?: ReactNode;
 }): JSX.Element;

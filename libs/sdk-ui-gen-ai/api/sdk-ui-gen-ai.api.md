@@ -206,22 +206,22 @@ export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThrea
 export type Contents = TextContents | RoutingContents | ReasoningContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
 // @beta (undocumented)
-export function DefaultLandingContainer({ children, isBigScreen, isSmallScreen, isFullscreen }: ILandingContentProps): JSX.Element;
+export function DefaultLandingContainer(input: ILandingContentProps): JSX.Element;
 
 // @beta (undocumented)
 export const DefaultLandingQuestion: FC<ILandingQuestionProps>;
 
 // @beta (undocumented)
-export function DefaultLandingQuestions({ children, isFullscreen, isBigScreen, isSmallScreen }: ILandingContentProps): JSX.Element;
+export function DefaultLandingQuestions(input: ILandingContentProps): JSX.Element;
 
 // @beta (undocumented)
 export const DefaultLandingScreen: FC<LandingScreenProps>;
 
 // @beta (undocumented)
-export function DefaultLandingTitle({ children }: ILandingTitleProps): JSX.Element;
+export function DefaultLandingTitle(input: ILandingTitleProps): JSX.Element;
 
 // @beta (undocumented)
-export function DefaultLandingTitleAscent({ children }: ILandingTitleProps): JSX.Element;
+export function DefaultLandingTitleAscent(input: ILandingTitleProps): JSX.Element;
 
 // @public (undocumented)
 export type ErrorContents = {

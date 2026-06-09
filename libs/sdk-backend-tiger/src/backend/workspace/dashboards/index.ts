@@ -83,6 +83,7 @@ import {
     type IDashboardAttributeFilterConfig,
     type IDashboardBase,
     type IDashboardDefinition,
+    type IDashboardExportParameter,
     type IDashboardFilterView,
     type IDashboardFilterViewSaveRequest,
     type IDashboardObjectIdentity,
@@ -141,6 +142,7 @@ import { getSettingsForCurrentUser } from "../settings/index.js";
 
 import { type TigerDashboardPermissionType, buildDashboardPermissions } from "./dashboardPermissions.js";
 import { DashboardsQuery } from "./dashboardsQuery.js";
+import { getParametersMetadata, patchDashboardParametersFromExport } from "./parameters.js";
 import { resolveWidgetFilters, resolveWidgetFiltersWithMultipleDateFilters } from "./widgetFilters.js";
 
 export function getOrphanedTabFilterContexts(
@@ -206,14 +208,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             });
         });
 
-        const { filterContext, title, hideWidgetTitles } = await this.prepareMetadata(
+        const { filterContext, title, hideWidgetTitles, parametersByTab } = await this.prepareMetadata(
             options?.exportId,
             options?.exportType,
             filterContextRef,
             options?.exportTabId,
         );
 
-        const dashboard = convertDashboard(result.data, filterContext);
+        const dashboard = patchDashboardParametersFromExport(convertDashboard(result.data, filterContext), {
+            parametersByTab,
+        });
         return updateDashboard(dashboard, title, hideWidgetTitles);
     };
 
@@ -234,7 +238,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const dataSets = included.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet));
 
-        const { filterContext, title, hideWidgetTitles } = await this.prepareMetadata(
+        const { filterContext, title, hideWidgetTitles, parametersByTab } = await this.prepareMetadata(
             options?.exportId,
             options?.exportType,
             filterContextRef,
@@ -242,6 +246,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         let updatedDashboard = convertDashboard(dashboard, filterContext);
+        updatedDashboard = patchDashboardParametersFromExport(updatedDashboard, {
+            parametersByTab,
+        });
         updatedDashboard = updateDashboard(updatedDashboard, title, hideWidgetTitles);
 
         return {
@@ -279,6 +286,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         exportTabId?: string,
     ): Promise<{
         filterContext?: IFilterContext;
+        parametersByTab?: Record<string, IDashboardExportParameter[]>;
         title?: string;
         hideWidgetTitles?: boolean;
         exportMetadata?: Record<string, string>;
@@ -338,7 +346,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const filterContext = filterContextFromFiltersByTab || filterContextFromFilters;
 
         return {
-            ...(filterContext || {}),
+            ...filterContext,
+            ...(convertedExportMetadata?.parametersByTab
+                ? { parametersByTab: convertedExportMetadata.parametersByTab }
+                : {}),
             ...(convertedExportMetadata?.title ? { title: convertedExportMetadata.title } : {}),
             ...(convertedExportMetadata?.hideWidgetTitles
                 ? { hideWidgetTitles: convertedExportMetadata.hideWidgetTitles }
@@ -681,6 +692,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
                     filtersByTab: withoutAllTimePerTab,
+                    ...getParametersMetadata(options?.parametersByTab),
                     exportMetadata: options?.exportMetadata,
                 }),
             };
@@ -744,6 +756,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
                     filtersByTab: withoutAllTimePerTab,
+                    ...getParametersMetadata(options?.parametersByTab),
                     title: options?.title,
                     hideWidgetTitles: options?.hideWidgetTitles,
                     exportMetadata: options?.exportMetadata,
@@ -1001,6 +1014,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 metadata: convertToBackendExportMetadata({
                     filters: withoutAllTime,
                     filtersByTab: withoutAllTimePerTab,
+                    ...getParametersMetadata(options?.parametersByTab),
                     title: options?.filename,
                 }),
             };
@@ -1611,6 +1625,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         exportTabId?: string,
     ): Promise<{
         filterContext?: IFilterContext;
+        parametersByTab?: Record<string, IDashboardExportParameter[]>;
         title?: string;
         hideWidgetTitles?: boolean;
         exportMetadata?: Record<string, string>;
@@ -1625,6 +1640,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         return {
             filterContext: filterContextByExport?.filterContext || filterContextByRef,
+            parametersByTab: filterContextByExport?.parametersByTab,
             title: filterContextByExport?.title,
             hideWidgetTitles: filterContextByExport?.hideWidgetTitles,
             exportMetadata: filterContextByExport?.exportMetadata,

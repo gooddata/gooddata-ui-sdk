@@ -21,6 +21,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import {
     type FilterContextItem,
+    type IDashboardExportParameter,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionDashboardSettings,
     type IExportDefinitionMetadataObject,
@@ -73,6 +74,7 @@ type MetadataObjectDefinition<T extends ITigerFilter | ITigerFilterContextItem =
     title?: string;
     filters?: T[];
     filtersByTab?: Record<string, ITigerFilterContextItem[]>;
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
 };
 
 // Accepts either ITigerFilterContextItem (our manual wire shape, used in the toBackend direction
@@ -182,6 +184,7 @@ export const convertVisualExportRequest = (
           )
         : undefined;
     const filtersByTabObj = filtersByTab ? { filtersByTab } : {};
+    const parametersByTabObj = metadata?.parametersByTab ? { parametersByTab: metadata.parametersByTab } : {};
 
     return {
         type: "dashboard",
@@ -191,6 +194,7 @@ export const convertVisualExportRequest = (
             dashboard: dashboardId,
             ...filtersObj,
             ...filtersByTabObj,
+            ...parametersByTabObj,
         },
     };
 };
@@ -238,6 +242,7 @@ export const convertImageExportRequest = (
             widget: widgetIds?.[0] ?? "",
             dashboard: dashboardId,
             filters: convertTigerToSdkFilters(tigerMetadata?.filters),
+            ...(tigerMetadata?.parametersByTab ? { parametersByTab: tigerMetadata.parametersByTab } : {}),
         },
     };
 };
@@ -262,6 +267,7 @@ export const convertSlidesExportRequest = (
                 dashboard: dashboardId,
                 widget: tigerMetadata?.widget,
                 filters: convertTigerToSdkFilters(tigerMetadata?.filters),
+                ...(tigerMetadata?.parametersByTab ? { parametersByTab: tigerMetadata.parametersByTab } : {}),
             },
         };
     }
@@ -289,6 +295,7 @@ export const convertSlidesExportRequest = (
             dashboard: dashboardId,
             filters,
             filtersByTab,
+            ...(metadataObj?.parametersByTab ? { parametersByTab: metadataObj.parametersByTab } : {}),
         },
     } as IExportDefinitionDashboardRequestPayload;
 };
@@ -435,6 +442,9 @@ const convertExportDefinitionRequestPayload = (
               )
             : undefined;
         const filtersByTabObj = filtersByTab ? { filtersByTab } : {};
+        const parametersByTabObj = metadata?.parametersByTab
+            ? { parametersByTab: metadata.parametersByTab }
+            : {};
 
         return {
             type: "dashboard",
@@ -444,6 +454,7 @@ const convertExportDefinitionRequestPayload = (
                 dashboard: exportRequest.dashboardId,
                 ...filtersObj,
                 ...filtersByTabObj,
+                ...parametersByTabObj,
             },
         };
     }

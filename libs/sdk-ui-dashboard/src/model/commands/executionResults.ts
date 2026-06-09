@@ -1,7 +1,12 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { type IResultWarning, type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    type IExecutionResultLimitBreak,
+    type IResultWarning,
+    type ObjRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { type IExecutionResultEnvelope } from "../store/executionResults/types.js";
@@ -49,6 +54,7 @@ export function setExecutionResultLoading(
             executionResult: undefined,
             error: undefined,
             warnings: undefined,
+            limitBreaks: undefined,
         },
         correlationId,
     );
@@ -70,6 +76,7 @@ export function setExecutionResultError(
             isLoading: false,
             error,
             warnings: undefined,
+            limitBreaks: undefined,
         },
         correlationId,
     );
@@ -84,6 +91,7 @@ export function setExecutionResultData(
     id: ObjRef | string,
     executionResult: IExecutionResult,
     executionWarnings: IResultWarning[] | undefined,
+    limitBreaks: IExecutionResultLimitBreak[] | undefined,
     correlationId?: string,
 ): IUpsertExecutionResult {
     return upsertExecutionResult(
@@ -93,6 +101,7 @@ export function setExecutionResultData(
             error: undefined,
             executionResult,
             warnings: executionWarnings,
+            limitBreaks,
         },
         correlationId,
     );

@@ -437,7 +437,7 @@
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Filtr nie ma zastosowania do tej wizualizacji.",
     "configurationPanel.mvfBlockedByRankingFilter": "Tego filtra nie można zastosować, ponieważ wizualizacja używa filtra Top/bottom values. Usuń filtr Top/bottom values, aby zastosować ten filtr.",
     "configurationPanel.mvfMissingMeasure": "Metryka używana w tym filtrze już nie istnieje w przestrzeni roboczej.",
-    "filters.mvf.missingMetric.tooltip": "Metryka używana w tym filtrze już nie istnieje w przestrzeni roboczej.",
+    "filters.mvf.missingMetric.tooltip": "Błąd: Metryka używana w tym filtrze już nie istnieje w przestrzeni roboczej.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI nie może być filtrowane wg daty. Odznacz pole wyboru.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" nie może być już zastosowany do wizualizacji. Wybierz inny wymiar lub edytuj wizualizację.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" nie może być już zastosowany do KPI. Wybierz inny wymiar lub edytuj KPI.",

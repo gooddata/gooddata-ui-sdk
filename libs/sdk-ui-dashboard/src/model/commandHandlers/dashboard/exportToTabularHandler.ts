@@ -3,12 +3,8 @@
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 
-import {
-    type FiltersByTab,
-    type IDashboardParameterValueOverride,
-    type IExportResult,
-} from "@gooddata/sdk-backend-spi";
-import { type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
+import { type FiltersByTab, type IExportResult } from "@gooddata/sdk-backend-spi";
+import { type FilterContextItem, type IDashboardExportParameter, type ObjRef } from "@gooddata/sdk-model";
 
 import { type IExportDashboardToExcel } from "../../commands/dashboard.js";
 import {
@@ -37,7 +33,7 @@ function exportDashboardToTabular(
     widgetIds?: string[],
     dashboardFiltersOverride?: FilterContextItem[],
     filtersByTab?: FiltersByTab,
-    dashboardTabsParametersOverrides?: Record<string, IDashboardParameterValueOverride[]>,
+    dashboardTabsParametersOverrides?: Record<string, IDashboardExportParameter[]>,
     format?: "XLSX" | "PDF",
     pdfConfiguration?: {
         pageSize?: "A3" | "A4" | "LETTER";
@@ -84,7 +80,7 @@ export function* exportToTabularHandler(
     const filterContextFilters: SagaReturnType<typeof selectFilterContextFilters> =
         yield select(selectFilterContextFilters);
     const filtersByTab: ReturnType<typeof selectFiltersByTab> = yield select(selectFiltersByTab);
-    const parametersByTab: Record<string, IDashboardParameterValueOverride[]> = yield select(
+    const parametersByTab: Record<string, IDashboardExportParameter[]> = yield select(
         selectExportEffectiveParameters(widgetIds),
     );
 

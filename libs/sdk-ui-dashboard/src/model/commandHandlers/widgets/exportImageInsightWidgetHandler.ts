@@ -4,6 +4,7 @@ import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
 import { type IExportResult } from "@gooddata/sdk-backend-spi";
+import { type IDashboardExportParameter, objRefToString } from "@gooddata/sdk-model";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 import { type IExportImageInsightWidget } from "../../commands/insight.js";
@@ -15,6 +16,7 @@ import {
 import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectExportEffectiveParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
@@ -47,6 +49,11 @@ export function* exportImageInsightWidgetHandler(
           }
         : undefined;
 
+    // widget-scoped export → per-tab parameter overrides for this widget (empty when the flag is off)
+    const parametersByTab: Record<string, IDashboardExportParameter[]> = yield select(
+        selectExportEffectiveParameters([objRefToString(ref)]),
+    );
+
     const exportDashboardToImage = backend.workspace(workspace).dashboards().exportDashboardToImage;
     const result: PromiseFnReturnType<typeof exportDashboardToImage> = yield call(
         exportDashboardToImage,
@@ -57,6 +64,7 @@ export function* exportImageInsightWidgetHandler(
             widgetIds: [ref],
             filename,
             timeout,
+            parametersByTab,
         },
     );
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

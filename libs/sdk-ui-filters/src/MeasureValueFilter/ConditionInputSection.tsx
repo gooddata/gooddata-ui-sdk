@@ -33,7 +33,6 @@ export interface IConditionInputSectionProps {
           }
         | undefined;
     usePercentage: boolean;
-    baseDisableAutofocus?: boolean;
     separators?: ISeparators;
     onValueChange: (index: number, value: number) => void;
     onFromChange: (index: number, from: number) => void;
@@ -52,7 +51,6 @@ export const ConditionInputSection = memo(function ConditionInputSection(props: 
         conditionNumber,
         condition,
         usePercentage,
-        baseDisableAutofocus,
         separators,
         onValueChange,
         onFromChange,
@@ -67,8 +65,8 @@ export const ConditionInputSection = memo(function ConditionInputSection(props: 
         return null;
     }
 
-    // Only the first condition can autofocus inputs. All others explicitly disable autofocus.
-    const disableAutofocus = baseDisableAutofocus === true || index !== 0;
+    // Never autofocus the value inputs. Initial focus must stay on the operator dropdown button.
+    const disableAutofocus = true;
 
     const errorId = `mvf-validation-error-${index}`;
 
@@ -99,12 +97,7 @@ export const ConditionInputSection = memo(function ConditionInputSection(props: 
                     conditionNumber={conditionNumber}
                 />
                 {shouldShowError ? (
-                    <div
-                        id={errorId}
-                        className="gd-mvf-input-error s-mvf-input-error"
-                        data-testid={errorId}
-                        role="alert"
-                    >
+                    <div id={errorId} className="gd-mvf-input-error s-mvf-input-error" data-testid={errorId}>
                         {validationErrorText}
                     </div>
                 ) : null}

@@ -610,6 +610,40 @@ export function emptyDef(workspace: string): IExecutionDefinition;
 export type EmptyValues = "include" | "exclude" | "only";
 
 // @alpha
+export type ExecutionResultCellLimitType = (typeof ExecutionResultCellLimitTypes)[number];
+
+// @alpha
+export const ExecutionResultCellLimitTypes: readonly ["cellCount", "cells", "xtab-cells"];
+
+// @alpha
+export type ExecutionResultColumnLimitType = (typeof ExecutionResultColumnLimitTypes)[number];
+
+// @alpha
+export const ExecutionResultColumnLimitTypes: readonly ["columnCount", "columns", "xtab-columns"];
+
+// @alpha
+export type ExecutionResultLimitKind = keyof typeof ExecutionResultLimitTypes;
+
+// @alpha
+export type ExecutionResultLimitType = ExecutionResultRowLimitType | ExecutionResultColumnLimitType | ExecutionResultCellLimitType;
+
+// @alpha
+export const ExecutionResultLimitTypes: {
+    readonly rows: readonly ["rowCount", "rows", "xtab-rows"];
+    readonly columns: readonly ["columnCount", "columns", "xtab-columns"];
+    readonly cells: readonly ["cellCount", "cells", "xtab-cells"];
+};
+
+// @alpha
+export function executionResultLimitTypeToKind(limitType: string): ExecutionResultLimitKind | "unknown";
+
+// @alpha
+export type ExecutionResultRowLimitType = (typeof ExecutionResultRowLimitTypes)[number];
+
+// @alpha
+export const ExecutionResultRowLimitTypes: readonly ["rowCount", "rows", "xtab-rows"];
+
+// @alpha
 export function exportDefinitionCreated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
 
 // @alpha
@@ -1798,6 +1832,13 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
 }
 
 // @alpha
+export interface IDashboardExportParameter {
+    id: string;
+    title: string;
+    value: string;
+}
+
+// @alpha
 export interface IDashboardFilterGroup {
     // (undocumented)
     filters: IDashboardFilterGroupItem[];
@@ -2387,6 +2428,13 @@ export interface IExecutionDefinition {
 }
 
 // @alpha
+export interface IExecutionResultLimitBreak<TLimitType extends string = ExecutionResultLimitType | (string & {})> {
+    readonly limit: number;
+    readonly limitType: TLimitType;
+    readonly value?: number;
+}
+
+// @alpha
 export interface IExistingDashboard extends IDashboardObjectIdentity {
     title?: string;
 }
@@ -2405,6 +2453,7 @@ export interface IExportDefinitionDashboardContent {
     filters?: FilterContextItem[];
     // (undocumented)
     filtersByTab?: Record<string, FilterContextItem[]>;
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
 }
 
 // @alpha
@@ -2447,6 +2496,7 @@ export interface IExportDefinitionVisualizationObjectContent {
     dashboard?: Identifier;
     // (undocumented)
     filters?: IFilter[] | FilterContextItem[];
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
     // (undocumented)
     visualizationObject: Identifier;
     widget?: Identifier;

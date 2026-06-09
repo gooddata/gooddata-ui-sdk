@@ -6,6 +6,7 @@ import { type DashboardTabularExportRequestV2 } from "@gooddata/api-client-tiger
 import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
+    type IDashboardExportParameter,
     type IExecutionDefinition,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionVisualizationObjectRequestPayload,
@@ -14,8 +15,11 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
+    convertExportDefinitionRequestPayload,
     convertToDashboardTabularExportRequest,
+    convertToImageExportRequest,
     convertToRawExportRequest,
+    convertToSlidesExportRequest,
     convertToTabularExportRequest,
     convertToVisualExportRequest,
     convertVisualizationToDashboardTabularExportRequest,
@@ -188,6 +192,120 @@ describe("ExportDefinitionsConverter toBackend", () => {
 
         const result = convertVisualizationToDashboardTabularExportRequest(request);
         expect(result.dashboardFiltersOverride).toEqual([]);
+    });
+
+    it("emits metadata.parametersByTab from dashboard content in visual export", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "42", title: "Param 1" };
+        const request: IExportDefinitionDashboardRequestPayload = {
+            type: "dashboard",
+            fileName: "dashboard-visual",
+            format: "PDF",
+            content: {
+                dashboard: "dashboardId",
+                parametersByTab: { tab1: [parameter] },
+            },
+        };
+
+        const result = convertToVisualExportRequest(request);
+        const metadata = result.metadata as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab?.["tab1"]).toEqual([parameter]);
+    });
+
+    it("emits per-tab params flat alongside viz-object filters in image (PNG) export", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "7", title: "Param 1" };
+        const widgetFilter: FilterContextItem = {
+            attributeFilter: {
+                displayForm: idRef("attr.df", "displayForm"),
+                negativeSelection: false,
+                attributeElements: { values: ["North"] },
+            },
+        };
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "widget-png",
+            format: "PNG",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                filters: [widgetFilter],
+                parametersByTab: { tabOwning: [parameter] },
+            },
+        };
+
+        const result = convertToImageExportRequest(request);
+        const metadata = result.metadata as {
+            filters?: FilterContextItem[];
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab?.["tabOwning"]).toEqual([parameter]);
+        expect(metadata.filters).toHaveLength(1);
+    });
+
+    it("emits metadata.parametersByTab from dashboard content in slides export", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "42", title: "Param 1" };
+        const request: IExportDefinitionDashboardRequestPayload = {
+            type: "dashboard",
+            fileName: "dashboard-slides",
+            format: "PDF_SLIDES",
+            content: {
+                dashboard: "dashboardId",
+                parametersByTab: { tab1: [parameter] },
+            },
+        };
+
+        const result = convertToSlidesExportRequest(request);
+        const metadata = result.metadata as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab?.["tab1"]).toEqual([parameter]);
+    });
+
+    it("emits metadata.parametersByTab from viz-object content in widget slides export", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "9", title: "Param 1" };
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "widget-slides",
+            format: "PPTX",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                parametersByTab: { tabOwning: [parameter] },
+            },
+        };
+
+        const result = convertToSlidesExportRequest(request);
+        const metadata = result.metadata as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab?.["tabOwning"]).toEqual([parameter]);
+    });
+
+    it("emits metadata.parametersByTab from dashboard content in standalone export definition", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "42", title: "Param 1" };
+        const request: IExportDefinitionDashboardRequestPayload = {
+            type: "dashboard",
+            fileName: "dashboard-export-definition",
+            format: "PDF",
+            content: {
+                dashboard: "dashboardId",
+                parametersByTab: { tab1: [parameter] },
+            },
+        };
+
+        const result = convertExportDefinitionRequestPayload(request);
+        const metadata = result.metadata as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(metadata.parametersByTab?.["tab1"]).toEqual([parameter]);
     });
 
     it("maps FilterContextItem filters to dashboard override in dashboard tabular export", () => {

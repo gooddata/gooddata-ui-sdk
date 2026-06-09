@@ -48,8 +48,10 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
      *
      * @param correlation - correlation that will be included in all callbacks fired by this method
      * @param skipElementsLoading - when true, only loads attribute metadata (skips elements, selection, total count)
+     * @param preserveWorkingSelection - when true, keeps the current working/committed selection instead of
+     *  re-deriving it from the filter (used when switching back to elements mode from text mode)
      */
-    init(correlation?: Correlation, skipElementsLoading?: boolean): void;
+    init(correlation?: Correlation, skipElementsLoading?: boolean, preserveWorkingSelection?: boolean): void;
 
     /**
      * Returns the current status of the initialization.

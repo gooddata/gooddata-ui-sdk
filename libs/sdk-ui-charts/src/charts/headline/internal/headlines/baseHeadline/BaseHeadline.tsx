@@ -19,7 +19,7 @@ import { PrimarySection } from "./PrimarySection.js";
 const RESIZE_GUARD_TIMEOUT = 3000;
 const Measure = defaultImport(ReactMeasure);
 
-interface IHeadlineProps {
+export interface IHeadlineProps {
     data: IBaseHeadlineData;
     config?: IChartConfig;
     onDrill?: HeadlineFiredDrillEvent;

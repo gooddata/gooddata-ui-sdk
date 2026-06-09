@@ -20,6 +20,7 @@ import {
     type ObjRef,
     areObjRefsEqual,
     filterAttributeElements,
+    filterLocalIdentifier,
     filterObjRef,
     isArbitraryAttributeFilter,
     isAttributeElementsByRef,
@@ -28,6 +29,8 @@ import {
     isMatchAttributeFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -122,7 +125,7 @@ type UpdateFilterProps = {
     isSelectionInvalid: boolean;
 };
 
-type UpdateFilterType = "init-parent" | "init-self" | undefined;
+type UpdateFilterType = "init-parent" | "init-self" | "init-self-preserve-selection" | undefined;
 
 function updateNonResettingFilter(
     handler: IMultiSelectAttributeFilterHandler,
@@ -306,6 +309,11 @@ function refreshByType(
     }
     if (change === "init-self") {
         handler.init();
+    }
+    if (change === "init-self-preserve-selection") {
+        // Load the element options without re-deriving (and clobbering) the working selection
+        // that resetForModeSwitch just restored.
+        handler.init(undefined, false, true);
     }
 }
 
@@ -512,9 +520,10 @@ function useInitOrReload(
             );
         };
 
-        // When text→elements mode switch happens, resetForModeSwitch already committed "All" to the handler.
-        // Suppress filterChanged so we don't override that reset with the stale filter prop (parent's
-        // onChange may not have propagated yet, so filter can still hold the old list selection).
+        // When text→elements mode switch happens, resetForModeSwitch already committed the target
+        // selection (restored List selection or "All") to the handler. Suppress filterChanged so we
+        // don't override that reset with the stale filter prop (parent's onChange may not have
+        // propagated yet, so filter can still hold the previous mode's selection).
         const justSwitchedFromText = prevIsTextModeRef.current && !isTextMode;
         prevIsTextModeRef.current = isTextMode;
 
@@ -548,10 +557,11 @@ function useInitOrReload(
             ? updateAutomaticResettingFilter(handler, updateProps, supportsCircularDependencyInFilters)
             : updateNonResettingFilter(handler, updateProps, supportsKeepingDependentFiltersSelection);
 
-        // Safety net: if elements were not loaded yet (e.g., backend init was interrupted),
-        // trigger a full init when switching to elements mode so the list is populated.
+        // Switching back to elements mode from text mode: elements were not loaded in text mode, so
+        // trigger an init to populate the list — but preserve the working selection that
+        // resetForModeSwitch restored instead of re-deriving it from the stale filter prop.
         if (justSwitchedFromText) {
-            change = "init-self";
+            change = "init-self-preserve-selection";
         }
 
         refreshByType(
@@ -1122,8 +1132,7 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
 
     const resetForModeSwitch = useCallback(
         (newFilter: IAttributeFilter, newDisplayAsLabel?: ObjRef) => {
-            // we are always resetting to ALL filter
-            if (!handler || !isNegativeAttributeFilter(newFilter)) {
+            if (!handler) {
                 return;
             }
             const displayFormRef = filterObjRef(newFilter);
@@ -1132,11 +1141,43 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
                 handler.setDisplayAsLabel(newDisplayAsLabel);
             }
             handler.setSearch("");
-            handler.changeSelection({ keys: [], isInverted: true });
+            // Apply the target filter's actual selection (keys + inverted flag) to the WORKING
+            // selection. For an empty negative filter this resets to "All"; for a restored List filter
+            // it reinstates the previously displayed element selection.
+            const elements = filterAttributeElements(newFilter);
+            const keys = elements
+                ? isAttributeElementsByValue(elements)
+                    ? elements.values
+                    : elements.uris
+                : [];
+            handler.changeSelection({ keys, isInverted: isNegativeAttributeFilter(newFilter) });
+            // Only commit in the withoutApply flow. With a deferred Apply the committed selection must
+            // stay equal to the applied filter prop — committing here would make the filter-prop
+            // re-sync (updateFilter) see a difference and clobber the just-restored working selection.
             withoutApply && handler.commitSelection();
         },
         [handler, withoutApply],
     );
+
+    // Builds an elements filter from the current working (not yet applied) selection. Used to snapshot
+    // the List selection before switching to Text so it can be restored on switch-back, including any
+    // changes the user made after the last Apply.
+    const getWorkingElementsFilter = useCallback((): IAttributeFilter | undefined => {
+        if (!handler) {
+            return undefined;
+        }
+        const committedFilter = handler.getFilter();
+        const committedElements = filterAttributeElements(committedFilter);
+        const { keys, isInverted } = handler.getWorkingSelection();
+        const elements: IAttributeElements = isAttributeElementsByValue(committedElements)
+            ? { values: keys }
+            : { uris: keys };
+        const displayForm = filterObjRef(committedFilter);
+        const localIdentifier = filterLocalIdentifier(committedFilter);
+        return isInverted
+            ? newNegativeAttributeFilter(displayForm, elements, localIdentifier)
+            : newPositiveAttributeFilter(displayForm, elements, localIdentifier);
+    }, [handler]);
 
     const callbacks = useCallbacks(
         handler!,
@@ -1185,5 +1226,6 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
         ...forcedInitErrorProp,
         setDisplayForm,
         resetForModeSwitch,
+        getWorkingElementsFilter,
     };
 }

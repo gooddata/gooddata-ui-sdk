@@ -13,7 +13,6 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
     dashboardMeasureValueFilterLocalIdentifier,
-    isAllTimeDashboardDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
@@ -21,6 +20,7 @@ import {
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
+    isNoopAllTimeDashboardDateFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -151,7 +151,10 @@ export function applyFilterContext(
     if (
         appliedCommonDateFilter ||
         !workingCommonDateFilter ||
-        (isAllTimeDashboardDateFilter(workingCommonDateFilter) && !appliedCommonDateFilter)
+        // Drop the working common date filter only when it is a true no-op All time filter.
+        // An All time filter that carries `emptyValueHandling` (the "Empty values" preset) is a
+        // meaningful change and must be kept, otherwise the dashboard would not detect it as changed.
+        (isNoopAllTimeDashboardDateFilter(workingCommonDateFilter) && !appliedCommonDateFilter)
     ) {
         return {
             ...filterContext,

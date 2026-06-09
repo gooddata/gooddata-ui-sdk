@@ -3,8 +3,8 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { isEqual } from "lodash-es";
 
-import { type IDashboardParameterValueOverride } from "@gooddata/sdk-backend-spi";
 import {
+    type IDashboardExportParameter,
     type IDashboardParameter,
     type IDashboardTab,
     type IInsightParameterValue,
@@ -379,13 +379,13 @@ export const selectEffectiveParameterValuesForWidget: (
  */
 export const selectExportEffectiveParameters: (
     widgetIds: string[] | undefined,
-) => DashboardSelector<Record<string, IDashboardParameterValueOverride[]>> = (widgetIds) =>
+) => DashboardSelector<Record<string, IDashboardExportParameter[]>> = (widgetIds) =>
     widgetIds?.length
         ? selectExportEffectiveParametersForWidgets(widgetIds)
         : selectExportEffectiveParametersDashboardScope;
 
 const selectExportEffectiveParametersDashboardScope: DashboardSelector<
-    Record<string, IDashboardParameterValueOverride[]>
+    Record<string, IDashboardExportParameter[]>
 > = createSelector(
     selectTabs,
     selectEnableParameters,
@@ -407,7 +407,7 @@ const selectExportEffectiveParametersDashboardScope: DashboardSelector<
 
 const selectExportEffectiveParametersForWidgets: (
     widgetIds: ReadonlyArray<string>,
-) => DashboardSelector<Record<string, IDashboardParameterValueOverride[]>> = createMemoizedSelector(
+) => DashboardSelector<Record<string, IDashboardExportParameter[]>> = createMemoizedSelector(
     (widgetIds: ReadonlyArray<string>) =>
         createSelector(
             selectAllTabsInsightWidgetContexts,

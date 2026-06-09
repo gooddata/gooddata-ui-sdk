@@ -125,11 +125,34 @@ export const useAttributeFilterController = (
     const [selectionType, setSelectionType] = useState<AttributeFilterSelectionType>(
         () => getSelectionTypeFromFilter(resolvedFilter) ?? "elements",
     );
+    // Only re-sync the selection type when the resolved (applied) filter's TYPE actually changes.
+    // Re-syncing on every resolvedFilter reference change would clobber an in-progress mode switch
+    // whenever the consumer re-renders with a new (but same-type) filter object — e.g. an app that
+    // recomputes the filter from its own state each render. That reverted the just-clicked mode and
+    // forced the user to switch List <-> Text twice.
+    const lastResolvedSelectionTypeRef = useRef<AttributeFilterSelectionType>(
+        getSelectionTypeFromFilter(resolvedFilter) ?? "elements",
+    );
     useEffect(() => {
-        setSelectionType(getSelectionTypeFromFilter(resolvedFilter) ?? "elements");
+        const nextSelectionType = getSelectionTypeFromFilter(resolvedFilter) ?? "elements";
+        if (nextSelectionType !== lastResolvedSelectionTypeRef.current) {
+            lastResolvedSelectionTypeRef.current = nextSelectionType;
+            setSelectionType(nextSelectionType);
+        }
     }, [resolvedFilter]);
 
     const isTextSelectionType = selectionType === "text";
+
+    // Remembers the List (elements) selection captured when leaving List mode, so switching
+    // List -> Text -> List can restore it (keys and inverted flag) instead of resetting to "All".
+    // Seeded from the initial filter; updated with the live working selection on each switch to Text.
+    const lastElementsFilterRef = useRef<IAttributeFilter | undefined>(
+        resolvedFilter &&
+            !isArbitraryAttributeFilter(resolvedFilter) &&
+            !isMatchAttributeFilter(resolvedFilter)
+            ? resolvedFilter
+            : undefined,
+    );
 
     const originalSelectionType = getSelectionTypeFromFilter(resolvedFilter);
     const selectionTypeChanged = originalSelectionType !== selectionType;
@@ -412,7 +435,8 @@ export const useAttributeFilterController = (
         ],
     );
 
-    const { currentDisplayFormRef: elementsCurrentDisplayFormRef } = elementsFilterController;
+    const { currentDisplayFormRef: elementsCurrentDisplayFormRef, getWorkingElementsFilter } =
+        elementsFilterController;
     const onSelectionTypeChangeForControllers = useCallback(
         (newMode: AttributeFilterSelectionType) => {
             if (!resolvedDisplayFormRef) {
@@ -425,6 +449,12 @@ export const useAttributeFilterController = (
             }
 
             if (newMode === "text") {
+                // Leaving List: snapshot the current working element selection (including changes made
+                // since the last Apply) so switching back to List restores exactly what was on screen.
+                const workingElementsFilter = getWorkingElementsFilter?.();
+                if (workingElementsFilter) {
+                    lastElementsFilterRef.current = workingElementsFilter;
+                }
                 if (availableTextSelectionTypes.includes("arbitrary")) {
                     nextAvailableMode = "arbitrary";
                 } else {
@@ -440,11 +470,18 @@ export const useAttributeFilterController = (
 
             const displayAsDisplayFormForNewFilter = newMode === "text" ? undefined : userSelectedDisplayForm;
 
-            const newFilter = createEmptyFilterForAvailableSelectionType(
-                nextAvailableMode,
-                displayFormForNewFilter,
-                localId,
-            );
+            // Switching back to List: restore the previously applied element selection (keys + inverted
+            // flag) when we have it, so a List -> Text -> List round-trip preserves the user's selection
+            // instead of resetting to "All" (and, with stale committed elements, inverting it).
+            const restoredElementsFilter = newMode === "text" ? undefined : lastElementsFilterRef.current;
+
+            const newFilter =
+                restoredElementsFilter ??
+                createEmptyFilterForAvailableSelectionType(
+                    nextAvailableMode,
+                    displayFormForNewFilter,
+                    localId,
+                );
             handleSelectionTypeChange(newFilter, displayAsDisplayFormForNewFilter, selectionType, newMode);
         },
         [
@@ -455,6 +492,7 @@ export const useAttributeFilterController = (
             userSelectedDisplayForm,
             elementsCurrentDisplayFormRef,
             resolvedDisplayFormRef,
+            getWorkingElementsFilter,
         ],
     );
 
@@ -572,12 +610,19 @@ export const useAttributeFilterController = (
         onResetText?.();
         onResetElements();
         setSelectionType(getSelectionTypeFromFilter(resolvedFilter) ?? "elements");
+        // The remembered List selection is only meaningful within a single open session (List -> Text
+        // -> List). Clear it on close so a snapshot captured before a Text filter was applied is not
+        // reused on the next open, which would push the stale elements selection and undo the applied
+        // text state. Leaving List re-captures the working selection, so this is safe.
+        lastElementsFilterRef.current = undefined;
     }, [onResetText, onResetElements, resolvedFilter]);
 
     // Wrap elements onReset to also revert selectionType on dropdown close without Apply.
     const onResetElementsMode = useCallback(() => {
         onResetElements();
         setSelectionType(getSelectionTypeFromFilter(resolvedFilter) ?? "elements");
+        // See onResetTextMode: the remembered List selection is session-scoped, clear it on close.
+        lastElementsFilterRef.current = undefined;
     }, [onResetElements, resolvedFilter]);
 
     if (isTextSelectionType) {

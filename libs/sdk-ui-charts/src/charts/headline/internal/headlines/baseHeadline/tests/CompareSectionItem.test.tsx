@@ -5,7 +5,7 @@ import { type RefObject } from "react";
 import { render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
+import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { CompareSectionItem } from "../CompareSectionItem.js";
 
@@ -21,7 +21,7 @@ const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("CompareSectionItem", () => {
     const renderCompareSectionItem = (props: {
-        dataItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
+        dataItem: IBaseHeadlineItem;
         titleRef?: RefObject<HTMLDivElement>;
     }) => {
         return render(<CompareSectionItem {...props} />);
@@ -38,7 +38,7 @@ describe("CompareSectionItem", () => {
     it("Should render base headline data item from provided baseHeadlineDataItemComponent property", () => {
         const MockBaseHeadlineItemComponent = vi.fn();
         const titleRef = vi.fn();
-        const dataItem: IBaseHeadlineItem<BaseHeadlineItemAccepted> = {
+        const dataItem: IBaseHeadlineItem = {
             ...TEST_BASE_HEADLINE_ITEM,
             baseHeadlineDataItemComponent: MockBaseHeadlineItemComponent,
         };

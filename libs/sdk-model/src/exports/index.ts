@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 
 import { type IAuditable } from "../base/metadata.js";
 import { type FilterContextItem } from "../dashboard/filterContext.js";
+import { type IDashboardExportParameter } from "../dashboard/parameter.js";
 import { type IFilter } from "../execution/filter/index.js";
 import { type IMetadataObject, type IMetadataObjectDefinition } from "../ldm/metadata/types.js";
 import { type Identifier } from "../objRef/index.js";
@@ -67,6 +68,10 @@ export interface IExportDefinitionVisualizationObjectContent {
      */
     dashboard?: Identifier;
     filters?: IFilter[] | FilterContextItem[];
+    /**
+     * Parameter runtime-overrides applied on export, keyed by the owning tab's localIdentifier.
+     */
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
 }
 
 /**
@@ -80,6 +85,10 @@ export interface IExportDefinitionDashboardContent {
     dashboard: Identifier;
     filters?: FilterContextItem[];
     filtersByTab?: Record<string, FilterContextItem[]>;
+    /**
+     * Parameter runtime-overrides applied on export, keyed by tab localIdentifier.
+     */
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
 }
 
 /**

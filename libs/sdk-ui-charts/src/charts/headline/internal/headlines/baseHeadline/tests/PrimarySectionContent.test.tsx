@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
+import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { PrimarySectionContent } from "../PrimarySectionContent.js";
 
@@ -18,9 +18,7 @@ vi.mock("../BaseHeadlineContext.js", () => ({
 const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("PrimarySectionContent", () => {
-    const renderPrimarySectionContent = (props: {
-        primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
-    }) => {
+    const renderPrimarySectionContent = (props: { primaryItem: IBaseHeadlineItem }) => {
         return render(<PrimarySectionContent {...props} />);
     };
 
@@ -34,7 +32,7 @@ describe("PrimarySectionContent", () => {
 
     it("Should render base headline data item from provided baseHeadlineDataItemComponent property", () => {
         const MockBaseHeadlineItemComponent = vi.fn();
-        const primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted> = {
+        const primaryItem: IBaseHeadlineItem = {
             ...TEST_BASE_HEADLINE_ITEM,
             baseHeadlineDataItemComponent: MockBaseHeadlineItemComponent,
         };

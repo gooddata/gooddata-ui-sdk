@@ -329,6 +329,7 @@ export {
     useToastsCenterValue,
     type IToastsCenterContext,
 } from "./Messages/toasts/context.js";
+export { WidgetNotice, type IWidgetNoticeProps, type WidgetNoticeType } from "./WidgetNotice/WidgetNotice.js";
 export type {
     IDialogBaseProps,
     IDialogProps,

@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ChangeEvent, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { type ChangeEvent, type Ref, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -16,7 +16,7 @@ import {
     isRangeConditionOperator,
 } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { Bubble, BubbleHoverTrigger, UiIconButton } from "@gooddata/sdk-ui-kit";
+import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { ConditionInputSection } from "./ConditionInputSection.js";
 import { MEASURE_VALUE_FILTER_DROPDOWN_BODY_CLASS } from "./constants.js";
@@ -45,7 +45,6 @@ interface IDropdownBodyProps extends IMeasureValueFilterCustomComponentProps {
     usePercentage?: boolean;
     warningMessage?: WarningMessage;
     locale?: string;
-    disableAutofocus?: boolean;
     onCancel?: () => void;
     measureTitle?: string;
     onApply: IMeasureValueFilterDropdownCallback;
@@ -90,7 +89,6 @@ interface IDropdownBodyState {
 }
 
 const DefaultValuePrecision = 6;
-const ALIGN_POINTS = [{ align: "cr cl" }];
 
 interface IConditionActionButtonProps {
     icon: "plus" | "cross";
@@ -99,14 +97,16 @@ interface IConditionActionButtonProps {
     isDestructive?: boolean;
     onClick: () => void;
     dataTestId: string;
-    label: string;
+    /** Accessible name; carries the condition number to disambiguate repeated buttons (WCAG 2.4.6). */
+    ariaLabel: string;
     tooltip: string;
+    buttonRef?: Ref<HTMLButtonElement>;
 }
 
 /**
- * Plus / cross button next to a condition row. On mobile, skip the hover tooltip wrapper —
- * tooltips aren't usable on touch and the Bubble's internal Overlay caused a re-positioning
- * feedback loop when a new condition row was inserted into the fullscreen overlay.
+ * Plus / cross button next to a condition row. On mobile, skip the tooltip wrapper —
+ * tooltips aren't usable on touch and the tooltip's internal floating layer caused a
+ * re-positioning feedback loop when a new condition row was inserted into the fullscreen overlay.
  */
 function ConditionActionButton({
     icon,
@@ -115,11 +115,13 @@ function ConditionActionButton({
     isDestructive,
     onClick,
     dataTestId,
-    label,
+    ariaLabel,
     tooltip,
+    buttonRef,
 }: IConditionActionButtonProps) {
     const button = (
         <UiIconButton
+            ref={buttonRef}
             icon={icon}
             size={isMobile ? "medium" : "small"}
             variant="tertiary"
@@ -127,7 +129,7 @@ function ConditionActionButton({
             isDesctructive={isDestructive}
             onClick={onClick}
             dataTestId={dataTestId}
-            label={label}
+            label={ariaLabel}
         />
     );
 
@@ -136,10 +138,13 @@ function ConditionActionButton({
     }
 
     return (
-        <BubbleHoverTrigger>
-            {button}
-            <Bubble alignPoints={ALIGN_POINTS}>{tooltip}</Bubble>
-        </BubbleHoverTrigger>
+        <UiTooltip
+            content={tooltip}
+            triggerBy={["hover", "focus"]}
+            arrowPlacement="left"
+            optimalPlacement
+            anchor={button}
+        />
     );
 }
 
@@ -309,6 +314,38 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         };
     });
     const [applyOnResult, setApplyOnResult] = useState<boolean>(initialApplyOnResult ?? true);
+
+    const [conditionAnnouncement, setConditionAnnouncement] = useState<string>("");
+    const announcementTimeoutRef = useRef<number | undefined>(undefined);
+    const announceConditionChange = useCallback((message: string) => {
+        // Defer so the aria-live region reliably re-announces.
+        window.clearTimeout(announcementTimeoutRef.current);
+        announcementTimeoutRef.current = window.setTimeout(() => {
+            setConditionAnnouncement(message);
+        });
+    }, []);
+    useEffect(() => () => window.clearTimeout(announcementTimeoutRef.current), []);
+
+    // Per-condition action buttons (add on the first row, remove on the rest), keyed by index, so
+    // focus can be restored into the dialog after a condition row is removed. The ref callbacks are
+    // memoized per index so their identity is stable across renders (no detach/reattach churn).
+    const conditionActionButtonRefs = useRef(new Map<number, HTMLButtonElement>());
+    const conditionActionButtonRefSetters = useRef(new Map<number, Ref<HTMLButtonElement>>());
+    const setConditionActionButtonRef = useCallback((index: number): Ref<HTMLButtonElement> => {
+        const setters = conditionActionButtonRefSetters.current;
+        let setter = setters.get(index);
+        if (!setter) {
+            setter = (el: HTMLButtonElement | null) => {
+                if (el) {
+                    conditionActionButtonRefs.current.set(index, el);
+                } else {
+                    conditionActionButtonRefs.current.delete(index);
+                }
+            };
+            setters.set(index, setter);
+        }
+        return setter;
+    }, []);
 
     // Keep the checkbox state in a ref to avoid edge cases where Apply is clicked
     // immediately after toggling the checkbox (before state update is reflected in callbacks).
@@ -795,26 +832,49 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         if (isAddConditionDisabled) {
             return;
         }
+        let addedConditionNumber: number | undefined;
         setState((prev) => {
             const first = prev.conditions[0];
             if (!first || first.operator === "ALL") {
                 return prev;
             }
+            addedConditionNumber = prev.conditions.length + 1;
             // adding a freshly-empty condition is not yet a valid commit; isStateValid will gate emission.
             return {
                 ...prev,
                 conditions: [...prev.conditions, { operator: first.operator, value: {}, showError: {} }],
             };
         });
-    }, [isAddConditionDisabled, enableMultipleConditions]);
+        if (addedConditionNumber !== undefined) {
+            announceConditionChange(
+                intl.formatMessage(
+                    { id: "mvf.condition.announcement.added" },
+                    { number: addedConditionNumber },
+                ),
+            );
+        }
+    }, [isAddConditionDisabled, enableMultipleConditions, announceConditionChange, intl]);
 
-    const handleRemoveCondition = useCallback((index: number) => {
-        isCommitPending.current = true;
-        setState((prev) => ({
-            ...prev,
-            conditions: prev.conditions.filter((_, i) => i !== index),
-        }));
-    }, []);
+    const handleRemoveCondition = useCallback(
+        (index: number) => {
+            isCommitPending.current = true;
+            setState((prev) => ({
+                ...prev,
+                conditions: prev.conditions.filter((_, i) => i !== index),
+            }));
+            announceConditionChange(
+                intl.formatMessage({ id: "mvf.condition.announcement.removed" }, { number: index + 1 }),
+            );
+            // The removed row's cross button took focus; move it back into the dialog (to the
+            // previous condition's remove button, or the add button on the first row) so the
+            // focus trap is not left behind on <body>.
+            const focusTargetIndex = index - 1 >= 1 ? index - 1 : 0;
+            requestAnimationFrame(() => {
+                conditionActionButtonRefs.current.get(focusTargetIndex)?.focus();
+            });
+        },
+        [announceConditionChange, intl],
+    );
 
     const handleApplyOnResultChange = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
@@ -888,8 +948,9 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                                                             isMobile={props.isMobile}
                                                             isDisabled={isAddConditionDisabled}
                                                             onClick={handleAddCondition}
+                                                            buttonRef={setConditionActionButtonRef(idx)}
                                                             dataTestId="mvf-add-condition"
-                                                            label={addConditionTooltip}
+                                                            ariaLabel={addConditionTooltip}
                                                             tooltip={
                                                                 isAddConditionDisabled
                                                                     ? addConditionDisabledTooltip
@@ -902,8 +963,14 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                                                             isMobile={props.isMobile}
                                                             isDestructive
                                                             onClick={() => handleRemoveCondition(idx)}
+                                                            buttonRef={setConditionActionButtonRef(idx)}
                                                             dataTestId={`mvf-remove-condition-${idx}`}
-                                                            label={removeConditionTooltip}
+                                                            ariaLabel={intl.formatMessage(
+                                                                {
+                                                                    id: "mvf.removeConditionTooltip.ariaLabel",
+                                                                },
+                                                                { number: idx + 1 },
+                                                            )}
                                                             tooltip={removeConditionTooltip}
                                                         />
                                                     )}
@@ -924,7 +991,6 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                                                     }
                                                     condition={c}
                                                     usePercentage={props.usePercentage ?? false}
-                                                    baseDisableAutofocus={props.disableAutofocus}
                                                     separators={props.separators}
                                                     onValueChange={handleValueChange}
                                                     onFromChange={handleFromChange}
@@ -1024,6 +1090,10 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                     />
                 );
             })()}
+            {/* Screen reader announcement when a condition is added or removed */}
+            <div className="sr-only" aria-live="polite" aria-atomic="true" role="status">
+                {conditionAnnouncement}
+            </div>
         </div>
     );
 });
