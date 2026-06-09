@@ -12,7 +12,7 @@ import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
 
 // @internal
-export function ConditionalScopedThemeProvider({ children }: {
+export function ConditionalScopedThemeProvider(input: {
     children: ReactNode;
 }): ReactNode;
 
@@ -55,16 +55,16 @@ export interface IThemeProviderProps {
 }
 
 // @internal
-export function ScopedThemeProvider({ children, theme: themeParam, backend: backendParam, workspace: workspaceParam, modifier, enableComplementaryPalette, removeGlobalStylesOnUnmout }: IScopedThemeProviderProps): JSX.Element;
+export function ScopedThemeProvider(input: IScopedThemeProviderProps): JSX.Element;
 
 // @public
-export function ThemeContextProvider({ children, theme, themeIsLoading, themeStatus, isScopeThemed }: IThemeContextProviderProps): JSX.Element;
+export function ThemeContextProvider(input: IThemeContextProviderProps): JSX.Element;
 
 // @public (undocumented)
 export type ThemeModifier = (theme: ITheme) => ITheme;
 
 // @public
-export function ThemeProvider({ children, theme: themeParam, backend: backendParam, workspace: workspaceParam, modifier, enableComplementaryPalette, removeGlobalStylesOnUnmout }: IThemeProviderProps): JSX.Element;
+export function ThemeProvider(input: IThemeProviderProps): JSX.Element;
 
 // @public (undocumented)
 export type ThemeStatus = "pending" | "loading" | "success";

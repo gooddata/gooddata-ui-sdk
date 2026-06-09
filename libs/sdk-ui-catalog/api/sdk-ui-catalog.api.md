@@ -19,10 +19,10 @@ import { ReactNode } from 'react';
 export function AnalyticsCatalog(props: IAnalyticsCatalogProps): JSX.Element;
 
 // @internal (undocumented)
-export function AnalyticsCatalogDetail({ backend, workspace, locale, ...restProps }: IAnalyticsCatalogDetailProps): JSX.Element;
+export function AnalyticsCatalogDetail(input: IAnalyticsCatalogDetailProps): JSX.Element;
 
 // @internal (undocumented)
-export function AnalyticsCatalogDetailContent({ backend, workspace, locale, ...restProps }: IAnalyticsCatalogDetailContentProps): JSX.Element;
+export function AnalyticsCatalogDetailContent(input: IAnalyticsCatalogDetailContentProps): JSX.Element;
 
 // @internal
 export function AnalyticsCatalogFilter<T>(props: IAnalyticsCatalogFilterProps<T>): JSX.Element;

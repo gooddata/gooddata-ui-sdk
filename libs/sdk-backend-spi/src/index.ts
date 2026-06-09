@@ -299,7 +299,6 @@ export type {
     IDashboardExportPdfOptions,
     IDashboardExportRawOptions,
     IDashboardExportTabularOptions,
-    IDashboardParameterValueOverride,
     IDashboardExportImageOptions,
     IDashboardExportPresentationOptions,
     FiltersByTab,

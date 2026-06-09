@@ -7,6 +7,7 @@ import type {
     IDashboardAttributeFilterConfig,
     IDashboardBase,
     IDashboardDefinition,
+    IDashboardExportParameter,
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
     IDashboardObjectIdentity,
@@ -233,28 +234,6 @@ export interface IRawExportCustomOverrides {
 }
 
 /**
- * Backend-neutral parameter value override sent on dashboard tabular export.
- *
- * @alpha
- */
-export interface IDashboardParameterValueOverride {
-    /**
-     * Parameter identifier; drives AFM execution. Matches the workspace catalog parameter's id.
-     */
-    id: string;
-    /**
-     * Value to apply for the parameter, encoded as a string (numeric values are stringified).
-     * Drives AFM execution.
-     */
-    value: string;
-    /**
-     * Display title rendered into the export's info sheet. Presentation-only; not consumed by
-     * execution.
-     */
-    title: string;
-}
-
-/**
  * Options for exporting dashboard to tabular format.
  *
  * @alpha
@@ -299,7 +278,7 @@ export interface IDashboardExportTabularOptions {
      * Per-tab parameter overrides. Key is tabId; values drive AFM execution and info-sheet rendering
      * for that tab's sub-export. Mirrors `dashboardTabsFiltersOverrides`.
      */
-    dashboardTabsParametersOverrides?: Record<string, IDashboardParameterValueOverride[]>;
+    dashboardTabsParametersOverrides?: Record<string, IDashboardExportParameter[]>;
 
     /**
      * PDF-specific configuration options. Only applicable when format is "PDF".
@@ -336,6 +315,12 @@ export interface IDashboardExportPdfOptions {
      * Custom export metadata forwarded through the export flow.
      */
     exportMetadata?: Record<string, string>;
+
+    /**
+     * Per-tab parameter runtime-overrides applied when rendering the exported file. Keyed by tab
+     * `localIdentifier`. Mirrors `dashboardTabsParametersOverrides` on the tabular options.
+     */
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
 
     /**
      * Override the default export result polling timeout (in milliseconds).
@@ -387,6 +372,13 @@ export interface IDashboardExportImageOptions {
     filename?: string;
 
     /**
+     * Per-tab parameter runtime-overrides applied when rendering the exported image.
+     * Keyed by tab `localIdentifier`; a widget-scoped export carries the single owning tab.
+     * Mirrors `dashboardTabsParametersOverrides` on the tabular options.
+     */
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
+
+    /**
      * Override the default export result polling timeout (in milliseconds).
      *
      * @remarks
@@ -410,6 +402,13 @@ export interface IDashboardExportPresentationOptions {
     hideWidgetTitles?: boolean;
     filename?: string;
     exportMetadata?: Record<string, string>;
+
+    /**
+     * Per-tab parameter runtime-overrides applied when rendering the exported slides.
+     * Keyed by tab `localIdentifier`; a widget-scoped export carries the single owning tab.
+     * Mirrors `dashboardTabsParametersOverrides` on the tabular options.
+     */
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
 
     /**
      * Override the default export result polling timeout (in milliseconds).

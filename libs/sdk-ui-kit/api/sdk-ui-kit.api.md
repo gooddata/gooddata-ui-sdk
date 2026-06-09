@@ -112,10 +112,10 @@ export type ActionType = "LinkButton" | "Button" | "Switcher";
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
 
 // @internal (undocumented)
-export function AddButton({ title, isDisabled, onClick, tooltip, tooltipAlignPoints, className }: IAddButtonProps): JSX.Element;
+export function AddButton(input: IAddButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function AddGranteeBase({ appliedGrantees, addedGrantees, currentUser, isDirty, currentUserPermissions, sharedObject, previouslyFocusedRef, onCancel, onSubmit, onBackClick, onAddUserOrGroups, onDelete, onGranularGranteeChange, isGranteeShareLoading }: IAddGranteeBaseProps): JSX.Element;
+export function AddGranteeBase(input: IAddGranteeBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => IMessage;
@@ -131,7 +131,7 @@ export type AlignConfig = {
 };
 
 // @internal (undocumented)
-export function alignConfigToAlignPoint({ triggerAlignPoint, overlayAlignPoint, offset }: AlignConfig): IAlignPoint;
+export function alignConfigToAlignPoint(input: AlignConfig): IAlignPoint;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -168,10 +168,10 @@ export type ArrowOffsets = Record<string, ArrowOffset>;
 export function AsyncList<T>(props: IAsyncListProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function AutoSize({ children }: IAutoSizeProps): JSX.Element;
+export function AutoSize(input: IAutoSizeProps): JSX.Element;
 
 // @internal (undocumented)
-export function BackButton({ onClick, className, disabled }: IBackButtonProps): JSX.Element;
+export function BackButton(input: IBackButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export type BackgroundShape = "circle" | "square";
@@ -206,7 +206,7 @@ export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
 export type BubbleFocusTriggerProps = IBubbleTriggerProps;
 
 // @internal (undocumented)
-export function BubbleHeaderSeparator({ title, message }: IBubbleHeaderSeparatorProps): JSX.Element;
+export function BubbleHeaderSeparator(input: IBubbleHeaderSeparatorProps): JSX.Element;
 
 // @internal (undocumented)
 export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> {
@@ -258,16 +258,16 @@ export const ChartSortingWithIntl: FC<WithIntlProps<IChartSortingProps>> & {
 export const Checkbox: NamedExoticComponent<ICheckboxProps>;
 
 // @internal (undocumented)
-export function CodeArea({ code, onCopyCode }: ICodeAreaProps): JSX.Element;
+export function CodeArea(input: ICodeAreaProps): JSX.Element;
 
 // @internal (undocumented)
-export function CodeLanguageSelect({ selectedLanguage, onLanguageChanged }: ICodeLanguageSelectProps): JSX.Element;
+export function CodeLanguageSelect(input: ICodeLanguageSelectProps): JSX.Element;
 
 // @internal (undocumented)
 export type CodeLanguageType = "js" | "ts";
 
 // @internal (undocumented)
-export function CodeOptions({ option, onChange }: ICodeOptionsProps): JSX.Element;
+export function CodeOptions(input: ICodeOptionsProps): JSX.Element;
 
 // @internal
 export type Color = string;
@@ -282,13 +282,13 @@ export function ColorPickerPointer(): JSX.Element;
 export function ColorPreview(props: IColorPreviewProps): JSX.Element;
 
 // @internal (undocumented)
-export function CommunityEditionDialog({ headerText, infoText, copyrightText, links, onClose, closeButtonText }: ICommunityEditionDialogProps): JSX.Element;
+export function CommunityEditionDialog(input: ICommunityEditionDialogProps): JSX.Element;
 
 // @internal (undocumented)
-export function ComponentLabelsProvider({ children, labels }: IComponentLabelsProviderProps): JSX.Element;
+export function ComponentLabelsProvider(input: IComponentLabelsProviderProps): JSX.Element;
 
 // @internal (undocumented)
-export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle }: IComponentTableProps<TProps>): JSX.Element;
+export function ComponentTable<TProps extends object>(input: IComponentTableProps<TProps>): JSX.Element;
 
 // @internal (undocumented)
 export const ConfirmDialog: NamedExoticComponent<IConfirmDialogBaseProps>;
@@ -300,7 +300,7 @@ export const ConfirmDialogBase: NamedExoticComponent<IConfirmDialogBaseProps>;
 export type ConfirmDialogVariant = VariantPrimary | VariantDanger;
 
 // @internal (undocumented)
-export function ContentDivider({ className }: {
+export function ContentDivider(input: {
     className?: string;
 }): JSX.Element;
 
@@ -333,7 +333,7 @@ export function createTemplates(formatMessage: (descriptor: {
 }) => string, definitions: readonly ITemplateDefinition[], messageIdPrefix?: string): IFormatTemplate[];
 
 // @internal
-export function CsvDelimiterPicker({ value, onChange, validationError, label, onEnterKeyPress, layout }: ICsvDelimiterPickerProps): JSX.Element;
+export function CsvDelimiterPicker(input: ICsvDelimiterPickerProps): JSX.Element;
 
 // @internal
 export const CURRENCY_PRESET_DEFINITIONS: readonly ICurrencyPresetDefinition[];
@@ -356,10 +356,10 @@ export type CurrentUserPermissions = {
 };
 
 // @internal (undocumented)
-export function CustomizableCheckmark({ className, width, height }: ICustomizableCheckmarkProps): JSX.Element;
+export function CustomizableCheckmark(input: ICustomizableCheckmarkProps): JSX.Element;
 
 // @internal (undocumented)
-export function DateDatasetsListItem({ id, title, isHeader, isSelected, isUnrelated, onClick }: IDateDatasetsListItemProps): JSX.Element;
+export function DateDatasetsListItem(input: IDateDatasetsListItemProps): JSX.Element;
 
 // @internal (undocumented)
 export class Datepicker extends PureComponent<IDatePickerOwnProps> {
@@ -389,31 +389,31 @@ export const defaultFocusCheckFn: (element: HTMLElement) => boolean;
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
-export function DefaultUiListboxInteractiveItemComponent<T>({ item, isFocused, isSelected, isCompact, onSelect }: IUiListboxInteractiveItemProps<T>): ReactNode;
+export function DefaultUiListboxInteractiveItemComponent<T>(input: IUiListboxInteractiveItemProps<T>): ReactNode;
 
 // @internal
-export function DefaultUiListboxStaticItemComponent<T>({ item }: IUiListboxStaticItemProps<T>): ReactNode;
+export function DefaultUiListboxStaticItemComponent<T>(input: IUiListboxStaticItemProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuContent: NamedExoticComponent<IUiMenuContentProps<object>>;
 
 // @internal (undocumented)
-export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused }: IUiMenuContentItemProps<T>): ReactNode;
+export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>(input: IUiMenuContentItemProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuContentItemWrapper: NamedExoticComponent<IUiMenuContentItemWrapperProps<object>>;
 
 // @internal (undocumented)
-export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({ item }: IUiMenuGroupItemProps<T>): ReactNode;
+export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>(input: IUiMenuGroupItemProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuHeader: FC;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused }: IUiMenuInteractiveItemProps<T>): ReactNode;
+export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>(input: IUiMenuInteractiveItemProps<T>): ReactNode;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({ item }: IUiMenuInteractiveItemWrapperProps<T>): ReactNode;
+export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>(input: IUiMenuInteractiveItemWrapperProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuStaticItem: NamedExoticComponent<IUiMenuStaticItemProps<object>>;
@@ -435,19 +435,19 @@ export const DefaultUiTabsAllTabsButton: <TTabProps extends Record<any, any> = E
 export function DefaultUiTabsContainer<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"Container", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, onDoubleClick, isFocused }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(input: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex, isOpen, onToggleOpen }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element | null;
+export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(input: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, onClick, ariaAttributes, tabIndex, id }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element | null;
+export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(input: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected }: IUiTabComponentProps<"TabValue", TTabProps, TTabActionProps>): JSX.Element;
+export function DefaultUiTabsTabValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(input: IUiTabComponentProps<"TabValue", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, isExpanded, isFocused, isSelected, isCompact, onToggle, onSelect, ariaAttributes }: IUiTreeviewItemProps<Level>): ReactNode;
+export function DefaultUiTreeViewItemComponent<Level>(input: IUiTreeviewItemProps<Level>): ReactNode;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -471,7 +471,7 @@ export const DESCRIPTION_PANEL_ARROW_OFFSETS: {
 };
 
 // @internal (undocumented)
-export function DescriptionIcon({ className }: IDescriptionTriggerProps): JSX.Element;
+export function DescriptionIcon(input: IDescriptionTriggerProps): JSX.Element;
 
 // @internal (undocumented)
 export function DescriptionPanel(props: IDescriptionPanelProps): JSX.Element;
@@ -495,13 +495,13 @@ export function DialogCloseButton(props: IDialogCloseButtonProps): JSX.Element;
 export type DialogHeaderTitleSize = "default" | "large";
 
 // @internal (undocumented)
-export function DialogList({ items, isLoading, className, emptyMessageElement, itemComponent, itemClassName, onItemClick, onItemDelete }: IDialogListProps): JSX.Element;
+export function DialogList(input: IDialogListProps): JSX.Element;
 
 // @internal (undocumented)
-export function DialogListHeader({ className, gdIconName, title, buttonTitle, buttonDisabled, buttonTooltipText, onButtonClick }: IDialogListHeaderProps): JSX.Element;
+export function DialogListHeader(input: IDialogListHeaderProps): JSX.Element;
 
 // @internal (undocumented)
-export function DialogListItemBasic({ item, className, onClick, onDelete }: IDialogListItemComponentProps): JSX.Element;
+export function DialogListItemBasic(input: IDialogListItemComponentProps): JSX.Element;
 
 // @internal (undocumented)
 export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem> = FunctionComponent<IDialogListItemComponentProps<T>>;
@@ -510,34 +510,34 @@ export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem>
 export type DialogModeType = "ShareGrantee" | "AddGrantee";
 
 // @internal (undocumented)
-export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, faviconUrl }: IDocumentHeaderProps): null;
+export function DocumentHeader(input: IDocumentHeaderProps): null;
 
 // @internal (undocumented)
-export function DomainHomepageLink({ onClick }: IDomainHomepageLinkProps): JSX.Element;
+export function DomainHomepageLink(input: IDomainHomepageLinkProps): JSX.Element;
 
 // @internal (undocumented)
-export function Dropdown({ isOpen: isOpenProp, onToggle, className, openOnInit, closeOnParentScroll, closeOnMouseDrag, closeOnOutsideClick, overlayPositionType, alignPoints, overlayZIndex, ignoreClicksOnByClass, renderBody, renderButton, onOpenStateChanged, fullscreenOnMobile, enableEventPropagation, enableAutoToggle, closeOnEscape, autofocusOnOpen, initialFocus, returnFocusTo, accessibilityConfig, shouldTrapFocus }: IDropdownProps): JSX.Element;
+export function Dropdown(input: IDropdownProps): JSX.Element;
 
 // @internal (undocumented)
-export function DropdownButton({ id, className, accessibilityConfig, value, title, disabled, isOpen, isSmall, iconLeft, isFullWidth, onClick, children, dropdownId, buttonRef }: IDropdownButtonProps): JSX.Element;
+export function DropdownButton(input: IDropdownButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): JSX.Element;
 
 // @internal
-export function DropdownList<T>({ id, title, className, tabsClassName, width, height, maxHeight, onKeyDownSelect, onKeyDownConfirm, isMobile, isLoading, items, itemsCount, itemHeight, containerPadding, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, accessibilityConfig, renderItem, itemHeightGetter, itemTitleGetter, loadNextPage, hasNextPage, skeletonItemsCount, shouldLoadNextPage, isNextPageLoading, SkeletonItem, onScroll, scrollToItem, scrollToItemKeyExtractor }: IDropdownListProps<T>): ReactElement;
+export function DropdownList<T>(input: IDropdownListProps<T>): ReactElement;
 
 // @internal (undocumented)
-export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: IDropdownTagsProps): JSX.Element;
+export function DropdownTabs(input: IDropdownTagsProps): JSX.Element;
 
 // @internal (undocumented)
 export const EditableLabel: ForwardRefExoticComponent<IEditableLabelProps & RefAttributes<HTMLDivElement>>;
 
 // @internal
-export function EllipsisText({ text, maxLines }: IEllipsisTextProps): JSX.Element;
+export function EllipsisText(input: IEllipsisTextProps): JSX.Element;
 
 // @internal (undocumented)
-export function EmbedInsightDialogBase({ code, propertiesLink, integrationDocLink, embedTab, embedTypeOptions, openSaveInsightDialog, onClose, onCopyCode, onOptionsChange, onTabChange, showWebComponentsTab }: IEmbedInsightDialogBaseProps): JSX.Element;
+export function EmbedInsightDialogBase(input: IEmbedInsightDialogBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export type EmbedOptionsType = IReactOptions | IWebComponentsOptions;
@@ -569,7 +569,7 @@ export const ExportTabularPdfDialog: NamedExoticComponent<IExportTabularPdfDialo
 export const FileDropzone: ForwardRefExoticComponent<IFileDropzoneProps & RefAttributes<IFileDropzoneHandle>>;
 
 // @internal (undocumented)
-export function FilePickerButton({ buttonLabel, acceptedFileTypes, multiple, disabled, ariaLabel, onFilesSelected, buttonProps }: IFilePickerButtonProps): JSX.Element;
+export function FilePickerButton(input: IFilePickerButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export const FileValidationErrorCode: {
@@ -582,7 +582,7 @@ export const FileValidationErrorCode: {
 export type FileValidationErrorCode = (typeof FileValidationErrorCode)[keyof typeof FileValidationErrorCode];
 
 // @internal (undocumented)
-export function FilterGroupItem({ title, subtitle, selectedItemsCount, totalItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, disabled }: IFilterGroupItemProps): JSX.Element;
+export function FilterGroupItem(input: IFilterGroupItemProps): JSX.Element;
 
 // @internal (undocumented)
 export const FilterLabel: NamedExoticComponent<IFilterLabelProps>;
@@ -787,7 +787,7 @@ export type GranteeAvatarKind = "user" | "group";
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
 
 // @internal (undocumented)
-export function GranteeItemComponent({ grantee, mode, currentUserPermissions, isSharedObjectLocked, isGranteeShareLoading, onDelete, onChange }: IGranteeItemProps): JSX.Element | null;
+export function GranteeItemComponent(input: IGranteeItemProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type GranteeStatus = "Inactive" | "Active";
@@ -802,7 +802,7 @@ export function guidFor(obj: any): string;
 export const handleOnGoodstrapDragEvent: DebouncedFunc<() => void>;
 
 // @internal (undocumented)
-export function Header({ children, ...restProps }: IHeaderProps): JSX.Element;
+export function Header(input: IHeaderProps): JSX.Element;
 
 // @internal (undocumented)
 export const HEADER_CHAT_BUTTON_ID = "gd-header-chat-button";
@@ -838,10 +838,10 @@ export const HEADER_ITEM_ID_METRICS: string;
 export const HEADER_ITEM_ID_REPORTS: string;
 
 // @internal (undocumented)
-export function HeaderBadge({ children, color, backgroundColor }: IHeaderBadgeProps): JSX.Element;
+export function HeaderBadge(input: IHeaderBadgeProps): JSX.Element;
 
 // @internal (undocumented)
-export function HeaderBadgeWithModal({ renderModalContent, children, color, ...badgeProps }: IHeaderBadgeWithModalProps): JSX.Element;
+export function HeaderBadgeWithModal(input: IHeaderBadgeWithModalProps): JSX.Element;
 
 // @internal (undocumented)
 export const HeaderDataMenu: FC<WithIntlProps<IHeaderDataMenuProps>> & {
@@ -855,7 +855,7 @@ export type HeaderSearchContext = {
 };
 
 // @internal
-export function HeaderSearchProvider({ children, ...rest }: PropsWithChildren<HeaderSearchContext>): JSX.Element;
+export function HeaderSearchProvider(input: PropsWithChildren<HeaderSearchContext>): JSX.Element;
 
 // @internal (undocumented)
 export const HeaderWorkspacePicker: FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
@@ -872,7 +872,7 @@ export type HorizontalPosition = "left" | "center" | "right";
 export function HubspotConversionTouchPointDialog(props: IHubspotConversionTouchPointDialogBaseProps): JSX.Element;
 
 // @internal
-export function Hyperlink({ text, href, onClick, className, iconClass }: IHyperlinkProps): JSX.Element;
+export function Hyperlink(input: IHyperlinkProps): JSX.Element;
 
 // @internal (undocumented)
 export interface IAccessibilityConfigBase {
@@ -1102,7 +1102,7 @@ export interface IAutoSizeChildren {
 // @internal (undocumented)
 export interface IAutoSizeProps {
     // (undocumented)
-    children: ({ width, height }: IAutoSizeChildren) => ReactNode;
+    children: (input: IAutoSizeChildren) => ReactNode;
 }
 
 // @internal
@@ -1523,135 +1523,135 @@ export interface IComponentTableProps<TProps extends object> {
 export const Icon: Record<string, FC<IIconProps>>;
 
 // @internal (undocumented)
-export function IconAborted({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconAborted(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconAlert({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconAlert(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconAlertPaused({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconAlertPaused(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconArrowDown({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconArrowDown(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconArrowLeft({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconArrowLeft(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconArrowRight({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconArrowRight(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconArrowUp({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconArrowUp(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconAttachmentClip({ className, width, height, color }: IIconProps): JSX.Element;
+export function IconAttachmentClip(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconAttribute({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconAttribute(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconAttributeFilter({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconAttributeFilter(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconBar({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconBar(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconBoldHyperlink({ color, className, width, height, ariaLabel }: IIconProps & {
+export function IconBoldHyperlink(input: IIconProps & {
     ariaLabel?: string;
 }): JSX.Element;
 
 // @internal (undocumented)
-export function IconBook({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconBook(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconBubble({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconBubble(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconBullet({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconBullet(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconBurgerMenu({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconBurgerMenu(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconChatBubble({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconChatBubble(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconClose({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconClose(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconColumn({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconColumn(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconColumnContainer({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconColumnContainer(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconColumns({ colorPalette, className, width, height }: IColumnsIconProps): JSX.Element;
+export function IconColumns(input: IColumnsIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconCombo({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconCombo(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconContract({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconContract(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconCopy({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconCopy(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDashboard({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconDashboard(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDataset({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconDataset(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDataSource({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconDataSource(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDate({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconDate(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDependencyWheel({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconDependencyWheel(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDonut({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconDonut(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDragHandle({ className, color, width, height }: IIconProps): JSX.Element;
+export function IconDragHandle(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDrillDown({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconDrillDown(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDrillToDashboard({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconDrillToDashboard(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconDrillToInsight({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconDrillToInsight(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconEdit({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconEdit(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconEllipsis({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconEllipsis(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconEmail({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconEmail(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconEmbedCode({ color, className, ariaHidden, width, height }: IIconProps): JSX.Element;
+export function IconEmbedCode(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconError({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconError(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconExpand({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconExpand(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconExplore({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconExplore(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconExternalLink({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconExternalLink(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconFact({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconFact(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessibilityConfig"> {
@@ -1703,211 +1703,211 @@ export interface IConfirmDialogBaseProps extends Omit<IDialogBaseProps, "accessi
 }
 
 // @internal (undocumented)
-export function IconFunction({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconFunction(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconFunnel({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconFunnel(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconGenAI({ color, className, ariaHidden, width, height }: IIconProps): JSX.Element;
+export function IconGenAI(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconGenAI2({ color, className, ariaHidden, width, height }: IIconProps): JSX.Element;
+export function IconGenAI2(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconGeo({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconGeo(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconHash({ color, backgroundColor, className, width, height }: IHashIconProps): JSX.Element;
+export function IconHash(input: IHashIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconHeader({ className, color, width, height }: IIconProps): JSX.Element;
+export function IconHeader(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconHeadlineChart({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconHeadlineChart(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconHeatMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconHeatMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconHistoryBack({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconHistoryBack(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconHome({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconHome(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconHyperlink({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconHyperlink(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconImage({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconImage(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconInsight({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconInsight(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconInsightPicker({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconInsightPicker(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconInteraction({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconInteraction(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconInvite({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconInvite(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconKeyword({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconKeyword(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconLabel({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconLabel(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconLeave({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconLeave(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconLegendMenu({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconLegendMenu(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconLine({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconLine(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconLock({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconLock(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconLogout({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconLogout(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconMagic({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconMagic(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconMany({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconMany(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconMetric({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconMetric(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconMinimize({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconMinimize(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconNewVisualization({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconNewVisualization(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconOrigin({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconOrigin(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export const iconPaths: Record<IconType, ReactNode>;
 
 // @internal (undocumented)
-export function IconPdf({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconPdf(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconPie({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconPie(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconProgress({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconProgress(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconPyramid({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconPyramid(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconQuestionMark({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconQuestionMark(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconRadar({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconRadar(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconRefresh({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconRefresh(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconRepeater({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconRepeater(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconReset({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconReset(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconRichText({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconRichText(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconRows({ colorPalette, className, width, height }: IRowsIconProps): JSX.Element;
+export function IconRows(input: IRowsIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconRun({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconRun(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconSankey({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconSankey(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconSave({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconSave(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconScatterPlot({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconScatterPlot(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconSchedule({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconSchedule(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconSearch({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconSearch(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconSettingsGear({ className, width, height, color }: IIconProps): JSX.Element;
+export function IconSettingsGear(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconSimplifiedDashboard({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconSimplifiedDashboard(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconSmallDragHandle({ className, color, width, height }: IIconProps): JSX.Element;
+export function IconSmallDragHandle(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconStackedArea({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconStackedArea(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconSuccess({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconSuccess(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconTable({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconTable(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconThumbsDown({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconThumbsDown(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconThumbsUp({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconThumbsUp(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconToken({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconToken(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconTrash({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconTrash(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconTreeMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin";
 
 // @internal (undocumented)
-export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
+export function IconUndo(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconUser({ color, backgroundColor, className, width, height }: IUserIconProps): JSX.Element;
+export function IconUser(input: IUserIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconUserGroup({ color, backgroundColor, className, width, height }: IUserGroupIconProps): JSX.Element;
+export function IconUserGroup(input: IUserGroupIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconVisualizationSwitcher({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconVisualizationSwitcher(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconWarning({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconWarning(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconWaterfall({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
+export function IconWaterfall(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconWebhook({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconWebhook(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconWebsite({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconWebsite(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconWidget({ color, className, width, height }: IIconProps): JSX.Element;
+export function IconWidget(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export interface ICsvDelimiterPickerProps {
@@ -4509,16 +4509,16 @@ export const InputWithNumberFormat: NamedExoticComponent<IInputWithNumberFormatP
 export type InsightCodeType = "definition" | "reference";
 
 // @internal (undocumented)
-export function InsightIcon({ visualizationUrl, iconProps }: IInsightIconProps): ReturnType<FC<IIconProps>> | null;
+export function InsightIcon(input: IInsightIconProps): ReturnType<FC<IIconProps>> | null;
 
 // @internal (undocumented)
-export function InsightListItem({ title, description, updated, type, isSelected, isLoading, filters, separators, LoadingComponent, onClick, onDescriptionPanelOpen, showDescriptionPanel, useRichText, useReferences, richTextExecConfig, width, isLocked, onDelete, metadataTimeZone }: IInsightListItemProps): JSX.Element;
+export function InsightListItem(input: IInsightListItemProps): JSX.Element;
 
 // @internal (undocumented)
-export function InsightListItemDate({ config }: IInsightListItemDateProps): JSX.Element;
+export function InsightListItemDate(input: IInsightListItemDateProps): JSX.Element;
 
 // @internal (undocumented)
-export function InsightListItemTypeIcon({ type }: {
+export function InsightListItemTypeIcon(input: {
     type: string;
 }): JSX.Element;
 
@@ -4534,22 +4534,22 @@ export interface INumericInputProps {
 export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, hideTotalItemsCount }: IInvertableSelectAllCheckboxProps): JSX.Element | null;
+export function InvertableSelectAllCheckbox(input: IInvertableSelectAllCheckboxProps): JSX.Element | null;
 
 // @internal (undocumented)
-export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, renderRight, icon, isDisabled, accessibilityConfig }: IInvertableSelectItem): JSX.Element;
+export function InvertableSelectItem(input: IInvertableSelectItem): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectLimitWarning({ limit, selectedItemsCount }: IInvertableSelectLimitWarningProps): JSX.Element;
+export function InvertableSelectLimitWarning(input: IInvertableSelectLimitWarningProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectSearchBar({ className, isSmall, searchString, onSearch, onEscKeyPress, searchPlaceholder, onKeyDown }: IInvertableSelectSearchBarProps): JSX.Element;
+export function InvertableSelectSearchBar(input: IInvertableSelectSearchBarProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectStatus<T>({ selectedItems, getItemTitle, isInverted }: IInvertableSelectStatusProps<T>): JSX.Element;
+export function InvertableSelectStatus<T>(input: IInvertableSelectStatusProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectStatusBar<T>({ className, selectedItems, getItemTitle, isInverted, selectedItemsLimit, showSelectionStatus }: IInvertableSelectStatusBarProps<T>): JSX.Element;
+export function InvertableSelectStatusBar<T>(input: IInvertableSelectStatusBarProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualisedProps<T>): JSX.Element;
@@ -5654,7 +5654,7 @@ export interface ITabsState {
 }
 
 // @internal (undocumented)
-export function Item({ checked, subMenu, disabled, className, children, style, onClick }: IItemProps): JSX.Element;
+export function Item(input: IItemProps): JSX.Element;
 
 // @internal
 export interface ITemplateDefinition {
@@ -5667,7 +5667,7 @@ export interface ITemplateDefinition {
 }
 
 // @internal (undocumented)
-export function ItemsWrapper({ smallItemsSpacing, className, children, style, wrapperRef }: IItemsWrapperProps): JSX.Element;
+export function ItemsWrapper(input: IItemsWrapperProps): JSX.Element;
 
 // @internal (undocumented)
 export interface ITextAreaWithSubmitProps {
@@ -8093,6 +8093,34 @@ export interface IWebComponentsOptions {
 }
 
 // @internal (undocumented)
+export interface IWidgetNoticeProps {
+    // (undocumented)
+    action?: ReactNode;
+    // (undocumented)
+    closeButtonLabel?: string;
+    // (undocumented)
+    collapseLabel?: ReactNode;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    defaultExpanded?: boolean;
+    // (undocumented)
+    detail?: ReactNode;
+    // (undocumented)
+    detailAction?: ReactNode;
+    // (undocumented)
+    expandLabel?: ReactNode;
+    // (undocumented)
+    message: ReactNode;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    showIcon?: boolean;
+    // (undocumented)
+    type?: WidgetNoticeType;
+}
+
+// @internal (undocumented)
 export interface IWithBubbleProps {
     // (undocumented)
     alignPoints?: IAlignPoint[];
@@ -8133,13 +8161,13 @@ export type LabelRowKind = "primary" | "default";
 export type LabelSize = "small" | "normal";
 
 // @internal @deprecated (undocumented)
-export function LegacyInvertableList<T>({ className, filteredItemsCount, getItemKey, height, isInverted, isLoading, isLoadingClass: IsLoadingClass, isMobile, itemHeight, items, itemsCount, limitHitWarningClass: LimitHitWarningClass, listItemClass, maxSelectionSize, noItemsFound, noItemsFoundClass: NoItemsFoundClass, onRangeChange, onSearch, onSelect, searchPlaceholder, searchString, selection, showSearchField, smallSearch, tagName, width, actionsAsCheckboxes, selectAllCheckbox, rowItem, isSearchFieldAutoFocused }: ILegacyInvertableListProps<T>): JSX.Element;
+export function LegacyInvertableList<T>(input: ILegacyInvertableListProps<T>): JSX.Element;
 
 // @internal @deprecated (undocumented)
-export function LegacyList({ className, onScroll, onScrollStart, onSelect, width, height, itemHeight, itemHeightGetter, compensateBorder, scrollToSelected, dataSource, rowItem }: ILegacyListProps): JSX.Element;
+export function LegacyList(input: ILegacyListProps): JSX.Element;
 
 // @internal @deprecated (undocumented)
-export function LegacyListItem<T>({ item, listItemClass }: ILegacyListItemProps<T>): ReactElement;
+export function LegacyListItem<T>(input: ILegacyListItemProps<T>): ReactElement;
 
 // @internal @deprecated (undocumented)
 export const LegacyMultiSelectList: <T>(props: ILegacyMultiSelectListProps<T>) => any;
@@ -8151,28 +8179,28 @@ export const LegacyMultiSelectListItem: NamedExoticComponent<ILegacyMultiSelectL
 export function LegacySingleSelectList<T>(props: ILegacySingleSelectListProps<T>): ReactElement;
 
 // @internal @deprecated (undocumented)
-export function LegacySingleSelectListItem({ source, selected, onSelect, onMouseOver, onMouseOut }: ILegacySingleSelectListItemProps): ReactElement;
+export function LegacySingleSelectListItem(input: ILegacySingleSelectListItemProps): ReactElement;
 
 // @internal (undocumented)
 export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 
 // @internal (undocumented)
-export function List<T>({ id, className, compensateBorder, width, height, maxHeight, items, itemsCount, itemHeight, itemHeightGetter, maxVisibleItemsCount, renderItem, onScrollStart, onScrollEnd, scrollToItem, scrollDirection, accessibilityConfig }: IListProps<T>): ReactElement;
+export function List<T>(input: IListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export const LOADING_HEIGHT = 100;
 
 // @internal (undocumented)
-export function LoadingDots({ className }: ILoadingDotsProps): JSX.Element;
+export function LoadingDots(input: ILoadingDotsProps): JSX.Element;
 
 // @internal (undocumented)
-export function LoadingMask({ className, height, width, size }: ILoadingMaskProps): JSX.Element;
+export function LoadingMask(input: ILoadingMaskProps): JSX.Element;
 
 // @internal (undocumented)
-export function LoadingSpinner({ className, color }: ILoadingSpinner): JSX.Element;
+export function LoadingSpinner(input: ILoadingSpinner): JSX.Element;
 
 // @internal (undocumented)
-export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSelected }: ILocaleSettingProps): JSX.Element;
+export function LocaleSetting(input: ILocaleSettingProps): JSX.Element;
 
 // @internal (undocumented)
 export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
@@ -8234,13 +8262,13 @@ export type MeasureSortSuggestion = {
 } & IMeasureSortTarget;
 
 // @internal (undocumented)
-export function Menu({ alignment, children, closeOnScroll, defaultOpened, offset, onOpenedChange, openAction, opened, portalTarget, spacing, toggler, togglerWrapperClassName }: IMenuProps): JSX.Element;
+export function Menu(input: IMenuProps): JSX.Element;
 
 // @internal (undocumented)
 export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "right"] | ["top", "left"] | ["right", "top"] | ["right", "bottom"] | ["left", "top"] | ["left", "bottom"];
 
 // @internal (undocumented)
-export function Message({ id, onClose, type, children, className, contrast, intensive, dataTestId }: IMessageProps): JSX.Element;
+export function Message(input: IMessageProps): JSX.Element;
 
 // @internal (undocumented)
 export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail" | "id">;
@@ -8252,13 +8280,13 @@ export type MessageType = "success" | "progress" | "error" | "warning";
 export const META_DATA_TIMEZONE = "Europe/Prague";
 
 // @internal (undocumented)
-export function MetadataList({ title, list }: IMetadataListProps): JSX.Element;
+export function MetadataList(input: IMetadataListProps): JSX.Element;
 
 // @internal (undocumented)
 export const modifierNegator: "!";
 
 // @internal (undocumented)
-export function MultiSelectList<T>({ isMobile, width, height, items, itemHeight, itemsCount, onScrollEnd, renderItem, selectedItems, listClassNames, onSelectAll, onSelectNone, isInverted, isSearching, isSelected, filteredItemsCount, selectAllCheckbox, tagName }: IMultiSelectListProps<T>): JSX.Element;
+export function MultiSelectList<T>(input: IMultiSelectListProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export const MultiSelectListItem: NamedExoticComponent<IMultiSelectListItemProps>;
@@ -8267,7 +8295,7 @@ export const MultiSelectListItem: NamedExoticComponent<IMultiSelectListItemProps
 export type NavigationDirection = "forward" | "backward";
 
 // @internal (undocumented)
-export function NoData({ className, hasNoMatchingData, notFoundLabel, noDataLabel }: INoDataProps): JSX.Element;
+export function NoData(input: INoDataProps): JSX.Element;
 
 // @internal
 export function NonContextToastsInterop(props: {
@@ -8279,7 +8307,7 @@ export function NonContextToastsInterop(props: {
 export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Date;
 
 // @internal (undocumented)
-export function NumericInput({ value, onValueChanged }: INumericInputProps): JSX.Element;
+export function NumericInput(input: INumericInputProps): JSX.Element;
 
 // @internal (undocumented)
 export type OnLeveledSelectFn<Levels extends any[]> = (item: IUiTreeViewItem<LevelTypesUnion<Levels>>, mods: IUiTreeViewSelectionMods, event: MouseEvent_2 | KeyboardEvent_2) => void;
@@ -8350,7 +8378,7 @@ export class OverlayController {
 }
 
 // @internal
-export function OverlayControllerProvider({ children, overlayController }: IOverlayControllerProviderProps): JSX.Element;
+export function OverlayControllerProvider(input: IOverlayControllerProviderProps): JSX.Element;
 
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
@@ -8362,13 +8390,13 @@ export type PageOrientation = "PORTRAIT" | "LANDSCAPE";
 export type PageSize = "A3" | "A4" | "LETTER";
 
 // @internal (undocumented)
-export function ParameterControlButton({ name, value, isActive, isDraggable, isDragging, onClick, className, "data-testid": dataTestId }: IParameterControlButtonProps): JSX.Element;
+export function ParameterControlButton(input: IParameterControlButtonProps): JSX.Element;
 
 // @internal
-export function ParameterControlDropdown({ name, value, resetValue, constraints, onApply, onCancel }: IParameterControlDropdownProps): JSX.Element;
+export function ParameterControlDropdown(input: IParameterControlDropdownProps): JSX.Element;
 
 // @internal
-export function ParameterPicker({ parameters, excludedKeys, isLoading, maxListHeight, onAdd, onCancel }: IParameterPickerProps): JSX.Element;
+export function ParameterPicker(input: IParameterPickerProps): JSX.Element;
 
 // @internal
 export type PermissionMenuLevel = "VIEW" | "SHARE";
@@ -8395,7 +8423,7 @@ export function propCombinationsFor<TProps extends object>(baseProps: TProps): <
 export const recommendedHeader: IDateDatasetHeader;
 
 // @internal
-export function Recurrence({ label, recurrenceType, inheritRecurrenceType, startDate, cronValue, cronPlaceholder, cronDescription, timezone, onRepeatTypeChange, onCronValueChange, allowHourlyRecurrence, showTimezoneInOccurrence, showRepeatTypeDescription, showInheritValue, isWhiteLabeled, weekStart, onRecurrenceDropdownOpen, closeOnParentScroll }: IRecurrenceProps): JSX.Element;
+export function Recurrence(input: IRecurrenceProps): JSX.Element;
 
 // @internal
 export const RECURRENCE_TYPES: {
@@ -8438,7 +8466,7 @@ export const ResponsiveContextProvider: Provider<IResponsiveConfig>;
 export type ResponsiveScreenType = "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 
 // @internal (undocumented)
-export function ResponsiveText({ tagName: Tag, tagClassName, title, children, windowResizeRefreshDelay, window: windowInstance, minFontSize, includeHeightCheck }: IResponsiveTextProps): JSX.Element;
+export function ResponsiveText(input: IResponsiveTextProps): JSX.Element;
 
 // @internal (undocumented)
 export function RichText(props: IRichTextProps): JSX.Element;
@@ -8456,7 +8484,7 @@ export const ScopedIdStore: IContextStore<IScopedIdStoreValue>;
 export function ScreenReaderToast(): JSX.Element;
 
 // @internal (undocumented)
-export function ScrollableItem({ scrollIntoView, bottomMargin, isElementInvisibleCheck, className, children, onItemScrolled, tagName: TagName }: IScrollableItemProps): JSX.Element;
+export function ScrollableItem(input: IScrollableItemProps): JSX.Element;
 
 // @internal (undocumented)
 export const ScrollablePanel: ForwardRefExoticComponent<IScrollablePanelProps & RefAttributes<HTMLDivElement | undefined>>;
@@ -8470,7 +8498,7 @@ export const scrollContextDefault: {
 };
 
 // @internal (undocumented)
-export function ScrollGradient({ backgroundColor, size, className, contentClassName, onScroll, children }: IScrollGradientProps): JSX.Element;
+export function ScrollGradient(input: IScrollGradientProps): JSX.Element;
 
 // @internal (undocumented)
 export const SELECT_ITEM_ACTION = "selectItem";
@@ -8485,7 +8513,7 @@ export type SelectedTime = {
 export function Separator(props: HTMLAttributes<HTMLDivElement>): JSX.Element;
 
 // @internal (undocumented)
-export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height }: ISeparatorLineProps): JSX.Element;
+export function SeparatorLine(input: ISeparatorLineProps): JSX.Element;
 
 // @internal (undocumented)
 export type Separators = {
@@ -8500,10 +8528,10 @@ export const separatorStaticItem: {
 };
 
 // @internal (undocumented)
-export function SettingItem({ className, title, titleTooltipText, alignPointTitleTooltip, value, actionType, actionValue, hasDivider, isLoading, isDisableAction, actionTooltipText, alignPointActionTooltip, onAction, renderSubtitle, titleTooltipHideDelay }: ISettingItem): JSX.Element;
+export function SettingItem(input: ISettingItem): JSX.Element;
 
 // @internal (undocumented)
-export function ShareDialog({ backend, workspace, locale, sharedObject, currentUser, onApply, onCancel, onError, onInteraction, isLockingSupported, isCurrentUserWorkspaceManager, isGranteeShareLoading, labels, currentUserPermissions, dashboardFilters, dashboardParameters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, onShareLinkCopy }: IShareDialogProps): JSX.Element;
+export function ShareDialog(input: IShareDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export function ShareDialogBase(props: IShareDialogBaseProps): JSX.Element;
@@ -8522,7 +8550,7 @@ export type ShareDialogInteractionGranteeData = {
 export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
 
 // @internal (undocumented)
-export function ShareGranteeBase({ isLoading, isLockedNow, isUnderLenientControlNow, grantees, sharedObject, isDirty, currentUserPermissions, dashboardFilters, dashboardParameters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onCancel, onSubmit, onGranteeDelete, onGranularGranteeChange, onAddGranteeButtonClick, onLockChange, onUnderLenientControlChange, isCurrentUserWorkspaceManager, onShareLinkCopy }: IShareGranteeBaseProps): JSX.Element;
+export function ShareGranteeBase(input: IShareGranteeBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export class ShortenedText extends PureComponent<IShortenedTextProps, IShortenedTextState> {
@@ -8559,7 +8587,7 @@ export function shouldHidePPExperience(_featureFlags: ISettings): boolean;
 export const simpleRecurrenceTypeMappingFn: (_date?: Date | null | undefined, cronExpression?: string | undefined, allowHourlyRecurrence?: boolean | undefined, _showInheritValue?: boolean | undefined, weekStart?: WeekStart | undefined) => string;
 
 // @internal
-export function SimpleSettingWidget({ title, currentSettingStatus, titleTooltip, helpLinkText, helpLinkUrl, actionButtonText, isLoading, onSubmit, onHelpLinkClick }: ISimpleSettingWidgetProps): JSX.Element;
+export function SimpleSettingWidget(input: ISimpleSettingWidgetProps): JSX.Element;
 
 // @internal (undocumented)
 export const SingleSelectListItem: ForwardRefExoticComponent<ISingleSelectListItemProps & RefAttributes<HTMLButtonElement | HTMLDivElement>>;
@@ -8647,10 +8675,10 @@ export type StyleProps = Record<string, string | boolean>;
 export function StylingEditorDialog<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function StylingEditorDialogFooter({ link, disableSubmit, showProgressIndicator, errorMessage, onSubmit, onCancel, onHelpClick }: TStylingEditorDialogFooterProps): JSX.Element;
+export function StylingEditorDialogFooter(input: TStylingEditorDialogFooterProps): JSX.Element;
 
 // @internal (undocumented)
-export function StylingExample({ name, colors, onClick }: IStylingExampleProps): JSX.Element;
+export function StylingExample(input: IStylingExampleProps): JSX.Element;
 
 // @internal (undocumented)
 export type StylingPickerItemContent = ITheme | IColorPalette;
@@ -8662,13 +8690,13 @@ export function StylingSettingWidget<T extends StylingPickerItemContent>(props: 
 export function SubMenu(props: ISubMenuProps): JSX.Element;
 
 // @internal (undocumented)
-export function SyntaxHighlightingInput({ value, label, placeholder, autocompletion, onApi, onChange, onCursor, onKeyDown, onCompletion, onFocus, onBlur, className, beforeExtensions, extensions, disabled }: ISyntaxHighlightingInputProps): JSX.Element;
+export function SyntaxHighlightingInput(input: ISyntaxHighlightingInputProps): JSX.Element;
 
 // @internal (undocumented)
-export function Tabs({ className, onTabSelect, selectedTabId: propSelectedTabId, tabs }: ITabsProps): ReactElement;
+export function Tabs(input: ITabsProps): ReactElement;
 
 // @internal (undocumented)
-export function TextAreaWithSubmit({ className, maxLength, rows, onCancel, onEditingStart, onChange, placeholder, scrollToEndOnEditingStart, autofocus, disabled, defaultValue, onSubmit: onSubmitProp }: ITextAreaWithSubmitProps): JSX.Element;
+export function TextAreaWithSubmit(input: ITextAreaWithSubmitProps): JSX.Element;
 
 // @internal (undocumented)
 export type ThemeColor = "primary" | "success" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
@@ -8677,7 +8705,7 @@ export type ThemeColor = "primary" | "success" | "warning" | "error" | "compleme
 export const Timepicker: NamedExoticComponent<ITimepickerOwnProps>;
 
 // @internal (undocumented)
-export function ToastMessageList({ messages, onRemoveMessage }: {
+export function ToastMessageList(input: {
     messages: IMessage[];
     onRemoveMessage?: (id: string) => void;
 }): JSX.Element;
@@ -8689,7 +8717,7 @@ export function ToastsCenter(): JSX.Element | null;
 export const ToastsCenterContext: IContextStore<IToastsCenterContext>;
 
 // @internal
-export function ToastsCenterContextProvider({ skipAutomaticMessageRendering, children }: {
+export function ToastsCenterContextProvider(input: {
     skipAutomaticMessageRendering?: boolean;
     children: ReactNode;
 }): JSX.Element;
@@ -8725,13 +8753,13 @@ export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_unive
 export const typedUiMenuContextStore: <T extends IUiMenuItemData = object, M = object>() => IContextStore<IUiMenuContext<T, M>>;
 
 // @internal (undocumented)
-export function Typography({ tagName: Tag, children, className, title, id, onClick }: ITypographyProps): JSX.Element;
+export function Typography(input: ITypographyProps): JSX.Element;
 
 // @internal (undocumented)
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
 // @internal
-export function UiAddGranteeDialog({ objectTitle, searchQuery, onSearchQueryChange, selectedGrantee, onBack, onClose, onCancel, onAdd, isAddDisabled, dataTestId }: IUiAddGranteeDialogProps): JSX.Element;
+export function UiAddGranteeDialog(input: IUiAddGranteeDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiAsyncTable<T extends {
@@ -8744,7 +8772,7 @@ export function UiAsyncTable<T extends {
 export const UiAsyncTableCheckboxColumnWidth = 34;
 
 // @internal (undocumented)
-export function UiAsyncTableEmptyState({ title, description, icon }: IUiAsyncTableEmptyStateProps): JSX.Element;
+export function UiAsyncTableEmptyState(input: IUiAsyncTableEmptyStateProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps): JSX.Element;
@@ -8768,22 +8796,22 @@ export const UiAsyncTableRowHeightNormal = 45;
 export const UiAsyncTableScrollbarWidth = 10;
 
 // @internal (undocumented)
-export function UiAsyncTableTitle({ title, onSearch, renderIcon, actions }: IUiAsyncTableTitleProps): JSX.Element;
+export function UiAsyncTableTitle(input: IUiAsyncTableTitleProps): JSX.Element;
 
 // @internal
 export type UiAsyncTableVariant = "regular" | "small";
 
 // @internal
-export function UiAutofocus({ root, children, ...options }: {
+export function UiAutofocus(input: {
     root?: ReactElement;
     children: ReactNode;
 } & IUiAutofocusOptions): FunctionComponentElement<any>;
 
 // @internal
-export function UiAvatar({ icon, size, backgroundColor, iconColor, iconSize, accessibilityConfig, dataTestId }: IUiAvatarProps): JSX.Element;
+export function UiAvatar(input: IUiAvatarProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiBadge({ label }: IUiBadgeProps): JSX.Element;
+export function UiBadge(input: IUiBadgeProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiBreadcrumb: ForwardRefExoticComponent<IUiBreadcrumbProps & RefAttributes<HTMLDivElement>>;
@@ -8803,13 +8831,13 @@ export type UiButtonSegmentedControlProps = Omit<ComponentPropsWithRef<"div">, "
 export const UiCard: ForwardRefExoticComponent<IUiCardProps & RefAttributes<HTMLDivElement>>;
 
 // @internal
-export function UiCheckbox({ checked, onChange, preventDefault, stopPropagation, indeterminate, disabled, accessibilityConfig, tabIndex, label, id }: IUiCheckboxProps): JSX.Element;
+export function UiCheckbox(input: IUiCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, iconAfter, iconColor, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton }: IUiChipProps): JSX.Element;
+export function UiChip(input: IUiChipProps): JSX.Element;
 
 // @internal
-export function UiCombobox({ children, ...props }: IUiComboboxProps): JSX.Element;
+export function UiCombobox(input: IUiComboboxProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiComboboxInput: ForwardRefExoticComponent<UiComboboxInputProps & RefAttributes<HTMLInputElement>>;
@@ -8818,7 +8846,7 @@ export const UiComboboxInput: ForwardRefExoticComponent<UiComboboxInputProps & R
 export type UiComboboxInputProps = InputHTMLAttributes<HTMLInputElement>;
 
 // @internal (undocumented)
-export function UiComboboxList({ children, className, ...htmlProps }: IUiComboboxListProps): JSX.Element;
+export function UiComboboxList(input: IUiComboboxListProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiComboboxListItem(props: IUiComboboxListItemProps): JSX.Element;
@@ -8836,34 +8864,34 @@ export function UiComboboxListItemLabel(props: UiComboboxListItemLabelProps): JS
 export type UiComboboxListItemLabelProps = HTMLAttributes<HTMLSpanElement>;
 
 // @internal (undocumented)
-export function UiComboboxPopup({ style, className, children, ...htmlProps }: UiComboboxPopupProps): JSX.Element | null;
+export function UiComboboxPopup(input: UiComboboxPopupProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
 
 // @internal
-export function UiConfirmDialog({ title, description, confirmLabel, confirmVariant, onClose, onCancel, onConfirm, dataTestId }: IUiConfirmDialogProps): JSX.Element;
+export function UiConfirmDialog(input: IUiConfirmDialogProps): JSX.Element;
 
 // @internal
-export function UiControlButton({ title, titleClassName, subtitle, subtitleClassName, icon, titleExtension, subtitleExtension, isOpen, isDraggable, isDragging, isError, disabled, disabledTooltip, onClick, className, "data-testid": dataTestId, buttonRef, buttonId, dropdownId, ariaLabel }: IUiControlButtonProps): JSX.Element;
+export function UiControlButton(input: IUiControlButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiCopyButton({ label, clipboardContent, successMessage, successMessageOptions, errorMessage, errorMessageOptions }: IUiCopyButtonProps): JSX.Element;
+export function UiCopyButton(input: IUiCopyButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative }: IUiDateProps): JSX.Element;
+export function UiDate(input: IUiDateProps): JSX.Element;
 
 // @internal
-export function UiDialogFooter({ children, divider }: IUiDialogFooterProps): JSX.Element;
+export function UiDialogFooter(input: IUiDialogFooterProps): JSX.Element;
 
 // @internal
-export function UiDialogHeader({ title, titleSize, onClose, leading }: IUiDialogHeaderProps): JSX.Element;
+export function UiDialogHeader(input: IUiDialogHeaderProps): JSX.Element;
 
 // @internal
-export function UiDialogShell({ children, width, isModal, onClose, accessibilityConfig, dataTestId }: IUiDialogShellProps): JSX.Element;
+export function UiDialogShell(input: IUiDialogShellProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, closeButtonSize, showBackdrop, header, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig }: IUiDrawerProps): JSX.Element | null;
+export function UiDrawer(input: IUiDrawerProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type UiDrawerTransitionProps = {
@@ -8873,41 +8901,41 @@ export type UiDrawerTransitionProps = {
 };
 
 // @internal
-export function UiDropdown({ renderButton, renderBody, isOpen: isOpenProp, onOpenChange, openOnInit, placement, offset, alignPoints, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOnByClass, zIndex, width, fullWidthButton, enableFocusTrap, autofocusOnOpen, initialFocus, returnFocusTo, onOpen, onClose, accessibilityConfig }: IUiDropdownProps): JSX.Element;
+export function UiDropdown(input: IUiDropdownProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiDropdownIconButton: ForwardRefExoticComponent<IUiDropdownIconButtonProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal
-export function UiErrorPage({ title, description, dataTestId, accessibilityConfig }: IUiErrorPageProps): JSX.Element;
+export function UiErrorPage(input: IUiErrorPageProps): JSX.Element;
 
 // @internal
-export function UiFloatingElement({ children, anchor, isOpen, onClose, placement, alignPoints, strategy, offset, autoFlip, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOn, shouldCloseOnClick, zIndex: zIndexProp, className, contentClassName, style, width, maxWidth, maxHeight, accessibilityConfig, onPlacementChange }: IUiFloatingElementProps): JSX.Element | null;
+export function UiFloatingElement(input: IUiFloatingElementProps): JSX.Element | null;
 
 // @internal (undocumented)
-export function UiFocusManager({ children, ...args }: IUiFocusManagerProps): JSX.Element;
+export function UiFocusManager(input: IUiFocusManagerProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiFocusTrap({ root, children, focusCheckFn }: {
+export function UiFocusTrap(input: {
     root?: ReactElement;
     children: ReactNode;
     focusCheckFn?: (element: HTMLElement) => boolean;
 }): FunctionComponentElement<any>;
 
 // @internal
-export function UiGeneralAccessRadio({ value, onChange, workspaceControls, dataTestId }: IUiGeneralAccessRadioProps): JSX.Element;
+export function UiGeneralAccessRadio(input: IUiGeneralAccessRadioProps): JSX.Element;
 
 // @internal
-export function UiGranteeAvatar({ kind, decorative, dataTestId }: IUiGranteeAvatarProps): JSX.Element;
+export function UiGranteeAvatar(input: IUiGranteeAvatarProps): JSX.Element;
 
 // @internal
-export function UiGranteeRow({ kind, name, email, isOwner, controls, dataTestId }: IUiGranteeRowProps): JSX.Element;
+export function UiGranteeRow(input: IUiGranteeRowProps): JSX.Element;
 
 // @internal
-export function UiGranteeRowControls({ labels, selectedLabelIds, permissionLevel, onLabelsChange, onPermissionChange, onTransferOwnership, onRemoveAccess, dataTestId }: IUiGranteeRowControlsProps): JSX.Element;
+export function UiGranteeRowControls(input: IUiGranteeRowControlsProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiIcon({ type, color, layout, disableAnimation, accessibilityConfig, size, backgroundSize, backgroundColor, backgroundType, backgroundShape }: IUiIconProps): JSX.Element;
+export function UiIcon(input: IUiIconProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiIconButton: ForwardRefExoticComponent<IUiIconButtonPublicProps & RefAttributes<HTMLButtonElement>>;
@@ -8919,16 +8947,16 @@ export type UiIconButtonProps = IUiIconButtonPublicProps;
 export const UiInlineTextGenerator: ForwardRefExoticComponent<IUiInlineTextGeneratorProps & RefAttributes<HTMLDivElement>>;
 
 // @internal
-export function UiLabelChecklistRow({ label, kind, suffix, checked, disabled, onChange, dataTestId }: IUiLabelChecklistRowProps): JSX.Element;
+export function UiLabelChecklistRow(input: IUiLabelChecklistRowProps): JSX.Element;
 
 // @internal
-export function UiLabelRow({ label, kind, suffix, leading, labelId, onClick, dataTestId }: IUiLabelRowProps): JSX.Element;
+export function UiLabelRow(input: IUiLabelRowProps): JSX.Element;
 
 // @internal
-export function UiLabelsList({ items, dataTestId }: IUiLabelsListProps): JSX.Element;
+export function UiLabelsList(input: IUiLabelsListProps): JSX.Element;
 
 // @internal
-export function UiLabelsPicker({ anchor, items, defaultSelectedIds, onApply, dataTestId }: IUiLabelsPickerProps): JSX.Element;
+export function UiLabelsPicker(input: IUiLabelsPickerProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>;
@@ -8937,10 +8965,10 @@ export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>
 export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTreeViewProps<Levels>): JSX.Element;
 
 // @internal (undocumented)
-export function UiLink({ variant, flipUnderline, fullWidth, isDisabled, dataTestId, as, href, onClick, tabIndex, ...rest }: IUiLinkProps): JSX.Element;
+export function UiLink(input: IUiLinkProps): JSX.Element;
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, reference, ariaAttributes }: IUiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>(input: IUiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
 
 // @internal (undocumented)
 export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role"> & {
@@ -8951,10 +8979,10 @@ export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttribu
 export function UiMenu<T extends IUiMenuItemData = object, M extends object = object>(props: IUiMenuProps<T, M>): ReactNode;
 
 // @internal (undocumented)
-export function UiNavigationBypass({ label, items, onItemClick, style }: IUiNavigationBypassProps): JSX.Element;
+export function UiNavigationBypass(input: IUiNavigationBypassProps): JSX.Element;
 
 // @internal
-export function UiObjectShareDialog({ objectTitle, onClose, grantees, onAddClick, generalAccess, onGeneralAccessChange, workspaceControls, dataTestId }: IUiObjectShareDialogProps): JSX.Element;
+export function UiObjectShareDialog(input: IUiObjectShareDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiPagedVirtualList: <T>(props: IUiPagedVirtualListProps<T> & RefAttributes<IUiPagedVirtualListImperativeHandle<T>>) => ReactNode;
@@ -8969,33 +8997,33 @@ export type UiPaginationButtonDirection = "previous" | "next";
 export type UiPaginationButtonSize = "small" | "large";
 
 // @internal
-export function UiPermissionMenu({ anchor, selectedLevel, onPermissionChange, onTransferOwnership, onLabelsClick, labelsCounter, onRemoveAccess, dataTestId }: IUiPermissionMenuProps): JSX.Element;
+export function UiPermissionMenu(input: IUiPermissionMenuProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiPopover({ id, accessibilityConfig, anchor, anchorAccessibilityConfig, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose }: IUiPopoverProps): JSX.Element;
+export function UiPopover(input: IUiPopoverProps): JSX.Element;
 
 // @internal
-export function UiRadio({ checked, onChange, name, value, disabled, accessibilityConfig, tabIndex, label, id, dataTestId }: IUiRadioProps): JSX.Element;
+export function UiRadio(input: IUiRadioProps): JSX.Element;
 
 // @internal
-export function UiRadioRow({ checked, onChange, name, value, title, description, trailing, disabled, dataTestId }: IUiRadioRowProps): JSX.Element;
+export function UiRadioRow(input: IUiRadioRowProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiRefsTree = Record<string, HTMLDivElement | null>;
 
 // @internal (undocumented)
-export function UiReturnFocusOnUnmount({ children, ...options }: IUiReturnFocusOnUnmountOptions & {
+export function UiReturnFocusOnUnmount(input: IUiReturnFocusOnUnmountOptions & {
     children: ReactNode;
 }): JSX.Element;
 
 // @internal
-export function UiSearchResultsAnnouncement({ totalResults, resultValues, announcementDelay }: ISearchResultsAnnouncementProps): JSX.Element;
+export function UiSearchResultsAnnouncement(input: ISearchResultsAnnouncementProps): JSX.Element;
 
 // @internal
-export function UiSectionHeading({ label, action }: IUiSectionHeadingProps): JSX.Element;
+export function UiSectionHeading(input: IUiSectionHeadingProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, inline, itemsGap, direction, itemBorderRadius }: IUiSkeletonProps): JSX.Element;
+export function UiSkeleton(input: IUiSkeletonProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiStateTreeItem = {
@@ -9009,10 +9037,10 @@ export type UiStaticTreeView<Level> = UiTreeViewTree<Level>;
 export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>): JSX.Element;
 
 // @internal
-export function UiSubmenuHeader({ title, tooltipText, onBack, onClose, backAriaLabel, closeAriaLabel, useShortenedTitle, textColor, backgroundColor, height, titleId }: IUiSubmenuHeaderProps): JSX.Element;
+export function UiSubmenuHeader(input: IUiSubmenuHeaderProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiTabOutHandler({ onTabOut, children }: {
+export function UiTabOutHandler(input: {
     onTabOut: () => void;
     children: ReactNode;
 }): JSX.Element;
@@ -9042,16 +9070,16 @@ export type UiTagProps = {
 };
 
 // @internal (undocumented)
-export function UiTags({ tags, tagOptions, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, creatableLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig }: IUiTagsProps): JSX.Element;
+export function UiTags(input: IUiTagsProps): JSX.Element;
 
 // @internal
-export function UiTextInput({ type, value, onChange, label, placeholder, iconBefore, iconAfter, onIconAfter, accessibilityConfig, disabled, autoFocus, dataTestId }: IUiTextInputProps): JSX.Element;
+export function UiTextInput(input: IUiTextInputProps): JSX.Element;
 
 // @internal
 export type UiToastIntlValues = Record<string, PrimitiveType>;
 
 // @internal
-export function UiToastItem({ toast, onClose }: IUiToastItemProps): ReactNode;
+export function UiToastItem(input: IUiToastItemProps): ReactNode;
 
 // @internal
 export type UiToastKind = "success" | "info" | "warning" | "error";
@@ -9063,15 +9091,15 @@ export type UiToastMessage = string | {
 };
 
 // @internal
-export function UiToastProvider({ children }: {
+export function UiToastProvider(input: {
     children: ReactNode;
 }): JSX.Element;
 
 // @internal
-export function UiToastsContainer({ dataTestId }: IUiToastsContainerProps): ReactNode;
+export function UiToastsContainer(input: IUiToastsContainerProps): ReactNode;
 
 // @internal (undocumented)
-export function UiTooltip({ id, anchor, content, behaviour, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, anchorWrapperStyles }: IUiTooltipProps): JSX.Element;
+export function UiTooltip(input: IUiTooltipProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["length"];
@@ -9088,7 +9116,7 @@ export type UiTreeViewEvents = {
 };
 
 // @internal (undocumented)
-export function UiTreeViewEventsProvider({ children }: PropsWithChildren): JSX.Element;
+export function UiTreeViewEventsProvider(input: PropsWithChildren): JSX.Element;
 
 // @internal (undocumented)
 export type UiTreeViewEventType = keyof UiTreeViewEvents;
@@ -9124,7 +9152,7 @@ export const unrelatedHeader: IDateDatasetHeader;
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
 
 // @internal (undocumented)
-export function UploadFileList({ files, emptyStateLabel, onRemoveFile, onRetryFile }: IUploadFileListProps): JSX.Element | null;
+export function UploadFileList(input: IUploadFileListProps): JSX.Element | null;
 
 // @internal (undocumented)
 export const UploadItemStatus: {
@@ -9138,7 +9166,7 @@ export const UploadItemStatus: {
 export type UploadItemStatus = (typeof UploadItemStatus)[keyof typeof UploadItemStatus];
 
 // @internal (undocumented)
-export function UploadStatusDialog({ isOpen, title, fileName, status, onClose }: IUploadStatusDialogProps): JSX.Element | null;
+export function UploadStatusDialog(input: IUploadStatusDialogProps): JSX.Element | null;
 
 // @internal
 export function useAsyncTableResponsiveColumns<T>(columns: Array<IUiAsyncTableColumnDefinitionResponsive<T>>, hasCheckbox?: boolean): {
@@ -9162,7 +9190,7 @@ export function useCloseOnParentScroll(isOpen: boolean, onClose: () => void, anc
 export function useComboboxState(): IUiComboboxState;
 
 // @internal
-export function useCurrencyFormatDefaults({ metricType, currencyFormatOverride, onFormatChange, shouldBootstrap, fallbackFormat }: UseCurrencyFormatDefaultsConfig): void;
+export function useCurrencyFormatDefaults(input: UseCurrencyFormatDefaultsConfig): void;
 
 // @internal (undocumented)
 export type UseCurrencyFormatDefaultsConfig = {
@@ -9181,10 +9209,10 @@ export function useElementSize<T extends HTMLElement>(deps?: DependencyList): {
 };
 
 // @internal (undocumented)
-export function useFileSelection({ rules, multiple, onValidateFile, onFilesAccepted, onFilesRejected }?: IUseFileSelectionConfig): IUseFileSelectionResult;
+export function useFileSelection(input?: IUseFileSelectionConfig): IUseFileSelectionResult;
 
 // @internal
-export function useFloatingPosition({ isOpen, onOpenChange, placement: placementProp, alignPoints, strategy, offset: offsetProp, autoFlip, fallbackPlacements: fallbackPlacementsProp, arrowRef, customMiddleware, maxWidth, maxHeight, zIndex: zIndexProp, shiftPadding }: IUseFloatingPositionOptions): IUseFloatingPositionResult;
+export function useFloatingPosition(input: IUseFloatingPositionOptions): IUseFloatingPositionResult;
 
 // @internal (undocumented)
 export function useFocusWithinContainer(idToFocus?: string | null): {
@@ -9216,12 +9244,12 @@ export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInvert
 export const useIsZoomed: (baseZoomLevel?: number) => boolean;
 
 // @internal (undocumented)
-export const useKeyboardNavigationTarget: ({ navigationId, label, tabIndex, onFocus, }: IUseKeyboardNavigationTargetProps) => {
+export const useKeyboardNavigationTarget: (input: IUseKeyboardNavigationTargetProps) => {
     targetRef: (node: HTMLElement | null) => void;
 };
 
 // @internal (undocumented)
-export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, isSimple, isWrapping, focusedIndex: focusedIndexProp }: {
+export function useListWithActionsKeyboardNavigation<Item, Action extends string>(input: {
     items: Item[];
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item, e?: KeyboardEvent_2) => (() => void) | undefined;
@@ -9244,7 +9272,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 
 // @internal
-export function useMetricTypePresets({ metricType, currencyFormatOverride, formatMessage }: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;
+export function useMetricTypePresets(input: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;
 
 // @internal
 export type UseMetricTypePresetsConfig = {
@@ -9282,7 +9310,7 @@ export function useScopedIdOptional<T>(item?: T, specifier?: string): string | u
 
 // @internal (undocumented)
 export const useScopedIdStoreValue: <T>(getIdFromItem: (item: T) => string) => {
-    makeId: ({ item, specifier }: {
+    makeId: (input: {
         item: T;
         specifier?: string | undefined;
     }) => string;
@@ -9306,22 +9334,22 @@ export const useToastMessage: () => IUseToastMessageType;
 export const useToastsCenterValue: (onDismissMessage?: ((id: string) => void) | undefined) => IToastsCenterContext;
 
 // @internal
-export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ active, refocusKey, initialFocus, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
+export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>(input?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>({ enableFocusTrap, enableAutofocus, enableReturnFocusOnUnmount, tabOutHandler, focusCheckFn, }: Omit<IUiFocusManagerProps, "children">) => IUiFocusHelperConnectors<T>;
+export const useUiFocusManagerConnectors: <T extends HTMLElement = HTMLElement>(input: Omit<IUiFocusManagerProps, "children">) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
 export const useUiFocusTrapConnectors: <T extends HTMLElement = HTMLElement>(focusCheckFn: (element: HTMLElement) => boolean) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>({ returnFocusTo, focusVisible, }?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;
+export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>(input?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
 export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: ((event: KeyboardEvent_2<Element>) => void) | undefined) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, onTabDoubleClick, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, disableBottomBorder, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
+export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(input: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
 
 // @internal
 export function useUiToast(): IUseUiToastResult;
@@ -9333,7 +9361,7 @@ export function useUiTreeViewEventPublisher<T extends UiTreeViewEventType>(event
 export function useUiTreeViewEventSubscriber<T extends UiTreeViewEventType>(eventType: T, handler: (event: UiTreeViewEvents[T]) => void): void;
 
 // @internal (undocumented)
-export function useUploadQueue({ uploadFn, onUploadSuccess, onUploadError }: IUseUploadQueueConfig): IUseUploadQueueResult;
+export function useUploadQueue(input: IUseUploadQueueConfig): IUseUploadQueueResult;
 
 // @internal
 export const useZoom: () => IZoomContextState;
@@ -9378,6 +9406,12 @@ export type VariantTooltip = "tooltip";
 export type VerticalPosition = "top" | "center" | "bottom";
 
 // @internal (undocumented)
+export function WidgetNotice(input: IWidgetNoticeProps): JSX.Element;
+
+// @internal (undocumented)
+export type WidgetNoticeType = "info" | "success" | "warning" | "error";
+
+// @internal (undocumented)
 export function withBubble<T>(WrappedComponent: ComponentType<T>): ForwardRefExoticComponent<PropsWithoutRef<T & IWithBubbleProps> & RefAttributes<any>>;
 
 // @internal (undocumented)
@@ -9393,7 +9427,7 @@ export function ZoomAwareOverlay<T extends HTMLElement = HTMLElement>(props: IOv
 export const ZoomContext: Context<IZoomContextState>;
 
 // @internal
-export function ZoomProvider({ children }: ZoomProviderProps): JSX.Element;
+export function ZoomProvider(input: ZoomProviderProps): JSX.Element;
 
 // @internal
 export type ZoomProviderProps = {

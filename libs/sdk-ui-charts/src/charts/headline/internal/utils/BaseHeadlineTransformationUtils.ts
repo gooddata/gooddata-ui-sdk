@@ -11,11 +11,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { BaseHeadlineDataItem } from "../headlines/baseHeadline/baseHeadlineDataItems/BaseHeadlineDataItem.js";
-import {
-    type BaseHeadlineItemAccepted,
-    type IBaseHeadlineData,
-    type IBaseHeadlineItem,
-} from "../interfaces/BaseHeadlines.js";
+import { type IBaseHeadlineData, type IBaseHeadlineItem } from "../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../interfaces/Headlines.js";
 
 import {
@@ -38,7 +34,7 @@ export function getBaseHeadlineData(
         executionData[0],
         isSomeHeaderPredicateMatched(drillablePredicates, itemHeaders[0], dv),
         "primaryValue",
-    );
+    )!;
 
     let secondaryItemData: IHeadlineExecutionData | undefined;
     let secondaryItemHeader: IMeasureDescriptor | undefined;
@@ -69,18 +65,14 @@ export function getBaseHeadlineData(
         "secondaryValue",
     );
 
-    return {
-        primaryItem: primaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
-        secondaryItem: secondaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
-        tertiaryItem: tertiaryItem as IBaseHeadlineItem<BaseHeadlineItemAccepted>,
-    };
+    return { primaryItem, secondaryItem, tertiaryItem };
 }
 
 export function createBaseHeadlineItem(
     executionData: IHeadlineExecutionData | undefined,
     isDrillable: boolean,
     elementType: HeadlineElementType,
-): IBaseHeadlineItem<IHeadlineDataItem> | null {
+): Extract<IBaseHeadlineItem, { data: IHeadlineDataItem }> | null {
     const data = createHeadlineDataItem(executionData, isDrillable);
 
     return data

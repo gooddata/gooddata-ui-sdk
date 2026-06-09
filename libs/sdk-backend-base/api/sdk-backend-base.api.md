@@ -839,7 +839,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 // @internal
 export class DummyGenAIChatThread implements IChatThread {
     // (undocumented)
-    loadHistory(_fromInteractionId: string, { signal }: {
+    loadHistory(_fromInteractionId: string, input: {
         signal?: AbortSignal;
     }): Promise<IChatThreadHistory>;
     // (undocumented)
@@ -858,7 +858,7 @@ export class DummyGenAIChatThread implements IChatThread {
 export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
     constructor(workspaceId: string);
     // (undocumented)
-    query({ signal }?: {
+    query(input?: {
         signal?: AbortSignal;
     }): Promise<{
         results: {

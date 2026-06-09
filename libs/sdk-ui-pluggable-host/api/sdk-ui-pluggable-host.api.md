@@ -67,7 +67,7 @@ export interface ILoadPlatformContextCallbacks {
 export function installPreloadErrorHandler(): void;
 
 // @alpha
-export function installVersionWatcher({ url, intervalMs, onNewDeployment }: IVersionWatcherOptions): void;
+export function installVersionWatcher(input: IVersionWatcherOptions): void;
 
 // @alpha (undocumented)
 export interface IRootCallbacks {
@@ -112,7 +112,7 @@ export function registerPlatformContextCallbacks(callbacks: ILoadPlatformContext
 export function reloadForStaleChunks(reason: string): void;
 
 // @alpha (undocumented)
-export function Root({ callbacks }: {
+export function Root(input: {
     callbacks?: IRootCallbacks;
 }): JSX.Element;
 

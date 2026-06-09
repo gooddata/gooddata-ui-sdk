@@ -58,11 +58,11 @@ export const TEST_DATA_WITH_SUB_ITEM: IComparisonDataWithSubItem = {
     title: "data_item_title",
 };
 
-export const TEST_BASE_HEADLINE_ITEM: IBaseHeadlineItem<IHeadlineDataItem> = {
+export const TEST_BASE_HEADLINE_ITEM = {
     data: TEST_DATA_ITEM,
     elementType: "primaryValue",
     baseHeadlineDataItemComponent: BaseHeadlineDataItem,
-};
+} satisfies IBaseHeadlineItem;
 
 export const TEST_COLOR_CONFIGS: IColorConfig = {
     positive: {

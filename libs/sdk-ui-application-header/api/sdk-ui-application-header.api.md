@@ -13,7 +13,7 @@ import { JSX } from 'react/jsx-runtime';
 import { MouseEvent as MouseEvent_2 } from 'react';
 
 // @alpha (undocumented)
-export function AppHeaderNotifications({ isMobile, closeNotificationsOverlay, locale, useAsOfDateParam, enableExportToDocumentStorage }: {
+export function AppHeaderNotifications(input: {
     isMobile?: boolean;
     closeNotificationsOverlay?: () => void;
     locale?: ILocale;
@@ -78,13 +78,13 @@ export interface IWorkspacePickerProps {
 }
 
 // @alpha (undocumented)
-export function usePagedWorkspaces<TResolve extends boolean = true>({ backend, userId, resolveWorkspaceDescriptor }: IPagedWorkspacesConfig<TResolve>): IPagedWorkspacesResult<TResolve>;
+export function usePagedWorkspaces<TResolve extends boolean = true>(input: IPagedWorkspacesConfig<TResolve>): IPagedWorkspacesResult<TResolve>;
 
 // @alpha
 export type WorkspaceItems<TResolve extends boolean> = TResolve extends true ? IWorkspaceDescriptor[] : IAnalyticalWorkspace[];
 
 // @alpha (undocumented)
-export function WorkspacePicker({ backend, userId, selectedWorkspace, onWorkspaceSelect, onHomepageLinkClick }: IWorkspacePickerProps): JSX.Element;
+export function WorkspacePicker(input: IWorkspacePickerProps): JSX.Element;
 
 // (No @packageDocumentation comment for this package)
 

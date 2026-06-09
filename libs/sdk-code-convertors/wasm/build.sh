@@ -46,6 +46,7 @@ npx -y "esbuild@0.25.0" wasm/entry.js \
     --outfile=wasm/bundle.js \
     --alias:crypto=./wasm/crypto-shim.js \
     --main-fields=module,main \
+    --banner:js='globalThis.setInterval=globalThis.setInterval||function(){return 0};globalThis.clearInterval=globalThis.clearInterval||function(){};globalThis.setTimeout=globalThis.setTimeout||function(){return 0};globalThis.clearTimeout=globalThis.clearTimeout||function(){};' \
     --log-level=error
 
 # Compile to WASM

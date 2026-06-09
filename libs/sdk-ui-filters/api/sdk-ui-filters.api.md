@@ -75,10 +75,10 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps): JSX.Ele
 export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" | "canceled";
 
 // @internal (undocumented)
-export function AttributeDatasetInfo({ title, defaultAttributeFilterTitle, attributeDataSet }: IAttributeDatasetInfoProps): JSX.Element;
+export function AttributeDatasetInfo(input: IAttributeDatasetInfoProps): JSX.Element;
 
 // @internal
-export function AttributeDisplayFormSelect({ onSelect, alignPoints }: IAttributeDisplayFormSelectProps): JSX.Element;
+export function AttributeDisplayFormSelect(input: IAttributeDisplayFormSelectProps): JSX.Element;
 
 // @public
 export type AttributeElementKey = string | null;
@@ -87,7 +87,7 @@ export type AttributeElementKey = string | null;
 export function AttributeFilter(props: IAttributeFilterProps): JSX.Element;
 
 // @beta
-export function AttributeFilterAllValuesFilteredResult({ parentFilterTitles, searchString, enableShowingFilteredElements }: IAttributeFilterAllValuesFilteredResultProps): JSX.Element;
+export function AttributeFilterAllValuesFilteredResult(input: IAttributeFilterAllValuesFilteredResultProps): JSX.Element;
 
 // @alpha
 export type AttributeFilterAvailableSelectionType = "elements" | "arbitrary" | "match";
@@ -96,12 +96,12 @@ export type AttributeFilterAvailableSelectionType = "elements" | "arbitrary" | "
 export function AttributeFilterButton(props: IAttributeFilterButtonProps): JSX.Element | null;
 
 // @beta
-export function AttributeFilterButtonTooltip({ children }: {
+export function AttributeFilterButtonTooltip(input: {
     children?: ReactNode;
 }): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeFilterConfigurationButton({ onConfiguration }: IAttributeFilterConfigurationButtonProps): JSX.Element;
+export function AttributeFilterConfigurationButton(input: IAttributeFilterConfigurationButtonProps): JSX.Element;
 
 // @public
 export type AttributeFilterController = AttributeFilterControllerData & AttributeFilterControllerCallbacks;
@@ -113,19 +113,19 @@ export type AttributeFilterControllerCallbacks = CommonFilterControllerCallbacks
 export type AttributeFilterControllerData = CommonFilterControllerData & ElementsFilterControllerData & SelectionTypeControllerData & Partial<TextFilterControllerData>;
 
 // @internal (undocumented)
-export function AttributeFilterDeleteButton({ onDelete }: IAttributeFilterDeleteButtonProps): JSX.Element;
+export function AttributeFilterDeleteButton(input: IAttributeFilterDeleteButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeFilterDependencyTooltip({ tooltipContent, ariaLabel }: IAttributeFilterDependencyTooltipProps): JSX.Element;
+export function AttributeFilterDependencyTooltip(input: IAttributeFilterDependencyTooltipProps): JSX.Element;
 
 // @beta
-export function AttributeFilterDropdownActions({ isApplyDisabled, onApplyButtonClick, onCancelButtonClick, applyDisabledTooltip, withoutApply }: IAttributeFilterDropdownActionsProps): JSX.Element;
+export function AttributeFilterDropdownActions(input: IAttributeFilterDropdownActionsProps): JSX.Element;
 
 // @beta
-export function AttributeFilterDropdownBody({ onApplyButtonClick, onCancelButtonClick, width }: IAttributeFilterDropdownBodyProps): JSX.Element;
+export function AttributeFilterDropdownBody(input: IAttributeFilterDropdownBodyProps): JSX.Element;
 
 // @beta
-export function AttributeFilterDropdownButton({ isOpen, title, selectedItemsCount, totalItemsCount, showSelectionCount, subtitle, disabled, customIcon, isFiltering, isLoading, isLoaded, isError, isDraggable, icon, TooltipContentComponent, titleExtension, onClick, className, buttonRef, buttonId, dropdownId, ariaLabel }: IAttributeFilterDropdownButtonProps): JSX.Element;
+export function AttributeFilterDropdownButton(input: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
 export function AttributeFilterElementsActions(props: IAttributeFilterElementsActionsProps): JSX.Element;
@@ -134,49 +134,49 @@ export function AttributeFilterElementsActions(props: IAttributeFilterElementsAc
 export function AttributeFilterElementsSearchBar(props: IAttributeFilterElementsSearchBarProps): JSX.Element;
 
 // @beta
-export function AttributeFilterElementsSelect({ items, totalItemsCount, totalItemsCountWithCurrentSettings, isInverted, selectedItems, onSelect, searchString, onSearch, isLoading, isLoadingNextPage, nextPageSize, onLoadNextPage, error, attributeTitle, isFilteredByParentFilters, parentFilterTitles, enableShowingFilteredElements, onShowFilteredElements, irrelevantSelection, onClearIrrelevantSelection, onApplyButtonClick, isApplyDisabled, isFilteredByDependentDateFilters, isFilteredByLimitingValidationItems, withoutApply }: IAttributeFilterElementsSelectProps): JSX.Element;
+export function AttributeFilterElementsSelect(input: IAttributeFilterElementsSelectProps): JSX.Element;
 
 // @beta
 export function AttributeFilterElementsSelectError(): JSX.Element;
 
 // @beta
-export function AttributeFilterElementsSelectItem({ item, isSelected, focusedAction, onSelect, onSelectOnly, onDeselect, primaryLabelTitle, index }: IAttributeFilterElementsSelectItemProps): JSX.Element;
+export function AttributeFilterElementsSelectItem(input: IAttributeFilterElementsSelectItemProps): JSX.Element;
 
 // @beta
-export function AttributeFilterElementsSelectLoading({ height }: IAttributeFilterElementsSelectLoadingProps): JSX.Element;
+export function AttributeFilterElementsSelectLoading(input: IAttributeFilterElementsSelectLoadingProps): JSX.Element;
 
 // @beta
 export function AttributeFilterEmptyAttributeResult(): JSX.Element;
 
 // @beta
-export function AttributeFilterEmptyResult({ height, totalItemsCount, searchString, isFilteredByParentFilters, isFilteredByDependentDateFilters, parentFilterTitles, enableShowingFilteredElements }: IAttributeFilterEmptyResultProps): JSX.Element;
+export function AttributeFilterEmptyResult(input: IAttributeFilterEmptyResultProps): JSX.Element;
 
 // @beta
 export function AttributeFilterEmptySearchResult(): JSX.Element;
 
 // @beta
-export function AttributeFilterError({ isOpen, isDraggable }: IAttributeFilterErrorProps): JSX.Element;
+export function AttributeFilterError(input: IAttributeFilterErrorProps): JSX.Element;
 
 // @beta
-export function AttributeFilterFilteredStatus({ parentFilterTitles }: IAttributeFilterFilteredStatusProps): JSX.Element;
+export function AttributeFilterFilteredStatus(input: IAttributeFilterFilteredStatusProps): JSX.Element;
 
 // @beta
-export function AttributeFilterLoading({ onClick }: IAttributeFilterLoadingProps): JSX.Element;
+export function AttributeFilterLoading(input: IAttributeFilterLoadingProps): JSX.Element;
 
 // @beta
-export function AttributeFilterSelectionStatus({ isInverted, selectedItems, getItemTitle, selectedItemsLimit, showSelectionStatus }: IAttributeFilterSelectionStatusProps): JSX.Element;
+export function AttributeFilterSelectionStatus(input: IAttributeFilterSelectionStatusProps): JSX.Element;
 
 // @alpha
 export type AttributeFilterSelectionType = "elements" | "text";
 
 // @beta
-export function AttributeFilterSimpleDropdownButton({ title, isLoading, isFiltering, disabled, isOpen, onClick }: IAttributeFilterDropdownButtonProps): JSX.Element;
+export function AttributeFilterSimpleDropdownButton(input: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
-export function AttributeFilterSimpleDropdownButtonWithSelection({ isOpen, subtitle, title, selectedItemsCount, onClick, isLoading, isFiltering, showSelectionCount }: IAttributeFilterDropdownButtonProps): JSX.Element;
+export function AttributeFilterSimpleDropdownButtonWithSelection(input: IAttributeFilterDropdownButtonProps): JSX.Element;
 
 // @beta
-export function AttributeFilterStatusBar({ attributeTitle, isFilteredByParentFilters, parentFilterTitles, totalElementsCountWithCurrentSettings, getItemTitle, isInverted, selectedItems, selectedItemsLimit, enableShowingFilteredElements, onShowFilteredElements, irrelevantSelection, onClearIrrelevantSelection, isFilteredByLimitingValidationItems, isFilteredByDependentDateFilters, withoutApply }: IAttributeFilterStatusBarProps): JSX.Element;
+export function AttributeFilterStatusBar(input: IAttributeFilterStatusBarProps): JSX.Element;
 
 // @alpha
 export type AttributeFilterTextSelectionType = Extract<AttributeFilterAvailableSelectionType, "arbitrary" | "match">;
@@ -333,7 +333,7 @@ export function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBar
 export function ensureCompatibleGranularity<T extends IUiRelativeDateFilterFormLike>(filterOption: T, availableGranularities: DateFilterGranularity[], fiscalFirst: boolean): T;
 
 // @alpha
-export function FilterButtonCustomIcon({ customIcon, disabled }: IFilterButtonCustomIconProps): JSX.Element | null;
+export function FilterButtonCustomIcon(input: IFilterButtonCustomIconProps): JSX.Element | null;
 
 // @internal
 export function filterFiscalGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[];
@@ -827,7 +827,7 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
     getInitError(): GoodDataSdkError | undefined;
     getInitStatus(): AsyncOperationStatus;
     getOriginalFilter(): IAttributeFilter | undefined;
-    init(correlation?: Correlation, skipElementsLoading?: boolean): void;
+    init(correlation?: Correlation, skipElementsLoading?: boolean, preserveWorkingSelection?: boolean): void;
     onInitCancel: CallbackRegistration<OnInitCancelCallbackPayload>;
     onInitError: CallbackRegistration<OnInitErrorCallbackPayload>;
     onInitStart: CallbackRegistration<OnInitStartCallbackPayload>;
@@ -1610,7 +1610,7 @@ export const MeasureValueFilter: NamedExoticComponent<IMeasureValueFilterProps>;
 export const MeasureValueFilterDropdown: NamedExoticComponent<IMeasureValueFilterDropdownProps>;
 
 // @beta
-export function MeasureValueFilterDropdownActions({ onApplyButtonClick, onCancelButtonClick, isApplyDisabled, applyDisabledTooltip, withoutApply }: IMeasureValueFilterDropdownActionsProps): JSX.Element;
+export function MeasureValueFilterDropdownActions(input: IMeasureValueFilterDropdownActionsProps): JSX.Element;
 
 // @beta (undocumented)
 export type MeasureValueFilterOperator = ComparisonConditionOperator | RangeConditionOperator | "ALL";
@@ -1750,7 +1750,7 @@ export type OnSelectionCommittedCallbackPayload<T> = {
 export type ParentFilterOverAttributeType = ObjRef | ((parentFilter: IAttributeFilter, index: number) => ObjRef);
 
 // @beta (undocumented)
-export function RankingFilter({ measureItems, attributeItems, filter, onApply, onCancel, buttonTitle, onDropDownItemMouseOver, onDropDownItemMouseOut, customGranularitySelection, locale }: IRankingFilterProps): JSX.Element;
+export function RankingFilter(input: IRankingFilterProps): JSX.Element;
 
 // @beta (undocumented)
 export function RankingFilterDropdown(props: IRankingFilterDropdownProps): JSX.Element;
@@ -1763,6 +1763,7 @@ export type SelectionTypeControllerCallbacks = {
     onSelectionTypeChange?: (newMode: AttributeFilterSelectionType) => void;
     setDisplayForm?: (displayFormRef: ObjRef) => void;
     resetForModeSwitch?: (newFilter: IAttributeFilter, newDisplayAsLabel?: ObjRef) => void;
+    getWorkingElementsFilter?: () => IAttributeFilter | undefined;
 };
 
 // @public
@@ -1773,10 +1774,10 @@ export type SelectionTypeControllerData = {
 };
 
 // @beta
-export function SingleSelectionAttributeFilterElementsSelectItem({ item, onSelectOnly, isSelected, focusedAction, fullscreenOnMobile, primaryLabelTitle }: IAttributeFilterElementsSelectItemProps): JSX.Element;
+export function SingleSelectionAttributeFilterElementsSelectItem(input: IAttributeFilterElementsSelectItemProps): JSX.Element;
 
 // @beta
-export function SingleSelectionAttributeFilterStatusBar({ enableShowingFilteredElements, isFilteredByParentFilters, parentFilterTitles, totalElementsCountWithCurrentSettings, attributeTitle, onShowFilteredElements, irrelevantSelection, isFilteredByLimitingValidationItems, isFilteredByDependentDateFilters }: IAttributeFilterStatusBarProps): JSX.Element;
+export function SingleSelectionAttributeFilterStatusBar(input: IAttributeFilterStatusBarProps): JSX.Element;
 
 // @alpha
 export const STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT: DateFilterGranularity[];

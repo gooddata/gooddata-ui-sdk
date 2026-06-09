@@ -437,7 +437,7 @@
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Фильтр неприменим к этой визуализации.",
     "configurationPanel.mvfBlockedByRankingFilter": "Этот фильтр нельзя применить, потому что в визуализации используется фильтр значений Top/bottom. Чтобы применить этот фильтр, удалите фильтр значений Top/bottom.",
     "configurationPanel.mvfMissingMeasure": "Показатель, используемый в этом фильтре, больше не существует в рабочей области.",
-    "filters.mvf.missingMetric.tooltip": "Показатель, используемый в этом фильтре, больше не существует в рабочей области.",
+    "filters.mvf.missingMetric.tooltip": "Ошибка: Показатель, используемый в этом фильтре, больше не существует в рабочей области.",
     "configurationPanel.kpiCantBeFilteredByDate": "Этот КПЭ нельзя фильтровать по дате. Снимите флажок.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" больше нельзя применять к визуализации. Выберите другое измерение или отредактируйте визуализацию.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" больше нельзя применять к КПЭ. Выберите другое измерение или отредактируйте анализ.",

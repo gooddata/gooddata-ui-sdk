@@ -48,6 +48,7 @@ import type { IDashboard } from '@gooddata/sdk-model';
 import type { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import type { IDashboardBase } from '@gooddata/sdk-model';
 import type { IDashboardDefinition } from '@gooddata/sdk-model';
+import type { IDashboardExportParameter } from '@gooddata/sdk-model';
 import type { IDashboardFilterView } from '@gooddata/sdk-model';
 import type { IDashboardFilterViewSaveRequest } from '@gooddata/sdk-model';
 import { IDashboardLayout } from '@gooddata/sdk-model';
@@ -71,6 +72,7 @@ import { IDimensionDescriptor } from '@gooddata/sdk-model';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
+import { IExecutionResultLimitBreak } from '@gooddata/sdk-model';
 import type { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
@@ -693,7 +695,7 @@ export type IChatConversationItem = {
     responseId: string;
     replyTo?: string;
     createdAt: number;
-    role: "user" | "assistant" | "tool";
+    role: "user" | "assistant" | "tool" | "system";
     content: IChatConversationContent;
     feedback?: IChatConversationFeedback;
 };
@@ -935,6 +937,7 @@ export interface ICreateKnowledgeDocumentRequest {
 // @alpha
 export interface IDashboardExportImageOptions {
     filename?: string;
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
     timeout?: number;
     widgetIds?: ObjRef[];
 }
@@ -943,6 +946,7 @@ export interface IDashboardExportImageOptions {
 export interface IDashboardExportPdfOptions {
     exportMetadata?: Record<string, string>;
     filename?: string;
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
     timeout?: number;
 }
 
@@ -954,6 +958,7 @@ export interface IDashboardExportPresentationOptions {
     filename?: string;
     // (undocumented)
     hideWidgetTitles?: boolean;
+    parametersByTab?: Record<string, IDashboardExportParameter[]>;
     // (undocumented)
     templateId?: string;
     timeout?: number;
@@ -975,7 +980,7 @@ export interface IDashboardExportRawOptions {
 export interface IDashboardExportTabularOptions {
     dashboardFiltersOverride?: FilterContextItem[];
     dashboardTabsFiltersOverrides?: FiltersByTab;
-    dashboardTabsParametersOverrides?: Record<string, IDashboardParameterValueOverride[]>;
+    dashboardTabsParametersOverrides?: Record<string, IDashboardExportParameter[]>;
     exportInfo?: boolean;
     format?: "XLSX" | "PDF";
     mergeHeaders?: boolean;
@@ -987,13 +992,6 @@ export interface IDashboardExportTabularOptions {
     timeout?: number;
     title?: string;
     widgetIds?: string[];
-}
-
-// @alpha
-export interface IDashboardParameterValueOverride {
-    id: string;
-    title: string;
-    value: string;
 }
 
 // @alpha
@@ -1334,6 +1332,7 @@ export interface IExecutionResultDataSourceMessage {
 // @alpha
 export interface IExecutionResultMetadata {
     readonly dataSourceMessages: ReadonlyArray<IExecutionResultDataSourceMessage>;
+    readonly limitBreaks?: ReadonlyArray<IExecutionResultLimitBreak>;
 }
 
 // @internal
@@ -3065,7 +3064,7 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
 export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";
 
 // @alpha
-export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>, { sectionCallback, itemCallback, widgetCallback }: {
+export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>, input: {
     sectionCallback?: (section: IDashboardLayoutSection<TWidget>, sectionPath: LayoutPath) => void;
     itemCallback?: (item: IDashboardLayoutItem<TWidget>, widgetPath: LayoutPath) => void;
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;

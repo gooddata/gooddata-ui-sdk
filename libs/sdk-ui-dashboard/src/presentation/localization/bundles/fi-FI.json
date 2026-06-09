@@ -437,7 +437,7 @@
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Suodatin ei sovellu tähän visualisointiin.",
     "configurationPanel.mvfBlockedByRankingFilter": "Tätä suodatinta ei voi käyttää, koska visualisointi käyttää Ylä-/ala-arvojen suodatinta. Poista Ylä-/ala-arvojen suodatin, jotta voit käyttää tätä suodatinta.",
     "configurationPanel.mvfMissingMeasure": "Tässä suodattimessa käytettyä metriikkaa ei enää ole työtilassa.",
-    "filters.mvf.missingMetric.tooltip": "Tässä suodattimessa käytettyä metriikkaa ei enää ole työtilassa.",
+    "filters.mvf.missingMetric.tooltip": "Virhe: Tässä suodattimessa käytettyä metrikkaa ei enää ole työtilassa.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI:ta ei voi suodattaa päivämäärällä. Poista valintamerkki.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" ei voida enää soveltaa visualisointiin. Valitse toinen ulottuvuus tai muokkaa visualisointia.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" ei voi enää soveltaa KPI:hin. Valitse eri ulottuvuus tai muokkaa KPI:tä.",

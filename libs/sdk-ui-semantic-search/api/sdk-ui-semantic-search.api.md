@@ -23,7 +23,7 @@ export function customMatcher<I extends SearchItem, G extends SearchItemGroup<I>
 export function defaultMatcher<I extends SearchItem, G extends SearchItemGroup<I>>(item: I | G | string, searchQueryUpper: string): boolean;
 
 // @public (undocumented)
-export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProps): JSX.Element;
+export function FooterButtonAiAssistant(input: FooterButtonAiAssistantProps): JSX.Element;
 
 // @public (undocumented)
 export type FooterButtonAiAssistantProps = {
@@ -120,7 +120,7 @@ export type SearchResults<I extends SearchItem, G extends SearchItemGroup<I>> = 
 };
 
 // @beta
-export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps): JSX.Element;
+export function SemanticSearch(input: SemanticSearchProps): JSX.Element;
 
 // @beta
 export type SemanticSearchHookInput = {
@@ -170,9 +170,9 @@ export type SemanticSearchProps = {
 };
 
 // @alpha
-export function useHybridSearch<I extends SearchItem, G extends SearchItemGroup<I>>({ limit, workspace, backend, debounceMs, allowSematicSearch, deepSearch, objectTypes, includeTags, excludeTags, matcher, itemBuilder }: IUseHybridSearchOptions<I>): IHybridSearchResult<I, G>;
+export function useHybridSearch<I extends SearchItem, G extends SearchItemGroup<I>>(input: IUseHybridSearchOptions<I>): IHybridSearchResult<I, G>;
 
 // @beta
-export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, allowedRelationshipTypes, includeTags, excludeTags, }: SemanticSearchHookInput) => SemanticSearchInputResult;
+export const useSemanticSearch: (input: SemanticSearchHookInput) => SemanticSearchInputResult;
 
 ```

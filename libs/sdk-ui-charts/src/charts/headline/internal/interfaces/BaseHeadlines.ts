@@ -14,9 +14,6 @@ export const COMPARISON_DEFAULT_OBJECT: IComparison = {
     enabled: true,
 };
 
-export type BaseHeadlineDataItemComponentType<T extends IBaseHeadlineTitle & IBaseHeadlineDrillable> =
-    ComponentType<IBaseHeadlineDataItemProps<T> & IWithTitleProps<T> & IWithDrillableItemProps<T>>;
-
 export interface IBaseHeadlineTitle {
     title?: string;
 }
@@ -47,12 +44,34 @@ export enum EvaluationType {
     POSITIVE_VALUE = "positive",
 }
 
-export interface IBaseHeadlineItem<T extends IBaseHeadlineTitle & IBaseHeadlineDrillable> {
-    data: T;
-    baseHeadlineDataItemComponent: BaseHeadlineDataItemComponentType<T>;
-    evaluationType?: EvaluationType | undefined | null;
+/**
+ * A `DataItemComponent<IHeadlineDataItem>`, etc. is basically equivalent to `typeof BaseHeadlineDataItem` (the component),
+ * but makes sure there are no cyclical dependencies (dependency cruiser does not exclude type only imports from the circular check).
+ */
+export type DataItemComponent<T extends IBaseHeadlineTitle> = ComponentType<
+    IBaseHeadlineDataItemProps<T> & IWithTitleProps<T>
+>;
+
+export type IBaseHeadlineItem = (
+    | { baseHeadlineDataItemComponent: DataItemComponent<IHeadlineDataItem>; data: IHeadlineDataItem }
+    | { baseHeadlineDataItemComponent: DataItemComponent<IComparisonDataItem>; data: IComparisonDataItem }
+    | {
+          baseHeadlineDataItemComponent: DataItemComponent<IComparisonDataWithSubItem>;
+          data: IComparisonDataWithSubItem;
+      }
+) & {
+    evaluationType?: EvaluationType | null;
     elementType?: HeadlineElementType;
-}
+};
+
+// Note: this type should be used only for specific casting purposes as it is currently used.
+export type BaseHeadlineDataItemComponentType = ComponentType<
+    IBaseHeadlineDataItemProps<IBaseHeadlineItem["data"]> & {
+        shouldHideTitle?: boolean;
+        titleRef?: RefObject<HTMLDivElement>;
+        elementType?: HeadlineElementType;
+    }
+>;
 
 export interface IComparisonDataItem extends IBaseHeadlineValueItem, IBaseHeadlineTitle {}
 
@@ -69,12 +88,10 @@ export function isComparisonDataWithSubItem(
     return !isEmpty(dataItem) && (dataItem as IComparisonDataWithSubItem).subItem !== undefined;
 }
 
-export type BaseHeadlineItemAccepted = IHeadlineDataItem | ComparisonDataItem;
-
 export interface IBaseHeadlineData {
-    primaryItem: IBaseHeadlineItem<BaseHeadlineItemAccepted>;
-    secondaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted> | null;
-    tertiaryItem?: IBaseHeadlineItem<BaseHeadlineItemAccepted> | null;
+    primaryItem: IBaseHeadlineItem;
+    secondaryItem?: IBaseHeadlineItem | null;
+    tertiaryItem?: IBaseHeadlineItem | null;
 }
 
 export interface IBaseHeadlineDataItemProps<T> {

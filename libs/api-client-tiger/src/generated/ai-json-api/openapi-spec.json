@@ -34,6 +34,15 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateConversationRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "201": {
                         "description": "Successful Response",
@@ -332,6 +341,66 @@
                     },
                     "422": {
                         "description": "Title cannot be generated yet or LLM is not configured."
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/switchAgent": {
+            "post": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Switch the active agent on an existing conversation",
+                "operationId": "switchAgent",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SwitchAgentRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConversationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "User has no access to target agent."
+                    },
+                    "404": {
+                        "description": "Conversation or target agent not found, or feature flag off."
+                    },
+                    "422": {
+                        "description": "Cannot switch in a preview conversation."
                     }
                 }
             }
@@ -723,6 +792,49 @@
                 }
             }
         },
+        "/api/v1/ai/workspaces/{workspace_id}/agents": {
+            "get": {
+                "tags": [
+                    "Agents"
+                ],
+                "summary": "List agents available to the current user in a workspace",
+                "description": "List agents the calling user can use in this workspace, sorted A-Z.\n\nThis is the personalized \"usable here\" view for the agent switcher --\naccess-filtered to the caller, enabled, non-preview, with per-agent\nlastUsedAt. For agent CRUD/management use the metadata entity endpoint\nGET /api/v1/entities/agents instead.",
+                "operationId": "listAgents",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AgentListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/ai/workspaces/{workspace_id}/summary": {
             "post": {
                 "tags": [
@@ -782,7 +894,7 @@
                     "AI Observability"
                 ],
                 "summary": "(EXPERIMENTAL) AI observability overview for the caller's organization",
-                "description": "Returns AI usage stats for the caller's organization for the current calendar month, alongside the previous month's value and a direction indicator. Backed by the ai_usage_counters table populated by the metering pipeline.",
+                "description": "Returns AI usage stats for the caller's organization for the current calendar month, alongside the previous month's value. Backed by the ai_usage_counters table populated by the metering pipeline.",
                 "operationId": "getObservabilityOverview",
                 "responses": {
                     "200": {
@@ -1968,6 +2080,82 @@
                 ],
                 "title": "AfmObjectIdentifierBody"
             },
+            "AgentListItemResponse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description"
+                    },
+                    "isAvailableToAll": {
+                        "type": "boolean",
+                        "title": "Isavailabletoall"
+                    },
+                    "modifiedAt": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Modifiedat"
+                    },
+                    "lastUsedAt": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Lastusedat"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "name",
+                    "isAvailableToAll"
+                ],
+                "title": "AgentListItemResponse",
+                "description": "A single agent visible to the calling user in the workspace."
+            },
+            "AgentListResponse": {
+                "properties": {
+                    "agents": {
+                        "items": {
+                            "$ref": "#/components/schemas/AgentListItemResponse"
+                        },
+                        "type": "array",
+                        "title": "Agents"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "agents"
+                ],
+                "title": "AgentListResponse",
+                "description": "List of agents accessible to the calling user."
+            },
             "AllTimeDateFilter-Input": {
                 "properties": {
                     "allTimeDateFilter": {
@@ -2753,7 +2941,8 @@
                         "enum": [
                             "user",
                             "assistant",
-                            "tool"
+                            "tool",
+                            "system"
                         ],
                         "title": "Role",
                         "description": "Author role of the item."
@@ -2824,6 +3013,70 @@
                         ],
                         "title": "Taskid",
                         "description": "Task identifier grouping related work items."
+                    },
+                    "agentId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Agentid",
+                        "description": "Agent that processed this item. Populated on every persisted item once LX-2483 ships."
+                    },
+                    "oldAgentId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Oldagentid",
+                        "description": "Agent ID before the switch (marker rows only)."
+                    },
+                    "newAgentId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Newagentid",
+                        "description": "Agent ID after the switch (marker rows only)."
+                    },
+                    "actorUserId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Actoruserid",
+                        "description": "User who initiated the switch (marker rows only). NULL for drift-driven markers."
+                    },
+                    "trigger": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "agent_switched",
+                                    "agent_updated"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Trigger",
+                        "description": "Why the marker was written (marker rows only)."
                     }
                 },
                 "additionalProperties": false,
@@ -3069,6 +3322,24 @@
                 "title": "ConversationUpdateRequest",
                 "description": "PATCH /conversations/{conversationId} body."
             },
+            "CreateConversationRequest": {
+                "properties": {
+                    "agentId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Agentid"
+                    }
+                },
+                "type": "object",
+                "title": "CreateConversationRequest",
+                "description": "POST /conversations body."
+            },
             "DateFilterAbsolute": {
                 "properties": {
                     "type": {
@@ -3196,15 +3467,6 @@
                 ],
                 "title": "DeleteDocumentResponse",
                 "description": "Response for DELETE /documents/{documentId}."
-            },
-            "Direction": {
-                "type": "string",
-                "enum": [
-                    "INCREASED",
-                    "DECREASED",
-                    "NO_CHANGE"
-                ],
-                "title": "Direction"
             },
             "DocumentMetadataResponse": {
                 "properties": {
@@ -3800,21 +4062,23 @@
                         "type": "integer",
                         "title": "Previousvalue"
                     },
-                    "direction": {
-                        "$ref": "#/components/schemas/Direction"
-                    },
-                    "changePercentage": {
-                        "type": "number",
-                        "title": "Changepercentage"
+                    "total": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Total"
                     }
                 },
                 "type": "object",
                 "required": [
                     "type",
                     "currentValue",
-                    "previousValue",
-                    "direction",
-                    "changePercentage"
+                    "previousValue"
                 ],
                 "title": "MetricUsageResponse"
             },
@@ -3991,7 +4255,9 @@
             "ObservabilityMetricType": {
                 "type": "string",
                 "enum": [
-                    "AI_QUERIES"
+                    "AI_QUERIES",
+                    "AI_WORKSPACES",
+                    "AI_USERS"
                 ],
                 "title": "ObservabilityMetricType",
                 "description": "Metrics exposed by the AI observability endpoint."
@@ -5480,6 +5746,20 @@
                     "generatedAt"
                 ],
                 "title": "SummarizeResponse"
+            },
+            "SwitchAgentRequest": {
+                "properties": {
+                    "agentId": {
+                        "type": "string",
+                        "title": "Agentid"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "agentId"
+                ],
+                "title": "SwitchAgentRequest",
+                "description": "POST /conversations/{conversationId}/switchAgent body."
             },
             "TextFilterValue": {
                 "properties": {

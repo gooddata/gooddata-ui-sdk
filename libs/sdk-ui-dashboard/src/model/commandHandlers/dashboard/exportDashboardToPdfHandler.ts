@@ -8,7 +8,7 @@ import {
     type IDashboardExportPdfOptions,
     type IExportResult,
 } from "@gooddata/sdk-backend-spi";
-import { type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IDashboardExportParameter, type ObjRef } from "@gooddata/sdk-model";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 import { type IExportDashboardToPdf } from "../../commands/dashboard.js";
@@ -24,6 +24,7 @@ import {
     selectFilterContextFilters,
     selectFiltersByTab,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectExportEffectiveParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 
@@ -66,6 +67,11 @@ export function* exportDashboardToPdfHandler(
         {} as FiltersByTab,
     );
 
+    // dashboard-scoped export → per-tab parameter overrides (empty when the flag is off)
+    const parametersByTab: Record<string, IDashboardExportParameter[]> = yield select(
+        selectExportEffectiveParameters(undefined),
+    );
+
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
@@ -73,6 +79,7 @@ export function* exportDashboardToPdfHandler(
     const options: IDashboardExportPdfOptions = {
         timeout,
         exportMetadata: cmd.payload?.exportMetadata,
+        parametersByTab,
     };
 
     const result: PromiseFnReturnType<typeof exportDashboardToPdf> = yield call(

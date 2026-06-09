@@ -437,7 +437,7 @@
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Bộ lọc không áp dụng được cho trực quan hóa này.",
     "configurationPanel.mvfBlockedByRankingFilter": "Không thể áp dụng bộ lọc này vì trực quan hóa sử dụng bộ lọc giá trị Trên cùng/dưới cùng. Hãy xóa bộ lọc giá trị Trên cùng/dưới cùng để áp dụng bộ lọc này.",
     "configurationPanel.mvfMissingMeasure": "Thước đo được dùng trong bộ lọc này không còn tồn tại trong không gian làm việc.",
-    "filters.mvf.missingMetric.tooltip": "Thước đo được dùng trong bộ lọc này không còn tồn tại trong không gian làm việc.",
+    "filters.mvf.missingMetric.tooltip": "Lỗi: Thước đo được dùng trong bộ lọc này không còn tồn tại trong không gian làm việc.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI không thể được lọc theo Ngày. Bỏ chọn hộp kiểm.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" không còn có thể áp dụng cho trực quan hóa. Chọn một chiều khác hoặc chỉnh sửa trực quan hóa.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" không thể áp dụng cho KPI nữa. Hãy chọn một chiều dữ liệu khác hoặc chỉnh sửa KPI.",

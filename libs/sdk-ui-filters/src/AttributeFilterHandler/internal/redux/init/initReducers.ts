@@ -8,7 +8,11 @@ import { type Correlation } from "../../../types/common.js";
 import { type AttributeFilterReducer } from "../store/state.js";
 
 const init: AttributeFilterReducer<
-    PayloadAction<{ correlation: Correlation; skipElementsLoading?: boolean }>
+    PayloadAction<{
+        correlation: Correlation;
+        skipElementsLoading?: boolean;
+        preserveWorkingSelection?: boolean;
+    }>
 > = (v) => v;
 
 const initStart: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> = (state) => {

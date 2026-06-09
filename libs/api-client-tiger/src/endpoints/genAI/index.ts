@@ -39,6 +39,10 @@ import {
 } from "../../generated/afm-rest-api/index.js";
 import {
     AIObservabilityAi_GetObservabilityOverview,
+    type AgentsAiListAgentsRequest,
+    AgentsAi_ListAgents,
+    type AiAgentListItemResponse,
+    type AiAgentListResponse,
     type AiMetricUsageResponse,
     AiObservabilityMetricType,
     type AiObservabilityOverviewResponse,
@@ -51,12 +55,14 @@ import {
     type ConversationsAiPatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatchRequest,
     type ConversationsAiPostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPostRequest,
     type ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest,
+    type ConversationsAiSwitchAgentRequest,
     ConversationsAi_DeleteConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdDelete,
     ConversationsAi_GetConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGet,
     ConversationsAi_GetConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsGet,
     ConversationsAi_PatchConversationApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdPatch,
     ConversationsAi_PostConversationsApiV1AiWorkspacesWorkspaceIdChatConversationsPost,
     ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost,
+    ConversationsAi_SwitchAgent,
     type ItemsAiGetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGetRequest,
     ItemsAi_GetConversationItemsApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdItemsGet,
     type KnowledgeAiCreateDocumentRequest,
@@ -103,6 +109,10 @@ import {
 
 // GenAI API - Export GenAI-related ActionsApi functions with GenAiApi_ prefix
 export {
+    AgentsAi_ListAgents as GenAiApi_ListAgents,
+    type AgentsAiListAgentsRequest as GenAiApiListAgentsRequest,
+    type AiAgentListItemResponse as GenAiApiAgentListItemResponse,
+    type AiAgentListResponse as GenAiApiAgentListResponse,
     AIObservabilityAi_GetObservabilityOverview as GenAiApi_GetObservabilityOverview,
     type AiMetricUsageResponse as GenAiApiMetricUsageResponse,
     AiObservabilityMetricType as GenAiApiObservabilityMetricType,
@@ -166,6 +176,8 @@ export {
     type AiSummarizeResponse as GenAiApiSummarizeResponse,
     ConversationsAi_PostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePost as GenAiApi_PostGenerateConversationTitle,
     type ConversationsAiPostGenerateConversationTitleApiV1AiWorkspacesWorkspaceIdChatConversationsConversationIdGenerateTitlePostRequest as GenAiApiPostGenerateConversationTitleRequest,
+    ConversationsAi_SwitchAgent as GenAiApi_SwitchAgent,
+    type ConversationsAiSwitchAgentRequest as GenAiApiSwitchAgentRequest,
     // Knowledge Documents
     KnowledgeAi_CreateDocument as GenAiApi_CreateKnowledgeDocument,
     type KnowledgeAiCreateDocumentRequest as GenAiApiCreateKnowledgeDocumentRequest,

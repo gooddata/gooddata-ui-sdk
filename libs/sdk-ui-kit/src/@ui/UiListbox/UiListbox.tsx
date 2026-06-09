@@ -230,11 +230,15 @@ export function UiListbox<InteractiveItemData, StaticItemData>({
                             />
                         </li>
                     ) : (
+                        // Static items (separators, headers) are presentational; `role="presentation"`
+                        // keeps the <li> out of the a11y tree so it isn't exposed as a `listitem`,
+                        // which is an invalid child of `role="listbox"` (only `option`/`group` allowed).
                         <li
                             key={item.id ?? index}
                             ref={(el) => {
                                 itemRefs.current[index] = el;
                             }}
+                            role="presentation"
                             data-testid={testId}
                         >
                             <StaticItemComponent item={item} />

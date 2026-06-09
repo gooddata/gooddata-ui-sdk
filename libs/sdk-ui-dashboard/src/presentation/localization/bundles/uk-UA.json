@@ -437,7 +437,7 @@
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Фільтр не можна застосувати до цієї візуалізації.",
     "configurationPanel.mvfBlockedByRankingFilter": "Цей фільтр не можна застосувати, оскільки візуалізація використовує фільтр верхніх/нижніх значень. Видаліть фільтр верхніх/нижніх значень, щоб застосувати цей фільтр.",
     "configurationPanel.mvfMissingMeasure": "Метрика, яка використовується в цьому фільтрі, більше не існує в робочій області.",
-    "filters.mvf.missingMetric.tooltip": "Метрика, яка використовується в цьому фільтрі, більше не існує в робочій області.",
+    "filters.mvf.missingMetric.tooltip": "Помилка: Метрика, яка використовується в цьому фільтрі, більше не існує в робочій області.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI не можна фільтрувати за датою. Зніміть прапорець.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" більше не можна застосувати до візуалізації. Виберіть інший вимір або відредагуйте візуалізацію.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" більше не можна застосувати до KPI. Виберіть інший вимір або відредагуйте KPI.",

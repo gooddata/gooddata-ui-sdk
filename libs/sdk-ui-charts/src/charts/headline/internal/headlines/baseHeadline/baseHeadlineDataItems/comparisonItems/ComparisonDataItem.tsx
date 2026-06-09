@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 
 import {
+    type DataItemComponent,
     type IBaseHeadlineDataItemProps,
     type IComparisonDataItem,
 } from "../../../../interfaces/BaseHeadlines.js";
@@ -43,4 +44,5 @@ function ComparisonDataItemComponent({
     );
 }
 
-export const ComparisonDataItem = withTitle(ComparisonDataItemComponent);
+export const ComparisonDataItem: DataItemComponent<IComparisonDataItem> =
+    withTitle(ComparisonDataItemComponent);

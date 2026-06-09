@@ -437,7 +437,7 @@
     "configurationPanel.vizCantBeFilteredByMeasureValueFilter": "Il filtro non può essere applicato a questa visualizzazione.",
     "configurationPanel.mvfBlockedByRankingFilter": "Questo filtro non può essere applicato perché la visualizzazione usa un filtro Valori superiori/inferiori. Rimuovi il filtro Valori superiori/inferiori per applicare questo filtro.",
     "configurationPanel.mvfMissingMeasure": "La metrica usata in questo filtro non esiste più nell'area di lavoro.",
-    "filters.mvf.missingMetric.tooltip": "La metrica usata in questo filtro non esiste più nell'area di lavoro.",
+    "filters.mvf.missingMetric.tooltip": "Errore: La metrica usata in questo filtro non esiste più nell'area di lavoro.",
     "configurationPanel.kpiCantBeFilteredByDate": "Il KPI non può essere filtrato per Data. Deselezionare la casella di controllo.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" non può più essere applicato alla visualizzazione. Selezionare una dimensione diversa o modificare la visualizzazione.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" non può più essere applicato al KPI. Selezionare una dimensione diversa o modificare il KPI.",

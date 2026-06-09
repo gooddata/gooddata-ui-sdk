@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { type Matcher, suppressConsole } from "@gooddata/util";
@@ -134,5 +135,48 @@ describe("AttributeFilterHandler", () => {
         const selection = attributeFilterHandler.getCommittedSelection();
         const elements = attributeFilterHandler.getElementsByKey(selection.keys);
         expect(elements).toMatchSnapshot();
+    });
+
+    // Regression tests: switching an attribute filter List -> Text -> List re-inits the handler to
+    // load the element options. A plain init re-derives the selection from the filter and overwrites a
+    // pending (unapplied) working selection; the preserveWorkingSelection flag avoids that so the
+    // restored List selection survives the switch-back.
+    describe("init() with preserveWorkingSelection", () => {
+        const pendingKeys = ["pending-element-1", "pending-element-2"];
+
+        it("should keep a pending working selection when preserveWorkingSelection is true", async () => {
+            const handler = newTestAttributeFilterHandlerWithAttributeFilter(
+                positiveAttributeFilterDefaultDF,
+            );
+            const initialCommitted = handler.getCommittedSelection().keys;
+            // The fixture filter carries a selection, so a plain init would have something to re-derive.
+            expect(initialCommitted.length).toBeGreaterThan(0);
+
+            // Simulate an unsaved working change (e.g. the user unchecked items) that was NOT applied.
+            handler.changeSelection({ keys: pendingKeys, isInverted: false });
+
+            // Switch-back re-init: loads options but must not re-derive the selection from the filter.
+            handler.init("switch-back", false, true);
+            await waitForAsync();
+
+            expect(handler.getWorkingSelection().keys).toEqual(pendingKeys);
+            // The committed (applied) selection is left untouched.
+            expect(handler.getCommittedSelection().keys).toEqual(initialCommitted);
+        });
+
+        it("should re-derive the working selection from the filter without preserveWorkingSelection", async () => {
+            const handler = newTestAttributeFilterHandlerWithAttributeFilter(
+                positiveAttributeFilterDefaultDF,
+            );
+            handler.changeSelection({ keys: pendingKeys, isInverted: false });
+
+            // A plain init re-derives the selection from the filter, discarding the pending change.
+            // This is the behavior preserveWorkingSelection guards the switch-back path against.
+            handler.init("regular");
+            await waitForAsync();
+
+            expect(handler.getWorkingSelection().keys).not.toEqual(pendingKeys);
+            expect(handler.getWorkingSelection().keys).toEqual(handler.getCommittedSelection().keys);
+        });
     });
 });

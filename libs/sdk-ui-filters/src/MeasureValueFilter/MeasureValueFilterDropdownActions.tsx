@@ -2,7 +2,7 @@
 
 import { useIntl } from "react-intl";
 
-import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { type IMeasureValueFilterDropdownActionsProps } from "./typings.js";
 
@@ -30,6 +30,13 @@ export function MeasureValueFilterDropdownActions({
     const cancelText = intl.formatMessage({ id: "cancel" });
     const closeText = intl.formatMessage({ id: "close" });
 
+    // The Apply button stays focusable while disabled (it uses aria-disabled, not the native
+    // disabled attribute), so the reason it is disabled must reach screen readers as the button's
+    // description — the visual hover/focus tooltip alone is not announced. We expose it via a
+    // visually hidden element referenced by aria-describedby (WCAG 4.1.2 / 1.3.1).
+    const applyDescriptionId = useIdPrefixed("mvf-apply-disabled-desc");
+    const showApplyDescription = !!isApplyDisabled && !!applyDisabledTooltip;
+
     return (
         <div className="gd-mvf-dropdown-footer">
             <Button
@@ -39,21 +46,31 @@ export function MeasureValueFilterDropdownActions({
                 title={withoutApply ? closeText : cancelText}
             />
             {withoutApply ? null : (
-                <UiTooltip
-                    content={applyDisabledTooltip}
-                    triggerBy={["hover"]}
-                    disabled={!isApplyDisabled || !applyDisabledTooltip}
-                    arrowPlacement="left"
-                    optimalPlacement
-                    anchor={
-                        <Button
-                            className="gd-button-action gd-button-small s-mvf-dropdown-apply"
-                            onClick={onApplyButtonClick}
-                            value={intl.formatMessage({ id: "apply" })}
-                            disabled={isApplyDisabled}
-                        />
-                    }
-                />
+                <>
+                    <UiTooltip
+                        content={applyDisabledTooltip}
+                        triggerBy={["hover", "focus"]}
+                        disabled={!isApplyDisabled || !applyDisabledTooltip}
+                        arrowPlacement="left"
+                        optimalPlacement
+                        anchor={
+                            <Button
+                                className="gd-button-action gd-button-small s-mvf-dropdown-apply"
+                                onClick={onApplyButtonClick}
+                                value={intl.formatMessage({ id: "apply" })}
+                                disabled={isApplyDisabled}
+                                accessibilityConfig={
+                                    showApplyDescription ? { ariaDescribedBy: applyDescriptionId } : undefined
+                                }
+                            />
+                        }
+                    />
+                    {showApplyDescription ? (
+                        <span id={applyDescriptionId} className="sr-only">
+                            {applyDisabledTooltip}
+                        </span>
+                    ) : null}
+                </>
             )}
         </div>
     );

@@ -62,6 +62,29 @@ export interface IDashboardParameter {
 }
 
 /**
+ * Backend-neutral parameter value carried on a dashboard tabular export.
+ *
+ * @alpha
+ */
+export interface IDashboardExportParameter {
+    /**
+     * Parameter identifier; drives AFM execution. Matches the workspace catalog parameter's id.
+     */
+    id: string;
+
+    /**
+     * Value to apply for the parameter, encoded as a string.
+     */
+    value: string;
+
+    /**
+     * Display title rendered into the export's info sheet. Presentation-only; not consumed by
+     * execution.
+     */
+    title: string;
+}
+
+/**
  * Tests whether the provided object is an instance of {@link IDashboardParameter}.
  *
  * @param obj - object to test

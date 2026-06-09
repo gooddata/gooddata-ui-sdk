@@ -187,4 +187,34 @@ describe("export dashboard to PDF handler", () => {
             );
         },
     );
+
+    it("should thread the effective per-tab parameters into PDF backend export options", async () => {
+        const { dashboard, exportDashboardToPdfSpy } = await createSpyDashboard();
+
+        dashboard.dispatch(exportDashboardToPdf());
+        await dashboard.waitFor("GDC.DASH/EVT.EXPORT.PDF.RESOLVED");
+
+        // The flag is off for the reference workspace, so the selector resolves to an empty map,
+        // which the backend method then omits from the payload.
+        expect(exportDashboardToPdfSpy.mock.calls[0]?.[3]).toEqual(
+            expect.objectContaining({ parametersByTab: {} }),
+        );
+    });
+
+    it.each([
+        [exportDashboardToPdfPresentation, "GDC.DASH/EVT.EXPORT.PDF_PRESENTATION.RESOLVED"] as const,
+        [exportDashboardToPptPresentation, "GDC.DASH/EVT.EXPORT.PPT_PRESENTATION.RESOLVED"] as const,
+    ])(
+        "should thread the effective per-tab parameters into %s backend export options",
+        async (commandFactory, resolvedEventType) => {
+            const { dashboard, exportDashboardToPresentationSpy } = await createSpyDashboard();
+
+            dashboard.dispatch(commandFactory());
+            await dashboard.waitFor(resolvedEventType);
+
+            expect(exportDashboardToPresentationSpy.mock.calls[0]?.[4]).toEqual(
+                expect.objectContaining({ parametersByTab: {} }),
+            );
+        },
+    );
 });

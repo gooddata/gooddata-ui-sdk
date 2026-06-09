@@ -1,8 +1,8 @@
 // (C) 2026 GoodData Corporation
 
-import { type IDashboardParameterValueOverride } from "@gooddata/sdk-backend-spi";
 import {
     DashboardParameterModeValues,
+    type IDashboardExportParameter,
     type IDashboardParameter,
     type IDashboardTab,
     type IInsight,
@@ -30,7 +30,7 @@ const EMPTY_PARAMETERS: IDashboardParameter[] = [];
 /**
  * @internal
  */
-export const EMPTY_EXPORT_PARAMETERS: Record<string, IDashboardParameterValueOverride[]> = {};
+export const EMPTY_EXPORT_PARAMETERS: Record<string, IDashboardExportParameter[]> = {};
 
 /**
  * Walks the insight's metric buckets and returns the parameter refs they reference,
@@ -133,7 +133,7 @@ export function workspaceParametersByRef(
 export function formatDashboardParameter(
     entry: IDashboardParameterEntry,
     workspaceParameter: IParameterMetadataObject | undefined,
-): IDashboardParameterValueOverride | undefined {
+): IDashboardExportParameter | undefined {
     if (entry.runtimeOverride === undefined) {
         return undefined;
     }
@@ -270,8 +270,8 @@ export function computeParameterResetTargets(
 export function collectExportOverrides(
     tabRefSelections: ReadonlyArray<{ tab: ITabState; allowedRefs?: Set<string> }>,
     workspaceByRef: Map<string, IParameterMetadataObject>,
-): Record<string, IDashboardParameterValueOverride[]> {
-    const result: Record<string, IDashboardParameterValueOverride[]> = {};
+): Record<string, IDashboardExportParameter[]> {
+    const result: Record<string, IDashboardExportParameter[]> = {};
     for (const { tab, allowedRefs } of tabRefSelections) {
         const entries = tab.parameters?.parameters ?? parametersInitialState.parameters;
         const scoped = allowedRefs
@@ -325,8 +325,8 @@ export function buildWidgetScopeTabRefSelections(
 function formatEntries(
     entries: IDashboardParameterEntry[],
     workspaceByRef: Map<string, IParameterMetadataObject>,
-): IDashboardParameterValueOverride[] {
-    const rows: IDashboardParameterValueOverride[] = [];
+): IDashboardExportParameter[] {
+    const rows: IDashboardExportParameter[] = [];
     for (const entry of entries) {
         const workspaceParameter = workspaceByRef.get(objRefToString(entry.parameter.ref));
         const row = formatDashboardParameter(entry, workspaceParameter);

@@ -208,6 +208,11 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
             }
 
             function AttributeFilterComponent(attributeFilterProps: IAttributeFilterProps) {
+                const isMobile = useMediaQuery("mobileDevice");
+                // On mobile, render filters inside the group same as standard mobile attribute filter row.
+                const InnerDropdownButton: ComponentType<IAttributeFilterDropdownButtonProps> = isMobile
+                    ? AttributeFilterDropdownButton
+                    : (FilterGroupItem as ComponentType<IAttributeFilterDropdownButtonProps>);
                 // When the filter swaps between Loading / Error / DropdownButton renderings,
                 // the focused DOM node is unmounted. Capture focus on ref-cleanup and
                 // re-apply it when the replacement mounts, so the user doesn't visually lose focus.
@@ -241,9 +246,8 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                             ...props
                         }: IAttributeFilterDropdownButtonProps) {
                             const titleExtension = getTitleExtension?.(filterIdentifier, props.title);
-                            const CustomDropdownButtonComponent: ComponentType<IAttributeFilterDropdownButtonProps> =
-                                attributeFilterProps.DropdownButtonComponent ??
-                                (FilterGroupItem as ComponentType<IAttributeFilterDropdownButtonProps>);
+                            const CustomDropdownButtonComponent =
+                                attributeFilterProps.DropdownButtonComponent ?? InnerDropdownButton;
                             const handleButtonRef = useMergeRefs(buttonRef, setFilterItemRef);
                             return (
                                 <CustomDropdownButtonComponent
@@ -252,25 +256,50 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                                         <>
                                             {props.titleExtension}
                                             {titleExtension}
-                                            <FilterButtonCustomIcon
-                                                customIcon={props.customIcon}
-                                                disabled={props.disabled}
-                                            />
+                                            {/* On mobile the InnerDropdownButton is
+                                            AttributeFilterDropdownButton, which renders the custom
+                                            icon natively from its `customIcon` prop. Only inject it
+                                            here for the desktop FilterGroupItem, which does not -
+                                            otherwise the icon would render twice. */}
+                                            {isMobile ? null : (
+                                                <FilterButtonCustomIcon
+                                                    customIcon={props.customIcon}
+                                                    disabled={props.disabled}
+                                                />
+                                            )}
                                         </>
                                     }
                                     buttonRef={handleButtonRef}
+                                    isOpen={isMobile ? true : props.isOpen}
                                 />
                             );
                         },
-                        [attributeFilterProps.DropdownButtonComponent, setFilterItemRef],
+                        [
+                            attributeFilterProps.DropdownButtonComponent,
+                            InnerDropdownButton,
+                            setFilterItemRef,
+                            isMobile,
+                        ],
                     );
                 const LoadingComponent: NonNullable<IAttributeFilterProps["LoadingComponent"]> = useCallback(
-                    () => <FilterGroupItem isLoading buttonRef={setFilterItemRef} />,
-                    [setFilterItemRef],
+                    () => (
+                        <InnerDropdownButton
+                            isLoading
+                            buttonRef={setFilterItemRef}
+                            isOpen={isMobile ? true : undefined}
+                        />
+                    ),
+                    [setFilterItemRef, InnerDropdownButton, isMobile],
                 );
                 const ErrorComponent: NonNullable<IAttributeFilterProps["ErrorComponent"]> = useCallback(
-                    () => <FilterGroupItem isError buttonRef={setFilterItemRef} />,
-                    [setFilterItemRef],
+                    () => (
+                        <InnerDropdownButton
+                            isError
+                            buttonRef={setFilterItemRef}
+                            isOpen={isMobile ? true : undefined}
+                        />
+                    ),
+                    [setFilterItemRef, InnerDropdownButton, isMobile],
                 );
                 const ElementsSearchBarComponent: NonNullable<
                     IAttributeFilterProps["ElementsSearchBarComponent"]
@@ -318,10 +347,11 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
             }
 
             function MeasureValueFilterComponent(measureValueFilterProps: IMeasureValueFilterProps) {
+                const isMobile = useMediaQuery("mobileDevice");
                 const setFilterItemRef = useCallback((element: HTMLElement | null) => {
                     filterItemRefs.current.set(filterIdentifier, element);
                 }, []);
-                const DropdownButtonComponent: NonNullable<
+                const FilterGroupItemDropdownButton: NonNullable<
                     IMeasureValueFilterProps["DropdownButtonComponent"]
                 > = useCallback(
                     function DropdownButtonComponent({
@@ -354,13 +384,17 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     [setFilterItemRef],
                 );
 
+                // On mobile, fall back to MeasureValueFilter's own default dropdown button (a
+                // standard mobile filter row) instead of FilterGroupItem.
+                const DropdownButtonComponent = isMobile
+                    ? measureValueFilterProps.DropdownButtonComponent
+                    : (measureValueFilterProps.DropdownButtonComponent ?? FilterGroupItemDropdownButton);
+
                 return (
                     <MeasureValueFilter
                         {...measureValueFilterProps}
                         alignPoints={ITEM_ALIGN_POINTS}
-                        DropdownButtonComponent={
-                            measureValueFilterProps.DropdownButtonComponent ?? DropdownButtonComponent
-                        }
+                        DropdownButtonComponent={DropdownButtonComponent}
                     />
                 );
             }
@@ -427,10 +461,10 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                 onKeyDown={handleKeyDown}
             >
                 <DropdownList
-                    className="gd-filter-group-body"
+                    className={cx("gd-filter-group-body", { "gd-is-mobile": isMobile })}
                     items={filters}
                     maxHeight={450}
-                    itemHeight={53}
+                    itemHeight={isMobile ? 47 : 53}
                     accessibilityConfig={{
                         role: "list",
                         ariaLabel: groupAriaLabel,
@@ -449,7 +483,12 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
 
     const renderButton = useCallback(
         ({ toggleDropdown, isOpen, buttonRef, dropdownId }: IDropdownButtonRenderProps) => (
-            <div className={cx({ "gd-is-mobile": isMobile && isOpen })}>
+            <div
+                className={cx({
+                    "gd-attribute-filter-mobile-button-wrapper gd-is-mobile gd-is-mobile--with-menu":
+                        isMobile && isOpen,
+                })}
+            >
                 <AttributeFilterDropdownButton
                     title={title}
                     subtitle={subtitle}

@@ -915,7 +915,7 @@ export type IChatConversationItem = {
     responseId: string;
     replyTo?: string;
     createdAt: number;
-    role: "user" | "assistant" | "tool";
+    role: "user" | "assistant" | "tool" | "system";
     content: IChatConversationContent;
     feedback?: IChatConversationFeedback;
 };

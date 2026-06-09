@@ -130,11 +130,11 @@ export const convertToImageExportRequest = (
     title?: string,
 ): ImageExportRequest => {
     if (exportRequest.format === "PNG") {
-        const { dashboard, widget, filters } = exportRequest.content;
+        const { dashboard, widget, filters, parametersByTab } = exportRequest.content;
         if (!widget || !dashboard) {
             throw new UnexpectedError("Export definition must have a widget or dashboard");
         }
-        const isMetadataFilled = title || filters;
+        const isMetadataFilled = title || filters || parametersByTab;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -144,6 +144,7 @@ export const convertToImageExportRequest = (
                                     filters: convertSdkFiltersToTiger(filters),
                                 }
                               : {}),
+                          ...(parametersByTab ? { parametersByTab } : {}),
                           ...(title ? { title } : {}),
                       },
                   }
@@ -172,7 +173,7 @@ export const convertToSlidesExportRequest = (
     }
 
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
-        const { filters, filtersByTab, dashboard } = exportRequest.content;
+        const { filters, filtersByTab, dashboard, parametersByTab } = exportRequest.content;
 
         // Convert filtersByTab to API format
         const filtersByTabObj = filtersByTab
@@ -182,7 +183,7 @@ export const convertToSlidesExportRequest = (
               }, {})
             : undefined;
 
-        const isMetadataFilled = title || filters || filtersByTab;
+        const isMetadataFilled = title || filters || filtersByTab || parametersByTab;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -193,6 +194,7 @@ export const convertToSlidesExportRequest = (
                                 }
                               : {}),
                           ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
+                          ...(parametersByTab ? { parametersByTab } : {}),
                           ...(title ? { title } : {}),
                       },
                   }
@@ -208,7 +210,7 @@ export const convertToSlidesExportRequest = (
         };
     }
 
-    const { filters, widget, dashboard } = exportRequest.content;
+    const { filters, widget, dashboard, parametersByTab } = exportRequest.content;
 
     if (!widget) {
         throw new UnexpectedError("Export definition must have a widget");
@@ -223,6 +225,7 @@ export const convertToSlidesExportRequest = (
         metadata: {
             widget,
             ...(filters ? { filters: convertSdkFiltersToTiger(filters) } : {}),
+            ...(parametersByTab ? { parametersByTab } : {}),
             ...(title ? { title } : {}),
         },
     };
@@ -232,7 +235,7 @@ export const convertToVisualExportRequest = (
     exportRequest: IExportDefinitionDashboardRequestPayload,
     title?: string,
 ): VisualExportRequest => {
-    const { filters, filtersByTab, dashboard } = exportRequest.content;
+    const { filters, filtersByTab, dashboard, parametersByTab } = exportRequest.content;
 
     // Convert filtersByTab to API format
     const filtersByTabObj = filtersByTab
@@ -242,7 +245,7 @@ export const convertToVisualExportRequest = (
           }, {})
         : undefined;
 
-    const isMetadataFilled = title || filters || filtersByTab;
+    const isMetadataFilled = title || filters || filtersByTab || parametersByTab;
     const metadataObj = {
         ...(isMetadataFilled
             ? {
@@ -253,6 +256,7 @@ export const convertToVisualExportRequest = (
                             }
                           : {}),
                       ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
+                      ...(parametersByTab ? { parametersByTab } : {}),
                       ...(title ? { title } : {}),
                   },
               }
@@ -393,7 +397,7 @@ export const convertExportDefinitionRequestPayload = (
     title?: string,
 ): TabularExportRequest | VisualExportRequest => {
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
-        const { filters, filtersByTab, dashboard } = exportRequest.content;
+        const { filters, filtersByTab, dashboard, parametersByTab } = exportRequest.content;
 
         // Convert filtersByTab to API format
         const filtersByTabObj = filtersByTab
@@ -403,7 +407,7 @@ export const convertExportDefinitionRequestPayload = (
               }, {})
             : undefined;
 
-        const isMetadataFilled = title || filters || filtersByTab;
+        const isMetadataFilled = title || filters || filtersByTab || parametersByTab;
         const metadataObj = {
             ...(isMetadataFilled
                 ? {
@@ -414,6 +418,7 @@ export const convertExportDefinitionRequestPayload = (
                                 }
                               : {}),
                           ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
+                          ...(parametersByTab ? { parametersByTab } : {}),
                           ...(title ? { title } : {}),
                       },
                   }

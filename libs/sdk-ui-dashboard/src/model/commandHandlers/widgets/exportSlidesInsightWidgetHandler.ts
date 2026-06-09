@@ -4,6 +4,7 @@ import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
 import { type FiltersByTab, type IExportResult } from "@gooddata/sdk-backend-spi";
+import { type IDashboardExportParameter, objRefToString } from "@gooddata/sdk-model";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
 import { type IExportSlidesInsightWidget } from "../../commands/insight.js";
@@ -18,6 +19,7 @@ import {
     selectFilterContextFilters,
     selectFiltersByTab,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectExportEffectiveParameters } from "../../store/tabs/parameters/parametersSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 
@@ -42,6 +44,12 @@ export function* exportSlidesInsightWidgetHandler(
         },
         {} as FiltersByTab,
     );
+
+    // widget-scoped export → per-tab parameter overrides for this widget (empty when the flag is off)
+    const parametersByTab: Record<string, IDashboardExportParameter[]> = yield select(
+        selectExportEffectiveParameters([objRefToString(ref)]),
+    );
+
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
@@ -60,6 +68,7 @@ export function* exportSlidesInsightWidgetHandler(
             filename,
             timeout,
             templateId,
+            parametersByTab,
         },
     );
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

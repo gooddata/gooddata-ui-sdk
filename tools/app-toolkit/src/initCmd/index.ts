@@ -4,7 +4,7 @@ import * as path from "path";
 
 import { sync as spawnSync } from "cross-spawn";
 import fse from "fs-extra";
-import tar from "tar";
+import { extract } from "tar";
 
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions, type AppTemplate, type TargetAppLanguage } from "../_base/types.js";
@@ -28,7 +28,7 @@ function unpackProject(target: string, language: TargetAppLanguage, template: Ap
     const archiveNameFunction = archiveNameFunctionByTemplate[template];
 
     return fse.mkdirp(target).then((_) => {
-        return tar.x({
+        return extract({
             file: archiveNameFunction(language),
             strip: 1,
             cwd: target,

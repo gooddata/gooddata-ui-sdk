@@ -3,12 +3,17 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    type AutomationAutomationImageExport,
+    type AutomationAutomationSlidesExport,
     type AutomationAutomationTabularExport,
+    type AutomationAutomationVisualExport,
+    type JsonApiExportDefinitionOutWithLinks,
     type JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
     type JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
 } from "@gooddata/api-client-tiger";
 import {
     type IDashboardAttributeFilter,
+    type IDashboardExportParameter,
     type IExportDefinitionDashboardRequestPayload,
     type IMeasureValueFilter,
     idRef,
@@ -19,8 +24,12 @@ import {
 
 import {
     convertDashboardTabularExportRequest,
+    convertExportDefinitionMdObject,
+    convertImageExportRequest,
+    convertSlidesExportRequest,
     convertTabularExportRequest,
     convertToRawExportRequest,
+    convertVisualExportRequest,
 } from "../fromBackend/ExportDefinitionsConverter.js";
 
 describe("ExportDefinitionsConverter fromBackend", () => {
@@ -136,6 +145,106 @@ describe("ExportDefinitionsConverter fromBackend", () => {
         expect(result.type).toBe("visualizationObject");
         expect(result.content.filters).toHaveLength(1);
         expect(isMeasureValueFilter(result.content.filters?.[0])).toBe(true);
+    });
+
+    it("restores content.parametersByTab from metadata in visual export", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "42", title: "Param 1" };
+        const exportRequest = {
+            requestPayload: {
+                fileName: "dashboard-visual",
+                dashboardId: "dashboardId",
+                metadata: { parametersByTab: { tab1: [parameter] } },
+            },
+        } as unknown as AutomationAutomationVisualExport;
+
+        const result = convertVisualExportRequest(exportRequest);
+
+        expect(result.content.parametersByTab?.["tab1"]).toEqual([parameter]);
+    });
+
+    it("restores content.parametersByTab from metadata in image (PNG) export", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "7", title: "Param 1" };
+        const exportRequest = {
+            requestPayload: {
+                fileName: "widget-png",
+                dashboardId: "dashboardId",
+                format: "PNG",
+                widgetIds: ["widgetId"],
+                metadata: { parametersByTab: { tabOwning: [parameter] } },
+            },
+        } as unknown as AutomationAutomationImageExport;
+
+        const result = convertImageExportRequest(exportRequest);
+
+        expect(result.content.parametersByTab?.["tabOwning"]).toEqual([parameter]);
+    });
+
+    it("restores content.parametersByTab from metadata in dashboard slides export", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "42", title: "Param 1" };
+        const exportRequest = {
+            requestPayload: {
+                fileName: "dashboard-slides",
+                format: "PDF",
+                dashboardId: "dashboardId",
+                metadata: { parametersByTab: { tab1: [parameter] } },
+            },
+        } as unknown as AutomationAutomationSlidesExport;
+
+        const result = convertSlidesExportRequest(exportRequest) as IExportDefinitionDashboardRequestPayload;
+
+        expect(result.type).toBe("dashboard");
+        expect(result.content.parametersByTab?.["tab1"]).toEqual([parameter]);
+    });
+
+    it("restores content.parametersByTab from metadata in widget slides export", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "9", title: "Param 1" };
+        const exportRequest = {
+            requestPayload: {
+                fileName: "widget-slides",
+                format: "PPTX",
+                dashboardId: "dashboardId",
+                widgetIds: ["widgetId"],
+                metadata: { widget: "widgetId", parametersByTab: { tabOwning: [parameter] } },
+            },
+        } as unknown as AutomationAutomationSlidesExport;
+
+        const result = convertSlidesExportRequest(exportRequest);
+
+        expect(result.type).toBe("visualizationObject");
+        expect(result.content.parametersByTab?.["tabOwning"]).toEqual([parameter]);
+    });
+
+    it("omits content.parametersByTab when visual export metadata has none", () => {
+        const exportRequest = {
+            requestPayload: { fileName: "dashboard-visual", dashboardId: "dashboardId", metadata: {} },
+        } as unknown as AutomationAutomationVisualExport;
+
+        const result = convertVisualExportRequest(exportRequest);
+
+        expect(result.content.parametersByTab).toBeUndefined();
+    });
+
+    it("restores content.parametersByTab from metadata in standalone dashboard export definition", () => {
+        const parameter: IDashboardExportParameter = { id: "p1", value: "42", title: "Param 1" };
+        const exportDefinitionOut = {
+            id: "ed1",
+            attributes: {
+                title: "dashboard-export-definition",
+                requestPayload: {
+                    fileName: "dashboard-export-definition",
+                    dashboardId: "dashboardId",
+                    metadata: { parametersByTab: { tab1: [parameter] } },
+                },
+            },
+        } as unknown as JsonApiExportDefinitionOutWithLinks;
+
+        const result = convertExportDefinitionMdObject(exportDefinitionOut);
+        const content = result.requestPayload.content as {
+            parametersByTab?: Record<string, IDashboardExportParameter[]>;
+        };
+
+        expect(result.requestPayload.type).toBe("dashboard");
+        expect(content.parametersByTab?.["tab1"]).toEqual([parameter]);
     });
 
     it("converts dashboard tab-level filters to FilterContextItem[]", () => {

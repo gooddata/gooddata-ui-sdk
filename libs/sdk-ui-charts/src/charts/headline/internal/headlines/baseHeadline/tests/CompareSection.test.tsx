@@ -6,7 +6,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
-import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import {
     HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR,
     TEST_BASE_HEADLINE_ITEM,
@@ -34,22 +33,22 @@ const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("CompareSection", () => {
     const MockCompareItem = vi.mocked(CompareSectionItem);
-    const secondaryItem: IBaseHeadlineItem<IHeadlineDataItem> = TEST_BASE_HEADLINE_ITEM;
-    const tertiaryItem: IBaseHeadlineItem<IHeadlineDataItem> = {
+    const secondaryItem = TEST_BASE_HEADLINE_ITEM;
+    const tertiaryItem = {
         ...TEST_BASE_HEADLINE_ITEM,
-        elementType: null as any,
+        elementType: "secondaryValue",
         data: {
             ...TEST_BASE_HEADLINE_ITEM.data,
             localIdentifier: "tertiary_local_identifier",
         },
-    };
+    } satisfies IBaseHeadlineItem;
 
-    const renderCompareSection = (props?: {
-        secondaryItem: IBaseHeadlineItem<IHeadlineDataItem>;
-        tertiaryItem?: IBaseHeadlineItem<IHeadlineDataItem>;
+    const renderCompareSection = (props: {
+        secondaryItem: IBaseHeadlineItem;
+        tertiaryItem?: IBaseHeadlineItem;
     }) => {
         const WrappedHeadlineCompareSection = withIntl(CompareSection);
-        return render(<WrappedHeadlineCompareSection {...(props as any)} />);
+        return render(<WrappedHeadlineCompareSection {...props} />);
     };
 
     beforeEach(() => {
@@ -104,7 +103,7 @@ describe("CompareSection", () => {
             clientWidth: 60,
         });
 
-        const secondaryItem: IBaseHeadlineItem<IHeadlineDataItem> = TEST_BASE_HEADLINE_ITEM;
+        const secondaryItem = TEST_BASE_HEADLINE_ITEM;
         const { container } = renderCompareSection({ secondaryItem, tertiaryItem });
 
         expect(container.querySelector(HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR)).toBeInTheDocument();
@@ -120,7 +119,7 @@ describe("CompareSection", () => {
             clientWidth: 60,
         });
 
-        const secondaryItem: IBaseHeadlineItem<IHeadlineDataItem> = TEST_BASE_HEADLINE_ITEM;
+        const secondaryItem = TEST_BASE_HEADLINE_ITEM;
         const { container } = renderCompareSection({ secondaryItem });
 
         expect(container.querySelector(HEADLINE_PAGINATED_COMPARE_SECTION_SELECTOR)).toBeNull();

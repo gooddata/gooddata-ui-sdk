@@ -102,7 +102,6 @@ export function RangeInput({
                     <div
                         id={fromErrorId}
                         className="gd-mvf-input-error gd-mvf-input-error--range s-mvf-input-error"
-                        role="alert"
                     >
                         {fromField?.errorText}
                     </div>
@@ -139,7 +138,6 @@ export function RangeInput({
                     <div
                         id={toErrorId}
                         className="gd-mvf-input-error gd-mvf-input-error--range s-mvf-input-error"
-                        role="alert"
                     >
                         {toField?.errorText}
                     </div>

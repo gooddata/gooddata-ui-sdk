@@ -1738,6 +1738,8 @@ export {
     selectIsExecutionResultReadyForExportByRef,
     selectHasSomeExecutionResult,
     selectIsExecutionResultExportableToCsvRawByRef,
+    selectExecutionResultLimitBreaksByRef,
+    selectHasExecutionResultLimitBreaksByRef,
 } from "./model/store/executionResults/executionResultsSelectors.js";
 export type { IExecutionResultEnvelope } from "./model/store/executionResults/types.js";
 export type {

@@ -158,6 +158,8 @@ function ConversationMessages({ messages, catalogItems }: IConversationMessagesP
                                     );
                                 case "tool":
                                     return <ToolItemComponent message={message} isLast={isLast} />;
+                                case "system":
+                                    return null;
                                 default:
                                     return assertNever(message.role);
                             }

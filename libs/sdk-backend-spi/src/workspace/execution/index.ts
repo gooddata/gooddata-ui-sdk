@@ -10,6 +10,7 @@ import {
     type IDimensionDescriptor,
     type IExecutionConfig,
     type IExecutionDefinition,
+    type IExecutionResultLimitBreak,
     type IGeoJsonFeature,
     type IInsight,
     type IInsightDefinition,
@@ -207,6 +208,10 @@ export interface IExecutionResultMetadata {
      * Additional information sent by the underlying data source.
      */
     readonly dataSourceMessages: ReadonlyArray<IExecutionResultDataSourceMessage>;
+    /**
+     * Limits broken during result computation, causing partial data to be returned.
+     */
+    readonly limitBreaks?: ReadonlyArray<IExecutionResultLimitBreak>;
 }
 
 /**

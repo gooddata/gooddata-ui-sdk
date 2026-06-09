@@ -5,7 +5,7 @@ import url from "url";
 
 import { sync as spawnSync } from "cross-spawn";
 import fse from "fs-extra";
-import tar from "tar";
+import { extract } from "tar";
 
 import { logError, logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { type ActionOptions, type TargetAppLanguage } from "../_base/types.js";
@@ -26,7 +26,7 @@ import { type IFileReplacementSpec, replaceInFiles } from "./replaceInFiles.js";
 
 function unpackProject(target: string, language: TargetAppLanguage) {
     return fse.mkdirp(target).then((_) => {
-        return tar.x({
+        return extract({
             file: getDashboardPluginTemplateArchive(language),
             strip: 1,
             cwd: target,

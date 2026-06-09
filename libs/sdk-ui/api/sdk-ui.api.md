@@ -137,10 +137,10 @@ export type AttributesMeasuresOrPlaceholders = Array<ValueOrMultiValuePlaceholde
 export type AttributesOrPlaceholders = ValuesOrPlaceholders<IAttribute>;
 
 // @public
-export function BackendProvider({ children, backend }: IBackendProviderProps): JSX.Element;
+export function BackendProvider(input: IBackendProviderProps): JSX.Element;
 
 // @public
-export function BackendProviderWithCorrelation({ backend: externalBackend, correlationData, children }: IBackendProviderWithCorrelationProps): JSX.Element;
+export function BackendProviderWithCorrelation(input: IBackendProviderWithCorrelationProps): JSX.Element;
 
 // @public
 export class BadRequestSdkError extends GoodDataSdkError {
@@ -250,7 +250,7 @@ export function convertError(error: unknown): GoodDataSdkError;
 export function convertGeoInsightToTableDefinition(insight: IInsightDefinition, options?: GeoTableConversionOptions): IInsightDefinition | undefined;
 
 // @public
-export function CorrelationProvider({ children, correlationData }: ICorrelationProviderProps): JSX.Element;
+export function CorrelationProvider(input: ICorrelationProviderProps): JSX.Element;
 
 // @internal
 export const createContextStore: <T>(name: string) => IContextStore<T>;
@@ -481,7 +481,7 @@ export const ErrorCodes: {
 };
 
 // @public
-export function ErrorComponent({ icon, className, width, height, style, message, description, clientHeight }: IErrorProps): JSX.Element;
+export function ErrorComponent(input: IErrorProps): JSX.Element;
 
 // @public
 export function Execute(props: IExecuteProps): JSX.Element;
@@ -1362,7 +1362,7 @@ export interface IMeasureTitleProps {
 }
 
 // @internal (undocumented)
-function Intl_2({ children, customLocale, customMessages, forTest }: {
+function Intl_2(input: {
     children: ReactNode;
     customLocale?: ILocale;
     customMessages?: ITranslations;
@@ -1376,7 +1376,7 @@ export const IntlTranslationsProvider: FC<WithIntlProps<ITranslationsProviderPro
 };
 
 // @internal (undocumented)
-export function IntlWrapper({ locale, children }: IIntlWrapperProps): JSX.Element | null;
+export function IntlWrapper(input: IIntlWrapperProps): JSX.Element | null;
 
 // @internal (undocumented)
 export interface IOpenAsReportUiConfig {
@@ -2189,7 +2189,7 @@ export interface IWorkspaceProviderProps {
 export const Kpi: ComponentType<IKpiProps>;
 
 // @public
-export function LoadingComponent({ className, color, speed, inline, height, width, imageHeight, imageWidth }: ILoadingProps): JSX.Element;
+export function LoadingComponent(input: ILoadingProps): JSX.Element;
 
 export { LOCALES }
 
@@ -2269,7 +2269,7 @@ export type OnFiredDrillEvent = IDrillEventCallback;
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 
 // @public
-export function OrganizationProvider({ organization, children }: IOrganizationProviderProps): JSX.Element;
+export function OrganizationProvider(input: IOrganizationProviderProps): JSX.Element;
 
 // @internal (undocumented)
 export type OverTimeComparisonType = "same_period_previous_year" | "previous_period" | "nothing";
@@ -2288,7 +2288,7 @@ export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 export type PlaceholderResolvedValue<T> = T extends Array<infer A> ? Flatten<PlaceholderResolvedValue<A>>[] : T extends IPlaceholder<infer B> ? B : T extends IComposedPlaceholder<infer C, any, any> ? C : T;
 
 // @public
-export function PlaceholdersProvider({ children, initialValues }: IPlaceholdersProviderProps): ReactElement;
+export function PlaceholdersProvider(input: IPlaceholdersProviderProps): ReactElement;
 
 // @public
 export type PlaceholdersResolvedValues<Tuple extends any[]> = {
@@ -2324,7 +2324,7 @@ export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifie
 export function resolveDefaultDisplayFormRefForDisplayForm(displayFormRef: ObjRef, catalogAttributes: ICatalogAttribute[], preloadedAttributesWithReferences?: IAttributeWithReferences[]): ObjRef | undefined;
 
 // @alpha
-export function resolveLCMWorkspaceIdentifiers(backend: any, { client, dataProduct, workspace }: IClientWorkspaceIdentifiers): IClientWorkspaceIdentifiers;
+export function resolveLCMWorkspaceIdentifiers(backend: any, input: IClientWorkspaceIdentifiers): IClientWorkspaceIdentifiers;
 
 // @internal
 export const resolveLocale: (locale: unknown) => ILocale;
@@ -2478,7 +2478,7 @@ export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedP
 export const useCorrelationData: () => Record<string, string>;
 
 // @public
-export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess }: {
+export function useDataExport(input: {
     execution: IPreparedExecution | undefined | null;
     exportConfig?: IExportConfig;
 } & UseDataExportCallbacks, deps?: DependencyList): UseDataExportState;
@@ -2650,10 +2650,10 @@ export function withContexts<T extends {
 export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: ComponentType<T & ILoadingInjectedProps>): ComponentType<T>;
 
 // @internal
-export function withExecution<T>({ execution, events, loadOnMount, shouldRefetch, window, exportTitle, enableExecutionCancelling }: IWithExecution<T>): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T>;
+export function withExecution<T>(input: IWithExecution<T>): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T>;
 
 // @internal
-export function withExecutionLoading<TProps>({ promiseFactory, loadOnMount, events, shouldRefetch, window, exportTitle, enableExecutionCancelling }: IWithExecutionLoading<TProps>): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps>;
+export function withExecutionLoading<TProps>(input: IWithExecutionLoading<TProps>): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps>;
 
 // @internal (undocumented)
 export function withIntl<P>(WrappedComponent: FC<P> | ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): ComponentType<P>;
@@ -2675,7 +2675,7 @@ export function withWorkspace<T extends {
 }>(Component: ComponentType<T>): ComponentType<T>;
 
 // @public
-export function WorkspaceProvider({ children, workspace }: IWorkspaceProviderProps): JSX.Element;
+export function WorkspaceProvider(input: IWorkspaceProviderProps): JSX.Element;
 
 // @internal
 export const wrapDisplayName: (hocName: string, BaseComponent?: ComponentType<any> | undefined) => <T>(Component: ComponentType<T>) => ComponentType<T>;
