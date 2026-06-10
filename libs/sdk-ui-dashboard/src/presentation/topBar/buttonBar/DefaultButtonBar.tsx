@@ -22,10 +22,13 @@ export function DefaultButtonBar({
     saveAsNewButtonProps,
     shareButtonProps,
     childContentPosition = "left",
+    left,
+    right,
 }: IButtonBarProps): ReactElement {
     // TODO INE allow customization of buttons via getter from props
     return (
         <div className="dash-control-buttons">
+            {left}
             {childContentPosition === "left" && children}
             <CancelButton {...cancelButtonProps} />
             <SaveButton {...saveButtonProps} />
@@ -34,6 +37,7 @@ export function DefaultButtonBar({
             <SaveAsNewButton {...saveAsNewButtonProps} />
             <ShareButton {...shareButtonProps} />
             {childContentPosition === "right" && children}
+            {right}
         </div>
     );
 }

@@ -21,6 +21,8 @@ import { GenAiStore, type GenAiStoreProps } from "./GenAiStore.js";
 
 export type GenAIChatDialogProps = Omit<GenAiStoreProps, "children"> & {
     isOpen: boolean;
+    className?: string;
+    dialogPosition?: "left" | "right";
     locale?: string;
     canManage?: boolean;
     canAnalyze?: boolean;
@@ -45,6 +47,8 @@ export function GenAIChatDialog({
     onOpen,
     onClose,
     settings,
+    className,
+    dialogPosition,
     returnFocusTo,
     objectTypes,
     includeTags,
@@ -81,6 +85,8 @@ export function GenAIChatDialog({
                         genAIStore={genAIStore}
                         backend={effectiveBackend}
                         workspace={effectiveWorkspace}
+                        className={className}
+                        dialogPosition={dialogPosition}
                         isOpen={isOpen}
                         onOpen={onOpen}
                         onClose={onClose}
@@ -102,6 +108,8 @@ type GenAIChatDialogContentProps = {
     genAIStore: EnhancedStore;
     backend: IAnalyticalBackend;
     workspace: string;
+    className?: string;
+    dialogPosition?: "left" | "right";
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
@@ -118,6 +126,8 @@ function GenAIChatDialogContent({
     genAIStore,
     backend,
     workspace,
+    className,
+    dialogPosition,
     isOpen,
     onOpen,
     onClose,
@@ -189,7 +199,12 @@ function GenAIChatDialogContent({
                         <CustomizationProvider
                             landingScreenComponentProvider={LandingScreenComponentProvider}
                         >
-                            <GenAIChatOverlay returnFocusTo={returnFocusTo} onClose={onCloseHandler} />
+                            <GenAIChatOverlay
+                                className={className}
+                                dialogPosition={dialogPosition}
+                                returnFocusTo={returnFocusTo}
+                                onClose={onCloseHandler}
+                            />
                         </CustomizationProvider>
                     </ConfigProvider>
                 </OverlayControllerProvider>

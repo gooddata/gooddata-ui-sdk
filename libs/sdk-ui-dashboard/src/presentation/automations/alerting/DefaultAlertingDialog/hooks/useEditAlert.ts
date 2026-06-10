@@ -254,6 +254,7 @@ export function useEditAlert({
                     insight,
                     commonDateFilterId,
                     true,
+                    false,
                 ),
                 supportedMeasures,
                 defaultMeasure,
@@ -563,6 +564,7 @@ export function useEditAlert({
                     insight,
                     commonDateFilterId,
                     true,
+                    !s.metadata?.widget,
                 );
                 const visibleFilters = getVisibleFiltersByFilters(
                     filters,

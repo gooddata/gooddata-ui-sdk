@@ -115,6 +115,73 @@ $drag-handle-icon: "data:image/svg+xml,%3Csvg width='7' height='26' viewBox='0 0
         }
     }
 
+    // Single full-width line, flat (no border/gradient), chevron pinned right.
+    // Declared after the state modifiers so its flat `::after` wins.
+    &--layout-row {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+        font-size: 14px;
+        border-radius: 0;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        // Room for the pinned chevron
+        padding-right: 28px;
+
+        // Flat: no chip border or open-state gradient.
+        &::after {
+            display: none;
+        }
+
+        #{$root}__icon {
+            display: flex;
+            height: 100%;
+            align-items: center;
+        }
+
+        // One left-aligned line; chevron is taken out of flow.
+        #{$root}__content {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        // min-width: 0 lets a long label ellipsise instead of overflowing.
+        #{$root}__title-row {
+            flex: 0 1 auto;
+            min-width: 0;
+            max-width: 100%;
+            margin-right: 5px;
+        }
+
+        #{$root}__title--withColon::after {
+            content: ":";
+        }
+
+        #{$root}__subtitle-row {
+            flex: 1 1 auto;
+            min-width: 0;
+            max-width: none;
+
+            // Chevron
+            &::after {
+                position: absolute;
+                top: 50%;
+                // `content` is inset by padding-right lands it 12px from the button edge.
+                right: -16px;
+                margin-left: 0;
+                font-size: 18px;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+    &--hideChevron {
+        #{$root}__subtitle-row::after {
+            display: none;
+        }
+    }
+
     &__icon {
         position: relative;
         z-index: 1;

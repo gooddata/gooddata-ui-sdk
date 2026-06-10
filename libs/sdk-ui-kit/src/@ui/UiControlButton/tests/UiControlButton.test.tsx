@@ -135,4 +135,40 @@ describe("UiControlButton", () => {
         const { container } = render(<UiControlButton title="T" titleClassName="my-title-cls" />);
         expect(container.querySelector(".my-title-cls")).not.toBeNull();
     });
+
+    it("defaults to the stacked layout modifier", () => {
+        render(<UiControlButton title="T" />);
+        const button = screen.getByRole("button");
+        expect(button.className).toMatch(/gd-ui-kit-control-button--layout-stacked/);
+        expect(button.className).not.toMatch(/gd-ui-kit-control-button--layout-row/);
+    });
+
+    it("applies the row layout modifier when layout is row", () => {
+        render(<UiControlButton title="T" layout="row" />);
+        const button = screen.getByRole("button");
+        expect(button.className).toMatch(/gd-ui-kit-control-button--layout-row/);
+        expect(button.className).not.toMatch(/gd-ui-kit-control-button--layout-stacked/);
+    });
+
+    it("adds the title colon modifier in row layout only when a subtitle is present", () => {
+        const { container, rerender } = render(<UiControlButton title="T" layout="row" subtitle="= 25" />);
+        expect(container.querySelector(".gd-ui-kit-control-button__title--withColon")).not.toBeNull();
+
+        rerender(<UiControlButton title="T" layout="row" />);
+        expect(container.querySelector(".gd-ui-kit-control-button__title--withColon")).toBeNull();
+    });
+
+    it("does not add the title colon modifier in the stacked layout", () => {
+        const { container } = render(<UiControlButton title="T" subtitle="= 25" />);
+        expect(container.querySelector(".gd-ui-kit-control-button__title--withColon")).toBeNull();
+    });
+
+    it("applies the hideChevron modifier when hideChevron is set", () => {
+        const { rerender } = render(<UiControlButton title="T" subtitle="= 25" />);
+        const button = screen.getByRole("button");
+        expect(button.className).not.toMatch(/gd-ui-kit-control-button--hideChevron/);
+
+        rerender(<UiControlButton title="T" subtitle="= 25" hideChevron />);
+        expect(button.className).toMatch(/gd-ui-kit-control-button--hideChevron/);
+    });
 });

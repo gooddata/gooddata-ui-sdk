@@ -368,7 +368,10 @@ export function getFiltersAttribute(
 
 function getAttributeRelatedFilter(attr: AlertAttribute | undefined, alert?: IAutomationMetadataObject) {
     const filter = alert?.alert?.execution.filters.filter((f) => {
-        return getSliceFilterDisplayFormLocalId(f) === attr?.attribute.attribute.localIdentifier;
+        return (
+            attr?.attribute.attribute.localIdentifier &&
+            getSliceFilterDisplayFormLocalId(f) === attr.attribute.attribute.localIdentifier
+        );
     })[0];
 
     if (isPositiveAttributeFilter(filter) && isAttributeElementsByValue(filter.positiveAttributeFilter.in)) {

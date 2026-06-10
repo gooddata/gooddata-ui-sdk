@@ -124,11 +124,12 @@ Produces a production bundle in \`dist/\`.
             "outputFolderNames": []
         },
         {
-            // \`pack-build:remote\` (in package.json) copies \`../module/gdc-snap-test-pluggable.tgz\`
-            // into the harness build context. The harness depends on its sibling module as a
-            // workspace dep, so Rush's phase machinery runs the module's _phase:pack-build first.
-            // If that dep edge is ever removed, this script will fail with ENOENT — fix the dep,
-            // not the script.
+            // The scaffolder-injected \`_phase:pack-build\` (see internalProfile.ts) builds the
+            // harness shell into <app>-harness.tgz and copies the sibling module's federation
+            // remote \`../module/gdc-snap-test-pluggable.tgz\` in as <app>-remote.tgz —
+            // both ADDed by the harness Dockerfile. The harness depends on its sibling module as
+            // a workspace dep, so Rush runs the module's _phase:pack-build first. If that dep edge
+            // is ever removed, the copy will fail with ENOENT — fix the dep, not the script.
             "operationName": "_phase:pack-build",
             "outputFolderNames": [],
             "disableBuildCacheForOperation": true

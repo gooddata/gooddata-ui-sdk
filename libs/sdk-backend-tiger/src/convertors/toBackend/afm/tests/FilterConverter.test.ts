@@ -66,6 +66,36 @@ describe("tiger filter converter from model to AFM", () => {
                 convertFilter(newMeasureValueFilter(uriRef("unsupported"), "GREATER_THAN", 10));
             }).toThrow();
         });
+
+        it("should preserve localIdentifier for a single-condition comparison filter", () => {
+            const filter: IMeasureValueFilter = {
+                measureValueFilter: {
+                    measure: localIdRef("m1"),
+                    localIdentifier: "mvfLocalId",
+                    conditions: [{ comparison: { operator: "GREATER_THAN", value: 10 } }],
+                },
+            };
+            const result = convertFilter(filter) as {
+                comparisonMeasureValueFilter: { localIdentifier?: string };
+            };
+            expect(result.comparisonMeasureValueFilter.localIdentifier).toBe("mvfLocalId");
+        });
+
+        it("should preserve localIdentifier for a single-condition range filter (CQ-2464)", () => {
+            // Regression: the range branch used to drop localIdentifier, which broke matching of
+            // BETWEEN / NOT BETWEEN measure value filters when comparing saved vs current alert filters.
+            const filter: IMeasureValueFilter = {
+                measureValueFilter: {
+                    measure: localIdRef("m1"),
+                    localIdentifier: "mvfLocalId",
+                    conditions: [{ range: { operator: "BETWEEN", from: 64, to: 128 } }],
+                },
+            };
+            const result = convertFilter(filter) as {
+                rangeMeasureValueFilter: { localIdentifier?: string };
+            };
+            expect(result.rangeMeasureValueFilter.localIdentifier).toBe("mvfLocalId");
+        });
     });
     describe("convert absolute date filter", () => {
         const Scenarios: Array<[string, unknown]> = [

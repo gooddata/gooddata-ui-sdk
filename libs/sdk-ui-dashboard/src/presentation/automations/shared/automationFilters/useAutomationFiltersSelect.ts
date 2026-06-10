@@ -197,7 +197,7 @@ export const useAutomationFiltersSelect = ({
 
     // State of current automation filters to display (and potentially save).
     const [editedAutomationFilters, setEditedAutomationFilters] = useState<FilterContextItem[]>(
-        automationToEdit && !isDashboardAutomationWithoutStoredFilters
+        automationToEdit && (!isDashboardAutomationWithoutStoredFilters || !automationToEdit.metadata?.widget)
             ? filtersForExistingAutomation
             : filtersForNewAutomation,
     );

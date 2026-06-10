@@ -24,6 +24,7 @@
 @use "configurationPanel"; // order is important here, configurationPanel must come before insightConfiguration ...
 @use "insightConfiguration";
 @use "visualization";
+@use "warningPartialResult";
 @use "shareIndicators";
 @use "sidebar";
 @use "floatingToolbar";

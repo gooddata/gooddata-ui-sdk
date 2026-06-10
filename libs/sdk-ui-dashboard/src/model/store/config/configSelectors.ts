@@ -1153,7 +1153,7 @@ export const selectActiveCalendars: DashboardSelector<IActiveCalendars | undefin
 export const selectEnableDashboardFilterGroups: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableDashboardFilterGroups ?? false;
+        return state.settings?.enableDashboardFilterGroups ?? true;
     },
 );
 

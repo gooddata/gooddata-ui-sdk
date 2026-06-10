@@ -30,6 +30,12 @@ export interface IUiControlButtonProps {
     icon?: ReactNode;
     titleExtension?: ReactNode;
     subtitleExtension?: ReactNode;
+    /**
+     * `"stacked"` (default): title above subtitle, chevron beside subtitle.
+     * `"row"`: single full-width line, flat background, chevron pinned right.
+     */
+    layout?: "stacked" | "row";
+    hideChevron?: boolean;
     isOpen?: boolean;
     isDraggable?: boolean;
     isDragging?: boolean;
@@ -70,6 +76,8 @@ export function UiControlButton({
     icon,
     titleExtension,
     subtitleExtension,
+    layout = "stacked",
+    hideChevron,
     isOpen,
     isDraggable,
     isDragging,
@@ -86,6 +94,9 @@ export function UiControlButton({
 }: IUiControlButtonProps) {
     const tooltipId = useIdPrefixed("gd-ui-kit-control-button-tooltip");
     const showDisabledTooltip = !!disabled && !!disabledTooltip;
+    const hasSubtitle = subtitle !== undefined || subtitleExtension !== undefined;
+    // Trailing colon on the label, only when a subtitle follows it.
+    const showLabelColon = layout === "row" && hasSubtitle;
 
     const onKeyDown = (event: KeyboardEvent) => {
         if (!isActionKey(event)) {
@@ -105,6 +116,8 @@ export function UiControlButton({
             ref={buttonRef}
             className={cx(
                 b({
+                    layout,
+                    hideChevron: !!hideChevron,
                     isOpen: !!isOpen,
                     isDraggable: !!isDraggable,
                     isDragging: !!isDragging,
@@ -128,7 +141,7 @@ export function UiControlButton({
             {icon ? <div className={e("icon")}>{icon}</div> : null}
             <div className={e("content")}>
                 <div className={e("title-row")}>
-                    <div className={e("title")}>
+                    <div className={e("title", { withColon: showLabelColon })}>
                         <ShortenedText
                             tooltipAlignPoints={TITLE_TOOLTIP_ALIGN_POINTS}
                             className={titleClassName}
@@ -138,7 +151,7 @@ export function UiControlButton({
                     </div>
                     {titleExtension}
                 </div>
-                {subtitle === undefined && subtitleExtension === undefined ? null : (
+                {hasSubtitle ? (
                     <div className={e("subtitle-row")}>
                         {typeof subtitle === "string" ? (
                             <div className={e("subtitle")}>
@@ -154,7 +167,7 @@ export function UiControlButton({
                         )}
                         {subtitleExtension}
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );

@@ -313,6 +313,7 @@ export const getAppliedWidgetFilters = (
     insight: IInsight | undefined,
     commonDateFilterId: string | undefined,
     mergeInsightFilters: boolean = false,
+    withoutWidget: boolean = false,
 ) => {
     // Hidden filters are never included in selectedAutomationFilters,
     // but we need them to construct proper execution filters, so merge them.
@@ -327,7 +328,9 @@ export const getAppliedWidgetFilters = (
     // Now, convert sanitized selected filters to execution filters shape.
     const selectedExecutionFilters = isInsightWidget(widget)
         ? filterContextItemsToDashboardFiltersByWidget(selectedFiltersWithoutIgnoredFilters, widget)
-        : [];
+        : withoutWidget
+          ? filterContextItemsToDashboardFiltersByWidget(selectedFiltersWithoutIgnoredFilters, undefined)
+          : [];
 
     const filtersToUse = mergeInsightFilters
         ? mergeFilters(insight?.insight?.filters ?? [], selectedExecutionFilters, commonDateFilterId)
