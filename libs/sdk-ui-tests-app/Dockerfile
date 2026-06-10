@@ -7,7 +7,7 @@
 # Expects that `sdk.tgz` is already created (using `npm run pack-build`).
 # WORKSPACE_ID is injected at runtime via the entrypoint (pass as env var).
 
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/nginxinc/nginx-unprivileged:1.31.1@sha256:1a3f97f13b245fd6307668326a9a43adfe8bab1853572e0970430285f95e5208
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/nginxinc/nginx-unprivileged:1.31.1@sha256:9f6b32064a29d747404d959e078c713a0523a9bd4e41f6912058126ebca94e61
 
 # Switch to root to set up directory permissions, then back to nginx
 USER root

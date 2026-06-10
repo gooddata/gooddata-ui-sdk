@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type FC, type RefObject, useCallback } from "react";
+import { type FC, type RefObject, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -24,6 +24,8 @@ export type GenAIChatOverlayDispatchProps = {
 
 export type GenAIChatOverlayExternalProps = {
     returnFocusTo?: RefObject<HTMLElement | null> | string;
+    className?: string;
+    dialogPosition?: "left" | "right";
     onClose: () => void;
 };
 
@@ -34,12 +36,16 @@ function GenAIChatOverlayComponent({
     returnFocusTo,
     setHistory,
     loadConversation,
+    dialogPosition,
+    className,
 }: GenAIChatOverlayProps) {
     const intl = useIntl();
     const { isFullscreen } = useFullscreenCheck();
 
-    const classNames = cx("gd-gen-ai-chat__window", {
+    const classNames = cx("gd-gen-ai-chat__window", className, {
         "gd-gen-ai-chat__window--fullscreen": isFullscreen,
+        "gd-gen-ai-chat__window--left": !isFullscreen && dialogPosition === "left",
+        "gd-gen-ai-chat__window--right": !isFullscreen && dialogPosition !== "left",
     });
 
     const onHistoryClose = useCallback(() => {
@@ -54,12 +60,22 @@ function GenAIChatOverlayComponent({
         [loadConversation, setHistory],
     );
 
+    const position = useMemo(() => {
+        if (isFullscreen) {
+            return "cc cc";
+        }
+        if (dialogPosition === "left") {
+            return "bl bl";
+        }
+        return "br br";
+    }, [dialogPosition, isFullscreen]);
+
     return (
         <Dialog
             isModal={isFullscreen}
             returnFocusTo={returnFocusTo}
             returnFocusAfterClose={!!returnFocusTo}
-            alignPoints={[{ align: isFullscreen ? "cc cc" : "br br" }]}
+            alignPoints={[{ align: position }]}
             submitOnEnterKey={false}
             closeOnEscape
             closeOnParentScroll={false}

@@ -430,6 +430,7 @@ function convertMeasureValueFilter(
                 from: Math.min(originalFrom, originalTo),
                 to: Math.max(originalFrom, originalTo),
                 treatNullValuesAs,
+                localIdentifier,
                 ...dimensionalityProp,
                 ...applyOnResultProp,
             },

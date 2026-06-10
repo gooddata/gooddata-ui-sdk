@@ -42,6 +42,7 @@ export function UiTags({
     removeLabel = "Remove",
     creatableLabel = "(Create new)",
     mode = "single-line",
+    size = "small",
     canDeleteTags = true,
     canCreateTag = true,
     readOnly = false,
@@ -49,13 +50,16 @@ export function UiTags({
     onTagAdd = () => {},
     onTagRemove = () => {},
     accessibilityConfig = defaultAccessibilityConfig,
+    renderAddButton,
 }: IUiTagsProps) {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [popupOpen, setPopupOpen] = useState(false);
     const popupId = useId();
 
     const isDeletable = canDeleteTags && !readOnly;
-    const isAddable = canCreateTag && !readOnly;
+    // A custom add-button slot takes precedence over the built-in create-tag combobox.
+    const hasCustomAddButton = !!renderAddButton && !readOnly;
+    const isAddable = canCreateTag && !readOnly && !hasCustomAddButton;
 
     const {
         rootRef,
@@ -70,7 +74,7 @@ export function UiTags({
         availableWidth,
         lastAvailableWidth,
         setTooltipContainer,
-    } = useResponsiveTags(tags, mode, [canCreateTag, canDeleteTags, readOnly]);
+    } = useResponsiveTags(tags, mode, [canCreateTag, canDeleteTags, readOnly, hasCustomAddButton]);
 
     const items = [...showedTags, hiddenTags];
 
@@ -122,7 +126,12 @@ export function UiTags({
             <div className={e("shadow-container")} ref={allContainerRef}>
                 {tags.map((tag) => {
                     return (
-                        <UiTag key={getKey(tag, isDeletable, readOnly)} tag={tag} isDeletable={isDeletable} />
+                        <UiTag
+                            key={getKey(tag, isDeletable, readOnly)}
+                            tag={tag}
+                            isDeletable={isDeletable}
+                            size={size}
+                        />
                     );
                 })}
             </div>
@@ -185,6 +194,7 @@ export function UiTags({
                                                             isDeletable={isDeletable}
                                                             isDisabled={readOnly}
                                                             isFocused={hiddenFocusedIndex === i}
+                                                            size={size}
                                                             maxWidth={tooltipWidth}
                                                             onDelete={onTagRemoveHandler}
                                                             onClick={onTagClickHandler}
@@ -222,6 +232,7 @@ export function UiTags({
                             isDisabled={readOnly}
                             deleteLabel={removeLabel}
                             isFocused={showedFocusedIndex === i}
+                            size={size}
                             onDelete={onTagRemoveHandler}
                             onClick={onTagClickHandler}
                             key={getKey(tag, isDeletable, readOnly)}
@@ -229,7 +240,18 @@ export function UiTags({
                         />
                     );
                 })}
-                {isAddable ? (
+                {hasCustomAddButton ? (
+                    <div
+                        className={e("add-button")}
+                        ref={addButtonRef}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }}
+                    >
+                        {renderAddButton?.()}
+                    </div>
+                ) : isAddable ? (
                     <div
                         className={e("add-button")}
                         ref={addButtonRef}
@@ -344,7 +366,7 @@ export function UiTags({
                         />
                     </div>
                 ) : null}
-                {!isAddable && tags.length === 0 ? (
+                {!isAddable && !hasCustomAddButton && tags.length === 0 ? (
                     <div className={e("empty-state")}>{noTagsLabel}</div>
                 ) : null}
             </div>

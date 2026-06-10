@@ -2438,6 +2438,10 @@ export interface IButtonBarProps {
     // (undocumented)
     editButtonProps: IEditButtonProps;
     // (undocumented)
+    left?: ReactNode;
+    // (undocumented)
+    right?: ReactNode;
+    // (undocumented)
     saveAsNewButtonProps: ISaveAsNewButtonProps;
     // (undocumented)
     saveButtonProps: ISaveButtonProps;

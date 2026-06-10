@@ -1,0 +1,16 @@
+// (C) 2026 GoodData Corporation
+
+.overlay.gd-dialog.gd-warning-partial-result {
+    position: absolute;
+    z-index: 2;
+    bottom: 10px;
+    left: 50%;
+    width: 280px;
+    max-width: calc(100% - 20px);
+    padding: 0;
+    transform: translateX(-50%);
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}

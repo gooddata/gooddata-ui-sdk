@@ -33,11 +33,13 @@ import {
 } from "../../insight/insightToTable.js";
 import { ShowAsTableButton } from "../../showAsTableButton/ShowAsTableButton.js";
 import { useShowAsTable } from "../../showAsTableButton/useShowAsTable.js";
+import { InsightWidgetWarningPartialResult } from "../warningPartialResult/InsightWidgetWarningPartialResult.js";
 
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { type IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 import { useInsightMenu } from "./useInsightMenu.js";
+import { useInsightWarning } from "./useInsightWarning.js";
 
 export function DefaultDashboardInsightWidget(props: Omit<IDefaultDashboardInsightWidgetProps, "insight">) {
     return <DashboardWidgetInsightGuard {...props} Component={DefaultDashboardInsightWidgetCore} />;
@@ -200,6 +202,8 @@ function DefaultDashboardInsightWidgetCore({
 
     const titleId = useId();
 
+    const { limitBreaks, executionResult } = useInsightWarning(widget.ref);
+
     const { isWidgetAsTable, toggleWidgetAsTable } = useShowAsTable(widget);
 
     const accessibilityTableInsight = useMemo(() => {
@@ -301,6 +305,22 @@ function DefaultDashboardInsightWidgetCore({
                                 items={menuItems}
                             />
                         );
+                    }}
+                    renderAfterVisualization={() => {
+                        if (limitBreaks.length > 0) {
+                            return (
+                                <InsightWidgetWarningPartialResult
+                                    className="gd-warning-partial-result"
+                                    limitBreaks={limitBreaks}
+                                    onExportRawCSV={onExportRawCSV}
+                                    isExporting={!exportCSVRawEnabled}
+                                    isExportRawVisible={isExportRawVisible}
+                                    executionResult={executionResult!}
+                                    isLoading={executionResult?.isLoading}
+                                />
+                            );
+                        }
+                        return null;
                     }}
                 >
                     {({ clientHeight, clientWidth }) => (

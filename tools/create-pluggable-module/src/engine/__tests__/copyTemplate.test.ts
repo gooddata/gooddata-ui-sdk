@@ -59,6 +59,18 @@ describe("copyTemplate", () => {
         expect(copied.equals(binaryContent)).toBe(true);
     });
 
+    it("copies TLS cert fixtures (.crt/.key) verbatim — never token-substituted", () => {
+        // Self-signed e2e certs are cryptographic artifacts. Even though PEM is ASCII, a
+        // token match inside the body must not rewrite the cert, so they go through the
+        // verbatim (BINARY_EXTENSIONS) path.
+        const pem = "-----BEGIN CERTIFICATE-----\nTOKENISH-base64-payload\n-----END CERTIFICATE-----\n";
+        writeFileSync(join(src, "server.crt"), pem);
+        writeFileSync(join(src, "server.key"), pem);
+        copyTemplate(src, dest, [["TOKENISH", "REPLACED"]]);
+        expect(readFileSync(join(dest, "server.crt"), "utf-8")).toBe(pem);
+        expect(readFileSync(join(dest, "server.key"), "utf-8")).toBe(pem);
+    });
+
     it("token substitution ORDER matters — longer-first prevents partial overlap", () => {
         writeFileSync(join(src, "a.txt"), "foo-bar foo");
         const { written: _w } = copyTemplate(src, dest, [

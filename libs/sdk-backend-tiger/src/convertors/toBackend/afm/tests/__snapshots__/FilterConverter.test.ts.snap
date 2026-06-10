@@ -341,6 +341,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 {
   "rangeMeasureValueFilter": {
     "from": 64,
+    "localIdentifier": undefined,
     "measure": {
       "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },
@@ -355,6 +356,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 {
   "rangeMeasureValueFilter": {
     "from": 64,
+    "localIdentifier": undefined,
     "measure": {
       "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },
@@ -383,6 +385,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
       },
     ],
     "from": 10,
+    "localIdentifier": undefined,
     "measure": {
       "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },
@@ -397,6 +400,7 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 {
   "rangeMeasureValueFilter": {
     "from": 64,
+    "localIdentifier": undefined,
     "measure": {
       "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     },

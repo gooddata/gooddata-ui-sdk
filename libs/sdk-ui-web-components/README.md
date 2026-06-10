@@ -230,6 +230,32 @@ InsightView component](https://www.gooddata.com/docs/gooddata-ui/latest/learn/vi
 - `locale` - the localization of the visualization. For available languages, see [the full list of available localizations](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui/src/base/localization/Locale.ts).
 - `objectTypes` - optional comma-separated list of metadata object types available to assistant search and suggestions.
 
+`gd-ai-assistant`, `gd-ai-conversations`, and `gd-ai-provider` also expose these JavaScript properties and methods:
+
+- `onLinkClick` - callback called when a link in chat is clicked.
+- `onDispatcher` - callback that receives the internal dispatcher function.
+- `startNewConversationAction()` - helper method that dispatches the start-new-conversation action.
+
+`onDispatcher` is a property callback (not an HTML attribute).
+Assign it after the custom element is upgraded:
+
+```html
+<gd-ai-provider id="provider"></gd-ai-provider>
+<script type="module">
+    await customElements.whenDefined("gd-ai-provider");
+
+    const providerEl = document.getElementById("provider");
+
+    providerEl.onDispatcher = (dispatch) => {
+        window.genAiDispatch = dispatch;
+    };
+
+    document.getElementById("new-conversation")?.addEventListener("click", () => {
+        providerEl.startNewConversationAction?.();
+    });
+</script>
+```
+
 ```html
 <!-- override currently used workspace -->
 <gd-ai-assistant workspace="my-workspace"></gd-ai-assistant>

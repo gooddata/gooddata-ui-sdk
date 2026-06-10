@@ -24,6 +24,8 @@ export interface IButtonBarProps {
     settingButtonProps: ISettingButtonProps;
     saveAsNewButtonProps: ISaveAsNewButtonProps;
     children?: ReactNode;
+    left?: ReactNode;
+    right?: ReactNode;
 }
 
 /**

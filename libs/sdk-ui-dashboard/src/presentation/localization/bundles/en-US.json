@@ -1259,6 +1259,70 @@
         "text": "Untitled visualization",
         "crowdinContext": "Default title for exported file"
     },
+    "partial_data_warning.title": {
+        "text": "Partial results only.",
+        "crowdinContext": "Title of a warning displayed when a visualization shows partial data because result limits were exceeded."
+    },
+    "partial_data_warning.show_details": {
+        "text": "Show details",
+        "crowdinContext": "Link to expand partial data warning details."
+    },
+    "partial_data_warning.hide_details": {
+        "text": "Hide details",
+        "crowdinContext": "Link to collapse partial data warning details."
+    },
+    "partial_data_warning.close": {
+        "text": "Dismiss partial data warning",
+        "crowdinContext": "Accessibility label for the close button in partial data warning."
+    },
+    "partial_data_warning.export_raw": {
+        "text": "Export full result as Raw (.csv)",
+        "crowdinContext": "Action link in partial data warning that exports the full raw CSV result."
+    },
+    "partial_data_warning.description": {
+        "text": "The result exceeds a result size limit.",
+        "crowdinContext": "Generic detail text for partial data warning."
+    },
+    "partial_data_warning.rows.description": {
+        "text": "The result exceeds the {rowLimit} row limit by {rowOverflow} rows.",
+        "crowdinContext": "Partial data warning detail when the row limit is exceeded."
+    },
+    "partial_data_warning.rows.description.unknown_total": {
+        "text": "The result exceeds the {rowLimit} row limit.",
+        "crowdinContext": "Partial data warning detail when the row limit is exceeded and the exact total is unknown."
+    },
+    "partial_data_warning.columns.description": {
+        "text": "The result exceeds the {columnLimit} columns limit by {columnOverflow} columns.",
+        "crowdinContext": "Partial data warning detail when the column limit is exceeded."
+    },
+    "partial_data_warning.columns.description.unknown_total": {
+        "text": "The result exceeds the {columnLimit} columns limit.",
+        "crowdinContext": "Partial data warning detail when the column limit is exceeded and the exact total is unknown."
+    },
+    "partial_data_warning.rows_columns.description": {
+        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit by {columnOverflow} columns and {rowOverflow} rows.",
+        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded."
+    },
+    "partial_data_warning.rows_columns.description.unknown_column_total": {
+        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit. It exceeds the row limit by {rowOverflow} rows.",
+        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded, but only the row overflow is known."
+    },
+    "partial_data_warning.rows_columns.description.unknown_row_total": {
+        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit. It exceeds the columns limit by {columnOverflow} columns.",
+        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded, but only the column overflow is known."
+    },
+    "partial_data_warning.rows_columns.description.unknown_total": {
+        "text": "The result exceeds both the {columnLimit} columns and the {rowLimit} row limit.",
+        "crowdinContext": "Partial data warning detail when both row and column limits are exceeded and exact totals are unknown."
+    },
+    "partial_data_warning.cells.description": {
+        "text": "The result exceeds the {cellLimit} datapoint limit by {cellOverflow} datapoints.",
+        "crowdinContext": "Partial data warning detail when the datapoint limit is exceeded."
+    },
+    "partial_data_warning.cells.description.unknown_total": {
+        "text": "The result exceeds the {cellLimit} datapoint limit.",
+        "crowdinContext": "Partial data warning detail when the datapoint limit is exceeded and the exact total is unknown."
+    },
     "export_unsupported.disabled": {
         "text": "Export is not supported",
         "crowdinContext": "Export to the file not supported."

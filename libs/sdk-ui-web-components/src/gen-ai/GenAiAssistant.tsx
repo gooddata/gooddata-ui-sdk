@@ -1,97 +1,60 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type ComponentProps } from "react";
+import type { LinkHandlerEvent, GenAIAssistant as OriginalGenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
 
-import { omit } from "lodash-es";
+import { CustomElementAdapter, GET_COMPONENT, LOAD_COMPONENT } from "../common/CustomElementAdapter.js";
+import { type CustomElementContext } from "../context.js";
 
-import { resolveLocale } from "@gooddata/sdk-ui";
-import type {
-    ChatEvent,
-    GenAIConversationsProps,
-    LinkHandlerEvent,
-    GenAIAssistant as OriginalGenAIAssistant,
-} from "@gooddata/sdk-ui-gen-ai";
-
-import {
-    CustomElementAdapter,
-    EVENT_BUILDER,
-    EVENT_HANDLER,
-    GET_COMPONENT,
-    LOAD_COMPONENT,
-} from "../common/CustomElementAdapter.js";
-import { stringToObjectTypes } from "../common/typeGuards/stringToObjectTypes.js";
-import { type CustomElementContext, getStore } from "../context.js";
-import { findParentWithAttribute } from "../utils.js";
+import { type ICommonPropertiesDefinition, getProperties, setActions } from "./common.js";
 
 type IGenAIAssistant = typeof OriginalGenAIAssistant;
 type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
 
-export class GenAIAssistant extends CustomElementAdapter<IGenAIAssistant> {
+export class GenAIAssistant
+    extends CustomElementAdapter<IGenAIAssistant>
+    implements ICommonPropertiesDefinition
+{
+    //HANDLES: CLICK
+
+    declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
+
+    //DISPATCHER
+
+    declare _dispatch?: ICommonPropertiesDefinition["_dispatch"];
+    declare _onDispatcher?: ICommonPropertiesDefinition["_onDispatcher"];
+
+    set onDispatcher(onDispatcher: (action: any) => void) {
+        this._onDispatcher = onDispatcher;
+        if (this._dispatch && onDispatcher) {
+            onDispatcher(this._dispatch);
+        }
+    }
+    get onDispatcher(): ((action: any) => void) | undefined {
+        return this._onDispatcher;
+    }
+
+    //COMPONENT
+
     static get observedAttributes() {
         return ["workspace", "locale", "objectTypes"];
+    }
+
+    override getLiveProperties() {
+        return ["onLinkClick", "onDispatcher"];
+    }
+
+    override connectedCallback() {
+        super.connectedCallback();
+        void setActions(this);
     }
 
     override async [LOAD_COMPONENT]() {
         return (await import("@gooddata/sdk-ui-gen-ai")).GenAIAssistant;
     }
 
-    onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
-
     override [GET_COMPONENT](Component: IGenAIAssistant, { backend, workspaceId }: CustomElementContext) {
-        const storeId = findParentWithAttribute(this, "store");
-        const store = storeId ? getStore(storeId) : undefined;
+        const props = getProperties(this, "<gd-ai-assistant>");
 
-        // Collect the rest of the props
-        const extraProps: Partial<ComponentProps<IGenAIAssistant>> = {};
-
-        if (this.hasAttribute("locale")) {
-            extraProps.locale = resolveLocale(this.getAttribute("locale"));
-        }
-
-        if (this.hasAttribute("objectTypes")) {
-            const stringifiedObjectTypes = this.getAttribute("objectTypes");
-            if (stringifiedObjectTypes) {
-                try {
-                    extraProps.objectTypes = stringToObjectTypes(stringifiedObjectTypes);
-                } catch (e) {
-                    console.error(
-                        "Invalid object types not used in <gd-ai-assistant> component",
-                        e,
-                        stringifiedObjectTypes,
-                    );
-                }
-            }
-        }
-
-        // Emit custom DOM event when link is clicked
-        extraProps.onLinkClick = (e) => {
-            const type = "linkClick";
-            const detail = omit(e, ["preventDefault"]) as IGenAIAssistantLinkClick;
-
-            this[EVENT_HANDLER](type)(detail);
-            if (typeof this.onLinkClick === "function") {
-                this.onLinkClick(this[EVENT_BUILDER](type, detail));
-            }
-            // Prevent default behavior of the link click, we created
-            // the custom event to handle it in the application
-            e.preventDefault();
-        };
-
-        return (
-            <Component
-                backend={backend}
-                workspace={workspaceId}
-                providedStore={store as GenAIConversationsProps["providedStore"]}
-                eventHandlers={[
-                    {
-                        eval: (e): e is ChatEvent => Boolean(e),
-                        handler: (event) => {
-                            this[EVENT_HANDLER](event.type)(event.payload);
-                        },
-                    },
-                ]}
-                {...extraProps}
-            />
-        );
+        return <Component backend={backend} workspace={workspaceId} {...props} />;
     }
 }

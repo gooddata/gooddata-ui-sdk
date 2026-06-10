@@ -29,7 +29,6 @@
     background-color: kit-variables.$gd-color-light;
     display: flex;
     flex-direction: column;
-    margin: 0 1em 1em 0;
     //stylelint-disable-next-line declaration-no-important
     padding: 0 !important;
     //stylelint-disable-next-line declaration-no-important
@@ -49,6 +48,14 @@
         .gd-gen-ai-chat__messages__visualization__wrapper {
             height: 300px;
         }
+    }
+
+    &--right {
+        margin: 0 1em 1em 0;
+    }
+
+    &--left {
+        margin: 0 0 1em 1em;
     }
 
     &__header {

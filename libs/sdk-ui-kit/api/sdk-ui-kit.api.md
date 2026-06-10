@@ -6315,6 +6315,8 @@ export interface IUiControlButtonProps {
     // (undocumented)
     dropdownId?: string;
     // (undocumented)
+    hideChevron?: boolean;
+    // (undocumented)
     icon?: ReactNode;
     // (undocumented)
     isDraggable?: boolean;
@@ -6324,6 +6326,7 @@ export interface IUiControlButtonProps {
     isError?: boolean;
     // (undocumented)
     isOpen?: boolean;
+    layout?: "stacked" | "row";
     // (undocumented)
     onClick?: () => void;
     // (undocumented)
@@ -7575,6 +7578,8 @@ export interface IUiTagAccessibilityConfig extends IAccessibilityConfigBase {
 // @internal (undocumented)
 export interface IUiTagDef {
     // (undocumented)
+    iconBefore?: IconType;
+    // (undocumented)
     id: string;
     // (undocumented)
     isDeletable?: boolean;
@@ -7616,8 +7621,10 @@ export interface IUiTagsProps {
     readOnly?: boolean;
     // (undocumented)
     removeLabel?: string;
+    renderAddButton?: () => ReactNode;
     // (undocumented)
     saveLabel?: string;
+    size?: "small" | "large";
     // (undocumented)
     tagOptions?: Array<IUiTagDef>;
     // (undocumented)

@@ -2,16 +2,13 @@
 
 import { v4 as uuid } from "uuid";
 
-import { resolveLocale } from "@gooddata/sdk-ui";
-import type { ChatEvent, LinkHandlerEvent, GenAiStore as OriginalGenAiStore } from "@gooddata/sdk-ui-gen-ai";
+import type {
+    GenAiStoreProps,
+    LinkHandlerEvent,
+    GenAiStore as OriginalGenAiStore,
+} from "@gooddata/sdk-ui-gen-ai";
 
-import {
-    CustomElementAdapter,
-    EVENT_HANDLER,
-    GET_COMPONENT,
-    LOAD_COMPONENT,
-} from "../common/CustomElementAdapter.js";
-import { stringToObjectTypes } from "../common/typeGuards/stringToObjectTypes.js";
+import { CustomElementAdapter, GET_COMPONENT, LOAD_COMPONENT } from "../common/CustomElementAdapter.js";
 import {
     type CustomElementContext,
     type IPromiseWithResolver,
@@ -19,16 +16,47 @@ import {
     getStore,
     setStore,
 } from "../context.js";
-import { defineCustomElement, findParentWithAttribute } from "../utils.js";
+import { defineCustomElement } from "../utils.js";
+
+import { type ICommonPropertiesDefinition, getProperties, mimicActions, setActions } from "./common.js";
 
 type IGenAiStore = typeof OriginalGenAiStore;
+type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
 
 const STORE = "store";
 const componentRandomName = `gd-ai-store-${uuid()}`;
 
-export class GenAiProvider extends HTMLElement {
+export class GenAiProvider extends HTMLElement implements ICommonPropertiesDefinition {
     private wrapper: HTMLDivElement | null = null;
+    private storeEle: GenAiStore | null = null;
     private store: string = Math.random().toString(36).substring(2, 15);
+
+    _onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
+    _onDispatcher?: Required<GenAiStoreProps>["onDispatcher"];
+
+    set onLinkClick(onLinkClick: ((event: CustomEvent<IGenAIAssistantLinkClick>) => void) | undefined) {
+        this._onLinkClick = onLinkClick;
+        const store = this.storeEle;
+        if (store) {
+            store.onLinkClick = onLinkClick;
+        }
+    }
+
+    get onLinkClick(): ((event: CustomEvent<IGenAIAssistantLinkClick>) => void) | undefined {
+        return this._onLinkClick;
+    }
+
+    set onDispatcher(onDispatcher: Required<GenAiStoreProps>["onDispatcher"] | undefined) {
+        this._onDispatcher = onDispatcher;
+        const store = this.storeEle;
+        if (store && onDispatcher) {
+            store.onDispatcher = onDispatcher;
+        }
+    }
+
+    get onDispatcher(): Required<GenAiStoreProps>["onDispatcher"] | undefined {
+        return this._onDispatcher;
+    }
 
     connectedCallback() {
         this.setAttribute(STORE, this.getAttribute(STORE) ?? this.store);
@@ -50,7 +78,11 @@ export class GenAiProvider extends HTMLElement {
             this.wrapper = document.createElement("div");
             this.prepend(this.wrapper);
 
-            const store = document.createElement(componentRandomName);
+            const store = (this.storeEle = document.createElement(componentRandomName) as GenAiStore);
+            store.onLinkClick = this.onLinkClick;
+            if (this.onDispatcher) {
+                store.onDispatcher = this.onDispatcher;
+            }
 
             ["workspace", "locale", "objectTypes"].forEach((attr) => {
                 if (this.getAttribute(attr)) {
@@ -58,6 +90,8 @@ export class GenAiProvider extends HTMLElement {
                 }
             });
             this.wrapper.appendChild(store);
+
+            void mimicActions(this, store);
         });
     }
 }
@@ -71,62 +105,53 @@ function deferredStore<T>() {
     return data;
 }
 
-type IGenAIAssistantConversationsLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
-
 class GenAiStore extends CustomElementAdapter<IGenAiStore> {
+    //HANDLES: CLICK
+
+    declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => void;
+
+    //DISPATCHER
+
+    declare _dispatch?: ICommonPropertiesDefinition["_dispatch"];
+    declare _onDispatcher?: ICommonPropertiesDefinition["_onDispatcher"];
+
+    set onDispatcher(onDispatcher: (action: any) => void) {
+        this._onDispatcher = onDispatcher;
+        if (this._dispatch && onDispatcher) {
+            onDispatcher(this._dispatch);
+        }
+    }
+    get onDispatcher(): ((action: any) => void) | undefined {
+        return this._onDispatcher;
+    }
+
+    //COMPONENT
+
     static get observedAttributes() {
         return ["workspace", "locale", "objectTypes"];
+    }
+
+    override getLiveProperties() {
+        return ["onLinkClick", "onDispatcher"];
+    }
+
+    override connectedCallback() {
+        super.connectedCallback();
+        void setActions(this);
     }
 
     override async [LOAD_COMPONENT]() {
         return (await import("@gooddata/sdk-ui-gen-ai")).GenAiStore;
     }
 
-    onLinkClick?: (event: CustomEvent<IGenAIAssistantConversationsLinkClick>) => void;
-
     override [GET_COMPONENT](Component: IGenAiStore, { backend, workspaceId }: CustomElementContext) {
-        const storeId = findParentWithAttribute(this, "store");
-        const extraProps: {
-            locale?: string;
-            objectTypes?: ReturnType<typeof stringToObjectTypes>;
-        } = {};
-
-        if (this.hasAttribute("locale")) {
-            extraProps.locale = resolveLocale(this.getAttribute("locale"));
-        }
-
-        if (this.hasAttribute("objectTypes")) {
-            const stringifiedObjectTypes = this.getAttribute("objectTypes");
-            if (stringifiedObjectTypes) {
-                try {
-                    extraProps.objectTypes = stringToObjectTypes(stringifiedObjectTypes);
-                } catch (e) {
-                    console.error(
-                        "Invalid object types not used in <gd-ai-store> component",
-                        e,
-                        stringifiedObjectTypes,
-                    );
-                }
-            }
-        }
+        const props = getProperties(this, "<gd-ai-store>");
 
         return (
-            <Component
-                backend={backend}
-                workspace={workspaceId}
-                eventHandlers={[
-                    {
-                        eval: (e): e is ChatEvent => Boolean(e),
-                        handler: (event) => {
-                            this[EVENT_HANDLER](event.type)(event.payload);
-                        },
-                    },
-                ]}
-                {...extraProps}
-            >
+            <Component backend={backend} workspace={workspaceId} {...props} providedStore={undefined}>
                 {(s) => {
-                    if (storeId) {
-                        const store = getStore(storeId);
+                    if (props.storeId) {
+                        const store = getStore(props.storeId);
                         store?.resolve(s);
                     }
                     return null;

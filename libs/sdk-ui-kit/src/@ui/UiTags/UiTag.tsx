@@ -16,13 +16,14 @@ export interface IUiTagProps {
     isReadOnly?: boolean;
     isDisabled?: boolean;
     isFocused?: boolean;
+    size?: "small" | "large";
     onDelete?: (tag: IUiTagDef) => void;
     onClick?: (tag: IUiTagDef) => void;
     maxWidth?: number | "none";
 }
 
 export const UiTag = forwardRef<HTMLButtonElement, IUiTagProps>(function UiTag(
-    { tag, maxWidth, isDeletable, isDisabled, isFocused, deleteLabel, onDelete, onClick }: IUiTagProps,
+    { tag, maxWidth, isDeletable, isDisabled, isFocused, size, deleteLabel, onDelete, onClick }: IUiTagProps,
     ref,
 ) {
     const canBeDeleted = isDeletable && (tag.isDeletable ?? true);
@@ -33,6 +34,8 @@ export const UiTag = forwardRef<HTMLButtonElement, IUiTagProps>(function UiTag(
                 tabIndex={-1}
                 deleteTabIndex={-1}
                 label={`${tag.label}`}
+                size={size}
+                iconBefore={tag.iconBefore}
                 isDeletable={canBeDeleted}
                 isDisabled={isDisabled}
                 accessibilityConfig={{

@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { cpSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
+import { chmodSync, cpSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "fs";
 import { join } from "path";
 
 import type { TokenReplacements } from "../types.js";
@@ -19,7 +19,7 @@ const SKIP_SUFFIXES = [".tsbuildinfo"];
  * Files for which token-substitution-in-text would corrupt the byte stream.
  * Binary files must be copied verbatim.
  */
-const BINARY_EXTENSIONS = new Set([
+export const BINARY_EXTENSIONS = new Set([
     ".ico",
     ".png",
     ".jpg",
@@ -29,6 +29,10 @@ const BINARY_EXTENSIONS = new Set([
     ".woff2",
     ".ttf",
     ".eot",
+    // TLS fixtures (self-signed e2e certs): cryptographic artifacts that must
+    // never be touched by token substitution, even though PEM is ASCII text.
+    ".crt",
+    ".key",
 ]);
 
 export interface ICopyResult {
@@ -84,6 +88,7 @@ function copyFile(
 ): void {
     const ext = name.slice(name.lastIndexOf(".")).toLowerCase();
     if (BINARY_EXTENSIONS.has(ext)) {
+        // cpSync preserves the source mode (including the executable bit) by default.
         cpSync(srcPath, destPath);
         written.push(destPath);
         return;
@@ -94,5 +99,14 @@ function copyFile(
         content = content.replaceAll(token, value);
     }
     writeFileSync(destPath, content, "utf-8");
+    // writeFileSync creates with default perms (0o666 & ~umask), dropping the source's
+    // executable bit. Carry over ONLY the source's exec bits (never clearing write bits,
+    // so a read-only source can't make the copy read-only and break a later rewrite) so
+    // shell scripts stay runnable — both the package.json `./scripts/...sh` entries and the
+    // CI ref-workspace action invoke them directly (`./create-ref-workspace.sh`), needing +x.
+    const execBits = statSync(srcPath).mode & 0o111;
+    if (execBits) {
+        chmodSync(destPath, statSync(destPath).mode | execBits);
+    }
     written.push(destPath);
 }

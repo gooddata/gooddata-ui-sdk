@@ -4,6 +4,7 @@
 
 $tags_line_height: 20px;
 $tags_tooltip_max_width: 280px;
+$tags_tooltip_viewport_margin: 160px;
 
 @mixin tag($margin-right: 5px) {
     .gd-ui-kit-tags__tag {
@@ -135,6 +136,10 @@ $tags_tooltip_max_width: 280px;
     display: flex;
     max-width: $tags_tooltip_max_width;
     width: $tags_tooltip_max_width;
+    max-height: calc(100vh - #{$tags_tooltip_viewport_margin});
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 5px;

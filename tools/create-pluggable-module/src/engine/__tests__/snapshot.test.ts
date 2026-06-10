@@ -8,6 +8,7 @@ import { dirname, join, relative } from "path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { clientProfile } from "../../profiles/client.js";
+import { BINARY_EXTENSIONS } from "../copyTemplate.js";
 import { runProfileWithAnswers } from "../runProfile.js";
 
 import { scrubPackageJsonVersions } from "./scrubPackageJsonVersions.js";
@@ -38,10 +39,11 @@ function treeToMap(root: string): Record<string, string> {
                 continue;
             }
             const rel = relative(root, abs);
-            // Binary files (images, fonts) — record only their size so changes
-            // surface in the snapshot without including raw bytes.
+            // Binary files (images, fonts, cert fixtures) — record only their size so
+            // changes surface in the snapshot without including raw bytes. Reuses the
+            // engine's BINARY_EXTENSIONS so this list can never drift from copyTemplate.
             const ext = entry.name.slice(entry.name.lastIndexOf(".")).toLowerCase();
-            if ([".png", ".jpg", ".jpeg", ".gif", ".ico", ".woff", ".woff2", ".ttf", ".eot"].includes(ext)) {
+            if (BINARY_EXTENSIONS.has(ext)) {
                 out[rel] = `<binary, ${statSync(abs).size} bytes>`;
                 continue;
             }
